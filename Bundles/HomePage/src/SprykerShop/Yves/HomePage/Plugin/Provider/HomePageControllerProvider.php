@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\HomePage\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\HomePage\Plugin\Router\HomePageRouteProviderPlugin` instead.
+ */
 class HomePageControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_HOME = 'home';

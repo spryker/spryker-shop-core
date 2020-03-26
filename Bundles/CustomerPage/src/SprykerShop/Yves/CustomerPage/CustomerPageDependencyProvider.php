@@ -15,6 +15,11 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClient
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientBridge;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientBridge;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceBridge;
+use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToUtilValidateServiceBridge;
 use SprykerShop\Yves\CustomerPage\Plugin\AuthenticationHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\GuestCheckoutAuthenticationHandlerPlugin;
@@ -25,36 +30,41 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_SALES = 'CLIENT_SALES';
+    public const CLIENT_SHIPMENT = 'CLIENT_SHIPMENT';
     public const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
-    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
-    public const PLUGIN_AUTHENTICATION_HANDLER = 'PLUGIN_AUTHENTICATION_HANDLER';
-    public const PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER = 'PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER';
-    public const PLUGIN_LOGIN_AUTHENTICATION_HANDLER = 'PLUGIN_LOGIN_AUTHENTICATION_HANDLER';
-    public const PLUGIN_GUEST_AUTHENTICATION_HANDLER = 'PLUGIN_GUEST_AUTHENTICATION_HANDLER';
-    public const PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER = 'PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER';
-    public const FLASH_MESSENGER = 'FLASH_MESSENGER';
-    public const STORE = 'STORE';
-    public const PLUGIN_CUSTOMER_OVERVIEW_WIDGETS = 'PLUGIN_CUSTOMER_OVERVIEW_WIDGETS';
-    public const PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS = 'PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS';
-    public const PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS = 'PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS';
-    public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
-
-    public const PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS = 'PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS';
-    public const PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT = 'PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT';
 
     public const PLUGIN_AFTER_CUSTOMER_AUTHENTICATION_SUCCESS = 'PLUGIN_AFTER_CUSTOMER_AUTHENTICATION_SUCCESS';
+    public const PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT = 'PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT';
+    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+    public const PLUGIN_AUTHENTICATION_HANDLER = 'PLUGIN_AUTHENTICATION_HANDLER';
+    public const PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS = 'PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS';
+    public const PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS = 'PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS';
+    public const PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS = 'PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS';
+    public const PLUGIN_CUSTOMER_OVERVIEW_WIDGETS = 'PLUGIN_CUSTOMER_OVERVIEW_WIDGETS';
+    public const PLUGIN_GUEST_AUTHENTICATION_HANDLER = 'PLUGIN_GUEST_AUTHENTICATION_HANDLER';
+    public const PLUGIN_LOGIN_AUTHENTICATION_HANDLER = 'PLUGIN_LOGIN_AUTHENTICATION_HANDLER';
+    public const PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER = 'PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER';
+    public const PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER = 'PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER';
+
+    public const SERVICE_CUSTOMER = 'SERVICE_CUSTOMER';
+    public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
+    public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
+
+    public const FLASH_MESSENGER = 'FLASH_MESSENGER';
+    public const STORE = 'STORE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
         $container = $this->addCustomerClient($container);
+        $container = $this->addProductBundleClient($container);
         $container = $this->addSalesClient($container);
-        $container = $this->addProductGroupClient($container);
+        $container = $this->addShipmentClient($container);
         $container = $this->addQuoteClient($container);
         $container = $this->addApplication($container);
         $container = $this->addAuthenticationHandlerPlugin($container);
@@ -71,6 +81,8 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPreRegistrationCustomerTransferExpanderPlugins($container);
         $container = $this->addAfterLoginCustomerRedirectPlugins($container);
         $container = $this->addAfterCustomerAuthenticationSuccessPlugins($container);
+        $container = $this->addShipmentService($container);
+        $container = $this->addCustomerService($container);
 
         return $container;
     }
@@ -80,11 +92,11 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addStore(Container $container)
+    protected function addStore(Container $container): Container
     {
-        $container[static::STORE] = function () {
+        $container->set(static::STORE, function () {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }
@@ -96,11 +108,11 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addApplication(Container $container): Container
     {
-        $container[self::PLUGIN_APPLICATION] = function () {
+        $container->set(static::PLUGIN_APPLICATION, function () {
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
-        };
+        });
 
         return $container;
     }
@@ -112,9 +124,9 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addAuthenticationHandlerPlugin(Container $container): Container
     {
-        $container[self::PLUGIN_AUTHENTICATION_HANDLER] = function () {
+        $container->set(static::PLUGIN_AUTHENTICATION_HANDLER, function () {
             return new AuthenticationHandler();
-        };
+        });
 
         return $container;
     }
@@ -126,9 +138,9 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLoginCheckoutAuthenticationHandlerPlugin(Container $container): Container
     {
-        $container[self::PLUGIN_LOGIN_AUTHENTICATION_HANDLER] = function () {
+        $container->set(static::PLUGIN_LOGIN_AUTHENTICATION_HANDLER, function () {
             return new LoginCheckoutAuthenticationHandlerPlugin();
-        };
+        });
 
         return $container;
     }
@@ -140,9 +152,9 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addGuestCheckoutAuthenticationHandlerPlugin(Container $container): Container
     {
-        $container[self::PLUGIN_GUEST_AUTHENTICATION_HANDLER] = function () {
+        $container->set(static::PLUGIN_GUEST_AUTHENTICATION_HANDLER, function () {
             return new GuestCheckoutAuthenticationHandlerPlugin();
-        };
+        });
 
         return $container;
     }
@@ -154,9 +166,9 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addRegistrationCheckoutAuthenticationHandlerPlugin(Container $container): Container
     {
-        $container[self::PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER] = function () {
+        $container->set(static::PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER, function () {
             return new RegistrationCheckoutAuthenticationHandlerPlugin();
-        };
+        });
 
         return $container;
     }
@@ -168,9 +180,9 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFlashMessenger(Container $container): Container
     {
-        $container[self::FLASH_MESSENGER] = function (Container $container) {
-            return $container[self::PLUGIN_APPLICATION]['flash_messenger'];
-        };
+        $container->set(static::FLASH_MESSENGER, function (Container $container) {
+            return $container[static::PLUGIN_APPLICATION]['flash_messenger'];
+        });
 
         return $container;
     }
@@ -182,9 +194,9 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[self::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new CustomerPageToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }
@@ -196,9 +208,9 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteClient(Container $container): Container
     {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new CustomerPageToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }
@@ -210,9 +222,9 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSalesClient(Container $container): Container
     {
-        $container[self::CLIENT_SALES] = function (Container $container) {
+        $container->set(static::CLIENT_SALES, function (Container $container) {
             return new CustomerPageToSalesClientBridge($container->getLocator()->sales()->client());
-        };
+        });
 
         return $container;
     }
@@ -222,11 +234,11 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addProductGroupClient(Container $container): Container
+    protected function addProductBundleClient(Container $container): Container
     {
-        $container[self::CLIENT_PRODUCT_BUNDLE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_BUNDLE, function (Container $container) {
             return new CustomerPageToProductBundleClientBridge($container->getLocator()->productBundle()->client());
-        };
+        });
 
         return $container;
     }
@@ -238,9 +250,9 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerOverviewWidgetPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_CUSTOMER_OVERVIEW_WIDGETS] = function () {
+        $container->set(static::PLUGIN_CUSTOMER_OVERVIEW_WIDGETS, function () {
             return $this->getCustomerOverviewWidgetPlugins();
-        };
+        });
 
         return $container;
     }
@@ -252,9 +264,9 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerOrderListWidgetPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS] = function () {
+        $container->set(static::PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS, function () {
             return $this->getCustomerOrderListWidgetPlugins();
-        };
+        });
 
         return $container;
     }
@@ -266,9 +278,9 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerOrderViewWidgetPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS] = function () {
+        $container->set(static::PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS, function () {
             return $this->getCustomerOrderViewWidgetPlugins();
-        };
+        });
 
         return $container;
     }
@@ -280,9 +292,9 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerMenuItemWidgetPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS] = function () {
+        $container->set(static::PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS, function () {
             return $this->getCustomerMenuItemWidgetPlugins();
-        };
+        });
 
         return $container;
     }
@@ -294,9 +306,9 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilValidateService(Container $container): Container
     {
-        $container[self::SERVICE_UTIL_VALIDATE] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_VALIDATE, function (Container $container) {
             return new CustomerPageToUtilValidateServiceBridge($container->getLocator()->utilValidate()->service());
-        };
+        });
 
         return $container;
     }
@@ -308,9 +320,9 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPreRegistrationCustomerTransferExpanderPlugins(Container $container): Container
     {
-        $container[self::PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER] = function () {
+        $container->set(static::PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER, function () {
             return $this->getPreRegistrationCustomerTransferExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -330,9 +342,9 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addAfterLoginCustomerRedirectPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT] = function () {
+        $container->set(static::PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT, function () {
             return $this->getAfterLoginCustomerRedirectPlugins();
-        };
+        });
 
         return $container;
     }
@@ -384,9 +396,9 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addAfterCustomerAuthenticationSuccessPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_AFTER_CUSTOMER_AUTHENTICATION_SUCCESS] = function () {
+        $container->set(static::PLUGIN_AFTER_CUSTOMER_AUTHENTICATION_SUCCESS, function () {
             return $this->getAfterCustomerAuthenticationSuccessPlugins();
-        };
+        });
 
         return $container;
     }
@@ -397,5 +409,47 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function getAfterCustomerAuthenticationSuccessPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addShipmentService(Container $container): Container
+    {
+        $container->set(static::SERVICE_SHIPMENT, function (Container $container) {
+            return new CustomerPageToShipmentServiceBridge($container->getLocator()->shipment()->service());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCustomerService(Container $container): Container
+    {
+        $container->set(static::SERVICE_CUSTOMER, function (Container $container): CustomerPageToCustomerServiceInterface {
+            return new CustomerPageToCustomerServiceBridge($container->getLocator()->customer()->service());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addShipmentClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_SHIPMENT, function (Container $container): CustomerPageToShipmentClientInterface {
+            return new CustomerPageToShipmentClientBridge($container->getLocator()->shipment()->client());
+        });
+
+        return $container;
     }
 }

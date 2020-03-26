@@ -32,7 +32,7 @@ class SharedCartPermissionGroupWidgetPlugin extends AbstractWidgetPlugin impleme
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -44,7 +44,7 @@ class SharedCartPermissionGroupWidgetPlugin extends AbstractWidgetPlugin impleme
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

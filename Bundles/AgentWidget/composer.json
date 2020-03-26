@@ -4,7 +4,7 @@
   "description": "AgentWidget module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.28.1",
     "spryker/agent": "^1.0.0",
@@ -13,14 +13,13 @@
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
-    "spryker-shop/quote-request-agent-widget": "*",
     "spryker/code-sniffer": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/router": "*",
+    "spryker/silex": "*"
   },
   "suggest": {
     "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
-    "spryker-shop/quote-request-agent-widget": "If you want to use QuoteRequestAgentOverviewWidget and QuoteRequestAgentCancelWidget widgets."
+    "spryker/router": "Use this module when you want to use the Router."
   },
   "autoload": {
     "psr-4": {
@@ -29,6 +28,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

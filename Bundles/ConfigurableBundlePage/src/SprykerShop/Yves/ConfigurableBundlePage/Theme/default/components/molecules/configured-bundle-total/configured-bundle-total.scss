@@ -1,0 +1,9 @@
+@mixin configurable-bundle-page-configured-bundle-total($name: '.configured-bundle-total') {
+    #{$name} {
+        padding: map-get($setting-spacing, 'default');
+        margin: map-get($setting-spacing, 'big') map-get($setting-spacing, 'default');
+        background: $setting-color-lighter;
+
+        @content;
+    }
+}

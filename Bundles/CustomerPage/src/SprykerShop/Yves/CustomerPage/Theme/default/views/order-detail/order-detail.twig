@@ -1,31 +1,35 @@
 {% extends template('page-layout-customer', 'CustomerPage') %}
 
+{# @deprecated property 'orderItems' is deprecated: use 'shipmentGroups' instead #}
 {% define data = {
     order: _view.order,
-    orderItems: _view.items,
-
+    orderItems: _view.items | default([]),
+    shipmentGroups: _view.shipmentGroups,
+    orderShipmentExpenses: _view.orderShipmentExpenses,
     title: 'customer.account.order_history' | trans,
-    activePage: 'order'
+    activePage: 'order',
+    requestUri: app.request.requestUri,
 } %}
 
 {% block customerContent %}
-
     {% embed [
         molecule('customer-reorder-form', 'CustomerReorderWidget'),
         molecule('order-detail', 'CustomerPage'),
     ] ignore missing with {
         data: {
             idSalesOrder: data.order.idSalesOrder,
-            orderItems: data.orderItems,
-            order: data.order
-        }
+            shipmentGroups: data.shipmentGroups,
+            orderShipmentExpenses: data.orderShipmentExpenses | default([]),
+            order: data.order,
+        },
     } only %}
         {% block formContent %}
             {% include molecule('order-detail', 'CustomerPage') with {
                 data: {
                     order: data.order,
-                    orderItems: data.orderItems
-                }
+                    shipmentGroups: data.shipmentGroups,
+                    orderShipmentExpenses: data.orderShipmentExpenses,
+                },
             } only %}
         {% endblock %}
 
@@ -43,7 +47,7 @@
         {% widget 'CommentThreadWidget' args [
             data.order.idSalesOrder,
             'sales_order',
-            app.request.requestUri,
+            data.requestUri,
             data.order.commentThread
         ] only %}
         {% endwidget %}

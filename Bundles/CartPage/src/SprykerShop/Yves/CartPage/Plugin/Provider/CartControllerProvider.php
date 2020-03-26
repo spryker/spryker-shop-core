@@ -11,6 +11,9 @@ use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin` instead.
+ */
 class CartControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_CART = 'cart';
@@ -97,8 +100,8 @@ class CartControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
-     * @uses CartControllerProvider::getQuantityFromRequest()
-     * @uses CartController::quickAddAction()
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::getQuantityFromRequest()
+     * @uses \SprykerShop\Yves\CartPage\Controller\CartController::quickAddAction()
      *
      * @return $this
      */

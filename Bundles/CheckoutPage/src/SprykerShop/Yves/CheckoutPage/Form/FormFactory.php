@@ -17,9 +17,13 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClient
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Form\DataProvider\SubFormDataProviders;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\PaymentForm;
+use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentCollectionForm;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\SummaryForm;
 
+/**
+ * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
+ */
 class FormFactory extends AbstractFactory
 {
     /**
@@ -43,7 +47,7 @@ class FormFactory extends AbstractFactory
      */
     public function createAddressFormCollection()
     {
-        return $this->createFormCollection($this->getAddressFormTypes(), $this->getAddressFormDataProvider());
+        return $this->createFormCollection($this->getAddressFormTypes(), $this->getCheckoutAddressFormDataProviderPlugin());
     }
 
     /**
@@ -60,16 +64,26 @@ class FormFactory extends AbstractFactory
     public function getShipmentFormTypes()
     {
         return [
-            $this->getShipmentForm(),
+            $this->getShipmentCollectionForm(),
         ];
     }
 
     /**
+     * @deprecated Use getShipmentCollectionForm() instead.
+     *
      * @return string
      */
     public function getShipmentForm()
     {
         return ShipmentForm::class;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShipmentCollectionForm(): string
+    {
+        return ShipmentCollectionForm::class;
     }
 
     /**
@@ -110,7 +124,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
+     * @return (\Symfony\Component\Form\FormTypeInterface|string)[]
      */
     public function getCustomerFormTypes()
     {
@@ -144,7 +158,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @param \Symfony\Component\Form\FormTypeInterface[]|string[] $formTypes
+     * @param (\Symfony\Component\Form\FormTypeInterface|string)[] $formTypes
      * @param \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface|null $dataProvider
      *
      * @return \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface
@@ -206,10 +220,10 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface|null
+     * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
      */
-    public function getAddressFormDataProvider()
+    public function getCheckoutAddressFormDataProviderPlugin(): StepEngineFormDataProviderInterface
     {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::ADDRESS_STEP_FORM_DATA_PROVIDER);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_CHECKOUT_ADDRESS_FORM_DATA_PROVIDER);
     }
 }

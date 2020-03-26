@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="spryker:transfer-01"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="CreateConfiguredBundleRequest">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="configuredBundle" type="ConfiguredBundle"/>
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="ConfiguredBundle">
+        <property name="template" type="ConfigurableBundleTemplate"/>
+        <property name="quantity" type="int"/>
+        <property name="groupKey" type="string"/>
+    </transfer>
+
+    <transfer name="ConfiguredBundleItem">
+        <property name="slot" type="ConfigurableBundleTemplateSlot"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateStorage">
+        <property name="slots" singular="slot" type="ConfigurableBundleTemplateSlotStorage[]"/>
+        <property name="name" type="string"/>
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="ProductConcreteCriteriaFilter">
+        <property name="requestParams" type="array" singular="requestParams"/>
+        <property name="excludedProductIds" type="int[]" singular="excludedProductId"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateSlotStorage">
+        <property name="idProductList" type="int"/>
+        <property name="idConfigurableBundleTemplateSlot" type="int"/>
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplatePageSearchRequest">
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="sku" type="string"/>
+        <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
+    </transfer>
+
+    <transfer name="LocalizedAttributes">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ProductList">
+        <property name="idProductList" type="int"/>
+    </transfer>
+
+    <transfer name="ConfiguratorState">
+        <property name="slotStateFormsData" type="array" singular="slotStateFormsData"/>
+        <property name="configurableBundleTemplateStorage" type="ConfigurableBundleTemplateStorage"/>
+        <property name="products" type="ProductView[]" singular="product"/>
+        <property name="isStateModified" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="ProductView">
+        <property name="idProductConcrete" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="name" type="string"/>
+        <property name="images" singular="image" type="ProductImageStorage[]"/>
+        <property name="price" type="int"/>
+        <property name="quantity" type="int"/>
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="errors" type="QuoteError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+        <property name="name" type="string"/>
+        <property name="configuredBundleItem" type="ConfiguredBundleItem"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="ProductConcreteImageStorage">
+        <property name="imageSets" singular="imageSet" type="ProductImageSetStorage[]"/>
+    </transfer>
+
+    <transfer name="ProductImageSetStorage">
+        <property name="images" singular="image" type="ProductImageStorage[]"/>
+    </transfer>
+
+    <transfer name="CurrentProductPrice">
+        <property name="sumPrice" type="int"/>
+    </transfer>
+
+    <transfer name="PriceProductFilter">
+        <property name="quantity" type="int"/>
+        <property name="idProduct" type="int"/>
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplate">
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateSlot">
+    </transfer>
+
+    <transfer name="QuoteError">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="ProductImageStorage">
+    </transfer>
+
+</transfers>

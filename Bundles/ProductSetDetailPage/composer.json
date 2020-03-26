@@ -4,19 +4,19 @@
   "description": "ProductSetDetailPage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-router-extension": "^1.0.0",
     "spryker-shop/shop-ui": "^1.0.0",
+    "spryker-shop/storage-router-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/product-set-storage": "^1.0.0",
-    "spryker/product-storage": "^1.10.0",
+    "spryker/product-storage": "^1.14.0",
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker-shop/product-set-widget": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "suggest": {
     "spryker-shop/product-set-widget": "If you want to use components from module ProductSetWidget or ProductSetWidgetPlugin.",
@@ -29,6 +29,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

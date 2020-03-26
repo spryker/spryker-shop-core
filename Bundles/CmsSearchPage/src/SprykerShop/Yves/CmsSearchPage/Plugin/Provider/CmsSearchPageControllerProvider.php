@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CmsSearchPage\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\CmsSearchPage\Plugin\Router\CmsSearchPageRouteProviderPlugin` instead.
+ */
 class CmsSearchPageControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_SEARCH = 'search-cms';

@@ -67,6 +67,7 @@ class CmsController extends AbstractController
             ->render($localeCmsPageDataTransfer->getPlaceholders(), ['cmsContent' => $data]);
 
         return [
+            'idCmsPage' => $localeCmsPageDataTransfer->getIdCmsPage(),
             'placeholders' => $placeholders,
             'edit' => $edit,
             'pageTitle' => $localeCmsPageDataTransfer->getMetaTitle(),

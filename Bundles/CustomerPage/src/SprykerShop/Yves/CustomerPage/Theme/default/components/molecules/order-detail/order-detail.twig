@@ -1,12 +1,16 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'order-detail'
+    name: 'order-detail',
 } %}
 
+{# @deprecated property "orderItems" is deprecated: use "shipmentGroups" instead. #}
+
 {% define data = {
-    orderItems: required,
-    order: required
+    orderItems: [],
+    shipmentGroups: data.orderItems | default([]),
+    orderShipmentExpenses: data.orderShipmentExpenses | default([]),
+    order: required,
 } %}
 
 {% block body %}
@@ -24,42 +28,57 @@
                     {{ 'customer.order.date' | trans }}:
                     <strong>{{ data.order.createdAt | formatDateTime }}</strong>
                 </li>
+
+                {% embed molecule('order-custom-reference', 'OrderCustomReferenceWidget') ignore missing with {
+                    config: {
+                        tag: 'li',
+                    },
+                    data: {
+                        orderCustomReference: data.order.orderCustomReference | default,
+                    },
+                } only %}
+                    {% block title %}
+                        {{ data.title }}:
+                    {% endblock %}
+
+                    {% block textWrapper %}
+                        <strong class="text-break">
+                            {{ block('text') }}
+                        </strong>
+                    {% endblock %}
+                {% endembed %}
             </ul>
             <hr class="box__separator">
             {% include molecule('order-detail-table', 'CustomerPage') with {
                 data: {
-                    items: data.orderItems,
+                    shipmentGroups: data.shipmentGroups,
+                    orderShipmentExpenses: data.orderShipmentExpenses,
                     currencyIsoCode: data.order.currencyIsoCode,
-                    order: data.order
-                }
-            } only %}
-            <hr class="box__separator">
-            {% include molecule('order-summary', 'CustomerPage') with {
-                class: 'text-right',
-                data: {
-                    order: data.order
-                }
+                    order: data.order,
+                },
             } only %}
         </div>
 
-        <div class="box spacing-top spacing-top--big">
-            <h5>{{ 'customer.order.shipping_address' | trans }}</h5>
-            <hr class="box__separator">
-            {% include molecule('display-address') with {
-                data: {
-                    address: data.order.shippingAddress
-                }
-            } only %}
-        </div>
-
-        <div class="box spacing-top spacing-top--big">
-            <h5>{{ 'customer.order.billing_address' | trans }}</h5>
-            <hr class="box__separator">
-            {% include molecule('display-address') with {
-                data: {
-                    address: data.order.billingAddress
-                }
-            } only %}
+        <div class="box">
+            <h5>{{ 'customer.order.payment' | trans }}</h5>
+            <div class="box grid grid--justify spacing-bottom spacing-bottom--big">
+                <div class="col col--sm-12 col--lg-6">
+                    {% include molecule('order-payment', 'CustomerPage') with {
+                        data: {
+                            payments: data.order.payments,
+                            currencyIsoCode: data.order.currencyIsoCode,
+                        },
+                    } only %}
+                </div>
+                <div class="col col--sm-12 col--lg-5 spacing-left spacing-left--inner">
+                    <strong>{{ 'customer.order.billing_address' | trans }}</strong>
+                    {% include molecule('display-address') with {
+                        data: {
+                            address: data.order.billingAddress,
+                        },
+                    } only %}
+                </div>
+            </div>
         </div>
 
         {% if data.order.cartNote is not empty %}
@@ -70,11 +89,22 @@
                     {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
                         data: {
                             label: 'cart_note.customer_page.order_note',
-                            note: data.order.cartNote
-                        }
+                            note: data.order.cartNote,
+                        },
                     } only %}
                 {% endif %}
             </div>
         {% endif %}
+
+        <div class="box">
+            <h5>{{ 'customer.order.complete_checkout' | trans }}</h5>
+            <hr />
+            {% include molecule('order-summary', 'CustomerPage') with {
+                class: 'text-right',
+                data: {
+                    order: data.order,
+                },
+            } only %}
+        </div>
     {% endblock %}
 {% endblock %}

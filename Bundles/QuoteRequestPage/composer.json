@@ -4,7 +4,7 @@
   "description": "QuoteRequestPage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker-shop/quote-request-page-extension": "^1.0.0",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.0.0",
@@ -25,15 +25,17 @@
     "spryker-shop/product-option-widget": "*",
     "spryker-shop/product-packaging-unit-widget": "*",
     "spryker/code-sniffer": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/router": "*",
+    "spryker/silex": "*"
   },
   "suggest": {
     "spryker-shop/cart-page": "If you want to use cart page molecules: ^3.2.0",
+    "spryker-shop/configurable-bundle-widget": "If you want to use configurable bundle widget functionality",
     "spryker-shop/customer-page": "If you want to use customer layout templates: ^1.0.0",
     "spryker-shop/discount-widget": "If you want to use discount widget functionality: ^1.2.0",
     "spryker-shop/product-option-widget": "If you want to use product option widget functionality",
     "spryker-shop/product-packaging-unit-widget": "If you want to use product packaging unit widget functionality",
+    "spryker/router": "Use this module if you want use the RouterProviderPlugin.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
@@ -43,9 +45,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   },
   "config": {

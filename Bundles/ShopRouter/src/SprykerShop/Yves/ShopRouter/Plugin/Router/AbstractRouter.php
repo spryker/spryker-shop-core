@@ -19,6 +19,9 @@ use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
 
+/**
+ * @deprecated Use `spryker/router` instead.
+ */
 abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
 {
     /**
@@ -32,9 +35,7 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
     private $sslEnabled;
 
     /**
-     * {@inheritdoc}
-     *
-     * @return void
+     * @inheritDoc
      */
     public function setContext(RequestContext $context)
     {
@@ -42,7 +43,7 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function getContext()
     {
@@ -50,7 +51,7 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function getRouteCollection()
     {
@@ -111,7 +112,8 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
         $url = $pathInfo;
         $scheme = $this->context->getScheme();
 
-        if ($referenceType !== self::NETWORK_PATH &&
+        if (
+            $referenceType !== self::NETWORK_PATH &&
             ($scheme === 'http' && $this->sslEnabled === true || $scheme === 'https' && $this->sslEnabled === false)
         ) {
             $referenceType = self::ABSOLUTE_URL;
@@ -121,12 +123,15 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
             case self::ABSOLUTE_URL:
             case self::NETWORK_PATH:
                 $url = $this->buildUrl($pathInfo, $referenceType);
+
                 break;
             case self::ABSOLUTE_PATH:
                 $url = $pathInfo;
+
                 break;
             case self::RELATIVE_PATH:
                 $url = UrlGenerator::getRelativePath($this->context->getPathInfo(), $pathInfo);
+
                 break;
         }
 

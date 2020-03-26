@@ -19,6 +19,10 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  */
 class SubRequestExceptionHandlerPlugin extends AbstractPlugin implements ExceptionHandlerPluginInterface
 {
+    /**
+     * @see \Spryker\Shared\Application\Application::SERVICE_REQUEST
+     */
+    public const SERVICE_REQUEST = 'request';
     public const URL_NAME_PREFIX = 'error/';
 
     /**
@@ -40,7 +44,7 @@ class SubRequestExceptionHandlerPlugin extends AbstractPlugin implements Excepti
     {
         $application = $this->getFactory()->getApplication();
 
-        $request = $application[$application::REQUEST];
+        $request = $application[static::SERVICE_REQUEST];
         $errorPageUrl = $application->url(static::URL_NAME_PREFIX . $exception->getStatusCode());
         $cookies = $request->cookies->all();
 

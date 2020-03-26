@@ -5,14 +5,3 @@
         @content;
     }
 }
-
-/**
- * @deprecated use shopping-list-widget-subtotal-price mixin instead.
- */
-@mixin shopping-list-subtotal-price($name: '.subtotal-price') {
-    @include shopping-list-widget-subtotal-price();
-
-    #{$name} {
-        @content;
-    }
-}

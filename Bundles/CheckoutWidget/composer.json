@@ -4,16 +4,15 @@
   "description": "CheckoutWidget module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker-shop/checkout-page": "^1.0.0 || ^2.0.0",
+    "php": ">=7.2",
+    "spryker-shop/checkout-page": "^1.0.0 || ^2.0.0 || ^3.0.0",
     "spryker-shop/shop-ui": "^1.0.0",
     "spryker/checkout": "^4.3.0 || ^6.0.0",
     "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
     "spryker-shop/cart-page": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "suggest": {
     "spryker-shop/cart-page": "Widget plugins are available for this module."
@@ -25,6 +24,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

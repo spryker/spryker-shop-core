@@ -27,7 +27,7 @@ class MenuItemCompanyWidgetPlugin extends AbstractWidgetPlugin implements MenuIt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -39,7 +39,7 @@ class MenuItemCompanyWidgetPlugin extends AbstractWidgetPlugin implements MenuIt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

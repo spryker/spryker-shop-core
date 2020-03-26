@@ -1,0 +1,98 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'address-item-form',
+} %}
+
+{% define data = {
+    form: required,
+    formBundle: null,
+    shippingForm: required,
+    jsAddressClass: '',
+} %}
+
+{% block body %}
+    {% if is_granted('ROLE_USER') %}
+        <div class="text-right spacing spacing--inner">
+            <hr>
+            <a href="{{url('customer/address')}}">{{ 'page.checkout.address.manage_your_addresses' | trans }}</a>
+            <hr>
+        </div>
+    {% endif %}
+
+    {% set items = data.form.vars.data | filter(item => not item.relatedBundleItemIdentifier) %}
+
+    {% if items | length %}
+        {% embed molecule('form') with {
+            data: {
+                form: data.form,
+                enableStart: false,
+                enableEnd: false,
+            },
+            embed: {
+                jsName: config.jsName,
+                shippingForm: data.shippingForm,
+            },
+        } only %}
+            {% block fields %}
+                <div class="col col--sm-12">
+                    {% include molecule('address-item-form-field-list', 'CheckoutPage') with {
+                        class: embed.jsName ~ '__items',
+                        data: {
+                            items: data.form,
+                            shippingForm: embed.shippingForm,
+                            parentJsName: embed.jsName,
+                        },
+                    } only %}
+                </div>
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+
+    {% if data.formBundle and data.formBundle.vars.data | length %}
+        {% embed molecule('form') with {
+            data: {
+                form: data.formBundle,
+                enableStart: false,
+                enableEnd: false,
+            },
+            embed: {
+                jsName: config.jsName,
+                shippingForm: data.shippingForm,
+            },
+        } only %}
+            {% block fields %}
+                <div class="col col--sm-12">
+                    {% include molecule('address-bundle-item-form-field-list', 'CheckoutPage') with {
+                        class: embed.jsName ~ '__items',
+                        data: {
+                            items: data.form,
+                            shippingForm: embed.shippingForm,
+                            parentJsName: embed.jsName,
+                        },
+                    } only %}
+                </div>
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+
+    {% block stepValidation %}
+        {% include molecule('is-next-checkout-step-enabled', 'CheckoutPage') with {
+            attributes: {
+                'trigger-selector': '.' ~ data.jsAddressClass ~ '__form-select-shippingAddress',
+                'target-selector': '.' ~ config.jsName ~ '__validate-next-checkout-step',
+            },
+        } only %}
+
+        {% include molecule('validate-next-checkout-step', 'CheckoutPage') with {
+            class: config.jsName ~ '__validate-next-checkout-step',
+            attributes: {
+                'container-selector': '.' ~ config.jsName ~ '__item-shipping',
+                'target-selector': '.' ~ data.jsAddressClass ~ '__form-submit',
+                'dropdown-trigger-selector': '.' ~ config.jsName ~ '__trigger',
+                'parent-target-class-name': config.jsName ~ '__items',
+                'is-enable': false,
+            },
+        } only %}
+    {% endblock %}
+{% endblock %}

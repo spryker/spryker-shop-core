@@ -12,6 +12,9 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \SprykerShop\Yves\QuoteApprovalWidget\QuoteApprovalWidgetConfig getConfig()
+ */
 class QuoteApproveRequestForm extends AbstractType
 {
     public const OPTION_APPROVERS_LIST = 'OPTION_APPROVERS_LIST';

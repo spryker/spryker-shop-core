@@ -1,5 +1,12 @@
 {% extends template('page-layout-checkout', 'CheckoutPage') %}
 
+{#
+    @deprecated property "data.shipmentMethod" is deprecated.
+    @deprecated property "data.overview.shipmentMethod" is deprecated.
+    @deprecated property "data.overview.payments" is deprecated.
+    @deprecated property "data.overview.prices.storeCurrency" is deprecated.
+    @deprecated property "data.overview.prices.priceToPay" is deprecated.
+#}
 {% define data = {
     cart: _view.quoteTransfer,
     backUrl: _view.previousStepUrl,
@@ -7,141 +14,233 @@
     cartItems: _view.cartItems,
     shippingAddress: _view.quoteTransfer.shippingAddress,
     billingAddress: _view.quoteTransfer.billingAddress,
-    shipmentMethod: _view.quoteTransfer.shipment.method.name,
+    shipmentMethod: _view.quoteTransfer.shipment.method.name | default,
     paymentMethod: _view.quoteTransfer.payment.paymentMethod,
+    shipmentGroups: _view.shipmentGroups,
+    isPlaceableOrder: _view.isPlaceableOrder,
+    isPlaceableOrderErrors: _view.isPlaceableOrderErrors,
 
     forms: {
-        summary: _view.summaryForm
+        summary: _view.summaryForm,
     },
 
     overview: {
-        shipmentMethod: _view.quoteTransfer.shipment.method.name,
-        payments: _view.quoteTransfer.payments,
+        shipmentMethod: _view.quoteTransfer.shipment.method.name | default,
+        payments: _view.quoteTransfer.payments | default([]),
         expenses: _view.quoteTransfer.expenses,
         voucherDiscounts: _view.quoteTransfer.voucherDiscounts,
         cartRuleDiscounts: _view.quoteTransfer.cartRuleDiscounts,
+        totalCosts: _view.totalCosts,
+        shipmentGroups: _view.shipmentGroups,
 
         prices: {
             subTotal: _view.quoteTransfer.totals.subtotal,
-            storeCurrency: _view.quoteTransfer.shipment.method.storeCurrencyPrice,
+            storeCurrency: _view.quoteTransfer.shipment.method.storeCurrencyPrice | default([]),
             grandTotal: _view.quoteTransfer.totals.grandtotal,
             priceToPay: _view.quoteTransfer.totals.priceToPay,
             tax: _view.quoteTransfer.totals.taxtotal.amount,
-            discountTotal: _view.quoteTransfer.totals.discounttotal | default
-        }
+            discountTotal: _view.quoteTransfer.totals.discounttotal | default,
+        },
     },
-
-    title: 'checkout.step.summary.title' | trans
+    requestUri: app.request.requestUri,
+    title: 'checkout.step.summary.title' | trans,
 } %}
 
 {% block content %}
+    {% set isGiftCardExists = null %}
+
+    <div class="grid grid--stretch grid--justify">
+        {% for shipmentGroup in data.shipmentGroups %}
+            <div class="col col--sm-12 col--lg-6">
+                <div class="box">
+                    <h4>{{ 'checkout.step.shipment.title' | trans }} n&#176;{{ loop.index }}</h4>
+                    <hr>
+                    <h6><strong>{{ 'checkout.step.summary.products' | trans }}</strong></h6>
+
+                    {% widget 'QuoteConfiguredBundleWidget' args [data.cart, shipmentGroup.items] with {
+                        data: {
+                            isEditable: false,
+                            isQuantitySummaryVisible: true,
+                        },
+                    } only %}
+                    {% endwidget %}
+
+                    {% for item in shipmentGroup.cartItems %}
+                        {% set cartItem = item.bundleProduct ?? item %}
+                        {% set isConfiguredBundle = cartItem.configuredBundleItem is defined and cartItem.configuredBundleItem is not empty %}
+                        {% set isGiftCardExists = cartItem.giftCardMetadata is not null and cartItem.giftCardMetadata.isGiftCard %}
+
+                        {% if not isConfiguredBundle %}
+                            {% embed molecule('summary-node', 'CheckoutPage') with {
+                                data: {
+                                    node: cartItem,
+                                    bundleItems: item.bundleItems | default([]),
+                                },
+                            } only %}
+                                {% block body %}
+                                    {{ parent() }}
+
+                                    {% if data.node.cartNote %}
+                                        {% if widgetExists('CartNoteQuoteItemNoteWidgetPlugin') %}
+                                            {{ widget('CartNoteQuoteItemNoteWidgetPlugin', data.node) }} {# @deprecated Use molecule('note-list', 'CartNoteWidget') instead. #}
+                                        {% else %}
+                                            {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
+                                                data: {
+                                                    label: 'cart_note.checkout_page.item_note',
+                                                    note: data.node.cartNote,
+                                                },
+                                            } only %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endblock %}
+                            {% endembed %}
+
+                            {% if not loop.last %}<hr>{% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col col--sm-12 col--lg-6">
+                <div class="box">
+                    <h6>{{ 'checkout.step.summary.delivery_address' | trans }}</h6>
+                    <hr>
+                    {% embed molecule('display-address') with {
+                        data: {
+                            address: shipmentGroup.shipment.shippingAddress,
+                        },
+                    } only %}
+                        {% block addressBadgeLabel %}{% endblock %}
+                    {% endembed %}
+
+                    <a href="{{ url('checkout-address') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-address') }}>
+                        {{ 'general.edit.button' | trans }}
+                    </a>
+                </div>
+
+                {% if not isGiftCardExists %}
+                    <div class="box">
+                        <h6>{{ 'checkout.step.summary.delivery_method' | trans }}</h6>
+                        <hr>
+                        {% include molecule('delivery-information', 'CustomerPage') ignore missing with {
+                            data: {
+                                carrierName: shipmentGroup.shipment.method.carrierName,
+                                methodName: shipmentGroup.shipment.method.name,
+                                storeCurrencyPrice: shipmentGroup.shipment.method.storeCurrencyPrice,
+                                currencyIsoCode: shipmentGroup.shipment.method.currencyIsoCode,
+                            },
+                        } only %}
+
+                        <a href="{{ url('checkout-shipment') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-shipment') }}>
+                            {{ 'general.edit.button' | trans }}
+                        </a>
+                    </div>
+
+                    <div class="box">
+                        <h6>{{ 'checkout.step.summary.requested_delivery_date' | trans }}</h6>
+                        <hr>
+                        <ul class="list">
+                            <li class="list__item">{{ shipmentGroup.shipment.requestedDeliveryDate }}</li>
+                        </ul>
+                        <a href="{{ url('checkout-shipment') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-shipment') }}>
+                            {{ 'general.edit.button' | trans }}
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+    {% embed molecule('order-custom-reference', 'OrderCustomReferenceWidget') ignore missing with {
+        class: 'box',
+        data: {
+            orderCustomReference: data.cart.orderCustomReference | default,
+        },
+    } only %}
+        {% block title %}
+            <h6 class="{{ classTitle }}">{{ data.title }}</h6>
+        {% endblock %}
+    {% endembed %}
+
+    <div class="box">
+        <h4>{{ 'checkout.step.summary.payment' | trans }}</h4>
+        <hr>
+        <div class="grid grid--stretch grid--justify">
+            <div class="col col--sm-12 col--lg-6">
+                <div class="box">
+                    <h6>{{ data.transfer.payment.paymentMethod | capitalize }}</h6>
+                    <hr>
+
+                    {% block payment %}
+                        {% if data.transfer.payment.paymentMethod == 'invoice' %}
+                            <ul class="list">
+                                <li class="list__item"><strong>{{ 'page.checkout.summary.date_of_birth' | trans }}: </strong>{{ data.transfer.payment.dummyPayment.dateOfBirth }}</li>
+                            </ul>
+                        {% endif %}
+                    {% endblock %}
+
+                    <a href="{{ url('checkout-payment') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-payment') }}>
+                        {{ 'general.edit.button' | trans }}
+                    </a>
+                </div>
+            </div>
+
+            <div class="col col--sm-12 col--lg-6">
+                <div class="box">
+                    <h6>{{ 'checkout.step.summary.billing_address' | trans }}</h6>
+                    <hr>
+                    {% embed molecule('display-address') with {
+                        data: {
+                            address: data.billingAddress,
+                        },
+                    } only %}
+                        {% block addressBadgeLabel %}{% endblock %}
+                    {% endembed %}
+
+                    <a href="{{ url('checkout-address') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-address') }}>
+                        {{ 'general.edit.button' | trans }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="grid">
-        <div class="col col--sm-12 col--lg-4">
-            <div class="box">
-                <span class="float-right">{{ 'checkout.step.summary.with_method' | trans }} <strong>{{data.paymentMethod}}</strong></span>
-                <h6>{{ 'checkout.step.summary.payment' | trans }}</h6>
-                <hr class="box__separator">
-
-                {% include molecule('display-address') with {
-                    class: 'text-small',
-                    data: {
-                        address: data.billingAddress
-                    }
-                } only %}
-            </div>
-
-            <div class="box">
-                <span class="float-right">{{ 'checkout.step.summary.with_method' | trans }} <strong>{{ data.shipmentMethod }}</strong></span>
-                <h6>{{ 'checkout.step.summary.shipping' | trans }}</h6>
-                <hr class="box__separator">
-
-                {% include molecule('display-address') with {
-                    class: 'text-small',
-                    data: {
-                        address: data.shippingAddress
-                    }
-                } only %}
-            </div>
-
+        <div class="col col--sm-12">
             {% if data.cart.idQuote is not empty %}
                 <div class="box">
                     {% widget 'CommentThreadWidget' args [
                         data.cart.idQuote,
                         'quote',
-                        app.request.requestUri,
+                        data.requestUri,
                         data.cart.commentThread
                     ] only %}
                     {% endwidget %}
                 </div>
             {% endif %}
-        </div>
 
-        <div class="col col--sm-12 col--lg-8">
-            {% widget 'QuoteConfiguredBundleWidget' args [data.cart] with {
-                data: {
-                    isEditable: false,
-                },
-            } only %}
-            {% endwidget %}
-
-            {% set itemsExceptConfiguredBundles = data.cartItems | filter(item => item.configuredBundleItem is not defined or item.configuredBundleItem is empty) %}
-            {% if itemsExceptConfiguredBundles %}
-                <div class="box">
-                    {% for item in itemsExceptConfiguredBundles %}
-                        {% set item = item.bundleProduct is defined ? item.bundleProduct : item %}
-                        {% embed molecule('summary-item', 'CheckoutPage') with {
-                            data: {
-                                name: item.name,
-                                quantity: item.quantity,
-                                price: item.sumPrice | money,
-                                options: item.productOptions | default({}),
-                                bundleItems: item.bundleItems | default([]),
-                                quantitySalesUnit: item.quantitySalesUnit,
-                                amountSalesUnit: item.amountSalesUnit,
-                                amount: item.amount,
-                            },
-                            embed: {
-                                isLast: not loop.last,
-                                item: item,
-                            },
-                        } only %}
-                            {% block body %}
-                                {{parent()}}
-                                {% if widgetExists('CartNoteQuoteItemNoteWidgetPlugin') %}
-                                    {% if embed.item.cartNote is not empty %}
-                                        {{ widget('CartNoteQuoteItemNoteWidgetPlugin', embed.item) }} {# @deprecated Use molecule('note-list', 'CartNoteWidget') instead. #}
-                                    {% endif %}
-                                {% elseif embed.item.cartNote is not empty %}
-                                    {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
-                                        data: {
-                                            label: 'cart_note.checkout_page.item_note',
-                                            note: embed.item.cartNote,
-                                        },
-                                    } only %}
-                                {% endif %}
-                                {% if embed.isLast %}<hr class="box__separator">{% endif %}
-                            {% endblock %}
-                        {% endembed %}
-                    {% endfor %}
-                </div>
-            {% endif %}
-
-            {% if data.transfer.cartNote is not empty %}
+            {% if data.transfer.cartNote %}
                 {% if widgetExists('CartNoteQuoteNoteWidgetPlugin') %}
                     <div class="box">
-                        {{ widget('CartNoteQuoteNoteWidgetPlugin', data.transfer) }}  {#@deprecated Use molecule('note-list', 'CartNoteWidget') instead.#}
+                        {{ widget('CartNoteQuoteNoteWidgetPlugin', data.transfer) }}  {# @deprecated Use molecule('note-list', 'CartNoteWidget') instead. #}
                     </div>
                 {% else %}
                     <div class="box">
                         {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
                             data: {
                                 label: 'cart_note.checkout_page.quote_note',
-                                note: data.transfer.cartNote
-                            }
+                                note: data.transfer.cartNote,
+                            },
                         } only %}
                     </div>
                 {% endif %}
             {% endif %}
+            <div class="box">
+                {% widget 'QuoteApprovalWidget' args [data.cart] only %}{% endwidget %}
+            </div>
+
+            <div class="box">
+                <h4>{{ 'page.checkout.summary.complete_checkout' | trans }}</h4>
+            </div>
 
             <div class="box">
                 {% widget 'CartCodeFormWidget' args [data.transfer] only %}
@@ -155,33 +254,52 @@
                 data: {
                     form: data.forms.summary,
                     submit: {
-                        enable: can('SeeOrderPlaceSubmitPermissionPlugin'),
-                        text: 'checkout.step.place.order' | trans
+                        enable: data.isPlaceableOrder
+                            and can('SeeOrderPlaceSubmitPermissionPlugin')
+                            and (not is_granted('ROLE_USER') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote)),
+                        text: 'checkout.step.place.order' | trans,
                     },
                     cancel: {
                         enable: true,
                         url: data.backUrl,
-                        text: 'general.back.button' | trans
-                    }
+                        text: 'general.back.button' | trans,
+                    },
                 },
                 embed: {
                     overview: data.overview,
-                    cart: data.cart
-                }
+                    cart: data.cart,
+                    isPlaceableOrderErrors: data.isPlaceableOrderErrors,
+                },
             } only %}
                 {% block body %}
                     {% include molecule('summary-overview', 'CheckoutPage') with {
-                        data: embed.overview
+                        data: embed.overview,
                     } only %}
 
                     {% include molecule('gift-card-payment-summary', 'GiftCardWidget') ignore missing with {
                         data: {
-                            cart: embed.cart
-                        }
+                            cart: embed.cart,
+                        },
                     } only %}
 
+                    {% widget 'QuoteApproveRequestWidget' args [embed.cart] %}
+                        {% block body %}
+                            <hr>
+                            {{ parent() }}
+                        {% endblock %}
+                    {% endwidget %}
+
                     <hr class="box__separator">
-                    {{parent()}}
+                    {{ parent() }}
+
+                    {% if embed.isPlaceableOrderErrors is not empty %}
+                        <hr class="box__separator">
+                        <ul class="list list--alert">
+                            {% for error in embed.isPlaceableOrderErrors %}
+                                <li class="list__item">{{ error.message | trans(error.parameters) }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                 {% endblock %}
             {% endembed %}
         </div>

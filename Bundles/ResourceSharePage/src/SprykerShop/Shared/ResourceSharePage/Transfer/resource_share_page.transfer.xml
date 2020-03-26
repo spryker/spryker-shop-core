@@ -1,40 +1,36 @@
 <?xml version="1.0"?>
 
 <transfers xmlns="spryker:transfer-01"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Route">
-        <property name="route" type="string" />
-        <property name="parameters" type="array"/>
+        <property name="route" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
     <transfer name="ResourceShareRequest">
-        <property name="resourceShare" type="ResourceShare" />
-        <property name="customer" type="Customer" />
+        <property name="resourceShare" type="ResourceShare"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="Customer">
-        <property name="customerReference" type="string" />
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="ResourceShareResponse">
-        <property name="isSuccessful" type="bool" />
-        <property name="resourceShare" type="ResourceShare" />
-        <property name="isLoginRequired" type="bool" />
-        <property name="messages" type="Message[]" singular="message" />
+        <property name="isSuccessful" type="bool"/>
+        <property name="resourceShare" type="ResourceShare"/>
+        <property name="isLoginRequired" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="Message">
-        <property name="value" type="string" />
+        <property name="value" type="string"/>
     </transfer>
 
     <transfer name="ResourceShare">
-        <property name="uuid" type="string" />
-    </transfer>
-
-    <transfer name="Message">
-        <property name="value" type="string" />
+        <property name="uuid" type="string"/>
     </transfer>
 
 </transfers>

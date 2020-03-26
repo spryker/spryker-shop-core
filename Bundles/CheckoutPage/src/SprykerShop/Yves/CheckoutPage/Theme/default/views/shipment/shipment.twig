@@ -3,10 +3,10 @@
 {% define data = {
     backUrl: _view.previousStepUrl,
     forms: {
-        shipment: _view.shipmentForm
+        shipment: _view.shipmentCollectionForm,
     },
 
-    title: 'checkout.step.shipment.title' | trans
+    title: 'checkout.step.shipment.title' | trans,
 } %}
 
 {% block content %}
@@ -14,38 +14,75 @@
         class: 'box',
         data: {
             form: data.forms.shipment,
-            options: {
-                attr: {
-                    id: 'payment-form'
-                }
-            },
+            cart: data.forms.shipment.vars.data,
             submit: {
                 enable: true,
-                text: 'general.next.button' | trans
+                text: 'checkout.step.payment' | trans,
             },
             cancel: {
                 enable: true,
                 url: data.backUrl,
-                text: 'general.back.button' | trans
-            }
-        }
+                text: 'general.back.button' | trans,
+            },
+        },
     } only %}
         {% block fields %}
-            {% for name, choices in data.form.idShipmentMethod.vars.choices %}
-                <div class="form__field col col--sm-12">
-                    <h5>{{name}}</h5>
-                    <ul class="list spacing-y">
-                        {% for key, choice in choices %}
-                            <li class="list__item spacing-y">
-                                {{ form_row(data.form.idShipmentMethod[key], {
-                                    label: data.form.idShipmentMethod[key].vars.label,
-                                    required: false
-                                }) }}
-                            </li>
+            {% set shipmentGroupCollectionForm = data.form.shipmentGroups | default %}
+            {% for shipmentGroupForm in shipmentGroupCollectionForm %}
+                {% if shipmentGroupForm.hash is defined %}
+                    {% do shipmentGroupForm.hash.setRendered %}
+                {% endif %}
+                <article class="col col--sm-12 grid spacing spacing--inner">
+                    <div class="col col--sm-12 spacing-bottom">
+                        <h3>
+                            {{ 'page.checkout.shipment.shipping_address.title' | trans }}:
+                            {{ shipmentGroupForm.shipment.vars.label }}
+                        </h3>
+                    </div>
+                    <div class="col col--sm-12 col--lg-6 grid">
+                        {% for item in shipmentGroupForm.vars.data.cartItems %}
+                            <div class="col col--sm-12 col--lg-8">
+                                {% set cartItem = item.bundleProduct ?? item %}
+
+                                {% include molecule('summary-node', 'CheckoutPage') with {
+                                    data: {
+                                        node: cartItem,
+                                        bundleItems: item.bundleItems | default([]),
+                                    },
+                                } only %}
+
+                                {% if not loop.last %}<hr>{% endif %}
+                            </div>
                         {% endfor %}
-                    </ul>
-                </div>
-                {% if not loop.last %}<div class="form__field col col--sm-12"><hr class="box__separator"></div>{% endif %}
+                    </div>
+                    <div class="col col--sm-12 col--lg-6">
+                        {{ form_errors(shipmentGroupForm.shipment.shipmentSelection) }}
+                        {% for name, choices in shipmentGroupForm.shipment.shipmentSelection.vars.choices %}
+                            <h5>{{ name }}</h5>
+                            <ul class="list spacing-y">
+                                {% for key, choice in choices %}
+                                    <li class="list__item spacing-y">
+                                        {{ form_row(shipmentGroupForm.shipment.shipmentSelection[key], {
+                                            label: shipmentGroupForm.shipment.shipmentSelection[key].vars.label,
+                                            required: false
+                                        }) }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            {% if not loop.last %}<hr>{% endif %}
+                        {% endfor %}
+
+                        <div class="col col--sm-12">
+                            <h3>{{ 'page.checkout.shipment.requested_delivery_date.title' | trans }}</h3>
+                            {{ form_row(shipmentGroupForm.shipment.requestedDeliveryDate, {
+                                attr: {
+                                    'placeholder': 'YYYY-MM-DD',
+                                }
+                            }) }}
+                        </div>
+                    </div>
+                </article>
+                <div class="col col--sm-12 spacing spacing--inner"><hr></div>
             {% endfor %}
         {% endblock %}
     {% endembed %}

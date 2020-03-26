@@ -1,13 +1,14 @@
 <?xml version="1.0"?>
 <transfers xmlns="spryker:transfer-01"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Quote">
         <property name="items" type="Item[]" singular="item"/>
         <property name="quoteApprovals" type="QuoteApproval[]" singular="quoteApproval"/>
         <property name="quoteRequestVersionReference" type="string"/>
         <property name="commentThread" type="CommentThread"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="QuoteApproval">
@@ -17,9 +18,12 @@
     <transfer name="Item">
         <property name="id" type="int"/>
         <property name="sku" type="string"/>
+        <property name="url" type="string"/>
         <property name="groupKeyPrefix" type="string"/>
         <property name="quantity" type="int"/>
         <property name="normalizableFields" type="string[]" singular="normalizableField"/>
+        <property name="productOptions" type="ProductOption[]" singular="productOption"/>
+        <property name="idProductAbstract" type="int"/>
     </transfer>
 
     <transfer name="QuoteResponse">
@@ -39,14 +43,20 @@
         <property name="idProductConcrete" type="int"/>
         <property name="availableAttributes" type="array" singular="availableAttribute"/>
         <property name="sku" type="string"/>
-    </transfer>
-
-    <transfer name="ProductConcreteAvailabilityRequest">
-        <property name="sku" type="string"/>
+        <property name="selectedAttributes" type="array" singular="selectedAttribute"/>
+        <property name="addToCartUrl" type="string"/>
     </transfer>
 
     <transfer name="CommentThread">
         <property name="idCommentThread" type="int"/>
+        <property name="ownerType" type="string"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
     </transfer>
 
 </transfers>

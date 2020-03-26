@@ -21,7 +21,7 @@ class CartListPermissionGroupWidgetPlugin extends AbstractWidgetPlugin
     public const NAME = 'CartListPermissionGroupWidgetPlugin';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -38,7 +38,7 @@ class CartListPermissionGroupWidgetPlugin extends AbstractWidgetPlugin
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -50,7 +50,7 @@ class CartListPermissionGroupWidgetPlugin extends AbstractWidgetPlugin
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

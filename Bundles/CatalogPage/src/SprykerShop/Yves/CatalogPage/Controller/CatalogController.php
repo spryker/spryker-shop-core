@@ -77,6 +77,8 @@ class CatalogController extends AbstractController
 
         $searchResults = $this->reduceRestrictedSortingOptions($searchResults);
         $searchResults = $this->updateFacetFiltersByCategory($searchResults, $idCategory);
+        $searchResults = $this->filterFacetsInSearchResults($searchResults);
+
         $metaTitle = isset($categoryNode['meta_title']) ? $categoryNode['meta_title'] : '';
         $metaDescription = isset($categoryNode['meta_description']) ? $categoryNode['meta_description'] : '';
         $metaKeywords = isset($categoryNode['meta_keywords']) ? $categoryNode['meta_keywords'] : '';
@@ -128,6 +130,8 @@ class CatalogController extends AbstractController
             ->catalogSearch($searchString, $this->getAllowedRequestParameters($request));
 
         $searchResults = $this->reduceRestrictedSortingOptions($searchResults);
+        $searchResults = $this->filterFacetsInSearchResults($searchResults);
+
         $isEmptyCategoryFilterValueVisible = $this->getFactory()
             ->getModuleConfig()
             ->isEmptyCategoryFilterValueVisible();
@@ -210,6 +214,24 @@ class CatalogController extends AbstractController
     }
 
     /**
+     * @param array $searchResults
+     *
+     * @return array
+     */
+    protected function filterFacetsInSearchResults(array $searchResults): array
+    {
+        if (!isset($searchResults[FacetResultFormatterPlugin::NAME])) {
+            return $searchResults;
+        }
+
+        $searchResults['filteredFacets'] = $this->getFactory()
+            ->createFacetFilter()
+            ->getFilteredFacets($searchResults[FacetResultFormatterPlugin::NAME]);
+
+        return $searchResults;
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
@@ -233,6 +255,11 @@ class CatalogController extends AbstractController
             unset($parameters[$this->getFactory()->getModuleConfig()->getParameterNamePage()]);
             $this->addErrorMessage(static::MESSAGE_PAGE_NOT_FOUND);
         }
+
+        $shopContextParameters = $this->getFactory()
+            ->getShopContext()
+            ->modifiedToArray();
+        $parameters = array_merge($parameters, $shopContextParameters);
 
         if ($this->can('SeePricePermissionPlugin')) {
             return $parameters;

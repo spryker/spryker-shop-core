@@ -4,22 +4,11 @@
             color: map-get($setting-color-actions, 'alert');
         }
 
-        &__name {
+        &__text {
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        @content;
-    }
-}
-
-/**
- * @deprecated use shopping-list-page-shopping-list-message mixin instead.
- */
-@mixin shopping-list-message($name: '.shopping-list-message') {
-    @include shopping-list-page-shopping-list-message();
-
-    #{$name} {
         @content;
     }
 }

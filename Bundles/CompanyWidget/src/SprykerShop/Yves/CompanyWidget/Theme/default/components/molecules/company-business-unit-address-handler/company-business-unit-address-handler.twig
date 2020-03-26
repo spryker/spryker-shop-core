@@ -2,16 +2,18 @@
 
 {% define config = {
     name: 'company-business-unit-address-handler',
-    tag: 'company-business-unit-address-handler'
+    tag: 'company-business-unit-address-handler',
 } %}
 
 {% define attributes = {
     'form-selector': required,
-    'trigger-selector': required,
     'data-selector': required,
-    'ignore-selector': '',
-    'customer-address-id-selector': '',
+    'addresses': required,
+    'shipping-address-toggler-selector': '',
     'default-address-selector': '',
-    'custom-address-trigger': '',
-    'addresses': required
+    'address-hidden-input-selector': '',
+    'company-address-hidden-input-selector': '',
+    'shipping-address-hidden-input-selector': '',
+    'shipping-company-address-hidden-input-selector': '',
+    'toggle-option-value': '',
 } %}

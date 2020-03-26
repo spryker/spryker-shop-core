@@ -7,10 +7,10 @@
 
 {% block template %}
     {% if data.isVisible and data.isCompanyUserChangeAllowed %}
-        {{parent()}}
+        {{ parent() }}
     {% endif %}
 {% endblock %}
 
 {% block body %}
-    <a href="{{ path('company/user/select') }}" data-id="change-company-user">{{ "business_on_behalf_widget.change_company_user" | trans }}</a>
+    <a href="{{ path('company/user/select') }}">{{ 'business_on_behalf_widget.change_company_user' | trans }}</a>
 {% endblock %}

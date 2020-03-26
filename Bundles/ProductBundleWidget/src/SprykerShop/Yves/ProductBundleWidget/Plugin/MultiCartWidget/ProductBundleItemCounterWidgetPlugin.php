@@ -32,7 +32,7 @@ class ProductBundleItemCounterWidgetPlugin extends AbstractWidgetPlugin implemen
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -44,7 +44,7 @@ class ProductBundleItemCounterWidgetPlugin extends AbstractWidgetPlugin implemen
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

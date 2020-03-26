@@ -17,7 +17,7 @@ use Twig\Environment;
 class ShopPermissionTwigPlugin extends AbstractTwigExtensionPlugin
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

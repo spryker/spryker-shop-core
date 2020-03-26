@@ -19,38 +19,44 @@ export default class ActionSingleClickEnforcer extends Component {
 
     protected onTargetClick(event: Event): void {
         const targetElement = <HTMLElement>event.currentTarget;
-        const isDisabled: boolean = targetElement.hasAttribute('disabled');
         const isLink: boolean = targetElement.matches('a');
-        const form: HTMLFormElement = targetElement.closest('form');
-        const submitButton = form ? <HTMLButtonElement | HTMLInputElement>form.querySelector('[type="submit"]')
-            || <HTMLButtonElement>form.getElementsByTagName('button')[0] : undefined;
-
-        if (isDisabled) {
-            event.preventDefault();
-
-            return;
-        }
-
-        if (form && submitButton) {
-            form.addEventListener('submit', () => {
-                this.disableElement(targetElement);
-            });
-            submitButton.click();
-
-            return;
-        }
 
         if (isLink) {
-            event.preventDefault();
-            const url: string = (<HTMLLinkElement>targetElement).href;
+            const link = <HTMLLinkElement>targetElement;
+            this.disableLink(event, link);
 
-            window.location.href = url;
+            return;
         }
 
-        this.disableElement(targetElement);
+        this.disableButton(targetElement);
+        const form: HTMLFormElement = targetElement.closest('form');
+
+        if (form) {
+            const buttonType = targetElement.getAttribute('type');
+            const isSubmit = buttonType === 'submit' || buttonType === 'image';
+            const isButton: boolean = targetElement.matches('button');
+            const isButtonSubmit = isButton && !buttonType;
+
+            if (isSubmit || isButtonSubmit) {
+                const submitEvent: Event = new Event('submit');
+                form.submit();
+                form.dispatchEvent(submitEvent);
+            }
+        }
     }
 
-    protected disableElement(targetElement: HTMLElement): void {
+    protected disableLink(event: Event, targetElement: HTMLLinkElement): void {
+        event.preventDefault();
+
+        if (targetElement.dataset && targetElement.dataset.disabled) {
+            return;
+        }
+
+        targetElement.dataset.disabled = 'true';
+        window.location.href = targetElement.href;
+    }
+
+    protected disableButton(targetElement: HTMLElement): void {
         targetElement.setAttribute('disabled', 'disabled');
     }
 

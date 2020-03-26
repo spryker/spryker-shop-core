@@ -116,7 +116,8 @@ class WidgetTagTokenParser extends AbstractTokenParser
     {
         $attributes = [];
 
-        if ($args = $this->parseArgs($stream)) {
+        $args = $this->parseArgs($stream);
+        if ($args) {
             if (isset($nodes[static::NODE_WIDGET_EXPRESSION])) {
                 throw new SyntaxError(
                     sprintf('Ambiguous use of "args", can be used only when widget\'s name defined as a string literal.'),
@@ -126,11 +127,13 @@ class WidgetTagTokenParser extends AbstractTokenParser
             $nodes[static::NODE_ARGS] = $args;
         }
 
-        if ($use = $this->parseUse($stream)) {
+        $use = $this->parseUse($stream);
+        if ($use) {
             $nodes[static::NODE_USE] = $use;
         }
 
-        if ($with = $this->parseWith($stream)) {
+        $with = $this->parseWith($stream);
+        if ($with) {
             $nodes[static::NODE_WITH] = $with;
         }
 
@@ -246,16 +249,16 @@ class WidgetTagTokenParser extends AbstractTokenParser
                     $index = count($elsewidgets) / 2;
                     $elsewidgets[] = new ConstantExpression($index, $token->getLine());
                     $elsewidgets[] = $this->parseElsewidget($stream, $token);
-                    break;
 
+                    break;
                 case static::TOKEN_NOWIDGET:
                     $nodes[static::NODE_NOWIDGET] = $this->parseNowidget($stream);
-                    break;
 
+                    break;
                 case static::TOKEN_ENDWIDGET:
                     $end = true;
-                    break;
 
+                    break;
                 default:
                     throw new SyntaxError(
                         sprintf(

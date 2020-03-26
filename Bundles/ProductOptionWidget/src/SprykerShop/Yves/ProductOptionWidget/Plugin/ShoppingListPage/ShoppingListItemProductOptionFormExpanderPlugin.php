@@ -4,6 +4,7 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace SprykerShop\Yves\ProductOptionWidget\Plugin\ShoppingListPage;
 
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
@@ -20,7 +21,7 @@ use Symfony\Component\Form\FormEvents;
 class ShoppingListItemProductOptionFormExpanderPlugin extends AbstractPlugin implements ShoppingListItemFormExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Extends shopping list item form with product options form.
      *
      * @api

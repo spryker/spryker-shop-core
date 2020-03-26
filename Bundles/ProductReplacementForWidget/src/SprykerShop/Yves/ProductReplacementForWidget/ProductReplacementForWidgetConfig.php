@@ -15,4 +15,14 @@ class ProductReplacementForWidgetConfig extends AbstractBundleConfig
      * @see \Spryker\Shared\Product\ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP
      */
     public const RESOURCE_TYPE_ATTRIBUTE_MAP = 'attribute_map';
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isProductReplacementFilterActive(): bool
+    {
+        return false;
+    }
 }

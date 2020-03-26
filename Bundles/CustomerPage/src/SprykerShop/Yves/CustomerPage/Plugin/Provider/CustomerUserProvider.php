@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CustomerPage\Plugin\Provider;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CustomerPage\Security\Customer;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -78,11 +79,13 @@ class CustomerUserProvider extends AbstractPlugin implements UserProviderInterfa
      */
     public function supportsClass($class)
     {
-        return $class === Customer::class;
+        return is_a($class, Customer::class, true);
     }
 
     /**
      * @param string $email
+     *
+     * @throws \Symfony\Component\Security\Core\Exception\AuthenticationException
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
@@ -94,6 +97,10 @@ class CustomerUserProvider extends AbstractPlugin implements UserProviderInterfa
         $customerTransfer = $this->getFactory()
             ->getCustomerClient()
             ->getCustomerByEmail($customerTransfer);
+
+        if ($customerTransfer->getIdCustomer() === null) {
+            throw new AuthenticationException(sprintf('Customer with email "%s" not found.', $email));
+        }
 
         return $customerTransfer;
     }

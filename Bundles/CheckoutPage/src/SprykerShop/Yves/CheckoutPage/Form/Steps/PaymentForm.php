@@ -64,7 +64,7 @@ class PaymentForm extends AbstractType
         $paymentMethodChoices = $this->getPaymentMethodChoices($paymentMethodSubForms);
 
         $this->addPaymentMethodChoices($builder, $paymentMethodChoices)
-             ->addPaymentMethodSubForms($builder, $paymentMethodSubForms, $options);
+            ->addPaymentMethodSubForms($builder, $paymentMethodSubForms, $options);
 
         return $this;
     }
@@ -153,6 +153,7 @@ class PaymentForm extends AbstractType
 
             if (!$paymentMethodSubForm instanceof SubFormProviderNameInterface) {
                 $choices[$subFormName] = $paymentMethodSubForm->getPropertyPath();
+
                 continue;
             }
 

@@ -34,7 +34,7 @@ class SharedCartRouterStrategyPlugin implements ResourceShareRouterStrategyPlugi
     protected const PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns 'true', when resource type is Quote, and share option is Read-only or Full access.
      * - Returns 'false' otherwise.
      *
@@ -59,7 +59,7 @@ class SharedCartRouterStrategyPlugin implements ResourceShareRouterStrategyPlugi
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns RouteTransfer with a cart route.
      *
      * @api

@@ -2,20 +2,22 @@
 
 {% define data = {
     pages: _view.cms_pages,
+    sort: _view.sort,
     searchString: _view.searchString,
-
     title: ('global.search.results' | trans) ~ ' ' ~ _view.searchString,
     metaTitle: _view.pageTitle | default,
     metaDescription: _view.pageDescription | default,
     metaKeywords: _view.pageKeywords | default,
-
     pagination: {
         parameters: app.request.query.all(),
         currentPage: _view.pagination.currentPage,
         paginationPath: app.request.attributes.get('_route'),
         maxPage: _view.pagination.maxPage,
-        showAlwaysFirstAndLast: true
-    }
+        showAlwaysFirstAndLast: true,
+        numFound: _view.pagination.numFound,
+        config: _view.pagination.config,
+        currentItemsPerPage: _view.pagination.currentItemsPerPage,
+    },
 } %}
 
 {% block breadcrumbs %}
@@ -29,7 +31,7 @@
 {% endblock %}
 
 {% block title %}
-    <h3>{{ 'global.search.results' | trans }} "<strong>{{ data.searchString }}</strong>"</h3>
+    <h3>{{ 'global.search.results' | trans }} "<strong class="text-break">{{ data.searchString }}</strong>"</h3>
 {% endblock %}
 
 {% block form %}
@@ -38,7 +40,11 @@
     </div>
     <div class="col col--sm-12">
         {% include molecule('sort', 'CmsSearchPage') with {
-            class: 'box'
+            class: 'box',
+            data: {
+                pagination: data.pagination,
+                sort: data.sort,
+            },
         } only %}
 
         {% include molecule('pagination') with {

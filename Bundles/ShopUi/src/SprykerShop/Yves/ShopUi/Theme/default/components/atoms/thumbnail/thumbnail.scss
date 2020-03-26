@@ -21,6 +21,10 @@
             height: 30rem;
         }
 
+        &--full-width {
+            width: 100%;
+        }
+
         &--min-size {
             min-width: 2.5rem;
         }
@@ -43,6 +47,10 @@
         &--has-border {
             border: 0.25rem solid transparent;
             box-shadow: 0 0 0 1px $setting-color-lighter;
+        }
+
+        &--without-spaces {
+            margin: 0;
         }
 
         @content;
