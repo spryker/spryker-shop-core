@@ -83,7 +83,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CHECKOUT_ADDRESS_STEP_ENTER_PRE_CHECK = 'PLUGINS_CHECKOUT_ADDRESS_STEP_ENTER_PRE_CHECK';
     public const PLUGINS_CHECKOUT_SHIPMENT_STEP_ENTER_PRE_CHECK = 'PLUGINS_CHECKOUT_SHIPMENT_STEP_ENTER_PRE_CHECK';
     public const PLUGINS_CHECKOUT_PAYMENT_STEP_ENTER_PRE_CHECK = 'PLUGINS_CHECKOUT_PAYMENT_STEP_ENTER_PRE_CHECK';
-    public const PLUGIN_CHECKOUT_SHIPMENT_FORM_PRE_GROUP_ITEMS_BY_SHIPMENT = 'PLUGIN_CHECKOUT_SHIPMENT_FORM_PRE_GROUP_ITEMS_BY_SHIPMENT';
+    public const PLUGINS_CHECKOUT_SHIPMENT_FORM_PRE_GROUP_ITEMS_BY_SHIPMENT = 'PLUGINS_CHECKOUT_SHIPMENT_FORM_PRE_GROUP_ITEMS_BY_SHIPMENT';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -786,7 +786,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCheckoutShipmentFormPreGroupItemsByShipmentPlugins(Container $container): Container
     {
-        $container->set(static::PLUGIN_CHECKOUT_SHIPMENT_FORM_PRE_GROUP_ITEMS_BY_SHIPMENT, function (): array {
+        $container->set(static::PLUGINS_CHECKOUT_SHIPMENT_FORM_PRE_GROUP_ITEMS_BY_SHIPMENT, function (): array {
             return $this->getCheckoutShipmentStepPreGroupItemsByShipmentPlugins();
         });
 

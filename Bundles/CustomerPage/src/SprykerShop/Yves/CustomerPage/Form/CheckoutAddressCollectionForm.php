@@ -45,7 +45,7 @@ class CheckoutAddressCollectionForm extends AbstractType
     public const OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES = 'can_deliver_to_multiple_shipping_addresses';
     public const OPTION_IS_CUSTOMER_LOGGED_IN = 'is_customer_logged_in';
     public const OPTION_BUNDLE_ITEMS = 'bundleItems';
-    public const OPTION_PLUGIN_PRE_GROUP_ITEMS_BY_SHIPMENT = 'OPTION_PLUGIN_PRE_GROUP_ITEMS_BY_SHIPMENT';
+    public const OPTION_PLUGINS_PRE_GROUP_ITEMS_BY_SHIPMENT = 'OPTION_PLUGINS_PRE_GROUP_ITEMS_BY_SHIPMENT';
 
     public const GROUP_SHIPPING_ADDRESS = self::FIELD_SHIPPING_ADDRESS;
     public const GROUP_BILLING_ADDRESS = self::FIELD_BILLING_ADDRESS;
@@ -93,7 +93,7 @@ class CheckoutAddressCollectionForm extends AbstractType
             ->setRequired(static::OPTION_COUNTRY_CHOICES)
             ->setRequired(static::OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES)
             ->setRequired(static::OPTION_IS_CUSTOMER_LOGGED_IN)
-            ->setRequired(static::OPTION_PLUGIN_PRE_GROUP_ITEMS_BY_SHIPMENT)
+            ->setRequired(static::OPTION_PLUGINS_PRE_GROUP_ITEMS_BY_SHIPMENT)
             ->setRequired(static::OPTION_BUNDLE_ITEMS);
     }
 
@@ -198,7 +198,7 @@ class CheckoutAddressCollectionForm extends AbstractType
             return;
         }
 
-        $quoteTransfer = $this->executePreGroupItemsByShipmentPlugins($quoteTransfer, $options[static::OPTION_PLUGIN_PRE_GROUP_ITEMS_BY_SHIPMENT]);
+        $quoteTransfer = $this->executeCheckoutAddressStepPreGroupItemsByShipmentPlugins($quoteTransfer, $options[static::OPTION_PLUGINS_PRE_GROUP_ITEMS_BY_SHIPMENT]);
 
         $shipmentGroupCollection = $this->mergeShipmentGroupsByShipmentHash(
             $shipmentService->groupItemsByShipment($quoteTransfer->getItems()),
@@ -228,14 +228,16 @@ class CheckoutAddressCollectionForm extends AbstractType
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CheckoutAddressStepPreGroupItemsByShipmentPluginInterface[] $preGroupItemsByShipmentPlugins
+     * @param \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CheckoutAddressStepPreGroupItemsByShipmentPluginInterface[] $checkoutAddressStepPreGroupItemsByShipmentPlugins
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function executePreGroupItemsByShipmentPlugins(QuoteTransfer $quoteTransfer, array $preGroupItemsByShipmentPlugins): QuoteTransfer
-    {
-        foreach ($preGroupItemsByShipmentPlugins as $preGroupItemsByShipmentPlugin) {
-            $quoteTransfer = $preGroupItemsByShipmentPlugin->preGroupItemsByShipment($quoteTransfer);
+    protected function executeCheckoutAddressStepPreGroupItemsByShipmentPlugins(
+        QuoteTransfer $quoteTransfer,
+        array $checkoutAddressStepPreGroupItemsByShipmentPlugins
+    ): QuoteTransfer {
+        foreach ($checkoutAddressStepPreGroupItemsByShipmentPlugins as $checkoutAddressStepPreGroupItemsByShipmentPlugin) {
+            $quoteTransfer = $checkoutAddressStepPreGroupItemsByShipmentPlugin->preGroupItemsByShipment($quoteTransfer);
         }
 
         return $quoteTransfer;

@@ -9,11 +9,14 @@ namespace SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
+/**
+ * Provides preparation of items in quote transfer at the address step before grouping.
+ */
 interface CheckoutAddressStepPreGroupItemsByShipmentPluginInterface
 {
     /**
      * Specifications:
-     * - Groups items by shipment.
+     * - Prepares quote items before grouping.
      *
      * @api
      *

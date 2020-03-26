@@ -15,7 +15,7 @@ class MerchantShipmentStepPreGroupItemsByShipmentPlugin extends AbstractPlugin i
 {
     /**
      * {@inheritDoc}
-     * - Sets merchant reference in shipment of item transfers.
+     * - Sets ShipmentTransfer.merchantReference.
      *
      * @api
      *

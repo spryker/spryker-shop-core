@@ -442,6 +442,6 @@ class CustomerPageFactory extends AbstractFactory
      */
     protected function getCheckoutAddressFormPreGroupItemsByShipmentPlugins(): array
     {
-        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_CHECKOUT_ADDRESS_FORM_PRE_GROUP_ITEMS_BY_SHIPMENT);
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGINS_CHECKOUT_ADDRESS_FORM_PRE_GROUP_ITEMS_BY_SHIPMENT);
     }
 }

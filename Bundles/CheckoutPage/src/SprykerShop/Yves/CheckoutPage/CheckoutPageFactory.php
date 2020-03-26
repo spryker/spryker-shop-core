@@ -180,6 +180,6 @@ class CheckoutPageFactory extends AbstractFactory
      */
     public function getCheckoutShipmentStepPreGroupItemsByShipmentPlugins(): array
     {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_CHECKOUT_SHIPMENT_FORM_PRE_GROUP_ITEMS_BY_SHIPMENT);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_SHIPMENT_FORM_PRE_GROUP_ITEMS_BY_SHIPMENT);
     }
 }

@@ -73,7 +73,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     /**
      * @var \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepPreGroupItemsByShipmentPluginInterface[]
      */
-    protected $preGroupItemsByShipmentPlugins;
+    protected $checkoutShipmentStepPreGroupItemsByShipmentPlugins;
 
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
@@ -83,7 +83,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
      * @param \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig $checkoutPageConfig
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface $productBundleClient
-     * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepPreGroupItemsByShipmentPluginInterface[] $preGroupItemsByShipmentPlugins
+     * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepPreGroupItemsByShipmentPluginInterface[] $checkoutShipmentStepPreGroupItemsByShipmentPlugins
      */
     public function __construct(
         CheckoutPageToShipmentClientInterface $shipmentClient,
@@ -93,7 +93,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
         CheckoutPageToShipmentServiceInterface $shipmentService,
         CheckoutPageConfig $checkoutPageConfig,
         CheckoutPageToProductBundleClientInterface $productBundleClient,
-        array $preGroupItemsByShipmentPlugins
+        array $checkoutShipmentStepPreGroupItemsByShipmentPlugins
     ) {
         $this->shipmentClient = $shipmentClient;
         $this->glossaryStorageClient = $glossaryStorageClient;
@@ -102,7 +102,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
         $this->shipmentService = $shipmentService;
         $this->checkoutPageConfig = $checkoutPageConfig;
         $this->productBundleClient = $productBundleClient;
-        $this->preGroupItemsByShipmentPlugins = $preGroupItemsByShipmentPlugins;
+        $this->checkoutShipmentStepPreGroupItemsByShipmentPlugins = $checkoutShipmentStepPreGroupItemsByShipmentPlugins;
     }
 
     /**
@@ -133,8 +133,8 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     public function getOptions(AbstractTransfer $quoteTransfer)
     {
-        foreach ($this->preGroupItemsByShipmentPlugins as $preGroupItemsByShipmentPlugin) {
-            $quoteTransfer = $preGroupItemsByShipmentPlugin->preGroupItemsByShipment($quoteTransfer);
+        foreach ($this->checkoutShipmentStepPreGroupItemsByShipmentPlugins as $checkoutShipmentStepPreGroupItemsByShipmentPlugin) {
+            $quoteTransfer = $checkoutShipmentStepPreGroupItemsByShipmentPlugin->preGroupItemsByShipment($quoteTransfer);
         }
 
         $shipmentGroupCollection = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());

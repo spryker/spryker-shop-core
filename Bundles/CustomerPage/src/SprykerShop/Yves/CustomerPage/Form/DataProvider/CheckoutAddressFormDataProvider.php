@@ -65,7 +65,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     /**
      * @var array|\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CheckoutAddressStepPreGroupItemsByShipmentPluginInterface[]
      */
-    protected $preGroupItemsByShipmentPlugins;
+    protected $checkoutAddressStepPreGroupItemsByShipmentPlugins;
 
     /**
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface $customerClient
@@ -75,7 +75,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface $productBundleClient
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface $shipmentService
      * @param \SprykerShop\Yves\CustomerPage\CustomerAddress\AddressChoicesResolverInterface $addressChoicesResolver
-     * @param \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CheckoutAddressStepPreGroupItemsByShipmentPluginInterface[] $preGroupItemsByShipmentPlugins
+     * @param \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CheckoutAddressStepPreGroupItemsByShipmentPluginInterface[] $checkoutAddressStepPreGroupItemsByShipmentPlugins
      */
     public function __construct(
         CustomerPageToCustomerClientInterface $customerClient,
@@ -85,7 +85,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         CustomerPageToProductBundleClientInterface $productBundleClient,
         CustomerPageToShipmentServiceInterface $shipmentService,
         AddressChoicesResolverInterface $addressChoicesResolver,
-        array $preGroupItemsByShipmentPlugins
+        array $checkoutAddressStepPreGroupItemsByShipmentPlugins
     ) {
         parent::__construct($customerClient, $store);
 
@@ -95,7 +95,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         $this->productBundleClient = $productBundleClient;
         $this->shipmentService = $shipmentService;
         $this->addressChoicesResolver = $addressChoicesResolver;
-        $this->preGroupItemsByShipmentPlugins = $preGroupItemsByShipmentPlugins;
+        $this->checkoutAddressStepPreGroupItemsByShipmentPlugins = $checkoutAddressStepPreGroupItemsByShipmentPlugins;
     }
 
     /**
@@ -140,7 +140,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
             CheckoutAddressCollectionForm::OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES => $canDeliverToMultipleShippingAddresses,
             CheckoutAddressCollectionForm::OPTION_IS_CUSTOMER_LOGGED_IN => $this->customerClient->isLoggedIn(),
             CheckoutAddressCollectionForm::OPTION_BUNDLE_ITEMS => $this->getBundleItemsFromQuote($quoteTransfer),
-            CheckoutAddressCollectionForm::OPTION_PLUGIN_PRE_GROUP_ITEMS_BY_SHIPMENT => $this->preGroupItemsByShipmentPlugins,
+            CheckoutAddressCollectionForm::OPTION_PLUGINS_PRE_GROUP_ITEMS_BY_SHIPMENT => $this->checkoutAddressStepPreGroupItemsByShipmentPlugins,
         ];
     }
 

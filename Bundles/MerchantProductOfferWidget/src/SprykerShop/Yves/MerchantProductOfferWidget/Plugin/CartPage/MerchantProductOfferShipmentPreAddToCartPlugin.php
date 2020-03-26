@@ -15,7 +15,7 @@ class MerchantProductOfferShipmentPreAddToCartPlugin extends AbstractPlugin impl
 {
     /**
      * {@inheritDoc}
-     * - Sets merchant reference in shipment of item transfers.
+     * - Sets ShipmentTransfer.merchantReference.
      *
      * @api
      *
