@@ -64,7 +64,9 @@ interface QuoteRequestPageToQuoteRequestClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer
      */
-    public function getQuoteRequestVersionCollectionByFilter(QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer): QuoteRequestVersionCollectionTransfer;
+    public function getQuoteRequestVersionCollectionByFilter(
+        QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer
+    ): QuoteRequestVersionCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
