@@ -17,7 +17,7 @@ class CurrencyPlugin extends AbstractPlugin implements CurrencyPluginInterface
     /**
      * @var \Generated\Shared\Transfer\CurrencyTransfer|null
      */
-    protected static $currencyTransfer;
+    protected static $currentCurrencyTransfer;
 
     /**
      * @var \Generated\Shared\Transfer\CurrencyTransfer[]
@@ -43,10 +43,10 @@ class CurrencyPlugin extends AbstractPlugin implements CurrencyPluginInterface
      */
     public function getCurrent()
     {
-        if (static::$currencyTransfer === null) {
-            static::$currencyTransfer = $this->getFactory()->getCurrencyClient()->getCurrent();
+        if (static::$currentCurrencyTransfer === null) {
+            static::$currentCurrencyTransfer = $this->getFactory()->getCurrencyClient()->getCurrent();
         }
 
-        return static::$currencyTransfer;
+        return static::$currentCurrencyTransfer;
     }
 }
