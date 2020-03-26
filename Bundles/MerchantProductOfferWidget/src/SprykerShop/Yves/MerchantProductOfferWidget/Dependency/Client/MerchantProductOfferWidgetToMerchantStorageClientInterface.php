@@ -23,5 +23,5 @@ interface MerchantProductOfferWidgetToMerchantStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
      */
-    public function find(array $merchantIds): array;
+    public function get(array $merchantIds): array;
 }

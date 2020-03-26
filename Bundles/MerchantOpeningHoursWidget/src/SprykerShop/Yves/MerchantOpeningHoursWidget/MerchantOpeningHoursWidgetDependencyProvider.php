@@ -37,7 +37,9 @@ class MerchantOpeningHoursWidgetDependencyProvider extends AbstractBundleDepende
     protected function addMerchantOpeningHoursStorageClient(Container $container): Container
     {
         $container->set(static::CLIENT_MERCHANT_OPENING_HOURS_STORAGE, function (Container $container) {
-            return new MerchantOpeningHoursWidgetToMerchantOpeningHoursStorageClientBridge($container->getLocator()->merchantOpeningHoursStorage()->client());
+            return new MerchantOpeningHoursWidgetToMerchantOpeningHoursStorageClientBridge(
+                $container->getLocator()->merchantOpeningHoursStorage()->client()
+            );
         });
 
         return $container;

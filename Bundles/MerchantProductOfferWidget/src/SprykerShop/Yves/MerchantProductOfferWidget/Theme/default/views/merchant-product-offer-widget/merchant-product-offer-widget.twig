@@ -26,9 +26,9 @@
                                     data: {
                                         checked: isSameMerchantOffer,
                                         radioGroupName: 'product_offer_reference',
-                                        offerReference: productOffer.productOfferReference,
-                                        merchantName: productOffer.merchantStorage.name,
-                                        merchantUrl: productOffer.merchantStorage.merchantUrl,
+                                        offerReference: productOffer.productOfferReference | default,
+                                        merchantName: productOffer.merchantStorage.name | default,
+                                        merchantUrl: productOffer.merchantStorage.merchantUrl | default,
                                         price: productOffer.price.price | default(null),
                                         currencyIsoCode: productOffer.price.currency.code | default(null),
                                         shouldShowRadioButton: data.productOfferCollection | length > 1

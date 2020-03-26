@@ -124,7 +124,7 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
     {
         $indexedMerchantStorageTransfers = [];
         
-        $merchantStorageTransfers = $this->merchantStorageClient->find($merchantIds);
+        $merchantStorageTransfers = $this->merchantStorageClient->get($merchantIds);
 
         foreach ($merchantStorageTransfers as $merchantStorageTransfer) {
             $indexedMerchantStorageTransfers[$merchantStorageTransfer->getIdMerchant()] = $merchantStorageTransfer;

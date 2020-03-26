@@ -9,18 +9,21 @@
     text: '',
 } %}
 
-{%- block class -%}
-    {{ parent() }} spacing-bottom spacing-bottom--big
+{%- block extraClass -%}
+    spacing-bottom spacing-bottom--big
 {%- endblock -%}
 
 {% block body %}
+    {% set titleClassName = '' %}
+    {% set textClassName = '' %}
+
     {% block title %}
-        <strong>{{ data.title }}</strong>
+        <strong class='{{ titleClassName }}'>{{ data.title }}</strong>
     {% endblock %}
 
     {% block text %}
         {% if data.text | trim %}
-            <div>{{ data.text }}</div>
+            <div class='{{ textClassName }}'>{{ data.text }}</div>
         {% endif %}
     {% endblock %}
 {% endblock %}

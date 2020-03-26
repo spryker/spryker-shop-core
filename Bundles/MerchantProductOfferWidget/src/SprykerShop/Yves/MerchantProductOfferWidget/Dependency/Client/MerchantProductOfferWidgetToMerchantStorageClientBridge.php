@@ -39,8 +39,8 @@ class MerchantProductOfferWidgetToMerchantStorageClientBridge implements Merchan
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
      */
-    public function find(array $merchantIds): array
+    public function get(array $merchantIds): array
     {
-        return $this->merchantStorageClient->find($merchantIds);
+        return $this->merchantStorageClient->get($merchantIds);
     }
 }

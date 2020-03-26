@@ -4,7 +4,7 @@
     merchant: _view.merchant,
 } %}
 
-{% set merchantName = data.merchant.name %}
+{% set merchantName = data.merchant.name | default %}
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
@@ -24,10 +24,10 @@
 {% endblock %}
 
 {% block content %}
-    {% include molecule('merchant-profile', 'MerchantProfileWidget') with {
+    {% include molecule('merchant-profile', 'MerchantProfileWidget') ignore missing with {
         data: {
-            merchantStorageProfile: data.merchant.merchantStorageProfile,
-            idMerchant: data.merchant.idMerchant
+            merchantStorageProfile: data.merchant.merchantStorageProfile | default,
+            idMerchant: data.merchant.idMerchant | default
         },
     } only %}
 {% endblock %}

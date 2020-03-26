@@ -30,7 +30,7 @@ class MerchantController extends AbstractController
                 'merchant' => $merchantStorageTransfer,
             ],
             [],
-            '@MerchantPage/views/merchant-profile/merchant-profile.twig'
+            '@MerchantPage/views/merchant-page/merchant-page.twig'
         );
     }
 }
