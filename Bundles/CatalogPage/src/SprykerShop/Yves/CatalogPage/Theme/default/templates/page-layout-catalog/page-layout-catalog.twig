@@ -10,14 +10,17 @@
     filterPath: null,
     viewMode: null,
     isEmptyCategoryFilterValueVisible: null,
-
+    sort: _view.sort,
     pagination: {
         currentPage: required,
         maxPage: required,
         parameters: app.request.query.all(),
         paginationPath: app.request.getPathInfo(),
-        showAlwaysFirstAndLast: true
-    }
+        showAlwaysFirstAndLast: true,
+        numFound: _view.pagination.numFound,
+        config: _view.pagination.config,
+        currentItemsPerPage: _view.pagination.currentItemsPerPage,
+    },
 } %}
 
 {% macro renderBreadcrumbSteps(categoryNode, isLastLeaf, filterPath) %}
@@ -103,6 +106,8 @@
                 {% include molecule('sort', 'CatalogPage') with {
                     class: 'box',
                     data: {
+                        pagination: data.pagination,
+                        sort: data.sort,
                         parentJsName: catalogJsName,
                     },
                 } only %}
