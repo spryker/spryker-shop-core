@@ -47,7 +47,7 @@ class FormFactory extends AbstractFactory
      */
     public function createAddressFormCollection()
     {
-        return $this->createFormCollection($this->getAddressFormTypes(), $this->getAddressFormDataProvider());
+        return $this->createFormCollection($this->getAddressFormTypes(), $this->getCheckoutAddressFormDataProviderPlugin());
     }
 
     /**
@@ -220,10 +220,10 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface|null
+     * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
      */
-    public function getAddressFormDataProvider()
+    public function getCheckoutAddressFormDataProviderPlugin(): StepEngineFormDataProviderInterface
     {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::ADDRESS_STEP_FORM_DATA_PROVIDER);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_CHECKOUT_ADDRESS_FORM_DATA_PROVIDER);
     }
 }
