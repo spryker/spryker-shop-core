@@ -9,4 +9,6 @@
     @include helper-spacing('.spacing-right', right);
     @include helper-spacing('.spacing-x', left right);
     @include helper-spacing('.spacing-y', top bottom);
+
+    @content;
 }

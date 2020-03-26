@@ -73,12 +73,13 @@
 
                             {% else %}
                                 <li class="list__item spacing-y">
-                                    {{
-                                    form_row(embed.forms.shipping.id_customer_address, {
+                                    {{ form_row(embed.forms.shipping.id_customer_address, {
                                         label: 'page.checkout.address.delivery.address_select' | trans,
                                         component: molecule('select'),
-                                    })
-                                    }}
+                                        attr: {
+                                            class: embed.jsAddressClass ~ '__form-select-shippingAddress',
+                                        },
+                                    }) }}
                                 </li>
                             {% endif %}
                         </ul>
@@ -180,12 +181,13 @@
 
                                     {% else %}
                                         <li class="list__item spacing-y">
-                                            {{
-                                            form_row(data.form.id_customer_address, {
+                                            {{ form_row(data.form.id_customer_address, {
                                                 label: 'page.checkout.address.billing.address_select' | trans,
                                                 component: molecule('select'),
-                                            })
-                                            }}
+                                                attr: {
+                                                    class: embed.jsAddressClass ~ '__form-select-billingAddress',
+                                                },
+                                            }) }}
                                         </li>
                                     {% endif %}
                                 </ul>
@@ -204,17 +206,10 @@
             <div class="grid grid--middle grid--justify">
                 <div class="col">
                     {% set optionValueDeliverToMultipleAddresses = '-1' %}
-                    {% if not embed.isCompanyBusinessUnitShippingAddressApplicable %}
-                        {% set existingShippingAddressSelectSelector = embed.forms.shipping.id_customer_address is defined ? '[name="' ~ embed.forms.shipping.id_customer_address.vars.full_name ~ '"]' : '' %}
-                        {% set existingBillingAddressSelectSelector = embed.forms.billing.id_customer_address is defined ? '[name="' ~ embed.forms.billing.id_customer_address.vars.full_name ~ '"]' : '' %}
-                    {% else %}
-                        {% set existingShippingAddressSelectSelector = '.' ~ embed.jsAddressClass ~ '__form-select-shippingAddress' %}
-                        {% set existingBillingAddressSelectSelector = '.' ~ embed.jsAddressClass ~ '__form-select-billingAddress' %}
-                    {% endif %}
 
                     {% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {
                         attributes: {
-                            'trigger-selector': existingShippingAddressSelectSelector | default(''),
+                            'trigger-selector': '.' ~ embed.jsAddressClass ~ '__form-select-shippingAddress',
                             'target-selector': '.' ~ embed.jsAddressClass ~ '__shipping',
                             'sub-target-selector': '.' ~ embed.jsAddressClass ~ '__items-target',
                             'container-billing-address-selector': '.' ~ embed.jsAddressClass ~ '__billing-same-as-shipping',
@@ -226,7 +221,7 @@
 
                     {% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {
                         attributes: {
-                            'trigger-selector': existingBillingAddressSelectSelector | default(''),
+                            'trigger-selector': '.' ~ embed.jsAddressClass ~ '__form-select-billingAddress',
                             'target-selector': '.' ~ embed.jsAddressClass ~ '__billing',
                         },
                     } only %}
