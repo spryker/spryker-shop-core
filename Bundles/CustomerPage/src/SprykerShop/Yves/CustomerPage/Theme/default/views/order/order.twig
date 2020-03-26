@@ -12,29 +12,74 @@
         currentPage: _view.pagination.page,
         paginationPath: 'customer/order',
         maxPage: _view.pagination.lastPage,
-        showAlwaysFirstAndLast: true
+        showAlwaysFirstAndLast: true,
     },
 
     title: 'customer.account.order_history' | trans,
-    activePage: 'order'
+    activePage: 'order',
 } %}
+
+{% set jsPrefix = 'js-order-' %}
 
 {% block customerContent %}
     <div class="box">
-        <h5>{{ 'customer.order.all_orders' | trans }}</h5>
-        <hr>
-        {% include molecule('order-table', 'CustomerPage') with {
-            data: {
-                orders: data.orders,
-                filterFields: data.filterFields,
-                isOrderSearchEnabled: data.isOrderSearchEnabled,
-                isOrderSearchOrderItemsVisible: data.isOrderSearchOrderItemsVisible,
-                orderSearchForm: data.orderSearchForm
-            }
-        } only %}
-        <hr>
-        {% include molecule('pagination') with {
-            data: data.pagination
-        } only %}
+        {% block customerTitle %}
+            <h5>{{ 'customer.order.all_orders' | trans }}</h5>
+        {% endblock %}
+
+        {% block filterSection %}
+            {% if data.orderSearchForm %}
+                {% block formStart %}
+                    {{ form_start(data.orderSearchForm) }}
+                {% endblock %}
+
+                {% block orderFilters %}
+                    {% include molecule('order-filters', 'CustomerPage') with {
+                        data: {
+                            orderSearchForm: data.orderSearchForm,
+                            jsPrefix: jsPrefix,
+                        },
+                    } only %}
+                {% endblock %}
+
+                {% block orderActiveFilters %}
+                    {% include molecule('order-active-filters', 'CustomerPage') with {
+                        data: {
+                            orderSearchForm: data.orderSearchForm,
+                            jsPrefix: jsPrefix,
+                        },
+                    } only %}
+                {% endblock %}
+            {% endif %}
+        {% endblock %}
+
+        {% block orderTable %}
+            {% include molecule('order-table', 'CustomerPage') with {
+                data: {
+                    orders: data.orders,
+                    orderSearchForm: data.orderSearchForm,
+                    filterFields: data.filterFields,
+                    isOrderSearchEnabled: data.isOrderSearchEnabled,
+                    isOrderSearchOrderItemsVisible: data.isOrderSearchOrderItemsVisible,
+                    jsPrefix: jsPrefix,
+                },
+            } only %}
+        {% endblock %}
+
+        {% block separator %}
+            <hr>
+        {% endblock %}
+
+        {% block pagination %}
+            {% include molecule('pagination') with {
+                data: data.pagination,
+            } only %}
+        {% endblock %}
+
+        {% if data.orderSearchForm %}
+            {% block endForm %}
+                {{ form_end(data.orderSearchForm) }}
+            {% endblock %}
+        {% endif %}
     </div>
 {% endblock %}

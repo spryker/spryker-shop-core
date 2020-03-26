@@ -6,10 +6,11 @@
 
 {% define data = {
     orders: required,
+    orderSearchForm: null,
     isOrderSearchEnabled: false,
     isOrderSearchOrderItemsVisible: true,
-    orderSearchForm: null,
     filterFields: [],
+    jsPrefix: '',
 } %}
 
 {% set customerNameWidget = data.orders.count and data.filterFields ?
@@ -20,34 +21,16 @@
 
 {% block body %}
     <table class="table table--expand">
-        {% if (data.orderSearchForm) %}
-            {{ form_start(data.orderSearchForm) }}
-
-            {{ form_row(data.orderSearchForm.searchType) }}
-            {{ form_row(data.orderSearchForm.searchText) }}
-
-            {{ form_row(data.orderSearchForm.dateFrom) }}
-            {{ form_row(data.orderSearchForm.dateTo) }}
-
-            {{ form_row(data.orderSearchForm.isOrderItemsVisible) }}
-
-            <button type="submit" name="submit" class="button button--success">
-                {{ 'customer.order_history.apply' | trans }}
-            </button>
-
-            <hr/>
-
-            {% include molecule('active-filters', 'CustomerPage') with {
-                data: {
-                    orderSearchForm: data.orderSearchForm,
-                },
-            } only %}
-        {% endif %}
-
         <thead>
             <tr>
-                <th>{{ 'customer.order.reference' | trans }}</th>
-                <th>{{ 'customer.order.date' | trans }}</th>
+                <th {{ _self.sortingAttributes('orderReference', data.orderSearchForm, data.jsPrefix) }}>
+                    {{ 'customer.order.reference' | trans }}
+                    {{ _self.sortingIcon('orderReference', data.orderSearchForm) }}
+                </th>
+                <th {{ _self.sortingAttributes('date', data.orderSearchForm, data.jsPrefix) }}>
+                    {{ 'customer.order.date' | trans }}
+                    {{ _self.sortingIcon('date', data.orderSearchForm) }}
+                </th>
                 {% if isCompanyUserColumnsVisible %}
                     <th>{{ 'customer.order.company_user' | trans }}</th>
                     <th>{{ 'customer.order.email' | trans }}</th>
@@ -59,13 +42,10 @@
                 <th>{{ 'customer.table.actions' | trans }}</th>
             </tr>
         </thead>
-        {% if (data.orderSearchForm) %}
-            {{ form_end(data.orderSearchForm) }}
-        {% endif %}
         <tbody>
             {% if data.orders is empty %}
                 <tr>
-                    <td colspan="100%">{{ 'customer.account.no_order' | trans }}</td>
+                    <td colspan="100">{{ 'customer.account.no_order' | trans }}</td>
                 </tr>
             {% endif %}
 
@@ -106,10 +86,11 @@
                 </tr>
                 {% if data.isOrderSearchEnabled and data.isOrderSearchOrderItemsVisible %}
                     <tr>
-                        <td colspan="100%">
-                            {% include molecule('order-items-table', 'CustomerPage') with {
+                        <td colspan="100">
+                            {% include molecule('order-table-products', 'CustomerPage') with {
                                 data: {
                                     items: order.items,
+                                    priceMode: order.priceMode,
                                 },
                             } only %}
                         </td>
@@ -118,4 +99,62 @@
             {% endfor %}
         </tbody>
     </table>
+
+    {% if data.orderSearchForm %}
+        {{ form_row(data.orderSearchForm.orderBy, {
+            attr: {
+                class: data.jsPrefix ~ 'orderBy-target',
+            }})
+        }}
+
+        {{ form_row(data.orderSearchForm.orderDirection, {
+            attr: {
+                class: data.jsPrefix ~ 'orderDirection-target',
+            }})
+        }}
+
+        {% include molecule('form-value-setter', 'CustomerPage') with {
+            attributes: {
+                'trigger-class-name': data.jsPrefix ~ 'orderBy-trigger',
+                'target-class-name': data.jsPrefix ~ 'orderBy-target',
+            },
+        } only %}
+
+        {% include molecule('form-value-setter', 'CustomerPage') with {
+            attributes: {
+                'trigger-class-name': data.jsPrefix ~ 'orderDirection-trigger',
+                'target-class-name': data.jsPrefix ~ 'orderDirection-target',
+                'value-field': 'set-value-direction',
+            },
+        } only %}
+    {% endif %}
+
+    {%- macro sortingAttributes(orderByValue, orderSearchForm, jsPrefix, class='') -%}
+        {% if orderSearchForm %}
+            {% set orderDirection = orderSearchForm.orderDirection.vars.value %}
+
+            class="{{ class }} {{ jsPrefix }}orderBy-trigger {{ jsPrefix }}orderDirection-trigger"
+            set-value="{{ orderByValue }}"
+            set-value-direction="{{ (orderDirection == 'ASC') ? 'DESC' : 'ASC' }}"
+        {% endif %}
+    {%- endmacro -%}
+
+    {%- macro sortingIcon(orderByValue, orderSearchForm) -%}
+        {% if orderSearchForm %}
+            {% set orderDirection = orderSearchForm.orderDirection.vars.value %}
+            {% set orderBy = orderSearchForm.orderBy.vars.value %}
+            {% set iconName = 'sort-none' %}
+
+            {% if orderBy == orderByValue %}
+                {% set iconName = (orderDirection == 'ASC') ? 'sort-asc' : 'sort-desc' %}
+            {% endif %}
+
+            {% include atom('icon') with {
+                modifiers: ['small'],
+                data: {
+                    name: iconName,
+                },
+            } only %}
+        {% endif %}
+    {%- endmacro -%}
 {% endblock %}

@@ -34,7 +34,6 @@ class OrderSearchForm extends AbstractType
 
     public const OPTION_ORDER_SEARCH_TYPES = 'OPTION_ORDER_SEARCH_TYPES';
     public const OPTION_CURRENT_TIMEZONE = 'OPTION_CURRENT_TIMEZONE';
-    public const OPTION_PER_PAGE = 'OPTION_PER_PAGE';
 
     public const FORM_NAME = 'orderSearchForm';
 
@@ -48,7 +47,6 @@ class OrderSearchForm extends AbstractType
         $resolver->setRequired([
             static::OPTION_ORDER_SEARCH_TYPES,
             static::OPTION_CURRENT_TIMEZONE,
-            static::OPTION_PER_PAGE,
         ]);
     }
 
