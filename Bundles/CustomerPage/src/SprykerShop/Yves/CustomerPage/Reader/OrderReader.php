@@ -86,10 +86,6 @@ class OrderReader implements OrderReaderInterface
             $this->createPaginationTransfer($request)
         );
 
-        $orderListTransfer->setPagination(
-            $this->createPaginationTransfer($request)
-        );
-
         if (!$orderListTransfer->getFilter()) {
             $orderListTransfer->setFilter($this->createFilterTransfer());
         }
