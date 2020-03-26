@@ -73,4 +73,6 @@
     .is-not-scrollable-y {
         overflow-y: hidden;
     }
+
+    @content;
 }
