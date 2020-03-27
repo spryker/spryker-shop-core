@@ -14,7 +14,7 @@
 {% set shippingAddress = data.shipment.shippingAddress is defined ? data.shipment.shippingAddress %}
 
 {% block component %}
-    {% if shipmentMethod or shippingAddress %}
+    {% if shipmentMethod and shippingAddress %}
         {{ parent() }}
     {% endif %}
 {% endblock %}

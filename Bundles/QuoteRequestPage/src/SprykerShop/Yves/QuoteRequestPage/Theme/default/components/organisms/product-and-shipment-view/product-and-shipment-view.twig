@@ -14,15 +14,17 @@
 } %}
 
 {% block body %}
-    {% block configuredBundle %}
-        {% widget 'QuoteConfiguredBundleWidget' args [data.quote, data.items] with {
-            data: {
-                isEditable: data.isConfiguredBundleEditable,
-                isQuantitySummaryVisible: data.isConfiguredBundleQuantitySummaryVisible,
-            },
-        } only %}
-        {% endwidget %}
-    {% endblock %}
+    {% if data.items %}
+        {% block configuredBundle %}
+            {% widget 'QuoteConfiguredBundleWidget' args [data.quote, data.items] with {
+                data: {
+                    isEditable: data.isConfiguredBundleEditable,
+                    isQuantitySummaryVisible: data.isConfiguredBundleQuantitySummaryVisible,
+                },
+            } only %}
+            {% endwidget %}
+        {% endblock %}
+    {% endif %}
 
     {% block productList %}
         {% set cartItems = data.items | filter(item => item.configuredBundleItem is not defined or item.configuredBundleItem is empty) %}

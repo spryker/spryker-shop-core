@@ -517,7 +517,8 @@
         {% endblock %}
 
         {% block productListInner %}
-            {% for cartItem in data.items %}
+            {% set cartItems = data.items | filter(item => item.configuredBundleItem is not defined or item.configuredBundleItem is empty) %}
+            {% for cartItem in cartItems %}
                 {% block productItem %}
                     {% embed molecule('product-cart-item', 'CartPage') ignore missing with {
                         data: {
