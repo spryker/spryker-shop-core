@@ -15,7 +15,7 @@ class MerchantCheckoutAddressStepPreGroupItemsByShipmentPlugin extends AbstractP
 {
     /**
      * {@inheritDoc}
-     * - Unset ShipmentTransfer.merchantReference.
+     * - Unsets ShipmentTransfer.merchantReference.
      *
      * @api
      *

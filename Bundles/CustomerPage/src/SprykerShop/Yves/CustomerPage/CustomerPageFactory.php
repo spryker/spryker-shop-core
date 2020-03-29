@@ -162,8 +162,7 @@ class CustomerPageFactory extends AbstractFactory
             $this->getShipmentClient(),
             $this->getProductBundleClient(),
             $this->getShipmentService(),
-            $this->createAddressChoicesResolver(),
-            $this->getCheckoutAddressFormPreGroupItemsByShipmentPlugins()
+            $this->createAddressChoicesResolver()
         );
     }
 
@@ -440,8 +439,8 @@ class CustomerPageFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CheckoutAddressStepPreGroupItemsByShipmentPluginInterface[]
      */
-    protected function getCheckoutAddressFormPreGroupItemsByShipmentPlugins(): array
+    public function getCheckoutAddressStepPreGroupItemsByShipmentPlugins(): array
     {
-        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGINS_CHECKOUT_ADDRESS_FORM_PRE_GROUP_ITEMS_BY_SHIPMENT);
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGINS_CHECKOUT_ADDRESS_STEP_PRE_GROUP_ITEMS_BY_SHIPMENT);
     }
 }

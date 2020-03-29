@@ -133,9 +133,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     public function getOptions(AbstractTransfer $quoteTransfer)
     {
-        foreach ($this->checkoutShipmentStepPreGroupItemsByShipmentPlugins as $checkoutShipmentStepPreGroupItemsByShipmentPlugin) {
-            $quoteTransfer = $checkoutShipmentStepPreGroupItemsByShipmentPlugin->preGroupItemsByShipment($quoteTransfer);
-        }
+        $quoteTransfer = $this->executeCheckoutShipmentStepPreGroupItemsByShipmentPlugins($quoteTransfer);
 
         $shipmentGroupCollection = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
         $shipmentGroupCollection = $this->expandShipmentGroupsWithCartItems($shipmentGroupCollection, $quoteTransfer);
@@ -153,6 +151,20 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
         $options[ShipmentForm::OPTION_SHIPMENT_METHODS] = $this->createAvailableShipmentChoiceList($quoteTransfer);
 
         return $options;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executeCheckoutShipmentStepPreGroupItemsByShipmentPlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($this->checkoutShipmentStepPreGroupItemsByShipmentPlugins as $checkoutShipmentStepPreGroupItemsByShipmentPlugin) {
+            $quoteTransfer = $checkoutShipmentStepPreGroupItemsByShipmentPlugin->preGroupItemsByShipment($quoteTransfer);
+        }
+
+        return $quoteTransfer;
     }
 
     /**
