@@ -26,8 +26,8 @@
 {% block content %}
     {% include molecule('merchant-profile', 'MerchantProfileWidget') ignore missing with {
         data: {
-            merchantStorageProfile: data.merchant.merchantStorageProfile | default,
-            idMerchant: data.merchant.idMerchant | default
+            merchantStorageProfile: data.merchant.merchantProfile | default,
+            idMerchant: data.merchant.idMerchant | default,
         },
     } only %}
 {% endblock %}
