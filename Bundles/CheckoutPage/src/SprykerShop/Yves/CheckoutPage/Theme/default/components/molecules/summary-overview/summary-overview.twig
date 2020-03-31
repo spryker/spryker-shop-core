@@ -9,6 +9,7 @@
     @deprecated property "shipmentMethod" is deprecated.
     @deprecated property "payments" is deprecated.
     @deprecated property "cartQuantity" is deprecated.
+    @deprecated property "shipmentGroups" is deprecated, use "expenses" instead.
     @deprecated property "prices.storeCurrency" is deprecated.
 #}
 
@@ -20,7 +21,7 @@
     voucherDiscounts: [],
     cartRuleDiscounts: [],
     cartQuantity: cartQuantity is defined ? cartQuantity : app['cart.quantity'] | default,
-    shipmentGroups: required,
+    shipmentGroups: [],
     priceMode: null,
 
     prices: {
