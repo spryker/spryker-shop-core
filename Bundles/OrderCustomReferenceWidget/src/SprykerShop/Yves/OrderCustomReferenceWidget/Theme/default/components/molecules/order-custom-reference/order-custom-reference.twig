@@ -1,0 +1,35 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'order-custom-reference',
+} %}
+
+{% define data = {
+    title: 'order_custom_reference.title' | trans,
+    orderCustomReference: required,
+} %}
+
+{% block component %}
+    {% if data.orderCustomReference %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% set classTitle = '' %}
+    {% set classText = 'text-break' %}
+
+    {% if data.orderCustomReference %}
+        {% block title %}
+            <h5 class="{{ classTitle }}">{{ data.title }}</h5>
+        {% endblock %}
+
+        {% block textWrapper %}
+            <p class="{{ classText }}">
+                {% block text %}
+                    {{ data.orderCustomReference | escape | nl2br }}
+                {% endblock %}
+            </p>
+        {% endblock %}
+    {% endif %}
+{% endblock %}

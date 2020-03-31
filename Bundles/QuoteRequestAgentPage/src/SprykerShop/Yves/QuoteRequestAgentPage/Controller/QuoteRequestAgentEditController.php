@@ -23,7 +23,6 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
     protected const GLOSSARY_KEY_QUOTE_REQUEST_UPDATED = 'quote_request_page.quote_request.updated';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_SENT_TO_CUSTOMER = 'quote_request_page.quote_request.sent_to_customer';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
-    protected const GLOSSARY_KEY_QUOTE_REQUEST_EMPTY_SHIPMENT = 'quote_request.validation.error.empty_shipment';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -61,16 +60,6 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
      */
     protected function executeSendToCustomerAction(string $quoteRequestReference): RedirectResponse
     {
-        $quoteRequestTransfer = $this->getQuoteRequestByReference($quoteRequestReference);
-
-        if (!$this->getFactory()->createShipmentValidator()->validate($quoteRequestTransfer)) {
-            $this->addErrorMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_EMPTY_SHIPMENT);
-
-            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_EDIT, [
-                static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
-            ]);
-        }
-
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
             ->setWithHidden(true)
             ->setQuoteRequestReference($quoteRequestReference);
