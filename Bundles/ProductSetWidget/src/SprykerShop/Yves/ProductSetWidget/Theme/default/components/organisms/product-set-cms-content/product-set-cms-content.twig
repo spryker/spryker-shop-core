@@ -82,7 +82,7 @@
                 {% for product in data.products %}
                     <div class="col col--sm-12 col--lg-4">
                         {% embed molecule('product-item') with {
-                            class: 'box--stretch ' ~ config.jsName ~ '__product-item',
+                            class: config.jsName ~ '__product-item box--stretch',
                             data: {
                                 product: product,
                                 sku: '',
