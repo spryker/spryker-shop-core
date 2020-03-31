@@ -31,13 +31,11 @@ class RoutingHelper implements RoutingHelperInterface
 
     /**
      * @param \Silex\Application $app
-     * @param \Spryker\Shared\Kernel\Store $store
      * @param \SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceInterface $utilTextService
      */
-    public function __construct(Application $app, Store $store, ShopApplicationToUtilTextServiceInterface $utilTextService)
+    public function __construct(Application $app, ShopApplicationToUtilTextServiceInterface $utilTextService)
     {
         $this->app = $app;
-        $this->store = $store;
         $this->utilTextService = $utilTextService;
     }
 
@@ -60,7 +58,7 @@ class RoutingHelper implements RoutingHelperInterface
         }
         [$namespace, $application, $module, $layer, $controllerName] = explode('\\', $controllerNamespaceName);
 
-        $module = str_replace($this->store->getStoreName(), '', $module);
+        $module = str_replace(APPLICATION_CODE_BUCKET, '', $module);
 
         $controller = $this->utilTextService->camelCaseToSeparator(str_replace('Controller', '', $controllerName));
         $action = $this->utilTextService->camelCaseToSeparator((str_replace('Action', '', $actionName)));
