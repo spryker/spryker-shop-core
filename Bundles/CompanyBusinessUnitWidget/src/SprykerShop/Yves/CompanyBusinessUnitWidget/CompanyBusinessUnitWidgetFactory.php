@@ -8,23 +8,32 @@
 namespace SprykerShop\Yves\CompanyBusinessUnitWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\CompanyBusinessUnitWidget\Dependency\Client\CompanyBusinessUnitWidgetToCompanyBusinessUnitSalesConnectorClientInterface;
+use SprykerShop\Yves\CompanyBusinessUnitWidget\Dependency\Client\CompanyBusinessUnitWidgetToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\CompanyBusinessUnitWidget\Dependency\Client\CompanyBusinessUnitWidgetToCustomerClientInterface;
-use SprykerShop\Yves\CompanyBusinessUnitWidget\FormExpander\OrderSearchFormExpander;
-use SprykerShop\Yves\CompanyBusinessUnitWidget\FormExpander\OrderSearchFormExpanderInterface;
+use SprykerShop\Yves\CompanyBusinessUnitWidget\Form\CompanyBusinessUnitForm;
+use SprykerShop\Yves\CompanyBusinessUnitWidget\Form\DataProvider\CompanyBusinessUnitFormDataProvider;
 use SprykerShop\Yves\CompanyBusinessUnitWidget\FormHandler\OrderSearchFormHandler;
 use SprykerShop\Yves\CompanyBusinessUnitWidget\FormHandler\OrderSearchFormHandlerInterface;
+use Symfony\Component\Form\FormTypeInterface;
 
 class CompanyBusinessUnitWidgetFactory extends AbstractFactory
 {
     /**
-     * @return \SprykerShop\Yves\CompanyBusinessUnitWidget\FormExpander\OrderSearchFormExpanderInterface
+     * @return \Symfony\Component\Form\FormTypeInterface
      */
-    public function createOrderSearchFormExpander(): OrderSearchFormExpanderInterface
+    public function createCompanyBusinessUnitForm(): FormTypeInterface
     {
-        return new OrderSearchFormExpander(
-            $this->getCompanyBusinessUnitSalesConnectorClient(),
-            $this->getCustomerClient()
+        return new CompanyBusinessUnitForm();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyBusinessUnitWidget\Form\DataProvider\CompanyBusinessUnitFormDataProvider
+     */
+    public function createCompanyBusinessUnitFormDataProvider(): CompanyBusinessUnitFormDataProvider
+    {
+        return new CompanyBusinessUnitFormDataProvider(
+            $this->getCustomerClient(),
+            $this->getCompanyBusinessUnitClient()
         );
     }
 
@@ -39,11 +48,11 @@ class CompanyBusinessUnitWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CompanyBusinessUnitWidget\Dependency\Client\CompanyBusinessUnitWidgetToCompanyBusinessUnitSalesConnectorClientInterface
+     * @return \SprykerShop\Yves\CompanyBusinessUnitWidget\Dependency\Client\CompanyBusinessUnitWidgetToCompanyBusinessUnitClientInterface
      */
-    public function getCompanyBusinessUnitSalesConnectorClient(): CompanyBusinessUnitWidgetToCompanyBusinessUnitSalesConnectorClientInterface
+    public function getCompanyBusinessUnitClient(): CompanyBusinessUnitWidgetToCompanyBusinessUnitClientInterface
     {
-        return $this->getProvidedDependency(CompanyBusinessUnitWidgetDependencyProvider::CLIENT_COMPANY_BUSINESS_UNIT_SALES_CONNECTOR);
+        return $this->getProvidedDependency(CompanyBusinessUnitWidgetDependencyProvider::CLIENT_COMPANY_BUSINESS_UNIT);
     }
 
     /**

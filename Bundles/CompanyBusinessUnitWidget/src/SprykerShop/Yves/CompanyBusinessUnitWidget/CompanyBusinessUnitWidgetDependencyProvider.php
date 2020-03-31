@@ -9,12 +9,12 @@ namespace SprykerShop\Yves\CompanyBusinessUnitWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\CompanyBusinessUnitWidget\Dependency\Client\CompanyBusinessUnitWidgetToCompanyBusinessUnitSalesConnectorClientBridge;
+use SprykerShop\Yves\CompanyBusinessUnitWidget\Dependency\Client\CompanyBusinessUnitWidgetToCompanyBusinessUnitClientBridge;
 use SprykerShop\Yves\CompanyBusinessUnitWidget\Dependency\Client\CompanyBusinessUnitWidgetToCustomerClientBridge;
 
 class CompanyBusinessUnitWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CLIENT_COMPANY_BUSINESS_UNIT_SALES_CONNECTOR = 'CLIENT_COMPANY_BUSINESS_UNIT_SALES_CONNECTOR';
+    public const CLIENT_COMPANY_BUSINESS_UNIT = 'CLIENT_COMPANY_BUSINESS_UNIT';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
     /**
@@ -26,7 +26,7 @@ class CompanyBusinessUnitWidgetDependencyProvider extends AbstractBundleDependen
     {
         $container = parent::provideDependencies($container);
 
-        $container = $this->addCompanyBusinessUnitSalesConnectorClient($container);
+        $container = $this->addCompanyBusinessUnitClient($container);
         $container = $this->addCustomerClient($container);
 
         return $container;
@@ -37,11 +37,11 @@ class CompanyBusinessUnitWidgetDependencyProvider extends AbstractBundleDependen
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCompanyBusinessUnitSalesConnectorClient(Container $container): Container
+    protected function addCompanyBusinessUnitClient(Container $container): Container
     {
-        $container->set(static::CLIENT_COMPANY_BUSINESS_UNIT_SALES_CONNECTOR, function (Container $container) {
-            return new CompanyBusinessUnitWidgetToCompanyBusinessUnitSalesConnectorClientBridge(
-                $container->getLocator()->companyBusinessUnitSalesConnector()->client()
+        $container->set(static::CLIENT_COMPANY_BUSINESS_UNIT, function (Container $container) {
+            return new CompanyBusinessUnitWidgetToCompanyBusinessUnitClientBridge(
+                $container->getLocator()->companyBusinessUnit()->client()
             );
         });
 

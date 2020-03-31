@@ -29,8 +29,12 @@ class CompanyBusinessUnitOrderSearchFormExpanderPlugin extends AbstractPlugin im
      */
     public function expand(FormBuilderInterface $builder, array $options): void
     {
-        $this->getFactory()
-            ->createOrderSearchFormExpander()
-            ->expandOrderSearchFormWithBusinessUnitField($builder, $options);
+        $companyBusinessUnitForm = $this->getFactory()->createCompanyBusinessUnitForm();
+        $companyBusinessUnitFormDataProvider = $this->getFactory()->createCompanyBusinessUnitFormDataProvider();
+
+        $companyBusinessUnitForm->buildForm(
+            $builder,
+            $companyBusinessUnitFormDataProvider->getOptions()
+        );
     }
 }

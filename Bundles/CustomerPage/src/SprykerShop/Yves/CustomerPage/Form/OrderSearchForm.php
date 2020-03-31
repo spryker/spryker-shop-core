@@ -34,6 +34,7 @@ class OrderSearchForm extends AbstractType
 
     public const OPTION_ORDER_SEARCH_TYPES = 'OPTION_ORDER_SEARCH_TYPES';
     public const OPTION_CURRENT_TIMEZONE = 'OPTION_CURRENT_TIMEZONE';
+    public const OPTION_EXPANDABLE_DATA = 'OPTION_EXPANDABLE_DATA';
 
     public const FORM_NAME = 'orderSearchForm';
 
@@ -44,6 +45,8 @@ class OrderSearchForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setRequired([
             static::OPTION_ORDER_SEARCH_TYPES,
             static::OPTION_CURRENT_TIMEZONE,

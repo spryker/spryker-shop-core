@@ -13,11 +13,10 @@
     jsPrefix: '',
 } %}
 
-{% set customerNameWidget = data.orders.count and data.filterFields ?
-    findWidget('CustomerNameWidget', [(data.orders | first), data.filterFields])
-    : null %}
-
-{% set isCompanyUserColumnsVisible = customerNameWidget ? customerNameWidget.isVisible : false %}
+{% set isCompanyUserColumnsVisible = data.orderSearchForm
+    and data.orderSearchForm.companyBusinessUnit is defined
+    and data.orderSearchForm.companyBusinessUnit.vars.value != 'customer'
+%}
 
 {% block body %}
     <table class="table table--expand">
@@ -53,12 +52,10 @@
                 <tr>
                     <td>{{ order.orderReference }}</td>
                     <td>{{ date(order.createdAt) | formatDateTime }}</td>
-                    {% widget 'CustomerNameWidget' args [order, data.filterFields, isCompanyUserColumnsVisible] only %}
-                        {% block content %}
-                            <td>{{ data.order.firstName ~ ' ' ~ data.order.lastName }}</td>
-                            <td>{{ data.order.email }}</td>
-                        {% endblock %}
-                    {% endwidget %}
+                    {% if isCompanyUserColumnsVisible %}
+                        <td>{{ order.firstName ~ ' ' ~ order.lastName }}</td>
+                        <td>{{ order.email }}</td>
+                    {% endif %}
                     {% if data.isOrderSearchEnabled and data.isOrderSearchOrderItemsVisible %}
                         <td>{{ order.items.count }}</td>
                     {% endif %}
