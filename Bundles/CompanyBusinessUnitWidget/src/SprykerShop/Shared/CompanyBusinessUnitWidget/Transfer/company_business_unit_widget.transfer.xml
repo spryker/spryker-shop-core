@@ -14,6 +14,8 @@
 
     <transfer name="CompanyUser">
         <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
+        <property name="idCompanyUser" type="int"/>
+        <property name="fkCompany" type="int"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnit">
@@ -41,6 +43,10 @@
     </transfer>
 
     <transfer name="Order">
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitCriteriaFilter">
+        <property name="idCompany" type="int"/>
     </transfer>
 
 </transfers>
