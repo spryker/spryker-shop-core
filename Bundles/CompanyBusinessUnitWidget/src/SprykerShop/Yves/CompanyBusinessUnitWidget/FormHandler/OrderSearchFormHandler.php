@@ -21,12 +21,12 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
     protected const FILTER_FIELD_TYPE_CUSTOMER_REFERENCE = 'customerReference';
 
     /**
-     * @uses \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpander::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT
+     * @uses \Spryker\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT
      */
     protected const FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT = 'companyBusinessUnit';
 
     /**
-     * @uses \Spryker\Zed\CompanySalesConnector\Business\Expander\OrderSearchQueryExpander::FILTER_FIELD_TYPE_COMPANY
+     * @uses \Spryker\Zed\CompanySalesConnector\CompanySalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY
      */
     protected const FILTER_FIELD_TYPE_COMPANY = 'company';
 

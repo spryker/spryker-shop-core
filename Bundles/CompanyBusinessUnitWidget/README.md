@@ -1,7 +1,7 @@
 # CompanyBusinessUnitWidget Module
 [![Build Status](https://travis-ci.org/spryker-shop/company-business-unit-widget.svg)](https://travis-ci.org/spryker-shop/company-business-unit-widget)
 
-Provides company business unit related information.
+Module provides widgets to integrate company business unit functionality into other features.
 
 ## Installation
 
