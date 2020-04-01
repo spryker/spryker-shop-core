@@ -32,6 +32,7 @@
     {% set row2Class = 'form__fields grid grid--bottom' %}
     {% set dateFromClass = 'form__field col col--sm-12 col--lg-3' %}
     {% set dateToClass = 'form__field col col--sm-12 col--lg-3' %}
+    {% set companyClass = 'form__field col col--sm-12 col--lg-6' %}
 
     {% block row2 %}
         <div class="{{ row2Class }}">
@@ -46,6 +47,13 @@
                 {{ form_row(data.orderSearchForm.dateTo, {
                     attr: {
                         class: data.jsPrefix ~ data.orderSearchForm.dateTo.vars.name ~ '-target',
+                    }})
+                }}
+            </div>
+            <div class="{{ companyClass }}">
+                {{ form_row(data.orderSearchForm.companyBusinessUnit, {
+                    attr: {
+                        class: data.jsPrefix ~ data.orderSearchForm.companyBusinessUnit.vars.name ~ '-target',
                     }})
                 }}
             </div>
