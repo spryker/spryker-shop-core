@@ -83,7 +83,8 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CHECKOUT_ADDRESS_STEP_ENTER_PRE_CHECK = 'PLUGINS_CHECKOUT_ADDRESS_STEP_ENTER_PRE_CHECK';
     public const PLUGINS_CHECKOUT_SHIPMENT_STEP_ENTER_PRE_CHECK = 'PLUGINS_CHECKOUT_SHIPMENT_STEP_ENTER_PRE_CHECK';
     public const PLUGINS_CHECKOUT_PAYMENT_STEP_ENTER_PRE_CHECK = 'PLUGINS_CHECKOUT_PAYMENT_STEP_ENTER_PRE_CHECK';
-    public const PLUGINS_CHECKOUT_SHIPMENT_FORM_PRE_GROUP_ITEMS_BY_SHIPMENT = 'PLUGINS_CHECKOUT_SHIPMENT_FORM_PRE_GROUP_ITEMS_BY_SHIPMENT';
+
+    public const PLUGINS_CHECKOUT_STEP_ENGINE_PRE_RENDER = 'PLUGINS_CHECKOUT_STEP_ENGINE_PRE_RENDER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -131,7 +132,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addShipmentService($container);
         $container = $this->addCustomerService($container);
         $container = $this->addAddressStepExecutorAddressTransferExpanderPlugins($container);
-        $container = $this->addCheckoutShipmentFormPreGroupItemsByShipmentPlugins($container);
+        $container = $this->addCheckoutStepEnginePreRenderPlugins($container);
 
         return $container;
     }
@@ -784,19 +785,19 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCheckoutShipmentFormPreGroupItemsByShipmentPlugins(Container $container): Container
+    protected function addCheckoutStepEnginePreRenderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_CHECKOUT_SHIPMENT_FORM_PRE_GROUP_ITEMS_BY_SHIPMENT, function (): array {
-            return $this->getCheckoutShipmentStepPreGroupItemsByShipmentPlugins();
+        $container->set(static::PLUGINS_CHECKOUT_STEP_ENGINE_PRE_RENDER, function (): array {
+            return $this->getCheckoutStepEnginePreRenderPlugins();
         });
 
         return $container;
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepPreGroupItemsByShipmentPluginInterface[]
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\StepEngine\StepEnginePreRenderPluginInterface[]
      */
-    protected function getCheckoutShipmentStepPreGroupItemsByShipmentPlugins(): array
+    protected function getCheckoutStepEnginePreRenderPlugins(): array
     {
         return [];
     }

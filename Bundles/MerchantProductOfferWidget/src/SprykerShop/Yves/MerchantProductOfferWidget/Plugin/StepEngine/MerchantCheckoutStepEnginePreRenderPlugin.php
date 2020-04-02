@@ -5,13 +5,12 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\MerchantProductOfferWidget\Plugin\CheckoutPage;
+namespace SprykerShop\Yves\MerchantProductOfferWidget\Plugin\StepEngine;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepPreGroupItemsByShipmentPluginInterface;
+use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\StepEngine\StepEnginePreRenderPluginInterface;
 
-class MerchantShipmentStepPreGroupItemsByShipmentPlugin extends AbstractPlugin implements CheckoutShipmentStepPreGroupItemsByShipmentPluginInterface
+class MerchantCheckoutStepEnginePreRenderPlugin implements StepEnginePreRenderPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -23,7 +22,7 @@ class MerchantShipmentStepPreGroupItemsByShipmentPlugin extends AbstractPlugin i
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function preGroupItemsByShipment(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemTransfer->getShipment()->setMerchantReference($itemTransfer->getMerchantReference());

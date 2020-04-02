@@ -87,7 +87,12 @@ class StepFactory extends AbstractFactory
      */
     public function createStepEngine(StepCollectionInterface $stepCollection)
     {
-        return new StepEngine($stepCollection, $this->createDataContainer(), $this->createStepBreadcrumbGenerator());
+        return new StepEngine(
+            $stepCollection,
+            $this->createDataContainer(),
+            $this->createStepBreadcrumbGenerator(),
+            $this->getCheckoutStepEnginePreRenderPlugins()
+        );
     }
 
     /**
@@ -429,5 +434,13 @@ class StepFactory extends AbstractFactory
     public function getShoppingListItemExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_ADDRESS_STEP_EXECUTOR_ADDRESS_TRANSFER_EXPANDERS);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\StepEngine\StepEnginePreRenderPluginInterface[]
+     */
+    public function getCheckoutStepEnginePreRenderPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_STEP_ENGINE_PRE_RENDER);
     }
 }

@@ -87,8 +87,7 @@ class CheckoutPageFactory extends AbstractFactory
             $this->getMoneyPlugin(),
             $this->getShipmentService(),
             $this->getConfig(),
-            $this->getProductBundleClient(),
-            $this->getCheckoutShipmentStepPreGroupItemsByShipmentPlugins()
+            $this->getProductBundleClient()
         );
     }
 
@@ -173,13 +172,5 @@ class CheckoutPageFactory extends AbstractFactory
     protected function getSubFormFilterPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_SUB_FORM_FILTERS);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepPreGroupItemsByShipmentPluginInterface[]
-     */
-    public function getCheckoutShipmentStepPreGroupItemsByShipmentPlugins(): array
-    {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_SHIPMENT_FORM_PRE_GROUP_ITEMS_BY_SHIPMENT);
     }
 }

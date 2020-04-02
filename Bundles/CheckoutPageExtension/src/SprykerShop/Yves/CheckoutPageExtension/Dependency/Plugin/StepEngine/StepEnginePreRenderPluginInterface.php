@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin;
+namespace SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\StepEngine;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
- * Provides preparation of quote transfer at the shipment step before grouping.
+ * Provides preparation of quote transfer for each step of checkout process before template rendering.
  */
-interface CheckoutShipmentStepPreGroupItemsByShipmentPluginInterface
+interface StepEnginePreRenderPluginInterface
 {
     /**
      * Specifications:
-     * - Prepares quote transfer before grouping.
+     * - Prepares quote transfer for each step of checkout process before template rendering.
      *
      * @api
      *
@@ -24,5 +24,5 @@ interface CheckoutShipmentStepPreGroupItemsByShipmentPluginInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function preGroupItemsByShipment(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }
