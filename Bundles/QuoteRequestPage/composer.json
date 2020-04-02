@@ -8,7 +8,7 @@
     "spryker-shop/checkout-page-extension": "^1.2.0",
     "spryker-shop/quote-request-page-extension": "^1.0.0",
     "spryker-shop/shop-application": "^1.0.0",
-    "spryker-shop/shop-ui": "^1.0.0",
+    "spryker-shop/shop-ui": "^1.36.0",
     "spryker/application": "^3.8.0",
     "spryker/cart": "^5.0.0 || ^7.0.0",
     "spryker/company-user": "^2.10.0",
@@ -31,9 +31,10 @@
     "spryker/silex": "*"
   },
   "suggest": {
-    "spryker-shop/cart-page": "If you want to use cart page molecules: ^3.2.0",
+    "spryker-shop/cart-page": "If you want to use cart page molecules: ^3.16.0",
+    "spryker-shop/checkout-page": "If you want to use QuoteRequestConvertedCheckoutStepResolverStrategyPlugin and QuoteRequestInProcessCheckoutStepResolverStrategyPlugin: ^3.12.0",
     "spryker-shop/configurable-bundle-widget": "If you want to use configurable bundle widget functionality",
-    "spryker-shop/customer-page": "If you want to use customer layout templates: ^1.0.0",
+    "spryker-shop/customer-page": "If you want to use customer layout templates: ^2.13.0",
     "spryker-shop/discount-widget": "If you want to use discount widget functionality: ^1.2.0",
     "spryker-shop/product-option-widget": "If you want to use product option widget functionality",
     "spryker-shop/product-packaging-unit-widget": "If you want to use product packaging unit widget functionality",

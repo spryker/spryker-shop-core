@@ -19,10 +19,10 @@
 {%- endblock %}
 
 {% set priceModeGross = 'GROSS_MODE' %}
-{% set sourceUnitPrice = '' %}
+{% set shipmentMethodSourcePrice = '' %}
 
 {% if data.sourcePrice %}
-    {% set sourceUnitPrice = (data.priceMode == priceModeGross) ? data.sourcePrice.grossAmount : data.sourcePrice.netAmount %}
+    {% set shipmentMethodSourcePrice = (data.priceMode == priceModeGross) ? data.sourcePrice.grossAmount : data.sourcePrice.netAmount %}
 {% endif %}
 
 {% block body %}
@@ -30,9 +30,9 @@
     <li class="list__item">
         {{ data.methodName }}<br>
         <span>
-            {% if sourceUnitPrice or sourceUnitPrice is same as(0) %}
+            {% if shipmentMethodSourcePrice or shipmentMethodSourcePrice is same as(0) %}
                 <s>{{ data.storeCurrencyPrice | money(true, data.currencyIsoCode) }}</s>
-                {{ sourceUnitPrice | money(true, data.currencyIsoCode) }}
+                {{ shipmentMethodSourcePrice | money(true, data.currencyIsoCode) }}
             {% else %}
                 {{ data.storeCurrencyPrice | money(true, data.currencyIsoCode) }}
             {% endif %}

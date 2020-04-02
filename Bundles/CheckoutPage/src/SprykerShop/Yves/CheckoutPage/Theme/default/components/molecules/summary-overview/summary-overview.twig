@@ -71,12 +71,10 @@
             <strong class="float-right">{{ data.totalCosts | money }}</strong>
             <strong>{{ 'checkout.step.summary.shipment_costs_total' | trans }}</strong>
             {% for expense in data.expenses if expense.type == shipmentExpenseType %}
-                {% set sourceUnitPrice = (data.priceMode == priceModeGross) ? expense.unitGrossPrice : expense.unitNetPrice %}
-
                 <div class="grid grid--justify">
                     <span class="col col--sm-10">{{ expense.shipment.method.carrierName }}
                         - {{ expense.shipment.method.name }}</span>
-                    <span class="col col--expand text-right">{{ sourceUnitPrice | money }}</span>
+                    <span class="col col--expand text-right">{{ expense.sumPrice | money }}</span>
                 </div>
             {% endfor %}
         </li>

@@ -9,6 +9,11 @@ namespace SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
+/**
+ * Provides extension capabilities for the checkout steps creation process.
+ *
+ * Use this plugin for adding/removing checkout steps.
+ */
 interface CheckoutStepResolverStrategyPluginInterface
 {
     /**

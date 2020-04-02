@@ -14,8 +14,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class QuoteRequestAgentCheckoutController extends QuoteRequestAgentAbstractController
 {
-    protected const PARAM_SWITCH_USER = '_switch_user';
-
     /**
      * @param string $quoteRequestReference
      *
