@@ -5,28 +5,25 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CustomerPage\Handler;
+namespace SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\OrderListTransfer;
-use Symfony\Component\Form\FormInterface;
 
-interface OrderSearchFormHandlerInterface
+interface OrderSearchFormHandlerPluginInterface
 {
     /**
-     * @param \Symfony\Component\Form\FormInterface $orderSearchForm
+     * Specification:
+     * - Handles OrderSearchForm submit.
+     *
+     * @api
+     *
+     * @param array $orderSearchFormData
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function handleOrderSearchFormSubmit(
-        FormInterface $orderSearchForm,
+        array $orderSearchFormData,
         OrderListTransfer $orderListTransfer
     ): OrderListTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
-     */
-    public function resetFilterFields(OrderListTransfer $orderListTransfer): OrderListTransfer;
 }

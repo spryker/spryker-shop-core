@@ -78,10 +78,9 @@ class OrderReader implements OrderReaderInterface
      */
     protected function expandOrderListTransfer(Request $request, OrderListTransfer $orderListTransfer): OrderListTransfer
     {
-        $customerTransfer = $this->customerClient->getCustomer();
-
-        $orderListTransfer->setCustomer($customerTransfer);
-        $orderListTransfer->setIdCustomer($customerTransfer->getIdCustomer());
+        $orderListTransfer->setIdCustomer(
+            $this->customerClient->getCustomer()->getIdCustomer()
+        );
 
         $orderListTransfer->setPagination(
             $this->createPaginationTransfer($request)

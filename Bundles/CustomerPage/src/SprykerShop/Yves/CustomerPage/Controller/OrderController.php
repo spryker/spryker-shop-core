@@ -96,6 +96,7 @@ class OrderController extends AbstractCustomerController
             'isOrderSearchEnabled' => $customerPageConfig->isOrderSearchEnabled(),
             'isOrderSearchOrderItemsVisible' => $orderListTransfer->getFormat()->getExpandWithItems(),
             'orderSearchForm' => isset($orderSearchForm) ? $orderSearchForm->createView() : null,
+            'filterFields' => $orderListTransfer->getFilterFields()->getArrayCopy(),
         ];
     }
 
@@ -130,13 +131,14 @@ class OrderController extends AbstractCustomerController
         $isReset = $request->query->get(OrderSearchForm::FORM_NAME)[OrderSearchForm::FIELD_RESET] ?? null;
 
         if ($isReset) {
-            return $orderListTransfer;
+            return $this->getFactory()
+                ->createOrderSearchFormHandler()
+                ->resetFilterFields($orderListTransfer);
         }
 
         $orderSearchForm->handleRequest($request);
 
         return $this->getFactory()
-            ->createCustomerFormFactory()
             ->createOrderSearchFormHandler()
             ->handleOrderSearchFormSubmit($orderSearchForm, $orderListTransfer);
     }

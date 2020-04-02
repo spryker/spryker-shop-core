@@ -57,6 +57,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     public const STORE = 'STORE';
 
     public const PLUGINS_ORDER_SEARCH_FORM_EXPANDER = 'PLUGINS_ORDER_SEARCH_FORM_EXPANDER';
+    public const PLUGINS_ORDER_SEARCH_FORM_HANDLER = 'PLUGINS_ORDER_SEARCH_FORM_HANDLER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -89,6 +90,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addShipmentService($container);
         $container = $this->addCustomerService($container);
         $container = $this->addOrderSearchFormExpanderPlugins($container);
+        $container = $this->addOrderSearchFormHandlerPlugins($container);
 
         return $container;
     }
@@ -490,9 +492,31 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addOrderSearchFormHandlerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ORDER_SEARCH_FORM_HANDLER, function () {
+            return $this->getOrderSearchFormHandlerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\OrderSearchFormExpanderPluginInterface[]
      */
     protected function getOrderSearchFormExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\OrderSearchFormHandlerPluginInterface[]
+     */
+    protected function getOrderSearchFormHandlerPlugins(): array
     {
         return [];
     }

@@ -15,19 +15,40 @@
 
 {% block component %}
     {% set activeFilters = [] %}
+    {% set businessUnitName = 'companyBusinessUnit' %}
+    {% set businessUnitDefaultValue = 'customer' %}
     {% set dateFilters = ['dateFrom', 'dateTo'] %}
-    {% set filterFields = ['dateFrom', 'dateTo'] %}
+    {% set filterFields = ['dateFrom', 'dateTo', businessUnitName] %}
 
     {% for field in data.orderSearchForm.children %}
         {% if field.vars.value and field.vars.name in filterFields %}
             {% set fitlerValue = field.vars.name in dateFilters ?
                 field.vars.value | date('d.m.Y H:i')
                 : field.vars.value %}
-            {% set filter = [{
-                name: field.vars.name,
-                label: field.vars.label,
-                value: fitlerValue,
-            }] %}
+            {% set filter = [] %}
+
+            {% if field.vars.name == businessUnitName %}
+                {% if field.vars.value != businessUnitDefaultValue %}
+                    {% set selectedValue = data.orderSearchForm.companyBusinessUnit.vars.value %}
+                    {% set choices = data.orderSearchForm.companyBusinessUnit.vars.choices | filter(v => v.value == selectedValue) %}
+                    {% set label = choices|length ? (choices|first).label : null %}
+                    {% set fitlerValue = label | trans%}
+
+                    {% set filter = [{
+                        name: field.vars.name,
+                        label: field.vars.label,
+                        defaultValue: businessUnitDefaultValue,
+                        value: fitlerValue,
+                    }] %}
+                {% endif %}
+            {% else %}
+                {% set filter = [{
+                    name: field.vars.name,
+                    label: field.vars.label,
+                    defaultValue: '',
+                    value: fitlerValue,
+                }] %}
+            {% endif %}
             {% set activeFilters =  activeFilters | merge(filter) %}
         {% endif %}
     {% endfor %}
@@ -52,7 +73,8 @@
 
     {% for filter in activeFilters %}
         {% block activeFilter %}
-            <span class="{{ activeItemClass }} {{ data.jsPrefix ~ filter.name }}-trigger" set-value="">
+            <span class="{{ activeItemClass }} {{ data.jsPrefix ~ filter.name }}-trigger"
+                  set-value="{{ filter.defaultValue }}">
                 {% block activeFilterKey %}
                     <strong class="{{ activeItemKeyClass }}">{{ filter.label | trans }}:</strong>
                 {% endblock %}
