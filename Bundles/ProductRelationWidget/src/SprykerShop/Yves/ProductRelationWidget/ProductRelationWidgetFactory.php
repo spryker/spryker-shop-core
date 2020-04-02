@@ -42,6 +42,6 @@ class ProductRelationWidgetFactory extends AbstractFactory
      */
     public function getStoreClient(): ProductRelationWidgetToStoreClientInterface
     {
-        return $this->getProvidedDependency(ProductRelationWidgetDependencyProvider::CLIENT_PRODUCT_RELATION_STORAGE);
+        return $this->getProvidedDependency(ProductRelationWidgetDependencyProvider::CLIENT_STORE);
     }
 }
