@@ -49,7 +49,7 @@ class MerchantReader implements MerchantReaderInterface
     public function extractSelectedMerchantReference(): ?string
     {
         $selectedMerchantReference = $this->selectedMerchantCookie->getMerchantReference();
-        $merchantTransfers = $this->merchantSearchClient->getActiveMerchants()->getMerchants();
+        $merchantTransfers = $this->merchantSearchClient->getMerchantCollection()->getMerchants();
 
         foreach ($merchantTransfers as $merchantTransfer) {
             if ($selectedMerchantReference === $merchantTransfer->getMerchantReference()) {
