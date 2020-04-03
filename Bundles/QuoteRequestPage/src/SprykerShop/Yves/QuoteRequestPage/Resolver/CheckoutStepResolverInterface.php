@@ -14,12 +14,12 @@ interface CheckoutStepResolverInterface
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
      */
-    public function resolveCheckoutStepsForQuoteInQuoteRequestProcess(array $steps): array;
+    public function applyQuoteRequestCheckoutWorkflow(array $steps): array;
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[] $steps
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
      */
-    public function resolveCheckoutStepsForQuoteRequestForQuoteWithCustomShipmentPrice(array $steps): array;
+    public function applyQuoteWithCustomShipmentPriceCheckoutWorkflow(array $steps): array;
 }

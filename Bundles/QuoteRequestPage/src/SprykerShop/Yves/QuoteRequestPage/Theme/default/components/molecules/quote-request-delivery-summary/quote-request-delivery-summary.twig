@@ -150,12 +150,9 @@
 
             {% if not data.hasMultiShipments and hasSingleShippingMethod %}
                 {% block shipmentMethodInformation %}
-                    {% include molecule('delivery-information', 'CustomerPage') ignore missing with {
+                    {% include molecule('shipment-information', 'CustomerPage') ignore missing with {
                         data: {
-                            carrierName: data.quote.shipment.method.carrierName,
-                            methodName: data.quote.shipment.method.name,
-                            storeCurrencyPrice: data.quote.shipment.method.storeCurrencyPrice,
-                            currencyIsoCode: data.quote.shipment.method.currencyIsoCode,
+                            shipmentMethod: data.quote.shipment.method,
                         },
                     } only %}
                 {% endblock %}

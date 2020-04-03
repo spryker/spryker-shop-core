@@ -12,25 +12,71 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST
+     */
     protected const ROUTE_QUOTE_REQUEST = 'quote-request';
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_CREATE
+     */
     protected const ROUTE_QUOTE_REQUEST_CREATE = 'quote-request/create';
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_REVISE
+     */
     protected const ROUTE_QUOTE_REQUEST_REVISE = 'quote-request/revise';
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_SEND_TO_USER
+     */
     protected const ROUTE_QUOTE_REQUEST_SEND_TO_USER = 'quote-request/send-to-user';
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_EDIT
+     */
     protected const ROUTE_QUOTE_REQUEST_EDIT = 'quote-request/edit';
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_EDIT_ITEMS
+     */
     protected const ROUTE_QUOTE_REQUEST_EDIT_ITEMS = 'quote-request/edit-items';
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM
+     */
     protected const ROUTE_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM = 'quote-request/edit-items-confirm';
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_CANCEL
+     */
+    protected const ROUTE_QUOTE_REQUEST_CANCEL = 'quote-request/cancel';
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_DETAILS
+     */
+    protected const ROUTE_QUOTE_REQUEST_DETAILS = 'quote-request/details';
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_CONVERT_TO_CART
+     */
+    protected const ROUTE_QUOTE_REQUEST_CONVERT_TO_CART = 'quote-request/convert-to-cart';
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE
+     */
+    protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::QUOTE_REQUEST_REFERENCE_REGEX
+     */
+    protected const QUOTE_REQUEST_REFERENCE_REGEX = '[a-zA-Z0-9-]+';
+
     protected const ROUTE_QUOTE_REQUEST_EDIT_ADDRESS = 'quote-request/edit-address';
     protected const ROUTE_QUOTE_REQUEST_EDIT_ADDRESS_CONFIRM = 'quote-request/edit-address-confirm';
     protected const ROUTE_QUOTE_REQUEST_EDIT_SHIPMENT = 'quote-request/edit-shipment';
     protected const ROUTE_QUOTE_REQUEST_EDIT_SHIPMENT_CONFIRM = 'quote-request/edit-shipment-confirm';
-    protected const ROUTE_QUOTE_REQUEST_CANCEL = 'quote-request/cancel';
-    protected const ROUTE_QUOTE_REQUEST_DETAILS = 'quote-request/details';
-    protected const ROUTE_QUOTE_REQUEST_CONVERT_TO_CART = 'quote-request/convert-to-cart';
     protected const ROUTE_QUOTE_REQUEST_SAVE = 'quote-request/save';
-
-    protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
-
-    protected const QUOTE_REQUEST_REFERENCE_REGEX = '[a-zA-Z0-9-]+';
 
     /**
      * Specification:

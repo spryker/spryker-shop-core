@@ -14,11 +14,11 @@ use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepResolve
 /**
  * @method \SprykerShop\Yves\QuoteRequestAgentPage\QuoteRequestAgentPageFactory getFactory()
  */
-class QuoteRequestAgentCheckoutStepResolverStrategyPlugin extends AbstractPlugin implements CheckoutStepResolverStrategyPluginInterface
+class QuoteRequestAgentCheckoutWorkflowCheckoutStepResolverStrategyPlugin extends AbstractPlugin implements CheckoutStepResolverStrategyPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Returns true if quote request reference and quote request version reference are set.
+     * - Returns true if quote request version is editable by agent.
      *
      * @api
      *
@@ -28,7 +28,7 @@ class QuoteRequestAgentCheckoutStepResolverStrategyPlugin extends AbstractPlugin
      */
     public function isApplicable(QuoteTransfer $quoteTransfer): bool
     {
-        return $quoteTransfer->getQuoteRequestReference() && $quoteTransfer->getQuoteRequestVersionReference();
+        return $this->getFactory()->getQuoteRequestAgentClient()->isEditableQuoteRequestVersion($quoteTransfer);
     }
 
     /**
@@ -44,6 +44,6 @@ class QuoteRequestAgentCheckoutStepResolverStrategyPlugin extends AbstractPlugin
      */
     public function execute(array $steps, QuoteTransfer $quoteTransfer): array
     {
-        return $this->getFactory()->createCheckoutStepResolver()->resolveCheckoutSteps($steps);
+        return $this->getFactory()->createCheckoutStepResolver()->applyQuoteRequestCheckoutWorkflow($steps);
     }
 }

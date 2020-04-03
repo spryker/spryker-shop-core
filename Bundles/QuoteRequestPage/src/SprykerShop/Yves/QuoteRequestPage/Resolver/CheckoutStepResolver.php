@@ -47,7 +47,7 @@ class CheckoutStepResolver implements CheckoutStepResolverInterface
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
      */
-    public function resolveCheckoutStepsForQuoteInQuoteRequestProcess(array $steps): array
+    public function applyQuoteRequestCheckoutWorkflow(array $steps): array
     {
         $resolvedSteps = [$this->entryStep];
 
@@ -74,7 +74,7 @@ class CheckoutStepResolver implements CheckoutStepResolverInterface
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
      */
-    public function resolveCheckoutStepsForQuoteRequestForQuoteWithCustomShipmentPrice(array $steps): array
+    public function applyQuoteWithCustomShipmentPriceCheckoutWorkflow(array $steps): array
     {
         $resolvedSteps = [];
         $stepsToRemove = [

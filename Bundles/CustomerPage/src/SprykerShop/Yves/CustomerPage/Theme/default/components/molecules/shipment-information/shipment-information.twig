@@ -1,0 +1,38 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'shipment-information',
+    tag: 'ul',
+} %}
+
+{% define data = {
+    shipmentMethod: required,
+    priceMode: null,
+} %}
+
+{% block class -%}
+    {{ parent() }} list
+{%- endblock %}
+
+{% set method = data.shipmentMethod %}
+{% set priceModeGross = 'GROSS_MODE' %}
+{% set shipmentMethodSourcePrice = null %}
+
+{% if method.sourcePrice %}
+    {% set shipmentMethodSourcePrice = (data.priceMode == priceModeGross) ? method.sourcePrice.grossAmount : method.sourcePrice.netAmount %}
+{% endif %}
+
+{% block body %}
+    <li class="list__item">{{ method.carrierName }}</li>
+    <li class="list__item">
+        {{ method.name }}<br>
+        <span>
+            {% if shipmentMethodSourcePrice or shipmentMethodSourcePrice is same as(0) %}
+                <s>{{ method.storeCurrencyPrice | money(true, method.currencyIsoCode) }}</s>
+                {{ shipmentMethodSourcePrice | money(true, method.currencyIsoCode) }}
+            {% else %}
+                {{ method.storeCurrencyPrice | money(true, method.currencyIsoCode) }}
+            {% endif %}
+        </span>
+    </li>
+{% endblock %}

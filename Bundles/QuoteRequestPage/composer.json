@@ -32,7 +32,7 @@
   },
   "suggest": {
     "spryker-shop/cart-page": "If you want to use cart page molecules: ^3.16.0",
-    "spryker-shop/checkout-page": "If you want to use QuoteRequestConvertedCheckoutStepResolverStrategyPlugin and QuoteRequestInProcessCheckoutStepResolverStrategyPlugin: ^3.12.0",
+    "spryker-shop/checkout-page": "If you want to use QuoteRequestCheckoutWorkflowCheckoutStepResolverStrategyPlugin and QuoteWithCustomShipmentPriceCheckoutWorkflowCheckoutStepResolverStrategyPlugin: ^3.12.0",
     "spryker-shop/configurable-bundle-widget": "If you want to use configurable bundle widget functionality",
     "spryker-shop/customer-page": "If you want to use customer layout templates: ^2.13.0",
     "spryker-shop/discount-widget": "If you want to use discount widget functionality: ^1.2.0",

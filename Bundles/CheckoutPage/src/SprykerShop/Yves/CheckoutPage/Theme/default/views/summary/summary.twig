@@ -122,17 +122,10 @@
                     <div class="box">
                         <h6>{{ 'checkout.step.summary.delivery_method' | trans }}</h6>
                         <hr>
-                        {% set isShipmentMethod = shipmentGroup.shipment is defined and shipmentGroup.shipment and shipmentGroup.shipment.method %}
-                        {% set shipmentMethodSourcePrice = isShipmentMethod and shipmentGroup.shipment.method.sourcePrice is defined ? shipmentGroup.shipment.method.sourcePrice %}
-
-                        {% include molecule('delivery-information', 'CustomerPage') ignore missing with {
+                        {% include molecule('shipment-information', 'CustomerPage') ignore missing with {
                             data: {
-                                carrierName: shipmentGroup.shipment.method.carrierName,
-                                methodName: shipmentGroup.shipment.method.name,
-                                storeCurrencyPrice: shipmentGroup.shipment.method.storeCurrencyPrice,
-                                currencyIsoCode: shipmentGroup.shipment.method.currencyIsoCode,
+                                shipmentMethod: shipmentGroup.shipment.method,
                                 priceMode: data.cart.priceMode,
-                                sourcePrice: shipmentMethodSourcePrice,
                             },
                         } only %}
 

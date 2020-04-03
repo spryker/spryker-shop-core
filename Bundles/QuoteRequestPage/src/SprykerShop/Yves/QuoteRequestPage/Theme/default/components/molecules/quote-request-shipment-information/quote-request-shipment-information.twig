@@ -38,15 +38,11 @@
                 {% if shipmentMethod %}
                     {% block shipmentMethod %}
                         <div class="grid grid--justify">
-                            {% include molecule('delivery-information', 'CustomerPage') ignore missing with {
+                            {% include molecule('shipment-information', 'CustomerPage') ignore missing with {
                                 class: 'col',
                                 data: {
-                                    carrierName: shipmentMethod.carrierName,
-                                    methodName: shipmentMethod.name,
-                                    storeCurrencyPrice: shipmentMethod.storeCurrencyPrice,
-                                    currencyIsoCode: shipmentMethod.currencyIsoCode,
+                                    shipmentMethod: shipmentMethod,
                                     priceMode: data.priceMode,
-                                    sourcePrice: shipmentMethod.sourcePrice,
                                 },
                             } only %}
 
