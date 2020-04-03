@@ -85,7 +85,7 @@ class WidgetFactory implements WidgetFactoryInterface
      */
     protected function generateCacheKey(string $widgetClassName, array $arguments): string
     {
-        return md5($widgetClassName . json_encode($arguments));
+        return md5($widgetClassName . serialize($arguments));
     }
 
     /**
