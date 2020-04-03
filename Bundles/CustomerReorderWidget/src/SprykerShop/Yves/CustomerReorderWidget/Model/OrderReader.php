@@ -78,7 +78,8 @@ class OrderReader implements OrderReaderInterface
         $orderTransfer = new OrderTransfer();
         $orderTransfer
             ->setIdSalesOrder($idSalesOrder)
-            ->setFkCustomer($customerTransfer->getIdCustomer());
+            ->setFkCustomer($customerTransfer->getIdCustomer())
+            ->setCustomer($customerTransfer);
 
         return $orderTransfer;
     }

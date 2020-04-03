@@ -156,7 +156,8 @@ class OrderController extends AbstractCustomerController
 
         $orderTransfer = new OrderTransfer();
         $orderTransfer->setIdSalesOrder($idSalesOrder)
-            ->setFkCustomer($customerTransfer->getIdCustomer());
+            ->setFkCustomer($customerTransfer->getIdCustomer())
+            ->setCustomer($customerTransfer);
 
         $orderTransfer = $this->getFactory()
             ->getSalesClient()
