@@ -50,7 +50,7 @@
     "spryker-shop/order-custom-reference-widget": "Add the module if you want to use order custom reference functionality",
     "spryker-shop/product-packaging-unit-widget": "If you want to use components from module ProductPackagingUnitWidget or SummaryProductPackagingUnitWidgetPlugin: ^0.5.2",
     "spryker/router": "Use this module when you want to use the Router.",
-    "spryker/shipment-cart-connector": "If you want to use source price functionality and SanitizeCartShipmentItemExpanderPlugin, min version 2.1.0",
+    "spryker/shipment-cart-connector": "If you want to use CartShipmentCartOperationPostSavePlugin and SanitizeCartShipmentItemExpanderPlugin, min version 2.1.0",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {

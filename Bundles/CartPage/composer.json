@@ -49,7 +49,7 @@
     "spryker/container": "If you want to use the CartTwigPlugin",
     "spryker/permission": "If you want to use permissions plugins",
     "spryker/router": "Use this module when using plugins that adds routes to the Route Module.",
-    "spryker/shipment": "If you want to use a shipment total price calculated with expenses and ShipmentTotalCalculatorPlugin, min version 8.4.0",
+    "spryker/shipment": "If you want to use a shipment total price calculated using expenses and ShipmentTotalCalculatorPlugin, min version 8.4.0",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
     "spryker/twig": "Use this module when using plugins that need Twig dependencies."
   },
