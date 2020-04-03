@@ -19,7 +19,7 @@
     "spryker/price": "^5.0.0",
     "spryker/quote": "^2.0.0",
     "spryker/quote-request": "^2.0.0",
-    "spryker/quote-request-agent": "^2.0.0",
+    "spryker/quote-request-agent": "^2.1.0",
     "spryker/shipment": "^8.4.0",
     "spryker/step-engine": "^3.3.0",
     "spryker/store": "^1.8.0",
