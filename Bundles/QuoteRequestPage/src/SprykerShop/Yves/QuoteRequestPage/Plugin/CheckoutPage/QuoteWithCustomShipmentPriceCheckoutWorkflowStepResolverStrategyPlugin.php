@@ -14,11 +14,11 @@ use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepResolve
 /**
  * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
  */
-class QuoteRequestCheckoutWorkflowCheckoutStepResolverStrategyPlugin extends AbstractPlugin implements CheckoutStepResolverStrategyPluginInterface
+class QuoteWithCustomShipmentPriceCheckoutWorkflowStepResolverStrategyPlugin extends AbstractPlugin implements CheckoutStepResolverStrategyPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Returns true if quote request version is editable.
+     * - Returns true if quote shipment source price can be edited.
      *
      * @api
      *
@@ -28,12 +28,14 @@ class QuoteRequestCheckoutWorkflowCheckoutStepResolverStrategyPlugin extends Abs
      */
     public function isApplicable(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->getFactory()->getQuoteRequestClient()->isEditableQuoteRequestVersion($quoteTransfer);
+        return $this->getFactory()
+            ->getQuoteRequestClient()
+            ->isEditableQuoteShipmentSourcePrice($quoteTransfer);
     }
 
     /**
      * {@inheritDoc}
-     * - Returns checkout steps suitable when buyer is editing shipment data for request for quote.
+     * - Returns checkout steps suitable for quote with custom shipment prices.
      *
      * @api
      *
@@ -46,6 +48,6 @@ class QuoteRequestCheckoutWorkflowCheckoutStepResolverStrategyPlugin extends Abs
     {
         return $this->getFactory()
             ->createCheckoutStepResolver()
-            ->applyQuoteRequestCheckoutWorkflow($steps);
+            ->applyQuoteWithCustomShipmentPriceCheckoutWorkflow($steps);
     }
 }

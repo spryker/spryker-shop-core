@@ -14,7 +14,7 @@ use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepResolve
 /**
  * @method \SprykerShop\Yves\QuoteRequestAgentPage\QuoteRequestAgentPageFactory getFactory()
  */
-class QuoteRequestAgentCheckoutWorkflowCheckoutStepResolverStrategyPlugin extends AbstractPlugin implements CheckoutStepResolverStrategyPluginInterface
+class QuoteRequestAgentCheckoutWorkflowStepResolverStrategyPlugin extends AbstractPlugin implements CheckoutStepResolverStrategyPluginInterface
 {
     /**
      * {@inheritDoc}

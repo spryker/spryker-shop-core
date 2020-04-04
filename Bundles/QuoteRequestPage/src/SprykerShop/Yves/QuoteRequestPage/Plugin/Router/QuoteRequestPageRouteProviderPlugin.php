@@ -188,7 +188,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestEditItemsController::indexAction()
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestEditItemsController::confirmAction()
      *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
@@ -204,7 +204,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestEditController::submitAction()
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestEditController::sendToUserAction()
      *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
@@ -268,7 +268,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestEditItemsController::indexAction()
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestEditAddressController::indexAction()
      *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
@@ -284,7 +284,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestEditItemsController::indexAction()
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestEditAddressController::confirmAction()
      *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
@@ -300,7 +300,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestEditItemsController::indexAction()
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestEditShipmentController::indexAction()
      *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
@@ -316,7 +316,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestEditItemsController::indexAction()
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestEditShipmentController::confirmAction()
      *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
@@ -332,6 +332,8 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestSaveController::saveAction()
+     *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \Spryker\Yves\Router\Route\RouteCollection
