@@ -57,7 +57,7 @@
     "spryker/messenger": "Use this module when using plugins that need Messenger dependencies.",
     "spryker/router": "Use this module when you want to use the Router.",
     "spryker/security": "Add this module to use the SecurityPlugin.",
-    "spryker/shipment-cart-connector": "If you want to use CartShipmentCartOperationPostSavePlugin and SanitizeCartShipmentItemExpanderPlugin, min version 2.1.0",
+    "spryker/shipment-cart-connector": "If you want to use shipment totals in quote or shipment source prices, min version 2.1.0",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
