@@ -9,7 +9,7 @@
 
 {% set hasMultiShipments = data.shipmentGroups | length > 1 %}
 {% set quote = null %}
-{% set breadcrumbExtend = [] %}
+{% set breadcrumbExtension = [] %}
 
 {% block breadcrumbs %}
     {% set breadcrumbSteps = [
@@ -22,7 +22,7 @@
             url: path('quote-request'),
         },
     ] %}
-    {% set breadcrumbSteps = breadcrumbSteps | merge(breadcrumbExtend) %}
+    {% set breadcrumbSteps = breadcrumbSteps | merge(breadcrumbExtension) %}
 
     {% include molecule('breadcrumb') with {
         data: {

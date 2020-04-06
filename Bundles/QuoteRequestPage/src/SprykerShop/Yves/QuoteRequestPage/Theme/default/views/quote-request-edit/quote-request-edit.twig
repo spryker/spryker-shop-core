@@ -11,7 +11,7 @@
 } %}
 
 {% block breadcrumbs %}
-    {% set breadcrumbExtend = [
+    {% set breadcrumbExtension = [
         {
             label: '#' ~ data.quoteRequestForm.vars.value.quoteRequestReference,
             url: url('quote-request/details', {
