@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\MerchantProductOfferWidget\Plugin\CartPage;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CartPageExtension\Dependency\Plugin\PreAddToCartPluginInterface;
 
@@ -28,7 +27,7 @@ class MerchantProductOfferShipmentPreAddToCartPlugin extends AbstractPlugin impl
     public function preAddToCart(ItemTransfer $itemTransfer, array $params): ItemTransfer
     {
         if (!$itemTransfer->getShipment()) {
-            $itemTransfer->setShipment(new ShipmentTransfer());
+            return $itemTransfer;
         }
 
         $itemTransfer->getShipment()->setMerchantReference($itemTransfer->getMerchantReference());

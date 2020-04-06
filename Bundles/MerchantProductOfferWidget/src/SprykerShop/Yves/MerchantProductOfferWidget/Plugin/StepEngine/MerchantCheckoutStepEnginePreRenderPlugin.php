@@ -30,6 +30,10 @@ class MerchantCheckoutStepEnginePreRenderPlugin implements StepEnginePreRenderPl
         }
 
         foreach ($dataTransfer->getItems() as $itemTransfer) {
+            if (!$itemTransfer->getShipment()) {
+                continue;
+            }
+
             $itemTransfer->getShipment()->setMerchantReference($itemTransfer->getMerchantReference());
         }
 
