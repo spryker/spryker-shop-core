@@ -22,7 +22,6 @@
     cartRuleDiscounts: [],
     cartQuantity: cartQuantity is defined ? cartQuantity : app['cart.quantity'] | default,
     shipmentGroups: [],
-    priceMode: null,
 
     prices: {
         subTotal: required,
@@ -33,7 +32,6 @@
     },
 } %}
 
-{% set priceModeGross = 'GROSS_MODE' %}
 {% set shipmentExpenseType = 'SHIPMENT_EXPENSE_TYPE' %}
 
 {% macro itemDiscounts(discounts, title) %}
