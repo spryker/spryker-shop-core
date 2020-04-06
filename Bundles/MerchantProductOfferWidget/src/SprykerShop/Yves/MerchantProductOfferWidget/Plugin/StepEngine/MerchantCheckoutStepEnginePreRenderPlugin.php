@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\MerchantProductOfferWidget\Plugin\StepEngine;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngineExtension\Dependency\Plugin\StepEnginePreRenderPluginInterface;
 
 class MerchantCheckoutStepEnginePreRenderPlugin implements StepEnginePreRenderPluginInterface
@@ -18,16 +19,20 @@ class MerchantCheckoutStepEnginePreRenderPlugin implements StepEnginePreRenderPl
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function execute(AbstractTransfer $dataTransfer): AbstractTransfer
     {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+        if (!$dataTransfer instanceof QuoteTransfer) {
+            return $dataTransfer;
+        }
+
+        foreach ($dataTransfer->getItems() as $itemTransfer) {
             $itemTransfer->getShipment()->setMerchantReference($itemTransfer->getMerchantReference());
         }
 
-        return $quoteTransfer;
+        return $dataTransfer;
     }
 }
