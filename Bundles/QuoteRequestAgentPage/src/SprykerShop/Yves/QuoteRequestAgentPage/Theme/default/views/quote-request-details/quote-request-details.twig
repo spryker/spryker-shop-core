@@ -13,7 +13,7 @@
 {% set isLatestVersion = data.version.idQuoteRequestVersion == data.quoteRequest.latestVersion.idQuoteRequestVersion %}
 
 {% block breadcrumbs %}
-    {% set breadcrumbExtend = [
+    {% set breadcrumbExtension = [
         {
             label: '#' ~ data.quoteRequest.quoteRequestReference,
         },
