@@ -8,6 +8,7 @@
     isQuoteRequestCancelable: _view.isQuoteRequestCancelable,
     isQuoteRequestRevisable: _view.isQuoteRequestRevisable,
     isQuoteRequestEditable: _view.isQuoteRequestEditable,
+    shipmentExpenses: _view.shipmentExpenses,
 } %}
 
 {% set isLatestVersion = data.version.idQuoteRequestVersion == data.quoteRequest.latestVersion.idQuoteRequestVersion %}
@@ -71,6 +72,7 @@
                     quote: quote,
                     hasMultiShipments: hasMultiShipments,
                     quoteRequestReference: data.quoteRequest.quoteRequestReference,
+                    shipmentExpenses: data.shipmentExpenses,
                 },
             } only %}
         {% endblock %}

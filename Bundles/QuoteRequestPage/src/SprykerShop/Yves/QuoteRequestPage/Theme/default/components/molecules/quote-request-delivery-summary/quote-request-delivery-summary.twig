@@ -9,6 +9,7 @@
     hasMultiShipments: false,
     isEditable: false,
     quoteRequestReference: false,
+    shipmentExpenses: [],
 } %}
 
 {% set hasShipment = data.quote.shipment is not null %}
@@ -148,11 +149,11 @@
                 {% endblock %}
             {% endif %}
 
-            {% if not data.hasMultiShipments and hasSingleShippingMethod %}
+            {% if not data.hasMultiShipments and hasSingleShippingMethod and shipmentExpenses | length > 0 %}
                 {% block shipmentMethodInformation %}
                     {% include molecule('shipment-information', 'CustomerPage') ignore missing with {
                         data: {
-                            shipmentMethod: data.quote.shipment.method,
+                            shipmentExpense: shipmentExpenses | first,
                         },
                     } only %}
                 {% endblock %}

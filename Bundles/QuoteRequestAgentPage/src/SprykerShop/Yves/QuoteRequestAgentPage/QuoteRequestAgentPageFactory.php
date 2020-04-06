@@ -29,6 +29,8 @@ use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPa
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToStoreClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentPageToShipmentServiceInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentPageToUtilDateTimeServiceInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Extractor\ExpenseExtractor;
+use SprykerShop\Yves\QuoteRequestAgentPage\Extractor\ExpenseExtractorInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Extractor\ItemExtractor;
 use SprykerShop\Yves\QuoteRequestAgentPage\Extractor\ItemExtractorInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\DataProvider\QuoteRequestAgentFormDataProvider;
@@ -241,6 +243,14 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
             $this->createEntryStep(),
             $this->createSaveRequestForQuoteStep()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Extractor\ExpenseExtractorInterface
+     */
+    public function createExpenseExtractor(): ExpenseExtractorInterface
+    {
+        return new ExpenseExtractor($this->getShipmentService());
     }
 
     /**

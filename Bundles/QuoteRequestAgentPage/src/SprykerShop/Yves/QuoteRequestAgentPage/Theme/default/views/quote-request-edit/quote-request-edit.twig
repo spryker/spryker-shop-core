@@ -10,6 +10,7 @@
     shipmentGroups: _view.quoteRequestForm.latestVersion.shipmentGroups.vars.value | default([]),
     itemsWithShipment: _view.itemsWithShipment | default([]),
     itemsWithoutShipment: _view.itemsWithoutShipment | default([]),
+    shipmentExpenses: _view.shipmentExpenses | default([]),
 } %}
 
 {% block breadcrumbs %}
@@ -94,6 +95,7 @@
             hasMultiShipments: hasMultiShipments,
             isConfiguredBundleEditable: false,
             isConfiguredBundleQuantitySummaryVisible: true,
+            shipmentExpenses: data.shipmentExpenses,
         },
         embed: {
             itemForms: data.quoteRequestForm.latestVersion.quote.items,
@@ -233,6 +235,7 @@
                     shipment: data.shipment,
                     hasMultiShipments: true,
                     priceMode: data.quote.priceMode,
+                    shipmentExpense: data.shipmentExpenses[embed.shipmentGroup.hash] is defined ? data.shipmentExpenses[embed.shipmentGroup.hash] : null,
                 },
                 embed: {
                     shipmentGroupForms: embed.shipmentGroupForms,
@@ -269,6 +272,7 @@
             quote: quote,
             items: data.itemsWithShipment,
             shipment: quote.shipment,
+            shipmentExpenses: data.shipmentExpenses,
             hasMultiShipments: hasMultiShipments,
             isConfiguredBundleEditable: true,
         },
@@ -412,6 +416,7 @@
                 data: {
                     shipment: data.quote.shipment,
                     priceMode: data.quote.priceMode,
+                    shipmentExpense: data.shipmentExpenses | length > 0 ? data.shipmentExpenses | first : null
                 },
                 embed: {
                     shipmentGroupForm: embed.shipmentGroupForms | first,
@@ -594,6 +599,7 @@
                     hasMultiShipments: hasMultiShipments,
                     isEditable: true,
                     quoteRequestReference: data.quoteRequest.quoteRequestReference,
+                    shipmentExpenses: data.shipmentExpenses,
                 }
             } only %}
                 {% block body %}

@@ -8,6 +8,7 @@
     shipment: required,
     hasMultiShipments: false,
     priceMode: null,
+    shipmentExpense: null,
 } %}
 
 {% set shipmentMethod = data.shipment.method is defined ? data.shipment.method %}
@@ -35,14 +36,13 @@
     {% block shipmentInformationWrapper %}
         <div class="box">
             {% block shipmentInformation %}
-                {% if shipmentMethod %}
+                {% if shipmentMethod and data.shipmentExpense %}
                     {% block shipmentMethod %}
                         <div class="grid grid--justify">
                             {% include molecule('shipment-information', 'CustomerPage') ignore missing with {
                                 class: 'col',
                                 data: {
-                                    shipmentMethod: shipmentMethod,
-                                    priceMode: data.priceMode,
+                                    shipmentExpense: data.shipmentExpense,
                                 },
                             } only %}
 

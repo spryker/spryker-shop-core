@@ -7,6 +7,7 @@
     quoteRequestForm: _view.quoteRequestForm,
     quoteRequest: _view.quoteRequestForm.vars.value,
     quoteRequestReference: _view.quoteRequestReference,
+    shipmentExpenses: _view.shipmentExpenses,
 } %}
 
 {% block breadcrumbs %}
@@ -67,6 +68,7 @@
                 hasMultiShipments: hasMultiShipments,
                 isEditable: true,
                 quoteRequestReference: data.quoteRequestReference,
+                shipmentExpenses: data.shipmentExpenses
             },
         } only %}
     {% endblock %}

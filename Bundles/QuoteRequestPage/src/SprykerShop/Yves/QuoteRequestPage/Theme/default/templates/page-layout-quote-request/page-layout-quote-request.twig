@@ -4,6 +4,7 @@
     shipmentGroups: _view.shipmentGroups | default([]),
     itemsWithShipment: _view.itemsWithShipment | default([]),
     itemsWithoutShipment: _view.itemsWithoutShipment | default([]),
+    shipmentExpenses: _view.shipmentExpenses | default([]),
 } %}
 
 {% set hasMultiShipments = data.shipmentGroups | length > 1 %}
@@ -189,6 +190,7 @@
                                                     hasMultiShipments: hasMultiShipments,
                                                     isConfiguredBundleEditable: false,
                                                     isConfiguredBundleQuantitySummaryVisible: true,
+                                                    shipmentExpense: data.shipmentExpenses[shipmentGroup.hash] is defined ? data.shipmentExpenses[shipmentGroup.hash] : null,
                                                 },
                                             } only %}
                                         {% endblock %}
@@ -205,6 +207,7 @@
                                     shipment: quote.shipment,
                                     hasMultiShipments: hasMultiShipments,
                                     isConfiguredBundleEditable: false,
+                                    shipmentExpense: data.shipmentExpenses | length > 0 ? data.shipmentExpenses | first : null
                                 },
                             } only %}
                         {% endblock %}

@@ -5,6 +5,7 @@
     quoteRequestForm: _view.quoteRequestForm,
     quoteRequest: _view.quoteRequestForm.vars.value,
     latestVersion: _view.quoteRequestForm.vars.value.latestVersion,
+    shipmentExpenses: _view.shipmentExpenses,
 } %}
 
 {% block breadcrumbs %}
@@ -57,6 +58,7 @@
             data: {
                 quote: quote,
                 hasMultiShipments: hasMultiShipments,
+                shipmentExpenses: data.shipmentExpenses,
             },
         } only %}
     {% endblock %}

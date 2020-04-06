@@ -79,6 +79,7 @@ class QuoteRequestEditController extends QuoteRequestAbstractController
             'quoteRequestReference' => $quoteRequestTransfer->getQuoteRequestReference(),
             'itemsWithShipment' => $itemExtractor->extractItemsWithShipment($quoteRequestTransfer),
             'itemsWithoutShipment' => $itemExtractor->extractItemsWithoutShipment($quoteRequestTransfer),
+            'shipmentExpenses' => $this->getFactory()->createExpenseExtractor()->extractShipmentExpenses($quoteRequestTransfer),
         ];
     }
 

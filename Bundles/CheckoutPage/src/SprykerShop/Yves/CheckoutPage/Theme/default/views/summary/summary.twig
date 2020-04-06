@@ -20,6 +20,7 @@
     shipmentGroups: _view.shipmentGroups,
     isPlaceableOrder: _view.isPlaceableOrder,
     isPlaceableOrderErrors: _view.isPlaceableOrderErrors,
+    shipmentExpenses: _view.shipmentExpenses,
 
     forms: {
         summary: _view.summaryForm,
@@ -119,21 +120,21 @@
                     </a>
                 </div>
                 {% if not isGiftCardExists %}
-                    <div class="box">
-                        <h6>{{ 'checkout.step.summary.delivery_method' | trans }}</h6>
-                        <hr>
-                        {% include molecule('shipment-information', 'CustomerPage') ignore missing with {
-                            data: {
-                                shipmentMethod: shipmentGroup.shipment.method,
-                                priceMode: data.cart.priceMode,
-                            },
-                        } only %}
+                    {% if data.shipmentExpenses[shipmentGroup.hash] is defined %}
+                        <div class="box">
+                            <h6>{{ 'checkout.step.summary.delivery_method' | trans }}</h6>
+                            <hr>
+                            {% include molecule('shipment-information', 'CustomerPage') ignore missing with {
+                                data: {
+                                    shipmentExpense: data.shipmentExpenses[shipmentGroup.hash],
+                                },
+                            } only %}
 
-                        <a href="{{ url('checkout-shipment') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-shipment') }}>
-                            {{ 'general.edit.button' | trans }}
-                        </a>
-                    </div>
-
+                            <a href="{{ url('checkout-shipment') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-shipment') }}>
+                                {{ 'general.edit.button' | trans }}
+                            </a>
+                        </div>
+                    {% endif %}
                     <div class="box">
                         <h6>{{ 'checkout.step.summary.requested_delivery_date' | trans }}</h6>
                         <hr>

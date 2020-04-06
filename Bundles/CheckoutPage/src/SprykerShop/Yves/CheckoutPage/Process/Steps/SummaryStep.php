@@ -20,6 +20,11 @@ use Symfony\Component\HttpFoundation\Request;
 class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
 {
     /**
+     * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE
+     */
+    public const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
+
+    /**
      * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface
      */
     protected $productBundleClient;
@@ -119,6 +124,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
             'totalCosts' => $this->getShipmentTotalCosts($shipmentGroups, $quoteTransfer),
             'isPlaceableOrder' => $isPlaceableOrderResponseTransfer->getIsSuccess(),
             'isPlaceableOrderErrors' => $isPlaceableOrderResponseTransfer->getErrors(),
+            'shipmentExpenses' => $this->getShipmentExpenses($quoteTransfer),
         ];
     }
 
@@ -230,5 +236,26 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
         }
 
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer[]
+     */
+    protected function getShipmentExpenses(QuoteTransfer $quoteTransfer): array
+    {
+        $shipmentExpenses = [];
+
+        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
+            if ($expenseTransfer->getType() !== static::SHIPMENT_EXPENSE_TYPE) {
+                continue;
+            }
+
+            $shipmentHashKey = $this->shipmentService->getShipmentHashKey($expenseTransfer->getShipment());
+            $shipmentExpenses[$shipmentHashKey] = $expenseTransfer;
+        }
+
+        return $shipmentExpenses;
     }
 }

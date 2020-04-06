@@ -6,33 +6,22 @@
 } %}
 
 {% define data = {
-    shipmentMethod: required,
-    priceMode: null,
+    shipmentExpense: required,
 } %}
 
 {% block class -%}
     {{ parent() }} list
 {%- endblock %}
 
-{% set method = data.shipmentMethod %}
-{% set priceModeGross = 'GROSS_MODE' %}
-{% set shipmentMethodSourcePrice = null %}
-
-{% if method.sourcePrice %}
-    {% set shipmentMethodSourcePrice = (data.priceMode == priceModeGross) ? method.sourcePrice.grossAmount : method.sourcePrice.netAmount %}
-{% endif %}
-
 {% block body %}
-    <li class="list__item">{{ method.carrierName }}</li>
+    <li class="list__item">{{ data.shipmentExpense.shipment.method.carrierName }}</li>
     <li class="list__item">
-        {{ method.name }}<br>
+        {{ data.shipmentExpense.shipment.method.name }}<br>
         <span>
-            {% if shipmentMethodSourcePrice or shipmentMethodSourcePrice is same as(0) %}
-                <s>{{ method.storeCurrencyPrice | money(true, method.currencyIsoCode) }}</s>
-                {{ shipmentMethodSourcePrice | money(true, method.currencyIsoCode) }}
-            {% else %}
-                {{ method.storeCurrencyPrice | money(true, method.currencyIsoCode) }}
+            {% if data.shipmentExpense.shipment.method.storeCurrencyPrice != data.shipmentExpense.sumPrice %}
+                <s>{{ data.shipmentExpense.shipment.method.storeCurrencyPrice | money(true, data.shipmentExpense.shipment.method.currencyIsoCode) }}</s>
             {% endif %}
+                {{ data.shipmentExpense.sumPrice | money(true, data.shipmentExpense.shipment.method.currencyIsoCode) }}
         </span>
     </li>
 {% endblock %}

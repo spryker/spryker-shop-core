@@ -130,7 +130,7 @@
                         <div class="spacing-y spacing-y--inner">
                             {% include molecule('shipment-information', 'CustomerPage') with {
                                 data: {
-                                    shipmentMethod: expense.shipment.method,
+                                    shipmentMethod: expense,
                                 },
                             } only %}
                         </div>

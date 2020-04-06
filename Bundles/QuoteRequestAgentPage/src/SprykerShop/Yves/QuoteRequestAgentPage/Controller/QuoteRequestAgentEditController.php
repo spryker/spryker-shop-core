@@ -124,6 +124,7 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
             'quoteRequestForm' => $quoteRequestForm->createView(),
             'itemsWithShipment' => $itemExtractor->extractItemsWithShipment($quoteRequestTransfer),
             'itemsWithoutShipment' => $itemExtractor->extractItemsWithoutShipment($quoteRequestTransfer),
+            'shipmentExpenses' => $this->getFactory()->createExpenseExtractor()->extractShipmentExpenses($quoteRequestTransfer),
         ];
     }
 

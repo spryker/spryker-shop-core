@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ShipmentTransfer;
 
 interface QuoteRequestAgentPageToShipmentServiceInterface
 {
@@ -17,4 +18,11 @@ interface QuoteRequestAgentPageToShipmentServiceInterface
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
     public function groupItemsByShipment(iterable $itemTransferCollection): ArrayObject;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return string
+     */
+    public function getShipmentHashKey(ShipmentTransfer $shipmentTransfer): string;
 }

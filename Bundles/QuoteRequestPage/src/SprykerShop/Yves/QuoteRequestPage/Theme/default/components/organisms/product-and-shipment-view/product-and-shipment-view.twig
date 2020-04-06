@@ -11,6 +11,7 @@
     hasMultiShipments: required,
     isConfiguredBundleEditable: true,
     isConfiguredBundleQuantitySummaryVisible: false,
+    shipmentExpense: null,
 } %}
 
 {% block body %}
@@ -83,6 +84,7 @@
                 {% include molecule('quote-request-shipment-information', 'QuoteRequestPage') with {
                     data: {
                         shipment: data.shipment,
+                        shipmentExpense: data.shipmentExpense,
                         hasMultiShipments: data.hasMultiShipments,
                         priceMode: data.quote.priceMode,
                     },
