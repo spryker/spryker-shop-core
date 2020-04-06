@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\MerchantProductOfferWidget\Plugin\StepEngine;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\StepEngine\StepEnginePreRenderPluginInterface;
+use Spryker\Yves\StepEngineExtension\Dependency\Plugin\StepEnginePreRenderPluginInterface;
 
 class MerchantCheckoutStepEnginePreRenderPlugin implements StepEnginePreRenderPluginInterface
 {

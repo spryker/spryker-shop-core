@@ -795,7 +795,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\StepEngine\StepEnginePreRenderPluginInterface[]
+     * @return \Spryker\Yves\StepEngineExtension\Dependency\Plugin\StepEnginePreRenderPluginInterface[]
      */
     protected function getCheckoutStepEnginePreRenderPlugins(): array
     {

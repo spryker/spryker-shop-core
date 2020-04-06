@@ -437,7 +437,7 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\StepEngine\StepEnginePreRenderPluginInterface[]
+     * @return \Spryker\Yves\StepEngineExtension\Dependency\Plugin\StepEnginePreRenderPluginInterface[]
      */
     public function getCheckoutStepEnginePreRenderPlugins(): array
     {
