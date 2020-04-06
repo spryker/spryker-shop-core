@@ -17,9 +17,9 @@
     is-scrollable
 {% endblock %}
 
-{% set isCompanyUserColumnsVisible = data.orderSearchForm
-    and data.orderSearchForm.companyBusinessUnit is defined
-    and data.orderSearchForm.companyBusinessUnit.vars.value != 'customer'
+{% set isCompanyUserColumnsVisible = data.orderSearchForm.vars.value
+    and data.orderSearchForm.vars.value.companyBusinessUnit is defined
+    and data.orderSearchForm.vars.value.companyBusinessUnit != 'customer'
 %}
 
 {% block body %}
