@@ -98,6 +98,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/cart/add/{sku}', 'CartPage', 'Cart', 'addAction');
         $route = $route->setRequirement('sku', static::SKU_PATTERN);
+        $route = $route->setMethods(['POST']);
         $routeCollection->add(static::ROUTE_CART_ADD, $route);
 
         return $routeCollection;
@@ -114,6 +115,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/cart/quick-add/{sku}', 'CartPage', 'Cart', 'quickAddAction');
         $route = $route->setRequirement('sku', static::SKU_PATTERN);
+        $route = $route->setMethods(['POST']);
         $routeCollection->add(static::ROUTE_CART_QUICK_ADD, $route);
 
         return $routeCollection;
@@ -129,6 +131,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $route = $this->buildRoute('/cart/remove/{sku}/{groupKey}', 'CartPage', 'Cart', 'removeAction');
         $route = $route->setRequirement('sku', static::SKU_PATTERN);
         $route = $route->setDefault('groupKey', '');
+        $route = $route->setMethods(['POST']);
 
         $routeCollection->add(static::ROUTE_CART_REMOVE, $route);
 

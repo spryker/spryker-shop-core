@@ -75,6 +75,7 @@ class CartController extends AbstractController
         $quoteClient = $this->getFactory()->getQuoteClient();
 
         return [
+            'removeCartItemForm' => $this->getFactory()->createCartPageFormFactory()->getRemoveForm()->createView(),
             'cart' => $quoteTransfer,
             'isQuoteEditable' => $quoteClient->isQuoteEditable($quoteTransfer),
             'isQuoteLocked' => $quoteClient->isQuoteLocked($quoteTransfer),
@@ -92,6 +93,12 @@ class CartController extends AbstractController
      */
     public function addAction(Request $request, $sku)
     {
+        $form = $this->getFactory()->createCartPageFormFactory()->getAddToCartForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return $this->redirectResponseExternal($request->headers->get('referer'));
+        }
+
         $quantity = $request->get('quantity', 1);
 
         if (!$this->canAddCartItem()) {
@@ -178,6 +185,12 @@ class CartController extends AbstractController
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
+        $form = $this->getFactory()->createCartPageFormFactory()->getRemoveForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return $this->redirectResponseExternal($request->headers->get('referer'));
         }
 
         $this->getFactory()

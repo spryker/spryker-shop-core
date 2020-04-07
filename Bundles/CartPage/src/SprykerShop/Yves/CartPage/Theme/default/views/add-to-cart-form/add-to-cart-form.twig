@@ -1,0 +1,15 @@
+{% extends template('widget') %}
+
+{% define data = {
+    form: _widget.addToCartForm,
+    config: _widget.config,
+    product: _widget.product,
+    isDisabled: _widget.isAddToCartDisabled,
+    options: _widget.quantityOptions
+} %}
+
+{% block body %}
+    {{ form_start(data.form, {'action': path("cart/add", {"sku": data.product.sku}) }) }}
+        {% block embeddedData %}{% endblock %}
+    {{ form_end(data.form) }}
+{% endblock %}

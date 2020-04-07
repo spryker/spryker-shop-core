@@ -90,65 +90,68 @@
     {% endembed %}
 
     <hr>
-    <form method="POST" class="{{ config.jsName }}__form" action="{{ path("cart/add", {"sku": sku}) }}">
-        {% widget 'ProductOptionConfiguratorWidget' args [data.product] only %}
-        {% elsewidget 'ProductOptionWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductOptionConfiguratorWidget instead. #}
-        {% endwidget %}
 
-        {% if can('SeeAddToCartPermissionPlugin') %}
-            {% widget 'ProductPackagingUnitWidget' args [data.product, isDisabled, options] only %}
-            {% elsewidget 'ProductPackagingUnitWidgetPlugin' args [data.product, isDisabled, options] only %} {# @deprecated Use ProductPackagingUnitWidget instead. #}
-            {% elsewidget 'ManageProductMeasurementUnitWidget' args [data.product, isDisabled, options] only %}
-            {% elsewidget 'ProductMeasurementUnitWidgetPlugin' args [data.product, isDisabled, options] only %} {# @deprecated Use ManageProductMeasurementUnitWidget instead. #}
-            {% nowidget %}
-                <div class="grid grid--bottom grid--justify">
-                    <div class="col col--sm-5">
-                        <label>
-                            {{'cart.item_quantity' | trans}}
-                            {% include atom('select') with {
-                                modifiers: ['expand'],
-                                data: {
-                                    options: options,
-                                },
-                                attributes: {
-                                    name: 'quantity',
-                                    disabled: isDisabled,
-                                },
-                            } only %}
-                        </label>
-                    </div>
-
-                    <div class="col col--sm-6">
-                        <button type="submit" class="button button--success button--expand" data-init-single-click {{ isDisabled ? 'disabled' : '' }} {{ qa('add-to-cart-button') }}>
-                            {% include atom('icon') with {
-                                data: {
-                                    name: 'cart-plus',
-                                },
-                            } only %}
-                            {{ 'page.detail.add-to-cart' | trans }}
-                        </button>
-                    </div>
-                </div>
+    {% widget 'AddToCartFormWidget'  args [config, data.product, isDisabled, options] only %}
+        {% block embeddedData %}
+            {% widget 'ProductOptionConfiguratorWidget' args [data.product] only %}
+            {% elsewidget 'ProductOptionWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductOptionConfiguratorWidget instead. #}
             {% endwidget %}
-        {% endif %}
 
-        {% widget 'AddToMultiCartWidget' args [isDisabled] only %}
-        {% elsewidget 'MultiCartWidgetPlugin' args [data.product, isDisabled] only %} {# @deprecated Use AddToMultiCartWidget instead. #}
-        {% endwidget %}
+            {% if can('SeeAddToCartPermissionPlugin') %}
+                {% widget 'ProductPackagingUnitWidget' args [data.product, data.isDisabled, data.options] only %}
+                {% elsewidget 'ProductPackagingUnitWidgetPlugin' args [data.product, data.isDisabled, data.options] only %} {# @deprecated Use ProductPackagingUnitWidget instead. #}
+                {% elsewidget 'ManageProductMeasurementUnitWidget' args [data.product, data.isDisabled, data.options] only %}
+                {% elsewidget 'ProductMeasurementUnitWidgetPlugin' args [data.product, data.isDisabled, data.options] only %} {# @deprecated Use ManageProductMeasurementUnitWidget instead. #}
+                {% nowidget %}
+                    <div class="grid grid--bottom grid--justify">
+                        <div class="col col--sm-5">
+                            <label>
+                                {{'cart.item_quantity' | trans}}
+                                {% include atom('select') with {
+                                    modifiers: ['expand'],
+                                    data: {
+                                        options: options,
+                                    },
+                                    attributes: {
+                                        name: 'quantity',
+                                        disabled: data.isDisabled,
+                                    },
+                                } only %}
+                            </label>
+                        </div>
 
-        {% widget 'MerchantProductOfferWidget' args [data.product] only %}{% endwidget %}
+                        <div class="col col--sm-6">
+                            <button type="submit" class="button button--success button--expand" data-init-single-click {{ data.isDisabled ? 'disabled' : '' }} {{ qa('add-to-cart-button') }}>
+                                {% include atom('icon') with {
+                                    data: {
+                                        name: 'cart-plus',
+                                    },
+                                } only %}
+                                {{ 'page.detail.add-to-cart' | trans }}
+                            </button>
+                        </div>
+                    </div>
+                {% endwidget %}
+            {% endif %}
 
-        {% if widgetExists('AvailabilityWidgetPlugin') %}
-            {{ widget('AvailabilityWidgetPlugin', data.product) }} {# @deprecated Use molecule('availability-product', 'AvailabilityWidget') instead. #}
-        {% else %}
-            {% include molecule('availability-product', 'AvailabilityWidget') ignore missing with {
-                data: {
-                    idProductConcrete: data.product.idProductConcrete,
-                    isAvailable: data.product.available,
-                },
-            } only %}
-        {% endif %}
-    </form>
+            {% widget 'AddToMultiCartWidget' args [data.isDisabled] only %}
+            {% elsewidget 'MultiCartWidgetPlugin' args [data.product, data.isDisabled] only %} {# @deprecated Use AddToMultiCartWidget instead. #}
+            {% endwidget %}
+
+            {% widget 'MerchantProductOfferWidget' args [data.product] only %}{% endwidget %}
+
+            {% if widgetExists('AvailabilityWidgetPlugin') %}
+                {{ widget('AvailabilityWidgetPlugin', data.product) }} {# @deprecated Use molecule('availability-product', 'AvailabilityWidget') instead. #}
+            {% else %}
+                {% include molecule('availability-product', 'AvailabilityWidget') ignore missing with {
+                    data: {
+                        idProductConcrete: data.product.idProductConcrete,
+                        isAvailable: data.product.available,
+                    },
+                } only %}
+            {% endif %}
+        {% endblock %}
+    {% endwidget %}
 
     {% if not isAvailable and not isProductAbstract %}
         {% widget 'AvailabilityNotificationSubscriptionWidget' args [data.product] only %}{% endwidget %}

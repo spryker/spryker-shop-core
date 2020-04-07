@@ -52,30 +52,32 @@
                                     {% block actions %}
                                         {% set disabled = data.product.idProductConcrete is empty %}
 
-                                        <form method="POST" action="/cart/add/{{ data.sku }}" class="grid grid--bottom grid--justify">
-                                            <div class="col col--sm-5">
-                                                {% include molecule('quantity-selector') with {
-                                                    data: {
-                                                        maxQuantity: data.product.promotionItem.maxQuantity,
-                                                        hasUpdateButton: false,
-                                                    },
-                                                } only %}
-                                            </div>
-
-                                            <div class="col col--sm-6">
-                                                <input type="hidden" value="{{ data.sku }}" name="groupKey">
-                                                <input type="hidden" value="{{ data.product.promotionItem.discount.discountPromotion.idDiscountPromotion }}" name="idDiscountPromotion">
-
-                                                <button type="submit" class="button button--success button--expand" data-init-single-click {{ disabled ? 'disabled' }}>
-                                                    {% include atom('icon') with {
+                                        {% widget 'AddToCartFormWidget'  args [config, data.product, disabled] only %}
+                                            {% block embeddedData %}
+                                                <div class="col col--sm-5">
+                                                    {% include molecule('quantity-selector') with {
                                                         data: {
-                                                            name: 'cart-plus',
+                                                            maxQuantity: data.product.promotionItem.maxQuantity,
+                                                            hasUpdateButton: false,
                                                         },
                                                     } only %}
-                                                    {{ 'page.detail.add-to-cart' | trans }}
-                                                </button>
-                                            </div>
-                                        </form>
+                                                </div>
+
+                                                <div class="col col--sm-6">
+                                                    <input type="hidden" value="{{ data.sku }}" name="groupKey">
+                                                    <input type="hidden" value="{{ data.product.promotionItem.discount.discountPromotion.idDiscountPromotion }}" name="idDiscountPromotion">
+
+                                                    <button type="submit" class="button button--success button--expand" data-init-single-click {{ disabled ? 'disabled' }}>
+                                                        {% include atom('icon') with {
+                                                            data: {
+                                                                name: 'cart-plus',
+                                                            },
+                                                        } only %}
+                                                        {{ 'page.detail.add-to-cart' | trans }}
+                                                    </button>
+                                                </div>
+                                            {% endblock %}
+                                        {% endwidget %}
                                     {% endblock %}
                                 </div>
                             {% endblock %}

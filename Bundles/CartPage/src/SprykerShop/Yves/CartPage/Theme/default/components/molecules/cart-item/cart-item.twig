@@ -101,9 +101,9 @@
             {% endif %}
 
             {% if canEditCart %}
-                <a class="float-right" href="{{ path('cart/remove', {'sku': data.cartItem.sku, 'groupKey': data.cartItem.groupKey }) }}">
-                    &times; {{ 'remove' | trans }}
-                </a>
+                {{ form_start(_view.removeCartItemForm, {'action': path('cart/remove', {'sku': data.cartItem.sku, 'groupKey': data.cartItem.groupKey }) }) }}
+                    {{ form_widget(_view.removeCartItemForm.submit, { 'label': 'remove' | trans  , 'attr' : { 'class':'float-right link' } }) }}
+                {{ form_end(_view.removeCartItemForm) }}
             {% endif %}
 
             {% block cartItemNote %}
