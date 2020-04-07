@@ -228,7 +228,7 @@
                 </div>
 
                 <div class="col">
-                    {% widget 'QuoteRequestCheckoutWidget' args [data.form.vars.value, data.backUrl] only %}
+                    {% widget 'QuoteRequestActionsWidget' args [data.form.vars.value, data.backUrl] only %}
                         {% block saveButton %}{% endblock %}
                         {% block backButton %}{% endblock %}
                     {% endwidget %}

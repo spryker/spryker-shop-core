@@ -87,9 +87,9 @@
             {% endfor %}
         {% endblock %}
         {% block actions %}
-            {% set quoteRequestCheckoutWidget = findWidget('QuoteRequestCheckoutWidget', [data.cart, data.backUrl]) %}
-            {% if quoteRequestCheckoutWidget and quoteRequestCheckoutWidget.isVisible %}
-                {% widget quoteRequestCheckoutWidget only %}{% endwidget %}
+            {% set QuoteRequestActionsWidget = findWidget('QuoteRequestActionsWidget', [data.cart, data.backUrl]) %}
+            {% if QuoteRequestActionsWidget and QuoteRequestActionsWidget.isVisible %}
+                {% widget QuoteRequestActionsWidget only %}{% endwidget %}
             {% else %}
                 {{ parent() }}
             {% endif %}
