@@ -33,7 +33,7 @@ class QuoteRequestActionsWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'QuoteRequestCheckoutWidget';
+        return 'QuoteRequestActionsWidget';
     }
 
     /**
