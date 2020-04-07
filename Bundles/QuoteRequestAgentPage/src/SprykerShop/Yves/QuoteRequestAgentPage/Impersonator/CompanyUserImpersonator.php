@@ -13,6 +13,11 @@ use Generated\Shared\Transfer\QuoteRequestTransfer;
 class CompanyUserImpersonator implements CompanyUserImpersonatorInterface
 {
     /**
+     * @uses \Symfony\Component\Security\Http\Firewall\SwitchUserListener::EXIT_VALUE
+     */
+    protected const EXIT_VALUE = '_exit';
+
+    /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::PARAM_QUOTE_REQUEST_REFERENCE
      */
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
@@ -35,7 +40,7 @@ class CompanyUserImpersonator implements CompanyUserImpersonatorInterface
         if ($companyUserTransfer && $companyUserTransfer->getIdCompanyUser() !== $quoteRequestTransfer->getCompanyUser()->getIdCompanyUser()) {
             return [
                 static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestTransfer->getQuoteRequestReference(),
-                static::PARAM_SWITCH_USER => '_exit',
+                static::PARAM_SWITCH_USER => static::EXIT_VALUE,
             ];
         }
 
