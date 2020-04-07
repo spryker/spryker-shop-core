@@ -71,6 +71,8 @@ class QuickOrderPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getAllowedCsvFileMimeTypes(): array
