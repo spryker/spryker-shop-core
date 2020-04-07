@@ -38,4 +38,12 @@ class FormFactory extends AbstractFactory
     {
         return $this->getFormFactory()->create(AddToCartForm::class);
     }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getAddItemsForm()
+    {
+        return $this->getFormFactory()->create(AddItemsForm::class);
+    }
 }

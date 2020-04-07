@@ -69,6 +69,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCartAddItemsRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cart/add-items', 'CartPage', 'Cart', 'addItemsAction');
+        $route = $route->setMethods(['POST']);
         $routeCollection->add(static::ROUTE_CART_ADD_ITEMS, $route);
 
         return $routeCollection;

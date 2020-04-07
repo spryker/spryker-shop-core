@@ -21,28 +21,30 @@
     <hr>
     {% block header %}
         {% block addToCartForm %}
-            <form method="POST" class="{{ data.formClass }}" action="{{ path('cart/add-items') }}">
-                {% set isDisabled = false %}
+            {% widget 'AddItemsFormWidget'  args [config, data, data.products] only %}
+                {% block embeddedData %}
+                    {% set isDisabled = false %}
 
-                {% for product in data.products %}
-                    {% if product.idProductConcrete is not empty %}
-                        {% if product.available %}
-                            <input type="hidden" name="items[{{ loop.index }}][sku]" value="{{ product.sku }}">
-                            <input type="hidden" name="items[{{ loop.index }}][quantity]" value="1">
+                    {% for product in data.data.products %}
+                        {% if product.idProductConcrete is not empty %}
+                            {% if product.available %}
+                                <input type="hidden" name="items[{{ loop.index }}][sku]" value="{{ product.sku }}">
+                                <input type="hidden" name="items[{{ loop.index }}][quantity]" value="1">
+                            {% endif %}
+                        {% else %}
+                            {% set isDisabled = true %}
                         {% endif %}
-                    {% else %}
-                        {% set isDisabled = true %}
-                    {% endif %}
-                {% endfor %}
+                    {% endfor %}
 
-                <button type="submit" class="button {{ data.buttonClass }}" {{ isDisabled ? 'disabled' : 'data-init-single-click' }}>
-                    {{ 'product.set.detail.add-all-to-cart' | trans }}
-                </button>
+                    <button type="submit" class="button {{ data.data.buttonClass }}" {{ isDisabled ? 'disabled' : 'data-init-single-click' }}>
+                        {{ 'product.set.detail.add-all-to-cart' | trans }}
+                    </button>
 
-                {% block title %}
-                    {{ block('productSetTitle') }}
+                    {% block title %}
+                        {{ block('productSetTitle') }}
+                    {% endblock %}
                 {% endblock %}
-            </form>
+            {% endwidget %}
         {% endblock %}
 
         {% block description %}

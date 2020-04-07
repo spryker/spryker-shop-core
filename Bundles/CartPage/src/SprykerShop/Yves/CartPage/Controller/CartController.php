@@ -244,6 +244,12 @@ class CartController extends AbstractController
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
 
+        $form = $this->getFactory()->createCartPageFormFactory()->getAddItemsForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return $this->redirectResponseExternal($request->headers->get('referer'));
+        }
+
         $items = (array)$request->request->get(self::PARAM_ITEMS);
         $itemTransfers = $this->mapItems($items);
 

@@ -64,10 +64,10 @@
                                                 </div>
 
                                                 <div class="col col--sm-6">
-                                                    <input type="hidden" value="{{ data.sku }}" name="groupKey">
+                                                    <input type="hidden" value="{{ data.product.sku }}" name="groupKey">
                                                     <input type="hidden" value="{{ data.product.promotionItem.discount.discountPromotion.idDiscountPromotion }}" name="idDiscountPromotion">
 
-                                                    <button type="submit" class="button button--success button--expand" data-init-single-click {{ disabled ? 'disabled' }}>
+                                                    <button type="submit" class="button button--success button--expand" data-init-single-click {{ data.isDisabled ? 'disabled' }}>
                                                         {% include atom('icon') with {
                                                             data: {
                                                                 name: 'cart-plus',

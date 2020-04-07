@@ -37,30 +37,33 @@
 
     <div class="box">
         {% block header %}
-            <form method="POST" action="{{ path('cart/add-items') }}">
-                {% set isDisabled = false %}
+            {% widget 'AddItemsFormWidget'  args [config, data, data.products] only %}
+                {% block embeddedData %}
+                    {% set isDisabled = false %}
 
-                {% for product in data.products %}
-                    {% if product.idProductConcrete is not empty %}
-                        {% if product.available %}
-                            <input type="hidden" name="items[{{ loop.index }}][sku]" class="{{ config.jsName }}__product-sku-hidden-input" value="{{ product.sku }}">
-                            <input type="hidden" name="items[{{ loop.index }}][quantity]" value="1">
+                    {% for product in data.data.products %}
+                        {% if product.idProductConcrete is not empty %}
+                            {% if product.available %}
+                                <input type="hidden" name="items[{{ loop.index }}][sku]" class="{{ data.config.jsName }}__product-sku-hidden-input" value="{{ product.sku }}">
+                                <input type="hidden" name="items[{{ loop.index }}][quantity]" value="1">
+                            {% endif %}
+                        {% else %}
+                            {% set isDisabled = true %}
                         {% endif %}
-                    {% else %}
-                        {% set isDisabled = true %}
+                    {% endfor %}
+
+                    {% if (data.data.products | length) %}
+                        <button type="submit" class="button float-right" {{ isDisabled ? 'disabled' : 'data-init-single-click' }}>
+                            {{ 'product.set.detail.add-all-to-cart' | trans }}
+                        </button>
                     {% endif %}
-                {% endfor %}
 
-                {% if (data.products | length) %}
-                    <button type="submit" class="button float-right" {{ isDisabled ? 'disabled' : 'data-init-single-click' }}>
-                        {{ 'product.set.detail.add-all-to-cart' | trans }}
-                    </button>
-                {% endif %}
+                    {% block title %}
+                        <h5>{{ 'product.set.detail.set-contents' | trans }}</h5>
+                    {% endblock %}
 
-                {% block title %}
-                    <h5>{{ 'product.set.detail.set-contents' | trans }}</h5>
                 {% endblock %}
-            </form>
+            {% endwidget %}
 
             <hr class="box__separator">
             {% block description %}

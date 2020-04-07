@@ -28,30 +28,32 @@
     {% endblock %}
 
     {% block header %}
-        <form method="POST" action="{{ path('cart/add-items') }}">
-            {% set isDisabled = false %}
+        {% widget 'AddItemsFormWidget'  args [config, data, data.products] only %}
+            {% block embeddedData %}
+                {% set isDisabled = false %}
 
-            {% for product in data.products %}
-                {% if product.idProductConcrete is not empty %}
-                    {% if product.available %}
-                        <input type="hidden" name="items[{{ loop.index }}][sku]" value="{{ product.sku }}">
-                        <input type="hidden" name="items[{{ loop.index }}][quantity]" value="1">
+                {% for product in data.data.products %}
+                    {% if product.idProductConcrete is not empty %}
+                        {% if product.available %}
+                            <input type="hidden" name="items[{{ loop.index }}][sku]" value="{{ product.sku }}">
+                            <input type="hidden" name="items[{{ loop.index }}][quantity]" value="1">
+                        {% endif %}
+                    {% else %}
+                        {% set isDisabled = true %}
                     {% endif %}
-                {% else %}
-                    {% set isDisabled = true %}
+                {% endfor %}
+
+                {% if can('SeeAddToCartPermissionPlugin') %}
+                    <button type="submit" class="button float-right" {{ isDisabled ? 'disabled' : 'data-init-single-click' }}>
+                        {{ 'product.set.detail.add-all-to-cart' | trans }}
+                    </button>
                 {% endif %}
-            {% endfor %}
 
-            {% if can('SeeAddToCartPermissionPlugin') %}
-                <button type="submit" class="button float-right" {{ isDisabled ? 'disabled' : 'data-init-single-click' }}>
-                    {{ 'product.set.detail.add-all-to-cart' | trans }}
-                </button>
-            {% endif %}
-
-            {% block title %}
-                <h5>{{ 'product.set.detail.set-contents' | trans }}</h5>
+                {% block title %}
+                    <h5>{{ 'product.set.detail.set-contents' | trans }}</h5>
+                {% endblock %}
             {% endblock %}
-        </form>
+        {% endwidget %}
 
         {% block description %}
             {% if data.description %}
