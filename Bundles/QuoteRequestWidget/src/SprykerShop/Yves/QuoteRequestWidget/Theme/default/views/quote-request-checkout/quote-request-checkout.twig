@@ -7,24 +7,24 @@
 
 {% block body %}
     {% if data.isVisible %}
-        {% set classButtonBack = 'button button--secondary button--hollow' %}
-        {% set classButtonSave = 'button button--success' %}
-        {% set classButtonCancel = 'button button--secondary button--hollow' %}
+        {% set buttonBackClass = 'button button--secondary button--hollow' %}
+        {% set buttonSaveClass = 'button button--success' %}
+        {% set buttonCancelClass = 'button button--secondary button--hollow' %}
 
         {% block saveButton %}
-            <button type="submit" class="{{ classButtonSave }}">
+            <button type="submit" class="{{ buttonSaveClass }}">
                 {{ 'quote_request_page.quote_request.actions.save' | trans }}
             </button>
         {% endblock %}
 
         {% block backButton %}
-            <a href="{{ data.backUrl }}" class="{{ classButtonBack }}">
+            <a href="{{ data.backUrl }}" class="{{ buttonBackClass }}">
                 {{ 'general.back.button' | trans }}
             </a>
         {% endblock %}
 
         {% block cancelButton %}
-            <a href="{{ path('quote-request/cart/clear') }}" class="{{ classButtonCancel }}">
+            <a href="{{ path('quote-request/cart/clear') }}" class="{{ buttonCancelClass }}">
                 {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
             </a>
         {% endblock %}

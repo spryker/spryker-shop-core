@@ -73,12 +73,12 @@
     {% endblock %}
 
     {% block actions %}
-        {% set classButtonCancel = 'button button--expand' %}
-        {% set classButtonSubmit = 'button button--expand button--success' %}
+        {% set buttonCancelClass = 'button button--expand' %}
+        {% set buttonSubmitClass = 'button button--expand button--success' %}
 
         <div class="box spacing-top spacing-top--big">
             {% block actionCancel %}
-                <a class="{{ classButtonCancel }}" href="{{ url('cart') }}" data-init-single-click>
+                <a class="{{ buttonCancelClass }}" href="{{ url('cart') }}" data-init-single-click>
                     {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
                 </a>
             {% endblock %}
@@ -88,7 +88,7 @@
             {% endblock %}
 
             {% block actionSubmit %}
-                <button type="submit" class="{{ classButtonSubmit }}" data-init-single-click>
+                <button type="submit" class="{{ buttonSubmitClass }}" data-init-single-click>
                     {{ 'quote_request_page.quote_request.submit' | trans }}
                 </button>
             {% endblock %}

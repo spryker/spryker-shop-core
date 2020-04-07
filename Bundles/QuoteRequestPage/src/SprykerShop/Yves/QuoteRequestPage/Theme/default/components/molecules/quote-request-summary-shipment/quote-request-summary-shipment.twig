@@ -19,30 +19,30 @@
     {% endif %}
 {% endblock %}
 
-{% set classShipment = 'grid grid--justify' %}
-{% set classShipmentTitle = 'col' %}
-{% set classShipmentValue = 'col' %}
+{% set shipmentClass = 'grid grid--justify' %}
+{% set shipmentTitleClass = 'col' %}
+{% set shipmentValueClass = 'col' %}
 
 {% set priceModeGross = 'GROSS_MODE' %}
 {% set shipmentExpenseType = 'SHIPMENT_EXPENSE_TYPE' %}
 
 {% block body %}
     {% block title %}
-        <div class="{{ classShipment }}">
-            <strong class="{{ classShipmentTitle }}">{{ 'checkout.step.summary.shipment_costs_total' | trans }}</strong>
-            <strong class="{{ classShipmentValue }}">{{ data.shipmentTotal | money(true, data.currencyCode) }}</strong>
+        <div class="{{ shipmentClass }}">
+            <strong class="{{ shipmentTitleClass }}">{{ 'checkout.step.summary.shipment_costs_total' | trans }}</strong>
+            <strong class="{{ shipmentValueClass }}">{{ data.shipmentTotal | money(true, data.currencyCode) }}</strong>
         </div>
     {% endblock %}
     {% for expense in data.expenses if expense.type == shipmentExpenseType %}
         {% set sourceUnitPrice = (data.priceMode == priceModeGross) ? expense.unitGrossPrice : expense.unitNetPrice %}
 
         {% block summaryShipment %}
-            <div class="{{ classShipment }}">
-                <span class="{{ classShipmentTitle }}">
+            <div class="{{ shipmentClass }}">
+                <span class="{{ shipmentTitleClass }}">
                     {{ expense.shipment.method.carrierName | default }}
                     - {{ expense.shipment.method.name | default }}
                 </span>
-                <span class="{{ classShipmentValue }}">
+                <span class="{{ shipmentValueClass }}">
                     {{ sourceUnitPrice | money(true, data.currencyCode) }}
                 </span>
             </div>

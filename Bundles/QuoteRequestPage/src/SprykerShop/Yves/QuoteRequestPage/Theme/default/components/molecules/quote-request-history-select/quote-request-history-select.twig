@@ -18,18 +18,18 @@
     grid grid--middle spacing-bottom
 {% endblock %}
 
-{% set classLabel = 'col' %}
-{% set classValue = 'col' %}
+{% set labelClass = 'col' %}
+{% set valueClass = 'col' %}
 
 {% block body %}
     {% block label %}
-        <span class="{{ classLabel }}">
+        <span class="{{ labelClass }}">
             {{ 'quote_request_page.quote_request.labels.history' | trans }}:
         </span>
     {% endblock %}
 
     {% block value %}
-        <span class="{{ classValue }}">
+        <span class="{{ valueClass }}">
             {% if data.quoteRequestVersionReferences %}
                 {% block select %}
                     {% embed atom('select') with {
@@ -40,8 +40,10 @@
                         embed: {
                             versionReferences: data.quoteRequestVersionReferences,
                             currentVersionReference: data.version ? data.version.versionReference : null,
+                            selectJsName: config.jsName ~ '__select',
                         },
                     } only %}
+                        {% block selectClass %}{{ embed.selectJsName }}{% endblock %}
                         {% block options %}
                             {% for versionReference in embed.versionReferences %}
                                 {% set selectedOption = (versionReference == embed.currentVersionReference) ? 'selected' %}

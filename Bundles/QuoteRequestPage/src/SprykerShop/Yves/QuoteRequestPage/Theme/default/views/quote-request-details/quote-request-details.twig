@@ -78,17 +78,17 @@
         } only %}
     {% endblock %}
 
-    {% set classButtonBack = 'button button--expand button--hollow' %}
-    {% set classButtonCancel = 'button button--expand' %}
-    {% set classButtonRevise = 'button button--expand button--hollow' %}
-    {% set classButtonConvertToCart = 'button button--expand button--success' %}
-    {% set classButtonEdit = 'button button--expand button--success' %}
-    {% set classButtonSendToAgent = 'button button--expand button--success' %}
+    {% set buttonBackClass = 'button button--expand button--hollow' %}
+    {% set buttonCancelClass = 'button button--expand' %}
+    {% set buttonReviseClass = 'button button--expand button--hollow' %}
+    {% set buttonConvertToCartClass = 'button button--expand button--success' %}
+    {% set buttonEditClass = 'button button--expand button--success' %}
+    {% set buttonSendToAgentClass = 'button button--expand button--success' %}
 
     {% block actions %}
         <div class="box">
             {% block actionBack %}
-                <a class="{{ classButtonBack }}" href="{{ url('quote-request') }}">
+                <a class="{{ buttonBackClass }}" href="{{ url('quote-request') }}">
                     {{ 'quote_request_page.quote_request.actions.back_to_list' | trans }}
                 </a>
             {% endblock %}
@@ -103,7 +103,7 @@
                         {{ _self.button(
                             path('quote-request/cancel', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }),
                             'quote_request_page.quote_request.actions.cancel',
-                            classButtonCancel) }}
+                            buttonCancelClass) }}
                     {% endblock %}
                 {% endif %}
 
@@ -116,7 +116,7 @@
                         {{ _self.button(
                             path('quote-request/revise', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }),
                             'quote_request_page.quote_request.actions.revise',
-                            classButtonRevise) }}
+                            buttonReviseClass) }}
                     {% endblock %}
 
                     {% block actionSeparator3 %}
@@ -127,7 +127,7 @@
                         {{ _self.button(
                             path('quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }),
                             'quote_request_page.quote_request.actions.convert_to_cart',
-                            classButtonConvertToCart) }}
+                            buttonConvertToCartClass) }}
                     {% endblock %}
                 {% endif %}
 
@@ -140,7 +140,7 @@
                         {{ _self.button(
                             path('quote-request/edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }),
                             'quote_request_page.quote_request.actions.edit',
-                            classButtonEdit) }}
+                            buttonEditClass) }}
                     {% endblock %}
 
                     {% block actionSeparator5 %}
@@ -151,7 +151,7 @@
                         {{ _self.button(
                             path('quote-request/send-to-user', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }),
                             'quote_request_page.quote_request.actions.send_to_agent',
-                            classButtonSendToAgent) }}
+                            buttonSendToAgentClass) }}
                     {% endblock %}
                 {% endif %}
             {% endif %}

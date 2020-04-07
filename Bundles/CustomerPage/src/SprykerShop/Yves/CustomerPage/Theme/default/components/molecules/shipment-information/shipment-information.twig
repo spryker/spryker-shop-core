@@ -16,7 +16,9 @@
 {% block body %}
     <li class="list__item">{{ data.shipmentExpense.shipment.method.carrierName }}</li>
     <li class="list__item">
-        {{ data.shipmentExpense.shipment.method.name }}<br>
+        <div>
+            {{ data.shipmentExpense.shipment.method.name }}
+        </div>
         <span>
             {% if data.shipmentExpense.shipment.method.storeCurrencyPrice != data.shipmentExpense.sumPrice %}
                 <s>{{ data.shipmentExpense.shipment.method.storeCurrencyPrice | money(true, data.shipmentExpense.shipment.method.currencyIsoCode) }}</s>

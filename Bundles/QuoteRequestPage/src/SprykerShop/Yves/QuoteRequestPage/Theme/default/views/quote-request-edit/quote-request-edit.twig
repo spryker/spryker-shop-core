@@ -83,14 +83,14 @@
     {% endblock %}
 
     {% block actions %}
-        {% set classButtonBack = 'button button--expand button--hollow' %}
-        {% set classButtonEditItems = 'button button--expand' %}
-        {% set classButtonSave = 'button button--expand button--success' %}
-        {% set classButtonSend = 'button button--expand button--success' %}
+        {% set buttonBackClass = 'button button--expand button--hollow' %}
+        {% set buttonEditItemsClass = 'button button--expand' %}
+        {% set buttonSaveClass = 'button button--expand button--success' %}
+        {% set buttonSendClass = 'button button--expand button--success' %}
 
         <div class="box spacing-top spacing-top--big">
             {% block actionBack %}
-                <a class="{{ classButtonBack }}"
+                <a class="{{ buttonBackClass }}"
                    href="{{ url('quote-request/details', { quoteRequestReference: data.quoteRequest.quoteRequestReference }) }}"
                    data-init-single-click>
                     {{ 'quote_request_page.quote_request.actions.back_to_view' | trans }}
@@ -102,7 +102,7 @@
             {% endblock %}
 
             {% block actionEditItems %}
-                <a class="{{ classButtonEditItems }}"
+                <a class="{{ buttonEditItemsClass }}"
                    href="{{ url('quote-request/edit-items', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}"
                    data-init-single-click>
                     {{ 'quote_request_page.quote_request.actions.edit_items' | trans }}
@@ -114,7 +114,7 @@
             {% endblock %}
 
             {% block actionSave %}
-                <button type="submit" name="save" class="{{ classButtonSave }}" data-init-single-click>
+                <button type="submit" name="save" class="{{ buttonSaveClass }}" data-init-single-click>
                     {{ 'quote_request_page.quote_request.actions.save' | trans }}
                 </button>
             {% endblock %}
@@ -124,7 +124,7 @@
             {% endblock %}
 
             {% block actionSend %}
-                <button type="submit" name="sendToUser" class="{{ classButtonSend }}">
+                <button type="submit" name="sendToUser" class="{{ buttonSendClass }}">
                     {{ 'quote_request_page.quote_request.actions.send_to_agent' | trans }}
                 </button>
             {% endblock %}

@@ -14,20 +14,20 @@
 {% endblock %}
 
 {% block body %}
-    {% set classTitleWrapper = 'grid grid--justify grid--middle' %}
-    {% set classTitle = 'col' %}
-    {% set classCounter = 'col text-secondary' %}
+    {% set titleWrapperClass = 'grid grid--justify grid--middle' %}
+    {% set titleClass = 'col' %}
+    {% set counterClass = 'col text-secondary' %}
 
     {% block titleWrapper %}
-        <div class="{{ classTitleWrapper }}">
+        <div class="{{ titleWrapperClass }}">
             {% block title %}
-                <h6 class="{{ classTitle }}">
+                <h6 class="{{ titleClass }}">
                     {{ 'cart.your-order' | trans }}
                 </h6>
             {% endblock %}
 
             {% block counter %}
-                <div class="{{ classCounter }}">
+                <div class="{{ counterClass }}">
                     {% widget 'ProductBundleItemCounterWidget' args [data.cart] only %}
                     {% nowidget %}
                         {{ 'quote_request_page.quote_request.item' | trans({
@@ -43,19 +43,19 @@
         <hr>
     {% endblock %}
 
-    {% set classList = 'spacing-y' %}
-    {% set classItem = 'grid grid--justify' %}
-    {% set classItemTitle = 'col' %}
-    {% set classItemValue = 'col' %}
+    {% set listClass = 'spacing-y' %}
+    {% set itemClass = 'grid grid--justify' %}
+    {% set itemTitleClass = 'col' %}
+    {% set itemValueClass = 'col' %}
 
     {% block list %}
-        <div class="{{ classList }}">
+        <div class="{{ listClass }}">
             {% block subtotal %}
-                <div class="{{ classItem }}">
-                    <span class="{{ classItemTitle }}">
+                <div class="{{ itemClass }}">
+                    <span class="{{ itemTitleClass }}">
                         {{ 'cart.price.subtotal' | trans }}
                     </span>
-                    <span class="{{ classItemValue }}">
+                    <span class="{{ itemValueClass }}">
                         {{ data.cart.totals.subtotal | money(true, data.cart.currency.code) }}
                     </span>
                 </div>
@@ -87,12 +87,12 @@
             {% block salesOrderThreshhold %}
                 {% widget 'SalesOrderThresholdWidget' args [data.cart.expenses] with {
                     embed: {
-                        classItem: classItem,
+                        itemClass: itemClass,
                     },
                 } only %}
                     {% block body %}
                         <hr>
-                        <div class="{{ embed.classItem }}">
+                        <div class="{{ embed.itemClass }}">
                             {{ parent() }}
                         </div>
                     {% endblock %}
@@ -104,9 +104,9 @@
             {% endblock %}
 
             {% block tax %}
-                <div class="{{ classItem }}">
-                    <span class="{{ classItemTitle }}">{{ 'cart.total.tax_total' | trans }}</span>
-                    <span class="{{ classItemValue }}">{{ data.cart.totals.taxTotal.amount | money(true, data.cart.currency.code) }}</span>
+                <div class="{{ itemClass }}">
+                    <span class="{{ itemTitleClass }}">{{ 'cart.total.tax_total' | trans }}</span>
+                    <span class="{{ itemValueClass }}">{{ data.cart.totals.taxTotal.amount | money(true, data.cart.currency.code) }}</span>
                 </div>
             {% endblock %}
 
@@ -115,9 +115,9 @@
             {% endblock %}
 
             {% block grandTotal %}
-                <div class="{{ classItem }}">
-                    <span class="{{ classItemTitle }}">{{ 'cart.price.grand.total' | trans }}</span>
-                    <strong class="{{ classItemValue }}">{{ data.cart.totals.grandTotal | money(true, data.cart.currency.code) }}</strong>
+                <div class="{{ itemClass }}">
+                    <span class="{{ itemTitleClass }}">{{ 'cart.price.grand.total' | trans }}</span>
+                    <strong class="{{ itemValueClass }}">{{ data.cart.totals.grandTotal | money(true, data.cart.currency.code) }}</strong>
                 </div>
             {% endblock %}
         </div>

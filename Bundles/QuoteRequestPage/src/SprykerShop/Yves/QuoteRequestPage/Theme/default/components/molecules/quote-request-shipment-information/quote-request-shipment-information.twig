@@ -23,10 +23,10 @@
 {% block body %}
     {% block titleWrapper %}
         {% if not data.hasMultiShipments %}
-            {% set classTitleShipmentMethod = 'spacing-x spacing-top spacing-top--big' %}
+            {% set titleShipmentMethodClass = 'spacing-x spacing-top spacing-top--big' %}
 
             {% block title %}
-                <h4 class="{{ classTitleShipmentMethod }}">
+                <h4 class="{{ titleShipmentMethodClass }}">
                     {{ 'quote_request_page.quote_request.title_shipment_method' | trans }}
                 </h4>
             {% endblock %}
