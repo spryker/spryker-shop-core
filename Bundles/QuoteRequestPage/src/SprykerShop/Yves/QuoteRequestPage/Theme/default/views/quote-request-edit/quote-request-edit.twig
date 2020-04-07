@@ -97,11 +97,9 @@
                 </a>
             {% endblock %}
 
-            {% block actionSeparator1 %}
-                <hr class="box__separator">
-            {% endblock %}
-
             {% block actionEditItems %}
+                {{ block('separator') }}
+                
                 <a class="{{ buttonEditItemsClass }}"
                    href="{{ url('quote-request/edit-items', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}"
                    data-init-single-click>
@@ -109,25 +107,25 @@
                 </a>
             {% endblock %}
 
-            {% block actionSeparator2 %}
-                <hr class="box__separator">
-            {% endblock %}
-
             {% block actionSave %}
+                {{ block('separator') }}
+
                 <button type="submit" name="save" class="{{ buttonSaveClass }}" data-init-single-click>
                     {{ 'quote_request_page.quote_request.actions.save' | trans }}
                 </button>
             {% endblock %}
 
-            {% block actionSeparator3 %}
-                <hr class="box__separator">
-            {% endblock %}
-
             {% block actionSend %}
+                {{ block('separator') }}
+
                 <button type="submit" name="sendToUser" class="{{ buttonSendClass }}">
                     {{ 'quote_request_page.quote_request.actions.send_to_agent' | trans }}
                 </button>
             {% endblock %}
         </div>
     {% endblock %}
+{% endblock %}
+
+{% block separator %}
+    <hr class="box__separator">
 {% endblock %}

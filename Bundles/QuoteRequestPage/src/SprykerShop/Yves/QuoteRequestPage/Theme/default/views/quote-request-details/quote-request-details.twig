@@ -95,11 +95,9 @@
 
             {% if data.version and data.version.idQuoteRequestVersion == data.quoteRequest.latestVisibleVersion.idQuoteRequestVersion %}
                 {% if data.isQuoteRequestCancelable %}
-                    {% block actionSeparator1 %}
-                        <hr class="box__separator">
-                    {% endblock %}
-
                     {% block actionCancel %}
+                        {{ block('separator') }}
+
                         {{ _self.button(
                             path('quote-request/cancel', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }),
                             'quote_request_page.quote_request.actions.cancel',
@@ -108,22 +106,18 @@
                 {% endif %}
 
                 {% if data.isQuoteRequestReady %}
-                    {% block actionSeparator2 %}
-                        <hr class="box__separator">
-                    {% endblock %}
-
                     {% block actionRevise %}
+                        {{ block('separator') }}
+
                         {{ _self.button(
                             path('quote-request/revise', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }),
                             'quote_request_page.quote_request.actions.revise',
                             buttonReviseClass) }}
                     {% endblock %}
 
-                    {% block actionSeparator3 %}
-                        <hr class="box__separator">
-                    {% endblock %}
-
                     {% block actionConvertToCart %}
+                        {{ block('separator') }}
+
                         {{ _self.button(
                             path('quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }),
                             'quote_request_page.quote_request.actions.convert_to_cart',
@@ -132,22 +126,18 @@
                 {% endif %}
 
                 {% if data.isQuoteRequestEditable %}
-                    {% block actionSeparator4 %}
-                        <hr class="box__separator">
-                    {% endblock %}
-
                     {% block actionEdit %}
+                        {{ block('separator') }}
+
                         {{ _self.button(
                             path('quote-request/edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }),
                             'quote_request_page.quote_request.actions.edit',
                             buttonEditClass) }}
                     {% endblock %}
 
-                    {% block actionSeparator5 %}
-                        <hr class="box__separator">
-                    {% endblock %}
-
                     {% block actionSendToAgent %}
+                        {{ block('separator') }}
+
                         {{ _self.button(
                             path('quote-request/send-to-user', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }),
                             'quote_request_page.quote_request.actions.send_to_agent',
@@ -157,6 +147,10 @@
             {% endif %}
         </div>
     {% endblock %}
+{% endblock %}
+
+{% block separator %}
+    <hr class="box__separator">
 {% endblock %}
 
 {%- macro button(quoteRequestPath, text, className) -%}
