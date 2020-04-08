@@ -8,12 +8,11 @@
 namespace SprykerShop\Yves\CartPage\Form;
 
 use Spryker\Yves\Kernel\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class RemoveForm extends AbstractType
+class CartChangeQuantityForm extends AbstractType
 {
-    public const FORM_NAME = 'removeCartItemForm';
+    public const FORM_NAME = 'cartChangeQuantityForm';
 
     /**
      * @return string
@@ -31,6 +30,5 @@ class RemoveForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('submit', SubmitType::class);
     }
 }

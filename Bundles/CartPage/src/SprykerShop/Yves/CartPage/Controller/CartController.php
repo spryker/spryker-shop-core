@@ -220,6 +220,12 @@ class CartController extends AbstractController
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
 
+        $form = $this->getFactory()->createCartPageFormFactory()->getCartChangeQuantityForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
         $this->getFactory()
             ->getCartClient()
             ->changeItemQuantity($sku, $request->get('groupKey'), $quantity);

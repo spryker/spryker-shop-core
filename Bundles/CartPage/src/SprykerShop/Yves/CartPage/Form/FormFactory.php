@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CartPage\Form;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
@@ -26,7 +27,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getRemoveForm()
+    public function getRemoveForm(): FormInterface
     {
         return $this->getFormFactory()->create(RemoveForm::class);
     }
@@ -34,7 +35,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getAddToCartForm()
+    public function getAddToCartForm(): FormInterface
     {
         return $this->getFormFactory()->create(AddToCartForm::class);
     }
@@ -42,8 +43,16 @@ class FormFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getAddItemsForm()
+    public function getAddItemsForm(): FormInterface
     {
         return $this->getFormFactory()->create(AddItemsForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCartChangeQuantityForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(CartChangeQuantityForm::class);
     }
 }
