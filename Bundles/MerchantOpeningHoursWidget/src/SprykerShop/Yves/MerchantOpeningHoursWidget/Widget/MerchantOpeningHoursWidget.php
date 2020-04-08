@@ -45,7 +45,7 @@ class MerchantOpeningHoursWidget extends AbstractWidget
      *
      * @return void
      */
-    protected function addMerchantOpeningHoursParameter(int $idMerchant)
+    protected function addMerchantOpeningHoursParameter(int $idMerchant): void
     {
         $this->addParameter(
             static::PARAMETER_MERCHANT_OPENING_HOURS,

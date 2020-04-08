@@ -16,7 +16,6 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class ProductOfferSoldByMerchantWidget extends AbstractWidget
 {
     protected const PARAMETER_MERCHANT = 'merchant';
-    protected const PARAMETER_CURRENT_LOCALE = 'currentLocale';
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
