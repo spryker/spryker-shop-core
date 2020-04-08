@@ -149,11 +149,11 @@
                 {% endblock %}
             {% endif %}
 
-            {% if not data.hasMultiShipments and hasSingleShippingMethod and shipmentExpenses | length > 0 %}
+            {% if not data.hasMultiShipments and hasSingleShippingMethod and data.shipmentExpenses | length > 0 %}
                 {% block shipmentMethodInformation %}
                     {% include molecule('shipment-information', 'CustomerPage') ignore missing with {
                         data: {
-                            shipmentExpense: shipmentExpenses | first,
+                            shipmentExpense: data.shipmentExpenses | first,
                         },
                     } only %}
                 {% endblock %}
