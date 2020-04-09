@@ -15,6 +15,7 @@
 {% set shipment = data.quote.items[0].shipment is defined and data.quote.items[0].shipment is not null ? data.quote.items[0].shipment : data.quote.shipment %}
 {% set hasShipment = shipment is not null %}
 {% set hasSingleShippingAddress = hasShipment and shipment.shippingAddress %}
+{% set hasBillingAddress = data.quote.billingAddress is not null and data.quote.billingAddress.salutation %}
 {% set hasShipmentAddress = data.hasMultiShipments or hasSingleShippingAddress %}
 {% set hasSingleShippingMethod = hasShipment and shipment.method %}
 {% set hasShipmentMethod = data.hasMultiShipments or hasSingleShippingMethod %}
@@ -34,7 +35,7 @@
             {% endblock %}
 
             {% block billingWrapper %}
-                {% if data.quote.billingAddress %}
+                {% if hasBillingAddress %}
                     {% block billingSubtitle %}
                         <strong>{{ 'quote_request_page.quote_request.title_billing_address' | trans }}</strong>
                     {% endblock %}
@@ -86,7 +87,7 @@
                     {% endblock %}
                 {% endif %}
 
-                {% if data.quote.billingAddress and not hasShipmentAddress %}
+                {% if hasBillingAddress and not hasShipmentAddress %}
                     {% block deliverySubtitle3 %}
                         {{ _self.titleDeliveryAddress() }}
                     {% endblock %}
@@ -99,7 +100,7 @@
 
             {% block addressActions %}
                 {% block addAddressButtonWrapper %}
-                    {% if not data.quote.billingAddress and not hasShipmentAddress %}
+                    {% if not hasBillingAddress and not hasShipmentAddress %}
                         {% block textEmptyAddresses %}
                             <p>{{ 'quote_request_page.quote_request.empty_address' | trans }}</p>
                         {% endblock %}
@@ -150,11 +151,11 @@
                 {% endblock %}
             {% endif %}
 
-            {% if not data.hasMultiShipments and hasSingleShippingMethod and shipmentExpenses | length > 0 %}
+            {% if not data.hasMultiShipments and hasSingleShippingMethod and data.shipmentExpenses | length > 0 %}
                 {% block shipmentMethodInformation %}
                     {% include molecule('shipment-information', 'CustomerPage') ignore missing with {
                         data: {
-                            shipmentExpense: shipmentExpenses | first,
+                            shipmentExpense: data.shipmentExpenses | first,
                         },
                     } only %}
                 {% endblock %}
