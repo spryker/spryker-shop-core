@@ -56,7 +56,23 @@ class ShipmentGrouper implements ShipmentGrouperInterface
         }
 
         return $this->shipmentService
-            ->groupItemsByShipment($this->itemExtractor->extractItemsWithShipment($quoteRequestTransfer))
+            ->groupItemsByShipment($this->itemExtractor->extractItemsWithShipmentAddress($quoteRequestTransfer))
+            ->getArrayCopy();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    public function groupItemsByShippingMethod(QuoteRequestTransfer $quoteRequestTransfer): array
+    {
+        if ($this->quoteChecker->isQuoteLevelShipmentUsed($quoteRequestTransfer)) {
+            return [];
+        }
+
+        return $this->shipmentService
+            ->groupItemsByShipment($this->itemExtractor->extractItemsWithShipmentMethod($quoteRequestTransfer))
             ->getArrayCopy();
     }
 }

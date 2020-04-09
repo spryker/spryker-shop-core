@@ -118,12 +118,17 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
 
         $quoteRequestForm = $this->assertQuoteRequestVersion($quoteRequestForm);
 
+        $shipmentGroupTransfers = $this->getFactory()
+            ->createShipmentGrouper()
+            ->groupItemsByShippingAddress($quoteRequestTransfer);
+
         $itemExtractor = $this->getFactory()->createItemExtractor();
 
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),
-            'itemsWithShipment' => $itemExtractor->extractItemsWithShipment($quoteRequestTransfer),
-            'itemsWithoutShipment' => $itemExtractor->extractItemsWithoutShipment($quoteRequestTransfer),
+            'shipmentGroups' => $shipmentGroupTransfers,
+            'itemsWithShipment' => $itemExtractor->extractItemsWithShipmentAddress($quoteRequestTransfer),
+            'itemsWithoutShipment' => $itemExtractor->extractItemsWithoutShipmentAddress($quoteRequestTransfer),
             'shipmentExpenses' => $this->getFactory()->createExpenseExtractor()->extractShipmentExpenses($quoteRequestTransfer),
         ];
     }

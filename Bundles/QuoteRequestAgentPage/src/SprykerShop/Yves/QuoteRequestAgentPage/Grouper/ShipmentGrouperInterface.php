@@ -17,4 +17,11 @@ interface ShipmentGrouperInterface
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
     public function groupItemsByShippingAddress(QuoteRequestTransfer $quoteRequestTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    public function groupItemsByShippingMethod(QuoteRequestTransfer $quoteRequestTransfer): array;
 }

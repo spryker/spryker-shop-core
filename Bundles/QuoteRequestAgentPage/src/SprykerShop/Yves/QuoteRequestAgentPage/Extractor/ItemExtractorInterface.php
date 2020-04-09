@@ -16,12 +16,19 @@ interface ItemExtractorInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function extractItemsWithShipment(QuoteRequestTransfer $quoteRequestTransfer): array;
+    public function extractItemsWithShipmentAddress(QuoteRequestTransfer $quoteRequestTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function extractItemsWithoutShipment(QuoteRequestTransfer $quoteRequestTransfer): array;
+    public function extractItemsWithShipmentMethod(QuoteRequestTransfer $quoteRequestTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function extractItemsWithoutShipmentAddress(QuoteRequestTransfer $quoteRequestTransfer): array;
 }

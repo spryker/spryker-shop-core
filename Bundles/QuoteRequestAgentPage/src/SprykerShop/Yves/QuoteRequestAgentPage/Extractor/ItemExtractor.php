@@ -30,7 +30,7 @@ class ItemExtractor implements ItemExtractorInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function extractItemsWithShipment(QuoteRequestTransfer $quoteRequestTransfer): array
+    public function extractItemsWithShipmentAddress(QuoteRequestTransfer $quoteRequestTransfer): array
     {
         $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();
 
@@ -54,7 +54,31 @@ class ItemExtractor implements ItemExtractorInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function extractItemsWithoutShipment(QuoteRequestTransfer $quoteRequestTransfer): array
+    public function extractItemsWithShipmentMethod(QuoteRequestTransfer $quoteRequestTransfer): array
+    {
+        $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();
+
+        if ($this->quoteChecker->isQuoteLevelShipmentUsed($quoteRequestTransfer)) {
+            return $quoteTransfer->getItems()->getArrayCopy();
+        }
+
+        $itemTransfersWithShipment = [];
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($this->quoteChecker->isItemWithShipmentAddress($itemTransfer) && $itemTransfer->getShipment()->getMethod()) {
+                $itemTransfersWithShipment[] = $itemTransfer;
+            }
+        }
+
+        return $itemTransfersWithShipment;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function extractItemsWithoutShipmentAddress(QuoteRequestTransfer $quoteRequestTransfer): array
     {
         if ($this->quoteChecker->isQuoteLevelShipmentUsed($quoteRequestTransfer)) {
             return [];
