@@ -13,6 +13,7 @@
 } %}
 
 {% set hasShipment = data.quote.shipment is not null %}
+{% set hasBillingAddress = data.quote.billingAddress is not null and data.quote.billingAddress.salutation %}
 {% set hasSingleShippingAddress = hasShipment and data.quote.shipment.shippingAddress %}
 {% set hasShipmentAddress = data.hasMultiShipments or hasSingleShippingAddress %}
 {% set hasSingleShippingMethod = hasShipment and data.quote.shipment.method %}
@@ -33,7 +34,7 @@
             {% endblock %}
 
             {% block billingWrapper %}
-                {% if data.quote.billingAddress %}
+                {% if hasBillingAddress %}
                     {% block billingSubtitle %}
                         <strong>{{ 'quote_request_page.quote_request.title_billing_address' | trans }}</strong>
                     {% endblock %}
@@ -85,7 +86,7 @@
                     {% endblock %}
                 {% endif %}
 
-                {% if data.quote.billingAddress and not hasShipmentAddress %}
+                {% if hasBillingAddress and not hasShipmentAddress %}
                     {% block deliverySubtitle3 %}
                         {{ _self.titleDeliveryAddress() }}
                     {% endblock %}
@@ -98,7 +99,7 @@
 
             {% block addressActions %}
                 {% block addAddressButtonWrapper %}
-                    {% if not data.quote.billingAddress and not hasShipmentAddress %}
+                    {% if not hasBillingAddress and not hasShipmentAddress %}
                         {% block textEmptyAddresses %}
                             <p>{{ 'quote_request_page.quote_request.empty_address' | trans }}</p>
                         {% endblock %}
