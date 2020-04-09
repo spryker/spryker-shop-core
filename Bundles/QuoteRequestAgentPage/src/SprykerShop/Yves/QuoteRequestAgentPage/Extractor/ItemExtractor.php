@@ -41,7 +41,7 @@ class ItemExtractor implements ItemExtractorInterface
         $itemTransfersWithShipment = [];
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($this->quoteChecker->isItemWithShipment($itemTransfer)) {
+            if ($this->quoteChecker->isItemWithShipmentAddress($itemTransfer)) {
                 $itemTransfersWithShipment[] = $itemTransfer;
             }
         }
@@ -64,7 +64,7 @@ class ItemExtractor implements ItemExtractorInterface
         $itemTransfersWithoutShipment = [];
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$this->quoteChecker->isItemWithShipment($itemTransfer)) {
+            if (!$this->quoteChecker->isItemWithShipmentAddress($itemTransfer)) {
                 $itemTransfersWithoutShipment[] = $itemTransfer;
             }
         }

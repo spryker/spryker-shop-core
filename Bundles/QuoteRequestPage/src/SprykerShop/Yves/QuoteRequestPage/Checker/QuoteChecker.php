@@ -28,7 +28,7 @@ class QuoteChecker implements QuoteCheckerInterface
         }
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($this->isItemWithShipment($itemTransfer)) {
+            if ($this->isItemWithShipmentAddress($itemTransfer)) {
                 return false;
             }
         }
@@ -41,10 +41,9 @@ class QuoteChecker implements QuoteCheckerInterface
      *
      * @return bool
      */
-    public function isItemWithShipment(ItemTransfer $itemTransfer): bool
+    public function isItemWithShipmentAddress(ItemTransfer $itemTransfer): bool
     {
         return $itemTransfer->getShipment()
-            && $itemTransfer->getShipment()->getMethod()
             && $itemTransfer->getShipment()->getShippingAddress();
     }
 }

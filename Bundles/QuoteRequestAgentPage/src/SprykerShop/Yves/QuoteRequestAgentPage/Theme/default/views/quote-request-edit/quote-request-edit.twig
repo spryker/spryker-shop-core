@@ -271,7 +271,7 @@
         data: {
             quote: quote,
             items: data.itemsWithShipment,
-            shipment: quote.shipment,
+            shipment: quote.items[0].shipment | default(data.quote.shipment),
             shipmentExpenses: data.shipmentExpenses,
             hasMultiShipments: hasMultiShipments,
             isConfiguredBundleEditable: true,
@@ -414,7 +414,7 @@
         {% block shipmentInformation %}
             {% embed molecule('quote-request-shipment-information', 'QuoteRequestPage') ignore missing with {
                 data: {
-                    shipment: data.quote.shipment,
+                    shipment: data.quote.items[0].shipment | default(data.quote.shipment),
                     priceMode: data.quote.priceMode,
                     shipmentExpense: data.shipmentExpenses | length > 0 ? data.shipmentExpenses | first : null
                 },

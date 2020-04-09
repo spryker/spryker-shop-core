@@ -204,7 +204,7 @@
                                 data: {
                                     quote: quote,
                                     items: data.itemsWithShipment,
-                                    shipment: quote.shipment,
+                                    shipment: quote.items[0].shipment | default(data.quote.shipment),
                                     hasMultiShipments: hasMultiShipments,
                                     isConfiguredBundleEditable: false,
                                     shipmentExpense: data.shipmentExpenses | length > 0 ? data.shipmentExpenses | first : null

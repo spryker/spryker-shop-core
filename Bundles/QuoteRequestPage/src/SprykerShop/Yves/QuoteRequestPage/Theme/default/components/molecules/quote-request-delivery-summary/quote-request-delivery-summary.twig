@@ -12,10 +12,11 @@
     shipmentExpenses: [],
 } %}
 
-{% set hasShipment = data.quote.shipment is not null %}
-{% set hasSingleShippingAddress = hasShipment and data.quote.shipment.shippingAddress %}
+{% set shipment = data.quote.items[0].shipment is defined and data.quote.items[0].shipment is not null ? data.quote.items[0].shipment : data.quote.shipment %}
+{% set hasShipment = shipment is not null %}
+{% set hasSingleShippingAddress = hasShipment and shipment.shippingAddress %}
 {% set hasShipmentAddress = data.hasMultiShipments or hasSingleShippingAddress %}
-{% set hasSingleShippingMethod = hasShipment and data.quote.shipment.method %}
+{% set hasSingleShippingMethod = hasShipment and shipment.method %}
 {% set hasShipmentMethod = data.hasMultiShipments or hasSingleShippingMethod %}
 {% set quoteRequestReference = data.quoteRequestReference %}
 {% set urlEditAddress = 'quote-request/edit-address' %}
@@ -77,7 +78,7 @@
                     {% block deliveryAddress %}
                         {% embed molecule('display-address') with {
                             data: {
-                                address: data.quote.shipment.shippingAddress,
+                                address: data.quote.items[0].shipment.shippingAddress | default(data.quote.shipment.shippingAddress),
                             },
                         } only %}
                             {% block addressBadgeLabel %}{% endblock %}

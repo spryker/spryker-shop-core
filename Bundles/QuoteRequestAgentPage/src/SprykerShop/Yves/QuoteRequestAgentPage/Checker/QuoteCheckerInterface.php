@@ -26,5 +26,5 @@ interface QuoteCheckerInterface
      *
      * @return bool
      */
-    public function isItemWithShipment(ItemTransfer $itemTransfer): bool;
+    public function isItemWithShipmentAddress(ItemTransfer $itemTransfer): bool;
 }
