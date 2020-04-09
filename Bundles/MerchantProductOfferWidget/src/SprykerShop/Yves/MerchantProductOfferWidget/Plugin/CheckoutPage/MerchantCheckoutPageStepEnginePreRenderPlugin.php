@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\StepEngine\CheckoutPageStepEnginePreRenderPluginInterface;
 
-class MerchantCheckoutStepEnginePreRenderPlugin implements CheckoutPageStepEnginePreRenderPluginInterface
+class MerchantCheckoutPageStepEnginePreRenderPlugin implements CheckoutPageStepEnginePreRenderPluginInterface
 {
     /**
      * {@inheritDoc}

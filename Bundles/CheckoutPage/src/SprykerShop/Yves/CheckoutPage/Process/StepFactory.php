@@ -91,7 +91,7 @@ class StepFactory extends AbstractFactory
             $stepCollection,
             $this->createDataContainer(),
             $this->createStepBreadcrumbGenerator(),
-            $this->getCheckoutStepEnginePreRenderPlugins()
+            $this->getCheckoutPageStepEnginePreRenderPlugins()
         );
     }
 
@@ -439,8 +439,8 @@ class StepFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\StepEngine\CheckoutPageStepEnginePreRenderPluginInterface[]
      */
-    public function getCheckoutStepEnginePreRenderPlugins(): array
+    public function getCheckoutPageStepEnginePreRenderPlugins(): array
     {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_STEP_ENGINE_PRE_RENDER);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_PAGE_STEP_ENGINE_PRE_RENDER);
     }
 }
