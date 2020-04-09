@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\MerchantProductOfferWidget\Plugin\StepEngine;
+namespace SprykerShop\Yves\MerchantProductOfferWidget\Plugin\CheckoutPage;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use Spryker\Yves\StepEngineExtension\Dependency\Plugin\StepEnginePreRenderPluginInterface;
+use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\StepEngine\CheckoutPageStepEnginePreRenderPluginInterface;
 
-class MerchantCheckoutStepEnginePreRenderPlugin implements StepEnginePreRenderPluginInterface
+class MerchantCheckoutStepEnginePreRenderPlugin implements CheckoutPageStepEnginePreRenderPluginInterface
 {
     /**
      * {@inheritDoc}
