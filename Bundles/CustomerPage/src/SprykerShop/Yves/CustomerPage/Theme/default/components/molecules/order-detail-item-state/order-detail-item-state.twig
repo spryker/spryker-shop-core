@@ -1,0 +1,15 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'order-detail-item-state',
+} %}
+
+{% define data = {
+    orderItem: required,
+} %}
+
+{% block body %}
+    {% if data.orderItem.state is not empty %}
+        <strong>{{ data.orderItem.state.name | capitalize }}</strong>
+    {% endif %}
+{% endblock %}

@@ -17,6 +17,7 @@
 {% block body %}
     {% for shipmentGroup in data.shipmentGroups %}
         <h4>{{ 'customer.order.shipment' | trans }} n&#176;{{ loop.index }}</h4>
+        {% widget 'MerchantOrderReferenceForItemsWidget' args [shipmentGroup.items] only %}{% endwidget %}
 
         <div class="{{ config.name }}__content grid grid--justify">
             <div class="col col--sm-12 col--lg-8">
@@ -54,6 +55,21 @@
                                 </div>
 
                                 <p>{{ 'customer.order.item_quantity' | trans }}: {{ concreteItem.quantity }}</p>
+
+                                <div class="grid grid--justify">
+                                    <span class="spacing-right col col--sm-9">
+                                        {% widget 'ProductOfferSoldByMerchantWidget' args [concreteItem] only %}{% endwidget %}
+                                    </span>
+                                    <span class="spacing-right col col--sm-3 text-right">
+                                        <p>
+                                            {% include molecule('order-detail-item-state', 'CustomerPage') ignore missing with {
+                                                data: {
+                                                    orderItem: concreteItem,
+                                                },
+                                            } only %}
+                                        </p>
+                                    </span>
+                                </div>
 
                                 {% if concreteItem.amount %}
                                     <p>{{ 'customer.order.item_amount' | trans }}: {{ concreteItem.amount.toFloat() }}</p>
