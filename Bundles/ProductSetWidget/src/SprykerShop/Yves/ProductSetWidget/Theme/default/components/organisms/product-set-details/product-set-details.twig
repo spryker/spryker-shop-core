@@ -84,6 +84,8 @@
                                 data: {
                                     product: product,
                                     sku: '',
+                                },
+                                embed: {
                                     optionResetUrls: data.optionResetUrls[product.idProductAbstract] ?? [],
                                 },
                             } only %}
@@ -100,7 +102,7 @@
                                         },
                                         embed: {
                                             product: data.product,
-                                            optionResetUrls: data.optionResetUrls,
+                                            optionResetUrls: embed.optionResetUrls,
                                         },
                                     } only %}
                                         {% block variant %}

@@ -21,8 +21,8 @@
                 name: data.set.name,
                 description: data.set.description,
                 images: data.set.imageSets.0.images | default([]),
-                optionResetUrls: data.optionResetUrls
-            }
+                optionResetUrls: data.optionResetUrls,
+            },
         } only %}
     {% endif %}
 {% endblock %}
