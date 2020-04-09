@@ -271,7 +271,7 @@
         data: {
             quote: quote,
             items: data.itemsWithShipment,
-            shipment: quote.items[0].shipment | default(data.quote.shipment),
+            shipment: quote.items[0].shipment | default(quote.shipment),
             shipmentExpenses: data.shipmentExpenses,
             hasMultiShipments: hasMultiShipments,
             isConfiguredBundleEditable: true,

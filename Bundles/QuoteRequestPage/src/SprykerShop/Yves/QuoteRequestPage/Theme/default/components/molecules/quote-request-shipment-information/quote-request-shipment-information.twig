@@ -15,7 +15,7 @@
 {% set shippingAddress = data.shipment.shippingAddress is defined ? data.shipment.shippingAddress %}
 
 {% block component %}
-    {% if shipmentMethod and shippingAddress %}
+    {% if shippingAddress %}
         {{ parent() }}
     {% endif %}
 {% endblock %}
@@ -57,7 +57,9 @@
                 {% if data.hasMultiShipments and shippingAddress %}
                     {% block shipmentAddress %}
                         {% block shipmentAddressSeparator1 %}
-                            <hr class="box__separator spacing-y spacing-y--big">
+                            {% if shipmentMethod and data.shipmentExpense %}
+                                <hr class="box__separator spacing-y spacing-y--big">
+                            {% endif %}
                         {% endblock %}
 
                         {% block shipmentAddressTitle %}
