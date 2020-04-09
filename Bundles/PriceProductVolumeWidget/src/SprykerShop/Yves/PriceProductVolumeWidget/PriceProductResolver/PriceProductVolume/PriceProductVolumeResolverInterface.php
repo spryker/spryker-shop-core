@@ -7,15 +7,15 @@
 
 namespace SprykerShop\Yves\PriceProductVolumeWidget\PriceProductResolver\PriceProductVolume;
 
+use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\PriceProductVolumeCollectionTransfer;
-use Generated\Shared\Transfer\ProductViewTransfer;
 
 interface PriceProductVolumeResolverInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductVolumeCollectionTransfer
      */
-    public function resolveVolumeProductPrices(ProductViewTransfer $productViewTransfer): PriceProductVolumeCollectionTransfer;
+    public function resolveVolumeProductPrices(CurrentProductPriceTransfer $currentProductPriceTransfer): PriceProductVolumeCollectionTransfer;
 }
