@@ -2,7 +2,6 @@
 
 {% define config = {
     name: 'quote-request-item-summary',
-    tag: 'ul'
 } %}
 
 {% define data = {
@@ -16,38 +15,54 @@
 {% set priceModeGross = 'GROSS_MODE' %}
 {% set originUnitPrice = (data.priceMode == priceModeGross) ? data.cartItem.originUnitGrossPrice : data.cartItem.originUnitNetPrice %}
 
-{% block class %}{{ parent() }} list{% endblock %}
-
 {% block body %}
-    <li class="list__item spacing-y">
-        {% if can('SeePricePermissionPlugin') %}
-            {{ 'cart.item.item_price' | trans }}
-            {% if data.cartItem.sourceUnitGrossPrice is not null or data.cartItem.sourceUnitNetPrice is not null %}
-                <span class="float-right"><s>{{ originUnitPrice | money(true, data.currency.code) }}</s> {{ data.unitPrice }}</span>
-            {% else %}
-                <span class="float-right">{{ data.unitPrice }}</span>
-            {% endif %}
-        {% endif %}
-    </li>
+    {% block priceWrapper %}
+        <div class="grid grid--justify">
+            {% if can('SeePricePermissionPlugin') %}
+                {% block priceLabel %}
+                    <span class="col">
+                        {{ 'cart.item.item_price' | trans }}
+                    </span>
+                {% endblock %}
 
-    {% if data.cartItem.productOptions | length > 0 %}
-        <li class="list__item text-small">
+                {% block price %}
+                    <span class="col">
+                        {% if data.cartItem.sourceUnitGrossPrice is not null or data.cartItem.sourceUnitNetPrice is not null %}
+                            <s>{{ originUnitPrice | money(true, data.currency.code) }}</s> {{ data.unitPrice }}
+                        {% else %}
+                            {{ data.unitPrice }}
+                        {% endif %}
+                    </span>
+                {% endblock %}
+            {% endif %}
+        </div>
+    {% endblock %}
+
+    {% if data.cartItem.productOptions | length %}
+        {% block productOptions %}
             {% include molecule('product-options', 'ProductOptionWidget') ignore missing with {
                 data: {
                     options: data.cartItem.productOptions,
-                }
+                },
             } only %}
-        </li>
+        {% endblock %}
     {% endif %}
 
+    {% block totalPriceWrapper %}
+        <div class="grid grid--justify">
+            {% if can('SeePricePermissionPlugin') %}
+                {% block totalPriceLabel %}
+                    <strong class="col">{{ 'cart.item.item_total' | trans }}</strong>
+                {% endblock %}
 
-    <li class="list__item spacing-y">
-        {% if can('SeePricePermissionPlugin') %}
-            <strong>{{ 'cart.item.item_total' | trans }}</strong>
-            <strong class="float-right">{{ data.subtotalPrice }}</strong>
-        {% else %}
-            {{ 'customer.access.cannot_see_price' | trans }}
-        {% endif %}
-    </li>
-
+                {% block totalPrice %}
+                    <strong class="col">{{ data.subtotalPrice }}</strong>
+                {% endblock %}
+            {% else %}
+                {% block noPrice %}
+                    {{ 'customer.access.cannot_see_price' | trans }}
+                {% endblock %}
+            {% endif %}
+        </div>
+    {% endblock %}
 {% endblock %}
