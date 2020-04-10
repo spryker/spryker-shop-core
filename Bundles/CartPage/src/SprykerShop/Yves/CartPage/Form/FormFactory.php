@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CartPage\Form;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormFactory as SymfonyFormFactory;
 
 /**
  * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
@@ -19,7 +20,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Form\FormFactory
      */
-    public function getFormFactory()
+    public function getFormFactory(): SymfonyFormFactory
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
     }

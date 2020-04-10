@@ -96,7 +96,7 @@ class CartController extends AbstractController
         $form = $this->getFactory()->createCartPageFormFactory()->getAddToCartForm()->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
-            return $this->redirectResponseExternal($request->headers->get('referer'));
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
 
         $quantity = $request->get('quantity', 1);
@@ -190,7 +190,7 @@ class CartController extends AbstractController
         $form = $this->getFactory()->createCartPageFormFactory()->getRemoveForm()->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
-            return $this->redirectResponseExternal($request->headers->get('referer'));
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
 
         $this->getFactory()
@@ -253,7 +253,7 @@ class CartController extends AbstractController
         $form = $this->getFactory()->createCartPageFormFactory()->getAddItemsForm()->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
-            return $this->redirectResponseExternal($request->headers->get('referer'));
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
 
         $items = (array)$request->request->get(self::PARAM_ITEMS);
