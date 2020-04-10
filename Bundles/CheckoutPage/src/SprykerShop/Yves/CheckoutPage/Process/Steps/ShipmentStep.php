@@ -12,14 +12,17 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
+use Spryker\Yves\StepEngine\Dependency\Step\StepWithCodeInterface;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageDependencyProvider;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
 use SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
+class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterface, StepWithCodeInterface
 {
+    protected const STEP_CODE = 'shipment';
+
     /**
      * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface
      */
@@ -210,5 +213,13 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
         }
 
         return true;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCode(): string
+    {
+        return static::STEP_CODE;
     }
 }

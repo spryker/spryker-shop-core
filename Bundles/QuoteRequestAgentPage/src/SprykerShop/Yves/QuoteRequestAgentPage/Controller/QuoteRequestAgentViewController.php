@@ -91,6 +91,13 @@ class QuoteRequestAgentViewController extends QuoteRequestAgentAbstractControlle
             $request->query->get(static::PARAM_QUOTE_REQUEST_VERSION_REFERENCE)
         );
 
+        $quoteTransfer = $version->getQuote();
+        $shipmentGroupTransfers = $this->getFactory()
+            ->createShipmentGrouper()
+            ->groupItemsByShippingAddress($quoteTransfer);
+
+        $itemExtractor = $this->getFactory()->createItemExtractor();
+
         return [
             'quoteRequest' => $quoteRequestTransfer,
             'quoteRequestVersionReferences' => $this->getQuoteRequestVersionReferences($quoteRequestVersionTransfers),
@@ -98,6 +105,10 @@ class QuoteRequestAgentViewController extends QuoteRequestAgentAbstractControlle
             'isQuoteRequestCancelable' => $quoteRequestAgentClient->isQuoteRequestCancelable($quoteRequestTransfer),
             'isQuoteRequestRevisable' => $quoteRequestAgentClient->isQuoteRequestRevisable($quoteRequestTransfer),
             'isQuoteRequestEditable' => $quoteRequestAgentClient->isQuoteRequestEditable($quoteRequestTransfer),
+            'shipmentGroups' => $shipmentGroupTransfers,
+            'itemsWithShipment' => $itemExtractor->extractItemsWithShipmentAddress($quoteTransfer),
+            'itemsWithoutShipment' => $itemExtractor->extractItemsWithoutShipmentAddress($quoteTransfer),
+            'shipmentExpenses' => $this->getFactory()->createExpenseExtractor()->extractShipmentExpenses($quoteTransfer),
         ];
     }
 
