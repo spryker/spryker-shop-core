@@ -127,8 +127,8 @@ class QuoteRequestEditItemsController extends QuoteRequestAbstractController
      */
     protected function handleQuoteResponseErrors(QuoteResponseTransfer $quoteResponseTransfer): void
     {
-        foreach ($quoteResponseTransfer->getErrors() as $errorTransfer) {
-            $this->addErrorMessage($errorTransfer->getMessage());
+        foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
+            $this->addErrorMessage($quoteErrorTransfer->getMessage());
         }
     }
 }

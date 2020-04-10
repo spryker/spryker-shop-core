@@ -8,6 +8,12 @@
     </transfer>
 
     <transfer name="ProductView">
+        <property name="idProductAbstract" type="int"/>
+        <property name="attributeMap" type="AttributeMapStorage"/>
+    </transfer>
+
+    <transfer name="AttributeMapStorage">
+        <property name="superAttributes" type="array" singular="superAttributes"/>
     </transfer>
 
 </transfers>
