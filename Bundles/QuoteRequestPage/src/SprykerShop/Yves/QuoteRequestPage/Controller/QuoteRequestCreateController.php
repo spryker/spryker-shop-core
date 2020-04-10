@@ -82,9 +82,10 @@ class QuoteRequestCreateController extends QuoteRequestAbstractController
      */
     protected function getViewParameters(FormInterface $quoteRequestForm): array
     {
+        /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
         $quoteRequestTransfer = $quoteRequestForm->getData();
 
-        $quoteTransfer = $quoteRequestTransfer->getLatestVisibleVersion()->getQuote();
+        $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();
         $shipmentGroupTransfers = $this->getFactory()
             ->createShipmentGrouper()
             ->groupItemsByShippingAddress($quoteTransfer);
