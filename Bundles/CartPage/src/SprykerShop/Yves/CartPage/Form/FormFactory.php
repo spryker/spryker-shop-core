@@ -9,8 +9,8 @@ namespace SprykerShop\Yves\CartPage\Form;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormFactory as SymfonyFormFactory;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
