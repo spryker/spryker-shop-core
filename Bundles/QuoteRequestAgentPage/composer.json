@@ -37,11 +37,11 @@
   },
   "suggest": {
     "spryker-shop/agent-page": "If you want to use agent layout templates: ^1.2.0",
-    "spryker-shop/cart-page": "If you want to use cart page molecules: ^3.16.0",
+    "spryker-shop/cart-page": "If you use shipment or shipment price customization during quote request: ^3.16.0",
     "spryker-shop/configurable-bundle-widget": "If you want to use configurable bundle widget functionality",
     "spryker-shop/company-user-agent-widget": "If you want to use company user auto-complete form: ^1.0.0",
-    "spryker-shop/customer-page": "If you want to use customer layout templates: ^2.13.0",
-    "spryker-shop/quote-request-page": "If you want to use quote request page molecules: ^3.0.0",
+    "spryker-shop/customer-page": "If you use shipment or shipment price customization during quote request: ^2.13.0",
+    "spryker-shop/quote-request-page": "To have all functionality of QuoteRequestAgentPage: ^3.0.0",
     "spryker/router": "Use this module if you want use the RouterProviderPlugin.",
     "spryker/shipment-cart-connector": "If you want to use shipment totals in quote or shipment source prices, min version 2.1.0",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
