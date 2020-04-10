@@ -83,6 +83,20 @@
                                                 {% for bundledItem in item.bundleItems %}
                                                     <li>
                                                         &nbsp; - {{ bundledItem.quantity }} x {{ bundledItem.name }}
+                                                        <div class="grid grid--justify">
+                                                            <span class="spacing-right col col--sm-9">
+                                                                {% widget 'ProductOfferSoldByMerchantWidget' args [bundledItem] only %}{% endwidget %}
+                                                            </span>
+                                                            <span class="spacing-right col col--sm-3 text-right">
+                                                                <p>
+                                                                    {% include molecule('order-detail-item-state', 'CustomerPage') ignore missing with {
+                                                                        data: {
+                                                                            orderItem: bundledItem,
+                                                                        },
+                                                                    } only %}
+                                                                </p>
+                                                            </span>
+                                                        </div>
                                                     </li>
                                                 {% endfor %}
                                             </ul>

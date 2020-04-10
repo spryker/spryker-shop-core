@@ -1,0 +1,13 @@
+{% extends template('widget') %}
+
+{% define data = {
+    merchantOrderReferences: _widget.merchantOrderReferences,
+} %}
+
+{% block template %}
+    {% if data.merchantOrderReferences %}
+        <p>
+            {{ 'merchant_sales_order.merchant_order_id' | trans }}: <strong>{{ data.merchantOrderReferences | join(', ') }}</strong>
+        </p>
+    {% endif %}
+{% endblock %}
