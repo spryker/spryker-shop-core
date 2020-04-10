@@ -8,21 +8,19 @@
 namespace SprykerShop\Yves\QuoteRequestPage\Checker;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 class QuoteChecker implements QuoteCheckerInterface
 {
     /**
      * @deprecated Exists for Backward Compatibility reasons only.
      *
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isQuoteLevelShipmentUsed(QuoteRequestTransfer $quoteRequestTransfer): bool
+    public function isQuoteLevelShipmentUsed(QuoteTransfer $quoteTransfer): bool
     {
-        $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();
-
         if (!$quoteTransfer->getShipment() || !$quoteTransfer->getShipment()->getMethod()) {
             return false;
         }

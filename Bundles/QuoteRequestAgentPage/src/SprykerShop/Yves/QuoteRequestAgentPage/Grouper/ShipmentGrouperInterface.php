@@ -7,21 +7,21 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Grouper;
 
-use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ShipmentGrouperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function groupItemsByShippingAddress(QuoteRequestTransfer $quoteRequestTransfer): array;
+    public function groupItemsByShippingAddress(QuoteTransfer $quoteTransfer): array;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function groupItemsByShippingMethod(QuoteRequestTransfer $quoteRequestTransfer): array;
+    public function groupItemsByShippingMethod(QuoteTransfer $quoteTransfer): array;
 }

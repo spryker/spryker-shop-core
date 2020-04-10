@@ -79,7 +79,7 @@
                     {% block deliveryAddress %}
                         {% embed molecule('display-address') with {
                             data: {
-                                address: data.quote.items[0].shipment.shippingAddress | default(data.quote.shipment.shippingAddress),
+                                address: shipment.shippingAddress,
                             },
                         } only %}
                             {% block addressBadgeLabel %}{% endblock %}

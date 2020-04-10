@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Grouper;
 
-use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\QuoteRequestAgentPage\Checker\QuoteCheckerInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentPageToShipmentServiceInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Extractor\ItemExtractorInterface;
@@ -45,34 +45,34 @@ class ShipmentGrouper implements ShipmentGrouperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function groupItemsByShippingAddress(QuoteRequestTransfer $quoteRequestTransfer): array
+    public function groupItemsByShippingAddress(QuoteTransfer $quoteTransfer): array
     {
-        if ($this->quoteChecker->isQuoteLevelShipmentUsed($quoteRequestTransfer)) {
+        if ($this->quoteChecker->isQuoteLevelShipmentUsed($quoteTransfer)) {
             return [];
         }
 
         return $this->shipmentService
-            ->groupItemsByShipment($this->itemExtractor->extractItemsWithShipmentAddress($quoteRequestTransfer))
+            ->groupItemsByShipment($this->itemExtractor->extractItemsWithShipmentAddress($quoteTransfer))
             ->getArrayCopy();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function groupItemsByShippingMethod(QuoteRequestTransfer $quoteRequestTransfer): array
+    public function groupItemsByShippingMethod(QuoteTransfer $quoteTransfer): array
     {
-        if ($this->quoteChecker->isQuoteLevelShipmentUsed($quoteRequestTransfer)) {
+        if ($this->quoteChecker->isQuoteLevelShipmentUsed($quoteTransfer)) {
             return [];
         }
 
         return $this->shipmentService
-            ->groupItemsByShipment($this->itemExtractor->extractItemsWithShipmentMethod($quoteRequestTransfer))
+            ->groupItemsByShipment($this->itemExtractor->extractItemsWithShipmentMethod($quoteTransfer))
             ->getArrayCopy();
     }
 }

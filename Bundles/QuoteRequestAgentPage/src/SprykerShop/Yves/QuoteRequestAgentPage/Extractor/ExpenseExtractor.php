@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Extractor;
 
-use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentPageToShipmentServiceInterface;
 
 class ExpenseExtractor implements ExpenseExtractorInterface
@@ -31,13 +31,12 @@ class ExpenseExtractor implements ExpenseExtractorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer[]
      */
-    public function extractShipmentExpenses(QuoteRequestTransfer $quoteRequestTransfer): array
+    public function extractShipmentExpenses(QuoteTransfer $quoteTransfer): array
     {
-        $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();
         $shipmentExpenses = [];
 
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {

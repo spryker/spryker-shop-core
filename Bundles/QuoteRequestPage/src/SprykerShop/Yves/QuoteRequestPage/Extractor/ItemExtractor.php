@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Extractor;
 
-use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\QuoteRequestPage\Checker\QuoteCheckerInterface;
 
 class ItemExtractor implements ItemExtractorInterface
@@ -26,15 +26,13 @@ class ItemExtractor implements ItemExtractorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function extractItemsWithShipment(QuoteRequestTransfer $quoteRequestTransfer): array
+    public function extractItemsWithShipment(QuoteTransfer $quoteTransfer): array
     {
-        $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();
-
-        if ($this->quoteChecker->isQuoteLevelShipmentUsed($quoteRequestTransfer)) {
+        if ($this->quoteChecker->isQuoteLevelShipmentUsed($quoteTransfer)) {
             return $quoteTransfer->getItems()->getArrayCopy();
         }
 
@@ -50,17 +48,16 @@ class ItemExtractor implements ItemExtractorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function extractItemsWithoutShipment(QuoteRequestTransfer $quoteRequestTransfer): array
+    public function extractItemsWithoutShipment(QuoteTransfer $quoteTransfer): array
     {
-        if ($this->quoteChecker->isQuoteLevelShipmentUsed($quoteRequestTransfer)) {
+        if ($this->quoteChecker->isQuoteLevelShipmentUsed($quoteTransfer)) {
             return [];
         }
 
-        $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();
         $itemTransfersWithoutShipment = [];
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {

@@ -7,21 +7,21 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Extractor;
 
-use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ItemExtractorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function extractItemsWithShipment(QuoteRequestTransfer $quoteRequestTransfer): array;
+    public function extractItemsWithShipment(QuoteTransfer $quoteTransfer): array;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function extractItemsWithoutShipment(QuoteRequestTransfer $quoteRequestTransfer): array;
+    public function extractItemsWithoutShipment(QuoteTransfer $quoteTransfer): array;
 }

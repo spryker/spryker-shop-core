@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Form\DataProvider;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToPriceClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentForm;
@@ -52,36 +53,36 @@ class QuoteRequestAgentFormDataProvider
      */
     public function getOptions(QuoteRequestTransfer $quoteRequestTransfer): array
     {
-        return [
-            QuoteRequestAgentForm::OPTION_PRICE_MODE => $this->getPriceMode($quoteRequestTransfer),
-            QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID => $this->isQuoteValid($quoteRequestTransfer),
-            QuoteRequestAgentForm::OPTION_SHIPMENT_GROUPS => $this->shipmentGrouper->groupItemsByShippingMethod($quoteRequestTransfer),
-        ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     *
-     * @return string
-     */
-    protected function getPriceMode(QuoteRequestTransfer $quoteRequestTransfer): string
-    {
-        return $quoteRequestTransfer->getLatestVersion()->getQuote()->getPriceMode() ?? $this->priceClient->getCurrentPriceMode();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     *
-     * @return bool
-     */
-    protected function isQuoteValid(QuoteRequestTransfer $quoteRequestTransfer): bool
-    {
         $quoteTransfer = $quoteRequestTransfer
             ->requireLatestVersion()
             ->getLatestVersion()
                 ->requireQuote()
                 ->getQuote();
 
+        return [
+            QuoteRequestAgentForm::OPTION_PRICE_MODE => $this->getPriceMode($quoteTransfer),
+            QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID => $this->isQuoteValid($quoteTransfer),
+            QuoteRequestAgentForm::OPTION_SHIPMENT_GROUPS => $this->shipmentGrouper->groupItemsByShippingMethod($quoteTransfer),
+        ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return string
+     */
+    protected function getPriceMode(QuoteTransfer $quoteTransfer): string
+    {
+        return $quoteTransfer->getPriceMode() ?? $this->priceClient->getCurrentPriceMode();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteValid(QuoteTransfer $quoteTransfer): bool
+    {
         if (!$quoteTransfer->getItems()->count()) {
             return true;
         }

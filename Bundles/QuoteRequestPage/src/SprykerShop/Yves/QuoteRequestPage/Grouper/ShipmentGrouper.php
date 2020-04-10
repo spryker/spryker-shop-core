@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Grouper;
 
-use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\QuoteRequestPage\Checker\QuoteCheckerInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Service\QuoteRequestPageToShipmentServiceInterface;
 use SprykerShop\Yves\QuoteRequestPage\Extractor\ItemExtractorInterface;
@@ -45,18 +45,18 @@ class ShipmentGrouper implements ShipmentGrouperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function groupItemsByShippingAddress(QuoteRequestTransfer $quoteRequestTransfer): array
+    public function groupItemsByShippingAddress(QuoteTransfer $quoteTransfer): array
     {
-        if ($this->quoteChecker->isQuoteLevelShipmentUsed($quoteRequestTransfer)) {
+        if ($this->quoteChecker->isQuoteLevelShipmentUsed($quoteTransfer)) {
             return [];
         }
 
         return $this->shipmentService
-            ->groupItemsByShipment($this->itemExtractor->extractItemsWithShipment($quoteRequestTransfer))
+            ->groupItemsByShipment($this->itemExtractor->extractItemsWithShipment($quoteTransfer))
             ->getArrayCopy();
     }
 }
