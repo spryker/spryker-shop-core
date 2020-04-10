@@ -4,7 +4,7 @@
     merchantOrderReferences: _widget.merchantOrderReferences,
 } %}
 
-{% block template %}
+{% block body %}
     {% if data.merchantOrderReferences %}
         <p>
             {{ 'merchant_sales_order.merchant_order_id' | trans }}: <strong>{{ data.merchantOrderReferences | join(', ') }}</strong>

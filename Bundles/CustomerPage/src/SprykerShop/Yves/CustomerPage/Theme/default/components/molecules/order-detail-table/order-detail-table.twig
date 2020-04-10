@@ -56,20 +56,11 @@
 
                                 <p>{{ 'customer.order.item_quantity' | trans }}: {{ concreteItem.quantity }}</p>
 
-                                <div class="grid grid--justify">
-                                    <span class="spacing-right col col--sm-9">
-                                        {% widget 'ProductOfferSoldByMerchantWidget' args [concreteItem] only %}{% endwidget %}
-                                    </span>
-                                    <span class="spacing-right col col--sm-3 text-right">
-                                        <p>
-                                            {% include molecule('order-detail-item-state', 'CustomerPage') ignore missing with {
-                                                data: {
-                                                    orderItem: concreteItem,
-                                                },
-                                            } only %}
-                                        </p>
-                                    </span>
-                                </div>
+                                {% include molecule('order-detail-item-details', 'CustomerPage') ignore missing with {
+                                    data: {
+                                        orderItem: concreteItem,
+                                    },
+                                } only %}
 
                                 {% if concreteItem.amount %}
                                     <p>{{ 'customer.order.item_amount' | trans }}: {{ concreteItem.amount.toFloat() }}</p>
@@ -83,20 +74,11 @@
                                                 {% for bundledItem in item.bundleItems %}
                                                     <li>
                                                         &nbsp; - {{ bundledItem.quantity }} x {{ bundledItem.name }}
-                                                        <div class="grid grid--justify">
-                                                            <span class="spacing-right col col--sm-9">
-                                                                {% widget 'ProductOfferSoldByMerchantWidget' args [bundledItem] only %}{% endwidget %}
-                                                            </span>
-                                                            <span class="spacing-right col col--sm-3 text-right">
-                                                                <p>
-                                                                    {% include molecule('order-detail-item-state', 'CustomerPage') ignore missing with {
-                                                                        data: {
-                                                                            orderItem: bundledItem,
-                                                                        },
-                                                                    } only %}
-                                                                </p>
-                                                            </span>
-                                                        </div>
+                                                        {% include molecule('order-detail-item-details', 'CustomerPage') ignore missing with {
+                                                            data: {
+                                                                orderItem: bundledItem,
+                                                            },
+                                                        } only %}
                                                     </li>
                                                 {% endfor %}
                                             </ul>
