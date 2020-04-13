@@ -3,6 +3,7 @@
 {% define data = {
     set: _view.productSet,
     views: _view.productViews,
+    optionResetUrls: _view.optionResetUrls,
 
     title: _view.productSet.name,
 
@@ -19,8 +20,9 @@
                 products: data.views,
                 name: data.set.name,
                 description: data.set.description,
-                images: data.set.imageSets.0.images | default([])
-            }
+                images: data.set.imageSets.0.images | default([]),
+                optionResetUrls: data.optionResetUrls,
+            },
         } only %}
     {% endif %}
 {% endblock %}
