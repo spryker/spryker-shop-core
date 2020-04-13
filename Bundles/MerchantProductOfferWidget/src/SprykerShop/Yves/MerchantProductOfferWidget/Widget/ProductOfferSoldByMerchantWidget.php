@@ -16,7 +16,6 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class ProductOfferSoldByMerchantWidget extends AbstractWidget
 {
     protected const PARAMETER_MERCHANT = 'merchant';
-    protected const PARAMETER_CURRENT_LOCALE = 'currentLocale';
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -49,17 +48,17 @@ class ProductOfferSoldByMerchantWidget extends AbstractWidget
      */
     protected function addMerchantParameter(ItemTransfer $itemTransfer)
     {
-        if (!$itemTransfer->getProductOfferReference()) {
-            return $this;
+        $merchantStorageTransfer = null;
+
+        if ($itemTransfer->getProductOfferReference()) {
+            $productOfferStorageTransfer = $this->getFactory()
+                ->getMerchantProductOfferStorageClient()
+                ->findProductOfferStorageByReference($itemTransfer->getProductOfferReference());
+
+            $merchantStorageTransfer = $this->getFactory()
+                ->getMerchantStorageClient()
+                ->findOne($productOfferStorageTransfer->getIdMerchant());
         }
-
-        $productOfferStorageTransfer = $this->getFactory()
-            ->getMerchantProductOfferStorageClient()
-            ->findProductOfferStorageByReference($itemTransfer->getProductOfferReference());
-
-        $merchantStorageTransfer = $this->getFactory()
-            ->getMerchantStorageClient()
-            ->findOne($productOfferStorageTransfer->getIdMerchant());
 
         $this->addParameter(static::PARAMETER_MERCHANT, $merchantStorageTransfer);
 

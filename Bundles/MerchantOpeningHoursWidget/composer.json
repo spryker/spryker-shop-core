@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.2",
     "spryker/kernel": "^3.33.0",
-    "spryker/merchant-opening-hours-storage": "^0.1.0"
+    "spryker/merchant-opening-hours-storage": "^0.2.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*"
