@@ -37,7 +37,7 @@
                 {% if isCompanyUserColumnsVisible %}
                     <th {{ _self.sortingAttributes('customerName', data.orderSearchForm, data.jsPrefix) }}>
                         {{ 'customer.order.company_user' | trans }}
-                        {{ _self.sortingIcon('companyUser', data.orderSearchForm) }}
+                        {{ _self.sortingIcon('customerName', data.orderSearchForm) }}
                     </th>
                     <th {{ _self.sortingAttributes('customerEmail', data.orderSearchForm, data.jsPrefix) }}>
                         {{ 'customer.order.email' | trans }}
