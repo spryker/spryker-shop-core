@@ -1,1 +1,0 @@
-Displays order item state.

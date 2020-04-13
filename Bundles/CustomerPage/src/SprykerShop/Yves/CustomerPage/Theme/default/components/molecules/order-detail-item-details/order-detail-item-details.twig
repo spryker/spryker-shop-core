@@ -14,13 +14,11 @@
             {% widget 'ProductOfferSoldByMerchantWidget' args [data.orderItem] only %}{% endwidget %}
         </span>
         <span class="spacing-right col col--sm-3 text-right">
-            <p>
-                {% include molecule('order-detail-item-state', 'CustomerPage') ignore missing with {
-                    data: {
-                        orderItem: data.orderItem,
-                    },
-                } only %}
-            </p>
+            {% if data.orderItem.state is not empty %}
+                <p>
+                    <strong>{{ data.orderItem.state.name | capitalize }}</strong>
+                </p>
+            {% endif %}
         </span>
     </div>
 {% endblock %}
