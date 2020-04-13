@@ -18,8 +18,8 @@
 {% endblock %}
 
 {% set isCompanyUserColumnsVisible = data.orderSearchForm
-    and data.orderSearchForm.companyBusinessUnit is defined
-    and data.orderSearchForm.companyBusinessUnit.vars.value != 'customer'
+    and data.orderSearchForm.vars.value.companyBusinessUnit is defined
+    and data.orderSearchForm.vars.value.companyBusinessUnit != 'customer'
 %}
 
 {% block body %}
@@ -35,11 +35,14 @@
                     {{ _self.sortingIcon('date', data.orderSearchForm) }}
                 </th>
                 {% if isCompanyUserColumnsVisible %}
-                    <th {{ _self.sortingAttributes('companyUser', data.orderSearchForm, data.jsPrefix) }}>
+                    <th {{ _self.sortingAttributes('customerName', data.orderSearchForm, data.jsPrefix) }}>
                         {{ 'customer.order.company_user' | trans }}
                         {{ _self.sortingIcon('companyUser', data.orderSearchForm) }}
                     </th>
-                    <th>{{ 'customer.order.email' | trans }}</th>
+                    <th {{ _self.sortingAttributes('customerEmail', data.orderSearchForm, data.jsPrefix) }}>
+                        {{ 'customer.order.email' | trans }}
+                        {{ _self.sortingIcon('customerEmail', data.orderSearchForm) }}
+                    </th>
                 {% endif %}
                 {% if data.isOrderSearchEnabled and data.isOrderSearchOrderItemsVisible %}
                     <th>{{ 'customer.order.number_of_items' | trans }}</th>
