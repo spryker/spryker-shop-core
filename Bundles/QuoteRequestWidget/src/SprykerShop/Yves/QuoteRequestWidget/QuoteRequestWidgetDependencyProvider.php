@@ -9,11 +9,13 @@ namespace SprykerShop\Yves\QuoteRequestWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToCompanyUserClientBridge;
 use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToCustomerClientBridge;
 use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToPersistentCartClientBridge;
 use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToQuoteClientBridge;
 use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToQuoteRequestClientBridge;
+use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 
 class QuoteRequestWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -22,6 +24,7 @@ class QuoteRequestWidgetDependencyProvider extends AbstractBundleDependencyProvi
     public const CLIENT_QUOTE_REQUEST = 'CLIENT_QUOTE_REQUEST';
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const SERVICE_ROUTER = 'routers';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -36,6 +39,7 @@ class QuoteRequestWidgetDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addQuoteRequestClient($container);
         $container = $this->addPersistentCartClient($container);
         $container = $this->addCustomerClient($container);
+        $container = $this->addRouterService($container);
 
         return $container;
     }
@@ -106,6 +110,20 @@ class QuoteRequestWidgetDependencyProvider extends AbstractBundleDependencyProvi
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
             return new QuoteRequestWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addRouterService(Container $container): Container
+    {
+        $container->set(static::SERVICE_ROUTER, function (): ChainRouterInterface {
+            return (new Pimple())->getApplication()->get(static::SERVICE_ROUTER);
+        });
 
         return $container;
     }
