@@ -39,6 +39,8 @@
                                         {{ widgetBlock('CustomerReorderWidgetPlugin', 'reorderAction', order) }} {# @deprecated Use molecule('customer-reorder-link', 'CustomerReorderWidget') instead. #}
                                     </li>
                                 {% else %}
+
+                                    ssss
                                     {% include molecule('customer-reorder-link', 'CustomerReorderWidget') with {
                                         data: {
                                             idSalesOrder: order.idSalesOrder

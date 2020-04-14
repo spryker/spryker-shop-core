@@ -39,4 +39,13 @@
     {{ _self.item('customer.order.taxTotal' | trans, data.order.totals.taxTotal.amount | money(true, data.order.currencyIsoCode)) }}
 
     {{ _self.item('customer.order.grandTotal' | trans, data.order.totals.grandTotal | money(true, data.order.currencyIsoCode), false, true) }}
+
+    {% if data.order.totals and data.order.totals.remunerationTotal %}
+        {{ _self.item('customer.order.remunerationTotal' | trans, data.order.totals.remunerationTotal | money(true, data.order.currencyIsoCode), true) }}
+    {% endif %}
+
+    {% if data.order.totals and data.order.totals.canceledTotal %}
+        {{ _self.item('customer.order.canceledTotal' | trans, data.order.totals.canceledTotal | money(true, data.order.currencyIsoCode), true) }}
+    {% endif %}
+
 {% endblock %}
