@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CartPage\Form;
+namespace SprykerShop\Yves\CustomerReorderWidget\Form;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
@@ -25,32 +25,16 @@ class FormFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getRemoveForm(): FormInterface
+    public function getCustomerReorderWidgetForm(): FormInterface
     {
-        return $this->getFormFactory()->create(RemoveForm::class);
+        return $this->getFormFactory()->create(CustomerReorderWidgetForm::class);
     }
 
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getAddToCartForm(): FormInterface
+    public function getCustomerReorderItemsWidgetForm(): FormInterface
     {
-        return $this->getFormFactory()->create(AddToCartForm::class);
-    }
-
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function getAddItemsForm(): FormInterface
-    {
-        return $this->getFormFactory()->create(AddItemsForm::class);
-    }
-
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function getCartChangeQuantityForm(): FormInterface
-    {
-        return $this->getFormFactory()->create(CartChangeQuantityForm::class);
+        return $this->getFormFactory()->create(CustomerReorderItemsWidgetForm::class);
     }
 }

@@ -28,12 +28,20 @@ class OrderController extends AbstractController
     protected const PARAM_ID_ORDER = 'id';
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $idSalesOrder
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function reorderAction(int $idSalesOrder): RedirectResponse
+    public function reorderAction(Request $request, int $idSalesOrder): RedirectResponse
     {
+        $form = $this->getFactory()->createCustomerReorderWidgetFormFactory()
+            ->getCustomerReorderWidgetForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return $this->getFailureRedirect();
+        }
+
         $orderReader = $this->getFactory()
             ->createOrderReader();
 

@@ -1,0 +1,14 @@
+{% extends template('widget') %}
+
+{% define data = {
+    form: _widget.form,
+    order: _widget.order,
+    config: _widget.config,
+} %}
+
+{% block body %}
+    {{ form_start(data.form) }}
+        {% block embeddedData %}
+        {% endblock %}
+    {{ form_end(data.form) }}
+{% endblock %}
