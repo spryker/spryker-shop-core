@@ -120,18 +120,12 @@
             }})
         }}
 
-        {% include molecule('form-value-setter', 'CustomerPage') with {
+        {% include molecule('form-sort-submitter', 'CustomerPage') with {
             attributes: {
-                'trigger-class-name': data.jsPrefix ~ 'orderBy-trigger',
-                'target-class-name': data.jsPrefix ~ 'orderBy-target',
-            },
-        } only %}
-
-        {% include molecule('form-value-setter', 'CustomerPage') with {
-            attributes: {
-                'trigger-class-name': data.jsPrefix ~ 'orderDirection-trigger',
-                'target-class-name': data.jsPrefix ~ 'orderDirection-target',
-                'value-field': 'set-value-direction',
+                'form-class-name': data.jsPrefix ~ 'form',
+                'trigger-class-name': data.jsPrefix ~ 'sort-trigger',
+                'target-sort-by-class-name': data.jsPrefix ~ 'orderBy-target',
+                'target-sort-direction-class-name': data.jsPrefix ~ 'orderDirection-target',
             },
         } only %}
     {% endif %}
@@ -140,9 +134,9 @@
         {% if orderSearchForm %}
             {% set orderDirection = orderSearchForm.orderDirection.vars.value %}
 
-            class="{{ class }} {{ jsPrefix }}orderBy-trigger {{ jsPrefix }}orderDirection-trigger"
-            set-value="{{ orderByValue }}"
-            set-value-direction="{{ (orderDirection == 'ASC') ? 'DESC' : 'ASC' }}"
+            class="{{ class }} {{ jsPrefix }}sort-trigger"
+            sort-by="{{ orderByValue }}"
+            sort-direction="{{ (orderDirection == 'ASC') ? 'DESC' : 'ASC' }}"
         {% endif %}
     {%- endmacro -%}
 

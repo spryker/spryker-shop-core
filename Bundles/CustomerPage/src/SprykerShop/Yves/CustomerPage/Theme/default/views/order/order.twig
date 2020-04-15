@@ -28,9 +28,15 @@
         {% endblock %}
 
         {% block filterSection %}
+            {% set formClass = jsPrefix ~ 'form' %}
+
             {% if data.orderSearchForm %}
                 {% block formStart %}
-                    {{ form_start(data.orderSearchForm) }}
+                    {{ form_start(data.orderSearchForm, {
+                        attr: {
+                            class: formClass,
+                        },
+                    }) }}
                 {% endblock %}
 
                 {% block orderFilters %}

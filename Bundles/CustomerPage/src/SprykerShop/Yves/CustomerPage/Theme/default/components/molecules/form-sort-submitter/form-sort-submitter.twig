@@ -1,0 +1,15 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'form-sort-submitter',
+    tag: 'form-sort-submitter',
+} %}
+
+{% define attributes = {
+    'form-class-name': required,
+    'trigger-class-name': required,
+    'target-sort-by-class-name': required,
+    'target-sort-direction-class-name': required,
+    'sort-by-attribute': 'sort-by',
+    'sort-direction-attribute': 'sort-direction',
+} %}
