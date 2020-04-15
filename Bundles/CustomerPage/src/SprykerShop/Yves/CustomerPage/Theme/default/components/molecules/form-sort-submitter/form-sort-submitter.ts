@@ -1,6 +1,7 @@
 import Component from 'ShopUi/models/component';
 
 export default class FormSortSubmitter extends Component {
+    protected form: HTMLFormElement;
     protected triggers: HTMLElement[];
     protected targetSortBy: HTMLInputElement;
     protected targetSortDirection: HTMLInputElement;
@@ -8,6 +9,7 @@ export default class FormSortSubmitter extends Component {
     protected readyCallback(): void {}
 
     protected init(): void {
+        this.form = <HTMLFormElement>document.getElementsByClassName(this.formClassName)[0];
         this.triggers = <HTMLElement[]>Array.from(document.getElementsByClassName(this.triggerClassName));
         this.targetSortBy = <HTMLInputElement>document.getElementsByClassName(this.targetSortByClassName)[0];
         this.targetSortDirection = <HTMLInputElement>document.getElementsByClassName(this.targetSortDirectionClassName)[0];
@@ -27,12 +29,16 @@ export default class FormSortSubmitter extends Component {
     protected setValues(trigger: HTMLElement): void {
         const sortByValue: string = trigger.getAttribute(this.sotrByAttribute);
         const sortDirectionValue: string = trigger.getAttribute(this.sotrDirectionAttribute);
+        const submitEvent: Event = new Event('submit');
 
-        this.targetSortBy.value = sortByValue;
-        this.targetSortDirection.value = sortDirectionValue;
+        [this.targetSortBy.value, this.targetSortDirection.value] = [sortByValue, sortDirectionValue];
 
-        const form: HTMLFormElement = this.targetSortBy.closest('form');
-        form.submit();
+        this.form.submit();
+        this.form.dispatchEvent(submitEvent);
+    }
+
+    protected get formClassName(): string {
+        return this.getAttribute('form-class-name');
     }
 
     protected get triggerClassName(): string {

@@ -122,6 +122,7 @@
 
         {% include molecule('form-sort-submitter', 'CustomerPage') with {
             attributes: {
+                'form-class-name': data.jsPrefix ~ 'form',
                 'trigger-class-name': data.jsPrefix ~ 'sort-trigger',
                 'target-sort-by-class-name': data.jsPrefix ~ 'orderBy-target',
                 'target-sort-direction-class-name': data.jsPrefix ~ 'orderDirection-target',
