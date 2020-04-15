@@ -52,7 +52,6 @@
     <transfer name="Item">
         <property name="productOfferReference" type="string"/>
         <property name="merchantReference" type="string"/>
-        <property name="shipment" type="Shipment"/>
     </transfer>
 
     <transfer name="ProductOffer">
@@ -64,14 +63,6 @@
     </transfer>
 
     <transfer name="ShopContext">
-    </transfer>
-
-    <transfer name="Shipment">
-        <property name="merchantReference" type="string"/>
-    </transfer>
-
-    <transfer name="Quote">
-        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
 </transfers>
