@@ -16,7 +16,7 @@
 {% block body %}
     {% block orderDetailContent %} {# @deprecated - This block will be removed with next release. Content will be placed directly under `body` block #}
         <div class="box">
-            {% include molecule('return-create-link', 'SalesReturnPage') with {
+            {% include molecule('return-create-link', 'SalesReturnPage') ignore missing with {
                 class: 'float-right spacing-left',
                 data: {
                     idSalesOrder: data.order.idSalesOrder

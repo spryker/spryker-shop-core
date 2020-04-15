@@ -9,7 +9,7 @@
 } %}
 
 {% block body %}
-    <a href="{{ path('sales-return-page/create', { idSalesOrder: (data.idSalesOrder)}) }}">
+    <a href="{{ path('sales-return/create', { idSalesOrder: (data.idSalesOrder)}) }}">
         {% block content %}
             {{ 'sales_return_page.button.create_return' | trans }}
         {% endblock %}

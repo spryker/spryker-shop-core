@@ -12,7 +12,7 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    protected const ROUTE_SALES_RETURN_PAGE_CREATE = 'sales-return-page/create';
+    protected const ROUTE_SALES_RETURN_CREATE = 'sales-return/create';
 
     protected const PARAM_ID_SALES_ORDER = 'idSalesOrder';
     protected const PARAM_ID_SALES_ORDER_REGEX = '[a-zA-Z0-9-]+';
@@ -29,7 +29,7 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
-        $routeCollection = $this->addSalesReturnPageCreateRoute($routeCollection);
+        $routeCollection = $this->addSalesReturnCreateRoute($routeCollection);
 
         return $routeCollection;
     }
@@ -41,11 +41,11 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Yves\Router\Route\RouteCollection
      */
-    protected function addSalesReturnPageCreateRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addSalesReturnCreateRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/sales-return-page/create', 'SalesReturnPage', 'SalesReturnPageCreate', 'createAction');
+        $route = $this->buildRoute('/sales-return/create', 'SalesReturnPage', 'SalesReturnPageCreate', 'createAction');
         $route = $route->setRequirement(static::PARAM_ID_SALES_ORDER, static::PARAM_ID_SALES_ORDER_REGEX);
-        $routeCollection->add(static::ROUTE_SALES_RETURN_PAGE_CREATE, $route);
+        $routeCollection->add(static::ROUTE_SALES_RETURN_CREATE, $route);
 
         return $routeCollection;
     }
