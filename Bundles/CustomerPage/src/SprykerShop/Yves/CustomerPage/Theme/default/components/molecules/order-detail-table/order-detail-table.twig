@@ -128,12 +128,9 @@
                     <div class="{{ config.name }}__item {{ config.name }}__item--spacingless">
                         <h5>{{ 'customer.order.delivery_method' | trans }}</h5>
                         <div class="spacing-y spacing-y--inner">
-                            {% include molecule('delivery-information', 'CustomerPage') with {
+                            {% include molecule('shipment-information', 'CustomerPage') with {
                                 data: {
-                                    carrierName: expense.shipment.method.carrierName,
-                                    methodName: expense.name,
-                                    storeCurrencyPrice: expense.sumPrice,
-                                    currencyIsoCode: data.currencyIsoCode,
+                                    shipmentExpense: expense,
                                 },
                             } only %}
                         </div>

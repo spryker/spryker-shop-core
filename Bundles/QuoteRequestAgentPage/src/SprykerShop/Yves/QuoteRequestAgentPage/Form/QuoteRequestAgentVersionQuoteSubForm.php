@@ -35,6 +35,7 @@ class QuoteRequestAgentVersionQuoteSubForm extends AbstractType
         $resolver->setRequired([
             QuoteRequestAgentForm::OPTION_PRICE_MODE,
             QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID,
+            QuoteRequestAgentForm::OPTION_SHIPMENT_GROUPS,
         ]);
     }
 
