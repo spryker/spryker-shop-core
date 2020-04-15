@@ -47,8 +47,13 @@ class SimilarProductsWidget extends AbstractWidget
      */
     protected function findRelatedProducts(ProductViewTransfer $productViewTransfer): array
     {
+        $storeName = $this->getFactory()
+            ->getStoreClient()
+            ->getCurrentStore()
+            ->getName();
+
         return $this->getFactory()
             ->getProductRelationStorageClient()
-            ->findRelatedProducts($productViewTransfer->getIdProductAbstract(), $this->getLocale(), APPLICATION_STORE);
+            ->findRelatedProducts($productViewTransfer->getIdProductAbstract(), $this->getLocale(), $storeName);
     }
 }

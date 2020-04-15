@@ -15,6 +15,11 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class QuoteRequestAgentCheckoutController extends QuoteRequestAgentAbstractController
 {
     /**
+     * @uses \Symfony\Component\Security\Http\Firewall\SwitchUserListener::EXIT_VALUE
+     */
+    protected const EXIT_VALUE = '_exit';
+
+    /**
      * @param string $quoteRequestReference
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -48,7 +53,7 @@ class QuoteRequestAgentCheckoutController extends QuoteRequestAgentAbstractContr
         if ($companyUserTransfer->getIdCompanyUser() !== $quoteRequestTransfer->getCompanyUser()->getIdCompanyUser()) {
             return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_CONVERT_TO_CART, [
                 static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestTransfer->getQuoteRequestReference(),
-                static::PARAM_SWITCH_USER => '_exit',
+                static::PARAM_SWITCH_USER => static::EXIT_VALUE,
             ]);
         }
 
