@@ -29,7 +29,7 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
-        $routeCollection = $this->addQuoteRequestCreateRoute($routeCollection);
+        $routeCollection = $this->addSalesReturnPageCreateRoute($routeCollection);
 
         return $routeCollection;
     }
@@ -41,7 +41,7 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Yves\Router\Route\RouteCollection
      */
-    protected function addQuoteRequestCreateRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addSalesReturnPageCreateRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/sales-return-page/create', 'SalesReturnPage', 'SalesReturnPageCreate', 'createAction');
         $route = $route->setRequirement(static::PARAM_ID_SALES_ORDER, static::PARAM_ID_SALES_ORDER_REGEX);

@@ -45,6 +45,14 @@
                                         }
                                     } only %}
                                 {% endif %}
+                                <li class="menu__item">
+                                    {% include molecule('return-create-link', 'SalesReturnPage') with {
+                                        class: 'float-right spacing-left',
+                                        data: {
+                                            idSalesOrder: order.idSalesOrder
+                                        }
+                                    } only %}
+                                </li>
                             </ul>
                         </td>
                     </tr>
