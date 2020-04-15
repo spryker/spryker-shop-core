@@ -7,8 +7,7 @@
 } %}
 
 {% block body %}
-    {{ form_start(data.form) }}
-        {% block embeddedData %}
-        {% endblock %}
+    {{ form_start(data.form, {'action': path('customer/order/reorder-items')}) }}
+        {% block embeddedData %}{% endblock %}
     {{ form_end(data.form) }}
 {% endblock %}

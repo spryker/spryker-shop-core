@@ -72,6 +72,13 @@ class OrderController extends AbstractController
      */
     public function reorderItemsAction(Request $request): RedirectResponse
     {
+        $form = $this->getFactory()->createCustomerReorderWidgetFormFactory()
+            ->getCustomerReorderItemsWidgetForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return $this->getFailureRedirect();
+        }
+
         $idSalesOrder = $request->request->getInt(static::PARAM_ID_ORDER);
         $items = (array)$request->request->get(static::PARAM_ITEMS);
 
