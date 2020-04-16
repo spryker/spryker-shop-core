@@ -10,6 +10,7 @@
     products: required,
     description: '',
     images: [],
+    optionResetUrls: [],
 } %}
 
 {% block body %}
@@ -87,6 +88,9 @@
                                     product: product,
                                     sku: '',
                                 },
+                                embed: {
+                                    optionResetUrls: data.optionResetUrls[product.idProductAbstract] ?? [],
+                                },
                             } only %}
                                 {% block content %}
                                     {{ parent() }}
@@ -101,6 +105,7 @@
                                         },
                                         embed: {
                                             product: data.product,
+                                            optionResetUrls: embed.optionResetUrls,
                                         },
                                     } only %}
                                         {% block variant %}
@@ -113,6 +118,7 @@
                                                         selectedValue: selectedValue,
                                                         label: ('product.attribute.' ~ name) | trans,
                                                         isAvailable: isAvailable,
+                                                        optionResetUrl: embed.optionResetUrls[name] ?? '',
                                                     },
                                                 } only %}
                                             </li>

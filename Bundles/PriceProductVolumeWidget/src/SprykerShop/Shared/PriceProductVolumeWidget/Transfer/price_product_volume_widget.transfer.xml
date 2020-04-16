@@ -6,6 +6,12 @@
     <transfer name="ProductView">
         <property name="idProductConcrete" type="int"/>
         <property name="idProductAbstract" type="int"/>
+        <property name="currentProductPrice" type="CurrentProductPrice"/>
+    </transfer>
+
+    <transfer name="CurrentProductPrice">
+        <property name="priceData" type="string"/>
+        <property name="priceMode" type="string"/>
     </transfer>
 
     <transfer name="PriceProductVolumeCollection">
