@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\FilterFieldTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use SprykerShop\Yves\CompanyBusinessUnitWidget\Dependency\Client\CompanyBusinessUnitWidgetToCustomerClientInterface;
+use SprykerShop\Yves\CompanyBusinessUnitWidget\Form\DataProvider\CompanyBusinessUnitFormDataProvider;
 
 class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
 {
@@ -24,13 +25,6 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
      * @uses \Spryker\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT
      */
     protected const FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT = 'companyBusinessUnit';
-
-    /**
-     * @uses \Spryker\Zed\CompanySalesConnector\CompanySalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY
-     */
-    protected const FILTER_FIELD_TYPE_COMPANY = 'company';
-
-    protected const FILTER_FIELD_VALUE_CUSTOMER = 'customer';
 
     /**
      * @var \SprykerShop\Yves\CompanyBusinessUnitWidget\Dependency\Client\CompanyBusinessUnitWidgetToCustomerClientInterface
@@ -57,13 +51,13 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
     ): OrderListTransfer {
         $companyBusinessUnitValue = $orderSearchFormData[static::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT] ?? null;
 
-        if (!$companyBusinessUnitValue || $companyBusinessUnitValue === static::FILTER_FIELD_VALUE_CUSTOMER) {
+        if (!$companyBusinessUnitValue || $companyBusinessUnitValue === CompanyBusinessUnitFormDataProvider::CHOICE_CUSTOMER) {
             return $orderListTransfer;
         }
 
         $orderListTransfer = $this->excludeCustomerReferenceFilterField($orderListTransfer);
 
-        if ($companyBusinessUnitValue === static::FILTER_FIELD_TYPE_COMPANY) {
+        if ($companyBusinessUnitValue === CompanyBusinessUnitFormDataProvider::CHOICE_COMPANY) {
             return $this->addCompanyFilterField($orderListTransfer);
         }
 
@@ -126,7 +120,7 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
 
         $filterFieldTransfer = (new FilterFieldTransfer())
             ->setValue($companyUuid)
-            ->setType(static::FILTER_FIELD_TYPE_COMPANY);
+            ->setType(CompanyBusinessUnitFormDataProvider::CHOICE_COMPANY);
 
         return $orderListTransfer->addFilterField($filterFieldTransfer);
     }

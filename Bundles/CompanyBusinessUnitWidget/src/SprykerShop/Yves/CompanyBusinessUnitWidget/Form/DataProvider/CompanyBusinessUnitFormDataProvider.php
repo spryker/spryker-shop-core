@@ -18,8 +18,11 @@ class CompanyBusinessUnitFormDataProvider
 {
     use PermissionAwareTrait;
 
-    protected const CHOICE_CUSTOMER = 'customer';
-    protected const CHOICE_COMPANY = 'company';
+    /**
+     * @uses \Spryker\Zed\CompanySalesConnector\CompanySalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY
+     */
+    public const CHOICE_COMPANY = 'company';
+    public const CHOICE_CUSTOMER = 'customer';
 
     protected const GLOSSARY_KEY_CHOICE_MY_ORDERS = 'company_business_unit_widget.choice.my_orders';
     protected const GLOSSARY_KEY_CHOICE_COMPANY_ORDERS = 'company_business_unit_widget.choice.company_orders';

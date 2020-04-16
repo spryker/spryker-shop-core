@@ -22,27 +22,27 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class OrderController extends AbstractCustomerController
 {
     /**
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\CustomerPageConfig::getDefaultOrderHistoryPerPage()} instead.
      */
     public const ORDER_LIST_LIMIT = 10;
 
     /**
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\CustomerPageConfig::getDefaultOrderHistorySortField()} instead.
      */
     public const ORDER_LIST_SORT_FIELD = 'created_at';
 
     /**
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\CustomerPageConfig::getDefaultOrderHistorySortDirection()} instead.
      */
     public const ORDER_LIST_SORT_DIRECTION = 'DESC';
 
     /**
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Reader\OrderReader::PARAM_PAGE} instead.
      */
     public const PARAM_PAGE = 'page';
 
     /**
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Reader\OrderReader::DEFAULT_PAGE} instead.
      */
     public const DEFAULT_PAGE = 1;
 
