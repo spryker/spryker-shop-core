@@ -2,16 +2,17 @@
 
 {% define config = {
     name: 'return-create-link',
+    tag: 'a',
 } %}
 
 {% define data = {
     idSalesOrder: required,
 } %}
 
+{% define attributes = {
+    href: path('sales-return/create', { idSalesOrder: (data.idSalesOrder)}),
+} %}
+
 {% block body %}
-    <a href="{{ path('sales-return/create', { idSalesOrder: (data.idSalesOrder)}) }}">
-        {% block content %}
-            {{ 'sales_return_page.button.create_return' | trans }}
-        {% endblock %}
-    </a>
+    {{- 'sales_return_page.button.create_return' | trans -}}
 {% endblock %}
