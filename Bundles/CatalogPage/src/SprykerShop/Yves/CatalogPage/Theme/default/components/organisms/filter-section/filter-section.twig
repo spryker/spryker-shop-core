@@ -10,6 +10,7 @@
     filteredFacets: [],
     filterPath: null,
     categories: [],
+    category: null,
     isEmptyCategoryFilterValueVisible: null,
     parentJsName: '',
 } %}
@@ -32,6 +33,7 @@
                     data: {
                         filterPath: data.filterPath,
                         categories: data.categories,
+                        category: data.category,
                         filter: filter,
                         parameter: filter.config.parameterName | default(''),
                         min: filter.min | default(0),
