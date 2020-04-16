@@ -8,6 +8,7 @@
     "spryker-shop/customer-reorder-widget-extension": "^1.0.0",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.0.0",
+    "spryker/application": "^3.0.0",
     "spryker/availability-storage": "^1.0.0 || ^2.0.0",
     "spryker/cart": "^4.6.0 || ^5.0.0 || ^7.0.0",
     "spryker/customer": "^7.4.0",
@@ -28,10 +29,10 @@
     "spryker/silex": "*"
   },
   "suggest": {
+    "spryker-shop/cart-page": "The default widget redirect is heading to a cart controller. Please redefine the redirect URL if you would like to use a custom behavior.",
     "spryker-shop/customer-page": "Module with interface to implement (^0.2.0), to use the reorder widget on a customer page",
     "spryker/router": "Use this module when you want to use the Router.",
-    "spryker/silex": "If you want use the widget's router provider",
-    "spryker-shop/cart-page": "The default widget redirect is heading to a cart controller. Please redefine the redirect URL if you would like to use a custom behavior."
+    "spryker/silex": "If you want use the widget's router provider"
   },
   "autoload": {
     "psr-4": {
