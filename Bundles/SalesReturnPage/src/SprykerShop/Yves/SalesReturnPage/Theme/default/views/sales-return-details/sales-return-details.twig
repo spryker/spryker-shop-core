@@ -1,0 +1,29 @@
+{% extends template('page-layout-sales-return', 'SalesReturnPage') %}
+
+{% define data = {
+    return: _view.return,
+    returnItems: _view.return.returnItems,
+} %}
+
+{% block salesReturnContent %}
+    <div class="box">
+        <h5>{{ 'sales_return.return_details' | trans }}</h5>
+        <hr class="box__separator">
+        <ul>
+            <li>
+                {{ 'sales_return.return_reference' | trans }}:
+                <strong>{{ data.return.returnReference }}</strong>
+            </li>
+            <li>
+                {{ 'sales_return.return_date' | trans }}:
+                <strong>{{ data.return.createdAt | formatDateTime }}</strong>
+            </li>
+        </ul>
+        <hr class="box__separator">
+        {% include molecule('sales-return-detail-table', 'SalesReturnPage') with {
+            data: {
+                returnItems: data.returnItems,
+            },
+        } only %}
+    </div>
+{% endblock %}

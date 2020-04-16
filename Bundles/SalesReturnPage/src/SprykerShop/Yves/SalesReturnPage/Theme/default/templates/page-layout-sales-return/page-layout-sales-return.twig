@@ -1,0 +1,33 @@
+{% extends template('page-layout-main') %}
+
+{% define data = {
+    activePage: 'details'
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'customer.account' | trans
+            }]
+        }
+    } only %}
+{% endblock %}
+
+{% block content %}
+    <div class="grid">
+        <div class="col col--sm-12 col--md-3">
+            {% block customerNavigation %}
+                {% widget 'CustomerNavigationWidget' args [data.activePage] only %}
+                {% elsewidget 'CustomerNavigationWidgetPlugin' args [data.activePage] only %} {# @deprecated Use CustomerNavigationWidget instead. #}
+                {% endwidget %}
+            {% endblock %}
+        </div>
+
+        <div class="col col--sm-12 col--md-9">
+            {% block salesReturnContent %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}{% endblock %}

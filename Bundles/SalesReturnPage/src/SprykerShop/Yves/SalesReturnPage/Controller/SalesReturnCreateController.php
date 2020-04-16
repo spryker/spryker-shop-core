@@ -11,9 +11,9 @@ use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \SprykerShop\Yves\QuoteRequestAgentPage\QuoteRequestAgentPageFactory getFactory()
+ * @method \SprykerShop\Yves\SalesReturnPage\SalesReturnPageFactory getFactory()
  */
-class SalesReturnPageCreateController extends AbstractController
+class SalesReturnCreateController extends AbstractController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
