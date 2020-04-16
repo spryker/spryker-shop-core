@@ -31,7 +31,6 @@ export default class ButtonsStateHandler extends Component {
 
     protected onTriggerChange(): void {
         const checkedTriggers = this.triggers.filter(checkbox => checkbox.checked);
-        console.log(checkedTriggers);
 
         if (checkedTriggers.length) {
             this.disableTargets();
