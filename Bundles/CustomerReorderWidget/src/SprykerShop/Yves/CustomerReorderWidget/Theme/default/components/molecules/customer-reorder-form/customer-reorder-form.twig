@@ -18,16 +18,16 @@
         {% block formActions %}
             <div class="box">
                 {% set formActionsWrapperClass = 'grid grid--middle grid--right' %}
+                {% set reorderButtonWrapperClass = 'form-field col col--sm-5 col--lg-3 spacing-right' %}
                 {% set reorderButtonClass = 'button button--expand ' ~ config.jsName ~ '__trigger' %}
-                {% set buttonReorderColumnClass = 'form-field col col--sm-5 col--lg-3 spacing-right' %}
-                {% set reorderAllLinkColumnClass = 'form-field col col--sm-5 col--lg-3' %}
+                {% set reorderAllLinkWrapperClass = 'form-field col col--sm-5 col--lg-3' %}
                 {% set reorderAllLinkClass = 'button button--expand js-state-observable' %}
 
                 {% block formActionsInner %}
                     <div class="{{ formActionsWrapperClass }}">
-                        {% block buttonReorderColumn %}
-                            <div class="{{ buttonReorderColumnClass }}">
-                                {% block buttonReorderColumnInner %}
+                        {% block reorderButtonWrapper %}
+                            <div class="{{ reorderButtonWrapperClass }}">
+                                {% block reorderButton %}
                                     <button class="{{ reorderButtonClass }}" disabled>
                                         {{ 'customer.order.reorder_selected' | trans }}
                                     </button>
@@ -35,9 +35,9 @@
                             </div>
                         {% endblock %}
 
-                        {% block reorderAllLinkColumn %}
-                            <div class="{{ reorderAllLinkColumnClass }}">
-                                {% block reorderAllLinkColumnInner %}
+                        {% block reorderAllLinkWrapper %}
+                            <div class="{{ reorderAllLinkWrapperClass }}">
+                                {% block reorderAllLink %}
                                     <a href="{{ path('customer/order/reorder', {'idSalesOrder': data.idSalesOrder}) }}" class="{{ reorderAllLinkClass }}">
                                         {{ 'customer.order.reorder_all' | trans }}
                                     </a>
