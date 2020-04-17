@@ -35,7 +35,7 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestCreateController::createAction()
+     * @uses \SprykerShop\Yves\SalesReturnPage\Controller\SalesReturnPageCreateController::createAction()
      *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
