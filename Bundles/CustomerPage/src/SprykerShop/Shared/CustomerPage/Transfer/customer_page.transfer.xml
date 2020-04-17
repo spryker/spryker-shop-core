@@ -294,6 +294,13 @@
     </transfer>
 
     <transfer name="Totals">
+        <property name="refundTotal" type="int"/>
+        <property name="grandTotal" type="int"/>
+        <property name="taxTotal" type="TaxTotal"/>
+        <property name="expenseTotal" type="int"/>
+        <property name="subtotal" type="int"/>
+        <property name="remunerationTotal" type="int"/>
+        <property name="canceledTotal" type="int"/>
     </transfer>
 
     <transfer name="Locale">

@@ -1,0 +1,39 @@
+{
+  "name": "spryker-shop/sales-return-page",
+  "type": "library",
+  "description": "SalesReturnPage module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.2",
+    "spryker-shop/shop-application": "^1.2.0",
+    "spryker-shop/shop-ui": "^1.0.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/symfony": "^3.1.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/router": "*"
+  },
+  "suggest": {
+    "spryker/router": "Use this module if you want use the RouterProviderPlugin."
+  },
+  "autoload": {
+    "psr-4": {
+      "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "3.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
