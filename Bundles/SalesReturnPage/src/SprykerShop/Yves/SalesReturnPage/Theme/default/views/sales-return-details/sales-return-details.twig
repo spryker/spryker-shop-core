@@ -26,4 +26,14 @@
             },
         } only %}
     </div>
+
+    <div class="box">
+        <hr />
+        {% include molecule('sales-return-summary', 'SalesReturnPage') with {
+            class: 'text-right',
+            data: {
+                return: data.return,
+            },
+        } only %}
+    </div>
 {% endblock %}

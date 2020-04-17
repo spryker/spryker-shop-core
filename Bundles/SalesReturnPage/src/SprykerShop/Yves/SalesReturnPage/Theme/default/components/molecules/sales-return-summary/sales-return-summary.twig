@@ -1,0 +1,23 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'sales-return-detail-table',
+} %}
+
+{% define data = {
+    returnItems: [],
+    currencyIsoCode: null
+} %}
+
+{% block body %}
+    <ul>
+        <li>
+            {{ 'sales_return.items_to_return' | trans }}:
+            <strong>{{ data.return.returnTotals.remunerationTotal | money(true, data.currencyIsoCode) }}</strong>
+        </li>
+        <li>
+            {{ 'sales_return.remuneration_total' | trans }}:
+            <strong></strong>
+        </li>
+    </ul>
+{% endblock %}
