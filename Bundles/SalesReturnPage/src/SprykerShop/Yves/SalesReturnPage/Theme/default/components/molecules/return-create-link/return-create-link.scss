@@ -1,6 +1,0 @@
-@mixin sales-return-page-return-create-link($name: '.return-create-link') {
-    @include shop-ui-link($name) {
-
-        @content;
-    }
-}
