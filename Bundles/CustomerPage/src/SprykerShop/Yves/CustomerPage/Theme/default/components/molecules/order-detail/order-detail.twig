@@ -16,15 +16,12 @@
 {% block body %}
     {% block orderDetailContent %} {# @deprecated - This block will be removed with next release. Content will be placed directly under `body` block #}
         <div class="box">
-            {% include molecule('return-create-link', 'SalesReturnPage') ignore missing with {
-                class: 'float-right spacing-left',
-                data: {
-                    idSalesOrder: data.order.idSalesOrder
-                }
-            } only %}
-
+            {% block returnOrderLink %}
+                <a href="{{ path('sales-return/create', { idSalesOrder: (data.order.idSalesOrder)}) }}" class="link float-right spacing-left js-state-observable">
+                    {{- 'sales_return_page.button.create_return' | trans -}}
+                </a>
+            {% endblock %}
             <a href="{{url('customer/order')}}" class="link float-right">{{ 'general.back.button' | trans }}</a>
-
             <h5>{{ 'customer.profile.order_details' | trans }}</h5>
             <hr class="box__separator">
             <ul>
@@ -114,5 +111,14 @@
                 },
             } only %}
         </div>
+
+        {% block buttonsStateHandler %}
+            {% include molecule('buttons-state-handler', 'SalesReturnPage') ignore missing with {
+                attributes: {
+                    'trigger-class-name': 'js-customer-reorder-form__selection',
+                    'target-class-name': 'js-state-observable',
+                },
+            } only %}
+        {% endblock %}
     {% endblock %}
 {% endblock %}
