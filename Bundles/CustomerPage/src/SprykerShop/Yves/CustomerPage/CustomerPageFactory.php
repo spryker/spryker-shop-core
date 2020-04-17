@@ -20,6 +20,7 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClient
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesReturnClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface;
@@ -190,6 +191,14 @@ class CustomerPageFactory extends AbstractFactory
     public function getSalesClient(): CustomerPageToSalesClientInterface
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_SALES);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesReturnClientInterface
+     */
+    public function getSalesReturnClient(): CustomerPageToSalesReturnClientInterface
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_SALES_RETURN);
     }
 
     /**

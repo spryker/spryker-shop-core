@@ -263,6 +263,7 @@
         <property name="lastName" type="string"/>
         <property name="isDirty" type="bool"/>
         <property name="isGuest" type="bool"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="CustomerResponse">
@@ -305,12 +306,35 @@
     </transfer>
 
     <transfer name="ItemState">
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="ShipmentCarrier">
     </transfer>
 
     <transfer name="ShipmentMethod">
+    </transfer>
+
+    <transfer name="ReturnCollection">
+        <property name="pagination" type="Pagination"/>
+        <property name="returns" type="Return[]" singular="return"/>
+    </transfer>
+
+    <transfer name="ReturnFilter">
+        <property name="customerReference" type="string"/>
+        <property name="filter" type="Filter"/>
+    </transfer>
+
+    <transfer name="Return">
+        <property name="idSalesReturn" type="int"/>
+        <property name="returnReference" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="createdAt" type="string"/>
+        <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
+    </transfer>
+
+    <transfer name="ReturnItem">
+        <property name="orderItem" type="Item"/>
     </transfer>
 
 </transfers>
