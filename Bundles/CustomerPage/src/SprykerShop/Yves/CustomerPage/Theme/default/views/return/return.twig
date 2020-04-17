@@ -39,10 +39,10 @@
                     {% set itemStates = [] %}
                     {% for returnItem in return.returnItems %}
                         {% if returnItem.orderItem.orderReference not in orderReferences %}
-                            {% set orderReferences = orderReferences|merge([returnItem.orderItem.orderReference]) %}
+                            {% set orderReferences = orderReferences | merge([returnItem.orderItem.orderReference]) %}
                         {% endif %}
                         {% if returnItem.orderItem.state.name not in itemStates %}
-                            {% set itemStates = itemStates|merge([returnItem.orderItem.state.name]) %}
+                            {% set itemStates = itemStates | merge([returnItem.orderItem.state.name]) %}
                         {% endif %}
                     {% endfor %}
                     <tr>
