@@ -12,7 +12,6 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientBridge;
-use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToGlossaryStorageClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientBridge;
@@ -34,7 +33,6 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_SHIPMENT = 'CLIENT_SHIPMENT';
     public const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
-    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     public const PLUGIN_AFTER_CUSTOMER_AUTHENTICATION_SUCCESS = 'PLUGIN_AFTER_CUSTOMER_AUTHENTICATION_SUCCESS';
     public const PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT = 'PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT';
@@ -71,7 +69,6 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSalesClient($container);
         $container = $this->addShipmentClient($container);
         $container = $this->addQuoteClient($container);
-        $container = $this->addGlossaryStorageClient($container);
         $container = $this->addApplication($container);
         $container = $this->addAuthenticationHandlerPlugin($container);
         $container = $this->addLoginCheckoutAuthenticationHandlerPlugin($container);
@@ -456,22 +453,6 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_SHIPMENT, function (Container $container): CustomerPageToShipmentClientInterface {
             return new CustomerPageToShipmentClientBridge($container->getLocator()->shipment()->client());
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addGlossaryStorageClient(Container $container): Container
-    {
-        $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
-            return new CustomerPageToGlossaryStorageClientBridge(
-                $container->getLocator()->glossaryStorage()->client()
-            );
         });
 
         return $container;

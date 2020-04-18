@@ -64,12 +64,4 @@ class CustomerPageToSalesClientBridge implements CustomerPageToSalesClientInterf
     {
         return $this->salesClient->searchOrders($orderListTransfer);
     }
-
-    /**
-     * @return string[]
-     */
-    public function getOrderSearchTypes(): array
-    {
-        return $this->salesClient->getOrderSearchTypes();
-    }
 }

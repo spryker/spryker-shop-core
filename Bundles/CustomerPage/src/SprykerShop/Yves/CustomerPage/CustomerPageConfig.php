@@ -25,6 +25,16 @@ class CustomerPageConfig extends AbstractBundleConfig
     protected const DEFAULT_ORDER_HISTORY_SORT_DIRECTION = 'DESC';
 
     /**
+     * @uses \Spryker\Shared\Sales\SalesConfig::ORDER_SEARCH_TYPES
+     */
+    protected const ORDER_SEARCH_TYPES = [
+        'all',
+        'orderReference',
+        'itemName',
+        'itemSku',
+    ];
+
+    /**
      * @uses \Spryker\Zed\Customer\CustomerConfig::MAX_LENGTH_CUSTOMER_PASSWORD
      */
     protected const MAX_LENGTH_CUSTOMER_PASSWORD = 72;
@@ -122,5 +132,15 @@ class CustomerPageConfig extends AbstractBundleConfig
     public function getDefaultOrderHistorySortDirection(): string
     {
         return static::DEFAULT_ORDER_HISTORY_SORT_DIRECTION;
+    }
+
+    /**
+     * @api
+     *
+     * @return string[]
+     */
+    public function getOrderSearchTypes(): array
+    {
+        return static::ORDER_SEARCH_TYPES;
     }
 }

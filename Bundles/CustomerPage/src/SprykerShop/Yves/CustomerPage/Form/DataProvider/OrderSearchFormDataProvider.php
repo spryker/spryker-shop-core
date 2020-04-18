@@ -9,8 +9,6 @@ namespace SprykerShop\Yves\CustomerPage\Form\DataProvider;
 
 use Spryker\Shared\Kernel\Store;
 use SprykerShop\Yves\CustomerPage\CustomerPageConfig;
-use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToGlossaryStorageClientInterface;
-use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface;
 use SprykerShop\Yves\CustomerPage\Form\OrderSearchForm;
 
 class OrderSearchFormDataProvider
@@ -21,67 +19,40 @@ class OrderSearchFormDataProvider
     protected $customerPageConfig;
 
     /**
-     * @var \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface
-     */
-    protected $salesClient;
-
-    /**
-     * @var \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToGlossaryStorageClientInterface
-     */
-    protected $glossaryStorageClient;
-
-    /**
      * @var \Spryker\Shared\Kernel\Store
      */
     protected $store;
 
     /**
      * @param \SprykerShop\Yves\CustomerPage\CustomerPageConfig $customerPageConfig
-     * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface $salesClient
-     * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToGlossaryStorageClientInterface $glossaryStorageClient
      * @param \Spryker\Shared\Kernel\Store $store
      */
-    public function __construct(
-        CustomerPageConfig $customerPageConfig,
-        CustomerPageToSalesClientInterface $salesClient,
-        CustomerPageToGlossaryStorageClientInterface $glossaryStorageClient,
-        Store $store
-    ) {
+    public function __construct(CustomerPageConfig $customerPageConfig, Store $store)
+    {
         $this->customerPageConfig = $customerPageConfig;
-        $this->salesClient = $salesClient;
-        $this->glossaryStorageClient = $glossaryStorageClient;
         $this->store = $store;
     }
 
     /**
-     * @param string $localeName
-     *
      * @return array
      */
-    public function getOptions(string $localeName): array
+    public function getOptions(): array
     {
         return [
-            OrderSearchForm::OPTION_ORDER_SEARCH_TYPES => $this->getOrderSearchTypes($localeName),
+            OrderSearchForm::OPTION_ORDER_SEARCH_TYPES => $this->getOrderSearchTypes(),
             OrderSearchForm::OPTION_CURRENT_TIMEZONE => $this->getStoreTimezone(),
         ];
     }
 
     /**
-     * @param string $localeName
-     *
      * @return array
      */
-    protected function getOrderSearchTypes(string $localeName): array
+    protected function getOrderSearchTypes(): array
     {
         $searchTypes = [];
 
-        foreach ($this->salesClient->getOrderSearchTypes() as $searchType) {
-            $searchTypeTitle = $this->glossaryStorageClient->translate(
-                $this->generateSearchTypeGlossaryKey($searchType),
-                $localeName
-            );
-
-            $searchTypes[$searchTypeTitle] = $searchType;
+        foreach ($this->customerPageConfig->getOrderSearchTypes() as $searchType) {
+            $searchTypes[$this->generateSearchTypeGlossaryKey($searchType)] = $searchType;
         }
 
         return $searchTypes;

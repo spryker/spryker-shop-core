@@ -71,21 +71,21 @@ class OrderController extends AbstractCustomerController
     {
         $orderListTransfer = new OrderListTransfer();
         $customerPageFactory = $this->getFactory();
-        $customerPageConfig = $customerPageFactory->getConfig();
+        $isOrderSearchEnabled = $customerPageFactory->getConfig()->isOrderSearchEnabled();
 
-        if ($customerPageConfig->isOrderSearchEnabled()) {
-            $orderSearchFormDataProvider = $customerPageFactory->createCustomerFormFactory()
-                ->createOrderSearchFormDataProvider();
+        if (!$isOrderSearchEnabled) {
+            $orderListTransfer = $customerPageFactory->createOrderReader()->getOrderList($request, $orderListTransfer);
 
-            $orderSearchForm = $customerPageFactory->createCustomerFormFactory()
-                ->getOrderSearchForm([], $orderSearchFormDataProvider->getOptions($this->getLocale()));
-
-            $orderListTransfer = $this->handleOrderSearchFormSubmit(
-                $request,
-                $orderSearchForm,
-                $orderListTransfer
-            );
+            return [
+                'pagination' => $orderListTransfer->getPagination(),
+                'orderList' => $orderListTransfer->getOrders(),
+                'isOrderSearchEnabled' => $isOrderSearchEnabled,
+                'isOrderSearchOrderItemsVisible' => true,
+            ];
         }
+
+        $orderSearchForm = $customerPageFactory->createCustomerFormFactory()->getOrderSearchForm();
+        $orderListTransfer = $this->handleOrderSearchFormSubmit($request, $orderSearchForm, $orderListTransfer);
 
         $orderListTransfer = $customerPageFactory->createOrderReader()
             ->getOrderList($request, $orderListTransfer);
@@ -93,9 +93,9 @@ class OrderController extends AbstractCustomerController
         return [
             'pagination' => $orderListTransfer->getPagination(),
             'orderList' => $orderListTransfer->getOrders(),
-            'isOrderSearchEnabled' => $customerPageConfig->isOrderSearchEnabled(),
+            'isOrderSearchEnabled' => $isOrderSearchEnabled,
             'isOrderSearchOrderItemsVisible' => $orderListTransfer->getFormat()->getExpandWithItems(),
-            'orderSearchForm' => isset($orderSearchForm) ? $orderSearchForm->createView() : null,
+            'orderSearchForm' => $orderSearchForm->createView(),
             'filterFields' => $orderListTransfer->getFilterFields()->getArrayCopy(),
         ];
     }

@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\CustomerPage\Form;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CustomerPage\CustomerPageDependencyProvider;
-use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface;
 use SprykerShop\Yves\CustomerPage\Form\DataProvider\AddressFormDataProvider;
 use SprykerShop\Yves\CustomerPage\Form\DataProvider\OrderSearchFormDataProvider;
@@ -96,14 +95,17 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @param array $data
-     * @param array $options
-     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getOrderSearchForm(array $data = [], array $options = []): FormInterface
+    public function getOrderSearchForm(): FormInterface
     {
-        return $this->getFormFactory()->create(OrderSearchForm::class, $data, $options);
+        $orderSearchFormDataProvider = $this->createOrderSearchFormDataProvider();
+
+        return $this->getFormFactory()->create(
+            OrderSearchForm::class,
+            null,
+            $orderSearchFormDataProvider->getOptions()
+        );
     }
 
     /**
@@ -113,8 +115,6 @@ class FormFactory extends AbstractFactory
     {
         return new OrderSearchFormDataProvider(
             $this->getConfig(),
-            $this->getSalesClient(),
-            $this->getGlossaryStorageClient(),
             $this->getStore()
         );
     }
@@ -133,14 +133,6 @@ class FormFactory extends AbstractFactory
     public function getStore()
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::STORE);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToGlossaryStorageClientInterface
-     */
-    public function getGlossaryStorageClient(): CustomerPageToGlossaryStorageClientInterface
-    {
-        return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 
     /**
