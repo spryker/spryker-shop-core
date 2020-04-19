@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\FilterFieldTransfer;
 use Generated\Shared\Transfer\OrderListFormatTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
+use SprykerShop\Yves\CustomerPage\Form\OrderSearchFiltersForm;
 use SprykerShop\Yves\CustomerPage\Form\OrderSearchForm;
 use Symfony\Component\Form\FormInterface;
 
@@ -129,13 +130,13 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
         array $orderSearchFormData,
         OrderListTransfer $orderListTransfer
     ): OrderListTransfer {
-        $dateFrom = $orderSearchFormData[OrderSearchForm::FIELD_DATE_FROM] ?? null;
-        $dateTo = $orderSearchFormData[OrderSearchForm::FIELD_DATE_TO] ?? null;
+        $dateFrom = $orderSearchFormData[OrderSearchForm::FIELD_FILTERS][OrderSearchFiltersForm::FIELD_DATE_FROM] ?? null;
+        $dateTo = $orderSearchFormData[OrderSearchForm::FIELD_FILTERS][OrderSearchFiltersForm::FIELD_DATE_TO] ?? null;
 
         if ($dateFrom instanceof DateTime) {
             $orderListTransfer->addFilterField(
                 $this->createFilterFieldTransfer(
-                    OrderSearchForm::FIELD_DATE_FROM,
+                    OrderSearchFiltersForm::FIELD_DATE_FROM,
                     $dateFrom->format(static::DATE_FORMAT)
                 )
             );
@@ -144,7 +145,7 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
         if ($dateTo instanceof DateTime) {
             $orderListTransfer->addFilterField(
                 $this->createFilterFieldTransfer(
-                    OrderSearchForm::FIELD_DATE_TO,
+                    OrderSearchFiltersForm::FIELD_DATE_TO,
                     $dateTo->format(static::DATE_FORMAT)
                 )
             );

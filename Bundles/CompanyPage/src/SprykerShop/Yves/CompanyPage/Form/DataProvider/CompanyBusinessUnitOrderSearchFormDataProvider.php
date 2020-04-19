@@ -5,45 +5,40 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CompanyBusinessUnitWidget\Form\DataProvider;
+namespace SprykerShop\Yves\CompanyPage\Form\DataProvider;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
-use SprykerShop\Yves\CompanyBusinessUnitWidget\Dependency\Client\CompanyBusinessUnitWidgetToCompanyBusinessUnitClientInterface;
-use SprykerShop\Yves\CompanyBusinessUnitWidget\Dependency\Client\CompanyBusinessUnitWidgetToCustomerClientInterface;
-use SprykerShop\Yves\CompanyBusinessUnitWidget\Form\CompanyBusinessUnitForm;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface;
+use SprykerShop\Yves\CompanyPage\Expander\CompanyBusinessUnitOrderSearchFormExpander;
+use SprykerShop\Yves\CompanyPage\FormHandler\OrderSearchFormHandler;
 
-class CompanyBusinessUnitFormDataProvider
+class CompanyBusinessUnitOrderSearchFormDataProvider
 {
     use PermissionAwareTrait;
-
-    /**
-     * @uses \Spryker\Zed\CompanySalesConnector\CompanySalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY
-     */
-    public const CHOICE_COMPANY = 'company';
-    public const CHOICE_CUSTOMER = 'customer';
 
     protected const GLOSSARY_KEY_CHOICE_MY_ORDERS = 'company_business_unit_widget.choice.my_orders';
     protected const GLOSSARY_KEY_CHOICE_COMPANY_ORDERS = 'company_business_unit_widget.choice.company_orders';
 
     /**
-     * @var \SprykerShop\Yves\CompanyBusinessUnitWidget\Dependency\Client\CompanyBusinessUnitWidgetToCustomerClientInterface
+     * @var \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface
      */
     protected $customerClient;
 
     /**
-     * @var \SprykerShop\Yves\CompanyBusinessUnitWidget\Dependency\Client\CompanyBusinessUnitWidgetToCompanyBusinessUnitClientInterface
+     * @var \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface
      */
     protected $companyBusinessUnitClient;
 
     /**
-     * @param \SprykerShop\Yves\CompanyBusinessUnitWidget\Dependency\Client\CompanyBusinessUnitWidgetToCustomerClientInterface $customerClient
-     * @param \SprykerShop\Yves\CompanyBusinessUnitWidget\Dependency\Client\CompanyBusinessUnitWidgetToCompanyBusinessUnitClientInterface $companyBusinessUnitClient
+     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface $customerClient
+     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface $companyBusinessUnitClient
      */
     public function __construct(
-        CompanyBusinessUnitWidgetToCustomerClientInterface $customerClient,
-        CompanyBusinessUnitWidgetToCompanyBusinessUnitClientInterface $companyBusinessUnitClient
+        CompanyPageToCustomerClientInterface $customerClient,
+        CompanyPageToCompanyBusinessUnitClientInterface $companyBusinessUnitClient
     ) {
         $this->companyBusinessUnitClient = $companyBusinessUnitClient;
         $this->customerClient = $customerClient;
@@ -55,7 +50,7 @@ class CompanyBusinessUnitFormDataProvider
     public function getOptions(): array
     {
         return [
-            CompanyBusinessUnitForm::OPTION_COMPANY_BUSINESS_UNIT_CHOICES => $this->getCompanyBusinessUnitChoices(),
+            CompanyBusinessUnitOrderSearchFormExpander::OPTION_COMPANY_BUSINESS_UNIT_CHOICES => $this->getCompanyBusinessUnitChoices(),
         ];
     }
 
@@ -101,14 +96,14 @@ class CompanyBusinessUnitFormDataProvider
     protected function getChoicesFromCompanyBusinessUnitCollection(
         CompanyBusinessUnitCollectionTransfer $companyBusinessUnitCollectionTransfer
     ): array {
-        $choices = [static::GLOSSARY_KEY_CHOICE_MY_ORDERS => static::CHOICE_CUSTOMER];
+        $choices = [static::GLOSSARY_KEY_CHOICE_MY_ORDERS => OrderSearchFormHandler::CHOICE_CUSTOMER];
 
         foreach ($companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {
             $choices[$companyBusinessUnitTransfer->getName()] = $companyBusinessUnitTransfer->getUuid();
         }
 
         if (count($choices) > 2) {
-            $choices[static::GLOSSARY_KEY_CHOICE_COMPANY_ORDERS] = static::CHOICE_COMPANY;
+            $choices[static::GLOSSARY_KEY_CHOICE_COMPANY_ORDERS] = OrderSearchFormHandler::CHOICE_COMPANY;
         }
 
         return $choices;

@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\CustomerPage\Form;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,12 +24,11 @@ class OrderSearchForm extends AbstractType
 {
     public const FIELD_SEARCH_TYPE = 'searchType';
     public const FIELD_SEARCH_TEXT = 'searchText';
-    public const FIELD_DATE_FROM = 'dateFrom';
-    public const FIELD_DATE_TO = 'dateTo';
     public const FIELD_IS_ORDER_ITEMS_VISIBLE = 'isOrderItemsVisible';
     public const FIELD_ORDER_BY = 'orderBy';
     public const FIELD_ORDER_DIRECTION = 'orderDirection';
     public const FIELD_RESET = 'reset';
+    public const FIELD_FILTERS = 'filters';
 
     public const OPTION_ORDER_SEARCH_TYPES = 'OPTION_ORDER_SEARCH_TYPES';
     public const OPTION_CURRENT_TIMEZONE = 'OPTION_CURRENT_TIMEZONE';
@@ -73,12 +71,11 @@ class OrderSearchForm extends AbstractType
 
         $this->addSearchTypeField($builder, $options)
             ->addSearchTextField($builder)
-            ->addDateFromField($builder, $options)
-            ->addDateToField($builder, $options)
             ->addIsOrderItemsVisibleField($builder)
             ->addOrderByField($builder)
             ->addOrderDirectionField($builder)
-            ->addResetField($builder);
+            ->addResetField($builder)
+            ->addFiltersForm($builder, $options);
 
         $this->executeOrderSearchFormExpanderPlugins($builder, $options);
     }
@@ -112,42 +109,6 @@ class OrderSearchForm extends AbstractType
         $builder->add(static::FIELD_SEARCH_TEXT, TextType::class, [
             'label' => false,
             'required' => false,
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function addDateFromField(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add(static::FIELD_DATE_FROM, DateTimeType::class, [
-            'widget' => 'single_text',
-            'required' => false,
-            'view_timezone' => $options[static::OPTION_CURRENT_TIMEZONE],
-            'label' => 'customer.order_history.date_from',
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function addDateToField(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add(static::FIELD_DATE_TO, DateTimeType::class, [
-            'widget' => 'single_text',
-            'required' => false,
-            'view_timezone' => $options[static::OPTION_CURRENT_TIMEZONE],
-            'label' => 'customer.order_history.date_to',
         ]);
 
         return $this;
@@ -217,16 +178,37 @@ class OrderSearchForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return void
+     * @return $this
      */
-    protected function executeOrderSearchFormExpanderPlugins(FormBuilderInterface $builder, array $options): void
+    protected function addFiltersForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(
+            static::FIELD_FILTERS,
+            OrderSearchFiltersForm::class,
+            [
+                static::OPTION_CURRENT_TIMEZONE => $options[static::OPTION_CURRENT_TIMEZONE],
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    protected function executeOrderSearchFormExpanderPlugins(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
         $orderSearchFormExpanderPlugins = $this->getFactory()
             ->createCustomerFormFactory()
             ->getOrderSearchFormExpanderPlugins();
 
         foreach ($orderSearchFormExpanderPlugins as $orderSearchFormExpanderPlugin) {
-            $orderSearchFormExpanderPlugin->expand($builder, $options);
+            $builder = $orderSearchFormExpanderPlugin->expand($builder, $options);
         }
+
+        return $builder;
     }
 }

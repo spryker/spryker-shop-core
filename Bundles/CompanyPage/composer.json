@@ -13,7 +13,7 @@
     "spryker/application": "^3.8.0",
     "spryker/business-on-behalf": "^1.1.0",
     "spryker/company": "^1.0.0",
-    "spryker/company-business-unit": "^2.3.0",
+    "spryker/company-business-unit": "^2.11.0",
     "spryker/company-role": "^1.1.0",
     "spryker/company-unit-address": "^1.4.0",
     "spryker/company-user": "^2.0.0",
@@ -34,6 +34,8 @@
     "spryker/silex": "*"
   },
   "suggest": {
+    "spryker/company-sales-connector": "If you want to use CompanyBusinessUnitOrderSearchFormExpanderPlugin, CompanyBusinessUnitOrderSearchFormHandlerPlugin: ^1.0.0",
+    "spryker/company-business-unit-sales-connector": "If you want to use CompanyBusinessUnitOrderSearchFormExpanderPlugin, CompanyBusinessUnitOrderSearchFormHandlerPlugin: ^1.0.0",
     "spryker-shop/company-user-invitation-page": "If you want to import new invitations from file: ^2.1.0",
     "spryker-shop/customer-page": "If you want to have profile page for customers: ^1.3.2",
     "spryker/router": "Use this module when you want to use the Router.",

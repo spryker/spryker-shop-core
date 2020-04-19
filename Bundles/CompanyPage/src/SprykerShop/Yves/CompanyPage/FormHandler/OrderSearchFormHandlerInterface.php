@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CompanyBusinessUnitWidget\FormHandler;
+namespace SprykerShop\Yves\CompanyPage\FormHandler;
 
 use Generated\Shared\Transfer\OrderListTransfer;
 

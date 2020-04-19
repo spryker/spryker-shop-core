@@ -5,21 +5,31 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CompanyBusinessUnitWidget\FormHandler;
+namespace SprykerShop\Yves\CompanyPage\FormHandler;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\FilterFieldTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
-use SprykerShop\Yves\CompanyBusinessUnitWidget\Dependency\Client\CompanyBusinessUnitWidgetToCustomerClientInterface;
-use SprykerShop\Yves\CompanyBusinessUnitWidget\Form\DataProvider\CompanyBusinessUnitFormDataProvider;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface;
 
 class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
 {
     /**
+     * @uses \Spryker\Zed\CompanySalesConnector\CompanySalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY
+     */
+    public const CHOICE_COMPANY = 'company';
+    public const CHOICE_CUSTOMER = 'customer';
+
+    /**
      * @uses \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::FILTER_FIELD_TYPE_CUSTOMER_REFERENCE
      */
     protected const FILTER_FIELD_TYPE_CUSTOMER_REFERENCE = 'customerReference';
+
+    /**
+     * @uses \SprykerShop\Yves\CustomerPage\Form\OrderSearchForm::FIELD_FILTERS
+     */
+    protected const FIELD_FILTERS = 'filters';
 
     /**
      * @uses \Spryker\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT
@@ -27,14 +37,14 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
     protected const FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT = 'companyBusinessUnit';
 
     /**
-     * @var \SprykerShop\Yves\CompanyBusinessUnitWidget\Dependency\Client\CompanyBusinessUnitWidgetToCustomerClientInterface
+     * @var \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface
      */
     protected $customerClient;
 
     /**
-     * @param \SprykerShop\Yves\CompanyBusinessUnitWidget\Dependency\Client\CompanyBusinessUnitWidgetToCustomerClientInterface $customerClient
+     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface $customerClient
      */
-    public function __construct(CompanyBusinessUnitWidgetToCustomerClientInterface $customerClient)
+    public function __construct(CompanyPageToCustomerClientInterface $customerClient)
     {
         $this->customerClient = $customerClient;
     }
@@ -49,15 +59,15 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
         array $orderSearchFormData,
         OrderListTransfer $orderListTransfer
     ): OrderListTransfer {
-        $companyBusinessUnitValue = $orderSearchFormData[static::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT] ?? null;
+        $companyBusinessUnitValue = $orderSearchFormData[static::FIELD_FILTERS][static::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT] ?? null;
 
-        if (!$companyBusinessUnitValue || $companyBusinessUnitValue === CompanyBusinessUnitFormDataProvider::CHOICE_CUSTOMER) {
+        if (!$companyBusinessUnitValue || $companyBusinessUnitValue === static::CHOICE_CUSTOMER) {
             return $orderListTransfer;
         }
 
         $orderListTransfer = $this->excludeCustomerReferenceFilterField($orderListTransfer);
 
-        if ($companyBusinessUnitValue === CompanyBusinessUnitFormDataProvider::CHOICE_COMPANY) {
+        if ($companyBusinessUnitValue === static::CHOICE_COMPANY) {
             return $this->addCompanyFilterField($orderListTransfer);
         }
 
@@ -120,7 +130,7 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
 
         $filterFieldTransfer = (new FilterFieldTransfer())
             ->setValue($companyUuid)
-            ->setType(CompanyBusinessUnitFormDataProvider::CHOICE_COMPANY);
+            ->setType(static::CHOICE_COMPANY);
 
         return $orderListTransfer->addFilterField($filterFieldTransfer);
     }

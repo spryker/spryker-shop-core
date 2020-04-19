@@ -30,33 +30,18 @@
     {% endblock %}
 
     {% set row2Class = 'form__fields grid grid--bottom' %}
-    {% set dateFromClass = 'form__field col col--sm-12 col--lg-3' %}
-    {% set dateToClass = 'form__field col col--sm-12 col--lg-3' %}
-    {% set companyClass = 'form__field col col--sm-12 col--lg-6' %}
 
     {% block row2 %}
         <div class="{{ row2Class }}">
-            <div class="{{ dateFromClass }}">
-                {{ form_row(data.orderSearchForm.dateFrom, {
-                    attr: {
-                        class: data.jsPrefix ~ data.orderSearchForm.dateFrom.vars.name ~ '-target',
-                    }})
-                }}
-            </div>
-            <div class="{{ dateToClass }}">
-                {{ form_row(data.orderSearchForm.dateTo, {
-                    attr: {
-                        class: data.jsPrefix ~ data.orderSearchForm.dateTo.vars.name ~ '-target',
-                    }})
-                }}
-            </div>
-            <div class="{{ companyClass }}">
-                {{ form_row(data.orderSearchForm.companyBusinessUnit, {
-                    attr: {
-                        class: data.jsPrefix ~ data.orderSearchForm.companyBusinessUnit.vars.name ~ '-target',
-                    }})
-                }}
-            </div>
+            {% for filter in data.orderSearchForm.filters.children %}
+                <div class="{{ filter.vars.attr.class }}">
+                    {{ form_row(filter, {
+                        attr: {
+                            class: data.jsPrefix ~ filter.vars.name ~ '-target',
+                        }})
+                    }}
+                </div>
+            {% endfor %}
         </div>
     {% endblock %}
 

@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CompanyBusinessUnitWidget\Plugin\CustomerPage;
+namespace SprykerShop\Yves\CompanyPage\Plugin\CustomerPage;
 
 use Generated\Shared\Transfer\OrderListTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\OrderSearchFormHandlerPluginInterface;
 
 /**
- * @method \SprykerShop\Yves\CompanyBusinessUnitWidget\CompanyBusinessUnitWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
  */
 class CompanyBusinessUnitOrderSearchFormHandlerPlugin extends AbstractPlugin implements OrderSearchFormHandlerPluginInterface
 {

@@ -20,7 +20,7 @@
     {% set dateFilters = ['dateFrom', 'dateTo'] %}
     {% set filterFields = ['dateFrom', 'dateTo', businessUnitName] %}
 
-    {% for field in data.orderSearchForm.children %}
+    {% for field in data.orderSearchForm.filters.children %}
         {% if field.vars.value and field.vars.name in filterFields %}
             {% set fitlerValue = field.vars.name in dateFilters ?
                 field.vars.value | date('d.m.Y H:i')
@@ -29,8 +29,8 @@
 
             {% if field.vars.name == businessUnitName %}
                 {% if field.vars.value != businessUnitDefaultValue %}
-                    {% set selectedValue = data.orderSearchForm.companyBusinessUnit.vars.value %}
-                    {% set choices = data.orderSearchForm.companyBusinessUnit.vars.choices | filter(v => v.value == selectedValue) %}
+                    {% set selectedValue = data.orderSearchForm.filters.companyBusinessUnit.vars.value %}
+                    {% set choices = data.orderSearchForm.filters.companyBusinessUnit.vars.choices | filter(v => v.value == selectedValue) %}
                     {% set label = choices|length ? (choices|first).label : null %}
                     {% set fitlerValue = label | trans%}
 

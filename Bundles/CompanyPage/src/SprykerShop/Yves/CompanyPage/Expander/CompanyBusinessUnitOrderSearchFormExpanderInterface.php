@@ -5,18 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin;
+namespace SprykerShop\Yves\CompanyPage\Expander;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
-interface OrderSearchFormExpanderPluginInterface
+interface CompanyBusinessUnitOrderSearchFormExpanderInterface
 {
     /**
-     * Specification:
-     * - Expands OrderSearchForm with new form fields or subforms.
-     *
-     * @api
-     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
