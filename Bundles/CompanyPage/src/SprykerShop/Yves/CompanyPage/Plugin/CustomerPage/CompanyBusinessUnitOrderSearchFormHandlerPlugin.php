@@ -27,7 +27,7 @@ class CompanyBusinessUnitOrderSearchFormHandlerPlugin extends AbstractPlugin imp
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function handleOrderSearchFormSubmit(
+    public function handle(
         array $orderSearchFormData,
         OrderListTransfer $orderListTransfer
     ): OrderListTransfer {

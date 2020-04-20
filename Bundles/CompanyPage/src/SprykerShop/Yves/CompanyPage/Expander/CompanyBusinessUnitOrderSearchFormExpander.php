@@ -54,7 +54,7 @@ class CompanyBusinessUnitOrderSearchFormExpander implements CompanyBusinessUnitO
                 [
                     'choices' => $this->companyBusinessUnitOrderSearchFormDataProvider->getOptions()[static::OPTION_COMPANY_BUSINESS_UNIT_CHOICES],
                     'required' => false,
-                    'placeholder' => false,
+                    'placeholder' => 'company_business_unit_widget.choice.my_orders',
                     'label' => 'company_business_unit_widget.business_unit',
                     'attr' => [
                         'class' => 'form__field col col--sm-12 col--lg-6',

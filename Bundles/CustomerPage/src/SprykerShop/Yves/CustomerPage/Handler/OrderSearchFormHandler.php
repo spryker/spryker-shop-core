@@ -204,10 +204,7 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
         OrderListTransfer $orderListTransfer
     ): OrderListTransfer {
         foreach ($this->orderSearchFormHandlerPlugins as $orderSearchFormHandlerPlugin) {
-            $orderListTransfer = $orderSearchFormHandlerPlugin->handleOrderSearchFormSubmit(
-                $orderSearchFormData,
-                $orderListTransfer
-            );
+            $orderListTransfer = $orderSearchFormHandlerPlugin->handle($orderSearchFormData, $orderListTransfer);
         }
 
         return $orderListTransfer;

@@ -19,7 +19,6 @@ class CompanyBusinessUnitOrderSearchFormDataProvider
 {
     use PermissionAwareTrait;
 
-    protected const GLOSSARY_KEY_CHOICE_MY_ORDERS = 'company_business_unit_widget.choice.my_orders';
     protected const GLOSSARY_KEY_CHOICE_COMPANY_ORDERS = 'company_business_unit_widget.choice.company_orders';
 
     /**
@@ -96,13 +95,13 @@ class CompanyBusinessUnitOrderSearchFormDataProvider
     protected function getChoicesFromCompanyBusinessUnitCollection(
         CompanyBusinessUnitCollectionTransfer $companyBusinessUnitCollectionTransfer
     ): array {
-        $choices = [static::GLOSSARY_KEY_CHOICE_MY_ORDERS => OrderSearchFormHandler::CHOICE_CUSTOMER];
+        $choices = [];
 
         foreach ($companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {
             $choices[$companyBusinessUnitTransfer->getName()] = $companyBusinessUnitTransfer->getUuid();
         }
 
-        if (count($choices) > 2) {
+        if (count($choices) > 1) {
             $choices[static::GLOSSARY_KEY_CHOICE_COMPANY_ORDERS] = OrderSearchFormHandler::CHOICE_COMPANY;
         }
 

@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CustomerPage\Dependency\Client;
 
+use Exception;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
@@ -57,11 +58,18 @@ class CustomerPageToSalesClientBridge implements CustomerPageToSalesClientInterf
 
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param bool|null $isOrderSearchEnabled
+     *
+     * @throws \Exception
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer
+    public function searchOrders(OrderListTransfer $orderListTransfer, ?bool $isOrderSearchEnabled = true): OrderListTransfer
     {
+        if (!$isOrderSearchEnabled || !method_exists($this->salesClient, 'searchOrders')) {
+            throw new Exception('Order Search works since v11.*');
+        }
+
         return $this->salesClient->searchOrders($orderListTransfer);
     }
 }

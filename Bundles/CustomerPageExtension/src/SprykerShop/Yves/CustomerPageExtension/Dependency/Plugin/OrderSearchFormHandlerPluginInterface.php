@@ -9,6 +9,11 @@ namespace SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\OrderListTransfer;
 
+/**
+ * Provides form handling capabilities.
+ *
+ * Use this plugin for handling OrderSearchForm after submitting.
+ */
 interface OrderSearchFormHandlerPluginInterface
 {
     /**
@@ -22,8 +27,5 @@ interface OrderSearchFormHandlerPluginInterface
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function handleOrderSearchFormSubmit(
-        array $orderSearchFormData,
-        OrderListTransfer $orderListTransfer
-    ): OrderListTransfer;
+    public function handle(array $orderSearchFormData, OrderListTransfer $orderListTransfer): OrderListTransfer;
 }

@@ -17,9 +17,11 @@
     is-scrollable
 {% endblock %}
 
-{% set isCompanyUserColumnsVisible = data.orderSearchForm
-    and data.orderSearchForm.vars.value.companyBusinessUnit is defined
-    and data.orderSearchForm.vars.value.companyBusinessUnit != 'customer'
+{# Hardcoded b2b check, is it acceptable for us? #}
+{% set isCompanyUserColumnsVisible = data.orderSearchForm is defined
+    and data.orderSearchForm.vars.value.filters is defined
+    and data.orderSearchForm.vars.value.filters.companyBusinessUnit is defined
+    and data.orderSearchForm.vars.value.filters.companyBusinessUnit is not empty
 %}
 
 {% block body %}
