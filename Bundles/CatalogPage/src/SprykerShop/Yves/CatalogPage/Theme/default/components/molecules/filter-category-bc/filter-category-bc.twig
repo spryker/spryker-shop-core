@@ -1,3 +1,9 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'filter-category-bc',
+} %}
+
 {% define data = {
     filter: null,
     filterPath: null,
@@ -32,6 +38,7 @@
                     {% if hasChildren %}
                         {% include molecule('filter-category', 'CatalogPage') with {
                             data: {
+                                prepareFilterCategoriesDefined: data.prepareFilterCategoriesDefined,
                                 filter: data.filter,
                                 filterPath: data.filterPath,
                                 categories: categoryNode.children,

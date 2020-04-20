@@ -1,7 +1,11 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'filter-category',
+    name: 'filter-category'
+} %}
+
+{% define data = {
+    prepareFilterCategoriesDefined: data.prepareFilterCategoriesDefined ?? app.twig.function('prepareFilterCategories')
 } %}
 
 {% block component %}
@@ -9,7 +13,7 @@
 {% endblock %}
 
 {% block body %}
-    {% if app.twig.function('prepareFilterCategories') %}
+    {% if data.prepareFilterCategoriesDefined %}
         {% include molecule('filter-category-prepared', 'CatalogPage') %}
     {% else %}
         {% include molecule('filter-category-bc', 'CatalogPage') %}
