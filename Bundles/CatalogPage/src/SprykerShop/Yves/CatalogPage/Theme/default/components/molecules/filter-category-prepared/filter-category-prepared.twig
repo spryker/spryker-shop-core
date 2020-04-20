@@ -1,0 +1,47 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'filter-category',
+} %}
+
+{% define data = {
+    filter: null,
+    filterPath: null,
+    categories: prepareFilterCategories(data.filter, data.category.node_id | default(0)),
+    category: null,
+    isEmptyCategoryFilterValueVisible: null,
+    parentJsName: '',
+} %}
+
+{% block component %}
+    {% if data.categories is not empty %}{{ parent() }}{% endif %}
+{% endblock %}
+
+{% block body %}
+    <ul class="menu">
+        {% for categoryNode in data.categories %}
+            {% if (categoryNode.quantity > 0) or (categoryNode.quantity <= 0 and data.isEmptyCategoryFilterValueVisible == true) %}
+                {% set childrenClass = categoryNode.hasChildren ? 'menu__item--has-children-list' %}
+                {% set isDisabled = categoryNode.quantity == 0 ? 'disabled' %}
+
+                <li class="menu__item {{ childrenClass }}">
+                    <button class="link {{ data.parentJsName ? data.parentJsName ~ '__trigger' }}" type="button" {{ isDisabled }} data-url={{ categoryNode.url }}>
+                        {{ categoryNode.name }} ({{ categoryNode.quantity }})
+                    </button>
+
+                    {% if categoryNode.hasChildren %}
+                        {% include molecule('filter-category', 'CatalogPage') with {
+                            data: {
+                                filter: data.filter,
+                                filterPath: data.filterPath,
+                                categories: categoryNode.children,
+                                isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible,
+                                parentJsName: data.parentJsName,
+                            },
+                        } only %}
+                    {% endif %}
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endblock %}
