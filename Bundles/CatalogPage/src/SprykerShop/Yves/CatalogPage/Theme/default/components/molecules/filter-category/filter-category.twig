@@ -4,6 +4,10 @@
     name: 'filter-category',
 } %}
 
+{% block component %}
+    {% if data.categories is not empty %}{{ parent() }}{% endif %}
+{% endblock %}
+
 {% block body %}
     {% if app.twig.function('prepareFilterCategories') %}
         {% include molecule('filter-category-prepared', 'CatalogPage') %}

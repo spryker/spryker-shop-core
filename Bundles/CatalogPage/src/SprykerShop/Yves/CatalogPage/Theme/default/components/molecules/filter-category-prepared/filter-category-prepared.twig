@@ -1,9 +1,3 @@
-{% extends model('component') %}
-
-{% define config = {
-    name: 'filter-category',
-} %}
-
 {% define data = {
     filter: null,
     filterPath: null,
@@ -12,10 +6,6 @@
     isEmptyCategoryFilterValueVisible: null,
     parentJsName: '',
 } %}
-
-{% block component %}
-    {% if data.categories is not empty %}{{ parent() }}{% endif %}
-{% endblock %}
 
 {% block body %}
     <ul class="menu">
