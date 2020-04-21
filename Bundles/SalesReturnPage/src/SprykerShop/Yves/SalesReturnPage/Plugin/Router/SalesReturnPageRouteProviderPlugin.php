@@ -29,6 +29,9 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected const ROUTE_RETURN_CREATE = 'return/create';
 
+    protected const PARAM_ID_SALES_ORDER = 'idSalesOrder';
+    protected const PARAM_ID_SALES_ORDER_REGEX = '[a-zA-Z0-9-]+';
+
     /**
      * Specification:
      * - Adds Routes to the RouteCollection.

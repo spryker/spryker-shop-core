@@ -17,18 +17,35 @@
 
         {% block formActions %}
             <div class="box">
-                <div class="grid grid--middle grid--right">
-                    <div class="form-field col col--sm-5 col--lg-3 spacing-right">
-                        <button class="button button--expand {{ config.jsName }}__trigger" disabled>
-                            {{ 'customer.order.reorder_selected' | trans }}
-                        </button>
+                {% set formActionsWrapperClass = 'grid grid--middle grid--right' %}
+                {% set reorderButtonWrapperClass = 'form-field col col--sm-5 col--lg-3 spacing-right' %}
+                {% set reorderButtonClass = 'button button--expand ' ~ config.jsName ~ '__trigger' %}
+                {% set reorderAllLinkWrapperClass = 'form-field col col--sm-5 col--lg-3' %}
+                {% set reorderAllLinkClass = 'button button--expand js-state-observable' %}
+
+                {% block formActionsInner %}
+                    <div class="{{ formActionsWrapperClass }}">
+                        {% block reorderButtonWrapper %}
+                            <div class="{{ reorderButtonWrapperClass }}">
+                                {% block reorderButton %}
+                                    <button class="{{ reorderButtonClass }}" disabled>
+                                        {{ 'customer.order.reorder_selected' | trans }}
+                                    </button>
+                                {% endblock %}
+                            </div>
+                        {% endblock %}
+
+                        {% block reorderAllLinkWrapper %}
+                            <div class="{{ reorderAllLinkWrapperClass }}">
+                                {% block reorderAllLink %}
+                                    <a href="{{ path('customer/order/reorder', {'idSalesOrder': data.idSalesOrder}) }}" class="{{ reorderAllLinkClass }}">
+                                        {{ 'customer.order.reorder_all' | trans }}
+                                    </a>
+                                {% endblock %}
+                            </div>
+                        {% endblock %}
                     </div>
-                    <div class="form-field col col--sm-5 col--lg-3">
-                        <a href="{{ path('customer/order/reorder', {'idSalesOrder': data.idSalesOrder}) }}" class="button button--expand">
-                            {{ 'customer.order.reorder_all' | trans }}
-                        </a>
-                    </div>
-                </div>
+                {% endblock %}
             </div>
         {% endblock %}
     </form>
