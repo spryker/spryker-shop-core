@@ -1,4 +1,4 @@
-{% extends template('page-layout-customer', 'CustomerPage') %}
+{% extends template('page-layout-sales-return', 'SalesReturnPage') %}
 
 {% define data = {
     returns: _view.returns,
@@ -6,16 +6,16 @@
     pagination: {
         parameters: {},
         currentPage: _view.pagination.page,
-        paginationPath: 'customer/return',
+        paginationPath: 'sales-return/sales-return-list',
         maxPage: _view.pagination.lastPage,
         showAlwaysFirstAndLast: true
     },
 
-    title: 'customer.account.returns' | trans,
-    activePage: 'return'
+    title: 'sales_return.list.title' | trans,
+    activePage: 'sales-return-list'
 } %}
 
-{% block customerContent %}
+{% block salesReturnContent %}
     <div class="box">
         <h5>{{ 'customer.account.return' | trans }}</h5>
         <hr>
@@ -25,12 +25,12 @@
             <table class="table table--expand">
                 <thead>
                 <tr>
-                    <th>{{ 'customer.return.return_ref' | trans }}</th>
-                    <th>{{ 'customer.return.order_ref' | trans }}</th>
-                    <th>{{ 'customer.return.number_of_items' | trans }}</th>
-                    <th>{{ 'customer.return.date' | trans }}</th>
-                    <th>{{ 'customer.return.items_state' | trans }}</th>
-                    <th>{{ 'customer.table.actions' | trans }}</th>
+                    <th>{{ 'sales_return.return.return_ref' | trans }}</th>
+                    <th>{{ 'sales_return.return.order_ref' | trans }}</th>
+                    <th>{{ 'sales_return.return.number_of_items' | trans }}</th>
+                    <th>{{ 'sales_return.return.date' | trans }}</th>
+                    <th>{{ 'sales_return.return.items_state' | trans }}</th>
+                    <th>{{ 'sales_return.table.actions' | trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -65,12 +65,12 @@
                             <ul class="menu menu--inline">
                                 <li class="menu__item">
                                     <a href="#">
-                                        {{ 'customer.return.view_return' | trans }}
+                                        {{ 'sales_return.return.view_return' | trans }}
                                     </a>
                                 </li>
                                 <li class="menu__item">
                                     <a href="#">
-                                        {{ 'customer.return.print_return' | trans }}
+                                        {{ 'sales_return.return.print_return' | trans }}
                                     </a>
                                 </li>
                             </ul>

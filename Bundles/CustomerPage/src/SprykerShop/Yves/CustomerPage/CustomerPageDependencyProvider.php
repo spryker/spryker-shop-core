@@ -15,7 +15,6 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClient
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientBridge;
-use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesReturnClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceBridge;
@@ -31,7 +30,6 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_SALES = 'CLIENT_SALES';
-    public const CLIENT_SALES_RETURN = 'CLIENT_SALES_RETURN';
     public const CLIENT_SHIPMENT = 'CLIENT_SHIPMENT';
     public const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
@@ -66,7 +64,6 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerClient($container);
         $container = $this->addProductBundleClient($container);
         $container = $this->addSalesClient($container);
-        $container = $this->addSalesReturnClient($container);
         $container = $this->addShipmentClient($container);
         $container = $this->addQuoteClient($container);
         $container = $this->addApplication($container);
@@ -227,20 +224,6 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_SALES, function (Container $container) {
             return new CustomerPageToSalesClientBridge($container->getLocator()->sales()->client());
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addSalesReturnClient(Container $container): Container
-    {
-        $container->set(static::CLIENT_SALES_RETURN, function (Container $container) {
-            return new CustomerPageToSalesReturnClientBridge($container->getLocator()->salesReturn()->client());
         });
 
         return $container;

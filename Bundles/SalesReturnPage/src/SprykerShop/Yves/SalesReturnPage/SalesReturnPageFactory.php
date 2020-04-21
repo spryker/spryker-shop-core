@@ -8,7 +8,24 @@
 namespace SprykerShop\Yves\SalesReturnPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToCustomerClientInterface;
+use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnClientInterface;
 
 class SalesReturnPageFactory extends AbstractFactory
 {
+    /**
+     * @return \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToCustomerClientInterface
+     */
+    public function getCustomerClient(): SalesReturnPageToCustomerClientInterface
+    {
+        return $this->getProvidedDependency(SalesReturnPageDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnClientInterface
+     */
+    public function getSalesReturnClient(): SalesReturnPageToSalesReturnClientInterface
+    {
+        return $this->getProvidedDependency(SalesReturnPageDependencyProvider::CLIENT_SALES_RETURN);
+    }
 }

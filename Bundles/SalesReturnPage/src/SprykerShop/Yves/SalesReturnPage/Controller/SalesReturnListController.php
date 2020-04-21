@@ -5,20 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CustomerPage\Controller;
+namespace SprykerShop\Yves\SalesReturnPage\Controller;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
+use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
-class ReturnController extends AbstractCustomerController
+/**
+ * @method \SprykerShop\Yves\SalesReturnPage\SalesReturnPageFactory getFactory()
+ */
+class SalesReturnListController extends AbstractController
 {
-    public const RETURN_LIST_LIMIT = 10;
-    public const RETURN_LIST_SORT_FIELD = 'created_at';
-    public const RETURN_LIST_SORT_DIRECTION = 'DESC';
+    protected const RETURN_LIST_LIMIT = 1;
+    protected const RETURN_LIST_SORT_FIELD = 'created_at';
+    protected const RETURN_LIST_SORT_DIRECTION = 'DESC';
 
-    public const PARAM_PAGE = 'page';
-    public const DEFAULT_PAGE = 1;
+    protected const PARAM_PAGE = 'page';
+    protected const DEFAULT_PAGE = 1;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -32,7 +36,7 @@ class ReturnController extends AbstractCustomerController
         return $this->view(
             $viewData,
             [],
-            '@CustomerPage/views/return/return.twig'
+            '@SalesReturnPage/views/sales-return-list/sales-return-list.twig'
         );
     }
 
@@ -79,5 +83,17 @@ class ReturnController extends AbstractCustomerController
             ->setOrderDirection(self::RETURN_LIST_SORT_DIRECTION)
             ->setOffset($offset)
             ->setLimit(self::RETURN_LIST_LIMIT);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    protected function getLoggedInCustomerTransfer()
+    {
+        if ($this->getFactory()->getCustomerClient()->isLoggedIn()) {
+            return $this->getFactory()->getCustomerClient()->getCustomer();
+        }
+
+        return null;
     }
 }

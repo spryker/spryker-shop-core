@@ -1,0 +1,14 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isActivePage: _widget.isActivePage,
+} %}
+
+{% set itemClass = data.isActivePage ? ' menu__item--active' : '' %}
+
+{% block body %}
+    <li class="menu__item {{ itemClass }}">
+        <a href="{{ url('sales-return') }}" data-id="sidebar-sales-return">{{ 'sales_return_widget.sales_return.list.title' | trans }}</a>
+    </li>
+{% endblock %}
+

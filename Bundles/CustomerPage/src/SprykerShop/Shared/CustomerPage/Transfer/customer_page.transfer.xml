@@ -344,4 +344,7 @@
         <property name="orderItem" type="Item"/>
     </transfer>
 
+    <transfer name="TaxTotal">
+    </transfer>
+
 </transfers>

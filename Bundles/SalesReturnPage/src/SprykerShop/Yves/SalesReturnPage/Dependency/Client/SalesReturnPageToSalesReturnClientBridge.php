@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CustomerPage\Dependency\Client;
+namespace SprykerShop\Yves\SalesReturnPage\Dependency\Client;
 
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 
-class CustomerPageToSalesReturnClientBridge implements CustomerPageToSalesReturnClientInterface
+class SalesReturnPageToSalesReturnClientBridge implements SalesReturnPageToSalesReturnClientInterface
 {
     /**
      * @var \Spryker\Client\SalesReturn\SalesReturnClientInterface

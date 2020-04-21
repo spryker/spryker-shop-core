@@ -38,11 +38,9 @@
                class="{{macros.isActive('order', data.activePage)}}"
                data-id="sidebar-order">{{ 'customer.account.order_history' | trans }}</a>
         </li>
-        <li class="menu__item {{macros.isActive('return', data.activePage)}}">
-            <a href="{{ path('customer/return') }}"
-               class="{{macros.isActive('return', data.activePage)}}"
-               data-id="sidebar-order">{{ 'customer.account.return' | trans }}</a>
-        </li>
+
+        {% widget 'SalesReturnMenuItemWidget' args [data.activePage] only %}{% endwidget %}
+
         <li class="menu__item {{macros.isActive('newsletter', data.activePage)}}">
             <a href="{{ path('customer/newsletter') }}"
                class="{{macros.isActive('newsletter', data.activePage)}}"
