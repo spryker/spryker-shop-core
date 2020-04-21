@@ -53,13 +53,15 @@ abstract class AbstractReturnController extends AbstractController
             ->getReturns($returnFilterTransfer)
             ->getReturns();
 
-        if (!$returnTransfers->offsetExists(0)) {
+        $returnTransfer = $returnTransfers->getIterator()->current();
+
+        if (!$returnTransfer) {
             throw new NotFoundHttpException(sprintf(
                 "Return with provided reference %s doesn't exist",
                 $returnReference
             ));
         }
 
-        return $returnTransfers->offsetGet(0);
+        return $returnTransfer;
     }
 }

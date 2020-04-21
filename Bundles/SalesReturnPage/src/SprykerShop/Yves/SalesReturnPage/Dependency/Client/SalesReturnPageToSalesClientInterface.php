@@ -7,14 +7,15 @@
 
 namespace SprykerShop\Yves\SalesReturnPage\Dependency\Client;
 
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\OrderListRequestTransfer;
+use Generated\Shared\Transfer\OrderListTransfer;
 
 interface SalesReturnPageToSalesClientInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderListRequestTransfer $orderListRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getCustomerOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer;
+    public function getOffsetPaginatedCustomerOrderList(OrderListRequestTransfer $orderListRequestTransfer): OrderListTransfer;
 }
