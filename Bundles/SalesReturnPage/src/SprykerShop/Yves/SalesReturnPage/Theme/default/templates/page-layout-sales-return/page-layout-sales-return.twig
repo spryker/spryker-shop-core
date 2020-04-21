@@ -1,16 +1,28 @@
 {% extends template('page-layout-main') %}
 
 {% define data = {
-    activePage: 'details'
+    activePage: 'sales-return'
 } %}
 
+{% set breadcrumbExtension = [] %}
+
 {% block breadcrumbs %}
+    {% set breadcrumbSteps = [
+        {
+            label: 'customer.account' | trans,
+            url: path('customer/overview'),
+        },
+        {
+            label: 'sales_return.list.title' | trans,
+            url: path('sales-return'),
+        },
+    ] %}
+    {% set breadcrumbSteps = breadcrumbSteps | merge(breadcrumbExtension) %}
+
     {% include molecule('breadcrumb') with {
         data: {
-            steps: [{
-                label: 'customer.account' | trans
-            }]
-        }
+            steps: breadcrumbSteps,
+        },
     } only %}
 {% endblock %}
 

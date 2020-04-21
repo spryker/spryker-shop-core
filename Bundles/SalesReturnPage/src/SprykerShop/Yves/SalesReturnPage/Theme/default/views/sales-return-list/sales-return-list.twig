@@ -6,21 +6,20 @@
     pagination: {
         parameters: {},
         currentPage: _view.pagination.page,
-        paginationPath: 'sales-return/sales-return-list',
+        paginationPath: 'sales-return',
         maxPage: _view.pagination.lastPage,
         showAlwaysFirstAndLast: true
     },
 
-    title: 'sales_return.list.title' | trans,
-    activePage: 'sales-return-list'
+    title: 'sales_return.list.title' | trans
 } %}
 
 {% block salesReturnContent %}
     <div class="box">
-        <h5>{{ 'customer.account.return' | trans }}</h5>
+        <h5>{{ 'sales_return.list.title' | trans }}</h5>
         <hr>
         {% if data.returns is empty %}
-            <p>{{ 'customer.account.no_return' | trans }}</p>
+            <p>{{ 'sales_return.account.no_return' | trans }}</p>
         {% else %}
             <table class="table table--expand">
                 <thead>

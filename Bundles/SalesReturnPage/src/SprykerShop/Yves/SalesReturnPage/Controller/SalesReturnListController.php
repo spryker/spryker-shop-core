@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\SalesReturnPage\Controller;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -17,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SalesReturnListController extends AbstractController
 {
-    protected const RETURN_LIST_LIMIT = 1;
+    protected const RETURN_LIST_LIMIT = 10;
     protected const RETURN_LIST_SORT_FIELD = 'created_at';
     protected const RETURN_LIST_SORT_DIRECTION = 'DESC';
 
@@ -64,8 +65,11 @@ class SalesReturnListController extends AbstractController
      */
     protected function createReturnFilterTransfer(Request $request): ReturnFilterTransfer
     {
+        $customerTransfer = $this->findLoggedInCustomerTransfer();
+        $customerReference = $customerTransfer ? $customerTransfer->getCustomerReference() : null;
+
         return (new ReturnFilterTransfer())
-            ->setCustomerReference($this->getLoggedInCustomerTransfer()->getCustomerReference())
+            ->setCustomerReference($customerReference)
             ->setFilter($this->createFilterTransfer($request));
     }
 
@@ -88,7 +92,7 @@ class SalesReturnListController extends AbstractController
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    protected function getLoggedInCustomerTransfer()
+    protected function findLoggedInCustomerTransfer(): ?CustomerTransfer
     {
         if ($this->getFactory()->getCustomerClient()->isLoggedIn()) {
             return $this->getFactory()->getCustomerClient()->getCustomer();

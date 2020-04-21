@@ -15,14 +15,14 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class SalesReturnMenuItemWidget extends AbstractWidget
 {
     protected const PARAMETER_IS_ACTIVE_PAGE = 'isActivePage';
-    protected const PAGE_KEY_SALES_RETURN_LIST = 'sales-return-list';
+    protected const PAGE_KEY_SALES_RETURN = 'sales-return';
 
     /**
      * @param string $activePage
      */
     public function __construct(string $activePage)
     {
-        $this->addParameter(static::PARAMETER_IS_ACTIVE_PAGE, $activePage === static::PAGE_KEY_SALES_RETURN_LIST);
+        $this->addParameter(static::PARAMETER_IS_ACTIVE_PAGE, $activePage === static::PAGE_KEY_SALES_RETURN);
     }
 
     /**
