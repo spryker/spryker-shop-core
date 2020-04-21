@@ -67,13 +67,4 @@ interface CompanyPageToCompanyBusinessUnitClientInterface
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer
      */
     public function getCustomerCompanyBusinessUnitTree(CustomerTransfer $customerTransfer): CompanyBusinessUnitTreeNodeCollectionTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
-     */
-    public function getRawCompanyBusinessUnitCollection(
-        CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
-    ): CompanyBusinessUnitCollectionTransfer;
 }

@@ -93,15 +93,4 @@ class CompanyPageToCompanyBusinessUnitClientBridge implements CompanyPageToCompa
     {
         return $this->companyBusinessUnitClient->getCustomerCompanyBusinessUnitTree($customerTransfer);
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
-     */
-    public function getRawCompanyBusinessUnitCollection(
-        CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
-    ): CompanyBusinessUnitCollectionTransfer {
-        return $this->companyBusinessUnitClient->getRawCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
-    }
 }

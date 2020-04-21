@@ -69,10 +69,11 @@ class CompanyBusinessUnitOrderSearchFormDataProvider
 
         if ($this->can('SeeCompanyOrdersPermissionPlugin', $idCompanyUser)) {
             $companyBusinessUnitCriteriaFilterTransfer = (new CompanyBusinessUnitCriteriaFilterTransfer())
-                ->setIdCompany($companyUserTransfer->getFkCompany());
+                ->setIdCompany($companyUserTransfer->getFkCompany())
+                ->setWithoutExpanders(true);
 
             return $this->getChoicesFromCompanyBusinessUnitCollection(
-                $this->companyBusinessUnitClient->getRawCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer)
+                $this->companyBusinessUnitClient->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer)
             );
         }
 
