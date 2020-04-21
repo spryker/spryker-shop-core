@@ -23,18 +23,10 @@ class SalesReturnPageToCustomerClientBridge implements SalesReturnPageToCustomer
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function getCustomer()
     {
         return $this->customerClient->getCustomer();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isLoggedIn()
-    {
-        return $this->customerClient->isLoggedIn();
     }
 }

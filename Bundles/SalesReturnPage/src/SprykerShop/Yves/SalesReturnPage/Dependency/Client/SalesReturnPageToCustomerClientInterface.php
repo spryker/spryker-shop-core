@@ -10,12 +10,7 @@ namespace SprykerShop\Yves\SalesReturnPage\Dependency\Client;
 interface SalesReturnPageToCustomerClientInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function getCustomer();
-
-    /**
-     * @return bool
-     */
-    public function isLoggedIn();
 }
