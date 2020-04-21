@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\SalesReturnPage\Controller;
 
+use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -43,8 +44,29 @@ class ReturnCreateController extends AbstractReturnController
      */
     protected function executeCreateAction(Request $request, string $orderReference)
     {
+        /**
+         * @var \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[] $orderTransfersCollection
+         */
+        $orderTransfersCollection = $this->getFactory()
+            ->getSalesClient()
+            ->getOffsetPaginatedCustomerOrderList($this->createOrderListRequestTransfer($orderReference))
+            ->getOrders();
+        dd($orderTransfersCollection);
+
         return [
 
         ];
+    }
+
+    /**
+     * @param string $orderReference
+     *
+     * @return \Generated\Shared\Transfer\OrderListRequestTransfer
+     */
+    protected function createOrderListRequestTransfer($orderReference): OrderListRequestTransfer
+    {
+        return (new OrderListRequestTransfer())
+            ->setCustomerReference($this->getFactory()->getCustomerClient()->getCustomer()->getCustomerReference())
+            ->setOrderReference($orderReference);
     }
 }
