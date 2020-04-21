@@ -8,8 +8,10 @@
 namespace SprykerShop\Yves\SalesReturnPage\Controller;
 
 use Generated\Shared\Transfer\ReturnFilterTransfer;
+use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\SalesReturnPage\SalesReturnPageFactory getFactory()
@@ -20,9 +22,9 @@ class SalesReturnDetailsController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $returnReference
      *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View
      */
-    public function detailsAction(Request $request, string $returnReference)
+    public function detailsAction(Request $request, string $returnReference): View
     {
         $detailsData = $this->executeDetailsAction($request, $returnReference);
 
@@ -33,21 +35,32 @@ class SalesReturnDetailsController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $returnReference
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array
      */
-    public function executeDetailsAction(Request $request, string $returnReference)
+    public function executeDetailsAction(Request $request, string $returnReference): array
     {
         $returnFilterTransfer = (new ReturnFilterTransfer())
             ->setReturnReference($returnReference);
 
-        $salesReturnTransfer = $this->getFactory()
+        /**
+         * @var \Generated\Shared\Transfer\ReturnTransfer|null $returnTransfer
+         */
+        $returnTransfer = $this->getFactory()
             ->getSalesReturnClient()
             ->getReturns($returnFilterTransfer)
             ->getReturns()
-            ->offsetGet(0);
+            ->getIterator()
+            ->current();
+
+        if (!$returnTransfer) {
+            throw new NotFoundHttpException();
+        }
 
         return [
-            'return' => $salesReturnTransfer,
+            'returns' => $returnTransfer,
+            'reurnItemsCount' => $returnTransfer->getReturnItems()->count(),
         ];
     }
 }

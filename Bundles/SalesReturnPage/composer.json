@@ -12,7 +12,6 @@
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
-    "spryker-shop/customer-page": "*",
     "spryker/code-sniffer": "*",
     "spryker/router": "*"
   },

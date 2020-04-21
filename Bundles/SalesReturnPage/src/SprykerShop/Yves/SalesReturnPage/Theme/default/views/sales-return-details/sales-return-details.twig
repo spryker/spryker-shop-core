@@ -1,8 +1,9 @@
 {% extends template('page-layout-sales-return', 'SalesReturnPage') %}
 
 {% define data = {
-    return: _view.return,
-    returnItems: _view.return.returnItems,
+    returns: _view.returns,
+    returnItems: _view.returns.returnItems,
+    reurnItemsCount: _view.reurnItemsCount,
 } %}
 
 {% block salesReturnContent %}
@@ -12,11 +13,11 @@
         <ul>
             <li>
                 {{ 'sales_return.return_reference' | trans }}:
-                <strong>{{ data.return.returnReference }}</strong>
+                <strong>{{ data.returns.returnReference }}</strong>
             </li>
             <li>
                 {{ 'sales_return.return_date' | trans }}:
-                <strong>{{ data.return.createdAt | formatDateTime }}</strong>
+                <strong>{{ data.returns.createdAt | formatDateTime }}</strong>
             </li>
         </ul>
         <hr class="box__separator">
@@ -32,7 +33,8 @@
         {% include molecule('sales-return-summary', 'SalesReturnPage') with {
             class: 'text-right',
             data: {
-                return: data.return,
+                returns: data.returns,
+                reurnItemsCount: data.reurnItemsCount,
             },
         } only %}
     </div>

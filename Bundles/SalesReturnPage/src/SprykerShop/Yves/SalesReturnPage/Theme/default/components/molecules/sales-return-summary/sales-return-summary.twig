@@ -6,18 +6,19 @@
 
 {% define data = {
     returnItems: [],
-    currencyIsoCode: null
+    currencyIsoCode: null,
+    reurnItemsCount: null
 } %}
 
 {% block body %}
     <ul>
         <li>
             {{ 'sales_return.items_to_return' | trans }}:
-            <strong>{{ data.return.returnTotals.remunerationTotal | money(true, data.currencyIsoCode) }}</strong>
+            <strong>{{ data.reurnItemsCount }}</strong>
         </li>
         <li>
             {{ 'sales_return.remuneration_total' | trans }}:
-            <strong></strong>
+            <strong>{{ data.returns.returnTotals.remunerationTotal | money(true, data.currencyIsoCode) }}</strong>
         </li>
     </ul>
 {% endblock %}
