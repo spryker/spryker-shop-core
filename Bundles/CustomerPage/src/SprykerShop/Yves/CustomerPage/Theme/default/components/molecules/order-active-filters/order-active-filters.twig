@@ -93,7 +93,7 @@
 
     {% for filter in activeFilters %}
         {% block activeFilterReset %}
-            {% include molecule('form-value-setter', 'CustomerPage') with {
+            {% include molecule('form-value-setter') with {
                 attributes: {
                     'trigger-class-name': data.jsPrefix ~ filter.name ~ '-trigger',
                     'target-class-name': data.jsPrefix ~ filter.name ~ '-target',
@@ -108,7 +108,7 @@
                 class: data.jsPrefix ~ 'reset-target',
             }})
         }}
-        {% include molecule('form-value-setter', 'CustomerPage') with {
+        {% include molecule('form-value-setter') with {
             attributes: {
                 'trigger-class-name': data.jsPrefix ~ 'reset-trigger',
                 'target-class-name': data.jsPrefix ~ 'reset-target',
