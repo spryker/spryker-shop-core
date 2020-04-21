@@ -26,7 +26,7 @@ class ReturnSlipPrintController extends AbstractReturnController
         return $this->view(
             $response,
             [],
-            '@SalesReturnPage/views/print/print.twig'
+            '@SalesReturnPage/views/return-print/return-print.twig'
         );
     }
 
