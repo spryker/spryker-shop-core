@@ -59,7 +59,7 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected function addReturnCreateRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/return/create', 'SalesReturnPage', 'ReturnCreateController', 'createAction');
+        $route = $this->buildRoute('/return/create', 'SalesReturnPage', 'ReturnCreate', 'createAction');
         $routeCollection->add(static::ROUTE_RETURN_CREATE, $route);
 
         return $routeCollection;
@@ -72,7 +72,7 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected function addReturnListRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/return/list', 'SalesReturnPage', 'ReturnListController', 'listAction');
+        $route = $this->buildRoute('/return/list', 'SalesReturnPage', 'ReturnList', 'listAction');
         $routeCollection->add(static::ROUTE_RETURN_LIST, $route);
 
         return $routeCollection;
@@ -85,7 +85,7 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected function addReturnViewRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/return/view', 'SalesReturnPage', 'ReturnViewController', 'viewAction');
+        $route = $this->buildRoute('/return/view', 'SalesReturnPage', 'ReturnView', 'viewAction');
         $routeCollection->add(static::ROUTE_RETURN_VIEW, $route);
 
         return $routeCollection;
@@ -98,7 +98,7 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected function addReturnSlipPrintRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/return/slip-print', 'SalesReturnPage', 'ReturnSlipPrintController', 'printAction');
+        $route = $this->buildRoute('/return/slip-print', 'SalesReturnPage', 'ReturnSlipPrint', 'printAction');
         $routeCollection->add(static::ROUTE_RETURN_SLIP_PRINT, $route);
 
         return $routeCollection;
