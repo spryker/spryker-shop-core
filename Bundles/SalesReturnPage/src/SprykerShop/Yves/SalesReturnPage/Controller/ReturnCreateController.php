@@ -16,12 +16,13 @@ class ReturnCreateController extends AbstractReturnController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $orderReference
      *
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, string $orderReference)
     {
-        $response = $this->executecreateAction($request);
+        $response = $this->executecreateAction($request, $orderReference);
 
         if (!is_array($response)) {
             return $response;
@@ -36,10 +37,11 @@ class ReturnCreateController extends AbstractReturnController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $orderReference
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeCreateAction(Request $request)
+    protected function executeCreateAction(Request $request, string $orderReference)
     {
         return [
 

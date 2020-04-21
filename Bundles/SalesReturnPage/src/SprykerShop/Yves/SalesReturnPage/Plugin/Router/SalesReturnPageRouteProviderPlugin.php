@@ -30,6 +30,13 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected const ROUTE_RETURN_CREATE = 'return/create';
 
     /**
+     * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnCreateController::createAction()
+     */
+    protected const PARAM_ORDER_REFERENCE = 'orderReference';
+
+    protected const REFERENCE_REGEX = '[a-zA-Z0-9-]+';
+
+    /**
      * Specification:
      * - Adds Routes to the RouteCollection.
      *
@@ -56,7 +63,8 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected function addReturnCreateRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/return/create', 'SalesReturnPage', 'ReturnCreate', 'createAction');
+        $route = $this->buildRoute('/return/create/{orderReference}', 'SalesReturnPage', 'ReturnCreate', 'createAction');
+        $route = $route->setRequirement(static::PARAM_ORDER_REFERENCE, static::REFERENCE_REGEX);
         $routeCollection->add(static::ROUTE_RETURN_CREATE, $route);
 
         return $routeCollection;
