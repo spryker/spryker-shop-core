@@ -8,7 +8,36 @@
 namespace SprykerShop\Yves\SalesReturnPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToCustomerClientInterface;
+use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesClientInterface;
+use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnClientInterface;
 
+/**
+ * @method \SprykerShop\Yves\SalesReturnPage\SalesReturnPageConfig getConfig()
+ */
 class SalesReturnPageFactory extends AbstractFactory
 {
+    /**
+     * @return \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnClientInterface
+     */
+    public function getSalesReturnClient(): SalesReturnPageToSalesReturnClientInterface
+    {
+        return $this->getProvidedDependency(SalesReturnPageDependencyProvider::CLIENT_SALES_RETURN);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesClientInterface
+     */
+    public function getSalesClient(): SalesReturnPageToSalesClientInterface
+    {
+        return $this->getProvidedDependency(SalesReturnPageDependencyProvider::CLIENT_SALES);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToCustomerClientInterface
+     */
+    public function getCustomerClient(): SalesReturnPageToCustomerClientInterface
+    {
+        return $this->getProvidedDependency(SalesReturnPageDependencyProvider::CLIENT_CUSTOMER);
+    }
 }
