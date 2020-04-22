@@ -1,0 +1,75 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerShop\Yves\SalesReturnPage\Form;
+
+use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
+use Spryker\Yves\Kernel\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+/**
+ * @method \SprykerShop\Yves\SalesReturnPage\SalesReturnPageFactory getFactory()
+ * @method \SprykerShop\Yves\SalesReturnPage\SalesReturnPageConfig getConfig()
+ */
+class ReturnCreateForm extends AbstractType
+{
+    protected const FIELD_RETURN_ITEMS = 'returnItems';
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return void
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $this
+            ->addReturnItemsCollection($builder, $options);
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => ReturnCreateRequestTransfer::class,
+        ]);
+
+        $resolver->setRequired([
+            ReturnItemsForm::OPTION_REUTN_REASONS,
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addReturnItemsCollection(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(
+            static::FIELD_RETURN_ITEMS,
+            CollectionType::class,
+            [
+                'entry_type' => ReturnItemsForm::class,
+                'property_path' => 'returnItems',
+                'entry_options' => [
+                    ReturnItemsForm::OPTION_REUTN_REASONS => $options[ReturnItemsForm::OPTION_REUTN_REASONS],
+                ],
+                'label' => false,
+            ]
+        );
+
+        return $this;
+    }
+}

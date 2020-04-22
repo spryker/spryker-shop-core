@@ -1,7 +1,23 @@
 {% extends template('page-layout-main') %}
 
 {% define data = {
+    form: _view.returnCreateForm
 } %}
 
 {% block body %}
+
+    {{ form_start(data.form) }}
+    <ul>
+        {% for returnItem in data.form.returnItems %}
+            <li>
+                {{ form_errors(returnItem) }}
+                {{ form_widget(returnItem) }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    {{ form_widget(data.form) }}
+
+    <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
+    {{ form_end(data.form) }}
 {% endblock %}

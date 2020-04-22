@@ -45,16 +45,26 @@ class ReturnCreateController extends AbstractReturnController
     protected function executeCreateAction(Request $request, string $orderReference)
     {
         /**
-         * @var \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[] $orderTransfersCollection
+         * @var \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[] $orderTransfersCollections
          */
-        $orderTransfersCollection = $this->getFactory()
+        $orderTransfersCollections = $this->getFactory()
             ->getSalesClient()
             ->getOffsetPaginatedCustomerOrderList($this->createOrderListRequestTransfer($orderReference))
             ->getOrders();
-        dd($orderTransfersCollection);
+
+        if (!$orderTransfersCollections->count()) {
+            dd(1);
+        }
+
+        /**
+         * @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+         */
+        $orderTransfer = $orderTransfersCollections->offsetGet(0);
+        $returnCreateForm = $this->getFactory()->getCreateReturnForm($orderTransfer);
+        dd($request);
 
         return [
-
+            'returnCreateForm' => $returnCreateForm->createView(),
         ];
     }
 
@@ -63,7 +73,7 @@ class ReturnCreateController extends AbstractReturnController
      *
      * @return \Generated\Shared\Transfer\OrderListRequestTransfer
      */
-    protected function createOrderListRequestTransfer($orderReference): OrderListRequestTransfer
+    protected function createOrderListRequestTransfer(string $orderReference): OrderListRequestTransfer
     {
         return (new OrderListRequestTransfer())
             ->setCustomerReference($this->getFactory()->getCustomerClient()->getCustomer()->getCustomerReference())

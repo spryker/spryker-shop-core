@@ -4,6 +4,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
+    "spryker/application": "^3.8.0",
     "spryker/kernel": "^3.30.0",
     "spryker/sales": "^11.0.0",
     "spryker/sales-return": "^0.1.0"
