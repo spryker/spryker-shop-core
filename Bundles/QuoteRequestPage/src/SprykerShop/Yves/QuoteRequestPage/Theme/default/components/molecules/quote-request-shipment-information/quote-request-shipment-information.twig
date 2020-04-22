@@ -1,0 +1,87 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'quote-request-shipment-information',
+} %}
+
+{% define data = {
+    shipment: required,
+    hasMultiShipments: false,
+    priceMode: null,
+    shipmentExpense: null,
+} %}
+
+{% set shipmentMethod = data.shipment.method is defined ? data.shipment.method %}
+{% set shippingAddress = data.shipment.shippingAddress is defined ? data.shipment.shippingAddress %}
+
+{% block component %}
+    {% if (shipmentMethod and data.shipmentExpense) or (data.hasMultiShipments and shippingAddress) %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% block titleWrapper %}
+        {% if not data.hasMultiShipments %}
+            {% set titleShipmentMethodClass = 'spacing-x spacing-top spacing-top--big' %}
+
+            {% block title %}
+                <h4 class="{{ titleShipmentMethodClass }}">
+                    {{ 'quote_request_page.quote_request.title_shipment_method' | trans }}
+                </h4>
+            {% endblock %}
+        {% endif %}
+    {% endblock %}
+
+    {% block shipmentInformationWrapper %}
+        <div class="box">
+            {% block shipmentInformation %}
+                {% if shipmentMethod and data.shipmentExpense %}
+                    {% block shipmentMethod %}
+                        <div class="grid grid--justify">
+                            {% include molecule('shipment-information', 'CustomerPage') ignore missing with {
+                                class: 'col',
+                                data: {
+                                    shipmentExpense: data.shipmentExpense,
+                                },
+                            } only %}
+
+                            <div class="col col--sm-12 col--lg-4">
+                                {% block actions %}
+                                {% endblock %}
+                            </div>
+                        </div>
+                    {% endblock %}
+                {% endif %}
+
+                {% if data.hasMultiShipments and shippingAddress %}
+                    {% block shipmentAddress %}
+                        {% block shipmentAddressSeparator1 %}
+                            {% if shipmentMethod and data.shipmentExpense %}
+                                <hr class="box__separator spacing-y spacing-y--big">
+                            {% endif %}
+                        {% endblock %}
+
+                        {% block shipmentAddressTitle %}
+                            <h6>{{ 'checkout.step.summary.delivery_address' | trans }}</h6>
+                        {% endblock %}
+
+                        {% block shipmentAddressSeparator2 %}
+                            <hr>
+                        {% endblock %}
+
+                        {% block shipmentAddressInner %}
+                            {% embed molecule('display-address') with {
+                                data: {
+                                    address: shippingAddress,
+                                },
+                            } only %}
+                                {% block addressBadgeLabel %}{% endblock %}
+                            {% endembed %}
+                        {% endblock %}
+                    {% endblock %}
+                {% endif %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends template('page-layout-confirmation', 'QuoteRequestPage') %}
+
+{% define data = {
+    form: _view.quoteRequestEditAddressConfirmForm,
+    quoteRequest: _view.quoteRequestEditAddressConfirmForm.vars.value,
+} %}
+
+{% block message %}
+    <p>
+        {{ 'quote_request_page.quote_request.edit_address_confirm' | trans({
+            '%link%': url('quote-request/edit', { quoteRequestReference: data.quoteRequestReference }),
+            '%reference%': data.quoteRequestReference,
+        }) | raw }}
+    </p>
+{% endblock %}
