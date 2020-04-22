@@ -38,12 +38,24 @@ class CustomerPageToSalesClientBridge implements CustomerPageToSalesClientInterf
 
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param bool|null $isOrderSearchEnabled
+     *
+     * @throws \Exception
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getPaginatedCustomerOrdersOverview(OrderListTransfer $orderListTransfer): OrderListTransfer
+    public function getPaginatedCustomerOrdersOverview(OrderListTransfer $orderListTransfer, ?bool $isOrderSearchEnabled = false): OrderListTransfer
     {
-        return $this->salesClient->getPaginatedCustomerOrdersOverview($orderListTransfer);
+        // For BC reasons
+        if (!$isOrderSearchEnabled) {
+            return $this->salesClient->getPaginatedCustomerOrdersOverview($orderListTransfer);
+        }
+
+        if (method_exists($this->salesClient, 'searchOrders')) {
+            return $this->salesClient->searchOrders($orderListTransfer);
+        }
+
+        throw new Exception('Order Search works since v11.*');
     }
 
     /**
@@ -54,22 +66,5 @@ class CustomerPageToSalesClientBridge implements CustomerPageToSalesClientInterf
     public function getOrderDetails(OrderTransfer $orderTransfer)
     {
         return $this->salesClient->getOrderDetails($orderTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     * @param bool|null $isOrderSearchEnabled
-     *
-     * @throws \Exception
-     *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
-     */
-    public function searchOrders(OrderListTransfer $orderListTransfer, ?bool $isOrderSearchEnabled = true): OrderListTransfer
-    {
-        if (!$isOrderSearchEnabled || !method_exists($this->salesClient, 'searchOrders')) {
-            throw new Exception('Order Search works since v11.*');
-        }
-
-        return $this->salesClient->searchOrders($orderListTransfer);
     }
 }

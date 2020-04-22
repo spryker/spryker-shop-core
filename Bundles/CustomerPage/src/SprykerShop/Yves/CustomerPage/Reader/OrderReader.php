@@ -64,7 +64,7 @@ class OrderReader implements OrderReaderInterface
         $orderListTransfer = $this->expandOrderListTransfer($request, $orderListTransfer);
 
         if ($this->customerPageConfig->isOrderSearchEnabled()) {
-            return $this->salesClient->searchOrders($orderListTransfer);
+            return $this->salesClient->getPaginatedCustomerOrdersOverview($orderListTransfer, true);
         }
 
         return $this->salesClient->getPaginatedCustomerOrdersOverview($orderListTransfer);
@@ -78,9 +78,11 @@ class OrderReader implements OrderReaderInterface
      */
     protected function expandOrderListTransfer(Request $request, OrderListTransfer $orderListTransfer): OrderListTransfer
     {
-        $orderListTransfer->setIdCustomer(
-            $this->customerClient->getCustomer()->getIdCustomer()
-        );
+        $customerTransfer = $this->customerClient->getCustomer();
+
+        $orderListTransfer
+            ->setIdCustomer($customerTransfer->getIdCustomer())
+            ->setCustomerReference($customerTransfer->getCustomerReference());
 
         $orderListTransfer->setPagination(
             $this->createPaginationTransfer($request)

@@ -32,14 +32,4 @@ interface CustomerPageToSalesClientInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderDetails(OrderTransfer $orderTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     * @param bool|null $isOrderSearchEnabled
-     *
-     * @throws \Exception
-     *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
-     */
-    public function searchOrders(OrderListTransfer $orderListTransfer, ?bool $isOrderSearchEnabled = true): OrderListTransfer;
 }
