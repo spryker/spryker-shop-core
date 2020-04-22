@@ -7,10 +7,10 @@
     "php": ">=7.2",
     "spryker-shop/shop-application": "^1.2.0",
     "spryker-shop/shop-ui": "^1.0.0",
-    "spryker/customer": "^7.27.0",
+    "spryker/customer": "^7.19.0",
     "spryker/kernel": "^3.30.0",
     "spryker/sales": "^11.0.0",
-    "spryker/sales-return": "^0.1.0",
+    "spryker/sales-return": "^0.1.1",
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {

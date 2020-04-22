@@ -39,7 +39,9 @@
                data-id="sidebar-order">{{ 'customer.account.order_history' | trans }}</a>
         </li>
 
-        {% widget 'SalesReturnMenuItemWidget' args [data.activePage] only %}{% endwidget %}
+        {% block returnCreateLink %}
+            {% include molecule('return-list-link', 'SalesReturnPage') ignore missing %}
+        {% endblock %}
 
         <li class="menu__item {{macros.isActive('newsletter', data.activePage)}}">
             <a href="{{ path('customer/newsletter') }}"
