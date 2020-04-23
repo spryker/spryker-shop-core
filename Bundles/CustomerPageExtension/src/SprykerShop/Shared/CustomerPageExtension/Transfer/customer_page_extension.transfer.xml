@@ -6,4 +6,7 @@
     <transfer name="Customer">
     </transfer>
 
+    <transfer name="Quote">
+    </transfer>
+
 </transfers>
