@@ -8,7 +8,7 @@
     filterFields: _view.filterFields | default(null),
 
     pagination: {
-        parameters: {},
+        parameters: app.request.query.all(),
         currentPage: _view.pagination.page,
         paginationPath: 'customer/order',
         maxPage: _view.pagination.lastPage,
