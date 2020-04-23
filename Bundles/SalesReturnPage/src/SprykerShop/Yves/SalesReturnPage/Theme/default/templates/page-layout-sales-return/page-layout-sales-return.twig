@@ -26,9 +26,9 @@
     } only %}
 {% endblock %}
 
-{% block content %}
-    {% set wrapperClass = 'grid' %}
+{% set wrapperClass = 'grid' %}
 
+{% block content %}
     <div class="{{ wrapperClass }}">
         {% set sidebarClass = 'col col--sm-12 col--md-3' %}
         {% set contentClass = 'col col--sm-12 col--md-9' %}
@@ -37,9 +37,7 @@
             {% block customerNavigationWrapper %}
                 <div class="{{ sidebarClass }}">
                     {% block customerNavigation %}
-                        {% widget 'CustomerNavigationWidget' args [data.activePage] only %}
-                        {% elsewidget 'CustomerNavigationWidgetPlugin' args [data.activePage] only %} {# @deprecated Use CustomerNavigationWidget instead. #}
-                        {% endwidget %}
+                        {% widget 'CustomerNavigationWidget' args [data.activePage] only %}{% endwidget %}
                     {% endblock %}
                 </div>
             {% endblock %}
