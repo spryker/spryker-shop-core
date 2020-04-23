@@ -23,7 +23,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ReturnItemsForm extends AbstractType
 {
     public const FIELD_UUID = 'uuid';
-    public const FIELD_IS_CHECKED = 'isChecked';
     public const FIELD_REASON = 'reason';
     public const FIELD_CUSTOM_REASON = 'customReason';
     public const FIELD_ORDER_ITEM = 'orderItem';

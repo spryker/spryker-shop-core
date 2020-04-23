@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\SalesReturnPage\Controller;
 
 use Generated\Shared\Transfer\ReturnFilterTransfer;
+use Generated\Shared\Transfer\ReturnResponseTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -63,5 +64,17 @@ abstract class AbstractReturnController extends AbstractController
         }
 
         return $returnTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnResponseTransfer $returnResponseTransfer
+     *
+     * @return void
+     */
+    protected function handleResponseErrors(ReturnResponseTransfer $returnResponseTransfer): void
+    {
+        foreach ($returnResponseTransfer->getMessages() as $messageTransfer) {
+            $this->addErrorMessage($messageTransfer->getValue());
+        }
     }
 }

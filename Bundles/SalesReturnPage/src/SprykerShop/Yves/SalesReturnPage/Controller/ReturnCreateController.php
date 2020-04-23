@@ -55,21 +55,21 @@ class ReturnCreateController extends AbstractReturnController
     protected function executeCreateAction(Request $request, string $orderReference)
     {
         /**
-         * @var \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[] $orderTransfersCollections
+         * @var \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[] $orderTransfersCollection
          */
-        $orderTransfersCollections = $this->getFactory()
+        $orderTransfersCollection = $this->getFactory()
             ->getSalesClient()
             ->getOffsetPaginatedCustomerOrderList($this->createOrderListRequestTransfer($orderReference))
             ->getOrders();
 
-        if (!$orderTransfersCollections->count()) {
+        if (!$orderTransfersCollection->count()) {
             throw new NotFoundHttpException();
         }
 
         /**
          * @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer
          */
-        $orderTransfer = $orderTransfersCollections->offsetGet(0);
+        $orderTransfer = $orderTransfersCollection->offsetGet(0);
 
         $returnCreateForm = $this->getFactory()
             ->getCreateReturnForm($orderTransfer)
@@ -94,6 +94,8 @@ class ReturnCreateController extends AbstractReturnController
             ->createReturnResponseTransfer($returnCreateForm->getData());
 
         if (!$returnResponseTransfer->getIsSuccessful()) {
+            $this->handleResponseErrors($returnResponseTransfer);
+
             return $this->getViewParameters($returnCreateForm);
         }
 
