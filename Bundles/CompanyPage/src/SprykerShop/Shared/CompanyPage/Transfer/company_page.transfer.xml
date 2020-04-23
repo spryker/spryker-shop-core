@@ -94,6 +94,7 @@
         <property name="idCompany" type="int"/>
         <property name="filter" type="Filter"/>
         <property name="pagination" type="Pagination"/>
+        <property name="withoutExpanders" type="bool"/>
     </transfer>
 
     <transfer name="CompanyRoleCollection">
