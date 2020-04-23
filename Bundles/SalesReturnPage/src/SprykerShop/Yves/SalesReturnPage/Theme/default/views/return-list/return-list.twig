@@ -2,87 +2,127 @@
 
 {% define data = {
     returns: _view.returns,
-
     pagination: {
         parameters: {},
         currentPage: _view.pagination.page,
         paginationPath: 'return/list',
         maxPage: _view.pagination.lastPage,
-        showAlwaysFirstAndLast: true
+        showAlwaysFirstAndLast: true,
     },
-
     title: 'sales_return.list.title' | trans,
-    activePage: 'sales-return'
 } %}
 
+{% set contentWrapperClass = 'box' %}
+
 {% block salesReturnContent %}
-    <div class="box">
-        <h5>{{ 'sales_return.list.title' | trans }}</h5>
-        <hr>
-        {% if data.returns is empty %}
-            <p>{{ 'sales_return.account.no_return' | trans }}</p>
-        {% else %}
-            <table class="table table--expand">
-                <thead>
-                <tr>
-                    <th>{{ 'sales_return.return.return_ref' | trans }}</th>
-                    <th>{{ 'sales_return.return.order_ref' | trans }}</th>
-                    <th>{{ 'sales_return.return.number_of_items' | trans }}</th>
-                    <th>{{ 'sales_return.return.date' | trans }}</th>
-                    <th>{{ 'sales_return.return.items_state' | trans }}</th>
-                    <th>{{ 'sales_return.table.actions' | trans }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for return in data.returns %}
-                    {% set orderReferences = [] %}
-                    {% set itemStates = [] %}
-                    {% for returnItem in return.returnItems %}
-                        {% if returnItem.orderItem.orderReference not in orderReferences %}
-                            {% set orderReferences = orderReferences | merge([returnItem.orderItem.orderReference]) %}
-                        {% endif %}
-                        {% if returnItem.orderItem.state.name not in itemStates %}
-                            {% set itemStates = itemStates | merge([returnItem.orderItem.state.name]) %}
-                        {% endif %}
-                    {% endfor %}
-                    <tr>
-                        <td>{{ return.returnReference }}</td>
-                        <td>
-                            {% for orderReference in orderReferences %}
-                                <p>{{ orderReference }}</p>
+    <div class="{{ contentWrapperClass }}">
+        {% block salesReturnContentInner %}
+            {% block salesReturnContentTitle %}
+                <h5>{{ 'sales_return.list.title' | trans }}</h5>
+                {% block salesReturnContentTitleUnderline %}
+                    <hr>
+                {% endblock %}
+            {% endblock %}
+
+            {% if data.returns is empty %}
+                {% block salesReturnContentEmptyMessage %}
+                    <p>{{ 'sales_return.account.no_return' | trans }}</p>
+                {% endblock %}
+            {% else %}
+                {% set salesReturnTableClass = 'table table--expand' %}
+
+                {% block salesReturnTable %}
+                    <table class="{{ salesReturnTableClass }}">
+                        {% block salesReturnTableHeader %}
+                            <thead>
+                            <tr>
+                                {% block salesReturnTableHeaderCells %}
+                                    <th>{{ 'sales_return.return.return_ref' | trans }}</th>
+                                    <th>{{ 'sales_return.return.order_ref' | trans }}</th>
+                                    <th>{{ 'sales_return.return.number_of_items' | trans }}</th>
+                                    <th>{{ 'sales_return.return.date' | trans }}</th>
+                                    <th>{{ 'sales_return.return.items_state' | trans }}</th>
+                                    <th>{{ 'sales_return.table.actions' | trans }}</th>
+                                {% endblock %}
+                            </tr>
+                            </thead>
+                        {% endblock %}
+
+                        {% block salesReturnTableBody %}
+                            <tbody>
+                            {% for return in data.returns %}
+                                {% set orderReferences = [] %}
+                                {% set itemStates = [] %}
+                                {% for returnItem in return.returnItems %}
+                                    {% if returnItem.orderItem.orderReference not in orderReferences %}
+                                        {% set orderReferences = orderReferences | merge([returnItem.orderItem.orderReference]) %}
+                                    {% endif %}
+                                    {% if returnItem.orderItem.state.name not in itemStates %}
+                                        {% set itemStates = itemStates | merge([returnItem.orderItem.state.name]) %}
+                                    {% endif %}
+                                {% endfor %}
+                                <tr>
+                                    {% block salesReturnTableBodyCells %}
+                                        <td>{{ return.returnReference }}</td>
+                                        <td>
+                                            {% for orderReference in orderReferences %}
+                                                <p>{{ orderReference }}</p>
+                                            {% endfor %}
+                                        </td>
+                                        <td>{{ return.returnItems| length }}</td>
+                                        <td>{{ date(return.createdAt) | formatDateTime }}</td>
+                                        <td>
+                                            {% for itemState in itemStates %}
+                                                {% set itemStateClass = 'item-state item-state--' ~ itemState %}
+
+                                                {% block itemStateInfo %}
+                                                    <p class="{{ itemStateClass }}">
+                                                        {{ ('item.state.' ~ itemState) | trans }}
+                                                    </p>
+                                                {% endblock %}
+                                            {% endfor %}
+                                        </td>
+                                        <td>
+                                            {% set returnActionsMenuClass = 'menu menu--inline' %}
+                                            {% set returnActionsMenuItemClass = 'menu__item' %}
+
+                                            {% block returnActionsMenu %}
+                                                <ul class="{{ returnActionsMenuClass }}">
+                                                    <li class="{{ returnActionsMenuItemClass }}">
+                                                        {% block returnViewAction %}
+                                                            <a href="#">
+                                                                {{ 'sales_return.return.view_return' | trans }}
+                                                            </a>
+                                                        {% endblock %}
+                                                    </li>
+                                                    <li class="{{ returnActionsMenuItemClass }}">
+                                                        {% block returnPrintAction %}
+                                                            <a href="#">
+                                                                {{ 'sales_return.return.print_return' | trans }}
+                                                            </a>
+                                                        {% endblock %}
+                                                    </li>
+                                                </ul>
+                                            {% endblock %}
+                                        </td>
+                                    {% endblock %}
+                                </tr>
                             {% endfor %}
-                        </td>
-                        <td>{{ return.returnItems| length }}</td>
-                        <td>{{ date(return.createdAt) | formatDateTime }}</td>
-                        <td>
-                            {% for itemState in itemStates %}
-                                <p class="item-state item-state--{{ itemState }}">
-                                    {{ ('item.state.' ~ itemState) | trans }}
-                                </p>
-                            {% endfor %}
-                        </td>
-                        <td>
-                            <ul class="menu menu--inline">
-                                <li class="menu__item">
-                                    <a href="#">
-                                        {{ 'sales_return.return.view_return' | trans }}
-                                    </a>
-                                </li>
-                                <li class="menu__item">
-                                    <a href="#">
-                                        {{ 'sales_return.return.print_return' | trans }}
-                                    </a>
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        {% endif %}
-        <hr>
-        {% include molecule('pagination') with {
-            data: data.pagination
-        } only %}
+                            </tbody>
+                        {% endblock %}
+                    </table>
+                {% endblock %}
+            {% endif %}
+
+            {% block salesReturnTableUnderline %}
+                <hr>
+            {% endblock %}
+
+            {% block pagination %}
+                {% include molecule('pagination') with {
+                    data: data.pagination,
+                } only %}
+            {% endblock %}
+        {% endblock %}
     </div>
 {% endblock %}
