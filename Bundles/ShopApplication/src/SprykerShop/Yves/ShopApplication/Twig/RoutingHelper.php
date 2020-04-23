@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\ShopApplication\Twig;
 
 use LogicException;
 use Silex\Application;
-use Spryker\Shared\Kernel\Store;
 use SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceInterface;
 
 class RoutingHelper implements RoutingHelperInterface
