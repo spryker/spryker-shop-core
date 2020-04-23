@@ -17,10 +17,7 @@
     is-scrollable
 {% endblock %}
 
-{# Hardcoded b2b check, is it acceptable for us? #}
-{% set isCompanyUserColumnsVisible = data.orderSearchForm is defined
-    and data.orderSearchForm.vars.value.filters is defined
-    and data.orderSearchForm.vars.value.filters.companyBusinessUnit is defined
+{% set isCustomerDataColumnsVisible = data.orderSearchForm.vars.value.filters.companyBusinessUnit is defined
     and data.orderSearchForm.vars.value.filters.companyBusinessUnit is not empty
 %}
 
@@ -36,7 +33,7 @@
                     {{ 'customer.order.date' | trans }}
                     {{ _self.sortingIcon('date', data.orderSearchForm) }}
                 </th>
-                {% if isCompanyUserColumnsVisible %}
+                {% if data.isOrderSearchEnabled and isCustomerDataColumnsVisible %}
                     <th {{ _self.sortingAttributes('customerName', data.orderSearchForm, data.jsPrefix) }}>
                         {{ 'customer.order.company_user' | trans }}
                         {{ _self.sortingIcon('customerName', data.orderSearchForm) }}
@@ -64,7 +61,7 @@
                 <tr>
                     <td>{{ order.orderReference }}</td>
                     <td>{{ date(order.createdAt) | formatDateTime }}</td>
-                    {% if isCompanyUserColumnsVisible %}
+                    {% if data.isOrderSearchEnabled and isCustomerDataColumnsVisible %}
                         <td>{{ order.firstName ~ ' ' ~ order.lastName }}</td>
                         <td>{{ order.email }}</td>
                     {% endif %}

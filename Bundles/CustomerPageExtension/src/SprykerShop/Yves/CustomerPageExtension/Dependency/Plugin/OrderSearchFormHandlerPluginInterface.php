@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\OrderListTransfer;
 /**
  * Provides form handling capabilities.
  *
- * Use this plugin for handling OrderSearchForm after submitting.
+ * Use this plugin interface for handling OrderSearchForm after submitting.
  */
 interface OrderSearchFormHandlerPluginInterface
 {

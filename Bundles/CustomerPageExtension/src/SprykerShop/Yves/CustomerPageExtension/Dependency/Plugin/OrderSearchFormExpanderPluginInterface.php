@@ -12,7 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * Provides form expansion capabilities.
  *
- * Use this plugin for expanding OrderSearchForm with new form fields or subforms.
+ * Use this plugin interface for expanding OrderSearchForm with new form fields or subforms.
  */
 interface OrderSearchFormExpanderPluginInterface
 {

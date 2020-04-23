@@ -14,7 +14,7 @@ use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientBridge;
-use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientBridge;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientAdapter;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceBridge;
@@ -228,7 +228,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addSalesClient(Container $container): Container
     {
         $container->set(static::CLIENT_SALES, function (Container $container) {
-            return new CustomerPageToSalesClientBridge($container->getLocator()->sales()->client());
+            return new CustomerPageToSalesClientAdapter($container->getLocator()->sales()->client());
         });
 
         return $container;

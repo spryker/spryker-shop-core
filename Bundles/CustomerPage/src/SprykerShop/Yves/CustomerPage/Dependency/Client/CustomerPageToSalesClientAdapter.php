@@ -11,7 +11,7 @@ use Exception;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
-class CustomerPageToSalesClientBridge implements CustomerPageToSalesClientInterface
+class CustomerPageToSalesClientAdapter implements CustomerPageToSalesClientInterface
 {
     /**
      * @var \Spryker\Client\Sales\SalesClientInterface
