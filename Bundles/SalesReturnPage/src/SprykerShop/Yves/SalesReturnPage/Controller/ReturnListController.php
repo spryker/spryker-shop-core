@@ -18,8 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 class ReturnListController extends AbstractReturnController
 {
     protected const RETURN_LIST_LIMIT = 10;
-    protected const RETURN_LIST_SORT_FIELD = 'created_at';
-    protected const RETURN_LIST_SORT_DIRECTION = 'DESC';
 
     protected const PARAM_PAGE = 'page';
     protected const DEFAULT_PAGE = 1;
@@ -31,7 +29,7 @@ class ReturnListController extends AbstractReturnController
      */
     public function listAction(Request $request): View
     {
-        $response = $this->executelistAction($request);
+        $response = $this->executeListAction($request);
 
         return $this->view(
             $response,
@@ -64,24 +62,13 @@ class ReturnListController extends AbstractReturnController
      */
     protected function createReturnFilterTransfer(Request $request): ReturnFilterTransfer
     {
-        return (new ReturnFilterTransfer())
-            ->setCustomerReference($this->getFactory()->getCustomerClient()->getCustomer()->getCustomerReference())
-            ->setFilter($this->createFilterTransfer($request));
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Generated\Shared\Transfer\FilterTransfer
-     */
-    protected function createFilterTransfer(Request $request): FilterTransfer
-    {
         $offset = ($request->query->getInt(static::PARAM_PAGE, static::DEFAULT_PAGE) - 1) * static::RETURN_LIST_LIMIT;
-
-        return (new FilterTransfer())
-            ->setOrderBy(static::RETURN_LIST_SORT_FIELD)
-            ->setOrderDirection(static::RETURN_LIST_SORT_DIRECTION)
+        $filterTransfer = (new FilterTransfer())
             ->setOffset($offset)
             ->setLimit(static::RETURN_LIST_LIMIT);
+
+        return (new ReturnFilterTransfer())
+            ->setCustomerReference($this->getFactory()->getCustomerClient()->getCustomer()->getCustomerReference())
+            ->setFilter($filterTransfer);
     }
 }
