@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\SalesReturnPage\Form;
 
-use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ReturnCreateForm extends AbstractType
 {
-    protected const FIELD_RETURN_ITEMS = 'returnItems';
+    public const FIELD_RETURN_ITEMS = 'returnItems';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -40,10 +39,6 @@ class ReturnCreateForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'data_class' => ReturnCreateRequestTransfer::class,
-        ]);
-
         $resolver->setRequired([
             ReturnItemsForm::OPTION_REUTN_REASONS,
         ]);
@@ -62,7 +57,6 @@ class ReturnCreateForm extends AbstractType
             CollectionType::class,
             [
                 'entry_type' => ReturnItemsForm::class,
-                'property_path' => 'returnItems',
                 'entry_options' => [
                     ReturnItemsForm::OPTION_REUTN_REASONS => $options[ReturnItemsForm::OPTION_REUTN_REASONS],
                 ],

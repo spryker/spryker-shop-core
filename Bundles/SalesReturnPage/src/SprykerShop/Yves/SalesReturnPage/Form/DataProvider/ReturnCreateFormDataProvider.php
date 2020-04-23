@@ -7,16 +7,16 @@
 
 namespace SprykerShop\Yves\SalesReturnPage\Form\DataProvider;
 
-use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
-use Generated\Shared\Transfer\ReturnItemTransfer;
 use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
 use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnClientInterface;
+use SprykerShop\Yves\SalesReturnPage\Form\ReturnCreateForm;
 use SprykerShop\Yves\SalesReturnPage\Form\ReturnItemsForm;
 
 class ReturnCreateFormDataProvider
 {
+    public const GLOSSARY_KEY_CUSTOM_REASON = 'return.return_reasons.custom_reason.name';
+
     /**
      * @var \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnClientInterface
      */
@@ -34,41 +34,33 @@ class ReturnCreateFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ReturnCreateRequestTransfer
+     * @return array
      */
-    public function getData(OrderTransfer $orderTransfer): ReturnCreateRequestTransfer
+    public function getData(OrderTransfer $orderTransfer): array
     {
-        $returnCreateRequestTransfer = (new ReturnCreateRequestTransfer())
-            ->setCustomer($orderTransfer->getCustomer());
-
-        return $this->expandReturnCreateransferWithReturnItemTransfer($returnCreateRequestTransfer, $orderTransfer);
+        return [
+            ReturnCreateForm::FIELD_RETURN_ITEMS => $this->createReturnItemTransfersCollection($orderTransfer),
+        ];
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ReturnCreateRequestTransfer
+     * @return array
      */
-    protected function expandReturnCreateransferWithReturnItemTransfer(
-        ReturnCreateRequestTransfer $returnCreateRequestTransfer,
-        OrderTransfer $orderTransfer
-    ): ReturnCreateRequestTransfer {
-        if (!$orderTransfer->getItems()->count()) {
-            return $returnCreateRequestTransfer;
-        }
+    protected function createReturnItemTransfersCollection(OrderTransfer $orderTransfer): array
+    {
+        $returnItemsList = [];
 
-        $returnItemTransfersCollection = new ArrayObject();
+        if (!$orderTransfer->getItems()->count()) {
+            return $returnItemsList;
+        }
 
         foreach ($orderTransfer->getItems() as $orderItemTransfer) {
-            $returnItemTransfer = (new ReturnItemTransfer())
-                ->setOrderItem($orderItemTransfer)
-                ->setUuid($orderItemTransfer->getUuid());
-
-            $returnItemTransfersCollection->append($returnItemTransfer);
+            $returnItemsList[] = [ReturnItemsForm::FIELD_ORDER_ITEM => $orderItemTransfer];
         }
 
-        return $returnCreateRequestTransfer->setReturnItems($returnItemTransfersCollection);
+        return $returnItemsList;
     }
 
     /**
@@ -93,7 +85,7 @@ class ReturnCreateFormDataProvider
             $result[$returnReasonTransfer->getGlossaryKeyReason()] = $returnReasonTransfer->getGlossaryKeyReason();
         }
 
-        $result['custom_return_reason'] = 'custom_return_reason';
+        $result[static::GLOSSARY_KEY_CUSTOM_REASON] = static::GLOSSARY_KEY_CUSTOM_REASON;
 
         return $result;
     }

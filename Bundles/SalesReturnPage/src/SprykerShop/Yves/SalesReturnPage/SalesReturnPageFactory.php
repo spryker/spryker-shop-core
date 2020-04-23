@@ -13,7 +13,12 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToCustomerClientInterface;
 use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesClientInterface;
 use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnClientInterface;
+use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToStoreClientInterface;
 use SprykerShop\Yves\SalesReturnPage\Form\DataProvider\ReturnCreateFormDataProvider;
+use SprykerShop\Yves\SalesReturnPage\Form\Handler\ReturnHandler;
+use SprykerShop\Yves\SalesReturnPage\Form\Handler\ReturnHandlerInterface;
+use SprykerShop\Yves\SalesReturnPage\Form\Listener\ReturnItemsFormEventsListener;
+use SprykerShop\Yves\SalesReturnPage\Form\Listener\ReturnItemsFormEventsListenerInterface;
 use SprykerShop\Yves\SalesReturnPage\Form\ReturnCreateForm;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
@@ -36,6 +41,26 @@ class SalesReturnPageFactory extends AbstractFactory
             ReturnCreateForm::class,
             $returnCreateFormDataProvider->getData($orderTransfer),
             $returnCreateFormDataProvider->getOptions()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\SalesReturnPage\Form\Listener\ReturnItemsFormEventsListenerInterface
+     */
+    public function createReturnItemsFormEventsListener(): ReturnItemsFormEventsListenerInterface
+    {
+        return new ReturnItemsFormEventsListener();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\SalesReturnPage\Form\Handler\ReturnHandlerInterface
+     */
+    public function createReturnHandler(): ReturnHandlerInterface
+    {
+        return new ReturnHandler(
+            $this->getSalesReturnClient(),
+            $this->getCustomerClient(),
+            $this->getStoreClient()
         );
     }
 
@@ -79,5 +104,13 @@ class SalesReturnPageFactory extends AbstractFactory
     public function getCustomerClient(): SalesReturnPageToCustomerClientInterface
     {
         return $this->getProvidedDependency(SalesReturnPageDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToStoreClientInterface
+     */
+    public function getStoreClient(): SalesReturnPageToStoreClientInterface
+    {
+        return $this->getProvidedDependency(SalesReturnPageDependencyProvider::CLIENT_STORE);
     }
 }

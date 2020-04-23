@@ -8,13 +8,21 @@
 namespace SprykerShop\Yves\SalesReturnPage\Controller;
 
 use Generated\Shared\Transfer\OrderListRequestTransfer;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\SalesReturnPage\SalesReturnPageFactory getFactory()
  */
 class ReturnCreateController extends AbstractReturnController
 {
+    protected const GLOSSARY_KEY_RETURN_CREATED = 'sales_return_page.return.created';
+
+    protected const ROUTE_RETURN_VIEW = 'return/view';
+
+    protected const PARAM_RETURN_REFERENCE = 'returnReference';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $orderReference
@@ -40,6 +48,8 @@ class ReturnCreateController extends AbstractReturnController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $orderReference
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function executeCreateAction(Request $request, string $orderReference)
@@ -53,16 +63,54 @@ class ReturnCreateController extends AbstractReturnController
             ->getOrders();
 
         if (!$orderTransfersCollections->count()) {
-            dd(1);
+            throw new NotFoundHttpException();
         }
 
         /**
          * @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer
          */
         $orderTransfer = $orderTransfersCollections->offsetGet(0);
-        $returnCreateForm = $this->getFactory()->getCreateReturnForm($orderTransfer);
-        dd($request);
 
+        $returnCreateForm = $this->getFactory()
+            ->getCreateReturnForm($orderTransfer)
+            ->handleRequest($request);
+
+        if ($returnCreateForm->isSubmitted()) {
+            return $this->processReturnCreateForm($returnCreateForm);
+        }
+
+        return $this->getViewParameters($returnCreateForm);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $returnCreateForm
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function processReturnCreateForm(FormInterface $returnCreateForm)
+    {
+        $returnResponseTransfer = $this->getFactory()
+            ->createReturnHandler()
+            ->createReturnResponseTransfer($returnCreateForm->getData());
+
+        if (!$returnResponseTransfer->getIsSuccessful()) {
+            return $this->getViewParameters($returnCreateForm);
+        }
+
+        $this->addSuccessMessage(static::GLOSSARY_KEY_RETURN_CREATED);
+
+        return $this->redirectResponseInternal(static::ROUTE_RETURN_VIEW, [
+            static::PARAM_RETURN_REFERENCE => $returnResponseTransfer->getReturn()->getReturnReference(),
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $returnCreateForm
+     *
+     * @return array
+     */
+    protected function getViewParameters(FormInterface $returnCreateForm): array
+    {
         return [
             'returnCreateForm' => $returnCreateForm->createView(),
         ];

@@ -7,11 +7,13 @@
 
 namespace SprykerShop\Yves\SalesReturnPage\Form;
 
-use Generated\Shared\Transfer\ReturnItemTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -21,7 +23,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ReturnItemsForm extends AbstractType
 {
     public const FIELD_UUID = 'uuid';
+    public const FIELD_IS_CHECKED = 'isChecked';
     public const FIELD_REASON = 'reason';
+    public const FIELD_CUSTOM_REASON = 'customReason';
+    public const FIELD_ORDER_ITEM = 'orderItem';
 
     public const OPTION_REUTN_REASONS = 'return_reasons';
 
@@ -35,7 +40,8 @@ class ReturnItemsForm extends AbstractType
     {
         $this
             ->addUuid($builder)
-            ->addReason($builder, $options);
+            ->addReason($builder, $options)
+            ->addCustomReason($builder);
     }
 
     /**
@@ -48,31 +54,6 @@ class ReturnItemsForm extends AbstractType
         $resolver->setRequired([
             static::OPTION_REUTN_REASONS,
         ]);
-
-        $resolver->setDefaults([
-            'data_class' => ReturnItemTransfer::class,
-        ]);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function add(FormBuilderInterface $builder)
-    {
-        $builder
-            ->add(
-                static::FIELD_UUID,
-                CheckboxType::class,
-                [
-                    'required' => false,
-                    'mapped' => false,
-                    'label' => false,
-                ]
-            );
-
-        return $this;
     }
 
     /**
@@ -87,11 +68,16 @@ class ReturnItemsForm extends AbstractType
                 static::FIELD_UUID,
                 CheckboxType::class,
                 [
-                    'required' => false,
-                    'mapped' => false,
                     'label' => false,
+                    'required' => false,
                 ]
             );
+
+        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
+            return $this->getFactory()
+                ->createReturnItemsFormEventsListener()
+                ->mappReturnItemTransfersUuid($event);
+        });
 
         return $this;
     }
@@ -106,8 +92,23 @@ class ReturnItemsForm extends AbstractType
     {
         $builder->add(static::FIELD_REASON, ChoiceType::class, [
             'label' => 'Reason',
-            'placeholder' => 'Select one',
+            'placeholder' => 'return.return_reasons.select_reason.placeholder',
             'choices' => $options[static::OPTION_REUTN_REASONS],
+            'required' => false,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addCustomReason(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_CUSTOM_REASON, TextareaType::class, [
+            'label' => 'Custom Reason',
             'required' => false,
         ]);
 
