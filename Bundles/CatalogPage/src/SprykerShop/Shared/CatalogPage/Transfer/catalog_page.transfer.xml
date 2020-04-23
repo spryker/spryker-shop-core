@@ -41,6 +41,8 @@
     </transfer>
 
     <transfer name="FacetSearchResultValue">
+        <property name="value" type="string"/>
+        <property name="docCount" type="int"/>
     </transfer>
 
     <transfer name="ShopContext">
