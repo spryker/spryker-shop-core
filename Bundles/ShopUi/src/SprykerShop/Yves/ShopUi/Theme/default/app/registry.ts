@@ -16,7 +16,7 @@ const registry: Map<string, Candidate> = new Map();
 /**
  * Defines the generic custom element contructor signature that must be exported by each webcomponent module.
  */
-export interface CustomElementContructor {
+export interface CustomElementConstructor {
     new(): HTMLElement;
 }
 
@@ -24,7 +24,7 @@ export interface CustomElementContructor {
  * Defines the generic custom element module signature that must be implemented by each webcomponent module.
  */
 export interface CustomElementModule {
-    default: CustomElementContructor;
+    default: CustomElementConstructor;
 }
 
 /**
