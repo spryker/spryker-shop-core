@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\SalesReturnPage\Controller;
 
 use Generated\Shared\Transfer\OrderListRequestTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -76,18 +77,19 @@ class ReturnCreateController extends AbstractReturnController
             ->handleRequest($request);
 
         if ($returnCreateForm->isSubmitted()) {
-            return $this->processReturnCreateForm($returnCreateForm);
+            return $this->processReturnCreateForm($returnCreateForm, $orderTransfer);
         }
 
-        return $this->getViewParameters($returnCreateForm);
+        return $this->getViewParameters($returnCreateForm, $orderTransfer);
     }
 
     /**
      * @param \Symfony\Component\Form\FormInterface $returnCreateForm
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function processReturnCreateForm(FormInterface $returnCreateForm)
+    protected function processReturnCreateForm(FormInterface $returnCreateForm, OrderTransfer $orderTransfer)
     {
         $returnResponseTransfer = $this->getFactory()
             ->createReturnHandler()
@@ -96,7 +98,7 @@ class ReturnCreateController extends AbstractReturnController
         if (!$returnResponseTransfer->getIsSuccessful()) {
             $this->handleResponseErrors($returnResponseTransfer);
 
-            return $this->getViewParameters($returnCreateForm);
+            return $this->getViewParameters($returnCreateForm, $orderTransfer);
         }
 
         $this->addSuccessMessage(static::GLOSSARY_KEY_RETURN_CREATED);
@@ -108,13 +110,15 @@ class ReturnCreateController extends AbstractReturnController
 
     /**
      * @param \Symfony\Component\Form\FormInterface $returnCreateForm
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return array
      */
-    protected function getViewParameters(FormInterface $returnCreateForm): array
+    protected function getViewParameters(FormInterface $returnCreateForm, OrderTransfer $orderTransfer): array
     {
         return [
             'returnCreateForm' => $returnCreateForm->createView(),
+            'order' => $orderTransfer,
         ];
     }
 
