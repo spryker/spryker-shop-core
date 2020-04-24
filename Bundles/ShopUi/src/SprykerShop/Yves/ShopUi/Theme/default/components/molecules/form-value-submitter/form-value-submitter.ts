@@ -20,15 +20,22 @@ export default class FormValueSubmitter extends Component {
 
     protected mapTriggerClickEvent(): void {
         this.triggers.forEach((trigger: HTMLElement) => {
-            trigger.addEventListener('click', () => this.setValue(trigger));
+            trigger.addEventListener('click', () => this.onClick(trigger));
         });
+    }
+
+    protected onClick(trigger: HTMLElement): void {
+        this.setValue(trigger);
+        this.submitForm();
     }
 
     protected setValue(trigger: HTMLElement): void {
         const value: string = trigger.getAttribute(this.valueAttribute);
-        const submitEvent: Event = new Event('submit');
-
         this.target.value = value;
+    }
+
+    protected submitForm(): void {
+        const submitEvent: Event = new Event('submit');
         this.form.dispatchEvent(submitEvent);
         this.form.submit();
     }

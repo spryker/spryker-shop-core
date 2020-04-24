@@ -24,14 +24,14 @@
         {% if isDateField or isSelectField %}
             {% if isSelectField %}
                 {% set choices = field.vars.choices | filter(v => v.value == field.vars.value) %}
-                {% set label = choices|length ? (choices|first).label : null %}
+                {% set label = choices | length ? (choices | first).label : null %}
                 {% set fitlerValue = label | trans %}
             {% endif %}
 
             {% set filter = [{
                 name: field.vars.name,
                 label: field.vars.label,
-                defaultValue: isSelectField ? field.vars.placeholder : '',
+                defaultValue: isSelectField ? field.vars.placeholder,
                 value: isSelectField ? fitlerValue : field.vars.value | formatDateTime,
             }] %}
         {% endif %}
@@ -57,16 +57,16 @@
         </small>
     {% endblock %}
 
-    {% for filter in activeFilters %}
+    {% for activeFilter in activeFilters %}
         {% block activeFilter %}
-            <span class="{{ activeItemClass }} {{ data.jsPrefix ~ filter.name }}-trigger"
-                  set-value="{{ filter.defaultValue }}">
+            <span class="{{ activeItemClass }} {{ data.jsPrefix ~ activeFilter.name }}-trigger"
+                  set-value="{{ activeFilter.defaultValue }}">
                 {% block activeFilterKey %}
-                    <strong class="{{ activeItemKeyClass }}">{{ filter.label | trans }}:</strong>
+                    <strong class="{{ activeItemKeyClass }}">{{ activeFilter.label | trans }}:</strong>
                 {% endblock %}
 
                 {% block activeFilterValue %}
-                    <span class="{{ activeItemValueClass }}">{{ filter.value }}</span>
+                    <span class="{{ activeItemValueClass }}">{{ activeFilter.value }}</span>
                 {% endblock %}
 
                 {% block activeFilterIcon %}
@@ -88,13 +88,13 @@
         </span>
     {% endblock %}
 
-    {% for filter in activeFilters %}
+    {% for activeFilter in activeFilters %}
         {% block activeFilterReset %}
             {% include molecule('form-value-submitter') with {
                 attributes: {
                     'form-class-name': data.jsPrefix ~ 'form',
-                    'trigger-class-name': data.jsPrefix ~ filter.name ~ '-trigger',
-                    'target-class-name': data.jsPrefix ~ filter.name ~ '-target',
+                    'trigger-class-name': data.jsPrefix ~ activeFilter.name ~ '-trigger',
+                    'target-class-name': data.jsPrefix ~ activeFilter.name ~ '-target',
                 },
             } only %}
         {% endblock %}

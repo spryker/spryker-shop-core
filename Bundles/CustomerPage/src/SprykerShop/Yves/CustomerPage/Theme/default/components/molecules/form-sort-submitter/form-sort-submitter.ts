@@ -23,17 +23,23 @@ export default class FormSortSubmitter extends Component {
 
     protected mapTriggerClickEvent(): void {
         this.triggers.forEach((trigger: HTMLElement) => {
-            trigger.addEventListener('click', () => this.setValues(trigger));
+            trigger.addEventListener('click', () => this.onClick(trigger));
         });
+    }
+
+    protected onClick(trigger: HTMLElement): void {
+        this.setValues(trigger);
+        this.submitForm();
     }
 
     protected setValues(trigger: HTMLElement): void {
         const sortByValue: string = trigger.getAttribute(this.sotrByAttribute);
         const sortDirectionValue: string = trigger.getAttribute(this.sotrDirectionAttribute);
-        const submitEvent: Event = new Event('submit');
-
         [this.targetSortBy.value, this.targetSortDirection.value] = [sortByValue, sortDirectionValue];
+    }
 
+    protected submitForm(): void {
+        const submitEvent: Event = new Event('submit');
         this.form.dispatchEvent(submitEvent);
         this.form.submit();
     }
