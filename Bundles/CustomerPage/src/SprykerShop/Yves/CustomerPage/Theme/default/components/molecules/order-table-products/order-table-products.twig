@@ -31,17 +31,19 @@
                         {{ block('sku') }}
                     </div>
                     <div class="col col--sm-4 col--md-2 col--middle text-right">
-                        {{ (embed.priceMode == priceModeGross) ?
-                            data.product.unitGrossPrice | money :
-                            data.product.unitNetPrice | money }}
+                        {% set price = (embed.priceMode == priceModeGross) ?
+                            data.product.unitGrossPrice :
+                            data.product.unitNetPrice %}
+                        {{ price | money }}
                     </div>
                     <div class="col col--sm-4 col--md-2 col--middle text-right">
                         {{ data.product.quantity }}
                     </div>
                     <div class="col col--sm-4 col--md-2 col--middle text-right">
-                        {{ (embed.priceMode == priceModeGross) ?
-                            data.product.unitGrossPrice | money :
-                            data.product.unitNetPrice | money }}
+                        {% set sum = (embed.priceMode == priceModeGross) ?
+                            data.product.sumGrossPrice :
+                            data.product.sumNetPrice %}
+                        {{ sum | money }}
                     </div>
                 </div>
             {% endblock -%}

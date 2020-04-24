@@ -14,12 +14,12 @@
 {% endblock %}
 
 {% block body %}
-    {% set row1Class = 'form__fields grid grid--bottom' %}
+    {% set searchRowClass = 'form__fields grid grid--bottom' %}
     {% set searchTypeClass = 'form__field col col--sm-12 col--lg-3' %}
     {% set searchTextClass = 'form__field col col--sm-12 col--lg-9' %}
 
-    {% block row1 %}
-        <div class="{{ row1Class }}">
+    {% block searchRow %}
+        <div class="{{ searchRowClass }}">
             <div class="{{ searchTypeClass }}">
                 {{ form_row(data.orderSearchForm.searchType) }}
             </div>
@@ -29,10 +29,10 @@
         </div>
     {% endblock %}
 
-    {% set row2Class = 'form__fields grid grid--bottom' %}
+    {% set additionalFiltersRowClass = 'form__fields grid grid--bottom' %}
 
-    {% block row2 %}
-        <div class="{{ row2Class }}">
+    {% block additionalFiltersRow %}
+        <div class="{{ additionalFiltersRowClass }}">
             {% for filter in data.orderSearchForm.filters.children %}
                 <div class="{{ filter.vars.attr.class }}">
                     {{ form_row(filter, {
@@ -49,18 +49,18 @@
         <hr class="box__separator">
     {% endblock %}
 
-    {% set row3Class = 'form__fields grid grid--middle grid--justify' %}
+    {% set filterModeRowClass = 'form__fields grid grid--middle grid--justify' %}
     {% set orderItemsVisibleClass = 'form__field col' %}
     {% set actionWrapperClass = 'form__field col text-right' %}
     {% set actionClass = 'button button--success' %}
 
-    {% block row3 %}
-        <div class="{{ row3Class }}">
+    {% block filterModeRow %}
+        <div class="{{ filterModeRowClass }}">
             <div class="{{ orderItemsVisibleClass }}">
                 {{ form_row(data.orderSearchForm.isOrderItemsVisible) }}
             </div>
             <div class="{{ actionWrapperClass }}">
-                <button type="submit" name="buttonSubmit" class="{{ actionClass }}">
+                <button name="buttonSubmit" class="{{ actionClass }}">
                     {{ 'customer.order_history.apply' | trans }}
                 </button>
             </div>

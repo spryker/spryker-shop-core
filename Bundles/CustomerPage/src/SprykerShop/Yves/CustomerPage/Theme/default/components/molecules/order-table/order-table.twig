@@ -52,9 +52,11 @@
         </thead>
         <tbody>
             {% if data.orders is empty %}
-                <tr>
-                    <td colspan="100">{{ 'customer.account.no_order' | trans }}</td>
-                </tr>
+                {% block noOrder %}
+                    <tr>
+                        <td colspan="100">{{ 'customer.account.no_order' | trans }}</td>
+                    </tr>
+                {% endblock %}
             {% endif %}
 
             {% for order in data.orders %}
@@ -70,24 +72,26 @@
                     {% endif %}
                     <td>{{ order.totals.grandTotal | default(0) | money(true, order.currencyIsoCode) }}</td>
                     <td>
-                        <ul class="menu menu--inline">
-                            <li class="menu__item">
-                                <a href="{{ path('customer/order/details', {'id': order.idSalesOrder}) }}">
-                                    {{ 'customer.order.view_order' | trans }}
-                                </a>
-                            </li>
-                            {% if widgetExists('CustomerReorderWidgetPlugin') %}
+                        {% block actions %}
+                            <ul class="menu menu--inline">
                                 <li class="menu__item">
-                                    {{ widgetBlock('CustomerReorderWidgetPlugin', 'reorderAction', order) }} {# @deprecated Use molecule('customer-reorder-link', 'CustomerReorderWidget') instead. #}
+                                    <a href="{{ path('customer/order/details', {'id': order.idSalesOrder}) }}">
+                                        {{ 'customer.order.view_order' | trans }}
+                                    </a>
                                 </li>
-                            {% else %}
-                                {% include molecule('customer-reorder-link', 'CustomerReorderWidget') with {
-                                    data: {
-                                        idSalesOrder: order.idSalesOrder
-                                    }
-                                } only %}
-                            {% endif %}
-                        </ul>
+                                {% if widgetExists('CustomerReorderWidgetPlugin') %}
+                                    <li class="menu__item">
+                                        {{ widgetBlock('CustomerReorderWidgetPlugin', 'reorderAction', order) }} {# @deprecated Use molecule('customer-reorder-link', 'CustomerReorderWidget') instead. #}
+                                    </li>
+                                {% else %}
+                                    {% include molecule('customer-reorder-link', 'CustomerReorderWidget') ignore missing with {
+                                        data: {
+                                            idSalesOrder: order.idSalesOrder,
+                                        },
+                                    } only %}
+                                {% endif %}
+                            </ul>
+                        {% endblock %}
                     </td>
                 </tr>
                 {% if data.isOrderSearchEnabled and data.isOrderSearchOrderItemsVisible %}

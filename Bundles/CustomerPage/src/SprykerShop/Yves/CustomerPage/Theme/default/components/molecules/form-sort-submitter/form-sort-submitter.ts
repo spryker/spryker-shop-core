@@ -11,8 +11,9 @@ export default class FormSortSubmitter extends Component {
     protected init(): void {
         this.form = <HTMLFormElement>document.getElementsByClassName(this.formClassName)[0];
         this.triggers = <HTMLElement[]>Array.from(document.getElementsByClassName(this.triggerClassName));
-        this.targetSortBy = <HTMLInputElement>document.getElementsByClassName(this.targetSortByClassName)[0];
-        this.targetSortDirection = <HTMLInputElement>document.getElementsByClassName(this.targetSortDirectionClassName)[0];
+        this.targetSortBy = <HTMLInputElement>this.form.getElementsByClassName(this.targetSortByClassName)[0];
+        this.targetSortDirection = <HTMLInputElement>this.form
+            .getElementsByClassName(this.targetSortDirectionClassName)[0];
         this.mapEvents();
     }
 
@@ -33,8 +34,8 @@ export default class FormSortSubmitter extends Component {
 
         [this.targetSortBy.value, this.targetSortDirection.value] = [sortByValue, sortDirectionValue];
 
-        this.form.submit();
         this.form.dispatchEvent(submitEvent);
+        this.form.submit();
     }
 
     protected get formClassName(): string {
