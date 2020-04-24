@@ -18,4 +18,11 @@ interface SalesOrderConfiguredBundleGrouperInterface
      * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[]
      */
     public function getSalesOrderConfiguredBundles(OrderTransfer $orderTransfer, iterable $itemTransfers): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[]
+     */
+    public function getSalesOrderConfiguredBundlesByItems(array $itemTransfers): array;
 }

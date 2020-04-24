@@ -19,7 +19,7 @@
 
     <transfer name="Order">
         <property name="items" type="Item[]" singular="item"/>
-        <property name="salesOrderConfiguredBundles" type="SalesOrderConfiguredBundle[]" singular="salesOrderConfiguredBundle"/>
+        <property name="salesOrderConfiguredBundles" type="SalesOrderConfiguredBundle[]" singular="salesOrderConfiguredBundle" deprecated="Use item level SalesOrderConfiguredBundle (item.salesOrderConfiguredBundle) instead."/>
     </transfer>
 
     <transfer name="SalesOrderConfiguredBundle">
