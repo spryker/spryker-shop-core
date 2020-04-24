@@ -20,7 +20,8 @@
 
         <div class="{{ config.name }}__content grid grid--justify">
             <div class="col col--sm-12 col--lg-8">
-                {% widget 'OrderConfiguredBundleWidget' args [data.order, shipmentGroup.items] only %}
+                {% widget 'OrderItemsConfiguredBundleWidget' args [shipmentGroup.items] only %}
+                {% elsewidget 'OrderConfiguredBundleWidget' args [data.order, shipmentGroup.items] only %} {# @deprecated Use OrderItemsConfiguredBundleWidget instead. #}
                 {% endwidget %}
 
                 {% for item in shipmentGroup.cartItems %}
