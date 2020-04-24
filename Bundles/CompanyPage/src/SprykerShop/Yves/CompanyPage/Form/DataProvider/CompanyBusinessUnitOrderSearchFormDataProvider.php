@@ -19,7 +19,7 @@ class CompanyBusinessUnitOrderSearchFormDataProvider
 {
     use PermissionAwareTrait;
 
-    protected const GLOSSARY_KEY_CHOICE_COMPANY_ORDERS = 'company_business_unit_widget.choice.company_orders';
+    protected const GLOSSARY_KEY_CHOICE_COMPANY_ORDERS = 'company_page.choice.company_orders';
 
     /**
      * @var \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface
