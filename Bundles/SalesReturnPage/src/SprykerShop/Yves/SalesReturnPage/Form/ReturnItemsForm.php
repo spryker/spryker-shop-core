@@ -75,7 +75,7 @@ class ReturnItemsForm extends AbstractType
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
             return $this->getFactory()
                 ->createReturnItemsFormEventsListener()
-                ->mappReturnItemTransfersUuid($event);
+                ->mapReturnItemTransfersUuid($event);
         });
 
         return $this;

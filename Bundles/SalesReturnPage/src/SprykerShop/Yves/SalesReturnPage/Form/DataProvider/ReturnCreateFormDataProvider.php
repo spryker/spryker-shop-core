@@ -78,15 +78,15 @@ class ReturnCreateFormDataProvider
      */
     protected function prepareReturnReasonChoices(): array
     {
-        $result = [];
+        $returnReasonChoices = [];
         $returnReasonCollectionTransfer = $this->salesReturnClient->getReturnReasons((new ReturnReasonFilterTransfer()));
 
         foreach ($returnReasonCollectionTransfer->getReturnReasons() as $returnReasonTransfer) {
-            $result[$returnReasonTransfer->getGlossaryKeyReason()] = $returnReasonTransfer->getGlossaryKeyReason();
+            $returnReasonChoices[$returnReasonTransfer->getGlossaryKeyReason()] = $returnReasonTransfer->getGlossaryKeyReason();
         }
 
-        $result[static::GLOSSARY_KEY_CUSTOM_REASON] = static::GLOSSARY_KEY_CUSTOM_REASON;
+        $returnReasonChoices[static::GLOSSARY_KEY_CUSTOM_REASON] = static::GLOSSARY_KEY_CUSTOM_REASON;
 
-        return $result;
+        return $returnReasonChoices;
     }
 }

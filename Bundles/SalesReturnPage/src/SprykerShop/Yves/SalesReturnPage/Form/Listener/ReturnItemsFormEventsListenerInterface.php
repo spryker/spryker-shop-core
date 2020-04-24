@@ -16,5 +16,5 @@ interface ReturnItemsFormEventsListenerInterface
      *
      * @return \Symfony\Component\Form\FormEvent
      */
-    public function mappReturnItemTransfersUuid(FormEvent $event): FormEvent;
+    public function mapReturnItemTransfersUuid(FormEvent $event): FormEvent;
 }

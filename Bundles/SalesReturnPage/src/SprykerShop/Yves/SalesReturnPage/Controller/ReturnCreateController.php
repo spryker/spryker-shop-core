@@ -20,6 +20,9 @@ class ReturnCreateController extends AbstractReturnController
 {
     protected const GLOSSARY_KEY_RETURN_CREATED = 'sales_return_page.return.created';
 
+    /**
+     * @uses \SprykerShop\Yves\SalesReturnPage\Plugin\Router\SalesReturnPageRouteProviderPlugin::ROUTE_RETURN_VIEW
+     */
     protected const ROUTE_RETURN_VIEW = 'return/view';
 
     protected const PARAM_RETURN_REFERENCE = 'returnReference';
