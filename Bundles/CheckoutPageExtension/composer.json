@@ -4,7 +4,8 @@
   "description": "CheckoutPageExtension module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2"
+    "php": ">=7.2",
+    "spryker/step-engine-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*"
