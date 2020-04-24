@@ -9,6 +9,12 @@
     priceMode: required,
 } %}
 
+{% block component %}
+    {% if data.items | length %}
+        {{ parent() }}
+    {% endif %}
+{% endblock -%}
+
 {% block body %}
     {% for item in data.items %}
         {% embed molecule('product-item-list') with {

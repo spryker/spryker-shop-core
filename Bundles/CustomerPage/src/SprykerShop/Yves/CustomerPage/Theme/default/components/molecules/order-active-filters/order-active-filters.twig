@@ -18,24 +18,21 @@
 
     {% for field in data.orderSearchForm.filters.children %}
         {% set filter = [] %}
+        {% set isDateField = field.vars.data.timestamp is defined %}
+        {% set isSelectField = field.vars.choices is defined and field.vars.choices is not empty and field.vars.value %}
 
-        {% if field.vars.data.timestamp is defined %}
-            {% set filter = [{
-                name: field.vars.name,
-                label: field.vars.label,
-                defaultValue: '',
-                value: field.vars.value | formatDateTime,
-            }] %}
-        {% elseif field.vars.choices is defined and field.vars.choices is not empty and field.vars.value %}
-            {% set choices = field.vars.choices | filter(v => v.value == field.vars.value) %}
-            {% set label = choices|length ? (choices|first).label : null %}
-            {% set fitlerValue = label | trans %}
+        {% if isDateField or isSelectField %}
+            {% if isSelectField %}
+                {% set choices = field.vars.choices | filter(v => v.value == field.vars.value) %}
+                {% set label = choices|length ? (choices|first).label : null %}
+                {% set fitlerValue = label | trans %}
+            {% endif %}
 
             {% set filter = [{
                 name: field.vars.name,
                 label: field.vars.label,
-                defaultValue: field.vars.placeholder,
-                value: fitlerValue,
+                defaultValue: isSelectField ? field.vars.placeholder : '',
+                value: isSelectField ? fitlerValue : field.vars.value | formatDateTime,
             }] %}
         {% endif %}
 
@@ -56,7 +53,7 @@
 
     {% block title %}
         <small class="{{ titleClass }}">
-            {{- 'customer.order_history.active_filters' | trans -}}:
+            {{- 'customer.order_history.active_filters' | trans -}}
         </small>
     {% endblock %}
 
@@ -93,7 +90,7 @@
 
     {% for filter in activeFilters %}
         {% block activeFilterReset %}
-            {% include molecule('form-value-setter') with {
+            {% include molecule('form-value-submitter') with {
                 attributes: {
                     'form-class-name': data.jsPrefix ~ 'form',
                     'trigger-class-name': data.jsPrefix ~ filter.name ~ '-trigger',
@@ -109,7 +106,7 @@
                 class: data.jsPrefix ~ 'reset-target',
             }})
         }}
-        {% include molecule('form-value-setter') with {
+        {% include molecule('form-value-submitter') with {
             attributes: {
                 'form-class-name': data.jsPrefix ~ 'form',
                 'trigger-class-name': data.jsPrefix ~ 'reset-trigger',
