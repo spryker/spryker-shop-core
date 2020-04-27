@@ -15,13 +15,27 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 class CurrencyPlugin extends AbstractPlugin implements CurrencyPluginInterface
 {
     /**
+     * @var \Generated\Shared\Transfer\CurrencyTransfer|null
+     */
+    protected static $currentCurrencyTransfer;
+
+    /**
+     * @var \Generated\Shared\Transfer\CurrencyTransfer[]
+     */
+    protected static $currencyTransfersByIsoCode = [];
+
+    /**
      * @param string $isoCode
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function fromIsoCode($isoCode)
     {
-        return $this->getFactory()->getCurrencyClient()->fromIsoCode($isoCode);
+        if (!isset(static::$currencyTransfersByIsoCode[$isoCode])) {
+            static::$currencyTransfersByIsoCode[$isoCode] = $this->getFactory()->getCurrencyClient()->fromIsoCode($isoCode);
+        }
+
+        return static::$currencyTransfersByIsoCode[$isoCode];
     }
 
     /**
@@ -29,6 +43,10 @@ class CurrencyPlugin extends AbstractPlugin implements CurrencyPluginInterface
      */
     public function getCurrent()
     {
-        return $this->getFactory()->getCurrencyClient()->getCurrent();
+        if (static::$currentCurrencyTransfer === null) {
+            static::$currentCurrencyTransfer = $this->getFactory()->getCurrencyClient()->getCurrent();
+        }
+
+        return static::$currentCurrencyTransfer;
     }
 }
