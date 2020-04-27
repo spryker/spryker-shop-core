@@ -65,12 +65,10 @@ abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigCha
     abstract protected function getTemplateName(): string;
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param string $chartPluginName
      * @param string|null $dataIdentifier
      *
-     * @return array
+     * @return mixed[]
      */
     protected function getChartContext($chartPluginName, $dataIdentifier): array
     {
@@ -88,9 +86,7 @@ abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigCha
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
-     * @return array
+     * @return mixed[]
      */
     protected function getDefaultTwigOptions(): array
     {
