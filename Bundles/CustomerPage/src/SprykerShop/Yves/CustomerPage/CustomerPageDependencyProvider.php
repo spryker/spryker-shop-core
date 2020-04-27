@@ -46,6 +46,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_LOGIN_AUTHENTICATION_HANDLER = 'PLUGIN_LOGIN_AUTHENTICATION_HANDLER';
     public const PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER = 'PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER';
     public const PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER = 'PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER';
+    public const PLUGINS_CHECKOUT_ADDRESS_STEP_PRE_GROUP_ITEMS_BY_SHIPMENT = 'PLUGINS_CHECKOUT_ADDRESS_STEP_PRE_GROUP_ITEMS_BY_SHIPMENT';
 
     public const SERVICE_CUSTOMER = 'SERVICE_CUSTOMER';
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
@@ -83,6 +84,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addAfterCustomerAuthenticationSuccessPlugins($container);
         $container = $this->addShipmentService($container);
         $container = $this->addCustomerService($container);
+        $container = $this->addCheckoutAddressStepPreGroupItemsByShipmentPlugins($container);
 
         return $container;
     }
@@ -451,5 +453,27 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCheckoutAddressStepPreGroupItemsByShipmentPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CHECKOUT_ADDRESS_STEP_PRE_GROUP_ITEMS_BY_SHIPMENT, function () {
+            return $this->getCheckoutAddressStepPreGroupItemsByShipmentPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CheckoutAddressStepPreGroupItemsByShipmentPluginInterface[]
+     */
+    protected function getCheckoutAddressStepPreGroupItemsByShipmentPlugins(): array
+    {
+        return [];
     }
 }
