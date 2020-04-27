@@ -1,23 +1,81 @@
 {% extends template('page-layout-sales-return', 'SalesReturnPage') %}
 
 {% define data = {
-    form: _view.returnCreateForm
+    form: _view.returnCreateForm,
+    order: _view.order,
 } %}
 
-{% block salesReturnContentWrapper %}
+{% set contentWrapperClass = 'box' %}
 
-    {{ form_start(data.form) }}
-    <ul>
-        {% for returnItem in data.form.returnItems %}
-            <li>
-                {{ form_errors(returnItem) }}
-                {{ form_widget(returnItem) }}
-            </li>
-        {% endfor %}
-    </ul>
+{% block salesReturnContent %}
+    <div class="{{ contentWrapperClass }}">
+        {% block salesReturnContentForm %}
+            {{ form_start(data.form) }}
 
-    {{ form_widget(data.form) }}
+            {% block salesReturnContentHeader %}
+                {% set backLinkClass = 'link float-right' %}
 
-    <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
-    {{ form_end(data.form) }}
+                {% block backOrderLink %}
+                    <a href="{{ path('customer/order/details', {'id': data.order.idSalesOrder}) }}" class="{{ backLinkClass }}">{{ 'general.back.button' | trans }}</a>
+                {% endblock %}
+
+                {% block salesReturnPageTitle %}
+                    <h5>{{ 'sales_return_page.return.title' | trans }}</h5>
+                {% endblock %}
+
+                {% block salesReturnPageHeaderSeparator %}
+                    <hr class="box__separator">
+                {% endblock %}
+            {% endblock %}
+
+            {% set salesReturnOrderListClass = '' %}
+
+            {% block salesReturnOrderInfo %}
+                <ul class="{{ salesReturnOrderListClass }}">
+                    {% block salesReturnOrderInfoInner %}
+                        {% set salesReturnItemClass = '' %}
+
+                        {% block salesReturnIdItemInfo %}
+                            <li class="{{ salesReturnItemClass }}">
+                                {% block salesReturnIdItemInfoInner %}
+                                    {{ 'sales_return_page.order_id' | trans }}:
+                                    <strong>{{ data.order.orderReference }}</strong>
+                                {% endblock %}
+                            </li>
+                        {% endblock %}
+
+                        {% block salesReturnDateItemInfo %}
+                            <li class="{{ salesReturnItemClass }}">
+                                {% block salesReturnDateItemInfoInner %}
+                                    {{ 'sales_return_page.date' | trans }}:
+                                    <strong>{{ data.order.createdAt | formatDateTime }}</strong>
+                                {% endblock %}
+                            </li>
+                        {% endblock %}
+                    {% endblock %}
+                </ul>
+            {% endblock %}
+            <hr class="box__separator">
+            <ul>
+                {% for returnItem in data.form.returnItems %}
+                    <li>
+                        {{ form_errors(returnItem) }}
+                        {{ form_widget(returnItem) }}
+                    </li>
+                {% endfor %}
+            </ul>
+
+            {{ form_widget(data.form) }}
+
+            {% set salesReturnSaveActionClass = 'button button-primary spacing-top' %}
+
+            {% block salesReturnPageActions %}
+                <button class="{{ salesReturnSaveActionClass }}">
+                    {{ 'sales_return_page.button_text' | trans }}
+                </button>
+            {% endblock %}
+
+            {{ form_end(data.form) }}
+        {% endblock %}
+    </div>
 {% endblock %}
