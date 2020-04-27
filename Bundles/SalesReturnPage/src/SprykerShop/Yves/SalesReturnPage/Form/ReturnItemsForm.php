@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\SalesReturnPage\Form;
 
+use Generated\Shared\Transfer\ReturnItemTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -22,12 +23,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ReturnItemsForm extends AbstractType
 {
-    public const FIELD_UUID = 'uuid';
-    public const FIELD_REASON = 'reason';
-    public const FIELD_CUSTOM_REASON = 'customReason';
-    public const FIELD_ORDER_ITEM = 'orderItem';
+    protected const FIELD_CUSTOM_REASON = 'customReason';
 
-    public const OPTION_REUTN_REASONS = 'return_reasons';
+    public const OPTION_RETURN_REASONS = 'return_reasons';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -37,8 +35,7 @@ class ReturnItemsForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this
-            ->addUuid($builder)
+        $this->addUuid($builder)
             ->addReason($builder, $options)
             ->addCustomReason($builder);
     }
@@ -51,7 +48,7 @@ class ReturnItemsForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired([
-            static::OPTION_REUTN_REASONS,
+            static::OPTION_RETURN_REASONS,
         ]);
     }
 
@@ -62,15 +59,14 @@ class ReturnItemsForm extends AbstractType
      */
     protected function addUuid(FormBuilderInterface $builder)
     {
-        $builder
-            ->add(
-                static::FIELD_UUID,
-                CheckboxType::class,
-                [
-                    'label' => false,
-                    'required' => false,
-                ]
-            );
+        $builder->add(
+            ReturnItemTransfer::UUID,
+            CheckboxType::class,
+            [
+                'label' => false,
+                'required' => false,
+            ]
+        );
 
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
             return $this->getFactory()
@@ -89,10 +85,10 @@ class ReturnItemsForm extends AbstractType
      */
     protected function addReason(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_REASON, ChoiceType::class, [
+        $builder->add(ReturnItemTransfer::REASON, ChoiceType::class, [
             'label' => 'Reason',
-            'placeholder' => 'return.return_reasons.select_reason.placeholder',
-            'choices' => $options[static::OPTION_REUTN_REASONS],
+            'placeholder' => 'return_page.return_reasons.select_reason.placeholder',
+            'choices' => $options[static::OPTION_RETURN_REASONS],
             'required' => false,
         ]);
 

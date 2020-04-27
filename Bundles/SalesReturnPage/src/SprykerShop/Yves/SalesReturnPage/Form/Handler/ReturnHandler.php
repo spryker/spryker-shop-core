@@ -16,10 +16,14 @@ use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesRet
 use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToStoreClientInterface;
 use SprykerShop\Yves\SalesReturnPage\Form\DataProvider\ReturnCreateFormDataProvider;
 use SprykerShop\Yves\SalesReturnPage\Form\ReturnCreateForm;
-use SprykerShop\Yves\SalesReturnPage\Form\ReturnItemsForm;
 
 class ReturnHandler implements ReturnHandlerInterface
 {
+    /**
+     * @uses \SprykerShop\Yves\SalesReturnPage\Form\ReturnItemsForm::FIELD_CUSTOM_REASON
+     */
+    protected const FIELD_CUSTOM_REASON = 'customReason';
+
     /**
      * @var \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnClientInterface
      */
@@ -55,7 +59,7 @@ class ReturnHandler implements ReturnHandlerInterface
      *
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
-    public function createReturnResponseTransfer(array $returnItemsList): ReturnResponseTransfer
+    public function createReturn(array $returnItemsList): ReturnResponseTransfer
     {
         $returnItemData = isset($returnItemsList[ReturnCreateForm::FIELD_RETURN_ITEMS])
             ? $returnItemsList[ReturnCreateForm::FIELD_RETURN_ITEMS]
@@ -80,14 +84,14 @@ class ReturnHandler implements ReturnHandlerInterface
             ->setStore($this->storeClient->getCurrentStore()->getName());
 
         foreach ($returnItemData as $returnItem) {
-            if (!$returnItem[ReturnItemsForm::FIELD_UUID]) {
+            if (!$returnItem[ReturnItemTransfer::UUID]) {
                 continue;
             }
 
             $returnItemTransfer = (new ReturnItemTransfer())->fromArray($returnItem, true);
 
-            if ($returnItem[ReturnItemsForm::FIELD_REASON] === ReturnCreateFormDataProvider::GLOSSARY_KEY_CUSTOM_REASON && $returnItem[ReturnItemsForm::FIELD_CUSTOM_REASON]) {
-                $returnItemTransfer->setReason($returnItem[ReturnItemsForm::FIELD_CUSTOM_REASON]);
+            if ($returnItem[ReturnItemTransfer::REASON] === ReturnCreateFormDataProvider::GLOSSARY_KEY_CUSTOM_REASON && $returnItem[static::FIELD_CUSTOM_REASON]) {
+                $returnItemTransfer->setReason($returnItem[static::FIELD_CUSTOM_REASON]);
             }
 
             $returnItemTransfersCollection->append($returnItemTransfer);

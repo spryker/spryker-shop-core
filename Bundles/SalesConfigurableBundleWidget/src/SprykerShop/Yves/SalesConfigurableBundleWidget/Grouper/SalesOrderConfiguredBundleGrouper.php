@@ -14,6 +14,8 @@ use Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer;
 class SalesOrderConfiguredBundleGrouper implements SalesOrderConfiguredBundleGrouperInterface
 {
     /**
+     * @deprecated Use {@link \SprykerShop\Yves\SalesConfigurableBundleWidget\Grouper\SalesOrderConfiguredBundleGrouper::getSalesOrderConfiguredBundlesByItems()} instead.
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
@@ -42,7 +44,10 @@ class SalesOrderConfiguredBundleGrouper implements SalesOrderConfiguredBundleGro
         $salesOrderConfiguredBundleTransfers = [];
 
         foreach ($itemTransfers as $itemTransfer) {
-            if (isset($salesOrderConfiguredBundleTransfers[$itemTransfer->getSalesOrderConfiguredBundle()->getIdSalesOrderConfiguredBundle()])) {
+            if (
+                !$itemTransfer->getSalesOrderConfiguredBundle() ||
+                isset($salesOrderConfiguredBundleTransfers[$itemTransfer->getSalesOrderConfiguredBundle()->getIdSalesOrderConfiguredBundle()])
+            ) {
                 continue;
             }
 

@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ReturnCreateController extends AbstractReturnController
 {
-    protected const GLOSSARY_KEY_RETURN_CREATED = 'sales_return_page.return.created';
+    protected const GLOSSARY_KEY_RETURN_CREATED = 'return_page.return.created';
 
     /**
      * @uses \SprykerShop\Yves\SalesReturnPage\Plugin\Router\SalesReturnPageRouteProviderPlugin::ROUTE_RETURN_VIEW
@@ -52,15 +52,32 @@ class ReturnCreateController extends AbstractReturnController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $orderReference
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function executeCreateAction(Request $request, string $orderReference)
     {
-        /**
-         * @var \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[] $orderTransfersCollection
-         */
+        $orderTransfer = $this->getOrderByOrderReference($orderReference);
+
+        $returnCreateForm = $this->getFactory()
+            ->getCreateReturnForm($orderTransfer)
+            ->handleRequest($request);
+
+        if ($returnCreateForm->isSubmitted() && $returnCreateForm->isValid()) {
+            return $this->processReturnCreateForm($returnCreateForm, $orderTransfer);
+        }
+
+        return $this->getViewParameters($returnCreateForm, $orderTransfer);
+    }
+
+    /**
+     * @param string $orderReference
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function getOrderByOrderReference(string $orderReference): OrderTransfer
+    {
         $orderTransfersCollection = $this->getFactory()
             ->getSalesClient()
             ->getOffsetPaginatedCustomerOrderList($this->createOrderListRequestTransfer($orderReference))
@@ -70,20 +87,7 @@ class ReturnCreateController extends AbstractReturnController
             throw new NotFoundHttpException();
         }
 
-        /**
-         * @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-         */
-        $orderTransfer = $orderTransfersCollection->offsetGet(0);
-
-        $returnCreateForm = $this->getFactory()
-            ->getCreateReturnForm($orderTransfer)
-            ->handleRequest($request);
-
-        if ($returnCreateForm->isSubmitted()) {
-            return $this->processReturnCreateForm($returnCreateForm, $orderTransfer);
-        }
-
-        return $this->getViewParameters($returnCreateForm, $orderTransfer);
+        return $orderTransfersCollection->offsetGet(0);
     }
 
     /**
@@ -96,7 +100,7 @@ class ReturnCreateController extends AbstractReturnController
     {
         $returnResponseTransfer = $this->getFactory()
             ->createReturnHandler()
-            ->createReturnResponseTransfer($returnCreateForm->getData());
+            ->createReturn($returnCreateForm->getData());
 
         if (!$returnResponseTransfer->getIsSuccessful()) {
             $this->handleResponseErrors($returnResponseTransfer);
@@ -134,6 +138,6 @@ class ReturnCreateController extends AbstractReturnController
     {
         return (new OrderListRequestTransfer())
             ->setCustomerReference($this->getFactory()->getCustomerClient()->getCustomer()->getCustomerReference())
-            ->setOrderReference($orderReference);
+            ->setOrderReferences([$orderReference]);
     }
 }

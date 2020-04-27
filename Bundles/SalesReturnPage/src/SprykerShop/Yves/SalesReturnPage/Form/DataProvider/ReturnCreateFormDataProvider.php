@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\SalesReturnPage\Form\DataProvider;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ReturnItemTransfer;
 use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
 use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnClientInterface;
 use SprykerShop\Yves\SalesReturnPage\Form\ReturnCreateForm;
@@ -25,9 +26,8 @@ class ReturnCreateFormDataProvider
     /**
      * @param \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnClientInterface $salesReturnClient
      */
-    public function __construct(
-        SalesReturnPageToSalesReturnClientInterface $salesReturnClient
-    ) {
+    public function __construct(SalesReturnPageToSalesReturnClientInterface $salesReturnClient)
+    {
         $this->salesReturnClient = $salesReturnClient;
     }
 
@@ -40,6 +40,16 @@ class ReturnCreateFormDataProvider
     {
         return [
             ReturnCreateForm::FIELD_RETURN_ITEMS => $this->createReturnItemTransfersCollection($orderTransfer),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptions(): array
+    {
+        return [
+            ReturnItemsForm::OPTION_RETURN_REASONS => $this->prepareReturnReasonChoices(),
         ];
     }
 
@@ -57,20 +67,10 @@ class ReturnCreateFormDataProvider
         }
 
         foreach ($orderTransfer->getItems() as $orderItemTransfer) {
-            $returnItemsList[] = [ReturnItemsForm::FIELD_ORDER_ITEM => $orderItemTransfer];
+            $returnItemsList[] = [ReturnItemTransfer::ORDER_ITEM => $orderItemTransfer];
         }
 
         return $returnItemsList;
-    }
-
-    /**
-     * @return array
-     */
-    public function getOptions(): array
-    {
-        return [
-            ReturnItemsForm::OPTION_REUTN_REASONS => $this->prepareReturnReasonChoices(),
-        ];
     }
 
     /**

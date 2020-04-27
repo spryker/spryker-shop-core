@@ -137,4 +137,9 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="OrderListRequest">
+        <property name="customerReference" type="string"/>
+        <property name="orderReferences" type="string[]"/>
+    </transfer>
+
 </transfers>
