@@ -17,11 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ReturnListController extends AbstractReturnController
 {
-    protected const RETURN_LIST_LIMIT = 10;
-
-    protected const PARAM_PAGE = 'page';
-    protected const DEFAULT_PAGE = 1;
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -62,10 +57,13 @@ class ReturnListController extends AbstractReturnController
      */
     protected function createReturnFilterTransfer(Request $request): ReturnFilterTransfer
     {
-        $offset = ($request->query->getInt(static::PARAM_PAGE, static::DEFAULT_PAGE) - 1) * static::RETURN_LIST_LIMIT;
+        $listLimit = $this->getFactory()->getModuleConfig()->getReturnListLimit();
+        $paramPage = $this->getFactory()->getModuleConfig()->getParamPage();
+        $paramDefaultPage = $this->getFactory()->getModuleConfig()->getParamDefaultPage();
+        $offset = ($request->query->getInt($paramPage, $paramDefaultPage) - 1) * $listLimit;
         $filterTransfer = (new FilterTransfer())
             ->setOffset($offset)
-            ->setLimit(static::RETURN_LIST_LIMIT);
+            ->setLimit($listLimit);
 
         return (new ReturnFilterTransfer())
             ->setCustomerReference($this->getFactory()->getCustomerClient()->getCustomer()->getCustomerReference())

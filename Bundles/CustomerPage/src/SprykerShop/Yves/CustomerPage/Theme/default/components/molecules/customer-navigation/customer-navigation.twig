@@ -40,9 +40,8 @@
         </li>
 
         {% include molecule('return-list-menu-item', 'SalesReturnPage') ignore missing with {
-            class: macros.isActive('return/list', data.activePage),
             data: {
-                activeLinkClass: macros.isActive('return/list', data.activePage),
+                activePage: data.activePage
             },
         } only %}
 

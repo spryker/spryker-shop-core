@@ -6,11 +6,13 @@
 } %}
 
 {% define data = {
-    activeLinkClass: '',
+    activePage: 'return/list',
 } %}
 
-{%- block extraClass %} menu__item{% endblock -%}
+{% set isActivePage = data.activePage == 'return/list' ? 'menu__link--active' : '' %}
+
+{%- block extraClass %} menu__item {{ isActivePage }}{% endblock -%}
 
 {% block body %}
-    <a href="{{ path('return/list') }}" data-id="sidebar-sales-return" class="{{ data.activeLinkClass }}">{{ 'sales_return_widget.sales_return.list.title' | trans }}</a>
+    <a href="{{ path('return/list') }}" data-id="sidebar-sales-return" class="{{ isActivePage }}">{{ 'sales_return_widget.sales_return.list.title' | trans }}</a>
 {% endblock %}

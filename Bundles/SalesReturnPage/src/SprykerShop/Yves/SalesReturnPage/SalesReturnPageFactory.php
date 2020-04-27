@@ -40,4 +40,12 @@ class SalesReturnPageFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(SalesReturnPageDependencyProvider::CLIENT_CUSTOMER);
     }
+
+    /**
+     * @return \SprykerShop\Yves\SalesReturnPage\SalesReturnPageConfig
+     */
+    public function getModuleConfig(): SalesReturnPageConfig
+    {
+        return $this->getConfig();
+    }
 }

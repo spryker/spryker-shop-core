@@ -137,10 +137,4 @@
         <property name="name" type="string"/>
     </transfer>
 
-    <transfer name="OrderListRequest">
-    </transfer>
-
-    <transfer name="OrderList">
-    </transfer>
-
 </transfers>
