@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\SalesReturnPage\Controller;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Spryker\Yves\Kernel\View\View;
+use SprykerShop\Yves\SalesReturnPage\SalesReturnPageConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -17,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ReturnListController extends AbstractReturnController
 {
+    protected const PARAM_PAGE = 'page';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -57,16 +60,19 @@ class ReturnListController extends AbstractReturnController
      */
     protected function createReturnFilterTransfer(Request $request): ReturnFilterTransfer
     {
-        $listLimit = $this->getFactory()->getModuleConfig()->getReturnListLimit();
-        $paramPage = $this->getFactory()->getModuleConfig()->getParamPage();
-        $paramDefaultPage = $this->getFactory()->getModuleConfig()->getParamDefaultPage();
-        $offset = ($request->query->getInt($paramPage, $paramDefaultPage) - 1) * $listLimit;
+        $returnListPerPage = $this->getFactory()->getModuleConfig()->getReturnListPerPage();
+        $offset = ($request->query->getInt(static::PARAM_PAGE, SalesReturnPageConfig::PARAM_DEFAULT_PAGE) - 1) * $returnListPerPage;
         $filterTransfer = (new FilterTransfer())
             ->setOffset($offset)
-            ->setLimit($listLimit);
+            ->setLimit($returnListPerPage);
+
+        $customerReference = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer()
+            ->getCustomerReference();
 
         return (new ReturnFilterTransfer())
-            ->setCustomerReference($this->getFactory()->getCustomerClient()->getCustomer()->getCustomerReference())
+            ->setCustomerReference($customerReference)
             ->setFilter($filterTransfer);
     }
 }
