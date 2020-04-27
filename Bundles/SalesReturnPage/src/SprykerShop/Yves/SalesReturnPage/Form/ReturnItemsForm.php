@@ -86,7 +86,7 @@ class ReturnItemsForm extends AbstractType
     protected function addReason(FormBuilderInterface $builder, array $options)
     {
         $builder->add(ReturnItemTransfer::REASON, ChoiceType::class, [
-            'label' => 'Reason',
+            'label' => 'return_page.form_label.reason',
             'placeholder' => 'return_page.return_reasons.select_reason.placeholder',
             'choices' => $options[static::OPTION_RETURN_REASONS],
             'required' => false,
@@ -103,7 +103,7 @@ class ReturnItemsForm extends AbstractType
     protected function addCustomReason(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_CUSTOM_REASON, TextareaType::class, [
-            'label' => 'Custom Reason',
+            'label' => 'return_page.form_label.custom_reason',
             'required' => false,
         ]);
 
