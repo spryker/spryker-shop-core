@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\SalesReturnPage\Form\Listener;
 
-use SprykerShop\Yves\SalesReturnPage\Form\ReturnItemsForm;
+use Generated\Shared\Transfer\ReturnItemTransfer;
 use Symfony\Component\Form\FormEvent;
 
 class ReturnItemsFormEventsListener implements ReturnItemsFormEventsListenerInterface
@@ -21,11 +21,11 @@ class ReturnItemsFormEventsListener implements ReturnItemsFormEventsListenerInte
     {
         $returnItemData = $event->getData();
 
-        if ($returnItemData[ReturnItemsForm::FIELD_UUID]) {
+        if ($returnItemData[ReturnItemTransfer::UUID]) {
             /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
-            $itemTransfer = $returnItemData[ReturnItemsForm::FIELD_ORDER_ITEM];
+            $itemTransfer = $returnItemData[ReturnItemTransfer::ORDER_ITEM];
 
-            $returnItemData[ReturnItemsForm::FIELD_UUID] = $itemTransfer->getUuid();
+            $returnItemData[ReturnItemTransfer::UUID] = $itemTransfer->getUuid();
         }
 
         $event->setData($returnItemData);

@@ -16,7 +16,6 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class OrderItemsConfiguredBundleWidget extends AbstractWidget
 {
     protected const PARAMETER_ITEMS = 'items';
-    protected const PARAMETER_CURRENCY_ISO_CODE = 'currencyIsoCode';
     protected const PARAMETER_SALES_ORDER_CONFIGURED_BUNDLES = 'salesOrderConfiguredBundles';
 
     /**
@@ -31,7 +30,6 @@ class OrderItemsConfiguredBundleWidget extends AbstractWidget
             ->getSalesOrderConfiguredBundlesByItems($itemTransfers);
 
         $this->addItemsParameter($itemTransfers);
-        $this->addCurrencyIsoCodeParameter($itemTransfers);
         $this->addSalesOrderConfiguredBundlesParameter($salesOrderConfiguredBundles);
     }
 
@@ -49,19 +47,6 @@ class OrderItemsConfiguredBundleWidget extends AbstractWidget
     public static function getTemplate(): string
     {
         return '@SalesConfigurableBundleWidget/views/order-items-configured-bundle-widget/order-items-configured-bundle-widget.twig';
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return void
-     */
-    protected function addCurrencyIsoCodeParameter(array $itemTransfers): void
-    {
-        $this->addParameter(
-            static::PARAMETER_CURRENCY_ISO_CODE,
-            count($itemTransfers) ? reset($itemTransfers)->getCurrencyIsoCode() : null
-        );
     }
 
     /**

@@ -39,7 +39,7 @@ class ReturnCreateForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired([
-            ReturnItemsForm::OPTION_REUTN_REASONS,
+            ReturnItemsForm::OPTION_RETURN_REASONS,
         ]);
     }
 
@@ -57,7 +57,7 @@ class ReturnCreateForm extends AbstractType
             [
                 'entry_type' => ReturnItemsForm::class,
                 'entry_options' => [
-                    ReturnItemsForm::OPTION_REUTN_REASONS => $options[ReturnItemsForm::OPTION_REUTN_REASONS],
+                    ReturnItemsForm::OPTION_RETURN_REASONS => $options[ReturnItemsForm::OPTION_RETURN_REASONS],
                 ],
                 'label' => false,
             ]

@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\OrderTransfer;
 interface SalesOrderConfiguredBundleGrouperInterface
 {
     /**
+     * @deprecated Use {@link \SprykerShop\Yves\SalesConfigurableBundleWidget\Grouper\SalesOrderConfiguredBundleGrouperInterface::getSalesOrderConfiguredBundlesByItems()} instead.
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
