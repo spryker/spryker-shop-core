@@ -109,6 +109,9 @@ class OrderSearchForm extends AbstractType
         $builder->add(static::FIELD_SEARCH_TEXT, TextType::class, [
             'label' => false,
             'required' => false,
+            'attr' => [
+                'placeholder' => 'global.search',
+            ],
         ]);
 
         return $this;
