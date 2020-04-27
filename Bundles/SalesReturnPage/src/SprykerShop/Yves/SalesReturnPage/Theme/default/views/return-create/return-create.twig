@@ -1,10 +1,10 @@
-{% extends template('page-layout-main') %}
+{% extends template('page-layout-sales-return', 'SalesReturnPage') %}
 
 {% define data = {
     form: _view.returnCreateForm
 } %}
 
-{% block body %}
+{% block salesReturnContentWrapper %}
 
     {{ form_start(data.form) }}
     <ul>
