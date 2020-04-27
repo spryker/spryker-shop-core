@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ReturnCreateController extends AbstractReturnController
 {
-    protected const GLOSSARY_KEY_RETURN_CREATED = 'sales_return_page.return.created';
+    protected const GLOSSARY_KEY_RETURN_CREATED = 'return_page.return.created';
 
     /**
      * @uses \SprykerShop\Yves\SalesReturnPage\Plugin\Router\SalesReturnPageRouteProviderPlugin::ROUTE_RETURN_VIEW

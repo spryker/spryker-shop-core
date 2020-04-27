@@ -91,7 +91,7 @@ class ReturnItemsForm extends AbstractType
     {
         $builder->add(static::FIELD_REASON, ChoiceType::class, [
             'label' => 'Reason',
-            'placeholder' => 'return.return_reasons.select_reason.placeholder',
+            'placeholder' => 'return_page.return_reasons.select_reason.placeholder',
             'choices' => $options[static::OPTION_REUTN_REASONS],
             'required' => false,
         ]);
