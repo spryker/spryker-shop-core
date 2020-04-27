@@ -56,12 +56,14 @@ class ServiceControllerResolver implements ControllerResolverInterface, Argument
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param callable $controller
      *
-     * @return array|void
+     * @return array
      */
     public function getArguments(Request $request, $controller)
     {
         if (method_exists($this->controllerResolver, 'getArguments')) {
             return $this->controllerResolver->getArguments($request, $controller);
         }
+        
+        return [];
     }
 }

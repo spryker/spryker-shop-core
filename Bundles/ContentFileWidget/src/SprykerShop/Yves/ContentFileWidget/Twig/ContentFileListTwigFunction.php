@@ -87,8 +87,7 @@ class ContentFileListTwigFunction extends TwigFunction
      */
     public function getFunction(): callable
     {
-        return function (string $contentKey, string $templateIdentifier): ?string {
-
+        return function (string $contentKey, string $templateIdentifier): string {
             if (!isset($this->getAvailableTemplates()[$templateIdentifier])) {
                 return $this->getMessageContentFileListWrongTemplate($templateIdentifier);
             }
