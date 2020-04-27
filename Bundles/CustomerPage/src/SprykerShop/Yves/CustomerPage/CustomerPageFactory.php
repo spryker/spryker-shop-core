@@ -453,6 +453,14 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CheckoutAddressStepPreGroupItemsByShipmentPluginInterface[]
+     */
+    public function getCheckoutAddressStepPreGroupItemsByShipmentPlugins(): array
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGINS_CHECKOUT_ADDRESS_STEP_PRE_GROUP_ITEMS_BY_SHIPMENT);
+    }
+
+    /**
      * @return \SprykerShop\Yves\CustomerPage\Handler\OrderSearchFormHandlerInterface
      */
     public function createOrderSearchFormHandler(): OrderSearchFormHandlerInterface

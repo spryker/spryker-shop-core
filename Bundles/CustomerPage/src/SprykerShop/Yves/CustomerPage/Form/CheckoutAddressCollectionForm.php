@@ -194,6 +194,8 @@ class CheckoutAddressCollectionForm extends AbstractType
             return;
         }
 
+        $quoteTransfer = $this->executeCheckoutAddressStepPreGroupItemsByShipmentPlugins($quoteTransfer);
+
         $shipmentGroupCollection = $this->mergeShipmentGroupsByShipmentHash(
             $shipmentService->groupItemsByShipment($quoteTransfer->getItems()),
             $shipmentService->groupItemsByShipment($quoteTransfer->getBundleItems())
@@ -218,6 +220,21 @@ class CheckoutAddressCollectionForm extends AbstractType
         }
 
         $shippingAddressForm->setData(clone $shipmentGroupTransfer->getShipment()->getShippingAddress());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executeCheckoutAddressStepPreGroupItemsByShipmentPlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        $checkoutAddressStepPreGroupItemsByShipmentPlugins = $this->getFactory()->getCheckoutAddressStepPreGroupItemsByShipmentPlugins();
+        foreach ($checkoutAddressStepPreGroupItemsByShipmentPlugins as $checkoutAddressStepPreGroupItemsByShipmentPlugin) {
+            $quoteTransfer = $checkoutAddressStepPreGroupItemsByShipmentPlugin->preGroupItemsByShipment($quoteTransfer);
+        }
+
+        return $quoteTransfer;
     }
 
     /**
