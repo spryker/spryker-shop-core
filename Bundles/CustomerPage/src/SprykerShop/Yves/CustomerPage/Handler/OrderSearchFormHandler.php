@@ -143,10 +143,12 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
         }
 
         if ($dateTo instanceof DateTime) {
+            $modifiedDateTo = clone $dateTo;
+
             $orderListTransfer->addFilterField(
                 $this->createFilterFieldTransfer(
                     OrderSearchFiltersForm::FIELD_DATE_TO,
-                    $dateTo->modify('+1 minute')->format(static::DATE_FORMAT)
+                    $modifiedDateTo->modify('+1 minute')->format(static::DATE_FORMAT)
                 )
             );
         }

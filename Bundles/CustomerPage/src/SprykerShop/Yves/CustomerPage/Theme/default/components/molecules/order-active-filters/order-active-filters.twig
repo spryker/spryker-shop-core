@@ -32,7 +32,7 @@
                 name: field.vars.name,
                 label: field.vars.label,
                 defaultValue: isSelectField ? field.vars.placeholder,
-                value: isSelectField ? fitlerValue : field.vars.value | formatDateTime,
+                value: isSelectField ? fitlerValue : field.vars.data | formatDateTime,
             }] %}
         {% endif %}
 
