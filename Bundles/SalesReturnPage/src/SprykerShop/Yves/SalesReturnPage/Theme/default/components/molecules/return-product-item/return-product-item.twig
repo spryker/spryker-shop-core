@@ -1,0 +1,77 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'return-product-item',
+} %}
+
+{% define data = {
+    item: required,
+    currencyIsoCode: required,
+} %}
+
+{% set checkboxColumnClass = 'col col--middle col--sm-2' %}
+{% set productItemColumnClass = 'col col--sm-10 grid' %}
+
+{% block body %}
+    {% block checkboxColumn %}
+        <div class="{{ checkboxColumnClass }}">
+            {% block checkboxColumnInner %}
+                {% include atom('thumbnail') with {
+                    modifiers: ['small'],
+                    attributes: {
+                        src: data.item.metadata.image,
+                    },
+                } only %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block productItemColumn %}
+        <div class="{{ productItemColumnClass }}">
+            {% set productInfoColumnClass = 'col col--sm-6' %}
+            {% set productPriceColumnClass = 'col col--sm-2 text-center' %}
+            {% set productQuantityColumnClass = 'col col--sm-2 text-center' %}
+            {% set productPriceTotalColumnClass = 'col col--sm-2 text-center' %}
+
+            {% block productItemColumnInner %}
+                {% block productItemInfo %}
+                    <div class="{{ productInfoColumnClass }}">
+                        {% block productItemInfoInner %}
+                            {% block productItemReturnableDate %}
+                                <div>
+                                    {{ 'return_page.returnable_text' | trans }}
+                                </div>
+                            {% endblock %}
+
+                            {% block productItemName %}
+                                <div>
+                                    {{ data.item.name }}
+                                </div>
+                            {% endblock %}
+
+                            {% block productItemSku %}
+                                <div>
+                                    {{ 'return_page.item_sku' | trans }} {{ data.item.sku }}
+                                </div>
+                            {% endblock %}
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+
+                {% block productItemPrice %}
+                    <strong class="{{ productPriceColumnClass }}">{{ data.item.unitPrice | money(true, data.currencyIsoCode) }}</strong>
+                {% endblock %}
+
+                {% block productItemQuantity %}
+                    <div class="{{ productQuantityColumnClass }}">
+                        {{ 'return_page.quantity' | trans }} {{ data.item.quantity }}
+                    </div>
+                {% endblock %}
+
+                {% block productItemTotalPrice %}
+                    <strong class="{{ productPriceTotalColumnClass }}">{{ data.item.sumPrice | money(true, data.currencyIsoCode) }}</strong>
+                {% endblock %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}
