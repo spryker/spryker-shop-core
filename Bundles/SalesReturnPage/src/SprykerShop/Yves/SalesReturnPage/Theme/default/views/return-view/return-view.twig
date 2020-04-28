@@ -1,6 +1,9 @@
 {% extends template('page-layout-main') %}
 
 {% define data = {
+    return: _view.return,
+    returnItems: _view.return.returnItems,
+    returnItemsCount: _view.returnItemsCount,
 } %}
 
 {% block body %}
