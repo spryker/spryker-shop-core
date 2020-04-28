@@ -63,7 +63,7 @@ class ServiceControllerResolver implements ControllerResolverInterface, Argument
         if (method_exists($this->controllerResolver, 'getArguments')) {
             return $this->controllerResolver->getArguments($request, $controller);
         }
-        
+
         return [];
     }
 }

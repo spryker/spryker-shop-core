@@ -6,5 +6,4 @@ parameters:
 
     ignoreErrors:
     - '#PHPDoc tag @param for parameter \$arguments with type array is not subtype of native type array<int, mixed>#'
-    - '#Class Symfony\\Bridge\\Twig\\Form\\TwigRenderer not found.#'
     - '#Parameter \#1 \$app of class Spryker\\Yves\\Kernel\\ControllerResolver\\YvesFragmentControllerResolver constructor expects Silex\\Application, Spryker\\Service\\Container\\ContainerInterface given.#'

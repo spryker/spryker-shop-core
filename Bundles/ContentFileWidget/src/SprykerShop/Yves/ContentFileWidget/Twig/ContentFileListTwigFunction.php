@@ -105,7 +105,7 @@ class ContentFileListTwigFunction extends TwigFunction
             $fileViewCollection = $this->contentFileReader
                 ->getFileCollection($contentFileListTypeTransfer, $this->localeName);
 
-            return $this->twig->render(
+            return (string)$this->twig->render(
                 $this->getAvailableTemplates()[$templateIdentifier],
                 [
                     'fileViewCollection' => $fileViewCollection,
