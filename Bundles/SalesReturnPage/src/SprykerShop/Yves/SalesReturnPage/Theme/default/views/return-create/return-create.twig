@@ -13,10 +13,15 @@
             {{ form_start(data.form) }}
 
             {% block salesReturnContentHeader %}
-                {% set backLinkClass = 'link float-right' %}
+                {% set backLinkClass = 'float-right' %}
 
                 {% block backOrderLink %}
-                    <a href="{{ path('customer/order/details', {'id': data.order.idSalesOrder}) }}" class="{{ backLinkClass }}">{{ 'general.back.button' | trans }}</a>
+                    {% include molecule('order-detail-link', 'CustomerPage') ignore missing with {
+                        class: backLinkClass,
+                        attributes: {
+                            href: path('customer/order/details', {'id': data.order.idSalesOrder}),
+                        },
+                    } only %}
                 {% endblock %}
 
                 {% block salesReturnPageTitle %}
@@ -55,7 +60,10 @@
                     {% endblock %}
                 </ul>
             {% endblock %}
-            <hr class="box__separator">
+
+            {% block salesReturnOrderInfoSeparator %}
+                <hr class="box__separator">
+            {% endblock %}
             <ul>
                 {% for returnItem in data.form.returnItems %}
                     <li>
