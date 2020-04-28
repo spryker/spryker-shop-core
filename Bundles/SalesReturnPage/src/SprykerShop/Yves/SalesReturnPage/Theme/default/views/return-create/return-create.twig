@@ -25,7 +25,7 @@
                 {% endblock %}
 
                 {% block salesReturnPageTitle %}
-                    <h5>{{ 'sales_return_page.return.title' | trans }}</h5>
+                    <h5>{{ 'return_page.return.title' | trans }}</h5>
                 {% endblock %}
 
                 {% block salesReturnPageHeaderSeparator %}
@@ -43,7 +43,7 @@
                         {% block salesReturnIdItemInfo %}
                             <li class="{{ salesReturnItemClass }}">
                                 {% block salesReturnIdItemInfoInner %}
-                                    {{ 'sales_return_page.order_id' | trans }}:
+                                    {{ 'return_page.order_id' | trans }}:
                                     <strong>{{ data.order.orderReference }}</strong>
                                 {% endblock %}
                             </li>
@@ -52,7 +52,7 @@
                         {% block salesReturnDateItemInfo %}
                             <li class="{{ salesReturnItemClass }}">
                                 {% block salesReturnDateItemInfoInner %}
-                                    {{ 'sales_return_page.date' | trans }}:
+                                    {{ 'return_page.date' | trans }}:
                                     <strong>{{ data.order.createdAt | formatDateTime }}</strong>
                                 {% endblock %}
                             </li>
@@ -64,14 +64,49 @@
             {% block salesReturnOrderInfoSeparator %}
                 <hr class="box__separator">
             {% endblock %}
-            <ul>
-                {% for returnItem in data.form.returnItems %}
-                    <li>
-                        {{ form_errors(returnItem) }}
-                        {{ form_widget(returnItem) }}
-                    </li>
-                {% endfor %}
-            </ul>
+
+            {% set salesReturnProductsClass = '' %}
+            {% set salesReturnProductItemClass = 'grid grid--middle grid--justify box' %}
+
+            {% block salesReturnProducts %}
+                <ul class="{{ salesReturnProductsClass }}">
+                    {% for returnItem in data.form.returnItems %}
+                        {% block salesReturnProductItem %}
+                            <li class="{{ salesReturnProductItemClass }}">
+                                {% set checkboxWrapperClass = 'col col--sm-1' %}
+                                {% set productItemReturnClass = 'col col--sm-11 grid' %}
+
+                                {% block salesReturnProductItemInner %}
+                                    {{ form_errors(returnItem) }}
+
+                                    {% block checkbox %}
+                                        <div class="{{ checkboxWrapperClass }}">
+                                            {{ form_row(returnItem.uuid, {label: ' '}) }}
+                                        </div>
+                                    {% endblock %}
+
+                                    {% block salesReturnProductItemInfo %}
+                                        {% include molecule('return-product-item', 'SalesReturnPage') with {
+                                            class: productItemReturnClass,
+                                            data: {
+                                                item: returnItem.vars.value.orderItem,
+                                                currencyIsoCode: data.order.currencyIsoCode,
+                                            },
+                                        } only %}
+                                    {% endblock %}
+                                {% endblock %}
+
+                                <div class="reason">
+                                    {{ form_row(returnItem.reason) }}
+                                </div>
+                                <div class="custom-reason">
+                                    {{ form_row(returnItem.customReason) }}
+                                </div>
+                            </li>
+                        {% endblock %}
+                    {% endfor %}
+                </ul>
+            {% endblock %}
 
             {{ form_widget(data.form) }}
 
@@ -79,7 +114,7 @@
 
             {% block salesReturnPageActions %}
                 <button class="{{ salesReturnSaveActionClass }}">
-                    {{ 'sales_return_page.button_text' | trans }}
+                    {{ 'return_page.button_text' | trans }}
                 </button>
             {% endblock %}
 
