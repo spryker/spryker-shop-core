@@ -1,0 +1,125 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'quote-request-summary',
+} %}
+
+{% define data = {
+    cart: required,
+    shipmentGroups: [],
+} %}
+
+{% block extraClass %}
+    box
+{% endblock %}
+
+{% block body %}
+    {% set titleWrapperClass = 'grid grid--justify grid--middle' %}
+    {% set titleClass = 'col' %}
+    {% set counterClass = 'col text-secondary' %}
+
+    {% block titleWrapper %}
+        <div class="{{ titleWrapperClass }}">
+            {% block title %}
+                <h6 class="{{ titleClass }}">
+                    {{ 'cart.your-order' | trans }}
+                </h6>
+            {% endblock %}
+
+            {% block counter %}
+                <div class="{{ counterClass }}">
+                    {% widget 'ProductBundleItemCounterWidget' args [data.cart] only %}
+                    {% nowidget %}
+                        {{ 'quote_request_page.quote_request.item' | trans({
+                            '%count%': data.cart.items | length,
+                        }) }}
+                    {% endwidget %}
+                </div>
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block listSeparator %}
+        <hr>
+    {% endblock %}
+
+    {% set listClass = 'spacing-y' %}
+    {% set itemClass = 'grid grid--justify' %}
+    {% set itemTitleClass = 'col' %}
+    {% set itemValueClass = 'col' %}
+
+    {% block list %}
+        <div class="{{ listClass }}">
+            {% block subtotal %}
+                <div class="{{ itemClass }}">
+                    <span class="{{ itemTitleClass }}">
+                        {{ 'cart.price.subtotal' | trans }}
+                    </span>
+                    <span class="{{ itemValueClass }}">
+                        {{ data.cart.totals.subtotal | money(true, data.cart.currency.code) }}
+                    </span>
+                </div>
+            {% endblock %}
+
+            {% block discount %}
+                {% include molecule('quote-request-summary-discount', 'QuoteRequestPage') with {
+                    data: {
+                        voucherDiscounts: data.cart.voucherDiscounts | default,
+                        ruleDiscounts: data.cart.cartRuleDiscounts | default,
+                        discountTotal: data.cart.totals.discountTotal | default,
+                        currency: data.cart.currency | default,
+                    },
+                } only %}
+            {% endblock %}
+
+            {% block shipment %}
+                {% include molecule('quote-request-summary-shipment', 'QuoteRequestPage') with {
+                    data: {
+                        shipmentGroups: data.shipmentGroups,
+                        shipmentTotal: data.cart.totals.shipmentTotal | default,
+                        currencyCode: data.cart.currency.code | default,
+                        priceMode: data.cart.priceMode,
+                        expenses: data.cart.expenses
+                    },
+                } only %}
+            {% endblock %}
+
+            {% block salesOrderThreshhold %}
+                {% widget 'SalesOrderThresholdWidget' args [data.cart.expenses] with {
+                    embed: {
+                        itemClass: itemClass,
+                    },
+                } only %}
+                    {% block body %}
+                        <hr>
+                        <div class="{{ embed.itemClass }}">
+                            {{ parent() }}
+                        </div>
+                    {% endblock %}
+                {% endwidget %}
+            {% endblock %}
+
+            {% block taxSeparator %}
+                <hr>
+            {% endblock %}
+
+            {% block tax %}
+                <div class="{{ itemClass }}">
+                    <span class="{{ itemTitleClass }}">{{ 'cart.total.tax_total' | trans }}</span>
+                    <span class="{{ itemValueClass }}">{{ data.cart.totals.taxTotal.amount | money(true, data.cart.currency.code) }}</span>
+                </div>
+            {% endblock %}
+
+            {% block grandTotalSeparator %}
+                <hr>
+            {% endblock %}
+
+            {% block grandTotal %}
+                <div class="{{ itemClass }}">
+                    <span class="{{ itemTitleClass }}">{{ 'cart.price.grand.total' | trans }}</span>
+                    <strong class="{{ itemValueClass }}">{{ data.cart.totals.grandTotal | money(true, data.cart.currency.code) }}</strong>
+                </div>
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}

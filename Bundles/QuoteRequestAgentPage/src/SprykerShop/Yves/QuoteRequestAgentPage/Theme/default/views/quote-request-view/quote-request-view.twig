@@ -1,6 +1,8 @@
-{% extends template('page-layout-quote-request', 'QuoteRequestAgentPage') %}
+{% extends template('page-layout-agent', 'AgentPage') %}
 
 {% define data = {
+    title: 'quote_request_page.quote_request' | trans,
+    activePage: 'quoteRequestAgent',
     quoteRequests: _view.quoteRequests,
 
     pagination: {
@@ -8,11 +10,25 @@
         currentPage: _view.pagination.page,
         paginationPath: 'agent/quote-request',
         maxPage: _view.pagination.lastPage,
-        showAlwaysFirstAndLast: true
+        showAlwaysFirstAndLast: true,
     },
-
-    title: 'agent.account.quote_request' | trans,
 } %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'agent.account.page_title' | trans,
+                    url: path('agent/overview'),
+                },
+                {
+                    label: 'quote_request_page.quote_request' | trans,
+                },
+            ],
+        },
+    } only %}
+{% endblock %}
 
 {% block agentContent %}
     <div class="box">

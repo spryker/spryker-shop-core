@@ -83,6 +83,9 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CHECKOUT_ADDRESS_STEP_ENTER_PRE_CHECK = 'PLUGINS_CHECKOUT_ADDRESS_STEP_ENTER_PRE_CHECK';
     public const PLUGINS_CHECKOUT_SHIPMENT_STEP_ENTER_PRE_CHECK = 'PLUGINS_CHECKOUT_SHIPMENT_STEP_ENTER_PRE_CHECK';
     public const PLUGINS_CHECKOUT_PAYMENT_STEP_ENTER_PRE_CHECK = 'PLUGINS_CHECKOUT_PAYMENT_STEP_ENTER_PRE_CHECK';
+    public const PLUGINS_CHECKOUT_STEP_RESOLVER_STRATEGY = 'PLUGINS_CHECKOUT_STEP_RESOLVER_STRATEGY';
+
+    public const PLUGINS_CHECKOUT_PAGE_STEP_ENGINE_PRE_RENDER = 'PLUGINS_CHECKOUT_PAGE_STEP_ENGINE_PRE_RENDER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -130,6 +133,8 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addShipmentService($container);
         $container = $this->addCustomerService($container);
         $container = $this->addAddressStepExecutorAddressTransferExpanderPlugins($container);
+        $container = $this->addCheckoutStepResolverStrategyPlugins($container);
+        $container = $this->addCheckoutPageStepEnginePreRenderPlugins($container);
 
         return $container;
     }
@@ -775,5 +780,49 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
             'to be able to handle Customer step in checkout.', E_USER_DEPRECATED);
 
         return new CustomerStepHandler();
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCheckoutStepResolverStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CHECKOUT_STEP_RESOLVER_STRATEGY, function () {
+            return $this->getCheckoutStepResolverStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepResolverStrategyPluginInterface[]
+     */
+    protected function getCheckoutStepResolverStrategyPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCheckoutPageStepEnginePreRenderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CHECKOUT_PAGE_STEP_ENGINE_PRE_RENDER, function (): array {
+            return $this->getCheckoutPageStepEnginePreRenderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\StepEngine\CheckoutPageStepEnginePreRenderPluginInterface[]
+     */
+    protected function getCheckoutPageStepEnginePreRenderPlugins(): array
+    {
+        return [];
     }
 }

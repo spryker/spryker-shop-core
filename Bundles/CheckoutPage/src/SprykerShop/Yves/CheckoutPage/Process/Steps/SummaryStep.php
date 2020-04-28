@@ -20,6 +20,11 @@ use Symfony\Component\HttpFoundation\Request;
 class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
 {
     /**
+     * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE
+     */
+    public const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
+
+    /**
      * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface
      */
     protected $productBundleClient;
@@ -116,9 +121,10 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
                 $quoteTransfer->getBundleItems()
             ),
             'shipmentGroups' => $this->expandShipmentGroupsWithCartItems($shipmentGroups, $quoteTransfer),
-            'totalCosts' => $this->getTotalCosts($shipmentGroups),
+            'totalCosts' => $this->getShipmentTotalCosts($shipmentGroups, $quoteTransfer),
             'isPlaceableOrder' => $isPlaceableOrderResponseTransfer->getIsSuccess(),
             'isPlaceableOrderErrors' => $isPlaceableOrderResponseTransfer->getErrors(),
+            'shipmentExpenses' => $this->getShipmentExpenses($quoteTransfer),
         ];
     }
 
@@ -184,7 +190,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer[]|\ArrayObject $shipmentGroups
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroups
      *
      * @return int
      */
@@ -197,6 +203,23 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
         }
 
         return $totalCosts;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroups
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return int
+     */
+    protected function getShipmentTotalCosts(ArrayObject $shipmentGroups, QuoteTransfer $quoteTransfer): int
+    {
+        $totalsTransfer = $quoteTransfer->getTotals();
+
+        if ($totalsTransfer && $totalsTransfer->getShipmentTotal() !== null) {
+            return $totalsTransfer->getShipmentTotal();
+        }
+
+        return $this->getTotalCosts($shipmentGroups);
     }
 
     /**
@@ -213,5 +236,26 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
         }
 
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer[]
+     */
+    protected function getShipmentExpenses(QuoteTransfer $quoteTransfer): array
+    {
+        $shipmentExpenses = [];
+
+        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
+            if ($expenseTransfer->getType() !== static::SHIPMENT_EXPENSE_TYPE) {
+                continue;
+            }
+
+            $shipmentHashKey = $this->shipmentService->getShipmentHashKey($expenseTransfer->getShipment());
+            $shipmentExpenses[$shipmentHashKey] = $expenseTransfer;
+        }
+
+        return $shipmentExpenses;
     }
 }

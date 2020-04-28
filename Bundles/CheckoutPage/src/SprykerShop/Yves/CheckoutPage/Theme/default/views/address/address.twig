@@ -8,6 +8,7 @@
         items: _view.addressesForm.multiShippingAddresses | default([]),
         bundleItems: _view.addressesForm.multiShippingAddressesForBundleItems | default([]),
     },
+    backUrl: _view.previousStepUrl,
     isMultipleShipmentEnabled: _view.addressesForm.isMultipleShipmentEnabled.vars.value,
     title: 'checkout.step.address.title' | trans,
 } %}
@@ -22,6 +23,7 @@
         data: {
             title: 'page.checkout.address.shipping-address' | trans,
             form: data.forms.address,
+            backUrl: data.backUrl,
             submit: {
                 enable: true,
                 text: 'general.next.button' | trans,
@@ -226,6 +228,11 @@
                 </div>
 
                 <div class="col">
+                    {% widget 'QuoteRequestActionsWidget' args [data.form.vars.value, data.backUrl] only %}
+                        {% block saveButton %}{% endblock %}
+                        {% block backButton %}{% endblock %}
+                    {% endwidget %}
+
                     {{ parent() }}
                 </div>
             </div>
