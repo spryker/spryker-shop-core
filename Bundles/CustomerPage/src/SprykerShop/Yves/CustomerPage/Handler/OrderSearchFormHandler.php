@@ -137,7 +137,7 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
             $orderListTransfer->addFilterField(
                 $this->createFilterFieldTransfer(
                     OrderSearchFiltersForm::FIELD_DATE_FROM,
-                    $dateFrom->modify('-1 minute')->format(static::DATE_FORMAT)
+                    $dateFrom->format(static::DATE_FORMAT)
                 )
             );
         }
