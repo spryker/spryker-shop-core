@@ -33,6 +33,9 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnCreateController::createAction()
      */
     protected const PARAM_ORDER_REFERENCE = 'orderReference';
+    /**
+     * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnViewController::viewAction()
+     */
     protected const PARAM_RETURN_REFERENCE = 'returnReference';
 
     protected const REFERENCE_REGEX = '[a-zA-Z0-9-]+';
