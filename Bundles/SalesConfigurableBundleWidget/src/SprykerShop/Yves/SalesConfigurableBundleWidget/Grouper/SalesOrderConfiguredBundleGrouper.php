@@ -72,7 +72,10 @@ class SalesOrderConfiguredBundleGrouper implements SalesOrderConfiguredBundleGro
         $salesOrderConfiguredBundleItemTransfers = [];
 
         foreach ($itemTransfers as $itemTransfer) {
-            if ($itemTransfer->getSalesOrderConfiguredBundle()->getIdSalesOrderConfiguredBundle() === $idSalesOrderConfiguredBundle) {
+            if (
+                $itemTransfer->getSalesOrderConfiguredBundle() &&
+                $itemTransfer->getSalesOrderConfiguredBundle()->getIdSalesOrderConfiguredBundle() === $idSalesOrderConfiguredBundle
+            ) {
                 $salesOrderConfiguredBundleItemTransfers[] = $itemTransfer->getSalesOrderConfiguredBundleItem();
             }
         }
