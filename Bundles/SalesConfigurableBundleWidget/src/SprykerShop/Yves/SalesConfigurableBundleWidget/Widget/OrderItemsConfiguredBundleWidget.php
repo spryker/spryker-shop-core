@@ -7,39 +7,29 @@
 
 namespace SprykerShop\Yves\SalesConfigurableBundleWidget\Widget;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @deprecated Use {@link \SprykerShop\Yves\SalesConfigurableBundleWidget\Widget\OrderItemsConfiguredBundleWidget} instead.
- *
  * @method \SprykerShop\Yves\SalesConfigurableBundleWidget\SalesConfigurableBundleWidgetFactory getFactory()
  * @method \SprykerShop\Yves\SalesConfigurableBundleWidget\SalesConfigurableBundleWidgetConfig getConfig()
  */
-class OrderConfiguredBundleWidget extends AbstractWidget
+class OrderItemsConfiguredBundleWidget extends AbstractWidget
 {
-    protected const PARAMETER_ORDER = 'order';
     protected const PARAMETER_ITEMS = 'items';
     protected const PARAMETER_SALES_ORDER_CONFIGURED_BUNDLES = 'salesOrderConfiguredBundles';
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[]|null $itemTransfers
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      */
-    public function __construct(OrderTransfer $orderTransfer, ?iterable $itemTransfers = [])
+    public function __construct(iterable $itemTransfers)
     {
-        if ($itemTransfers === null || !count($itemTransfers)) {
-            $itemTransfers = $orderTransfer->getItems();
-        }
-
-        $itemTransfers = $this->mapOrderItems($itemTransfers);
+        $itemTransfers = $this->getItemsIndexedByIdSalesOrderItem($itemTransfers);
 
         $salesOrderConfiguredBundles = $this->getFactory()
             ->createSalesOrderConfiguredBundleGrouper()
-            ->getSalesOrderConfiguredBundles($orderTransfer, $itemTransfers);
+            ->getSalesOrderConfiguredBundlesByItems($itemTransfers);
 
         $this->addItemsParameter($itemTransfers);
-        $this->addOrderParameter($orderTransfer);
         $this->addSalesOrderConfiguredBundlesParameter($salesOrderConfiguredBundles);
     }
 
@@ -48,7 +38,7 @@ class OrderConfiguredBundleWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'OrderConfiguredBundleWidget';
+        return 'OrderItemsConfiguredBundleWidget';
     }
 
     /**
@@ -56,17 +46,7 @@ class OrderConfiguredBundleWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@SalesConfigurableBundleWidget/views/order-detail-configured-bundle-widget/order-detail-configured-bundle-widget.twig';
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
-     */
-    protected function addOrderParameter(OrderTransfer $orderTransfer): void
-    {
-        $this->addParameter(static::PARAMETER_ORDER, $orderTransfer);
+        return '@SalesConfigurableBundleWidget/views/order-items-configured-bundle-widget/order-items-configured-bundle-widget.twig';
     }
 
     /**
@@ -80,11 +60,11 @@ class OrderConfiguredBundleWidget extends AbstractWidget
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[] $salesOrderConfiguredBundles
+     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[] $salesOrderConfiguredBundles
      *
      * @return void
      */
-    protected function addSalesOrderConfiguredBundlesParameter(iterable $salesOrderConfiguredBundles): void
+    protected function addSalesOrderConfiguredBundlesParameter(array $salesOrderConfiguredBundles): void
     {
         $this->addParameter(static::PARAMETER_SALES_ORDER_CONFIGURED_BUNDLES, $salesOrderConfiguredBundles);
     }
@@ -94,14 +74,16 @@ class OrderConfiguredBundleWidget extends AbstractWidget
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function mapOrderItems(iterable $itemTransfers): array
+    protected function getItemsIndexedByIdSalesOrderItem(iterable $itemTransfers): array
     {
-        $items = [];
+        $indexedItems = [];
 
         foreach ($itemTransfers as $itemTransfer) {
-            $items[$itemTransfer->getIdSalesOrderItem()] = $itemTransfer;
+            if ($itemTransfer->getIdSalesOrderItem()) {
+                $indexedItems[$itemTransfer->getIdSalesOrderItem()] = $itemTransfer;
+            }
         }
 
-        return $items;
+        return $indexedItems;
     }
 }

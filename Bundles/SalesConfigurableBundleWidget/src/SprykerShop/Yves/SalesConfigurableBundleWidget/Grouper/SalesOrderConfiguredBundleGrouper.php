@@ -7,12 +7,15 @@
 
 namespace SprykerShop\Yves\SalesConfigurableBundleWidget\Grouper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer;
 
 class SalesOrderConfiguredBundleGrouper implements SalesOrderConfiguredBundleGrouperInterface
 {
     /**
+     * @deprecated Use {@link \SprykerShop\Yves\SalesConfigurableBundleWidget\Grouper\SalesOrderConfiguredBundleGrouper::getSalesOrderConfiguredBundlesByItems()} instead.
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
@@ -29,6 +32,52 @@ class SalesOrderConfiguredBundleGrouper implements SalesOrderConfiguredBundleGro
         }
 
         return $salesOrderConfiguredBundles;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[]
+     */
+    public function getSalesOrderConfiguredBundlesByItems(array $itemTransfers): array
+    {
+        $salesOrderConfiguredBundleTransfers = [];
+
+        foreach ($itemTransfers as $itemTransfer) {
+            if (
+                !$itemTransfer->getSalesOrderConfiguredBundle() ||
+                isset($salesOrderConfiguredBundleTransfers[$itemTransfer->getSalesOrderConfiguredBundle()->getIdSalesOrderConfiguredBundle()])
+            ) {
+                continue;
+            }
+
+            $salesOrderConfiguredBundleTransfer = clone $itemTransfer->getSalesOrderConfiguredBundle();
+            $salesOrderConfiguredBundleItemTransfers = $this->getSalesOrderConfiguredBundleItems($itemTransfers, $salesOrderConfiguredBundleTransfer->getIdSalesOrderConfiguredBundle());
+            $salesOrderConfiguredBundleTransfer->setSalesOrderConfiguredBundleItems(new ArrayObject($salesOrderConfiguredBundleItemTransfers));
+            $salesOrderConfiguredBundleTransfers[$salesOrderConfiguredBundleTransfer->getIdSalesOrderConfiguredBundle()] =
+                $salesOrderConfiguredBundleTransfer;
+        }
+
+        return $salesOrderConfiguredBundleTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param int $idSalesOrderConfiguredBundle
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer[]
+     */
+    protected function getSalesOrderConfiguredBundleItems(array $itemTransfers, int $idSalesOrderConfiguredBundle): array
+    {
+        $salesOrderConfiguredBundleItemTransfers = [];
+
+        foreach ($itemTransfers as $itemTransfer) {
+            if ($itemTransfer->getSalesOrderConfiguredBundle()->getIdSalesOrderConfiguredBundle() === $idSalesOrderConfiguredBundle) {
+                $salesOrderConfiguredBundleItemTransfers[] = $itemTransfer->getSalesOrderConfiguredBundleItem();
+            }
+        }
+
+        return $salesOrderConfiguredBundleItemTransfers;
     }
 
     /**
