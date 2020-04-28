@@ -29,7 +29,7 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
      */
     protected const FILTER_FIELD_TYPE_DATE = 'date';
 
-    protected const DATE_FORMAT = 'Y-m-d H:i:s';
+    protected const DATE_FORMAT = 'Y-m-d H:i';
 
     /**
      * @var \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface
@@ -137,7 +137,7 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
             $orderListTransfer->addFilterField(
                 $this->createFilterFieldTransfer(
                     OrderSearchFiltersForm::FIELD_DATE_FROM,
-                    $dateFrom->format(static::DATE_FORMAT)
+                    $dateFrom->modify('-1 minute')->format(static::DATE_FORMAT)
                 )
             );
         }
@@ -146,7 +146,7 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
             $orderListTransfer->addFilterField(
                 $this->createFilterFieldTransfer(
                     OrderSearchFiltersForm::FIELD_DATE_TO,
-                    $dateTo->format(static::DATE_FORMAT)
+                    $dateTo->modify('+1 minute')->format(static::DATE_FORMAT)
                 )
             );
         }
