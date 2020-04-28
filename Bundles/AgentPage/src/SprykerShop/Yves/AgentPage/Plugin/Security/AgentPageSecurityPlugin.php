@@ -93,6 +93,9 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
                 'check_path' => static::ROUTE_CHECK_PATH,
                 'username_parameter' => AgentLoginForm::FORM_NAME . '[' . AgentLoginForm::FIELD_EMAIL . ']',
                 'password_parameter' => AgentLoginForm::FORM_NAME . '[' . AgentLoginForm::FIELD_PASSWORD . ']',
+                'with_csrf' => true,
+                'csrf_parameter' => AgentLoginForm::FORM_NAME . '[_token]',
+                'csrf_token_id' => AgentLoginForm::FORM_NAME,
             ],
             'logout' => [
                 'logout_path' => static::ROUTE_LOGOUT,
