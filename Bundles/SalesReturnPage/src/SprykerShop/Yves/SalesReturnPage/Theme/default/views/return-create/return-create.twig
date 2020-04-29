@@ -91,22 +91,27 @@
                                         {% endblock %}
 
                                         {% block salesReturnProductItemInfo %}
-                                            {% include molecule('return-product-item', 'SalesReturnPage') with {
+                                            {% embed molecule('return-product-item', 'SalesReturnPage') with {
                                                 class: productItemReturnClass,
                                                 data: {
                                                     item: orderItem,
                                                 },
+                                                embed: {
+                                                    returnItem: returnItem,
+                                                },
                                             } only %}
+                                                {% block productItemInfoInner %}
+                                                    {{ parent() }}
+
+                                                    {% include molecule('return-product-reason', 'SalesReturnPage') with {
+                                                        data: {
+                                                            returnItem: embed.returnItem,
+                                                        },
+                                                    } only %}
+                                                {% endblock %}
+                                            {% endembed %}
                                         {% endblock %}
                                     {% endblock %}
-
-
-                                    <div class="reason">
-                                        {{ form_row(returnItem.reason) }}
-                                    </div>
-                                    <div class="custom-reason">
-                                        {{ form_row(returnItem.customReason) }}
-                                    </div>
                                 </li>
                             {% endblock %}
                         {% endif %}
