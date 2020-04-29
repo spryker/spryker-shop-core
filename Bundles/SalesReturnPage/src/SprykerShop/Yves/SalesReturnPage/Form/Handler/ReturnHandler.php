@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\SalesReturnPage\Form\Handler;
 
 use ArrayObject;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
 use Generated\Shared\Transfer\ReturnResponseTransfer;
@@ -19,6 +20,8 @@ use SprykerShop\Yves\SalesReturnPage\Form\ReturnCreateForm;
 
 class ReturnHandler implements ReturnHandlerInterface
 {
+    protected const GLOSSARY_KEY_CREATE_RETURN_SELECTED_ITEMS_ERROR = 'return_page.create_return.validation.selected_items';
+
     /**
      * @uses \SprykerShop\Yves\SalesReturnPage\Form\ReturnItemsForm::FIELD_CUSTOM_REASON
      */
@@ -66,9 +69,27 @@ class ReturnHandler implements ReturnHandlerInterface
             : [];
 
         $returnCreateRequestTransfer = $this->createReturnCreateRequestTransfer($returnItemData);
-        $returnResponseTransfer = $this->salesReturnClient->createReturn($returnCreateRequestTransfer);
 
-        return $returnResponseTransfer;
+        if ($returnCreateRequestTransfer->getReturnItems()->count()) {
+            return $this->salesReturnClient->createReturn($returnCreateRequestTransfer);
+        }
+
+        return $this->createErrorReturnResponse(static::GLOSSARY_KEY_CREATE_RETURN_SELECTED_ITEMS_ERROR);
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\ReturnResponseTransfer
+     */
+    protected function createErrorReturnResponse(string $message): ReturnResponseTransfer
+    {
+        $messageTransfer = (new MessageTransfer())
+            ->setValue($message);
+
+        return (new ReturnResponseTransfer())
+            ->setIsSuccessful(false)
+            ->addMessage($messageTransfer);
     }
 
     /**
@@ -90,7 +111,7 @@ class ReturnHandler implements ReturnHandlerInterface
 
             $returnItemTransfer = (new ReturnItemTransfer())->fromArray($returnItem, true);
 
-            if ($returnItem[ReturnItemTransfer::REASON] === ReturnCreateFormDataProvider::GLOSSARY_KEY_CUSTOM_REASON && $returnItem[static::FIELD_CUSTOM_REASON]) {
+            if ($returnItem[ReturnItemTransfer::REASON] === ReturnCreateFormDataProvider::CUSTOM_REASON_VALUE && $returnItem[static::FIELD_CUSTOM_REASON]) {
                 $returnItemTransfer->setReason($returnItem[static::FIELD_CUSTOM_REASON]);
             }
 
