@@ -16,12 +16,13 @@ class ReturnSlipPrintController extends AbstractReturnController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $returnReference
      *
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function printAction(Request $request)
+    public function printAction(Request $request, string $returnReference)
     {
-        $response = $this->executeprintAction($request);
+        $response = $this->executeprintAction($request, $returnReference);
 
         return $this->view(
             $response,
@@ -32,13 +33,17 @@ class ReturnSlipPrintController extends AbstractReturnController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $returnReference
      *
      * @return array
      */
-    protected function executePrintAction(Request $request)
+    protected function executePrintAction(Request $request, string $returnReference)
     {
-        return [
+        $returnTransfer = $this->getReturnByReference($returnReference);
 
+        return [
+            'return' => $returnTransfer,
+            'returnItemsCount' => $returnTransfer->getReturnItems()->count(),
         ];
     }
 }

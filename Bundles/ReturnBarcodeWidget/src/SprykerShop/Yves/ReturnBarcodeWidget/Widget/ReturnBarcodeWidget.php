@@ -7,25 +7,21 @@
 
 namespace SprykerShop\Yves\ReturnBarcodeWidget\Widget;
 
+use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @method \SprykerShop\Yves\ProductBarcodeWidget\ProductBarcodeWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\ReturnBarcodeWidget\ReturnBarcodeWidgetFactory getFactory()
  */
 class ReturnBarcodeWidget extends AbstractWidget
 {
-    protected const PARAMETER_RETURN_REFERENCE = 'returnReference';
-    protected const PARAMETER_SKU = 'sku';
-
      /**
-      * @param \Generated\Shared\Transfer\ProductViewTransfer|string $productViewTransfer
-      * @param string $barcodeGeneratorPlugin
+      * @param string $generationText
+      * @param string|null $barcodeGeneratorPlugin
       */
-    public function __construct(string $returnReference, string $sku)
+    public function __construct(string $generationText, ?string $barcodeGeneratorPlugin = null)
     {
-//        $this->addParameter(static::PARAMETER_RETURN_REFERENCE, $returnReference);
-//        $this->addParameter(static::PARAMETER_SKU, $sku);
-//        $this->addParameter('barcodeResponseTransfer', $this->getBarcodeResponseTransfer($productViewTransfer, $barcodeGeneratorPlugin));
+        $this->addParameter('barcodeResponseTransfer', $this->getBarcodeResponseTransfer($generationText, $barcodeGeneratorPlugin));
     }
 
     /**
@@ -45,17 +41,15 @@ class ReturnBarcodeWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $generationText
      * @param string|null $barcodeGeneratorPlugin
      *
      * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
      */
-//    protected function getBarcodeResponseTransfer(ProductViewTransfer $productViewTransfer, ?string $barcodeGeneratorPlugin): BarcodeResponseTransfer
-//    {
-//        $sku = $productViewTransfer->requireSku()->getSku();
-//
-//        return $this->getFactory()
-//            ->getProductBarcodeClient()
-//            ->generateBarcodeBySku($sku, $barcodeGeneratorPlugin);
-//    }
+    protected function getBarcodeResponseTransfer(string $generationText, ?string $barcodeGeneratorPlugin): BarcodeResponseTransfer
+    {
+        return $this->getFactory()
+            ->getBarcodeService()
+            ->generateBarcode($generationText, $barcodeGeneratorPlugin);
+    }
 }

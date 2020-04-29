@@ -1,7 +1,16 @@
 {% extends template('page-layout-main') %}
 
 {% define data = {
+    return: _view.return,
+    returnItemsCount: _view.returnItemsCount,
 } %}
 
 {% block body %}
+    {% set returnBarcodeWidget = findWidget('ReturnBarcodeWidget', [data.return.returnReference]) %}
+
+    {% widget returnBarcodeWidget only %}
+        {% block body %}
+            <td>{{ parent() }}</td>
+        {% endblock %}
+    {% endwidget %}
 {% endblock %}
