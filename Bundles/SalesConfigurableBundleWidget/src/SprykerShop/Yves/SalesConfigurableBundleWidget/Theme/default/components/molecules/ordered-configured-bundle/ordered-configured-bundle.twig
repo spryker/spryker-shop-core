@@ -80,13 +80,16 @@
             {% block bundleProductListInner %}
                 {% set partialItemCount = 0 %}
                 {% for item in data.bundle.salesOrderConfiguredBundleItems if data.items[item.IdSalesOrderItem] is defined %}
-                    {% include molecule('ordered-configured-bundle-product', 'SalesConfigurableBundleWidget') with {
-                        data: {
-                            product: data.items[item.IdSalesOrderItem],
-                            currencyIsoCode: item.currencyIsoCode ?? data.currencyIsoCode,
-                            image: data.items[item.IdSalesOrderItem].metadata.image,
-                        },
-                    } only %}
+                    {% block bundleProductItem %}
+                        {% include molecule('ordered-configured-bundle-product', 'SalesConfigurableBundleWidget') with {
+                            data: {
+                                product: data.items[item.IdSalesOrderItem],
+                                currencyIsoCode: item.currencyIsoCode ?? data.currencyIsoCode,
+                                image: data.items[item.IdSalesOrderItem].metadata.image,
+                            },
+                        } only %}
+                    {% endblock %}
+
                     {% set partialItemCount = partialItemCount + 1 %}
                 {% endfor %}
 

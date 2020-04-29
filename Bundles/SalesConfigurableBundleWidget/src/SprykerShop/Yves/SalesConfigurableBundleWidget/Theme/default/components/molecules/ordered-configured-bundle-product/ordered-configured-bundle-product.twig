@@ -29,8 +29,10 @@
     </div>
 {% endblock %}
 
+{% set contentWrapperClass = config.name ~ '__col col col--sm-12 col--lg-10 col--middle' %}
+
 {% block content %}
-    <div class="{{ config.name }}__col col col--sm-12 col--lg-10 col--middle">
+    <div class="{{ contentWrapperClass }}">
         {% block contentInner %}
             {% block generalInformation %}
                 {% block name -%}
