@@ -19,16 +19,18 @@
             <div class="col col--sm-12 col--lg-5">
                 {% set additionaImageClass = 'box' %}
 
-                {% block image %}
-                    {% include atom('thumbnail') with {
-                        class: additionaImageClass,
-                        modifiers: ['bigger'],
-                        attributes: {
-                            alt: merchantName | default,
-                            src: data.merchantStorageProfile.bannerUrlGlossaryKey | trans,
-                        },
-                    } only %}
-                {% endblock %}
+                {% if data.merchantStorageProfile.bannerUrlGlossaryKey %}
+                    {% block image %}
+                        {% include atom('thumbnail') with {
+                            class: additionaImageClass,
+                            modifiers: ['bigger'],
+                            attributes: {
+                                alt: merchantName | default,
+                                src: data.merchantStorageProfile.bannerUrlGlossaryKey | trans,
+                            },
+                        } only %}
+                    {% endblock %}
+                {% endif %}
             </div>
 
             <div class="col col--sm-12 col--lg-7">
@@ -38,23 +40,27 @@
                             <div class="grid">
                                 {% block detailInner %}
                                     <div class="col col--sm-12 col--lg-12 col--xl-10">
-                                        {% block description %}
-                                            <p>{{ data.merchantStorageProfile.descriptionGlossaryKey | trans }}</p>
-                                        {% endblock %}
+                                        {% if data.merchantStorageProfile.descriptionGlossaryKey %}
+                                            {% block description %}
+                                                <p>{{ data.merchantStorageProfile.descriptionGlossaryKey | trans }}</p>
+                                            {% endblock %}
+                                        {% endif %}
 
                                         {% block information %}
                                             <div class="grid">
                                                 {% block informationInner %}
                                                     {% block emailCol %}
                                                         <div class="col col--sm-12 col--lg-6">
-                                                            {% block email %}
-                                                                {% include molecule('information-item', 'MerchantPage') with {
-                                                                    data: {
-                                                                        title: 'merchant_profile.email' | trans,
-                                                                        text: data.merchantStorageProfile.publicEmail | trans,
-                                                                    },
-                                                                } only %}
-                                                            {% endblock %}
+                                                            {% if data.merchantStorageProfile.publicEmail %}
+                                                                {% block email %}
+                                                                    {% include molecule('information-item', 'MerchantPage') with {
+                                                                        data: {
+                                                                            title: 'merchant_profile.email' | trans,
+                                                                            text: data.merchantStorageProfile.publicEmail | trans,
+                                                                        },
+                                                                    } only %}
+                                                                {% endblock %}
+                                                            {% endif %}
                                                         </div>
                                                     {% endblock %}
 
@@ -88,27 +94,31 @@
 
                                                     {% block phoneCol %}
                                                         <div class="col col--sm-12 col--lg-6">
-                                                            {% block phone %}
-                                                                {% include molecule('information-item', 'MerchantPage') with {
-                                                                    data: {
-                                                                        title: 'merchant_profile.phone' | trans,
-                                                                        text: data.merchantStorageProfile.publicPhone | trans,
-                                                                    },
-                                                                } only %}
-                                                            {% endblock %}
+                                                            {% if data.merchantStorageProfile.publicPhone %}
+                                                                {% block phone %}
+                                                                    {% include molecule('information-item', 'MerchantPage') with {
+                                                                        data: {
+                                                                            title: 'merchant_profile.phone' | trans,
+                                                                            text: data.merchantStorageProfile.publicPhone | trans,
+                                                                        },
+                                                                    } only %}
+                                                                {% endblock %}
+                                                            {% endif %}
                                                         </div>
                                                     {% endblock %}
 
                                                     {% block deliveryTimeCol %}
                                                         <div class="col col--sm-12 col--lg-6">
-                                                            {% block deliveryTime %}
-                                                                {% include molecule('information-item', 'MerchantPage') with {
-                                                                    data: {
-                                                                        title: 'merchant_profile.delivery_time' | trans,
-                                                                        text: data.merchantStorageProfile.deliveryTimeGlossaryKey | trans,
-                                                                    },
-                                                                } only %}
-                                                            {% endblock %}
+                                                            {% if data.merchantStorageProfile.deliveryTimeGlossaryKey %}
+                                                                {% block deliveryTime %}
+                                                                    {% include molecule('information-item', 'MerchantPage') with {
+                                                                        data: {
+                                                                            title: 'merchant_profile.delivery_time' | trans,
+                                                                            text: data.merchantStorageProfile.deliveryTimeGlossaryKey | trans,
+                                                                        },
+                                                                    } only %}
+                                                                {% endblock %}
+                                                            {% endif %}
                                                         </div>
                                                     {% endblock %}
                                                 {% endblock %}
@@ -119,16 +129,18 @@
                                     <div class="col col--sm-3 col--lg-2">
                                         {% set additionalLogoClass = 'box' %}
 
-                                        {% block logo %}
-                                            {% include atom('thumbnail') with {
-                                                class: additionalLogoClass,
-                                                modifiers: ['small'],
-                                                attributes: {
-                                                    alt: merchantName | default,
-                                                    src: data.merchantStorageProfile.logoUrl | trans,
-                                                },
-                                            } only %}
-                                        {% endblock %}
+                                        {% if data.merchantStorageProfile.logoUrl %}
+                                            {% block logo %}
+                                                {% include atom('thumbnail') with {
+                                                    class: additionalLogoClass,
+                                                    modifiers: ['small'],
+                                                    attributes: {
+                                                        alt: merchantName | default,
+                                                        src: data.merchantStorageProfile.logoUrl | trans,
+                                                    },
+                                                } only %}
+                                            {% endblock %}
+                                        {% endif %}
                                     </div>
                                 {% endblock %}
                             </div>
@@ -143,24 +155,32 @@
 
     {% block additional %}
         {% set additionalArticlesClass = 'box' %}
-        {% set informationArticles = [
-            {
+        {% set informationArticles = [] %}
+
+        {% if data.merchantStorageProfile.termsConditionsGlossaryKey %}
+            {% set informationArticles = informationArticles|merge([{
                 'title': 'merchant_profile.terms_and_conditions' | trans,
                 'text': data.merchantStorageProfile.termsConditionsGlossaryKey | trans,
-            },
-            {
+            }]) %}
+        {% endif %}
+        {% if data.merchantStorageProfile.cancellationPolicyGlossaryKey %}
+            {% set informationArticles = informationArticles|merge([{
                 'title': 'merchant_profile.cancellation_policy' | trans,
                 'text': data.merchantStorageProfile.cancellationPolicyGlossaryKey | trans,
-            },
-            {
+            }]) %}
+        {% endif %}
+        {% if data.merchantStorageProfile.imprintGlossaryKey %}
+            {% set informationArticles = informationArticles|merge([{
                 'title': 'merchant_profile.imprint' | trans,
                 'text': data.merchantStorageProfile.imprintGlossaryKey | trans,
-            },
-            {
+            }]) %}
+        {% endif %}
+        {% if data.merchantStorageProfile.dataPrivacyGlossaryKey %}
+            {% set informationArticles = informationArticles|merge([{
                 'title': 'merchant_profile.privacy' | trans,
                 'text': data.merchantStorageProfile.dataPrivacyGlossaryKey | trans,
-            },
-        ] %}
+            }]) %}
+        {% endif %}
 
         {% block additionalContainer %}
             <div class="{{ additionalArticlesClass }}">
