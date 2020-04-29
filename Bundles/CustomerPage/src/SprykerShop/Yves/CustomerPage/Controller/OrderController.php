@@ -8,21 +8,42 @@
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
 use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\PaginationTransfer;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
+use SprykerShop\Yves\CustomerPage\Form\OrderSearchForm;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+/**
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
+ */
 class OrderController extends AbstractCustomerController
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\CustomerPageConfig::getDefaultOrderHistoryPerPage()} instead.
+     */
     public const ORDER_LIST_LIMIT = 10;
+
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\CustomerPageConfig::getDefaultOrderHistorySortField()} instead.
+     */
     public const ORDER_LIST_SORT_FIELD = 'created_at';
+
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\CustomerPageConfig::getDefaultOrderHistorySortDirection()} instead.
+     */
     public const ORDER_LIST_SORT_DIRECTION = 'DESC';
 
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Reader\OrderReader::PARAM_PAGE} instead.
+     */
     public const PARAM_PAGE = 'page';
+
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Reader\OrderReader::DEFAULT_PAGE} instead.
+     */
     public const DEFAULT_PAGE = 1;
 
     /**
@@ -48,17 +69,34 @@ class OrderController extends AbstractCustomerController
      */
     protected function executeIndexAction(Request $request): array
     {
-        $orderListTransfer = $this->createOrderListTransfer($request);
+        $orderListTransfer = new OrderListTransfer();
+        $customerPageFactory = $this->getFactory();
+        $isOrderSearchEnabled = $customerPageFactory->getConfig()->isOrderSearchEnabled();
 
-        $orderListTransfer = $this->getFactory()
-            ->getSalesClient()
-            ->getPaginatedCustomerOrdersOverview($orderListTransfer);
+        if (!$isOrderSearchEnabled) {
+            $orderListTransfer = $customerPageFactory->createOrderReader()->getOrderList($request, $orderListTransfer);
 
-        $orderList = $orderListTransfer->getOrders();
+            return [
+                'pagination' => $orderListTransfer->getPagination(),
+                'orderList' => $orderListTransfer->getOrders(),
+                'isOrderSearchEnabled' => $isOrderSearchEnabled,
+                'isOrderSearchOrderItemsVisible' => true,
+            ];
+        }
+
+        $orderSearchForm = $customerPageFactory->createCustomerFormFactory()->getOrderSearchForm();
+        $orderListTransfer = $this->handleOrderSearchFormSubmit($request, $orderSearchForm, $orderListTransfer);
+
+        $orderListTransfer = $customerPageFactory->createOrderReader()
+            ->getOrderList($request, $orderListTransfer);
 
         return [
             'pagination' => $orderListTransfer->getPagination(),
-            'orderList' => $orderList,
+            'orderList' => $orderListTransfer->getOrders(),
+            'isOrderSearchEnabled' => $isOrderSearchEnabled,
+            'isOrderSearchOrderItemsVisible' => $orderListTransfer->getFormat()->getExpandWithItems(),
+            'orderSearchForm' => $orderSearchForm->createView(),
+            'filterFields' => $orderListTransfer->getFilterFields()->getArrayCopy(),
         ];
     }
 
@@ -80,49 +118,29 @@ class OrderController extends AbstractCustomerController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\Form\FormInterface $orderSearchForm
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    protected function createOrderListTransfer(Request $request)
-    {
-        $orderListTransfer = new OrderListTransfer();
+    protected function handleOrderSearchFormSubmit(
+        Request $request,
+        FormInterface $orderSearchForm,
+        OrderListTransfer $orderListTransfer
+    ): OrderListTransfer {
+        $isReset = $request->query->get(OrderSearchForm::FORM_NAME)[OrderSearchForm::FIELD_RESET] ?? null;
 
-        $customerTransfer = $this->getLoggedInCustomerTransfer();
-        $orderListTransfer->setIdCustomer($customerTransfer->getIdCustomer());
+        if ($isReset) {
+            return $this->getFactory()
+                ->createOrderSearchFormHandler()
+                ->resetFilterFields($orderListTransfer);
+        }
 
-        $filterTransfer = $this->createFilterTransfer();
-        $orderListTransfer->setFilter($filterTransfer);
+        $orderSearchForm->handleRequest($request);
 
-        $paginationTransfer = $this->createPaginationTransfer($request);
-        $orderListTransfer->setPagination($paginationTransfer);
-
-        return $orderListTransfer;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Generated\Shared\Transfer\PaginationTransfer
-     */
-    protected function createPaginationTransfer(Request $request)
-    {
-        $paginationTransfer = new PaginationTransfer();
-        $paginationTransfer->setPage($request->query->getInt(self::PARAM_PAGE, self::DEFAULT_PAGE));
-        $paginationTransfer->setMaxPerPage(self::ORDER_LIST_LIMIT);
-
-        return $paginationTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\FilterTransfer
-     */
-    protected function createFilterTransfer()
-    {
-        $filterTransfer = new FilterTransfer();
-        $filterTransfer->setOrderBy(self::ORDER_LIST_SORT_FIELD);
-        $filterTransfer->setOrderDirection(self::ORDER_LIST_SORT_DIRECTION);
-
-        return $filterTransfer;
+        return $this->getFactory()
+            ->createOrderSearchFormHandler()
+            ->handleOrderSearchFormSubmit($orderSearchForm, $orderListTransfer);
     }
 
     /**
@@ -138,7 +156,8 @@ class OrderController extends AbstractCustomerController
 
         $orderTransfer = new OrderTransfer();
         $orderTransfer->setIdSalesOrder($idSalesOrder)
-            ->setFkCustomer($customerTransfer->getIdCustomer());
+            ->setFkCustomer($customerTransfer->getIdCustomer())
+            ->setCustomer($customerTransfer);
 
         $orderTransfer = $this->getFactory()
             ->getSalesClient()

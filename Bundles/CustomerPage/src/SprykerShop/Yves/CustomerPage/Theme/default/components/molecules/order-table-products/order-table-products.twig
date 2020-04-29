@@ -1,0 +1,60 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'order-table-products',
+} %}
+
+{% define data = {
+    items: required,
+    priceMode: required,
+} %}
+
+{% block component %}
+    {% if data.items | length %}
+        {{ parent() }}
+    {% endif %}
+{% endblock -%}
+
+{% block body %}
+    {% for item in data.items %}
+        {% embed molecule('product-item-list') with {
+            data: {
+                product: item,
+                image: item.metadata.image,
+            },
+            embed: {
+                priceMode: data.priceMode,
+            },
+        } only %}
+            {%- block extraClass %}{% endblock -%}
+
+            {% block content %}
+                {% set priceModeGross = 'GROSS_MODE' %}
+
+                <div class="col col--sm-9 col--md-10 grid">
+                    <div class="col col--sm-12 col--md-6 col--middle">
+                        {{ block('name') }}
+                        {{ block('sku') }}
+                    </div>
+                    <div class="col col--sm-4 col--md-2 col--middle text-right">
+                        {% set price = (embed.priceMode == priceModeGross) ?
+                            data.product.unitGrossPrice :
+                            data.product.unitNetPrice %}
+                        {{ price | money }}
+                    </div>
+                    <div class="col col--sm-4 col--md-2 col--middle text-right">
+                        {{ data.product.quantity }}
+                    </div>
+                    <div class="col col--sm-4 col--md-2 col--middle text-right">
+                        {% set sum = (embed.priceMode == priceModeGross) ?
+                            data.product.sumGrossPrice :
+                            data.product.sumNetPrice %}
+                        {{ sum | money }}
+                    </div>
+                </div>
+            {% endblock -%}
+
+            {% block actionsContainer %}{% endblock -%}
+        {% endembed %}
+    {% endfor %}
+{% endblock %}

@@ -36,8 +36,20 @@
     <transfer name="OrderList">
         <property name="idCustomer" type="int"/>
         <property name="filter" type="Filter"/>
+        <property name="filterFields" type="FilterField[]" singular="filterField"/>
         <property name="orders" type="Order[]" singular="order"/>
         <property name="pagination" type="Pagination"/>
+        <property name="format" type="OrderListFormat"/>
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="OrderListFormat">
+        <property name="expandWithItems" type="bool"/>
+    </transfer>
+
+    <transfer name="FilterField">
+        <property name="type" type="string"/>
+        <property name="value" type="string"/>
     </transfer>
 
     <transfer name="Address">
@@ -263,6 +275,7 @@
         <property name="lastName" type="string"/>
         <property name="isDirty" type="bool"/>
         <property name="isGuest" type="bool"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="CustomerResponse">
