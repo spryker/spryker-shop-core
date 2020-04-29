@@ -1,0 +1,10 @@
+{% extends template('widget') %}
+
+{% define data = {
+    code: _widget.barcodeResponseTransfer.getCode,
+    encoding: _widget.barcodeResponseTransfer.getEncoding
+} %}
+
+{% block body %}
+    <img src="{{ data.encoding }},{{ data.code }}">
+{% endblock %}
