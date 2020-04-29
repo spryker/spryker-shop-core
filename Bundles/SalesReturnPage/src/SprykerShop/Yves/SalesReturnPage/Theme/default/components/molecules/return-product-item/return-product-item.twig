@@ -6,7 +6,6 @@
 
 {% define data = {
     item: required,
-    currencyIsoCode: required,
 } %}
 
 {% set checkboxColumnClass = 'col col--middle col--sm-2' %}
@@ -28,7 +27,8 @@
 
     {% block productItemColumn %}
         <div class="{{ productItemColumnClass }}">
-            {% set productInfoColumnClass = 'col col--sm-6' %}
+            {% set productInfoColumnClass = 'col col--sm-4' %}
+            {% set productStatusColumnClass = 'col col--sm-2 text-center' %}
             {% set productPriceColumnClass = 'col col--sm-2 text-center' %}
             {% set productQuantityColumnClass = 'col col--sm-2 text-center' %}
             {% set productPriceTotalColumnClass = 'col col--sm-2 text-center' %}
@@ -42,6 +42,12 @@
                                     {{ 'return_page.returnable_text' | trans }}
                                 </div>
                             {% endblock %}
+
+                            {% if not data.item.isReturnable %}
+                                <div>
+                                    {{ 'return_page.returnable_state' | trans }}
+                                </div>
+                            {% endif %}
 
                             {% block productItemName %}
                                 <div>
@@ -58,8 +64,12 @@
                     </div>
                 {% endblock %}
 
+                {% block productStatus %}
+                    <span class="{{ productStatusColumnClass }}">{{ data.item.state.name }}</span>
+                {% endblock %}
+
                 {% block productItemPrice %}
-                    <strong class="{{ productPriceColumnClass }}">{{ data.item.unitPrice | money(true, data.currencyIsoCode) }}</strong>
+                    <strong class="{{ productPriceColumnClass }}">{{ data.item.unitPrice | money(true, data.item.currencyIsoCode) }}</strong>
                 {% endblock %}
 
                 {% block productItemQuantity %}
@@ -69,7 +79,7 @@
                 {% endblock %}
 
                 {% block productItemTotalPrice %}
-                    <strong class="{{ productPriceTotalColumnClass }}">{{ data.item.sumPrice | money(true, data.currencyIsoCode) }}</strong>
+                    <strong class="{{ productPriceTotalColumnClass }}">{{ data.item.sumPrice | money(true, data.item.currencyIsoCode) }}</strong>
                 {% endblock %}
             {% endblock %}
         </div>
