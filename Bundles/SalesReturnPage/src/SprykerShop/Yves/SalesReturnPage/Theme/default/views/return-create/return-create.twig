@@ -67,46 +67,55 @@
 
             {% set salesReturnProductsClass = '' %}
             {% set salesReturnProductItemClass = 'grid grid--middle grid--justify box' %}
+            {% set orderItems = [] %}
 
             {% block salesReturnProducts %}
                 <ul class="{{ salesReturnProductsClass }}">
                     {% for returnItem in data.form.returnItems %}
-                        {% block salesReturnProductItem %}
-                            <li class="{{ salesReturnProductItemClass }}">
-                                {% set checkboxWrapperClass = 'col col--sm-1' %}
-                                {% set productItemReturnClass = 'col col--sm-11 grid' %}
+                        {% set orderItem = returnItem.vars.value.orderItem %}
+                        {% set isConfiguredBundle = orderItem.salesOrderConfiguredBundleItem is defined and orderItem.salesOrderConfiguredBundleItem is not null %}
 
-                                {% block salesReturnProductItemInner %}
-                                    {{ form_errors(returnItem) }}
+                        {% if not isConfiguredBundle %}
+                            {% block salesReturnProductItem %}
+                                <li class="{{ salesReturnProductItemClass }}">
+                                    {% set checkboxWrapperClass = 'col col--sm-1' %}
+                                    {% set productItemReturnClass = 'col col--sm-11 grid' %}
 
-                                    {% block checkbox %}
-                                        <div class="{{ checkboxWrapperClass }}">
-                                            {{ form_row(returnItem.uuid, {label: ' '}) }}
-                                        </div>
+                                    {% block salesReturnProductItemInner %}
+                                        {{ form_errors(returnItem) }}
+
+                                        {% block checkbox %}
+                                            <div class="{{ checkboxWrapperClass }}">
+                                                {{ form_row(returnItem.uuid, {label: ' '}) }}
+                                            </div>
+                                        {% endblock %}
+
+                                        {% block salesReturnProductItemInfo %}
+                                            {% include molecule('return-product-item', 'SalesReturnPage') with {
+                                                class: productItemReturnClass,
+                                                data: {
+                                                    item: orderItem,
+                                                },
+                                            } only %}
+                                        {% endblock %}
                                     {% endblock %}
 
-                                    {% block salesReturnProductItemInfo %}
-                                        {% include molecule('return-product-item', 'SalesReturnPage') with {
-                                            class: productItemReturnClass,
-                                            data: {
-                                                item: returnItem.vars.value.orderItem,
-                                                currencyIsoCode: data.order.currencyIsoCode,
-                                            },
-                                        } only %}
-                                    {% endblock %}
-                                {% endblock %}
 
-                                <div class="reason">
-                                    {{ form_row(returnItem.reason) }}
-                                </div>
-                                <div class="custom-reason">
-                                    {{ form_row(returnItem.customReason) }}
-                                </div>
-                            </li>
-                        {% endblock %}
+                                    <div class="reason">
+                                        {{ form_row(returnItem.reason) }}
+                                    </div>
+                                    <div class="custom-reason">
+                                        {{ form_row(returnItem.customReason) }}
+                                    </div>
+                                </li>
+                            {% endblock %}
+                        {% endif %}
+                        {% set orderItems = orderItems | merge([orderItem]) %}
                     {% endfor %}
                 </ul>
             {% endblock %}
+
+            {% widget 'OrderItemsConfiguredBundleWidget' args [orderItems] only %}{% endwidget %}
 
             {{ form_widget(data.form) }}
 
