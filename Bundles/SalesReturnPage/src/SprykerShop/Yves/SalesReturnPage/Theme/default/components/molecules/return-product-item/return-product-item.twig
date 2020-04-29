@@ -44,21 +44,25 @@
                             {% endblock %}
 
                             {% if not data.item.isReturnable %}
-                                <div>
-                                    {{ 'return_page.returnable_state' | trans }}
-                                </div>
+                                {% block productItemReturnableInfo %}
+                                    <div>
+                                        {{ 'return_page.returnable_state' | trans }}
+                                    </div>
+                                {% endblock %}
                             {% endif %}
 
                             {% block productItemName %}
-                                <div>
+                                <h6>
                                     {{ data.item.name }}
-                                </div>
+                                </h6>
                             {% endblock %}
 
+                            {% set skuClass = 'text-secondary' %}
+
                             {% block productItemSku %}
-                                <div>
+                                <small class="{{ skuClass }}">
                                     {{ 'return_page.item_sku' | trans }} {{ data.item.sku }}
-                                </div>
+                                </small>
                             {% endblock %}
                         {% endblock %}
                     </div>

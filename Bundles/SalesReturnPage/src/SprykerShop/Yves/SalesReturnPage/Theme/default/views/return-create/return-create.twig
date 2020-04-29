@@ -78,8 +78,8 @@
                         {% if not isConfiguredBundle %}
                             {% block salesReturnProductItem %}
                                 <li class="{{ salesReturnProductItemClass }}">
-                                    {% set checkboxWrapperClass = 'col col--sm-1' %}
-                                    {% set productItemReturnClass = 'col col--sm-11 grid' %}
+                                    {% set checkboxWrapperClass = 'col' %}
+                                    {% set productItemReturnClass = 'col col--expand grid' %}
 
                                     {% block salesReturnProductItemInner %}
                                         {{ form_errors(returnItem) }}
@@ -117,10 +117,16 @@
                         {% endif %}
                         {% set orderItems = orderItems | merge([orderItem]) %}
                     {% endfor %}
+
+                    {% set salesReturnConfigurableBundleItemClass = '' %}
+
+                    {% block configurableBundle %}
+                        <li class="{{ salesReturnConfigurableBundleItemClass }}">
+                            {% widget 'OrderItemsConfiguredBundleWidget' args [orderItems] use view('order-returnable-items-configured-bundle-widget', 'SalesConfigurableBundleWidget') only %}{% endwidget %}
+                        </li>
+                    {% endblock %}
                 </ul>
             {% endblock %}
-
-            {% widget 'OrderItemsConfiguredBundleWidget' args [orderItems] only %}{% endwidget %}
 
             {{ form_widget(data.form) }}
 
