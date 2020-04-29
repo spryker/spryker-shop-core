@@ -1,0 +1,13 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'form-value-submitter',
+    tag: 'form-value-submitter',
+} %}
+
+{% define attributes = {
+    'form-class-name': required,
+    'trigger-class-name': required,
+    'target-class-name': required,
+    'value-field': 'set-value',
+} %}

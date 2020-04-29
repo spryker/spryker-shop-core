@@ -1,0 +1,73 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'order-filters',
+} %}
+
+{% define data = {
+    orderSearchForm: required,
+    jsPrefix: required,
+} %}
+
+{% block extraClass %}
+    spacing-y spacing-y--inner
+{% endblock %}
+
+{% block body %}
+    {% set searchRowClass = 'form__fields grid grid--bottom' %}
+    {% set searchTypeClass = 'form__field col col--sm-12 col--lg-3' %}
+    {% set searchTextClass = 'form__field col col--sm-12 col--lg-9' %}
+
+    {% block searchRow %}
+        <div class="{{ searchRowClass }}">
+            <div class="{{ searchTypeClass }}">
+                {{ form_row(data.orderSearchForm.searchType) }}
+            </div>
+            <div class="{{ searchTextClass }}">
+                {{ form_row(data.orderSearchForm.searchText) }}
+            </div>
+        </div>
+    {% endblock %}
+
+    {% set additionalFiltersRowClass = 'form__fields grid grid--bottom' %}
+
+    {% block additionalFiltersRow %}
+        <div class="{{ additionalFiltersRowClass }}">
+            {% for filter in data.orderSearchForm.filters.children %}
+                <div class="{{ filter.vars.attr.class }}">
+                    {{ form_row(filter, {
+                        attr: {
+                            class: data.jsPrefix ~ filter.vars.name ~ '-target',
+                        }})
+                    }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock %}
+
+    {% block separator1 %}
+        <hr class="box__separator">
+    {% endblock %}
+
+    {% set filterModeRowClass = 'form__fields grid grid--middle grid--justify' %}
+    {% set orderItemsVisibleClass = 'form__field col' %}
+    {% set actionWrapperClass = 'form__field col text-right' %}
+    {% set actionClass = 'button button--success' %}
+
+    {% block filterModeRow %}
+        <div class="{{ filterModeRowClass }}">
+            <div class="{{ orderItemsVisibleClass }}">
+                {{ form_row(data.orderSearchForm.isOrderItemsVisible) }}
+            </div>
+            <div class="{{ actionWrapperClass }}">
+                <button name="buttonSubmit" class="{{ actionClass }}">
+                    {{ 'customer.order_history.apply' | trans }}
+                </button>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block separator2 %}
+        <hr class="box__separator">
+    {% endblock %}
+{% endblock %}

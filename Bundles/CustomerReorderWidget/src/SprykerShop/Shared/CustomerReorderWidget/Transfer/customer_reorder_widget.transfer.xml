@@ -37,6 +37,7 @@
         <property name="items" type="Item[]"  singular="item"/>
         <property name="orderReference" type="string"/>
         <property name="bundleItems" type="Item[]" singular="bundleItem"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="Quote">
