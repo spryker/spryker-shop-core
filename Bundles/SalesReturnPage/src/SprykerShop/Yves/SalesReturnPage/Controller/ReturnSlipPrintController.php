@@ -22,7 +22,7 @@ class ReturnSlipPrintController extends AbstractReturnController
      */
     public function printAction(Request $request, string $returnReference)
     {
-        $response = $this->executeprintAction($request, $returnReference);
+        $response = $this->executePrintAction($request, $returnReference);
 
         return $this->view(
             $response,

@@ -47,7 +47,7 @@ class BarcodeWidget extends AbstractWidget
      *
      * @return void
      */
-    protected function addBarcodeResponseParameter(string $generationText, ?string $barcodeGeneratorPlugin): void
+    protected function addBarcodeResponseParameter(string $generationText, ?string $barcodeGeneratorPlugin = null): void
     {
         $this->addParameter(
             static::PARAMETER_BARCODE_RESPONSE,
