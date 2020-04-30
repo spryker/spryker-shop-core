@@ -53,7 +53,7 @@ class BarcodeWidget extends AbstractWidget
             static::PARAMETER_BARCODE_RESPONSE,
             $this->getFactory()
                 ->getBarcodeService()
-                ->generateBarcode($generationText, $barcodeGeneratorPlugin),
+                ->generateBarcode($generationText, $barcodeGeneratorPlugin)
         );
     }
 }
