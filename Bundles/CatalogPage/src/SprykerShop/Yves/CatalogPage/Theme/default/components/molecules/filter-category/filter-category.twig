@@ -16,6 +16,6 @@
     {% if data.prepareFilterCategoriesDefined %}
         {% include molecule('filter-category-prepared', 'CatalogPage') %}
     {% else %}
-        {% include molecule('filter-category-bc', 'CatalogPage') %}
+        {% include molecule('filter-category-fallback', 'CatalogPage') %}
     {% endif %}
 {% endblock %}
