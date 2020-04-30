@@ -10,12 +10,7 @@
     </div>
 {% endblock %}
 
-{% block content %}
-    {% set contentWrapperClass = 'col col--expand grid' %}
-
-    {{ parent() }}
-{% endblock %}
-
+{% set contentWrapperClass = 'col col--expand grid' %}
 {% set imageColumnClass = 'col col--middle col--sm-2' %}
 {% set productItemColumnClass = 'col col--sm-10 grid' %}
 {% set productInfoColumnClass = 'col col--sm-4' %}
@@ -24,59 +19,59 @@
 {% set productQuantityColumnClass = 'col col--sm-2 text-center' %}
 {% set productPriceTotalColumnClass = 'col col--sm-2 text-center' %}
 
-{% block contentInner %}
-    {% block imageColumn %}
-        <div class="{{ imageColumnClass }}">
-            {% block image %}
-                {% set thumbnailModifiers = ['small'] %}
-                {{ parent() }}
-            {% endblock %}
-        </div>
-    {% endblock %}
+{% block content %}
+    <div class="{{ contentWrapperClass }}">
+        {% block imageColumn %}
+            <div class="{{ imageColumnClass }}">
+                {% block image %}
+                    {% set thumbnailModifiers = ['small'] %}
+                    {{ parent() }}
+                {% endblock %}
+            </div>
+        {% endblock %}
 
-    {% block productItemColumn %}
-        <div class="{{ productItemColumnClass }}">
-            {% block productInfo %}
-                <div class="{{ productInfoColumnClass }}">
-                    {% block productItemReturnableDate %}
-                        <div>
-                            {{ 'sales_configured_bundle_widget.returnable_text' | trans }}
-                        </div>
-                    {% endblock %}
-
-                    {% if not data.product.isReturnable %}
-                        {% block productItemReturnableInfo %}
+        {% block productItemColumn %}
+            <div class="{{ productItemColumnClass }}">
+                {% block productInfo %}
+                    <div class="{{ productInfoColumnClass }}">
+                        {% block productItemReturnableDate %}
                             <div>
-                                {{ 'sales_configured_bundle_widget.returnable_state' | trans }}
+                                {{ 'sales_configured_bundle_widget.returnable_text' | trans }}
                             </div>
                         {% endblock %}
-                    {% endif %}
 
-                    {% block generalInformation %}
-                        {{ parent() }}
-                    {% endblock %}
-                </div>
-            {% endblock %}
+                        {% if not data.product.isReturnable %}
+                            {% block productItemReturnableInfo %}
+                                <div>
+                                    {{ 'sales_configured_bundle_widget.returnable_state' | trans }}
+                                </div>
+                            {% endblock %}
+                        {% endif %}
 
-            {% block status %}
-                <span class="{{ productStatusColumnClass }}">{{ data.product.state.name }}</span>
-            {% endblock %}
+                        {% block generalInformation %}
+                            {{ parent() }}
+                        {% endblock %}
+                    </div>
+                {% endblock %}
 
-            {% block price %}
-                <strong class="{{ productPriceColumnClass }}">{{ data.product.unitPrice | money(true, data.product.currencyIsoCode) }}</strong>
-            {% endblock %}
+                {% block status %}
+                    <span class="{{ productStatusColumnClass }}">{{ data.product.state.name }}</span>
+                {% endblock %}
 
-            {% block quantity %}
-                <div class="{{ productQuantityColumnClass }}">
-                    {{ 'configured_bundle.quantity' | trans }} {{ data.product.quantity }}
-                </div>
-            {% endblock %}
+                {% block price %}
+                    <strong class="{{ productPriceColumnClass }}">{{ data.product.unitPrice | money(true, data.product.currencyIsoCode) }}</strong>
+                {% endblock %}
 
-            {% block total %}
-                <strong class="{{ productPriceTotalColumnClass }}">{{ data.product.sumPrice | money(true, data.product.currencyIsoCode) }}</strong>
-            {% endblock %}
-        </div>
-    {% endblock %}
+                {% block quantity %}
+                    <div class="{{ productQuantityColumnClass }}">
+                        {{ 'configured_bundle.quantity' | trans }} {{ data.product.quantity }}
+                    </div>
+                {% endblock %}
+
+                {% block total %}
+                    <strong class="{{ productPriceTotalColumnClass }}">{{ data.product.sumPrice | money(true, data.product.currencyIsoCode) }}</strong>
+                {% endblock %}
+            </div>
+        {% endblock %}
+    </div>
 {% endblock %}
-
-
