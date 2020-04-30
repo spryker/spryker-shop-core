@@ -19,19 +19,23 @@
     {% set reasonSelectClass = config.jsName ~ '__select' %}
     {% set customReasonWrapperClass = config.jsName ~ '__target spacing-top is-hidden' %}
 
-    {% block dropdown %}
+    {% block dropdownWrapper %}
         <div class="{{ reasonWrapperClass }}">
-            {{ form_row(data.returnItem.reason, {
-                attr: {
-                    class: reasonSelectClass,
-                }
-            }) }}
+            {% block dropdown %}
+                {{ form_row(data.returnItem.reason, {
+                    attr: {
+                        class: reasonSelectClass,
+                    }
+                }) }}
+            {% endblock %}
         </div>
     {% endblock %}
 
-    {% block textarea %}
+    {% block textareaWrapper %}
         <div class="{{ customReasonWrapperClass }}">
-            {{ form_row(data.returnItem.customReason) }}
+            {% block textarea %}
+                {{ form_row(data.returnItem.customReason) }}
+            {% endblock %}
         </div>
     {% endblock %}
 {% endblock %}
