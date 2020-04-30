@@ -6,9 +6,9 @@
 } %}
 
 {% block body %}
-    {% set returnBarcodeWidget = findWidget('ReturnBarcodeWidget', [data.return.returnReference]) %}
+    {% set BarcodeWidget = findWidget('BarcodeWidget', [data.return.returnReference]) %}
 
-    {% widget returnBarcodeWidget only %}
+    {% widget BarcodeWidget only %}
         {% block body %}
             <td>{{ parent() }}</td>
         {% endblock %}

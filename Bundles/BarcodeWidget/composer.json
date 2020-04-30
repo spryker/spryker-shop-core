@@ -1,7 +1,7 @@
 {
-  "name": "spryker-shop/return-barcode-widget",
+  "name": "spryker-shop/barcode-widget",
   "type": "library",
-  "description": "ReturnBarcodeWidget module",
+  "description": "BarcodeWidget module",
   "license": "proprietary",
   "require": {
     "php": ">=7.2",

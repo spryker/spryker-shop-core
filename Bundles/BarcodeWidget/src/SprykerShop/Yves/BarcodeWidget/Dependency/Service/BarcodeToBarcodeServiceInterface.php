@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ReturnBarcodeWidget\Dependency\Service;
+namespace SprykerShop\Yves\BarcodeWidget\Dependency\Service;
 
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
 
-interface ReturnBarcodeToBarcodeServiceInterface
+interface BarcodeToBarcodeServiceInterface
 {
     /**
      * @param string $text

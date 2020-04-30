@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ReturnBarcodeWidget;
+namespace SprykerShop\Yves\BarcodeWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\ReturnBarcodeWidget\Dependency\Service\ReturnBarcodeToBarcodeServiceBridge;
+use SprykerShop\Yves\BarcodeWidget\Dependency\Service\BarcodeToBarcodeServiceBridge;
 
-class ReturnBarcodeWidgetDependencyProvider extends AbstractBundleDependencyProvider
+class BarcodeWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_BARCODE = 'SERVICE_BARCODE';
 
@@ -22,6 +22,8 @@ class ReturnBarcodeWidgetDependencyProvider extends AbstractBundleDependencyProv
      */
     public function provideDependencies(Container $container): Container
     {
+        $container = parent::provideDependencies($container);
+
         $container = $this->addBarcodeService($container);
 
         return $container;
@@ -35,7 +37,7 @@ class ReturnBarcodeWidgetDependencyProvider extends AbstractBundleDependencyProv
     protected function addBarcodeService(Container $container): Container
     {
         $container->set(static::SERVICE_BARCODE, function (Container $container) {
-            return new ReturnBarcodeToBarcodeServiceBridge(
+            return new BarcodeToBarcodeServiceBridge(
                 $container->getLocator()->barcode()->service()
             );
         });
