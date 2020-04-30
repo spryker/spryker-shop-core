@@ -28,17 +28,17 @@ class ReturnBarcodeWidgetDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Yves\Kernel\Container
      */
     protected function addBarcodeService(Container $container): Container
     {
-        $container[static::SERVICE_BARCODE] = function (Container $container) {
+        $container->set(static::SERVICE_BARCODE, function (Container $container) {
             return new ReturnBarcodeToBarcodeServiceBridge(
                 $container->getLocator()->barcode()->service()
             );
-        };
+        });
 
         return $container;
     }
