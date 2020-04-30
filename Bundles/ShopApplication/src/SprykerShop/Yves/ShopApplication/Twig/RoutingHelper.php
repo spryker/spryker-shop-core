@@ -57,11 +57,28 @@ class RoutingHelper implements RoutingHelperInterface
         }
         [$namespace, $application, $module, $layer, $controllerName] = explode('\\', $controllerNamespaceName);
 
-        $module = str_replace(APPLICATION_CODE_BUCKET, '', $module);
+        $module = $this->resolveModuleName($module);
 
         $controller = $this->utilTextService->camelCaseToSeparator(str_replace('Controller', '', $controllerName));
         $action = $this->utilTextService->camelCaseToSeparator((str_replace('Action', '', $actionName)));
 
         return $module . '/' . $controller . '/' . $action;
+    }
+
+    /**
+     * @param string $moduleName
+     *
+     * @return string
+     */
+    protected function resolveModuleName(string $moduleName): string
+    {
+        $codeBucketIdentifierLength = mb_strlen(APPLICATION_CODE_BUCKET);
+        $codeBucketSuffix = mb_substr($moduleName, -$codeBucketIdentifierLength);
+
+        if ($codeBucketSuffix === APPLICATION_CODE_BUCKET) {
+            $moduleName = mb_substr($moduleName, 0, -$codeBucketIdentifierLength);
+        }
+
+        return $moduleName;
     }
 }

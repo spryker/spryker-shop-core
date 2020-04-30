@@ -45,7 +45,7 @@ class WebProfilerWidgetConfig extends AbstractBundleConfig
      */
     public function getProfilerCacheDirectory(): string
     {
-        $defaultPath = APPLICATION_ROOT_DIR . '/data/cache/profiler';
+        $defaultPath = APPLICATION_ROOT_DIR . '/data/cache/codeBucket/profiler';
 
         return $this->get(WebProfilerWidgetConstants::PROFILER_CACHE_DIRECTORY, $defaultPath);
     }
