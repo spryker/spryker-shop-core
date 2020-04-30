@@ -9,7 +9,9 @@ namespace SprykerShop\Yves\QuoteRequestAgentWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToCustomerClientBridge;
+use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToMessengerClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToPersistentCartClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteRequestAgentClientBridge;
@@ -20,6 +22,9 @@ class QuoteRequestAgentWidgetDependencyProvider extends AbstractBundleDependency
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
+
+    public const SERVICE_ROUTER = 'routers';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -33,6 +38,8 @@ class QuoteRequestAgentWidgetDependencyProvider extends AbstractBundleDependency
         $container = $this->addQuoteClient($container);
         $container = $this->addPersistentCartClient($container);
         $container = $this->addCustomerClient($container);
+        $container = $this->addRouterService($container);
+        $container = $this->addMessengerClient($container);
 
         return $container;
     }
@@ -44,9 +51,9 @@ class QuoteRequestAgentWidgetDependencyProvider extends AbstractBundleDependency
      */
     protected function addQuoteRequestAgentClient(Container $container): Container
     {
-        $container[static::CLIENT_QUOTE_REQUEST_AGENT] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE_REQUEST_AGENT, function (Container $container) {
             return new QuoteRequestAgentWidgetToQuoteRequestAgentClientBridge($container->getLocator()->quoteRequestAgent()->client());
-        };
+        });
 
         return $container;
     }
@@ -58,9 +65,9 @@ class QuoteRequestAgentWidgetDependencyProvider extends AbstractBundleDependency
      */
     protected function addQuoteClient(Container $container): Container
     {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new QuoteRequestAgentWidgetToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }
@@ -72,9 +79,9 @@ class QuoteRequestAgentWidgetDependencyProvider extends AbstractBundleDependency
      */
     protected function addPersistentCartClient(Container $container): Container
     {
-        $container[static::CLIENT_PERSISTENT_CART] = function (Container $container) {
+        $container->set(static::CLIENT_PERSISTENT_CART, function (Container $container) {
             return new QuoteRequestAgentWidgetToPersistentCartClientBridge($container->getLocator()->persistentCart()->client());
-        };
+        });
 
         return $container;
     }
@@ -86,9 +93,39 @@ class QuoteRequestAgentWidgetDependencyProvider extends AbstractBundleDependency
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new QuoteRequestAgentWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addRouterService(Container $container): Container
+    {
+        $container->set(static::SERVICE_ROUTER, function () {
+            return (new Pimple())->getApplication()->get(static::SERVICE_ROUTER);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addMessengerClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_MESSENGER, function (Container $container) {
+            return new QuoteRequestAgentWidgetToMessengerClientBridge(
+                $container->getLocator()->messenger()->client()
+            );
+        });
 
         return $container;
     }

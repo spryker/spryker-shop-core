@@ -40,7 +40,7 @@ class AbstractController extends SprykerAbstractController
 
         if (static::COMPANY_USER_WITH_PERMISSIONS_REQUIRED) {
             if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
-                throw new NotFoundHttpException("Only company users are allowed to access this page");
+                throw new NotFoundHttpException('Only company users are allowed to access this page');
             }
 
             if (!$this->can(ManageCompanyUserInvitationPermissionPlugin::KEY, $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser())) {

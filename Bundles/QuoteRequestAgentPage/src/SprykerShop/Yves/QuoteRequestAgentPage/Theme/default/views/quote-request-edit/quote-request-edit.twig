@@ -1,102 +1,112 @@
 {% extends template('page-layout-quote-request', 'QuoteRequestAgentPage') %}
 
 {% define data = {
-    title: 'quote_request_page.quote_request' | trans,
+    title: 'quote_request_page.quote_request.title_edit' | trans({
+        '%id%': _view.quoteRequestForm.vars.value.quoteRequestReference,
+    }),
     quoteRequestForm: _view.quoteRequestForm,
     quoteRequest: _view.quoteRequestForm.vars.value,
+    shipmentGroupForms: _view.quoteRequestForm.latestVersion.shipmentGroups | default([]),
+    shipmentGroups: _view.quoteRequestForm.latestVersion.shipmentGroups.vars.value | default([]),
+    itemsWithShipment: _view.itemsWithShipment | default([]),
+    itemsWithoutShipment: _view.itemsWithoutShipment | default([]),
+    shipmentExpenses: _view.shipmentExpenses | default([]),
 } %}
 
-{% set quote = data.quoteRequest.latestVersion.quote %}
-
 {% block breadcrumbs %}
-    {% include molecule('breadcrumb') with {
-        data: {
-            steps: [
-                {
-                    label: 'agent.account.page_title' | trans,
-                    url: path('agent/overview'),
-                },
-                {
-                    label: 'quote_request_page.quote_request' | trans,
-                    url: path('agent/quote-request')
-                },
-                {
-                    label: '#' ~ data.quoteRequest.quoteRequestReference,
-                    url: path('agent/quote-request/details', {quoteRequestReference: data.quoteRequest.quoteRequestReference})
-                },
-                {
-                    label: 'quote_request_page.quote_request.actions.edit' | trans,
-                },
-            ],
+    {% set breadcrumbExtension = [
+        {
+            label: '#' ~ data.quoteRequest.quoteRequestReference,
+            url: path('agent/quote-request/details', {quoteRequestReference: data.quoteRequest.quoteRequestReference})
         },
-    } only %}
+        {
+            label: 'quote_request_page.quote_request.breadcrumb.edit' | trans,
+        },
+    ] %}
+
+    {{ parent() }}
 {% endblock %}
 
 {% block content %}
+    {% set quote = data.quoteRequest.latestVersion.quote %}
 
+    {{ block('contentInner') }}
+{% endblock %}
+
+{% block contentInner %}
     {{ form_start(data.quoteRequestForm) }}
+    {{ parent() }}
+    {{ form_end(data.quoteRequestForm) }}
+{% endblock %}
 
+{% block orderInformation %}
     <div class="grid">
-        <div class="col col--sm-12 col--xl-8">
-            <div class="box">
-                {% for child in data.quoteRequestForm.latestVersion.metadata %}
-                    <div class="col col--sm-12 col--xl-6">
-                        <div class="box">
-                            {{ form_row(child) }}
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-
-        <div class="col col--sm-12 col--xl-4">
-            <div class="box">
-                <h6>{{ "quote_request_page.quote_request.labels.information" | trans }}</h6>
-                <hr class="box__separator">
-                <p>{{ 'quote_request_page.quote_request.labels.date' | trans }}:
-                    <b>{{ data.quoteRequest.createdAt | formatDateTime }}</b>
-                </p>
-                <p>{{ 'quote_request_page.quote_request.labels.company' | trans }}:
-                    <b>{{ data.quoteRequest.companyUser.company.name }}</b>
-                </p>
-                <p>{{ 'quote_request_page.quote_request.labels.business_unit' | trans }}:
-                    <b>{{ data.quoteRequest.companyUser.companyBusinessUnit ? data.quoteRequest.companyUser.companyBusinessUnit.name : '' }}</b>
-                </p>
-                <p>{{ 'quote_request_page.quote_request.labels.customer' | trans }}:
-                    <b>{{ data.quoteRequest.companyUser.customer.firstName }} {{ data.quoteRequest.companyUser.customer.lastName }}</b>
-                </p>
-                <p>{{ 'quote_request_page.quote_request.labels.status' | trans }}:
-                    <span class="request-status request-status--{{ data.quoteRequest.status }}">{{ ('quote_request.status.' ~ data.quoteRequest.status) | trans }}</span>
-                </p>
-                <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:
-                    {{ form_row(data.quoteRequestForm.validUntil) }}
-                </p>
-                <hr class="box__separator">
-                <h6>{{ "quote_request_page.quote_request.labels.version_information" | trans }}</h6>
-                <hr class="box__separator">
-                <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:
-                    <b>{{ data.quoteRequest.latestVersion ? data.quoteRequest.latestVersion.versionReference : null }}</b>
-                </p>
-                <p>
-                    {{ form_row(data.quoteRequestForm.isLatestVersionVisible) }}
-                </p>
-            </div>
-        </div>
-    </div>
-    <div class="grid">
-        <div class="col col--sm-12 col--xl-8">
-            {% if quote and quote.priceMode is not empty %}
-                <div class="box">
-                    {% include molecule('price-mode') with {
-                        data: {
-                            priceMode: quote.priceMode,
-                        },
-                    } only %}
+        {% for child in data.quoteRequestForm.latestVersion.metadata %}
+            {% block orderInformationBoxWrapper %}
+                <div class="col col--sm-12 col--xl-6 spacing spacing--big spacing--inner">
+                    {{ form_row(child) }}
                 </div>
-            {% endif %}
-            {% widget 'QuoteConfiguredBundleWidget' args [quote] with {
-                data: {
-                    itemForms: data.quoteRequestForm.latestVersion.quote.items,
+            {% endblock %}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block quoteRequestInformation %}
+    {% embed molecule('quote-request-information', 'QuoteRequestPage') ignore missing with {
+        data: {
+            quoteRequest: data.quoteRequest,
+        },
+        embed: {
+            validUntil: data.quoteRequestForm.validUntil,
+        },
+    } only %}
+        {% block validUntil %}
+            <div class="grid grid--middle">
+                <span class="col">
+                    {{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:
+                </span>
+                <span class="col spacing-left">
+                    {{ form_row(embed.validUntil) }}
+                </span>
+            </div>
+        {% endblock %}
+
+        {% block history %}
+            <p>
+                {{ 'quote_request_page.quote_request.labels.history' | trans }}:
+                <span class="text-secondary">
+                    {{ data.quoteRequest.latestVersion ? data.quoteRequest.latestVersion.versionReference : null }}
+                </span>
+            </p>
+        {% endblock %}
+    {% endembed %}
+
+    {% block visibilityVersionToggler %}
+        {{ form_row(data.quoteRequestForm.isLatestVersionVisible) }}
+    {% endblock %}
+{% endblock %}
+
+{% block productsForMultiShipments %}
+    {% embed organism('product-and-shipment-view', 'QuoteRequestPage') ignore missing with {
+        data: {
+            quote: quote,
+            items: shipmentGroup.items,
+            shipment: shipmentGroup.shipment,
+            hasMultiShipments: hasMultiShipments,
+            isConfiguredBundleEditable: false,
+            isConfiguredBundleQuantitySummaryVisible: true,
+            shipmentExpenses: data.shipmentExpenses,
+        },
+        embed: {
+            itemForms: data.quoteRequestForm.latestVersion.quote.items,
+            shipmentGroup: shipmentGroup,
+            shipmentGroupForms: data.shipmentGroupForms,
+        },
+    } only %}
+        {% block configuredBundle %}
+            {% widget 'QuoteConfiguredBundleWidget' args [data.quote, data.items] with {
+                embed: {
+                    itemForms: embed.itemForms,
                 },
             } only %}
                 {% block bundleItem %}
@@ -109,7 +119,7 @@
                             isEditable: false,
                         },
                         embed: {
-                            itemForms: data.itemForms,
+                            itemForms: embed.itemForms,
                         },
                     } only %}
                         {% block bundleProductItem %}
@@ -154,56 +164,56 @@
                     {% endembed %}
                 {% endblock %}
             {% endwidget %}
+        {% endblock %}
 
-            {% set cartItems = data.quoteRequestForm.latestVersion.quote.items | filter(item => item.vars.value.configuredBundleItem is not defined or item.vars.value.configuredBundleItem is empty) %}
-            {% for itemChild in cartItems %}
-                {% set cartItem = itemChild.vars.value %}
-                {% embed molecule('product-cart-item', 'CartPage') ignore missing with {
-                    data: {
-                        product: cartItem,
-                    },
-                    embed: {
-                        priceMode: quote.priceMode,
-                        currency: quote.currency,
-                        itemChild: itemChild,
-                    },
-                } only %}
-                    {% block additionalInformation %}
-                        {% include molecule('quote-request-item-summary', 'QuoteRequestPage') ignore missing with {
-                            data: {
-                                priceMode: embed.priceMode,
-                                unitPrice: data.product.unitPrice | money(true, embed.currency.code),
-                                subtotalPrice: data.product.sumSubtotalAggregation | money(true, embed.currency.code),
-                                cartItem: data.product,
-                                currency: embed.currency,
-                            },
-                        } only %}
-                    {% endblock %}
+        {% block productItem %}
+            {% embed molecule('product-cart-item', 'CartPage') ignore missing with {
+                data: {
+                    product: cartItem,
+                },
+                embed: {
+                    priceMode: data.quote.priceMode,
+                    currency: data.quote.currency,
+                    itemForms: embed.itemForms,
+                },
+            } only %}
+                {% block additionalInformation %}
+                    {% include molecule('quote-request-item-summary', 'QuoteRequestPage') ignore missing with {
+                        data: {
+                            priceMode: embed.priceMode,
+                            unitPrice: data.product.unitPrice | money(true, embed.currency.code),
+                            subtotalPrice: data.product.sumSubtotalAggregation | money(true, embed.currency.code),
+                            cartItem: data.product,
+                            currency: embed.currency,
+                        },
+                    } only %}
+                {% endblock %}
 
-                    {% block actions %}
-                        {% if data.product.amountSalesUnit is empty %}
-                            {{ 'cart.item_quantity' | trans }}:
-                            <strong>{{ data.product.quantity }}</strong>
+                {% block actions %}
+                    {% if data.product.amountSalesUnit is empty %}
+                        {{ 'cart.item_quantity' | trans }}:
+                        <strong>{{ data.product.quantity }}</strong>
 
-                            {% if data.product.quantitySalesUnit %}
-                                {% set value = data.product.quantitySalesUnit.value %}
-                                {% set precision = data.product.quantitySalesUnit.precision %}
-                                {% set salesUnitName = data.product.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+                        {% if data.product.quantitySalesUnit %}
+                            {% set value = data.product.quantitySalesUnit.value %}
+                            {% set precision = data.product.quantitySalesUnit.precision %}
+                            {% set salesUnitName = data.product.quantitySalesUnit.productMeasurementUnit.name | default %}
 
-                                <p>
-                                    <small class="text-secondary">
-                                        [= {{ value / precision }} {{ salesUnitName | trans }}]
-                                    </small>
-                                </p>
-                            {% endif %}
+                            <p>
+                                <small class="text-secondary">
+                                    [= {{ value / precision }} {{ salesUnitName | trans }}]
+                                </small>
+                            </p>
                         {% endif %}
+                    {% endif %}
 
-                        {% set unitSourcePrice = embed.itemChild.sourceUnitGrossPrice is defined ? embed.itemChild.sourceUnitGrossPrice.vars.value : null %}
-                        {% set unitSourcePrice = embed.itemChild.sourceUnitNetPrice is defined ? embed.itemChild.sourceUnitNetPrice.vars.value : unitSourcePrice %}
+                    {% for itemForm in embed.itemForms if data.product.groupKey == itemForm.vars.value.groupKey %}
+                        {% set unitSourcePrice = itemForm.sourceUnitGrossPrice is defined ? itemForm.sourceUnitGrossPrice.vars.value : null %}
+                        {% set unitSourcePrice = itemForm.sourceUnitNetPrice is defined ? itemForm.sourceUnitNetPrice.vars.value : unitSourcePrice %}
 
                         {% include molecule('source-price-form', 'QuoteRequestAgentPage') with {
                             data: {
-                                priceForm: embed.itemChild,
+                                priceForm: itemForm,
                                 checkboxName: 'use_default_price',
                                 checkboxValue: 1,
                                 isChecked: unitSourcePrice == null,
@@ -213,44 +223,449 @@
                                 price: unitSourcePrice,
                             },
                         } only %}
-                    {% endblock %}
-                {% endembed %}
-            {% endfor %}
-        </div>
+                    {% endfor %}
 
-        <div class="col col--sm-12 col--xl-4">
-            {% if quote and quote.items is not empty %}
-                <div class="box">
-                    {% include molecule('quote-request-cart-summary', 'QuoteRequestPage') ignore missing with {
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+
+        {% block shipmentInformation %}
+            {% embed molecule('quote-request-shipment-information', 'QuoteRequestPage') ignore missing with {
+                data: {
+                    shipment: data.shipment,
+                    hasMultiShipments: true,
+                    priceMode: data.quote.priceMode,
+                    shipmentExpense: data.shipmentExpenses[embed.shipmentGroup.hash] is defined ? data.shipmentExpenses[embed.shipmentGroup.hash] : null,
+                },
+                embed: {
+                    shipmentGroupForms: embed.shipmentGroupForms,
+                    shipmentHash: embed.shipmentGroup.hash,
+                },
+            } only %}
+                {% block actions %}
+                    {% for shipmentGroupForm in embed.shipmentGroupForms if embed.shipmentHash == shipmentGroupForm.vars.value.hash %}
+                        {% set unitSourcePrice = shipmentGroupForm.sourcePrice.grossAmount is defined ? shipmentGroupForm.sourcePrice.grossAmount.vars.value : null %}
+                        {% set unitSourcePrice = shipmentGroupForm.sourcePrice.netAmount is defined ? shipmentGroupForm.sourcePrice.netAmount.vars.value : unitSourcePrice %}
+
+                        {% include molecule('source-price-form', 'QuoteRequestAgentPage') with {
+                            data: {
+                                priceForm: shipmentGroupForm,
+                                checkboxName: 'use_default_price',
+                                checkboxValue: 1,
+                                isChecked: unitSourcePrice == null,
+                                checkboxLabel: 'quote_request_page.quote_request.use_default_price' | trans,
+                            },
+                            attributes: {
+                                price: unitSourcePrice,
+                            },
+                        } only %}
+                    {% endfor %}
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block productsForSingleShipment %}
+    {% embed organism('product-and-shipment-view', 'QuoteRequestPage') ignore missing with {
+        data: {
+            quote: quote,
+            items: data.itemsWithShipment,
+            shipment: quote.items[0].shipment | default(quote.shipment),
+            shipmentExpenses: data.shipmentExpenses,
+            hasMultiShipments: hasMultiShipments,
+            isConfiguredBundleEditable: true,
+        },
+        embed: {
+            itemForms: data.quoteRequestForm.latestVersion.quote.items,
+            shipmentGroupForms: data.shipmentGroupForms,
+        },
+    } only %}
+        {% block configuredBundle %}
+            {% widget 'QuoteConfiguredBundleWidget' args [data.quote, data.items] with {
+                embed: {
+                    itemForms: embed.itemForms,
+                },
+            } only %}
+                {% block bundleItem %}
+                    {% embed molecule('configured-bundle', 'ConfigurableBundleWidget') ignore missing with {
                         data: {
-                            cart: quote,
+                            bundle: bundle,
+                            items: data.items,
+                            currencyIsoCode: data.currencyIsoCode,
+                            priceMode: data.priceMode,
+                            isEditable: false,
+                        },
+                        embed: {
+                            itemForms: embed.itemForms,
                         },
                     } only %}
-                </div>
-            {% endif %}
-            <div class="box">
-                <a class="button button--expand button--hollow"
-                   href="{{ url('agent/quote-request/details', {quoteRequestReference: data.quoteRequest.quoteRequestReference}) }}" data-init-single-click>
+                        {% block bundleProductItem %}
+                            {% embed molecule('configured-bundle-product', 'ConfigurableBundleWidget') ignore missing with {
+                                data: {
+                                    product: item,
+                                    currencyIsoCode: data.currencyIsoCode,
+                                    priceMode: data.priceMode,
+                                },
+                                embed: {
+                                    itemForms: embed.itemForms,
+                                },
+                            } only %}
+                                {% block quantityCol %}
+                                    <div class="{{ config.name }}__col col col--sm-4 col--lg-3">
+                                        {% block quantity %}
+                                            {{ parent() }}
+
+                                            {% for itemForm in embed.itemForms if data.product.groupKey == itemForm.vars.value.groupKey %}
+                                                {% set unitSourcePrice = itemForm.sourceUnitGrossPrice is defined ? itemForm.sourceUnitGrossPrice.vars.value : null %}
+                                                {% set unitSourcePrice = itemForm.sourceUnitNetPrice is defined ? itemForm.sourceUnitNetPrice.vars.value : unitSourcePrice %}
+
+                                                {% include molecule('source-price-form', 'QuoteRequestAgentPage') with {
+                                                    data: {
+                                                        priceForm: itemForm,
+                                                        checkboxName: 'use_default_price',
+                                                        checkboxValue: 1,
+                                                        isChecked: unitSourcePrice == null,
+                                                        checkboxLabel: 'quote_request_page.quote_request.use_default_price' | trans,
+                                                    },
+                                                    attributes: {
+                                                        price: unitSourcePrice,
+                                                    },
+                                                } only %}
+                                            {% endfor %}
+                                        {% endblock %}
+                                    </div>
+                                {% endblock %}
+                            {% endembed %}
+                        {% endblock %}
+                    {% endembed %}
+                {% endblock %}
+            {% endwidget %}
+        {% endblock %}
+
+        {% block productListInner %}
+            {% set cartItems = data.items | filter(item => item.configuredBundleItem is not defined or item.configuredBundleItem is empty) %}
+            {% for cartItem in cartItems %}
+
+                {% block productItem %}
+                    {% embed molecule('product-cart-item', 'CartPage') ignore missing with {
+                        data: {
+                            product: cartItem,
+                        },
+                        embed: {
+                            priceMode: data.quote.priceMode,
+                            currency: data.quote.currency,
+                            itemForms: embed.itemForms,
+                        },
+                    } only %}
+                        {% block additionalInformation %}
+                            {% include molecule('quote-request-item-summary', 'QuoteRequestPage') ignore missing with {
+                                data: {
+                                    priceMode: embed.priceMode,
+                                    unitPrice: data.product.unitPrice | money(true, embed.currency.code),
+                                    subtotalPrice: data.product.sumSubtotalAggregation | money(true, embed.currency.code),
+                                    cartItem: data.product,
+                                    currency: embed.currency,
+                                },
+                            } only %}
+                        {% endblock %}
+
+                        {% block actions %}
+                            {% if data.product.amountSalesUnit is empty %}
+                                {{ 'cart.item_quantity' | trans }}:
+                                <strong>{{ data.product.quantity }}</strong>
+
+                                {% if data.product.quantitySalesUnit %}
+                                    {% set value = data.product.quantitySalesUnit.value %}
+                                    {% set precision = data.product.quantitySalesUnit.precision %}
+                                    {% set salesUnitName = data.product.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+
+                                    <p>
+                                        <small class="text-secondary">
+                                            [= {{ value / precision }} {{ salesUnitName | trans }}]
+                                        </small>
+                                    </p>
+                                {% endif %}
+                            {% endif %}
+
+                            {% for itemForm in embed.itemForms if data.product.groupKey == itemForm.vars.value.groupKey %}
+                                {% set unitSourcePrice = itemForm.sourceUnitGrossPrice is defined ? itemForm.sourceUnitGrossPrice.vars.value : null %}
+                                {% set unitSourcePrice = itemForm.sourceUnitNetPrice is defined ? itemForm.sourceUnitNetPrice.vars.value : unitSourcePrice %}
+
+                                {% include molecule('source-price-form', 'QuoteRequestAgentPage') with {
+                                    data: {
+                                        priceForm: itemForm,
+                                        checkboxName: 'use_default_price',
+                                        checkboxValue: 1,
+                                        isChecked: unitSourcePrice == null,
+                                        checkboxLabel: 'quote_request_page.quote_request.use_default_price' | trans,
+                                    },
+                                    attributes: {
+                                        price: unitSourcePrice,
+                                    },
+                                } only %}
+                            {% endfor %}
+                        {% endblock %}
+                    {% endembed %}
+                {% endblock %}
+            {% endfor %}
+        {% endblock %}
+
+        {% block shipmentInformation %}
+            {% embed molecule('quote-request-shipment-information', 'QuoteRequestPage') ignore missing with {
+                data: {
+                    shipment: data.quote.items[0].shipment | default(data.quote.shipment),
+                    priceMode: data.quote.priceMode,
+                    shipmentExpense: data.shipmentExpenses | length > 0 ? data.shipmentExpenses | first : null
+                },
+                embed: {
+                    shipmentGroupForm: embed.shipmentGroupForms | first,
+                },
+            } only %}
+                {% block actions %}
+                    {% if embed.shipmentGroupForm %}
+                        {% set unitSourcePrice = embed.shipmentGroupForm.sourcePrice.grossAmount is defined ? embed.shipmentGroupForm.sourcePrice.grossAmount.vars.value : null %}
+                        {% set unitSourcePrice = embed.shipmentGroupForm.sourcePrice.netAmount is defined ? embed.shipmentGroupForm.sourcePrice.netAmount.vars.value : unitSourcePrice %}
+
+                        {% include molecule('source-price-form', 'QuoteRequestAgentPage') with {
+                            data: {
+                                priceForm: embed.shipmentGroupForm,
+                                checkboxName: 'use_default_price',
+                                checkboxValue: 1,
+                                isChecked: unitSourcePrice == null,
+                                checkboxLabel: 'quote_request_page.quote_request.use_default_price' | trans,
+                            },
+                            attributes: {
+                                price: unitSourcePrice,
+                            },
+                        } only %}
+                    {% endif %}
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block productsWithoutShipment %}
+    {% embed organism('product-and-shipment-view', 'QuoteRequestPage') ignore missing with {
+        data: {
+            quote: quote,
+            items: data.itemsWithoutShipment,
+            shipment: null,
+            hasMultiShipments: false,
+            isConfiguredBundleEditable: true,
+        },
+        embed: {
+            itemForms: data.quoteRequestForm.latestVersion.quote.items,
+        },
+    } only %}
+        {% block configuredBundle %}
+            {% widget 'QuoteConfiguredBundleWidget' args [data.quote, data.items] with {
+                embed: {
+                    itemForms: embed.itemForms,
+                },
+            } only %}
+                {% block bundleItem %}
+                    {% embed molecule('configured-bundle', 'ConfigurableBundleWidget') ignore missing with {
+                        data: {
+                            bundle: bundle,
+                            items: data.items,
+                            currencyIsoCode: data.currencyIsoCode,
+                            priceMode: data.priceMode,
+                            isEditable: false,
+                        },
+                        embed: {
+                            itemForms: embed.itemForms,
+                        },
+                    } only %}
+                        {% block bundleProductItem %}
+                            {% embed molecule('configured-bundle-product', 'ConfigurableBundleWidget') ignore missing with {
+                                data: {
+                                    product: item,
+                                    currencyIsoCode: data.currencyIsoCode,
+                                    priceMode: data.priceMode,
+                                },
+                                embed: {
+                                    itemForms: embed.itemForms,
+                                },
+                            } only %}
+                                {% block quantityCol %}
+                                    <div class="{{ config.name }}__col col col--sm-4 col--lg-3">
+                                        {% block quantity %}
+                                            {{ parent() }}
+
+                                            {% for itemForm in embed.itemForms if data.product.groupKey == itemForm.vars.value.groupKey %}
+                                                {% set unitSourcePrice = itemForm.sourceUnitGrossPrice is defined ? itemForm.sourceUnitGrossPrice.vars.value : null %}
+                                                {% set unitSourcePrice = itemForm.sourceUnitNetPrice is defined ? itemForm.sourceUnitNetPrice.vars.value : unitSourcePrice %}
+
+                                                {% include molecule('source-price-form', 'QuoteRequestAgentPage') with {
+                                                    data: {
+                                                        priceForm: itemForm,
+                                                        checkboxName: 'use_default_price',
+                                                        checkboxValue: 1,
+                                                        isChecked: unitSourcePrice == null,
+                                                        checkboxLabel: 'quote_request_page.quote_request.use_default_price' | trans,
+                                                    },
+                                                    attributes: {
+                                                        price: unitSourcePrice,
+                                                    },
+                                                } only %}
+                                            {% endfor %}
+                                        {% endblock %}
+                                    </div>
+                                {% endblock %}
+                            {% endembed %}
+                        {% endblock %}
+                    {% endembed %}
+                {% endblock %}
+            {% endwidget %}
+        {% endblock %}
+
+        {% block productListInner %}
+            {% set cartItems = data.items | filter(item => item.configuredBundleItem is not defined or item.configuredBundleItem is empty) %}
+            {% for cartItem in cartItems %}
+                {% block productItem %}
+                    {% embed molecule('product-cart-item', 'CartPage') ignore missing with {
+                        data: {
+                            product: cartItem,
+                        },
+                        embed: {
+                            priceMode: data.quote.priceMode,
+                            currency: data.quote.currency,
+                            itemForms: embed.itemForms,
+                        },
+                    } only %}
+                        {% block additionalInformation %}
+                            {% include molecule('quote-request-item-summary', 'QuoteRequestPage') ignore missing with {
+                                data: {
+                                    priceMode: embed.priceMode,
+                                    unitPrice: data.product.unitPrice | money(true, embed.currency.code),
+                                    subtotalPrice: data.product.sumSubtotalAggregation | money(true, embed.currency.code),
+                                    cartItem: data.product,
+                                    currency: embed.currency,
+                                },
+                            } only %}
+                        {% endblock %}
+
+                        {% block actions %}
+                            {% if data.product.amountSalesUnit is empty %}
+                                {{ 'cart.item_quantity' | trans }}:
+                                <strong>{{ data.product.quantity }}</strong>
+
+                                {% if data.product.quantitySalesUnit %}
+                                    {% set value = data.product.quantitySalesUnit.value %}
+                                    {% set precision = data.product.quantitySalesUnit.precision %}
+                                    {% set salesUnitName = data.product.quantitySalesUnit.productMeasurementUnit.name | default %}
+
+                                    <p>
+                                        <small class="text-secondary">
+                                            [= {{ value / precision }} {{ salesUnitName | trans }}]
+                                        </small>
+                                    </p>
+                                {% endif %}
+                            {% endif %}
+
+                            {% for itemForm in embed.itemForms if data.product.groupKey == itemForm.vars.value.groupKey %}
+                                {% set unitSourcePrice = itemForm.sourceUnitGrossPrice is defined ? itemForm.sourceUnitGrossPrice.vars.value : null %}
+                                {% set unitSourcePrice = itemForm.sourceUnitNetPrice is defined ? itemForm.sourceUnitNetPrice.vars.value : unitSourcePrice %}
+
+                                {% include molecule('source-price-form', 'QuoteRequestAgentPage') with {
+                                    data: {
+                                        priceForm: itemForm,
+                                        checkboxName: 'use_default_price',
+                                        checkboxValue: 1,
+                                        isChecked: unitSourcePrice == null,
+                                        checkboxLabel: 'quote_request_page.quote_request.use_default_price' | trans,
+                                    },
+                                    attributes: {
+                                        price: unitSourcePrice,
+                                    },
+                                } only %}
+                            {% endfor %}
+                        {% endblock %}
+                    {% endembed %}
+                {% endblock %}
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block quoteRequestSidebar %}
+    {% if quote and quote.items is not empty %}
+        {% block delivery %}
+            {% embed molecule('quote-request-delivery-summary', 'QuoteRequestPage') ignore missing with {
+                data: {
+                    quote: quote,
+                    hasMultiShipments: hasMultiShipments,
+                    isEditable: true,
+                    quoteRequestReference: data.quoteRequest.quoteRequestReference,
+                    shipmentExpenses: data.shipmentExpenses,
+                }
+            } only %}
+                {% block body %}
+                    {% set urlEditAddress = 'agent/quote-request/checkout-address' %}
+                    {% set urlEditShipment = 'agent/quote-request/checkout-shipment' %}
+                    {{ parent() }}
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+
+        {% block summary %}
+            {% include molecule('quote-request-summary', 'QuoteRequestPage') ignore missing with {
+                data: {
+                    cart: quote,
+                    shipmentGroups: data.shipmentGroups,
+                },
+            } only %}
+        {% endblock %}
+    {% endif %}
+
+    {% block actions %}
+        {% set buttonBackClass = 'button button--expand button--hollow' %}
+        {% set buttonEditItemsClass = 'button button--expand' %}
+        {% set buttonSaveClass = 'button button--expand button--success' %}
+        {% set buttonSendClass = 'button button--expand button--success' %}
+
+        <div class="box spacing-top spacing-top--big">
+            {% block actionBack %}
+                <a class="{{ buttonBackClass }}"
+                   href="{{ url('agent/quote-request/details', {quoteRequestReference: data.quoteRequest.quoteRequestReference}) }}"
+                   data-init-single-click>
                     {{ 'quote_request_page.quote_request.actions.back_to_view' | trans }}
                 </a>
-                <hr class="box__separator">
-                <a class="button button--expand button--edit-items"
-                   href="{{ url('agent/quote-request/edit-items', {quoteRequestReference: data.quoteRequest.quoteRequestReference}) }}" data-init-single-click>
+            {% endblock %}
+
+            {% block actionEditItems %}
+                {{ block('separator') }}
+
+                <a class="{{ buttonEditItemsClass }}"
+                   href="{{ url('agent/quote-request/edit-items', {quoteRequestReference: data.quoteRequest.quoteRequestReference}) }}"
+                   data-init-single-click>
                     {{ 'quote_request_page.quote_request.actions.edit_items' | trans }}
                 </a>
-                <hr class="box__separator">
-                <button type="submit" name="save" class="button button--expand button--success">
+            {% endblock %}
+
+            {% block actionSave %}
+                {{ block('separator') }}
+
+                <button type="submit" name="save" class="{{ buttonSaveClass }}" data-init-single-click>
                     {{ 'quote_request_page.quote_request.actions.save' | trans }}
                 </button>
-                {% if data.quoteRequest.latestVersion.quote.items | length %}
-                    <hr class="box__separator">
-                    <button type="submit" name="sendToCustomer" class="button button--expand button--success">
+            {% endblock %}
+
+            {% if data.quoteRequest.latestVersion.quote.items | length %}
+                {% block actionSend %}
+                    {{ block('separator') }}
+
+                    <button type="submit" name="sendToCustomer" class="{{ buttonSendClass }}">
                         {{ 'quote_request_page.quote_request.actions.send_to_customer' | trans }}
                     </button>
-                {% endif %}
-            </div>
+                {% endblock %}
+            {% endif %}
         </div>
-    </div>
+    {% endblock %}
+{% endblock %}
 
-    {{ form_end(data.quoteRequestForm) }}
+{% block separator %}
+    <hr class="box__separator">
 {% endblock %}

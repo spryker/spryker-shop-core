@@ -1,0 +1,51 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'quote-request-summary-shipment',
+} %}
+
+{% define data = {
+    shipmentGroups: required,
+    shipmentTotal: required,
+    currencyCode: required,
+    priceMode: null,
+    expenses: [],
+} %}
+
+{% block component %}
+    {% if (data.shipmentTotal or data.shipmentTotal is same as(0)) and data.currencyCode %}
+        <hr>
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% set shipmentClass = 'grid grid--justify' %}
+{% set shipmentTitleClass = 'col' %}
+{% set shipmentValueClass = 'col' %}
+
+{% set priceModeGross = 'GROSS_MODE' %}
+{% set shipmentExpenseType = 'SHIPMENT_EXPENSE_TYPE' %}
+
+{% block body %}
+    {% block title %}
+        <div class="{{ shipmentClass }}">
+            <strong class="{{ shipmentTitleClass }}">{{ 'checkout.step.summary.shipment_costs_total' | trans }}</strong>
+            <strong class="{{ shipmentValueClass }}">{{ data.shipmentTotal | money(true, data.currencyCode) }}</strong>
+        </div>
+    {% endblock %}
+    {% for expense in data.expenses if expense.type == shipmentExpenseType %}
+        {% set sourceUnitPrice = (data.priceMode == priceModeGross) ? expense.unitGrossPrice : expense.unitNetPrice %}
+
+        {% block summaryShipment %}
+            <div class="{{ shipmentClass }}">
+                <span class="{{ shipmentTitleClass }}">
+                    {{ expense.shipment.method.carrierName | default }}
+                    - {{ expense.shipment.method.name | default }}
+                </span>
+                <span class="{{ shipmentValueClass }}">
+                    {{ sourceUnitPrice | money(true, data.currencyCode) }}
+                </span>
+            </div>
+        {% endblock %}
+    {% endfor %}
+{% endblock %}
