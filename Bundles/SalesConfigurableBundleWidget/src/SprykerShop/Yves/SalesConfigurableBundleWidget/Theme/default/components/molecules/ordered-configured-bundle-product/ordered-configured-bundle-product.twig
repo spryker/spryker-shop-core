@@ -16,9 +16,10 @@
             {% widget 'CustomerReorderItemCheckboxWidget' args [data.product] only %}{% endwidget %}
         </div>
         <div class="col col--expand grid grid--middle">
+            {% set thumbnailModifiers = ['small', 'full-width'] %}
             {% block image %}
                 {% include atom('thumbnail') with {
-                    modifiers: ['small', 'full-width'],
+                    modifiers: thumbnailModifiers,
                     attributes: {
                         src: data.image,
                         alt: data.name,

@@ -28,6 +28,7 @@
     {% block imageColumn %}
         <div class="{{ imageColumnClass }}">
             {% block image %}
+                {% set thumbnailModifiers = ['small'] %}
                 {{ parent() }}
             {% endblock %}
         </div>
