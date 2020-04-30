@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\BarcodeWidget\Widget;
 
-use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
@@ -15,7 +14,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class BarcodeWidget extends AbstractWidget
 {
-    protected const PARAMETER_BARCODE_RESPONSE = 'barcodeResponseTransfer';
+    protected const PARAMETER_BARCODE_RESPONSE = 'barcodeResponse';
 
      /**
       * @param string $generationText
@@ -50,19 +49,11 @@ class BarcodeWidget extends AbstractWidget
      */
     protected function addBarcodeResponseParameter(string $generationText, ?string $barcodeGeneratorPlugin): void
     {
-        $this->addParameter(static::PARAMETER_BARCODE_RESPONSE, $this->getBarcodeResponseTransfer($generationText, $barcodeGeneratorPlugin));
-    }
-
-    /**
-     * @param string $generationText
-     * @param string|null $barcodeGeneratorPlugin
-     *
-     * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
-     */
-    protected function getBarcodeResponseTransfer(string $generationText, ?string $barcodeGeneratorPlugin): BarcodeResponseTransfer
-    {
-        return $this->getFactory()
-            ->getBarcodeService()
-            ->generateBarcode($generationText, $barcodeGeneratorPlugin);
+        $this->addParameter(
+            static::PARAMETER_BARCODE_RESPONSE,
+            $this->getFactory()
+                ->getBarcodeService()
+                ->generateBarcode($generationText, $barcodeGeneratorPlugin),
+        );
     }
 }
