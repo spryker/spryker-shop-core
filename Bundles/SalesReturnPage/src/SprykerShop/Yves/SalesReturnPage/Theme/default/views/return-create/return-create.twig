@@ -18,8 +18,8 @@
                 {% block backOrderLink %}
                     {% include molecule('order-detail-link', 'CustomerPage') ignore missing with {
                         class: backLinkClass,
-                        attributes: {
-                            href: path('customer/order/details', {'id': data.order.idSalesOrder}),
+                        data: {
+                            idSalesOrder: data.order.idSalesOrder,
                         },
                     } only %}
                 {% endblock %}
@@ -145,6 +145,7 @@
                                     } only %}
                                         {% block bundleProductItem %}
                                             {% embed molecule('ordered-configured-bundle-product-secondary', 'SalesConfigurableBundleWidget') with {
+                                                class: 'grid grid--middle',
                                                 data: {
                                                     product: data.items[item.IdSalesOrderItem],
                                                     currencyIsoCode: item.currencyIsoCode ?? data.currencyIsoCode,
