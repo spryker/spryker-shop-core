@@ -30,6 +30,6 @@ class ProductLabelProductViewExpanderPlugin extends AbstractPlugin implements Pr
     {
         return $this->getFactory()
             ->getProductLabelStorageClient()
-            ->expandProductView($productViewTransfer, $this->getLocale());
+            ->expandProductView($productViewTransfer, $this->getLocale(), APPLICATION_STORE);
     }
 }
