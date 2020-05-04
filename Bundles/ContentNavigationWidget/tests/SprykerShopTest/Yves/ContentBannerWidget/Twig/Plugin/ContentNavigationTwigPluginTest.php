@@ -154,7 +154,8 @@ class ContentNavigationTwigPluginTest extends Unit
         $contentNavigationWidgetToContentNavigationClientBridge = $this
             ->getMockBuilder(ContentNavigationWidgetToContentNavigationClientInterface::class)->getMock();
         $contentNavigationWidgetToContentNavigationClientBridge
-            ->method('executeNavigationTypeByKey')->willReturn($contentNavigationTypeTransfer);
+            ->method('executeNavigationTypeByKey')
+            ->willReturn($contentNavigationTypeTransfer);
         $this->tester->setDependency(
             ContentNavigationWidgetDependencyProvider::CLIENT_CONTENT_NAVIGATION,
             $contentNavigationWidgetToContentNavigationClientBridge
@@ -171,7 +172,8 @@ class ContentNavigationTwigPluginTest extends Unit
         $contentNavigationWidgetToContentStorageClientBridge = $this
             ->getMockBuilder(ContentNavigationToContentStorageClientInterface::class)->getMock();
         $contentNavigationWidgetToContentStorageClientBridge
-            ->method('findContentTypeContextByKey')->willReturn($contentTypeContextTransfer);
+            ->method('findContentTypeContextByKey')
+            ->willReturn($contentTypeContextTransfer);
         $this->tester->setDependency(
             ContentNavigationDependencyProvider::CLIENT_CONTENT_STORAGE,
             $contentNavigationWidgetToContentStorageClientBridge
