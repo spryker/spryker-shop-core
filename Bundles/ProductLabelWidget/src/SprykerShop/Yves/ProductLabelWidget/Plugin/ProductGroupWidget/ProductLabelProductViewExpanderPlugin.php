@@ -28,8 +28,14 @@ class ProductLabelProductViewExpanderPlugin extends AbstractPlugin implements Pr
      */
     public function expand(ProductViewTransfer $productViewTransfer): ProductViewTransfer
     {
+        $storeTransfer = $this->getFactory()->getStoreClient()->getCurrentStore();
+
         return $this->getFactory()
             ->getProductLabelStorageClient()
-            ->expandProductView($productViewTransfer, $this->getLocale(), APPLICATION_STORE);
+            ->expandProductView(
+                $productViewTransfer,
+                $this->getLocale(),
+                $storeTransfer->getName()
+            );
     }
 }
