@@ -6,4 +6,10 @@
     <transfer name="Customer">
     </transfer>
 
+    <transfer name="Quote">
+    </transfer>
+
+    <transfer name="OrderList">
+    </transfer>
+
 </transfers>
