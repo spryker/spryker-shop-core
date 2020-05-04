@@ -30,6 +30,21 @@ class ContentNavigationTwigFunction extends TwigFunction
     protected const WIDGET_TEMPLATE_IDENTIFIER_TREE_INLINE = 'tree-inline';
 
     /**
+     * @uses \Spryker\Shared\ContentNavigation\ContentNavigationConfig::WIDGET_TEMPLATE_IDENTIFIER_TREE
+     */
+    protected const WIDGET_TEMPLATE_IDENTIFIER_TREE = 'tree';
+
+    /**
+     * @uses \Spryker\Shared\ContentNavigation\ContentNavigationConfig::WIDGET_TEMPLATE_IDENTIFIER_TREE_INLINE
+     */
+    protected const WIDGET_TEMPLATE_IDENTIFIER_LIST_INLINE = 'list-inline';
+
+    /**
+     * @uses \Spryker\Shared\ContentNavigation\ContentNavigationConfig::WIDGET_TEMPLATE_IDENTIFIER_TREE_INLINE
+     */
+    protected const WIDGET_TEMPLATE_IDENTIFIER_LIST = 'list';
+
+    /**
      * @var \Twig\Environment
      */
     protected $twig;
@@ -113,6 +128,9 @@ class ContentNavigationTwigFunction extends TwigFunction
     {
         return [
             static::WIDGET_TEMPLATE_IDENTIFIER_TREE_INLINE => '@ContentNavigationWidget/views/navigation/tree-inline.twig',
+            static::WIDGET_TEMPLATE_IDENTIFIER_TREE => '@ContentNavigationWidget/views/navigation/tree.twig',
+            static::WIDGET_TEMPLATE_IDENTIFIER_LIST_INLINE => '@ContentNavigationWidget/views/navigation/list-inline.twig',
+            static::WIDGET_TEMPLATE_IDENTIFIER_LIST => '@ContentNavigationWidget/views/navigation/list.twig',
         ];
     }
 
