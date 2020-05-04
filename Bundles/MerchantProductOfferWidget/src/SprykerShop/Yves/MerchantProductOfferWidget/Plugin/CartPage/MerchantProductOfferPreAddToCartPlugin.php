@@ -47,6 +47,10 @@ class MerchantProductOfferPreAddToCartPlugin extends AbstractPlugin implements P
             ->getMerchantStorageClient()
             ->findOne($productOfferStorageTransfer->getIdMerchant());
 
+        if (!$merchantStorageTransfer) {
+            return $itemTransfer;
+        }
+
         $itemTransfer->setProductOfferReference($params[static::PARAM_PRODUCT_OFFER_REFERENCE])
             ->setMerchantReference($merchantStorageTransfer->getMerchantReference());
 

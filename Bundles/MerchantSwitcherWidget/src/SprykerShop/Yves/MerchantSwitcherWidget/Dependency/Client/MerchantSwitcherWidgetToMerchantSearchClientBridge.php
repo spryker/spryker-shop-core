@@ -27,8 +27,8 @@ class MerchantSwitcherWidgetToMerchantSearchClientBridge implements MerchantSwit
     /**
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function getMerchants(): MerchantCollectionTransfer
+    public function getMerchantCollection(): MerchantCollectionTransfer
     {
-        return $this->merchantSearchClient->getMerchants();
+        return $this->merchantSearchClient->getMerchantCollection();
     }
 }

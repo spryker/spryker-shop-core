@@ -26,7 +26,6 @@ class MerchantProductOfferWidgetFactory extends AbstractFactory
     public function createProductOfferReader(): MerchantProductOfferReaderInterface
     {
         return new MerchantProductOfferReader(
-            $this->getMerchantStorageClient(),
             $this->getMerchantProductOfferStorageClient(),
             $this->getPriceProductServiceClient(),
             $this->getPriceProductStorageClient(),

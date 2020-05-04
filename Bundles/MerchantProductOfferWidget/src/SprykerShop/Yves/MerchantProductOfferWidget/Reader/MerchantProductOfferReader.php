@@ -12,22 +12,15 @@ use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
-use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use SprykerShop\Shared\MerchantProductOfferWidget\MerchantProductOfferWidgetConfig;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface;
-use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantStorageClientInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToPriceProductStorageClientInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Service\MerchantProductOfferWidgetToPriceProductClientInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Resolver\ShopContextResolverInterface;
 
 class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
 {
-    /**
-     * @var \SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantStorageClientInterface
-     */
-    protected $merchantStorageClient;
-
     /**
      * @var \SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface
      */
@@ -49,20 +42,17 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
     protected $shopContextResolver;
 
     /**
-     * @param \SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantStorageClientInterface $merchantStorageClient
      * @param \SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface $merchantProductOfferStorageClient
      * @param \SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Service\MerchantProductOfferWidgetToPriceProductClientInterface $priceProductClient
      * @param \SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToPriceProductStorageClientInterface $priceProductStorageClient
      * @param \SprykerShop\Yves\MerchantProductOfferWidget\Resolver\ShopContextResolverInterface $shopContextResolver
      */
     public function __construct(
-        MerchantProductOfferWidgetToMerchantStorageClientInterface $merchantStorageClient,
         MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface $merchantProductOfferStorageClient,
         MerchantProductOfferWidgetToPriceProductClientInterface $priceProductClient,
         MerchantProductOfferWidgetToPriceProductStorageClientInterface $priceProductStorageClient,
         ShopContextResolverInterface $shopContextResolver
     ) {
-        $this->merchantStorageClient = $merchantStorageClient;
         $this->merchantProductOfferStorageClient = $merchantProductOfferStorageClient;
         $this->priceProductClient = $priceProductClient;
         $this->priceProductStorageClient = $priceProductStorageClient;
@@ -88,49 +78,25 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
 
         $productOfferStorageCollection = $this->merchantProductOfferStorageClient->getProductOfferStorageCollection($productOfferStorageCriteriaTransfer);
         $productOffersStorageTransfers = $productOfferStorageCollection->getProductOffersStorage();
-        $merchantIds = array_map(function (ProductOfferStorageTransfer $productOffersStorageTransfer) {
-            return $productOffersStorageTransfer->getIdMerchant();
-        }, $productOffersStorageTransfers->getArrayCopy());
 
         $priceProductTransfers = $this->getPriceProductTransfers($productViewTransfer);
-        $merchantStorageTransfers = $this->getMerchantStorageList($merchantIds);
 
         foreach ($productOffersStorageTransfers as $productOfferStorageTransfer) {
-            if (isset($merchantStorageTransfers[$productOfferStorageTransfer->getIdMerchant()])) {
-                $merchantStorageTransfer = $merchantStorageTransfers[$productOfferStorageTransfer->getIdMerchant()];
-                $merchantStorageTransfer->setMerchantUrl($this->getResolvedUrl($merchantStorageTransfer, $localeName));
-                $productOfferStorageTransfer->setMerchantStorage($merchantStorageTransfer);
+            $merchantStorageTransfer = $productOfferStorageTransfer->getMerchantStorage();
+            $merchantStorageTransfer->setMerchantUrl($this->getResolvedUrl($merchantStorageTransfer, $localeName));
+            $productOfferStorageTransfer->setMerchantStorage($merchantStorageTransfer);
 
-                $currentProductPriceTransfer = $this->getCurrentProductPriceTransferForOffer(
-                    $priceProductTransfers,
-                    $productOfferStorageTransfer->getProductOfferReference()
-                );
+            $currentProductPriceTransfer = $this->getCurrentProductPriceTransferForOffer(
+                $priceProductTransfers,
+                $productOfferStorageTransfer->getProductOfferReference()
+            );
 
-                $productOfferStorageTransfer->setPrice($currentProductPriceTransfer);
+            $productOfferStorageTransfer->setPrice($currentProductPriceTransfer);
 
-                $productOfferStorageList[] = $productOfferStorageTransfer;
-            }
+            $productOfferStorageList[] = $productOfferStorageTransfer;
         }
 
         return $productOfferStorageList;
-    }
-
-    /**
-     * @param int[] $merchantIds
-     *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
-     */
-    protected function getMerchantStorageList(array $merchantIds): array
-    {
-        $indexedMerchantStorageTransfers = [];
-        
-        $merchantStorageTransfers = $this->merchantStorageClient->get($merchantIds);
-
-        foreach ($merchantStorageTransfers as $merchantStorageTransfer) {
-            $indexedMerchantStorageTransfers[$merchantStorageTransfer->getIdMerchant()] = $merchantStorageTransfer;
-        }
-
-        return $indexedMerchantStorageTransfers;
     }
 
     /**
