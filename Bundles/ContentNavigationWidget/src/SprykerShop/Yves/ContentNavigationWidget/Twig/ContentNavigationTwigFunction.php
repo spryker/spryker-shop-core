@@ -139,7 +139,7 @@ class ContentNavigationTwigFunction extends TwigFunction
      *
      * @return string
      */
-    protected function getMessageNavigationNotFound(string $contentKey)
+    protected function getMessageNavigationNotFound(string $contentKey): string
     {
         return sprintf(static::MESSAGE_NAVIGATION_NOT_FOUND, $contentKey);
     }
@@ -149,7 +149,7 @@ class ContentNavigationTwigFunction extends TwigFunction
      *
      * @return string
      */
-    protected function getMessageNavigationWrongTemplate(string $templateIdentifier)
+    protected function getMessageNavigationWrongTemplate(string $templateIdentifier): string
     {
         return sprintf(static::MESSAGE_NAVIGATION_WRONG_TEMPLATE, $templateIdentifier);
     }
@@ -159,7 +159,7 @@ class ContentNavigationTwigFunction extends TwigFunction
      *
      * @return string
      */
-    protected function getMessageNavigationWrongType(string $contentKey)
+    protected function getMessageNavigationWrongType(string $contentKey): string
     {
         return sprintf(static::MESSAGE_NAVIGATION_WRONG_TYPE, $contentKey);
     }
