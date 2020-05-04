@@ -86,7 +86,7 @@
 
                                         {% block checkbox %}
                                             <div class="{{ checkboxWrapperClass }}">
-                                                {{ form_row(returnItem.uuid, {label: ' '}) }}
+                                                {{ form_row(returnItem.isReturnable, {label: ' '}) }}
                                             </div>
                                         {% endblock %}
 
@@ -159,7 +159,7 @@
                                                     <div class="col grid grid--middle">
                                                         {% for returnItem in embed.form.returnItems %}
                                                             {% if returnItem.vars.value.orderItem.IdSalesOrderItem == data.product.IdSalesOrderItem %}
-                                                                {{ form_row(returnItem.uuid, {label: ' '}) }}
+                                                                {{ form_row(returnItem.isReturnable, {label: ' '}) }}
                                                             {% endif %}
                                                         {% endfor %}
                                                     </div>

@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\SalesReturnPage\Form\Handler;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
@@ -105,7 +106,7 @@ class ReturnHandler implements ReturnHandlerInterface
             ->setStore($this->storeClient->getCurrentStore()->getName());
 
         foreach ($returnItemData as $returnItem) {
-            if (!$returnItem[ReturnItemTransfer::UUID]) {
+            if (!$returnItem[ItemTransfer::IS_RETURNABLE]) {
                 continue;
             }
 
