@@ -17,12 +17,17 @@ use Symfony\Component\Form\FormView;
 class CustomerReorderItemsFormWidget extends AbstractWidget
 {
     /**
+     * @var \Symfony\Component\Form\FormView|null
+     */
+    protected static $customerReorderItemsWidgetFormView;
+
+    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param array $config
      */
     public function __construct(OrderTransfer $orderTransfer, array $config)
     {
-        $this->addParameter('form', $this->getCustomerReorderItemsWidgetFormView());
+        $this->addParameter('form', $this->getOrCreateCustomerReorderItemsWidgetFormView());
         $this->addParameter('order', $orderTransfer);
         $this->addParameter('config', $config);
     }
@@ -46,11 +51,23 @@ class CustomerReorderItemsFormWidget extends AbstractWidget
     /**
      * @return \Symfony\Component\Form\FormView
      */
-    public function getCustomerReorderItemsWidgetFormView(): FormView
+    public function createCustomerReorderItemsWidgetFormView(): FormView
     {
         return $this->getFactory()
             ->createCustomerReorderWidgetFormFactory()
             ->getCustomerReorderItemsWidgetForm()
             ->createView();
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormView
+     */
+    protected function getOrCreateCustomerReorderItemsWidgetFormView(): FormView
+    {
+        if (static::$customerReorderItemsWidgetFormView === null) {
+            static::$customerReorderItemsWidgetFormView = $this->createCustomerReorderItemsWidgetFormView();
+        }
+
+        return static::$customerReorderItemsWidgetFormView;
     }
 }

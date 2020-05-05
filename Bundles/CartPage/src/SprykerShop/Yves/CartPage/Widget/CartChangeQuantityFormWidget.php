@@ -17,12 +17,17 @@ use Symfony\Component\Form\FormView;
 class CartChangeQuantityFormWidget extends AbstractWidget
 {
     /**
+     * @var \Symfony\Component\Form\FormView|null
+     */
+    protected static $cartChangeQuantityFormView;
+
+    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $cartItem
      * @param bool $readOnly
      */
     public function __construct(ItemTransfer $cartItem, bool $readOnly)
     {
-        $this->addParameter('cartChangeQuantityForm', $this->getCartChangeQuantityFormView());
+        $this->addParameter('cartChangeQuantityForm', $this->getOrCreateCartChangeQuantityFormView());
         $this->addParameter('cartItem', $cartItem);
         $this->addParameter('readOnly', $readOnly);
     }
@@ -46,11 +51,23 @@ class CartChangeQuantityFormWidget extends AbstractWidget
     /**
      * @return \Symfony\Component\Form\FormView
      */
-    protected function getCartChangeQuantityFormView(): FormView
+    protected function createCartChangeQuantityFormView(): FormView
     {
         return $this->getFactory()
             ->createCartPageFormFactory()
             ->getCartChangeQuantityForm()
             ->createView();
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormView
+     */
+    protected function getOrCreateCartChangeQuantityFormView(): FormView
+    {
+        if (static::$cartChangeQuantityFormView === null) {
+            static::$cartChangeQuantityFormView = $this->createCartChangeQuantityFormView();
+        }
+
+        return static::$cartChangeQuantityFormView;
     }
 }

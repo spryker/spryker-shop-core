@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CartPage\Plugin\Router;
 
 use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
 use Spryker\Yves\Router\Route\RouteCollection;
+use Symfony\Component\HttpFoundation\Request;
 
 class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -69,7 +70,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCartAddItemsRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cart/add-items', 'CartPage', 'Cart', 'addItemsAction');
-        $route = $route->setMethods(['POST']);
+        $route = $route->setMethods(Request::METHOD_POST);
         $routeCollection->add(static::ROUTE_CART_ADD_ITEMS, $route);
 
         return $routeCollection;
@@ -99,7 +100,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/cart/add/{sku}', 'CartPage', 'Cart', 'addAction');
         $route = $route->setRequirement('sku', static::SKU_PATTERN);
-        $route = $route->setMethods(['POST']);
+        $route = $route->setMethods(Request::METHOD_POST);
         $routeCollection->add(static::ROUTE_CART_ADD, $route);
 
         return $routeCollection;
@@ -116,7 +117,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/cart/quick-add/{sku}', 'CartPage', 'Cart', 'quickAddAction');
         $route = $route->setRequirement('sku', static::SKU_PATTERN);
-        $route = $route->setMethods(['POST']);
+        $route = $route->setMethods(Request::METHOD_POST);
         $routeCollection->add(static::ROUTE_CART_QUICK_ADD, $route);
 
         return $routeCollection;
@@ -132,7 +133,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $route = $this->buildRoute('/cart/remove/{sku}/{groupKey}', 'CartPage', 'Cart', 'removeAction');
         $route = $route->setRequirement('sku', static::SKU_PATTERN);
         $route = $route->setDefault('groupKey', '');
-        $route = $route->setMethods(['POST']);
+        $route = $route->setMethods(Request::METHOD_POST);
 
         $routeCollection->add(static::ROUTE_CART_REMOVE, $route);
 
@@ -148,7 +149,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/cart/change/{sku}', 'CartPage', 'Cart', 'changeAction');
         $route = $route->setRequirement('sku', static::SKU_PATTERN);
-        $route = $route->setMethods(['POST']);
+        $route = $route->setMethods(Request::METHOD_POST);
         $routeCollection->add(static::ROUTE_CART_CHANGE_QUANTITY, $route);
 
         return $routeCollection;
@@ -163,7 +164,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/cart/update/{sku}', 'CartPage', 'Cart', 'updateAction');
         $route = $route->setRequirement('sku', static::SKU_PATTERN);
-        $route = $route->setMethods(['POST']);
+        $route = $route->setMethods(Request::METHOD_POST);
         $routeCollection->add(static::ROUTE_CART_UPDATE, $route);
 
         return $routeCollection;

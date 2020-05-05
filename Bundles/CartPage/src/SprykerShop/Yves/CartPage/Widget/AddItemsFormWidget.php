@@ -16,6 +16,11 @@ use Symfony\Component\Form\FormView;
 class AddItemsFormWidget extends AbstractWidget
 {
     /**
+     * @var \Symfony\Component\Form\FormView|null
+     */
+    protected static $addToCartFromView;
+
+    /**
      * @param array $config
      * @param array $data
      * @param array $productViewTransfers
@@ -23,7 +28,7 @@ class AddItemsFormWidget extends AbstractWidget
     public function __construct(array $config, array $data, array $productViewTransfers)
     {
         $this->addParameter('config', $config);
-        $this->addParameter('addToCartForm', $this->getAddToCartFormView());
+        $this->addParameter('addToCartForm', $this->getOrCreateAddToCartFormView());
         $this->addParameter('data', $data);
         $this->addParameter('products', $productViewTransfers);
     }
@@ -47,11 +52,23 @@ class AddItemsFormWidget extends AbstractWidget
     /**
      * @return \Symfony\Component\Form\FormView
      */
-    protected function getAddToCartFormView(): FormView
+    protected function createAddToCartFormView(): FormView
     {
         return $this->getFactory()
             ->createCartPageFormFactory()
             ->getAddItemsForm()
             ->createView();
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormView
+     */
+    protected function getOrCreateAddToCartFormView(): FormView
+    {
+        if (static::$addToCartFromView === null) {
+            static::$addToCartFromView = $this->createAddToCartFormView();
+        }
+
+        return static::$addToCartFromView;
     }
 }
