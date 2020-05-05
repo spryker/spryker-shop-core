@@ -131,6 +131,7 @@
     </transfer>
 
     <transfer name="Store">
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="ItemState">
@@ -140,6 +141,10 @@
     <transfer name="OrderListRequest">
         <property name="customerReference" type="string"/>
         <property name="orderReferences" type="string[]" singular="orderReference"/>
+    </transfer>
+
+    <transfer name="OrderList">
+        <property name="orders" type="Order[]" singular="order"/>
     </transfer>
 
 </transfers>

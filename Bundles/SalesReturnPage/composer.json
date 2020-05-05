@@ -1,12 +1,13 @@
 {
   "name": "spryker-shop/sales-return-page",
+  "type": "library",
   "description": "SalesReturnPage module",
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
     "spryker/application": "^3.8.0",
-    "spryker/kernel": "^3.30.0",
     "spryker/customer": "^7.19.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/sales": "^11.0.0",
     "spryker/sales-return": "^0.1.0",
     "spryker/store": "^1.11.0",
@@ -31,8 +32,8 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
   },
   "extra": {
     "branch-alias": {
