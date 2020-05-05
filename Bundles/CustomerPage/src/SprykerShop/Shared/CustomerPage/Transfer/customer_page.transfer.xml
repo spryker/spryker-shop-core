@@ -320,4 +320,8 @@
     <transfer name="ShipmentMethod">
     </transfer>
 
+    <transfer name="TaxTotal">
+        <property name="amount" type="int"/>
+    </transfer>
+
 </transfers>
