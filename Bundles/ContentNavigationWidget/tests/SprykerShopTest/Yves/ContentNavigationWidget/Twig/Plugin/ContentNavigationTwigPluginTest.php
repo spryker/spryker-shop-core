@@ -37,7 +37,7 @@ class ContentNavigationTwigPluginTest extends Unit
 {
     protected const LOCALE = 'de_DE';
 
-    protected const DEFAULT_TEMPLATE = 'top-title';
+    protected const DEFAULT_TEMPLATE = 'tree-inline';
     protected const WRONG_TEMPLATE = 'wrong';
 
     protected const CONTENT_KEY = '0';

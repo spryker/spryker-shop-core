@@ -35,12 +35,12 @@ class ContentNavigationTwigFunction extends TwigFunction
     protected const WIDGET_TEMPLATE_IDENTIFIER_TREE = 'tree';
 
     /**
-     * @uses \Spryker\Shared\ContentNavigation\ContentNavigationConfig::WIDGET_TEMPLATE_IDENTIFIER_TREE_INLINE
+     * @uses \Spryker\Shared\ContentNavigation\ContentNavigationConfig::WIDGET_TEMPLATE_IDENTIFIER_LIST_INLINE
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_LIST_INLINE = 'list-inline';
 
     /**
-     * @uses \Spryker\Shared\ContentNavigation\ContentNavigationConfig::WIDGET_TEMPLATE_IDENTIFIER_TREE_INLINE
+     * @uses \Spryker\Shared\ContentNavigation\ContentNavigationConfig::WIDGET_TEMPLATE_IDENTIFIER_LIST
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_LIST = 'list';
 
