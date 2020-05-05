@@ -85,7 +85,7 @@ class ContentNavigationTwigPluginTest extends Unit
      */
     public function testContentNavigationWrongType(): void
     {
-        // Assign
+        // Arrange
         $contentTypeContextTransfer = new ContentTypeContextTransfer();
         $contentTypeContextTransfer->setKey(static::CONTENT_KEY);
         $contentTypeContextTransfer->setTerm(static::CONTENT_TERM);
@@ -108,7 +108,7 @@ class ContentNavigationTwigPluginTest extends Unit
      */
     public function testContentNavigationWrongTemplate(): void
     {
-        // Assign
+        // Arrange
         $contentNavigationTypeTransfer = new ContentNavigationTypeTransfer();
         $this->setContentNavigationWidgetToContentNavigationClientReturn($contentNavigationTypeTransfer);
 
@@ -128,7 +128,7 @@ class ContentNavigationTwigPluginTest extends Unit
      */
     public function testContentNavigationRendering(): void
     {
-        // Assign
+        // Arrange
         $contentTypeContextTransfer = new ContentNavigationTypeTransfer();
         $this->setContentNavigationWidgetToContentNavigationClientReturn($contentTypeContextTransfer);
 

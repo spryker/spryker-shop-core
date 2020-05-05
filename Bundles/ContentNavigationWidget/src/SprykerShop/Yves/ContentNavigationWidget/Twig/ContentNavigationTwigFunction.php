@@ -122,7 +122,7 @@ class ContentNavigationTwigFunction extends TwigFunction
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function getAvailableTemplates(): array
     {
