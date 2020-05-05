@@ -1,0 +1,20 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'return-create-link',
+    tag: 'a',
+} %}
+
+{% define data = {
+    idSalesOrder: required,
+} %}
+
+{% define attributes = {
+    href: path('return/create', { idSalesOrder: (data.idSalesOrder)}),
+} %}
+
+{%- block extraClass %} link{% endblock -%}
+
+{% block body %}
+    {{- 'sales_return_page.button.create_return' | trans -}}
+{% endblock %}
