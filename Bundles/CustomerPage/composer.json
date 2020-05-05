@@ -52,7 +52,7 @@
     "spryker-shop/home-page": "Widget plugins are available for this module.",
     "spryker-shop/order-custom-reference-widget": "Add the module if you want to use order custom reference functionality",
     "spryker-shop/product-packaging-unit-widget": "If you want to use components from module ProductPackagingUnitWidget or OrderDetailProductPackagingUnitWidgetPlugin.",
-    "spryker-shop/sales-configurable-bundle-widget": "Add the module if you want to use OrderConfiguredBundleWidget.",
+    "spryker-shop/sales-configurable-bundle-widget": "Add the module if you want to use OrderItemsConfiguredBundleWidget.",
     "spryker-shop/sales-return-page": "Add the module if you want to use return-create-link molecule.",
     "spryker/config": "Use this module when using plugins that need Config dependencies.",
     "spryker/container": "If you want to use twig plugins.",

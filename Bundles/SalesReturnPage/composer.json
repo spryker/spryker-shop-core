@@ -6,18 +6,23 @@
   "require": {
     "php": ">=7.2",
     "spryker-shop/shop-ui": "^1.0.0",
+    "spryker/application": "^3.8.0",
     "spryker/customer": "^7.19.0",
     "spryker/kernel": "^3.30.0",
     "spryker/sales": "^11.0.0",
     "spryker/sales-return": "^0.1.1",
+    "spryker/store": "^1.11.0",
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
+    "spryker-shop/customer-page": "*",
+    "spryker-shop/sales-configurable-bundle-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/router": "*"
   },
   "suggest": {
     "spryker-shop/customer-page": "Use this module when you want to use CustomerNavigationWidget",
+    "spryker-shop/sales-configurable-bundle-widget": "Use this module when you want to use OrderItemsConfiguredBundleWidget",
     "spryker/router": "Use this module if you want use the RouterProviderPlugin."
   },
   "autoload": {
@@ -28,8 +33,8 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
   },
   "extra": {
     "branch-alias": {

@@ -50,13 +50,13 @@ export default class ButtonsStateHandler extends Component {
     protected disableTargets(): void {
         this.targets.forEach((target: HTMLInputElement) => {
             target.setAttribute('disabled', 'disabled');
-        })
+        });
     }
 
     protected enableTargets(): void {
         this.targets.forEach((target: HTMLInputElement) => {
             target.removeAttribute('disabled');
-        })
+        });
     }
 
     protected get triggerClassName(): string {
