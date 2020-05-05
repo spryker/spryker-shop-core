@@ -1,4 +1,6 @@
 namespace: SprykerShopTest\Yves\ContentNavigationWidget
+include:
+  - tests/SprykerShopTest/Yves/ContentNavigationWidget
 
 paths:
     tests: .
