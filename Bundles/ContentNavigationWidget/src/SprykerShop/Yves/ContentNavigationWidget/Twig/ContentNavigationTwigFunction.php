@@ -109,7 +109,6 @@ class ContentNavigationTwigFunction extends TwigFunction
                 return $this->getMessageNavigationWrongType($contentKey);
             }
 
-
             $navigationStorageTransfer = $this->navigationStorageClient->findNavigationTreeByKey(
                 $contentNavigationTypeTransfer->getNavigationKey(),
                 $this->localeName
