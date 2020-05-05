@@ -8,6 +8,8 @@
 namespace SprykerShop\Yves\SalesReturnPage\Form\Handler;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
 use Generated\Shared\Transfer\ReturnResponseTransfer;
@@ -16,10 +18,16 @@ use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesRet
 use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToStoreClientInterface;
 use SprykerShop\Yves\SalesReturnPage\Form\DataProvider\ReturnCreateFormDataProvider;
 use SprykerShop\Yves\SalesReturnPage\Form\ReturnCreateForm;
-use SprykerShop\Yves\SalesReturnPage\Form\ReturnItemsForm;
 
 class ReturnHandler implements ReturnHandlerInterface
 {
+    protected const GLOSSARY_KEY_CREATE_RETURN_SELECTED_ITEMS_ERROR = 'return_page.create_return.validation.selected_items';
+
+    /**
+     * @uses \SprykerShop\Yves\SalesReturnPage\Form\ReturnItemsForm::FIELD_CUSTOM_REASON
+     */
+    protected const FIELD_CUSTOM_REASON = 'customReason';
+
     /**
      * @var \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnClientInterface
      */
@@ -55,16 +63,34 @@ class ReturnHandler implements ReturnHandlerInterface
      *
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
-    public function createReturnResponseTransfer(array $returnItemsList): ReturnResponseTransfer
+    public function createReturn(array $returnItemsList): ReturnResponseTransfer
     {
         $returnItemData = isset($returnItemsList[ReturnCreateForm::FIELD_RETURN_ITEMS])
             ? $returnItemsList[ReturnCreateForm::FIELD_RETURN_ITEMS]
             : [];
 
         $returnCreateRequestTransfer = $this->createReturnCreateRequestTransfer($returnItemData);
-        $returnResponseTransfer = $this->salesReturnClient->createReturn($returnCreateRequestTransfer);
 
-        return $returnResponseTransfer;
+        if ($returnCreateRequestTransfer->getReturnItems()->count()) {
+            return $this->salesReturnClient->createReturn($returnCreateRequestTransfer);
+        }
+
+        return $this->createErrorReturnResponse(static::GLOSSARY_KEY_CREATE_RETURN_SELECTED_ITEMS_ERROR);
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\ReturnResponseTransfer
+     */
+    protected function createErrorReturnResponse(string $message): ReturnResponseTransfer
+    {
+        $messageTransfer = (new MessageTransfer())
+            ->setValue($message);
+
+        return (new ReturnResponseTransfer())
+            ->setIsSuccessful(false)
+            ->addMessage($messageTransfer);
     }
 
     /**
@@ -80,14 +106,14 @@ class ReturnHandler implements ReturnHandlerInterface
             ->setStore($this->storeClient->getCurrentStore()->getName());
 
         foreach ($returnItemData as $returnItem) {
-            if (!$returnItem[ReturnItemsForm::FIELD_UUID]) {
+            if (!$returnItem[ItemTransfer::IS_RETURNABLE]) {
                 continue;
             }
 
             $returnItemTransfer = (new ReturnItemTransfer())->fromArray($returnItem, true);
 
-            if ($returnItem[ReturnItemsForm::FIELD_REASON] === ReturnCreateFormDataProvider::GLOSSARY_KEY_CUSTOM_REASON && $returnItem[ReturnItemsForm::FIELD_CUSTOM_REASON]) {
-                $returnItemTransfer->setReason($returnItem[ReturnItemsForm::FIELD_CUSTOM_REASON]);
+            if ($returnItem[ReturnItemTransfer::REASON] === ReturnCreateFormDataProvider::CUSTOM_REASON_VALUE && $returnItem[static::FIELD_CUSTOM_REASON]) {
+                $returnItemTransfer->setReason($returnItem[static::FIELD_CUSTOM_REASON]);
             }
 
             $returnItemTransfersCollection->append($returnItemTransfer);

@@ -3,7 +3,6 @@
 {% define data = {
     items: _widget.items,
     salesOrderConfiguredBundles: _widget.salesOrderConfiguredBundles,
-    currencyIsoCode: _widget.currencyIsoCode,
 } %}
 
 {% block body %}
@@ -13,7 +12,6 @@
                 data: {
                     bundle: bundle,
                     items: data.items,
-                    currencyIsoCode: data.currencyIsoCode,
                 },
             } only %}
         {% endblock %}

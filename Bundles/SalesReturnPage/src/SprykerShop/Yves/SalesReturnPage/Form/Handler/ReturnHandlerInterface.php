@@ -16,5 +16,5 @@ interface ReturnHandlerInterface
      *
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
-    public function createReturnResponseTransfer(array $returnItemsList): ReturnResponseTransfer;
+    public function createReturn(array $returnItemsList): ReturnResponseTransfer;
 }
