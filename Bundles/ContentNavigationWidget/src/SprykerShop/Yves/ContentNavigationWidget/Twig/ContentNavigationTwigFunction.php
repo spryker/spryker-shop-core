@@ -97,7 +97,8 @@ class ContentNavigationTwigFunction extends TwigFunction
     protected function getFunction(): callable
     {
         return function (string $contentKey, string $templateIdentifier): ?string {
-            if (!isset($this->getAvailableTemplates()[$templateIdentifier])) {
+            $availableTemplate = $this->findTemplate($templateIdentifier);
+            if (!$availableTemplate) {
                 return $this->getMessageNavigationWrongTemplate($templateIdentifier);
             }
             try {
@@ -119,23 +120,27 @@ class ContentNavigationTwigFunction extends TwigFunction
             }
 
             return $this->twig->render(
-                $this->getAvailableTemplates()[$templateIdentifier],
+                $availableTemplate,
                 ['navigation' => $navigationStorageTransfer]
             );
         };
     }
 
     /**
-     * @return string[]
+     * @param string $templateIdentifier
+     *
+     * @return string|null
      */
-    protected function getAvailableTemplates(): array
+    protected function findTemplate(string $templateIdentifier): ?string
     {
-        return [
+        $availableTemplates = [
             static::WIDGET_TEMPLATE_IDENTIFIER_TREE_INLINE => '@ContentNavigationWidget/views/navigation/tree-inline.twig',
             static::WIDGET_TEMPLATE_IDENTIFIER_TREE => '@ContentNavigationWidget/views/navigation/tree.twig',
             static::WIDGET_TEMPLATE_IDENTIFIER_LIST_INLINE => '@ContentNavigationWidget/views/navigation/list-inline.twig',
             static::WIDGET_TEMPLATE_IDENTIFIER_LIST => '@ContentNavigationWidget/views/navigation/list.twig',
         ];
+        
+        return $availableTemplates[$templateIdentifier] ?? null;
     }
 
     /**
