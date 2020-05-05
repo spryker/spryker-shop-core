@@ -105,13 +105,18 @@ class ContentNavigationTwigFunction extends TwigFunction
                 if (!$contentNavigationTypeTransfer) {
                     return $this->getMessageNavigationNotFound($contentKey);
                 }
-
-                $navigationStorageTransfer = $this->navigationStorageClient->findNavigationTreeByKey(
-                    $contentNavigationTypeTransfer->getNavigationKey(),
-                    $this->localeName
-                );
             } catch (MissingNavigationTermException $e) {
                 return $this->getMessageNavigationWrongType($contentKey);
+            }
+
+
+            $navigationStorageTransfer = $this->navigationStorageClient->findNavigationTreeByKey(
+                $contentNavigationTypeTransfer->getNavigationKey(),
+                $this->localeName
+            );
+
+            if (!$navigationStorageTransfer) {
+                return $this->getMessageNavigationNotFound($contentKey);
             }
 
             return $this->twig->render(

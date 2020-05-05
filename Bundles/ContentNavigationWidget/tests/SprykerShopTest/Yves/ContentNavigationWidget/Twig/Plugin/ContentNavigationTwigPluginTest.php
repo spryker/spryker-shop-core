@@ -140,7 +140,6 @@ class ContentNavigationTwigPluginTest extends Unit
         );
 
         // Assert
-
         $this->assertEquals($navigationContent, static::RENDERED_STRING);
     }
 
