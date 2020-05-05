@@ -15,6 +15,7 @@
         <property name="sumPriceToPayAggregation" type="int"/>
         <property name="quantity" type="int"/>
         <property name="name" type="string"/>
+        <property name="salesOrderConfiguredBundle" type="SalesOrderConfiguredBundle"/>
     </transfer>
 
     <transfer name="Order">

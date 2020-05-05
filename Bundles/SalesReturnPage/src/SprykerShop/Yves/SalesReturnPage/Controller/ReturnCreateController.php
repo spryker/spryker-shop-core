@@ -66,7 +66,10 @@ class ReturnCreateController extends AbstractReturnController
             return $this->processReturnCreateForm($returnCreateForm, $orderTransfer);
         }
 
-        return $this->getViewParameters($returnCreateForm, $orderTransfer);
+        return [
+            'returnCreateForm' => $returnCreateForm->createView(),
+            'order' => $orderTransfer,
+        ];
     }
 
     /**
@@ -78,9 +81,13 @@ class ReturnCreateController extends AbstractReturnController
      */
     protected function getOrderByOrderReference(string $orderReference): OrderTransfer
     {
+        $orderListRequestTransfer = (new OrderListRequestTransfer())
+            ->setCustomerReference($this->getFactory()->getCustomerClient()->getCustomer()->getCustomerReference())
+            ->setOrderReferences([$orderReference]);
+
         $orderTransfersCollection = $this->getFactory()
             ->getSalesClient()
-            ->getOffsetPaginatedCustomerOrderList($this->createOrderListRequestTransfer($orderReference))
+            ->getOffsetPaginatedCustomerOrderList($orderListRequestTransfer)
             ->getOrders();
 
         if (!$orderTransfersCollection->count()) {
@@ -102,42 +109,19 @@ class ReturnCreateController extends AbstractReturnController
             ->createReturnHandler()
             ->createReturn($returnCreateForm->getData());
 
-        if (!$returnResponseTransfer->getIsSuccessful()) {
-            $this->handleResponseErrors($returnResponseTransfer);
+        if ($returnResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::GLOSSARY_KEY_RETURN_CREATED);
 
-            return $this->getViewParameters($returnCreateForm, $orderTransfer);
+            return $this->redirectResponseInternal(static::ROUTE_RETURN_VIEW, [
+                static::PARAM_RETURN_REFERENCE => $returnResponseTransfer->getReturn()->getReturnReference(),
+            ]);
         }
 
-        $this->addSuccessMessage(static::GLOSSARY_KEY_RETURN_CREATED);
+        $this->handleResponseErrors($returnResponseTransfer);
 
-        return $this->redirectResponseInternal(static::ROUTE_RETURN_VIEW, [
-            static::PARAM_RETURN_REFERENCE => $returnResponseTransfer->getReturn()->getReturnReference(),
-        ]);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormInterface $returnCreateForm
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return array
-     */
-    protected function getViewParameters(FormInterface $returnCreateForm, OrderTransfer $orderTransfer): array
-    {
         return [
             'returnCreateForm' => $returnCreateForm->createView(),
             'order' => $orderTransfer,
         ];
-    }
-
-    /**
-     * @param string $orderReference
-     *
-     * @return \Generated\Shared\Transfer\OrderListRequestTransfer
-     */
-    protected function createOrderListRequestTransfer(string $orderReference): OrderListRequestTransfer
-    {
-        return (new OrderListRequestTransfer())
-            ->setCustomerReference($this->getFactory()->getCustomerClient()->getCustomer()->getCustomerReference())
-            ->setOrderReferences([$orderReference]);
     }
 }

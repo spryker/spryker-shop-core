@@ -6,7 +6,6 @@
 
 {% define data = {
     item: required,
-    currencyIsoCode: required,
 } %}
 
 {% set checkboxColumnClass = 'col col--middle col--sm-2' %}
@@ -28,7 +27,8 @@
 
     {% block productItemColumn %}
         <div class="{{ productItemColumnClass }}">
-            {% set productInfoColumnClass = 'col col--sm-6' %}
+            {% set productInfoColumnClass = 'col col--sm-4' %}
+            {% set productStatusColumnClass = 'col col--sm-2 text-center' %}
             {% set productPriceColumnClass = 'col col--sm-2 text-center' %}
             {% set productQuantityColumnClass = 'col col--sm-2 text-center' %}
             {% set productPriceTotalColumnClass = 'col col--sm-2 text-center' %}
@@ -43,23 +43,37 @@
                                 </div>
                             {% endblock %}
 
+                            {% if not data.item.isReturnable %}
+                                {% block productItemReturnableInfo %}
+                                    <div>
+                                        {{ 'return_page.returnable_state' | trans }}
+                                    </div>
+                                {% endblock %}
+                            {% endif %}
+
                             {% block productItemName %}
-                                <div>
+                                <h6>
                                     {{ data.item.name }}
-                                </div>
+                                </h6>
                             {% endblock %}
 
+                            {% set skuClass = 'text-secondary' %}
+
                             {% block productItemSku %}
-                                <div>
+                                <small class="{{ skuClass }}">
                                     {{ 'return_page.item_sku' | trans }} {{ data.item.sku }}
-                                </div>
+                                </small>
                             {% endblock %}
                         {% endblock %}
                     </div>
                 {% endblock %}
 
+                {% block productStatus %}
+                    <span class="{{ productStatusColumnClass }}">{{ data.item.state.name }}</span>
+                {% endblock %}
+
                 {% block productItemPrice %}
-                    <strong class="{{ productPriceColumnClass }}">{{ data.item.unitPrice | money(true, data.currencyIsoCode) }}</strong>
+                    <strong class="{{ productPriceColumnClass }}">{{ data.item.unitPrice | money(true, data.item.currencyIsoCode) }}</strong>
                 {% endblock %}
 
                 {% block productItemQuantity %}
@@ -69,7 +83,7 @@
                 {% endblock %}
 
                 {% block productItemTotalPrice %}
-                    <strong class="{{ productPriceTotalColumnClass }}">{{ data.item.sumPrice | money(true, data.currencyIsoCode) }}</strong>
+                    <strong class="{{ productPriceTotalColumnClass }}">{{ data.item.sumPrice | money(true, data.item.currencyIsoCode) }}</strong>
                 {% endblock %}
             {% endblock %}
         </div>
