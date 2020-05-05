@@ -6,11 +6,11 @@
 } %}
 
 {% define data = {
-    idSalesOrder: required,
+    orderReference: required,
 } %}
 
 {% define attributes = {
-    href: path('return/create', { idSalesOrder: (data.idSalesOrder)}),
+    href: path('return/create', { orderReference: (data.orderReference)}),
 } %}
 
 {%- block extraClass %} link{% endblock -%}
