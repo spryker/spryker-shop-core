@@ -6,11 +6,12 @@
 } %}
 
 {% define data = {
+    idSalesOrder: required,
     text: 'general.back.button' | trans,
 } %}
 
 {% define attributes = {
-    href: '#',
+    href: path('customer/order/details', {'id': data.idSalesOrder}),
 } %}
 
 {%- block extraClass %} link{% endblock -%}

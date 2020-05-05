@@ -17,8 +17,6 @@ use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToStoreCli
 use SprykerShop\Yves\SalesReturnPage\Form\DataProvider\ReturnCreateFormDataProvider;
 use SprykerShop\Yves\SalesReturnPage\Form\Handler\ReturnHandler;
 use SprykerShop\Yves\SalesReturnPage\Form\Handler\ReturnHandlerInterface;
-use SprykerShop\Yves\SalesReturnPage\Form\Listener\ReturnItemsFormEventsListener;
-use SprykerShop\Yves\SalesReturnPage\Form\Listener\ReturnItemsFormEventsListenerInterface;
 use SprykerShop\Yves\SalesReturnPage\Form\ReturnCreateForm;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
@@ -42,14 +40,6 @@ class SalesReturnPageFactory extends AbstractFactory
             $returnCreateFormDataProvider->getData($orderTransfer),
             $returnCreateFormDataProvider->getOptions()
         );
-    }
-
-    /**
-     * @return \SprykerShop\Yves\SalesReturnPage\Form\Listener\ReturnItemsFormEventsListenerInterface
-     */
-    public function createReturnItemsFormEventsListener(): ReturnItemsFormEventsListenerInterface
-    {
-        return new ReturnItemsFormEventsListener();
     }
 
     /**
