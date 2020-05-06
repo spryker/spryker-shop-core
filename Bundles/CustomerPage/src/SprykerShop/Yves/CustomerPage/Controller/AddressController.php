@@ -143,13 +143,7 @@ class AddressController extends AbstractCustomerController
         } elseif ($addressForm->isValid()) {
             $customerTransfer = $this->processAddressUpdate($customerTransfer, $addressForm->getData());
 
-            if ($customerTransfer !== null) {
-                $this->addSuccessMessage(Messages::CUSTOMER_ADDRESS_UPDATED);
-
-                return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_ADDRESS);
-            }
-
-            $this->addErrorMessage(Messages::CUSTOMER_ADDRESS_NOT_ADDED);
+            $this->addSuccessMessage(Messages::CUSTOMER_ADDRESS_UPDATED);
 
             return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_ADDRESS);
         }
@@ -174,6 +168,7 @@ class AddressController extends AbstractCustomerController
             ->setIdCustomerAddress($request->query->getInt('id'))
             ->setFkCustomer($customerTransfer->getIdCustomer());
 
+        /** @var \Generated\Shared\Transfer\AddressTransfer|null $addressTransfer */
         $addressTransfer = $this
             ->getFactory()
             ->getCustomerClient()
