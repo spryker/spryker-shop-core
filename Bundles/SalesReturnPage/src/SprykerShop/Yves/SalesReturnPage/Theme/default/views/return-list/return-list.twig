@@ -90,7 +90,7 @@
                                                 <ul class="{{ returnActionsMenuClass }}">
                                                     <li class="{{ returnActionsMenuItemClass }}">
                                                         {% block returnViewAction %}
-                                                            <a href="#">
+                                                            <a href="{{ path('return/view', { returnReference: (return.returnReference)}) }}">
                                                                 {{ 'sales_return.return.view_return' | trans }}
                                                             </a>
                                                         {% endblock %}
