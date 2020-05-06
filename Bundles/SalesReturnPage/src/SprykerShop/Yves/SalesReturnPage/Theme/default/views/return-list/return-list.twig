@@ -97,7 +97,7 @@
                                                     </li>
                                                     <li class="{{ returnActionsMenuItemClass }}">
                                                         {% block returnPrintAction %}
-                                                            <a href="#">
+                                                            <a href="{{ path('return/slip-print', { returnReference: (return.returnReference)}) }}">
                                                                 {{ 'sales_return.return.print_return' | trans }}
                                                             </a>
                                                         {% endblock %}
