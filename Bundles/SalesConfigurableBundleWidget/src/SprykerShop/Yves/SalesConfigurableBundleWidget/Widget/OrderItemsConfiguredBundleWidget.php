@@ -23,14 +23,10 @@ class OrderItemsConfiguredBundleWidget extends AbstractWidget
      */
     public function __construct(iterable $itemTransfers)
     {
-        $itemTransfers = $this->getItemsIndexedByIdSalesOrderItem($itemTransfers);
+        $indexedItemTransfers = $this->getItemsIndexedByIdSalesOrderItem($itemTransfers);
 
-        $salesOrderConfiguredBundles = $this->getFactory()
-            ->createSalesOrderConfiguredBundleGrouper()
-            ->getSalesOrderConfiguredBundlesByItems($itemTransfers);
-
-        $this->addItemsParameter($itemTransfers);
-        $this->addSalesOrderConfiguredBundlesParameter($salesOrderConfiguredBundles);
+        $this->addItemsParameter($indexedItemTransfers);
+        $this->addSalesOrderConfiguredBundlesParameter($indexedItemTransfers);
     }
 
     /**
@@ -50,22 +46,26 @@ class OrderItemsConfiguredBundleWidget extends AbstractWidget
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $indexedItemTransfers
      *
      * @return void
      */
-    protected function addItemsParameter(iterable $itemTransfers): void
+    protected function addItemsParameter(array $indexedItemTransfers): void
     {
-        $this->addParameter(static::PARAMETER_ITEMS, $itemTransfers);
+        $this->addParameter(static::PARAMETER_ITEMS, $indexedItemTransfers);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[] $salesOrderConfiguredBundles
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $indexedItemTransfers
      *
      * @return void
      */
-    protected function addSalesOrderConfiguredBundlesParameter(array $salesOrderConfiguredBundles): void
+    protected function addSalesOrderConfiguredBundlesParameter(array $indexedItemTransfers): void
     {
+        $salesOrderConfiguredBundles = $this->getFactory()
+            ->createSalesOrderConfiguredBundleGrouper()
+            ->getSalesOrderConfiguredBundlesByItems($indexedItemTransfers);
+
         $this->addParameter(static::PARAMETER_SALES_ORDER_CONFIGURED_BUNDLES, $salesOrderConfiguredBundles);
     }
 
@@ -76,14 +76,14 @@ class OrderItemsConfiguredBundleWidget extends AbstractWidget
      */
     protected function getItemsIndexedByIdSalesOrderItem(iterable $itemTransfers): array
     {
-        $indexedItems = [];
+        $indexedItemTransfers = [];
 
         foreach ($itemTransfers as $itemTransfer) {
             if ($itemTransfer->getIdSalesOrderItem()) {
-                $indexedItems[$itemTransfer->getIdSalesOrderItem()] = $itemTransfer;
+                $indexedItemTransfers[$itemTransfer->getIdSalesOrderItem()] = $itemTransfer;
             }
         }
 
-        return $indexedItems;
+        return $indexedItemTransfers;
     }
 }

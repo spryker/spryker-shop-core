@@ -38,6 +38,13 @@
                class="{{macros.isActive('order', data.activePage)}}"
                data-id="sidebar-order">{{ 'customer.account.order_history' | trans }}</a>
         </li>
+
+        {% include molecule('return-list-menu-item', 'SalesReturnPage') ignore missing with {
+            data: {
+                activePage: data.activePage
+            },
+        } only %}
+
         <li class="menu__item {{macros.isActive('newsletter', data.activePage)}}">
             <a href="{{ path('customer/newsletter') }}"
                class="{{macros.isActive('newsletter', data.activePage)}}"

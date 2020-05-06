@@ -7,14 +7,13 @@
 
 namespace SprykerShop\Yves\SalesReturnPage\Form;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -35,7 +34,7 @@ class ReturnItemsForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addUuid($builder)
+        $this->addIsReturnable($builder)
             ->addReason($builder, $options)
             ->addCustomReason($builder);
     }
@@ -57,22 +56,16 @@ class ReturnItemsForm extends AbstractType
      *
      * @return $this
      */
-    protected function addUuid(FormBuilderInterface $builder)
+    protected function addIsReturnable(FormBuilderInterface $builder)
     {
         $builder->add(
-            ReturnItemTransfer::UUID,
+            ItemTransfer::IS_RETURNABLE,
             CheckboxType::class,
             [
                 'label' => false,
                 'required' => false,
             ]
         );
-
-        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
-            return $this->getFactory()
-                ->createReturnItemsFormEventsListener()
-                ->mapReturnItemTransfersUuid($event);
-        });
 
         return $this;
     }
@@ -86,7 +79,7 @@ class ReturnItemsForm extends AbstractType
     protected function addReason(FormBuilderInterface $builder, array $options)
     {
         $builder->add(ReturnItemTransfer::REASON, ChoiceType::class, [
-            'label' => 'return_page.form_label.reason',
+            'label' => false,
             'placeholder' => 'return_page.return_reasons.select_reason.placeholder',
             'choices' => $options[static::OPTION_RETURN_REASONS],
             'required' => false,
@@ -103,7 +96,7 @@ class ReturnItemsForm extends AbstractType
     protected function addCustomReason(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_CUSTOM_REASON, TextareaType::class, [
-            'label' => 'return_page.form_label.custom_reason',
+            'label' => false,
             'required' => false,
         ]);
 

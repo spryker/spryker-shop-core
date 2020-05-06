@@ -1,0 +1,41 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'return-product-reason',
+    tag: 'return-product-reason',
+} %}
+
+{% define data = {
+    returnItem: required,
+} %}
+
+{% define attributes = {
+    'toggle-value': 'custom_reason',
+    'class-to-toggle': 'is-hidden',
+} %}
+
+{% block body %}
+    {% set reasonWrapperClass = 'spacing-top' %}
+    {% set reasonSelectClass = config.jsName ~ '__select' %}
+    {% set customReasonWrapperClass = config.jsName ~ '__target spacing-top is-hidden' %}
+
+    {% block dropdownWrapper %}
+        <div class="{{ reasonWrapperClass }}">
+            {% block dropdown %}
+                {{ form_row(data.returnItem.reason, {
+                    attr: {
+                        class: reasonSelectClass,
+                    }
+                }) }}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block textareaWrapper %}
+        <div class="{{ customReasonWrapperClass }}">
+            {% block textarea %}
+                {{ form_row(data.returnItem.customReason) }}
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}
