@@ -1,9 +1,23 @@
 {% extends template('widget') %}
 
 {% define data = {
-    items: _widget.items,
+    productBundles: _widget.productBundles,
 } %}
 
 {% block body %}
-    {{ dump(data.items) }}
+    {% for productBundle in data.productBundles %}
+        {% set bundleProduct = productBundle.bundleProduct %}
+            {{ bundleProduct.sku }}
+            {{ bundleProduct.name }}
+            {{ bundleProduct.sumPrice }}
+            {{ bundleProduct.metadata.image }}
+            {{ bundleProduct.quantity }}
+        {% for bundleItem in productBundle.bundleItems %}
+            {{ bundleItem.sku }}
+            {{ bundleItem.name }}
+            {{ bundleItem.sumPrice }}
+            {{ bundleItem.metadata.image }}
+            {{ bundleItem.quantity }}
+        {% endfor %}
+    {% endfor %}
 {% endblock %}

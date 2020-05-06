@@ -14,14 +14,14 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class OrderItemsProductBundleWidget extends AbstractWidget
 {
-    protected const PARAMETER_BUNDLE_ITEMS = 'bundleItems';
+    protected const PARAMETER_PRODUCT_BUNDLES = 'productBundles';
 
     /**
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      */
     public function __construct(iterable $itemTransfers)
     {
-        $this->addBundleItemsParameter($itemTransfers);
+        $this->addProductBundlesParameter($itemTransfers);
     }
 
     /**
@@ -45,10 +45,10 @@ class OrderItemsProductBundleWidget extends AbstractWidget
      *
      * @return void
      */
-    protected function addBundleItemsParameter(iterable $itemTransfers): void
+    protected function addProductBundlesParameter(iterable $itemTransfers): void
     {
         $this->addParameter(
-            static::PARAMETER_BUNDLE_ITEMS,
+            static::PARAMETER_PRODUCT_BUNDLES,
             $this->getFactory()->createItemExtractor()->extractBundleItems($itemTransfers)
         );
     }
