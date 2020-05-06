@@ -75,8 +75,9 @@
                     {% for returnItem in data.form.returnItems %}
                         {% set orderItem = returnItem.vars.value.orderItem %}
                         {% set isConfiguredBundle = orderItem.salesOrderConfiguredBundleItem is defined and orderItem.salesOrderConfiguredBundleItem is not null %}
+                        {% set isBundleItem = orderItem.relatedBundleItemIdentifier is defined and orderItem.relatedBundleItemIdentifier is not null %}
 
-                        {% if not isConfiguredBundle %}
+                        {% if not isConfiguredBundle and not isBundleItem %}
                             {% block salesReturnProductItem %}
                                 <li class="{{ salesReturnProductItemClass }}">
                                     {% set checkboxWrapperClass = 'col' %}
@@ -185,8 +186,40 @@
                                     {% endembed %}
                                 {% endblock %}
                             {% endwidget %}
+                        </li>
 
-                            {% widget 'OrderItemsProductBundleWidget' args [returnItems] only %}{% endwidget %}
+                        {% set salesReturnProductBundleItemClass = '' %}
+
+                        <li class="{{ salesReturnProductBundleItemClass }}">
+                            {% widget 'OrderItemsProductBundleWidget' args [returnItems] with {
+                                embed: {
+                                    form: data.form,
+                                },
+                            } only %}
+                                {% block bundle %}
+                                    {% embed molecule('product-bundle', 'ProductBundleWidget') with {
+                                        class: 'grid',
+                                        data: {
+                                            productBundle: productBundle,
+                                        },
+                                        embed: {
+                                            form: embed.form,
+                                        },
+                                    } only %}
+                                        {% block body %}
+                                            <div class="col grid grid--middle">
+                                                {% for returnItem in embed.form.returnItems %}
+                                                    {% if returnItem.vars.value.orderItem.IdSalesOrderItem == bundleProduct.IdSalesOrderItem %}
+                                                        {{ form_row(returnItem.isReturnable, {label: ' '}) }}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+
+                                            {{ parent() }}
+                                        {% endblock %}
+                                    {% endembed %}
+                                {% endblock %}
+                            {% endwidget %}
                         </li>
                     {% endblock %}
                 </ul>

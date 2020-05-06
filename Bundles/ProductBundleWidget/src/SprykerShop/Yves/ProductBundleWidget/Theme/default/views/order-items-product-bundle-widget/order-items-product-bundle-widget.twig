@@ -6,18 +6,13 @@
 
 {% block body %}
     {% for productBundle in data.productBundles %}
-        {% set bundleProduct = productBundle.bundleProduct %}
-            {{ bundleProduct.sku }}
-            {{ bundleProduct.name }}
-            {{ bundleProduct.sumPrice }}
-            {{ bundleProduct.metadata.image }}
-            {{ bundleProduct.quantity }}
-        {% for bundleItem in productBundle.bundleItems %}
-            {{ bundleItem.sku }}
-            {{ bundleItem.name }}
-            {{ bundleItem.sumPrice }}
-            {{ bundleItem.metadata.image }}
-            {{ bundleItem.quantity }}
-        {% endfor %}
+        {% block bundle %}
+            {% include molecule('product-bundle', 'ProductBundleWidget') with {
+                class: 'grid',
+                data: {
+                    productBundle: productBundle,
+                },
+            } only %}
+        {% endblock %}
     {% endfor %}
 {% endblock %}

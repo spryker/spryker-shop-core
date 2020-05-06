@@ -12,7 +12,7 @@
 
 {% set contentWrapperClass = 'col col--expand grid' %}
 {% set imageColumnClass = 'col col--middle col--sm-2' %}
-{% set productItemColumnClass = 'col col--sm-10 grid' %}
+{% set productItemColumnClass = 'col col--sm-10 grid spacing-y' %}
 {% set productInfoColumnClass = 'col col--sm-4' %}
 {% set productStatusColumnClass = 'col col--sm-2 text-center' %}
 {% set productPriceColumnClass = 'col col--sm-2 text-center' %}
@@ -55,11 +55,15 @@
                 {% endblock %}
 
                 {% block status %}
-                    <span class="{{ productStatusColumnClass }}">{{ data.product.state.name }}</span>
+                    <div class="{{ productStatusColumnClass }}">{{ data.product.state.name }}</div>
                 {% endblock %}
 
                 {% block price %}
-                    <strong class="{{ productPriceColumnClass }}">{{ data.product.unitPrice | money(true, data.product.currencyIsoCode) }}</strong>
+                    <div class="{{ productPriceColumnClass }}">
+                        {% block priceInner %}
+                            <strong>{{ data.product.unitPrice | money(true, data.product.currencyIsoCode) }}</strong>
+                        {% endblock %}
+                    </div>
                 {% endblock %}
 
                 {% block quantity %}
@@ -69,7 +73,11 @@
                 {% endblock %}
 
                 {% block total %}
-                    <strong class="{{ productPriceTotalColumnClass }}">{{ data.product.sumPrice | money(true, data.product.currencyIsoCode) }}</strong>
+                    <div class="{{ productPriceTotalColumnClass }}">
+                        {% block totalInner %}
+                            <strong>{{ data.product.sumPrice | money(true, data.product.currencyIsoCode) }}</strong>
+                        {% endblock %}
+                    </div>
                 {% endblock %}
             </div>
         {% endblock %}
