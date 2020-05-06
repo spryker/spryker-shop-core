@@ -51,11 +51,15 @@ class ProductLabelWidgetToProductLabelStorageClientBridge implements ProductLabe
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string $locale
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandProductView(ProductViewTransfer $productViewTransfer, string $locale): ProductViewTransfer
-    {
-        return $this->productLabelStorageClient->expandProductView($productViewTransfer, $locale);
+    public function expandProductView(
+        ProductViewTransfer $productViewTransfer,
+        string $locale,
+        ?string $storeName = null
+    ): ProductViewTransfer {
+        return $this->productLabelStorageClient->expandProductView($productViewTransfer, $locale, $storeName);
     }
 }
