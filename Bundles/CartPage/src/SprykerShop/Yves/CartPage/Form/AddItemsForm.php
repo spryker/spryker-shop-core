@@ -23,7 +23,8 @@ class AddItemsForm extends AbstractType
     }
 
     /**
-     * Empty method, because all options and form content will be defined in twig templates
+     * This method is empty, because this form needs to implement csrf protection and all options and form content
+     * will be defined in twig templates
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
