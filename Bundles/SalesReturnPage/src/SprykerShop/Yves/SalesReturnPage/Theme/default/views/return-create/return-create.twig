@@ -183,6 +183,8 @@
                                     {% endembed %}
                                 {% endblock %}
                             {% endwidget %}
+
+                            {% widget 'OrderItemsProductBundleWidget' args [orderItems] only %}{% endwidget %}
                         </li>
                     {% endblock %}
                 </ul>

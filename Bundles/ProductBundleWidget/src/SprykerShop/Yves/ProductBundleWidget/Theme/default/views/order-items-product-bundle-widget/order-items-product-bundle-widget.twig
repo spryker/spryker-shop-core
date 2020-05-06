@@ -1,0 +1,9 @@
+{% extends template('widget') %}
+
+{% define data = {
+    items: _widget.items,
+} %}
+
+{% block body %}
+    {{ dump(data.items) }}
+{% endblock %}
