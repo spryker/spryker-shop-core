@@ -102,7 +102,7 @@ class QuoteRequestAbstractController extends AbstractController
             ->findCompanyUser();
 
         if ($companyUserTransfer === null) {
-            throw new NotFoundHttpException("Only company users are allowed to access this page");
+            throw new NotFoundHttpException('Only company users are allowed to access this page');
         }
     }
 
