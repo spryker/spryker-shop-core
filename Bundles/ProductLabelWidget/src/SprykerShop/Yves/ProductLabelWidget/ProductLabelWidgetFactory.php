@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ProductLabelWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductLabelWidget\Dependency\Client\ProductLabelWidgetToProductLabelStorageClientInterface;
+use SprykerShop\Yves\ProductLabelWidget\Dependency\Client\ProductLabelWidgetToStoreClientInterface;
 
 class ProductLabelWidgetFactory extends AbstractFactory
 {
@@ -18,5 +19,13 @@ class ProductLabelWidgetFactory extends AbstractFactory
     public function getProductLabelStorageClient(): ProductLabelWidgetToProductLabelStorageClientInterface
     {
         return $this->getProvidedDependency(ProductLabelWidgetDependencyProvider::CLIENT_PRODUCT_LABEL_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductLabelWidget\Dependency\Client\ProductLabelWidgetToStoreClientInterface
+     */
+    public function getStoreClient(): ProductLabelWidgetToStoreClientInterface
+    {
+        return $this->getProvidedDependency(ProductLabelWidgetDependencyProvider::CLIENT_STORE);
     }
 }
