@@ -27,6 +27,8 @@ class CartController extends AbstractController
 
     public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
 
+    public const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
+
     public const PARAM_ITEMS = 'items';
 
     protected const FIELD_QUANTITY_TO_NORMALIZE = 'quantity';
@@ -96,6 +98,8 @@ class CartController extends AbstractController
         $form = $this->getFactory()->createCartPageFormFactory()->getAddToCartForm()->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
 
@@ -190,6 +194,8 @@ class CartController extends AbstractController
         $form = $this->getFactory()->createCartPageFormFactory()->getRemoveForm()->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
 
@@ -223,6 +229,8 @@ class CartController extends AbstractController
         $form = $this->getFactory()->createCartPageFormFactory()->getCartChangeQuantityForm()->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
 
@@ -253,6 +261,8 @@ class CartController extends AbstractController
         $form = $this->getFactory()->createCartPageFormFactory()->getAddItemsForm()->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
 
