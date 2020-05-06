@@ -1,0 +1,29 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'shipment-information',
+    tag: 'ul',
+} %}
+
+{% define data = {
+    shipmentExpense: required,
+} %}
+
+{% block class -%}
+    {{ parent() }} list
+{%- endblock %}
+
+{% block body %}
+    <li class="list__item">{{ data.shipmentExpense.shipment.method.carrierName }}</li>
+    <li class="list__item">
+        <div>
+            {{ data.shipmentExpense.shipment.method.name }}
+        </div>
+        <span>
+            {% if data.shipmentExpense.shipment.method.storeCurrencyPrice != data.shipmentExpense.sumPrice %}
+                <s>{{ data.shipmentExpense.shipment.method.storeCurrencyPrice | money(true, data.shipmentExpense.shipment.method.currencyIsoCode) }}</s>
+            {% endif %}
+                {{ data.shipmentExpense.sumPrice | money(true, data.shipmentExpense.shipment.method.currencyIsoCode) }}
+        </span>
+    </li>
+{% endblock %}

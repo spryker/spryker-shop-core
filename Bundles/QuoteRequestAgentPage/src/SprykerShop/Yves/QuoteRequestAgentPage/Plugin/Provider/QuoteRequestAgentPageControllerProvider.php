@@ -94,7 +94,7 @@ class QuoteRequestAgentPageControllerProvider extends AbstractYvesControllerProv
     }
 
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentEditController::startEditAction()
+     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentReviseController::indexAction()
      *
      * @return $this
      */
@@ -124,7 +124,7 @@ class QuoteRequestAgentPageControllerProvider extends AbstractYvesControllerProv
     }
 
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentEditController::editAction()
+     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentCreateController::createAction()
      *
      * @return $this
      */
