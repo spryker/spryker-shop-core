@@ -50,7 +50,8 @@ class SalesReturnPageFactory extends AbstractFactory
         return new ReturnHandler(
             $this->getSalesReturnClient(),
             $this->getCustomerClient(),
-            $this->getStoreClient()
+            $this->getStoreClient(),
+            $this->getSalesReturnPageFormFormPlugins()
         );
     }
 
@@ -60,7 +61,8 @@ class SalesReturnPageFactory extends AbstractFactory
     public function createReturnCreateFormDataProvider(): ReturnCreateFormDataProvider
     {
         return new ReturnCreateFormDataProvider(
-            $this->getSalesReturnClient()
+            $this->getSalesReturnClient(),
+            $this->getSalesReturnPageFormFormPlugins()
         );
     }
 
@@ -70,6 +72,14 @@ class SalesReturnPageFactory extends AbstractFactory
     public function getFormFactory(): FormFactory
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\SalesReturnPageFormExpanderPluginInterface[]
+     */
+    public function getSalesReturnPageFormFormPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesReturnPageDependencyProvider::PLUGINS_SALES_RETURN_PAGE_FORM);
     }
 
     /**

@@ -40,7 +40,7 @@ interface SalesReturnPageFormExpanderPluginInterface
     /**
      * Specification:
      * - Handles Return create form.
-     * - Converts submitted product bundles data to ReturnCreateRequestTransfer.
+     * - Adds submitted product bundle items to ReturnCreateRequestTransfer.
      *
      * @api
      *

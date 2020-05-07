@@ -9,8 +9,12 @@ namespace SprykerShop\Yves\ProductBundleWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductBundleWidget\Dependency\Client\ProductBundleWidgetToProductBundleClientInterface;
+use SprykerShop\Yves\ProductBundleWidget\Expander\SalesReturnPageFormExpander;
+use SprykerShop\Yves\ProductBundleWidget\Expander\SalesReturnPageFormExpanderInterface;
 use SprykerShop\Yves\ProductBundleWidget\Extractor\ItemExtractor;
 use SprykerShop\Yves\ProductBundleWidget\Extractor\ItemExtractorInterface;
+use SprykerShop\Yves\ProductBundleWidget\Handler\SalesReturnPageFormHandler;
+use SprykerShop\Yves\ProductBundleWidget\Handler\SalesReturnPageFormHandlerInterface;
 
 class ProductBundleWidgetFactory extends AbstractFactory
 {
@@ -28,5 +32,21 @@ class ProductBundleWidgetFactory extends AbstractFactory
     public function getProductBundleClient(): ProductBundleWidgetToProductBundleClientInterface
     {
         return $this->getProvidedDependency(ProductBundleWidgetDependencyProvider::CLIENT_PRODUCT_BUNDLE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductBundleWidget\Expander\SalesReturnPageFormExpanderInterface
+     */
+    public function getSalesReturnPageFormExpander(): SalesReturnPageFormExpanderInterface
+    {
+        return new SalesReturnPageFormExpander();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductBundleWidget\Handler\SalesReturnPageFormHandlerInterface
+     */
+    public function getSalesReturnPageFormHandler(): SalesReturnPageFormHandlerInterface
+    {
+        return new SalesReturnPageFormHandler();
     }
 }

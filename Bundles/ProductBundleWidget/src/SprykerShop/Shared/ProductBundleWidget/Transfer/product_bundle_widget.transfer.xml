@@ -8,8 +8,30 @@
         <property name="bundleItems" type="Item[]" singular="bundleItem"/>
     </transfer>
 
+    <transfer name="ReturnCreateRequest">
+        <property name="store" type="string"/>
+        <property name="customer" type="Customer"/>
+        <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
+    </transfer>
+
+    <transfer name="ReturnItem">
+        <property name="idSalesReturnItem" type="int"/>
+        <property name="idSalesReturn" type="int"/>
+        <property name="uuid" type="string"/>
+        <property name="reason" type="string"/>
+        <property name="orderItem" type="Item"/>
+    </transfer>
+\
     <transfer name="Item">
         <property name="sku" type="string"/>
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="uuid" type="string"/>
+        <property name="remunerationAmount" type="int"/>
+        <property name="refundableAmount" type="int"/>
+        <property name="canceledAmount" type="int"/>
+        <property name="state" type="ItemState"/>
+        <property name="createdAt" type="string"/>
+        <property name="isReturnable" type="bool"/>
     </transfer>
 
 </transfers>
