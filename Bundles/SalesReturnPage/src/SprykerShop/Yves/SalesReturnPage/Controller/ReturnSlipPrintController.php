@@ -16,9 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
 class ReturnSlipPrintController extends AbstractReturnController
 {
     /**
-     * @uses \SprykerShop\Yves\SalesReturnPage\Plugin\Router\SalesReturnPageRouteProviderPlugin::PARAM_ORDER_REFERENCE
+     * @uses \SprykerShop\Yves\SalesReturnPage\Plugin\Router\SalesReturnPageRouteProviderPlugin::PARAM_RETURN_REFERENCE
      */
-    protected const PARAM_ORDER_REFERENCE = 'orderReference';
+    protected const PARAM_RETURN_REFERENCE = 'returnReference';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -44,7 +44,7 @@ class ReturnSlipPrintController extends AbstractReturnController
     protected function executePrintAction(Request $request): array
     {
         return [
-            'return' => $this->getReturnByReference($request->get(static::PARAM_ORDER_REFERENCE)),
+            'return' => $this->getReturnByReference($request->get(static::PARAM_RETURN_REFERENCE)),
         ];
     }
 }
