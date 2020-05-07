@@ -121,7 +121,6 @@
                                     </td>
                                     <td class="no-bottom-border"></td>
                                 </tr>
-
                                 {% for item in bundle.salesOrderConfiguredBundleItems %}
                                     {% if data.items[item.IdSalesOrderItem] is defined %}
                                         {% set product = data.items[item.IdSalesOrderItem] %}

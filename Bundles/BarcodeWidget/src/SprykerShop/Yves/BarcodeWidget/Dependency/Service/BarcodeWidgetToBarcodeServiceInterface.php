@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\BarcodeWidget\Dependency\Service;
 
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
 
-interface BarcodeToBarcodeServiceInterface
+interface BarcodeWidgetToBarcodeServiceInterface
 {
     /**
      * @param string $text

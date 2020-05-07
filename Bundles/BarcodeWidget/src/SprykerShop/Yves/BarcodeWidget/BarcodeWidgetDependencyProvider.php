@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\BarcodeWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\BarcodeWidget\Dependency\Service\BarcodeToBarcodeServiceBridge;
+use SprykerShop\Yves\BarcodeWidget\Dependency\Service\BarcodeWidgetToBarcodeServiceBridge;
 
 class BarcodeWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -37,7 +37,7 @@ class BarcodeWidgetDependencyProvider extends AbstractBundleDependencyProvider
     protected function addBarcodeService(Container $container): Container
     {
         $container->set(static::SERVICE_BARCODE, function (Container $container) {
-            return new BarcodeToBarcodeServiceBridge(
+            return new BarcodeWidgetToBarcodeServiceBridge(
                 $container->getLocator()->barcode()->service()
             );
         });
