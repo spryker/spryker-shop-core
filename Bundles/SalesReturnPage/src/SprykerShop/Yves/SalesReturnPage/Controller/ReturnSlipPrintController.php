@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\SalesReturnPage\Controller;
 
+use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -15,14 +16,18 @@ use Symfony\Component\HttpFoundation\Request;
 class ReturnSlipPrintController extends AbstractReturnController
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $returnReference
-     *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @uses \SprykerShop\Yves\SalesReturnPage\Plugin\Router\SalesReturnPageRouteProviderPlugin::PARAM_ORDER_REFERENCE
      */
-    public function printAction(Request $request, string $returnReference)
+    protected const PARAM_ORDER_REFERENCE = 'orderReference';
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function printAction(Request $request): View
     {
-        $response = $this->executePrintAction($request, $returnReference);
+        $response = $this->executePrintAction($request);
 
         return $this->view(
             $response,
@@ -33,17 +38,13 @@ class ReturnSlipPrintController extends AbstractReturnController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $returnReference
      *
      * @return array
      */
-    protected function executePrintAction(Request $request, string $returnReference)
+    protected function executePrintAction(Request $request): array
     {
-        $returnTransfer = $this->getReturnByReference($returnReference);
-
         return [
-            'return' => $returnTransfer,
-            'returnItemsCount' => $returnTransfer->getReturnItems()->count(),
+            'return' => $this->getReturnByReference($request->get(static::PARAM_ORDER_REFERENCE)),
         ];
     }
 }

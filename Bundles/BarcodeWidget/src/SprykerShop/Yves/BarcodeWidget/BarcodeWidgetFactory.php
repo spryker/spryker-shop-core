@@ -8,14 +8,14 @@
 namespace SprykerShop\Yves\BarcodeWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\BarcodeWidget\Dependency\Service\BarcodeToBarcodeServiceInterface;
+use SprykerShop\Yves\BarcodeWidget\Dependency\Service\BarcodeWidgetToBarcodeServiceInterface;
 
 class BarcodeWidgetFactory extends AbstractFactory
 {
     /**
-     * @return \SprykerShop\Yves\BarcodeWidget\Dependency\Service\BarcodeToBarcodeServiceInterface
+     * @return \SprykerShop\Yves\BarcodeWidget\Dependency\Service\BarcodeWidgetToBarcodeServiceInterface
      */
-    public function getBarcodeService(): BarcodeToBarcodeServiceInterface
+    public function getBarcodeService(): BarcodeWidgetToBarcodeServiceInterface
     {
         return $this->getProvidedDependency(BarcodeWidgetDependencyProvider::SERVICE_BARCODE);
     }

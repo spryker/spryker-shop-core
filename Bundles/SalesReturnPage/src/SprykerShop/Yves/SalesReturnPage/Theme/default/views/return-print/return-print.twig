@@ -2,7 +2,7 @@
 
 {% define data = {
     return: _view.return,
-    returnItemsCount: _view.returnItemsCount,
+    returnItemsCount: _view.return.returnItems | length,
 } %}
 
 {% set orderReferences = [] %}
@@ -25,7 +25,7 @@
                         </tr>
                         <tr>
                             <td width="90"><strong>{{ 'return_page.slip.return_date' | trans }}</strong></td>
-                            <td width="125">{{ data.return.createdAt | date('M d, Y H:i') }}</td>
+                            <td width="125">{{ data.return.createdAt | formatDateTime }}</td>
                         </tr>
                     </table>
                 </div>
@@ -141,7 +141,7 @@
                                         <td class="no-top-border {{ not isLastItem ? 'no-bottom-border'}}">
                                             {{ product.name }}
                                         </td>
-                                        <<td class="no-top-border {{ not isLastItem ? 'no-bottom-border'}}">
+                                        <td class="no-top-border {{ not isLastItem ? 'no-bottom-border'}}">
                                             {% if product.sourceUnitGrossPrice is not null or product.sourceUnitNetPrice is not null %}
                                                 {% set priceModeGross = 'GROSS_MODE' %}
                                                 {% set originUnitPrice = (product.priceMode == priceModeGross) ? product.originUnitGrossPrice : product.originUnitNetPrice %}

@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\BarcodeWidget\Dependency\Service;
 
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
 
-class BarcodeToBarcodeServiceBridge implements BarcodeToBarcodeServiceInterface
+class BarcodeWidgetToBarcodeServiceBridge implements BarcodeWidgetToBarcodeServiceInterface
 {
     /**
      * @var \Spryker\Service\Barcode\BarcodeServiceInterface
