@@ -1,0 +1,91 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'return-overview',
+} %}
+
+{% define data = {
+    returnItems: required,
+    returnReference: required,
+    createdAt: required,
+} %}
+
+{% block body %}
+    {% set headlineClass = 'grid grid--justify' %}
+    {% set titleClass = 'col' %}
+    {% set actionsClass = 'col spacing-left spacing-left--inner' %}
+    {% set printSlipLinkClass = 'link spacing-left' %}
+    {% set backToListLinkClass = 'link' %}
+
+    {% block headline %}
+        <div class="{{ headlineClass }}">
+            {% block title %}
+                <h5 class="{{ titleClass }}">{{ 'sales_return.details.page_title' | trans }}</h5>
+            {% endblock %}
+
+            {% block actions %}
+                <div class="{{ actionsClass }}">
+                    {% block printSlipLink %}
+                        <a href="{{ path('return/slip-print', {returnReference: (data.returnReference)}) }}" class="{{ printSlipLinkClass }}">
+                            {{ 'sales_return.details.actions.print_slip' | trans }}
+                        </a>
+                    {% endblock %}
+
+                    {% block backToListLink %}
+                        <a href="{{ url('return/list') }}" class="{{ backToListLinkClass }}">
+                            {{ 'sales_return.details.actions.back_to_list' | trans }}
+                        </a>
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block separator %}
+        <hr class="box__separator">
+    {% endblock %}
+
+    {% set infoClass = '' %}
+    {% set orderReferences = [] %}
+
+    {% for returnItem in data.returnItems %}
+        {% if returnItem.orderItem.orderReference not in orderReferences %}
+            {% set orderReferences = orderReferences | merge([returnItem.orderItem.orderReference]) %}
+        {% endif %}
+    {% endfor %}
+
+    {% block info %}
+        <ul class="{{ infoClass }}">
+            {% block infoInner %}
+                {% set itemClass = '' %}
+
+                {% block orderRef %}
+                    <li class="{{ itemClass }}">
+                        {% block orderRefInner %}
+                            {{ 'sales_return.details.header.order_ref' | trans }}:
+                            <strong>{{ orderReferences | join(', ') }}</strong>
+                        {% endblock %}
+                    </li>
+                {% endblock %}
+
+                {% block returnRef %}
+                    <li class="{{ itemClass }}">
+                        {% block returnRefInner %}
+                            {{ 'sales_return.details.header.return_ref' | trans }}:
+                            <strong>{{ data.returnReference }}</strong>
+                        {% endblock %}
+                    </li>
+                {% endblock %}
+
+                {% block createdAt %}
+                    <li class="{{ itemClass }}">
+                        {% block createdAtInner %}
+                            {{ 'customer.order.date' | trans }}:
+                            <strong>{{ data.createdAt | formatDateTime }}</strong>
+                        {% endblock %}
+                    </li>
+                {% endblock %}
+            {% endblock %}
+        </ul>
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'return-total',
+} %}
+
+{% define data = {
+    returnItemsCount: required,
+    remunerationTotal: required,
+    currencyIsoCode: null,
+} %}
+
+{% block body %}
+    {% block separator1 %}
+        <hr class="box__separator">
+    {% endblock %}
+
+    {% set itemsToReturnClass = 'grid grid--justify' %}
+
+    {% block itemsToReturn %}
+        {% set itemsToReturnTitleClass = 'col' %}
+        {% set itemsToReturnValueClass = 'col spacing-left spacing-left--inner' %}
+
+        <div class="{{ itemsToReturnClass }}">
+            {% block itemsToReturnInner %}
+                <span class="{{ itemsToReturnTitleClass }}">{{ 'sales_return.details.total.items_to_return' | trans }}</span>
+                <span class="{{ itemsToReturnValueClass }}">
+                    {{ data.returnItemsCount }} {{ 'sales_return.details.total.items_to_return.count' | trans }}
+                </span>
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block separator2 %}
+        <hr class="box__separator">
+    {% endblock %}
+
+    {% set remunerationTotalClass = 'grid grid--justify' %}
+
+    {% block remunerationTotal %}
+        {% set remunerationTotalTitleClass = 'col' %}
+        {% set remunerationTotalValueClass = 'col spacing-left spacing-left--inner' %}
+
+        <div class="{{ remunerationTotalClass }}">
+            {% block remunerationTotalInner %}
+                <span class="{{ remunerationTotalTitleClass }}">{{ 'sales_return.details.total.remuneration_total' | trans }}</span>
+                <span class="{{ remunerationTotalValueClass }}">
+                    {{ data.remunerationTotal | money(true, data.currencyIsoCode) }}
+                </span>
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}
