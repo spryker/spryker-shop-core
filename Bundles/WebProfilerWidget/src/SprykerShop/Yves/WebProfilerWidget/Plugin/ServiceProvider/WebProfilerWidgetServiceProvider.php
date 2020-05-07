@@ -67,6 +67,8 @@ class WebProfilerWidgetServiceProvider extends AbstractPlugin implements Service
                 }
             }
         }
+
+        return null;
     }
 
     /**
