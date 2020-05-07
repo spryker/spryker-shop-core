@@ -47,7 +47,7 @@
             {% endblock %}
 
             {% block productsTable %}
-                <table class="products-table" width="100%">
+                <table class="products-table">
                     {% block productsTableHeader %}
                         <tr>
                             <th width="100">{{ 'return_page.slip.barcode' | trans }}</th>
@@ -103,12 +103,12 @@
                         } only %}
                             {% block bundleItem %}
                                 <tr>
-                                    <td style="border-bottom: none;"></td>
-                                    <td style="border-bottom: none;"></td>
-                                    <td style="border-bottom: none;"><strong>{{ bundle.name | trans }}</strong></td>
-                                    <td style="border-bottom: none;"></td>
-                                    <td style="border-bottom: none;">{{ bundle.quantity }}</td>
-                                    <td style="border-bottom: none;">
+                                    <td class="no-bottom-border"></td>
+                                    <td class="no-bottom-border"></td>
+                                    <td class="no-bottom-border"><strong>{{ bundle.name | trans }}</strong></td>
+                                    <td class="no-bottom-border"></td>
+                                    <td class="no-bottom-border">{{ bundle.quantity }}</td>
+                                    <td class="no-bottom-border">
                                         {% set bundleSumPriceToPayAggregation = 0 %}
                                         {% set currencyIsoCode = null %}
 
@@ -120,14 +120,14 @@
 
                                         {{ bundleSumPriceToPayAggregation | money(true, currencyIsoCode) }}
                                     </td>
-                                    <td style="border-bottom: none;"></td>
+                                    <td class="no-bottom-border"></td>
                                 </tr>
 
                                 {% for item in bundle.salesOrderConfiguredBundleItems if data.items[item.IdSalesOrderItem] is defined %}
                                     {% set product = data.items[item.IdSalesOrderItem] %}
                                     {% set isLastItem = loop.index == bundle.salesOrderConfiguredBundleItems | length %}
                                     <tr>
-                                        <td style="border-top: none; {{ not isLastItem ? 'border-bottom: none;'}}">
+                                        <td class="no-top-border {{ not isLastItem ? 'no-bottom-border'}}">
                                             {% widget 'BarcodeWidget' args [product.sku] only %}
                                                 {% block body %}
                                                     {% set imageClass = 'order-item-image' %}
@@ -135,31 +135,31 @@
                                                 {% endblock %}
                                             {% endwidget %}
                                         </td>
-                                        <td style="border-top: none; {{ not isLastItem ? 'border-bottom: none;'}}">
+                                        <td class="no-top-border {{ not isLastItem ? 'no-bottom-border'}}">
                                             {{ product.sku }}
                                         </td>
-                                        <td style="border-top: none; {{ not isLastItem ? 'border-bottom: none;'}}">
+                                        <td class="no-top-border {{ not isLastItem ? 'no-bottom-border'}}">
                                             {{ product.name }}
                                         </td>
-                                        <td style="border-top: none; {{ not isLastItem ? 'border-bottom: none;'}}">
+                                        <<td class="no-top-border {{ not isLastItem ? 'no-bottom-border'}}">
                                             {% if product.sourceUnitGrossPrice is not null or product.sourceUnitNetPrice is not null %}
                                                 {% set priceModeGross = 'GROSS_MODE' %}
                                                 {% set originUnitPrice = (product.priceMode == priceModeGross) ? product.originUnitGrossPrice : product.originUnitNetPrice %}
 
                                                 {%- block oldPriceValue -%}
-                                                    <del class="spacing-right">{{ originUnitPrice | money(true, product.currencyIsoCode) }}</del>
+                                                    <del>{{ originUnitPrice | money(true, product.currencyIsoCode) }}</del>
                                                 {% endblock %}
                                             {% endif %}
 
                                             {{ product.unitPrice | money(true, product.currencyIsoCode) }}
                                         </td>
-                                        <td style="border-top: none; {{ not isLastItem ? 'border-bottom: none;'}}">
+                                        <td class="no-top-border {{ not isLastItem ? 'no-bottom-border'}}">
                                             {{ product.quantity }}
                                         </td>
-                                        <td style="border-top: none; {{ not isLastItem ? 'border-bottom: none;'}}">
+                                        <td class="no-top-border {{ not isLastItem ? 'no-bottom-border'}}">
                                             {{ product.sumSubtotalAggregation | money(true, product.currencyIsoCode) }}
                                         </td>
-                                        <td style="border-top: none; {{ not isLastItem ? 'border-bottom: none;'}}">
+                                        <td class="no-top-border {{ not isLastItem ? 'no-bottom-border'}}">
                                             {% for returnItem in embed.returnItems %}
                                                 {% if returnItem.orderItem.IdSalesOrderItem == item.IdSalesOrderItem %}
                                                     {{ returnItem.reason ? returnItem.reason | trans }}
@@ -223,12 +223,21 @@
         }
 
         .products-table {
+            width: 100%;
             margin-bottom: 30px;
         }
 
         .order-item-image {
             width: 90px;
             display: block;
+        }
+
+        .no-top-border {
+            border-top: none;
+        }
+
+        .no-bottom-border {
+            border-top: none;
         }
     </style>
 {% endblock %}
