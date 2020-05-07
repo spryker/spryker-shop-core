@@ -58,8 +58,10 @@ class MerchantReader implements MerchantReaderInterface
                 return $selectedMerchantReference;
             }
         }
-        /** @var \Generated\Shared\Transfer\MerchantTransfer|false $selectedMerchantTransfer */
-        $selectedMerchantTransfer = reset($merchantTransfers);
+
+        $merchantTransfers->getIterator()->rewind();
+        /** @var \Generated\Shared\Transfer\MerchantTransfer|null $selectedMerchantTransfer */
+        $selectedMerchantTransfer = $merchantTransfers->getIterator()->current();
 
         if (!$selectedMerchantTransfer) {
             if ($selectedMerchantReference) {
