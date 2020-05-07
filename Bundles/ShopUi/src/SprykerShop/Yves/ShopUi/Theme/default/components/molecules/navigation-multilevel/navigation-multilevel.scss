@@ -1,12 +1,11 @@
 @mixin shop-ui-navigation-multilevel($name: '.navigation-multilevel') {
     #{$name} {
-        &--content-item {
-            .menu__item--has-children-dropdown {
-                z-index: 1;
-            }
-            .menu__item--has-children-dropdown:hover {
-                z-index: 2;
-            }
+        &__item--has-children-dropdown {
+            z-index: 1;
+        }
+
+        &__item--has-children-dropdown:hover {
+            z-index: 2;
         }
 
         @content;

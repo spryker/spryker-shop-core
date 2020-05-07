@@ -12,7 +12,7 @@
 } %}
 
 {% set menuClass = data.menuInline ? 'menu--inline' : '' %}
-{% set menuChildrenClass = data.menuDropdown ? 'menu__item--has-children-dropdown' : 'menu__item--has-children-list' %}
+{% set menuChildrenClass = data.menuDropdown ? config.name ~ '__item--has-children-dropdown menu__item--has-children-dropdown' : 'menu__item--has-children-list' %}
 
 {% block body %}
     <ul class="menu {{menuClass}}">
