@@ -2,7 +2,6 @@
 
 {% define data = {
     return: _view.return,
-    returnItemsCount: _view.returnItemsCount,
 } %}
 
 {% set orderReferences = [] %}
@@ -181,7 +180,7 @@
             <table align="right">
                 <tr>
                     <td><strong>{{ 'return_page.slip.items_to_return' | trans }}</strong></td>
-                    <td>{{ data.returnItemsCount }}</td>
+                    <td>{{ data.return.returnItems | length }}</td>
                 </tr>
                 <tr>
                     <td><strong>{{ 'return_page.slip.remuneration_total' | trans }}</strong></td>
