@@ -83,6 +83,7 @@
         <property name="sumPrice" type="int"/>
         <property name="productOptions" type="ProductOption[]" singular="productOption"/>
         <property name="orderReference" type="string"/>
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="ProductOption">

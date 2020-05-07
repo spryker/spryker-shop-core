@@ -1,16 +1,240 @@
-{% extends template('page-layout-main') %}
+{% extends template('page-blank') %}
 
 {% define data = {
     return: _view.return,
     returnItemsCount: _view.returnItemsCount,
 } %}
 
-{% block body %}
-    {% set BarcodeWidget = findWidget('BarcodeWidget', [data.return.returnReference]) %}
+{% set orderReferences = [] %}
 
-    {% widget BarcodeWidget only %}
-        {% block body %}
-            <td>{{ parent() }}</td>
+{% for returnItem in data.return.returnItems %}
+    {% if returnItem.orderItem.orderReference not in orderReferences %}
+        {% set orderReferences = orderReferences | merge([returnItem.orderItem.orderReference]) %}
+    {% endif %}
+{% endfor %}
+
+{% block body %}
+    <div class="wrapper">
+        {% block returnHeader %}
+            <div class="return-header">
+                <div>
+                    <table>
+                        <tr>
+                            <td width="90"><strong>{{ 'return_page.slip.return_reference' | trans }}</strong></td>
+                            <td width="125">{{ data.return.returnReference }}</td>
+                        </tr>
+                        <tr>
+                            <td width="90"><strong>{{ 'return_page.slip.return_date' | trans }}</strong></td>
+                            <td width="125">{{ data.return.createdAt | date('M d, Y H:i') }}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div>
+                    {% widget 'BarcodeWidget' args [data.return.returnReference] only %}{% endwidget %}
+                </div>
+            </div>
         {% endblock %}
-    {% endwidget %}
+
+        {% for orderReference in orderReferences %}
+            {% block orderReference %}
+                <table class="order-reference">
+                    <tr>
+                        <td width="90"><strong>{{ 'return_page.slip.order_reference' | trans }}</strong></td>
+                        <td width="125">{{ orderReference }}</td>
+                    </tr>
+                </table>
+            {% endblock %}
+
+            {% block productsTable %}
+                <table class="products-table" width="100%">
+                    {% block productsTableHeader %}
+                        <tr>
+                            <th width="100">{{ 'return_page.slip.barcode' | trans }}</th>
+                            <th width="75">{{ 'return_page.slip.product_sku' | trans }}</th>
+                            <th width="240">{{ 'return_page.slip.product_name' | trans }}</th>
+                            <th width="85">{{ 'return_page.slip.default_price' | trans }}</th>
+                            <th width="45">{{ 'return_page.slip.quantity' | trans }}</th>
+                            <th width="75">{{ 'return_page.slip.total_price' | trans }}</th>
+                            <th width="130">{{ 'return_page.slip.return_reason' | trans }}</th>
+                        </tr>
+                    {% endblock %}
+
+                    {% set orderItems = [] %}
+
+                    {% for returnItem in data.return.returnItems %}
+                        {% set orderItem = returnItem.orderItem %}
+                        {% set isCurrentOrderReference = orderReference == orderItem.orderReference %}
+                        {% set isConfiguredBundle = orderItem.salesOrderConfiguredBundleItem is defined and orderItem.salesOrderConfiguredBundleItem is not null %}
+
+                        {% if isCurrentOrderReference and not isConfiguredBundle %}
+                            {% block productItem %}
+                                <tr>
+                                    <td>
+                                        {% widget 'BarcodeWidget' args [orderItem.sku] only %}
+                                            {% block body %}
+                                                {% set imageClass = 'order-item-image' %}
+                                                {{ parent() }}
+                                            {% endblock %}
+                                        {% endwidget %}
+                                    </td>
+                                    <td>{{ orderItem.sku }}</td>
+                                    <td>{{ orderItem.name }}</td>
+                                    <td>{{ orderItem.unitPrice | money(true, orderItem.currencyIsoCode) }}</td>
+                                    <td>{{ orderItem.quantity }}</td>
+                                    <td>{{ orderItem.sumPrice | money(true, orderItem.currencyIsoCode) }}</td>
+                                    <td>
+                                        {{ returnItem.reason ? returnItem.reason | trans }}
+                                    </td>
+                                </tr>
+                            {% endblock %}
+                        {% endif %}
+
+                        {% if isCurrentOrderReference and isConfiguredBundle %}
+                            {% set orderItems = orderItems | merge([orderItem]) %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {% block configuredBundle %}
+                        {% widget 'OrderItemsConfiguredBundleWidget' args [orderItems] with {
+                            embed: {
+                                returnItems: data.return.returnItems,
+                            },
+                        } only %}
+                            {% block bundleItem %}
+                                <tr>
+                                    <td style="border-bottom: none;"></td>
+                                    <td style="border-bottom: none;"></td>
+                                    <td style="border-bottom: none;"><strong>{{ bundle.name | trans }}</strong></td>
+                                    <td style="border-bottom: none;"></td>
+                                    <td style="border-bottom: none;">{{ bundle.quantity }}</td>
+                                    <td style="border-bottom: none;">
+                                        {% set bundleSumPriceToPayAggregation = 0 %}
+                                        {% set currencyIsoCode = null %}
+
+                                        {% for item in bundle.salesOrderConfiguredBundleItems if data.items[item.IdSalesOrderItem] is defined %}
+                                            {% set product = data.items[item.IdSalesOrderItem] %}
+                                            {% set currencyIsoCode = product.currencyIsoCode %}
+                                            {% set bundleSumPriceToPayAggregation = bundleSumPriceToPayAggregation + product.sumPriceToPayAggregation %}
+                                        {% endfor %}
+
+                                        {{ bundleSumPriceToPayAggregation | money(true, currencyIsoCode) }}
+                                    </td>
+                                    <td style="border-bottom: none;"></td>
+                                </tr>
+
+                                {% for item in bundle.salesOrderConfiguredBundleItems if data.items[item.IdSalesOrderItem] is defined %}
+                                    {% set product = data.items[item.IdSalesOrderItem] %}
+                                    {% set isLastItem = loop.index == bundle.salesOrderConfiguredBundleItems | length %}
+                                    <tr>
+                                        <td style="border-top: none; {{ not isLastItem ? 'border-bottom: none;'}}">
+                                            {% widget 'BarcodeWidget' args [product.sku] only %}
+                                                {% block body %}
+                                                    {% set imageClass = 'order-item-image' %}
+                                                    {{ parent() }}
+                                                {% endblock %}
+                                            {% endwidget %}
+                                        </td>
+                                        <td style="border-top: none; {{ not isLastItem ? 'border-bottom: none;'}}">
+                                            {{ product.sku }}
+                                        </td>
+                                        <td style="border-top: none; {{ not isLastItem ? 'border-bottom: none;'}}">
+                                            {{ product.name }}
+                                        </td>
+                                        <td style="border-top: none; {{ not isLastItem ? 'border-bottom: none;'}}">
+                                            {% if product.sourceUnitGrossPrice is not null or product.sourceUnitNetPrice is not null %}
+                                                {% set priceModeGross = 'GROSS_MODE' %}
+                                                {% set originUnitPrice = (product.priceMode == priceModeGross) ? product.originUnitGrossPrice : product.originUnitNetPrice %}
+
+                                                {%- block oldPriceValue -%}
+                                                    <del class="spacing-right">{{ originUnitPrice | money(true, product.currencyIsoCode) }}</del>
+                                                {% endblock %}
+                                            {% endif %}
+
+                                            {{ product.unitPrice | money(true, product.currencyIsoCode) }}
+                                        </td>
+                                        <td style="border-top: none; {{ not isLastItem ? 'border-bottom: none;'}}">
+                                            {{ product.quantity }}
+                                        </td>
+                                        <td style="border-top: none; {{ not isLastItem ? 'border-bottom: none;'}}">
+                                            {{ product.sumSubtotalAggregation | money(true, product.currencyIsoCode) }}
+                                        </td>
+                                        <td style="border-top: none; {{ not isLastItem ? 'border-bottom: none;'}}">
+                                            {% for returnItem in embed.returnItems %}
+                                                {% if returnItem.orderItem.IdSalesOrderItem == item.IdSalesOrderItem %}
+                                                    {{ returnItem.reason ? returnItem.reason | trans }}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% endblock %}
+                        {% endwidget %}
+                    {% endblock %}
+                </table>
+            {% endblock %}
+        {% endfor %}
+
+
+        {% block returnTotal %}
+            <table align="right">
+                <tr>
+                    <td><strong>{{ 'return_page.slip.items_to_return' | trans }}</strong></td>
+                    <td>{{ data.returnItemsCount }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'return_page.slip.remuneration_total' | trans }}</strong></td>
+                    <td>{{ data.return.returnTotals.remunerationTotal | money(true, data.return.returnItems[0].orderItem.currencyIsoCode) }}</td>
+                </tr>
+            </table>
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block headStyles %}
+    <style>
+        html {
+            font-size: 13px;
+        }
+
+        th {
+            font-size: 12px;
+        }
+
+        td, th {
+            padding: 5px;
+            border: 1px solid #000;
+            box-sizing: border-box;
+        }
+
+        .wrapper {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .return-header {
+            display: flex;
+            justify-content:space-between;
+            margin-bottom: 40px;
+        }
+
+        .order-reference {
+            margin-bottom: 15px;
+        }
+
+        .products-table {
+            margin-bottom: 30px;
+        }
+
+        .order-item-image {
+            width: 90px;
+            display: block;
+        }
+    </style>
+{% endblock %}
+
+{% block headScripts %}
+{% endblock %}
+
+{% block footerScripts %}
 {% endblock %}
