@@ -197,8 +197,8 @@
                                 },
                             } only %}
                                 {% block bundle %}
-                                    {% embed molecule('product-bundle', 'ProductBundleWidget') with {
-                                        class: 'grid',
+                                    {% embed molecule('ordered-product-bundle', 'ProductBundleWidget') with {
+                                        class: 'grid spacing-left',
                                         data: {
                                             productBundle: productBundle,
                                         },

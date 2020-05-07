@@ -74,10 +74,40 @@
                             {% endblock %}
 
                             {% set emptyStatusClass = 'text-secondary' %}
+                            {% set bundleStatus = false %}
+                            {% set breakLoop = false %}
 
-                            {% block status %}
+                            {% for bundleItem in data.productBundle.bundleItems %}
+                                {% if not bundleStatus and not breakLoop %}
+                                    {% set bundleStatus = bundleItem.state.name %}
+                                {% endif %}
+
+                                {% if bundleStatus and not bundleStatus == bundleItem.state.name %}
+                                    {% set bundleStatus = false %}
+                                    {% set breakLoop = true %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {% block bundleStatus %}
                                 <div class="{{ bundleStatusColumnClass }}">
-                                    --
+                                    {% if bundleStatus %}
+                                        {% set bundleStatus = bundleStatus | replace({' ': '-'}) | lower %}
+
+                                        {% block status %}
+                                            {% include molecule('status') with {
+                                                data: {
+                                                    label: ('status.' ~ bundleStatus) | trans,
+                                                    status: bundleStatus,
+                                                },
+                                            } only %}
+                                        {% endblock %}
+                                    {% else %}
+                                        {% block emptyStatus %}
+                                            <span class="text-secondary">
+                                                --
+                                            </span>
+                                        {% endblock %}
+                                    {% endif %}
                                 </div>
                             {% endblock %}
 
@@ -115,7 +145,7 @@
 
                     {% block items %}
                         {% for bundleItem in data.productBundle.bundleItems %}
-                            {% include molecule('bundle-item', 'productBundleWidget') with {
+                            {% include molecule('ordered-bundle-item', 'productBundleWidget') with {
                                 class: itemsClass,
                                 data: {
                                     item: bundleItem,
