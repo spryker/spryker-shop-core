@@ -1,4 +1,4 @@
 parameters:
     ignoreErrors:
-        - '#Parameter \#1 $idCustomerAddress of method .+AddressTransfer::setIdCustomerAddress\(\) expects int|null, string|null given#'
         - '#Method .+CustomerPageToSalesClientInterface::getPaginatedCustomerOrdersOverview\(\) invoked with 2 parameters, 1 required.#'
+        - '#Parameter \#1 \$idCustomerAddress of method .+AddressTransfer::setIdCustomerAddress\(\) expects int\|null, string\|null given#'

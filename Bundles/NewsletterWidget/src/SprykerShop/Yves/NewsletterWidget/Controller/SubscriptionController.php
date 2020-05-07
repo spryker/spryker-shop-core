@@ -65,7 +65,8 @@ class SubscriptionController extends AbstractController
                 ->getNewsletterClient()
                 ->subscribeWithDoubleOptIn($request);
 
-            $subscriptionResult = current($subscriptionResponse->getSubscriptionResults());
+            /** @var \Generated\Shared\Transfer\NewsletterSubscriptionResultTransfer|null $subscriptionResult */
+            $subscriptionResult = $subscriptionResponse->getSubscriptionResults()->getIterator()->current();
 
             if ($subscriptionResult->getIsSuccess()) {
                 $subscriptionForm = $this

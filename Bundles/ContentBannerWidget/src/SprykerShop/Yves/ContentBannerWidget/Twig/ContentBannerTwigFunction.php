@@ -77,7 +77,7 @@ class ContentBannerTwigFunction extends TwigFunction
      */
     protected function getFunction(): callable
     {
-        return function (string $contentKey, string $templateIdentifier): ?string {
+        return function (string $contentKey, string $templateIdentifier): string {
             if (!isset($this->getAvailableTemplates()[$templateIdentifier])) {
                 return $this->getMessageBannerWrongTemplate($templateIdentifier);
             }
@@ -91,7 +91,7 @@ class ContentBannerTwigFunction extends TwigFunction
                 return $this->getMessageBannerWrongType($contentKey);
             }
 
-            return $this->twig->render(
+            return (string)$this->twig->render(
                 $this->getAvailableTemplates()[$templateIdentifier],
                 ['banner' => $contentBannerTypeTransfer]
             );
