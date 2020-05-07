@@ -12,30 +12,12 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    /**
-     * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnSlipPrintController::printAction()
-     */
     protected const ROUTE_RETURN_SLIP_PRINT = 'return/slip-print';
-    /**
-     * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnViewController::viewAction()
-     */
     protected const ROUTE_RETURN_VIEW = 'return/view';
-    /**
-     * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnListController::listAction()
-     */
     protected const ROUTE_RETURN_LIST = 'return/list';
-    /**
-     * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnCreateController::createAction()
-     */
     protected const ROUTE_RETURN_CREATE = 'return/create';
 
-    /**
-     * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnCreateController::createAction()
-     */
     protected const PARAM_ORDER_REFERENCE = 'orderReference';
-    /**
-     * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnViewController::viewAction()
-     */
     protected const PARAM_RETURN_REFERENCE = 'returnReference';
 
     protected const REFERENCE_REGEX = '[a-zA-Z0-9-]+';
@@ -61,6 +43,8 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
+     * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnCreateController::createAction()
+     *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \Spryker\Yves\Router\Route\RouteCollection
@@ -75,6 +59,8 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
+     * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnListController::listAction()
+     *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \Spryker\Yves\Router\Route\RouteCollection
@@ -88,6 +74,8 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
+     * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnViewController::viewAction()
+     *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \Spryker\Yves\Router\Route\RouteCollection
@@ -102,6 +90,8 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
+     * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnSlipPrintController::printAction()
+     *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \Spryker\Yves\Router\Route\RouteCollection

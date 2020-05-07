@@ -7,9 +7,8 @@
 
 namespace SprykerShop\Yves\SalesReturnPage\Controller;
 
-use Generated\Shared\Transfer\ReturnFilterTransfer;
+use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\SalesReturnPage\SalesReturnPageFactory getFactory()
@@ -17,18 +16,18 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class ReturnViewController extends AbstractReturnController
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $returnReference
-     *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @uses \SprykerShop\Yves\SalesReturnPage\Plugin\Router\SalesReturnPageRouteProviderPlugin::PARAM_RETURN_REFERENCE
      */
-    public function viewAction(Request $request, string $returnReference)
-    {
-        $response = $this->executeviewAction($request, $returnReference);
+    protected const PARAM_RETURN_REFERENCE = 'returnReference';
 
-        if (!is_array($response)) {
-            return $response;
-        }
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function viewAction(Request $request): View
+    {
+        $response = $this->executeViewAction($request);
 
         return $this->view(
             $response,
@@ -39,30 +38,12 @@ class ReturnViewController extends AbstractReturnController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $returnReference
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
-    protected function executeViewAction(Request $request, string $returnReference)
+    protected function executeViewAction(Request $request): array
     {
-        $returnFilterTransfer = (new ReturnFilterTransfer())
-            ->setReturnReference($returnReference);
-
-        /**
-         * @var \Generated\Shared\Transfer\ReturnTransfer|null $returnTransfer
-         */
-        $returnTransfer = $this->getFactory()
-            ->getSalesReturnClient()
-            ->getReturns($returnFilterTransfer)
-            ->getReturns()
-            ->getIterator()
-            ->current();
-
-        if (!$returnTransfer) {
-            throw new NotFoundHttpException();
-        }
+        $returnTransfer = $this->getReturnByReference($request->get(static::PARAM_RETURN_REFERENCE));
 
         return [
             'return' => $returnTransfer,
