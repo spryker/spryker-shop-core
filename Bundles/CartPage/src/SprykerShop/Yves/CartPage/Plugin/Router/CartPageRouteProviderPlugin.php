@@ -117,7 +117,6 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/cart/quick-add/{sku}', 'CartPage', 'Cart', 'quickAddAction');
         $route = $route->setRequirement('sku', static::SKU_PATTERN);
-        $route = $route->setMethods(Request::METHOD_POST);
         $routeCollection->add(static::ROUTE_CART_QUICK_ADD, $route);
 
         return $routeCollection;
