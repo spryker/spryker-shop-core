@@ -28,6 +28,7 @@ class SalesReturnPageFormExpander implements SalesReturnPageFormExpanderInterfac
         $expandedFormData = [
             static::PARAM_RETURN_ITEMS => [],
             ProductBundleItemsForm::FIELD_PRODUCT_BUNDLES => [],
+            ProductBundleItemsForm::PARAM_PRODUCT_BUNDLE_ITEMS => [],
         ];
 
         foreach ($formData[static::PARAM_RETURN_ITEMS] as $returnItemData) {
@@ -38,13 +39,13 @@ class SalesReturnPageFormExpander implements SalesReturnPageFormExpanderInterfac
             $itemTransfer = $returnItemData[ProductBundleItemsForm::PARAM_ORDER_ITEM];
 
             if ($itemTransfer->getProductBundle()) {
-                $productBundleSku = $itemTransfer->getProductBundle()->getSku();
+                $relatedBundleItemIdentifier = $itemTransfer->getRelatedBundleItemIdentifier();
 
-                if (!isset($productBundleItems[$productBundleSku])) {
-                    $productBundleItems[$productBundleSku] = [ProductBundleItemsForm::PARAM_PRODUCT_BUNDLE_DATA => $itemTransfer->getProductBundle()];
+                if (!isset($productBundleItems[$relatedBundleItemIdentifier])) {
+                    $productBundleItems[$relatedBundleItemIdentifier] = [ProductBundleItemsForm::PARAM_PRODUCT_BUNDLE_DATA => $itemTransfer->getProductBundle()];
                 }
 
-                $productBundleItems[$productBundleSku][ProductBundleItemsForm::PARAM_PRODUCT_BUNDLE_ITEMS][] = [ProductBundleItemsForm::PARAM_ORDER_ITEM => $itemTransfer];
+                $expandedFormData[ProductBundleItemsForm::PARAM_PRODUCT_BUNDLE_ITEMS][] = [ProductBundleItemsForm::PARAM_ORDER_ITEM => $itemTransfer];
 
                 continue;
             }

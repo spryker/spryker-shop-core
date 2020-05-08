@@ -24,14 +24,10 @@ class SalesReturnPageFormHandler implements SalesReturnPageFormHandlerInterface
      */
     public function handleFormData(array $returnItemsList, ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnCreateRequestTransfer
     {
-        $productBundlesList = isset($returnItemsList[ProductBundleItemsForm::FIELD_PRODUCT_BUNDLES])
-            ? $returnItemsList[ProductBundleItemsForm::FIELD_PRODUCT_BUNDLES]
-            : [];
+        $productBundlesList = $returnItemsList[ProductBundleItemsForm::FIELD_PRODUCT_BUNDLES] ?? [];
+        $producBundleItemTransfersCollection = $returnItemsList[ProductBundleItemsForm::PARAM_PRODUCT_BUNDLE_ITEMS] ?? [];
 
         foreach ($productBundlesList as $productBundleData) {
-            $producBundleItemTransfer = $productBundleData[ProductBundleItemsForm::PARAM_PRODUCT_BUNDLE_DATA];
-            $producBundleItemTransfersCollection = $productBundleData[ProductBundleItemsForm::PARAM_PRODUCT_BUNDLE_ITEMS] ?? [];
-
             if (!$productBundleData[ItemTransfer::IS_RETURNABLE] || !$producBundleItemTransfersCollection) {
                 continue;
             }
@@ -58,10 +54,12 @@ class SalesReturnPageFormHandler implements SalesReturnPageFormHandlerInterface
         array $productBundleData,
         ReturnCreateRequestTransfer $returnCreateRequestTransfer
     ): ReturnCreateRequestTransfer {
+        $productBundleitemTransfer = $productBundleData[ProductBundleItemsForm::PARAM_PRODUCT_BUNDLE_DATA];
+
         foreach ($producBundleItemTransfersCollection as $productBundleItem) {
             $itemTransfer = $productBundleItem[ProductBundleItemsForm::PARAM_ORDER_ITEM];
 
-            if (!$itemTransfer->getIsReturnable()) {
+            if ($productBundleitemTransfer->getBundleItemIdentifier() != $itemTransfer->getRelatedBundleItemIdentifier()) {
                 continue;
             }
 
