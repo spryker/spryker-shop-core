@@ -118,6 +118,7 @@
     {%- set component = component | default(atom(type)) -%}
     {%- set label = label | default(name | humanize) | trans -%}
     {%- set modifiers = errors is empty ? ['expand'] : ['expand', 'error'] -%}
+    {%- set inputClass = attr.class | default() -%}
 
     {% define attributes = {
         id: id,
@@ -125,13 +126,15 @@
         checked: checked | default(false),
         required: required | default(false),
         disabled: disabled | default(false),
-        value: value | default()
+        value: value | default(),
     } %}
 
     {% include component with {
+
         modifiers: modifiers,
         data: {
-            label: label
+            label: label,
+            inputClass: inputClass,
         },
         attributes: attributes
     } only %}

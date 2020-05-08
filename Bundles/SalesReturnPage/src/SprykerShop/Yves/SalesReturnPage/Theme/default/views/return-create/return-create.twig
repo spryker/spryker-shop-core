@@ -88,7 +88,7 @@
 
                                         {% block checkbox %}
                                             <div class="{{ checkboxWrapperClass }}">
-                                                {{ form_row(returnItem.isReturnable, {label: ' '}) }}
+                                                {{ form_row(returnItem.isReturnable, {label: ' ', 'attr': {'class': 'js-return_create_form__selection'}}) }}
                                             </div>
                                         {% endblock %}
 
@@ -162,7 +162,7 @@
                                                     <div class="col grid grid--middle">
                                                         {% for returnItem in embed.form.returnItems %}
                                                             {% if returnItem.vars.value.orderItem.IdSalesOrderItem == data.product.IdSalesOrderItem %}
-                                                                {{ form_row(returnItem.isReturnable, {label: ' '}) }}
+                                                                {{ form_row(returnItem.isReturnable, {label: ' ', 'attr': {'class': 'js-return_create_form__selection'}}) }}
                                                             {% endif %}
                                                         {% endfor %}
                                                     </div>
@@ -225,15 +225,24 @@
                 </ul>
             {% endblock %}
 
-            {% set salesReturnSaveActionClass = 'button button-primary spacing-top' %}
+            {% set salesReturnSaveActionClass = 'button button-primary spacing-top js-state-observable' %}
 
             {% block salesReturnPageActions %}
-                <button class="{{ salesReturnSaveActionClass }}">
+                <button class="{{ salesReturnSaveActionClass }}" disabled>
                     {{ 'return_page.button_text' | trans }}
                 </button>
             {% endblock %}
 
             {{ form_end(data.form) }}
+        {% endblock %}
+
+        {% block buttonsStateHandler %}
+            {% include molecule('buttons-enable-state-handler', 'SalesReturnPage') ignore missing with {
+                attributes: {
+                    'trigger-class-name': 'js-return_create_form__selection',
+                    'target-class-name': 'js-state-observable',
+                },
+            } only %}
         {% endblock %}
     </div>
 {% endblock %}

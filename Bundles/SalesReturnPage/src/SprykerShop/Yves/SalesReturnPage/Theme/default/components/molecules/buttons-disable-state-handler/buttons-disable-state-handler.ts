@@ -1,6 +1,6 @@
 import Component from 'ShopUi/models/component';
 
-export default class ButtonsStateHandler extends Component {
+export default class ButtonsDisableStateHandler extends Component {
     protected triggers: HTMLInputElement[];
     protected targets: HTMLElement[];
 
