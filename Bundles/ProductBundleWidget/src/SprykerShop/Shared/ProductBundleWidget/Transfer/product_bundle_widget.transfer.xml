@@ -21,7 +21,7 @@
         <property name="reason" type="string"/>
         <property name="orderItem" type="Item"/>
     </transfer>
-\
+
     <transfer name="Item">
         <property name="sku" type="string"/>
         <property name="idSalesOrderItem" type="int"/>
