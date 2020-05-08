@@ -10,6 +10,7 @@ export default class ReturnProductReason extends Component {
         this.select = <HTMLSelectElement>this.getElementsByClassName(`${this.jsName}__select`)[0];
         this.target = <HTMLElement>this.getElementsByClassName(`${this.jsName}__target`)[0];
 
+        this.selectHandler();
         this.mapEvents();
     }
 
