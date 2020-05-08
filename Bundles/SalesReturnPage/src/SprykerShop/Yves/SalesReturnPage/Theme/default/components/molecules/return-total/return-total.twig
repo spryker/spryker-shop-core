@@ -24,12 +24,12 @@
         <div class="{{ itemsToReturnClass }}">
             {% block itemsToReturnInner %}
                 {% block itemsToReturnInnerTitle %}
-                    <span class="{{ itemsToReturnTitleClass }}">{{ 'sales_return.details.total.items_to_return' | trans }}</span>
+                    <span class="{{ itemsToReturnTitleClass }}">{{ 'return_page.details.total.items_to_return' | trans }}</span>
                 {% endblock %}
 
                 {% block itemsToReturnInnerValue %}
                     <span class="{{ itemsToReturnValueClass }}">
-                        {{ data.returnItemsCount }} {{ 'sales_return.details.total.items_to_return.count' | trans }}
+                        {{ data.returnItemsCount }} {{ 'return_page.details.total.items_to_return.count' | trans }}
                     </span>
                 {% endblock %}
             {% endblock %}
@@ -49,7 +49,7 @@
         <div class="{{ remunerationTotalClass }}">
             {% block remunerationTotalInner %}
                 {% block remunerationTotalInnerTitle %}
-                    <span class="{{ remunerationTotalTitleClass }}">{{ 'sales_return.details.total.remuneration_total' | trans }}</span>
+                    <span class="{{ remunerationTotalTitleClass }}">{{ 'return_page.details.total.remuneration_total' | trans }}</span>
                 {% endblock %}
 
                 {% block remunerationTotalInnerValue %}
