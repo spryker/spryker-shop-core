@@ -63,7 +63,9 @@
                                             {% block productItemInfoInner %}
                                                 {{ parent() }}
 
-                                                <p><strong>{{ 'return.return_reasons.title' | trans }}:</strong> {{ embed.returnItem.reason | trans }}</p>
+                                                {% if embed.returnItem.reason is not null %}
+                                                    <p><strong>{{ 'return.return_reasons.title' | trans }}:</strong> {{ embed.returnItem.reason | trans }}</p>
+                                                {% endif %}
                                             {% endblock %}
                                         {% endembed %}
                                     {% endblock %}
@@ -116,7 +118,9 @@
                                                     {{ parent() }}
 
                                                     {% for returnItem in embed.returnItems %}
-                                                        {% if returnItem.orderItem.IdSalesOrderItem == data.product.IdSalesOrderItem %}
+                                                        {% set hasReason = returnItem.orderItem.IdSalesOrderItem == data.product.IdSalesOrderItem and returnItem.reason is not null %}
+
+                                                        {% if hasReason %}
                                                             <p><strong>{{ 'return.return_reasons.title' | trans }}:</strong> {{ returnItem.reason | trans }}</p>
                                                         {% endif %}
                                                     {% endfor %}
@@ -132,7 +136,7 @@
             {% endblock %}
         {% endblock %}
 
-        {% set salesReturnTotalClass = 'spacing-top spacing-top--bigg' %}
+        {% set salesReturnTotalClass = 'spacing-top spacing-top--big' %}
 
         {% block salesReturnTotal %}
             {% include molecule('return-total', 'SalesReturnPage') with {

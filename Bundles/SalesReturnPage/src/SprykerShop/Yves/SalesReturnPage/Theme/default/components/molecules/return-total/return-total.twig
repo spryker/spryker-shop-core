@@ -11,7 +11,7 @@
 } %}
 
 {% block body %}
-    {% block separator1 %}
+    {% block separatorTop %}
         <hr class="box__separator">
     {% endblock %}
 
@@ -23,15 +23,20 @@
 
         <div class="{{ itemsToReturnClass }}">
             {% block itemsToReturnInner %}
-                <span class="{{ itemsToReturnTitleClass }}">{{ 'sales_return.details.total.items_to_return' | trans }}</span>
-                <span class="{{ itemsToReturnValueClass }}">
-                    {{ data.returnItemsCount }} {{ 'sales_return.details.total.items_to_return.count' | trans }}
-                </span>
+                {% block itemsToReturnInnerTitle %}
+                    <span class="{{ itemsToReturnTitleClass }}">{{ 'sales_return.details.total.items_to_return' | trans }}</span>
+                {% endblock %}
+
+                {% block itemsToReturnInnerValue %}
+                    <span class="{{ itemsToReturnValueClass }}">
+                        {{ data.returnItemsCount }} {{ 'sales_return.details.total.items_to_return.count' | trans }}
+                    </span>
+                {% endblock %}
             {% endblock %}
         </div>
     {% endblock %}
 
-    {% block separator2 %}
+    {% block separatorMiddle %}
         <hr class="box__separator">
     {% endblock %}
 
@@ -43,10 +48,15 @@
 
         <div class="{{ remunerationTotalClass }}">
             {% block remunerationTotalInner %}
-                <span class="{{ remunerationTotalTitleClass }}">{{ 'sales_return.details.total.remuneration_total' | trans }}</span>
-                <span class="{{ remunerationTotalValueClass }}">
-                    {{ data.remunerationTotal | money(true, data.currencyIsoCode) }}
-                </span>
+                {% block remunerationTotalInnerTitle %}
+                    <span class="{{ remunerationTotalTitleClass }}">{{ 'sales_return.details.total.remuneration_total' | trans }}</span>
+                {% endblock %}
+
+                {% block remunerationTotalInnerValue %}
+                    <span class="{{ remunerationTotalValueClass }}">
+                        {{ data.remunerationTotal | money(true, data.currencyIsoCode) }}
+                    </span>
+                {% endblock %}
             {% endblock %}
         </div>
     {% endblock %}
