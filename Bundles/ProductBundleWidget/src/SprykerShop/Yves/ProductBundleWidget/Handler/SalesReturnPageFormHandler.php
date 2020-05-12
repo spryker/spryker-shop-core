@@ -56,15 +56,14 @@ class SalesReturnPageFormHandler implements SalesReturnPageFormHandlerInterface
     ): ReturnCreateRequestTransfer {
         $productBundleitemTransfer = $productBundleData[ProductBundleItemsForm::PARAM_PRODUCT_BUNDLE_DATA];
 
-        foreach ($producBundleItemTransfersCollection as $productBundleItem) {
-            $itemTransfer = $productBundleItem[ProductBundleItemsForm::PARAM_ORDER_ITEM];
-
+        foreach ($producBundleItemTransfersCollection as $itemTransfer) {
             if ($productBundleitemTransfer->getBundleItemIdentifier() != $itemTransfer->getRelatedBundleItemIdentifier()) {
                 continue;
             }
 
-            $returnItemTransfer = (new ReturnItemTransfer())->fromArray($productBundleItem, true);
-            $returnItemTransfer->setReason($productBundleData[ReturnItemTransfer::REASON]);
+            $returnItemTransfer = (new ReturnItemTransfer())
+                ->setReason($productBundleData[ReturnItemTransfer::REASON])
+                ->setOrderItem($itemTransfer);
 
             if (
                 $productBundleData[ReturnItemTransfer::REASON] === static::CUSTOM_REASON_VALUE

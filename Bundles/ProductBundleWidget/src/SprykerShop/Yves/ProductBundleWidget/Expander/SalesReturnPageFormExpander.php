@@ -45,7 +45,7 @@ class SalesReturnPageFormExpander implements SalesReturnPageFormExpanderInterfac
                     $productBundleItems[$relatedBundleItemIdentifier] = [ProductBundleItemsForm::PARAM_PRODUCT_BUNDLE_DATA => $itemTransfer->getProductBundle()];
                 }
 
-                $expandedFormData[ProductBundleItemsForm::PARAM_PRODUCT_BUNDLE_ITEMS][] = [ProductBundleItemsForm::PARAM_ORDER_ITEM => $itemTransfer];
+                $expandedFormData[ProductBundleItemsForm::PARAM_PRODUCT_BUNDLE_ITEMS][] = $itemTransfer;
 
                 continue;
             }
