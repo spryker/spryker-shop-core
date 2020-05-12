@@ -5,6 +5,15 @@
     order: _view.order,
 } %}
 
+{% block breadcrumbs %}
+    {% set breadcrumbExtension = [
+        {
+            label: 'sales_return.breadcrumb.create_return' | trans,
+        },
+    ] %}
+    {{ parent() }}
+{% endblock %}
+
 {% set contentWrapperClass = 'box' %}
 
 {% block salesReturnContent %}
