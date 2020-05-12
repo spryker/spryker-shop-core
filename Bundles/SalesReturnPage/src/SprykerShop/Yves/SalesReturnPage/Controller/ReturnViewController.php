@@ -22,12 +22,13 @@ class ReturnViewController extends AbstractReturnController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $returnReference
      *
      * @return \Spryker\Yves\Kernel\View\View
      */
-    public function viewAction(Request $request): View
+    public function viewAction(Request $request, string $returnReference): View
     {
-        $response = $this->executeViewAction($request);
+        $response = $this->executeViewAction($request, $returnReference);
 
         return $this->view(
             $response,
@@ -38,12 +39,13 @@ class ReturnViewController extends AbstractReturnController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $returnReference
      *
      * @return array
      */
-    protected function executeViewAction(Request $request): array
+    protected function executeViewAction(Request $request, string $returnReference): array
     {
-        $returnTransfer = $this->getReturnByReference($request->get(static::PARAM_RETURN_REFERENCE));
+        $returnTransfer = $this->getReturnByReference($returnReference);
 
         return [
             'return' => $returnTransfer,

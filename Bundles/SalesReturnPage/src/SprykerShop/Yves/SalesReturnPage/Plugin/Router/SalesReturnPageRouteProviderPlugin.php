@@ -12,9 +12,21 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnSlipPrintController::printAction()
+     */
     protected const ROUTE_RETURN_SLIP_PRINT = 'return/slip-print';
+    /**
+     * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnViewController::viewAction()
+     */
     protected const ROUTE_RETURN_VIEW = 'return/view';
+    /**
+     * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnListController::listAction()
+     */
     protected const ROUTE_RETURN_LIST = 'return/list';
+    /**
+     * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnCreateController::createAction()
+     */
     protected const ROUTE_RETURN_CREATE = 'return/create';
 
     protected const PARAM_ORDER_REFERENCE = 'orderReference';
