@@ -8,10 +8,10 @@
     productBundle: required,
 } %}
 
-{% set contentWrapperClass = 'col col--expand grid spacing-y' %}
+{% set contentWrapperClass = 'col col--expand grid spacing' %}
 {% set imageColumnClass = 'col col--sm-2' %}
 {% set bundleItemColumnClass = 'col col--sm-10' %}
-{% set bundleItemClass = 'col col--sm-12 grid spacing-bottom spacing-bottom--inner' %}
+{% set bundleItemClass = 'col col--sm-12 grid spacing-bottom spacing-bottom--inner spacing-right spacing-right--inner' %}
 {% set itemsClass = 'col col--sm-12 grid grid--middle spacing-y' %}
 {% set bundleInfoColumnClass = 'col col--sm-4' %}
 {% set bundleStatusColumnClass = 'col col--sm-2 text-center' %}
@@ -45,30 +45,32 @@
                         <div class="{{ bundleItemClass }}">
                             {% block bundleInfo %}
                                 <div class="{{ bundleInfoColumnClass }}">
-                                    {% block bundleItemReturnableDate %}
-                                        <div>
-                                            {{- 'product_bundle_widget.returnable_text' | trans -}}
-                                        </div>
-                                    {% endblock %}
-
-                                    {% if not bundleProduct.isReturnable %}
-                                        {% block bundleItemReturnableInfo %}
+                                    {% block bundleInfoInner %}
+                                        {% block bundleItemReturnableDate %}
                                             <div>
-                                                {{- 'product_bundle_widget.returnable_state' | trans -}}
+                                                {{- 'product_bundle_widget.returnable_text' | trans -}}
                                             </div>
                                         {% endblock %}
-                                    {% endif %}
 
-                                    {% block name -%}
-                                        <h6>{{ bundleProduct.name }}</h6>
-                                    {%- endblock %}
+                                        {% if not bundleProduct.isReturnable %}
+                                            {% block bundleItemReturnableInfo %}
+                                                <div>
+                                                    {{- 'product_bundle_widget.returnable_state' | trans -}}
+                                                </div>
+                                            {% endblock %}
+                                        {% endif %}
 
-                                    {% set skuClass = 'text-secondary' %}
+                                        {% block name -%}
+                                            <h6>{{ bundleProduct.name }}</h6>
+                                        {%- endblock %}
 
-                                    {% block sku -%}
-                                        <small class="{{ skuClass }}">
-                                            {{- 'product_bundle_widget.item_sku' | trans }} {{ bundleProduct.sku -}}
-                                        </small>
+                                        {% set skuClass = 'text-secondary' %}
+
+                                        {% block sku -%}
+                                            <small class="{{ skuClass }}">
+                                                {{- 'product_bundle_widget.item_sku' | trans }} {{ bundleProduct.sku -}}
+                                            </small>
+                                        {%- endblock %}
                                     {%- endblock %}
                                 </div>
                             {% endblock %}

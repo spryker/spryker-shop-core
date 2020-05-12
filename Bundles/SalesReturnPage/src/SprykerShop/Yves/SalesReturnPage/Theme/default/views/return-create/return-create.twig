@@ -191,7 +191,7 @@
                         {% set salesReturnProductBundleItemClass = '' %}
 
                         <li class="{{ salesReturnProductBundleItemClass }}">
-                            {% widget 'OrderItemsProductBundleWidget' args [data.form.productBundleItems] with {
+                            {% widget 'OrderItemsProductBundleWidget' args [data.form.vars.value.productBundleItems] with {
                                 embed: {
                                     form: data.form,
                                 },
@@ -207,8 +207,33 @@
                                         },
                                     } only %}
                                         {% block body %}
+                                            <div class="col grid grid--middle">
+                                                {% for key, productBundle in embed.form.productBundles %}
+                                                    {% if key == data.productBundle.bundleProduct.bundleItemIdentifier %}
+                                                        <div class="spacing-top spacing-top--big">
+                                                            <div class="spacing-top spacing-top--big">
+                                                                {{ form_row(productBundle.isReturnable, {label: ' ', 'attr': {'class': 'js-return_create_form__selection'}}) }}
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
 
                                             {{ parent() }}
+                                        {% endblock %}
+
+                                        {% block bundleInfoInner %}
+                                            {{ parent() }}
+
+                                            {% for key, productBundle in embed.form.productBundles %}
+                                                {% if key == data.productBundle.bundleProduct.bundleItemIdentifier %}
+                                                    {% include molecule('return-product-reason', 'SalesReturnPage') with {
+                                                        data: {
+                                                            returnItem: productBundle,
+                                                        },
+                                                    } only %}
+                                                {% endif %}
+                                            {% endfor %}
                                         {% endblock %}
                                     {% endembed %}
                                 {% endblock %}
