@@ -14,5 +14,5 @@ interface MerchantSwitcherWidgetToMerchantSearchClientInterface
     /**
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function getActiveMerchants(): MerchantCollectionTransfer;
+    public function getMerchantCollection(): MerchantCollectionTransfer;
 }

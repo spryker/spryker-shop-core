@@ -126,7 +126,7 @@ class ContentProductSetTwigFunction extends TwigFunction
             $productAbstractViewCollection = $this->contentProductAbstractReader
                 ->findProductAbstractCollection($productSetDataStorageTransfer, $selectedAttributes, $this->localeName);
 
-            return $this->twig->render(
+            return (string)$this->twig->render(
                 $this->getAvailableTemplates()[$templateIdentifier],
                 [
                     'productSet' => $productSetDataStorageTransfer,
