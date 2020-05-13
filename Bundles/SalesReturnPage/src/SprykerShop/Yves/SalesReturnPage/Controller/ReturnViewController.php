@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\SalesReturnPage\Controller;
 
+use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -16,16 +17,13 @@ class ReturnViewController extends AbstractReturnController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $returnReference
      *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View
      */
-    public function viewAction(Request $request)
+    public function viewAction(Request $request, string $returnReference): View
     {
-        $response = $this->executeviewAction($request);
-
-        if (!is_array($response)) {
-            return $response;
-        }
+        $response = $this->executeViewAction($request, $returnReference);
 
         return $this->view(
             $response,
@@ -36,13 +34,16 @@ class ReturnViewController extends AbstractReturnController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $returnReference
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
-    protected function executeViewAction(Request $request)
+    protected function executeViewAction(Request $request, string $returnReference): array
     {
-        return [
+        $returnTransfer = $this->getReturnByReference($returnReference);
 
+        return [
+            'return' => $returnTransfer,
         ];
     }
 }

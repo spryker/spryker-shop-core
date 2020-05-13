@@ -9,7 +9,7 @@
         maxPage: _view.pagination.lastPage,
         showAlwaysFirstAndLast: true,
     },
-    title: 'sales_return.list.title' | trans,
+    title: 'return_page.list.title' | trans,
 } %}
 
 {% set contentWrapperClass = 'box' %}
@@ -18,7 +18,7 @@
     <div class="{{ contentWrapperClass }}">
         {% block salesReturnContentInner %}
             {% block salesReturnContentTitle %}
-                <h5>{{ 'sales_return.list.title' | trans }}</h5>
+                <h5>{{ 'return_page.list.title' | trans }}</h5>
                 {% block salesReturnContentTitleUnderline %}
                     <hr>
                 {% endblock %}
@@ -26,7 +26,7 @@
 
             {% if data.returns is empty %}
                 {% block salesReturnContentEmptyMessage %}
-                    <p>{{ 'sales_return.account.no_return' | trans }}</p>
+                    <p>{{ 'return_page.account.no_return' | trans }}</p>
                 {% endblock %}
             {% else %}
                 {% set salesReturnTableClass = 'table table--expand' %}
@@ -37,12 +37,12 @@
                             <thead>
                             <tr>
                                 {% block salesReturnTableHeaderCells %}
-                                    <th>{{ 'sales_return.return.return_ref' | trans }}</th>
-                                    <th>{{ 'sales_return.return.order_ref' | trans }}</th>
-                                    <th>{{ 'sales_return.return.number_of_items' | trans }}</th>
-                                    <th>{{ 'sales_return.return.date' | trans }}</th>
-                                    <th>{{ 'sales_return.return.items_state' | trans }}</th>
-                                    <th>{{ 'sales_return.table.actions' | trans }}</th>
+                                    <th>{{ 'return_page.return.return_ref' | trans }}</th>
+                                    <th>{{ 'return_page.return.order_ref' | trans }}</th>
+                                    <th>{{ 'return_page.return.number_of_items' | trans }}</th>
+                                    <th>{{ 'return_page.return.date' | trans }}</th>
+                                    <th>{{ 'return_page.return.items_state' | trans }}</th>
+                                    <th>{{ 'return_page.table.actions' | trans }}</th>
                                 {% endblock %}
                             </tr>
                             </thead>
@@ -90,15 +90,15 @@
                                                 <ul class="{{ returnActionsMenuClass }}">
                                                     <li class="{{ returnActionsMenuItemClass }}">
                                                         {% block returnViewAction %}
-                                                            <a href="#">
-                                                                {{ 'sales_return.return.view_return' | trans }}
+                                                            <a href="{{ path('return/view', { returnReference: (return.returnReference)}) }}">
+                                                                {{ 'return_page.return.view_return' | trans }}
                                                             </a>
                                                         {% endblock %}
                                                     </li>
                                                     <li class="{{ returnActionsMenuItemClass }}">
                                                         {% block returnPrintAction %}
-                                                            <a href="#">
-                                                                {{ 'sales_return.return.print_return' | trans }}
+                                                            <a href="{{ path('return/slip-print', { returnReference: (return.returnReference)}) }}">
+                                                                {{ 'return_page.return.print_return' | trans }}
                                                             </a>
                                                         {% endblock %}
                                                     </li>
