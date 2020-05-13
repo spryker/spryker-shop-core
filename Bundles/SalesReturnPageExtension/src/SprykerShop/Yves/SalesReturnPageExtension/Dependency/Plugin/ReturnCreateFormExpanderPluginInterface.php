@@ -7,10 +7,9 @@
 
 namespace SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Symfony\Component\Form\FormBuilderInterface;
 
-interface SalesReturnPageFormExpanderPluginInterface
+interface ReturnCreateFormExpanderPluginInterface
 {
     /**
      * Specification:
@@ -27,7 +26,7 @@ interface SalesReturnPageFormExpanderPluginInterface
 
     /**
      * Specification:
-     * - Expands Return create form data with product bundles.
+     * - Expands Return create form data.
      *
      * @api
      *
@@ -36,18 +35,4 @@ interface SalesReturnPageFormExpanderPluginInterface
      * @return array
      */
     public function expandFormData(array $formData): array;
-
-    /**
-     * Specification:
-     * - Handles Return create form.
-     * - Adds submitted product bundle items to ReturnCreateRequestTransfer.
-     *
-     * @api
-     *
-     * @param array $returnItemsList
-     * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ReturnCreateRequestTransfer
-     */
-    public function handleFormData(array $returnItemsList, ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnCreateRequestTransfer;
 }

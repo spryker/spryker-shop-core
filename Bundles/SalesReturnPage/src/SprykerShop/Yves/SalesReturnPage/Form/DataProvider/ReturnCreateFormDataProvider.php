@@ -25,18 +25,18 @@ class ReturnCreateFormDataProvider
     protected $salesReturnClient;
 
     /**
-     * @var \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\SalesReturnPageFormExpanderPluginInterface[]
+     * @var \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormExpanderPluginInterface[]
      */
-    protected $salesReturnPageFormExpanderPlugins;
+    protected $returnCreateFormExpanderPlugins;
 
     /**
      * @param \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnClientInterface $salesReturnClient
-     * @param \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\SalesReturnPageFormExpanderPluginInterface[] $salesReturnPageFormExpanderPlugins
+     * @param \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormExpanderPluginInterface[] $returnCreateFormExpanderPlugins
      */
-    public function __construct(SalesReturnPageToSalesReturnClientInterface $salesReturnClient, array $salesReturnPageFormExpanderPlugins)
+    public function __construct(SalesReturnPageToSalesReturnClientInterface $salesReturnClient, array $returnCreateFormExpanderPlugins)
     {
         $this->salesReturnClient = $salesReturnClient;
-        $this->salesReturnPageFormExpanderPlugins = $salesReturnPageFormExpanderPlugins;
+        $this->returnCreateFormExpanderPlugins = $returnCreateFormExpanderPlugins;
     }
 
     /**
@@ -50,7 +50,7 @@ class ReturnCreateFormDataProvider
             ReturnCreateForm::FIELD_RETURN_ITEMS => $this->createReturnItemTransfersCollection($orderTransfer),
         ];
 
-        return $this->executeSalesReturnPageFormFormPlugins($returnCreateFormData);
+        return $this->executeReturnCreateFormExpanderPlugins($returnCreateFormData);
     }
 
     /**
@@ -105,10 +105,10 @@ class ReturnCreateFormDataProvider
      *
      * @return array
      */
-    protected function executeSalesReturnPageFormFormPlugins(array $returnCreateFormData): array
+    protected function executeReturnCreateFormExpanderPlugins(array $returnCreateFormData): array
     {
-        foreach ($this->salesReturnPageFormExpanderPlugins as $formPlugin) {
-            $returnCreateFormData = $formPlugin->expandFormData($returnCreateFormData);
+        foreach ($this->returnCreateFormExpanderPlugins as $returnCreateFormExpanderPlugin) {
+            $returnCreateFormData = $returnCreateFormExpanderPlugin->expandFormData($returnCreateFormData);
         }
 
         return $returnCreateFormData;

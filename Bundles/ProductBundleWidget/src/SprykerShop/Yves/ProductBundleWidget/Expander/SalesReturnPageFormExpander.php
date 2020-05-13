@@ -7,11 +7,15 @@
 
 namespace SprykerShop\Yves\ProductBundleWidget\Expander;
 
+use Generated\Shared\Transfer\ReturnItemTransfer;
 use SprykerShop\Yves\ProductBundleWidget\Form\ProductBundleItemsForm;
 
 class SalesReturnPageFormExpander implements SalesReturnPageFormExpanderInterface
 {
-    protected const PARAM_RETURN_ITEMS = 'returnItems';
+    /**
+     * @uses \SprykerShop\Yves\SalesReturnPage\Form\ReturnCreateForm::FIELD_RETURN_ITEMS
+     */
+    protected const FIELD_RETURN_ITEMS = 'returnItems';
 
     /**
      * @param array $formData
@@ -20,41 +24,90 @@ class SalesReturnPageFormExpander implements SalesReturnPageFormExpanderInterfac
      */
     public function expandFormData(array $formData): array
     {
-        if (!isset($formData[static::PARAM_RETURN_ITEMS])) {
+        if (!isset($formData[static::FIELD_RETURN_ITEMS])) {
             return $formData;
         }
 
-        $productBundleItems = [];
-        $expandedFormData = [
-            static::PARAM_RETURN_ITEMS => [],
-            ProductBundleItemsForm::FIELD_PRODUCT_BUNDLES => [],
-            ProductBundleItemsForm::PARAM_PRODUCT_BUNDLE_ITEMS => [],
+        $itemTransfers = $this->extractItemsFromFormData($formData);
+
+        return [
+            static::FIELD_RETURN_ITEMS => $this->getFormFieldsWithoutBundles($itemTransfers),
+            ProductBundleItemsForm::FIELD_PRODUCT_BUNDLES => $this->getProductBundleFormFields($itemTransfers),
+            ProductBundleItemsForm::PARAM_PRODUCT_BUNDLE_ITEMS => $this->getProductBundleItems($itemTransfers),
         ];
+    }
 
-        foreach ($formData[static::PARAM_RETURN_ITEMS] as $returnItemData) {
-            if (!$returnItemData[ProductBundleItemsForm::PARAM_ORDER_ITEM]) {
-                continue;
-            }
+    /**
+     * @param array $formData
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function extractItemsFromFormData(array $formData): array
+    {
+        $itemTransfers = [];
 
-            $itemTransfer = $returnItemData[ProductBundleItemsForm::PARAM_ORDER_ITEM];
-
-            if ($itemTransfer->getProductBundle()) {
-                $relatedBundleItemIdentifier = $itemTransfer->getRelatedBundleItemIdentifier();
-
-                if (!isset($productBundleItems[$relatedBundleItemIdentifier])) {
-                    $productBundleItems[$relatedBundleItemIdentifier] = [ProductBundleItemsForm::PARAM_PRODUCT_BUNDLE_DATA => $itemTransfer->getProductBundle()];
-                }
-
-                $expandedFormData[ProductBundleItemsForm::PARAM_PRODUCT_BUNDLE_ITEMS][] = $itemTransfer;
-
-                continue;
-            }
-
-            $expandedFormData[static::PARAM_RETURN_ITEMS][] = [ProductBundleItemsForm::PARAM_ORDER_ITEM => $itemTransfer];
+        foreach ($formData[static::FIELD_RETURN_ITEMS] as $returnItemData) {
+            $itemTransfers[] = $returnItemData[ReturnItemTransfer::ORDER_ITEM];
         }
 
-        $expandedFormData[ProductBundleItemsForm::FIELD_PRODUCT_BUNDLES] = $productBundleItems;
+        return $itemTransfers;
+    }
 
-        return $expandedFormData;
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[][]
+     */
+    protected function getFormFieldsWithoutBundles(array $itemTransfers): array
+    {
+        $itemFormFields = [];
+
+        foreach ($itemTransfers as $itemTransfer) {
+            if (!$itemTransfer->getRelatedBundleItemIdentifier()) {
+                $itemFormFields[] = [ReturnItemTransfer::ORDER_ITEM => $itemTransfer];
+            }
+        }
+
+        return $itemFormFields;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[][]
+     */
+    protected function getProductBundleFormFields(array $itemTransfers): array
+    {
+        $productBundleFormFields = [];
+
+        foreach ($itemTransfers as $itemTransfer) {
+            $relatedBundleItemIdentifier = $itemTransfer->getRelatedBundleItemIdentifier();
+
+            if ($relatedBundleItemIdentifier && !isset($productBundleFormFields[$relatedBundleItemIdentifier])) {
+                $productBundleFormFields[$relatedBundleItemIdentifier] = [
+                    ProductBundleItemsForm::PARAM_PRODUCT_BUNDLE_DATA => $itemTransfer->getProductBundle(),
+                ];
+            }
+        }
+
+        return $productBundleFormFields;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function getProductBundleItems(array $itemTransfers): array
+    {
+        $productBundleItems = [];
+
+        foreach ($itemTransfers as $itemTransfer) {
+            if ($itemTransfer->getRelatedBundleItemIdentifier()) {
+                $productBundleItems[] = $itemTransfer;
+            }
+        }
+
+        return $productBundleItems;
     }
 }

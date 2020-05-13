@@ -75,8 +75,8 @@ class ReturnCreateForm extends AbstractType
      */
     protected function executeSalesReturnPageFormFormPlugins(FormBuilderInterface $builder, array $options)
     {
-        foreach ($this->getFactory()->getSalesReturnPageFormFormPlugins() as $formPlugin) {
-            $formPlugin->buildForm($builder, $options);
+        foreach ($this->getFactory()->getReturnCreateFormExpanderPlugins() as $returnCreateFormExpanderPlugin) {
+            $returnCreateFormExpanderPlugin->buildForm($builder, $options);
         }
 
         return $this;

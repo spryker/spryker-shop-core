@@ -18,14 +18,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductBundleItemsForm extends AbstractType
 {
-    public const PARAM_ORDER_ITEM = 'orderItem';
     public const PARAM_PRODUCT_BUNDLE_DATA = 'productBundleData';
     public const PARAM_PRODUCT_BUNDLE_ITEMS = 'productBundleItems';
 
+    /**
+     * @uses \SprykerShop\Yves\SalesReturnPage\Form\ReturnItemsForm::FIELD_CUSTOM_REASON
+     */
     public const FIELD_CUSTOM_REASON = 'customReason';
     public const FIELD_PRODUCT_BUNDLES = 'productBundles';
 
-    public const OPTION_RETURN_REASONS = 'return_reasons';
+    /**
+     * @uses \SprykerShop\Yves\SalesReturnPage\Form\ReturnItemsForm::OPTION_RETURN_REASONS
+     */
+    public const OPTION_RETURN_REASONS = 'returnReasons';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -35,7 +40,7 @@ class ProductBundleItemsForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addIsReturnable($builder)
+        $this->addIsReturnableField($builder)
             ->addReason($builder, $options)
             ->addCustomReason($builder);
     }
@@ -57,7 +62,7 @@ class ProductBundleItemsForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIsReturnable(FormBuilderInterface $builder)
+    protected function addIsReturnableField(FormBuilderInterface $builder)
     {
         $builder->add(
             ItemTransfer::IS_RETURNABLE,

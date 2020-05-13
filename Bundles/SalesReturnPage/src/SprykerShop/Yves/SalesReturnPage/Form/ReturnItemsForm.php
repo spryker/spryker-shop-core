@@ -24,7 +24,7 @@ class ReturnItemsForm extends AbstractType
 {
     protected const FIELD_CUSTOM_REASON = 'customReason';
 
-    public const OPTION_RETURN_REASONS = 'return_reasons';
+    public const OPTION_RETURN_REASONS = 'returnReasons';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
