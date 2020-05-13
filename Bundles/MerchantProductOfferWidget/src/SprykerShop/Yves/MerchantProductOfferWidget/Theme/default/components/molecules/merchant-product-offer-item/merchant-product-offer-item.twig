@@ -7,7 +7,7 @@
 {% define data = {
     checked: false,
     radioGroupName: required,
-    offerReference: required,
+    productOfferReference: required,
     merchantName: required,
     merchantUrl: required,
     price: required,
@@ -26,18 +26,18 @@
                 <div class="col {{ radioColVisibilityClass }}">
                     {% block radio %}
                         {% include atom('radio') with {
-                            class: config.jsName ~ '__trigger-' ~ data.offerReference,
+                            class: config.jsName ~ '__trigger-' ~ data.productOfferReference,
                             attributes: {
                                 checked: data.checked,
                                 name: data.radioGroupName,
-                                value: data.offerReference,
+                                value: data.productOfferReference,
                             },
                         } only %}
 
                         {% include molecule('page-location-search-params-updater', 'MerchantProductOfferWidget') with {
                             attributes: {
-                                'trigger-class': config.jsName ~ '__trigger-' ~ data.offerReference,
-                                'search-params': 'attribute[product_offer_reference]=' ~ data.offerReference,
+                                'trigger-class': config.jsName ~ '__trigger-' ~ data.productOfferReference,
+                                'search-params': 'attribute[product_offer_reference]=' ~ data.productOfferReference,
                             },
                         } only %}
                     {% endblock %}
