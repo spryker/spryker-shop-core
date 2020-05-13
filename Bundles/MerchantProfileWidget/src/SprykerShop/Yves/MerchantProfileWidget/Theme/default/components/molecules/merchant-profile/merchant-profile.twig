@@ -1,0 +1,198 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'merchant-profile',
+} %}
+
+{% define data = {
+    idMerchant: required,
+    merchantStorageProfile: required,
+} %}
+
+{%- block extraClass -%}
+    spacing-bottom spacing-bottom--big
+{%- endblock -%}
+
+{% block body %}
+    <div class="grid">
+        {% block contentInner %}
+            <div class="col col--sm-12 col--lg-5">
+                {% set additionaImageClass = 'box' %}
+
+                {% if data.merchantStorageProfile.bannerUrlGlossaryKey %}
+                    {% block image %}
+                        {% include atom('thumbnail') with {
+                            class: additionaImageClass,
+                            modifiers: ['bigger'],
+                            attributes: {
+                                alt: merchantName | default,
+                                src: data.merchantStorageProfile.bannerUrlGlossaryKey | trans,
+                            },
+                        } only %}
+                    {% endblock %}
+                {% endif %}
+            </div>
+
+            <div class="col col--sm-12 col--lg-7">
+                {% block detailContainer %}
+                    <div class="box">
+                        {% block detail %}
+                            <div class="grid">
+                                {% block detailInner %}
+                                    <div class="col col--sm-12 col--lg-12 col--xl-10">
+                                        {% if data.merchantStorageProfile.descriptionGlossaryKey %}
+                                            {% block description %}
+                                                <p>{{ data.merchantStorageProfile.descriptionGlossaryKey | trans }}</p>
+                                            {% endblock %}
+                                        {% endif %}
+
+                                        {% block information %}
+                                            <div class="grid">
+                                                {% block informationInner %}
+                                                    {% block emailCol %}
+                                                        <div class="col col--sm-12 col--lg-6">
+                                                            {% if data.merchantStorageProfile.publicEmail %}
+                                                                {% block email %}
+                                                                    {% include molecule('information-item', 'MerchantPage') with {
+                                                                        data: {
+                                                                            title: 'merchant_profile.email' | trans,
+                                                                            text: data.merchantStorageProfile.publicEmail | trans,
+                                                                        },
+                                                                    } only %}
+                                                                {% endblock %}
+                                                            {% endif %}
+                                                        </div>
+                                                    {% endblock %}
+
+                                                    {% block addressCol %}
+                                                        {% set merchantAddresses = data.merchantStorageProfile.addressCollection | default([]) %}
+
+                                                        {% if merchantAddresses %}
+                                                            <div class="col col--sm-12 col--lg-6">
+                                                                {% block address %}
+                                                                    {% embed molecule('information-item', 'MerchantPage') with {
+                                                                        data: {
+                                                                            title: 'merchant_profile.address' | trans,
+                                                                        },
+                                                                        embed: {
+                                                                            addresses: merchantAddresses,
+                                                                        },
+                                                                    } only %}
+                                                                        {% block text %}
+                                                                            {% for address in embed.addresses %}
+                                                                                <div>{{ address.address1 }} {{ address.address2 }}</div>
+                                                                                <div>{{ address.zipCode }} {{ address.city}}</div>
+                                                                                <div>{{ address.address3 }}</div>
+                                                                                <div>{{ address.countryName }}</div>
+                                                                            {% endfor %}
+                                                                        {% endblock %}
+                                                                    {% endembed %}
+                                                                {% endblock %}
+                                                            </div>
+                                                        {% endif %}
+                                                    {% endblock %}
+
+                                                    {% block phoneCol %}
+                                                        <div class="col col--sm-12 col--lg-6">
+                                                            {% if data.merchantStorageProfile.publicPhone %}
+                                                                {% block phone %}
+                                                                    {% include molecule('information-item', 'MerchantPage') with {
+                                                                        data: {
+                                                                            title: 'merchant_profile.phone' | trans,
+                                                                            text: data.merchantStorageProfile.publicPhone | trans,
+                                                                        },
+                                                                    } only %}
+                                                                {% endblock %}
+                                                            {% endif %}
+                                                        </div>
+                                                    {% endblock %}
+
+                                                    {% block deliveryTimeCol %}
+                                                        <div class="col col--sm-12 col--lg-6">
+                                                            {% if data.merchantStorageProfile.deliveryTimeGlossaryKey %}
+                                                                {% block deliveryTime %}
+                                                                    {% include molecule('information-item', 'MerchantPage') with {
+                                                                        data: {
+                                                                            title: 'merchant_profile.delivery_time' | trans,
+                                                                            text: data.merchantStorageProfile.deliveryTimeGlossaryKey | trans,
+                                                                        },
+                                                                    } only %}
+                                                                {% endblock %}
+                                                            {% endif %}
+                                                        </div>
+                                                    {% endblock %}
+                                                {% endblock %}
+                                            </div>
+                                        {% endblock %}
+                                    </div>
+
+                                    <div class="col col--sm-3 col--lg-2">
+                                        {% set additionalLogoClass = 'box' %}
+
+                                        {% if data.merchantStorageProfile.logoUrl %}
+                                            {% block logo %}
+                                                {% include atom('thumbnail') with {
+                                                    class: additionalLogoClass,
+                                                    modifiers: ['small'],
+                                                    attributes: {
+                                                        alt: merchantName | default,
+                                                        src: data.merchantStorageProfile.logoUrl | trans,
+                                                    },
+                                                } only %}
+                                            {% endblock %}
+                                        {% endif %}
+                                    </div>
+                                {% endblock %}
+                            </div>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+
+                {% widget 'MerchantOpeningHoursWidget' args [data.idMerchant] only %}{% endwidget %}
+            </div>
+        {% endblock %}
+    </div>
+
+    {% block additional %}
+        {% set additionalArticlesClass = 'box' %}
+        {% set informationArticles = [] %}
+
+        {% if data.merchantStorageProfile.termsConditionsGlossaryKey %}
+            {% set informationArticles = informationArticles|merge([{
+                'title': 'merchant_profile.terms_and_conditions' | trans,
+                'text': data.merchantStorageProfile.termsConditionsGlossaryKey | trans,
+            }]) %}
+        {% endif %}
+        {% if data.merchantStorageProfile.cancellationPolicyGlossaryKey %}
+            {% set informationArticles = informationArticles|merge([{
+                'title': 'merchant_profile.cancellation_policy' | trans,
+                'text': data.merchantStorageProfile.cancellationPolicyGlossaryKey | trans,
+            }]) %}
+        {% endif %}
+        {% if data.merchantStorageProfile.imprintGlossaryKey %}
+            {% set informationArticles = informationArticles|merge([{
+                'title': 'merchant_profile.imprint' | trans,
+                'text': data.merchantStorageProfile.imprintGlossaryKey | trans,
+            }]) %}
+        {% endif %}
+        {% if data.merchantStorageProfile.dataPrivacyGlossaryKey %}
+            {% set informationArticles = informationArticles|merge([{
+                'title': 'merchant_profile.privacy' | trans,
+                'text': data.merchantStorageProfile.dataPrivacyGlossaryKey | trans,
+            }]) %}
+        {% endif %}
+
+        {% block additionalContainer %}
+            <div class="{{ additionalArticlesClass }}">
+                {% for informationArticle in informationArticles %}
+                    {% block additionalInformation %}
+                        <div class="spacing-bottom spacing-bottom--big">
+                            <h5>{{ informationArticle.title }}</h5>
+                            <p>{{ informationArticle.text | raw }}</p>
+                        </div>
+                    {% endblock %}
+                {% endfor %}
+            </div>
+        {% endblock %}
+    {% endblock %}
+{% endblock %}

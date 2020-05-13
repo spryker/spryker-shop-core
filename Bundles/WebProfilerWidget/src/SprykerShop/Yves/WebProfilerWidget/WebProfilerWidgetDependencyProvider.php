@@ -60,7 +60,7 @@ class WebProfilerWidgetDependencyProvider extends AbstractBundleDependencyProvid
     /**
      * @deprecated Use `\SprykerShop\Yves\WebProfilerWidget\WebProfilerWidgetDependencyProvider::getDataCollectorPlugins` instead.
      *
-     * @return array
+     * @return \Silex\ServiceProviderInterface[]
      */
     protected function getWebProfilerPlugins()
     {
