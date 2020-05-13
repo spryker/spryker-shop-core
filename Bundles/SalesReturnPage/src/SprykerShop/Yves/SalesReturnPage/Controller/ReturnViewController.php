@@ -16,11 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 class ReturnViewController extends AbstractReturnController
 {
     /**
-     * @uses \SprykerShop\Yves\SalesReturnPage\Plugin\Router\SalesReturnPageRouteProviderPlugin::PARAM_RETURN_REFERENCE
-     */
-    protected const PARAM_RETURN_REFERENCE = 'returnReference';
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $returnReference
      *

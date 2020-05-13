@@ -85,15 +85,8 @@
     </transfer>
 
     <transfer name="ProductOption">
-        <property name="idSalesOrderItemOption" type="int"/>
-        <property name="idProductOptionValue" type="int"/>
-        <property name="unitGrossPrice" type="int"/>
-        <property name="sumGrossPrice" type="int"/>
-        <property name="quantity" type="int"/>
-        <property name="refundableAmount" type="int"/>
-        <property name="unitNetPrice" type="int"/>
-        <property name="sumNetPrice" type="int"/>
         <property name="sumPrice" type="int"/>
+        <property name="value" type="string"/>
     </transfer>
 
     <transfer name="ReturnReasonCollection">
