@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ProductReviewWidget\Widget;
 
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewStorageTransfer;
+use Generated\Shared\Transfer\RatingAggregationTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,6 +28,9 @@ class ProductDetailPageReviewWidget extends AbstractWidget
         $request = $this->getApplication()['request'];
         $productReviews = $this->findProductReviews($idProductAbstract, $request);
 
+        $ratingAggregationTransfer = (new RatingAggregationTransfer());
+        $ratingAggregationTransfer->setRatingAggregation($productReviews['ratingAggregation']);
+
         $this->addParameter('idProductAbstract', $idProductAbstract)
             ->addParameter('productReviewStorageTransfer', $this->findProductAbstractReview($idProductAbstract))
             ->addParameter('maximumRating', $this->getMaximumRating())
@@ -35,7 +39,12 @@ class ProductDetailPageReviewWidget extends AbstractWidget
             ->addParameter('hasCustomer', $this->hasCustomer())
             ->addParameter('productReviews', $productReviews['productReviews'])
             ->addParameter('pagination', $productReviews['pagination'])
-            ->addParameter('summary', $this->getFactory()->createProductReviewSummaryCalculator()->execute($productReviews['ratingAggregation']))
+            ->addParameter(
+                'summary',
+                $this->getFactory()
+                    ->getProductReviewClient()
+                    ->calculateProductReviewSummary($ratingAggregationTransfer)
+            )
             ->addParameter('maximumRating', $this->getFactory()->getProductReviewClient()->getMaximumRating());
     }
 

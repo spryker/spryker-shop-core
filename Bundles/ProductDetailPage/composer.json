@@ -7,16 +7,17 @@
     "php": ">=7.2",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-router-extension": "^1.0.0",
-    "spryker-shop/shop-ui": "^1.27.0",
+    "spryker-shop/shop-ui": "^1.34.0",
     "spryker-shop/storage-router-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
-    "spryker/product-storage": "^1.1.0",
+    "spryker/product-storage": "^1.19.0",
     "spryker/storage": "^3.4.0",
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
     "spryker-shop/availability-widget": "*",
     "spryker-shop/cms-block-widget": "*",
+    "spryker-shop/product-group-widget": "*",
     "spryker-shop/product-review-widget": "*",
     "spryker-shop/wishlist-widget": "*",
     "spryker/code-sniffer": "*"
@@ -24,6 +25,7 @@
   "suggest": {
     "spryker-shop/availability-widget": "If you want to use components from module AvailabilityWidget or AvailabilityWidgetPlugin.",
     "spryker-shop/cms-block-widget": "If you want to use components from module CmsBlockWidget or ProductCmsBlockWidgetPlugin.",
+    "spryker-shop/product-group-widget": "If you want to use components from module ProductGroupColorWidget or ProductGroupWidget",
     "spryker-shop/product-review-widget": "If you want to use ProductDetailPageReviewWidget or ProductReviewWidgetPlugin.",
     "spryker-shop/wishlist-widget": "If you want to use components from module WishlistWidget or WishlistWidgetPlugin."
   },

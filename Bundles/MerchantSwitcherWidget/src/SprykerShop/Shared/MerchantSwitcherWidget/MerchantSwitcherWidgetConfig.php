@@ -15,7 +15,7 @@ class MerchantSwitcherWidgetConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Enables/disables merchant switcher functionality.
+     * - Enables/disables merchant switcher widget.
      *
      * @api
      *

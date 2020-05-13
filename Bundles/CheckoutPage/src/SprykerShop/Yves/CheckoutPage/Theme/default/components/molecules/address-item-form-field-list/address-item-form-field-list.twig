@@ -4,10 +4,12 @@
     name: 'address-item-form-field-list',
 } %}
 
+{# @deprecated property "jsAddressClass" is deprecated. #}
 {% define data = {
     items: required,
     shippingForm: required,
     jsAddressClass: '',
+    parentJsName: '',
 } %}
 
 {%- block class -%}
@@ -49,6 +51,7 @@
 
                 {% block multiShippingAddresses %}
                     {% set formFieldUniqueName = 'multiShippingAddresses' %}
+                    {% set addressSelectJsName = data.parentJsName ? data.parentJsName ~ '__trigger' %}
 
                     {% if hasShippingAddressesAndApplicable %}
                         <div class="col col--sm-3 spacing spacing--inner">
@@ -56,7 +59,8 @@
                                 {% if isCompanyBusinessUnitShippingAddressApplicable %}
                                     {% widget companyBusinessUnitShippingAddressWidget with {
                                         data: {
-                                            itemShippingTriggerJsClass: config.jsName ~ '__trigger ' ~ config.jsName ~ '__trigger--' ~ loop.index,
+                                            itemShippingTriggerJsClass: addressSelectJsName ~ ' ' ~ config.jsName ~ '__trigger--' ~ loop.index,
+                                            hasPreselectedOption: true,
                                         },
                                         embed: {
                                             index: loop.index,
@@ -99,7 +103,7 @@
                                     {{ form_row(item.shippingAddress.id_customer_address, {
                                         label: 'page.checkout.address.delivery.address_select' | trans,
                                         attr: {
-                                            class: config.jsName ~ '__trigger ' ~ config.jsName ~ '__trigger--' ~ loop.index,
+                                            class: addressSelectJsName ~ ' ' ~ config.jsName ~ '__trigger--' ~ loop.index,
                                         },
                                     }) }}
                                 {% endif %}
@@ -109,8 +113,10 @@
                 {% endblock %}
 
                 <div class="col col--sm-12">
+                    {% set formJsName = data.parentJsName ? data.parentJsName ~ '__item-shipping' %}
+
                     {% include molecule('form') with {
-                        class: config.jsName ~ '__item-shipping ' ~ (hasShippingAddressesAndApplicable ? ' is-hidden ') ~ config.jsName ~ '__item-shipping--' ~ loop.index,
+                        class: formJsName ~ ' ' ~ (hasShippingAddressesAndApplicable ? 'is-hidden ') ~ config.jsName ~ '__item-shipping--' ~ loop.index,
                         data: {
                             form: item.shippingAddress,
                             enableStart: false,
@@ -135,6 +141,7 @@
                                 'trigger-selector': '.' ~ config.jsName ~ '__trigger--' ~ loop.index,
                                 'target-selector': '.' ~ config.jsName ~ '__item-shipping--' ~ loop.index,
                                 'parent-target-class-name': config.jsName,
+                                'is-trigger-has-preselected-option': true,
                             },
                         } only %}
                     {% endif %}
@@ -142,22 +149,4 @@
             </div>
         {% endif %}
     {% endfor %}
-
-    {% include molecule('is-next-checkout-step-enabled', 'CheckoutPage') with {
-        attributes: {
-            'trigger-selector': isCompanyBusinessUnitShippingAddressApplicable ? '.' ~ data.jsAddressClass ~ '__form-select-shippingAddress' : '[name="addressesForm[shippingAddress][id_customer_address]"]',
-            'target-selector': '.' ~ config.jsName ~ '__validate-next-checkout-step',
-        },
-    } only %}
-
-    {% include molecule('validate-next-checkout-step', 'CheckoutPage') with {
-        class: config.jsName ~ '__validate-next-checkout-step',
-        attributes: {
-            'container-selector': '.' ~ config.jsName ~ '__item-shipping',
-            'target-selector': '.' ~ data.jsAddressClass ~ '__form-submit',
-            'dropdown-trigger-selector': '.' ~ config.jsName ~ '__trigger',
-            'parent-target-class-name': config.jsName,
-            'is-enable': false,
-        },
-    } only %}
 {% endblock %}

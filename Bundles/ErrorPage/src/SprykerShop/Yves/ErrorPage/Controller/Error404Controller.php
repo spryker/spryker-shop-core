@@ -22,14 +22,14 @@ class Error404Controller extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return \Spryker\Yves\Kernel\View\View
      */
     public function indexAction(Request $request)
     {
-        return $this->viewResponse([
+        return $this->view([
             'error' => $this->getErrorMessage($request),
             'hideUserMenu' => true,
-        ]);
+        ], [], '@ErrorPage/views/error404/error404.twig');
     }
 
     /**

@@ -25,8 +25,8 @@ class CustomerPageToProductBundleClientBridge implements CustomerPageToProductBu
     }
 
     /**
-     * @param \ArrayObject $items
-     * @param \ArrayObject $bundleItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $bundleItems
      *
      * @return array
      */

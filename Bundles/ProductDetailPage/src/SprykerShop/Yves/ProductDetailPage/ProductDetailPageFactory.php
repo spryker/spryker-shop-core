@@ -7,8 +7,11 @@
 
 namespace SprykerShop\Yves\ProductDetailPage;
 
+use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Client\ProductDetailPageToProductStorageClientInterface;
+use SprykerShop\Yves\ProductDetailPage\Resolver\ShopContextResolver;
+use SprykerShop\Yves\ProductDetailPage\Resolver\ShopContextResolverInterface;
 
 class ProductDetailPageFactory extends AbstractFactory
 {
@@ -26,5 +29,21 @@ class ProductDetailPageFactory extends AbstractFactory
     public function getProductStorageClient(): ProductDetailPageToProductStorageClientInterface
     {
         return $this->getProvidedDependency(ProductDetailPageDependencyProvider::CLIENT_PRODUCT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Communication\Application
+     */
+    public function getApplication(): Application
+    {
+        return $this->getProvidedDependency(ProductDetailPageDependencyProvider::PLUGIN_APPLICATION);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductDetailPage\Resolver\ShopContextResolverInterface
+     */
+    public function createShopContextResolver(): ShopContextResolverInterface
+    {
+        return new ShopContextResolver($this->getApplication());
     }
 }

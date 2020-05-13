@@ -6,13 +6,12 @@
     orderItems: _view.items | default([]),
     shipmentGroups: _view.shipmentGroups,
     orderShipmentExpenses: _view.orderShipmentExpenses,
-
     title: 'customer.account.order_history' | trans,
     activePage: 'order',
+    requestUri: app.request.requestUri,
 } %}
 
 {% block customerContent %}
-
     {% embed [
         molecule('customer-reorder-form', 'CustomerReorderWidget'),
         molecule('order-detail', 'CustomerPage'),
@@ -48,7 +47,7 @@
         {% widget 'CommentThreadWidget' args [
             data.order.idSalesOrder,
             'sales_order',
-            app.request.requestUri,
+            data.requestUri,
             data.order.commentThread
         ] only %}
         {% endwidget %}

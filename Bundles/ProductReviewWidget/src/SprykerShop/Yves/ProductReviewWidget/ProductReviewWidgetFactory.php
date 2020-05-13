@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ProductReviewWidget;
 
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Yves\Kernel\Application;
 use Spryker\Yves\ProductReview\ProductReviewFactory as SprykerProductReviewFactory;
 use SprykerShop\Yves\ProductReviewWidget\Controller\Calculator\ProductReviewSummaryCalculator;
 use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToCustomerClientInterface;
@@ -15,6 +16,9 @@ use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetTo
 use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductReviewStorageClientInterface;
 use SprykerShop\Yves\ProductReviewWidget\Form\DataProvider\ProductReviewFormDataProvider;
 use SprykerShop\Yves\ProductReviewWidget\Form\ProductReviewForm;
+use SprykerShop\Yves\ProductReviewWidget\ProductReviewSearchRequestBuilder\ProductReviewSearchRequestBuilder;
+use SprykerShop\Yves\ProductReviewWidget\ProductReviewSearchRequestBuilder\ProductReviewSearchRequestBuilderInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetConfig getConfig()
@@ -71,6 +75,8 @@ class ProductReviewWidgetFactory extends SprykerProductReviewFactory
     }
 
     /**
+     * @deprecated Use \Spryker\Client\ProductReview\ProductReviewFactory::createProductReviewSummaryCalculator instead.
+     *
      * @return \SprykerShop\Yves\ProductReviewWidget\Controller\Calculator\ProductReviewSummaryCalculatorInterface
      */
     public function createProductReviewSummaryCalculator()
@@ -84,5 +90,29 @@ class ProductReviewWidgetFactory extends SprykerProductReviewFactory
     public function createProductReviewFormDataProvider()
     {
         return new ProductReviewFormDataProvider();
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\Application
+     */
+    public function getApplication(): Application
+    {
+        return $this->getProvidedDependency(ProductReviewWidgetDependencyProvider::PLUGIN_APPLICATION);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    public function getApplicationRequest(): Request
+    {
+        return $this->getApplication()['request'];
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductReviewWidget\ProductReviewSearchRequestBuilder\ProductReviewSearchRequestBuilderInterface
+     */
+    public function createProductReviewSearchRequestBuilder(): ProductReviewSearchRequestBuilderInterface
+    {
+        return new ProductReviewSearchRequestBuilder();
     }
 }

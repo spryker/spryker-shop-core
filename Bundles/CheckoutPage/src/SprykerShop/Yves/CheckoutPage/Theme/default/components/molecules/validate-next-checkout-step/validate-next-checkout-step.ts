@@ -13,15 +13,14 @@ export default class ValidateNextCheckoutStep extends Component {
     protected parentTarget: HTMLElement;
     protected readonly requiredFormFieldSelectors: string = 'select[required], input[required]';
 
-    protected readyCallback(): void {
+    protected readyCallback(): void {}
+
+    protected init(): void {
         this.containers = <HTMLElement[]>Array.from(document.querySelectorAll(this.containerSelector));
         this.target = <HTMLButtonElement>document.querySelector(this.targetSelector);
-
-        if (this.dropdownTriggerSelector) {
-            this.dropdownTriggers = <HTMLSelectElement[]>Array.from(document.querySelectorAll(
-                this.dropdownTriggerSelector
-            ));
-        }
+        this.dropdownTriggers = <HTMLSelectElement[]>Array.from(document.querySelectorAll(
+            this.dropdownTriggerSelector
+        ));
 
         if (this.parentTargetClassName) {
             this.parentTarget = <HTMLElement>document.getElementsByClassName(this.parentTargetClassName)[0];
@@ -37,11 +36,9 @@ export default class ValidateNextCheckoutStep extends Component {
     protected mapEvents(): void {
         this.mapTriggerEvents();
 
-        if (this.dropdownTriggers) {
-            this.dropdownTriggers.forEach((element: HTMLSelectElement) => {
-                element.addEventListener('change', () => this.onDropdownTriggerChange());
-            });
-        }
+        this.dropdownTriggers.forEach((element: HTMLSelectElement) => {
+            element.addEventListener('change', () => this.onDropdownTriggerChange());
+        });
 
         if (this.parentTarget) {
             this.parentTarget.addEventListener('toggleForm', () => this.onDropdownTriggerChange());
@@ -51,7 +48,7 @@ export default class ValidateNextCheckoutStep extends Component {
     protected mapTriggerEvents(): void {
         if (this.triggers) {
             this.triggers.forEach((element: HTMLFormElement) => {
-                element.addEventListener('change', () => this.onTriggerChange());
+                element.addEventListener('input', () => this.onTriggerInput());
             });
         }
     }
@@ -83,13 +80,13 @@ export default class ValidateNextCheckoutStep extends Component {
         }, []);
     }
 
-    protected onTriggerChange(): void {
+    protected onTriggerInput(): void {
         this.fillFormFieldsCollection();
         this.toggleDisablingNextStepButton();
     }
 
     protected onDropdownTriggerChange(): void {
-        this.onTriggerChange();
+        this.onTriggerInput();
         this.mapTriggerEvents();
     }
 
@@ -98,7 +95,7 @@ export default class ValidateNextCheckoutStep extends Component {
             return;
         }
 
-        if (this.isFormFieldsEmpty) {
+        if (this.isFormFieldsEmpty || this.isDropdownTriggerPreSelected) {
             this.disableNextStepButton(true);
 
             return;
@@ -114,6 +111,10 @@ export default class ValidateNextCheckoutStep extends Component {
         if (this.target) {
             this.target.disabled = isDisabled;
         }
+    }
+
+    protected get isDropdownTriggerPreSelected(): boolean {
+        return this.dropdownTriggers.some((element: HTMLSelectElement) => !element.value);
     }
 
     /**

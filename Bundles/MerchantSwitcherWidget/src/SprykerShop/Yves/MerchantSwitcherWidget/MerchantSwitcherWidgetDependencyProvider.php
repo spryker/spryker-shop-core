@@ -11,11 +11,15 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToMerchantSearchClientBridge;
+use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToMerchantSwitcherClientBridge;
+use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToQuoteClientBridge;
 
 class MerchantSwitcherWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_MERCHANT_SEARCH = 'CLIENT_MERCHANT_SEARCH';
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    public const CLIENT_MERCHANT_SWITCHER = 'CLIENT_MERCHANT_SWITCHER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -28,6 +32,8 @@ class MerchantSwitcherWidgetDependencyProvider extends AbstractBundleDependencyP
 
         $container = $this->addMerchantSearchClient($container);
         $container = $this->addApplication($container);
+        $container = $this->addQuoteClient($container);
+        $container = $this->addMerchantSwitcherClient($container);
 
         return $container;
     }
@@ -57,6 +63,34 @@ class MerchantSwitcherWidgetDependencyProvider extends AbstractBundleDependencyP
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addQuoteClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
+            return new MerchantSwitcherWidgetToQuoteClientBridge($container->getLocator()->quote()->client());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addMerchantSwitcherClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_MERCHANT_SWITCHER, function (Container $container) {
+            return new MerchantSwitcherWidgetToMerchantSwitcherClientBridge($container->getLocator()->merchantSwitcher()->client());
         });
 
         return $container;

@@ -39,6 +39,8 @@ class ContentFileWidgetConfig extends AbstractBundleConfig
     ];
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getFileIconNames(): array

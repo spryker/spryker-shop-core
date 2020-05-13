@@ -24,7 +24,7 @@ class CheckoutBreadcrumbPlugin extends AbstractPlugin
     public function generateStepBreadcrumbs(?AbstractTransfer $dataTransfer = null)
     {
         $stepFactory = $this->getFactory()->createStepFactory();
-        $stepCollection = $stepFactory->createStepCollection();
+        $stepCollection = $stepFactory->createStepResolver()->resolveSteps();
 
         return $stepFactory->createStepBreadcrumbGenerator()->generateStepBreadcrumbs($stepCollection, $dataTransfer);
     }

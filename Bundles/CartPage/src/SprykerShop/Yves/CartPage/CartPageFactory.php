@@ -17,6 +17,9 @@ use SprykerShop\Yves\CartPage\Mapper\CartItemsAttributeMapper;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAvailabilityMapper;
 use SprykerShop\Yves\CartPage\Model\CartItemReader;
 use SprykerShop\Yves\CartPage\Plugin\Provider\AttributeVariantsProvider;
+use SprykerShop\Yves\CartPage\ProductViewExpander\ProductViewExpander;
+use SprykerShop\Yves\CartPage\ProductViewExpander\ProductViewExpanderInterface;
+use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 
 class CartPageFactory extends AbstractFactory
 {
@@ -172,5 +175,21 @@ class CartPageFactory extends AbstractFactory
     public function createCartItemsAvailabilityMapper()
     {
         return new CartItemsAvailabilityMapper($this->getAvailabilityStorageClient());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CartPage\ProductViewExpander\ProductViewExpanderInterface
+     */
+    public function createProductViewExpander(): ProductViewExpanderInterface
+    {
+        return new ProductViewExpander($this->getRouter());
+    }
+
+    /**
+     * @return \Symfony\Cmf\Component\Routing\ChainRouterInterface
+     */
+    public function getRouter(): ChainRouterInterface
+    {
+        return $this->getApplication()->get(CartPageDependencyProvider::SERVICE_ROUTER);
     }
 }

@@ -7,11 +7,12 @@
 
 namespace SprykerShop\Yves\PriceProductVolumeWidget\Widget;
 
-use Generated\Shared\Transfer\PriceProductVolumeCollectionTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\PriceProductVolumeWidget\Widget\CurrentProductPriceVolumeWidget instead.
+ *
  * @method \SprykerShop\Yves\PriceProductVolumeWidget\PriceProductVolumeWidgetFactory getFactory()
  */
 class ProductPriceVolumeWidget extends AbstractWidget
@@ -21,11 +22,9 @@ class ProductPriceVolumeWidget extends AbstractWidget
      */
     public function __construct(ProductViewTransfer $productViewTransfer)
     {
-        $this->addParameter('product', $productViewTransfer)
-            ->addParameter(
-                'volumeProductPrices',
-                $this->findPriceProductVolume($productViewTransfer)
-            );
+        $widget = new CurrentProductPriceVolumeWidget($productViewTransfer->getCurrentProductPrice());
+
+        $this->parameters = $widget->getParameters();
     }
 
     /**
@@ -42,17 +41,5 @@ class ProductPriceVolumeWidget extends AbstractWidget
     public static function getTemplate(): string
     {
         return '@PriceProductVolumeWidget/views/volume-price-product-widget/volume-price-product.twig';
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductVolumeCollectionTransfer
-     */
-    protected function findPriceProductVolume(ProductViewTransfer $productViewTransfer): PriceProductVolumeCollectionTransfer
-    {
-        return $this->getFactory()
-            ->createPriceProductVolumeResolver()
-            ->resolveVolumeProductPrices($productViewTransfer);
     }
 }

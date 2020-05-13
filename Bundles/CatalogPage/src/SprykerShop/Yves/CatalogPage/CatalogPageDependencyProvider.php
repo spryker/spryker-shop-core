@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CatalogPage;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCatalogClientBridge;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCategoryStorageClientBridge;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToLocaleClientBridge;
@@ -25,6 +26,7 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_CATALOG_PAGE_WIDGETS = 'PLUGIN_CATALOG_PAGE_WIDGETS';
     public const CLIENT_PRODUCT_CATEGORY_FILTER = 'CLIENT_PRODUCT_CATEGORY_FILTER';
     public const CLIENT_PRODUCT_CATEGORY_FILTER_STORAGE = 'CLIENT_PRODUCT_CATEGORY_FILTER_STORAGE';
+    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -40,6 +42,7 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductCategoryFilterClient($container);
         $container = $this->addProductCategoryFilterStorageClient($container);
         $container = $this->addCatalogPageWidgetPlugins($container);
+        $container = $this->addApplication($container);
 
         return $container;
     }
@@ -148,5 +151,21 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function getCatalogPageWidgetPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addApplication(Container $container): Container
+    {
+        $container->set(static::PLUGIN_APPLICATION, function () {
+            $pimplePlugin = new Pimple();
+
+            return $pimplePlugin->getApplication();
+        });
+
+        return $container;
     }
 }

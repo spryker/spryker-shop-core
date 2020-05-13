@@ -60,8 +60,10 @@ class DoubleOptInSubscriptionRequestHandler implements SubscriptionRequestHandle
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer
      */
-    protected function createNewsletterSubscriptionRequest(CustomerTransfer $customerTransfer, ?string $subscriberKey = null): NewsletterSubscriptionRequestTransfer
-    {
+    protected function createNewsletterSubscriptionRequest(
+        CustomerTransfer $customerTransfer,
+        ?string $subscriberKey = null
+    ): NewsletterSubscriptionRequestTransfer {
         $subscriptionRequest = new NewsletterSubscriptionRequestTransfer();
 
         $subscriberTransfer = new NewsletterSubscriberTransfer();

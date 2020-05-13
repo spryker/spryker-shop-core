@@ -7,18 +7,21 @@
 
 namespace SprykerShop\Yves\ProductReviewWidget;
 
+use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use Spryker\Yves\ProductReview\ProductReviewDependencyProvider as SprykerProductReviewDependencyProvider;
+use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToCustomerClientBridge;
 use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductReviewClientBridge;
 use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductReviewStorageClientBridge;
 
-class ProductReviewWidgetDependencyProvider extends SprykerProductReviewDependencyProvider
+class ProductReviewWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
     public const CLIENT_PRODUCT_REVIEW = 'CLIENT_PRODUCT_REVIEW';
     public const CLIENT_PRODUCT_REVIEW_STORAGE = 'CLIENT_PRODUCT_REVIEW_STORAGE';
+
+    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -32,6 +35,7 @@ class ProductReviewWidgetDependencyProvider extends SprykerProductReviewDependen
         $container = $this->addCustomerClient($container);
         $container = $this->addProductReviewClient($container);
         $container = $this->addProductReviewStorageClient($container);
+        $container = $this->addPluginApplication($container);
 
         return $container;
     }
@@ -74,6 +78,20 @@ class ProductReviewWidgetDependencyProvider extends SprykerProductReviewDependen
         $container[static::CLIENT_PRODUCT_REVIEW_STORAGE] = function (Container $container) {
             return new ProductReviewWidgetToProductReviewStorageClientBridge($container->getLocator()->productReviewStorage()->client());
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addPluginApplication(Container $container): Container
+    {
+        $container->set(static::PLUGIN_APPLICATION, function () {
+            return (new Pimple())->getApplication();
+        });
 
         return $container;
     }

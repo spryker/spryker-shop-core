@@ -21,28 +21,34 @@ export default class AddressFormToggler extends Component {
     protected billingSameAsShippingToggler: HTMLInputElement;
     protected parentTarget: HTMLElement;
     protected eventToggleForm: CustomEvent = new CustomEvent(EVENT_TOGGLE_FORM);
+    protected readonly togglerPlaceholderValue: string = '0';
 
-    protected readyCallback(): void {
-        if (this.triggerSelector) {
-            this.toggler = <HTMLSelectElement>document.querySelector(this.triggerSelector);
-            this.form = <HTMLFormElement>document.querySelector(this.targetSelector);
-            this.containerBillingAddress = <HTMLElement>document.querySelector(this.containerBillingAddressSelector);
-            this.billingSameAsShipping = <HTMLElement>document.querySelector(this.billingSameAsShippingSelector);
-            this.billingSameAsShippingToggler = <HTMLInputElement>document.querySelector(
-                this.billingSameAsShippingTogglerSelector
-            );
+    protected readyCallback(): void {}
 
-            if (this.subTargetSelector) {
-                this.subForm = <HTMLFormElement>document.querySelector(this.subTargetSelector);
-            }
-
-            if (this.parentTargetClassName) {
-                this.parentTarget = <HTMLElement>document.getElementsByClassName(this.parentTargetClassName)[0];
-            }
-
-            this.onTogglerChange();
-            this.mapEvents();
+    protected init(): void {
+        if (!this.triggerSelector) {
+            return;
         }
+
+        this.toggler = <HTMLSelectElement>document.querySelector(this.triggerSelector);
+        this.form = <HTMLFormElement>document.querySelector(this.targetSelector);
+        this.containerBillingAddress = <HTMLElement>document.querySelector(this.containerBillingAddressSelector);
+        this.billingSameAsShipping = <HTMLElement>document.querySelector(this.billingSameAsShippingSelector);
+        this.billingSameAsShippingToggler = <HTMLInputElement>document.querySelector(
+            this.billingSameAsShippingTogglerSelector
+        );
+
+        if (this.subTargetSelector) {
+            this.subForm = <HTMLFormElement>document.querySelector(this.subTargetSelector);
+        }
+
+        if (this.parentTargetClassName) {
+            this.parentTarget = <HTMLElement>document.getElementsByClassName(this.parentTargetClassName)[0];
+        }
+
+        this.onTogglerChange();
+        this.setTriggerPreSelectedOption();
+        this.mapEvents();
     }
 
     protected mapEvents(): void {
@@ -50,12 +56,12 @@ export default class AddressFormToggler extends Component {
     }
 
     protected onTogglerChange(): void {
-        const selectedOption = this.toggler ? <string>this.toggler.options[this.toggler.selectedIndex].value : '';
+        const selectedOption = <string>this.toggler.options[this.toggler.selectedIndex].value;
 
         if (selectedOption === this.optionValueDeliverToMultipleAddresses) {
             this.toggleSubForm();
         } else {
-            this.toggleForm(!!selectedOption);
+            this.toggleForm(selectedOption !== this.togglerPlaceholderValue);
         }
     }
 
@@ -81,6 +87,15 @@ export default class AddressFormToggler extends Component {
         if (this.parentTarget) {
             this.parentTarget.dispatchEvent(this.eventToggleForm);
         }
+    }
+
+    protected setTriggerPreSelectedOption(): void {
+        if (!this.isTriggerHasPreselectedOption) {
+            return;
+        }
+
+        this.toggler.options[0].disabled = true;
+        this.toggler.options[0].defaultSelected = true;
     }
 
     /**
@@ -141,5 +156,9 @@ export default class AddressFormToggler extends Component {
 
     protected get parentTargetClassName(): string {
         return this.getAttribute('parent-target-class-name');
+    }
+
+    protected get isTriggerHasPreselectedOption(): boolean {
+        return this.hasAttribute('is-trigger-has-preselected-option');
     }
 }

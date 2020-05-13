@@ -439,7 +439,11 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     protected function setQuoteShipment(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        return $quoteTransfer->setShipment(new ShipmentTransfer());
+        if (!$quoteTransfer->getShipment()) {
+            $quoteTransfer->setShipment(new ShipmentTransfer());
+        }
+
+        return $quoteTransfer;
     }
 
     /**

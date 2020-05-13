@@ -16,6 +16,8 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 class ChartWidgetConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\ChartLayoutTransfer
      */
     public function getDefaultChartLayout(): ChartLayoutTransfer

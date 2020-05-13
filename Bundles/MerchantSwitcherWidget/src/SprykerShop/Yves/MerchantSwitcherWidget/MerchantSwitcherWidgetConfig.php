@@ -22,6 +22,8 @@ class MerchantSwitcherWidgetConfig extends AbstractBundleConfig
     protected const MERCHANT_SELECTOR_COOKIE_TIME_EXPIRATION = 315360000;
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isMerchantSwitcherEnabled(): bool
@@ -30,6 +32,8 @@ class MerchantSwitcherWidgetConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getMerchantSelectorCookieIdentifier(): string
@@ -38,6 +42,8 @@ class MerchantSwitcherWidgetConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getMerchantSelectorCookieTimeExpiration(): int

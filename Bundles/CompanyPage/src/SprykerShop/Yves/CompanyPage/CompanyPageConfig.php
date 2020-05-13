@@ -14,6 +14,8 @@ class CompanyPageConfig extends AbstractBundleConfig
     protected const ZIP_CODE_CONSTRAINT_PATTERN = '/^\d{5}$/';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getZipCodeConstraintPattern(): string

@@ -14,6 +14,8 @@ class ProductReviewWidgetConfig extends AbstractBundleConfig
     public const GLOSSARY_KEY_INVALID_RATING_VALIDATION_MESSAGE = 'validation.choice';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getInvalidRatingValidationMessageGlossaryKey(): string

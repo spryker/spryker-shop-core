@@ -13,23 +13,11 @@
     {% if widgetExists('ProductImageWidgetPlugin') %}
         {{ widget('ProductImageWidgetPlugin', data.product) }} {# @deprecated Use molecule('simple-carousel') instead. #}
     {% else %}
-        {% embed molecule('simple-carousel') with {
+        {% include molecule('image-carousel') with {
             data: {
-                slides: data.product.images | default([])
-            }
+                slides: data.product.images | default([]),
+            },
         } only %}
-            {% block slide %}
-                <div class="text-center">
-                    {% include atom('thumbnail') with {
-                        modifiers: ['bigger'],
-                        attributes: {
-                            itemprop: 'image',
-                            src: slide.externalUrlLarge
-                        }
-                    } only %}
-                </div>
-            {% endblock %}
-        {% endembed %}
     {% endif %}
 
     {% widget 'ProductAbstractLabelWidget' args [data.product.idProductAbstract] only %}

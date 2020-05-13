@@ -48,9 +48,7 @@ class QuoteRequestCreateController extends QuoteRequestAbstractController
             return $this->processQuoteRequestForm($quoteRequestForm);
         }
 
-        return [
-            'quoteRequestForm' => $quoteRequestForm->createView(),
-        ];
+        return $this->getViewParameters($quoteRequestForm);
     }
 
     /**
@@ -74,8 +72,32 @@ class QuoteRequestCreateController extends QuoteRequestAbstractController
 
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
+        return $this->getViewParameters($quoteRequestForm);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $quoteRequestForm
+     *
+     * @return array
+     */
+    protected function getViewParameters(FormInterface $quoteRequestForm): array
+    {
+        /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
+        $quoteRequestTransfer = $quoteRequestForm->getData();
+
+        $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();
+        $shipmentGroupTransfers = $this->getFactory()
+            ->createShipmentGrouper()
+            ->groupItemsByShippingAddress($quoteTransfer);
+
+        $itemExtractor = $this->getFactory()->createItemExtractor();
+
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),
+            'shipmentGroups' => $shipmentGroupTransfers,
+            'itemsWithShipment' => $itemExtractor->extractItemsWithShipment($quoteTransfer),
+            'itemsWithoutShipment' => $itemExtractor->extractItemsWithoutShipment($quoteTransfer),
+            'shipmentExpenses' => $this->getFactory()->createExpenseExtractor()->extractShipmentExpenses($quoteTransfer),
         ];
     }
 }

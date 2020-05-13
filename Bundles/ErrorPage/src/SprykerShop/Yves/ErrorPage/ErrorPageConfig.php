@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 class ErrorPageConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return int[]
      */
     public function getValidSubRequestExceptionStatusCodes()
@@ -25,6 +27,8 @@ class ErrorPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isErrorStackTraceEnabled(): bool

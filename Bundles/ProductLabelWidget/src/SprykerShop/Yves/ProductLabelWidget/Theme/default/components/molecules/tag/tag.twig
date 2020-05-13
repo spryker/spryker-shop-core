@@ -2,13 +2,18 @@
 
 {% define config = {
     name: 'tag',
-    tag: 'span'
+    tag: 'span',
 } %}
 
 {% define data = {
-    text: ''
+    text: '',
+    textClass: '',
+} %}
+
+{% define attributes = {
+    'data-label-tag-type': '',
 } %}
 
 {% block body %}
-    <span class="{{config.name}}__text">{{data.text}}</span>
+    <span class="{{ config.name }}__text {{ data.textClass }}">{{ data.text }}</span>
 {% endblock %}

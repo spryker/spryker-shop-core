@@ -1,6 +1,8 @@
 import Component from 'ShopUi/models/component';
+import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
 
 export default class MerchantSelectorForm extends Component {
+    protected ajaxProvider: AjaxProvider;
     protected form: HTMLFormElement;
     protected select: HTMLSelectElement;
     protected message: string;
@@ -9,6 +11,7 @@ export default class MerchantSelectorForm extends Component {
     protected readyCallback(): void {}
 
     protected init(): void {
+        this.ajaxProvider = <AjaxProvider>this.getElementsByClassName(`${this.jsName}__provider`)[0];
         this.form = <HTMLFormElement>this.getElementsByClassName(`${this.jsName}__form`)[0];
         this.select = <HTMLSelectElement>this.form.getElementsByClassName(`${this.jsName}__select`)[0];
         this.initiallySelectedIndex = this.select.selectedIndex;
@@ -32,28 +35,26 @@ export default class MerchantSelectorForm extends Component {
         const currentMerchantOptionText: string = this.select.options[this.initiallySelectedIndex].text;
         const newMerchantOptionText: string = this.select.options[this.select.selectedIndex].text;
 
-        this.message = this.message.replace(this.currentMerchantNameTemplate, currentMerchantOptionText);
+        this.message = this.messageTemplate.replace(this.currentMerchantNameTemplate, currentMerchantOptionText);
         this.message = this.message.replace(this.newMerchantNameTemplate, newMerchantOptionText);
     }
 
     /**
      * Sets merchant after according answer of confirmation question.
      */
-    setMerchant(): void {
-        const isFormSubmitConfirmed: boolean = confirm(this.message);
-
-        if (isFormSubmitConfirmed) {
-            this.form.submit();
-
+    async setMerchant(): Promise<void> {
+        if (!confirm(this.message)) {
             return;
         }
 
-        this.selectInitialOption();
-    }
+        this.ajaxProvider.queryParams.set('merchant-reference', this.select.value);
 
-    protected selectInitialOption(): void {
-        const initialMerchantOption: HTMLOptionElement = this.select.options[this.initiallySelectedIndex];
-        initialMerchantOption.selected = true;
+        try {
+            await this.ajaxProvider.fetch();
+            document.location.reload();
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     protected get messageTemplate(): string {

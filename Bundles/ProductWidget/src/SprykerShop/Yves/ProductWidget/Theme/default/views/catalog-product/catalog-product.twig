@@ -28,13 +28,19 @@
             },
         } only %}
             {% block labels %}
-                {% widget 'ProductConcreteLabelWidget' args [data.product.id_product_labels] only %}{% endwidget %}
+                {% widget 'ProductConcreteLabelWidget' args [data.product.id_product_labels] with {
+                    data: {
+                        parentJsName: config.jsName,
+                    },
+                } only %}{% endwidget %}
             {% endblock %}
 
             {% block rating %}
-                {% if data.product.rating is defined %}
-                    {% widget 'ProductReviewDisplayWidget' args [data.product.rating] only %}{% endwidget %}
-                {% endif %}
+                {% widget 'ProductReviewDisplayWidget' args [data.product.rating | default(0)] with {
+                    data: {
+                        parentJsName: config.jsName,
+                    },
+                } only %}{% endwidget %}
             {% endblock %}
         {% endembed %}
     </div>

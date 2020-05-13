@@ -10,6 +10,8 @@ namespace SprykerShop\Yves\ProductGroupWidget;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductGroupWidget\Dependency\Client\ProductGroupWidgetToProductGroupStorageClientInterface;
 use SprykerShop\Yves\ProductGroupWidget\Dependency\Client\ProductGroupWidgetToProductStorageClientInterface;
+use SprykerShop\Yves\ProductGroupWidget\Reader\ProductGroupReader;
+use SprykerShop\Yves\ProductGroupWidget\Reader\ProductGroupReaderInterface;
 
 class ProductGroupWidgetFactory extends AbstractFactory
 {
@@ -27,5 +29,25 @@ class ProductGroupWidgetFactory extends AbstractFactory
     public function getProductStorageClient(): ProductGroupWidgetToProductStorageClientInterface
     {
         return $this->getProvidedDependency(ProductGroupWidgetDependencyProvider::CLIENT_PRODUCT_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface[]
+     */
+    public function getProductViewExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductGroupWidgetDependencyProvider::PLUGIN_PRODUCT_VIEW_EXPANDERS);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductGroupWidget\Reader\ProductGroupReaderInterface
+     */
+    public function getProductGroupReader(): ProductGroupReaderInterface
+    {
+        return new ProductGroupReader(
+            $this->getProductGroupStorageClient(),
+            $this->getProductStorageClient(),
+            $this->getProductViewExpanderPlugins()
+        );
     }
 }

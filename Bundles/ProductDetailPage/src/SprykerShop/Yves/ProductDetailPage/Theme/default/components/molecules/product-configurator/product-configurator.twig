@@ -47,8 +47,9 @@
     <small>{{ 'product.attribute.sku' | trans }}: {{sku}}</small>
 
     <hr>
-    {% widget 'ProductPriceVolumeWidget' args [data.product] only %}
-    {% elsewidget 'PriceProductVolumeWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductPriceVolumeWidget instead. #}
+    {% widget 'CurrentProductPriceVolumeWidget' args [data.product.currentProductPrice] only %}
+    {% elsewidget 'ProductPriceVolumeWidget' args [data.product] only %} {# @deprecated Use CurrentProductPriceVolumeWidget instead. #}
+    {% elsewidget 'PriceProductVolumeWidgetPlugin' args [data.product] only %} {# @deprecated Use CurrentProductPriceVolumeWidget instead. #}
     {% nowidget %}
         {% if widgetExists('PriceWidgetPlugin') %}
             {{ widget('PriceWidgetPlugin', data.product) }}  {# @deprecated Use molecule('money-price') instead. #}
@@ -73,6 +74,10 @@
         {% widget 'ProductGroupWidget' args [data.product.idProductAbstract] only %}
         {% elsewidget 'ProductGroupWidgetPlugin' args [data.product.idProductAbstract] only %} {# @deprecated Use ProductGroupWidget instead. #}
         {% endwidget %}
+    {% endblock %}
+
+    {% block colors %}
+        {% widget 'ProductGroupColorWidget' args [data.product.idProductAbstract, data.product.selectedAttributes ?? []] use view('product-detail-color-selector', 'ProductGroupWidget') only %}{% endwidget %}
     {% endblock %}
 
     {% embed molecule('variant-configurator', 'ProductDetailPage') with {

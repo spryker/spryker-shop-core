@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\ProductReviewWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\ProductReviewRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
+use Generated\Shared\Transfer\ProductReviewSummaryTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
+use Generated\Shared\Transfer\RatingAggregationTransfer;
 
 class ProductReviewWidgetToProductReviewClientBridge implements ProductReviewWidgetToProductReviewClientInterface
 {
@@ -51,5 +54,29 @@ class ProductReviewWidgetToProductReviewClientBridge implements ProductReviewWid
     public function submitCustomerReview(ProductReviewRequestTransfer $productReviewRequestTransfer)
     {
         return $this->productReviewClient->submitCustomerReview($productReviewRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function expandProductViewWithProductReviewData(
+        ProductViewTransfer $productViewTransfer,
+        ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer
+    ): ProductViewTransfer {
+        return $this->productReviewClient
+            ->expandProductViewWithProductReviewData($productViewTransfer, $productReviewSearchRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RatingAggregationTransfer $ratingAggregationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductReviewSummaryTransfer
+     */
+    public function calculateProductReviewSummary(RatingAggregationTransfer $ratingAggregationTransfer): ProductReviewSummaryTransfer
+    {
+        return $this->productReviewClient->calculateProductReviewSummary($ratingAggregationTransfer);
     }
 }

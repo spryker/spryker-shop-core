@@ -13,6 +13,8 @@ use SprykerShop\Shared\CalculationPage\CalculationPageConstants;
 class CalculationPageConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return bool
      */
     public function isCartDebugEnabled(): bool

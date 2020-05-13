@@ -2,56 +2,59 @@
 
 {% define config = {
     name: 'notification-area',
-    tag: 'section'
+    tag: 'section',
 } %}
 
 {% define data = {
     messages: [],
     successMessages: [],
     warningMessages: [],
-    alertMessages: []
+    alertMessages: [],
+    flashMessagesInfo: app.session.flashbag.get('flash.messages.info'),
+    flashMessagesSuccess: app.session.flashbag.get('flash.messages.success'),
+    flashMessagesError: app.session.flashbag.get('flash.messages.error'),
 } %}
 
-{% set messages = data.messages | merge(app.session.flashbag.get('flash.messages.info')) %}
-{% set successMessages = data.successMessages | merge(app.session.flashbag.get('flash.messages.success')) %}
+{% set messages = data.messages | merge(data.flashMessagesInfo) %}
+{% set successMessages = data.successMessages | merge(data.flashMessagesSuccess) %}
 {% set warningMessages = data.warningMessages %}
-{% set alertMessages = data.alertMessages | merge(app.session.flashbag.get('flash.messages.error')) %}
+{% set alertMessages = data.alertMessages | merge(data.flashMessagesError) %}
 {% set hasNoMessage = messages is empty and successMessages is empty and warningMessages is empty and alertMessages is empty %}
 
 {% block component %}
-    {% if not hasNoMessage %}{{parent()}}{% endif %}
+    {% if not hasNoMessage %}{{ parent() }}{% endif %}
 {% endblock %}
 
 {% block body %}
     {% for message in messages %}
         {% include molecule('flash-message') with {
             data: {
-                text: message
-            }
+                text: message,
+            },
         } only %}
     {% endfor %}
     {% for message in successMessages %}
         {% include molecule('flash-message') with {
             data: {
                 action: 'success',
-                text: message
-            }
+                text: message,
+            },
         } only %}
     {% endfor %}
     {% for message in warningMessages %}
         {% include molecule('flash-message') with {
             data: {
                 action: 'warning',
-                text: message
-            }
+                text: message,
+            },
         } only %}
     {% endfor %}
     {% for message in alertMessages %}
         {% include molecule('flash-message') with {
             data: {
                 action: 'alert',
-                text: message
-            }
+                text: message,
+            },
         } only %}
     {% endfor %}
 {% endblock %}

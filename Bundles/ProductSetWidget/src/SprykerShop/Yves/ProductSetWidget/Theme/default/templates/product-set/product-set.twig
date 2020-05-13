@@ -128,7 +128,7 @@
                                             {{- buttonContent -}}
                                         </button>
                                     {% else %}
-                                        <a href="{{ path('cart/add', {sku: data.product.sku}) }}" class="button button--expand" data-init-single-click>
+                                        <a href="{{ path('cart/add', {sku: data.product.sku}) }}" class="button button--expand {{ config.jsName }}__link-add-to-cart" data-init-single-click>
                                             {{- buttonContent -}}
                                         </a>
                                     {% endif %}

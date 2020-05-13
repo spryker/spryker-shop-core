@@ -42,14 +42,14 @@
         </div>
 
         <div class="float-right">
-            <a href="{{ data.backUrl }}" class="button button--secondary button--hollow">
+            <a href="{{ path('multi-cart') }}" class="button button--secondary button--hollow">
                 {% include atom('icon') with {
                     modifiers: ['small'],
                     data: {
                         name: 'chevron-left'
                     }
                 } only %}
-                {{ "general.back.button" | trans }}
+                {{ 'shared_cart.dismiss_confirmation.carts_list' | trans }}
             </a>
             <a href="{{ url('shared-cart/dismiss', { 'idQuote' : data.idQuote }) }}" class="button button--alert">
                 {{ "shared_cart_page.cart.dismiss" | trans }}

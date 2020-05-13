@@ -20,7 +20,7 @@ use SprykerShop\Yves\CompanyPage\Form\CompanyBusinessUnitForm;
 
 class CompanyBusinessUnitFormDataProvider
 {
-    protected const COMPANY_UNIT_ADDRESS_KEY = "%s %s %s %s, %s";
+    protected const COMPANY_UNIT_ADDRESS_KEY = '%s %s %s %s, %s';
 
     /**
      * @var \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface
@@ -92,8 +92,10 @@ class CompanyBusinessUnitFormDataProvider
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer
      */
-    protected function prepareCompanyUnitAddressCriteriaFilterTransfer(?int $idCompany = null, ?int $idCompanyBusinessUnit = null): CompanyUnitAddressCriteriaFilterTransfer
-    {
+    protected function prepareCompanyUnitAddressCriteriaFilterTransfer(
+        ?int $idCompany = null,
+        ?int $idCompanyBusinessUnit = null
+    ): CompanyUnitAddressCriteriaFilterTransfer {
         $companyUnitAddressCriteriaFilter = new CompanyUnitAddressCriteriaFilterTransfer();
 
         if ($idCompany) {

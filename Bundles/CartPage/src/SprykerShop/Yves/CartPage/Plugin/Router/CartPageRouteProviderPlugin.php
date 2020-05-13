@@ -104,8 +104,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @uses CartControllerProvider::getQuantityFromRequest()
-     * @uses CartController::quickAddAction()
+     * @uses \SprykerShop\Yves\CartPage\Controller\CartController::quickAddAction()
      *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
@@ -130,7 +129,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $route = $this->buildRoute('/cart/remove/{sku}/{groupKey}', 'CartPage', 'Cart', 'removeAction');
         $route = $route->setRequirement('sku', static::SKU_PATTERN);
         $route = $route->setDefault('groupKey', '');
-        
+
         $routeCollection->add(static::ROUTE_CART_REMOVE, $route);
 
         return $routeCollection;

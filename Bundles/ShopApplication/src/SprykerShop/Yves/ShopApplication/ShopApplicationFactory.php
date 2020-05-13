@@ -145,7 +145,7 @@ class ShopApplicationFactory extends AbstractFactory
      */
     public function createRoutingHelper()
     {
-        return new RoutingHelper($this->getApplication(), $this->getStore(), $this->getUtilTextService());
+        return new RoutingHelper($this->getApplication(), $this->getUtilTextService());
     }
 
     /**

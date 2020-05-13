@@ -14,6 +14,8 @@ class CmsSlotBlockWidgetConfig extends AbstractBundleConfig
     protected const CMS_BLOCK_TWIG_FUNCTION_NAME = 'spyCmsBlock';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getCmsBlockTwigFunctionName(): string

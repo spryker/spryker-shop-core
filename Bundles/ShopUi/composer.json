@@ -10,11 +10,13 @@
     "spryker/twig-extension": "^1.0.0"
   },
   "require-dev": {
+    "spryker-shop/product-group-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
     "spryker/silex": "*"
   },
   "suggest": {
+    "spryker-shop/product-group-widget": "If you want to use components from module ProductGroupColorWidget or ProductGroupWidget",
     "spryker/container": "If you want to use Twig Plugins",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
