@@ -44,7 +44,6 @@ class ReturnViewController extends AbstractReturnController
 
         return [
             'return' => $returnTransfer,
-            'returnItemsCount' => $returnTransfer->getReturnItems()->count(),
         ];
     }
 }
