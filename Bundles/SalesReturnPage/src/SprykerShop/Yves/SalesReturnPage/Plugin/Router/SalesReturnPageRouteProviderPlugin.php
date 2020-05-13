@@ -110,7 +110,8 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected function addReturnSlipPrintRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/return/slip-print', 'SalesReturnPage', 'ReturnSlipPrint', 'printAction');
+        $route = $this->buildRoute('/return/slip-print/{returnReference}', 'SalesReturnPage', 'ReturnSlipPrint', 'printAction');
+        $route = $route->setRequirement(static::PARAM_RETURN_REFERENCE, static::REFERENCE_REGEX);
         $routeCollection->add(static::ROUTE_RETURN_SLIP_PRINT, $route);
 
         return $routeCollection;

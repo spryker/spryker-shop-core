@@ -75,6 +75,7 @@
         <property name="state" type="ItemState"/>
         <property name="createdAt" type="string"/>
         <property name="isReturnable" type="bool"/>
+        <property name="unitPrice" type="int"/>
         <property name="name" type="string"/>
         <property name="sku" type="string"/>
         <property name="quantity" type="int"/>
@@ -82,6 +83,7 @@
         <property name="sumPrice" type="int"/>
         <property name="productOptions" type="ProductOption[]" singular="productOption"/>
         <property name="orderReference" type="string"/>
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="ProductOption">
