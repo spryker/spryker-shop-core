@@ -12,10 +12,10 @@ use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 interface SalesReturnPageFormHandlerInterface
 {
     /**
-     * @param array $returnItemsList
+     * @param array $returnItemList
      * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ReturnCreateRequestTransfer
      */
-    public function handleFormData(array $returnItemsList, ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnCreateRequestTransfer;
+    public function handleFormData(array $returnItemList, ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnCreateRequestTransfer;
 }

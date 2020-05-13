@@ -14,26 +14,29 @@ use SprykerShop\Yves\ProductBundleWidget\Form\ProductBundleItemsForm;
 
 class SalesReturnPageFormHandler implements SalesReturnPageFormHandlerInterface
 {
+    /**
+     * @uses \SprykerShop\Yves\SalesReturnPage\Form\DataProvider\ReturnCreateFormDataProvider::CUSTOM_REASON_VALUE
+     */
     protected const CUSTOM_REASON_VALUE = 'custom_reason';
 
     /**
-     * @param array $returnItemsList
+     * @param array $returnItemList
      * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ReturnCreateRequestTransfer
      */
-    public function handleFormData(array $returnItemsList, ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnCreateRequestTransfer
+    public function handleFormData(array $returnItemList, ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnCreateRequestTransfer
     {
-        $productBundlesList = $returnItemsList[ProductBundleItemsForm::FIELD_PRODUCT_BUNDLES] ?? [];
-        $producBundleItemTransfersCollection = $returnItemsList[ProductBundleItemsForm::PARAM_PRODUCT_BUNDLE_ITEMS] ?? [];
+        $productBundleList = $returnItemList[ProductBundleItemsForm::FIELD_PRODUCT_BUNDLES] ?? [];
+        $productBundleItemTransferCollection = $returnItemList[ProductBundleItemsForm::PARAM_PRODUCT_BUNDLE_ITEMS] ?? [];
 
-        foreach ($productBundlesList as $productBundleData) {
-            if (!$productBundleData[ItemTransfer::IS_RETURNABLE] || !$producBundleItemTransfersCollection) {
+        foreach ($productBundleList as $productBundleData) {
+            if (!$productBundleData[ItemTransfer::IS_RETURNABLE] || !$productBundleItemTransferCollection) {
                 continue;
             }
 
             $returnCreateRequestTransfer = $this->appendReturnItemTransfers(
-                $producBundleItemTransfersCollection,
+                $productBundleItemTransferCollection,
                 $productBundleData,
                 $returnCreateRequestTransfer
             );
@@ -43,21 +46,21 @@ class SalesReturnPageFormHandler implements SalesReturnPageFormHandlerInterface
     }
 
     /**
-     * @param array $producBundleItemTransfersCollection
+     * @param array $productBundleItemTransferCollection
      * @param array $productBundleData
      * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ReturnCreateRequestTransfer
      */
     protected function appendReturnItemTransfers(
-        array $producBundleItemTransfersCollection,
+        array $productBundleItemTransferCollection,
         array $productBundleData,
         ReturnCreateRequestTransfer $returnCreateRequestTransfer
     ): ReturnCreateRequestTransfer {
-        $productBundleitemTransfer = $productBundleData[ProductBundleItemsForm::PARAM_PRODUCT_BUNDLE_DATA];
+        $productBundleItemTransfer = $productBundleData[ProductBundleItemsForm::PARAM_PRODUCT_BUNDLE_DATA];
 
-        foreach ($producBundleItemTransfersCollection as $itemTransfer) {
-            if ($productBundleitemTransfer->getBundleItemIdentifier() != $itemTransfer->getRelatedBundleItemIdentifier()) {
+        foreach ($productBundleItemTransferCollection as $itemTransfer) {
+            if ($productBundleItemTransfer->getBundleItemIdentifier() != $itemTransfer->getRelatedBundleItemIdentifier()) {
                 continue;
             }
 

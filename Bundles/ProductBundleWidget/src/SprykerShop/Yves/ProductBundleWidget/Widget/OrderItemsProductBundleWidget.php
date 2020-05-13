@@ -14,6 +14,9 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class OrderItemsProductBundleWidget extends AbstractWidget
 {
+    /**
+     * @uses \SprykerShop\Yves\ProductBundleWidget\Form\ProductBundleItemsForm::FIELD_PRODUCT_BUNDLES
+     */
     protected const PARAMETER_PRODUCT_BUNDLES = 'productBundles';
 
     /**

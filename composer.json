@@ -24,6 +24,7 @@
     "spryker-shop/availability-notification-page": "*",
     "spryker-shop/availability-notification-widget": "*",
     "spryker-shop/availability-widget": "*",
+    "spryker-shop/barcode-widget": "*",
     "spryker-shop/business-on-behalf-widget": "*",
     "spryker-shop/calculation-page": "*",
     "spryker-shop/cart-code-widget": "*",

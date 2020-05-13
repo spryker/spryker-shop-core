@@ -32,6 +32,8 @@
         <property name="state" type="ItemState"/>
         <property name="createdAt" type="string"/>
         <property name="isReturnable" type="bool"/>
+        <property name="relatedBundleItemIdentifier" type="string"/>
+        <property name="productBundle" type="Item"/>
     </transfer>
 
 </transfers>

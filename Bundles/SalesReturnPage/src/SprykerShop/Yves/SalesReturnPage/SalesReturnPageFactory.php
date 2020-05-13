@@ -51,7 +51,7 @@ class SalesReturnPageFactory extends AbstractFactory
             $this->getSalesReturnClient(),
             $this->getCustomerClient(),
             $this->getStoreClient(),
-            $this->getSalesReturnPageFormFormPlugins()
+            $this->getReturnCreateFormHandlerPlugins()
         );
     }
 
@@ -62,7 +62,7 @@ class SalesReturnPageFactory extends AbstractFactory
     {
         return new ReturnCreateFormDataProvider(
             $this->getSalesReturnClient(),
-            $this->getSalesReturnPageFormFormPlugins()
+            $this->getReturnCreateFormExpanderPlugins()
         );
     }
 
@@ -75,11 +75,19 @@ class SalesReturnPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\SalesReturnPageFormExpanderPluginInterface[]
+     * @return \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormExpanderPluginInterface[]
      */
-    public function getSalesReturnPageFormFormPlugins(): array
+    public function getReturnCreateFormExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(SalesReturnPageDependencyProvider::PLUGINS_SALES_RETURN_PAGE_FORM);
+        return $this->getProvidedDependency(SalesReturnPageDependencyProvider::PLUGINS_RETURN_CREATE_FORM_EXPANDER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface[]
+     */
+    public function getReturnCreateFormHandlerPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesReturnPageDependencyProvider::PLUGINS_RETURN_CREATE_FORM_HANDLER);
     }
 
     /**
