@@ -264,10 +264,11 @@
         {% endblock %}
 
         {% block buttonsStateHandler %}
-            {% include molecule('buttons-enable-state-handler', 'SalesReturnPage') ignore missing with {
+            {% include molecule('buttons-state-handler', 'SalesReturnPage') with {
                 attributes: {
                     'trigger-class-name': 'js-return_create_form__selection',
                     'target-class-name': 'js-state-observable',
+                    'is-enabler': 'true',
                 },
             } only %}
         {% endblock %}
