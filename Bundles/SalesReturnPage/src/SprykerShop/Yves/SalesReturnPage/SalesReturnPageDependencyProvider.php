@@ -39,6 +39,7 @@ class SalesReturnPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStoreClient($container);
 
         $container = $this->addReturnCreateFormExpanderPlugins($container);
+        $container = $this->addReturnCreateFormHandlerPlugins($container);
 
         return $container;
     }
