@@ -81,7 +81,7 @@ class ProductBundleItemsForm extends AbstractType
     {
         $builder->add(ReturnItemTransfer::REASON, ChoiceType::class, [
             'label' => false,
-            'placeholder' => 'return_page.return_reasons.select_reason.placeholder',
+            'placeholder' => 'return.return_reasons.select_reason.placeholder',
             'choices' => $options[static::OPTION_RETURN_REASONS],
             'required' => false,
         ]);
