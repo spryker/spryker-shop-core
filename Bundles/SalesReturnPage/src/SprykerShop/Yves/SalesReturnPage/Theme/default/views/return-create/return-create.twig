@@ -207,7 +207,7 @@
                             } only %}
                                 {% block bundle %}
                                     {% embed molecule('ordered-product-bundle', 'ProductBundleWidget') with {
-                                        class: 'grid spacing-left',
+                                        class: 'grid',
                                         data: {
                                             productBundle: productBundle,
                                         },
@@ -215,7 +215,7 @@
                                             form: embed.form,
                                         },
                                     } only %}
-                                        {% block body %}
+                                        {% block contentWrapper %}
                                             <div class="col grid grid--middle">
                                                 {% for key, productBundle in embed.form.productBundles %}
                                                     {% if key == data.productBundle.bundleProduct.bundleItemIdentifier %}
