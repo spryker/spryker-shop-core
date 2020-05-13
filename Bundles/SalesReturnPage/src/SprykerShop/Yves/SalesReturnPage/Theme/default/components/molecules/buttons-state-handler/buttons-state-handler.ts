@@ -15,6 +15,7 @@ export default class ButtonsStateHandler extends Component {
     protected mapEvents(): void {
         this.mapTriggerChangeEvent();
         this.mapTargetClickEvent();
+        this.onTriggerChange();
     }
 
     protected mapTriggerChangeEvent(): void {
