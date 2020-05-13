@@ -116,7 +116,7 @@
         </div>
 
         {% block buttonsStateHandler %}
-            {% include molecule('buttons-disable-state-handler', 'SalesReturnPage') ignore missing with {
+            {% include molecule('buttons-state-handler', 'SalesReturnPage') ignore missing with {
                 attributes: {
                     'trigger-class-name': 'js-customer-reorder-form__selection',
                     'target-class-name': 'js-state-observable',

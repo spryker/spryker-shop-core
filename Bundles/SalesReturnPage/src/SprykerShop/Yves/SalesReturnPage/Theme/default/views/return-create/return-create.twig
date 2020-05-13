@@ -5,6 +5,15 @@
     order: _view.order,
 } %}
 
+{% block breadcrumbs %}
+    {% set breadcrumbExtension = [
+        {
+            label: 'sales_return.breadcrumb.create_return' | trans,
+        },
+    ] %}
+    {{ parent() }}
+{% endblock %}
+
 {% set contentWrapperClass = 'box' %}
 
 {% block salesReturnContent %}
@@ -43,7 +52,7 @@
                         {% block salesReturnIdItemInfo %}
                             <li class="{{ salesReturnItemClass }}">
                                 {% block salesReturnIdItemInfoInner %}
-                                    {{ 'return_page.order_id' | trans }}:
+                                    {{ 'return_page.order_reference' | trans }}:
                                     <strong>{{ data.order.orderReference }}</strong>
                                 {% endblock %}
                             </li>
@@ -52,7 +61,7 @@
                         {% block salesReturnDateItemInfo %}
                             <li class="{{ salesReturnItemClass }}">
                                 {% block salesReturnDateItemInfoInner %}
-                                    {{ 'return_page.date' | trans }}:
+                                    {{ 'return_page.order_date' | trans }}:
                                     <strong>{{ data.order.createdAt | formatDateTime }}</strong>
                                 {% endblock %}
                             </li>
@@ -189,34 +198,57 @@
                         </li>
 
                         {% set salesReturnProductBundleItemClass = '' %}
+
+                        <li class="{{ salesReturnProductBundleItemClass }}">
+                            {% widget 'OrderItemsProductBundleWidget' args [data.form.vars.value.productBundleItems] with {
+                                embed: {
+                                    form: data.form,
+                                },
+                            } only %}
+                                {% block bundle %}
+                                    {% embed molecule('ordered-product-bundle', 'ProductBundleWidget') with {
+                                        class: 'grid spacing-left',
+                                        data: {
+                                            productBundle: productBundle,
+                                        },
+                                        embed: {
+                                            form: embed.form,
+                                        },
+                                    } only %}
+                                        {% block body %}
+                                            <div class="col grid grid--middle">
+                                                {% for key, productBundle in embed.form.productBundles %}
+                                                    {% if key == data.productBundle.bundleProduct.bundleItemIdentifier %}
+                                                        <div class="spacing-top spacing-top--big">
+                                                            <div class="spacing-top spacing-top--big">
+                                                                {{ form_row(productBundle.isReturnable, {label: ' ', 'attr': {'class': 'js-return_create_form__selection'}}) }}
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+
+                                            {{ parent() }}
+                                        {% endblock %}
+
+                                        {% block bundleInfoInner %}
+                                            {{ parent() }}
+
+                                            {% for key, productBundle in embed.form.productBundles %}
+                                                {% if key == data.productBundle.bundleProduct.bundleItemIdentifier %}
+                                                    {% include molecule('return-product-reason', 'SalesReturnPage') with {
+                                                        data: {
+                                                            returnItem: productBundle,
+                                                        },
+                                                    } only %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endblock %}
+                                    {% endembed %}
+                                {% endblock %}
+                            {% endwidget %}
+                        </li>
                     {% endblock %}
-                    {% set salesReturnProductBundleItemClass = '' %}
-
-                    <li class="{{ salesReturnProductBundleItemClass }}">
-                        {% widget 'OrderItemsProductBundleWidget' args [data.form.vars.value.productBundleItems] with {
-                            embed: {
-                                form: data.form,
-                            },
-                        } only %}
-                            {% block bundle %}
-                                {% embed molecule('ordered-product-bundle', 'ProductBundleWidget') with {
-                                    class: 'grid spacing-left',
-                                    data: {
-                                        productBundle: productBundle,
-                                    },
-                                    embed: {
-                                        form: embed.form,
-                                    },
-                                } only %}
-                                    {% block body %}
-                                        {{ parent() }}
-                                    {% endblock %}
-                                {% endembed %}
-                            {% endblock %}
-                        {% endwidget %}
-                    </li>
-
-
                 </ul>
             {% endblock %}
 
@@ -232,10 +264,11 @@
         {% endblock %}
 
         {% block buttonsStateHandler %}
-            {% include molecule('buttons-enable-state-handler', 'SalesReturnPage') ignore missing with {
+            {% include molecule('buttons-state-handler', 'SalesReturnPage') with {
                 attributes: {
                     'trigger-class-name': 'js-return_create_form__selection',
                     'target-class-name': 'js-state-observable',
+                    'is-enabler': 'true',
                 },
             } only %}
         {% endblock %}

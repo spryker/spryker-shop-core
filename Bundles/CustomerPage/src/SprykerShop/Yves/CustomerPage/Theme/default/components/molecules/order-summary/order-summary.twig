@@ -41,6 +41,6 @@
     {% endif %}
 
     {% if data.order.totals and data.order.totals.canceledTotal %}
-        {{ _self.item('customer.order.canceledTotal' | trans, data.order.totals.canceledTotal | money(true, data.order.currencyIsoCode), true) }}
+        {{ _self.item('customer.order.refundTotal' | trans, data.order.totals.canceledTotal | money(true, data.order.currencyIsoCode), true) }}
     {% endif %}
 {% endblock %}
