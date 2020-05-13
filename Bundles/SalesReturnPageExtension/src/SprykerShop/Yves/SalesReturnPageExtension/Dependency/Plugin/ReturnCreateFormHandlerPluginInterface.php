@@ -5,17 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductBundleWidget\Handler;
+namespace SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 
-interface SalesReturnPageFormHandlerInterface
+interface ReturnCreateFormHandlerPluginInterface
 {
     /**
-     * @param array $returnItemList
+     * Specification:
+     * - Handles Return create form.
+     *
+     * @api
+     *
+     * @param array $returnItemsList
      * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ReturnCreateRequestTransfer
      */
-    public function handleFormData(array $returnItemList, ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnCreateRequestTransfer;
+    public function handleFormData(array $returnItemsList, ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnCreateRequestTransfer;
 }

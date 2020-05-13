@@ -5,6 +5,15 @@
     order: _view.order,
 } %}
 
+{% block breadcrumbs %}
+    {% set breadcrumbExtension = [
+        {
+            label: 'sales_return.breadcrumb.create_return' | trans,
+        },
+    ] %}
+    {{ parent() }}
+{% endblock %}
+
 {% set contentWrapperClass = 'box' %}
 
 {% block salesReturnContent %}
@@ -43,7 +52,7 @@
                         {% block salesReturnIdItemInfo %}
                             <li class="{{ salesReturnItemClass }}">
                                 {% block salesReturnIdItemInfoInner %}
-                                    {{ 'return_page.order_id' | trans }}:
+                                    {{ 'return_page.order_reference' | trans }}:
                                     <strong>{{ data.order.orderReference }}</strong>
                                 {% endblock %}
                             </li>
@@ -52,7 +61,7 @@
                         {% block salesReturnDateItemInfo %}
                             <li class="{{ salesReturnItemClass }}">
                                 {% block salesReturnDateItemInfoInner %}
-                                    {{ 'return_page.date' | trans }}:
+                                    {{ 'return_page.order_date' | trans }}:
                                     <strong>{{ data.order.createdAt | formatDateTime }}</strong>
                                 {% endblock %}
                             </li>
