@@ -29,10 +29,8 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected const ROUTE_RETURN_CREATE = 'return/create';
 
-    /**
-     * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnCreateController::createAction()
-     */
     protected const PARAM_ORDER_REFERENCE = 'orderReference';
+    protected const PARAM_RETURN_REFERENCE = 'returnReference';
 
     protected const REFERENCE_REGEX = '[a-zA-Z0-9-]+';
 
@@ -57,6 +55,8 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
+     * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnCreateController::createAction()
+     *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \Spryker\Yves\Router\Route\RouteCollection
@@ -71,6 +71,8 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
+     * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnListController::listAction()
+     *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \Spryker\Yves\Router\Route\RouteCollection
@@ -84,26 +86,32 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
+     * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnViewController::viewAction()
+     *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addReturnViewRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/return/view', 'SalesReturnPage', 'ReturnView', 'viewAction');
+        $route = $this->buildRoute('/return/view/{returnReference}', 'SalesReturnPage', 'ReturnView', 'viewAction');
+        $route = $route->setRequirement(static::PARAM_RETURN_REFERENCE, static::REFERENCE_REGEX);
         $routeCollection->add(static::ROUTE_RETURN_VIEW, $route);
 
         return $routeCollection;
     }
 
     /**
+     * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnSlipPrintController::printAction()
+     *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addReturnSlipPrintRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/return/slip-print', 'SalesReturnPage', 'ReturnSlipPrint', 'printAction');
+        $route = $this->buildRoute('/return/slip-print/{returnReference}', 'SalesReturnPage', 'ReturnSlipPrint', 'printAction');
+        $route = $route->setRequirement(static::PARAM_RETURN_REFERENCE, static::REFERENCE_REGEX);
         $routeCollection->add(static::ROUTE_RETURN_SLIP_PRINT, $route);
 
         return $routeCollection;

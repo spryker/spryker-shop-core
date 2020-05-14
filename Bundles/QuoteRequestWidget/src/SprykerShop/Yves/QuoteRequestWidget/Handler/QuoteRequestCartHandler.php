@@ -65,7 +65,7 @@ class QuoteRequestCartHandler implements QuoteRequestCartHandlerInterface
         $companyUserTransfer = $this->companyUserClient->findCompanyUser();
 
         if (!$companyUserTransfer) {
-            throw new NotFoundHttpException("Only company users are allowed to access this page");
+            throw new NotFoundHttpException('Only company users are allowed to access this page');
         }
 
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())

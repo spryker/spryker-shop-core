@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\SalesReturnPage\Controller;
 
+use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -16,12 +17,13 @@ class ReturnSlipPrintController extends AbstractReturnController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $returnReference
      *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View
      */
-    public function printAction(Request $request)
+    public function printAction(Request $request, string $returnReference): View
     {
-        $response = $this->executeprintAction($request);
+        $response = $this->executePrintAction($request, $returnReference);
 
         return $this->view(
             $response,
@@ -32,13 +34,14 @@ class ReturnSlipPrintController extends AbstractReturnController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $returnReference
      *
      * @return array
      */
-    protected function executePrintAction(Request $request)
+    protected function executePrintAction(Request $request, string $returnReference): array
     {
         return [
-
+            'return' => $this->getReturnByReference($returnReference),
         ];
     }
 }

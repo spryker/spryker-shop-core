@@ -1,0 +1,18 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'return-list-menu-item',
+    tag: 'li',
+} %}
+
+{% define data = {
+    activePage: 'return/list',
+} %}
+
+{% set isActivePage = data.activePage == 'return/list' ? 'menu__link--active' : '' %}
+
+{%- block extraClass %} menu__item {{ isActivePage }}{% endblock -%}
+
+{% block body %}
+    <a href="{{ path('return/list') }}" data-id="sidebar-sales-return" class="{{ isActivePage }}">{{ 'return_page.list.title' | trans }}</a>
+{% endblock %}

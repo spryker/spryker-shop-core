@@ -15,6 +15,7 @@
         <property name="store" type="string"/>
         <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
         <property name="returnTotals" type="ReturnTotals"/>
+        <property name="createdAt" type="string"/>
     </transfer>
 
     <transfer name="ReturnItem">
@@ -74,7 +75,21 @@
         <property name="state" type="ItemState"/>
         <property name="createdAt" type="string"/>
         <property name="isReturnable" type="bool"/>
+        <property name="unitPrice" type="int"/>
+        <property name="name" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+        <property name="sumSubtotalAggregation" type="int"/>
+        <property name="sumPrice" type="int"/>
+        <property name="productOptions" type="ProductOption[]" singular="productOption"/>
+        <property name="orderReference" type="string"/>
+        <property name="currencyIsoCode" type="string"/>
         <property name="returnPolicyMessages" type="Message[]"  singular="returnPolicyMessage"/>
+    </transfer>
+
+    <transfer name="ProductOption">
+        <property name="sumPrice" type="int"/>
+        <property name="value" type="string"/>
     </transfer>
 
     <transfer name="ReturnReasonCollection">

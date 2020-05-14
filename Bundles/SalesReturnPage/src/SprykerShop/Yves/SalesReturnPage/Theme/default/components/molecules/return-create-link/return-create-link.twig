@@ -1,0 +1,20 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'return-create-link',
+    tag: 'a',
+} %}
+
+{% define data = {
+    orderReference: required,
+} %}
+
+{% define attributes = {
+    href: path('return/create', { orderReference: (data.orderReference)}),
+} %}
+
+{%- block extraClass %} link{% endblock -%}
+
+{% block body %}
+    {{- 'return_page.button.create_return' | trans -}}
+{% endblock %}
