@@ -5,9 +5,11 @@
 } %}
 
 {% block body %}
-    {% include molecule('navigation-icon-list') with {
-        data: {
-            nodes: data.navigation.nodes
-        }
-    } only %}
+    {% if data.navigation.isActive %}
+        {% include molecule('navigation-icon-list') with {
+            data: {
+                nodes: data.navigation.nodes
+            }
+        } only %}
+    {% endif %}
 {% endblock %}

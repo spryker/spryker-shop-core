@@ -5,12 +5,14 @@
 } %}
 
 {% block body %}
-    {% include molecule('navigation-multilevel') with {
-        modifiers: ['content-item'],
-        data: {
-            nodes: data.navigation.nodes,
-            menuInline: false,
-            menuDropdown: false
-        }
-    } only %}
+    {% if data.navigation.isActive %}
+        {% include molecule('navigation-multilevel') with {
+            modifiers: ['content-item'],
+            data: {
+                nodes: data.navigation.nodes,
+                menuInline: false,
+                menuDropdown: false
+            }
+        } only %}
+    {% endif %}
 {% endblock %}

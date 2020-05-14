@@ -5,9 +5,11 @@
 } %}
 
 {% block body %}
-    {% include molecule('navigation-list') with {
-        data: {
-            nodes: data.navigation.nodes
-        }
-    } only %}
+    {% if data.navigation.isActive %}
+        {% include molecule('navigation-list') with {
+            data: {
+                nodes: data.navigation.nodes
+            }
+        } only %}
+    {% endif %}
 {% endblock %}
