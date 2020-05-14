@@ -143,6 +143,9 @@
 
                     <div class="{{ salesReturnProductBundleItemClass }}">
                         {% widget 'OrderItemsProductBundleWidget' args [orderBundleItems] with {
+                            embed: {
+                                returnItems: data.returnItems,
+                            },
                         } only %}
                             {% block bundle %}
                                 {% embed molecule('ordered-product-bundle', 'ProductBundleWidget') with {
@@ -150,18 +153,20 @@
                                     data: {
                                         productBundle: productBundle,
                                     },
+                                    embed: {
+                                        returnItems: embed.returnItems,
+                                    },
                                 } only %}
                                     {% block bundleInfoInner %}
                                         {{ parent() }}
 
-{#                                        {% for key, productBundle in embed.form.productBundles %}#}
-{#                                            {% set bundleProduct = data.productBundle.bundleProduct %}#}
-{#                                            {% set hasReason = key == bundleProduct.bundleItemIdentifier and bundleProduct.reason is not null %}#}
+                                        {% for returnItem in embed.returnItems %}
+                                            {% set hasReason = returnItem.orderItem.IdSalesOrderItem == data.productBundle.bundleProduct.bundleItemIdentifier and returnItem.reason is not null %}
 
-{#                                            {% if hasReason %}#}
-{#                                                <p><strong>{{ 'return_page.return_reasons.title' | trans }}:</strong> {{ returnItem.reason | trans }}</p>#}
-{#                                            {% endif %}#}
-{#                                        {% endfor %}#}
+                                            {% if hasReason %}
+                                                <p><strong>{{ 'return_page.return_reasons.title' | trans }}:</strong> {{ returnItem.reason | trans }}</p>
+                                            {% endif %}
+                                        {% endfor %}
                                     {% endblock %}
                                 {% endembed %}
                             {% endblock %}
