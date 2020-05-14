@@ -119,6 +119,10 @@ class ContentNavigationTwigFunction extends TwigFunction
                 return $this->getMessageNavigationNotFound($contentKey);
             }
 
+            if (!$navigationStorageTransfer->getIsActive()) {
+                return '';
+            }
+
             return $this->twig->render(
                 $availableTemplate,
                 ['navigation' => $navigationStorageTransfer]
