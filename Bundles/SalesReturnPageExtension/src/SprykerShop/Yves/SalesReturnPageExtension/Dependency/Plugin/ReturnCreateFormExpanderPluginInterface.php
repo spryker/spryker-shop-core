@@ -9,11 +9,18 @@ namespace SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * Specification:
+ * - Executed by {@link \SprykerShop\Yves\SalesReturnPage\Form\DataProvider\ReturnCreateFormDataProvider::getData()}.
+ * - Executed by {@link \SprykerShop\Yves\SalesReturnPage\Form\ReturnCreateForm::buildForm()}.
+ * - Provides extension capabilities for {@link \SprykerShop\Yves\SalesReturnPage\Form\ReturnCreateForm}.
+ * - Implement this plugin interface to expand form data and to customize form building process.
+ */
 interface ReturnCreateFormExpanderPluginInterface
 {
     /**
      * Specification:
-     *  - Extends return create form metadata field with additional input fields.
+     *  - Extends ReturnCreateForm metadata field with additional input fields.
      *
      * @api
      *
@@ -26,7 +33,7 @@ interface ReturnCreateFormExpanderPluginInterface
 
     /**
      * Specification:
-     * - Expands Return create form data.
+     * - Expands ReturnCreateForm data.
      *
      * @api
      *

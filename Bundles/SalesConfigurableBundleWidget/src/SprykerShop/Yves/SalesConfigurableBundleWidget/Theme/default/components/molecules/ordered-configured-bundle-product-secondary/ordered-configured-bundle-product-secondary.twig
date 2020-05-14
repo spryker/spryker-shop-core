@@ -94,7 +94,7 @@
                 {% block total %}
                     <div class="{{ productPriceTotalColumnClass }}">
                         {% block totalInner %}
-                            <strong>{{ data.product.sumPrice | money(true, data.product.currencyIsoCode) }}</strong>
+                            <strong>{{ data.product.sumPriceToPayAggregation | money(true, data.product.currencyIsoCode) }}</strong>
                         {% endblock %}
                     </div>
                 {% endblock %}

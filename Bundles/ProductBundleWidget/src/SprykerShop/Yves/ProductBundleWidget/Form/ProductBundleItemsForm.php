@@ -18,8 +18,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductBundleItemsForm extends AbstractType
 {
-    public const PARAM_PRODUCT_BUNDLE_DATA = 'productBundleData';
-    public const PARAM_PRODUCT_BUNDLE_ITEMS = 'productBundleItems';
+    public const KEY_PRODUCT_BUNDLE_DATA = 'productBundleData';
+    public const KEY_PRODUCT_BUNDLE_ITEMS = 'productBundleItems';
 
     /**
      * @uses \SprykerShop\Yves\SalesReturnPage\Form\ReturnItemsForm::FIELD_CUSTOM_REASON
@@ -41,8 +41,8 @@ class ProductBundleItemsForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addIsReturnableField($builder)
-            ->addReason($builder, $options)
-            ->addCustomReason($builder);
+            ->addReasonField($builder, $options)
+            ->addCustomReasonField($builder);
     }
 
     /**
@@ -82,7 +82,7 @@ class ProductBundleItemsForm extends AbstractType
      *
      * @return $this
      */
-    protected function addReason(FormBuilderInterface $builder, array $options)
+    protected function addReasonField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(ReturnItemTransfer::REASON, ChoiceType::class, [
             'label' => false,
@@ -99,7 +99,7 @@ class ProductBundleItemsForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCustomReason(FormBuilderInterface $builder)
+    protected function addCustomReasonField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_CUSTOM_REASON, TextareaType::class, [
             'label' => false,

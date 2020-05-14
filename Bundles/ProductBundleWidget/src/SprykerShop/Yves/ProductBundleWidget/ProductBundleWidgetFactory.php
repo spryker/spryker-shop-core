@@ -9,12 +9,12 @@ namespace SprykerShop\Yves\ProductBundleWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductBundleWidget\Dependency\Client\ProductBundleWidgetToProductBundleClientInterface;
-use SprykerShop\Yves\ProductBundleWidget\Expander\SalesReturnPageFormExpander;
-use SprykerShop\Yves\ProductBundleWidget\Expander\SalesReturnPageFormExpanderInterface;
+use SprykerShop\Yves\ProductBundleWidget\Expander\ReturnCreateFormExpander;
+use SprykerShop\Yves\ProductBundleWidget\Expander\ReturnCreateFormExpanderInterface;
 use SprykerShop\Yves\ProductBundleWidget\Extractor\ItemExtractor;
 use SprykerShop\Yves\ProductBundleWidget\Extractor\ItemExtractorInterface;
-use SprykerShop\Yves\ProductBundleWidget\Handler\SalesReturnPageFormHandler;
-use SprykerShop\Yves\ProductBundleWidget\Handler\SalesReturnPageFormHandlerInterface;
+use SprykerShop\Yves\ProductBundleWidget\Handler\ReturnCreateFormHandler;
+use SprykerShop\Yves\ProductBundleWidget\Handler\ReturnCreateFormHandlerInterface;
 
 class ProductBundleWidgetFactory extends AbstractFactory
 {
@@ -35,18 +35,18 @@ class ProductBundleWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductBundleWidget\Expander\SalesReturnPageFormExpanderInterface
+     * @return \SprykerShop\Yves\ProductBundleWidget\Expander\ReturnCreateFormExpanderInterface
      */
-    public function getSalesReturnPageFormExpander(): SalesReturnPageFormExpanderInterface
+    public function createSalesReturnPageFormExpander(): ReturnCreateFormExpanderInterface
     {
-        return new SalesReturnPageFormExpander();
+        return new ReturnCreateFormExpander();
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductBundleWidget\Handler\SalesReturnPageFormHandlerInterface
+     * @return \SprykerShop\Yves\ProductBundleWidget\Handler\ReturnCreateFormHandlerInterface
      */
-    public function getSalesReturnPageFormHandler(): SalesReturnPageFormHandlerInterface
+    public function createReturnCreateFormHandler(): ReturnCreateFormHandlerInterface
     {
-        return new SalesReturnPageFormHandler();
+        return new ReturnCreateFormHandler();
     }
 }

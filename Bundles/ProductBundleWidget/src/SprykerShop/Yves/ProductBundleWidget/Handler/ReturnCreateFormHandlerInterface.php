@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\ProductBundleWidget\Handler;
 
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 
-interface SalesReturnPageFormHandlerInterface
+interface ReturnCreateFormHandlerInterface
 {
     /**
      * @param array $returnItemList

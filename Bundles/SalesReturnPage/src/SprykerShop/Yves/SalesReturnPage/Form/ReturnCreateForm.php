@@ -29,7 +29,7 @@ class ReturnCreateForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addReturnItemsCollection($builder, $options);
-        $this->executeSalesReturnPageFormFormPlugins($builder, $options);
+        $this->executeReturnCreateFormExpanderPlugins($builder, $options);
     }
 
     /**
@@ -73,10 +73,10 @@ class ReturnCreateForm extends AbstractType
      *
      * @return $this
      */
-    protected function executeSalesReturnPageFormFormPlugins(FormBuilderInterface $builder, array $options)
+    protected function executeReturnCreateFormExpanderPlugins(FormBuilderInterface $builder, array $options)
     {
         foreach ($this->getFactory()->getReturnCreateFormExpanderPlugins() as $returnCreateFormExpanderPlugin) {
-            $returnCreateFormExpanderPlugin->buildForm($builder, $options);
+            $builder = $returnCreateFormExpanderPlugin->buildForm($builder, $options);
         }
 
         return $this;

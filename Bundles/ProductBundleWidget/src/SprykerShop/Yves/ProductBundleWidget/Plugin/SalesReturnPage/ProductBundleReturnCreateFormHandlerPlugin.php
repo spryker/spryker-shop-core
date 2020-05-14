@@ -30,7 +30,7 @@ class ProductBundleReturnCreateFormHandlerPlugin extends AbstractPlugin implemen
     public function handleFormData(array $returnItemsList, ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnCreateRequestTransfer
     {
         return $this->getFactory()
-            ->getSalesReturnPageFormHandler()
+            ->createReturnCreateFormHandler()
             ->handleFormData($returnItemsList, $returnCreateRequestTransfer);
     }
 }

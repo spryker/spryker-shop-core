@@ -9,11 +9,17 @@ namespace SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 
+/**
+ * Specification:
+ * - Executed by {@link \SprykerShop\Yves\SalesReturnPage\Form\Handler\ReturnHandler::createReturn()}.
+ * - Provides extension capabilities for {@link \SprykerShop\Yves\SalesReturnPage\Form\ReturnCreateForm}.
+ * - Implement this plugin interface to customize form handling process.
+ */
 interface ReturnCreateFormHandlerPluginInterface
 {
     /**
      * Specification:
-     * - Handles Return create form.
+     * - Handles ReturnCreateForm data.
      *
      * @api
      *

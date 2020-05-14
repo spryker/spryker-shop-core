@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
 use SprykerShop\Yves\ProductBundleWidget\Form\ProductBundleItemsForm;
 
-class SalesReturnPageFormHandler implements SalesReturnPageFormHandlerInterface
+class ReturnCreateFormHandler implements ReturnCreateFormHandlerInterface
 {
     /**
      * @uses \SprykerShop\Yves\SalesReturnPage\Form\DataProvider\ReturnCreateFormDataProvider::CUSTOM_REASON_VALUE
@@ -28,10 +28,14 @@ class SalesReturnPageFormHandler implements SalesReturnPageFormHandlerInterface
     public function handleFormData(array $returnItemList, ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnCreateRequestTransfer
     {
         $productBundleList = $returnItemList[ProductBundleItemsForm::FIELD_PRODUCT_BUNDLES] ?? [];
-        $productBundleItemTransferCollection = $returnItemList[ProductBundleItemsForm::PARAM_PRODUCT_BUNDLE_ITEMS] ?? [];
+        $productBundleItemTransferCollection = $returnItemList[ProductBundleItemsForm::KEY_PRODUCT_BUNDLE_ITEMS] ?? [];
+
+        if (!$productBundleItemTransferCollection) {
+            return $returnCreateRequestTransfer;
+        }
 
         foreach ($productBundleList as $productBundleData) {
-            if (!$productBundleData[ItemTransfer::IS_RETURNABLE] || !$productBundleItemTransferCollection) {
+            if (!$productBundleData[ItemTransfer::IS_RETURNABLE]) {
                 continue;
             }
 
@@ -46,7 +50,7 @@ class SalesReturnPageFormHandler implements SalesReturnPageFormHandlerInterface
     }
 
     /**
-     * @param array $productBundleItemTransferCollection
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $productBundleItemTransferCollection
      * @param array $productBundleData
      * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
      *
@@ -57,10 +61,10 @@ class SalesReturnPageFormHandler implements SalesReturnPageFormHandlerInterface
         array $productBundleData,
         ReturnCreateRequestTransfer $returnCreateRequestTransfer
     ): ReturnCreateRequestTransfer {
-        $productBundleItemTransfer = $productBundleData[ProductBundleItemsForm::PARAM_PRODUCT_BUNDLE_DATA];
+        $productBundleItemTransfer = $productBundleData[ProductBundleItemsForm::KEY_PRODUCT_BUNDLE_DATA];
 
         foreach ($productBundleItemTransferCollection as $itemTransfer) {
-            if ($productBundleItemTransfer->getBundleItemIdentifier() != $itemTransfer->getRelatedBundleItemIdentifier()) {
+            if ($productBundleItemTransfer->getBundleItemIdentifier() !== $itemTransfer->getRelatedBundleItemIdentifier()) {
                 continue;
             }
 

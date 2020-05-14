@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\ProductBundleWidget\Expander;
 
-interface SalesReturnPageFormExpanderInterface
+interface ReturnCreateFormExpanderInterface
 {
     /**
      * @param array $formData

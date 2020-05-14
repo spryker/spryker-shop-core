@@ -20,7 +20,7 @@ class ProductBundleReturnCreateFormExpanderPlugin extends AbstractPlugin impleme
 {
     /**
      * {@inheritDoc}
-     * - Adds bundle products with items for ReturnCreateForm.
+     * - Expands ReturnCreateForm with product bundles field.
      *
      * @api
      *
@@ -48,7 +48,7 @@ class ProductBundleReturnCreateFormExpanderPlugin extends AbstractPlugin impleme
 
     /**
      * {@inheritDoc}
-     * - Expands Return create form data with product bundles.
+     * - Expands ReturnCreateForm data with product bundles.
      *
      * @api
      *
@@ -59,7 +59,7 @@ class ProductBundleReturnCreateFormExpanderPlugin extends AbstractPlugin impleme
     public function expandFormData(array $formData): array
     {
         return $this->getFactory()
-            ->getSalesReturnPageFormExpander()
+            ->createSalesReturnPageFormExpander()
             ->expandFormData($formData);
     }
 }
