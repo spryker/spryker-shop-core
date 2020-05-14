@@ -9,7 +9,8 @@
 {% block breadcrumbs %}
     {% set breadcrumbExtension = [
         {
-            label: 'return_page.details.breadcrumb' | trans,
+            label: data.return.returnReference,
+            withChevron: false,
         },
     ] %}
 

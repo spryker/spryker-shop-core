@@ -25,15 +25,15 @@
 
             {% block actions %}
                 <div class="{{ actionsClass }}">
-                    {% block printSlipLink %}
-                        <a href="{{ path('return/slip-print', {returnReference: (data.returnReference)}) }}" class="{{ printSlipLinkClass }}">
-                            {{ 'return_page.details.actions.print_slip' | trans }}
-                        </a>
-                    {% endblock %}
-
                     {% block backToListLink %}
                         <a href="{{ url('return/list') }}" class="{{ backToListLinkClass }}">
                             {{ 'return_page.details.actions.back_to_list' | trans }}
+                        </a>
+                    {% endblock %}
+
+                    {% block printSlipLink %}
+                        <a href="{{ path('return/slip-print', {returnReference: (data.returnReference)}) }}" class="{{ printSlipLinkClass }}">
+                            {{ 'return_page.details.actions.print_slip' | trans }}
                         </a>
                     {% endblock %}
                 </div>
