@@ -1,14 +1,15 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'product-bundle',
+    name: 'ordered-product-bundle',
 } %}
 
 {% define data = {
     productBundle: required,
 } %}
 
-{% set contentWrapperClass = 'col col--expand grid spacing' %}
+{% set contentWrapperClass = 'box col col--expand grid' %}
+{% set contentClass = 'col col--expand grid' %}
 {% set imageColumnClass = 'col col--sm-2' %}
 {% set bundleItemColumnClass = 'col col--sm-10' %}
 {% set bundleItemClass = 'col col--sm-12 grid spacing-bottom spacing-bottom--inner spacing-right spacing-right--inner' %}
@@ -22,145 +23,145 @@
 
 {% block body %}
     <div class="{{ contentWrapperClass }}">
-        {% block content %}
-            {% block imageWrapper %}
-                <div class="{{ imageColumnClass }}">
-                    {% set thumbnailModifiers = ['small'] %}
+        {% block contentWrapper %}
+            <div class="{{ contentClass }}">
+                {% block content %}
+                    {% block imageWrapper %}
+                        <div class="{{ imageColumnClass }}">
+                            {% set thumbnailModifiers = ['small'] %}
 
-                    {% block image %}
-                        {% include atom('thumbnail') with {
-                            modifiers: thumbnailModifiers,
-                            attributes: {
-                                src: bundleProduct.metadata.image,
-                                alt: bundleProduct.name,
-                            },
-                        } only %}
-                    {% endblock %}
-                </div>
-            {% endblock %}
-
-            {% block bundleItemColumn %}
-                <div class="{{ bundleItemColumnClass }}">
-                    {% block bundleItem %}
-                        <div class="{{ bundleItemClass }}">
-                            {% block bundleInfo %}
-                                <div class="{{ bundleInfoColumnClass }}">
-                                    {% block bundleInfoInner %}
-                                        {% block bundleItemReturnableDate %}
-                                            <div>
-                                                {{- 'product_bundle_widget.returnable_text' | trans -}}
-                                            </div>
-                                        {% endblock %}
-
-                                        {% if not bundleProduct.isReturnable %}
-                                            {% block bundleItemReturnableInfo %}
-                                                <div>
-                                                    {{- 'product_bundle_widget.returnable_state' | trans -}}
-                                                </div>
-                                            {% endblock %}
-                                        {% endif %}
-
-                                        {% block name -%}
-                                            <h6>{{ bundleProduct.name }}</h6>
-                                        {%- endblock %}
-
-                                        {% set skuClass = 'text-secondary' %}
-
-                                        {% block sku -%}
-                                            <small class="{{ skuClass }}">
-                                                {{- 'product_bundle_widget.item_sku' | trans }} {{ bundleProduct.sku -}}
-                                            </small>
-                                        {%- endblock %}
-                                    {%- endblock %}
-                                </div>
-                            {% endblock %}
-
-                            {% set emptyStatusClass = 'text-secondary' %}
-                            {% set bundleStatus = false %}
-                            {% set breakLoop = false %}
-
-                            {% for bundleItem in data.productBundle.bundleItems %}
-                                {% if not bundleStatus and not breakLoop %}
-                                    {% set bundleStatus = bundleItem.state.name %}
-                                {% endif %}
-
-                                {% if bundleStatus and not bundleStatus == bundleItem.state.name %}
-                                    {% set bundleStatus = false %}
-                                    {% set breakLoop = true %}
-                                {% endif %}
-                            {% endfor %}
-
-                            {% block bundleStatus %}
-                                <div class="{{ bundleStatusColumnClass }}">
-                                    {% if bundleStatus %}
-                                        {% set bundleStatus = bundleStatus | replace({' ': '-'}) | lower %}
-
-                                        {% block status %}
-                                            {% include molecule('status') with {
-                                                data: {
-                                                    label: ('status.' ~ bundleStatus) | trans,
-                                                    status: bundleStatus,
-                                                },
-                                            } only %}
-                                        {% endblock %}
-                                    {% else %}
-                                        {% block emptyStatus %}
-                                            <span class="text-secondary">
-                                                --
-                                            </span>
-                                        {% endblock %}
-                                    {% endif %}
-                                </div>
-                            {% endblock %}
-
-                            {% block price %}
-                                <div class="{{ bundlePriceColumnClass }}">
-                                    {% block priceInner %}
-                                        <strong>{{ bundleProduct.unitPrice | money(true, bundleProduct.currencyIsoCode) }}</strong>
-                                    {% endblock %}
-                                </div>
-                            {% endblock %}
-
-                            {% block quantity %}
-                                <div class="{{ bundleQuantityColumnClass }}">
-                                    {% block quantityTitle %}
-                                        {{ 'product_bundle_widget.quantity' | trans }}
-                                    {% endblock %}
-
-                                    {{ bundleProduct.quantity }}
-                                </div>
-                            {% endblock %}
-
-                            {% block total %}
-                                <div class="{{ bundlePriceTotalColumnClass }}">
-                                    {% block totalInner %}
-                                        <strong>{{ bundleProduct.sumPrice | money(true, bundleProduct.currencyIsoCode) }}</strong>
-                                    {% endblock %}
-                                </div>
+                            {% block image %}
+                                {% include atom('thumbnail') with {
+                                    modifiers: thumbnailModifiers,
+                                    attributes: {
+                                        src: bundleProduct.metadata.image,
+                                        alt: bundleProduct.name,
+                                    },
+                                } only %}
                             {% endblock %}
                         </div>
                     {% endblock %}
 
-                    {% block separator %}
-                        <hr class="box__separator col col--sm-12">
-                    {% endblock %}
+                    {% block bundleItemColumn %}
+                        <div class="{{ bundleItemColumnClass }}">
+                            {% block bundleItem %}
+                                <div class="{{ bundleItemClass }}">
+                                    {% block bundleInfo %}
+                                        <div class="{{ bundleInfoColumnClass }}">
+                                            {% block bundleInfoInner %}
+                                                {% block bundleItemReturnableDate %}
+                                                    <div>
+                                                        {{- 'product_bundle_widget.returnable_text' | trans -}}
+                                                    </div>
+                                                {% endblock %}
 
-                    {% block items %}
-                        {% for bundleItem in data.productBundle.bundleItems %}
-                            {% include molecule('ordered-bundle-item', 'productBundleWidget') with {
-                                class: itemsClass,
-                                data: {
-                                    item: bundleItem,
-                                },
-                            } only %}
-                        {% endfor %}
-                    {% endblock %}
-                </div>
+                                                {% if not bundleProduct.isReturnable %}
+                                                    {% block bundleItemReturnableInfo %}
+                                                        <div>
+                                                            {{- 'product_bundle_widget.returnable_state' | trans -}}
+                                                        </div>
+                                                    {% endblock %}
+                                                {% endif %}
 
-                {% block bundleSeparator %}
-                    <hr class="box__separator col col--sm-12">
+                                                {% block name -%}
+                                                    <h6>{{ bundleProduct.name }}</h6>
+                                                {%- endblock %}
+
+                                                {% set skuClass = 'text-secondary' %}
+
+                                                {% block sku -%}
+                                                    <small class="{{ skuClass }}">
+                                                        {{- 'product_bundle_widget.item_sku' | trans }} {{ bundleProduct.sku -}}
+                                                    </small>
+                                                {%- endblock %}
+                                            {%- endblock %}
+                                        </div>
+                                    {% endblock %}
+
+                                    {% set emptyStatusClass = 'text-secondary' %}
+                                    {% set bundleStatus = false %}
+                                    {% set breakLoop = false %}
+
+                                    {% for bundleItem in data.productBundle.bundleItems %}
+                                        {% if not bundleStatus and not breakLoop %}
+                                            {% set bundleStatus = bundleItem.state.name %}
+                                        {% endif %}
+
+                                        {% if bundleStatus and not bundleStatus == bundleItem.state.name %}
+                                            {% set bundleStatus = false %}
+                                            {% set breakLoop = true %}
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    {% block bundleStatus %}
+                                        <div class="{{ bundleStatusColumnClass }}">
+                                            {% if bundleStatus %}
+                                                {% set bundleStatus = bundleStatus | replace({' ': '-'}) | lower %}
+
+                                                {% block status %}
+                                                    {% include molecule('status') with {
+                                                        data: {
+                                                            label: ('status.' ~ bundleStatus) | trans,
+                                                            status: bundleStatus,
+                                                        },
+                                                    } only %}
+                                                {% endblock %}
+                                            {% else %}
+                                                {% block emptyStatus %}
+                                                    <span class="text-secondary">
+                                                --
+                                            </span>
+                                                {% endblock %}
+                                            {% endif %}
+                                        </div>
+                                    {% endblock %}
+
+                                    {% block price %}
+                                        <div class="{{ bundlePriceColumnClass }}">
+                                            {% block priceInner %}
+                                                <strong>{{ bundleProduct.unitPrice | money(true, bundleProduct.currencyIsoCode) }}</strong>
+                                            {% endblock %}
+                                        </div>
+                                    {% endblock %}
+
+                                    {% block quantity %}
+                                        <div class="{{ bundleQuantityColumnClass }}">
+                                            {% block quantityTitle %}
+                                                {{ 'product_bundle_widget.quantity' | trans }}
+                                            {% endblock %}
+
+                                            {{ bundleProduct.quantity }}
+                                        </div>
+                                    {% endblock %}
+
+                                    {% block total %}
+                                        <div class="{{ bundlePriceTotalColumnClass }}">
+                                            {% block totalInner %}
+                                                <strong>{{ bundleProduct.sumPrice | money(true, bundleProduct.currencyIsoCode) }}</strong>
+                                            {% endblock %}
+                                        </div>
+                                    {% endblock %}
+                                </div>
+                            {% endblock %}
+
+                            {% block separator %}
+                                <hr class="box__separator col col--sm-12">
+                            {% endblock %}
+
+                            {% block items %}
+                                {% for bundleItem in data.productBundle.bundleItems %}
+                                    {% include molecule('ordered-bundle-item', 'productBundleWidget') with {
+                                        class: itemsClass,
+                                        data: {
+                                            item: bundleItem,
+                                        },
+                                    } only %}
+                                {% endfor %}
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
                 {% endblock %}
-            {% endblock %}
+            </div>
         {% endblock %}
     </div>
 {% endblock %}

@@ -7,7 +7,7 @@
 {% block body %}
     {% for productBundle in data.productBundles %}
         {% block bundle %}
-            {% include molecule('product-bundle', 'ProductBundleWidget') with {
+            {% include molecule('ordered-product-bundle', 'ProductBundleWidget') with {
                 class: 'grid',
                 data: {
                     productBundle: productBundle,

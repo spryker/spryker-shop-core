@@ -79,7 +79,7 @@
             {% set orderItems = [] %}
 
             {% block salesReturnProducts %}
-                <ul class="{{ salesReturnProductsClass }}">
+                <div class="{{ salesReturnProductsClass }}">
                     {% for returnItem in data.form.returnItems %}
                         {% set orderItem = returnItem.vars.value.orderItem %}
                         {% set isConfiguredBundle = orderItem.salesOrderConfiguredBundleItem is defined and orderItem.salesOrderConfiguredBundleItem is not null %}
@@ -87,7 +87,7 @@
 
                         {% if not isConfiguredBundle and not isBundleItem %}
                             {% block salesReturnProductItem %}
-                                <li class="{{ salesReturnProductItemClass }}">
+                                <div class="{{ salesReturnProductItemClass }}">
                                     {% set checkboxWrapperClass = 'col' %}
                                     {% set productItemReturnClass = 'col col--expand grid' %}
 
@@ -122,7 +122,7 @@
                                             {% endembed %}
                                         {% endblock %}
                                     {% endblock %}
-                                </li>
+                                </div>
                             {% endblock %}
                         {% endif %}
 
@@ -132,7 +132,7 @@
                     {% set salesReturnConfigurableBundleItemClass = '' %}
 
                     {% block configurableBundle %}
-                        <li class="{{ salesReturnConfigurableBundleItemClass }}">
+                        <div class="{{ salesReturnConfigurableBundleItemClass }}">
                             {% widget 'OrderItemsConfiguredBundleWidget'
                                 args [orderItems]
                                 use view('order-returnable-items-configured-bundle-widget', 'SalesConfigurableBundleWidget')
@@ -191,11 +191,11 @@
                                     {% endembed %}
                                 {% endblock %}
                             {% endwidget %}
-                        </li>
+                        </div>
 
                         {% set salesReturnProductBundleItemClass = '' %}
 
-                        <li class="{{ salesReturnProductBundleItemClass }}">
+                        <div class="{{ salesReturnProductBundleItemClass }}">
                             {% widget 'OrderItemsProductBundleWidget' args [data.form.vars.value.productBundleItems] with {
                                 embed: {
                                     form: data.form,
@@ -203,7 +203,7 @@
                             } only %}
                                 {% block bundle %}
                                     {% embed molecule('ordered-product-bundle', 'ProductBundleWidget') with {
-                                        class: 'grid spacing-left',
+                                        class: 'grid',
                                         data: {
                                             productBundle: productBundle,
                                         },
@@ -211,7 +211,7 @@
                                             form: embed.form,
                                         },
                                     } only %}
-                                        {% block body %}
+                                        {% block contentWrapper %}
                                             <div class="col grid grid--middle">
                                                 {% for key, productBundle in embed.form.productBundles %}
                                                     {% if key == data.productBundle.bundleProduct.bundleItemIdentifier %}
@@ -243,9 +243,9 @@
                                     {% endembed %}
                                 {% endblock %}
                             {% endwidget %}
-                        </li>
+                        </div>
                     {% endblock %}
-                </ul>
+                </div>
             {% endblock %}
 
             {% set salesReturnSaveActionClass = 'button button-primary spacing-top js-state-observable' %}
