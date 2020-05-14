@@ -20,9 +20,9 @@
                 {% set additionaImageClass = 'box' %}
 
                 {% set bannerUrlGlossaryValue = (data.merchantStorageProfile.bannerUrlGlossaryKey ?: '') | trans %}
-                {% set bannerUrlHasTranslation = data.merchantStorageProfile.bannerUrlGlossaryKey
+                {% set hasBannerUrlTranslation = data.merchantStorageProfile.bannerUrlGlossaryKey
                     ? data.merchantStorageProfile.bannerUrlGlossaryKey != bannerUrlGlossaryValue %}
-                {% if bannerUrlHasTranslation %}
+                {% if hasBannerUrlTranslation %}
                     {% block image %}
                         {% include atom('thumbnail') with {
                             class: additionaImageClass,
@@ -44,9 +44,9 @@
                                 {% block detailInner %}
                                     <div class="col col--sm-12 col--lg-12 col--xl-10">
                                         {% set descriptionGlossaryValue = (data.merchantStorageProfile.descriptionGlossaryKey ?: '') | trans %}
-                                        {% set descriptionHasTranslation = data.merchantStorageProfile.descriptionGlossaryKey
+                                        {% set hasDescriptionTranslation = data.merchantStorageProfile.descriptionGlossaryKey
                                             ? data.merchantStorageProfile.descriptionGlossaryKey != descriptionGlossaryValue %}
-                                        {% if descriptionHasTranslation %}
+                                        {% if hasDescriptionTranslation %}
                                             {% block description %}
                                                 <p>{{ descriptionGlossaryValue }}</p>
                                             {% endblock %}
@@ -116,9 +116,9 @@
                                                     {% block deliveryTimeCol %}
                                                         <div class="col col--sm-12 col--lg-6">
                                                             {% set deliveryTimeGlossaryValue = (data.merchantStorageProfile.deliveryTimeGlossaryKey ?: '') | trans %}
-                                                            {% set deliveryTimeHasTranslation = data.merchantStorageProfile.deliveryTimeGlossaryKey
+                                                            {% set hasDeliveryTimeTranslation = data.merchantStorageProfile.deliveryTimeGlossaryKey
                                                                 ? data.merchantStorageProfile.deliveryTimeGlossaryKey != deliveryTimeGlossaryValue %}
-                                                            {% if deliveryTimeHasTranslation %}
+                                                            {% if hasDeliveryTimeTranslation %}
                                                                 {% block deliveryTime %}
                                                                     {% include molecule('information-item', 'MerchantPage') with {
                                                                         data: {
@@ -167,36 +167,36 @@
         {% set informationArticles = [] %}
 
         {% set termsConditionsGlossaryValue = (data.merchantStorageProfile.termsConditionsGlossaryKey ?: '') | trans %}
-        {% set termsConditionsHasTranslation = data.merchantStorageProfile.termsConditionsGlossaryKey
+        {% set hasTermsConditionsTranslation = data.merchantStorageProfile.termsConditionsGlossaryKey
             ? data.merchantStorageProfile.termsConditionsGlossaryKey != termsConditionsGlossaryValue %}
-        {% if termsConditionsHasTranslation and termsConditionsGlossaryValue | striptags %}
+        {% if hasTermsConditionsTranslation and termsConditionsGlossaryValue | striptags %}
             {% set informationArticles = informationArticles|merge([{
                 'title': 'merchant_profile.terms_and_conditions' | trans,
                 'text': termsConditionsGlossaryValue,
             }]) %}
         {% endif %}
         {% set cancellationPolicyGlossaryValue = (data.merchantStorageProfile.cancellationPolicyGlossaryKey ?: '') | trans %}
-        {% set cancellationPolicyHasTranslation = data.merchantStorageProfile.cancellationPolicyGlossaryKey
+        {% set hasCancellationPolicyTranslation = data.merchantStorageProfile.cancellationPolicyGlossaryKey
             ? data.merchantStorageProfile.cancellationPolicyGlossaryKey != cancellationPolicyGlossaryValue %}
-        {% if cancellationPolicyHasTranslation and cancellationPolicyGlossaryValue | striptags %}
+        {% if hasCancellationPolicyTranslation and cancellationPolicyGlossaryValue | striptags %}
             {% set informationArticles = informationArticles|merge([{
                 'title': 'merchant_profile.cancellation_policy' | trans,
                 'text': cancellationPolicyGlossaryValue,
             }]) %}
         {% endif %}
         {% set imprintGlossaryValue = (data.merchantStorageProfile.imprintGlossaryKey ?: '') | trans %}
-        {% set imprintHasTranslation = data.merchantStorageProfile.imprintGlossaryKey
+        {% set hasImprintTranslation = data.merchantStorageProfile.imprintGlossaryKey
             ? data.merchantStorageProfile.imprintGlossaryKey != imprintGlossaryValue %}
-        {% if imprintHasTranslation and imprintGlossaryValue | striptags %}
+        {% if hasImprintTranslation and imprintGlossaryValue | striptags %}
             {% set informationArticles = informationArticles|merge([{
                 'title': 'merchant_profile.imprint' | trans,
                 'text': imprintGlossaryValue,
             }]) %}
         {% endif %}
         {% set dataPrivacyGlossaryValue = (data.merchantStorageProfile.dataPrivacyGlossaryKey ?: '') | trans %}
-        {% set dataPrivacyHasTranslation = data.merchantStorageProfile.dataPrivacyGlossaryKey
+        {% set hasDataPrivacyTranslation = data.merchantStorageProfile.dataPrivacyGlossaryKey
             ? data.merchantStorageProfile.dataPrivacyGlossaryKey != dataPrivacyGlossaryValue %}
-        {% if dataPrivacyHasTranslation and dataPrivacyGlossaryValue | striptags %}
+        {% if hasDataPrivacyTranslation and dataPrivacyGlossaryValue | striptags %}
             {% set informationArticles = informationArticles|merge([{
                 'title': 'merchant_profile.privacy' | trans,
                 'text': dataPrivacyGlossaryValue,
