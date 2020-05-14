@@ -14,7 +14,7 @@
     {% set headlineClass = 'grid grid--justify' %}
     {% set titleClass = 'col' %}
     {% set actionsClass = 'col spacing-left spacing-left--inner' %}
-    {% set printSlipLinkClass = 'link spacing-left' %}
+    {% set printSlipLinkClass = 'link spacing-right' %}
     {% set backToListLinkClass = 'link' %}
 
     {% block headline %}
@@ -26,7 +26,9 @@
             {% block actions %}
                 <div class="{{ actionsClass }}">
                     {% block printSlipLink %}
-                        <a href="{{ path('return/slip-print', {returnReference: (data.returnReference)}) }}" class="{{ printSlipLinkClass }}">
+                        <a href="{{ path('return/slip-print', {returnReference: (data.returnReference)}) }}"
+                           class="{{ printSlipLinkClass }}"
+                           target="_blank">
                             {{ 'return_page.details.actions.print_slip' | trans }}
                         </a>
                     {% endblock %}
