@@ -77,7 +77,6 @@
             {% set salesReturnProductsClass = '' %}
             {% set salesReturnProductItemClass = 'grid grid--middle grid--justify box' %}
             {% set orderItems = [] %}
-            {% set returnItems = [] %}
 
             {% block salesReturnProducts %}
                 <ul class="{{ salesReturnProductsClass }}">
@@ -127,10 +126,7 @@
                             {% endblock %}
                         {% endif %}
 
-                        {% if isConfiguredBundle %}
-                            {% set orderItems = orderItems | merge([orderItem]) %}
-                        {% endif %}
-                        {% set returnItems = returnItems | merge([orderItem]) %}
+                        {% set orderItems = orderItems | merge([orderItem]) %}
                     {% endfor %}
 
                     {% set salesReturnConfigurableBundleItemClass = '' %}

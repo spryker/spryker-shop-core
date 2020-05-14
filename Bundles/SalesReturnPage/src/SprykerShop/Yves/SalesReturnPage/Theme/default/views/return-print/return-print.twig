@@ -65,8 +65,9 @@
                         {% set orderItem = returnItem.orderItem %}
                         {% set isCurrentOrderReference = orderReference == orderItem.orderReference %}
                         {% set isConfiguredBundle = orderItem.salesOrderConfiguredBundleItem is defined and orderItem.salesOrderConfiguredBundleItem is not null %}
+                        {% set isBundleItem = orderItem.relatedBundleItemIdentifier is defined and orderItem.relatedBundleItemIdentifier is not null %}
 
-                        {% if isCurrentOrderReference and not isConfiguredBundle %}
+                        {% if isCurrentOrderReference and not isConfiguredBundle and not isBundleItem %}
                             {% block productItem %}
                                 <tr>
                                     <td>
@@ -89,7 +90,7 @@
                             {% endblock %}
                         {% endif %}
 
-                        {% if isCurrentOrderReference and isConfiguredBundle %}
+                        {% if isCurrentOrderReference %}
                             {% set orderItems = orderItems | merge([orderItem]) %}
                         {% endif %}
                     {% endfor %}
@@ -170,10 +171,69 @@
                             {% endblock %}
                         {% endwidget %}
                     {% endblock %}
+
+                    {% block productBundle %}
+                        {% widget 'OrderItemsProductBundleWidget' args [orderItems] with {
+                            embed: {
+                                returnItems: data.return.returnItems,
+                            },
+                        } only %}
+                            {% block bundle %}
+                                {% set bundleProduct = productBundle.bundleProduct %}
+                                <tr>
+                                    <td class="no-bottom-border">
+                                        {% widget 'BarcodeWidget' args [bundleProduct.sku] only %}
+                                            {% block body %}
+                                                {% set imageClass = 'order-item-image' %}
+                                                {{ parent() }}
+                                            {% endblock %}
+                                        {% endwidget %}
+                                    </td>
+                                    <td class="no-bottom-border">
+                                        {{ bundleProduct.sku }}
+                                    </td>
+                                    <td class="no-bottom-border">
+                                        {{ bundleProduct.name }}
+                                    </td>
+                                    <td class="no-bottom-border">
+                                        {{ bundleProduct.unitPrice | money(true, bundleProduct.currencyIsoCode) }}
+                                    </td>
+                                    <td class="no-bottom-border">
+                                        {{ bundleProduct.quantity }}
+                                    </td>
+                                    <td class="no-bottom-border">
+                                        {{ bundleProduct.sumPrice | money(true, bundleProduct.currencyIsoCode) }}
+                                    </td>
+                                    <td class="no-bottom-border">
+                                        {% for returnItem in embed.returnItems %}
+                                            {% set firstBundleItem = productBundle.bundleItems | first %}
+                                            {% if returnItem.orderItem.IdSalesOrderItem == firstBundleItem.IdSalesOrderItem %}
+                                                {{ returnItem.reason ? returnItem.reason | trans }}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                                {% for bundleItem in productBundle.bundleItems %}
+                                    <tr>
+                                        <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}}"></td>
+                                        <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}}"></td>
+                                        <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}}">
+                                            {{ bundleItem.name }}
+                                        </td>
+                                        <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}}"></td>
+                                        <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}}">
+                                            {{ bundleItem.quantity }}
+                                        </td>
+                                        <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}}"></td>
+                                        <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}}"></td>
+                                    </tr>
+                                {% endfor %}
+                            {% endblock %}
+                        {% endwidget %}
+                    {% endblock %}
                 </table>
             {% endblock %}
         {% endfor %}
-
 
         {% block returnTotal %}
             <table align="right">
