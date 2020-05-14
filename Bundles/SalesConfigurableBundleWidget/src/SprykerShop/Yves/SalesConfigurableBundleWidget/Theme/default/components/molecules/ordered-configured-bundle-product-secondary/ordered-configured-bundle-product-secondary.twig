@@ -4,6 +4,10 @@
     name: 'ordered-configured-bundle-product-secondary',
 } %}
 
+{% block extraClass %}
+    spacing-y spacing-y--inner
+{% endblock %}
+
 {% block imageContainer %}
     <div class="col grid grid--middle">
         {% widget 'CustomerReorderItemCheckboxWidget' args [data.product] only %}{% endwidget %}
@@ -32,25 +36,28 @@
 
         {% block productItemColumn %}
             <div class="{{ productItemColumnClass }}">
+                {% set returnPolicyMessageClass = 'badge badge--hollow spacing-bottom spacing-bottom--small' %}
+                {% set returnableInfoClass = 'badge badge--hollow spacing-bottom' %}
+
                 {% block productInfo %}
                     <div class="{{ productInfoColumnClass }}">
-                        {% block productItemReturnableDate %}
-                            <div>
-                                {{ 'sales_configured_bundle_widget.returnable_text' | trans }}
-                            </div>
-                        {% endblock %}
+                        {% for returnPolicyMessage in data.product.returnPolicyMessages %}
+                            {% block productItemReturnPolicyMessage %}
+                                <div class="{{ returnPolicyMessageClass }}">
+                                    {{ returnPolicyMessage.value | trans(returnPolicyMessage.parameters) }}
+                                </div>
+                            {% endblock %}
+                        {% endfor %}
 
                         {% if not data.product.isReturnable %}
                             {% block productItemReturnableInfo %}
-                                <div>
+                                <div class="{{ returnableInfoClass }}">
                                     {{ 'sales_configured_bundle_widget.returnable_state' | trans }}
                                 </div>
                             {% endblock %}
                         {% endif %}
 
-                        {% block generalInformation %}
-                            {{ parent() }}
-                        {% endblock %}
+                        {{ block('generalInformation') }}
                     </div>
                 {% endblock %}
 

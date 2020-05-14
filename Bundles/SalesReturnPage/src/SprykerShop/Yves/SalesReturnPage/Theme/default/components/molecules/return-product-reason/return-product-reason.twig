@@ -23,9 +23,10 @@
         <div class="{{ reasonWrapperClass }}">
             {% block dropdown %}
                 {{ form_row(data.returnItem.reason, {
+                    disabled: not data.returnItem.vars.value.orderItem.isReturnable,
                     attr: {
                         class: reasonSelectClass,
-                    }
+                    },
                 }) }}
             {% endblock %}
         </div>

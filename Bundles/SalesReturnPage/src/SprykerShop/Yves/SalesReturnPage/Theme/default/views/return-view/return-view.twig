@@ -60,6 +60,8 @@
                                                 returnItem: returnItem,
                                             },
                                         } only %}
+                                            {% block productItemReturnPolicyMessage %}{% endblock %}
+
                                             {% block productItemInfoInner %}
                                                 {{ parent() }}
 
@@ -101,6 +103,12 @@
                                         },
                                     } only %}
                                         {% block bundleProductItem %}
+                                            {% if not loop.first %}
+                                                {% block separator %}
+                                                    <hr class="box__separator">
+                                                {% endblock %}
+                                            {% endif %}
+
                                             {% embed molecule('ordered-configured-bundle-product-secondary', 'SalesConfigurableBundleWidget') with {
                                                 class: 'grid grid--middle',
                                                 data: {
@@ -113,6 +121,8 @@
                                                 },
                                             } only %}
                                                 {% block imageContainer %}{% endblock %}
+
+                                                {% block productItemReturnPolicyMessage %}{% endblock %}
 
                                                 {% block generalInformation %}
                                                     {{ parent() }}
