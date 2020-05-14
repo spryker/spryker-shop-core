@@ -59,7 +59,7 @@ class ProductBundleReturnCreateFormExpanderPlugin extends AbstractPlugin impleme
     public function expandFormData(array $formData): array
     {
         return $this->getFactory()
-            ->createSalesReturnPageFormExpander()
+            ->createReturnCreateFormExpander()
             ->expandFormData($formData);
     }
 }

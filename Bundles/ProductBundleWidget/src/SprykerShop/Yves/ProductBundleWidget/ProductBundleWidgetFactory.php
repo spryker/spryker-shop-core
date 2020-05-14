@@ -37,7 +37,7 @@ class ProductBundleWidgetFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\ProductBundleWidget\Expander\ReturnCreateFormExpanderInterface
      */
-    public function createSalesReturnPageFormExpander(): ReturnCreateFormExpanderInterface
+    public function createReturnCreateFormExpander(): ReturnCreateFormExpanderInterface
     {
         return new ReturnCreateFormExpander();
     }

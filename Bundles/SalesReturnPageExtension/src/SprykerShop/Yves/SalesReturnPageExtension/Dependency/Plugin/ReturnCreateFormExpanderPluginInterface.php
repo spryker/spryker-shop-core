@@ -20,7 +20,7 @@ interface ReturnCreateFormExpanderPluginInterface
 {
     /**
      * Specification:
-     *  - Extends ReturnCreateForm metadata field with additional input fields.
+     *  - Expands ReturnCreateForm metadata field with additional input fields.
      *
      * @api
      *
