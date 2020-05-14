@@ -84,7 +84,7 @@
                                     <td>{{ orderItem.quantity }}</td>
                                     <td>{{ orderItem.sumPrice | money(true, orderItem.currencyIsoCode) }}</td>
                                     <td>
-                                        {{ returnItem.reason ? returnItem.reason | trans }}
+                                        {{ returnItem.reason ? returnItem.reason | trans : 'custom_reason' | trans }}
                                     </td>
                                 </tr>
                             {% endblock %}
@@ -159,11 +159,13 @@
                                                 {{ product.sumSubtotalAggregation | money(true, product.currencyIsoCode) }}
                                             </td>
                                             <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}}">
+                                                {% set reasonText = 'custom_reason' | trans %}
                                                 {% for returnItem in embed.returnItems %}
-                                                    {% if returnItem.orderItem.IdSalesOrderItem == item.IdSalesOrderItem %}
-                                                        {{ returnItem.reason ? returnItem.reason | trans }}
+                                                    {% if returnItem.orderItem.IdSalesOrderItem == item.IdSalesOrderItem and returnItem.reason %}
+                                                        {% set reasonText = returnItem.reason | trans %}
                                                     {% endif %}
                                                 {% endfor %}
+                                                {{ reasonText }}
                                             </td>
                                         </tr>
                                     {% endif %}
@@ -206,11 +208,13 @@
                                         {{ bundleProduct.sumPrice | money(true, firstBundleItem.currencyIsoCode) }}
                                     </td>
                                     <td class="no-bottom-border">
+                                        {% set reasonText = 'custom_reason' | trans %}
                                         {% for returnItem in embed.returnItems %}
-                                            {% if returnItem.orderItem.IdSalesOrderItem == firstBundleItem.IdSalesOrderItem %}
-                                                {{ returnItem.reason ? returnItem.reason | trans }}
+                                            {% if returnItem.orderItem.IdSalesOrderItem == firstBundleItem.IdSalesOrderItem and returnItem.reason %}
+                                                {% set reasonText = returnItem.reason | trans %}
                                             {% endif %}
                                         {% endfor %}
+                                        {{ reasonText }}
                                     </td>
                                 </tr>
                                 {% for bundleItem in productBundle.bundleItems %}
