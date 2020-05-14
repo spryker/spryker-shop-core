@@ -180,6 +180,7 @@
                         } only %}
                             {% block bundle %}
                                 {% set bundleProduct = productBundle.bundleProduct %}
+                                {% set firstBundleItem = productBundle.bundleItems | first %}
                                 <tr>
                                     <td class="no-bottom-border">
                                         {% widget 'BarcodeWidget' args [bundleProduct.sku] only %}
@@ -196,17 +197,16 @@
                                         {{ bundleProduct.name }}
                                     </td>
                                     <td class="no-bottom-border">
-                                        {{ bundleProduct.unitPrice | money(true, bundleProduct.currencyIsoCode) }}
+                                        {{ bundleProduct.unitPrice | money(true, firstBundleItem.currencyIsoCode) }}
                                     </td>
                                     <td class="no-bottom-border">
                                         {{ bundleProduct.quantity }}
                                     </td>
                                     <td class="no-bottom-border">
-                                        {{ bundleProduct.sumPrice | money(true, bundleProduct.currencyIsoCode) }}
+                                        {{ bundleProduct.sumPrice | money(true, firstBundleItem.currencyIsoCode) }}
                                     </td>
                                     <td class="no-bottom-border">
                                         {% for returnItem in embed.returnItems %}
-                                            {% set firstBundleItem = productBundle.bundleItems | first %}
                                             {% if returnItem.orderItem.IdSalesOrderItem == firstBundleItem.IdSalesOrderItem %}
                                                 {{ returnItem.reason ? returnItem.reason | trans }}
                                             {% endif %}
