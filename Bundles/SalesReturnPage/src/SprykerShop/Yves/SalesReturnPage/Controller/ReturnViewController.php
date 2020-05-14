@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\SalesReturnPage\Controller;
 
+use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -44,6 +45,26 @@ class ReturnViewController extends AbstractReturnController
 
         return [
             'return' => $returnTransfer,
+            'uniqueOrderReferences' => $this->extractUniqueOrderReferencesFromReturn($returnTransfer),
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     *
+     * @return string[]
+     */
+    protected function extractUniqueOrderReferencesFromReturn(ReturnTransfer $returnTransfer): array
+    {
+        $uniqueOrderReferences = [];
+
+        foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
+            $idSalesOrder = $returnItemTransfer->getOrderItem()->getFkSalesOrder();
+            $orderReference = $returnItemTransfer->getOrderItem()->getOrderReference();
+
+            $uniqueOrderReferences[$idSalesOrder] = $orderReference;
+        }
+
+        return $uniqueOrderReferences;
     }
 }
