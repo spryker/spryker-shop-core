@@ -13,14 +13,14 @@
 
 {% block body %}
     {% if data.concreteItem.quantitySalesUnit is not null and data.concreteItem.quantity is not null %}
-        {% set salesUnitName = data.concreteItem.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+        {% set salesUnitName = data.concreteItem.quantitySalesUnit.productMeasurementUnit.name | default %}
         {% set salesUnitQuantity = data.concreteItem.quantity / data.concreteItem.quantitySalesUnit.conversion %}
         {% set salesUnitSummary = '' %}
         {% if salesUnitName %}
             {% set salesUnitSummary = salesUnitQuantity | round(data.concreteItem.quantitySalesUnit.precision, 'floor') ~ ' ' ~ salesUnitName | trans %}
         {% endif %}
 
-        {% set amountSalesUnitName = data.concreteItem.amountSalesUnit.productMeasurementUnit.name | default('') %}
+        {% set amountSalesUnitName = data.concreteItem.amountSalesUnit.productMeasurementUnit.name | default %}
     {% endif %}
     <td>
         {% block actions %}{% endblock %}
