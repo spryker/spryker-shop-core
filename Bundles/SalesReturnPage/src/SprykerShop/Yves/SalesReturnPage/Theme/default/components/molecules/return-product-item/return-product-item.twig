@@ -76,7 +76,7 @@
                             {% block state %}
                                 {% include molecule('status') with {
                                     data: {
-                                        label: ('oms.state' ~ itemState) | trans,
+                                        label: ('oms.state.' ~ itemState) | trans,
                                         status: itemState,
                                     },
                                 } only %}
