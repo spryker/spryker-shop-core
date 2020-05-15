@@ -1,7 +1,7 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'bundle-item',
+    name: 'ordered-bundle-item',
 } %}
 
 {% define data = {
@@ -38,7 +38,7 @@
 
     {% block quantityWrapper %}
         <div class="{{ quantityWrapperClass }}">
-            {% block quantity %}
+            {% block quantityText %}
                 {{ 'product_bundle_widget.quantity' | trans }}
             {% endblock %}
 

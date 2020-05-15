@@ -2,13 +2,13 @@ import Component from 'ShopUi/models/component';
 
 export default class ButtonsStateHandler extends Component {
     protected triggers: HTMLInputElement[];
-    protected targets: HTMLLinkElement[];
+    protected targets: HTMLAnchorElement[];
 
     protected readyCallback(): void {}
 
     protected init(): void {
         this.triggers = <HTMLInputElement[]>Array.from(document.getElementsByClassName(this.triggerClassName));
-        this.targets = <HTMLLinkElement[]>Array.from(document.getElementsByClassName(this.targetClassName));
+        this.targets = <HTMLAnchorElement[]>Array.from(document.getElementsByClassName(this.targetClassName));
         this.mapEvents();
     }
 
@@ -25,7 +25,7 @@ export default class ButtonsStateHandler extends Component {
     }
 
     protected mapTargetClickEvent(): void {
-        this.targets.forEach((target: HTMLLinkElement) => {
+        this.targets.forEach((target: HTMLAnchorElement) => {
             target.addEventListener('click', (event: Event) => this.onTargetClick(event, target));
         });
     }
@@ -62,20 +62,20 @@ export default class ButtonsStateHandler extends Component {
         this.disableTargets();
     }
 
-    protected onTargetClick(event: Event, target: HTMLLinkElement): void {
+    protected onTargetClick(event: Event, target: HTMLAnchorElement): void {
         if (target.hasAttribute('disabled')) {
             event.preventDefault();
         }
     }
 
     protected disableTargets(): void {
-        this.targets.forEach((target: HTMLLinkElement) => {
+        this.targets.forEach((target: HTMLAnchorElement) => {
             target.setAttribute('disabled', 'disabled');
         });
     }
 
     protected enableTargets(): void {
-        this.targets.forEach((target: HTMLLinkElement) => {
+        this.targets.forEach((target: HTMLAnchorElement) => {
             target.removeAttribute('disabled');
         });
     }

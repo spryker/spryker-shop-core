@@ -12,8 +12,8 @@
 {% set contentClass = 'col col--expand grid' %}
 {% set imageColumnClass = 'col col--sm-2' %}
 {% set bundleItemColumnClass = 'col col--sm-10' %}
-{% set bundleItemClass = 'col col--sm-12 grid spacing-bottom spacing-bottom--inner spacing-right spacing-right--inner' %}
-{% set itemsClass = 'col col--sm-12 grid grid--middle spacing-y' %}
+{% set bundleItemClass = 'grid spacing-bottom spacing-bottom--inner spacing-right spacing-right--inner' %}
+{% set itemsClass = 'grid grid--middle spacing-y' %}
 {% set bundleInfoColumnClass = 'col col--sm-4' %}
 {% set bundleStatusColumnClass = 'col col--sm-2 text-center' %}
 {% set bundlePriceColumnClass = 'col col--sm-2 text-center' %}
@@ -148,7 +148,7 @@
                             {% endblock %}
 
                             {% block separator %}
-                                <hr class="box__separator col col--sm-12">
+                                <hr class="box__separator">
                             {% endblock %}
 
                             {% block items %}
