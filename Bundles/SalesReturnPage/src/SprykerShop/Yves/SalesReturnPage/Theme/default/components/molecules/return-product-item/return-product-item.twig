@@ -64,6 +64,22 @@
                                     {{ 'return_page.item_sku' | trans }} {{ data.item.sku }}
                                 </small>
                             {% endblock %}
+
+                            {% if data.item.productOptions is not empty %}
+                                <div class="spacing-bottom">
+                                    {% block detailRow %}
+                                        {{ 'customer.order.options' | trans }}
+                                        <ul>
+                                            {% for productOption in data.item.productOptions %}
+                                                <li>
+                                                    &nbsp; + {{ productOption.value | trans }}
+                                                    <strong>{{ productOption.sumPrice | money(true, data.item.currencyIsoCode) }}</strong>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endblock %}
+                                </div>
+                            {% endif %}
                         {% endblock %}
                     </div>
                 {% endblock %}
@@ -102,7 +118,7 @@
                 {% endblock %}
 
                 {% block productItemTotalPrice %}
-                    <strong class="{{ productPriceTotalColumnClass }}">{{ data.item.sumPrice | money(true, data.item.currencyIsoCode) }}</strong>
+                    <strong class="{{ productPriceTotalColumnClass }}">{{ data.item.sumPriceToPayAggregation | money(true, data.item.currencyIsoCode) }}</strong>
                 {% endblock %}
             {% endblock %}
         </div>

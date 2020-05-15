@@ -20,6 +20,8 @@
 {% set bundleQuantityColumnClass = 'col col--sm-4 text-center' %}
 {% set bundlePriceTotalColumnClass = 'col col--sm-4 text-center' %}
 {% set bundleProduct = data.productBundle.bundleProduct %}
+{% set firstBundleItem = data.productBundle.bundleItems | first %}
+{% set currencyIsoCode = firstBundleItem.currencyIsoCode %}
 
 {% block body %}
     <div class="{{ contentWrapperClass }}">
@@ -74,12 +76,25 @@
                                                         {{- 'product_bundle_widget.item_sku' | trans }} {{ bundleProduct.sku -}}
                                                     </small>
                                                 {%- endblock %}
+
+                                                {% if bundleProduct.productOptions is not empty %}
+                                                    <div class="spacing-bottom">
+                                                        {% block detailRow %}
+                                                            {{ 'customer.order.options' | trans }}
+                                                            <ul>
+                                                                {% for productOption in bundleProduct.productOptions %}
+                                                                    <li>
+                                                                        &nbsp; + {{ productOption.value | trans }}
+                                                                        <strong>{{ productOption.sumPrice | money(true, currencyIsoCode) }}</strong>
+                                                                    </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        {% endblock %}
+                                                    </div>
+                                                {% endif %}
                                             {%- endblock %}
                                         </div>
                                     {% endblock %}
-
-                                    {% set firstBundleItem = data.productBundle.bundleItems | first %}
-                                    {% set currencyIsoCode = firstBundleItem.currencyIsoCode %}
 
                                     <div class="{{ bundlePriceQuantityColumnClass }}">
                                         {% block price %}
@@ -103,7 +118,7 @@
                                         {% block total %}
                                             <div class="{{ bundlePriceTotalColumnClass }}">
                                                 {% block totalInner %}
-                                                    <strong>{{ bundleProduct.sumPrice | money(true, currencyIsoCode) }}</strong>
+                                                    <strong>{{ bundleProduct.sumPriceToPayAggregation | money(true, currencyIsoCode) }}</strong>
                                                 {% endblock %}
                                             </div>
                                         {% endblock %}
