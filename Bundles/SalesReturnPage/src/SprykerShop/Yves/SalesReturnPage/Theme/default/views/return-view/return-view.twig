@@ -3,13 +3,15 @@
 {% define data = {
     return: _view.return,
     returnItems: _view.return.returnItems,
+    uniqueOrderReferences: _view.uniqueOrderReferences,
     title: 'return_page.details.page_title' | trans,
 } %}
 
 {% block breadcrumbs %}
     {% set breadcrumbExtension = [
         {
-            label: 'return_page.details.breadcrumb' | trans,
+            label: data.return.returnReference,
+            withChevron: false,
         },
     ] %}
 
@@ -27,6 +29,7 @@
                         returnItems: data.returnItems,
                         returnReference: data.return.returnReference,
                         createdAt: data.return.createdAt,
+                        uniqueOrderReferences: data.uniqueOrderReferences,
                     },
                 } only %}
             {% endblock %}
