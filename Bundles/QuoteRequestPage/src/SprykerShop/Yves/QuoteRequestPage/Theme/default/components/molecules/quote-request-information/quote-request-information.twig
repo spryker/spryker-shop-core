@@ -61,7 +61,7 @@
             {% if data.quoteRequest.status %}
                 {% include molecule('status') with {
                     data: {
-                        label: ('status.' ~ data.quoteRequest.status) | trans,
+                        label: ('quote_request.status.' ~ data.quoteRequest.status) | trans,
                         status: data.quoteRequest.status,
                     },
                 } only %}

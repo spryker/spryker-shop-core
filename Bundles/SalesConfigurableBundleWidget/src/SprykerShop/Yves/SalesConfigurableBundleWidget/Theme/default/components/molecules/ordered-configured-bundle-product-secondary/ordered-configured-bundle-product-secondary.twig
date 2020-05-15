@@ -54,21 +54,21 @@
                     </div>
                 {% endblock %}
 
-                {% set status = data.product.state.name | replace({' ': '-'}) | lower %}
+                {% set itemState = data.product.state.name | replace({' ': '-'}) | lower %}
 
                 {% block status %}
                     <div class="{{ productStatusColumnClass }}">
-                        {% if status %}
-                            {% block statusInner %}
+                        {% if itemState %}
+                            {% block stateInner %}
                                 {% include molecule('status') with {
                                     data: {
-                                        label: ('status.' ~ status) | trans,
-                                        status: status,
+                                        label: ('oms.state.' ~ itemState) | trans,
+                                        status: itemState,
                                     },
                                 } only %}
                             {% endblock %}
                         {% else %}
-                            {% block emptyStatus %}
+                            {% block emptyState %}
                                 <span class="text-secondary">
                                     --
                                 </span>

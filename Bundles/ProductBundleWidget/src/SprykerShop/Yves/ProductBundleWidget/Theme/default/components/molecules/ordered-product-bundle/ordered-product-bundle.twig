@@ -12,13 +12,13 @@
 {% set contentClass = 'col col--expand grid' %}
 {% set imageColumnClass = 'col col--sm-2' %}
 {% set bundleItemColumnClass = 'col col--sm-10' %}
-{% set bundleItemClass = 'col col--sm-12 grid spacing-bottom spacing-bottom--inner spacing-right spacing-right--inner' %}
+{% set bundleItemClass = 'col col--sm-12 grid grid--justify spacing-bottom spacing-bottom--inner' %}
 {% set itemsClass = 'col col--sm-12 grid grid--middle spacing-y' %}
 {% set bundleInfoColumnClass = 'col col--sm-4' %}
-{% set bundleStatusColumnClass = 'col col--sm-2 text-center' %}
-{% set bundlePriceColumnClass = 'col col--sm-2 text-center' %}
-{% set bundleQuantityColumnClass = 'col col--sm-2 text-center' %}
-{% set bundlePriceTotalColumnClass = 'col col--sm-2 text-center' %}
+{% set bundlePriceQuantityColumnClass = 'col col--sm-6' %}
+{% set bundlePriceColumnClass = 'col col--sm-4 text-center' %}
+{% set bundleQuantityColumnClass = 'col col--sm-4 text-center' %}
+{% set bundlePriceTotalColumnClass = 'col col--sm-4 text-center' %}
 {% set bundleProduct = data.productBundle.bundleProduct %}
 
 {% block body %}
@@ -78,72 +78,36 @@
                                         </div>
                                     {% endblock %}
 
-                                    {% set emptyStatusClass = 'text-secondary' %}
-                                    {% set bundleStatus = false %}
-                                    {% set breakLoop = false %}
-
-                                    {% for bundleItem in data.productBundle.bundleItems %}
-                                        {% if not bundleStatus and not breakLoop %}
-                                            {% set bundleStatus = bundleItem.state.name %}
-                                        {% endif %}
-
-                                        {% if bundleStatus and not bundleStatus == bundleItem.state.name %}
-                                            {% set bundleStatus = false %}
-                                            {% set breakLoop = true %}
-                                        {% endif %}
-                                    {% endfor %}
-
-                                    {% block bundleStatus %}
-                                        <div class="{{ bundleStatusColumnClass }}">
-                                            {% if bundleStatus %}
-                                                {% set bundleStatus = bundleStatus | replace({' ': '-'}) | lower %}
-
-                                                {% block status %}
-                                                    {% include molecule('status') with {
-                                                        data: {
-                                                            label: ('status.' ~ bundleStatus) | trans,
-                                                            status: bundleStatus,
-                                                        },
-                                                    } only %}
-                                                {% endblock %}
-                                            {% else %}
-                                                {% block emptyStatus %}
-                                                    <span class="text-secondary">
-                                                --
-                                            </span>
-                                                {% endblock %}
-                                            {% endif %}
-                                        </div>
-                                    {% endblock %}
-
                                     {% set firstBundleItem = data.productBundle.bundleItems | first %}
                                     {% set currencyIsoCode = firstBundleItem.currencyIsoCode %}
 
-                                    {% block price %}
-                                        <div class="{{ bundlePriceColumnClass }}">
-                                            {% block priceInner %}
-                                                <strong>{{ bundleProduct.unitPrice | money(true, currencyIsoCode) }}</strong>
-                                            {% endblock %}
-                                        </div>
-                                    {% endblock %}
+                                    <div class="{{ bundlePriceQuantityColumnClass }}">
+                                        {% block price %}
+                                            <div class="{{ bundlePriceColumnClass }}">
+                                                {% block priceInner %}
+                                                    <strong>{{ bundleProduct.unitPrice | money(true, currencyIsoCode) }}</strong>
+                                                {% endblock %}
+                                            </div>
+                                        {% endblock %}
 
-                                    {% block quantity %}
-                                        <div class="{{ bundleQuantityColumnClass }}">
-                                            {% block quantityTitle %}
-                                                {{ 'product_bundle_widget.quantity' | trans }}
-                                            {% endblock %}
+                                        {% block quantity %}
+                                            <div class="{{ bundleQuantityColumnClass }}">
+                                                {% block quantityTitle %}
+                                                    {{ 'product_bundle_widget.quantity' | trans }}
+                                                {% endblock %}
 
-                                            {{ bundleProduct.quantity }}
-                                        </div>
-                                    {% endblock %}
+                                                {{ bundleProduct.quantity }}
+                                            </div>
+                                        {% endblock %}
 
-                                    {% block total %}
-                                        <div class="{{ bundlePriceTotalColumnClass }}">
-                                            {% block totalInner %}
-                                                <strong>{{ bundleProduct.sumPrice | money(true, currencyIsoCode) }}</strong>
-                                            {% endblock %}
-                                        </div>
-                                    {% endblock %}
+                                        {% block total %}
+                                            <div class="{{ bundlePriceTotalColumnClass }}">
+                                                {% block totalInner %}
+                                                    <strong>{{ bundleProduct.sumPrice | money(true, currencyIsoCode) }}</strong>
+                                                {% endblock %}
+                                            </div>
+                                        {% endblock %}
+                                    </div>
                                 </div>
                             {% endblock %}
 

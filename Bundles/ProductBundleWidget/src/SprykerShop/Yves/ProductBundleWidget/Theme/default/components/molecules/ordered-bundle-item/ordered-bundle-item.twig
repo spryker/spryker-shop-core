@@ -11,7 +11,8 @@
 {% set thumbnailModifiers = ['small'] %}
 {% set imageColumnClass = 'col col--middle col--sm-2' %}
 {% set nameWrapperClass = 'col col--middle col--sm-4' %}
-{% set quantityWrapperClass = 'col col--middle col--sm-6 text-center spacing-right spacing-right--inner' %}
+{% set stateWrapperClass = 'col col--middle col--sm-2 text-center' %}
+{% set quantityWrapperClass = 'col col--middle col--sm-2 text-center' %}
 
 {% block body %}
     {% block imageWrapper %}
@@ -32,6 +33,21 @@
         <div class="{{ nameWrapperClass }}">
             {% block name %}
                 <h6>{{ data.item.name }}</h6>
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% set itemState = data.item.state.name | replace({' ': '-'}) | lower %}
+
+    {% block state %}
+        <div class="{{ stateWrapperClass }}">
+            {% block stateText %}
+                {% include molecule('status') with {
+                    data: {
+                        label: ('oms.state.' ~ itemState) | trans,
+                        status: itemState,
+                    },
+                } only %}
             {% endblock %}
         </div>
     {% endblock %}
