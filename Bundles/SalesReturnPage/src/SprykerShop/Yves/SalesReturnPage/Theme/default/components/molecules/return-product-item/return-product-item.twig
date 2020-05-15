@@ -95,10 +95,18 @@
                     <strong class="{{ productPriceColumnClass }}">{{ data.item.unitPrice | money(true, data.item.currencyIsoCode) }}</strong>
                 {% endblock %}
 
-                {% block productItemQuantity %}
-                    <div class="{{ productQuantityColumnClass }}">
-                        {{ 'return_page.quantity' | trans }} {{ data.item.quantity }}
-                    </div>
+                {% block productItemQuantityAmount %}
+                        <div class="{{ productQuantityColumnClass }}">
+                            {% block productItemQuantity %}
+                                <p>{{ 'return_page.quantity' | trans }} {{ data.item.quantity }}</p>
+                            {% endblock %}
+
+                            {% if data.item.amount %}
+                                {% block productItemAmount %}
+                                    <p>{{ 'customer.order.item_amount' | trans }}: {{ data.item.amount.toFloat() }}</p>
+                                {% endblock %}
+                            {% endif %}
+                        </div>
                 {% endblock %}
 
                 {% block productItemTotalPrice %}
