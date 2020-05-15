@@ -96,7 +96,7 @@
 
                                         {% block checkbox %}
                                             <div class="{{ checkboxWrapperClass }}">
-                                                {{ form_row(returnItem.isReturnable, {label: ' ', 'attr': {'class': 'js-return_create_form__selection'}}) }}
+                                                {{ form_row(returnItem.isReturnable, {label: ' ', 'attr': {'class': 'js-return-create-form__selection'}}) }}
                                             </div>
                                         {% endblock %}
 
@@ -167,7 +167,7 @@
                                                     <div class="col grid grid--middle">
                                                         {% for returnItem in embed.form.returnItems %}
                                                             {% if returnItem.vars.value.orderItem.IdSalesOrderItem == data.product.IdSalesOrderItem %}
-                                                                {{ form_row(returnItem.isReturnable, {label: ' ', 'attr': {'class': 'js-return_create_form__selection'}}) }}
+                                                                {{ form_row(returnItem.isReturnable, {label: ' ', 'attr': {'class': 'js-return-create-form__selection'}}) }}
                                                             {% endif %}
                                                         {% endfor %}
                                                     </div>
@@ -217,7 +217,7 @@
                                                     {% if key == data.productBundle.bundleProduct.bundleItemIdentifier %}
                                                         <div class="spacing-top spacing-top--big">
                                                             <div class="spacing-top spacing-top--big">
-                                                                {{ form_row(productBundle.isReturnable, {label: ' ', 'attr': {'class': 'js-return_create_form__selection'}}) }}
+                                                                {{ form_row(productBundle.isReturnable, {label: ' ', 'attr': {'class': 'js-return-create-form__selection'}}) }}
                                                             </div>
                                                         </div>
                                                     {% endif %}
@@ -248,7 +248,7 @@
                 </div>
             {% endblock %}
 
-            {% set salesReturnSaveActionClass = 'button button-primary spacing-top js-state-observable' %}
+            {% set salesReturnSaveActionClass = 'button spacing-top js-state-observable' %}
 
             {% block salesReturnPageActions %}
                 <button class="{{ salesReturnSaveActionClass }}" disabled>
@@ -262,7 +262,7 @@
         {% block buttonsStateHandler %}
             {% include molecule('buttons-state-handler', 'SalesReturnPage') with {
                 attributes: {
-                    'trigger-class-name': 'js-return_create_form__selection',
+                    'trigger-class-name': 'js-return-create-form__selection',
                     'target-class-name': 'js-state-observable',
                     'is-enabler': 'true',
                 },

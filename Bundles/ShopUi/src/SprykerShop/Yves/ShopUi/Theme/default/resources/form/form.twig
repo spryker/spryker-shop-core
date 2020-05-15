@@ -130,13 +130,12 @@
     } %}
 
     {% include component with {
-
         modifiers: modifiers,
         data: {
             label: label,
             inputClass: inputClass,
         },
-        attributes: attributes
+        attributes: attributes,
     } only %}
 {%- endblock -%}
 
