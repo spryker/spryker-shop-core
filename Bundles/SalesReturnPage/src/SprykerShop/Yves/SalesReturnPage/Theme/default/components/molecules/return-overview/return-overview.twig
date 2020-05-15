@@ -8,6 +8,7 @@
     returnItems: required,
     returnReference: required,
     createdAt: required,
+    uniqueOrderReferences: required,
 } %}
 
 {% block body %}
@@ -65,7 +66,12 @@
                     <li class="{{ itemClass }}">
                         {% block orderRefInner %}
                             {{ 'return_page.details.header.order_ref' | trans }}:
-                            <strong>{{ orderReferences | join(', ') }}</strong>
+                            {% for idSalesOrder, orderReference in data.uniqueOrderReferences %}
+                                <a href="{{ url('customer/order/details', {'id': idSalesOrder}) }}" class="link">
+                                    {{ orderReference }}
+                                </a>
+                                {%- if not loop.last -%},&nbsp{%- endif -%}
+                            {% endfor %}
                         {% endblock %}
                     </li>
                 {% endblock %}
