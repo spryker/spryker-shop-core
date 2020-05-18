@@ -129,6 +129,30 @@ class ContentNavigationTwigPluginTest extends Unit
     /**
      * @return void
      */
+    public function testContentNavigationWithInactiveNavigationWillReturnEmptyLine(): void
+    {
+        // Arrange
+        $this->setContentNavigationWidgetToContentNavigationClientReturn(new ContentNavigationTypeTransfer());
+        $this->setContentNavigationWidgetToNavigationStorageClientReturn(
+            (new NavigationStorageTransfer)
+                ->setIsActive(false)
+                ->setKey(static::CONTENT_KEY)
+        );
+
+        // Act
+        $navigationContent = call_user_func(
+            $this->getContentNavigationTwigFunction()->getCallable(),
+            static::CONTENT_KEY,
+            static::DEFAULT_TEMPLATE
+        );
+
+        // Assert
+        $this->assertEquals($navigationContent, '');
+    }
+
+    /**
+     * @return void
+     */
     public function testContentNavigationRendering(): void
     {
         // Arrange
