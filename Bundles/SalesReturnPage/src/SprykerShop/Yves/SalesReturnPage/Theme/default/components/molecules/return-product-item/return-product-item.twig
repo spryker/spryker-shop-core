@@ -67,7 +67,7 @@
 
                             {% if data.item.productOptions is not empty %}
                                 <div class="spacing-bottom">
-                                    {% block detailRow %}
+                                    {% block productOptions %}
                                         {{ 'return_page.item.options' | trans }}
                                         <ul>
                                             {% for productOption in data.item.productOptions %}
