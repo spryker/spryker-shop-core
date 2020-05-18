@@ -92,7 +92,7 @@
                                         {{ orderItem.quantity }}
                                     </td>
                                     <td class="{{ noBottomBorderClass }}">
-                                        {{ orderItem.sumPrice | money(true, orderItem.currencyIsoCode) }}
+                                        {{ orderItem.sumSubtotalAggregation | money(true, orderItem.currencyIsoCode) }}
                                     </td>
                                     <td class="{{ noBottomBorderClass }}">
                                         {{ returnItem.reason ? returnItem.reason | trans : 'custom_reason' | trans }}
@@ -243,7 +243,7 @@
                                         {{ bundleProduct.quantity }}
                                     </td>
                                     <td class="no-bottom-border">
-                                        {{ bundleProduct.sumPrice | money(true, firstBundleItem.currencyIsoCode) }}
+                                        {{ bundleProduct.sumSubtotalAggregation | money(true, firstBundleItem.currencyIsoCode) }}
                                     </td>
                                     <td class="no-bottom-border">
                                         {% set reasonText = 'custom_reason' | trans %}
