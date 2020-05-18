@@ -26,7 +26,7 @@ class ItemExtractor implements ItemExtractorInterface
      */
     public function extractBundleItems(iterable $itemTransfers): array
     {
-        $productBundles = $this->getProductBundles($itemTransfers);
+        $productBundles = $this->getIndexedProductBundles($itemTransfers);
         $bundleItems = [];
 
         foreach ($itemTransfers as $itemTransfer) {
@@ -53,7 +53,7 @@ class ItemExtractor implements ItemExtractorInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function getProductBundles(iterable $itemTransfers): array
+    protected function getIndexedProductBundles(iterable $itemTransfers): array
     {
         $productBundles = [];
 

@@ -16,7 +16,7 @@ use SprykerShop\Yves\SalesReturnPage\Form\ReturnItemsForm;
 
 class ReturnCreateFormDataProvider
 {
-    public const GLOSSARY_KEY_CUSTOM_REASON = 'return.return_reasons.custom_reason.name';
+    public const GLOSSARY_KEY_CUSTOM_REASON = 'return_page.return_reasons.custom_reason.placeholder';
     public const CUSTOM_REASON_VALUE = 'custom_reason';
 
     /**
