@@ -66,12 +66,12 @@
                         {% set isCurrentOrderReference = orderReference == orderItem.orderReference %}
                         {% set isConfiguredBundle = orderItem.salesOrderConfiguredBundleItem is defined and orderItem.salesOrderConfiguredBundleItem is not null %}
                         {% set isBundleItem = orderItem.relatedBundleItemIdentifier is defined and orderItem.relatedBundleItemIdentifier is not null %}
-                        {% set hasProductOptions = orderItem.productOptions | length %}
+                        {% set noBottomBorderClass = orderItem.productOptions | length ? 'no-bottom-border' %}
 
                         {% if isCurrentOrderReference and not isConfiguredBundle and not isBundleItem %}
                             {% block productItem %}
                                 <tr>
-                                    <td class="{{ hasProductOptions ? 'no-bottom-border'}}">
+                                    <td class="{{ noBottomBorderClass }}">
                                         {% widget 'BarcodeWidget' args [orderItem.sku] only %}
                                             {% block body %}
                                                 {% set imageClass = 'order-item-image' %}
@@ -79,45 +79,46 @@
                                             {% endblock %}
                                         {% endwidget %}
                                     </td>
-                                    <td class="{{ hasProductOptions ? 'no-bottom-border'}}">
+                                    <td class="{{ noBottomBorderClass }}">
                                         {{ orderItem.sku }}
                                     </td>
-                                    <td class="{{ hasProductOptions ? 'no-bottom-border'}}">
+                                    <td class="{{ noBottomBorderClass }}">
                                         {{ orderItem.name }}
                                     </td>
-                                    <td class="{{ hasProductOptions ? 'no-bottom-border'}}">
+                                    <td class="{{ noBottomBorderClass }}">
                                         {{ orderItem.unitPrice | money(true, orderItem.currencyIsoCode) }}
                                     </td>
-                                    <td class="{{ hasProductOptions ? 'no-bottom-border'}}">
+                                    <td class="{{ noBottomBorderClass }}">
                                         {{ orderItem.quantity }}
                                     </td>
-                                    <td class="{{ hasProductOptions ? 'no-bottom-border'}}">
+                                    <td class="{{ noBottomBorderClass }}">
                                         {{ orderItem.sumPrice | money(true, orderItem.currencyIsoCode) }}
                                     </td>
-                                    <td class="{{ hasProductOptions ? 'no-bottom-border'}}">
+                                    <td class="{{ noBottomBorderClass }}">
                                         {{ returnItem.reason ? returnItem.reason | trans : 'custom_reason' | trans }}
                                     </td>
                                 </tr>
 
                                 {% for productOption in orderItem.productOptions %}
+                                    {% set noBottomBorderClass = not loop.last ? 'no-bottom-border' %}
                                     <tr>
-                                        <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}}"></td>
-                                        <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}}"></td>
-                                        <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}} product-option">
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }} product-option">
                                             {% if loop.first %}
                                                 <hr>
                                             {% endif %}
                                             {{ productOption.value }}
                                         </td>
-                                        <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}} product-option">
+                                        <td class="no-top-border {{ noBottomBorderClass }} product-option">
                                             {% if loop.first %}
                                                 <hr>
                                             {% endif %}
                                             {{ productOption.unitPrice | money(true, orderItem.currencyIsoCode) }}
                                         </td>
-                                        <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}}"></td>
-                                        <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}}"></td>
-                                        <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
                                     </tr>
                                 {% endfor %}
                             {% endblock %}
@@ -159,8 +160,9 @@
                                 {% for item in bundle.salesOrderConfiguredBundleItems %}
                                     {% if data.items[item.IdSalesOrderItem] is defined %}
                                         {% set product = data.items[item.IdSalesOrderItem] %}
+                                        {% set noBottomBorderClass = not loop.last ? 'no-bottom-border' %}
                                         <tr>
-                                            <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}}">
+                                            <td class="no-top-border {{ noBottomBorderClass }}">
                                                 {% widget 'BarcodeWidget' args [product.sku] only %}
                                                     {% block body %}
                                                         {% set imageClass = 'order-item-image' %}
@@ -168,13 +170,13 @@
                                                     {% endblock %}
                                                 {% endwidget %}
                                             </td>
-                                            <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}}">
+                                            <td class="no-top-border {{ noBottomBorderClass }}">
                                                 {{ product.sku }}
                                             </td>
-                                            <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}}">
+                                            <td class="no-top-border {{ noBottomBorderClass }}">
                                                 {{ product.name }}
                                             </td>
-                                            <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}}">
+                                            <td class="no-top-border {{ noBottomBorderClass }}">
                                                 {% if product.sourceUnitGrossPrice is not null or product.sourceUnitNetPrice is not null %}
                                                     {% set priceModeGross = 'GROSS_MODE' %}
                                                     {% set originUnitPrice = (product.priceMode == priceModeGross) ? product.originUnitGrossPrice : product.originUnitNetPrice %}
@@ -186,13 +188,13 @@
 
                                                 {{ product.unitPrice | money(true, product.currencyIsoCode) }}
                                             </td>
-                                            <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}}">
+                                            <td class="no-top-border {{ noBottomBorderClass }}">
                                                 {{ product.quantity }}
                                             </td>
-                                            <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}}">
+                                            <td class="no-top-border {{ noBottomBorderClass }}">
                                                 {{ product.sumSubtotalAggregation | money(true, product.currencyIsoCode) }}
                                             </td>
-                                            <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}}">
+                                            <td class="no-top-border {{ noBottomBorderClass }}">
                                                 {% set reasonText = 'custom_reason' | trans %}
                                                 {% for returnItem in embed.returnItems %}
                                                     {% if returnItem.orderItem.IdSalesOrderItem == item.IdSalesOrderItem and returnItem.reason %}
@@ -255,40 +257,42 @@
                                 </tr>
 
                                 {% for bundleItem in productBundle.bundleItems %}
+                                    {% set noBottomBorderClass = not loop.last or hasBundleOptions ? 'no-bottom-border' %}
                                     <tr>
-                                        <td class="no-top-border {{ not loop.last or not hasBundleOptions ? 'no-bottom-border'}}"></td>
-                                        <td class="no-top-border {{ not loop.last or not hasBundleOptions ? 'no-bottom-border'}}"></td>
-                                        <td class="no-top-border {{ not loop.last or not hasBundleOptions ? 'no-bottom-border'}}">
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}">
                                             {{ bundleItem.name }}
                                         </td>
-                                        <td class="no-top-border {{ not loop.last or not hasBundleOptions ? 'no-bottom-border'}}"></td>
-                                        <td class="no-top-border {{ not loop.last or not hasBundleOptions ? 'no-bottom-border'}}">
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}">
                                             {{ bundleItem.quantity }}
                                         </td>
-                                        <td class="no-top-border {{ not loop.last or not hasBundleOptions ? 'no-bottom-border'}}"></td>
-                                        <td class="no-top-border {{ not loop.last or not hasBundleOptions ? 'no-bottom-border'}}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
                                     </tr>
                                 {% endfor %}
 
                                 {% for productOption in bundleProduct.productOptions %}
+                                    {% set noBottomBorderClass = not loop.last ? 'no-bottom-border' %}
                                     <tr>
-                                        <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}}"></td>
-                                        <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}}"></td>
-                                        <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}} product-option">
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }} product-option">
                                             {% if loop.first %}
                                                 <hr>
                                             {% endif %}
                                             {{ productOption.value }}
                                         </td>
-                                        <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}} product-option">
+                                        <td class="no-top-border {{ noBottomBorderClass }} product-option">
                                             {% if loop.first %}
                                                 <hr>
                                             {% endif %}
                                             {{ productOption.unitPrice | money(true, firstBundleItem.currencyIsoCode) }}
                                         </td>
-                                        <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}}"></td>
-                                        <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}}"></td>
-                                        <td class="no-top-border {{ not loop.last ? 'no-bottom-border'}}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
                                     </tr>
                                 {% endfor %}
                             {% endblock %}
