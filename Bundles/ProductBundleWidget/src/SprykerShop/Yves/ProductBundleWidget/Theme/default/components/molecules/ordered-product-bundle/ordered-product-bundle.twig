@@ -49,12 +49,6 @@
                                     {% block bundleInfo %}
                                         <div class="{{ bundleInfoColumnClass }}">
                                             {% block bundleInfoInner %}
-                                                {% block bundleItemReturnableDate %}
-                                                    <div>
-                                                        {{- 'product_bundle_widget.returnable_text' | trans -}}
-                                                    </div>
-                                                {% endblock %}
-
                                                 {% if not bundleProduct.isReturnable %}
                                                     {% block bundleItemReturnableInfo %}
                                                         <div>

@@ -1,11 +1,11 @@
 {% extends template('widget') %}
 
 {% define data = {
-    productBundles: _widget.productBundles,
+    productBundleItems: _widget.productBundles,
 } %}
 
 {% block body %}
-    {% for productBundle in data.productBundles %}
+    {% for productBundle in data.productBundleItems %}
         {% block bundle %}
             {% include molecule('ordered-product-bundle', 'ProductBundleWidget') with {
                 class: 'grid',
