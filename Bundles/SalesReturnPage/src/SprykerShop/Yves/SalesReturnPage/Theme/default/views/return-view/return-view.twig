@@ -161,6 +161,10 @@
                                     },
                                 } only %}
                                     {% block bundleInfoInner %}
+                                        <div>
+                                            {{- 'product_bundle_widget.returnable_text' | trans -}}
+                                        </div>
+
                                         {{ parent() }}
 
                                         {% for returnItem in embed.returnItems %}

@@ -70,7 +70,7 @@
 
                 {% set itemState = data.item.state.name | replace({' ': '-'}) | lower %}
 
-                {% block productStatus %}
+                {% block productState %}
                     <div class="{{ productStatusColumnClass }}">
                         {% if itemState %}
                             {% block state %}

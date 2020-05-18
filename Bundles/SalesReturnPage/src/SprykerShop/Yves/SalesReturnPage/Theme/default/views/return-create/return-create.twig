@@ -228,6 +228,10 @@
                                         {% endblock %}
 
                                         {% block bundleInfoInner %}
+                                            <div>
+                                                {{- 'product_bundle_widget.returnable_text' | trans -}}
+                                            </div>
+
                                             {{ parent() }}
 
                                             {% for key, productBundle in embed.form.productBundles %}
