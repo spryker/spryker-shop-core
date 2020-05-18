@@ -10,13 +10,16 @@ namespace SprykerShopTest\Yves\ContentNavigationWidget\Twig\Plugin;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ContentNavigationTypeTransfer;
 use Generated\Shared\Transfer\ContentTypeContextTransfer;
+use Generated\Shared\Transfer\NavigationStorageTransfer;
 use ReflectionClassConstant;
 use Spryker\Client\ContentNavigation\ContentNavigationDependencyProvider;
 use Spryker\Client\ContentNavigation\Dependency\Client\ContentNavigationToContentStorageClientInterface;
 use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
 use SprykerShop\Yves\ContentNavigationWidget\ContentNavigationWidgetDependencyProvider;
 use SprykerShop\Yves\ContentNavigationWidget\Dependency\Client\ContentNavigationWidgetToContentNavigationClientInterface;
+use SprykerShop\Yves\ContentNavigationWidget\Dependency\Client\ContentNavigationWidgetToNavigationStorageClientInterface;
 use SprykerShop\Yves\ContentNavigationWidget\Plugin\Twig\ContentNavigationTwigPlugin;
 use SprykerShop\Yves\ContentNavigationWidget\Twig\ContentNavigationTwigFunction;
 use Twig\Environment;
@@ -129,8 +132,12 @@ class ContentNavigationTwigPluginTest extends Unit
     public function testContentNavigationRendering(): void
     {
         // Arrange
-        $contentTypeContextTransfer = new ContentNavigationTypeTransfer();
-        $this->setContentNavigationWidgetToContentNavigationClientReturn($contentTypeContextTransfer);
+        $this->setContentNavigationWidgetToContentNavigationClientReturn(new ContentNavigationTypeTransfer());
+        $this->setContentNavigationWidgetToNavigationStorageClientReturn(
+            (new NavigationStorageTransfer)
+                ->setIsActive(true)
+                ->setKey(static::CONTENT_KEY)
+        );
 
         // Act
         $navigationContent = call_user_func(
@@ -158,6 +165,24 @@ class ContentNavigationTwigPluginTest extends Unit
         $this->tester->setDependency(
             ContentNavigationWidgetDependencyProvider::CLIENT_CONTENT_NAVIGATION,
             $contentNavigationWidgetToContentNavigationClientBridge
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationStorageTransfer $navigationStorageTransfer
+     *
+     * @return void
+     */
+    protected function setContentNavigationWidgetToNavigationStorageClientReturn(NavigationStorageTransfer $navigationStorageTransfer): void
+    {
+        $contentNavigationWidgetToNavigationStorageClientBridge = $this
+            ->getMockBuilder(ContentNavigationWidgetToNavigationStorageClientInterface::class)->getMock();
+        $contentNavigationWidgetToNavigationStorageClientBridge
+            ->method('findNavigationTreeByKey')
+            ->willReturn($navigationStorageTransfer);
+        $this->tester->setDependency(
+            ContentNavigationWidgetDependencyProvider::CLIENT_NAVIGATION_STORAGE,
+            $contentNavigationWidgetToNavigationStorageClientBridge
         );
     }
 
