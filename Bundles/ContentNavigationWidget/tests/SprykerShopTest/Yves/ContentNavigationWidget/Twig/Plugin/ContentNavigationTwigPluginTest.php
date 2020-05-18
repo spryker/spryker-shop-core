@@ -15,7 +15,6 @@ use ReflectionClassConstant;
 use Spryker\Client\ContentNavigation\ContentNavigationDependencyProvider;
 use Spryker\Client\ContentNavigation\Dependency\Client\ContentNavigationToContentStorageClientInterface;
 use Spryker\Service\Container\ContainerInterface;
-use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
 use SprykerShop\Yves\ContentNavigationWidget\ContentNavigationWidgetDependencyProvider;
 use SprykerShop\Yves\ContentNavigationWidget\Dependency\Client\ContentNavigationWidgetToContentNavigationClientInterface;
