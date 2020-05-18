@@ -27,6 +27,8 @@ class CartController extends AbstractController
 
     public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
 
+    public const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
+
     public const PARAM_ITEMS = 'items';
 
     protected const FIELD_QUANTITY_TO_NORMALIZE = 'quantity';
@@ -75,6 +77,7 @@ class CartController extends AbstractController
         $quoteClient = $this->getFactory()->getQuoteClient();
 
         return [
+            'removeCartItemForm' => $this->getFactory()->createCartPageFormFactory()->getRemoveForm()->createView(),
             'cart' => $quoteTransfer,
             'isQuoteEditable' => $quoteClient->isQuoteEditable($quoteTransfer),
             'isQuoteLocked' => $quoteClient->isQuoteLocked($quoteTransfer),
@@ -92,6 +95,14 @@ class CartController extends AbstractController
      */
     public function addAction(Request $request, $sku)
     {
+        $form = $this->getFactory()->createCartPageFormFactory()->getAddToCartForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
         $quantity = $request->get('quantity', 1);
 
         if (!$this->canAddCartItem()) {
@@ -180,6 +191,14 @@ class CartController extends AbstractController
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
 
+        $form = $this->getFactory()->createCartPageFormFactory()->getRemoveForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
         $this->getFactory()
             ->getCartClient()
             ->removeItem($sku, $groupKey);
@@ -207,6 +226,14 @@ class CartController extends AbstractController
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
 
+        $form = $this->getFactory()->createCartPageFormFactory()->getCartChangeQuantityForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
         $this->getFactory()
             ->getCartClient()
             ->changeItemQuantity($sku, $request->get('groupKey'), $quantity);
@@ -227,6 +254,14 @@ class CartController extends AbstractController
     {
         if (!$this->canAddCartItem()) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
+        $form = $this->getFactory()->createCartPageFormFactory()->getAddItemsForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
 
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
