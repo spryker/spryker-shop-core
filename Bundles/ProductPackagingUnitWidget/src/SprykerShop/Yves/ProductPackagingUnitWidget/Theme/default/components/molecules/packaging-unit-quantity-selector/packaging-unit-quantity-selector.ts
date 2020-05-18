@@ -408,7 +408,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         const result = a * b;
         const precision = Number(this.currentSalesUnit.precision);
 
-        return Math.round(result * precision ) / precision;
+        return Math.round(result * precision) / precision;
     }
 
     protected getMinQuantity(): number {
