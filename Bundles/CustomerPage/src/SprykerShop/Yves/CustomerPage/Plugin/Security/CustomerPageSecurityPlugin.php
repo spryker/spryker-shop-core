@@ -79,6 +79,9 @@ class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPlugi
                 'check_path' => '/login_check',
                 'username_parameter' => LoginForm::FORM_NAME . '[' . LoginForm::FIELD_EMAIL . ']',
                 'password_parameter' => LoginForm::FORM_NAME . '[' . LoginForm::FIELD_PASSWORD . ']',
+                'with_csrf' => true,
+                'csrf_parameter' => LoginForm::FORM_NAME . '[_token]',
+                'csrf_token_id' => LoginForm::FORM_NAME,
             ],
             'logout' => [
                 'logout_path' => static::ROUTE_LOGOUT,
