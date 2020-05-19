@@ -110,6 +110,10 @@
                                         },
                                     } only %}
                                         {% block bundleProductItem %}
+                                            {% if not loop.first %}
+                                                <hr class="box__separator">
+                                            {% endif %}
+
                                             {% embed molecule('ordered-configured-bundle-product-secondary', 'SalesConfigurableBundleWidget') with {
                                                 class: 'grid grid--middle',
                                                 data: {
@@ -161,6 +165,10 @@
                                     },
                                 } only %}
                                     {% block bundleInfoInner %}
+                                        <div>
+                                            {{- 'product_bundle_widget.returnable_text' | trans -}}
+                                        </div>
+
                                         {{ parent() }}
 
                                         {% for returnItem in embed.returnItems %}

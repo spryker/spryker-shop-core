@@ -36,28 +36,15 @@
             {% block productItemColumnInner %}
                 {% block productItemInfo %}
                     <div class="{{ productInfoColumnClass }}">
+                        {% set productNameClass = '' %}
+                        {% set skuClass = 'text-secondary' %}
+
                         {% block productItemInfoInner %}
-                            {% block productItemReturnableDate %}
-                                <div>
-                                    {{ 'return_page.returnable_text' | trans }}
-                                </div>
-                            {% endblock %}
-
-                            {% if not data.item.isReturnable %}
-                                {% block productItemReturnableInfo %}
-                                    <div>
-                                        {{ 'return_page.returnable_state' | trans }}
-                                    </div>
-                                {% endblock %}
-                            {% endif %}
-
                             {% block productItemName %}
-                                <h6>
+                                <h6 class="{{ productNameClass }}">
                                     {{ data.item.name }}
                                 </h6>
                             {% endblock %}
-
-                            {% set skuClass = 'text-secondary' %}
 
                             {% block productItemSku %}
                                 <small class="{{ skuClass }}">

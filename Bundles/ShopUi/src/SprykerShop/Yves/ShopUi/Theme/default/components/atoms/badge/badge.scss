@@ -6,6 +6,12 @@
         background-color: helper-color-light($setting-color-main);
         color: helper-color-dark($setting-color-main);
 
+        &--hollow {
+            border: 1px solid $setting-color-light;
+            background: none;
+            color: $setting-color-dark;
+        }
+
         @each $action, $setting-color-action in $setting-color-actions {
             @include shop-ui-badge-action($action, $setting-color-action);
         }

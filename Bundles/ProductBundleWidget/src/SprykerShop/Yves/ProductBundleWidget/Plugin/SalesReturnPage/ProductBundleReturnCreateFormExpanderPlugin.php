@@ -7,10 +7,9 @@
 
 namespace SprykerShop\Yves\ProductBundleWidget\Plugin\SalesReturnPage;
 
+use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\ProductBundleWidget\Form\ProductBundleItemsForm;
 use SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormExpanderPluginInterface;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -27,23 +26,13 @@ class ProductBundleReturnCreateFormExpanderPlugin extends AbstractPlugin impleme
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return \Symfony\Component\Form\FormBuilderInterface
+     * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): FormBuilderInterface
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add(
-            ProductBundleItemsForm::FIELD_PRODUCT_BUNDLES,
-            CollectionType::class,
-            [
-                'entry_type' => ProductBundleItemsForm::class,
-                'entry_options' => [
-                    ProductBundleItemsForm::OPTION_RETURN_REASONS => $options[ProductBundleItemsForm::OPTION_RETURN_REASONS],
-                ],
-                'label' => false,
-            ]
-        );
-
-        return $builder;
+        $this->getFactory()
+            ->createReturnProductBundleForm()
+            ->buildForm($builder, $options);
     }
 
     /**
@@ -61,5 +50,23 @@ class ProductBundleReturnCreateFormExpanderPlugin extends AbstractPlugin impleme
         return $this->getFactory()
             ->createReturnCreateFormExpander()
             ->expandFormData($formData);
+    }
+
+    /**
+     * {@inheritDoc}
+     * - Adds submitted product bundle items to ReturnCreateRequestTransfer.
+     *
+     * @api
+     *
+     * @param array $returnItemsList
+     * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnCreateRequestTransfer
+     */
+    public function handleFormData(array $returnItemsList, ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnCreateRequestTransfer
+    {
+        return $this->getFactory()
+            ->createReturnCreateFormHandler()
+            ->handleFormData($returnItemsList, $returnCreateRequestTransfer);
     }
 }

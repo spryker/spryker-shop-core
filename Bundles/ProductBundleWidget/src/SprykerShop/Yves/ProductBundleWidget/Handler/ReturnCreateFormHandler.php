@@ -10,7 +10,8 @@ namespace SprykerShop\Yves\ProductBundleWidget\Handler;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
-use SprykerShop\Yves\ProductBundleWidget\Form\ProductBundleItemsForm;
+use SprykerShop\Yves\ProductBundleWidget\Form\ReturnProductBundleForm;
+use SprykerShop\Yves\ProductBundleWidget\Form\ReturnProductBundleItemsForm;
 
 class ReturnCreateFormHandler implements ReturnCreateFormHandlerInterface
 {
@@ -27,8 +28,8 @@ class ReturnCreateFormHandler implements ReturnCreateFormHandlerInterface
      */
     public function handleFormData(array $returnItemList, ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnCreateRequestTransfer
     {
-        $productBundleList = $returnItemList[ProductBundleItemsForm::FIELD_PRODUCT_BUNDLES] ?? [];
-        $productBundleItemTransferCollection = $returnItemList[ProductBundleItemsForm::KEY_PRODUCT_BUNDLE_ITEMS] ?? [];
+        $productBundleList = $returnItemList[ReturnProductBundleForm::FIELD_PRODUCT_BUNDLES] ?? [];
+        $productBundleItemTransferCollection = $returnItemList[ReturnProductBundleItemsForm::KEY_PRODUCT_BUNDLE_ITEMS] ?? [];
 
         if (!$productBundleItemTransferCollection) {
             return $returnCreateRequestTransfer;
@@ -61,7 +62,7 @@ class ReturnCreateFormHandler implements ReturnCreateFormHandlerInterface
         array $productBundleData,
         ReturnCreateRequestTransfer $returnCreateRequestTransfer
     ): ReturnCreateRequestTransfer {
-        $productBundleItemTransfer = $productBundleData[ProductBundleItemsForm::KEY_PRODUCT_BUNDLE_DATA];
+        $productBundleItemTransfer = $productBundleData[ReturnProductBundleItemsForm::KEY_PRODUCT_BUNDLE_DATA];
 
         foreach ($productBundleItemTransferCollection as $itemTransfer) {
             if ($productBundleItemTransfer->getBundleItemIdentifier() !== $itemTransfer->getRelatedBundleItemIdentifier()) {
@@ -74,9 +75,9 @@ class ReturnCreateFormHandler implements ReturnCreateFormHandlerInterface
 
             if (
                 $productBundleData[ReturnItemTransfer::REASON] === static::CUSTOM_REASON_VALUE
-                && $productBundleData[ProductBundleItemsForm::FIELD_CUSTOM_REASON]
+                && $productBundleData[ReturnProductBundleItemsForm::FIELD_CUSTOM_REASON]
             ) {
-                $returnItemTransfer->setReason($productBundleData[ProductBundleItemsForm::FIELD_CUSTOM_REASON]);
+                $returnItemTransfer->setReason($productBundleData[ReturnProductBundleItemsForm::FIELD_CUSTOM_REASON]);
             }
 
             $returnCreateRequestTransfer->getReturnItems()->append($returnItemTransfer);

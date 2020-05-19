@@ -16,7 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProductBundleItemsForm extends AbstractType
+class ReturnProductBundleItemsForm extends AbstractType
 {
     public const KEY_PRODUCT_BUNDLE_DATA = 'productBundleData';
     public const KEY_PRODUCT_BUNDLE_ITEMS = 'productBundleItems';
@@ -86,7 +86,7 @@ class ProductBundleItemsForm extends AbstractType
     {
         $builder->add(ReturnItemTransfer::REASON, ChoiceType::class, [
             'label' => false,
-            'placeholder' => 'return.return_reasons.select_reason.placeholder',
+            'placeholder' => 'return_page.return_reasons.select_reason.placeholder',
             'choices' => $options[static::OPTION_RETURN_REASONS],
             'required' => false,
         ]);

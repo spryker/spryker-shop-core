@@ -51,12 +51,6 @@
                                     {% block bundleInfo %}
                                         <div class="{{ bundleInfoColumnClass }}">
                                             {% block bundleInfoInner %}
-                                                {% block bundleItemReturnableDate %}
-                                                    <div>
-                                                        {{- 'product_bundle_widget.returnable_text' | trans -}}
-                                                    </div>
-                                                {% endblock %}
-
                                                 {% if not bundleProduct.isReturnable %}
                                                     {% block bundleItemReturnableInfo %}
                                                         <div>
@@ -132,7 +126,7 @@
 
                             {% block items %}
                                 {% for bundleItem in data.productBundle.bundleItems %}
-                                    {% include molecule('ordered-bundle-item', 'productBundleWidget') with {
+                                    {% include molecule('ordered-bundle-item', 'ProductBundleWidget') with {
                                         class: itemsClass,
                                         data: {
                                             item: bundleItem,
