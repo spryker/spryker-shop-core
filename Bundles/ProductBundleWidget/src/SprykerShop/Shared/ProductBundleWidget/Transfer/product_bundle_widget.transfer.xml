@@ -34,6 +34,14 @@
         <property name="isReturnable" type="bool"/>
         <property name="relatedBundleItemIdentifier" type="string"/>
         <property name="productBundle" type="Item"/>
+        <property name="bundleItemIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="ItemState">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Customer">
     </transfer>
 
 </transfers>

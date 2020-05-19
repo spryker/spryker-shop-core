@@ -111,7 +111,7 @@
 
                             {% block items %}
                                 {% for bundleItem in data.productBundle.bundleItems %}
-                                    {% include molecule('ordered-bundle-item', 'productBundleWidget') with {
+                                    {% include molecule('ordered-bundle-item', 'ProductBundleWidget') with {
                                         class: itemsClass,
                                         data: {
                                             item: bundleItem,
