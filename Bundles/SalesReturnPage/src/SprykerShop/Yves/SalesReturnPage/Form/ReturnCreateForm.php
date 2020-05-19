@@ -76,7 +76,7 @@ class ReturnCreateForm extends AbstractType
     protected function executeReturnCreateFormExpanderPlugins(FormBuilderInterface $builder, array $options)
     {
         foreach ($this->getFactory()->getReturnCreateFormExpanderPlugins() as $returnCreateFormExpanderPlugin) {
-            $returnCreateFormExpanderPlugin->buildForm($builder, $options);
+            builder = $returnCreateFormExpanderPlugin->buildForm($builder, $options);
         }
 
         return $this;
