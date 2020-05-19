@@ -14,7 +14,7 @@ use SprykerShop\Yves\CartPage\Dependency\Plugin\ProductBundleWidget\ProductBundl
 use SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleCartItemsListWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleCartItemsListWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleCartItemsListWidget} instead.
  *
  * @method \SprykerShop\Yves\ProductBundleWidget\ProductBundleWidgetFactory getFactory()
  */

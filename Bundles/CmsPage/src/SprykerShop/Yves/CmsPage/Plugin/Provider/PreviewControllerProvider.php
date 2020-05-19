@@ -11,7 +11,7 @@ use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
 /**
- * @deprecated Use `\SprykerShop\Yves\CmsPage\Plugin\Router\CmsPageRouteProviderPlugin` instead.
+ * @deprecated Use {@link \SprykerShop\Yves\CmsPage\Plugin\Router\CmsPageRouteProviderPlugin} instead.
  */
 class PreviewControllerProvider extends AbstractYvesControllerProvider
 {

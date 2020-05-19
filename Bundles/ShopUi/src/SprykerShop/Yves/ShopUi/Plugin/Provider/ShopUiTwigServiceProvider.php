@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig\Environment;
 
 /**
- * @deprecated Use `\SprykerShop\Yves\ShopUi\Plugin\Twig\ShopUiTwigPlugin` instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ShopUi\Plugin\Twig\ShopUiTwigPlugin} instead.
  *
  * @method \SprykerShop\Yves\ShopUi\ShopUiFactory getFactory()
  */

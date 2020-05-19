@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\ShopUi\Dependency\Plugin\MultiCart;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\MultiCartWidget\Widget\MiniCartWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\MultiCartWidget\Widget\MiniCartWidget} instead.
  */
 interface MiniCartWidgetPluginInterface extends WidgetPluginInterface
 {

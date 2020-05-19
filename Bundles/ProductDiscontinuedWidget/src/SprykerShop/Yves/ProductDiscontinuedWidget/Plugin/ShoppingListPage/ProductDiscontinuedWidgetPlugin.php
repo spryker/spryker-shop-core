@@ -12,7 +12,7 @@ use SprykerShop\Yves\ProductDiscontinuedWidget\Widget\ProductDiscontinuedWidget;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Plugin\ProductDiscontinuedWidget\ProductDiscontinuedWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductDiscontinuedWidget\Widget\ProductDiscontinuedWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductDiscontinuedWidget\Widget\ProductDiscontinuedWidget} instead.
  *
  * @method \SprykerShop\Yves\ProductDiscontinuedWidget\ProductDiscontinuedWidgetFactory getFactory()
  */

@@ -11,7 +11,7 @@ use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
 /**
- * @deprecated Use `\SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Router\CompanyUserInvitationPageRouteProviderPlugin` instead.
+ * @deprecated Use {@link \SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Router\CompanyUserInvitationPageRouteProviderPlugin} instead.
  */
 class CompanyUserInvitationPageControllerProvider extends AbstractYvesControllerProvider
 {
