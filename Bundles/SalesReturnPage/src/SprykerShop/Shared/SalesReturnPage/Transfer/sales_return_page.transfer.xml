@@ -85,6 +85,7 @@
         <property name="orderReference" type="string"/>
         <property name="currencyIsoCode" type="string"/>
         <property name="fkSalesOrder" type="int"/>
+        <property name="returnPolicyMessages" type="Message[]"  singular="returnPolicyMessage"/>
     </transfer>
 
     <transfer name="ProductOption">
@@ -110,6 +111,7 @@
 
     <transfer name="Message">
         <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
     <transfer name="CalculableObject">
