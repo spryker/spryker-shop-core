@@ -133,7 +133,7 @@ class ContentNavigationTwigPluginTest extends Unit
         // Arrange
         $this->setContentNavigationWidgetToContentNavigationClientReturn(new ContentNavigationTypeTransfer());
         $this->setContentNavigationWidgetToNavigationStorageClientReturn(
-            (new NavigationStorageTransfer)
+            (new NavigationStorageTransfer())
                 ->setIsActive(false)
                 ->setKey(static::CONTENT_KEY)
         );
@@ -157,7 +157,7 @@ class ContentNavigationTwigPluginTest extends Unit
         // Arrange
         $this->setContentNavigationWidgetToContentNavigationClientReturn(new ContentNavigationTypeTransfer());
         $this->setContentNavigationWidgetToNavigationStorageClientReturn(
-            (new NavigationStorageTransfer)
+            (new NavigationStorageTransfer())
                 ->setIsActive(true)
                 ->setKey(static::CONTENT_KEY)
         );
