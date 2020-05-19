@@ -9,13 +9,13 @@ namespace SprykerShop\Yves\ProductBundleWidget\Plugin\SalesReturnPage;
 
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormExpanderPluginInterface;
+use SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \SprykerShop\Yves\ProductBundleWidget\ProductBundleWidgetFactory getFactory()
  */
-class ProductBundleReturnCreateFormExpanderPlugin extends AbstractPlugin implements ReturnCreateFormExpanderPluginInterface
+class ProductBundleReturnCreateFormHandlerPlugin extends AbstractPlugin implements ReturnCreateFormHandlerPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -26,11 +26,11 @@ class ProductBundleReturnCreateFormExpanderPlugin extends AbstractPlugin impleme
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return void
+     * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createReturnProductBundleForm()
             ->buildForm($builder, $options);
     }

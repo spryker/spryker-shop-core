@@ -19,11 +19,13 @@ class ReturnProductBundleForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return void
+     * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
         $this->addReturnBundleItemsCollection($builder, $options);
+
+        return $builder;
     }
 
     /**
