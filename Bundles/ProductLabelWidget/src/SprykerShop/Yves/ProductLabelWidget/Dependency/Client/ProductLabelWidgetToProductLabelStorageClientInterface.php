@@ -31,14 +31,14 @@ interface ProductLabelWidgetToProductLabelStorageClientInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param string $locale
-     * @param string|null $storeName
+     * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
     public function expandProductView(
         ProductViewTransfer $productViewTransfer,
-        string $locale,
-        ?string $storeName = null
+        string $localeName,
+        string $storeName
     ): ProductViewTransfer;
 }
