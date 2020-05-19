@@ -20,9 +20,14 @@ use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToGlossaryStorageC
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToPermissionClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToStoreClientInterface;
+use SprykerShop\Yves\CompanyPage\Expander\CompanyBusinessUnitOrderSearchFormExpander;
+use SprykerShop\Yves\CompanyPage\Expander\CompanyBusinessUnitOrderSearchFormExpanderInterface;
 use SprykerShop\Yves\CompanyPage\Expander\CompanyUnitAddressExpander;
 use SprykerShop\Yves\CompanyPage\Expander\CompanyUnitAddressExpanderInterface;
+use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyBusinessUnitOrderSearchFormDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\FormFactory;
+use SprykerShop\Yves\CompanyPage\FormHandler\OrderSearchFormHandler;
+use SprykerShop\Yves\CompanyPage\FormHandler\OrderSearchFormHandlerInterface;
 use SprykerShop\Yves\CompanyPage\Mapper\CompanyUnitMapper;
 use SprykerShop\Yves\CompanyPage\Mapper\CompanyUnitMapperInterface;
 use SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitAddressReader;
@@ -44,6 +49,35 @@ class CompanyPageFactory extends AbstractFactory
     public function createCompanyPageFormFactory(): FormFactory
     {
         return new FormFactory();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Expander\CompanyBusinessUnitOrderSearchFormExpanderInterface
+     */
+    public function createCompanyBusinessUnitOrderSearchFormExpander(): CompanyBusinessUnitOrderSearchFormExpanderInterface
+    {
+        return new CompanyBusinessUnitOrderSearchFormExpander(
+            $this->createCompanyBusinessUnitOrderSearchFormDataProvider()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\FormHandler\OrderSearchFormHandlerInterface
+     */
+    public function createOrderSearchFormHandler(): OrderSearchFormHandlerInterface
+    {
+        return new OrderSearchFormHandler($this->getCustomerClient());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyBusinessUnitOrderSearchFormDataProvider
+     */
+    public function createCompanyBusinessUnitOrderSearchFormDataProvider(): CompanyBusinessUnitOrderSearchFormDataProvider
+    {
+        return new CompanyBusinessUnitOrderSearchFormDataProvider(
+            $this->getCustomerClient(),
+            $this->getCompanyBusinessUnitClient()
+        );
     }
 
     /**

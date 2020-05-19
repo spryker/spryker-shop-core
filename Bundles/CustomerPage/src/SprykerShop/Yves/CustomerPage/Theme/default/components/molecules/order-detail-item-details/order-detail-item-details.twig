@@ -1,0 +1,24 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'order-detail-item-details',
+} %}
+
+{% define data = {
+    orderItem: required,
+} %}
+
+{% block body %}
+    <div class="grid grid--justify">
+        <span class="spacing-right col col--sm-9">
+            {% widget 'ProductOfferSoldByMerchantWidget' args [data.orderItem] only %}{% endwidget %}
+        </span>
+        <span class="spacing-right col col--sm-3 text-right">
+            {% if data.orderItem.state is not empty %}
+                <p>
+                    <strong>{{ data.orderItem.state.name | capitalize }}</strong>
+                </p>
+            {% endif %}
+        </span>
+    </div>
+{% endblock %}

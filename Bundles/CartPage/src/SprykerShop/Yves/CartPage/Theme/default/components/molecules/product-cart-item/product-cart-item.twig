@@ -112,9 +112,9 @@
             {% endif %}
 
             {% if canEditCart %}
-                <a class="float-right" href="{{ path('cart/remove', {'sku': data.sku, 'groupKey': data.product.groupKey }) }}" data-init-single-click>
-                    {{- 'product_cart_item.remove' | trans | raw -}}
-                </a>
+                {{ form_start(_view.removeCartItemForm, {'action': path('cart/remove', {'sku': data.sku, 'groupKey': data.product.groupKey}) }) }}
+                    {{ form_widget(_view.removeCartItemForm.submit, { 'label': 'product_cart_item.remove' | trans  , 'attr' : { 'class':'float-right link' } }) }}
+                {{ form_end(_view.removeCartItemForm) }}
             {% endif %}
 
             {% if data.cart %}
