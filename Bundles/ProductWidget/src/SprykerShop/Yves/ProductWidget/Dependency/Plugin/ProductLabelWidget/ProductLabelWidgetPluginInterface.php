@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\ProductWidget\Dependency\Plugin\ProductLabelWidget;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductLabelWidget\Widget\ProductConcreteLabelWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductLabelWidget\Widget\ProductConcreteLabelWidget} instead.
  */
 interface ProductLabelWidgetPluginInterface extends WidgetPluginInterface
 {

@@ -14,7 +14,7 @@ use SprykerShop\Yves\DiscountPromotionWidget\Widget\CartDiscountPromotionProduct
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated Use \SprykerShop\Yves\DiscountPromotionWidget\Widget\CartDiscountPromotionProductListWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\DiscountPromotionWidget\Widget\CartDiscountPromotionProductListWidget} instead.
  */
 class DiscountPromotionItemListWidgetPlugin extends AbstractWidgetPlugin implements DiscountPromotionItemListWidgetPluginInterface
 {

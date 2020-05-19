@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductPackagingUnitWidget\Widget\ProductPackagingUnitWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductPackagingUnitWidget\Widget\ProductPackagingUnitWidget} instead.
  */
 interface ProductPackagingUnitWidgetPluginInterface extends WidgetPluginInterface
 {
