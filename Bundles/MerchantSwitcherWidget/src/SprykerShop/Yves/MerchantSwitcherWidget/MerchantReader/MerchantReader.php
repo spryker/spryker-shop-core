@@ -49,7 +49,7 @@ class MerchantReader implements MerchantReaderInterface
     public function extractSelectedMerchantReference(): ?string
     {
         $selectedMerchantReference = $this->selectedMerchantCookie->getMerchantReference();
-        $merchantTransfers = $this->merchantSearchClient->getActiveMerchants()->getMerchants();
+        $merchantTransfers = $this->merchantSearchClient->getMerchantCollection()->getMerchants();
 
         foreach ($merchantTransfers as $merchantTransfer) {
             if ($selectedMerchantReference === $merchantTransfer->getMerchantReference()) {
@@ -58,8 +58,10 @@ class MerchantReader implements MerchantReaderInterface
                 return $selectedMerchantReference;
             }
         }
-        /** @var \Generated\Shared\Transfer\MerchantTransfer|false $selectedMerchantTransfer */
-        $selectedMerchantTransfer = reset($merchantTransfers);
+
+        $merchantTransfers->getIterator()->rewind();
+        /** @var \Generated\Shared\Transfer\MerchantTransfer|null $selectedMerchantTransfer */
+        $selectedMerchantTransfer = $merchantTransfers->getIterator()->current();
 
         if (!$selectedMerchantTransfer) {
             if ($selectedMerchantReference) {

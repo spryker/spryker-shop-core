@@ -81,7 +81,7 @@ class ContentProductAbstractListTwigFunction extends TwigFunction
      */
     public function getFunction(): callable
     {
-        return function (string $contentKey, string $templateIdentifier): ?string {
+        return function (string $contentKey, string $templateIdentifier): string {
 
             if (!isset($this->getAvailableTemplates()[$templateIdentifier])) {
                 return $this->getMessageProductAbstractWrongTemplate($templateIdentifier);
@@ -98,7 +98,7 @@ class ContentProductAbstractListTwigFunction extends TwigFunction
                 return $this->getMessageProductAbstractNotFound($contentKey);
             }
 
-            return $this->twig->render(
+            return (string)$this->twig->render(
                 $this->getAvailableTemplates()[$templateIdentifier],
                 [
                     'productAbstractViewCollection' => $productAbstractViewCollection,

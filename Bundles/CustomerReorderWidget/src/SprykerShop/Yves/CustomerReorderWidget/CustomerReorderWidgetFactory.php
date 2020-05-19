@@ -18,6 +18,7 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductStorageClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToZedRequestClientInterface;
+use SprykerShop\Yves\CustomerReorderWidget\Form\FormFactory;
 use SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityChecker;
 use SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityCheckerInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Model\CartFiller;
@@ -162,5 +163,13 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     public function getPostReorderPlugins(): array
     {
         return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::PLUGINS_POST_REORDER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Form\FormFactory
+     */
+    public function createCustomerReorderWidgetFormFactory(): FormFactory
+    {
+        return new FormFactory();
     }
 }
