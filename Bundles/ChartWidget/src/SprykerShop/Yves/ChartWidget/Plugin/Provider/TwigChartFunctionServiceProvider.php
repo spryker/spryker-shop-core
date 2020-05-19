@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig\Environment;
 
 /**
- * @deprecated Use `\SprykerShop\Yves\ChartWidget\Plugin\Twig\ChartTwigPlugin` instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ChartWidget\Plugin\Twig\ChartTwigPlugin} instead.
  *
  * @method \SprykerShop\Yves\ChartWidget\ChartWidgetFactory getFactory()
  */
