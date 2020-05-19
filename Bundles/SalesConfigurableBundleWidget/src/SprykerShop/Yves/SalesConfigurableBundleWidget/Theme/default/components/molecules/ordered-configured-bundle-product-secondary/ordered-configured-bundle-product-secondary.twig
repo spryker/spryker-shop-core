@@ -41,22 +41,6 @@
 
                 {% block productInfo %}
                     <div class="{{ productInfoColumnClass }}">
-                        {% for returnPolicyMessage in data.product.returnPolicyMessages %}
-                            {% block productItemReturnPolicyMessage %}
-                                <div class="{{ returnPolicyMessageClass }}">
-                                    {{ returnPolicyMessage.value | trans(returnPolicyMessage.parameters) }}
-                                </div>
-                            {% endblock %}
-                        {% endfor %}
-
-                        {% if not data.product.isReturnable %}
-                            {% block productItemReturnableInfo %}
-                                <div class="{{ returnableInfoClass }}">
-                                    {{ 'sales_configured_bundle_widget.returnable_state' | trans }}
-                                </div>
-                            {% endblock %}
-                        {% endif %}
-
                         {{ block('generalInformation') }}
                     </div>
                 {% endblock %}

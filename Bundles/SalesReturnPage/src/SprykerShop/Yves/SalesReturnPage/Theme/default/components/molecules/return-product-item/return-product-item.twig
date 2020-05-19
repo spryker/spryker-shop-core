@@ -36,28 +36,10 @@
             {% block productItemColumnInner %}
                 {% block productItemInfo %}
                     <div class="{{ productInfoColumnClass }}">
-                        {% set returnPolicyMessageClass = 'badge badge--hollow spacing-bottom spacing-bottom--small' %}
-                        {% set returnableInfoClass = 'badge badge--hollow spacing-bottom' %}
                         {% set productNameClass = '' %}
                         {% set skuClass = 'text-secondary' %}
 
                         {% block productItemInfoInner %}
-                            {% for returnPolicyMessage in data.item.returnPolicyMessages %}
-                                {% block productItemReturnPolicyMessage %}
-                                    <div class="{{ returnPolicyMessageClass }}">
-                                        {{ returnPolicyMessage.value | trans(returnPolicyMessage.parameters) }}
-                                    </div>
-                                {% endblock %}
-                            {% endfor %}
-
-                            {% if not data.item.isReturnable %}
-                                {% block productItemReturnableInfo %}
-                                    <div class="{{ returnableInfoClass }}">
-                                        {{ 'return_page.returnable_state' | trans }}
-                                    </div>
-                                {% endblock %}
-                            {% endif %}
-
                             {% block productItemName %}
                                 <h6 class="{{ productNameClass }}">
                                     {{ data.item.name }}

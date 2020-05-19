@@ -113,6 +113,20 @@
                                                 },
                                             } only %}
                                                 {% block productItemInfoInner %}
+                                                    <div class="spacing-bottom">
+                                                        {% for returnPolicyMessage in data.item.returnPolicyMessages %}
+                                                            <div class="badge badge--hollow spacing-bottom spacing-bottom--small">
+                                                                {{ returnPolicyMessage.value | trans(returnPolicyMessage.parameters) }}
+                                                            </div>
+                                                        {% endfor %}
+
+                                                        {% if not data.item.isReturnable %}
+                                                            <div class="badge badge--hollow spacing-bottom spacing-bottom--small">
+                                                                {{ 'return_page.returnable_state' | trans }}
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+
                                                     {{ parent() }}
 
                                                     {% include molecule('return-product-reason', 'SalesReturnPage') with {
@@ -185,6 +199,20 @@
                                                 {% endblock %}
 
                                                 {% block generalInformation %}
+                                                    <div class="spacing-bottom">
+                                                        {% for returnPolicyMessage in data.product.returnPolicyMessages %}
+                                                            <div class="badge badge--hollow spacing-bottom spacing-bottom--small">
+                                                                {{ returnPolicyMessage.value | trans(returnPolicyMessage.parameters) }}
+                                                            </div>
+                                                        {% endfor %}
+
+                                                        {% if not data.product.isReturnable %}
+                                                            <div class="badge badge--hollow spacing-bottom spacing-bottom--small">
+                                                                {{ 'sales_configured_bundle_widget.returnable_state' | trans }}
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+
                                                     {{ parent() }}
 
                                                     {% for returnItem in embed.form.returnItems %}
