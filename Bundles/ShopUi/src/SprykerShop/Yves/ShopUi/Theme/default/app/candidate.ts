@@ -1,4 +1,4 @@
-import { CustomElementContructor, CustomElementModule, CustomElementImporter } from './registry';
+import { CustomElementConstructor, CustomElementModule, CustomElementImporter } from './registry';
 import { debug } from '../app/logger';
 
 /**
@@ -46,7 +46,7 @@ export default class Candidate {
         try {
             debug('define', this.tagName, `(${elements.length})`);
             const customElementModule: CustomElementModule = await this.customElementImporter();
-            const customElementConstructor: CustomElementContructor = customElementModule.default;
+            const customElementConstructor: CustomElementConstructor = customElementModule.default;
             customElements.define(this.tagName, customElementConstructor);
             await customElements.whenDefined(this.tagName);
         } catch (err) {

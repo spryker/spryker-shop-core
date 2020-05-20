@@ -8,7 +8,8 @@
 namespace SprykerShop\Yves\ProductBundleWidget\Expander;
 
 use Generated\Shared\Transfer\ReturnItemTransfer;
-use SprykerShop\Yves\ProductBundleWidget\Form\ProductBundleItemsForm;
+use SprykerShop\Yves\ProductBundleWidget\Form\ReturnProductBundleForm;
+use SprykerShop\Yves\ProductBundleWidget\Form\ReturnProductBundleItemsForm;
 
 class ReturnCreateFormExpander implements ReturnCreateFormExpanderInterface
 {
@@ -32,8 +33,8 @@ class ReturnCreateFormExpander implements ReturnCreateFormExpanderInterface
 
         return [
             static::FIELD_RETURN_ITEMS => $this->getFormFieldsWithoutBundles($itemTransfers),
-            ProductBundleItemsForm::FIELD_PRODUCT_BUNDLES => $this->getProductBundleFormFields($itemTransfers),
-            ProductBundleItemsForm::KEY_PRODUCT_BUNDLE_ITEMS => $this->getProductBundleItems($itemTransfers),
+            ReturnProductBundleForm::FIELD_PRODUCT_BUNDLES => $this->getProductBundleFormFields($itemTransfers),
+            ReturnProductBundleItemsForm::KEY_PRODUCT_BUNDLE_ITEMS => $this->getProductBundleItems($itemTransfers),
         ];
     }
 
@@ -85,7 +86,7 @@ class ReturnCreateFormExpander implements ReturnCreateFormExpanderInterface
 
             if ($relatedBundleItemIdentifier && !isset($productBundleFormFields[$relatedBundleItemIdentifier])) {
                 $productBundleFormFields[$relatedBundleItemIdentifier] = [
-                    ProductBundleItemsForm::KEY_PRODUCT_BUNDLE_DATA => $itemTransfer->getProductBundle(),
+                    ReturnProductBundleItemsForm::KEY_PRODUCT_BUNDLE_DATA => $itemTransfer->getProductBundle(),
                 ];
             }
         }

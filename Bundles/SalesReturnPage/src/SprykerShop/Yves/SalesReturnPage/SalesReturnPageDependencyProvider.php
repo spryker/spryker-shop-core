@@ -21,7 +21,6 @@ class SalesReturnPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_SALES = 'CLIENT_SALES';
     public const CLIENT_STORE = 'CLIENT_STORE';
 
-    public const PLUGINS_RETURN_CREATE_FORM_EXPANDER = 'PLUGINS_RETURN_CREATE_FORM_EXPANDER';
     public const PLUGINS_RETURN_CREATE_FORM_HANDLER = 'PLUGINS_RETURN_CREATE_FORM_HANDLER';
 
     /**
@@ -38,7 +37,6 @@ class SalesReturnPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerClient($container);
         $container = $this->addStoreClient($container);
 
-        $container = $this->addReturnCreateFormExpanderPlugins($container);
         $container = $this->addReturnCreateFormHandlerPlugins($container);
 
         return $container;
@@ -106,28 +104,6 @@ class SalesReturnPageDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addReturnCreateFormExpanderPlugins(Container $container): Container
-    {
-        $container->set(static::PLUGINS_RETURN_CREATE_FORM_EXPANDER, function () {
-            return $this->getReturnCreateFormExpanderPlugins();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @return \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormExpanderPluginInterface[]
-     */
-    protected function getReturnCreateFormExpanderPlugins(): array
-    {
-        return [];
     }
 
     /**

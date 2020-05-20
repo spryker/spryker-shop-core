@@ -16,7 +16,7 @@ use SprykerShop\Yves\SalesReturnPage\Form\ReturnItemsForm;
 
 class ReturnCreateFormDataProvider
 {
-    public const GLOSSARY_KEY_CUSTOM_REASON = 'return.return_reasons.custom_reason.name';
+    public const GLOSSARY_KEY_CUSTOM_REASON = 'return_page.return_reasons.custom_reason.placeholder';
     public const CUSTOM_REASON_VALUE = 'custom_reason';
 
     /**
@@ -25,18 +25,18 @@ class ReturnCreateFormDataProvider
     protected $salesReturnClient;
 
     /**
-     * @var \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormExpanderPluginInterface[]
+     * @var \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface[]
      */
-    protected $returnCreateFormExpanderPlugins;
+    protected $returnCreateFormHandlerPlugins;
 
     /**
      * @param \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnClientInterface $salesReturnClient
-     * @param \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormExpanderPluginInterface[] $returnCreateFormExpanderPlugins
+     * @param \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface[] $returnCreateFormHandlerPlugins
      */
-    public function __construct(SalesReturnPageToSalesReturnClientInterface $salesReturnClient, array $returnCreateFormExpanderPlugins)
+    public function __construct(SalesReturnPageToSalesReturnClientInterface $salesReturnClient, array $returnCreateFormHandlerPlugins)
     {
         $this->salesReturnClient = $salesReturnClient;
-        $this->returnCreateFormExpanderPlugins = $returnCreateFormExpanderPlugins;
+        $this->returnCreateFormHandlerPlugins = $returnCreateFormHandlerPlugins;
     }
 
     /**
@@ -50,7 +50,7 @@ class ReturnCreateFormDataProvider
             ReturnCreateForm::FIELD_RETURN_ITEMS => $this->createReturnItemTransfersCollection($orderTransfer),
         ];
 
-        return $this->executeReturnCreateFormExpanderPlugins($returnCreateFormData);
+        return $this->executeReturnCreateFormHandlerPlugins($returnCreateFormData);
     }
 
     /**
@@ -105,10 +105,10 @@ class ReturnCreateFormDataProvider
      *
      * @return array
      */
-    protected function executeReturnCreateFormExpanderPlugins(array $returnCreateFormData): array
+    protected function executeReturnCreateFormHandlerPlugins(array $returnCreateFormData): array
     {
-        foreach ($this->returnCreateFormExpanderPlugins as $returnCreateFormExpanderPlugin) {
-            $returnCreateFormData = $returnCreateFormExpanderPlugin->expandFormData($returnCreateFormData);
+        foreach ($this->returnCreateFormHandlerPlugins as $returnCreateFormHandlerPlugin) {
+            $returnCreateFormData = $returnCreateFormHandlerPlugin->expandFormData($returnCreateFormData);
         }
 
         return $returnCreateFormData;

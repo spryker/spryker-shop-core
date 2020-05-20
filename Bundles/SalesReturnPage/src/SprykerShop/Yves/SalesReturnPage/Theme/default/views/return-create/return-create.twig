@@ -96,7 +96,11 @@
 
                                         {% block checkbox %}
                                             <div class="{{ checkboxWrapperClass }}">
-                                                {{ form_row(returnItem.isReturnable, {label: ' ', 'attr': {'class': 'js-return-create-form__selection'}}) }}
+                                                {{ form_row(returnItem.isReturnable, {
+                                                    label: ' ',
+                                                    attr: {'class': 'js-return-create-form__selection'},
+                                                    disabled: not orderItem.isReturnable,
+                                                }) }}
                                             </div>
                                         {% endblock %}
 
@@ -111,11 +115,26 @@
                                                 },
                                             } only %}
                                                 {% block productItemInfoInner %}
+                                                    <div class="spacing-bottom">
+                                                        {% for returnPolicyMessage in data.item.returnPolicyMessages %}
+                                                            <div class="badge badge--hollow spacing-bottom spacing-bottom--small">
+                                                                {{ returnPolicyMessage.value | trans(returnPolicyMessage.parameters) }}
+                                                            </div>
+                                                        {% endfor %}
+
+                                                        {% if not data.item.isReturnable %}
+                                                            <div class="badge badge--hollow spacing-bottom spacing-bottom--small">
+                                                                {{ 'return_page.returnable_state' | trans }}
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+
                                                     {{ parent() }}
 
                                                     {% include molecule('return-product-reason', 'SalesReturnPage') with {
                                                         data: {
                                                             returnItem: embed.returnItem,
+                                                            isReturnable: embed.returnItem.vars.value.orderItem.isReturnable,
                                                         },
                                                     } only %}
                                                 {% endblock %}
@@ -152,6 +171,10 @@
                                         },
                                     } only %}
                                         {% block bundleProductItem %}
+                                            {% if not loop.first %}
+                                                <hr class="box__separator">
+                                            {% endif %}
+
                                             {% embed molecule('ordered-configured-bundle-product-secondary', 'SalesConfigurableBundleWidget') with {
                                                 class: 'grid grid--middle',
                                                 data: {
@@ -167,13 +190,31 @@
                                                     <div class="col grid grid--middle">
                                                         {% for returnItem in embed.form.returnItems %}
                                                             {% if returnItem.vars.value.orderItem.IdSalesOrderItem == data.product.IdSalesOrderItem %}
-                                                                {{ form_row(returnItem.isReturnable, {label: ' ', 'attr': {'class': 'js-return-create-form__selection'}}) }}
+                                                                {{ form_row(returnItem.isReturnable, {
+                                                                    label: ' ',
+                                                                    attr: {'class': 'js-return-create-form__selection'},
+                                                                    disabled: not data.product.isReturnable,
+                                                                }) }}
                                                             {% endif %}
                                                         {% endfor %}
                                                     </div>
                                                 {% endblock %}
 
                                                 {% block generalInformation %}
+                                                    <div class="spacing-bottom">
+                                                        {% for returnPolicyMessage in data.product.returnPolicyMessages %}
+                                                            <div class="badge badge--hollow spacing-bottom spacing-bottom--small">
+                                                                {{ returnPolicyMessage.value | trans(returnPolicyMessage.parameters) }}
+                                                            </div>
+                                                        {% endfor %}
+
+                                                        {% if not data.product.isReturnable %}
+                                                            <div class="badge badge--hollow spacing-bottom spacing-bottom--small">
+                                                                {{ 'sales_configured_bundle_widget.returnable_state' | trans }}
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+
                                                     {{ parent() }}
 
                                                     {% for returnItem in embed.form.returnItems %}
@@ -181,6 +222,7 @@
                                                             {% include molecule('return-product-reason', 'SalesReturnPage') with {
                                                                 data: {
                                                                     returnItem: returnItem,
+                                                                    isReturnable: returnItem.vars.value.orderItem.isReturnable,
                                                                 },
                                                             } only %}
                                                         {% endif %}
@@ -212,12 +254,21 @@
                                         },
                                     } only %}
                                         {% block contentWrapper %}
+                                            {% set isReturnable = true %}
+                                            {% for bundleItem in data.productBundle.bundleItems if (bundleItem.isReturnable == false) %}
+                                                {% set isReturnable = false %}
+                                            {% endfor %}
+
                                             <div class="col grid grid--middle">
                                                 {% for key, productBundle in embed.form.productBundles %}
                                                     {% if key == data.productBundle.bundleProduct.bundleItemIdentifier %}
                                                         <div class="spacing-top spacing-top--big">
                                                             <div class="spacing-top spacing-top--big">
-                                                                {{ form_row(productBundle.isReturnable, {label: ' ', 'attr': {'class': 'js-return-create-form__selection'}}) }}
+                                                                {{ form_row(productBundle.isReturnable, {
+                                                                    label: ' ',
+                                                                    attr: {'class': 'js-return-create-form__selection'},
+                                                                    disabled: not isReturnable,
+                                                                }) }}
                                                             </div>
                                                         </div>
                                                     {% endif %}
@@ -228,6 +279,22 @@
                                         {% endblock %}
 
                                         {% block bundleInfoInner %}
+                                            {% set bundleItem = data.productBundle.bundleItems | first %}
+
+                                            <div class="spacing-bottom">
+                                                <div class="badge badge--hollow spacing-bottom spacing-bottom--small">
+                                                    {% for returnPolicyMessage in bundleItem.returnPolicyMessages %}
+                                                        {{ returnPolicyMessage.value | trans(returnPolicyMessage.parameters) }}
+                                                    {% endfor %}
+                                                </div>
+
+                                                {% if not isReturnable %}
+                                                    <div class="badge badge--hollow spacing-bottom spacing-bottom--small">
+                                                        {{- 'product_bundle_widget.returnable_state' | trans -}}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+
                                             {{ parent() }}
 
                                             {% for key, productBundle in embed.form.productBundles %}
@@ -235,6 +302,7 @@
                                                     {% include molecule('return-product-reason', 'SalesReturnPage') with {
                                                         data: {
                                                             returnItem: productBundle,
+                                                            isReturnable: isReturnable,
                                                         },
                                                     } only %}
                                                 {% endif %}

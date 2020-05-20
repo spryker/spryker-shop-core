@@ -9,6 +9,7 @@
         <property name="status" type="string"/>
         <property name="initialUserTransfer" type="CompanyUser"/>
         <property name="name" type="string"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="CompanyUser">
@@ -86,12 +87,14 @@
         <property name="addressCollection" type="CompanyUnitAddressCollection"/>
         <property name="company" type="Company"/>
         <property name="name" type="string"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnitCriteriaFilter">
         <property name="idCompany" type="int"/>
         <property name="filter" type="Filter"/>
         <property name="pagination" type="Pagination"/>
+        <property name="withoutExpanders" type="bool"/>
     </transfer>
 
     <transfer name="CompanyRoleCollection">
@@ -182,6 +185,15 @@
     </transfer>
 
     <transfer name="CompanyBusinessUnitTreeNode">
+    </transfer>
+
+    <transfer name="OrderList">
+        <property name="filterFields" type="FilterField[]" singular="filterField"/>
+    </transfer>
+
+    <transfer name="FilterField">
+        <property name="value" type="string"/>
+        <property name="type" type="string"/>
     </transfer>
 
 </transfers>

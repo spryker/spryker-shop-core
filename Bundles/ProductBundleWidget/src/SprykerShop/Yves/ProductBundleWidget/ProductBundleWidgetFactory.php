@@ -13,8 +13,10 @@ use SprykerShop\Yves\ProductBundleWidget\Expander\ReturnCreateFormExpander;
 use SprykerShop\Yves\ProductBundleWidget\Expander\ReturnCreateFormExpanderInterface;
 use SprykerShop\Yves\ProductBundleWidget\Extractor\ItemExtractor;
 use SprykerShop\Yves\ProductBundleWidget\Extractor\ItemExtractorInterface;
+use SprykerShop\Yves\ProductBundleWidget\Form\ReturnProductBundleForm;
 use SprykerShop\Yves\ProductBundleWidget\Handler\ReturnCreateFormHandler;
 use SprykerShop\Yves\ProductBundleWidget\Handler\ReturnCreateFormHandlerInterface;
+use Symfony\Component\Form\FormTypeInterface;
 
 class ProductBundleWidgetFactory extends AbstractFactory
 {
@@ -48,5 +50,13 @@ class ProductBundleWidgetFactory extends AbstractFactory
     public function createReturnCreateFormHandler(): ReturnCreateFormHandlerInterface
     {
         return new ReturnCreateFormHandler();
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormTypeInterface
+     */
+    public function createReturnProductBundleForm(): FormTypeInterface
+    {
+        return new ReturnProductBundleForm();
     }
 }
