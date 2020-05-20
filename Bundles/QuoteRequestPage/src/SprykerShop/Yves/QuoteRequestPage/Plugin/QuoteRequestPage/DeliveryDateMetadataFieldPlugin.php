@@ -33,7 +33,7 @@ class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements QuoteReq
      * @api
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      *
      * @return \Symfony\Component\Form\FormBuilderInterface
      */

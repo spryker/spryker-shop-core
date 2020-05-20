@@ -10,43 +10,59 @@
 } %}
 
 {% block body %}
-    <form action="{{ path('customer/order/reorder-items') }}" method="post">
-        <input type="hidden" name="id" value="{{ data.idSalesOrder }}">
+    {% widget 'CustomerReorderItemsFormWidget'  args [data.order, config] with {
+        embed: {
+            formContent: block('formContent'),
+        },
+    } only %}
+        {% block embeddedData %}
+            <input type="hidden" name="id" value="{{ data.order.idSalesOrder }}">
+            {{ embed.formContent | raw }}
 
-        {% block formContent %}{% endblock %}
+            {% block formActions %}
+                <div class="box">
+                    {% set formActionsWrapperClass = 'grid grid--middle grid--right' %}
+                    {% set reorderButtonWrapperClass = 'form-field col col--sm-5 col--lg-3 spacing-right' %}
+                    {% set reorderButtonClass = 'button button--expand ' ~ config.jsName ~ '__trigger' %}
+                    {% set reorderAllLinkWrapperClass = 'form-field col col--sm-5 col--lg-3' %}
+                    {% set reorderAllLinkClass = 'button button--expand js-state-observable' %}
 
-        {% block formActions %}
-            <div class="box">
-                {% set formActionsWrapperClass = 'grid grid--middle grid--right' %}
-                {% set reorderButtonWrapperClass = 'form-field col col--sm-5 col--lg-3 spacing-right' %}
-                {% set reorderButtonClass = 'button button--expand ' ~ config.jsName ~ '__trigger' %}
-                {% set reorderAllLinkWrapperClass = 'form-field col col--sm-5 col--lg-3' %}
-                {% set reorderAllLinkClass = 'button button--expand js-state-observable' %}
+                    {% block formActionsInner %}
+                        <div class="{{ formActionsWrapperClass }}">
+                            {% block reorderButtonWrapper %}
+                                <div class="{{ reorderButtonWrapperClass }}">
+                                    {% block reorderButton %}
+                                        <button class="{{ reorderButtonClass }}" disabled>
+                                            {{ 'customer.order.reorder_selected' | trans }}
+                                        </button>
+                                    {% endblock %}
+                                </div>
+                            {% endblock %}
 
-                {% block formActionsInner %}
-                    <div class="{{ formActionsWrapperClass }}">
-                        {% block reorderButtonWrapper %}
-                            <div class="{{ reorderButtonWrapperClass }}">
-                                {% block reorderButton %}
-                                    <button class="{{ reorderButtonClass }}" disabled>
-                                        {{ 'customer.order.reorder_selected' | trans }}
-                                    </button>
-                                {% endblock %}
-                            </div>
-                        {% endblock %}
-
-                        {% block reorderAllLinkWrapper %}
-                            <div class="{{ reorderAllLinkWrapperClass }}">
-                                {% block reorderAllLink %}
-                                    <a href="{{ path('customer/order/reorder', {'idSalesOrder': data.idSalesOrder}) }}" class="{{ reorderAllLinkClass }}">
-                                        {{ 'customer.order.reorder_all' | trans }}
-                                    </a>
-                                {% endblock %}
-                            </div>
-                        {% endblock %}
-                    </div>
-                {% endblock %}
-            </div>
+                            {% block reorderAllLinkWrapper %}
+                                <div class="{{ reorderAllLinkWrapperClass }}">
+                                    {% block reorderAllLink %}
+                                        <a href="{{ path('customer/order/reorder', {'idSalesOrder': data.idSalesOrder}) }}" class="{{ reorderAllLinkClass }}">
+                                            {{ 'customer.order.reorder_all' | trans }}
+                                        </a>
+                                    {% endblock %}
+                                </div>
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
+                </div>
+            {% endblock %}
         {% endblock %}
-    </form>
+    {% endwidget %}
+    <div class="box">
+        <div class="grid grid--middle grid--right">
+            <div class="form-field col col--sm-5 col--lg-3">
+                {% widget 'CustomerReorderFormWidget'  args [data.order] only %}
+                    {% block embeddedData %}
+                        <input class="button button--expand" type="submit" value="{{ 'customer.order.reorder_all' | trans }}">
+                    {% endblock %}
+                {% endwidget %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -336,7 +336,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return (\Symfony\Component\Form\FormTypeInterface|string)[]
+     * @return \Symfony\Component\Form\FormTypeInterface[]|string[]
      */
     protected function getCustomerStepSubForms(): array
     {

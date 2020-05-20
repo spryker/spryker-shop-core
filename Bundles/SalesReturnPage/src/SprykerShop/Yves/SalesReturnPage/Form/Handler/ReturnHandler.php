@@ -44,26 +44,26 @@ class ReturnHandler implements ReturnHandlerInterface
     protected $storeClient;
 
     /**
-     * @var \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormExpanderPluginInterface[]
+     * @var \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface[]
      */
-    protected $returnCreateFormExpanderPlugins;
+    protected $returnCreateFormHandlerPlugins;
 
     /**
      * @param \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnClientInterface $salesReturnClient
      * @param \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToCustomerClientInterface $customerClient
      * @param \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToStoreClientInterface $storeClient
-     * @param \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormExpanderPluginInterface[] $returnCreateFormExpanderPlugins
+     * @param \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface[] $returnCreateFormHandlerPlugins
      */
     public function __construct(
         SalesReturnPageToSalesReturnClientInterface $salesReturnClient,
         SalesReturnPageToCustomerClientInterface $customerClient,
         SalesReturnPageToStoreClientInterface $storeClient,
-        array $returnCreateFormExpanderPlugins
+        array $returnCreateFormHandlerPlugins
     ) {
         $this->salesReturnClient = $salesReturnClient;
         $this->customerClient = $customerClient;
         $this->storeClient = $storeClient;
-        $this->returnCreateFormExpanderPlugins = $returnCreateFormExpanderPlugins;
+        $this->returnCreateFormHandlerPlugins = $returnCreateFormHandlerPlugins;
     }
 
     /**
@@ -78,7 +78,7 @@ class ReturnHandler implements ReturnHandlerInterface
             : [];
 
         $returnCreateRequestTransfer = $this->createReturnCreateRequestTransfer($returnItemData);
-        $returnCreateRequestTransfer = $this->executeReturnCreateFormExpanderPlugins($returnItemsList, $returnCreateRequestTransfer);
+        $returnCreateRequestTransfer = $this->executeReturnCreateFormHandlerPlugins($returnItemsList, $returnCreateRequestTransfer);
 
         if ($returnCreateRequestTransfer->getReturnItems()->count()) {
             return $this->salesReturnClient->createReturn($returnCreateRequestTransfer);
@@ -139,12 +139,12 @@ class ReturnHandler implements ReturnHandlerInterface
      *
      * @return \Generated\Shared\Transfer\ReturnCreateRequestTransfer
      */
-    protected function executeReturnCreateFormExpanderPlugins(
+    protected function executeReturnCreateFormHandlerPlugins(
         array $returnItemsList,
         ReturnCreateRequestTransfer $returnCreateRequestTransfer
     ): ReturnCreateRequestTransfer {
-        foreach ($this->returnCreateFormExpanderPlugins as $returnCreateFormExpanderPlugin) {
-            $returnCreateRequestTransfer = $returnCreateFormExpanderPlugin->handleFormData($returnItemsList, $returnCreateRequestTransfer);
+        foreach ($this->returnCreateFormHandlerPlugins as $returnCreateFormHandlerPlugin) {
+            $returnCreateRequestTransfer = $returnCreateFormHandlerPlugin->handleFormData($returnItemsList, $returnCreateRequestTransfer);
         }
 
         return $returnCreateRequestTransfer;

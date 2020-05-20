@@ -57,7 +57,7 @@ class TwigChartFunctionServiceProvider extends AbstractPlugin implements Service
     }
 
     /**
-     * @return array
+     * @return \Twig\TwigFunction[]
      */
     protected function getChartTwigFunctions(): array
     {

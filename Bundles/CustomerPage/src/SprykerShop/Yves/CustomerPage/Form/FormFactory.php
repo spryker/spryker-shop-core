@@ -10,7 +10,10 @@ namespace SprykerShop\Yves\CustomerPage\Form;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CustomerPage\CustomerPageDependencyProvider;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface;
 use SprykerShop\Yves\CustomerPage\Form\DataProvider\AddressFormDataProvider;
+use SprykerShop\Yves\CustomerPage\Form\DataProvider\OrderSearchFormDataProvider;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
@@ -92,6 +95,31 @@ class FormFactory extends AbstractFactory
     }
 
     /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getOrderSearchForm(): FormInterface
+    {
+        $orderSearchFormDataProvider = $this->createOrderSearchFormDataProvider();
+
+        return $this->getFormFactory()->create(
+            OrderSearchForm::class,
+            null,
+            $orderSearchFormDataProvider->getOptions()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Form\DataProvider\OrderSearchFormDataProvider
+     */
+    public function createOrderSearchFormDataProvider(): OrderSearchFormDataProvider
+    {
+        return new OrderSearchFormDataProvider(
+            $this->getConfig(),
+            $this->getStore()
+        );
+    }
+
+    /**
      * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface
      */
     public function getCustomerClient()
@@ -105,5 +133,21 @@ class FormFactory extends AbstractFactory
     public function getStore()
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface
+     */
+    public function getSalesClient(): CustomerPageToSalesClientInterface
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_SALES);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\OrderSearchFormExpanderPluginInterface[]
+     */
+    public function getOrderSearchFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGINS_ORDER_SEARCH_FORM_EXPANDER);
     }
 }
