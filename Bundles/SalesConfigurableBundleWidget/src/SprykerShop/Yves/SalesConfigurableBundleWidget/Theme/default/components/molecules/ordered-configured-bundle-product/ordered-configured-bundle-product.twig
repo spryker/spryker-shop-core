@@ -100,7 +100,7 @@
                                                 {% endblock %}
 
                                                 {%- block totalValue -%}
-                                                    {{ data.product.sumSubtotalAggregation | money(true, data.currencyIsoCode) }}
+                                                    {{ data.product.sumPriceToPayAggregation | money(true, data.currencyIsoCode) }}
                                                 {% endblock %}
                                             {% else %}
                                                 {{ 'customer.access.cannot_see_price' | trans }}

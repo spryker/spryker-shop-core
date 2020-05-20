@@ -16,7 +16,7 @@ use SprykerShop\Yves\SalesReturnPage\Form\ReturnItemsForm;
 
 class ReturnCreateFormDataProvider
 {
-    public const GLOSSARY_KEY_CUSTOM_REASON = 'return_page.return_reasons.custom_reason.name';
+    public const GLOSSARY_KEY_CUSTOM_REASON = 'return_page.return_reasons.custom_reason.placeholder';
     public const CUSTOM_REASON_VALUE = 'custom_reason';
 
     /**
@@ -25,11 +25,18 @@ class ReturnCreateFormDataProvider
     protected $salesReturnClient;
 
     /**
-     * @param \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnClientInterface $salesReturnClient
+     * @var \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface[]
      */
-    public function __construct(SalesReturnPageToSalesReturnClientInterface $salesReturnClient)
+    protected $returnCreateFormHandlerPlugins;
+
+    /**
+     * @param \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnClientInterface $salesReturnClient
+     * @param \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface[] $returnCreateFormHandlerPlugins
+     */
+    public function __construct(SalesReturnPageToSalesReturnClientInterface $salesReturnClient, array $returnCreateFormHandlerPlugins)
     {
         $this->salesReturnClient = $salesReturnClient;
+        $this->returnCreateFormHandlerPlugins = $returnCreateFormHandlerPlugins;
     }
 
     /**
@@ -39,9 +46,11 @@ class ReturnCreateFormDataProvider
      */
     public function getData(OrderTransfer $orderTransfer): array
     {
-        return [
+        $returnCreateFormData = [
             ReturnCreateForm::FIELD_RETURN_ITEMS => $this->createReturnItemTransfersCollection($orderTransfer),
         ];
+
+        return $this->executeReturnCreateFormHandlerPlugins($returnCreateFormData);
     }
 
     /**
@@ -89,5 +98,19 @@ class ReturnCreateFormDataProvider
         $returnReasonChoices[static::GLOSSARY_KEY_CUSTOM_REASON] = static::CUSTOM_REASON_VALUE;
 
         return $returnReasonChoices;
+    }
+
+    /**
+     * @param array $returnCreateFormData
+     *
+     * @return array
+     */
+    protected function executeReturnCreateFormHandlerPlugins(array $returnCreateFormData): array
+    {
+        foreach ($this->returnCreateFormHandlerPlugins as $returnCreateFormHandlerPlugin) {
+            $returnCreateFormData = $returnCreateFormHandlerPlugin->expandFormData($returnCreateFormData);
+        }
+
+        return $returnCreateFormData;
     }
 }

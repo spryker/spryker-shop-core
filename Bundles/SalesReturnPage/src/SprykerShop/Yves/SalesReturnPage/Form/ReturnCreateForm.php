@@ -29,6 +29,7 @@ class ReturnCreateForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addReturnItemsCollection($builder, $options);
+        $this->executeReturnCreateFormHandlerPlugins($builder, $options);
     }
 
     /**
@@ -62,6 +63,21 @@ class ReturnCreateForm extends AbstractType
                 'label' => false,
             ]
         );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function executeReturnCreateFormHandlerPlugins(FormBuilderInterface $builder, array $options)
+    {
+        foreach ($this->getFactory()->getReturnCreateFormHandlerPlugins() as $returnCreateFormHandlerPlugin) {
+            $builder = $returnCreateFormHandlerPlugin->buildForm($builder, $options);
+        }
 
         return $this;
     }

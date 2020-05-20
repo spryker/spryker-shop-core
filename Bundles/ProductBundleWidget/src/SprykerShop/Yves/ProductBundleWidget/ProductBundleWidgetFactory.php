@@ -9,14 +9,54 @@ namespace SprykerShop\Yves\ProductBundleWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductBundleWidget\Dependency\Client\ProductBundleWidgetToProductBundleClientInterface;
+use SprykerShop\Yves\ProductBundleWidget\Expander\ReturnCreateFormExpander;
+use SprykerShop\Yves\ProductBundleWidget\Expander\ReturnCreateFormExpanderInterface;
+use SprykerShop\Yves\ProductBundleWidget\Extractor\ItemExtractor;
+use SprykerShop\Yves\ProductBundleWidget\Extractor\ItemExtractorInterface;
+use SprykerShop\Yves\ProductBundleWidget\Form\ReturnProductBundleForm;
+use SprykerShop\Yves\ProductBundleWidget\Handler\ReturnCreateFormHandler;
+use SprykerShop\Yves\ProductBundleWidget\Handler\ReturnCreateFormHandlerInterface;
+use Symfony\Component\Form\FormTypeInterface;
 
 class ProductBundleWidgetFactory extends AbstractFactory
 {
+    /**
+     * @return \SprykerShop\Yves\ProductBundleWidget\Extractor\ItemExtractorInterface
+     */
+    public function createItemExtractor(): ItemExtractorInterface
+    {
+        return new ItemExtractor();
+    }
+
     /**
      * @return \SprykerShop\Yves\ProductBundleWidget\Dependency\Client\ProductBundleWidgetToProductBundleClientInterface
      */
     public function getProductBundleClient(): ProductBundleWidgetToProductBundleClientInterface
     {
         return $this->getProvidedDependency(ProductBundleWidgetDependencyProvider::CLIENT_PRODUCT_BUNDLE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductBundleWidget\Expander\ReturnCreateFormExpanderInterface
+     */
+    public function createReturnCreateFormExpander(): ReturnCreateFormExpanderInterface
+    {
+        return new ReturnCreateFormExpander();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductBundleWidget\Handler\ReturnCreateFormHandlerInterface
+     */
+    public function createReturnCreateFormHandler(): ReturnCreateFormHandlerInterface
+    {
+        return new ReturnCreateFormHandler();
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormTypeInterface
+     */
+    public function createReturnProductBundleForm(): FormTypeInterface
+    {
+        return new ReturnProductBundleForm();
     }
 }

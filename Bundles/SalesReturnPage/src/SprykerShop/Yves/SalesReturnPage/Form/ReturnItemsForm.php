@@ -22,9 +22,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ReturnItemsForm extends AbstractType
 {
-    protected const FIELD_CUSTOM_REASON = 'customReason';
+    public const OPTION_RETURN_REASONS = 'returnReasons';
 
-    public const OPTION_RETURN_REASONS = 'return_reasons';
+    protected const FIELD_CUSTOM_REASON = 'customReason';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

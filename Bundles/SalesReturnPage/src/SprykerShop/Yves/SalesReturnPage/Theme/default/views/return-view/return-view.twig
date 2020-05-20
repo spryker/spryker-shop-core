@@ -41,16 +41,18 @@
             {% set salesReturnProductsClass = '' %}
             {% set salesReturnProductItemClass = 'grid grid--middle grid--justify box' %}
             {% set orderItems = [] %}
+            {% set orderBundleItems = [] %}
 
             {% block salesReturnProducts %}
-                <ul class="{{ salesReturnProductsClass }}">
+                <div class="{{ salesReturnProductsClass }}">
                     {% for returnItem in data.returnItems %}
                         {% set orderItem = returnItem.orderItem %}
                         {% set isConfiguredBundle = orderItem.salesOrderConfiguredBundleItem is defined and orderItem.salesOrderConfiguredBundleItem is not null %}
+                        {% set isBundleItem = orderItem.relatedBundleItemIdentifier is defined and orderItem.relatedBundleItemIdentifier is not null %}
 
-                        {% if not isConfiguredBundle %}
+                        {% if not isConfiguredBundle and not isBundleItem %}
                             {% block salesReturnProductItem %}
-                                <li class="{{ salesReturnProductItemClass }}">
+                                <div class="{{ salesReturnProductItemClass }}">
                                     {% set productItemReturnClass = 'col col--expand grid' %}
 
                                     {% block salesReturnProductItemInner %}
@@ -72,19 +74,23 @@
                                             {% endblock %}
                                         {% endembed %}
                                     {% endblock %}
-                                </li>
+                                </div>
                             {% endblock %}
                         {% endif %}
 
                         {% if isConfiguredBundle %}
                             {% set orderItems = orderItems | merge([orderItem]) %}
                         {% endif %}
+
+                        {% if isBundleItem %}
+                            {% set orderBundleItems = orderBundleItems | merge([orderItem]) %}
+                        {% endif %}
                     {% endfor %}
 
                     {% set salesReturnConfigurableBundleItemClass = '' %}
 
                     {% block configurableBundle %}
-                        <li class="{{ salesReturnConfigurableBundleItemClass }}">
+                        <div class="{{ salesReturnConfigurableBundleItemClass }}">
                             {% widget 'OrderItemsConfiguredBundleWidget'
                                 args [orderItems]
                                 use view('order-returnable-items-configured-bundle-widget', 'SalesConfigurableBundleWidget')
@@ -137,9 +143,47 @@
                                     {% endembed %}
                                 {% endblock %}
                             {% endwidget %}
-                        </li>
+                        </div>
                     {% endblock %}
-                </ul>
+
+                    {% set salesReturnProductBundleItemClass = '' %}
+
+                    <div class="{{ salesReturnProductBundleItemClass }}">
+                        {% widget 'OrderItemsProductBundleWidget' args [orderBundleItems] with {
+                            embed: {
+                                returnItems: data.returnItems,
+                            },
+                        } only %}
+                            {% block bundle %}
+                                {% embed molecule('ordered-product-bundle', 'ProductBundleWidget') with {
+                                    class: 'grid',
+                                    data: {
+                                        productBundle: productBundle,
+                                    },
+                                    embed: {
+                                        returnItems: embed.returnItems,
+                                    },
+                                } only %}
+                                    {% block bundleInfoInner %}
+                                        <div>
+                                            {{- 'product_bundle_widget.returnable_text' | trans -}}
+                                        </div>
+
+                                        {{ parent() }}
+
+                                        {% for returnItem in embed.returnItems %}
+                                            {% set hasReason = returnItem.orderItem.IdSalesOrderItem == data.productBundle.bundleProduct.bundleItemIdentifier and returnItem.reason is not null %}
+
+                                            {% if hasReason %}
+                                                <p><strong>{{ 'return_page.return_reasons.title' | trans }}:</strong> {{ returnItem.reason | trans }}</p>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endblock %}
+                                {% endembed %}
+                            {% endblock %}
+                        {% endwidget %}
+                    </div>
+                </div>
             {% endblock %}
         {% endblock %}
 

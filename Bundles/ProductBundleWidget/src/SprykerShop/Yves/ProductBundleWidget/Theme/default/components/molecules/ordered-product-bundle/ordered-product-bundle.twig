@@ -1,0 +1,120 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'ordered-product-bundle',
+} %}
+
+{% define data = {
+    productBundle: required,
+} %}
+
+{% set contentWrapperClass = 'box col col--expand grid' %}
+{% set contentClass = 'col col--expand grid' %}
+{% set imageColumnClass = 'col col--sm-2' %}
+{% set bundleItemColumnClass = 'col col--sm-10' %}
+{% set bundleItemClass = 'grid grid--justify spacing-bottom spacing-bottom--inner spacing-right spacing-right--inner' %}
+{% set itemsClass = 'grid grid--middle spacing-y' %}
+{% set bundleInfoColumnClass = 'col col--sm-4' %}
+{% set bundlePriceQuantityColumnClass = 'col col--sm-6' %}
+{% set bundlePriceColumnClass = 'col col--sm-4 text-center' %}
+{% set bundleQuantityColumnClass = 'col col--sm-4 text-center' %}
+{% set bundlePriceTotalColumnClass = 'col col--sm-4 text-center' %}
+{% set bundleProduct = data.productBundle.bundleProduct %}
+
+{% block body %}
+    <div class="{{ contentWrapperClass }}">
+        {% block contentWrapper %}
+            <div class="{{ contentClass }}">
+                {% block content %}
+                    {% block imageWrapper %}
+                        <div class="{{ imageColumnClass }}">
+                            {% set thumbnailModifiers = ['small'] %}
+
+                            {% block image %}
+                                {% include atom('thumbnail') with {
+                                    modifiers: thumbnailModifiers,
+                                    attributes: {
+                                        src: bundleProduct.metadata.image,
+                                        alt: bundleProduct.name,
+                                    },
+                                } only %}
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
+
+                    {% block bundleItemColumn %}
+                        <div class="{{ bundleItemColumnClass }}">
+                            {% block bundleItem %}
+                                <div class="{{ bundleItemClass }}">
+                                    {% block bundleInfo %}
+                                        <div class="{{ bundleInfoColumnClass }}">
+                                            {% block bundleInfoInner %}
+                                                {% block name -%}
+                                                    <h6>{{ bundleProduct.name }}</h6>
+                                                {%- endblock %}
+
+                                                {% set skuClass = 'text-secondary' %}
+
+                                                {% block sku -%}
+                                                    <small class="{{ skuClass }}">
+                                                        {{- 'product_bundle_widget.item_sku' | trans }} {{ bundleProduct.sku -}}
+                                                    </small>
+                                                {%- endblock %}
+                                            {%- endblock %}
+                                        </div>
+                                    {% endblock %}
+
+                                    {% set firstBundleItem = data.productBundle.bundleItems | first %}
+                                    {% set currencyIsoCode = firstBundleItem.currencyIsoCode %}
+
+                                    <div class="{{ bundlePriceQuantityColumnClass }}">
+                                        {% block price %}
+                                            <div class="{{ bundlePriceColumnClass }}">
+                                                {% block priceInner %}
+                                                    <strong>{{ bundleProduct.unitPrice | money(true, currencyIsoCode) }}</strong>
+                                                {% endblock %}
+                                            </div>
+                                        {% endblock %}
+
+                                        {% block quantity %}
+                                            <div class="{{ bundleQuantityColumnClass }}">
+                                                {% block quantityTitle %}
+                                                    {{ 'product_bundle_widget.quantity' | trans }}
+                                                {% endblock %}
+
+                                                {{ bundleProduct.quantity }}
+                                            </div>
+                                        {% endblock %}
+
+                                        {% block total %}
+                                            <div class="{{ bundlePriceTotalColumnClass }}">
+                                                {% block totalInner %}
+                                                    <strong>{{ bundleProduct.sumPrice | money(true, currencyIsoCode) }}</strong>
+                                                {% endblock %}
+                                            </div>
+                                        {% endblock %}
+                                    </div>
+                                </div>
+                            {% endblock %}
+
+                            {% block separator %}
+                                <hr class="box__separator">
+                            {% endblock %}
+
+                            {% block items %}
+                                {% for bundleItem in data.productBundle.bundleItems %}
+                                    {% include molecule('ordered-bundle-item', 'ProductBundleWidget') with {
+                                        class: itemsClass,
+                                        data: {
+                                            item: bundleItem,
+                                        },
+                                    } only %}
+                                {% endfor %}
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
+                {% endblock %}
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}
