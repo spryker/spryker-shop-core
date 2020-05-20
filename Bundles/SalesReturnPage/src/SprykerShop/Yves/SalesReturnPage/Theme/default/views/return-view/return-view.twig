@@ -87,6 +87,46 @@
                         {% endif %}
                     {% endfor %}
 
+                    {% set salesReturnProductBundleItemClass = '' %}
+
+                    {% block bundle %}
+                        <div class="{{ salesReturnProductBundleItemClass }}">
+                            {% widget 'OrderItemsProductBundleWidget' args [orderBundleItems] with {
+                                embed: {
+                                    returnItems: data.returnItems,
+                                },
+                            } only %}
+                                {% block bundle %}
+                                    {% embed molecule('ordered-product-bundle', 'ProductBundleWidget') with {
+                                        class: 'grid',
+                                        data: {
+                                            productBundle: productBundle,
+                                        },
+                                        embed: {
+                                            returnItems: embed.returnItems,
+                                        },
+                                    } only %}
+                                        {% block bundleInfoInner %}
+                                            <div>
+                                                {{- 'product_bundle_widget.returnable_text' | trans -}}
+                                            </div>
+
+                                            {{ parent() }}
+
+                                            {% for returnItem in embed.returnItems %}
+                                                {% set hasReason = returnItem.orderItem.IdSalesOrderItem == data.productBundle.bundleProduct.bundleItemIdentifier and returnItem.reason is not null %}
+
+                                                {% if hasReason %}
+                                                    <p><strong>{{ 'return_page.return_reasons.title' | trans }}:</strong> {{ returnItem.reason | trans }}</p>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endblock %}
+                                    {% endembed %}
+                                {% endblock %}
+                            {% endwidget %}
+                        </div>
+                    {% endblock %}
+
                     {% set salesReturnConfigurableBundleItemClass = '' %}
 
                     {% block configurableBundle %}
@@ -145,44 +185,6 @@
                             {% endwidget %}
                         </div>
                     {% endblock %}
-
-                    {% set salesReturnProductBundleItemClass = '' %}
-
-                    <div class="{{ salesReturnProductBundleItemClass }}">
-                        {% widget 'OrderItemsProductBundleWidget' args [orderBundleItems] with {
-                            embed: {
-                                returnItems: data.returnItems,
-                            },
-                        } only %}
-                            {% block bundle %}
-                                {% embed molecule('ordered-product-bundle', 'ProductBundleWidget') with {
-                                    class: 'grid',
-                                    data: {
-                                        productBundle: productBundle,
-                                    },
-                                    embed: {
-                                        returnItems: embed.returnItems,
-                                    },
-                                } only %}
-                                    {% block bundleInfoInner %}
-                                        <div>
-                                            {{- 'product_bundle_widget.returnable_text' | trans -}}
-                                        </div>
-
-                                        {{ parent() }}
-
-                                        {% for returnItem in embed.returnItems %}
-                                            {% set hasReason = returnItem.orderItem.IdSalesOrderItem == data.productBundle.bundleProduct.bundleItemIdentifier and returnItem.reason is not null %}
-
-                                            {% if hasReason %}
-                                                <p><strong>{{ 'return_page.return_reasons.title' | trans }}:</strong> {{ returnItem.reason | trans }}</p>
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% endblock %}
-                                {% endembed %}
-                            {% endblock %}
-                        {% endwidget %}
-                    </div>
                 </div>
             {% endblock %}
         {% endblock %}
