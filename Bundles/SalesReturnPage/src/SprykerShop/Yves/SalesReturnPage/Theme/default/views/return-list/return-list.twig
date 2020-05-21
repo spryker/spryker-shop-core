@@ -76,9 +76,9 @@
                                                 {% set itemStateClass = 'status status--' ~ itemState %}
 
                                                 {% block itemStateInfo %}
-                                                    <p class="{{ itemStateClass }}">
-                                                        {{ ('item.state.' ~ itemState) | trans }}
-                                                    </p>
+                                                    <span class="{{ itemStateClass }}">
+                                                        {{ ('oms.state.' ~ itemState) | trans }}
+                                                    </span>
                                                 {% endblock %}
                                             {% endfor %}
                                         </td>
