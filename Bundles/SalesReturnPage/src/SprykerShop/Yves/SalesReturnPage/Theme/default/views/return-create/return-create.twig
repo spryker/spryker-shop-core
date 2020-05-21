@@ -150,7 +150,7 @@
 
                     {% set salesReturnProductBundleItemClass = '' %}
 
-                    {% block bundle %}
+                    {% block productBundle %}
                         <div class="{{ salesReturnProductBundleItemClass }}">
                             {% widget 'OrderItemsProductBundleWidget' args [data.form.vars.value.productBundleItems] with {
                                 embed: {
