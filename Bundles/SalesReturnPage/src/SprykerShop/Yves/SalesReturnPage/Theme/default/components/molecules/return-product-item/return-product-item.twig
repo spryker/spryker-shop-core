@@ -75,27 +75,21 @@
 
                 {% block productState %}
                     <div class="{{ productStatusColumnClass }}">
-                        {% if itemState %}
-                            {% block state %}
-                                {% include molecule('status') with {
-                                    data: {
-                                        label: ('oms.state.' ~ itemState) | trans,
-                                        status: itemState,
-                                    },
-                                } only %}
-                            {% endblock %}
-                        {% else %}
-                            {% block emptyState %}
-                                <span class="text-secondary">
-                                    --
-                                </span>
-                            {% endblock %}
-                        {% endif %}
+                        {% block state %}
+                            {% include molecule('status') with {
+                                data: {
+                                    label: ('oms.state.' ~ itemState) | trans,
+                                    status: itemState,
+                                },
+                            } only %}
+                        {% endblock %}
                     </div>
                 {% endblock %}
 
                 {% block productItemPrice %}
-                    <strong class="{{ productPriceColumnClass }}">{{ data.item.unitPrice | money(true, data.item.currencyIsoCode) }}</strong>
+                    <div class="{{ productPriceColumnClass }}">
+                        <strong>{{ data.item.unitPrice | money(true, data.item.currencyIsoCode) }}</strong>
+                    </div>
                 {% endblock %}
 
                 {% block productItemQuantityAmount %}
@@ -113,7 +107,9 @@
                 {% endblock %}
 
                 {% block productItemTotalPrice %}
-                    <strong class="{{ productPriceTotalColumnClass }}">{{ data.item.sumPriceToPayAggregation | money(true, data.item.currencyIsoCode) }}</strong>
+                    <div class="{{ productPriceTotalColumnClass }}">
+                        <strong>{{ data.item.sumPriceToPayAggregation | money(true, data.item.currencyIsoCode) }}</strong>
+                    </div>
                 {% endblock %}
             {% endblock %}
         </div>

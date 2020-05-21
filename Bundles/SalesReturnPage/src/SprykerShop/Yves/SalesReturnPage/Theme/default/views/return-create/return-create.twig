@@ -192,7 +192,9 @@
                                                             {% if returnItem.vars.value.orderItem.IdSalesOrderItem == data.product.IdSalesOrderItem %}
                                                                 {{ form_row(returnItem.isReturnable, {
                                                                     label: ' ',
-                                                                    attr: {'class': 'js-return-create-form__selection'},
+                                                                    attr: {
+                                                                        'class': 'js-return-create-form__selection',
+                                                                    },
                                                                     disabled: not data.product.isReturnable,
                                                                 }) }}
                                                             {% endif %}
@@ -316,7 +318,7 @@
                 </div>
             {% endblock %}
 
-            {% set salesReturnSaveActionClass = 'button spacing-left js-state-observable' %}
+            {% set salesReturnSaveActionClass = 'button spacing-left js-return-create-action-state-observable' %}
 
             {% block salesReturnPageActions %}
                 <button class="{{ salesReturnSaveActionClass }}" disabled>
@@ -328,11 +330,11 @@
         {% endblock %}
 
         {% block buttonsStateHandler %}
-            {% include molecule('buttons-state-handler', 'SalesReturnPage') with {
+            {% include molecule('order-detail-buttons-state-handler', 'SalesReturnPage') with {
                 attributes: {
                     'trigger-class-name': 'js-return-create-form__selection',
-                    'target-class-name': 'js-state-observable',
-                    'is-enabler': 'true',
+                    'target-class-name': 'js-return-create-action-state-observable',
+                    'enable-mode': 'true',
                 },
             } only %}
         {% endblock %}
