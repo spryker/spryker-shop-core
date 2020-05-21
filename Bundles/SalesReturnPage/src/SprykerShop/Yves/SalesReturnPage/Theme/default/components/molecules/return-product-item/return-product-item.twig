@@ -75,22 +75,14 @@
 
                 {% block productState %}
                     <div class="{{ productStatusColumnClass }}">
-                        {% if itemState %}
-                            {% block state %}
-                                {% include molecule('status') with {
-                                    data: {
-                                        label: ('oms.state.' ~ itemState) | trans,
-                                        status: itemState,
-                                    },
-                                } only %}
-                            {% endblock %}
-                        {% else %}
-                            {% block emptyState %}
-                                <span class="text-secondary">
-                                    --
-                                </span>
-                            {% endblock %}
-                        {% endif %}
+                        {% block state %}
+                            {% include molecule('status') with {
+                                data: {
+                                    label: ('oms.state.' ~ itemState) | trans,
+                                    status: itemState,
+                                },
+                            } only %}
+                        {% endblock %}
                     </div>
                 {% endblock %}
 

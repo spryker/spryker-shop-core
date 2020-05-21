@@ -39,11 +39,21 @@
                data-id="sidebar-order">{{ 'customer.account.order_history' | trans }}</a>
         </li>
 
-        {% include molecule('return-list-menu-item', 'SalesReturnPage') ignore missing with {
+        {% embed molecule('return-list-link', 'SalesReturnPage') ignore missing with {
+            class: macros.isActive('return/list', data.activePage),
             data: {
                 activePage: data.activePage,
             },
+            embed: {
+                activeClass: macros.isActive('return/list', data.activePage),
+            },
         } only %}
+            {% block component %}
+                <li class="menu__item {{ embed.activeClass }}">
+                    {{ parent() }}
+                </li>
+            {% endblock %}
+        {% endembed %}
 
         <li class="menu__item {{macros.isActive('newsletter', data.activePage)}}">
             <a href="{{ path('customer/newsletter') }}"

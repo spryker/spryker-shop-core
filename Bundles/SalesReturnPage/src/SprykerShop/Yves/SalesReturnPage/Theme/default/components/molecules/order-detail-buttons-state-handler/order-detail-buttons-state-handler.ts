@@ -37,27 +37,11 @@ export default class OrderDetailButtonsStateHandler extends Component {
     protected toggleButtonState(): void {
         const checkedTriggers = <HTMLInputElement[]>this.triggers.filter(checkbox => checkbox.checked);
 
-        if (this.enableMode) {
-            this.disableTargetsIfNotSelectedTriggers(checkedTriggers);
-
-            return;
-        }
-
-        this.disableTargetsIfSelectedTriggers(checkedTriggers);
+        this.toggleTargets(checkedTriggers, this.enableMode);
     }
 
-    protected disableTargetsIfSelectedTriggers(checkedTriggers: HTMLInputElement[]): void {
-        if (checkedTriggers.length) {
-            this.disableTargets();
-
-            return;
-        }
-
-        this.enableTargets();
-    }
-
-    protected disableTargetsIfNotSelectedTriggers(checkedTriggers: HTMLInputElement[]): void {
-        if (checkedTriggers.length) {
+    protected toggleTargets(checkedTriggers: HTMLInputElement[], enableMode: string): void {
+        if (Boolean(enableMode) === Boolean(checkedTriggers.length)) {
             this.enableTargets();
 
             return;
@@ -93,6 +77,6 @@ export default class OrderDetailButtonsStateHandler extends Component {
     }
 
     protected get enableMode(): string {
-        return this.getAttribute('is-enabler');
+        return this.getAttribute('enable-mode');
     }
 }
