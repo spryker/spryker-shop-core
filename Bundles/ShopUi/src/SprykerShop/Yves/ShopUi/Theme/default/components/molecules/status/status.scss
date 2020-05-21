@@ -1,7 +1,7 @@
 @mixin shop-ui-status($name: '.status') {
     @include shop-ui-badge($name) {
         &--in-progress,
-        &--payment-pendingб
+        &--payment-pending,
         &--refunded {
             background-color: helper-color-light(map-get($setting-color-actions, 'alert'));
             color: helper-color-dark(map-get($setting-color-actions, 'alert'));
