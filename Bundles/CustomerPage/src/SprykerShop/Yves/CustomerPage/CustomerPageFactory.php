@@ -32,6 +32,8 @@ use SprykerShop\Yves\CustomerPage\Expander\ShipmentGroupExpanderInterface;
 use SprykerShop\Yves\CustomerPage\Form\DataProvider\CheckoutAddressFormDataProvider;
 use SprykerShop\Yves\CustomerPage\Form\FormFactory;
 use SprykerShop\Yves\CustomerPage\Form\Transformer\AddressSelectTransformer;
+use SprykerShop\Yves\CustomerPage\Handler\OrderSearchFormHandler;
+use SprykerShop\Yves\CustomerPage\Handler\OrderSearchFormHandlerInterface;
 use SprykerShop\Yves\CustomerPage\Mapper\CustomerMapper;
 use SprykerShop\Yves\CustomerPage\Mapper\CustomerMapperInterface;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\AccessDeniedHandler;
@@ -39,6 +41,8 @@ use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationFailureH
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationSuccessHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerSecurityServiceProvider;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerUserProvider;
+use SprykerShop\Yves\CustomerPage\Reader\OrderReader;
+use SprykerShop\Yves\CustomerPage\Reader\OrderReaderInterface;
 use SprykerShop\Yves\CustomerPage\Security\Customer;
 use SprykerShop\Yves\CustomerPage\Twig\GetUsernameTwigFunction;
 use SprykerShop\Yves\CustomerPage\Twig\IsLoggedTwigFunction;
@@ -182,6 +186,18 @@ class CustomerPageFactory extends AbstractFactory
         $application = $this->getApplication();
 
         return $application['security.token_storage'];
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Reader\OrderReaderInterface
+     */
+    public function createOrderReader(): OrderReaderInterface
+    {
+        return new OrderReader(
+            $this->getSalesClient(),
+            $this->getCustomerClient(),
+            $this->getConfig()
+        );
     }
 
     /**
@@ -434,5 +450,32 @@ class CustomerPageFactory extends AbstractFactory
     public function getCustomerService(): CustomerPageToCustomerServiceInterface
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::SERVICE_CUSTOMER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CheckoutAddressStepPreGroupItemsByShipmentPluginInterface[]
+     */
+    public function getCheckoutAddressStepPreGroupItemsByShipmentPlugins(): array
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGINS_CHECKOUT_ADDRESS_STEP_PRE_GROUP_ITEMS_BY_SHIPMENT);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Handler\OrderSearchFormHandlerInterface
+     */
+    public function createOrderSearchFormHandler(): OrderSearchFormHandlerInterface
+    {
+        return new OrderSearchFormHandler(
+            $this->getCustomerClient(),
+            $this->getOrderSearchFormHandlerPlugins()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\OrderSearchFormHandlerPluginInterface[]
+     */
+    public function getOrderSearchFormHandlerPlugins(): array
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGINS_ORDER_SEARCH_FORM_HANDLER);
     }
 }

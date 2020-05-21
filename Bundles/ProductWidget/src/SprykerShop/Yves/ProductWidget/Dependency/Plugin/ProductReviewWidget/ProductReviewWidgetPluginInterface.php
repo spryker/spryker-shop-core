@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\ProductWidget\Dependency\Plugin\ProductReviewWidget;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductReviewWidget\Widget\ProductReviewDisplayWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductReviewWidget\Widget\ProductReviewDisplayWidget} instead.
  */
 interface ProductReviewWidgetPluginInterface extends WidgetPluginInterface
 {

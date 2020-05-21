@@ -13,7 +13,7 @@ use SprykerShop\Yves\CartPage\Dependency\Plugin\SalesOrderThresholdWidget\SalesO
 use SprykerShop\Yves\SalesOrderThresholdWidget\Widget\SalesOrderThresholdWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\SalesOrderThresholdWidget\Widget\SalesOrderThresholdWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\SalesOrderThresholdWidget\Widget\SalesOrderThresholdWidget} instead.
  *
  * @method \SprykerShop\Yves\SalesOrderThresholdWidget\SalesOrderThresholdWidgetFactory getFactory()
  */

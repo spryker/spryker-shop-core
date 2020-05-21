@@ -14,7 +14,7 @@ use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientBridge;
-use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientBridge;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientAdapter;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceBridge;
@@ -46,6 +46,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_LOGIN_AUTHENTICATION_HANDLER = 'PLUGIN_LOGIN_AUTHENTICATION_HANDLER';
     public const PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER = 'PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER';
     public const PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER = 'PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER';
+    public const PLUGINS_CHECKOUT_ADDRESS_STEP_PRE_GROUP_ITEMS_BY_SHIPMENT = 'PLUGINS_CHECKOUT_ADDRESS_STEP_PRE_GROUP_ITEMS_BY_SHIPMENT';
 
     public const SERVICE_CUSTOMER = 'SERVICE_CUSTOMER';
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
@@ -53,6 +54,9 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
 
     public const FLASH_MESSENGER = 'FLASH_MESSENGER';
     public const STORE = 'STORE';
+
+    public const PLUGINS_ORDER_SEARCH_FORM_EXPANDER = 'PLUGINS_ORDER_SEARCH_FORM_EXPANDER';
+    public const PLUGINS_ORDER_SEARCH_FORM_HANDLER = 'PLUGINS_ORDER_SEARCH_FORM_HANDLER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -83,6 +87,9 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addAfterCustomerAuthenticationSuccessPlugins($container);
         $container = $this->addShipmentService($container);
         $container = $this->addCustomerService($container);
+        $container = $this->addCheckoutAddressStepPreGroupItemsByShipmentPlugins($container);
+        $container = $this->addOrderSearchFormExpanderPlugins($container);
+        $container = $this->addOrderSearchFormHandlerPlugins($container);
 
         return $container;
     }
@@ -223,7 +230,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addSalesClient(Container $container): Container
     {
         $container->set(static::CLIENT_SALES, function (Container $container) {
-            return new CustomerPageToSalesClientBridge($container->getLocator()->sales()->client());
+            return new CustomerPageToSalesClientAdapter($container->getLocator()->sales()->client());
         });
 
         return $container;
@@ -451,5 +458,71 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCheckoutAddressStepPreGroupItemsByShipmentPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CHECKOUT_ADDRESS_STEP_PRE_GROUP_ITEMS_BY_SHIPMENT, function () {
+            return $this->getCheckoutAddressStepPreGroupItemsByShipmentPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CheckoutAddressStepPreGroupItemsByShipmentPluginInterface[]
+     */
+    protected function getCheckoutAddressStepPreGroupItemsByShipmentPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addOrderSearchFormExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ORDER_SEARCH_FORM_EXPANDER, function () {
+            return $this->getOrderSearchFormExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addOrderSearchFormHandlerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ORDER_SEARCH_FORM_HANDLER, function () {
+            return $this->getOrderSearchFormHandlerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\OrderSearchFormExpanderPluginInterface[]
+     */
+    protected function getOrderSearchFormExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\OrderSearchFormHandlerPluginInterface[]
+     */
+    protected function getOrderSearchFormHandlerPlugins(): array
+    {
+        return [];
     }
 }

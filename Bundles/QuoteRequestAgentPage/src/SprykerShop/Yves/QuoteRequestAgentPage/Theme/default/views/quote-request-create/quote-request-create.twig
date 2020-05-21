@@ -1,7 +1,8 @@
-{% extends template('page-layout-quote-request', 'QuoteRequestAgentPage') %}
+{% extends template('page-layout-agent', 'AgentPage') %}
 
 {% define data = {
-    title: 'quote_request_page.quote_request' | trans,
+    title: 'quote_request_page.quote_request.title_create' | trans,
+    activePage: 'quoteRequestAgent',
     quoteRequestCreateForm: _view.quoteRequestCreateForm,
     impersonatedCustomer: _view.impersonatedCustomer,
 } %}
@@ -19,50 +20,58 @@
                     url: path('agent/quote-request'),
                 },
                 {
-                    label: 'quote_request_page.quote_request.create' | trans,
-                }
-            ]
-        }
+                    label: 'quote_request_page.quote_request.breadcrumb.create' | trans,
+                },
+            ],
+        },
     } only %}
 {% endblock %}
 
 {% block agentContent %}
-
     <div class="box">
-        {{ form_start(data.quoteRequestCreateForm) }}
+        {% block form %}
+            {{ form_start(data.quoteRequestCreateForm) }}
+                {% block label %}
+                    <label>{{ 'quote_request_agent_widget.form.select_customer' | trans }}:</label>
+                {% endblock %}
 
-        <div class="grid">
-            <div class="col col--sm-12 col--md-12">
-                <label>{{ 'quote_request_agent_widget.form.select_customer' | trans }}:</label>
-                {% include molecule('autocomplete-form') with {
-                    data: {
-                        id: 'agent-company-user',
-                        suggestionsUrl: path('agent/company-user/autocomplete'),
-                        name: 'idCompanyUser',
-                        value: data.impersonatedCustomer ? data.impersonatedCustomer.email : '',
-                    },
-                    attributes: {
-                        'suggested-item-class-name': 'company-user-list__container-item',
-                        'value-data-attribute': 'data-value',
-                        'query-string': 'pattern',
-                        'auto-init': data.impersonatedCustomer ? true : false,
-                    }
-                } only %}
-            </div>
-        </div>
-        <hr class="box__separator">
-        <div class="col col--sm-12">
-            <a class="button button button--hollow"
-               href="{{ url('agent/quote-request') }}">
-                {{ 'quote_request_page.quote_request.actions.back_to_list' | trans }}
-            </a>
+                {% block autocompleteField %}
+                    {% include molecule('autocomplete-form') with {
+                        data: {
+                            id: 'agent-company-user',
+                            suggestionsUrl: path('agent/company-user/autocomplete'),
+                            name: 'idCompanyUser',
+                            value: data.impersonatedCustomer ? data.impersonatedCustomer.email,
+                        },
+                        attributes: {
+                            'suggested-item-class-name': 'company-user-list__container-item',
+                            'value-data-attribute': 'data-value',
+                            'query-string': 'pattern',
+                            'auto-init': data.impersonatedCustomer ? true : false,
+                        },
+                    } only %}
+                {% endblock %}
 
-            <button type="submit" name="save" class="button button--success">
-                {{ 'quote_request_page.quote_request.actions.save' | trans }}
-            </button>
-        </div>
+                {% block separator %}
+                    <hr class="box__separator">
+                {% endblock %}
 
-        {{ form_end(data.quoteRequestCreateForm) }}
+                {% block actions %}
+                    {% block actionBack %}
+                        <a class="button button--hollow"
+                           href="{{ url('agent/quote-request') }}">
+                            {{ 'quote_request_page.quote_request.actions.back_to_list' | trans }}
+                        </a>
+                    {% endblock %}
+
+                    {% block actionSave %}
+                        <button type="submit" name="save" class="button button--success" data-init-single-click>
+                            {{ 'quote_request_page.quote_request.actions.save' | trans }}
+                        </button>
+                    {% endblock %}
+                {% endblock %}
+
+            {{ form_end(data.quoteRequestCreateForm) }}
+        {% endblock %}
     </div>
-
 {% endblock %}

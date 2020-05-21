@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\ShopUi\Dependency\Plugin\NavigationWidget;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\NavigationWidget\Widget\NavigationWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\NavigationWidget\Widget\NavigationWidget} instead.
  */
 interface NavigationWidgetPluginInterface extends WidgetPluginInterface
 {

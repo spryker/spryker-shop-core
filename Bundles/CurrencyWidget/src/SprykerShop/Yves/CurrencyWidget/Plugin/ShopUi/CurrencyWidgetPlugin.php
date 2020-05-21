@@ -12,7 +12,7 @@ use SprykerShop\Yves\CurrencyWidget\Widget\CurrencyWidget;
 use SprykerShop\Yves\ShopUi\Dependency\Plugin\CurrencyWidget\CurrencyWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\CurrencyWidget\Widget\CurrencyWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\CurrencyWidget\Widget\CurrencyWidget} instead.
  */
 class CurrencyWidgetPlugin extends AbstractWidgetPlugin implements CurrencyWidgetPluginInterface
 {

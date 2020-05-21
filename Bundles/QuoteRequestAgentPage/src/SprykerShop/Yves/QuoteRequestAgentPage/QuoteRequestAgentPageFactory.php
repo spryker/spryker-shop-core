@@ -10,21 +10,45 @@ namespace SprykerShop\Yves\QuoteRequestAgentPage;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\StepEngine\Dependency\Step\StepInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Checker\QuoteChecker;
+use SprykerShop\Yves\QuoteRequestAgentPage\Checker\QuoteCheckerInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\CheckoutStep\EntryStep;
+use SprykerShop\Yves\QuoteRequestAgentPage\CheckoutStep\SaveRequestForQuoteStep;
+use SprykerShop\Yves\QuoteRequestAgentPage\Converter\QuoteRequestConverter;
+use SprykerShop\Yves\QuoteRequestAgentPage\Converter\QuoteRequestConverterInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCompanyUserClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCustomerClientInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToMessengerClientInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToPersistentCartClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToPriceClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteRequestAgentClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteRequestClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToStoreClientInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentPageToShipmentServiceInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentPageToUtilDateTimeServiceInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Extractor\ExpenseExtractor;
+use SprykerShop\Yves\QuoteRequestAgentPage\Extractor\ExpenseExtractorInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Extractor\ItemExtractor;
+use SprykerShop\Yves\QuoteRequestAgentPage\Extractor\ItemExtractorInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\DataProvider\QuoteRequestAgentFormDataProvider;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\Handler\QuoteRequestAgentCreateHandler;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\Handler\QuoteRequestAgentCreateHandlerInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Form\Listener\QuoteRequestAgentFormEventsListener;
+use SprykerShop\Yves\QuoteRequestAgentPage\Form\Listener\QuoteRequestAgentFormEventsListenerInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentCreateForm;
+use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentEditAddressConfirmForm;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentEditItemsConfirmForm;
+use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentEditShipmentConfirmForm;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentForm;
+use SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouper;
+use SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouperInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Impersonator\CompanyUserImpersonator;
+use SprykerShop\Yves\QuoteRequestAgentPage\Impersonator\CompanyUserImpersonatorInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Resolver\CheckoutStepResolver;
+use SprykerShop\Yves\QuoteRequestAgentPage\Resolver\CheckoutStepResolverInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -33,6 +57,21 @@ use Symfony\Component\Form\FormInterface;
  */
 class QuoteRequestAgentPageFactory extends AbstractFactory
 {
+    /**
+     * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::CHECKOUT_INDEX
+     */
+    protected const ROUTE_CHECKOUT_INDEX = 'checkout-index';
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_QUOTE_REQUEST_AGENT
+     */
+    protected const ROUTE_QUOTE_REQUEST_AGENT = 'agent/quote-request';
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SAVE
+     */
+    protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SAVE = 'agent/quote-request/checkout-save';
+
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
@@ -63,13 +102,40 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getQuoteRequestAgentEditAddressConfirmForm(QuoteRequestTransfer $quoteRequestTransfer): FormInterface
+    {
+        return $this->getFormFactory()->create(
+            QuoteRequestAgentEditAddressConfirmForm::class,
+            $quoteRequestTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getQuoteRequestAgentEditShipmentConfirmForm(QuoteRequestTransfer $quoteRequestTransfer): FormInterface
+    {
+        return $this->getFormFactory()->create(
+            QuoteRequestAgentEditShipmentConfirmForm::class,
+            $quoteRequestTransfer
+        );
+    }
+
+    /**
      * @return \SprykerShop\Yves\QuoteRequestAgentPage\Form\DataProvider\QuoteRequestAgentFormDataProvider
      */
     public function createQuoteRequestAgentFormDataProvider(): QuoteRequestAgentFormDataProvider
     {
         return new QuoteRequestAgentFormDataProvider(
             $this->getCartClient(),
-            $this->getPriceClient()
+            $this->getPriceClient(),
+            $this->createShipmentGrouper()
         );
     }
 
@@ -89,6 +155,102 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
         return new QuoteRequestAgentCreateHandler(
             $this->getQuoteRequestAgentClient()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouperInterface
+     */
+    public function createShipmentGrouper(): ShipmentGrouperInterface
+    {
+        return new ShipmentGrouper(
+            $this->getShipmentService(),
+            $this->createItemExtractor(),
+            $this->createQuoteChecker()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Extractor\ItemExtractorInterface
+     */
+    public function createItemExtractor(): ItemExtractorInterface
+    {
+        return new ItemExtractor($this->createQuoteChecker());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Checker\QuoteCheckerInterface
+     */
+    public function createQuoteChecker(): QuoteCheckerInterface
+    {
+        return new QuoteChecker();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Impersonator\CompanyUserImpersonatorInterface
+     */
+    public function createCompanyUserImpersonator(): CompanyUserImpersonatorInterface
+    {
+        return new CompanyUserImpersonator();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Converter\QuoteRequestConverterInterface
+     */
+    public function createQuoteRequestConverter(): QuoteRequestConverterInterface
+    {
+        return new QuoteRequestConverter(
+            $this->getMessengerClient(),
+            $this->getQuoteRequestAgentClient()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Form\Listener\QuoteRequestAgentFormEventsListenerInterface
+     */
+    public function createQuoteRequestAgentFormEventsListener(): QuoteRequestAgentFormEventsListenerInterface
+    {
+        return new QuoteRequestAgentFormEventsListener();
+    }
+
+    /**
+     * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface
+     */
+    public function createEntryStep(): StepInterface
+    {
+        return new EntryStep(
+            static::ROUTE_CHECKOUT_INDEX,
+            static::ROUTE_QUOTE_REQUEST_AGENT
+        );
+    }
+
+    /**
+     * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface
+     */
+    public function createSaveRequestForQuoteStep(): StepInterface
+    {
+        return new SaveRequestForQuoteStep(
+            static::ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SAVE,
+            static::ROUTE_QUOTE_REQUEST_AGENT
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Resolver\CheckoutStepResolverInterface
+     */
+    public function createCheckoutStepResolver(): CheckoutStepResolverInterface
+    {
+        return new CheckoutStepResolver(
+            $this->createEntryStep(),
+            $this->createSaveRequestForQuoteStep()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Extractor\ExpenseExtractorInterface
+     */
+    public function createExpenseExtractor(): ExpenseExtractorInterface
+    {
+        return new ExpenseExtractor($this->getShipmentService());
     }
 
     /**
@@ -113,6 +275,14 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     public function getQuoteRequestClient(): QuoteRequestAgentPageToQuoteRequestClientInterface
     {
         return $this->getProvidedDependency(QuoteRequestAgentPageDependencyProvider::CLIENT_QUOTE_REQUEST);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentPageToShipmentServiceInterface
+     */
+    public function getShipmentService(): QuoteRequestAgentPageToShipmentServiceInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestAgentPageDependencyProvider::SERVICE_SHIPMENT);
     }
 
     /**
@@ -177,5 +347,21 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     public function getStoreClient(): QuoteRequestAgentPageToStoreClientInterface
     {
         return $this->getProvidedDependency(QuoteRequestAgentPageDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToMessengerClientInterface
+     */
+    public function getMessengerClient(): QuoteRequestAgentPageToMessengerClientInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestAgentPageDependencyProvider::CLIENT_MESSENGER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToPersistentCartClientInterface
+     */
+    public function getPersistentCartClient(): QuoteRequestAgentPageToPersistentCartClientInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestAgentPageDependencyProvider::CLIENT_PERSISTENT_CART);
     }
 }

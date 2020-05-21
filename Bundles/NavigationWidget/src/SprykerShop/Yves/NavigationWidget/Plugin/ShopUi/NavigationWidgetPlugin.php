@@ -12,7 +12,7 @@ use SprykerShop\Yves\NavigationWidget\Widget\NavigationWidget;
 use SprykerShop\Yves\ShopUi\Dependency\Plugin\NavigationWidget\NavigationWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\NavigationWidget\Widget\NavigationWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\NavigationWidget\Widget\NavigationWidget} instead.
  *
  * @method \SprykerShop\Yves\NavigationWidget\NavigationWidgetFactory getFactory()
  */

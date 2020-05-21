@@ -195,7 +195,7 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return array
+     * @return mixed[]
      */
     protected function getRouteDefinitions(ContainerInterface $container): array
     {
@@ -241,7 +241,7 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
     }
 
     /**
-     * @return array
+     * @return string[][]
      */
     protected function getDataCollectorPluginTemplates(): array
     {

@@ -12,7 +12,7 @@ use SprykerShop\Yves\CompanyWidget\Widget\CompanyMenuItemWidget;
 use SprykerShop\Yves\ShopUi\Dependency\Plugin\CompanyWidget\MenuItemCompanyWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\CompanyWidget\Widget\CompanyMenuItemWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\CompanyWidget\Widget\CompanyMenuItemWidget} instead.
  */
 class MenuItemCompanyWidgetPlugin extends AbstractWidgetPlugin implements MenuItemCompanyWidgetPluginInterface
 {

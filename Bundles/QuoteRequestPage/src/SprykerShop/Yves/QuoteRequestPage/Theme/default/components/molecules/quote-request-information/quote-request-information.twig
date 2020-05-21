@@ -1,0 +1,100 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'quote-request-information',
+} %}
+
+{% define data = {
+    quoteRequest: required,
+    quoteRequestVersionReferences: null,
+    version: null,
+} %}
+
+{% block body %}
+    {% block date %}
+        <p>
+            {{ 'quote_request_page.quote_request.labels.date' | trans }}:
+            <span class="text-secondary">{{ data.quoteRequest.createdAt | formatDateTime }}</span>
+        </p>
+    {% endblock %}
+
+    {% set hasCompany = data.quoteRequest.companyUser and data.quoteRequest.companyUser.company %}
+    {% if hasCompany %}
+        {% block company %}
+            <p>
+                {{ 'quote_request_page.quote_request.labels.company' | trans }}:
+                <span class="text-secondary">
+                    {{ data.quoteRequest.companyUser.company.name }}
+                </span>
+            </p>
+        {% endblock %}
+    {% endif %}
+
+    {% set hasBusinessUnit = data.quoteRequest.companyUser and data.quoteRequest.companyUser.companyBusinessUnit %}
+    {% if hasBusinessUnit %}
+        {% block BusinessUnit %}
+            <p>
+                {{ 'quote_request_page.quote_request.labels.business_unit' | trans }}:
+                <span class="text-secondary">
+                    {{ data.quoteRequest.companyUser.companyBusinessUnit.name }}
+                </span>
+            </p>
+        {% endblock %}
+    {% endif %}
+
+    {% set hasCustomer = data.quoteRequest.companyUser and data.quoteRequest.companyUser.customer %}
+    {% if hasCustomer %}
+        {% block customer %}
+            <p>
+                {{ 'quote_request_page.quote_request.labels.customer' | trans }}:
+                <span class="text-secondary">
+                    {{ data.quoteRequest.companyUser.customer.firstName }} {{ data.quoteRequest.companyUser.customer.lastName }}
+                </span>
+            </p>
+        {% endblock %}
+    {% endif %}
+
+    {% block status %}
+        <p>
+            {{ 'quote_request_page.quote_request.labels.status' | trans }}:
+
+            {% if data.quoteRequest.status %}
+                {% include molecule('status') with {
+                    data: {
+                        label: ('quote_request.status.' ~ data.quoteRequest.status) | trans,
+                        status: data.quoteRequest.status,
+                    },
+                } only %}
+            {% else %}
+                <span class="text-secondary">
+                    --
+                </span>
+            {% endif %}
+        </p>
+    {% endblock %}
+
+    {% block additionalContent %}
+        {% block validUntil %}
+            <p>
+                {{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:
+                <span class="text-secondary">
+                    {% if data.quoteRequest.validUntil %}
+                        {{ data.quoteRequest.validUntil | formatDateTime }}
+                    {% else %}
+                        --
+                    {% endif %}
+                </span>
+            </p>
+        {% endblock %}
+
+        {% block history %}
+            {% include molecule('quote-request-history-select', 'QuoteRequestPage') with {
+                class: 'grid grid--middle',
+                data: {
+                    quoteRequestVersionReferences: data.quoteRequestVersionReferences,
+                    version: data.version,
+                },
+            } only %}
+        {% endblock %}
+    {% endblock %}
+{% endblock %}

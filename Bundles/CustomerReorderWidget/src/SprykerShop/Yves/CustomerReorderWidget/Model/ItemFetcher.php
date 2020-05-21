@@ -170,6 +170,7 @@ class ItemFetcher implements ItemFetcherInterface
 
             $idSaleOrderItem = $itemTransfer->getIdSalesOrderItem();
             $itemTransfer->setIdSalesOrderItem(null);
+            $itemTransfer->setUuid(null);
             $itemTransfer->setIsOrdered(false);
             $itemTransfer = $this->cleanUpProductOptions($itemTransfer);
             $itemTransfer = $this->cleanUpItemShipmentAddress($itemTransfer);

@@ -75,7 +75,7 @@ class ProductReviewWidgetFactory extends SprykerProductReviewFactory
     }
 
     /**
-     * @deprecated Use \Spryker\Client\ProductReview\ProductReviewFactory::createProductReviewSummaryCalculator instead.
+     * @deprecated Use {@link \Spryker\Client\ProductReview\ProductReviewFactory::createProductReviewSummaryCalculator()} instead.
      *
      * @return \SprykerShop\Yves\ProductReviewWidget\Controller\Calculator\ProductReviewSummaryCalculatorInterface
      */
