@@ -119,7 +119,7 @@
                 {% endfor %}
 
                 {% widget 'OrderItemsConfiguredBundleWidget' args [shipmentGroup.items] only %}
-                    {% elsewidget 'OrderConfiguredBundleWidget' args [data.order, shipmentGroup.items] only %} {# @deprecated Use OrderItemsConfiguredBundleWidget instead. #}
+                {% elsewidget 'OrderConfiguredBundleWidget' args [data.order, shipmentGroup.items] only %} {# @deprecated Use OrderItemsConfiguredBundleWidget instead. #}
                 {% endwidget %}
             </div>
 

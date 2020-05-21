@@ -95,7 +95,9 @@
                 {% endblock %}
 
                 {% block productItemPrice %}
-                    <strong class="{{ productPriceColumnClass }}">{{ data.item.unitPrice | money(true, data.item.currencyIsoCode) }}</strong>
+                    <div class="{{ productPriceColumnClass }}">
+                        <strong>{{ data.item.unitPrice | money(true, data.item.currencyIsoCode) }}</strong>
+                    </div>
                 {% endblock %}
 
                 {% block productItemQuantityAmount %}
@@ -113,7 +115,9 @@
                 {% endblock %}
 
                 {% block productItemTotalPrice %}
-                    <strong class="{{ productPriceTotalColumnClass }}">{{ data.item.sumPriceToPayAggregation | money(true, data.item.currencyIsoCode) }}</strong>
+                    <div class="{{ productPriceTotalColumnClass }}">
+                        <strong>{{ data.item.sumPriceToPayAggregation | money(true, data.item.currencyIsoCode) }}</strong>
+                    </div>
                 {% endblock %}
             {% endblock %}
         </div>

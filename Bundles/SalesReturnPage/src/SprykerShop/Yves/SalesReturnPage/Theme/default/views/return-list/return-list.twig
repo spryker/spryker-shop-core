@@ -35,16 +35,16 @@
                     <table class="{{ salesReturnTableClass }}">
                         {% block salesReturnTableHeader %}
                             <thead>
-                            <tr>
-                                {% block salesReturnTableHeaderCells %}
-                                    <th>{{ 'return_page.return.return_ref' | trans }}</th>
-                                    <th>{{ 'return_page.return.order_ref' | trans }}</th>
-                                    <th>{{ 'return_page.return.number_of_items' | trans }}</th>
-                                    <th>{{ 'return_page.return.date' | trans }}</th>
-                                    <th>{{ 'return_page.return.items_state' | trans }}</th>
-                                    <th>{{ 'return_page.table.actions' | trans }}</th>
-                                {% endblock %}
-                            </tr>
+                                <tr>
+                                    {% block salesReturnTableHeaderCells %}
+                                        <th>{{ 'return_page.return.return_ref' | trans }}</th>
+                                        <th>{{ 'return_page.return.order_ref' | trans }}</th>
+                                        <th>{{ 'return_page.return.number_of_items' | trans }}</th>
+                                        <th>{{ 'return_page.return.date' | trans }}</th>
+                                        <th>{{ 'return_page.return.items_state' | trans }}</th>
+                                        <th>{{ 'return_page.table.actions' | trans }}</th>
+                                    {% endblock %}
+                                </tr>
                             </thead>
                         {% endblock %}
 
