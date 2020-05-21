@@ -1,27 +1,27 @@
 @mixin shop-ui-status($name: '.status') {
     @include shop-ui-badge($name) {
         &--in-progress,
-        &--payment-pending {
+        &--payment-pendingб
+        &--refunded {
             background-color: helper-color-light(map-get($setting-color-actions, 'alert'));
             color: helper-color-dark(map-get($setting-color-actions, 'alert'));
         }
 
         &--ready,
-        &--paid {
+        &--paid,
+        &--delivered {
             background-color: helper-color-light(map-get($setting-color-actions, 'success'));
             color: helper-color-dark(map-get($setting-color-actions, 'success'));
         }
 
         &--waiting,
         &--confirmed,
-        &--exported,
-        &--shipped {
+        &--exported {
             background-color: helper-color-light(map-get($setting-color-actions, 'warning'));
             color: helper-color-dark(map-get($setting-color-actions, 'warning'));
         }
 
-        &--closed,
-        &--delivered {
+        &--closed {
             background-color: helper-color-light($setting-color-darkest);
             color: helper-color-dark($setting-color-darkest);
         }
@@ -36,6 +36,11 @@
         &--draft {
             background-color: helper-color-light($setting-color-alt);
             color: helper-color-dark($setting-color-alt);
+        }
+
+        &--shipped {
+            background-color: helper-color-light($setting-color-main);
+            color: helper-color-dark($setting-color-main);
         }
 
         @content;
