@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\BarcodeWidget\Widget;
 
+use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
@@ -14,7 +15,8 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class BarcodeWidget extends AbstractWidget
 {
-    protected const PARAMETER_BARCODE_RESPONSE = 'barcodeResponse';
+    protected const PARAMETER_CODE = 'code';
+    protected const PARAMETER_ENCODING = 'encoding';
 
      /**
       * @param string $generationText
@@ -22,7 +24,12 @@ class BarcodeWidget extends AbstractWidget
       */
     public function __construct(string $generationText, ?string $barcodeGeneratorPlugin = null)
     {
-        $this->addBarcodeResponseParameter($generationText, $barcodeGeneratorPlugin);
+        $barcodeResponseTransfer = $this->getFactory()
+            ->getBarcodeService()
+            ->generateBarcode($generationText, $barcodeGeneratorPlugin);
+
+        $this->addCodeParameter($barcodeResponseTransfer);
+        $this->addEncodingParameter($barcodeResponseTransfer);
     }
 
     /**
@@ -42,18 +49,22 @@ class BarcodeWidget extends AbstractWidget
     }
 
     /**
-     * @param string $generationText
-     * @param string|null $barcodeGeneratorPlugin
+     * @param \Generated\Shared\Transfer\BarcodeResponseTransfer $barcodeResponseTransfer
      *
      * @return void
      */
-    protected function addBarcodeResponseParameter(string $generationText, ?string $barcodeGeneratorPlugin = null): void
+    protected function addCodeParameter(BarcodeResponseTransfer $barcodeResponseTransfer): void
     {
-        $this->addParameter(
-            static::PARAMETER_BARCODE_RESPONSE,
-            $this->getFactory()
-                ->getBarcodeService()
-                ->generateBarcode($generationText, $barcodeGeneratorPlugin)
-        );
+        $this->addParameter(static::PARAMETER_CODE, $barcodeResponseTransfer->getCode());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\BarcodeResponseTransfer $barcodeResponseTransfer
+     *
+     * @return void
+     */
+    protected function addEncodingParameter(BarcodeResponseTransfer $barcodeResponseTransfer): void
+    {
+        $this->addParameter(static::PARAMETER_ENCODING, $barcodeResponseTransfer->getEncoding());
     }
 }
