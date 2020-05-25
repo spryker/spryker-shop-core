@@ -88,7 +88,17 @@
 
                 {% block productItemPrice %}
                     <div class="{{ productPriceColumnClass }}">
-                        <strong>{{ data.item.unitPrice | money(true, data.item.currencyIsoCode) }}</strong>
+                        {% block currentProductItemPrice %}
+                            <div>
+                                <strong>{{ (data.item.sumPrice - data.item.sumDiscountAmountFullAggregation) | money(true, data.item.currencyIsoCode) }}</strong>
+                            </div>
+                        {% endblock %}
+
+                        {% block oldProductItemPrice %}
+                            <div>
+                                <del class="text-secondary">{{ data.item.sumPrice | money(true, data.item.currencyIsoCode) }}</del>
+                            </div>
+                        {% endblock %}
                     </div>
                 {% endblock %}
 
