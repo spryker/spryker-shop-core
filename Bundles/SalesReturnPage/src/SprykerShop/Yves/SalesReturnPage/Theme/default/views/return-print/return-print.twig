@@ -86,13 +86,13 @@
                                         {{ orderItem.name }}
                                     </td>
                                     <td class="{{ noBottomBorderClass }}">
-                                        {{ orderItem.unitPrice | money(true, orderItem.currencyIsoCode) }}
+                                        {{ (orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation) | money(true, orderItem.currencyIsoCode) }}
                                     </td>
                                     <td class="{{ noBottomBorderClass }}">
                                         {{ orderItem.quantity }}
                                     </td>
                                     <td class="{{ noBottomBorderClass }}">
-                                        {{ orderItem.sumSubtotalAggregation | money(true, orderItem.currencyIsoCode) }}
+                                        {{ orderItem.sumPriceToPayAggregation | money(true, orderItem.currencyIsoCode) }}
                                     </td>
                                     <td class="{{ noBottomBorderClass }}">
                                         {{ returnItem.reason ? returnItem.reason | trans : 'custom_reason' | trans }}
@@ -237,13 +237,13 @@
                                         {{ bundleProduct.name }}
                                     </td>
                                     <td class="no-bottom-border">
-                                        {{ bundleProduct.unitPrice | money(true, firstBundleItem.currencyIsoCode) }}
+                                        {{ (bundleProduct.sumPrice - bundleProduct.sumDiscountAmountFullAggregation) | money(true, firstBundleItem.currencyIsoCode) }}
                                     </td>
                                     <td class="no-bottom-border">
                                         {{ bundleProduct.quantity }}
                                     </td>
                                     <td class="no-bottom-border">
-                                        {{ bundleProduct.sumSubtotalAggregation | money(true, firstBundleItem.currencyIsoCode) }}
+                                        {{ bundleProduct.sumPriceToPayAggregation | money(true, firstBundleItem.currencyIsoCode) }}
                                     </td>
                                     <td class="no-bottom-border">
                                         {% set reasonText = 'custom_reason' | trans %}

@@ -85,8 +85,16 @@
                                     <div class="{{ bundlePriceQuantityColumnClass }}">
                                         {% block price %}
                                             <div class="{{ bundlePriceColumnClass }}">
-                                                {% block priceInner %}
-                                                    <strong>{{ bundleProduct.unitPrice | money(true, currencyIsoCode) }}</strong>
+                                                {% block currentProductItemPrice %}
+                                                    <div>
+                                                        <strong>{{ (bundleProduct.sumPrice - bundleProduct.sumDiscountAmountFullAggregation) | money(true, currencyIsoCode) }}</strong>
+                                                    </div>
+                                                {% endblock %}
+
+                                                {% block oldProductItemPrice %}
+                                                    <div>
+                                                        <del class="text-secondary">{{ bundleProduct.sumPrice | money(true, currencyIsoCode) }}</del>
+                                                    </div>
                                                 {% endblock %}
                                             </div>
                                         {% endblock %}
