@@ -18,7 +18,7 @@
         <div class="box">
             {% block returnCreateLink %}
                 {% include molecule('return-create-link', 'SalesReturnPage') ignore missing with {
-                    class: 'float-right spacing-left js-state-observable',
+                    class: 'float-right spacing-left js-order-detail-action-state-observable',
                     data: {
                         orderReference: data.order.orderReference,
                     },
@@ -116,10 +116,10 @@
         </div>
 
         {% block buttonsStateHandler %}
-            {% include molecule('buttons-state-handler', 'SalesReturnPage') ignore missing with {
+            {% include molecule('order-detail-buttons-state-handler', 'SalesReturnPage') ignore missing with {
                 attributes: {
                     'trigger-class-name': 'js-customer-reorder-form__selection',
-                    'target-class-name': 'js-state-observable',
+                    'target-class-name': 'js-order-detail-action-state-observable',
                 },
             } only %}
         {% endblock %}

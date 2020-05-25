@@ -37,7 +37,7 @@ class OrderItemsProductBundleWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@ProductBundleWidget/views/order-items-product-bundle-widget/order-items-product-bundle-widget.twig';
+        return '@ProductBundleWidget/views/ordered-product-bundles-list/ordered-product-bundles-list.twig';
     }
 
     /**

@@ -10,19 +10,23 @@ export default class ReturnProductReason extends Component {
         this.select = <HTMLSelectElement>this.getElementsByClassName(`${this.jsName}__select`)[0];
         this.target = <HTMLElement>this.getElementsByClassName(`${this.jsName}__target`)[0];
 
-        this.selectHandler();
+        this.toggleTargetClass()
         this.mapEvents();
     }
 
     protected mapEvents(): void {
-        this.onSelectChange();
+        this.mapSelectChange();
+    }
+
+    protected mapSelectChange(): void {
+        this.select.addEventListener('change', () => this.onSelectChange());
     }
 
     protected onSelectChange(): void {
-        this.select.addEventListener('change', () => this.selectHandler());
+        this.toggleTargetClass();
     }
 
-    protected selectHandler(): void {
+    protected toggleTargetClass(): void {
         const isToggleValueSelected = this.toggleValue === this.select.value;
         this.target.classList.toggle(this.classToToggle, !isToggleValueSelected);
     }

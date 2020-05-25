@@ -1,6 +1,6 @@
 import Component from 'ShopUi/models/component';
 
-export default class ButtonsStateHandler extends Component {
+export default class OrderDetailButtonsStateHandler extends Component {
     protected triggers: HTMLInputElement[];
     protected targets: HTMLAnchorElement[];
 
@@ -15,7 +15,7 @@ export default class ButtonsStateHandler extends Component {
     protected mapEvents(): void {
         this.mapTriggerChangeEvent();
         this.mapTargetClickEvent();
-        this.onTriggerChange();
+        this.toggleButtonState();
     }
 
     protected mapTriggerChangeEvent(): void {
@@ -31,29 +31,17 @@ export default class ButtonsStateHandler extends Component {
     }
 
     protected onTriggerChange(): void {
+        this.toggleButtonState();
+    }
+
+    protected toggleButtonState(): void {
         const checkedTriggers = <HTMLInputElement[]>this.triggers.filter(checkbox => checkbox.checked);
 
-        if (this.isEnabler) {
-            this.disableTargetsIfNotSelectedTriggers(checkedTriggers);
-
-            return;
-        }
-
-        this.disableTargetsIfSelectedTriggers(checkedTriggers);
+        this.toggleTargets(checkedTriggers, this.enableMode);
     }
 
-    protected disableTargetsIfSelectedTriggers(checkedTriggers: HTMLInputElement[]): void {
-        if (checkedTriggers.length) {
-            this.disableTargets();
-
-            return;
-        }
-
-        this.enableTargets();
-    }
-
-    protected disableTargetsIfNotSelectedTriggers(checkedTriggers: HTMLInputElement[]): void {
-        if (checkedTriggers.length) {
+    protected toggleTargets(checkedTriggers: HTMLInputElement[], enableMode: string): void {
+        if (Boolean(enableMode) === Boolean(checkedTriggers.length)) {
             this.enableTargets();
 
             return;
@@ -88,7 +76,7 @@ export default class ButtonsStateHandler extends Component {
         return this.getAttribute('target-class-name');
     }
 
-    protected get isEnabler(): string {
-        return this.getAttribute('is-enabler');
+    protected get enableMode(): string {
+        return this.getAttribute('enable-mode');
     }
 }
