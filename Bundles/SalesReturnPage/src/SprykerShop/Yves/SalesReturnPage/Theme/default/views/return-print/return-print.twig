@@ -173,7 +173,7 @@
                                     {% if data.items[item.IdSalesOrderItem] is defined %}
                                         {% set product = data.items[item.IdSalesOrderItem] %}
                                         {% set noBottomBorderClass = not loop.last ? 'no-bottom-border' %}
-                                        {% set isDiscount = product.sumDiscountAmountFullAggregation is defined and product.sumDiscountAmountFullAggregation is not null %}
+                                        {% set isConfiguredBundleDiscount = product.sumDiscountAmountFullAggregation is defined and product.sumDiscountAmountFullAggregation is not null %}
                                         <tr>
                                             <td class="no-top-border {{ noBottomBorderClass }}">
                                                 {% widget 'BarcodeWidget' args [product.sku] only %}
@@ -190,7 +190,7 @@
                                                 {{ product.name }}
                                             </td>
                                             <td class="no-top-border {{ noBottomBorderClass }}">
-                                                {% if isDiscount -%}
+                                                {% if isConfiguredBundleDiscount -%}
                                                     {% block currentProductItemPrice %}
                                                         <div>
                                                             {{ product.unitPriceToPayAggregation | money(true, product.currencyIsoCode) }}

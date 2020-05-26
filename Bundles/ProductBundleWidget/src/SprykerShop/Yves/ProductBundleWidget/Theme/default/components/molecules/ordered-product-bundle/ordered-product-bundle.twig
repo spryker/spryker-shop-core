@@ -82,10 +82,12 @@
                                         </div>
                                     {% endblock %}
 
+                                    {% set isDiscount = bundleProduct.sumDiscountAmountFullAggregation is defined and bundleProduct.sumDiscountAmountFullAggregation is not null %}
+
                                     <div class="{{ bundlePriceQuantityColumnClass }}">
                                         {% block price %}
                                             <div class="{{ bundlePriceColumnClass }}">
-                                                {% if bundleProduct.sumDiscountAmountFullAggregation is defined and bundleProduct.sumDiscountAmountFullAggregation is not null -%}
+                                                {% if isDiscount -%}
                                                     {% block currentProductBundlePrice %}
                                                         <div>
                                                             <strong>{{ (bundleProduct.sumPrice - bundleProduct.sumDiscountAmountFullAggregation) | money(true, currencyIsoCode) }}</strong>

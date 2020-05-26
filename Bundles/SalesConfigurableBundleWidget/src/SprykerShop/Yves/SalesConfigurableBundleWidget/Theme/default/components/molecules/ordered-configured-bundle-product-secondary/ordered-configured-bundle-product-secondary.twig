@@ -60,9 +60,11 @@
                     </div>
                 {% endblock %}
 
+                {% set isDiscount = data.product.sumDiscountAmountFullAggregation is defined and data.product.sumDiscountAmountFullAggregation is not null %}
+
                 {% block price %}
                     <div class="{{ productPriceColumnClass }}">
-                        {% if data.product.sumDiscountAmountFullAggregation is defined and data.product.sumDiscountAmountFullAggregation is not null -%}
+                        {% if isDiscount -%}
                             {% block currentProductItemPrice %}
                                 <div>
                                     <strong>{{ (data.product.unitPriceToPayAggregation) | money(true, data.product.currencyIsoCode) }}</strong>
