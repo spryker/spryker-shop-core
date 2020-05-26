@@ -31,7 +31,7 @@ use Twig\Profiler\Profile;
 class WebProfilerWidgetFactory extends AbstractFactory
 {
     /**
-     * @deprecated Use `\SprykerShop\Yves\WebProfilerWidget\Plugin\Application\WebProfilerApplicationPlugin` instead.
+     * @deprecated Use {@link \SprykerShop\Yves\WebProfilerWidget\Plugin\Application\WebProfilerApplicationPlugin} instead.
      *
      * @return \Silex\ServiceProviderInterface[]
      */

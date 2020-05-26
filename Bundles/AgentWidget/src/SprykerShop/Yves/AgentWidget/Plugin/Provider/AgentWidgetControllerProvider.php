@@ -11,7 +11,7 @@ use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
 /**
- * @deprecated Use `\SprykerShop\Yves\AgentWidget\Plugin\Router\AgentWidgetRouteProviderPlugin` instead.
+ * @deprecated Use {@link \SprykerShop\Yves\AgentWidget\Plugin\Router\AgentWidgetRouteProviderPlugin} instead.
  */
 class AgentWidgetControllerProvider extends AbstractYvesControllerProvider
 {

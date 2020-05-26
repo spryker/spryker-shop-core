@@ -13,7 +13,7 @@ use SprykerShop\Yves\CartPage\Dependency\Plugin\MultiCartWidget\CartOperationsWi
 use SprykerShop\Yves\MultiCartWidget\Widget\CartOperationsWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\MultiCartWidget\Widget\CartOperationsWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\MultiCartWidget\Widget\CartOperationsWidget} instead.
  *
  * @method \SprykerShop\Yves\MultiCartWidget\MultiCartWidgetFactory getFactory()
  */

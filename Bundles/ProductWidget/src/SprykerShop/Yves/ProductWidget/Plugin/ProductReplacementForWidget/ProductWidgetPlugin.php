@@ -13,7 +13,7 @@ use SprykerShop\Yves\ProductReplacementForWidget\Dependency\Plugin\ProductWidget
 use SprykerShop\Yves\ProductWidget\Widget\PdpProductReplacementForListWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductWidget\Widget\PdpProductReplacementForListWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductWidget\Widget\PdpProductReplacementForListWidget} instead.
  *
  * @method \SprykerShop\Yves\ProductWidget\ProductWidgetFactory getFactory()
  */

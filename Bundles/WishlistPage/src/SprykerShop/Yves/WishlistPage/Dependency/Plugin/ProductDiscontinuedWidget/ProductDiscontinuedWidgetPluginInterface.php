@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\WishlistPage\Dependency\Plugin\ProductDiscontinuedWid
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductDiscontinuedWidget\Widget\ProductDiscontinuedWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductDiscontinuedWidget\Widget\ProductDiscontinuedWidget} instead.
  */
 interface ProductDiscontinuedWidgetPluginInterface extends WidgetPluginInterface
 {

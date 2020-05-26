@@ -12,7 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated Use `\SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin` instead.
+ * @deprecated Use {@link \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin} instead.
  */
 class CartControllerProvider extends AbstractYvesControllerProvider
 {

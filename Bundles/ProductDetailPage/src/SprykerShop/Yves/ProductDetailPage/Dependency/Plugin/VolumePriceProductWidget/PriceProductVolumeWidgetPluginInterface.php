@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\PriceProductVolumeWidget\Widget\ProductPriceVolumeWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\PriceProductVolumeWidget\Widget\ProductPriceVolumeWidget} instead.
  */
 interface PriceProductVolumeWidgetPluginInterface extends WidgetPluginInterface
 {

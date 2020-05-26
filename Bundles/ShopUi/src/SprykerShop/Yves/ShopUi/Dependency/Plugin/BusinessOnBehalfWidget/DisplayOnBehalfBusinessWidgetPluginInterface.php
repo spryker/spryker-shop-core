@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\ShopUi\Dependency\Plugin\BusinessOnBehalfWidget;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\BusinessOnBehalfWidget\Widget\BusinessOnBehalfStatusWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\BusinessOnBehalfWidget\Widget\BusinessOnBehalfStatusWidget} instead.
  */
 interface DisplayOnBehalfBusinessWidgetPluginInterface extends WidgetPluginInterface
 {

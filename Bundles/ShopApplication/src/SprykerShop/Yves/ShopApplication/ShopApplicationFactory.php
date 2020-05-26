@@ -49,7 +49,7 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use createWidgetFactory() method instead.
+     * @deprecated Use {@link createWidgetFactory()} method instead.
      *
      * @return \Spryker\Yves\Kernel\Widget\WidgetFactoryInterface
      */
@@ -93,7 +93,7 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use getGlobalWidgetCollection() method instead.
+     * @deprecated Use {@link getGlobalWidgetCollection()} method instead.
      *
      * @return \Spryker\Yves\Kernel\Widget\WidgetContainerInterface
      */

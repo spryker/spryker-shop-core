@@ -11,7 +11,7 @@ use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
 /**
- * @deprecated Use `\SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin` instead.
+ * @deprecated Use {@link \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin} instead.
  */
 class CheckoutPageControllerProvider extends AbstractYvesControllerProvider
 {

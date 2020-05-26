@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductDiscontinu
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductDiscontinuedWidget\Widget\ProductDiscontinuedNoteWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductDiscontinuedWidget\Widget\ProductDiscontinuedNoteWidget} instead.
  */
 interface ProductDiscontinuedWidgetPluginInterface extends WidgetPluginInterface
 {

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\PriceProductVolumeWidget\Widget\CurrentProductPriceVolumeWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\PriceProductVolumeWidget\Widget\CurrentProductPriceVolumeWidget} instead.
  *
  * @method \SprykerShop\Yves\PriceProductVolumeWidget\PriceProductVolumeWidgetFactory getFactory()
  */
