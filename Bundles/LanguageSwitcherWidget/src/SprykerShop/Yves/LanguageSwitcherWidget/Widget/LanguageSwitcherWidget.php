@@ -88,7 +88,11 @@ class LanguageSwitcherWidget extends AbstractWidget
             $language = $this->getLanguageFromLocale($locale);
             foreach ($localeUrls as $localeUrl) {
                 if ($localeUrl[UrlStorageTransfer::LOCALE_NAME] === $locale) {
-                    $languages[$language] = $localeUrl[UrlStorageTransfer::URL] . '?' . $queryString;
+                    $url = $localeUrl[UrlStorageTransfer::URL];
+                    if ($queryString) {
+                        $url .= '?' . $queryString;
+                    }
+                    $languages[$language] = $url;
 
                     break;
                 }
