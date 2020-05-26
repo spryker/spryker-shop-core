@@ -96,7 +96,7 @@ class ContentNavigationTwigFunction extends TwigFunction
      */
     protected function getFunction(): callable
     {
-        return function (string $contentKey, string $templateIdentifier): ?string {
+        return function (string $contentKey, string $templateIdentifier) {
             $availableTemplate = $this->findTemplate($templateIdentifier);
             if (!$availableTemplate) {
                 return $this->getMessageNavigationWrongTemplate($templateIdentifier);
