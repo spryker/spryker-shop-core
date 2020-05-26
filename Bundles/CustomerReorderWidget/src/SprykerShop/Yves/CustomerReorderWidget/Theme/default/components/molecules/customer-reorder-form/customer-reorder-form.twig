@@ -32,7 +32,7 @@
     <div class="box text-right">
         {% widget 'CustomerReorderFormWidget'  args [data.order] only %}
             {% block embeddedData %}
-                <input class="button" type="submit" value="{{ 'customer.order.reorder_all' | trans }}">
+                <button class="button">{{ 'customer.order.reorder_all' | trans }}</button>
             {% endblock %}
         {% endwidget %}
     </div>

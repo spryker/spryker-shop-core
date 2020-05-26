@@ -69,7 +69,7 @@
                                                 {{ parent() }}
 
                                                 {% if embed.returnItem.reason is not null %}
-                                                    <p><strong>{{ 'return_page.return_reasons.title' | trans }}:</strong> {{ embed.returnItem.reason | trans }}</p>
+                                                    <p><strong>{{ 'return_page.return_reasons.title' | trans }}</strong> {{ embed.returnItem.reason | trans }}</p>
                                                 {% endif %}
                                             {% endblock %}
                                         {% endembed %}
@@ -117,7 +117,7 @@
                                                 {% set hasReason = returnItem.orderItem.IdSalesOrderItem == data.productBundle.bundleProduct.bundleItemIdentifier and returnItem.reason is not null %}
 
                                                 {% if hasReason %}
-                                                    <p><strong>{{ 'return_page.return_reasons.title' | trans }}:</strong> {{ returnItem.reason | trans }}</p>
+                                                    <p><strong>{{ 'return_page.return_reasons.title' | trans }}</strong> {{ returnItem.reason | trans }}</p>
                                                 {% endif %}
                                             {% endfor %}
                                         {% endblock %}
@@ -174,7 +174,7 @@
                                                         {% set hasReason = returnItem.orderItem.IdSalesOrderItem == data.product.IdSalesOrderItem and returnItem.reason is not null %}
 
                                                         {% if hasReason %}
-                                                            <p><strong>{{ 'return_page.return_reasons.title' | trans }}:</strong> {{ returnItem.reason | trans }}</p>
+                                                            <p><strong>{{ 'return_page.return_reasons.title' | trans }}</strong> {{ returnItem.reason | trans }}</p>
                                                         {% endif %}
                                                     {% endfor %}
                                                 {% endblock %}

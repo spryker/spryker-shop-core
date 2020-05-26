@@ -1,1 +1,1 @@
-Displays dropdown with a return reasons and also textarea if choose custom reason.
+Displays dropdown with return reasons and if the custom reason is chosen also displays textarea.

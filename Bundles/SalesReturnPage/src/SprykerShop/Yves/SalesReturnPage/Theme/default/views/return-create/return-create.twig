@@ -25,7 +25,7 @@
                 {% set backLinkClass = 'float-right' %}
 
                 {% block backOrderLink %}
-                    {% include molecule('order-detail-link', 'CustomerPage') ignore missing with {
+                    {% include atom('order-detail-link', 'CustomerPage') ignore missing with {
                         class: backLinkClass,
                         data: {
                             idSalesOrder: data.order.idSalesOrder,
@@ -52,7 +52,7 @@
                         {% block salesReturnIdItemInfo %}
                             <li class="{{ salesReturnItemClass }}">
                                 {% block salesReturnIdItemInfoInner %}
-                                    {{ 'return_page.order_reference' | trans }}:
+                                    {{ 'return_page.order_reference' | trans }}
                                     <strong>{{ data.order.orderReference }}</strong>
                                 {% endblock %}
                             </li>
@@ -61,7 +61,7 @@
                         {% block salesReturnDateItemInfo %}
                             <li class="{{ salesReturnItemClass }}">
                                 {% block salesReturnDateItemInfoInner %}
-                                    {{ 'return_page.order_date' | trans }}:
+                                    {{ 'return_page.order_date' | trans }}
                                     <strong>{{ data.order.createdAt | formatDateTime }}</strong>
                                 {% endblock %}
                             </li>
@@ -174,18 +174,17 @@
                                             {% endfor %}
 
                                             <div class="col grid grid--middle">
-                                                {% for key, productBundle in embed.form.productBundles %}
-                                                    {% if key == data.productBundle.bundleProduct.bundleItemIdentifier %}
+                                                {% for key, productBundle in embed.form.productBundles
+                                                    if key == data.productBundle.bundleProduct.bundleItemIdentifier %}
+                                                    <div class="spacing-top spacing-top--big">
                                                         <div class="spacing-top spacing-top--big">
-                                                            <div class="spacing-top spacing-top--big">
-                                                                {{ form_row(productBundle.isReturnable, {
-                                                                    label: ' ',
-                                                                    attr: {'class': 'js-return-create-form__selection'},
-                                                                    disabled: not isReturnable,
-                                                                }) }}
-                                                            </div>
+                                                            {{ form_row(productBundle.isReturnable, {
+                                                                label: ' ',
+                                                                attr: {'class': 'js-return-create-form__selection'},
+                                                                disabled: not isReturnable,
+                                                            }) }}
                                                         </div>
-                                                    {% endif %}
+                                                    </div>
                                                 {% endfor %}
                                             </div>
 
@@ -211,15 +210,14 @@
 
                                             {{ parent() }}
 
-                                            {% for key, productBundle in embed.form.productBundles %}
-                                                {% if key == data.productBundle.bundleProduct.bundleItemIdentifier %}
-                                                    {% include molecule('return-product-reason', 'SalesReturnPage') with {
-                                                        data: {
-                                                            returnItem: productBundle,
-                                                            isReturnable: isReturnable,
-                                                        },
-                                                    } only %}
-                                                {% endif %}
+                                            {% for key, productBundle in embed.form.productBundles
+                                                if key == data.productBundle.bundleProduct.bundleItemIdentifier %}
+                                                {% include molecule('return-product-reason', 'SalesReturnPage') with {
+                                                    data: {
+                                                        returnItem: productBundle,
+                                                        isReturnable: isReturnable,
+                                                    },
+                                                } only %}
                                             {% endfor %}
                                         {% endblock %}
                                     {% endembed %}
@@ -268,16 +266,15 @@
                                             } only %}
                                                 {% block imageContainer %}
                                                     <div class="col grid grid--middle">
-                                                        {% for returnItem in embed.form.returnItems %}
-                                                            {% if returnItem.vars.value.orderItem.IdSalesOrderItem == data.product.IdSalesOrderItem %}
-                                                                {{ form_row(returnItem.isReturnable, {
-                                                                    label: ' ',
-                                                                    attr: {
-                                                                        'class': 'js-return-create-form__selection',
-                                                                    },
-                                                                    disabled: not data.product.isReturnable,
-                                                                }) }}
-                                                            {% endif %}
+                                                        {% for returnItem in embed.form.returnItems
+                                                            if returnItem.vars.value.orderItem.IdSalesOrderItem == data.product.IdSalesOrderItem %}
+                                                            {{ form_row(returnItem.isReturnable, {
+                                                                label: ' ',
+                                                                attr: {
+                                                                    'class': 'js-return-create-form__selection',
+                                                                },
+                                                                disabled: not data.product.isReturnable,
+                                                            }) }}
                                                         {% endfor %}
                                                     </div>
                                                 {% endblock %}
@@ -299,15 +296,14 @@
 
                                                     {{ parent() }}
 
-                                                    {% for returnItem in embed.form.returnItems %}
-                                                        {% if returnItem.vars.value.orderItem.IdSalesOrderItem == data.product.IdSalesOrderItem %}
-                                                            {% include molecule('return-product-reason', 'SalesReturnPage') with {
-                                                                data: {
-                                                                    returnItem: returnItem,
-                                                                    isReturnable: returnItem.vars.value.orderItem.isReturnable,
-                                                                },
-                                                            } only %}
-                                                        {% endif %}
+                                                    {% for returnItem in embed.form.returnItems
+                                                        if returnItem.vars.value.orderItem.IdSalesOrderItem == data.product.IdSalesOrderItem %}
+                                                        {% include molecule('return-product-reason', 'SalesReturnPage') with {
+                                                            data: {
+                                                                returnItem: returnItem,
+                                                                isReturnable: returnItem.vars.value.orderItem.isReturnable,
+                                                            },
+                                                        } only %}
                                                     {% endfor %}
                                                 {% endblock %}
                                             {% endembed %}

@@ -51,10 +51,8 @@
     {% set infoClass = '' %}
     {% set orderReferences = [] %}
 
-    {% for returnItem in data.returnItems %}
-        {% if returnItem.orderItem.orderReference not in orderReferences %}
-            {% set orderReferences = orderReferences | merge([returnItem.orderItem.orderReference]) %}
-        {% endif %}
+    {% for returnItem in data.returnItems if returnItem.orderItem.orderReference not in orderReferences %}
+        {% set orderReferences = orderReferences | merge([returnItem.orderItem.orderReference]) %}
     {% endfor %}
 
     {% block info %}
@@ -65,11 +63,14 @@
                 {% block orderRef %}
                     <li class="{{ itemClass }}">
                         {% block orderRefInner %}
-                            {{ 'return_page.details.header.order_ref' | trans }}:
+                            {{ 'return_page.order_reference' | trans }}
                             {% for idSalesOrder, orderReference in data.uniqueOrderReferences %}
-                                <a href="{{ url('customer/order/details', {'id': idSalesOrder}) }}" class="link">
-                                    {{ orderReference }}
-                                </a>
+                                {% include atom('order-detail-link', 'CustomerPage') ignore missing with {
+                                    data: {
+                                        idSalesOrder: idSalesOrder,
+                                        text: orderReference,
+                                    },
+                                } only %}
                                 {%- if not loop.last -%},&nbsp{%- endif -%}
                             {% endfor %}
                         {% endblock %}
@@ -79,7 +80,7 @@
                 {% block returnRef %}
                     <li class="{{ itemClass }}">
                         {% block returnRefInner %}
-                            {{ 'return_page.details.header.return_ref' | trans }}:
+                            {{ 'return_page.return_reference' | trans }}
                             <strong>{{ data.returnReference }}</strong>
                         {% endblock %}
                     </li>
@@ -88,7 +89,7 @@
                 {% block createdAt %}
                     <li class="{{ itemClass }}">
                         {% block createdAtInner %}
-                            {{ 'return_page.details.header.return_date' | trans }}:
+                            {{ 'return_page.return_date' | trans }}
                             <strong>{{ data.createdAt | formatDateTime }}</strong>
                         {% endblock %}
                     </li>

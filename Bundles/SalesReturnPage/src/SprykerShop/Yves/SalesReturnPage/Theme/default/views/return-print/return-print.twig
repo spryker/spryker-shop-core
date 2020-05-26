@@ -6,10 +6,9 @@
 
 {% set orderReferences = [] %}
 
-{% for returnItem in data.return.returnItems %}
-    {% if returnItem.orderItem.orderReference not in orderReferences %}
-        {% set orderReferences = orderReferences | merge([returnItem.orderItem.orderReference]) %}
-    {% endif %}
+{% for returnItem in data.return.returnItems
+    if returnItem.orderItem.orderReference not in orderReferences %}
+    {% set orderReferences = orderReferences | merge([returnItem.orderItem.orderReference]) %}
 {% endfor %}
 
 {% block body %}
@@ -95,7 +94,7 @@
                                         {{ orderItem.sumSubtotalAggregation | money(true, orderItem.currencyIsoCode) }}
                                     </td>
                                     <td class="{{ noBottomBorderClass }}">
-                                        {{ returnItem.reason ? returnItem.reason | trans : 'custom_reason' | trans }}
+                                        {{ returnItem.reason ? returnItem.reason | trans : '--' }}
                                     </td>
                                 </tr>
 
@@ -165,9 +164,11 @@
                                         {{ bundleProduct.sumSubtotalAggregation | money(true, firstBundleItem.currencyIsoCode) }}
                                     </td>
                                     <td class="no-bottom-border">
-                                        {% set reasonText = 'custom_reason' | trans %}
+                                        {% set reasonText = '--' %}
                                         {% for returnItem in embed.returnItems %}
-                                            {% if returnItem.orderItem.IdSalesOrderItem == firstBundleItem.IdSalesOrderItem and returnItem.reason %}
+                                            {% set hasReason = returnItem.orderItem.IdSalesOrderItem == firstBundleItem.IdSalesOrderItem and returnItem.reason %}
+
+                                            {% if hasReason %}
                                                 {% set reasonText = returnItem.reason | trans %}
                                             {% endif %}
                                         {% endfor %}
@@ -284,9 +285,11 @@
                                                 {{ product.sumSubtotalAggregation | money(true, product.currencyIsoCode) }}
                                             </td>
                                             <td class="no-top-border {{ noBottomBorderClass }}">
-                                                {% set reasonText = 'custom_reason' | trans %}
+                                                {% set reasonText = '--' %}
                                                 {% for returnItem in embed.returnItems %}
-                                                    {% if returnItem.orderItem.IdSalesOrderItem == item.IdSalesOrderItem and returnItem.reason %}
+                                                    {% set hasReason = returnItem.orderItem.IdSalesOrderItem == item.IdSalesOrderItem and returnItem.reason %}
+
+                                                    {% if hasReason %}
                                                         {% set reasonText = returnItem.reason | trans %}
                                                     {% endif %}
                                                 {% endfor %}

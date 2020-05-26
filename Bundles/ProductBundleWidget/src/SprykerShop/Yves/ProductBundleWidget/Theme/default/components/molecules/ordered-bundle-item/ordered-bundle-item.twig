@@ -6,6 +6,10 @@
 
 {% define data = {
     item: required,
+    image: data.item.metadata.image,
+    name: data.item.name,
+    state: data.item.state.name,
+    quantity: data.item.quantity,
 } %}
 
 {% set thumbnailModifiers = ['small'] %}
@@ -21,8 +25,8 @@
                 {% include atom('thumbnail') with {
                     modifiers: thumbnailModifiers,
                     attributes: {
-                        src: data.item.metadata.image,
-                        alt: data.item.name,
+                        src: data.image,
+                        alt: data.name,
                     },
                 } only %}
             {% endblock %}
@@ -32,12 +36,12 @@
     {% block nameWrapper %}
         <div class="{{ nameWrapperClass }}">
             {% block name %}
-                <h6>{{ data.item.name }}</h6>
+                <h6>{{ data.name }}</h6>
             {% endblock %}
         </div>
     {% endblock %}
 
-    {% set itemState = data.item.state.name | replace({' ': '-'}) | lower %}
+    {% set itemState = data.state | replace({' ': '-'}) | lower %}
 
     {% block state %}
         <div class="{{ stateWrapperClass }}">
@@ -58,7 +62,7 @@
                 {{ 'product_bundle_widget.quantity' | trans }}
             {% endblock %}
 
-            {{ data.item.quantity }}
+            {{ data.quantity }}
         </div>
     {% endblock %}
 {% endblock %}
