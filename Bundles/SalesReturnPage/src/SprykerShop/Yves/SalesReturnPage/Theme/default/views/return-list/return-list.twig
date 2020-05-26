@@ -73,11 +73,11 @@
                                         <td>{{ date(return.createdAt) | formatDateTime }}</td>
                                         <td>
                                             {% for itemState in itemStates %}
-                                                {% set itemStateClass = 'item-state item-state--' ~ itemState %}
+                                                {% set itemStateClass = 'status status--' ~ itemState %}
 
                                                 {% block itemStateInfo %}
                                                     <p class="{{ itemStateClass }}">
-                                                        {{ ('item.state.' ~ itemState) | trans }}
+                                                        {{ ('oms.state.' ~ itemState) | trans }}
                                                     </p>
                                                 {% endblock %}
                                             {% endfor %}

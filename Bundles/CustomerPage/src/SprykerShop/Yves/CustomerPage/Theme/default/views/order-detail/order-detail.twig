@@ -33,12 +33,6 @@
             } only %}
         {% endblock %}
 
-        {% block linkColumnInner %}
-            {% set reorderLinkClasses = 'button button--expand js-order-detail-action-state-observable' %}
-
-            {{ parent() }}
-        {% endblock %}
-
         {% block orderDetailContent %}
             {{ widgetBlock('CustomerReorderWidgetPlugin', 'formStart', data.order) }} {# @deprecated Use molecule('customer-reorder-form', 'CustomerReorderWidget') instead. #}
 

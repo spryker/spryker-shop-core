@@ -37,11 +37,11 @@ export default class OrderDetailButtonsStateHandler extends Component {
     protected toggleButtonState(): void {
         const checkedTriggers = <HTMLInputElement[]>this.triggers.filter(checkbox => checkbox.checked);
 
-        this.toggleTargets(checkedTriggers, this.enableMode);
+        this.toggleTargets(checkedTriggers);
     }
 
-    protected toggleTargets(checkedTriggers: HTMLInputElement[], enableMode: string): void {
-        if (Boolean(enableMode) === Boolean(checkedTriggers.length)) {
+    protected toggleTargets(checkedTriggers: HTMLInputElement[], enableMode: string = this.enableMode): void {
+        if (Boolean(checkedTriggers.length) === Boolean(enableMode)) {
             this.enableTargets();
 
             return;

@@ -38,6 +38,8 @@
                     <div class="{{ productInfoColumnClass }}">
                         {% set productNameClass = '' %}
                         {% set skuClass = 'text-secondary' %}
+                        {% set productOptionWrapperClass = 'spacing-bottom' %}
+                        {% set productOptionListClass = '' %}
 
                         {% block productItemInfoInner %}
                             {% block productItemName %}
@@ -53,10 +55,10 @@
                             {% endblock %}
 
                             {% if data.item.productOptions is not empty %}
-                                <div class="spacing-bottom">
+                                <div class="{{ productOptionWrapperClass }}">
                                     {% block productOptions %}
                                         {{ 'return_page.item.options' | trans }}
-                                        <ul>
+                                        <ul class="{{ productOptionListClass }}">
                                             {% for productOption in data.item.productOptions %}
                                                 <li>
                                                     &nbsp; + {{ productOption.value | trans }}
