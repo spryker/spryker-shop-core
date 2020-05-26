@@ -62,9 +62,25 @@
 
                 {% block price %}
                     <div class="{{ productPriceColumnClass }}">
-                        {% block priceInner %}
-                            <strong>{{ data.product.unitPrice | money(true, data.product.currencyIsoCode) }}</strong>
-                        {% endblock %}
+                        {% if data.product.sumDiscountAmountFullAggregation is defined and data.product.sumDiscountAmountFullAggregation is not null -%}
+                            {% block currentProductItemPrice %}
+                                <div>
+                                    <strong>{{ (data.product.unitPriceToPayAggregation) | money(true, data.product.currencyIsoCode) }}</strong>
+                                </div>
+                            {% endblock %}
+
+                            {% block oldProductItemPrice %}
+                                <div>
+                                    <del class="text-secondary">{{ data.product.unitSubtotalAggregation | money(true, data.product.currencyIsoCode) }}</del>
+                                </div>
+                            {% endblock %}
+                        {% else %}
+                            {% block originalProductItemPrice %}
+                                <div>
+                                    <strong>{{ data.product.unitSubtotalAggregation | money(true, data.product.currencyIsoCode) }}</strong>
+                                </div>
+                            {% endblock %}
+                        {% endif %}
                     </div>
                 {% endblock %}
 

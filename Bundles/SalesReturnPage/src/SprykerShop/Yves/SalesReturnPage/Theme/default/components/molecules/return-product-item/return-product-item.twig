@@ -88,7 +88,7 @@
 
                 {% block productItemPrice %}
                     <div class="{{ productPriceColumnClass }}">
-                        {% if data.item.sumDiscountAmountFullAggregation is defined and data.item.sumDiscountAmountFullAggregation is not null  -%}
+                        {% if data.item.sumDiscountAmountFullAggregation is defined and data.item.sumDiscountAmountFullAggregation is not null -%}
                             {% block currentProductItemPrice %}
                                 <div>
                                     <strong>{{ (data.item.sumPrice - data.item.sumDiscountAmountFullAggregation) | money(true, data.item.currencyIsoCode) }}</strong>
