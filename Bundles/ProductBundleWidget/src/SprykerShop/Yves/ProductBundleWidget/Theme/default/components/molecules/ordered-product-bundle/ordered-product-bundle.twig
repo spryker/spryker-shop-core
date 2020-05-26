@@ -85,17 +85,25 @@
                                     <div class="{{ bundlePriceQuantityColumnClass }}">
                                         {% block price %}
                                             <div class="{{ bundlePriceColumnClass }}">
-                                                {% block currentProductItemPrice %}
-                                                    <div>
-                                                        <strong>{{ (bundleProduct.sumPrice - bundleProduct.sumDiscountAmountFullAggregation) | money(true, currencyIsoCode) }}</strong>
-                                                    </div>
-                                                {% endblock %}
+                                                {% if bundleProduct.sumDiscountAmountFullAggregation is defined and bundleProduct.sumDiscountAmountFullAggregation is not null -%}
+                                                    {% block currentProductBundlePrice %}
+                                                        <div>
+                                                            <strong>{{ (bundleProduct.sumPrice - bundleProduct.sumDiscountAmountFullAggregation) | money(true, currencyIsoCode) }}</strong>
+                                                        </div>
+                                                    {% endblock %}
 
-                                                {% block oldProductItemPrice %}
-                                                    <div>
-                                                        <del class="text-secondary">{{ bundleProduct.sumPrice | money(true, currencyIsoCode) }}</del>
-                                                    </div>
-                                                {% endblock %}
+                                                    {% block oldProductBundlePrice %}
+                                                        <div>
+                                                            <del class="text-secondary">{{ bundleProduct.sumPrice | money(true, currencyIsoCode) }}</del>
+                                                        </div>
+                                                    {% endblock %}
+                                                {% else %}
+                                                    {% block originalProductBundlePrice %}
+                                                        <div>
+                                                            <strong>{{ bundleProduct.sumPrice | money(true, currencyIsoCode) }}</strong>
+                                                        </div>
+                                                    {% endblock %}
+                                                {% endif %}
                                             </div>
                                         {% endblock %}
 

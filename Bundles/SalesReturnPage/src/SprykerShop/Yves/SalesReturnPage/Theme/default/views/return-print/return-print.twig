@@ -67,6 +67,7 @@
                         {% set isConfiguredBundle = orderItem.salesOrderConfiguredBundleItem is defined and orderItem.salesOrderConfiguredBundleItem is not null %}
                         {% set isBundleItem = orderItem.relatedBundleItemIdentifier is defined and orderItem.relatedBundleItemIdentifier is not null %}
                         {% set noBottomBorderClass = orderItem.productOptions | length ? 'no-bottom-border' %}
+                        {% set isItemDiscount = orderItem.sumDiscountAmountFullAggregation is defined and orderItem.sumDiscountAmountFullAggregation is not null %}
 
                         {% if isCurrentOrderReference and not isConfiguredBundle and not isBundleItem %}
                             {% block productItem %}
@@ -86,7 +87,7 @@
                                         {{ orderItem.name }}
                                     </td>
                                     <td class="{{ noBottomBorderClass }}">
-                                        {{ (orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation) | money(true, orderItem.currencyIsoCode) }}
+                                        {{ (isItemDiscount ? orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation : orderItem.sumPrice) | money(true, orderItem.currencyIsoCode) }}
                                     </td>
                                     <td class="{{ noBottomBorderClass }}">
                                         {{ orderItem.quantity }}
@@ -220,6 +221,7 @@
                                 {% set bundleProduct = productBundle.bundleProduct %}
                                 {% set firstBundleItem = productBundle.bundleItems | first %}
                                 {% set hasBundleOptions = bundleProduct.productOptions | length %}
+                                {% set isBundleDiscount = bundleProduct.sumDiscountAmountFullAggregation is defined and bundleProduct.sumDiscountAmountFullAggregation is not null %}
 
                                 <tr>
                                     <td class="no-bottom-border">
@@ -237,7 +239,7 @@
                                         {{ bundleProduct.name }}
                                     </td>
                                     <td class="no-bottom-border">
-                                        {{ (bundleProduct.sumPrice - bundleProduct.sumDiscountAmountFullAggregation) | money(true, firstBundleItem.currencyIsoCode) }}
+                                        {{ (isBundleDiscount ? bundleProduct.sumPrice - bundleProduct.sumDiscountAmountFullAggregation : bundleProduct.sumPrice) | money(true, firstBundleItem.currencyIsoCode) }}
                                     </td>
                                     <td class="no-bottom-border">
                                         {{ bundleProduct.quantity }}
