@@ -88,9 +88,29 @@
                     </div>
                 {% endblock %}
 
+                {% set isDiscount = data.item.sumDiscountAmountFullAggregation is defined and data.item.sumDiscountAmountFullAggregation is not null %}
+
                 {% block productItemPrice %}
                     <div class="{{ productPriceColumnClass }}">
-                        <strong>{{ data.item.unitPrice | money(true, data.item.currencyIsoCode) }}</strong>
+                        {% if isDiscount -%}
+                            {% block currentProductItemPrice %}
+                                <div>
+                                    <strong>{{ (data.item.sumPrice - data.item.sumDiscountAmountFullAggregation) | money(true, data.item.currencyIsoCode) }}</strong>
+                                </div>
+                            {% endblock %}
+
+                            {% block oldProductItemPrice %}
+                                <div>
+                                    <del class="text-secondary">{{ data.item.sumPrice | money(true, data.item.currencyIsoCode) }}</del>
+                                </div>
+                            {% endblock %}
+                        {% else %}
+                            {% block originalProductItemPrice %}
+                                <div>
+                                    <strong>{{ data.item.sumPrice | money(true, data.item.currencyIsoCode) }}</strong>
+                                </div>
+                            {% endblock %}
+                        {% endif %}
                     </div>
                 {% endblock %}
 

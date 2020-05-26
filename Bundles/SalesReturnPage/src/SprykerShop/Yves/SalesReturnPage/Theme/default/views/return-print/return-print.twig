@@ -66,6 +66,7 @@
                         {% set isConfiguredBundle = orderItem.salesOrderConfiguredBundleItem is defined and orderItem.salesOrderConfiguredBundleItem is not null %}
                         {% set isBundleItem = orderItem.relatedBundleItemIdentifier is defined and orderItem.relatedBundleItemIdentifier is not null %}
                         {% set noBottomBorderClass = orderItem.productOptions | length ? 'no-bottom-border' %}
+                        {% set isItemDiscount = orderItem.sumDiscountAmountFullAggregation is defined and orderItem.sumDiscountAmountFullAggregation is not null %}
 
                         {% if isCurrentOrderReference and not isConfiguredBundle and not isBundleItem %}
                             {% block productItem %}
@@ -85,13 +86,24 @@
                                         {{ orderItem.name }}
                                     </td>
                                     <td class="{{ noBottomBorderClass }}">
-                                        {{ orderItem.unitPrice | money(true, orderItem.currencyIsoCode) }}
+                                        {% if isItemDiscount %}
+                                            <div>
+                                                {{ (orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation) | money(true, orderItem.currencyIsoCode) }}
+                                            </div>
+                                            <div>
+                                                <del class="text-secondary">{{ orderItem.sumPrice | money(true, orderItem.currencyIsoCode) }}</del>
+                                            </div>
+                                        {% else %}
+                                            <div>
+                                                {{ orderItem.sumPrice | money(true, orderItem.currencyIsoCode) }}
+                                            </div>
+                                        {% endif %}
                                     </td>
                                     <td class="{{ noBottomBorderClass }}">
                                         {{ orderItem.quantity }}
                                     </td>
                                     <td class="{{ noBottomBorderClass }}">
-                                        {{ orderItem.sumSubtotalAggregation | money(true, orderItem.currencyIsoCode) }}
+                                        {{ orderItem.sumPriceToPayAggregation | money(true, orderItem.currencyIsoCode) }}
                                     </td>
                                     <td class="{{ noBottomBorderClass }}">
                                         {{ returnItem.reason ? returnItem.reason | trans : '--' }}
@@ -138,6 +150,7 @@
                                 {% set bundleProduct = productBundle.bundleProduct %}
                                 {% set firstBundleItem = productBundle.bundleItems | first %}
                                 {% set hasBundleOptions = bundleProduct.productOptions | length %}
+                                {% set isBundleDiscount = bundleProduct.sumDiscountAmountFullAggregation is defined and bundleProduct.sumDiscountAmountFullAggregation is not null %}
 
                                 <tr>
                                     <td class="no-bottom-border">
@@ -155,13 +168,24 @@
                                         {{ bundleProduct.name }}
                                     </td>
                                     <td class="no-bottom-border">
-                                        {{ bundleProduct.unitPrice | money(true, firstBundleItem.currencyIsoCode) }}
+                                        {% if isBundleDiscount %}
+                                            <div>
+                                                {{ (bundleProduct.sumPrice - bundleProduct.sumDiscountAmountFullAggregation) | money(true, firstBundleItem.currencyIsoCode) }}
+                                            </div>
+                                            <div>
+                                                <del class="text-secondary">{{ bundleProduct.sumPrice | money(true, firstBundleItem.currencyIsoCode) }}</del>
+                                            </div>
+                                        {% else %}
+                                            <div>
+                                                {{ bundleProduct.sumPrice | money(true, firstBundleItem.currencyIsoCode) }}
+                                            </div>
+                                        {% endif %}
                                     </td>
                                     <td class="no-bottom-border">
                                         {{ bundleProduct.quantity }}
                                     </td>
                                     <td class="no-bottom-border">
-                                        {{ bundleProduct.sumSubtotalAggregation | money(true, firstBundleItem.currencyIsoCode) }}
+                                        {{ bundleProduct.sumPriceToPayAggregation | money(true, firstBundleItem.currencyIsoCode) }}
                                     </td>
                                     <td class="no-bottom-border">
                                         {% set reasonText = '--' %}
@@ -251,6 +275,7 @@
                                     {% if data.items[item.IdSalesOrderItem] is defined %}
                                         {% set product = data.items[item.IdSalesOrderItem] %}
                                         {% set noBottomBorderClass = not loop.last ? 'no-bottom-border' %}
+                                        {% set isConfiguredBundleDiscount = product.sumDiscountAmountFullAggregation is defined and product.sumDiscountAmountFullAggregation is not null %}
                                         <tr>
                                             <td class="no-top-border {{ noBottomBorderClass }}">
                                                 {% widget 'BarcodeWidget' args [product.sku] only %}
@@ -267,16 +292,25 @@
                                                 {{ product.name }}
                                             </td>
                                             <td class="no-top-border {{ noBottomBorderClass }}">
-                                                {% if product.sourceUnitGrossPrice is not null or product.sourceUnitNetPrice is not null %}
-                                                    {% set priceModeGross = 'GROSS_MODE' %}
-                                                    {% set originUnitPrice = (product.priceMode == priceModeGross) ? product.originUnitGrossPrice : product.originUnitNetPrice %}
+                                                {% if isConfiguredBundleDiscount -%}
+                                                    {% block currentProductItemPrice %}
+                                                        <div>
+                                                            {{ product.unitPriceToPayAggregation | money(true, product.currencyIsoCode) }}
+                                                        </div>
+                                                    {% endblock %}
 
-                                                    {%- block oldPriceValue -%}
-                                                        <del>{{ originUnitPrice | money(true, product.currencyIsoCode) }}</del>
+                                                    {% block oldProductItemPrice %}
+                                                        <div>
+                                                            <del class="text-secondary">{{ product.unitSubtotalAggregation | money(true, product.currencyIsoCode) }}</del>
+                                                        </div>
+                                                    {% endblock %}
+                                                {% else %}
+                                                    {% block originalProductItemPrice %}
+                                                        <div>
+                                                            {{ product.unitSubtotalAggregation | money(true, product.currencyIsoCode) }}
+                                                        </div>
                                                     {% endblock %}
                                                 {% endif %}
-
-                                                {{ product.unitPrice | money(true, product.currencyIsoCode) }}
                                             </td>
                                             <td class="no-top-border {{ noBottomBorderClass }}">
                                                 {{ product.quantity }}
@@ -285,11 +319,9 @@
                                                 {{ product.sumSubtotalAggregation | money(true, product.currencyIsoCode) }}
                                             </td>
                                             <td class="no-top-border {{ noBottomBorderClass }}">
-                                                {% set reasonText = '--' %}
+                                                {% set reasonText = 'custom_reason' | trans %}
                                                 {% for returnItem in embed.returnItems %}
-                                                    {% set hasReason = returnItem.orderItem.IdSalesOrderItem == item.IdSalesOrderItem and returnItem.reason %}
-
-                                                    {% if hasReason %}
+                                                    {% if returnItem.orderItem.IdSalesOrderItem == item.IdSalesOrderItem and returnItem.reason %}
                                                         {% set reasonText = returnItem.reason | trans %}
                                                     {% endif %}
                                                 {% endfor %}
@@ -371,6 +403,10 @@
         .product-option {
             font-size: 11px;
             padding: 2px 5px;
+        }
+
+        .text-secondary {
+            color: #bbb;
         }
 
         .no-top-border {
