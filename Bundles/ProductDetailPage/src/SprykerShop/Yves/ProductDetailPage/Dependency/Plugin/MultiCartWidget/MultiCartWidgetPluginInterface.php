@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\MultiCartWidget;
 use Generated\Shared\Transfer\ProductViewTransfer;
 
 /**
- * @deprecated Use \SprykerShop\Yves\MultiCartWidget\Widget\AddToMultiCartWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\MultiCartWidget\Widget\AddToMultiCartWidget} instead.
  */
 interface MultiCartWidgetPluginInterface
 {

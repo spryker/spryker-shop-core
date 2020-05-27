@@ -11,7 +11,7 @@ use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
 /**
- * @deprecated Use `\SprykerShop\Yves\CommentWidget\Plugin\Router\CommentWidgetRouteProviderPlugin` instead.
+ * @deprecated Use {@link \SprykerShop\Yves\CommentWidget\Plugin\Router\CommentWidgetRouteProviderPlugin} instead.
  */
 class CommentWidgetControllerProvider extends AbstractYvesControllerProvider
 {

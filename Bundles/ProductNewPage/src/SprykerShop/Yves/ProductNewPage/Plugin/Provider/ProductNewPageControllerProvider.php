@@ -11,7 +11,7 @@ use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
 /**
- * @deprecated Use `\SprykerShop\Yves\ProductNewPage\Plugin\Router\ProductNewPageRouteProviderPlugin` instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductNewPage\Plugin\Router\ProductNewPageRouteProviderPlugin} instead.
  */
 class ProductNewPageControllerProvider extends AbstractYvesControllerProvider
 {

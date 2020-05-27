@@ -44,7 +44,7 @@ abstract class AbstractCompanyController extends AbstractController
     }
 
     /**
-     * @deprecated Use \SprykerShop\Yves\CompanyPage\Controller\AbstractCompanyController::findCurrentCompanyUserTransfer instead.
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Controller\AbstractCompanyController::findCurrentCompanyUserTransfer()} instead.
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */

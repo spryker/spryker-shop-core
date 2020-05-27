@@ -12,7 +12,7 @@ use SprykerShop\Yves\ProductLabelWidget\Widget\ProductAbstractLabelWidget;
 use SprykerShop\Yves\ProductWidget\Dependency\Plugin\ProductLabelWidget\ProductAbstractLabelWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductLabelWidget\Widget\ProductAbstractLabelWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductLabelWidget\Widget\ProductAbstractLabelWidget} instead.
  *
  * @method \SprykerShop\Yves\ProductLabelWidget\ProductLabelWidgetFactory getFactory()
  */

@@ -32,7 +32,7 @@
 }
 
 /**
- * @deprecated use shop-ui-quote-status-color mixin instead.
+ * @deprecated Use shop-ui-quote-status-color mixin instead.
  */
 @mixin status-color($action-color, $opacity: 1) {
     @include shop-ui-quote-status-color($action-color, $opacity);

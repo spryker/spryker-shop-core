@@ -11,7 +11,7 @@ use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
 /**
- * @deprecated Use `\SprykerShop\Yves\PriceWidget\Plugin\Router\PriceWidgetRouteProviderPlugin` instead.
+ * @deprecated Use {@link \SprykerShop\Yves\PriceWidget\Plugin\Router\PriceWidgetRouteProviderPlugin} instead.
  */
 class PriceControllerProvider extends AbstractYvesControllerProvider
 {

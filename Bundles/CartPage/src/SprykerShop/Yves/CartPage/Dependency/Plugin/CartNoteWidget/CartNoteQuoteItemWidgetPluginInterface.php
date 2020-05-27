@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\CartNoteWidget\Widget\CartItemNoteFormWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\CartNoteWidget\Widget\CartItemNoteFormWidget} instead.
  */
 interface CartNoteQuoteItemWidgetPluginInterface extends WidgetPluginInterface
 {

@@ -13,7 +13,7 @@ use SprykerShop\Yves\CmsContentWidgetProductConnector\Dependency\Plugin\ProductW
 use SprykerShop\Yves\ProductWidget\Widget\CmsProductWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductWidget\Widget\CmsProductWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductWidget\Widget\CmsProductWidget} instead.
  *
  * @method \SprykerShop\Yves\ProductWidget\ProductWidgetFactory getFactory()
  */

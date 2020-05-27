@@ -13,7 +13,7 @@ use SprykerShop\Yves\CartPage\Dependency\Plugin\CheckoutWidget\CheckoutBreadcrum
 use SprykerShop\Yves\CheckoutWidget\Widget\CheckoutBreadcrumbWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\CheckoutWidget\Widget\CheckoutBreadcrumbWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\CheckoutWidget\Widget\CheckoutBreadcrumbWidget} instead.
  */
 class CheckoutBreadcrumbWidgetPlugin extends AbstractWidgetPlugin implements CheckoutBreadcrumbWidgetPluginInterface
 {
