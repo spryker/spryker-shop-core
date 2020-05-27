@@ -65,7 +65,7 @@
                         {% block orderRefInner %}
                             {{ 'return_page.order_reference' | trans }}
                             {% for idSalesOrder, orderReference in data.uniqueOrderReferences %}
-                                {% include atom('order-detail-link', 'CustomerPage') ignore missing with {
+                                {% include molecule('order-detail-link', 'CustomerPage') ignore missing with {
                                     data: {
                                         idSalesOrder: idSalesOrder,
                                         text: orderReference,

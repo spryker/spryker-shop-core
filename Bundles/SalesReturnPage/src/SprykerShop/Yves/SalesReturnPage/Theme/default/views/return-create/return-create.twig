@@ -25,7 +25,7 @@
                 {% set backLinkClass = 'float-right' %}
 
                 {% block backOrderLink %}
-                    {% include atom('order-detail-link', 'CustomerPage') ignore missing with {
+                    {% include molecule('order-detail-link', 'CustomerPage') ignore missing with {
                         class: backLinkClass,
                         data: {
                             idSalesOrder: data.order.idSalesOrder,
@@ -98,7 +98,7 @@
                                             <div class="{{ checkboxWrapperClass }}">
                                                 {{ form_row(returnItem.isReturnable, {
                                                     label: ' ',
-                                                    attr: {'class': 'js-return-create-form__selection'},
+                                                    attr: {'class': 'js-return-create__trigger-state-toggler'},
                                                     disabled: not orderItem.isReturnable,
                                                 }) }}
                                             </div>
@@ -180,7 +180,7 @@
                                                         <div class="spacing-top spacing-top--big">
                                                             {{ form_row(productBundle.isReturnable, {
                                                                 label: ' ',
-                                                                attr: {'class': 'js-return-create-form__selection'},
+                                                                attr: {'class': 'js-return-create__trigger-state-toggler'},
                                                                 disabled: not isReturnable,
                                                             }) }}
                                                         </div>
@@ -271,7 +271,7 @@
                                                             {{ form_row(returnItem.isReturnable, {
                                                                 label: ' ',
                                                                 attr: {
-                                                                    'class': 'js-return-create-form__selection',
+                                                                    'class': 'js-return-create__trigger-state-toggler',
                                                                 },
                                                                 disabled: not data.product.isReturnable,
                                                             }) }}
@@ -316,7 +316,7 @@
                 </div>
             {% endblock %}
 
-            {% set salesReturnSaveActionClass = 'button spacing-left js-return-create-action-state-observable' %}
+            {% set salesReturnSaveActionClass = 'button spacing-left js-return-create__target-state-toggler' %}
 
             {% block salesReturnPageActions %}
                 <button class="{{ salesReturnSaveActionClass }}" disabled>
@@ -328,11 +328,10 @@
         {% endblock %}
 
         {% block buttonsStateHandler %}
-            {% include molecule('order-detail-buttons-state-handler', 'SalesReturnPage') with {
+            {% include molecule('order-buttons-disable-toggler', 'SalesReturnPage') with {
                 attributes: {
-                    'trigger-class-name': 'js-return-create-form__selection',
-                    'target-class-name': 'js-return-create-action-state-observable',
-                    'enable-mode': 'true',
+                    'trigger-class-name': 'js-return-create__trigger-state-toggler',
+                    'target-class-name': 'js-return-create__target-state-toggler',
                 },
             } only %}
         {% endblock %}

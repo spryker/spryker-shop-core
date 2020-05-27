@@ -17,8 +17,8 @@
     {% block orderDetailContent %} {# @deprecated - This block will be removed with next release. Content will be placed directly under `body` block #}
         <div class="box">
             {% block returnCreateLink %}
-                {% include atom('return-create-link', 'SalesReturnPage') ignore missing with {
-                    class: config.jsName ~ '__action-state-observable float-right spacing-left',
+                {% include molecule('return-create-link', 'SalesReturnPage') ignore missing with {
+                    class: config.jsName ~ '__target-state-toggler float-right spacing-left',
                     data: {
                         orderReference: data.order.orderReference,
                     },
@@ -116,10 +116,11 @@
         </div>
 
         {% block buttonsStateHandler %}
-            {% include molecule('order-detail-buttons-state-handler', 'SalesReturnPage') ignore missing with {
+            {% include molecule('order-buttons-disable-toggler', 'SalesReturnPage') ignore missing with {
                 attributes: {
                     'trigger-class-name': 'js-customer-reorder-form__selection',
-                    'target-class-name': config.jsName ~ '__action-state-observable',
+                    'target-class-name': config.jsName ~ '__target-state-toggler',
+                    'is-disabled-when-checked': 'false',
                 },
             } only %}
         {% endblock %}
