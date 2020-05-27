@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductBarcodeWidget\Widget\ProductBarcodeWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductBarcodeWidget\Widget\ProductBarcodeWidget} instead.
  */
 interface ProductBarcodeWidgetPluginInterface extends WidgetPluginInterface
 {

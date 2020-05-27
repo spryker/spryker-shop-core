@@ -13,7 +13,7 @@ use SprykerShop\Yves\ProductBarcodeWidget\Widget\ProductBarcodeWidget;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Plugin\ProductBarcodeWidget\ProductBarcodeWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductBarcodeWidget\Widget\ProductBarcodeWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductBarcodeWidget\Widget\ProductBarcodeWidget} instead.
  *
  * @method \SprykerShop\Yves\ProductBarcodeWidget\ProductBarcodeWidgetFactory getFactory()
  */

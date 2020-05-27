@@ -12,7 +12,7 @@ use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductDiscontinuedWidg
 use SprykerShop\Yves\ProductDiscontinuedWidget\Widget\ProductDiscontinuedNoteWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductDiscontinuedWidget\Widget\ProductDiscontinuedNoteWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductDiscontinuedWidget\Widget\ProductDiscontinuedNoteWidget} instead.
  *
  * @method \SprykerShop\Yves\ProductDiscontinuedWidget\ProductDiscontinuedWidgetFactory getFactory()
  */

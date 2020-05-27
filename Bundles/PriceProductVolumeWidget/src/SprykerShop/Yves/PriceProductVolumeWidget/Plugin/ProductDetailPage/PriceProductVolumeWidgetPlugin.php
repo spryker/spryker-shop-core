@@ -14,7 +14,7 @@ use SprykerShop\Yves\PriceProductVolumeWidget\Widget\ProductPriceVolumeWidget;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\VolumePriceProductWidget\PriceProductVolumeWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\PriceProductVolumeWidget\Widget\CurrentProductPriceVolumeWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\PriceProductVolumeWidget\Widget\CurrentProductPriceVolumeWidget} instead.
  *
  * @method \SprykerShop\Yves\PriceProductVolumeWidget\PriceProductVolumeWidgetFactory getFactory()
  */

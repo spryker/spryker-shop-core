@@ -12,7 +12,7 @@
 }
 
 /**
- * @deprecated use configurable-bundle-widget-order-configured-bundle mixin instead.
+ * @deprecated Use configurable-bundle-widget-order-configured-bundle mixin instead.
  */
 @mixin configurable-bundle-widget-order-configured-bundle($name: '.order-configured-bundle') {
     @include sales-configurable-bundle-widget-order-configured-bundle();

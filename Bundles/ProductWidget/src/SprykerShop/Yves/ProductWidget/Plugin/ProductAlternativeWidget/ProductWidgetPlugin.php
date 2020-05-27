@@ -13,7 +13,7 @@ use SprykerShop\Yves\ProductAlternativeWidget\Dependency\Plugin\ProductWidget\Pr
 use SprykerShop\Yves\ProductWidget\Widget\ProductAlternativeWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductWidget\Widget\ProductAlternativeWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductWidget\Widget\ProductAlternativeWidget} instead.
  *
  * @method \SprykerShop\Yves\ProductWidget\ProductWidgetFactory getFactory()
  */
