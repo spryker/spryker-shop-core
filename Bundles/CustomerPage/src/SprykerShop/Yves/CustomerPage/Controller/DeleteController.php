@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
+use Symfony\Component\HttpFoundation\Request;
 
 class DeleteController extends AbstractCustomerController
 {
@@ -16,14 +17,35 @@ class DeleteController extends AbstractCustomerController
      */
     public function indexAction()
     {
-        return $this->view([], [], '@CustomerPage/views/profile-delete/profile-delete.twig');
+        $customerDeleteForm = $this->getFactory()
+            ->createCustomerFormFactory()
+            ->getCustomerDeleteForm();
+
+        return $this->view(
+            ['customerDeleteForm' => $customerDeleteForm->createView()],
+            [],
+            '@CustomerPage/views/profile-delete/profile-delete.twig'
+        );
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function confirmAction()
+    public function confirmDeleteAction(Request $request)
     {
+        $customerDeleteForm = $this->getFactory()
+            ->createCustomerFormFactory()
+            ->getCustomerDeleteForm()
+            ->handleRequest($request);
+
+        if (!$customerDeleteForm->isSubmitted() || !$customerDeleteForm->isValid()) {
+            $this->addErrorMessage('customer.account.delete.error');
+
+            return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_DELETE);
+        }
+
         $loggedInCustomerTransfer = $this->getLoggedInCustomerTransfer();
 
         $this->getFactory()

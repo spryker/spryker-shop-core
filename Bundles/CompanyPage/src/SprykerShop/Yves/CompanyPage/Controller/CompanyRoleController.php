@@ -114,9 +114,18 @@ class CompanyRoleController extends AbstractCompanyController
      */
     public function deleteAction(Request $request): RedirectResponse
     {
-        $idCompanyRole = $request->query->getInt('id');
-        $companyRoleTransfer = new CompanyRoleTransfer();
-        $companyRoleTransfer->setIdCompanyRole($idCompanyRole);
+        $companyRoleDeleteForm = $this->getFactory()
+            ->createCompanyPageFormFactory()
+            ->getCompanyRoleDeleteForm(new CompanyRoleTransfer())
+            ->handleRequest($request);
+
+        if (!$companyRoleDeleteForm->isSubmitted() || !$companyRoleDeleteForm->isValid()) {
+            $this->addErrorMessage('company.account.company_role.delete.error.cannot_remove');
+
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ROLE);
+        }
+
+        $companyRoleTransfer = $companyRoleDeleteForm->getData();
 
         $companyRoleTransfer = $this->getFactory()
             ->getCompanyRoleClient()
@@ -126,7 +135,9 @@ class CompanyRoleController extends AbstractCompanyController
             throw new NotFoundHttpException();
         }
 
-        $companyRoleResponseTransfer = $this->getFactory()->getCompanyRoleClient()->deleteCompanyRole($companyRoleTransfer);
+        $companyRoleResponseTransfer = $this->getFactory()
+            ->getCompanyRoleClient()
+            ->deleteCompanyRole($companyRoleTransfer);
 
         if ($companyRoleResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::SUCCESS_MESSAGE_COMPANY_ROLE_DELETE);
@@ -190,9 +201,14 @@ class CompanyRoleController extends AbstractCompanyController
             throw new NotFoundHttpException();
         }
 
+        $companyRoleDeleteForm = $this->getFactory()
+            ->createCompanyPageFormFactory()
+            ->getCompanyRoleDeleteForm($companyRoleTransfer);
+
         $viewData = [
             'idCompanyRole' => $idCompanyRole,
             'role' => $companyRoleTransfer,
+            'companyRoleDeleteForm' => $companyRoleDeleteForm->createView(),
         ];
 
         return $this->view($viewData, [], '@CompanyPage/views/role-delete/role-delete.twig');

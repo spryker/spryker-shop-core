@@ -6,6 +6,7 @@
     shoppingList: _view.shoppingList,
     sharedCompanyUsers: _view.sharedCompanyUsers,
     sharedCompanyBusinessUnits: _view.sharedCompanyBusinessUnits,
+    shoppingListDeleteForm: _view.shoppingListDeleteForm,
 } %}
 
 {% block breadcrumbs %}
@@ -36,7 +37,7 @@
 {% set shoppingListMessageClasses = 'box' %}
 
 {% block customerContent %}
-    {% include molecule('shopping-list-message', 'ShoppingListPage') with {
+    {% embed molecule('shopping-list-message', 'ShoppingListPage') with {
         class: shoppingListMessageClasses,
         data: {
             title: data.title,
@@ -45,5 +46,14 @@
             sharedCompanyUsers: data.sharedCompanyUsers,
             sharedCompanyBusinessUnits: data.sharedCompanyBusinessUnits,
         },
+        embed: {
+            shoppingListDeleteForm: data.shoppingListDeleteForm,
+        }
     } only %}
+        {% block deleteButton %}
+            {{ form_start(embed.shoppingListDeleteForm, {'attr': {'class': 'link'}, 'action': url('shopping-list/delete', { 'idShoppingList': data.idShoppingList })}) }}
+                <button data-init-single-click class="{{ deleteButtonClasses }}">{{ 'customer.account.shopping_list.overview.delete' | trans }}</button>
+            {{ form_end(embed.shoppingListDeleteForm) }}
+        {% endblock %}
+    {%  endembed %}
 {% endblock %}
