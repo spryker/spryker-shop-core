@@ -1,21 +1,24 @@
 import Component from 'ShopUi/models/component';
 
-export default class OrderDetailButtonsStateHandler extends Component {
+type Target = HTMLAnchorElement|HTMLButtonElement;
+
+export default class OrderButtonsDisableToggler extends Component {
     protected triggers: HTMLInputElement[];
-    protected targets: HTMLAnchorElement[];
+    protected targets: Target[];
 
     protected readyCallback(): void {}
 
     protected init(): void {
         this.triggers = <HTMLInputElement[]>Array.from(document.getElementsByClassName(this.triggerClassName));
-        this.targets = <HTMLAnchorElement[]>Array.from(document.getElementsByClassName(this.targetClassName));
+        this.targets = <Target[]>Array.from(document.getElementsByClassName(this.targetClassName));
+
+        this.toggleButtonState();
         this.mapEvents();
     }
 
     protected mapEvents(): void {
         this.mapTriggerChangeEvent();
         this.mapTargetClickEvent();
-        this.toggleButtonState();
     }
 
     protected mapTriggerChangeEvent(): void {
@@ -25,7 +28,7 @@ export default class OrderDetailButtonsStateHandler extends Component {
     }
 
     protected mapTargetClickEvent(): void {
-        this.targets.forEach((target: HTMLAnchorElement) => {
+        this.targets.forEach((target: Target) => {
             target.addEventListener('click', (event: Event) => this.onTargetClick(event, target));
         });
     }
@@ -40,8 +43,8 @@ export default class OrderDetailButtonsStateHandler extends Component {
         this.toggleTargets(checkedTriggers);
     }
 
-    protected toggleTargets(checkedTriggers: HTMLInputElement[], enableMode: string = this.enableMode): void {
-        if (Boolean(checkedTriggers.length) === Boolean(enableMode)) {
+    protected toggleTargets(checkedTriggers: HTMLInputElement[]): void {
+        if (Boolean(checkedTriggers.length) === this.isDisabledWhenChecked) {
             this.enableTargets();
 
             return;
@@ -50,21 +53,33 @@ export default class OrderDetailButtonsStateHandler extends Component {
         this.disableTargets();
     }
 
-    protected onTargetClick(event: Event, target: HTMLAnchorElement): void {
-        if (target.hasAttribute('disabled')) {
+    protected onTargetClick(event: Event, target: Target): void {
+        if (target.classList.contains(this.disabledClassName)) {
             event.preventDefault();
         }
     }
 
     protected disableTargets(): void {
-        this.targets.forEach((target: HTMLAnchorElement) => {
-            target.setAttribute('disabled', 'disabled');
+        this.targets.forEach((target: Target) => {
+            if (target.tagName === 'A') {
+                target.classList.add(this.disabledClassName);
+            }
+
+            if (target.tagName === 'BUTTON') {
+                target.setAttribute('disabled', 'disabled');
+            }
         });
     }
 
     protected enableTargets(): void {
-        this.targets.forEach((target: HTMLAnchorElement) => {
-            target.removeAttribute('disabled');
+        this.targets.forEach((target: Target) => {
+            if (target.tagName === 'A') {
+                target.classList.remove(this.disabledClassName);
+            }
+
+            if (target.tagName === 'BUTTON') {
+                target.removeAttribute('disabled');
+            }
         });
     }
 
@@ -76,7 +91,12 @@ export default class OrderDetailButtonsStateHandler extends Component {
         return this.getAttribute('target-class-name');
     }
 
-    protected get enableMode(): string {
-        return this.getAttribute('enable-mode');
+    protected get isDisabledWhenChecked(): boolean {
+        const attributeValue = this.getAttribute('is-disabled-when-checked');
+        return attributeValue === 'true';
+    }
+
+    protected get disabledClassName(): string {
+        return this.getAttribute('disabled-class-name');
     }
 }
