@@ -22,14 +22,18 @@
     <hr>
     {% block header %}
         {% block addToCartForm %}
-            {% widget 'AddItemsFormWidget'  args [config, data, data.products] only %}
+            {% widget 'AddItemsFormWidget'  args [config, data, data.products] with {
+                embed: {
+                    jsName: config.jsName,
+                },
+            } only %}
                 {% block embeddedData %}
                     {% set isDisabled = false %}
 
                     {% for product in data.data.products %}
                         {% if product.idProductConcrete is not empty %}
                             {% if product.available %}
-                                <input type="hidden" name="items[{{ loop.index }}][sku]" class="{{ config.jsName }}__product-sku-hidden-input" value="{{ product.sku }}">
+                                <input type="hidden" name="items[{{ loop.index }}][sku]" class="{{ embed.jsName }}__product-sku-hidden-input" value="{{ product.sku }}">
                                 <input type="hidden" name="items[{{ loop.index }}][quantity]" value="1">
                             {% endif %}
                         {% else %}
