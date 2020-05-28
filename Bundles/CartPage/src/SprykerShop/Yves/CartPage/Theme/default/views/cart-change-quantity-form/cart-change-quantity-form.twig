@@ -7,7 +7,7 @@
 } %}
 
 {% block body %}
-    {{ form_start(data.form, {'action': path('cart/change/quantity', {'sku': data.cartItem.sku }), 'name': 'cartChangeQuantityForm_' ~ data.cartItem.sku }) }}
+    {{ form_start(data.form, {'action': path('cart/change/quantity', {'sku': data.cartItem.sku }), 'name': 'cartChangeQuantityForm_' ~ data.cartItem.groupKey }) }}
         {% block embeddedData %}{% endblock %}
     {{ form_end(data.form) }}
 {% endblock %}

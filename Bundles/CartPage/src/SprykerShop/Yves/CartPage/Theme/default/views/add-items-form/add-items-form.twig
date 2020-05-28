@@ -8,7 +8,7 @@
 } %}
 
 {% block body %}
-    {{ form_start(data.form, {'class': data.data.formClass, 'action': path('cart/add-items'), 'name': 'addItemsForm_' ~ data.product.sku }) }}
+    {{ form_start(data.form, {'class': data.data.formClass, 'action': path('cart/add-items'), 'name': 'addItemsForm_' }) }}
         {% block embeddedData %}{% endblock %}
     {{ form_end(data.form) }}
 {% endblock %}
