@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\SalesReturnPage\Controller;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Spryker\Yves\Kernel\View\View;
-use SprykerShop\Yves\SalesReturnPage\SalesReturnPageConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -20,7 +19,6 @@ class ReturnListController extends AbstractReturnController
 {
     protected const PARAM_PAGE = 'page';
     protected const PARAM_PAGE_DEFAULT = 1;
-
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
