@@ -88,11 +88,10 @@ class LanguageSwitcherWidget extends AbstractWidget
             $language = $this->getLanguageFromLocale($locale);
             foreach ($localeUrls as $localeUrl) {
                 if ($localeUrl[UrlStorageTransfer::LOCALE_NAME] === $locale) {
-                    $url = $localeUrl[UrlStorageTransfer::URL];
-                    if ($queryString) {
-                        $url .= '?' . $queryString;
-                    }
-                    $languages[$language] = $url;
+                    $languages[$language] = $this->getLocaleUrlWithQueryString(
+                        $localeUrl[UrlStorageTransfer::URL],
+                        $queryString
+                    );
 
                     break;
                 }
@@ -100,6 +99,21 @@ class LanguageSwitcherWidget extends AbstractWidget
         }
 
         return $languages;
+    }
+
+    /**
+     * @param string $url
+     * @param string|null $queryString
+     *
+     * @return string
+     */
+    protected function getLocaleUrlWithQueryString(string $url, ?string $queryString): string
+    {
+        if ($queryString) {
+            return $url . '?' . $queryString;
+        }
+
+        return $url;
     }
 
     /**
