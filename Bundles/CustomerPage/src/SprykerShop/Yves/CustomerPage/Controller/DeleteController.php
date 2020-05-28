@@ -33,7 +33,7 @@ class DeleteController extends AbstractCustomerController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function confirmDeleteAction(Request $request)
+    public function confirmAction(Request $request)
     {
         $customerDeleteForm = $this->getFactory()
             ->createCustomerFormFactory()
