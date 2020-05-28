@@ -18,7 +18,7 @@ class SalesReturnPageConfig extends AbstractBundleConfig
      *
      * @return int
      */
-    public function getReturnListPerPage(): int
+    public function getReturnPerPage(): int
     {
         return static::DEFAULT_RETURN_LIST_PER_PAGE;
     }

@@ -7,9 +7,6 @@
 
 namespace SprykerShop\Yves\SalesReturnPage\Controller;
 
-use Generated\Shared\Transfer\ReturnFilterTransfer;
-use Generated\Shared\Transfer\ReturnResponseTransfer;
-use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -31,50 +28,6 @@ abstract class AbstractReturnController extends AbstractController
             throw new NotFoundHttpException(
                 'Only logged in customers are allowed to access this page'
             );
-        }
-    }
-
-    /**
-     * @param string $returnReference
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return \Generated\Shared\Transfer\ReturnTransfer
-     */
-    protected function getReturnByReference(string $returnReference): ReturnTransfer
-    {
-        $returnFilterTransfer = (new ReturnFilterTransfer())
-            ->setReturnReference($returnReference)
-            ->setCustomerReference(
-                $this->getFactory()->getCustomerClient()->getCustomer()->getCustomerReference()
-            );
-
-        $returnTransfers = $this->getFactory()
-            ->getSalesReturnClient()
-            ->getReturns($returnFilterTransfer)
-            ->getReturns();
-
-        $returnTransfer = $returnTransfers->getIterator()->current();
-
-        if (!$returnTransfer) {
-            throw new NotFoundHttpException(sprintf(
-                "Return with provided reference %s doesn't exist",
-                $returnReference
-            ));
-        }
-
-        return $returnTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ReturnResponseTransfer $returnResponseTransfer
-     *
-     * @return void
-     */
-    protected function handleResponseErrors(ReturnResponseTransfer $returnResponseTransfer): void
-    {
-        foreach ($returnResponseTransfer->getMessages() as $messageTransfer) {
-            $this->addErrorMessage($messageTransfer->getValue());
         }
     }
 }
