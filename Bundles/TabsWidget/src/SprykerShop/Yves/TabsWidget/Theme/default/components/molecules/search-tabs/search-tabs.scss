@@ -38,7 +38,7 @@ $search-tab-border: 1px solid $setting-color-lighter;
 }
 
 /**
- * @deprecated use tabs-widget-search-tabs mixin instead.
+ * @deprecated Use tabs-widget-search-tabs mixin instead.
  */
 @mixin catalog-page-search-tabs($name: '.search-tabs') {
     @include tabs-widget-search-tabs();

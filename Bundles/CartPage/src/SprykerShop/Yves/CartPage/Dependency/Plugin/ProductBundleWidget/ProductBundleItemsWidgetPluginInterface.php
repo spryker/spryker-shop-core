@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleCartItemsListWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleCartItemsListWidget} instead.
  */
 interface ProductBundleItemsWidgetPluginInterface extends WidgetPluginInterface
 {

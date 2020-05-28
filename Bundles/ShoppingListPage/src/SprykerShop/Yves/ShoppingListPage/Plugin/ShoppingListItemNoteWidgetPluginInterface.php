@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ShoppingListNoteWidget\Widget\ShoppingListItemNoteWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ShoppingListNoteWidget\Widget\ShoppingListItemNoteWidget} instead.
  */
 interface ShoppingListItemNoteWidgetPluginInterface extends WidgetPluginInterface
 {

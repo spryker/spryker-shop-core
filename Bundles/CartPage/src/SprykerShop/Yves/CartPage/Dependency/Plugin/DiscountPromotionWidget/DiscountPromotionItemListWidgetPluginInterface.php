@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated Use \SprykerShop\Yves\DiscountPromotionWidget\Widget\CartDiscountPromotionProductListWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\DiscountPromotionWidget\Widget\CartDiscountPromotionProductListWidget} instead.
  */
 interface DiscountPromotionItemListWidgetPluginInterface extends WidgetPluginInterface
 {

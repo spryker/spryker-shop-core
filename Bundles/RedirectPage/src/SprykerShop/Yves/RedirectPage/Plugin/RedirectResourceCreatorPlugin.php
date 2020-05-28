@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface;
 
 /**
- * @deprecated Use `\SprykerShop\Yves\RedirectPage\Plugin\StorageRouter\RedirectResourceCreatorPlugin` instead.
+ * @deprecated Use {@link \SprykerShop\Yves\RedirectPage\Plugin\StorageRouter\RedirectResourceCreatorPlugin} instead.
  *
  * @method \SprykerShop\Yves\RedirectPage\RedirectPageFactory getFactory()
  */

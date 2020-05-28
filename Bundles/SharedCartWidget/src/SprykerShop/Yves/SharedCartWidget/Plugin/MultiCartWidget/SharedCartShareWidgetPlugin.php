@@ -13,7 +13,7 @@ use SprykerShop\Yves\MultiCartWidget\Dependency\Plugin\SharedCartWidget\SharedCa
 use SprykerShop\Yves\SharedCartWidget\Widget\SharedCartShareWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\SharedCartWidget\Widget\SharedCartShareWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\SharedCartWidget\Widget\SharedCartShareWidget} instead.
  *
  * @method \SprykerShop\Yves\SharedCartWidget\SharedCartWidgetFactory getFactory()
  */

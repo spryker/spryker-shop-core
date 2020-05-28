@@ -26,7 +26,7 @@
 }
 
 /**
- * @deprecated use configurable-bundle-widget-order-configured-bundle-product mixin instead.
+ * @deprecated Use configurable-bundle-widget-order-configured-bundle-product mixin instead.
  */
 @mixin configurable-bundle-widget-order-configured-bundle-product($name: '.order-configured-bundle-product') {
     @include sales-configurable-bundle-widget-order-configured-bundle-product();

@@ -73,9 +73,7 @@ class ReturnHandler implements ReturnHandlerInterface
      */
     public function createReturn(array $returnItemsList): ReturnResponseTransfer
     {
-        $returnItemData = isset($returnItemsList[ReturnCreateForm::FIELD_RETURN_ITEMS])
-            ? $returnItemsList[ReturnCreateForm::FIELD_RETURN_ITEMS]
-            : [];
+        $returnItemData = $returnItemsList[ReturnCreateForm::FIELD_RETURN_ITEMS] ?? [];
 
         $returnCreateRequestTransfer = $this->createReturnCreateRequestTransfer($returnItemData);
         $returnCreateRequestTransfer = $this->executeReturnCreateFormHandlerPlugins($returnItemsList, $returnCreateRequestTransfer);

@@ -25,7 +25,7 @@ class ContentProductSetTwigFunction extends TwigFunction
     protected const FUNCTION_CONTENT_PRODUCT_SET = 'content_product_set';
 
     /**
-     * @deprecated Use `\SprykerShop\Yves\ContentProductSetWidget\Twig\ContentProductSetTwigFunction::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_TOP` instead.
+     * @deprecated Use {@link \SprykerShop\Yves\ContentProductSetWidget\Twig\ContentProductSetTwigFunction::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_TOP} instead.
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
 

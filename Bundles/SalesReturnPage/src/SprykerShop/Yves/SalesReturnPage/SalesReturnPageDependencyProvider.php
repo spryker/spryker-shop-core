@@ -12,12 +12,14 @@ use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToCustomerClientBridge;
 use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesClientBridge;
 use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnClientBridge;
+use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnSearchClientBridge;
 use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToStoreClientBridge;
 
 class SalesReturnPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_SALES_RETURN = 'CLIENT_SALES_RETURN';
+    public const CLIENT_SALES_RETURN_SEARCH = 'CLIENT_SALES_RETURN_SEARCH';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_SALES = 'CLIENT_SALES';
     public const CLIENT_STORE = 'CLIENT_STORE';
 
@@ -33,6 +35,7 @@ class SalesReturnPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideDependencies($container);
 
         $container = $this->addSalesReturnClient($container);
+        $container = $this->addSalesReturnSearchClient($container);
         $container = $this->addSalesClient($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addStoreClient($container);
@@ -126,5 +129,21 @@ class SalesReturnPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function getReturnCreateFormHandlerPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSalesReturnSearchClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_SALES_RETURN_SEARCH, function (Container $container) {
+            return new SalesReturnPageToSalesReturnSearchClientBridge(
+                $container->getLocator()->salesReturnSearch()->client()
+            );
+        });
+
+        return $container;
     }
 }

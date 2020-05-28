@@ -208,7 +208,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     }
 
     /**
-     * @deprecated Use createAvailableMethodsByShipmentChoiceList() instead.
+     * @deprecated Use {@link createAvailableMethodsByShipmentChoiceList()} instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -236,7 +236,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     }
 
     /**
-     * @deprecated Use getAvailableMethodsByShipment() instead.
+     * @deprecated Use {@link getAvailableMethodsByShipment()} instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
