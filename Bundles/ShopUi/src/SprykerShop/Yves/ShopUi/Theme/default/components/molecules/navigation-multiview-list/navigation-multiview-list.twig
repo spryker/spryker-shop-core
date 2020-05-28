@@ -2,11 +2,11 @@
 
 {% define config = {
     name: 'navigation-icon-list',
-    tag: 'nav'
+    tag: 'nav',
 } %}
 
 {% define data = {
-    nodes: []
+    nodes: [],
 } %}
 
 {% block body %}
@@ -15,23 +15,23 @@
             {% embed atom('node') with {
                 class: 'menu__item',
                 config: {
-                    tag: 'li'
+                    tag: 'li',
                 },
                 data: {
-                    node: node
+                    node: node,
                 },
                 embed: {
-                    name: config.name
-                }
+                    name: config.name,
+                },
             } only %}
 
-                {% set icon = '' %}
-                {% define classArray = data.node.cssClass | split(' ') %}
+                {% set iconName = '' %}
+                {% set classArray = data.node.cssClass | split(' ') %}
                 {% if classArray | length > 0 %}
                     {% for tempIcon in classArray %}
                         {% set tempClassArray = tempIcon | split('--') %}
                         {% if tempClassArray | length > 1 %}
-                            {% set icon = tempClassArray[1] %}
+                            {% set iconName = tempClassArray[1] %}
                         {% endif %}
                     {% endfor %}
                 {% endif %}
@@ -39,12 +39,12 @@
                 {% block url %}
                     <a class="link link--alt {{ data.node.cssClass }}" href="{{ data.node.url }}"
                        title="{{ data.node.title }}">
-                        {% if icon %}
+                        {% if iconName %}
                             {% include atom('icon') with {
                                 modifiers: ['big'],
                                 data: {
-                                    name: icon
-                                }
+                                    name: iconName,
+                                },
                             } only %}
                         {% else %}
                             {{ data.node.title }}
@@ -55,12 +55,12 @@
                 {% block externalUrl %}
                     <a class="link link--alt {{ data.node.cssClass }}" href="{{ data.node.url }}" target="_blank"
                        title="{{ data.node.title }}">
-                        {% if icon %}
+                        {% if iconName %}
                             {% include atom('icon') with {
                                 modifiers: ['big'],
                                 data: {
-                                    name: icon
-                                }
+                                    name: iconName,
+                                },
                             } only %}
                         {% else %}
                             {{ data.node.title }}
@@ -69,13 +69,13 @@
                 {% endblock %}
 
                 {% block other %}
-                    {% if icon %}
+                    {% if iconName %}
                         {% include atom('icon') with {
                             modifiers: ['big'],
                             class: embed.name ~ '__icon ' ~ data.node.cssClass,
                             data: {
-                                name: icon
-                            }
+                                name: iconName,
+                            },
                         } only %}
                     {% else %}
                         {{ data.node.title }}
