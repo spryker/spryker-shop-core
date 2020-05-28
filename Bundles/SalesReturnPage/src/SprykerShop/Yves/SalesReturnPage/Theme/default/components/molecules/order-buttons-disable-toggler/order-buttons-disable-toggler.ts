@@ -63,6 +63,7 @@ export default class OrderButtonsDisableToggler extends Component {
         this.targets.forEach((target: Target) => {
             if (target.tagName === 'A') {
                 target.classList.add(this.disabledClassName);
+                return;
             }
 
             if (target.tagName === 'BUTTON') {
@@ -75,6 +76,7 @@ export default class OrderButtonsDisableToggler extends Component {
         this.targets.forEach((target: Target) => {
             if (target.tagName === 'A') {
                 target.classList.remove(this.disabledClassName);
+                return;
             }
 
             if (target.tagName === 'BUTTON') {

@@ -6,10 +6,10 @@
 
 {% define data = {
     item: required,
-    image: data.item.metadata.image,
-    name: data.item.name,
-    state: data.item.state.name,
-    quantity: data.item.quantity,
+    image: data.item.metadata.image | default,
+    name: data.item.name | default,
+    state: data.item.state.name | default,
+    quantity: data.item.quantity | default,
 } %}
 
 {% set thumbnailModifiers = ['small'] %}

@@ -6,15 +6,15 @@
 
 {% define data = {
     productBundle: required,
-    image: data.productBundle.bundleProduct.metadata.image,
-    name: data.productBundle.bundleProduct.name,
-    sku: data.productBundle.bundleProduct.sku,
-    productOptions: data.productBundle.bundleProduct.productOptions,
-    sumDiscountAmountFullAggregation: data.productBundle.bundleProduct.sumDiscountAmountFullAggregation,
-    sumPrice: data.productBundle.bundleProduct.sumPrice,
-    quantity: data.productBundle.bundleProduct.quantity,
-    sumPriceToPayAggregation: data.productBundle.bundleProduct.sumPriceToPayAggregation,
-    currencyIsoCode: data.productBundle.bundleItems[0].currencyIsoCode,
+    image: data.productBundle.bundleProduct.metadata.image | default,
+    name: data.productBundle.bundleProduct.name | default,
+    sku: data.productBundle.bundleProduct.sku | default,
+    productOptions: data.productBundle.bundleProduct.productOptions | default({}),
+    sumDiscountAmountFullAggregation: data.productBundle.bundleProduct.sumDiscountAmountFullAggregation | default,
+    sumPrice: data.productBundle.bundleProduct.sumPrice | default,
+    quantity: data.productBundle.bundleProduct.quantity | default,
+    sumPriceToPayAggregation: data.productBundle.bundleProduct.sumPriceToPayAggregation | default,
+    currencyIsoCode: data.productBundle.bundleItems[0].currencyIsoCode | default,
 } %}
 
 {% set contentWrapperClass = 'box col col--expand grid' %}
