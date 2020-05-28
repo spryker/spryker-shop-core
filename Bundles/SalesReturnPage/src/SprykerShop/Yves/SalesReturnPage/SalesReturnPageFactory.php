@@ -13,6 +13,7 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToCustomerClientInterface;
 use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesClientInterface;
 use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnClientInterface;
+use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnSearchClientInterface;
 use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToStoreClientInterface;
 use SprykerShop\Yves\SalesReturnPage\Form\DataProvider\ReturnCreateFormDataProvider;
 use SprykerShop\Yves\SalesReturnPage\Form\Handler\ReturnHandler;
@@ -62,6 +63,7 @@ class SalesReturnPageFactory extends AbstractFactory
     {
         return new ReturnCreateFormDataProvider(
             $this->getSalesReturnClient(),
+            $this->getSalesReturnSearchClient(),
             $this->getReturnCreateFormHandlerPlugins()
         );
     }
@@ -120,5 +122,13 @@ class SalesReturnPageFactory extends AbstractFactory
     public function getStoreClient(): SalesReturnPageToStoreClientInterface
     {
         return $this->getProvidedDependency(SalesReturnPageDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnSearchClientInterface
+     */
+    public function getSalesReturnSearchClient(): SalesReturnPageToSalesReturnSearchClientInterface
+    {
+        return $this->getProvidedDependency(SalesReturnPageDependencyProvider::CLIENT_SALES_RETURN_SEARCH);
     }
 }

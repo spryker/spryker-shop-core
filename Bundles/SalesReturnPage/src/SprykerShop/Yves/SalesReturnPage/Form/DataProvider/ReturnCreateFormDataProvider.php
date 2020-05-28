@@ -9,15 +9,22 @@ namespace SprykerShop\Yves\SalesReturnPage\Form\DataProvider;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
-use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
+use Generated\Shared\Transfer\ReturnReasonSearchRequestTransfer;
 use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnClientInterface;
+use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnSearchClientInterface;
 use SprykerShop\Yves\SalesReturnPage\Form\ReturnCreateForm;
 use SprykerShop\Yves\SalesReturnPage\Form\ReturnItemsForm;
 
 class ReturnCreateFormDataProvider
 {
-    public const GLOSSARY_KEY_CUSTOM_REASON = 'return_page.return_reasons.custom_reason.placeholder';
     public const CUSTOM_REASON_VALUE = 'custom_reason';
+
+    protected const GLOSSARY_KEY_CUSTOM_REASON = 'return_page.return_reasons.custom_reason.placeholder';
+
+    /**
+     * @uses \Spryker\Client\SalesReturnSearch\Plugin\Elasticsearch\ResultFormatter\ReturnReasonSearchResultFormatterPlugin::NAME
+     */
+    protected const RETURN_REASON_COLLECTION = 'ReturnReasonCollection';
 
     /**
      * @var \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnClientInterface
@@ -30,13 +37,23 @@ class ReturnCreateFormDataProvider
     protected $returnCreateFormHandlerPlugins;
 
     /**
+     * @var \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnSearchClientInterface
+     */
+    protected $returnSearchClient;
+
+    /**
      * @param \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnClientInterface $salesReturnClient
+     * @param \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnSearchClientInterface $returnSearchClient
      * @param \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface[] $returnCreateFormHandlerPlugins
      */
-    public function __construct(SalesReturnPageToSalesReturnClientInterface $salesReturnClient, array $returnCreateFormHandlerPlugins)
-    {
+    public function __construct(
+        SalesReturnPageToSalesReturnClientInterface $salesReturnClient,
+        SalesReturnPageToSalesReturnSearchClientInterface $returnSearchClient,
+        array $returnCreateFormHandlerPlugins
+    ) {
         $this->salesReturnClient = $salesReturnClient;
         $this->returnCreateFormHandlerPlugins = $returnCreateFormHandlerPlugins;
+        $this->returnSearchClient = $returnSearchClient;
     }
 
     /**
@@ -88,11 +105,17 @@ class ReturnCreateFormDataProvider
      */
     protected function prepareReturnReasonChoices(): array
     {
-        $returnReasonChoices = [];
-        $returnReasonCollectionTransfer = $this->salesReturnClient->getReturnReasons((new ReturnReasonFilterTransfer()));
+        $returnReasonSearchResponse = $this->returnSearchClient->searchReturnReasons((new ReturnReasonSearchRequestTransfer()));
+        if (!isset($returnReasonSearchResponse[static::RETURN_REASON_COLLECTION])) {
+            return [];
+        }
 
-        foreach ($returnReasonCollectionTransfer->getReturnReasons() as $returnReasonTransfer) {
-            $returnReasonChoices[$returnReasonTransfer->getGlossaryKeyReason()] = $returnReasonTransfer->getGlossaryKeyReason();
+        $returnReasonChoices = [];
+        /** @var \Generated\Shared\Transfer\ReturnReasonSearchCollectionTransfer $returnReasonCollectionTransfer */
+        $returnReasonCollectionTransfer = $returnReasonSearchResponse[static::RETURN_REASON_COLLECTION];
+
+        foreach ($returnReasonCollectionTransfer->getReturnReasons() as $returnReasonSearchTransfer) {
+            $returnReasonChoices[$returnReasonSearchTransfer->getName()] = $returnReasonSearchTransfer->getName();
         }
 
         $returnReasonChoices[static::GLOSSARY_KEY_CUSTOM_REASON] = static::CUSTOM_REASON_VALUE;

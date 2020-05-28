@@ -10,8 +10,6 @@ namespace SprykerShop\Yves\SalesReturnPage\Dependency\Client;
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
-use Generated\Shared\Transfer\ReturnReasonCollectionTransfer;
-use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
 use Generated\Shared\Transfer\ReturnResponseTransfer;
 
 class SalesReturnPageToSalesReturnClientBridge implements SalesReturnPageToSalesReturnClientInterface
@@ -27,16 +25,6 @@ class SalesReturnPageToSalesReturnClientBridge implements SalesReturnPageToSales
     public function __construct($salesReturnClient)
     {
         $this->salesReturnClient = $salesReturnClient;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ReturnReasonFilterTransfer $returnReasonFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\ReturnReasonCollectionTransfer
-     */
-    public function getReturnReasons(ReturnReasonFilterTransfer $returnReasonFilterTransfer): ReturnReasonCollectionTransfer
-    {
-        return $this->salesReturnClient->getReturnReasons($returnReasonFilterTransfer);
     }
 
     /**
