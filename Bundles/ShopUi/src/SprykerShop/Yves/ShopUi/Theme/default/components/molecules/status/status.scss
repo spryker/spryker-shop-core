@@ -1,7 +1,6 @@
 @mixin shop-ui-status($name: '.status') {
     @include shop-ui-badge($name) {
         &--in-progress,
-        &--payment-pending,
         &--refunded {
             background-color: helper-color-light(map-get($setting-color-actions, 'alert'));
             color: helper-color-dark(map-get($setting-color-actions, 'alert'));
@@ -15,6 +14,7 @@
         }
 
         &--waiting,
+        &--payment-pending,
         &--confirmed,
         &--exported {
             background-color: helper-color-light(map-get($setting-color-actions, 'warning'));
@@ -28,7 +28,9 @@
 
         &--canceled,
         &--ready-for-return,
-        &--returned {
+        &--returned,
+        &--waiting-for-return,
+        &--return-canceled {
             background-color: helper-color-light($setting-color-darker);
             color: helper-color-dark($setting-color-darker);
         }
@@ -36,11 +38,6 @@
         &--draft {
             background-color: helper-color-light($setting-color-alt);
             color: helper-color-dark($setting-color-alt);
-        }
-
-        &--shipped {
-            background-color: helper-color-light($setting-color-main);
-            color: helper-color-dark($setting-color-main);
         }
 
         @content;
