@@ -12,7 +12,7 @@ use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetTo
 use SprykerShop\Yves\ProductReviewWidget\Form\ProductReviewForm;
 
 /**
- * @deprecated Use `\Spryker\Client\ProductReview\Calculator\ProductReviewSummaryCalculator` instead.
+ * @deprecated Use {@link \Spryker\Client\ProductReview\Calculator\ProductReviewSummaryCalculator} instead.
  */
 class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorInterface
 {

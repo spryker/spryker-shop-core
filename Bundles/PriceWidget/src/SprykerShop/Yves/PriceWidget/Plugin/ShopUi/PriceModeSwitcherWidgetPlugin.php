@@ -12,7 +12,7 @@ use SprykerShop\Yves\PriceWidget\Widget\PriceModeSwitcherWidget;
 use SprykerShop\Yves\ShopUi\Dependency\Plugin\PriceWidget\PriceModeSwitcherWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\PriceWidget\Widget\PriceModeSwitcherWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\PriceWidget\Widget\PriceModeSwitcherWidget} instead.
  *
  * @method \SprykerShop\Yves\PriceWidget\PriceWidgetFactory getFactory()
  */

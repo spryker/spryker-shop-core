@@ -140,7 +140,7 @@ abstract class YvesBootstrap
     }
 
     /**
-     * @deprecated Use `\Spryker\Yves\Router\RouterDependencyProvider::getRouterPlugins()` instead.
+     * @deprecated Use {@link \Spryker\Yves\Router\RouterDependencyProvider::getRouterPlugins()} instead.
      *
      * @return void
      */
@@ -149,7 +149,7 @@ abstract class YvesBootstrap
     }
 
     /**
-     * @deprecated Use `\Spryker\Yves\Router\RouterDependencyProvider::getRouteProvider()` instead.
+     * @deprecated Use {@link \Spryker\Yves\Router\RouterDependencyProvider::getRouteProvider()} instead.
      *
      * @return void
      */

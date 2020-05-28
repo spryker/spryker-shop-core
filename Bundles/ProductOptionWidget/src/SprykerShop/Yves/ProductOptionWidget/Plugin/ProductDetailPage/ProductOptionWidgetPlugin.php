@@ -13,7 +13,7 @@ use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductOptionWidget\Pro
 use SprykerShop\Yves\ProductOptionWidget\Widget\ProductOptionConfiguratorWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductOptionWidget\Widget\ProductOptionConfiguratorWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductOptionWidget\Widget\ProductOptionConfiguratorWidget} instead.
  *
  * @method \SprykerShop\Yves\ProductOptionWidget\ProductOptionWidgetFactory getFactory()
  */

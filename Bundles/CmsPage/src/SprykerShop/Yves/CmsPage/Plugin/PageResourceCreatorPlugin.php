@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface;
 
 /**
- * @deprecated Use `\SprykerShop\Yves\CmsPage\Plugin\StorageRouter\PageResourceCreatorPlugin` instead.
+ * @deprecated Use {@link \SprykerShop\Yves\CmsPage\Plugin\StorageRouter\PageResourceCreatorPlugin} instead.
  *
  * @method \SprykerShop\Yves\CmsPage\CmsPageFactory getFactory()
  */

@@ -68,7 +68,7 @@ abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigCha
      * @param string $chartPluginName
      * @param string|null $dataIdentifier
      *
-     * @return array
+     * @return mixed[]
      */
     protected function getChartContext($chartPluginName, $dataIdentifier): array
     {
@@ -86,7 +86,7 @@ abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigCha
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     protected function getDefaultTwigOptions(): array
     {

@@ -13,7 +13,7 @@ use SprykerShop\Yves\ShoppingListNoteWidget\Widget\ShoppingListItemNoteWidget;
 use SprykerShop\Yves\ShoppingListPage\Plugin\ShoppingListItemNoteWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ShoppingListNoteWidget\Widget\ShoppingListItemNoteWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ShoppingListNoteWidget\Widget\ShoppingListItemNoteWidget} instead.
  */
 class ShoppingListItemNoteWidgetPlugin extends AbstractWidgetPlugin implements ShoppingListItemNoteWidgetPluginInterface
 {

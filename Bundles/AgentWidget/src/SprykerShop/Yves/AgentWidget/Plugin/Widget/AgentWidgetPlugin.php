@@ -12,7 +12,7 @@ use SprykerShop\Yves\AgentWidget\Widget\AgentControlBarWidget;
 use SprykerShop\Yves\ShopUi\Dependency\Plugin\AgentWidget\AgentWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\AgentWidget\Widget\AgentControlBarWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\AgentWidget\Widget\AgentControlBarWidget} instead.
  *
  * @method \SprykerShop\Yves\AgentWidget\AgentWidgetFactory getFactory()
  */

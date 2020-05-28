@@ -13,7 +13,7 @@ use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductRelationWidget\S
 use SprykerShop\Yves\ProductRelationWidget\Widget\SimilarProductsWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductRelationWidget\Widget\SimilarProductsWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductRelationWidget\Widget\SimilarProductsWidget} instead.
  *
  * @method \SprykerShop\Yves\ProductRelationWidget\ProductRelationWidgetFactory getFactory()
  */

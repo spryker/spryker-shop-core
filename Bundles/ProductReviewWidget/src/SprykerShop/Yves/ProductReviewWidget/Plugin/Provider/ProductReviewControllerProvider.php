@@ -11,7 +11,7 @@ use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
 /**
- * @deprecated Use `\SprykerShop\Yves\ProductReviewWidget\Plugin\Router\ProductReviewWidgetRouteProviderPlugin` instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductReviewWidget\Plugin\Router\ProductReviewWidgetRouteProviderPlugin} instead.
  */
 class ProductReviewControllerProvider extends AbstractYvesControllerProvider
 {
@@ -47,7 +47,7 @@ class ProductReviewControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
-     * @deprecated use addProductReviewCreateRoute() instead
+     * @deprecated Use {@link addProductReviewCreateRoute()} instead
      *
      * @return $this
      */

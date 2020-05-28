@@ -12,7 +12,7 @@ use SprykerShop\Yves\CartPage\Dependency\Plugin\DiscountWidget\DiscountVoucherFo
 use SprykerShop\Yves\DiscountWidget\Widget\DiscountVoucherFormWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\DiscountWidget\Widget\DiscountVoucherFormWidget instead
+ * @deprecated Use {@link \SprykerShop\Yves\DiscountWidget\Widget\DiscountVoucherFormWidget} instead
  *
  * @method \SprykerShop\Yves\DiscountWidget\DiscountWidgetFactory getFactory()
  */

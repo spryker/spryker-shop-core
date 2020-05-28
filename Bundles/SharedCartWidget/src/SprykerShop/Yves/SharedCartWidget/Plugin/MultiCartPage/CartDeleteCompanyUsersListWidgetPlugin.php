@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\SharedCartWidget\Widget\CartDeleteCompanyUsersListWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\SharedCartWidget\Widget\CartDeleteCompanyUsersListWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\SharedCartWidget\Widget\CartDeleteCompanyUsersListWidget} instead.
  *
  * @method \SprykerShop\Yves\SharedCartWidget\SharedCartWidgetFactory getFactory()
  */

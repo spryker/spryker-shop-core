@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\SharedCartWidget\Widget\SharedCartPermissionGroupWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\SharedCartWidget\Widget\SharedCartPermissionGroupWidget} instead.
  */
 interface SharedCartPermissionGroupWidgetPluginInterface extends WidgetPluginInterface
 {
