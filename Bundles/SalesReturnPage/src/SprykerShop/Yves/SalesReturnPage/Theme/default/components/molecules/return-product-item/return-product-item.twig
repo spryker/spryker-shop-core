@@ -11,6 +11,18 @@
 {% set checkboxColumnClass = 'col col--middle col--sm-2' %}
 {% set productItemColumnClass = 'col col--sm-10 grid' %}
 
+{%- macro cleanedState(state) -%}
+    {% spaceless %}
+        {% set forbiddenSymbols = ['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '=', '+', '[', ']', '{', '}', '\\', '|', ':', ';', '\'', '"', '<', '>', ',', '.', '/', '?', '§', '№'] %}
+        {% set state = state | replace({' ': '-'}) | lower %}
+
+        {% for symbol in forbiddenSymbols %}
+            {% set state = state | replace({("#{symbol}"): ''}) %}
+        {% endfor %}
+        {{ state }}
+    {% endspaceless %}
+{%- endmacro -%}
+
 {% block body %}
     {% block checkboxColumn %}
         <div class="{{ checkboxColumnClass }}">
@@ -73,15 +85,13 @@
                     </div>
                 {% endblock %}
 
-                {% set itemState = data.item.state.name | replace({' ': '-'}) | lower %}
-
                 {% block productState %}
                     <div class="{{ productStatusColumnClass }}">
                         {% block state %}
                             {% include molecule('status') with {
                                 data: {
-                                    label: ('oms.state.' ~ itemState) | trans,
-                                    status: itemState,
+                                    label: ('oms.state.' ~ _self.cleanedState(data.item.state.name)) | trans,
+                                    status: _self.cleanedState(data.item.state.name),
                                 },
                             } only %}
                         {% endblock %}

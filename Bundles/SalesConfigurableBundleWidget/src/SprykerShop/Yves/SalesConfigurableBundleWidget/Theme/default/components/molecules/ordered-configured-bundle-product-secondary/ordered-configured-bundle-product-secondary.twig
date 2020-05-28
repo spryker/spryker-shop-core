@@ -23,6 +23,18 @@
 {% set productQuantityColumnClass = 'col col--sm-2 text-center' %}
 {% set productPriceTotalColumnClass = 'col col--sm-2 text-center' %}
 
+{%- macro cleanedState(state) -%}
+    {% spaceless %}
+        {% set forbiddenSymbols = ['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '=', '+', '[', ']', '{', '}', '\\', '|', ':', ';', '\'', '"', '<', '>', ',', '.', '/', '?', '§', '№'] %}
+        {% set state = state | replace({' ': '-'}) | lower %}
+
+        {% for symbol in forbiddenSymbols %}
+            {% set state = state | replace({("#{symbol}"): ''}) %}
+        {% endfor %}
+        {{ state }}
+    {% endspaceless %}
+{%- endmacro -%}
+
 {% block content %}
     <div class="{{ contentWrapperClass }}">
         {% block imageColumn %}
@@ -45,15 +57,13 @@
                     </div>
                 {% endblock %}
 
-                {% set itemState = data.product.state.name | replace({' ': '-'}) | lower %}
-
                 {% block state %}
                     <div class="{{ productStatusColumnClass }}">
                         {% block stateInner %}
                             {% include molecule('status') with {
                                 data: {
-                                    label: ('oms.state.' ~ itemState) | trans,
-                                    status: itemState,
+                                    label: ('oms.state.' ~ _self.cleanedState(data.product.state.name)) | trans,
+                                    status: _self.cleanedState(data.product.state.name),
                                 },
                             } only %}
                         {% endblock %}
