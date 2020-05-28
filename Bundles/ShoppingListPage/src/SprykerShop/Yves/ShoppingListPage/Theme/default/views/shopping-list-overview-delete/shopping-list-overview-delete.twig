@@ -37,7 +37,7 @@
 {% set shoppingListMessageClasses = 'box' %}
 
 {% block customerContent %}
-    {% embed molecule('shopping-list-message', 'ShoppingListPage') with {
+    {% include molecule('shopping-list-message', 'ShoppingListPage') with {
         class: shoppingListMessageClasses,
         data: {
             title: data.title,
@@ -45,15 +45,7 @@
             idShoppingList: data.shoppingList.idShoppingList,
             sharedCompanyUsers: data.sharedCompanyUsers,
             sharedCompanyBusinessUnits: data.sharedCompanyBusinessUnits,
-        },
-        embed: {
             shoppingListDeleteForm: data.shoppingListDeleteForm,
-        }
+        },
     } only %}
-        {% block deleteButton %}
-            {{ form_start(embed.shoppingListDeleteForm, {'attr': {'class': 'link'}, 'action': url('shopping-list/delete', { 'idShoppingList': data.idShoppingList })}) }}
-                <button data-init-single-click class="{{ deleteButtonClasses }}">{{ 'customer.account.shopping_list.overview.delete' | trans }}</button>
-            {{ form_end(embed.shoppingListDeleteForm) }}
-        {% endblock %}
-    {%  endembed %}
 {% endblock %}
