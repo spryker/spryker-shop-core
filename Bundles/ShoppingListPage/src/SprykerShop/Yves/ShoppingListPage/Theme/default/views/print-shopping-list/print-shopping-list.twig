@@ -66,7 +66,9 @@
         </tbody>
         <thead>
             <tr>
-                <th>{{ 'customer.account.print_shopping_list.table.barcode' | trans }}</th>
+                {% if widgetExists('ProductBarcodeWidget') %}
+                    <th>{{ 'customer.account.print_shopping_list.table.barcode' | trans }}</th>
+                {% endif %}
                 <th>{{ 'customer.account.print_shopping_list.table.product_sku' | trans }}</th>
                 <th>{{ 'customer.account.print_shopping_list.table.product_name' | trans }}</th>
                 <th>{{ 'customer.account.print_shopping_list.table.default_price' | trans }}</th>
