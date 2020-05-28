@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\SalesReturnPage\Controller;
 
 use Spryker\Yves\Kernel\View\View;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\SalesReturnPage\SalesReturnPageFactory getFactory()
@@ -16,14 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 class ReturnSlipPrintController extends AbstractReturnController
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $returnReference
      *
      * @return \Spryker\Yves\Kernel\View\View
      */
-    public function printAction(Request $request, string $returnReference): View
+    public function printAction(string $returnReference): View
     {
-        $response = $this->executePrintAction($request, $returnReference);
+        $response = $this->executePrintAction($returnReference);
 
         return $this->view(
             $response,
@@ -33,15 +32,27 @@ class ReturnSlipPrintController extends AbstractReturnController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $returnReference
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return array
      */
-    protected function executePrintAction(Request $request, string $returnReference): array
+    protected function executePrintAction(string $returnReference): array
     {
+        $returnTransfer = $this->getFactory()
+            ->createReturnReader()
+            ->findReturnByReference($returnReference, $this->getFactory()->getCustomerClient()->getCustomer()->getCustomerReference());
+
+        if (!$returnTransfer) {
+            throw new NotFoundHttpException(sprintf(
+                "Return with provided reference %s doesn't exist",
+                $returnReference
+            ));
+        }
+
         return [
-            'return' => $this->getReturnByReference($returnReference),
+            'return' => $returnTransfer,
         ];
     }
 }
