@@ -65,14 +65,14 @@
 
                                                 {% block sku -%}
                                                     <small class="{{ skuClass }}">
-                                                        {{- sales_product_bundle_widget.item_sku' | trans }} {{ data.sku -}}
+                                                        {{- 'sales_product_bundle_widget.item_sku' | trans }} {{ data.sku -}}
                                                     </small>
                                                 {%- endblock %}
 
                                                 {% if data.productOptions is not empty %}
                                                     <div class="spacing-bottom">
                                                         {% block productOptions %}
-                                                            {{ sales_product_bundle_widget.item.options' | trans }}
+                                                            {{ 'sales_product_bundle_widget.item.options' | trans }}
                                                             <ul>
                                                                 {% for productOption in data.productOptions %}
                                                                     <li>
@@ -118,7 +118,7 @@
                                         {% block quantity %}
                                             <div class="{{ bundleQuantityColumnClass }}">
                                                 {% block quantityTitle %}
-                                                    {{ sales_product_bundle_widget.quantity' | trans }}
+                                                    {{ 'sales_product_bundle_widget.quantity' | trans }}
                                                 {% endblock %}
 
                                                 {{ data.quantity }}
