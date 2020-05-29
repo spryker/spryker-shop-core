@@ -40,7 +40,7 @@ export default class WindowLocationApplicator extends Component {
         const data = new URLSearchParams(<URLSearchParams>formData);
 
         formData.forEach((value: string, key: string) => {
-            if (value.length) {
+            if (value != false) {
                 return;
             }
 
