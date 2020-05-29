@@ -61,11 +61,11 @@ class ReturnListController extends AbstractReturnController
     protected function createReturnFilterTransfer(Request $request): ReturnFilterTransfer
     {
         $page = $request->query->getInt(static::PARAM_PAGE, static::PARAM_PAGE_DEFAULT);
-        $returnListPerPage = $this->getFactory()->getModuleConfig()->getReturnPerPage();
-        $offset = ($page - 1) * $returnListPerPage;
+        $returnPerPage = $this->getFactory()->getModuleConfig()->getReturnPerPage();
+        $offset = ($page - 1) * $returnPerPage;
         $filterTransfer = (new FilterTransfer())
             ->setOffset($offset)
-            ->setLimit($returnListPerPage);
+            ->setLimit($returnPerPage);
 
         $customerReference = $this->getFactory()
             ->getCustomerClient()
