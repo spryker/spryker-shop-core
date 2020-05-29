@@ -1,0 +1,78 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'ordered-bundle-item',
+} %}
+
+{% define data = {
+    item: required,
+    image: data.item.metadata.image | default,
+    name: data.item.name | default,
+    state: data.item.state.name | default,
+    quantity: data.item.quantity | default,
+} %}
+
+{% set thumbnailModifiers = ['small'] %}
+{% set imageColumnClass = 'col col--middle col--sm-2' %}
+{% set nameWrapperClass = 'col col--middle col--sm-4' %}
+{% set stateWrapperClass = 'col col--middle col--sm-2 text-center' %}
+{% set quantityWrapperClass = 'col col--middle col--sm-2 text-center' %}
+
+{%- macro cleanedState(state) -%}
+    {% spaceless %}
+        {% set forbiddenSymbols = ['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '=', '+', '[', ']', '{', '}', '\\', '|', ':', ';', '\'', '"', '<', '>', ',', '.', '/', '?', '§', '№'] %}
+        {% set state = state | replace({' ': '-'}) | lower %}
+
+        {% for symbol in forbiddenSymbols %}
+            {% set state = state | replace({("#{symbol}"): ''}) %}
+        {% endfor %}
+        {{ state }}
+    {% endspaceless %}
+{%- endmacro -%}
+
+{% block body %}
+    {% block imageWrapper %}
+        <div class="{{ imageColumnClass }}">
+            {% block image %}
+                {% include atom('thumbnail') with {
+                    modifiers: thumbnailModifiers,
+                    attributes: {
+                        src: data.image,
+                        alt: data.name,
+                    },
+                } only %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block nameWrapper %}
+        <div class="{{ nameWrapperClass }}">
+            {% block name %}
+                <h6>{{ data.name }}</h6>
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block state %}
+        <div class="{{ stateWrapperClass }}">
+            {% block stateText %}
+                {% include molecule('status') with {
+                    data: {
+                        label: ('oms.state.' ~ _self.cleanedState(data.state)) | trans,
+                        status: _self.cleanedState(data.state),
+                    },
+                } only %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block quantityWrapper %}
+        <div class="{{ quantityWrapperClass }}">
+            {% block quantityText %}
+                {{ sales_product_bundle_widget.quantity' | trans }}
+            {% endblock %}
+
+            {{ data.quantity }}
+        </div>
+    {% endblock %}
+{% endblock %}

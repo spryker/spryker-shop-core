@@ -1,0 +1,159 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'ordered-product-bundle',
+} %}
+
+{% define data = {
+    productBundle: required,
+    image: data.productBundle.bundleProduct.metadata.image | default,
+    name: data.productBundle.bundleProduct.name | default,
+    sku: data.productBundle.bundleProduct.sku | default,
+    productOptions: data.productBundle.bundleProduct.productOptions | default({}),
+    sumDiscountAmountFullAggregation: data.productBundle.bundleProduct.sumDiscountAmountFullAggregation | default,
+    sumPrice: data.productBundle.bundleProduct.sumPrice | default,
+    quantity: data.productBundle.bundleProduct.quantity | default,
+    sumPriceToPayAggregation: data.productBundle.bundleProduct.sumPriceToPayAggregation | default,
+    currencyIsoCode: data.productBundle.bundleItems[0].currencyIsoCode | default,
+} %}
+
+{% set contentWrapperClass = 'box col col--expand grid' %}
+{% set contentClass = 'col col--expand grid' %}
+{% set imageColumnClass = 'col col--sm-2' %}
+{% set bundleItemColumnClass = 'col col--sm-10' %}
+{% set bundleItemClass = 'grid grid--justify spacing-bottom spacing-bottom--inner spacing-right spacing-right--inner' %}
+{% set itemsClass = 'grid grid--middle spacing-y' %}
+{% set bundleInfoColumnClass = 'col col--sm-4' %}
+{% set bundlePriceQuantityColumnClass = 'col col--sm-6' %}
+{% set bundlePriceColumnClass = 'col col--sm-4 text-center' %}
+{% set bundleQuantityColumnClass = 'col col--sm-4 text-center' %}
+{% set bundlePriceTotalColumnClass = 'col col--sm-4 text-center' %}
+
+{% block body %}
+    <div class="{{ contentWrapperClass }}">
+        {% block contentWrapper %}
+            <div class="{{ contentClass }}">
+                {% block content %}
+                    {% block imageWrapper %}
+                        <div class="{{ imageColumnClass }}">
+                            {% set thumbnailModifiers = ['small'] %}
+
+                            {% block image %}
+                                {% include atom('thumbnail') with {
+                                    modifiers: thumbnailModifiers,
+                                    attributes: {
+                                        src: data.image,
+                                        alt: data.name,
+                                    },
+                                } only %}
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
+
+                    {% block bundleItemColumn %}
+                        <div class="{{ bundleItemColumnClass }}">
+                            {% block bundleItem %}
+                                <div class="{{ bundleItemClass }}">
+                                    {% block bundleInfo %}
+                                        <div class="{{ bundleInfoColumnClass }}">
+                                            {% block bundleInfoInner %}
+                                                {% block name -%}
+                                                    <h6>{{ data.name }}</h6>
+                                                {%- endblock %}
+
+                                                {% set skuClass = 'text-secondary' %}
+
+                                                {% block sku -%}
+                                                    <small class="{{ skuClass }}">
+                                                        {{- sales_product_bundle_widget.item_sku' | trans }} {{ data.sku -}}
+                                                    </small>
+                                                {%- endblock %}
+
+                                                {% if data.productOptions is not empty %}
+                                                    <div class="spacing-bottom">
+                                                        {% block productOptions %}
+                                                            {{ sales_product_bundle_widget.item.options' | trans }}
+                                                            <ul>
+                                                                {% for productOption in data.productOptions %}
+                                                                    <li>
+                                                                        &nbsp; + {{ productOption.value | trans }}
+                                                                        <strong>{{ productOption.sumPrice | money(true, data.currencyIsoCode) }}</strong>
+                                                                    </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        {% endblock %}
+                                                    </div>
+                                                {% endif %}
+                                            {%- endblock %}
+                                        </div>
+                                    {% endblock %}
+
+                                    {% set isDiscount = data.sumDiscountAmountFullAggregation is defined and data.sumDiscountAmountFullAggregation is not null %}
+
+                                    <div class="{{ bundlePriceQuantityColumnClass }}">
+                                        {% block price %}
+                                            <div class="{{ bundlePriceColumnClass }}">
+                                                {% if isDiscount -%}
+                                                    {% block currentProductBundlePrice %}
+                                                        <div>
+                                                            <strong>{{ (data.sumPrice - data.sumDiscountAmountFullAggregation) | money(true, data.currencyIsoCode) }}</strong>
+                                                        </div>
+                                                    {% endblock %}
+
+                                                    {% block oldProductBundlePrice %}
+                                                        <div>
+                                                            <del class="text-secondary">{{ data.sumPrice | money(true, data.currencyIsoCode) }}</del>
+                                                        </div>
+                                                    {% endblock %}
+                                                {% else %}
+                                                    {% block originalProductBundlePrice %}
+                                                        <div>
+                                                            <strong>{{ data.sumPrice | money(true, data.currencyIsoCode) }}</strong>
+                                                        </div>
+                                                    {% endblock %}
+                                                {% endif %}
+                                            </div>
+                                        {% endblock %}
+
+                                        {% block quantity %}
+                                            <div class="{{ bundleQuantityColumnClass }}">
+                                                {% block quantityTitle %}
+                                                    {{ sales_product_bundle_widget.quantity' | trans }}
+                                                {% endblock %}
+
+                                                {{ data.quantity }}
+                                            </div>
+                                        {% endblock %}
+
+                                        {% block total %}
+                                            <div class="{{ bundlePriceTotalColumnClass }}">
+                                                {% block totalInner %}
+                                                    <strong>{{ data.sumPriceToPayAggregation | money(true, data.currencyIsoCode) }}</strong>
+                                                {% endblock %}
+                                            </div>
+                                        {% endblock %}
+                                    </div>
+                                </div>
+                            {% endblock %}
+
+                            {% block separator %}
+                                <hr class="box__separator">
+                            {% endblock %}
+
+                            {% block items %}
+                                {% for bundleItem in data.productBundle.bundleItems %}
+                                    {% include molecule('ordered-bundle-item', 'SalesProductBundleWidget') with {
+                                        class: itemsClass,
+                                        data: {
+                                            item: bundleItem,
+                                        },
+                                    } only %}
+                                {% endfor %}
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
+                {% endblock %}
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}
