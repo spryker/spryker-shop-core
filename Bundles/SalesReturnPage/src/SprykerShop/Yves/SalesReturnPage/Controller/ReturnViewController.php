@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\SalesReturnPage\Controller;
 
 use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Yves\Kernel\View\View;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\SalesReturnPage\SalesReturnPageFactory getFactory()
@@ -17,14 +17,13 @@ use Symfony\Component\HttpFoundation\Request;
 class ReturnViewController extends AbstractReturnController
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $returnReference
      *
      * @return \Spryker\Yves\Kernel\View\View
      */
-    public function viewAction(Request $request, string $returnReference): View
+    public function viewAction(string $returnReference): View
     {
-        $response = $this->executeViewAction($request, $returnReference);
+        $response = $this->executeViewAction($returnReference);
 
         return $this->view(
             $response,
@@ -34,14 +33,24 @@ class ReturnViewController extends AbstractReturnController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $returnReference
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return array
      */
-    protected function executeViewAction(Request $request, string $returnReference): array
+    protected function executeViewAction(string $returnReference): array
     {
-        $returnTransfer = $this->getReturnByReference($returnReference);
+        $returnTransfer = $this->getFactory()
+            ->createReturnReader()
+            ->findReturnByReference($returnReference, $this->getFactory()->getCustomerClient()->getCustomer()->getCustomerReference());
+
+        if (!$returnTransfer) {
+            throw new NotFoundHttpException(sprintf(
+                "Return with provided reference %s doesn't exist",
+                $returnReference
+            ));
+        }
 
         return [
             'return' => $returnTransfer,

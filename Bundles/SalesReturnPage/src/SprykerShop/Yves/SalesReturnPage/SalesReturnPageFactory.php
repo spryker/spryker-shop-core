@@ -19,6 +19,8 @@ use SprykerShop\Yves\SalesReturnPage\Form\DataProvider\ReturnCreateFormDataProvi
 use SprykerShop\Yves\SalesReturnPage\Form\Handler\ReturnHandler;
 use SprykerShop\Yves\SalesReturnPage\Form\Handler\ReturnHandlerInterface;
 use SprykerShop\Yves\SalesReturnPage\Form\ReturnCreateForm;
+use SprykerShop\Yves\SalesReturnPage\Reader\ReturnReader;
+use SprykerShop\Yves\SalesReturnPage\Reader\ReturnReaderInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -66,6 +68,14 @@ class SalesReturnPageFactory extends AbstractFactory
             $this->getSalesReturnSearchClient(),
             $this->getReturnCreateFormHandlerPlugins()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\SalesReturnPage\Reader\ReturnReaderInterface
+     */
+    public function createReturnReader(): ReturnReaderInterface
+    {
+        return new ReturnReader($this->getSalesReturnClient());
     }
 
     /**

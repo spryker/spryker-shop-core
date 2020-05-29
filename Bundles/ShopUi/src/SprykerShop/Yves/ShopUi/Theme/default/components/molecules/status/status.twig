@@ -10,9 +10,20 @@
     status: required,
 } %}
 
+{%- macro statusModifire(className, status) -%}
+    {% spaceless %}
+        {% set forbiddenSymbols = ['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '=', '+', '[', ']', '{', '}', '\\', '|', ':', ';', '\'', '"', '<', '>', ',', '.', '/', '?', '§', '№'] %}
+        {% set status = status | replace({' ': '-'}) | lower %}
+
+        {% for symbol in forbiddenSymbols %}
+            {% set status = status | replace({("#{symbol}"): ''}) %}
+        {% endfor %}
+        {{ className }}--{{ status }}
+    {% endspaceless %}
+{%- endmacro -%}
+
 {% block extraClass %}
-    {% set status = data.status | replace({' ': '-'}) | lower %}
-    {% if status %}{{ config.name }}--{{ status }}{% endif %}
+    {% if data.status %}{{ _self.statusModifire(config.name, data.status) }}{% endif %}
 {% endblock %}
 
 {% block body %}
