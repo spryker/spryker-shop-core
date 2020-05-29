@@ -34,9 +34,9 @@ class WishlistWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addWishlistClient(Container $container): Container
     {
-        $container[static::CLIENT_WISHLIST] = function (Container $container) {
+        $container->set(static::CLIENT_WISHLIST, function (Container $container) {
             return new WishlistWidgetToWishlistClientBridge($container->getLocator()->wishlist()->client());
-        };
+        });
 
         return $container;
     }

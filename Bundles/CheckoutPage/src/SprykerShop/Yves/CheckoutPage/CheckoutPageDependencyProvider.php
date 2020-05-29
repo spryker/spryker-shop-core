@@ -549,9 +549,9 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPaymentPageWidgetPlugins(Container $container): Container
     {
-        $container[self::PLUGIN_PAYMENT_PAGE_WIDGETS] = function () {
+        $container->set(static::PLUGIN_PAYMENT_PAGE_WIDGETS, function () {
             return $this->getPaymentPageWidgetPlugins();
-        };
+        });
 
         return $container;
     }

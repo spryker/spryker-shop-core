@@ -33,9 +33,9 @@ class NavigationWidgetDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addNavigationStorageClient($container)
     {
-        $container[static::CLIENT_NAVIGATION_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_NAVIGATION_STORAGE, function (Container $container) {
             return $container->getLocator()->navigationStorage()->client();
-        };
+        });
 
         return $container;
     }
