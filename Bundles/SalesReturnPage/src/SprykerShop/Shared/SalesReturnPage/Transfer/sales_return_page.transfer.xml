@@ -165,4 +165,11 @@
         <property name="orders" type="Order[]" singular="order"/>
     </transfer>
 
+    <transfer name="ReturnReasonSearchCollection">
+        <property name="returnReasons" type="ReturnReasonSearch[]" singular="returnReason"/>
+    </transfer>
+
+    <transfer name="ReturnReasonSearchRequest">
+    </transfer>
+
 </transfers>
