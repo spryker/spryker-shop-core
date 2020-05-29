@@ -14,6 +14,18 @@
 
 {% set contentWrapperClass = 'box' %}
 
+{%- macro cleanedState(state) -%}
+    {% spaceless %}
+        {% set forbiddenSymbols = ['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '=', '+', '[', ']', '{', '}', '\\', '|', ':', ';', '\'', '"', '<', '>', ',', '.', '/', '?', '§', '№'] %}
+        {% set state = state | replace({' ': '-'}) | lower %}
+
+        {% for symbol in forbiddenSymbols %}
+            {% set state = state | replace({("#{symbol}"): ''}) %}
+        {% endfor %}
+        {{ state }}
+    {% endspaceless %}
+{%- endmacro -%}
+
 {% block salesReturnContent %}
     <div class="{{ contentWrapperClass }}">
         {% block salesReturnContentInner %}
@@ -73,12 +85,13 @@
                                         <td>{{ date(return.createdAt) | formatDateTime }}</td>
                                         <td>
                                             {% for itemState in itemStates %}
-                                                {% set itemStateClass = 'status status--' ~ itemState %}
-
-                                                {% block itemStateInfo %}
-                                                    <p class="{{ itemStateClass }}">
-                                                        {{ ('oms.state.' ~ itemState) | trans }}
-                                                    </p>
+                                                {% block state %}
+                                                    {% include molecule('status') with {
+                                                        data: {
+                                                            label: ('oms.state.' ~ _self.cleanedState(itemState)) | trans,
+                                                            status: _self.cleanedState(itemState),
+                                                        },
+                                                    } only %}
                                                 {% endblock %}
                                             {% endfor %}
                                         </td>
