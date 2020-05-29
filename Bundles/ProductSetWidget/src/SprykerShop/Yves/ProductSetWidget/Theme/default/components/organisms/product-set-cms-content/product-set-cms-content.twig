@@ -2,6 +2,7 @@
 
 {% define config = {
     name: 'product-set-cms-content',
+    tag: 'product-set-cms-content',
 } %}
 
 {% define data = {
@@ -21,14 +22,18 @@
     <hr>
     {% block header %}
         {% block addToCartForm %}
-            {% widget 'AddItemsFormWidget'  args [config, data, data.products] only %}
+            {% widget 'AddItemsFormWidget'  args [config, data, data.products] with {
+                embed: {
+                    jsName: config.jsName,
+                },
+            } only %}
                 {% block embeddedData %}
                     {% set isDisabled = false %}
 
                     {% for product in data.data.products %}
                         {% if product.idProductConcrete is not empty %}
                             {% if product.available %}
-                                <input type="hidden" name="items[{{ loop.index }}][sku]" value="{{ product.sku }}">
+                                <input type="hidden" name="items[{{ loop.index }}][sku]" class="{{ embed.jsName }}__product-sku-hidden-input" value="{{ product.sku }}">
                                 <input type="hidden" name="items[{{ loop.index }}][quantity]" value="1">
                             {% endif %}
                         {% else %}
@@ -82,14 +87,15 @@
             {% for product in data.products %}
                 <div class="col col--sm-12 col--lg-4">
                     {% embed molecule('product-item') with {
-                        class: 'box--stretch',
+                        class: config.jsName ~ '__product-item box--stretch',
                         data: {
                             product: product,
                             sku: '',
                         },
                     } only %}
                         {% block content %}
-                            {{parent()}}
+                            {{ parent() }}
+
                             {% set isNotAvailable = data.product.idProductConcrete and not data.product.available %}
 
                             {% embed molecule('variant-configurator', 'ProductDetailPage') ignore missing with {
