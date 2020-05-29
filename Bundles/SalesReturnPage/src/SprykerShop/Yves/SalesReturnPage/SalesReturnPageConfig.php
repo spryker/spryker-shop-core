@@ -11,7 +11,7 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class SalesReturnPageConfig extends AbstractBundleConfig
 {
-    protected const DEFAULT_RETURN_LIST_PER_PAGE = 10;
+    protected const DEFAULT_RETURN_PER_PAGE = 10;
 
     /**
      * @api
@@ -20,6 +20,6 @@ class SalesReturnPageConfig extends AbstractBundleConfig
      */
     public function getReturnPerPage(): int
     {
-        return static::DEFAULT_RETURN_LIST_PER_PAGE;
+        return static::DEFAULT_RETURN_PER_PAGE;
     }
 }
