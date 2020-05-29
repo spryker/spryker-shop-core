@@ -11,6 +11,9 @@ use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \SprykerShop\Yves\SalesProductBundleWidget\SalesProductBundleWidgetConfig getConfig()
+ */
 class ReturnProductBundleForm extends AbstractType
 {
     public const FIELD_PRODUCT_BUNDLES = 'productBundles';

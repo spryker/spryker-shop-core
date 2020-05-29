@@ -16,6 +16,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \SprykerShop\Yves\SalesProductBundleWidget\SalesProductBundleWidgetConfig getConfig()
+ */
 class ReturnProductBundleItemsForm extends AbstractType
 {
     public const KEY_PRODUCT_BUNDLE_DATA = 'productBundleData';
