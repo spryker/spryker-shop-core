@@ -1,16 +1,14 @@
 import Component from 'ShopUi/models/component';
 
-type Target = HTMLAnchorElement|HTMLButtonElement;
-
 export default class OrderButtonsDisableToggler extends Component {
     protected triggers: HTMLInputElement[];
-    protected targets: Target[];
+    protected targets: HTMLElement[];
 
     protected readyCallback(): void {}
 
     protected init(): void {
         this.triggers = <HTMLInputElement[]>Array.from(document.getElementsByClassName(this.triggerClassName));
-        this.targets = <Target[]>Array.from(document.getElementsByClassName(this.targetClassName));
+        this.targets = <HTMLElement[]>Array.from(document.getElementsByClassName(this.targetClassName));
 
         this.toggleButtonState();
         this.mapEvents();
@@ -28,7 +26,7 @@ export default class OrderButtonsDisableToggler extends Component {
     }
 
     protected mapTargetClickEvent(): void {
-        this.targets.forEach((target: Target) => {
+        this.targets.forEach((target: HTMLElement) => {
             target.addEventListener('click', (event: Event) => this.onTargetClick(event, target));
         });
     }
@@ -53,14 +51,14 @@ export default class OrderButtonsDisableToggler extends Component {
         this.disableTargets();
     }
 
-    protected onTargetClick(event: Event, target: Target): void {
+    protected onTargetClick(event: Event, target: HTMLElement): void {
         if (target.classList.contains(this.disabledClassName)) {
             event.preventDefault();
         }
     }
 
     protected disableTargets(): void {
-        this.targets.forEach((target: Target) => {
+        this.targets.forEach((target: HTMLElement) => {
             if (target.tagName === 'A') {
                 target.classList.add(this.disabledClassName);
                 return;
@@ -73,15 +71,13 @@ export default class OrderButtonsDisableToggler extends Component {
     }
 
     protected enableTargets(): void {
-        this.targets.forEach((target: Target) => {
-            if (target.tagName === 'A') {
-                target.classList.remove(this.disabledClassName);
+        this.targets.forEach((target: HTMLElement) => {
+            if (target.tagName === 'BUTTON') {
+                target.removeAttribute('disabled');
                 return;
             }
 
-            if (target.tagName === 'BUTTON') {
-                target.removeAttribute('disabled');
-            }
+            target.classList.remove(this.disabledClassName);
         });
     }
 

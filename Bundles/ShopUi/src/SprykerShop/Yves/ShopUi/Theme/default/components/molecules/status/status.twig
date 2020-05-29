@@ -10,7 +10,7 @@
     status: required,
 } %}
 
-{%- macro statusModifire(className, status) -%}
+{%- macro escapeStatusModifier(className, status) -%}
     {% spaceless %}
         {% set forbiddenSymbols = ['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '=', '+', '[', ']', '{', '}', '\\', '|', ':', ';', '\'', '"', '<', '>', ',', '.', '/', '?', '§', '№'] %}
         {% set status = status | replace({' ': '-'}) | lower %}
@@ -23,7 +23,7 @@
 {%- endmacro -%}
 
 {% block extraClass %}
-    {% if data.status %}{{ _self.statusModifire(config.name, data.status) }}{% endif %}
+    {% if data.status %}{{ _self.escapeStatusModifier(config.name, data.status) }}{% endif %}
 {% endblock %}
 
 {% block body %}
