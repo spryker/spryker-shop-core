@@ -73,12 +73,15 @@
                                         <td>{{ date(return.createdAt) | formatDateTime }}</td>
                                         <td>
                                             {% for itemState in itemStates %}
-                                                {% set itemStateClass = 'status status--' ~ itemState %}
+                                                {% set state = itemState | replace({' ': '-'}) | lower %}
 
-                                                {% block itemStateInfo %}
-                                                    <p class="{{ itemStateClass }}">
-                                                        {{ ('oms.state.' ~ itemState) | trans }}
-                                                    </p>
+                                                {% block state %}
+                                                    {% include molecule('status') with {
+                                                        data: {
+                                                            label: ('oms.state.' ~ state) | trans,
+                                                            status: state,
+                                                        },
+                                                    } only %}
                                                 {% endblock %}
                                             {% endfor %}
                                         </td>
