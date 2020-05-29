@@ -7,7 +7,7 @@
 {% block body %}
     {% include molecule('navigation-list') with {
         data: {
-            nodes: data.navigation.nodes
-        }
+            nodes: data.navigation.nodes,
+        },
     } only %}
 {% endblock %}

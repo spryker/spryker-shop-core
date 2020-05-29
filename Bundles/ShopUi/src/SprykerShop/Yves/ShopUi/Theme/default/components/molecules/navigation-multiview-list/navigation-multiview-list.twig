@@ -1,7 +1,7 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'navigation-icon-list',
+    name: 'navigation-multiview-list',
     tag: 'nav',
 } %}
 
@@ -27,14 +27,13 @@
 
                 {% set iconName = '' %}
                 {% set classArray = data.node.cssClass | split(' ') %}
-                {% if classArray | length > 0 %}
-                    {% for tempIcon in classArray %}
-                        {% set tempClassArray = tempIcon | split('--') %}
-                        {% if tempClassArray | length > 1 %}
-                            {% set iconName = tempClassArray[1] %}
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
+
+                {% for classItem in classArray %}
+                    {% set classEntities = classItem | split('--') %}
+                    {% if classEntities | length > 1 %}
+                        {% set iconName = classEntities[1] %}
+                    {% endif %}
+                {% endfor %}
 
                 {% block url %}
                     <a class="link link--alt {{ data.node.cssClass }}" href="{{ data.node.url }}"
