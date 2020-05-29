@@ -24,12 +24,12 @@ class CodeController extends AbstractController
     public const PARAM_CODE = 'code';
 
     /**
-     * @uses \Spryker\Shared\CartCodes\CartCodesConfig::MESSAGE_TYPE_SUCCESS
+     * @uses \Spryker\Shared\CartCode\CartCodesConfig::MESSAGE_TYPE_SUCCESS
      */
     protected const MESSAGE_TYPE_SUCCESS = 'success';
 
     /**
-     * @uses \Spryker\Shared\CartCodes\CartCodesConfig::MESSAGE_TYPE_ERROR
+     * @uses \Spryker\Shared\CartCode\CartCodesConfig::MESSAGE_TYPE_ERROR
      */
     protected const MESSAGE_TYPE_ERROR = 'error';
 
