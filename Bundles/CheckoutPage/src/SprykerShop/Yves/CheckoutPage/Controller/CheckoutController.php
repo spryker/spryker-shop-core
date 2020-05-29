@@ -243,6 +243,10 @@ class CheckoutController extends AbstractController
             return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_SUMMARY);
         }
 
+        if ($quoteTransfer->getOrderReference() !== null) {
+            return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_SUCCESS);
+        }
+
         return $this->createStepProcess()->process($request);
     }
 
@@ -267,11 +271,19 @@ class CheckoutController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return mixed
      */
-    public function errorAction()
+    public function errorAction(Request $request)
     {
-        return $this->view([], [], '@CheckoutPage/views/order-fail/order-fail.twig');
+        $response = $this->createStepProcess()->process($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@CheckoutPage/views/order-fail/order-fail.twig');
     }
 
     /**
