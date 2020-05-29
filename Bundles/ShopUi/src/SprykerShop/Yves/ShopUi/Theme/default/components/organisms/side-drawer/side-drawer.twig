@@ -27,10 +27,8 @@
             </div>
         {% endblock %}
 
-        <div class="{{config.name}}__navigation">
-            <div class="{{config.name}}__row {{config.name}}__navigation-main is-hidden-sm-md">
-                {{ content_navigation('navigation-main', 'tree') }}
-            </div>
+        <div class="{{ config.name }}__navigation">
+            {{ content_navigation('navigation-main', 'tree') }}
             <hr>
             {% include organism('navigation-top') with {
                 class: 'text-left',
