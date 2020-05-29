@@ -16,6 +16,8 @@
         &--waiting,
         &--payment-pending,
         &--confirmed,
+        &--sent-to-merchant,
+        &--shipped-by-merchant,
         &--exported {
             background-color: helper-color-light(map-get($setting-color-actions, 'warning'));
             color: helper-color-dark(map-get($setting-color-actions, 'warning'));

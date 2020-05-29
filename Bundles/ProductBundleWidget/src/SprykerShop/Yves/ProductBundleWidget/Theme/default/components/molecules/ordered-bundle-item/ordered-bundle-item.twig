@@ -18,18 +18,6 @@
 {% set stateWrapperClass = 'col col--middle col--sm-2 text-center' %}
 {% set quantityWrapperClass = 'col col--middle col--sm-2 text-center' %}
 
-{%- macro cleanedState(state) -%}
-    {% spaceless %}
-        {% set forbiddenSymbols = ['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '=', '+', '[', ']', '{', '}', '\\', '|', ':', ';', '\'', '"', '<', '>', ',', '.', '/', '?', '§', '№'] %}
-        {% set state = state | replace({' ': '-'}) | lower %}
-
-        {% for symbol in forbiddenSymbols %}
-            {% set state = state | replace({("#{symbol}"): ''}) %}
-        {% endfor %}
-        {{ state }}
-    {% endspaceless %}
-{%- endmacro -%}
-
 {% block body %}
     {% block imageWrapper %}
         <div class="{{ imageColumnClass }}">
@@ -53,13 +41,15 @@
         </div>
     {% endblock %}
 
+    {% set state = data.state | replace({' ': '-'}) | lower %}
+
     {% block state %}
         <div class="{{ stateWrapperClass }}">
             {% block stateText %}
                 {% include molecule('status') with {
                     data: {
-                        label: ('oms.state.' ~ _self.cleanedState(data.state)) | trans,
-                        status: _self.cleanedState(data.state),
+                        label: ('oms.state.' ~ state) | trans,
+                        status: state,
                     },
                 } only %}
             {% endblock %}

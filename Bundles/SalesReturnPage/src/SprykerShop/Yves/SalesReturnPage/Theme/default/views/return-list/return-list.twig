@@ -14,18 +14,6 @@
 
 {% set contentWrapperClass = 'box' %}
 
-{%- macro cleanedState(state) -%}
-    {% spaceless %}
-        {% set forbiddenSymbols = ['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '=', '+', '[', ']', '{', '}', '\\', '|', ':', ';', '\'', '"', '<', '>', ',', '.', '/', '?', '§', '№'] %}
-        {% set state = state | replace({' ': '-'}) | lower %}
-
-        {% for symbol in forbiddenSymbols %}
-            {% set state = state | replace({("#{symbol}"): ''}) %}
-        {% endfor %}
-        {{ state }}
-    {% endspaceless %}
-{%- endmacro -%}
-
 {% block salesReturnContent %}
     <div class="{{ contentWrapperClass }}">
         {% block salesReturnContentInner %}
@@ -85,11 +73,13 @@
                                         <td>{{ date(return.createdAt) | formatDateTime }}</td>
                                         <td>
                                             {% for itemState in itemStates %}
+                                                {% set state = itemState | replace({' ': '-'}) | lower %}
+
                                                 {% block state %}
                                                     {% include molecule('status') with {
                                                         data: {
-                                                            label: ('oms.state.' ~ _self.cleanedState(itemState)) | trans,
-                                                            status: _self.cleanedState(itemState),
+                                                            label: ('oms.state.' ~ state) | trans,
+                                                            status: state,
                                                         },
                                                     } only %}
                                                 {% endblock %}
