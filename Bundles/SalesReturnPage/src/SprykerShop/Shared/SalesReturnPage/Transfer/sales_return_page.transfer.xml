@@ -172,4 +172,8 @@
     <transfer name="ReturnReasonSearchRequest">
     </transfer>
 
+    <transfer name="ReturnReasonSearch">
+        <property name="name" type="string"/>
+    </transfer>
+
 </transfers>

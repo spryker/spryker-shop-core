@@ -61,6 +61,7 @@ export default class OrderButtonsDisableToggler extends Component {
         this.targets.forEach((target: HTMLElement) => {
             if (target.tagName === 'A') {
                 target.classList.add(this.disabledClassName);
+
                 return;
             }
 
@@ -74,6 +75,7 @@ export default class OrderButtonsDisableToggler extends Component {
         this.targets.forEach((target: HTMLElement) => {
             if (target.tagName === 'BUTTON') {
                 target.removeAttribute('disabled');
+
                 return;
             }
 
@@ -91,6 +93,7 @@ export default class OrderButtonsDisableToggler extends Component {
 
     protected get isDisabledWhenChecked(): boolean {
         const attributeValue = this.getAttribute('is-disabled-when-checked');
+
         return attributeValue === 'true';
     }
 
