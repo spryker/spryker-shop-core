@@ -271,12 +271,16 @@ class CheckoutController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\HttpFoundation\Request|null $request
      *
      * @return mixed
      */
-    public function errorAction(Request $request)
+    public function errorAction(?Request $request = null)
     {
+        if ($request === null) {
+            return $this->view([], [], '@CheckoutPage/views/order-fail/order-fail.twig');
+        }
+
         $response = $this->createStepProcess()->process($request);
 
         if (!is_array($response)) {
