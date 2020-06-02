@@ -1,0 +1,25 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'accept-terms-checkbox',
+} %}
+
+{% define data = {
+    label: required,
+    name: 'acceptTermsAndConditions',
+    value: 1,
+} %}
+
+{% block body %}
+    {% embed atom('checkbox') with {
+        attributes: {
+            name: data.name,
+            value: data.value,
+        },
+        data: {
+            label: data.label,
+        },
+    } only %}
+        {%- block label -%}{{data.label | raw}}{%- endblock -%}
+    {% endembed %}
+{% endblock %}
