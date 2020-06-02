@@ -7,25 +7,22 @@
 
 namespace SprykerShop\Yves\CartPage\Widget;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 use Symfony\Component\Form\FormView;
 
 /**
  * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
  */
-class AddItemsFormWidget extends AbstractWidget
+class RemoveFromCartFormWidget extends AbstractWidget
 {
     /**
-     * @param array $config
-     * @param array $data
-     * @param array $productViewTransfers
+     * @param \Generated\Shared\Transfer\ItemTransfer $cartItem
      */
-    public function __construct(array $config, array $data, array $productViewTransfers)
+    public function __construct(ItemTransfer $cartItem)
     {
-        $this->addParameter('config', $config);
-        $this->addParameter('addToCartForm', $this->createAddToCartFormView());
-        $this->addParameter('data', $data);
-        $this->addParameter('products', $productViewTransfers);
+        $this->addParameter('removeFromCartForm', $this->createRemoveFromCartFormView());
+        $this->addParameter('cartItem', $cartItem);
     }
 
     /**
@@ -33,7 +30,7 @@ class AddItemsFormWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'AddItemsFormWidget';
+        return 'RemoveFromCartFormWidget';
     }
 
     /**
@@ -41,17 +38,17 @@ class AddItemsFormWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@CartPage/views/add-items-form/add-items-form.twig';
+        return '@CartPage/views/remove-from-cart/remove-from-cart-form.twig';
     }
 
     /**
      * @return \Symfony\Component\Form\FormView
      */
-    protected function createAddToCartFormView(): FormView
+    protected function createRemoveFromCartFormView(): FormView
     {
         return $this->getFactory()
             ->createCartPageFormFactory()
-            ->getAddItemsForm()
+            ->getRemoveForm()
             ->createView();
     }
 }
