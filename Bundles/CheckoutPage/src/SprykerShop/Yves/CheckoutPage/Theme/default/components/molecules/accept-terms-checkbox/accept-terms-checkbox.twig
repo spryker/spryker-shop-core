@@ -2,12 +2,14 @@
 
 {% define config = {
     name: 'accept-terms-checkbox',
+    tag: 'accept-terms-checkbox',
 } %}
 
 {% define data = {
     label: required,
     name: 'acceptTermsAndConditions',
     value: 1,
+    'target-class-name': '',
 } %}
 
 {% block body %}
@@ -16,10 +18,12 @@
             name: data.name,
             value: data.value,
         },
-        data: {
+        embed: {
+            jsName: config.jsName,
             label: data.label,
         },
     } only %}
-        {%- block label -%}{{data.label | raw}}{%- endblock -%}
+        {%- block inputClass -%}{{ embed.jsName ~ '__trigger' }}{%- endblock -%}
+        {%- block label -%}{{ embed.label | raw }}{%- endblock -%}
     {% endembed %}
 {% endblock %}
