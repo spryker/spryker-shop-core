@@ -93,7 +93,7 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
-     * @return mixed
+     * @return string[]
      */
     public function getCartPageWidgetPlugins()
     {

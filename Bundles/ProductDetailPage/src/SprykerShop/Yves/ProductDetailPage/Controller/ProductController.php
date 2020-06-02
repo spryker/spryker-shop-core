@@ -156,6 +156,9 @@ class ProductController extends AbstractController
      */
     protected function getSelectedAttributes(Request $request)
     {
-        return array_filter($request->query->get(self::PARAM_ATTRIBUTE, []));
+        /** @var array $data */
+        $data = $request->query->get(self::PARAM_ATTRIBUTE) ?: [];
+
+        return array_filter($data);
     }
 }
