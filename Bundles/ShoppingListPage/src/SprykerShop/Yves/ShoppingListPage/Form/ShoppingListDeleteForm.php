@@ -31,7 +31,7 @@ class ShoppingListDeleteForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addIdCompanyUserField($builder);
+        $this->addIdShoppingListField($builder);
     }
 
     /**
@@ -52,7 +52,7 @@ class ShoppingListDeleteForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdCompanyUserField(FormBuilderInterface $builder)
+    protected function addIdShoppingListField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_SHOPPING_LIST, HiddenType::class, [
             'constraints' => [

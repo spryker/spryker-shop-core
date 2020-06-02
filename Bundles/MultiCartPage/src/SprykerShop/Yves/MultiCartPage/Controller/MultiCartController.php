@@ -281,7 +281,7 @@ class MultiCartController extends AbstractController
         $multiCartDeleteForm = $this->getFactory()->getMultiCartDeleteForm($quoteTransfer);
 
         return [
-            'cart' => $this->findQuoteOrFail($idQuote),
+            'cart' => $quoteTransfer,
             'multiCartDeleteForm' => $multiCartDeleteForm->createView(),
         ];
     }
