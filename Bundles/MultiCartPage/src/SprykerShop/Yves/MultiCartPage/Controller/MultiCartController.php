@@ -30,6 +30,7 @@ class MultiCartController extends AbstractController
 
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
     protected const GLOSSARY_KEY_CART_UPDATED_ERROR = 'multi_cart_widget.cart.updated.error';
+    protected const GLOSSARY_KEY_CART_DELETE_ERROR = 'multi_cart_widget.cart.delete.error';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -210,7 +211,7 @@ class MultiCartController extends AbstractController
             ->handleRequest($request);
 
         if (!$multiCartDeleteForm->isSubmitted() || !$multiCartDeleteForm->isValid()) {
-            $this->addErrorMessage('multi_cart_widget.cart.delete.error');
+            $this->addErrorMessage(static::GLOSSARY_KEY_CART_DELETE_ERROR);
 
             return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
         }
