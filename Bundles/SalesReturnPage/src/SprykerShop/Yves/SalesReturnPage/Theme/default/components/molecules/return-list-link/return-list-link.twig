@@ -1,0 +1,15 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'return-list-link',
+    tag: 'a',
+} %}
+
+{% define attributes = {
+    href: path('return/list'),
+    'data-id': 'sidebar-sales-return',
+} %}
+
+{% block body %}
+    {{ 'return_page.list.title' | trans }}
+{% endblock %}
