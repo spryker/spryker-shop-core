@@ -29,6 +29,8 @@ class CompanyRoleController extends AbstractCompanyController
     protected const PARAMETER_ID_COMPANY_ROLE = 'id';
     protected const ERROR_MESSAGE_DEFAULT_COMPANY_ROLE_DELETE = 'company.account.company_role.delete.error.default_role';
 
+    protected const GLOSSARY_KEY_COMPANY_ROLE_DELETE_ERROR = 'company.account.company_role.delete.error.cannot_remove';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -120,7 +122,7 @@ class CompanyRoleController extends AbstractCompanyController
             ->handleRequest($request);
 
         if (!$companyRoleDeleteForm->isSubmitted() || !$companyRoleDeleteForm->isValid()) {
-            $this->addErrorMessage('company.account.company_role.delete.error.cannot_remove');
+            $this->addErrorMessage(static::GLOSSARY_KEY_COMPANY_ROLE_DELETE_ERROR);
 
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ROLE);
         }

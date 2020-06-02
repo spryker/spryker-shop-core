@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DeleteController extends AbstractCustomerController
 {
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_DELETE_ERROR = 'customer.account.delete.error';
+
     /**
      * @return \Spryker\Yves\Kernel\View\View
      */
@@ -41,7 +43,7 @@ class DeleteController extends AbstractCustomerController
             ->handleRequest($request);
 
         if (!$customerDeleteForm->isSubmitted() || !$customerDeleteForm->isValid()) {
-            $this->addErrorMessage('customer.account.delete.error');
+            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_DELETE_ERROR);
 
             return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_DELETE);
         }
