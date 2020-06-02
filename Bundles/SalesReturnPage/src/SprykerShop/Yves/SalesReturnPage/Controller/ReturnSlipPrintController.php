@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\SalesReturnPage\Controller;
 
+use Generated\Shared\Transfer\ReturnItemTransfer;
+use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -52,7 +54,23 @@ class ReturnSlipPrintController extends AbstractReturnController
         }
 
         return [
-            'return' => $returnTransfer,
+            'return' => $this->sortReturnItemByOrderReference($returnTransfer),
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnTransfer
+     */
+    protected function sortReturnItemByOrderReference(ReturnTransfer $returnTransfer): ReturnTransfer
+    {
+        $returnTransfer->getReturnItems()->uasort(
+            function (ReturnItemTransfer $firstReturnItemTransfer, ReturnItemTransfer $secondReturnItemTransfer) {
+                return strcmp($firstReturnItemTransfer->getOrderItem()->getOrderReference(), $secondReturnItemTransfer->getOrderItem()->getOrderReference());
+            }
+        );
+
+        return $returnTransfer;
     }
 }
