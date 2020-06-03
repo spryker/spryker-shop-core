@@ -1,0 +1,21 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'order-detail-link',
+    tag: 'a',
+} %}
+
+{% define data = {
+    idSalesOrder: required,
+    text: 'general.back.button' | trans,
+} %}
+
+{% define attributes = {
+    href: path('customer/order/details', {'id': data.idSalesOrder}),
+} %}
+
+{%- block extraClass %} link{% endblock -%}
+
+{% block body %}
+   {{- data.text -}}
+{% endblock %}

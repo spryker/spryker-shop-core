@@ -6,12 +6,13 @@
 } %}
 
 {% define data = {
-    label: ''
+    label: '',
+    inputClass: '',
 } %}
 
 {% define attributes = {
     type: 'checkbox',
-    required: false
+    required: false,
 } %}
 
 {% set disabled = attributes['disabled'] | default(false) %}
@@ -22,7 +23,7 @@
 
 {% block body %}
     <label class="{{config.name}}__container" {{qa('label')}}>
-        <input class="{{config.name}}__input {% block inputClass %}{% endblock %}" {{component.renderAttributes(attributes)}}>
+        <input class="{{config.name}}__input {% block inputClass %} {{- data.inputClass -}} {% endblock %}" {{ component.renderAttributes(attributes) }}>
         <span class="{{config.name}}__box"></span>
         <span class="{{config.name}}__check"></span>
         {%- block labelContainer -%}
