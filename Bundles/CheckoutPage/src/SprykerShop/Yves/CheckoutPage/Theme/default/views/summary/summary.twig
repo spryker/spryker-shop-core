@@ -279,12 +279,21 @@
                             component: molecule('accept-terms-checkbox', 'CheckoutPage'),
                             label: field.vars.label,
                             rowAttr: {
-                                class: config.name ~ '__field ' ~ fieldLayoutClass
-                            }
+                                class: config.name ~ '__field ' ~ fieldLayoutClass,
+                            },
+                            attributes: {
+                                'target-class-name': 'js-summary__submit-button',
+                            },
                         }) }}
                     {% else %}
                         {{ parent() }}
                     {% endif %}
+                {% endblock %}
+
+                {% block submit %}
+                    <button class="{{ config.name }}__action {{ data.submit.class }} js-summary__submit-button" data-init-single-click disabled>
+                        {{ data.submit.text }}
+                    </button>
                 {% endblock %}
 
                 {% block body %}
