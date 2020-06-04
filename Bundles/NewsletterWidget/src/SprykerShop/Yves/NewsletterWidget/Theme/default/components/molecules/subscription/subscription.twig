@@ -1,1 +1,5 @@
-{{ render(path('newsletter/subscribe')) }}
+{% extends model('component') %}
+
+{% block body %}
+    {{ render(path('newsletter/subscribe')) }}
+{% endblock %}
