@@ -22,7 +22,6 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClient
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToLocaleClientBridge;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToLocaleClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPaymentClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientBridge;
@@ -613,7 +612,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleClient(Container $container): Container
     {
-        $container->set(static::CLIENT_LOCALE, function (Container $container): CheckoutPageToLocaleClientInterface {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
             return new CheckoutPageToLocaleClientBridge(
                 $container->getLocator()->locale()->client()
             );

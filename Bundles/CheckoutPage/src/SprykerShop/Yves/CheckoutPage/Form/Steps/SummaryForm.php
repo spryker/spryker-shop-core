@@ -37,7 +37,7 @@ class SummaryForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addAcceptTermsAndConditionsCheckbox($builder, $options);
+        $this->addAcceptTermsAndConditionsField($builder, $options);
     }
 
     /**
@@ -66,7 +66,7 @@ class SummaryForm extends AbstractType
      *
      * @return $this
      */
-    protected function addAcceptTermsAndConditionsCheckbox(FormBuilderInterface $builder, array $options)
+    protected function addAcceptTermsAndConditionsField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_ACCEPT_TERMS_AND_CONDITIONS, CheckboxType::class, [
             'label' => $options[static::OPTION_ACCEPT_TERM_AND_CONDITIONS_LABEL],

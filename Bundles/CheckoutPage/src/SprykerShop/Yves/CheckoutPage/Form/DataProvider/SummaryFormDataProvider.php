@@ -19,8 +19,6 @@ class SummaryFormDataProvider implements StepEngineFormDataProviderInterface
 {
     protected const GLOSSARY_KEY_ACCEPT_TERM_AND_CONDITIONS = 'page.checkout.summary.accept_terms_and_conditions';
 
-    protected const PATTERN_HTML_LINK = '<a href="%s" target="_blank">%s</a>';
-
     /**
      * @var \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig
      */
@@ -54,7 +52,7 @@ class SummaryFormDataProvider implements StepEngineFormDataProviderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer
      */
     public function getData(AbstractTransfer $quoteTransfer): QuoteTransfer
     {
@@ -62,37 +60,41 @@ class SummaryFormDataProvider implements StepEngineFormDataProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array<string, string>
+     * @return array
      */
     public function getOptions(AbstractTransfer $quoteTransfer): array
     {
         $localizedTermsAndConditionsPageLinks = $this->checkoutPageConfig->getLocalizedTermsAndConditionsPageLinks();
         $currentLocale = $this->localeClient->getCurrentLocale();
 
-        if (array_key_exists($currentLocale, $localizedTermsAndConditionsPageLinks)) {
+        if (!isset($localizedTermsAndConditionsPageLinks[$currentLocale])) {
             return [
-                SummaryForm::OPTION_ACCEPT_TERM_AND_CONDITIONS_LABEL => sprintf(
-                    static::PATTERN_HTML_LINK,
-                    $localizedTermsAndConditionsPageLinks[$currentLocale],
-                    $this->translate(static::GLOSSARY_KEY_ACCEPT_TERM_AND_CONDITIONS)
-                ),
+                SummaryForm::OPTION_ACCEPT_TERM_AND_CONDITIONS_LABEL => static::GLOSSARY_KEY_ACCEPT_TERM_AND_CONDITIONS,
             ];
         }
 
         return [
-            SummaryForm::OPTION_ACCEPT_TERM_AND_CONDITIONS_LABEL => static::GLOSSARY_KEY_ACCEPT_TERM_AND_CONDITIONS,
+            SummaryForm::OPTION_ACCEPT_TERM_AND_CONDITIONS_LABEL => $this->generateOptionAcceptTermAndConditionsLabel(
+                $localizedTermsAndConditionsPageLinks,
+                $currentLocale
+            ),
         ];
     }
 
     /**
-     * @param string $translationKey
+     * @param array $localizedTermsAndConditionsPageLinks
+     * @param string $currentLocale
      *
      * @return string
      */
-    protected function translate(string $translationKey): string
+    protected function generateOptionAcceptTermAndConditionsLabel(array $localizedTermsAndConditionsPageLinks, string $currentLocale): string
     {
-        return $this->glossaryStorageClient->translate($translationKey, $this->localeClient->getCurrentLocale());
+        return sprintf(
+            '<a href="%s" target="_blank">%s</a>',
+            $localizedTermsAndConditionsPageLinks[$currentLocale],
+            $this->glossaryStorageClient->translate(static::GLOSSARY_KEY_ACCEPT_TERM_AND_CONDITIONS, $this->localeClient->getCurrentLocale())
+        );
     }
 }
