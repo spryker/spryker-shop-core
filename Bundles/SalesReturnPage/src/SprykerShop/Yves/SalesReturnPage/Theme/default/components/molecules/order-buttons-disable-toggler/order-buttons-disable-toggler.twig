@@ -1,0 +1,13 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'order-buttons-disable-toggler',
+    tag: 'order-buttons-disable-toggler',
+} %}
+
+{% define attributes = {
+    'trigger-class-name': required,
+    'target-class-name': required,
+    'is-disabled-when-checked': 'true',
+    'disabled-class-name': 'link--disabled',
+} %}
