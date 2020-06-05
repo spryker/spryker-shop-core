@@ -1,0 +1,60 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'lazy-image',
+    tag: 'lazy-image',
+} %}
+
+{% define data = {
+    imageSrc: required,
+    imagePlaceholder: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
+    isImage: true,
+    imageTitle: '',
+    extraAttributes: {},
+} %}
+
+{% block extraClass %}
+    js-viewport-intersection-observer--target
+    {% if not data.isImage %}
+        {{ config.name }}--background
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% set imageClasses = '' %}
+    {% set imageBackgroundClasses = '' %}
+    {% set fallbackImageClasses = imageClasses %}
+    {% set fallbackImageBackgroundClasses = imageBackgroundClasses %}
+
+    {% block imageContainer %}
+        {% if data.isImage %}
+            <img class="{{ config.jsName }}__image {{ imageClasses }}"
+                 src="{{ data.imagePlaceholder }}"
+                 data-src="{{ data.imageSrc }}"
+                 alt="{{ data.imageTitle }}"
+                {{ component.renderAttributes(data.extraAttributes) }}>
+        {% else %}
+            <div class="{{ config.name }}__background {{ config.jsName }}__background {{ imageBackgroundClasses }}"
+                 style="background-image: url({{ data.imagePlaceholder }})"
+                 data-background-image="url('{{ data.imageSrc }}')"
+                 title="{{ data.imageTitle }}"
+                {{ component.renderAttributes(data.extraAttributes) }}></div>
+        {% endif %}
+    {% endblock %}
+
+    {% block noscriptImage %}
+        <noscript>
+            {% if data.isImage %}
+                <img class="{{ fallbackImageClasses }}"
+                     src="{{ data.imageSrc }}"
+                     alt="{{ data.imageTitle }}"
+                    {{ component.renderAttributes(data.extraAttributes) }}>
+            {% else %}
+                <div class="{{ config.name }}__background {{ fallbackImageBackgroundClasses }}"
+                     style="background-image: url({{ data.imageSrc }})"
+                     title="{{ data.imageTitle }}"
+                    {{ component.renderAttributes(data.extraAttributes) }}></div>
+            {% endif %}
+        </noscript>
+    {% endblock %}
+{% endblock %}
