@@ -84,7 +84,7 @@ class SummaryFormDataProvider implements StepEngineFormDataProviderInterface
     }
 
     /**
-     * @param array $localizedTermsAndConditionsPageLinks
+     * @param string[] $localizedTermsAndConditionsPageLinks
      * @param string $currentLocale
      *
      * @return string
