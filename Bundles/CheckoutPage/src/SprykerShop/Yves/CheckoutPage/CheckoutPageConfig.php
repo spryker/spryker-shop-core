@@ -49,7 +49,7 @@ class CheckoutPageConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getLocalizedTermsAndConditionsPageLinks(): array
     {
