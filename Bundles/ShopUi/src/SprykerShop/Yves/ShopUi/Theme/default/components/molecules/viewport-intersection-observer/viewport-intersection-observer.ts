@@ -33,12 +33,12 @@ export default class ViewportIntersectionObserver extends Component {
 
     protected observerInit(): IntersectionObserver {
         return new IntersectionObserver(
-            this.observerHandler(),
+            this.observerCallback(),
             this.viewportOptions,
         );
     }
 
-    protected observerHandler(): IntersectionObserverCallback {
+    protected observerCallback(): IntersectionObserverCallback {
         return (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
             entries.forEach(entry => {
                 if (entry.intersectionRatio === 0 || !entry.isIntersecting) {

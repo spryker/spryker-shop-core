@@ -35,10 +35,9 @@
                 {{ component.renderAttributes(data.extraAttributes) }}>
         {% else %}
             <div class="{{ config.name }}__background {{ config.jsName }}__background {{ imageBackgroundClasses }}"
-                 style="background-image: url({{ data.imagePlaceholder }})"
                  data-background-image="url('{{ data.imageSrc }}')"
                  title="{{ data.imageTitle }}"
-                {{ component.renderAttributes(data.extraAttributes) }}></div>
+                {{ component.renderAttributes(data.extraAttributes | merge({'background-image': data.imagePlaceholder})) }}></div>
         {% endif %}
     {% endblock %}
 
@@ -51,9 +50,8 @@
                     {{ component.renderAttributes(data.extraAttributes) }}>
             {% else %}
                 <div class="{{ config.name }}__background {{ fallbackImageBackgroundClasses }}"
-                     style="background-image: url({{ data.imageSrc }})"
                      title="{{ data.imageTitle }}"
-                    {{ component.renderAttributes(data.extraAttributes) }}></div>
+                    {{ component.renderAttributes(data.extraAttributes | merge({'background-image': data.imageSrc})) }}></div>
             {% endif %}
         </noscript>
     {% endblock %}

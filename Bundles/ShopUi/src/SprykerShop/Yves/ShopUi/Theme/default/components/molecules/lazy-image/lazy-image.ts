@@ -16,21 +16,21 @@ export default class LazyImage extends Component {
     protected mapEvents(): void {
         this.addEventListener(EVENT_ELEMENT_IN_VIEWPORT, () => {
             if (this.image) {
-                this.imageHandler();
+                this.imageSrc = this.image.dataset.src;
 
                 return;
             }
             if (this.background) {
-                this.backgroundHandler();
+                this.backgroundImage = this.background.dataset.backgroundImage;
             }
         });
     }
 
-    protected imageHandler(): void {
-        this.image.src = this.image.dataset.src;
+    protected set imageSrc(src: string) {
+        this.image.src = src;
     }
 
-    protected backgroundHandler(): void {
-        this.background.style.backgroundImage = this.background.dataset.backgroundImage;
+    protected set backgroundImage(image: string) {
+        this.background.style.backgroundImage = image;
     }
 }
