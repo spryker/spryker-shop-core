@@ -8,22 +8,14 @@
 namespace SprykerShop\Yves\CartPage\Form;
 
 use Spryker\Yves\Kernel\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class RemoveForm extends AbstractType
 {
-    public const FORM_NAME = 'removeCartItemForm';
-
     /**
-     * @return string
-     */
-    public function getBlockPrefix()
-    {
-        return static::FORM_NAME;
-    }
-
-    /**
+     * This method is empty, because this form needs to implement csrf protection and all options and form content
+     * will be defined in twig templates.
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -31,6 +23,5 @@ class RemoveForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('submit', SubmitType::class);
     }
 }

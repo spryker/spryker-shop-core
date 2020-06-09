@@ -1,0 +1,426 @@
+{% extends template('page-blank') %}
+
+{% define data = {
+    return: _view.return,
+} %}
+
+{% set orderReferences = [] %}
+
+{% for returnItem in data.return.returnItems
+    if returnItem.orderItem.orderReference not in orderReferences %}
+    {% set orderReferences = orderReferences | merge([returnItem.orderItem.orderReference]) %}
+{% endfor %}
+
+{% block body %}
+    <div class="wrapper">
+        {% block returnHeader %}
+            <div class="return-header">
+                <div>
+                    <table>
+                        <tr>
+                            <td width="90"><strong>{{ 'return_page.slip.return_reference' | trans }}</strong></td>
+                            <td width="125">{{ data.return.returnReference }}</td>
+                        </tr>
+                        <tr>
+                            <td width="90"><strong>{{ 'return_page.slip.return_date' | trans }}</strong></td>
+                            <td width="125">{{ data.return.createdAt | formatDateTime }}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div>
+                    {% widget 'BarcodeWidget' args [data.return.returnReference] only %}{% endwidget %}
+                </div>
+            </div>
+        {% endblock %}
+
+        {% for orderReference in orderReferences %}
+            {% block orderReference %}
+                <table class="order-reference">
+                    <tr>
+                        <td width="90"><strong>{{ 'return_page.slip.order_reference' | trans }}</strong></td>
+                        <td width="125">{{ orderReference }}</td>
+                    </tr>
+                </table>
+            {% endblock %}
+
+            {% block productsTable %}
+                <table class="products-table">
+                    {% block productsTableHeader %}
+                        <tr>
+                            <th width="100">{{ 'return_page.slip.barcode' | trans }}</th>
+                            <th width="75">{{ 'return_page.slip.product_sku' | trans }}</th>
+                            <th width="240">{{ 'return_page.slip.product_name' | trans }}</th>
+                            <th width="85">{{ 'return_page.slip.default_price' | trans }}</th>
+                            <th width="45">{{ 'return_page.slip.quantity' | trans }}</th>
+                            <th width="75">{{ 'return_page.slip.total_price' | trans }}</th>
+                            <th width="130">{{ 'return_page.slip.return_reason' | trans }}</th>
+                        </tr>
+                    {% endblock %}
+
+                    {% set orderItems = [] %}
+
+                    {% for returnItem in data.return.returnItems %}
+                        {% set orderItem = returnItem.orderItem %}
+                        {% set isCurrentOrderReference = orderReference == orderItem.orderReference %}
+                        {% set isConfiguredBundle = orderItem.salesOrderConfiguredBundleItem is defined and orderItem.salesOrderConfiguredBundleItem is not null %}
+                        {% set isBundleItem = orderItem.relatedBundleItemIdentifier is defined and orderItem.relatedBundleItemIdentifier is not null %}
+                        {% set noBottomBorderClass = orderItem.productOptions | length ? 'no-bottom-border' %}
+                        {% set isItemDiscount = orderItem.sumDiscountAmountFullAggregation is defined and orderItem.sumDiscountAmountFullAggregation is not null %}
+
+                        {% if isCurrentOrderReference and not isConfiguredBundle and not isBundleItem %}
+                            {% block productItem %}
+                                <tr>
+                                    <td class="{{ noBottomBorderClass }}">
+                                        {% widget 'BarcodeWidget' args [orderItem.sku] only %}
+                                            {% block body %}
+                                                {% set imageClass = 'order-item-image' %}
+                                                {{ parent() }}
+                                            {% endblock %}
+                                        {% endwidget %}
+                                    </td>
+                                    <td class="{{ noBottomBorderClass }}">
+                                        {{ orderItem.sku }}
+                                    </td>
+                                    <td class="{{ noBottomBorderClass }}">
+                                        {{ orderItem.name }}
+                                    </td>
+                                    <td class="{{ noBottomBorderClass }}">
+                                        {% if isItemDiscount %}
+                                            <div>
+                                                {{ (orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation) | money(true, orderItem.currencyIsoCode) }}
+                                            </div>
+                                            <div>
+                                                <del class="text-secondary">{{ orderItem.sumPrice | money(true, orderItem.currencyIsoCode) }}</del>
+                                            </div>
+                                        {% else %}
+                                            <div>
+                                                {{ orderItem.sumPrice | money(true, orderItem.currencyIsoCode) }}
+                                            </div>
+                                        {% endif %}
+                                    </td>
+                                    <td class="{{ noBottomBorderClass }}">
+                                        {{ orderItem.quantity }}
+                                    </td>
+                                    <td class="{{ noBottomBorderClass }}">
+                                        {{ orderItem.sumPriceToPayAggregation | money(true, orderItem.currencyIsoCode) }}
+                                    </td>
+                                    <td class="{{ noBottomBorderClass }}">
+                                        {{ returnItem.reason ? returnItem.reason | trans : '--' }}
+                                    </td>
+                                </tr>
+
+                                {% for productOption in orderItem.productOptions %}
+                                    {% set noBottomBorderClass = not loop.last ? 'no-bottom-border' %}
+                                    <tr>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }} product-option">
+                                            {% if loop.first %}
+                                                <hr>
+                                            {% endif %}
+                                            {{ productOption.value }}
+                                        </td>
+                                        <td class="no-top-border {{ noBottomBorderClass }} product-option">
+                                            {% if loop.first %}
+                                                <hr>
+                                            {% endif %}
+                                            {{ productOption.unitPrice | money(true, orderItem.currencyIsoCode) }}
+                                        </td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                    </tr>
+                                {% endfor %}
+                            {% endblock %}
+                        {% endif %}
+
+                        {% if isCurrentOrderReference %}
+                            {% set orderItems = orderItems | merge([orderItem]) %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {% block productBundle %}
+                        {% widget 'OrderItemsProductBundleWidget' args [orderItems] with {
+                            embed: {
+                                returnItems: data.return.returnItems,
+                            },
+                        } only %}
+                            {% block bundle %}
+                                {% set bundleProduct = productBundle.bundleProduct %}
+                                {% set firstBundleItem = productBundle.bundleItems | first %}
+                                {% set hasBundleOptions = bundleProduct.productOptions | length %}
+                                {% set isBundleDiscount = bundleProduct.sumDiscountAmountFullAggregation is defined and bundleProduct.sumDiscountAmountFullAggregation is not null %}
+
+                                <tr>
+                                    <td class="no-bottom-border">
+                                        {% widget 'BarcodeWidget' args [bundleProduct.sku] only %}
+                                            {% block body %}
+                                                {% set imageClass = 'order-item-image' %}
+                                                {{ parent() }}
+                                            {% endblock %}
+                                        {% endwidget %}
+                                    </td>
+                                    <td class="no-bottom-border">
+                                        {{ bundleProduct.sku }}
+                                    </td>
+                                    <td class="no-bottom-border">
+                                        {{ bundleProduct.name }}
+                                    </td>
+                                    <td class="no-bottom-border">
+                                        {% if isBundleDiscount %}
+                                            <div>
+                                                {{ (bundleProduct.sumPrice - bundleProduct.sumDiscountAmountFullAggregation) | money(true, firstBundleItem.currencyIsoCode) }}
+                                            </div>
+                                            <div>
+                                                <del class="text-secondary">{{ bundleProduct.sumPrice | money(true, firstBundleItem.currencyIsoCode) }}</del>
+                                            </div>
+                                        {% else %}
+                                            <div>
+                                                {{ bundleProduct.sumPrice | money(true, firstBundleItem.currencyIsoCode) }}
+                                            </div>
+                                        {% endif %}
+                                    </td>
+                                    <td class="no-bottom-border">
+                                        {{ bundleProduct.quantity }}
+                                    </td>
+                                    <td class="no-bottom-border">
+                                        {{ bundleProduct.sumPriceToPayAggregation | money(true, firstBundleItem.currencyIsoCode) }}
+                                    </td>
+                                    <td class="no-bottom-border">
+                                        {% set reasonText = '--' %}
+                                        {% for returnItem in embed.returnItems %}
+                                            {% set hasReason = returnItem.orderItem.IdSalesOrderItem == firstBundleItem.IdSalesOrderItem and returnItem.reason %}
+
+                                            {% if hasReason %}
+                                                {% set reasonText = returnItem.reason | trans %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        {{ reasonText }}
+                                    </td>
+                                </tr>
+
+                                {% for bundleItem in productBundle.bundleItems %}
+                                    {% set noBottomBorderClass = not loop.last or hasBundleOptions ? 'no-bottom-border' %}
+                                    <tr>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}">
+                                            {{ bundleItem.name }}
+                                        </td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}">
+                                            {{ bundleItem.quantity }}
+                                        </td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                    </tr>
+                                {% endfor %}
+
+                                {% for productOption in bundleProduct.productOptions %}
+                                    {% set noBottomBorderClass = not loop.last ? 'no-bottom-border' %}
+                                    <tr>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }} product-option">
+                                            {% if loop.first %}
+                                                <hr>
+                                            {% endif %}
+                                            {{ productOption.value }}
+                                        </td>
+                                        <td class="no-top-border {{ noBottomBorderClass }} product-option">
+                                            {% if loop.first %}
+                                                <hr>
+                                            {% endif %}
+                                            {{ productOption.unitPrice | money(true, firstBundleItem.currencyIsoCode) }}
+                                        </td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                        <td class="no-top-border {{ noBottomBorderClass }}"></td>
+                                    </tr>
+                                {% endfor %}
+                            {% endblock %}
+                        {% endwidget %}
+                    {% endblock %}
+
+                    {% block configuredBundle %}
+                        {% widget 'OrderItemsConfiguredBundleWidget' args [orderItems] with {
+                            embed: {
+                                returnItems: data.return.returnItems,
+                            },
+                        } only %}
+                            {% block bundleItem %}
+                                <tr>
+                                    <td class="no-bottom-border"></td>
+                                    <td class="no-bottom-border"></td>
+                                    <td class="no-bottom-border"><strong>{{ bundle.name | trans }}</strong></td>
+                                    <td class="no-bottom-border"></td>
+                                    <td class="no-bottom-border">{{ bundle.quantity }}</td>
+                                    <td class="no-bottom-border">
+                                        {% set bundleSumPriceToPayAggregation = 0 %}
+                                        {% set currencyIsoCode = null %}
+
+                                        {% for item in bundle.salesOrderConfiguredBundleItems if data.items[item.IdSalesOrderItem] is defined %}
+                                            {% set product = data.items[item.IdSalesOrderItem] %}
+                                            {% set currencyIsoCode = product.currencyIsoCode %}
+                                            {% set bundleSumPriceToPayAggregation = bundleSumPriceToPayAggregation + product.sumPriceToPayAggregation %}
+                                        {% endfor %}
+
+                                        {{ bundleSumPriceToPayAggregation | money(true, currencyIsoCode) }}
+                                    </td>
+                                    <td class="no-bottom-border"></td>
+                                </tr>
+
+                                {% for item in bundle.salesOrderConfiguredBundleItems %}
+                                    {% if data.items[item.IdSalesOrderItem] is defined %}
+                                        {% set product = data.items[item.IdSalesOrderItem] %}
+                                        {% set noBottomBorderClass = not loop.last ? 'no-bottom-border' %}
+                                        {% set isConfiguredBundleDiscount = product.sumDiscountAmountFullAggregation is defined and product.sumDiscountAmountFullAggregation is not null %}
+                                        <tr>
+                                            <td class="no-top-border {{ noBottomBorderClass }}">
+                                                {% widget 'BarcodeWidget' args [product.sku] only %}
+                                                    {% block body %}
+                                                        {% set imageClass = 'order-item-image' %}
+                                                        {{ parent() }}
+                                                    {% endblock %}
+                                                {% endwidget %}
+                                            </td>
+                                            <td class="no-top-border {{ noBottomBorderClass }}">
+                                                {{ product.sku }}
+                                            </td>
+                                            <td class="no-top-border {{ noBottomBorderClass }}">
+                                                {{ product.name }}
+                                            </td>
+                                            <td class="no-top-border {{ noBottomBorderClass }}">
+                                                {% if isConfiguredBundleDiscount -%}
+                                                    {% block currentProductItemPrice %}
+                                                        <div>
+                                                            {{ product.unitPriceToPayAggregation | money(true, product.currencyIsoCode) }}
+                                                        </div>
+                                                    {% endblock %}
+
+                                                    {% block oldProductItemPrice %}
+                                                        <div>
+                                                            <del class="text-secondary">{{ product.unitSubtotalAggregation | money(true, product.currencyIsoCode) }}</del>
+                                                        </div>
+                                                    {% endblock %}
+                                                {% else %}
+                                                    {% block originalProductItemPrice %}
+                                                        <div>
+                                                            {{ product.unitSubtotalAggregation | money(true, product.currencyIsoCode) }}
+                                                        </div>
+                                                    {% endblock %}
+                                                {% endif %}
+                                            </td>
+                                            <td class="no-top-border {{ noBottomBorderClass }}">
+                                                {{ product.quantity }}
+                                            </td>
+                                            <td class="no-top-border {{ noBottomBorderClass }}">
+                                                {{ product.sumSubtotalAggregation | money(true, product.currencyIsoCode) }}
+                                            </td>
+                                            <td class="no-top-border {{ noBottomBorderClass }}">
+                                                {% set reasonText = 'custom_reason' | trans %}
+                                                {% for returnItem in embed.returnItems %}
+                                                    {% if returnItem.orderItem.IdSalesOrderItem == item.IdSalesOrderItem and returnItem.reason %}
+                                                        {% set reasonText = returnItem.reason | trans %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                                {{ reasonText }}
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endblock %}
+                        {% endwidget %}
+                    {% endblock %}
+                </table>
+            {% endblock %}
+        {% endfor %}
+
+        {% block returnTotal %}
+            <table align="right">
+                <tr>
+                    <td><strong>{{ 'return_page.slip.items_to_return' | trans }}</strong></td>
+                    <td>{{ data.return.returnItems | length }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'return_page.slip.remuneration_total' | trans }}</strong></td>
+                    <td>{{ data.return.returnTotals.remunerationTotal | money(true, data.return.returnItems[0].orderItem.currencyIsoCode) }}</td>
+                </tr>
+            </table>
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block headStyles %}
+    <style>
+        html {
+            font-size: 13px;
+        }
+
+        th {
+            font-size: 12px;
+        }
+
+        td, th {
+            padding: 5px;
+            border: 1px solid #000;
+            box-sizing: border-box;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid #ccc;
+            margin: 0 0 5px;
+            height: 1px;
+        }
+
+        .wrapper {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .return-header {
+            display: flex;
+            justify-content:space-between;
+            margin-bottom: 40px;
+        }
+
+        .order-reference {
+            margin-bottom: 15px;
+        }
+
+        .products-table {
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .order-item-image {
+            width: 90px;
+            display: block;
+        }
+
+        .product-option {
+            font-size: 11px;
+            padding: 2px 5px;
+        }
+
+        .text-secondary {
+            color: #bbb;
+        }
+
+        .no-top-border {
+            border-top: none;
+        }
+
+        .no-bottom-border {
+            border-bottom: none;
+        }
+    </style>
+{% endblock %}
+
+{% block headScripts %}
+{% endblock %}
+
+{% block footerScripts %}
+{% endblock %}

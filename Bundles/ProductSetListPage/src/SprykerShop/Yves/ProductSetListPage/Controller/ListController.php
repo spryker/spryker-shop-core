@@ -43,7 +43,7 @@ class ListController extends AbstractController
     protected function executeIndexAction(Request $request): array
     {
         $limit = $request->query->getInt(static::PARAM_LIMIT, self::DEFAULT_LIMIT);
-        $offset = $request->query->get(static::PARAM_OFFSET);
+        $offset = $request->query->getInt(static::PARAM_OFFSET) ?: null;
 
         return $this->getFactory()
             ->getProductSetPageSearchClient()
