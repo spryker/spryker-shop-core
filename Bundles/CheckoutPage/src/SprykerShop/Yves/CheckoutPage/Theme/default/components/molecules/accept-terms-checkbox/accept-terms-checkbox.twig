@@ -6,11 +6,17 @@
 } %}
 
 {% define data = {
-    label: required,
+    label: null,
     name: 'acceptTermsAndConditions',
     value: 1,
     'target-class-name': '',
 } %}
+
+{% block component %}
+    {% if data.label is not null %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
 
 {% block body %}
     {% embed atom('checkbox') with {
