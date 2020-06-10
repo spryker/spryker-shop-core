@@ -14,7 +14,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 class TextOrderFormatConstraintValidator extends ConstraintValidator
 {
     /**
-     * @param mixed $textOrder The value that should be validated
+     * @param string|null $textOrder The value that should be validated
      * @param \Symfony\Component\Validator\Constraint|\SprykerShop\Yves\QuickOrderPage\Form\Constraint\TextOrderFormatConstraint $constraint The constraint for the validation
      *
      * @throws \InvalidArgumentException
@@ -47,7 +47,7 @@ class TextOrderFormatConstraintValidator extends ConstraintValidator
     /**
      * @param string $textOrder
      * @param string $rowSplitterPattern
-     * @param array $allowedSeparators
+     * @param string[] $allowedSeparators
      *
      * @return bool
      */

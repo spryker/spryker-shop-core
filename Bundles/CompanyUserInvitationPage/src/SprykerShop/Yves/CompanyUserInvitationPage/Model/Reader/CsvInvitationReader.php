@@ -29,7 +29,7 @@ class CsvInvitationReader implements InvitationReaderInterface
     /**
      * @param string $importFilePath
      *
-     * @return mixed
+     * @return string[]
      */
     public function getHeaders(string $importFilePath)
     {

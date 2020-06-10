@@ -35,6 +35,7 @@ class Error403Controller extends AbstractController
      */
     protected function getErrorMessage(Request $request)
     {
+        /** @var \Symfony\Component\Debug\Exception\FlattenException|null $exception */
         $exception = $request->query->get(static::REQUEST_PARAM_EXCEPTION);
 
         if ($exception instanceof FlattenException) {
