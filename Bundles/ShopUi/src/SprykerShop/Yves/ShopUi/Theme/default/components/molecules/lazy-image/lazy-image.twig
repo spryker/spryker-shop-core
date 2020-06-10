@@ -21,38 +21,51 @@
 {% endblock %}
 
 {% block body %}
-    {% set imageClasses = '' %}
-    {% set imageBackgroundClasses = '' %}
-    {% set fallbackImageClasses = imageClasses %}
-    {% set fallbackImageBackgroundClasses = imageBackgroundClasses %}
+    {% set imageClasses = component.renderClass(config.name ~ '__image', modifiers) %}
+    {% set imageExtraClasses = '' %}
+    {% set backgroundClasses = component.renderClass(config.name ~ '__background', modifiers) %}
+    {% set backgroundExtraClasses = '' %}
 
-    {% block imageContainer %}
-        {% if data.isImage %}
-            <img class="{{ config.jsName }}__image {{ imageClasses }}"
-                 src="{{ data.imagePlaceholder }}"
-                 data-src="{{ data.imageSrc }}"
-                 alt="{{ data.imageTitle }}"
-                {{ component.renderAttributes(data.extraAttributes) }}>
-        {% else %}
-            <div class="{{ config.name }}__background {{ config.jsName }}__background {{ imageBackgroundClasses }}"
-                 data-background-image="url('{{ data.imageSrc }}')"
-                 title="{{ data.imageTitle }}"
-                {{ component.renderAttributes(data.extraAttributes | merge({'background-image': data.imagePlaceholder})) }}></div>
-        {% endif %}
-    {% endblock %}
+    {% block content %}
+        {% set fallbackImageClasses = imageExtraClasses %}
+        {% set fallbackBackgroundClasses = backgroundExtraClasses %}
 
-    {% block noscriptImage %}
-        <noscript>
+        {% block imageContainer %}
             {% if data.isImage %}
-                <img class="{{ fallbackImageClasses }}"
-                     src="{{ data.imageSrc }}"
-                     alt="{{ data.imageTitle }}"
-                    {{ component.renderAttributes(data.extraAttributes) }}>
+                {% block image %}
+                    <img class="{{ imageClasses }} {{ config.jsName }}__image {{ imageExtraClasses }}"
+                         src="{{ data.imagePlaceholder }}"
+                         data-src="{{ data.imageSrc }}"
+                         alt="{{ data.imageTitle }}"
+                        {{ component.renderAttributes(data.extraAttributes) }}>
+                {% endblock %}
             {% else %}
-                <div class="{{ config.name }}__background {{ fallbackImageBackgroundClasses }}"
-                     title="{{ data.imageTitle }}"
-                    {{ component.renderAttributes(data.extraAttributes | merge({'background-image': data.imageSrc})) }}></div>
+                {% block background %}
+                    <div class="{{ backgroundClasses }} {{ config.jsName }}__background {{ backgroundExtraClasses }}"
+                         data-background-image="url('{{ data.imageSrc }}')"
+                         title="{{ data.imageTitle }}"
+                        {{ component.renderAttributes(data.extraAttributes | merge({'background-image': data.imagePlaceholder})) }}></div>
+                {% endblock %}
             {% endif %}
-        </noscript>
+        {% endblock %}
+
+        {% block imageNoscriptContainer %}
+            <noscript>
+                {% if data.isImage %}
+                    {% block imageNoscript %}
+                        <img class="{{ imageClasses }} {{ fallbackImageClasses }}"
+                             src="{{ data.imageSrc }}"
+                             alt="{{ data.imageTitle }}"
+                            {{ component.renderAttributes(data.extraAttributes) }}>
+                    {% endblock %}
+                {% else %}
+                    {% block backgroundNoscript %}
+                        <div class="{{ backgroundClasses }} {{ fallbackBackgroundClasses }}"
+                             title="{{ data.imageTitle }}"
+                            {{ component.renderAttributes(data.extraAttributes | merge({'background-image': data.imageSrc})) }}></div>
+                    {% endblock %}
+                {% endif %}
+            </noscript>
+        {% endblock %}
     {% endblock %}
 {% endblock %}

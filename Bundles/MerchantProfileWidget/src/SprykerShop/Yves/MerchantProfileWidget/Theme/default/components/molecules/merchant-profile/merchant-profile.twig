@@ -21,12 +21,11 @@
 
                 {% if data.merchantStorageProfile.bannerUrlGlossaryKey %}
                     {% block image %}
-                        {% include atom('thumbnail') with {
+                        {% include molecule('lazy-image') with {
                             class: additionaImageClass,
-                            modifiers: ['bigger'],
-                            attributes: {
-                                alt: merchantName | default,
-                                src: data.merchantStorageProfile.bannerUrlGlossaryKey | trans,
+                            modifiers: ['thumbnail', 'bigger'],
+                            data: {
+                                imageSrc: data.merchantStorageProfile.bannerUrlGlossaryKey | trans,
                             },
                         } only %}
                     {% endblock %}
@@ -131,12 +130,11 @@
 
                                         {% if data.merchantStorageProfile.logoUrl %}
                                             {% block logo %}
-                                                {% include atom('thumbnail') with {
+                                                {% include molecule('lazy-image') with {
                                                     class: additionalLogoClass,
-                                                    modifiers: ['small'],
-                                                    attributes: {
-                                                        alt: merchantName | default,
-                                                        src: data.merchantStorageProfile.logoUrl | trans,
+                                                    modifiers: ['thumbnail', 'small'],
+                                                    data: {
+                                                        imageSrc: data.merchantStorageProfile.logoUrl | trans,
                                                     },
                                                 } only %}
                                             {% endblock %}

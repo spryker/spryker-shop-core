@@ -2,8 +2,80 @@
     #{$name} {
         line-height: 1;
 
+        &--thumbnail {
+            position: relative;
+            height: 10rem;
+            margin: 0.5rem;
+        }
+
+        &--smaller {
+            height: 3rem;
+        }
+
+        &--small {
+            height: 5rem;
+        }
+
+        &--big {
+            height: 20rem;
+        }
+
+        &--bigger {
+            height: 30rem;
+        }
+
+        &--expand {
+            width: 100%;
+        }
+
+        &--min-size {
+            min-width: 2.5rem;
+        }
+
+        &--has-border {
+            border: 0.25rem solid transparent;
+            box-shadow: 0 0 0 1px $setting-color-lighter;
+        }
+
+        &--spaceless {
+            margin: 0;
+        }
+
+        &--with-overlay {
+            position: relative;
+            overflow: hidden;
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: $setting-color-image-overlay;
+                z-index: $setting-zi-element;
+            }
+        }
+
         &--background {
             position: relative;
+        }
+
+        &__image {
+            &--thumbnail {
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+                max-width: 100%;
+                max-height: 100%;
+            }
+
+            &--color-light {
+                color: $setting-color-light;
+            }
         }
 
         &__background {

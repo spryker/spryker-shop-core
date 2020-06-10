@@ -62,12 +62,11 @@
                                             {% block thumbnailColInner %}
                                                 {% if item.images is defined and item.images is not empty %}
                                                     {% block thumbnail %}
-                                                        {% include atom('thumbnail') with {
-                                                            modifiers: ['small', 'min-size'],
-                                                            attributes: {
-                                                                alt: item.name | default,
-                                                                src: item.images.0.externalUrlSmall | default,
-                                                                title: item.name | default,
+                                                        {% include molecule('lazy-image') with {
+                                                            modifiers: ['thumbnail', 'small', 'min-size'],
+                                                            data: {
+                                                                imageSrc: item.images.0.externalUrlSmall | default,
+                                                                imageTitle: item.name | default,
                                                             },
                                                         } only %}
                                                     {% endblock %}

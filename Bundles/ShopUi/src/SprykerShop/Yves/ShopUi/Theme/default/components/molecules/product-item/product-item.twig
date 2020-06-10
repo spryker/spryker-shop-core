@@ -24,19 +24,19 @@
 
         {% block imageContainer %}
             {% macro thumbnail(src, alt='', extraClass='', modifiers=[], jsName) %}
-                {% embed atom('thumbnail') with {
+                {% embed molecule('lazy-image') with {
                     class: extraClass,
-                    modifiers: modifiers,
-                    attributes: {
-                        src: src,
-                        alt: alt,
+                    modifiers: modifiers | merge(['thumbnail']),
+                    data: {
+                        imageSrc: src,
+                        imageTitle: alt,
                     },
                     embed: {
                         jsName: jsName,
                     },
                 } only %}
-                    {% block image %}
-                        {% set additionalImageClass = embed.jsName ~ '__image' %}
+                    {% block content %}
+                        {% set imageExtraClasses = embed.jsName ~ '__image' %}
 
                         {{ parent() }}
                     {% endblock %}

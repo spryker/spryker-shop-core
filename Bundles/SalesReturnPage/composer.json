@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.2",
     "spryker-shop/sales-return-page-extension": "^1.0.0",
-    "spryker-shop/shop-ui": "^1.38.0",
+    "spryker-shop/shop-ui": "^1.39.0",
     "spryker/application": "^3.8.0",
     "spryker/customer": "^7.19.0",
     "spryker/kernel": "^3.30.0",

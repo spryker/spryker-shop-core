@@ -33,13 +33,12 @@
                     <tr class="{{ loop.index > 3 ? 'js-product-alternative-' ~ wishlistItemSku ~ '__show-all-target is-hidden' : '' }}">
                         <td class="text-center">
                             {% if item.images is defined and item.images is not empty %}
-                                {% include atom('thumbnail') with {
-                                    modifiers: ['small', 'min-size'],
-                                    attributes: {
-                                        alt: item.name,
-                                        src: item.images.0.externalUrlSmall,
-                                        title: item.name
-                                    }
+                                {% include molecule('lazy-image') with {
+                                    modifiers: ['thumbnail', 'small', 'min-size'],
+                                    data: {
+                                        imageSrc: item.images.0.externalUrlSmall,
+                                        imageTitle: item.name | default,
+                                    },
                                 } only %}
                             {% endif %}
                         </td>
