@@ -61,9 +61,11 @@
                                         <td class="{{ config.name }}__cell text-center">
                                             {% block thumbnailColInner %}
                                                 {% if item.images is defined and item.images is not empty %}
+                                                    {% set thumbnailModifiers = ['thumbnail', 'small', 'min-size'] %}
+
                                                     {% block thumbnail %}
                                                         {% include molecule('lazy-image') with {
-                                                            modifiers: ['thumbnail', 'small', 'min-size'],
+                                                            modifiers: thumbnailModifiers,
                                                             data: {
                                                                 imageSrc: item.images.0.externalUrlSmall | default,
                                                                 imageTitle: item.name | default,

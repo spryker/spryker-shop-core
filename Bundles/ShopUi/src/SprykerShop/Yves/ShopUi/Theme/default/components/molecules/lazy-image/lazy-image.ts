@@ -14,6 +14,10 @@ export default class LazyImage extends Component {
     }
 
     protected mapEvents(): void {
+        this.mapTriggerCustomViewportEvent();
+    }
+
+    protected mapTriggerCustomViewportEvent(): void {
         this.addEventListener(EVENT_ELEMENT_IN_VIEWPORT, () => {
             if (this.image) {
                 this.imageSrc = this.image.dataset.src;

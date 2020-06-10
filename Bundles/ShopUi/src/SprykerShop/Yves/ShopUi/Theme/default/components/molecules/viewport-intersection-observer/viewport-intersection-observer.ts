@@ -41,7 +41,7 @@ export default class ViewportIntersectionObserver extends Component {
     protected observerCallback(): IntersectionObserverCallback {
         return (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
             entries.forEach(entry => {
-                if (entry.intersectionRatio === 0 || !entry.isIntersecting) {
+                if (!entry.intersectionRatio || !entry.isIntersecting) {
                     return;
                 }
 

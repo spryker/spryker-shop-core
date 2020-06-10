@@ -18,17 +18,23 @@
     <a class="grid js-suggest-search__item--navigable js-suggest-search__product-item--navigable {{ config.name }}__link" href="{{ data.url }}">
         <span class="col col--sm-3">
             {% if data.image %}
-                {% include molecule('lazy-image') with {
-                    modifiers: ['thumbnail', 'smaller', 'has-border'],
-                    data: {
-                        imageSrc: data.image.external_url_small,
-                        imagePlaceholder: data.image.external_url_small,
-                        imageTitle: data.alt,
-                    },
-                    extraAttributes: data.title ? {
-                        title: data.title,
-                    } : {},
-                } only %}
+                {% set imageClasses = '' %}
+                {% set imageModifiers = ['thumbnail', 'smaller', 'has-border'] %}
+
+                {% block image %}
+                    {% include molecule('lazy-image') with {
+                        class: imageClasses,
+                        modifiers: imageModifiers,
+                        data: {
+                            imageSrc: data.image.external_url_small,
+                            imagePlaceholder: data.image.external_url_small,
+                            imageTitle: data.alt,
+                        },
+                        extraAttributes: data.title ? {
+                            title: data.title,
+                        } : {},
+                    } only %}
+                {% endblock %}
             {% endif %}
         </span>
 
@@ -39,7 +45,7 @@
                 {% include molecule('money-price') with {
                     data: {
                         amount: data.price,
-                        originalAmount: data.originalPrice is empty ? null : data.originalPrice,
+                        originalAmount: data.originalPrice ?? null,
                     },
                 } only %}
             {% else %}

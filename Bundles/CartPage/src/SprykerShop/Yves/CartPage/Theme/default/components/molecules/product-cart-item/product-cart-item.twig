@@ -14,16 +14,12 @@
 
 {% block imageContainer %}
     <div class="{{ config.name }}__col col col--sm-12 col--lg-2">
-        {% block image %}
-            {% include molecule('lazy-image') with {
-                modifiers: ['thumbnail', 'small'],
-                data: {
-                    imageSrc: data.image,
-                    imageTitle: data.name,
-                },
-            } only %}
-        {% endblock %}
+        {{ parent() }}
     </div>
+{% endblock %}
+
+{% block image %}
+    {{ macros.thumbnail(data.image, data.name, extraClass, ['small']) }}
 {% endblock %}
 
 {% block labels %}{% endblock %}

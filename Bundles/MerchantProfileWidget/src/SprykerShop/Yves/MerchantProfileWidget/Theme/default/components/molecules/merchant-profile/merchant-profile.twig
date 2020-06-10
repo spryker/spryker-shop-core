@@ -18,12 +18,13 @@
         {% block contentInner %}
             <div class="col col--sm-12 col--lg-5">
                 {% set additionaImageClass = 'box' %}
+                {% set additionaImageModifiers = ['thumbnail', 'bigger'] %}
 
                 {% if data.merchantStorageProfile.bannerUrlGlossaryKey %}
                     {% block image %}
                         {% include molecule('lazy-image') with {
                             class: additionaImageClass,
-                            modifiers: ['thumbnail', 'bigger'],
+                            modifiers: additionaImageModifiers,
                             data: {
                                 imageSrc: data.merchantStorageProfile.bannerUrlGlossaryKey | trans,
                             },
@@ -127,12 +128,13 @@
 
                                     <div class="col col--sm-3 col--lg-2">
                                         {% set additionalLogoClass = 'box' %}
+                                        {% set additionalLogoModifiers = ['thumbnail', 'small'] %}
 
                                         {% if data.merchantStorageProfile.logoUrl %}
                                             {% block logo %}
                                                 {% include molecule('lazy-image') with {
                                                     class: additionalLogoClass,
-                                                    modifiers: ['thumbnail', 'small'],
+                                                    modifiers: additionalLogoModifiers,
                                                     data: {
                                                         imageSrc: data.merchantStorageProfile.logoUrl | trans,
                                                     },
