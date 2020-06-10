@@ -40,7 +40,7 @@ export default class ViewportIntersectionObserver extends Component {
 
     protected observerCallback(): IntersectionObserverCallback {
         return (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
-            entries.forEach(entry => {
+            entries.forEach((entry: IntersectionObserverEntry) => {
                 if (!entry.intersectionRatio || !entry.isIntersecting) {
                     return;
                 }
@@ -59,7 +59,7 @@ export default class ViewportIntersectionObserver extends Component {
         if (!this.targets.length) {
             return;
         }
-        this.targets.forEach(item => this.observer.observe(item));
+        this.targets.forEach((item: HTMLElement) => this.observer.observe(item));
     }
 
     protected get viewportClassName(): string {

@@ -9,7 +9,7 @@ export default class LazyImage extends Component {
 
     protected init(): void {
         this.image = <HTMLImageElement>this.getElementsByClassName(`${this.jsName}__image`)[0];
-        this.background = <HTMLImageElement>this.getElementsByClassName(`${this.jsName}__background`)[0];
+        this.background = <HTMLElement>this.getElementsByClassName(`${this.jsName}__background`)[0];
         this.mapEvents();
     }
 
