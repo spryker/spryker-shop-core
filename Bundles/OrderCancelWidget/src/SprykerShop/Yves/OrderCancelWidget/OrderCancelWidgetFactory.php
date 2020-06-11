@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\OrderCancelWidget;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\OrderCancelWidget\Dependency\Client\OrderCancelWidgetToCustomerClientInterface;
+use SprykerShop\Yves\OrderCancelWidget\Dependency\Client\OrderCancelWidgetToSalesClientInterface;
 use SprykerShop\Yves\OrderCancelWidget\Form\OrderCancelForm;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
@@ -41,5 +42,13 @@ class OrderCancelWidgetFactory extends AbstractFactory
     public function getCustomerClient(): OrderCancelWidgetToCustomerClientInterface
     {
         return $this->getProvidedDependency(OrderCancelWidgetDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\OrderCancelWidget\Dependency\Client\OrderCancelWidgetToSalesClientInterface
+     */
+    public function getSalesClient(): OrderCancelWidgetToSalesClientInterface
+    {
+        return $this->getProvidedDependency(OrderCancelWidgetDependencyProvider::CLIENT_SALES);
     }
 }

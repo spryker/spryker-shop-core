@@ -18,14 +18,17 @@ class OrderCancelButtonWidget extends AbstractWidget
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
     protected const PARAMETER_FORM = 'form';
     protected const PARAMETER_ORDER = 'order';
+    protected const PARAMETER_RETURN_URL = 'returnUrl';
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param string $returnUrl
      */
-    public function __construct(OrderTransfer $orderTransfer)
+    public function __construct(OrderTransfer $orderTransfer, string $returnUrl)
     {
         $this->addIsVisibleParameter($orderTransfer);
         $this->addOrderParameter($orderTransfer);
+        $this->addReturnUrlParameter($returnUrl);
         $this->addFormParameter();
     }
 
@@ -63,6 +66,16 @@ class OrderCancelButtonWidget extends AbstractWidget
     protected function addOrderParameter(OrderTransfer $orderTransfer): void
     {
         $this->addParameter(static::PARAMETER_ORDER, $orderTransfer);
+    }
+
+    /**
+     * @param string $returnUrl
+     *
+     * @return void
+     */
+    protected function addReturnUrlParameter(string $returnUrl): void
+    {
+        $this->addParameter(static::PARAMETER_RETURN_URL, $returnUrl);
     }
 
     /**

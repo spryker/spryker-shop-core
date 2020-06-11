@@ -43,6 +43,14 @@
         {% endblock %}
     {% endembed %}
 
+        {% widget 'OrderCancelButtonWidget' args [data.order, app.request.requestUri] only %}
+            {% block embeddedData %}
+                <div class="box text-right">
+                    <input class="button" type="submit" value="{{ 'order_cancel_widget.cancel_order' | trans }}">
+                </div>
+            {% endblock %}
+        {% endwidget %}
+
     <div class="box">
         {% widget 'CommentThreadWidget' args [
             data.order.idSalesOrder,

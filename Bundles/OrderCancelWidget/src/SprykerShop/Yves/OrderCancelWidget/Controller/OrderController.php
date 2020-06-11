@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\OrderCancelWidget\Controller;
 
+use Generated\Shared\Transfer\OrderCancelRequestTransfer;
 use Generated\Shared\Transfer\OrderCancelResponseTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -18,7 +19,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class OrderController extends AbstractController
 {
+    protected const PARAMETER_ORDER_REFERENCE = 'orderReference';
+    protected const PARAMETER_RETURN_URL = 'returnUrl';
+
     protected const ROUTE_CUSTOMER_ORDER = 'customer/order';
+
+    protected const GLOSSARY_KEY_ORDER_CANCELLED = 'order_cancel_widget.order.cancelled';
 
     /**
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
@@ -55,15 +61,26 @@ class OrderController extends AbstractController
      */
     protected function executeCancelAction(Request $request): RedirectResponse
     {
-        $form = $this->getFactory()
-            ->getOrderCancelForm()
-            ->handleRequest($request);
+        $returnUrl = $request->query->get(static::PARAMETER_RETURN_URL);
+        $form = $this->getFactory()->getOrderCancelForm()->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
-            dd($request->get('orderReference'));
+            return $this->redirectResponseExternal($returnUrl);
         }
 
-        return $this->redirectResponseInternal(static::ROUTE_CUSTOMER_ORDER);
+        $orderCancelRequestTransfer = (new OrderCancelRequestTransfer())
+            ->setCustomer($this->getFactory()->getCustomerClient()->getCustomer())
+            ->setOrderReference($request->get(static::PARAMETER_ORDER_REFERENCE));
+
+        $orderCancelResponseTransfer = $this->getFactory()->getSalesClient()->cancelOrder($orderCancelRequestTransfer);
+
+        $this->handleResponseErrors($orderCancelResponseTransfer);
+
+        if ($orderCancelResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::GLOSSARY_KEY_ORDER_CANCELLED);
+        }
+
+        return $this->redirectResponseExternal($returnUrl);
     }
 
     /**

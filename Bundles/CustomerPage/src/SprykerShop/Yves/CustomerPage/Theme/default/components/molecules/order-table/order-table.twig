@@ -108,9 +108,9 @@
                                     {% endblock %}
                                 {% endembed %}
 
-                                {% widget 'OrderCancelButtonWidget'  args [order] only %}
+                                {% widget 'OrderCancelButtonWidget'  args [order, app.request.requestUri] only %}
                                     {% block embeddedData %}
-                                        <input class="link" type="submit" name="id" value="{{ 'order_cancel_widget.cancel_order' | trans }}">
+                                        <input class="link" type="submit" value="{{ 'order_cancel_widget.cancel_order' | trans }}">
                                     {% endblock %}
                                 {% endwidget %}
                             </ul>
