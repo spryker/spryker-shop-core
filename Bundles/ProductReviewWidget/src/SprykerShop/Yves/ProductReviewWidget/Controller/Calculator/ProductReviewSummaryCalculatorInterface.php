@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\ProductReviewWidget\Controller\Calculator;
 
 /**
- * @deprecated Use `\Spryker\Client\ProductReview\Calculator\ProductReviewSummaryCalculatorInterface` instead.
+ * @deprecated Use {@link \Spryker\Client\ProductReview\Calculator\ProductReviewSummaryCalculatorInterface} instead.
  */
 interface ProductReviewSummaryCalculatorInterface
 {

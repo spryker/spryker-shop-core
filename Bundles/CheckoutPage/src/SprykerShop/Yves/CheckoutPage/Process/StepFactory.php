@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CheckoutPage\Process;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\StepEngine\Dependency\Step\StepInterface;
 use Spryker\Yves\StepEngine\Process\StepBreadcrumbGenerator;
 use Spryker\Yves\StepEngine\Process\StepCollection;
 use Spryker\Yves\StepEngine\Process\StepCollectionInterface;
@@ -32,6 +33,7 @@ use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep\AddressStepExecutor;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep\PostConditionChecker as AddressStepPostConditionChecker;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\CustomerStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\EntryStep;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\ErrorStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\PaymentStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\PlaceOrderStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface;
@@ -122,6 +124,7 @@ class StepFactory extends AbstractFactory
             $this->createSummaryStep(),
             $this->createPlaceOrderStep(),
             $this->createSuccessStep(),
+            $this->createErrorStep(),
         ];
     }
 
@@ -272,6 +275,17 @@ class StepFactory extends AbstractFactory
             $this->getCartClient(),
             $this->getConfig(),
             CheckoutPageControllerProvider::CHECKOUT_SUCCESS,
+            $this->getConfig()->getEscapeRoute()
+        );
+    }
+
+    /**
+     * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface
+     */
+    public function createErrorStep(): StepInterface
+    {
+        return new ErrorStep(
+            CheckoutPageControllerProvider::CHECKOUT_ERROR,
             $this->getConfig()->getEscapeRoute()
         );
     }

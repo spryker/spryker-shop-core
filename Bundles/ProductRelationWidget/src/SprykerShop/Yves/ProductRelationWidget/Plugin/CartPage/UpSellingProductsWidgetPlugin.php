@@ -13,7 +13,7 @@ use SprykerShop\Yves\CartPage\Dependency\Plugin\ProductRelationWidget\UpSellingP
 use SprykerShop\Yves\ProductRelationWidget\Widget\UpSellingProductsWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductRelationWidget\Widget\UpSellingProductsWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductRelationWidget\Widget\UpSellingProductsWidget} instead.
  *
  * @method \SprykerShop\Yves\ProductRelationWidget\ProductRelationWidgetFactory getFactory()
  */

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\CheckoutWidget\Widget\CheckoutBreadcrumbWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\CheckoutWidget\Widget\CheckoutBreadcrumbWidget} instead.
  */
 interface CheckoutBreadcrumbWidgetPluginInterface extends WidgetPluginInterface
 {

@@ -58,18 +58,12 @@
         <p>
             {{ 'quote_request_page.quote_request.labels.status' | trans }}:
 
-            {% if data.quoteRequest.status %}
-                {% include molecule('status') with {
-                    data: {
-                        label: ('quote_request.status.' ~ data.quoteRequest.status) | trans,
-                        status: data.quoteRequest.status,
-                    },
-                } only %}
-            {% else %}
-                <span class="text-secondary">
-                    --
-                </span>
-            {% endif %}
+            {% include molecule('status') with {
+                data: {
+                    label: ('quote_request.status.' ~ data.quoteRequest.status) | trans,
+                    status: data.quoteRequest.status,
+                },
+            } only %}
         </p>
     {% endblock %}
 

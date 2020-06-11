@@ -9,7 +9,7 @@
 {% block body %}
     <tr>
         {% if data.concreteItem.amount is not null and data.concreteItem.quantity is not null %}
-            {% set salesUnitName = data.concreteItem.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+            {% set salesUnitName = data.concreteItem.quantitySalesUnit.productMeasurementUnit.name | default %}
             {% set salesUnitSummary = '' %}
             {% if salesUnitName %}
                 {% set salesUnitSummary = data.concreteItem.quantity / data.concreteItem.quantitySalesUnit.conversion ~ ' ' ~ salesUnitName | trans %}
@@ -30,7 +30,7 @@
             {{ data.concreteItem.unitPrice | money(true, data.currencyIsoCode) }}
         </td>
         <td>
-            {{ data.concreteItem.quantity }} {% if salesUnitSummary is defined and salesUnitSummary is not empty %}(={{ salesUnitSummary }}){% endif %}
+            {{ data.concreteItem.quantity }} {% if salesUnitSummary is defined and salesUnitSummary %}(={{ salesUnitSummary }}){% endif %}
         </td>
         <td>
             {{ data.concreteItem.unitPriceToPayAggregation | money(true, data.currencyIsoCode) }}
