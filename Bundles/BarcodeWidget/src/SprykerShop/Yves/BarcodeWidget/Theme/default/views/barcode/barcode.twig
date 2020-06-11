@@ -1,0 +1,12 @@
+{% extends template('widget') %}
+
+{% define data = {
+    code: _widget.code,
+    encoding: _widget.encoding,
+} %}
+
+{% set imageClass = '' %}
+
+{% block body %}
+    <img src="{{ data.encoding }},{{ data.code }}" class="{{ imageClass }}" alt="">
+{% endblock %}

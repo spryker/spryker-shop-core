@@ -112,9 +112,13 @@
             {% endif %}
 
             {% if canEditCart %}
-                {{ form_start(_view.removeCartItemForm, {'action': path('cart/remove', {'sku': data.sku, 'groupKey': data.product.groupKey}) }) }}
-                    {{ form_widget(_view.removeCartItemForm.submit, { 'label': 'product_cart_item.remove' | trans  , 'attr' : { 'class':'float-right link' } }) }}
-                {{ form_end(_view.removeCartItemForm) }}
+                {% widget 'RemoveFromCartFormWidget' args [data.product] only %}
+                    {% block embeddedData %}
+                        <button type="submit" class="float-right link" data-init-single-click {{ qa('add-to-cart-button') }}>
+                            {{ 'product_cart_item.remove' | trans }}
+                        </button>
+                    {% endblock %}
+                {% endwidget %}
             {% endif %}
 
             {% if data.cart %}

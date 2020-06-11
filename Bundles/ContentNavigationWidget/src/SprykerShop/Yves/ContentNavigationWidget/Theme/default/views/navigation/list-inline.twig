@@ -1,0 +1,13 @@
+{% extends template('widget') %}
+
+{% define data = {
+    navigation: navigation,
+} %}
+
+{% block body %}
+    {% include molecule('navigation-multiview-list') with {
+        data: {
+            nodes: data.navigation.nodes,
+        },
+    } only %}
+{% endblock %}

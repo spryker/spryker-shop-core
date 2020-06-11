@@ -15,17 +15,19 @@
         <property name="sumPriceToPayAggregation" type="int"/>
         <property name="quantity" type="int"/>
         <property name="name" type="string"/>
+        <property name="salesOrderConfiguredBundle" type="SalesOrderConfiguredBundle"/>
     </transfer>
 
     <transfer name="Order">
         <property name="items" type="Item[]" singular="item"/>
-        <property name="salesOrderConfiguredBundles" type="SalesOrderConfiguredBundle[]" singular="salesOrderConfiguredBundle"/>
+        <property name="salesOrderConfiguredBundles" type="SalesOrderConfiguredBundle[]" singular="salesOrderConfiguredBundle" deprecated="Use item level SalesOrderConfiguredBundle (item.salesOrderConfiguredBundle) instead."/>
     </transfer>
 
     <transfer name="SalesOrderConfiguredBundle">
         <property name="name" type="string"/>
         <property name="quantity" type="int"/>
         <property name="salesOrderConfiguredBundleItems" type="SalesOrderConfiguredBundleItem[]" singular="salesOrderConfiguredBundleItem"/>
+        <property name="idSalesOrderConfiguredBundle" type="int"/>
     </transfer>
 
     <transfer name="SalesOrderConfiguredBundleItem">

@@ -15,7 +15,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 class QuantityFieldConstraintValidator extends ConstraintValidator
 {
     /**
-     * @param mixed $orderItemTransfer The value that should be validated
+     * @param \Generated\Shared\Transfer\ItemTransfer $orderItemTransfer The value that should be validated
      * @param \Symfony\Component\Validator\Constraint|\SprykerShop\Yves\QuickOrderPage\Form\Constraint\QuantityFieldConstraint $constraint The constraint for the validation
      *
      * @throws \InvalidArgumentException
