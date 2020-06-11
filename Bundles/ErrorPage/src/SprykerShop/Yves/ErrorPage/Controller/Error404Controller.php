@@ -43,6 +43,7 @@ class Error404Controller extends AbstractController
             return '';
         }
 
+        /** @var \Symfony\Component\Debug\Exception\FlattenException|null $exception */
         $exception = $request->query->get(static::REQUEST_PARAM_EXCEPTION);
 
         if ($exception instanceof FlattenException) {
