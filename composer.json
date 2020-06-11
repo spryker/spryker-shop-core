@@ -82,6 +82,7 @@
     "spryker-shop/navigation-widget": "*",
     "spryker-shop/newsletter-page": "*",
     "spryker-shop/newsletter-widget": "*",
+    "spryker-shop/order-cancel-widget": "*",
     "spryker-shop/order-custom-reference-widget": "*",
     "spryker-shop/persistent-cart-share-page": "*",
     "spryker-shop/persistent-cart-share-widget": "*",

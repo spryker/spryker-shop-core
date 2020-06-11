@@ -107,6 +107,12 @@
                                         </li>
                                     {% endblock %}
                                 {% endembed %}
+
+                                {% widget 'OrderCancelButtonWidget'  args [order] only %}
+                                    {% block embeddedData %}
+                                        <input class="link" type="submit" name="id" value="{{ 'order_cancel_widget.cancel_order' | trans }}">
+                                    {% endblock %}
+                                {% endwidget %}
                             </ul>
                         {% endblock %}
                     </td>

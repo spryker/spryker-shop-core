@@ -1,0 +1,19 @@
+{% extends template('widget') %}
+
+{% define data = {
+    form: _widget.form,
+    order: _widget.order,
+    isVisible: _widget.isVisible
+} %}
+
+{% block body %}
+    {% if data.isVisible %}
+        {{ form_start(data.form, {'action': path('order/cancel', {'orderReference': data.order.orderReference})}) }}
+
+        {% block embeddedData %}
+            <input type="submit" class="btn btn-primary safe-submit" value="{{ 'order_cancel_widget.cancel_order' | trans }}"/>
+        {% endblock %}
+
+        {{ form_end(data.form) }}
+    {% endif %}
+{% endblock %}

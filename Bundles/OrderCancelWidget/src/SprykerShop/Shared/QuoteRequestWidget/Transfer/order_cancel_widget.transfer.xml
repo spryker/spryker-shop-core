@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="spryker:transfer-01"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="OrderCancelRequest">
+        <property name="orderReference" type="string"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="OrderCancelResponse">
+        <property name="order" type="Order"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]"  singular="message"/>
+    </transfer>
+
+</transfers>
