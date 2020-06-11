@@ -4,7 +4,8 @@
   "description": "MerchantProfileWidget module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2"
+    "php": ">=7.2",
+    "spryker-shop/shop-ui": "^1.39.0"
   },
   "require-dev": {
     "spryker-shop/merchant-page": "*",
