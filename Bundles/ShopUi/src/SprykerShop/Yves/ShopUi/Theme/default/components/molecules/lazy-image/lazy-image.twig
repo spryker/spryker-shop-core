@@ -25,7 +25,10 @@
     {% set imageExtraClasses = '' %}
     {% set backgroundClasses = component.renderClass(config.name ~ '__background', modifiers) %}
     {% set backgroundExtraClasses = '' %}
+    {% set imageSrc = data.imageSrc %}
     {% set imagePlaceholder = data.imagePlaceholder ?: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=' %}
+    {% set imageTitle = data.imageTitle %}
+    {% set extraAttributes = data.extraAttributes %}
 
     {% block content %}
         {% set fallbackImageClasses = imageExtraClasses %}
@@ -35,17 +38,17 @@
             {% if data.isBackground %}
                 {% block background %}
                     <div class="{{ backgroundClasses }} {{ config.jsName }}__background {{ backgroundExtraClasses }}"
-                         data-background-image="url('{{ data.imageSrc }}')"
-                         title="{{ data.imageTitle }}"
-                        {{ component.renderAttributes(data.extraAttributes | merge({'background-image': imagePlaceholder})) }}></div>
+                         data-background-image="url('{{ imageSrc }}')"
+                         title="{{ imageTitle }}"
+                        {{ component.renderAttributes(extraAttributes | merge({'background-image': imagePlaceholder})) }}></div>
                 {% endblock %}
             {% else %}
                 {% block image %}
                     <img class="{{ imageClasses }} {{ config.jsName }}__image {{ imageExtraClasses }}"
                          src="{{ imagePlaceholder }}"
-                         data-src="{{ data.imageSrc }}"
-                         alt="{{ data.imageTitle }}"
-                        {{ component.renderAttributes(data.extraAttributes) }}>
+                         data-src="{{ imageSrc }}"
+                         alt="{{ imageTitle }}"
+                        {{ component.renderAttributes(extraAttributes) }}>
                 {% endblock %}
             {% endif %}
         {% endblock %}
@@ -55,15 +58,15 @@
                 {% if data.isBackground %}
                     {% block backgroundNoScript %}
                         <div class="{{ backgroundClasses }} {{ fallbackBackgroundClasses }}"
-                             title="{{ data.imageTitle }}"
-                            {{ component.renderAttributes(data.extraAttributes | merge({'background-image': data.imageSrc})) }}></div>
+                             title="{{ imageTitle }}"
+                            {{ component.renderAttributes(extraAttributes | merge({'background-image': imageSrc})) }}></div>
                     {% endblock %}
                 {% else %}
                     {% block imageNoScript %}
                         <img class="{{ imageClasses }} {{ fallbackImageClasses }}"
-                             src="{{ data.imageSrc }}"
-                             alt="{{ data.imageTitle }}"
-                            {{ component.renderAttributes(data.extraAttributes) }}>
+                             src="{{ imageSrc }}"
+                             alt="{{ imageTitle }}"
+                            {{ component.renderAttributes(extraAttributes) }}>
                     {% endblock %}
                 {% endif %}
             </noscript>
