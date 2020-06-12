@@ -63,7 +63,6 @@ export default class ViewportIntersectionObserver extends Component {
         if (!this.targets.length) {
             return;
         }
-        
         this.targets.forEach((item: HTMLElement) => this.observer.observe(item));
     }
 
