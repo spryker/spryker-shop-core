@@ -22,8 +22,6 @@ class OrderController extends AbstractController
     protected const PARAMETER_ORDER_REFERENCE = 'orderReference';
     protected const PARAMETER_RETURN_URL = 'returnUrl';
 
-    protected const ROUTE_CUSTOMER_ORDER = 'customer/order';
-
     protected const GLOSSARY_KEY_ORDER_CANCELLED = 'order_cancel_widget.order.cancelled';
 
     /**
