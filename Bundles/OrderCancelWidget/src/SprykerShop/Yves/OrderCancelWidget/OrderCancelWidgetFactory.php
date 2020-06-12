@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\OrderCancelWidget\Dependency\Client\OrderCancelWidgetToCustomerClientInterface;
 use SprykerShop\Yves\OrderCancelWidget\Dependency\Client\OrderCancelWidgetToSalesClientInterface;
 use SprykerShop\Yves\OrderCancelWidget\Form\OrderCancelForm;
-use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
@@ -21,9 +21,9 @@ use Symfony\Component\Form\FormInterface;
 class OrderCancelWidgetFactory extends AbstractFactory
 {
     /**
-     * @return \Symfony\Component\Form\FormFactory
+     * @return \Symfony\Component\Form\FormFactoryInterface
      */
-    public function getFormFactory(): FormFactory
+    public function getFormFactory(): FormFactoryInterface
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
     }
