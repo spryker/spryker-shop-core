@@ -109,8 +109,10 @@
                                 {% endembed %}
 
                                 {% widget 'OrderCancelButtonWidget'  args [order, app.request.requestUri] only %}
-                                    {% block embeddedData %}
-                                        <input class="link" type="submit" value="{{ 'order_cancel_widget.cancel_order' | trans }}">
+                                    {% block body %}
+                                        <li class="menu__item">
+                                            {{ parent() }}
+                                        </li>
                                     {% endblock %}
                                 {% endwidget %}
                             </ul>

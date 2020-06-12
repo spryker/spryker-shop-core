@@ -7,6 +7,8 @@
     returnUrl: _widget.returnUrl,
 } %}
 
+{% set buttonClasses = 'link' %}
+
 {% block body %}
     {% if data.isVisible %}
         {{ form_start(data.form, {'action': path('order/cancel', {
@@ -14,8 +16,8 @@
             'returnUrl': data.returnUrl
         })}) }}
 
-        {% block embeddedData %}
-            <input class="button" type="submit" value="{{ 'order_cancel_widget.cancel_order' | trans }}">
+        {% block formContent %}
+            <button class="{{ buttonClasses }}" type="submit">{{ 'order_cancel_widget.cancel_order' | trans }}</button>
         {% endblock %}
 
         {{ form_end(data.form) }}
