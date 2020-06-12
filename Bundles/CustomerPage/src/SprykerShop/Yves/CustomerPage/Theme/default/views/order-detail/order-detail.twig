@@ -44,7 +44,7 @@
     {% endembed %}
 
         {% widget 'OrderCancelButtonWidget' args [data.order, app.request.requestUri] only %}
-            {% block formContent %}
+            {% block body %}
                 <div class="box text-right">
                     {% set buttonClasses = 'button button--alert' %}
                     {{ parent() }}
