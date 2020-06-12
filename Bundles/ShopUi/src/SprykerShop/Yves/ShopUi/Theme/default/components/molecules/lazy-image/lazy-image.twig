@@ -7,15 +7,15 @@
 
 {% define data = {
     imageSrc: required,
-    imagePlaceholder: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
-    isImage: true,
+    imagePlaceholder: '',
+    isBackground: false,
     imageTitle: '',
     extraAttributes: {},
 } %}
 
 {% block extraClass %}
     js-viewport-intersection-observer--target
-    {% if not data.isImage %}
+    {% if data.isBackground %}
         {{ config.name }}--background
     {% endif %}
 {% endblock %}
@@ -25,44 +25,45 @@
     {% set imageExtraClasses = '' %}
     {% set backgroundClasses = component.renderClass(config.name ~ '__background', modifiers) %}
     {% set backgroundExtraClasses = '' %}
+    {% set imagePlaceholder = data.imagePlaceholder ?: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=' %}
 
     {% block content %}
         {% set fallbackImageClasses = imageExtraClasses %}
         {% set fallbackBackgroundClasses = backgroundExtraClasses %}
 
         {% block imageContainer %}
-            {% if data.isImage %}
-                {% block image %}
-                    <img class="{{ imageClasses }} {{ config.jsName }}__image {{ imageExtraClasses }}"
-                         src="{{ data.imagePlaceholder }}"
-                         data-src="{{ data.imageSrc }}"
-                         alt="{{ data.imageTitle }}"
-                        {{ component.renderAttributes(data.extraAttributes) }}>
-                {% endblock %}
-            {% else %}
+            {% if data.isBackground %}
                 {% block background %}
                     <div class="{{ backgroundClasses }} {{ config.jsName }}__background {{ backgroundExtraClasses }}"
                          data-background-image="url('{{ data.imageSrc }}')"
                          title="{{ data.imageTitle }}"
-                        {{ component.renderAttributes(data.extraAttributes | merge({'background-image': data.imagePlaceholder})) }}></div>
+                        {{ component.renderAttributes(data.extraAttributes | merge({'background-image': imagePlaceholder})) }}></div>
+                {% endblock %}
+            {% else %}
+                {% block image %}
+                    <img class="{{ imageClasses }} {{ config.jsName }}__image {{ imageExtraClasses }}"
+                         src="{{ imagePlaceholder }}"
+                         data-src="{{ data.imageSrc }}"
+                         alt="{{ data.imageTitle }}"
+                        {{ component.renderAttributes(data.extraAttributes) }}>
                 {% endblock %}
             {% endif %}
         {% endblock %}
 
-        {% block imageNoscriptContainer %}
+        {% block imageNoScriptContainer %}
             <noscript>
-                {% if data.isImage %}
-                    {% block imageNoscript %}
+                {% if data.isBackground %}
+                    {% block backgroundNoScript %}
+                        <div class="{{ backgroundClasses }} {{ fallbackBackgroundClasses }}"
+                             title="{{ data.imageTitle }}"
+                            {{ component.renderAttributes(data.extraAttributes | merge({'background-image': data.imageSrc})) }}></div>
+                    {% endblock %}
+                {% else %}
+                    {% block imageNoScript %}
                         <img class="{{ imageClasses }} {{ fallbackImageClasses }}"
                              src="{{ data.imageSrc }}"
                              alt="{{ data.imageTitle }}"
                             {{ component.renderAttributes(data.extraAttributes) }}>
-                    {% endblock %}
-                {% else %}
-                    {% block backgroundNoscript %}
-                        <div class="{{ backgroundClasses }} {{ fallbackBackgroundClasses }}"
-                             title="{{ data.imageTitle }}"
-                            {{ component.renderAttributes(data.extraAttributes | merge({'background-image': data.imageSrc})) }}></div>
                     {% endblock %}
                 {% endif %}
             </noscript>

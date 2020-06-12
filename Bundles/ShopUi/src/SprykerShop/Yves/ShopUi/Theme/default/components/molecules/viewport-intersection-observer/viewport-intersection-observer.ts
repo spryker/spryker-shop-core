@@ -24,9 +24,11 @@ export default class ViewportIntersectionObserver extends Component {
             rootMargin: this.viewportMargin,
             threshold: this.visibilityThreshold,
         };
+
         if (this.viewportClassName) {
             this.viewportOptions.root = <HTMLElement>document.getElementsByClassName(this.viewportClassName)[0];
         }
+
         this.targets = <HTMLElement[]>Array.from(document.getElementsByClassName(this.targetClassName));
         this.observerSubscriber();
     }
@@ -47,9 +49,11 @@ export default class ViewportIntersectionObserver extends Component {
 
                 const item = entry.target;
                 const viewportCustomEvent = new CustomEvent(EVENT_ELEMENT_IN_VIEWPORT);
+
                 if (!this.isObserveVisibleTargets) {
                     observer.unobserve(item);
                 }
+
                 item.dispatchEvent(viewportCustomEvent);
             });
         };
@@ -59,6 +63,7 @@ export default class ViewportIntersectionObserver extends Component {
         if (!this.targets.length) {
             return;
         }
+        
         this.targets.forEach((item: HTMLElement) => this.observer.observe(item));
     }
 
