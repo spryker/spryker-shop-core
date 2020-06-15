@@ -12,16 +12,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class AddItemsForm extends AbstractType
 {
-    public const FORM_NAME = 'AddItemsForm';
-
-    /**
-     * @return string
-     */
-    public function getBlockPrefix()
-    {
-        return static::FORM_NAME;
-    }
-
     /**
      * This method is empty, because this form needs to implement csrf protection and all options and form content
      * will be defined in twig templates.

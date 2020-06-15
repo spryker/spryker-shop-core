@@ -108,7 +108,8 @@ class CmsProductSetContentWidgetPlugin extends SprykerCmsProductSetContentWidget
      */
     protected function getSelectedAttributes(array $context, $idProductAbstract)
     {
-        $attributes = $this->getRequest($context)->query->get(DetailController::PARAM_ATTRIBUTE, []);
+        /** @var array $attributes */
+        $attributes = $this->getRequest($context)->query->get(DetailController::PARAM_ATTRIBUTE) ?: [];
 
         return isset($attributes[$idProductAbstract]) ? array_filter($attributes[$idProductAbstract]) : [];
     }
