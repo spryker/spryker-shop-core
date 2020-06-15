@@ -11,7 +11,7 @@ use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
 /**
- * @deprecated Use `\SprykerShop\Yves\CalculationPage\Plugin\Router\CalculationPageRouteProviderPlugin` instead.
+ * @deprecated Use {@link \SprykerShop\Yves\CalculationPage\Plugin\Router\CalculationPageRouteProviderPlugin} instead.
  */
 class CalculationPageControllerProvider extends AbstractYvesControllerProvider
 {

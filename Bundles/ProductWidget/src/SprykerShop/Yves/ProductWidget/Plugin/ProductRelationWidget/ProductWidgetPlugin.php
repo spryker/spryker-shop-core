@@ -13,7 +13,7 @@ use SprykerShop\Yves\ProductRelationWidget\Dependency\Plugin\ProductWidget\Produ
 use SprykerShop\Yves\ProductWidget\Widget\PdpProductRelationWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductWidget\Widget\PdpProductRelationWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductWidget\Widget\PdpProductRelationWidget} instead.
  *
  * @method \SprykerShop\Yves\ProductWidget\ProductWidgetFactory getFactory()
  */

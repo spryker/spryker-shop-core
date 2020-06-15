@@ -72,7 +72,7 @@ class CmsContentWidgetProductSetConnectorDependencyProvider extends SprykerCmsCo
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return mixed
+     * @return \Spryker\Yves\Kernel\Container
      */
     protected function addProductStorageClient(Container $container)
     {

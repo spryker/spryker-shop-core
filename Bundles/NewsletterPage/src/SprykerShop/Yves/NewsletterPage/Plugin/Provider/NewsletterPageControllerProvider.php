@@ -11,7 +11,7 @@ use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
 /**
- * @deprecated Use `\SprykerShop\Yves\NewsletterPage\Plugin\Router\NewsletterPageRouteProviderPlugin` instead.
+ * @deprecated Use {@link \SprykerShop\Yves\NewsletterPage\Plugin\Router\NewsletterPageRouteProviderPlugin} instead.
  */
 class NewsletterPageControllerProvider extends AbstractYvesControllerProvider
 {

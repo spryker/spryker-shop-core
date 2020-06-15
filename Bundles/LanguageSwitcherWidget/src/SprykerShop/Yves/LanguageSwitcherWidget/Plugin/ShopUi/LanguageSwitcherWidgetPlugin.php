@@ -12,7 +12,7 @@ use SprykerShop\Yves\LanguageSwitcherWidget\Widget\LanguageSwitcherWidget;
 use SprykerShop\Yves\ShopUi\Dependency\Plugin\LanguageSwitcherWidget\LanguageSwitcherWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\LanguageSwitcherWidget\Widget\LanguageSwitcherWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\LanguageSwitcherWidget\Widget\LanguageSwitcherWidget} instead.
  */
 class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements LanguageSwitcherWidgetPluginInterface
 {

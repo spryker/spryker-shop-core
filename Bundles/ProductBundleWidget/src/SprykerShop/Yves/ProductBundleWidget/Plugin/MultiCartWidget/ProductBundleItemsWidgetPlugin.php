@@ -13,7 +13,7 @@ use SprykerShop\Yves\MultiCartWidget\Dependency\Plugin\ProductBundleWidget\Produ
 use SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleItemsMultiCartItemsListWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleItemsMultiCartItemsListWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleItemsMultiCartItemsListWidget} instead.
  *
  * @method \SprykerShop\Yves\ProductBundleWidget\ProductBundleWidgetFactory getFactory()
  */

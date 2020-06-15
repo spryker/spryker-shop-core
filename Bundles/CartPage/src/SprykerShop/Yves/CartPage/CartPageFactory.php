@@ -12,6 +12,7 @@ use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageCli
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToQuoteClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToZedRequestClientInterface;
+use SprykerShop\Yves\CartPage\Form\FormFactory;
 use SprykerShop\Yves\CartPage\Handler\CartItemHandler;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAttributeMapper;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAvailabilityMapper;
@@ -92,7 +93,7 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
-     * @return mixed
+     * @return string[]
      */
     public function getCartPageWidgetPlugins()
     {
@@ -191,5 +192,13 @@ class CartPageFactory extends AbstractFactory
     public function getRouter(): ChainRouterInterface
     {
         return $this->getApplication()->get(CartPageDependencyProvider::SERVICE_ROUTER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CartPage\Form\FormFactory
+     */
+    public function createCartPageFormFactory(): FormFactory
+    {
+        return new FormFactory();
     }
 }

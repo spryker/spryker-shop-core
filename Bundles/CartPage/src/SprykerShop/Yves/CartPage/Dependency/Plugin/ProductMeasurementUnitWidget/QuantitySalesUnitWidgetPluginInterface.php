@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductMeasurementUnitWidget\Widget\CartProductMeasurementUnitQuantitySelectorWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductMeasurementUnitWidget\Widget\CartProductMeasurementUnitQuantitySelectorWidget} instead.
  */
 interface QuantitySalesUnitWidgetPluginInterface extends WidgetPluginInterface
 {

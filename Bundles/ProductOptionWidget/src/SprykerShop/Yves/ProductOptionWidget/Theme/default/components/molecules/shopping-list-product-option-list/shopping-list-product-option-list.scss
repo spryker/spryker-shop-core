@@ -13,7 +13,7 @@ $shopping-list-product-option-list-padding: map-get($setting-spacing, 'small');
 }
 
 /**
- * @deprecated use product-option-widget-shopping-list-product-option-list mixin instead.
+ * @deprecated Use product-option-widget-shopping-list-product-option-list mixin instead.
  */
 @mixin shopping-list-product-option-list($name: '.shopping-list-product-option-list') {
     @include product-option-widget-shopping-list-product-option-list();

@@ -32,7 +32,7 @@ class CategoryFilterTwigExtension extends TwigExtension
     /**
      * @param array $context
      * @param \Generated\Shared\Transfer\FacetSearchResultTransfer $searchResultFacet
-     * @param mixed $idCategoryNode
+     * @param int|string $idCategoryNode
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
      */

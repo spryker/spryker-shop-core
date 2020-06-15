@@ -12,7 +12,7 @@ use SprykerShop\Yves\CustomerPage\Dependency\Plugin\MultiCartMenuItemWidget\Mult
 use SprykerShop\Yves\MultiCartWidget\Widget\MultiCartMenuItemWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\MultiCartWidget\Widget\MultiCartMenuItemWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\MultiCartWidget\Widget\MultiCartMenuItemWidget} instead.
  */
 class MultiCartMenuItemWidgetPlugin extends AbstractWidgetPlugin implements MultiCartMenuItemWidgetPluginInterface
 {

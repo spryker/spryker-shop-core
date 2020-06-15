@@ -13,7 +13,7 @@ use SprykerShop\Yves\MultiCartWidget\Widget\QuickOrderPageWidget;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Plugin\MultiCartWidget\MultiCartListWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\MultiCartWidget\Widget\QuickOrderPageWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\MultiCartWidget\Widget\QuickOrderPageWidget} instead.
  *
  * @method \SprykerShop\Yves\MultiCartWidget\MultiCartWidgetFactory getFactory()
  */
