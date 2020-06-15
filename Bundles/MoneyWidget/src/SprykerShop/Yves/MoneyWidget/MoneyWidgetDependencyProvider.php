@@ -100,7 +100,7 @@ class MoneyWidgetDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Money\Currencies\ISOCurrencies<mixed>
+     * @return \Money\Currencies\ISOCurrencies
      */
     protected function getIsoCurrencies()
     {

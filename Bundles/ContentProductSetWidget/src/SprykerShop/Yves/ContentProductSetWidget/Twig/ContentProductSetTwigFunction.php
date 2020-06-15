@@ -121,8 +121,9 @@ class ContentProductSetTwigFunction extends TwigFunction
             if (!$productSetDataStorageTransfer) {
                 return $this->getMessageProductSetNotFound($contentKey);
             }
-
-            $selectedAttributes = $this->getRequest($context)->query->get(static::PARAM_ATTRIBUTE, []);
+            
+            /** @var array $selectedAttributes */
+            $selectedAttributes = $this->getRequest($context)->query->get(static::PARAM_ATTRIBUTE) ?: [];
             $productAbstractViewCollection = $this->contentProductAbstractReader
                 ->findProductAbstractCollection($productSetDataStorageTransfer, $selectedAttributes, $this->localeName);
 

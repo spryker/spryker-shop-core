@@ -1,0 +1,38 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'accept-terms-checkbox',
+    tag: 'accept-terms-checkbox',
+} %}
+
+{% define data = {
+    label: null,
+    name: 'acceptTermsAndConditions',
+    value: 1,
+} %}
+
+{% define attributes = {
+    'target-class-name': '',
+} %}
+
+{% block component %}
+    {% if data.label is not null %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% embed atom('checkbox') with {
+        attributes: {
+            name: data.name,
+            value: data.value,
+        },
+        embed: {
+            jsName: config.jsName,
+            label: data.label,
+        },
+    } only %}
+        {%- block inputClass -%}{{ embed.jsName ~ '__trigger' }}{%- endblock -%}
+        {%- block label -%}{{ embed.label | raw }}{%- endblock -%}
+    {% endembed %}
+{% endblock %}

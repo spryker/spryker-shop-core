@@ -21,6 +21,7 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCartClientBrid
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientBridge;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToLocaleClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPaymentClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientBridge;
@@ -49,6 +50,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_PRICE = 'CLIENT_PRICE';
     public const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
 
     public const STORE = 'STORE';
 
@@ -103,6 +105,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPaymentClient($container);
         $container = $this->addPriceClient($container);
         $container = $this->addProductBundleClient($container);
+        $container = $this->addLocaleClient($container);
 
         $container = $this->addApplication($container);
         $container = $this->provideStore($container);
@@ -596,6 +599,22 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
             return new CheckoutPageToGlossaryStorageClientBridge(
                 $container->getLocator()->glossaryStorage()->client()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addLocaleClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
+            return new CheckoutPageToLocaleClientBridge(
+                $container->getLocator()->locale()->client()
             );
         });
 
