@@ -1,0 +1,201 @@
+{% extends template('page-layout-sales-return', 'SalesReturnPage') %}
+
+{% define data = {
+    return: _view.return,
+    returnItems: _view.return.returnItems,
+    uniqueOrderReferences: _view.uniqueOrderReferences,
+    title: 'return_page.details.page_title' | trans,
+} %}
+
+{% block breadcrumbs %}
+    {% set breadcrumbExtension = [
+        {
+            label: data.return.returnReference,
+            withChevron: false,
+        },
+    ] %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% set contentWrapperClass = 'box' %}
+
+{% block salesReturnContent %}
+    <div class="{{ contentWrapperClass }}">
+        {% block salesReturnContentInner %}
+            {% block salesReturnContentHeader %}
+                {% include molecule('return-overview', 'SalesReturnPage') with {
+                    data: {
+                        returnItems: data.returnItems,
+                        returnReference: data.return.returnReference,
+                        createdAt: data.return.createdAt,
+                        uniqueOrderReferences: data.uniqueOrderReferences,
+                    },
+                } only %}
+            {% endblock %}
+
+            {% block salesReturnProductsSeparator %}
+                <hr class="box__separator">
+            {% endblock %}
+
+            {% set salesReturnProductsClass = '' %}
+            {% set salesReturnProductItemClass = 'grid grid--middle grid--justify box' %}
+            {% set orderItems = [] %}
+            {% set orderBundleItems = [] %}
+
+            {% block salesReturnProducts %}
+                <div class="{{ salesReturnProductsClass }}">
+                    {% for returnItem in data.returnItems %}
+                        {% set orderItem = returnItem.orderItem %}
+                        {% set isConfiguredBundle = orderItem.salesOrderConfiguredBundleItem is defined and orderItem.salesOrderConfiguredBundleItem is not null %}
+                        {% set isBundleItem = orderItem.relatedBundleItemIdentifier is defined and orderItem.relatedBundleItemIdentifier is not null %}
+
+                        {% if not isConfiguredBundle and not isBundleItem %}
+                            {% block salesReturnProductItem %}
+                                <div class="{{ salesReturnProductItemClass }}">
+                                    {% set productItemReturnClass = 'col col--expand grid' %}
+
+                                    {% block salesReturnProductItemInner %}
+                                        {% embed molecule('return-product-item', 'SalesReturnPage') with {
+                                            class: productItemReturnClass,
+                                            data: {
+                                                item: orderItem,
+                                            },
+                                            embed: {
+                                                returnItem: returnItem,
+                                            },
+                                        } only %}
+                                            {% block productItemInfoInner %}
+                                                {{ parent() }}
+
+                                                {% if embed.returnItem.reason is not null %}
+                                                    <p><strong>{{ 'return_page.return_reasons.title' | trans }}</strong> {{ embed.returnItem.reason | trans }}</p>
+                                                {% endif %}
+                                            {% endblock %}
+                                        {% endembed %}
+                                    {% endblock %}
+                                </div>
+                            {% endblock %}
+                        {% endif %}
+
+                        {% if isConfiguredBundle %}
+                            {% set orderItems = orderItems | merge([orderItem]) %}
+                        {% endif %}
+
+                        {% if isBundleItem %}
+                            {% set orderBundleItems = orderBundleItems | merge([orderItem]) %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {% set salesReturnProductBundleItemClass = '' %}
+
+                    {% block productBundle %}
+                        <div class="{{ salesReturnProductBundleItemClass }}">
+                            {% widget 'OrderItemsProductBundleWidget' args [orderBundleItems] with {
+                                embed: {
+                                    returnItems: data.returnItems,
+                                },
+                            } only %}
+                                {% block bundle %}
+                                    {% embed molecule('ordered-product-bundle', 'SalesProductBundleWidget') with {
+                                        class: 'grid',
+                                        data: {
+                                            productBundle: productBundle,
+                                        },
+                                        embed: {
+                                            returnItems: embed.returnItems,
+                                        },
+                                    } only %}
+                                        {% block bundleInfoInner %}
+                                            {{ parent() }}
+
+                                            {% for returnItem in embed.returnItems %}
+                                                {% set hasReason = returnItem.orderItem.IdSalesOrderItem == data.productBundle.bundleProduct.bundleItemIdentifier and returnItem.reason is not null %}
+
+                                                {% if hasReason %}
+                                                    <p><strong>{{ 'return_page.return_reasons.title' | trans }}</strong> {{ returnItem.reason | trans }}</p>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endblock %}
+                                    {% endembed %}
+                                {% endblock %}
+                            {% endwidget %}
+                        </div>
+                    {% endblock %}
+
+                    {% set salesReturnConfigurableBundleItemClass = '' %}
+
+                    {% block configurableBundle %}
+                        <div class="{{ salesReturnConfigurableBundleItemClass }}">
+                            {% widget 'OrderItemsConfiguredBundleWidget'
+                                args [orderItems]
+                                use view('order-returnable-items-configured-bundle-widget', 'SalesConfigurableBundleWidget')
+                                with {
+                                    embed: {
+                                        returnItems: data.returnItems,
+                                    },
+                                } only %}
+                                    {% block bundleItem %}
+                                        {% embed molecule('ordered-configured-bundle', 'SalesConfigurableBundleWidget') ignore missing with {
+                                        data: {
+                                            bundle: bundle,
+                                            items: data.items,
+                                        },
+                                        embed: {
+                                            returnItems: embed.returnItems,
+                                        },
+                                    } only %}
+                                        {% block bundleProductItem %}
+                                            {% if not loop.first %}
+                                                <hr class="box__separator">
+                                            {% endif %}
+
+                                            {% embed molecule('ordered-configured-bundle-product-secondary', 'SalesConfigurableBundleWidget') with {
+                                                class: 'grid grid--middle',
+                                                data: {
+                                                    product: data.items[item.IdSalesOrderItem],
+                                                    currencyIsoCode: item.currencyIsoCode ?? data.currencyIsoCode,
+                                                    image: data.items[item.IdSalesOrderItem].metadata.image,
+                                                },
+                                                embed: {
+                                                    returnItems: embed.returnItems,
+                                                },
+                                            } only %}
+                                                {% block imageContainer %}{% endblock %}
+
+                                                {% block generalInformation %}
+                                                    {{ parent() }}
+
+                                                    {% for returnItem in embed.returnItems %}
+                                                        {% set hasReason = returnItem.orderItem.IdSalesOrderItem == data.product.IdSalesOrderItem and returnItem.reason is not null %}
+
+                                                        {% if hasReason %}
+                                                            <p><strong>{{ 'return_page.return_reasons.title' | trans }}</strong> {{ returnItem.reason | trans }}</p>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endblock %}
+                                            {% endembed %}
+                                        {% endblock %}
+                                    {% endembed %}
+                                {% endblock %}
+                            {% endwidget %}
+                        </div>
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        {% endblock %}
+
+        {% set salesReturnTotalClass = 'spacing-top spacing-top--big' %}
+
+        {% block salesReturnTotal %}
+            {% include molecule('return-total', 'SalesReturnPage') with {
+                class: salesReturnTotalClass,
+                data: {
+                    returnItemsCount: data.returnItems | length,
+                    remunerationTotal: data.return.returnTotals.remunerationTotal,
+                    currencyIsoCode: data.return.returnItems[0].orderItem.currencyIsoCode,
+                },
+            } only %}
+        {% endblock %}
+    </div>
+{% endblock %}

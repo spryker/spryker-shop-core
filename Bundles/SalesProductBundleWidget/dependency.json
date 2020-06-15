@@ -1,0 +1,7 @@
+{
+  "include": {
+    "spryker-shop/shop-ui": "ShopUi provides basic frontend infrastructure.",
+    "spryker/sales": "Version ^11.9.0 is needed to have currency ISO code in order item.",
+    "spryker/product-bundle": "Version ^7.4.0 is needed to have bundle item details in order item."
+  }
+}

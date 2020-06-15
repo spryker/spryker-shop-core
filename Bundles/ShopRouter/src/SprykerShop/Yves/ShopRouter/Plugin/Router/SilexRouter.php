@@ -59,7 +59,7 @@ class SilexRouter extends AbstractPlugin implements RouterInterface
      * @param array $parameters
      * @param int $referenceType
      *
-     * @return mixed|string
+     * @return string
      */
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {
