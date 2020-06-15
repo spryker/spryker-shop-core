@@ -15,8 +15,8 @@ class OrderCancelWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected const ROUTE_ORDER_CANCEL = 'order/cancel';
 
     /**
-     * Specification:
-     * - Adds Routes to the RouteCollection.
+     * {@inheritDoc}
+     * - Adds OrderCancelWidget module routes to RouteCollection.
      *
      * @api
      *
@@ -32,7 +32,7 @@ class OrderCancelWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @uses \SprykerShop\Yves\CustomerReorderWidget\Controller\OrderController::reorderItemsAction()
+     * @uses \SprykerShop\Yves\OrderCancelWidget\Controller\OrderCancelController::indexAction()
      *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
@@ -40,8 +40,7 @@ class OrderCancelWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected function addOrderCancelRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/order/cancel', 'OrderCancelWidget', 'Order', 'cancelAction');
-        $route = $route->setMethods(['POST']);
+        $route = $this->buildPostRoute('/order/cancel', 'OrderCancelWidget', 'OrderCancel');
         $routeCollection->add(static::ROUTE_ORDER_CANCEL, $route);
 
         return $routeCollection;

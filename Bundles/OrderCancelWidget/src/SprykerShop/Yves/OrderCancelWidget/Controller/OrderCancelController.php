@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * @method \SprykerShop\Yves\OrderCancelWidget\OrderCancelWidgetFactory getFactory()
  */
-class OrderController extends AbstractController
+class OrderCancelController extends AbstractController
 {
     protected const PARAMETER_ORDER_REFERENCE = 'orderReference';
     protected const PARAMETER_RETURN_URL = 'returnUrl';
@@ -45,9 +45,9 @@ class OrderController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function cancelAction(Request $request): RedirectResponse
+    public function indexAction(Request $request): RedirectResponse
     {
-        $response = $this->executeCancelAction($request);
+        $response = $this->executeIndexAction($request);
 
         return $response;
     }
@@ -57,7 +57,7 @@ class OrderController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeCancelAction(Request $request): RedirectResponse
+    protected function executeIndexAction(Request $request): RedirectResponse
     {
         $returnUrl = $request->query->get(static::PARAMETER_RETURN_URL);
         $form = $this->getFactory()->getOrderCancelForm()->handleRequest($request);
