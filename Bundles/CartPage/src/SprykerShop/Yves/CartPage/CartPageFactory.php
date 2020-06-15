@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CartPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageClientInterface;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToQuoteClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToZedRequestClientInterface;
@@ -200,5 +201,13 @@ class CartPageFactory extends AbstractFactory
     public function createCartPageFormFactory(): FormFactory
     {
         return new FormFactory();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToGlossaryStorageClientInterface
+     */
+    public function getGlossaryStorageClient(): CartPageToGlossaryStorageClientInterface
+    {
+        return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 }

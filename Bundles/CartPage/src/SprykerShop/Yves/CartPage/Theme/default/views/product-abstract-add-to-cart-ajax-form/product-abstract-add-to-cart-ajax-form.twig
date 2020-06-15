@@ -1,0 +1,28 @@
+{% extends template('widget') %}
+
+{% define data = {
+    addToCartForm: _widget.addToCartForm,
+    productAbstract: _widget.productAbstract,
+} %}
+
+{% block body %}
+    {{ form_start(data.addToCartForm, {
+        'name': 'productAbstractAddToCartAjaxForm_' ~ data.productAbstract['add_to_cart_sku'],
+        'method': 'POST',
+        'action': path('cart/addAjax', {'sku': data.productAbstract['add_to_cart_sku']}),
+    }) }}
+
+    {{ form_widget(data.addToCartForm._token) }}
+
+    <input type="hidden" name="quantity" value="9999">
+
+    {% block embeddedData %}
+        <button type="submit" class="button button--success">
+            <svg class="icon" data-qa="component icon">
+                <use xlink:href="#:cart-plus"></use>
+            </svg>
+        </button>
+    {% endblock %}
+
+    {{ form_end(data.addToCartForm) }}
+{% endblock %}

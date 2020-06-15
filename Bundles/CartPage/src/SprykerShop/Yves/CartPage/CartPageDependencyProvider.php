@@ -12,6 +12,7 @@ use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageClientBridge;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientBridge;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToGlossaryStorageClientBridge;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientBridge;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToQuoteClientBridge;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToZedRequestClientBridge;
@@ -23,6 +24,7 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const CLIENT_AVAILABILITY_STORAGE = 'CLIENT_AVAILABILITY_STORAGE';
+    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     public const PLUGIN_CART_VARIANT = 'PLUGIN_CART_VARIANT';
     public const PLUGIN_CART_ITEM_TRANSFORMERS = 'PLUGIN_CART_ITEM_TRANSFORMERS';
@@ -46,6 +48,7 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteClient($container);
         $container = $this->addProductStorageClient($container);
         $container = $this->addAvailabilityStorageClient($container);
+        $container = $this->addGlossaryStorageClient($container);
         $container = $this->addApplication($container);
         $container = $this->addCartVariantAttributeMapperPlugin($container);
         $container = $this->addCartPageWidgetPlugins($container);
@@ -122,6 +125,22 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::CLIENT_ZED_REQUEST] = function (Container $container) {
             return new CartPageToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addGlossaryStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
+            return new CartPageToGlossaryStorageClientBridge(
+                $container->getLocator()->glossaryStorage()->client()
+            );
+        });
 
         return $container;
     }

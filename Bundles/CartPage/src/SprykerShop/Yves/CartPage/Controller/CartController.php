@@ -15,8 +15,10 @@ use SprykerShop\Shared\CartPage\Plugin\ChangeCartItemPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
@@ -32,6 +34,12 @@ class CartController extends AbstractController
     public const PARAM_ITEMS = 'items';
 
     protected const FIELD_QUANTITY_TO_NORMALIZE = 'quantity';
+    protected const REQUEST_PARAMETER_SKU = 'sku';
+
+    protected const KEY_CODE = 'code';
+    protected const KEY_MESSAGES = 'messages';
+
+    protected const GLOSSARY_KEY_ERROR_MESSAGE_UNEXPECTED_ERROR = 'cart_page.error_message.unexpected_error';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -327,6 +335,85 @@ class CartController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function addAjaxAction(Request $request): JsonResponse
+    {
+        $response = $this->executeAddAjaxAction($request);
+
+        return $this->jsonResponse($response);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    public function executeAddAjaxAction(Request $request): array
+    {
+        $addToCartForm = $this->getFactory()->createCartPageFormFactory()->getAddToCartForm()->handleRequest($request);
+
+        if (!$addToCartForm->isSubmitted() || !$addToCartForm->isValid()) {
+            return [
+                static::KEY_CODE => Response::HTTP_BAD_REQUEST,
+                static::KEY_MESSAGES => [
+                    $this->getFactory()->getGlossaryStorageClient()->translate(
+                        static::GLOSSARY_KEY_ERROR_MESSAGE_UNEXPECTED_ERROR,
+                        $this->getLocale()
+                    ),
+                ],
+            ];
+        }
+
+        if (!$this->canAddCartItem()) {
+            return [
+                static::KEY_CODE => Response::HTTP_FORBIDDEN,
+                static::KEY_MESSAGES => [
+                    $this->getFactory()->getGlossaryStorageClient()->translate(
+                        static::MESSAGE_PERMISSION_FAILED,
+                        $this->getLocale()
+                    ),
+                ],
+            ];
+        }
+
+        $sku = $request->attributes->get(static::REQUEST_PARAMETER_SKU);
+        $quantity = $request->get(static::FIELD_QUANTITY_TO_NORMALIZE, 1);
+
+        $itemTransfer = (new ItemTransfer())
+            ->setSku($sku)
+            ->setQuantity($quantity);
+
+        $itemTransfer = $this->executePreAddToCartPlugins($itemTransfer, $request->request->all());
+
+        $this->getFactory()
+            ->getCartClient()
+            ->addItem($itemTransfer, $request->request->all());
+
+        $errorMessageTransfers = $this->getFactory()
+            ->getZedRequestClient()
+            ->getLastResponseErrorMessages();
+
+        if ($errorMessageTransfers) {
+            return [
+                static::KEY_CODE => Response::HTTP_PRECONDITION_FAILED,
+                static::KEY_MESSAGES => $this->transformMessageTransfersToArray($errorMessageTransfers),
+            ];
+        }
+
+        $successMessageTransfers = $this->getFactory()
+            ->getZedRequestClient()
+            ->getLastResponseSuccessMessages();
+
+        return [
+            static::KEY_CODE => Response::HTTP_OK,
+            static::KEY_MESSAGES => $this->transformMessageTransfersToArray($successMessageTransfers),
+        ];
+    }
+
+    /**
      * @param array $items
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
@@ -433,5 +520,21 @@ class CartController extends AbstractController
         }
 
         return $itemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     *
+     * @return string[]
+     */
+    protected function transformMessageTransfersToArray(array $messageTransfers): array
+    {
+        $messages = [];
+
+        foreach ($messageTransfers as $messageTransfer) {
+            $messages[] = $messageTransfer->getValue();
+        }
+
+        return $messages;
     }
 }
