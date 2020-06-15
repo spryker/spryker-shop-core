@@ -22,11 +22,11 @@
     <div class="grid">
         <div class="col col--sm-12 col--lg-3">
             {% if imageUrl %}
-                {% include atom('thumbnail') with {
-                    modifiers: ['small'],
-                    attributes: {
-                        alt: data.name | default,
-                        src: imageUrl.externalUrlLarge,
+                {% include molecule('lazy-image') with {
+                    modifiers: ['thumbnail', 'small'],
+                    data: {
+                        imageSrc: imageUrl.externalUrlLarge,
+                        imageTitle: data.name | default,
                     },
                 } only %}
             {% else %}

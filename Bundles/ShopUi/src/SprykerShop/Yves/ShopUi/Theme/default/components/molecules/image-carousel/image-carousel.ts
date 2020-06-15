@@ -41,6 +41,6 @@ export default class ImageCarousel extends SimpleCarousel {
     }
 
     protected setDefaultImageUrl(): void {
-        this.defaultImageUrl = this.currentSlideImage.src;
+        this.defaultImageUrl = this.currentSlideImage.dataset.src || this.currentSlideImage.src;
     }
 }

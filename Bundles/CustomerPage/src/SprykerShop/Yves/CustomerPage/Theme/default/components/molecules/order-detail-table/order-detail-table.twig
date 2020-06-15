@@ -37,10 +37,10 @@
                             </div>
 
                             <div class="col col--middle col--sm-3">
-                                {% include atom('thumbnail') with {
-                                    modifiers: ['small'],
-                                    attributes: {
-                                        src: concreteItem.metadata.image,
+                                {% include molecule('lazy-image') with {
+                                    modifiers: ['thumbnail', 'small'],
+                                    data: {
+                                        imageSrc: concreteItem.metadata.image,
                                     },
                                 } only %}
                             </div>
