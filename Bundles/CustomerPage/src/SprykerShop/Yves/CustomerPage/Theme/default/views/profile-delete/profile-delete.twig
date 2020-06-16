@@ -1,6 +1,7 @@
 {% extends template('page-layout-customer', 'CustomerPage') %}
 
 {% define data = {
+    customerDeleteForm: _view.customerDeleteForm,
     title: 'customer.account.profile_data' | trans,
     activePage: 'profile'
 } %}
@@ -10,6 +11,8 @@
         <h5>{{ "customer.profile.delete" | trans }}</h5>
         <hr class="box__separator">
         {{ "customer.profile.delete.confirmation_question" | trans }}
-        <a href="{{url('customer/delete/confirm')}}" class="button button--alert float-right">{{ "customer.profile.delete" | trans }}</a>
+        {{ form_start(data.customerDeleteForm, {'attr': {'class': 'link float-right'}, 'action': url('customer/delete/confirm')}) }}
+            <button data-init-single-click class="button button--alert float-right">{{ 'customer.profile.delete' | trans }}</button>
+        {{ form_end(data.customerDeleteForm) }}
     </div>
 {% endblock %}

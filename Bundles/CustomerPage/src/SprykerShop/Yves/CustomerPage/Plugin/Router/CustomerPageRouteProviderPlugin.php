@@ -267,7 +267,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected function addCustomerDeleteConfirmRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/customer/delete/confirm', 'CustomerPage', 'Delete', 'confirmAction');
+        $route = $this->buildPostRoute('/customer/delete/confirm', 'CustomerPage', 'Delete', 'confirmAction');
         $routeCollection->add(static::ROUTE_CUSTOMER_DELETE_CONFIRM, $route);
 
         return $routeCollection;
