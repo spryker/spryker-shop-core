@@ -14,8 +14,11 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 use Spryker\Yves\StepEngine\Form\FormCollectionHandler;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageDependencyProvider;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToLocaleClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Form\DataProvider\SubFormDataProviders;
+use SprykerShop\Yves\CheckoutPage\Form\DataProvider\SummaryFormDataProvider;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\PaymentForm;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentCollectionForm;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm;
@@ -120,7 +123,19 @@ class FormFactory extends AbstractFactory
      */
     public function createSummaryFormCollection()
     {
-        return $this->createFormCollection($this->getSummaryFormTypes());
+        return $this->createFormCollection($this->getSummaryFormTypes(), $this->createSummaryFormDataProvider());
+    }
+
+    /**
+     * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
+     */
+    public function createSummaryFormDataProvider(): StepEngineFormDataProviderInterface
+    {
+        return new SummaryFormDataProvider(
+            $this->getConfig(),
+            $this->getLocaleClient(),
+            $this->getGlossaryStorageClient()
+        );
     }
 
     /**
@@ -209,6 +224,22 @@ class FormFactory extends AbstractFactory
     public function getCustomerClient(): CheckoutPageToCustomerClientInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToLocaleClientInterface
+     */
+    public function getLocaleClient(): CheckoutPageToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_LOCALE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface
+     */
+    public function getGlossaryStorageClient(): CheckoutPageToGlossaryStorageClientInterface
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 
     /**

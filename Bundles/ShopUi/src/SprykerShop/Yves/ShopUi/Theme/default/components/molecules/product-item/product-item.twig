@@ -23,37 +23,39 @@
         {% set modifiers = [] %}
 
         {% block imageContainer %}
-            {% macro thumbnail(src, alt='', extraClass='', modifiers=[], jsName) %}
-                {% embed atom('thumbnail') with {
+            {% macro thumbnail(src, alt='', extraClass='', modifiers=[], jsName='') %}
+                {% embed molecule('lazy-image') with {
                     class: extraClass,
-                    modifiers: modifiers,
-                    attributes: {
-                        src: src,
-                        alt: alt,
+                    modifiers: modifiers | merge(['thumbnail']),
+                    data: {
+                        imageSrc: src,
+                        imageTitle: alt,
                     },
                     embed: {
                         jsName: jsName,
                     },
                 } only %}
-                    {% block image %}
-                        {% set additionalImageClass = embed.jsName ~ '__image' %}
+                    {% block content %}
+                        {% set imageExtraClasses = embed.jsName ? embed.jsName ~ '__image' %}
 
                         {{ parent() }}
                     {% endblock %}
                 {% endembed %}
             {% endmacro %}
 
+            {% import _self as macros %}
+
             {% block image %}
                 {% if data.url %}
                     {% block imageLink %}
                         <a class="{{ config.jsName }}__link-detail-page" href="{{ path(data.url) }}">
-                            {{ _self.thumbnail(data.image, data.name, extraClass, modifiers, config.jsName) }}
+                            {{ macros.thumbnail(data.image, data.name, extraClass, modifiers, config.jsName) }}
                         </a>
                     {% endblock %}
                 {% endif %}
                 {% if not data.url %}
                     {% block productThumbnail %}
-                        {{ _self.thumbnail(data.image, data.name, extraClass, modifiers, config.jsName) }}
+                        {{ macros.thumbnail(data.image, data.name, extraClass, modifiers, config.jsName) }}
                     {% endblock %}
                 {% endif %}
             {% endblock %}

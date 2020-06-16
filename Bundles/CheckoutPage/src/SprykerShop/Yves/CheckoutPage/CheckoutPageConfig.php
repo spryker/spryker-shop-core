@@ -45,4 +45,14 @@ class CheckoutPageConfig extends AbstractBundleConfig
     {
         return static::ESCAPE_ROUTE;
     }
+
+    /**
+     * @api
+     *
+     * @return string[]
+     */
+    public function getLocalizedTermsAndConditionsPageLinks(): array
+    {
+        return [];
+    }
 }

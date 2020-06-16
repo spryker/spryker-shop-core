@@ -1,0 +1,9 @@
+@mixin shop-ui-navigation-multilevel($name: '.navigation-multilevel') {
+    #{$name} {
+        &__item--has-children-dropdown:hover {
+            z-index: $setting-zi-element + 2;
+        }
+
+        @content;
+    }
+}
