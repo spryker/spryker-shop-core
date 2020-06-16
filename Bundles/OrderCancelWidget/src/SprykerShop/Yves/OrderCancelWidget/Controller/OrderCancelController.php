@@ -19,8 +19,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class OrderCancelController extends AbstractController
 {
-    protected const PARAMETER_ORDER_REFERENCE = 'orderReference';
-    protected const PARAMETER_RETURN_URL = 'returnUrl';
+    protected const PARAMETER_RETURN_URL = 'return-url';
+    protected const PARAMETER_ID_SALES_ORDER = 'id-sales-order';
 
     protected const GLOSSARY_KEY_ORDER_CANCELLED = 'order_cancel_widget.order.cancelled';
 
@@ -68,7 +68,7 @@ class OrderCancelController extends AbstractController
 
         $orderCancelRequestTransfer = (new OrderCancelRequestTransfer())
             ->setCustomer($this->getFactory()->getCustomerClient()->getCustomer())
-            ->setOrderReference($request->get(static::PARAMETER_ORDER_REFERENCE));
+            ->setIdSalesOrder($request->get(static::PARAMETER_ID_SALES_ORDER));
 
         $orderCancelResponseTransfer = $this->getFactory()->getSalesClient()->cancelOrder($orderCancelRequestTransfer);
 

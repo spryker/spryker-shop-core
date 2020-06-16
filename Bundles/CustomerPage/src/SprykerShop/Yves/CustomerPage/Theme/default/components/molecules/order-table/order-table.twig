@@ -109,7 +109,7 @@
                                 {% endembed %}
 
                                 {% widget 'OrderCancelButtonWidget'  args [order, app.request.requestUri] only %}
-                                    {% block body %}
+                                    {% block formContent %}
                                         <li class="menu__item">
                                             {{ parent() }}
                                         </li>
