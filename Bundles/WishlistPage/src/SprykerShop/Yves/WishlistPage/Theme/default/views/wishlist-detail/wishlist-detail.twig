@@ -6,6 +6,7 @@
     wishlistItems: _view.wishlistItems,
     addAllProductsToCart: _view.addAllAvailableProductsToCartForm,
     activeWishlistId: _view.wishlistOverview.wishlist.idWishlist,
+    wishlistRemoveItemFormCloner: _view.wishlistRemoveItemFormCloner,
 
     pagination: {
         currentPage: _view.currentPage,
@@ -51,7 +52,8 @@
             {% include molecule('wishlist-detail-table', 'WishlistPage') with {
                 data: {
                     wishlistItems: data.wishlistItems,
-                    wishlistName: data.wishlistName
+                    wishlistName: data.wishlistName,
+                    wishlistRemoveItemFormCloner: data.wishlistRemoveItemFormCloner
                 }
             } only %}
 

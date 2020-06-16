@@ -20,6 +20,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class WishlistOverviewController extends AbstractController
 {
+    public const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -76,6 +78,7 @@ class WishlistOverviewController extends AbstractController
         return [
             'wishlistCollection' => $wishlistCollection,
             'wishlistForm' => $wishlistForm->createView(),
+            'wishlistDeleteFormCloner' => $this->getFactory()->getFormCloner($this->getFactory()->getWishlistDeleteForm()),
         ];
     }
 
@@ -129,20 +132,32 @@ class WishlistOverviewController extends AbstractController
         return [
             'wishlistCollection' => $wishlistCollection,
             'wishlistForm' => $wishlistForm->createView(),
+            'wishlistDeleteFormCloner' => $this->getFactory()->getFormCloner($this->getFactory()->getWishlistDeleteForm()),
         ];
     }
 
     /**
      * @param string $wishlistName
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($wishlistName)
+    public function deleteAction($wishlistName, Request $request)
     {
+        $removeWishlistForm = $this->getFactory()->getWishlistDeleteForm()->handleRequest($request);
+
         $wishlistTransfer = new WishlistTransfer();
         $wishlistTransfer
             ->setFkCustomer($this->getIdCustomer())
             ->setName($wishlistName);
+
+        if (!$removeWishlistForm->isSubmitted() || !$removeWishlistForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_DETAILS, [
+                'wishlistName' => $wishlistTransfer->getName(),
+            ]);
+        }
 
         $this->getFactory()
             ->getWishlistClient()
