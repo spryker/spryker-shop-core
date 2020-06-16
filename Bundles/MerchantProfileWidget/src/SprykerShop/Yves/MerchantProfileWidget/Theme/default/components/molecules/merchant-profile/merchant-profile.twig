@@ -18,18 +18,18 @@
         {% block contentInner %}
             <div class="col col--sm-12 col--lg-5">
                 {% set additionaImageClass = 'box' %}
+                {% set additionaImageModifiers = ['thumbnail', 'bigger'] %}
 
                 {% set bannerUrlGlossaryValue = (data.merchantStorageProfile.bannerUrlGlossaryKey ?: '') | trans %}
                 {% set hasBannerUrlTranslation = data.merchantStorageProfile.bannerUrlGlossaryKey
                     ? data.merchantStorageProfile.bannerUrlGlossaryKey != bannerUrlGlossaryValue %}
                 {% if hasBannerUrlTranslation %}
                     {% block image %}
-                        {% include atom('thumbnail') with {
+                        {% include molecule('lazy-image') with {
                             class: additionaImageClass,
-                            modifiers: ['bigger'],
-                            attributes: {
-                                alt: merchantName | default,
-                                src: bannerUrlGlossaryValue,
+                            modifiers: additionaImageModifiers,
+                            data: {
+                                imageSrc: bannerUrlGlossaryValue,
                             },
                         } only %}
                     {% endblock %}
@@ -137,15 +137,15 @@
 
                                     <div class="col col--sm-3 col--lg-2">
                                         {% set additionalLogoClass = 'box' %}
+                                        {% set additionalLogoModifiers = ['thumbnail', 'small'] %}
 
                                         {% if data.merchantStorageProfile.logoUrl %}
                                             {% block logo %}
-                                                {% include atom('thumbnail') with {
+                                                {% include molecule('lazy-image') with {
                                                     class: additionalLogoClass,
-                                                    modifiers: ['small'],
-                                                    attributes: {
-                                                        alt: merchantName | default,
-                                                        src: data.merchantStorageProfile.logoUrl | trans,
+                                                    modifiers: additionalLogoModifiers,
+                                                    data: {
+                                                        imageSrc: data.merchantStorageProfile.logoUrl | trans,
                                                     },
                                                 } only %}
                                             {% endblock %}
