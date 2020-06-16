@@ -46,11 +46,19 @@
 
                                                                     {% if isTitleImage %}
                                                                         {% set imageClass = '' %}
+                                                                        {% set imageModifiers = [] %}
                                                                         {% set imageUrl = template.images.0.externalUrlSmall | default %}
 
                                                                         {% block templateTitleImage %}
                                                                             {% if imageUrl %}
-                                                                                <img class="{{ imageClass }}" src="{{ imageUrl }}" alt="{{ template.name | trans }}">
+                                                                                {% include molecule('lazy-image') with {
+                                                                                    class: imageClass,
+                                                                                    modifiers: imageModifiers,
+                                                                                    data: {
+                                                                                        imageSrc: imageUrl,
+                                                                                        imageTitle: template.name | trans,
+                                                                                    },
+                                                                                } only %}
                                                                             {% endif %}
                                                                         {% endblock %}
 

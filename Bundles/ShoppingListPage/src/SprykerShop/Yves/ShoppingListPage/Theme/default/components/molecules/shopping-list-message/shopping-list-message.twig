@@ -10,6 +10,7 @@
     idShoppingList: required,
     sharedCompanyUsers: required,
     sharedCompanyBusinessUnits: required,
+    shoppingListDeleteForm: required,
 } %}
 
 {% block body %}
@@ -124,10 +125,9 @@
                 {% endblock %}
 
                 {% block deleteButton %}
-                    <a href="{{ url('shopping-list/delete', { 'idShoppingList': data.idShoppingList }) }}"
-                       class="{{ deleteButtonClasses }}" data-init-single-click>
-                        {{- 'customer.account.shopping_list.overview.delete' | trans -}}
-                    </a>
+                    {{ form_start(data.shoppingListDeleteForm, {'attr': {'class': 'link'}, 'action': url('shopping-list/delete', { 'idShoppingList': data.idShoppingList })}) }}
+                        <button data-init-single-click class="{{ deleteButtonClasses }}">{{- 'customer.account.shopping_list.overview.delete' | trans -}}</button>
+                    {{ form_end(data.shoppingListDeleteForm) }}
                 {% endblock %}
             {% endblock %}
         </div>

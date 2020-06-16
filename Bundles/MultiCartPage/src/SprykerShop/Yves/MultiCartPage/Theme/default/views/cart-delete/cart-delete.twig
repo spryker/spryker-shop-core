@@ -1,6 +1,7 @@
 {% extends template('page-layout-multi-cart', 'MultiCartPage') %}
 
 {% define data = {
+    multiCartDeleteForm: _view.multiCartDeleteForm,
     cart: _view.cart | default([]),
     cartName: _view.cart.name | default,
     cartIdQuote: _view.cart.idQuote | default,
@@ -42,10 +43,9 @@
                 } only %}
                 {{ "general.back.button" | trans }}
             </a>
-            <a data-init-single-click href="{{ url('multi-cart/delete', { 'idQuote' : data.cartIdQuote }) }}"
-               class="button button--alert">
-                {{ "multi_cart_page.cart_delete_confirmation.delete" | trans }}
-            </a>
+            {{ form_start(data.multiCartDeleteForm, {'attr': {'class': 'link'}, 'action': url('multi-cart/delete', { 'idQuote' : data.cartIdQuote })}) }}
+                <button data-init-single-click class="button button--alert">{{ 'multi_cart_page.cart_delete_confirmation.delete' | trans }}</button>
+            {{ form_end(data.multiCartDeleteForm) }}
         </div>
     </div>
 {% endblock %}
