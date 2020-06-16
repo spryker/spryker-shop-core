@@ -351,7 +351,7 @@ class CartController extends AbstractController
      *
      * @return array
      */
-    public function executeAddAjaxAction(Request $request): array
+    protected function executeAddAjaxAction(Request $request): array
     {
         $addToCartForm = $this->getFactory()->createCartPageFormFactory()->getAddToCartForm()->handleRequest($request);
 
