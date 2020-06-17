@@ -55,7 +55,10 @@ class OrderCancelButtonWidget extends AbstractWidget
      */
     protected function addIsVisibleParameter(OrderTransfer $orderTransfer): void
     {
-        $this->addParameter(static::PARAMETER_IS_VISIBLE, $orderTransfer->getIsCancellable());
+        $this->addParameter(
+            static::PARAMETER_IS_VISIBLE,
+            $orderTransfer->getIsCancellable() && $this->isCustomerApplicableForCancel($orderTransfer)
+        );
     }
 
     /**
@@ -84,5 +87,23 @@ class OrderCancelButtonWidget extends AbstractWidget
     protected function addFormParameter(): void
     {
         $this->addParameter(static::PARAMETER_FORM, $this->getFactory()->getOrderCancelForm()->createView());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    protected function isCustomerApplicableForCancel(OrderTransfer $orderTransfer): bool
+    {
+        $customerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
+
+        if (!$customerTransfer) {
+            return false;
+        }
+
+        return $customerTransfer->getCustomerReference() === $orderTransfer->getCustomerReference();
     }
 }
