@@ -1,20 +1,9 @@
-{% extends model('component') %}
+{% extends organism('notification-area') %}
 
 {% define config = {
     name: 'flash-message-list',
 } %}
 
-{% define data = {
-    messages: [],
-} %}
-
 {% block body %}
-    {% for message in messages %}
-        {% include molecule('flash-message') with {
-            data: {
-                text: message.value | trans,
-                action: message.type
-            },
-        } only %}
-    {% endfor %}
+    {{ parent() }}
 {% endblock %}
