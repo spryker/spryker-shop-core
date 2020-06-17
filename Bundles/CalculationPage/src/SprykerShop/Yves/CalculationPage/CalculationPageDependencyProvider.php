@@ -37,9 +37,9 @@ class CalculationPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteClient(Container $container)
     {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new CalculationPageToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }
@@ -51,9 +51,9 @@ class CalculationPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCalculationClient(Container $container)
     {
-        $container[static::CLIENT_CALCULATION] = function (Container $container) {
+        $container->set(static::CLIENT_CALCULATION, function (Container $container) {
             return new CalculationPageToCalculationClientBridge($container->getLocator()->calculation()->client());
-        };
+        });
 
         return $container;
     }

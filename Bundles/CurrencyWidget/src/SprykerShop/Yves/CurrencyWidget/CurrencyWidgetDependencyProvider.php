@@ -37,9 +37,9 @@ class CurrencyWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStore(Container $container)
     {
-        $container[static::STORE] = function () {
+        $container->set(static::STORE, function () {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }
@@ -51,9 +51,9 @@ class CurrencyWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCurrencyClient(Container $container)
     {
-        $container[static::CLIENT_CURRENCY] = function (Container $container) {
+        $container->set(static::CLIENT_CURRENCY, function (Container $container) {
             return new CurrencyWidgetToCurrencyClientBridge($container->getLocator()->currency()->client());
-        };
+        });
 
         return $container;
     }

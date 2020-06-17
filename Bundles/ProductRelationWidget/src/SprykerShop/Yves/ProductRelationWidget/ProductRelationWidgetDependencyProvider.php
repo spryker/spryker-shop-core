@@ -57,9 +57,9 @@ class ProductRelationWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addProductRelationStorageClient(Container $container)
     {
-        $container[self::CLIENT_PRODUCT_RELATION_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_RELATION_STORAGE, function (Container $container) {
             return new ProductRelationWidgetToProductRelationStorageClientBridge($container->getLocator()->productRelationStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -71,9 +71,9 @@ class ProductRelationWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addProductDetailPageSimilarProductsWidgetPlugins(Container $container)
     {
-        $container[self::PLUGIN_PRODUCT_DETAIL_PAGE_SIMILAR_PRODUCTS_WIDGETS] = function () {
+        $container->set(static::PLUGIN_PRODUCT_DETAIL_PAGE_SIMILAR_PRODUCTS_WIDGETS, function () {
             return $this->getProductDetailPageSimilarProductsWidgetPlugins();
-        };
+        });
 
         return $container;
     }
@@ -95,9 +95,9 @@ class ProductRelationWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addCartPageUpSellingProductsWidgetPlugins(Container $container)
     {
-        $container[self::PLUGIN_CART_PAGE_UP_SELLING_PRODUCTS_WIDGETS] = function () {
+        $container->set(static::PLUGIN_CART_PAGE_UP_SELLING_PRODUCTS_WIDGETS, function () {
             return $this->getProductDetailPageSimilarProductsWidgetPlugins();
-        };
+        });
 
         return $container;
     }

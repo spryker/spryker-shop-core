@@ -35,9 +35,9 @@ class CompanyUserAgentWidgetDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addCompanyUserAgentClient(Container $container): Container
     {
-        $container[static::CLIENT_COMPANY_USER_AGENT] = function (Container $container) {
+        $container->set(static::CLIENT_COMPANY_USER_AGENT, function (Container $container) {
             return new CompanyUserAgentWidgetToCompanyUserAgentClientBridge($container->getLocator()->companyUserAgent()->client());
-        };
+        });
 
         return $container;
     }

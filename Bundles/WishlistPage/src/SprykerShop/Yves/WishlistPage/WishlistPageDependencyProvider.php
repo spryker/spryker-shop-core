@@ -44,9 +44,9 @@ class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[self::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new WishlistPageToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }
@@ -58,9 +58,9 @@ class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addWishlistClient(Container $container): Container
     {
-        $container[self::CLIENT_WISHLIST] = function (Container $container) {
+        $container->set(static::CLIENT_WISHLIST, function (Container $container) {
             return new WishlistPageToWishlistClientBridge($container->getLocator()->wishlist()->client());
-        };
+        });
 
         return $container;
     }
@@ -72,9 +72,9 @@ class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductStorageClient(Container $container)
     {
-        $container[self::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new WishlistPageToProductStorageClientBridge($container->getLocator()->productStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -86,9 +86,9 @@ class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addWishlistItemExpanderPlugins(Container $container)
     {
-        $container[self::PLUGIN_WISHLIST_ITEM_EXPANDERS] = function () {
+        $container->set(static::PLUGIN_WISHLIST_ITEM_EXPANDERS, function () {
             return $this->getWishlistItemExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -100,9 +100,9 @@ class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addWishlistViewWidgetPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_WISHLIST_VIEW_WIDGETS] = function () {
+        $container->set(static::PLUGIN_WISHLIST_VIEW_WIDGETS, function () {
             return $this->getWishlistViewWidgetPlugins();
-        };
+        });
 
         return $container;
     }
