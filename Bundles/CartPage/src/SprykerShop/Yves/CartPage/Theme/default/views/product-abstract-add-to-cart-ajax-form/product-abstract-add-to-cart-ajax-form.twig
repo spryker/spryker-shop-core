@@ -1,28 +1,20 @@
 {% extends template('widget') %}
 
 {% define data = {
-    addToCartForm: _widget.addToCartForm,
     productAbstract: _widget.productAbstract,
 } %}
 
 {% block body %}
-    {{ form_start(data.addToCartForm, {
-        'name': 'productAbstractAddToCartAjaxForm_' ~ data.productAbstract['add_to_cart_sku'],
-        'method': 'POST',
-        'action': path('cart/addAjax', {'sku': data.productAbstract['add_to_cart_sku']}),
-    }) }}
+    <a href="#" id="ajaxButton"
+       class="button button--success"
+       data-csrf-token="{{ csrf_token('add-to-cart-ajax') }}"
+       data-sku="{{ data.productAbstract["add_to_cart_sku"] }}"
+       data-url="{{ path('cart/addAjax', {'sku': data.productAbstract['add_to_cart_sku']}) }}"
+    >
+        <svg class="icon" data-qa="component icon">
+            <use xlink:href="#:cart-plus"></use>
+        </svg>
+    </a>
 
-    {{ form_widget(data.addToCartForm._token) }}
 
-    <input type="hidden" name="quantity" value="1">
-
-    {% block embeddedData %}
-        <button type="submit" class="button button--success">
-            <svg class="icon" data-qa="component icon">
-                <use xlink:href="#:cart-plus"></use>
-            </svg>
-        </button>
-    {% endblock %}
-
-    {{ form_end(data.addToCartForm) }}
 {% endblock %}

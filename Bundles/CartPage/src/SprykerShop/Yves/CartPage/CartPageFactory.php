@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\CartPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageClientInterface;
-use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToQuoteClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToZedRequestClientInterface;
@@ -22,6 +21,7 @@ use SprykerShop\Yves\CartPage\Plugin\Provider\AttributeVariantsProvider;
 use SprykerShop\Yves\CartPage\ProductViewExpander\ProductViewExpander;
 use SprykerShop\Yves\CartPage\ProductViewExpander\ProductViewExpanderInterface;
 use Symfony\Cmf\Component\Routing\ChainRouterInterface;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class CartPageFactory extends AbstractFactory
 {
@@ -204,10 +204,10 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToGlossaryStorageClientInterface
+     * @return \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface
      */
-    public function getGlossaryStorageClient(): CartPageToGlossaryStorageClientInterface
+    public function getCsrfTokenManager(): CsrfTokenManagerInterface
     {
-        return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
+        return $this->getApplication()->get(CartPageDependencyProvider::SERVICE_FORM_CSRF_PROVIDER);
     }
 }

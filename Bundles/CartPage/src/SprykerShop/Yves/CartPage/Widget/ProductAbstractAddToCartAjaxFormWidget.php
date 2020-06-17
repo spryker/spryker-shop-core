@@ -14,7 +14,6 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class ProductAbstractAddToCartAjaxFormWidget extends AbstractWidget
 {
-    protected const PARAMETER_ADD_TO_CART_FORM = 'addToCartForm';
     protected const PARAMETER_PRODUCT_ABSTRACT = 'productAbstract';
 
     /**
@@ -22,7 +21,6 @@ class ProductAbstractAddToCartAjaxFormWidget extends AbstractWidget
      */
     public function __construct(array $productAbstract)
     {
-        $this->addAddToCartFormParameter();
         $this->addProductAbstractParameter($productAbstract);
     }
 
@@ -40,19 +38,6 @@ class ProductAbstractAddToCartAjaxFormWidget extends AbstractWidget
     public static function getTemplate(): string
     {
         return '@CartPage/views/product-abstract-add-to-cart-ajax-form/product-abstract-add-to-cart-ajax-form.twig';
-    }
-
-    /**
-     * @return void
-     */
-    protected function addAddToCartFormParameter(): void
-    {
-        $addToCartForm = $this->getFactory()
-            ->createCartPageFormFactory()
-            ->getAddToCartForm()
-            ->createView();
-
-        $this->addParameter(static::PARAMETER_ADD_TO_CART_FORM, $addToCartForm);
     }
 
     /**

@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CartPage\Controller;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Shared\CartPage\Plugin\AddCartItemPermissionPlugin;
@@ -19,6 +20,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
  * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
@@ -33,12 +35,18 @@ class CartController extends AbstractController
 
     public const PARAM_ITEMS = 'items';
 
-    protected const FIELD_QUANTITY_TO_NORMALIZE = 'quantity';
     protected const REQUEST_PARAMETER_SKU = 'sku';
+    protected const REQUEST_PARAMETER_QUANTITY = 'quantity';
+    protected const REQUEST_PARAMETER_TOKEN = '_token';
+
+    protected const FIELD_QUANTITY_TO_NORMALIZE = 'quantity';
 
     protected const KEY_CODE = 'code';
     protected const KEY_MESSAGES = 'messages';
 
+    protected const CSRF_TOKEN_ID = 'add-to-cart-ajax';
+    protected const MESSAGE_TYPE_ERROR = 'error';
+    protected const FLASH_MESSAGE_LIST_TEMPLATE_PATH = '@ShopUi/components/organisms/flash-message-list/flash-message-list.twig';
     protected const GLOSSARY_KEY_ERROR_MESSAGE_UNEXPECTED_ERROR = 'cart_page.error_message.unexpected_error';
 
     /**
@@ -353,34 +361,27 @@ class CartController extends AbstractController
      */
     protected function executeAddAjaxAction(Request $request): array
     {
-        $addToCartForm = $this->getFactory()->createCartPageFormFactory()->getAddToCartForm()->handleRequest($request);
+        $csrfToken = new CsrfToken(
+            static::CSRF_TOKEN_ID,
+            $request->get(static::REQUEST_PARAMETER_TOKEN)
+        );
 
-        if (!$addToCartForm->isSubmitted() || !$addToCartForm->isValid()) {
-            return [
-                static::KEY_CODE => Response::HTTP_BAD_REQUEST,
-                static::KEY_MESSAGES => [
-                    $this->getFactory()->getGlossaryStorageClient()->translate(
-                        static::GLOSSARY_KEY_ERROR_MESSAGE_UNEXPECTED_ERROR,
-                        $this->getLocale()
-                    ),
-                ],
-            ];
+        if (!$this->getFactory()->getCsrfTokenManager()->isTokenValid($csrfToken)) {
+            return $this->createAjaxErrorResponse(
+                Response::HTTP_BAD_REQUEST,
+                [static::GLOSSARY_KEY_ERROR_MESSAGE_UNEXPECTED_ERROR]
+            );
         }
 
         if (!$this->canAddCartItem()) {
-            return [
-                static::KEY_CODE => Response::HTTP_FORBIDDEN,
-                static::KEY_MESSAGES => [
-                    $this->getFactory()->getGlossaryStorageClient()->translate(
-                        static::MESSAGE_PERMISSION_FAILED,
-                        $this->getLocale()
-                    ),
-                ],
-            ];
+            return $this->createAjaxErrorResponse(
+                Response::HTTP_FORBIDDEN,
+                [static::MESSAGE_PERMISSION_FAILED]
+            );
         }
 
-        $sku = $request->attributes->get(static::REQUEST_PARAMETER_SKU);
-        $quantity = $request->get(static::FIELD_QUANTITY_TO_NORMALIZE, 1);
+        $sku = $request->get(static::REQUEST_PARAMETER_SKU);
+        $quantity = $request->get(static::REQUEST_PARAMETER_QUANTITY, 1);
 
         $itemTransfer = (new ItemTransfer())
             ->setSku($sku)
@@ -392,24 +393,31 @@ class CartController extends AbstractController
             ->getCartClient()
             ->addItem($itemTransfer, $request->request->all());
 
-        $errorMessageTransfers = $this->getFactory()
+        $messageTransfers = $this->getFactory()
             ->getZedRequestClient()
             ->getLastResponseErrorMessages();
 
-        if ($errorMessageTransfers) {
+        if ($messageTransfers) {
+            $flashMessageListHtml = $this->renderView(
+                static::FLASH_MESSAGE_LIST_TEMPLATE_PATH,
+                [static::KEY_MESSAGES => $messageTransfers]
+            )->getContent();
+
             return [
-                static::KEY_CODE => Response::HTTP_PRECONDITION_FAILED,
-                static::KEY_MESSAGES => $this->transformMessageTransfersToArray($errorMessageTransfers),
+                static::KEY_CODE => Response::HTTP_BAD_REQUEST,
+                static::KEY_MESSAGES => $flashMessageListHtml,
             ];
         }
 
-        $successMessageTransfers = $this->getFactory()
-            ->getZedRequestClient()
-            ->getLastResponseSuccessMessages();
+        $flashMessageListHtml = $this->renderView(
+            static::FLASH_MESSAGE_LIST_TEMPLATE_PATH,
+            [static::KEY_MESSAGES => $this->getFactory()->getZedRequestClient()->getLastResponseSuccessMessages()]
+        )->getContent();
 
         return [
             static::KEY_CODE => Response::HTTP_OK,
-            static::KEY_MESSAGES => $this->transformMessageTransfersToArray($successMessageTransfers),
+            static::KEY_MESSAGES => $flashMessageListHtml,
+            static::REQUEST_PARAMETER_QUANTITY => $quantity,
         ];
     }
 
@@ -523,18 +531,45 @@ class CartController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     * @param string[] $messages
+     * @param string $type
      *
-     * @return string[]
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    protected function transformMessageTransfersToArray(array $messageTransfers): array
+    protected function createMessageTransfers(array $messages, string $type): array
     {
-        $messages = [];
+        $messageTransfers = [];
 
-        foreach ($messageTransfers as $messageTransfer) {
-            $messages[] = $messageTransfer->getValue();
+        foreach ($messages as $message) {
+            $messageTransfers[] = (new MessageTransfer())
+                ->setValue($message)
+                ->setType($type);
         }
 
-        return $messages;
+        return $messageTransfers;
+    }
+
+    /**
+     * @param int $code
+     * @param string[] $messages
+     *
+     * @return array
+     */
+    protected function createAjaxErrorResponse(int $code, array $messages): array
+    {
+        $messageTransfers = $this->createMessageTransfers(
+            $messages,
+            static::MESSAGE_TYPE_ERROR
+        );
+
+        $flashMessageListHtml = $this->renderView(
+            static::FLASH_MESSAGE_LIST_TEMPLATE_PATH,
+            [static::KEY_MESSAGES => $messageTransfers]
+        )->getContent();
+
+        return [
+            static::KEY_CODE => $code,
+            static::KEY_MESSAGES => $flashMessageListHtml,
+        ];
     }
 }
