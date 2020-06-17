@@ -16,9 +16,11 @@
 
     <transfer name="Order">
         <property name="isCancellable" type="bool"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="Customer">
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="Message">
