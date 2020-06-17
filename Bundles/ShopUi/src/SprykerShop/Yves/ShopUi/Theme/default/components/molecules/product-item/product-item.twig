@@ -175,7 +175,7 @@
                 {% endif %}
 
                 {% if data.product.add_to_cart_sku is defined and data.product.add_to_cart_sku is not empty %}
-                    {% widget 'ProductAbstractAddToCartAjaxFormWidget' args [data.product] only %}
+                    {% widget 'ProductAbstractAddToCartAjaxWidget' args [data.product] only %}
                     {% endwidget %}
                 {% endif %}
             {% endblock %}

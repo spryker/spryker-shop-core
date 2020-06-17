@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 /**
  * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
  */
-class ProductAbstractAddToCartAjaxFormWidget extends AbstractWidget
+class ProductAbstractAddToCartAjaxWidget extends AbstractWidget
 {
     protected const PARAMETER_PRODUCT_ABSTRACT = 'productAbstract';
 
@@ -29,7 +29,7 @@ class ProductAbstractAddToCartAjaxFormWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'ProductAbstractAddToCartAjaxFormWidget';
+        return 'ProductAbstractAddToCartAjaxWidget';
     }
 
     /**
@@ -37,7 +37,7 @@ class ProductAbstractAddToCartAjaxFormWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@CartPage/views/product-abstract-add-to-cart-ajax-form/product-abstract-add-to-cart-ajax-form.twig';
+        return '@CartPage/views/product-abstract-add-to-cart-ajax/product-abstract-add-to-cart-ajax.twig';
     }
 
     /**
