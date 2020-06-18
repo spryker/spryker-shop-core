@@ -1,0 +1,58 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'ajax-add-to-cart',
+    tag: 'ajax-add-to-cart',
+} %}
+
+{% define data = {
+    url: required,
+    csrfToken: required,
+    quantity: 1,
+    iconName: 'cart-plus',
+    buttonText: '',
+    buttonTitle: data.buttonText | default is empty ? 'global.add-to-cart' | trans,
+    buttonClasses: 'button button--success button--expand',
+    buttonExtraClasses: '',
+    extraAttributes: {},
+} %}
+
+{% block body %}
+    {% set buttonText = data.buttonText %}
+    {% set buttonTextClasses = '' %}
+    {% set iconName = data.iconName %}
+    {% set iconModifiers = [] %}
+
+    {% block button %}
+        <button
+            class="{{ config.name }}__button {{ config.jsName }}__button {{ data.buttonClasses }} {{ data.buttonExtraClasses }}"
+            type="button"
+            title="{{ data.buttonTitle }}"
+            data-url="{{ data.url }}"
+            data-csrf-token="{{ data.csrfToken }}"
+            data-quantity="{{ data.quantity }}"
+            {{ component.renderAttributes(data.extraAttributes) }}
+        >
+            {% block buttonContent %}
+                {% if buttonText %}
+                    {% block buttonText %}
+                        <span class="{{ buttonTextClasses }}">
+                            {{- buttonText -}}
+                        </span>
+                    {% endblock %}
+                {% endif %}
+
+                {% if iconName %}
+                    {% block icon %}
+                        {% include atom('icon') with {
+                            modifiers: iconModifiers,
+                            data: {
+                                name: iconName,
+                            },
+                        } only %}
+                    {% endblock %}
+                {% endif %}
+            {% endblock %}
+        </button>
+    {% endblock %}
+{% endblock %}

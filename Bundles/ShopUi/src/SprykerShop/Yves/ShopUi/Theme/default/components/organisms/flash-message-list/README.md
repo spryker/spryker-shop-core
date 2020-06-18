@@ -1,1 +1,1 @@
-Displays flash messages.
+Renders flash messages for AJAX response.

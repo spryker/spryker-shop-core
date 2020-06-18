@@ -152,32 +152,40 @@
     {% block actionsContainer %}
         <div class="{{ config.name }}__actions">
             {% block actions %}
-                {% if data.url %}
-                    {% block action %}
-                        <a class="button button--expand {{ config.jsName }}__link-detail-page" href="{{ path(data.url) }}">
-                            {% block actionInner %}
-                                {{- 'product.view' | trans -}}
+                <div class="{{ config.name }}__actions-row">
+                    {% block actionsContent %}
+                        {% if data.url %}
+                            {% block action %}
+                                <a class="button button--expand {{ config.jsName }}__link-detail-page" href="{{ path(data.url) }}">
+                                    {% block actionInner %}
+                                        {{- 'product.view' | trans -}}
 
-                                {% set iconModifiers = ['small'] %}
-                                {% set iconName = 'angle-double-right' %}
+                                        {% set iconModifiers = ['small'] %}
+                                        {% set iconName = 'angle-double-right' %}
 
-                                {% block icon %}
-                                    {%- include atom('icon') with {
-                                        modifiers: iconModifiers,
-                                        data: {
-                                            name: iconName,
-                                        },
-                                    } only -%}
-                                {% endblock %}
+                                        {% block icon %}
+                                            {%- include atom('icon') with {
+                                                modifiers: iconModifiers,
+                                                data: {
+                                                    name: iconName,
+                                                },
+                                            } only -%}
+                                        {% endblock %}
+                                    {% endblock %}
+                                </a>
                             {% endblock %}
-                        </a>
-                    {% endblock %}
-                {% endif %}
+                        {% endif %}
 
-                {% if data.product.add_to_cart_sku is defined and data.product.add_to_cart_sku is not empty %}
-                    {% widget 'ProductAbstractAddToCartAjaxWidget' args [data.product] only %}
-                    {% endwidget %}
-                {% endif %}
+                        {% if data.product.add_to_cart_sku is defined and data.product.add_to_cart_sku is not empty %}
+                            {% widget 'ProductAbstractAddToCartAjaxWidget' args [data.product] with {
+                                data: {
+                                    buttonExtraClasses: config.jsName ~ '__ajax-button-add-to-cart',
+                                },
+                            } only %}
+                            {% endwidget %}
+                        {% endif %}
+                    {% endblock %}
+                </div>
             {% endblock %}
         </div>
     {% endblock %}

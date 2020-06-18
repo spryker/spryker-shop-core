@@ -2,19 +2,20 @@
 
 {% define data = {
     productAbstract: _widget.productAbstract,
+    buttonClasses: 'button button--success button--expand',
+    buttonExtraClasses: '',
 } %}
 
+{% set extraClasses = 'spacing-left' %}
+
 {% block body %}
-    <a href="#" id="ajaxButton"
-       class="button button--success"
-       data-csrf-token="{{ csrf_token('add-to-cart-ajax') }}"
-       data-sku="{{ data.productAbstract["add_to_cart_sku"] }}"
-       data-url="{{ path('cart/addAjax', {'sku': data.productAbstract['add_to_cart_sku']}) }}"
-    >
-        <svg class="icon" data-qa="component icon">
-            <use xlink:href="#:cart-plus"></use>
-        </svg>
-    </a>
-
-
+    {% include molecule('ajax-add-to-cart') with {
+        class: extraClasses,
+        data: {
+            url: path('cart/addAjax', {'sku': data.productAbstract['add_to_cart_sku']}),
+            csrfToken: csrf_token('add-to-cart-ajax'),
+            buttonClasses: data.buttonClasses,
+            buttonExtraClasses: data.buttonExtraClasses,
+        },
+    } only %}
 {% endblock %}
