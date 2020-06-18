@@ -104,9 +104,9 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addQuoteRequestFormMetadataFieldPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUOTE_REQUEST_FORM_METADATA_FIELD] = function () {
+        $container->set(static::PLUGINS_QUOTE_REQUEST_FORM_METADATA_FIELD, function () {
             return $this->getQuoteRequestFormMetadataFieldPlugins();
-        };
+        });
 
         return $container;
     }

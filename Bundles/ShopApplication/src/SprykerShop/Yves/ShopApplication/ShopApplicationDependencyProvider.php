@@ -50,11 +50,11 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addApplicationPlugin(Container $container)
     {
-        $container[self::PLUGIN_APPLICATION] = function () {
+        $container->set(static::PLUGIN_APPLICATION, function () {
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
-        };
+        });
 
         return $container;
     }
@@ -66,9 +66,9 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStore(Container $container)
     {
-        $container[self::STORE] = function () {
+        $container->set(static::STORE, function () {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }
@@ -80,9 +80,9 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilTextService(Container $container)
     {
-        $container[self::SERVICE_UTIL_TEXT] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
             return new ShopApplicationToUtilTextServiceBridge($container->getLocator()->utilText()->service());
-        };
+        });
 
         return $container;
     }
@@ -106,14 +106,14 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addGlobalWidgets(Container $container)
     {
-        $container[self::WIDGET_GLOBAL] = function () {
+        $container->set(static::WIDGET_GLOBAL, function () {
             return array_unique(array_merge($this->getGlobalWidgets(), $this->getGlobalWidgetPlugins()));
-        };
+        });
 
         // Kept for BC reasons
-        $container[self::PLUGIN_GLOBAL_WIDGETS] = function () {
+        $container->set(static::PLUGIN_GLOBAL_WIDGETS, function () {
             return $this->getGlobalWidgetPlugins();
-        };
+        });
 
         return $container;
     }
@@ -143,9 +143,9 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFilterControllerEventSubscriberPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER] = function () {
+        $container->set(static::PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER, function () {
             return $this->getFilterControllerEventSubscriberPlugins();
-        };
+        });
 
         return $container;
     }

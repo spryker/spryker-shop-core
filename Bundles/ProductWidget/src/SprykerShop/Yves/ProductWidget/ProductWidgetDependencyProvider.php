@@ -45,9 +45,9 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductRelationWidgetSubWidgetPlugins(Container $container)
     {
-        $container[self::PLUGIN_PRODUCT_RELATION_WIDGET_SUB_WIDGETS] = function () {
+        $container->set(static::PLUGIN_PRODUCT_RELATION_WIDGET_SUB_WIDGETS, function () {
             return $this->getProductRelationWidgetSubWidgetPlugins();
-        };
+        });
 
         return $container;
     }
@@ -59,9 +59,9 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCatalogPageSubWidgetPlugins(Container $container)
     {
-        $container[self::PLUGIN_CATALOG_PAGE_SUB_WIDGETS] = function () {
+        $container->set(static::PLUGIN_CATALOG_PAGE_SUB_WIDGETS, function () {
             return $this->getCatalogPageSubWidgetPlugins();
-        };
+        });
 
         return $container;
     }
@@ -73,9 +73,9 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsContentWidgetProductSubWidgetPlugins(Container $container)
     {
-        $container[self::PLUGIN_CMS_CONTENT_WIDGET_PRODUCT_SUB_WIDGETS] = function () {
+        $container->set(static::PLUGIN_CMS_CONTENT_WIDGET_PRODUCT_SUB_WIDGETS, function () {
             return $this->getCmsContentWidgetProductSubWidgetPlugins();
-        };
+        });
 
         return $container;
     }
@@ -87,9 +87,9 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsContentWidgetProductGroupSubWidgetPlugins(Container $container)
     {
-        $container[self::PLUGIN_CMS_CONTENT_WIDGET_PRODUCT_GROUP_SUB_WIDGETS] = function () {
+        $container->set(static::PLUGIN_CMS_CONTENT_WIDGET_PRODUCT_GROUP_SUB_WIDGETS, function () {
             return $this->getCmsContentWidgetProductGroupSubWidgetPlugins();
-        };
+        });
 
         return $container;
     }
@@ -101,9 +101,9 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addHomePageSubWidgetPlugins(Container $container)
     {
-        $container[self::PLUGIN_HOME_PAGE_SUB_WIDGETS] = function () {
+        $container->set(static::PLUGIN_HOME_PAGE_SUB_WIDGETS, function () {
             return $this->getHomePageSubWidgetPlugins();
-        };
+        });
 
         return $container;
     }
@@ -115,9 +115,9 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductReplacementForWidgetPlugins(Container $container): Container
     {
-        $container[self::PLUGINS_PRODUCT_REPLACEMENT_FOR_WIDGET_SUB_WIDGET] = function () {
+        $container->set(static::PLUGINS_PRODUCT_REPLACEMENT_FOR_WIDGET_SUB_WIDGET, function () {
             return $this->getProductReplacementForWidgetPlugins();
-        };
+        });
 
         return $container;
     }
@@ -129,9 +129,9 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductAlternativeWidgetPlugins(Container $container): Container
     {
-        $container[self::PLUGINS_PRODUCT_ALTERNATIVE_WIDGET_SUB_WIDGET] = function () {
+        $container->set(static::PLUGINS_PRODUCT_ALTERNATIVE_WIDGET_SUB_WIDGET, function () {
             return $this->getProductAlternativeWidgetPlugins();
-        };
+        });
 
         return $container;
     }

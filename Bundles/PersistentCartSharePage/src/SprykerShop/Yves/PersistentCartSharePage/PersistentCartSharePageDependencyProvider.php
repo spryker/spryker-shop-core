@@ -38,11 +38,11 @@ class PersistentCartSharePageDependencyProvider extends AbstractBundleDependency
      */
     protected function addPersistentCartShareClient(Container $container): Container
     {
-        $container[static::CLIENT_PERSISTENT_CART_SHARE] = function (Container $container) {
+        $container->set(static::CLIENT_PERSISTENT_CART_SHARE, function (Container $container) {
             return new PersistentCartSharePageToPersistentCartShareClientBridge(
                 $container->getLocator()->persistentCartShare()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -54,11 +54,11 @@ class PersistentCartSharePageDependencyProvider extends AbstractBundleDependency
      */
     protected function addApplication(Container $container): Container
     {
-        $container[static::PLUGIN_APPLICATION] = function () {
+        $container->set(static::PLUGIN_APPLICATION, function () {
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
-        };
+        });
 
         return $container;
     }

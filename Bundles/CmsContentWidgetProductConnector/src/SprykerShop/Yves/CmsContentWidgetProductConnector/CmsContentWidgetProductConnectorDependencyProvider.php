@@ -37,9 +37,9 @@ class CmsContentWidgetProductConnectorDependencyProvider extends SprykerCmsConte
      */
     protected function addCmsProductContentWidgetPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_CMS_PRODUCT_CONTENT_WIDGETS] = function () {
+        $container->set(static::PLUGIN_CMS_PRODUCT_CONTENT_WIDGETS, function () {
             return $this->getCmsProductContentWidgetPlugins();
-        };
+        });
 
         return $container;
     }
@@ -51,9 +51,9 @@ class CmsContentWidgetProductConnectorDependencyProvider extends SprykerCmsConte
      */
     protected function addProductStorageClient(Container $container)
     {
-        $container[self::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new CmsContentWidgetProductConnectorToProductStorageClientBridge($container->getLocator()->productStorage()->client());
-        };
+        });
 
         return $container;
     }

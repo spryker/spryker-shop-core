@@ -210,12 +210,24 @@ class UserController extends AbstractCompanyController
      */
     public function deleteAction(Request $request)
     {
-        $idCompanyUser = $request->query->getInt('id');
-        $companyUserTransfer = (new CompanyUserTransfer())
-            ->setIdCompanyUser($idCompanyUser);
+        $companyUserDeleteForm = $this->getFactory()
+            ->createCompanyPageFormFactory()
+            ->getCompanyUserDeleteForm(new CompanyUserTransfer())
+            ->handleRequest($request);
 
+        if (!$companyUserDeleteForm->isSubmitted() || !$companyUserDeleteForm->isValid()) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_DELETE_COMPANY_USER);
+
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+        }
+
+        $companyUserTransfer = $companyUserDeleteForm->getData();
         $currentCompanyUserTransfer = $this->findCurrentCompanyUserTransfer();
-        if ($currentCompanyUserTransfer && $currentCompanyUserTransfer->getIdCompanyUser() === $idCompanyUser) {
+
+        if (
+            $currentCompanyUserTransfer
+            && $currentCompanyUserTransfer->getIdCompanyUser() === $companyUserTransfer->getIdCompanyUser()
+        ) {
             $this->addErrorMessage(static::ERROR_MESSAGE_DELETE_YOURSELF);
 
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
@@ -282,9 +294,14 @@ class UserController extends AbstractCompanyController
         $companyUserTransfer->requireCustomer();
         $customerTransfer = $companyUserTransfer->getCustomer();
 
+        $companyUserDeleteForm = $this->getFactory()
+            ->createCompanyPageFormFactory()
+            ->getCompanyUserDeleteForm($companyUserTransfer);
+
         return [
             'idCompanyUser' => $idCompanyUser,
             'customer' => $customerTransfer,
+            'companyUserDeleteForm' => $companyUserDeleteForm->createView(),
         ];
     }
 

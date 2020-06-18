@@ -15,11 +15,11 @@
         {% set imageModifiers =  ['small'] %}
 
         {% block image %}
-            {% include atom('thumbnail') with {
-                modifiers: imageModifiers,
-                attributes: {
-                    src: data.image,
-                    alt: data.name,
+            {% include molecule('lazy-image') with {
+                modifiers: imageModifiers | merge(['thumbnail']),
+                data: {
+                    imageSrc: data.image,
+                    imageTitle: data.name,
                 },
             } only %}
         {% endblock %}

@@ -20,6 +20,7 @@
         <property name="billingAddress" type="Address"/>
         <property name="checkoutConfirmed" type="bool"/>
         <property name="priceMode" type="string"/>
+        <property name="acceptTermsAndConditions" type="bool"/>
     </transfer>
 
     <transfer name="Message">

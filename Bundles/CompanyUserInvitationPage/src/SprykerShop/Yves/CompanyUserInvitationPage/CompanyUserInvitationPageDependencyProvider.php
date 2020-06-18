@@ -40,11 +40,11 @@ class CompanyUserInvitationPageDependencyProvider extends AbstractBundleDependen
      */
     protected function addSessionClient(Container $container): Container
     {
-        $container[self::CLIENT_SESSION] = function (Container $container) {
+        $container->set(static::CLIENT_SESSION, function (Container $container) {
             return new CompanyUserInvitationPageToSessionClientBridge(
                 $container->getLocator()->session()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -56,11 +56,11 @@ class CompanyUserInvitationPageDependencyProvider extends AbstractBundleDependen
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[self::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new CompanyUserInvitationPageToCustomerClientBridge(
                 $container->getLocator()->customer()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -72,11 +72,11 @@ class CompanyUserInvitationPageDependencyProvider extends AbstractBundleDependen
      */
     protected function addCompanyUserInvitationClient(Container $container): Container
     {
-        $container[self::CLIENT_COMPANY_USER_INVITATION] = function (Container $container) {
+        $container->set(static::CLIENT_COMPANY_USER_INVITATION, function (Container $container) {
             return new CompanyUserInvitationPageToCompanyUserInvitationClientBridge(
                 $container->getLocator()->companyUserInvitation()->client()
             );
-        };
+        });
 
         return $container;
     }

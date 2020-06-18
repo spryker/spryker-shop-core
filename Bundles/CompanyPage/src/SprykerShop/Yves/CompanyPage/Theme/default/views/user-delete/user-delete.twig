@@ -3,6 +3,7 @@
 {% define data = {
     idCompanyUser: _view.idCompanyUser,
     companyUserName: _view.customer.firstName ~ ' ' ~ _view.customer.lastName,
+    companyUserDeleteForm: _view.companyUserDeleteForm,
     title: 'company.account.company_user' | trans,
     activePage: 'users'
 } %}
@@ -37,10 +38,9 @@
             <a href="{{ url('company/user') }}" class="button button--info">
                 {{ "company.account.company_user.delete.back" | trans }}
             </a>
-            <a data-init-single-click href="{{ url('company/user/delete', { 'id' : data.idCompanyUser }) }}"
-               class="button button--alert">
-                {{ "company.account.company_user.delete" | trans }}
-            </a>
+            {{ form_start(data.companyUserDeleteForm, {'attr': {'class': 'link'}, 'action': url('company/user/delete')}) }}
+                <button data-init-single-click class="button button--alert">{{ 'company.account.company_user.delete' | trans }}</button>
+            {{ form_end(data.companyUserDeleteForm) }}
         </div>
     </div>
 {% endblock %}

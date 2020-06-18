@@ -40,9 +40,9 @@ class AvailabilityNotificationWidgetDependencyProvider extends AbstractBundleDep
      */
     protected function addAvailabilityNotificationClient(Container $container): Container
     {
-        $container[static::CLIENT_AVAILABILITY_NOTIFICATION] = function (Container $container) {
+        $container->set(static::CLIENT_AVAILABILITY_NOTIFICATION, function (Container $container) {
             return new AvailabilityNotificationWidgetToAvailabilityNotificationClientBridge($container->getLocator()->availabilityNotification()->client());
-        };
+        });
 
         return $container;
     }
@@ -54,9 +54,9 @@ class AvailabilityNotificationWidgetDependencyProvider extends AbstractBundleDep
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new AvailabilityNotificationWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }

@@ -34,9 +34,9 @@ class CmsSearchPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsSearchPageClient(Container $container): Container
     {
-        $container[static::CLIENT_CMS_SEARCH_PAGE] = function (Container $container) {
+        $container->set(static::CLIENT_CMS_SEARCH_PAGE, function (Container $container) {
             return new CmsSearchPageToCmsSearchPageClientBridge($container->getLocator()->cmsPageSearch()->client());
-        };
+        });
 
         return $container;
     }

@@ -37,9 +37,9 @@ class PriceWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteClient(Container $container)
     {
-        $container[self::CLIENT_QUOTE] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new PriceWidgetToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }
@@ -51,9 +51,9 @@ class PriceWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPriceClient(Container $container)
     {
-        $container[self::CLIENT_PRICE] = function (Container $container) {
+        $container->set(static::CLIENT_PRICE, function (Container $container) {
             return new PriceWidgetToPriceClientBridge($container->getLocator()->price()->client());
-        };
+        });
 
         return $container;
     }

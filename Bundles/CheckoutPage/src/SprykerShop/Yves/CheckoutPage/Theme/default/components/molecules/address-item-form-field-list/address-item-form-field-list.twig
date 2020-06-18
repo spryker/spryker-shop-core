@@ -34,12 +34,11 @@
                 {% set imageUrl = item.vars.data.images[0].externalUrlSmall ?? '' %}
 
                 <div class="col col--sm-1 spacing spacing--inner">
-                    {% include atom('thumbnail') with {
-                        modifiers: ['small'],
-                        attributes: {
-                            alt: itemName,
-                            src: imageUrl,
-                            title: itemName,
+                    {% include molecule('lazy-image') with {
+                        modifiers: ['thumbnail', 'small'],
+                        data: {
+                            imageSrc: imageUrl,
+                            imageTitle: itemName,
                         },
                     } only %}
                 </div>

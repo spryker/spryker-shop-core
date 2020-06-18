@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\MultiCartPage;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToCartClientInterface;
@@ -14,6 +15,7 @@ use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToMultiCartCli
 use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToQuoteClientInterface;
 use SprykerShop\Yves\MultiCartPage\Form\DataProvider\QuoteFormDataProvider;
 use SprykerShop\Yves\MultiCartPage\Form\DataProvider\QuoteFormDataProviderInterface;
+use SprykerShop\Yves\MultiCartPage\Form\MultiCartDeleteForm;
 use SprykerShop\Yves\MultiCartPage\Form\QuoteForm;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -31,6 +33,17 @@ class MultiCartPageFactory extends AbstractFactory
             QuoteForm::class,
             $this->createQuoteFormDataProvider()->getData($idQuote)
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $data
+     * @param mixed[] $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getMultiCartDeleteForm(QuoteTransfer $data, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(MultiCartDeleteForm::class, $data, $options);
     }
 
     /**
