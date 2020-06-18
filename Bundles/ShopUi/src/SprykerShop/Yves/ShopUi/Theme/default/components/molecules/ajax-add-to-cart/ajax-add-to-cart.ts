@@ -1,4 +1,5 @@
 import Component from '../../../models/component';
+import { EVENT_UPDATE_DYNAMIC_MESSAGES } from 'ShopUi/components/organisms/dynamic-notification-area/dynamic-notification-area';
 
 export default class AjaxAddToCart extends Component {
     protected button: HTMLButtonElement;
@@ -36,12 +37,10 @@ export default class AjaxAddToCart extends Component {
 
                     return;
                 }
-
-                const successCode = 200;
-                if (parsedResponse.code !== successCode) {
-
-                    return;
-                }
+                const dynamicNotificationCustomEvent = new CustomEvent(EVENT_UPDATE_DYNAMIC_MESSAGES, {
+                    detail: parsedResponse.messages,
+                });
+                document.dispatchEvent(dynamicNotificationCustomEvent);
             }).catch(error => {
             console.error(error);
         });
