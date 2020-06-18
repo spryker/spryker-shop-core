@@ -25,7 +25,7 @@ interface MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
-    public function getProductOfferStorageCollection(
+    public function getProductOffersBySkus(
         ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
     ): ProductOfferStorageCollectionTransfer;
 }
