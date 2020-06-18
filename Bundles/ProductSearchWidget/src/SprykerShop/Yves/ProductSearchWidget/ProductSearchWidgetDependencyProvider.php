@@ -39,11 +39,11 @@ class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addCatalogClient(Container $container): Container
     {
-        $container[static::CLIENT_CATALOG] = function (Container $container) {
+        $container->set(static::CLIENT_CATALOG, function (Container $container) {
             return new ProductSearchWidgetToCatalogClientBridge(
                 $container->getLocator()->catalog()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -55,11 +55,11 @@ class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductSearchWidgetToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service()
             );
-        };
+        });
 
         return $container;
     }
