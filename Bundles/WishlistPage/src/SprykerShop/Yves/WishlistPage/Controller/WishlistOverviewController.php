@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class WishlistOverviewController extends AbstractController
 {
-    public const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
+    protected const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

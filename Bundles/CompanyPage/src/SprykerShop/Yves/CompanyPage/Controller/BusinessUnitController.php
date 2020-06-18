@@ -21,6 +21,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class BusinessUnitController extends AbstractCompanyController
 {
+    protected const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
     protected const BUSINESS_UNIT_LIST_SORT_FIELD = 'id_company_business_unit';
     protected const COMPANY_UNIT_ADDRESS_LIST_SORT_FIELD = 'id_company_unit_address';
     protected const REQUEST_PARAM_ID = 'id';
@@ -201,6 +202,14 @@ class BusinessUnitController extends AbstractCompanyController
      */
     public function deleteAction(Request $request)
     {
+        $deleteForm = $this->getFactory()->createCompanyPageFormFactory()->getBusinessUnitDeleteForm()->handleRequest($request);
+
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
+        }
+
         $companyBusinessUnitId = $request->query->getInt(static::REQUEST_PARAM_ID);
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($companyBusinessUnitId);
@@ -266,6 +275,7 @@ class BusinessUnitController extends AbstractCompanyController
         }
 
         return [
+            'companyBusinessUnitDeleteForm' => $this->getFactory()->createCompanyPageFormFactory()->getBusinessUnitDeleteForm()->createView(),
             'companyBusinessUnit' => $companyBusinessUnitTransfer,
         ];
     }

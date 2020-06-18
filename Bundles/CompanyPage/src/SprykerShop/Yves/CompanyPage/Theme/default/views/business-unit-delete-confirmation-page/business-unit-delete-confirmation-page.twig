@@ -4,6 +4,7 @@
     title: 'company.account.address.delete_confimation_page' | trans,
     activePage: 'business-unit',
     companyBusinessUnit: _view.companyBusinessUnit,
+    form: _view.companyBusinessUnitDeleteForm,
 } %}
 
 {% block breadcrumbs %}
@@ -30,7 +31,8 @@
     <div class="box">
         {% include molecule('business-unit-delete-message', 'CompanyPage') with {
             data: {
-                companyBusinessUnit: data.companyBusinessUnit
+                companyBusinessUnit: data.companyBusinessUnit,
+                form: data.form
             }
         } only %}
     </div>

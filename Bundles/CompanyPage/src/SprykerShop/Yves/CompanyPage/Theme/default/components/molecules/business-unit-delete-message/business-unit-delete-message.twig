@@ -6,6 +6,7 @@
 
 {% define data = {
     companyBusinessUnit: required,
+    form: required,
 } %}
 
 {% block body %}
@@ -28,8 +29,7 @@
         {{ "label.button.cancel" | trans }}
     </a>
 
-    <a data-init-single-click class="button"
-       href="{{ url('company/business-unit/delete', {'id': data.companyBusinessUnit.idCompanyBusinessUnit}) }}">
-    {{ "label.button.submit" | trans }}
-    </a>
+    {{ form_start(data.form, {'action': path('company/business-unit/delete', {'id':data.companyBusinessUnit.idCompanyBusinessUnit}) }) }}
+        <input type="submit" data-init-single-click class="button" value="{{ "label.button.submit" | trans }}"/>
+    {{ form_end(data.form) }}
 {% endblock %}

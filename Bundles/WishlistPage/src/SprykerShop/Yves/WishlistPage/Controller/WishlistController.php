@@ -34,7 +34,7 @@ class WishlistController extends AbstractController
     public const PARAM_PRODUCT_ID = 'product-id';
     public const PARAM_SKU = 'sku';
     public const PARAM_WISHLIST_NAME = 'wishlist-name';
-    public const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
+    protected const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
 
     /**
      * @param string $wishlistName
