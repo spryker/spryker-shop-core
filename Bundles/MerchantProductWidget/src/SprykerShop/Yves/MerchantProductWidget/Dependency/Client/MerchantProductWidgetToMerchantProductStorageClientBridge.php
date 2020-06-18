@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\MerchantProductWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\MerchantProductStorageTransfer;
+
 class MerchantProductWidgetToMerchantProductStorageClientBridge implements MerchantProductWidgetToMerchantProductStorageClientInterface
 {
     /**
@@ -23,13 +25,12 @@ class MerchantProductWidgetToMerchantProductStorageClientBridge implements Merch
     }
 
     /**
-     * @param string $sku
+     * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\MerchantProductTransfer
+     * @return \Generated\Shared\Transfer\MerchantProductStorageTransfer
      */
-    public function findOne(string $sku): array
+    public function findOne(int $idProductAbstract): MerchantProductStorageTransfer
     {
-        return 'MER000001';
         return $this->merchantProductStorageClient->findOne($sku);
     }
 }
