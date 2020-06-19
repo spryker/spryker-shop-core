@@ -20,13 +20,16 @@
                 {% set additionaImageClass = 'box' %}
                 {% set additionaImageModifiers = ['thumbnail', 'bigger'] %}
 
-                {% if data.merchantStorageProfile.bannerUrlGlossaryKey %}
+                {% set bannerUrlGlossaryValue = (data.merchantStorageProfile.bannerUrlGlossaryKey ?: '') | trans %}
+                {% set hasBannerUrlTranslation = data.merchantStorageProfile.bannerUrlGlossaryKey
+                    ? data.merchantStorageProfile.bannerUrlGlossaryKey != bannerUrlGlossaryValue %}
+                {% if hasBannerUrlTranslation %}
                     {% block image %}
                         {% include molecule('lazy-image') with {
                             class: additionaImageClass,
                             modifiers: additionaImageModifiers,
                             data: {
-                                imageSrc: data.merchantStorageProfile.bannerUrlGlossaryKey | trans,
+                                imageSrc: bannerUrlGlossaryValue,
                             },
                         } only %}
                     {% endblock %}
@@ -40,9 +43,12 @@
                             <div class="grid">
                                 {% block detailInner %}
                                     <div class="col col--sm-12 col--lg-12 col--xl-10">
-                                        {% if data.merchantStorageProfile.descriptionGlossaryKey %}
+                                        {% set descriptionGlossaryValue = (data.merchantStorageProfile.descriptionGlossaryKey ?: '') | trans %}
+                                        {% set hasDescriptionTranslation = data.merchantStorageProfile.descriptionGlossaryKey
+                                            ? data.merchantStorageProfile.descriptionGlossaryKey != descriptionGlossaryValue %}
+                                        {% if hasDescriptionTranslation %}
                                             {% block description %}
-                                                <p>{{ data.merchantStorageProfile.descriptionGlossaryKey | trans }}</p>
+                                                <p>{{ descriptionGlossaryValue }}</p>
                                             {% endblock %}
                                         {% endif %}
 
@@ -109,12 +115,15 @@
 
                                                     {% block deliveryTimeCol %}
                                                         <div class="col col--sm-12 col--lg-6">
-                                                            {% if data.merchantStorageProfile.deliveryTimeGlossaryKey %}
+                                                            {% set deliveryTimeGlossaryValue = (data.merchantStorageProfile.deliveryTimeGlossaryKey ?: '') | trans %}
+                                                            {% set hasDeliveryTimeTranslation = data.merchantStorageProfile.deliveryTimeGlossaryKey
+                                                                ? data.merchantStorageProfile.deliveryTimeGlossaryKey != deliveryTimeGlossaryValue %}
+                                                            {% if hasDeliveryTimeTranslation %}
                                                                 {% block deliveryTime %}
                                                                     {% include molecule('information-item', 'MerchantPage') with {
                                                                         data: {
                                                                             title: 'merchant_profile.delivery_time' | trans,
-                                                                            text: data.merchantStorageProfile.deliveryTimeGlossaryKey | trans,
+                                                                            text: deliveryTimeGlossaryValue,
                                                                         },
                                                                     } only %}
                                                                 {% endblock %}
@@ -157,42 +166,56 @@
         {% set additionalArticlesClass = 'box' %}
         {% set informationArticles = [] %}
 
-        {% if data.merchantStorageProfile.termsConditionsGlossaryKey %}
+        {% set termsConditionsGlossaryValue = (data.merchantStorageProfile.termsConditionsGlossaryKey ?: '') | trans %}
+        {% set hasTermsConditionsTranslation = data.merchantStorageProfile.termsConditionsGlossaryKey
+            ? data.merchantStorageProfile.termsConditionsGlossaryKey != termsConditionsGlossaryValue %}
+        {% if hasTermsConditionsTranslation and termsConditionsGlossaryValue | striptags %}
             {% set informationArticles = informationArticles|merge([{
                 'title': 'merchant_profile.terms_and_conditions' | trans,
-                'text': data.merchantStorageProfile.termsConditionsGlossaryKey | trans,
+                'text': termsConditionsGlossaryValue,
             }]) %}
         {% endif %}
-        {% if data.merchantStorageProfile.cancellationPolicyGlossaryKey %}
+        {% set cancellationPolicyGlossaryValue = (data.merchantStorageProfile.cancellationPolicyGlossaryKey ?: '') | trans %}
+        {% set hasCancellationPolicyTranslation = data.merchantStorageProfile.cancellationPolicyGlossaryKey
+            ? data.merchantStorageProfile.cancellationPolicyGlossaryKey != cancellationPolicyGlossaryValue %}
+        {% if hasCancellationPolicyTranslation and cancellationPolicyGlossaryValue | striptags %}
             {% set informationArticles = informationArticles|merge([{
                 'title': 'merchant_profile.cancellation_policy' | trans,
-                'text': data.merchantStorageProfile.cancellationPolicyGlossaryKey | trans,
+                'text': cancellationPolicyGlossaryValue,
             }]) %}
         {% endif %}
-        {% if data.merchantStorageProfile.imprintGlossaryKey %}
+        {% set imprintGlossaryValue = (data.merchantStorageProfile.imprintGlossaryKey ?: '') | trans %}
+        {% set hasImprintTranslation = data.merchantStorageProfile.imprintGlossaryKey
+            ? data.merchantStorageProfile.imprintGlossaryKey != imprintGlossaryValue %}
+        {% if hasImprintTranslation and imprintGlossaryValue | striptags %}
             {% set informationArticles = informationArticles|merge([{
                 'title': 'merchant_profile.imprint' | trans,
-                'text': data.merchantStorageProfile.imprintGlossaryKey | trans,
+                'text': imprintGlossaryValue,
             }]) %}
         {% endif %}
-        {% if data.merchantStorageProfile.dataPrivacyGlossaryKey %}
+        {% set dataPrivacyGlossaryValue = (data.merchantStorageProfile.dataPrivacyGlossaryKey ?: '') | trans %}
+        {% set hasDataPrivacyTranslation = data.merchantStorageProfile.dataPrivacyGlossaryKey
+            ? data.merchantStorageProfile.dataPrivacyGlossaryKey != dataPrivacyGlossaryValue %}
+        {% if hasDataPrivacyTranslation and dataPrivacyGlossaryValue | striptags %}
             {% set informationArticles = informationArticles|merge([{
                 'title': 'merchant_profile.privacy' | trans,
-                'text': data.merchantStorageProfile.dataPrivacyGlossaryKey | trans,
+                'text': dataPrivacyGlossaryValue,
             }]) %}
         {% endif %}
 
         {% block additionalContainer %}
-            <div class="{{ additionalArticlesClass }}">
-                {% for informationArticle in informationArticles %}
-                    {% block additionalInformation %}
-                        <div class="spacing-bottom spacing-bottom--big">
-                            <h5>{{ informationArticle.title }}</h5>
-                            <p>{{ informationArticle.text | raw }}</p>
-                        </div>
-                    {% endblock %}
-                {% endfor %}
-            </div>
+            {% if informationArticles %}
+                <div class="{{ additionalArticlesClass }}">
+                    {% for informationArticle in informationArticles %}
+                        {% block additionalInformation %}
+                            <div class="spacing-bottom spacing-bottom--big">
+                                <h5>{{ informationArticle.title }}</h5>
+                                <p>{{ informationArticle.text | raw }}</p>
+                            </div>
+                        {% endblock %}
+                    {% endfor %}
+                </div>
+            {% endif %}
         {% endblock %}
     {% endblock %}
 {% endblock %}

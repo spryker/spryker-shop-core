@@ -77,11 +77,11 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addBusinessOnBehalfClient(Container $container): Container
     {
-        $container[static::CLIENT_BUSINESS_ON_BEHALF] = function (Container $container) {
+        $container->set(static::CLIENT_BUSINESS_ON_BEHALF, function (Container $container) {
             return new CompanyPageToBusinessOnBehalfClientBridge(
                 $container->getLocator()->businessOnBehalf()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -93,9 +93,9 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStore(Container $container): Container
     {
-        $container[static::STORE] = function () {
+        $container->set(static::STORE, function () {
             return new CompanyPageToKernelStoreBridge(Store::getInstance());
-        };
+        });
 
         return $container;
     }
@@ -107,9 +107,9 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new CompanyPageToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }
@@ -121,9 +121,9 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStoreClient(Container $container): Container
     {
-        $container[static::CLIENT_STORE] = function (Container $container) {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
             return new CompanyPageToStoreClientBridge($container->getLocator()->store()->client());
-        };
+        });
 
         return $container;
     }
@@ -135,9 +135,9 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUnitAddressClient(Container $container): Container
     {
-        $container[static::CLIENT_COMPANY_UNIT_ADDRESS] = function (Container $container) {
+        $container->set(static::CLIENT_COMPANY_UNIT_ADDRESS, function (Container $container) {
             return new CompanyPageToCompanyUnitAddressClientBridge($container->getLocator()->companyUnitAddress()->client());
-        };
+        });
 
         return $container;
     }
@@ -149,9 +149,9 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserClient(Container $container): Container
     {
-        $container[static::CLIENT_COMPANY_USER] = function (Container $container) {
+        $container->set(static::CLIENT_COMPANY_USER, function (Container $container) {
             return new CompanyPageToCompanyUserClientBridge($container->getLocator()->companyUser()->client());
-        };
+        });
 
         return $container;
     }
@@ -163,9 +163,9 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyRoleClient(Container $container): Container
     {
-        $container[static::CLIENT_COMPANY_ROLE] = function (Container $container) {
+        $container->set(static::CLIENT_COMPANY_ROLE, function (Container $container) {
             return new CompanyPageToCompanyRoleClientBridge($container->getLocator()->companyRole()->client());
-        };
+        });
 
         return $container;
     }
@@ -177,9 +177,9 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyClient(Container $container): Container
     {
-        $container[static::CLIENT_COMPANY] = function (Container $container) {
+        $container->set(static::CLIENT_COMPANY, function (Container $container) {
             return new CompanyPageToCompanyClientBridge($container->getLocator()->company()->client());
-        };
+        });
 
         return $container;
     }
@@ -191,9 +191,9 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyBusinessUnitClient(Container $container): Container
     {
-        $container[static::CLIENT_COMPANY_BUSINESS_UNIT] = function (Container $container) {
+        $container->set(static::CLIENT_COMPANY_BUSINESS_UNIT, function (Container $container) {
             return new CompanyPageToCompanyBusinessUnitClientBridge($container->getLocator()->companyBusinessUnit()->client());
-        };
+        });
 
         return $container;
     }
@@ -205,9 +205,9 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyOverviewWidgetPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_COMPANY_OVERVIEW_WIDGETS] = function () {
+        $container->set(static::PLUGIN_COMPANY_OVERVIEW_WIDGETS, function () {
             return $this->getCompanyOverviewWidgetPlugins();
-        };
+        });
 
         return $container;
     }
@@ -219,9 +219,9 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPermissionClient(Container $container): Container
     {
-        $container[static::CLIENT_PERMISSION] = function (Container $container) {
+        $container->set(static::CLIENT_PERMISSION, function (Container $container) {
             return new CompanyPageToPermissionClientBridge($container->getLocator()->permission()->client());
-        };
+        });
 
         return $container;
     }
@@ -233,9 +233,9 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMessengerClient(Container $container): Container
     {
-        $container[static::CLIENT_MESSENGER] = function (Container $container) {
+        $container->set(static::CLIENT_MESSENGER, function (Container $container) {
             return new CompanyPageToMessengerClientBridge($container->getLocator()->messenger()->client());
-        };
+        });
 
         return $container;
     }
@@ -247,9 +247,9 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addGlossaryStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_GLOSSARY_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
             return new CompanyPageToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -269,11 +269,11 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addApplication(Container $container): Container
     {
-        $container[static::PLUGIN_APPLICATION] = function () {
+        $container->set(static::PLUGIN_APPLICATION, function () {
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
-        };
+        });
 
         return $container;
     }

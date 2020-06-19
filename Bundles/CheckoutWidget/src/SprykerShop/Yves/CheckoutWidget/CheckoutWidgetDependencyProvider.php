@@ -37,9 +37,9 @@ class CheckoutWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCheckoutBreadcrumbPluginPlugins(Container $container)
     {
-        $container[self::PLUGIN_CHECKOUT_BREADCRUMB] = function () {
+        $container->set(static::PLUGIN_CHECKOUT_BREADCRUMB, function () {
             return new CheckoutBreadcrumbPlugin();
-        };
+        });
 
         return $container;
     }
@@ -51,9 +51,9 @@ class CheckoutWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCheckoutClient(Container $container)
     {
-        $container[static::CLIENT_CHECKOUT] = function (Container $container) {
+        $container->set(static::CLIENT_CHECKOUT, function (Container $container) {
             return new CheckoutWidgetToCheckoutClientBridge($container->getLocator()->checkout()->client());
-        };
+        });
 
         return $container;
     }
