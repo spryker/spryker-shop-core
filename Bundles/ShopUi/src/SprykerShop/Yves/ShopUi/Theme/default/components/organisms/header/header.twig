@@ -40,15 +40,28 @@
         </div>
 
         {% if data.showNavigation %}
-            <div class="{{config.name}}__row {{config.name}}__navigation-main is-hidden-sm-md">
-                {% block mainNavigation %}
-                    {% widget 'NavigationWidget' args ['MAIN_NAVIGATION', 'navigation-main'] %}
-                    {% nowidget %}
-                        {# @deprecated Kept for BC reasons, will be removed in next major. #}
-                        {{ widgetGlobal('NavigationWidgetPlugin', 'MAIN_NAVIGATION', 'navigation-main') }}
-                    {% endwidget %}
+            {% block mainNavigationWrapper %}
+                <div class="{{ config.name }}__row {{ config.name }}__navigation-main is-hidden-sm-md">
+                    <div class="{{ config.jsName }}__navigation-main">
+                        {% block mainNavigation %}
+                            {% widget 'NavigationWidget' args ['MAIN_NAVIGATION', 'navigation-main'] %}
+                            {% nowidget %}
+                                {# @deprecated Kept for BC reasons, will be removed in next major. #}
+                                {{ widgetGlobal('NavigationWidgetPlugin', 'MAIN_NAVIGATION', 'navigation-main') }}
+                            {% endwidget %}
+                        {% endblock %}
+                    </div>
+                </div>
+
+                {% block mainNavigationBlockDisplacer %}
+                    {% include molecule('navigation-displacer') with {
+                        attributes: {
+                            'block-to-move-class-name': config.jsName ~ '__navigation-main',
+                            'block-to-place-class-name': 'js-side-drawer__navigation-wrapper',
+                        },
+                    } only %}
                 {% endblock %}
-            </div>
+            {% endblock %}
         {% endif %}
 
         {% if data.showSearchForm %}
