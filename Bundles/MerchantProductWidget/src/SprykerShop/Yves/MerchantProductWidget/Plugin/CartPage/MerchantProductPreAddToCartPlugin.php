@@ -12,11 +12,12 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CartPageExtension\Dependency\Plugin\PreAddToCartPluginInterface;
 
 /**
- * @method \SprykerShop\Yves\MerchantProductWidget\MerchantProductOfferWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\MerchantProductWidget\MerchantProductWidgetFactory getFactory()
  */
 class MerchantProductPreAddToCartPlugin extends AbstractPlugin implements PreAddToCartPluginInterface
 {
     protected const PARAM_MERCHANT_REFERENCE = 'merchant_reference';
+    protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
 
     /**
      * {@inheritDoc}
@@ -31,8 +32,32 @@ class MerchantProductPreAddToCartPlugin extends AbstractPlugin implements PreAdd
      */
     public function preAddToCart(ItemTransfer $itemTransfer, array $params): ItemTransfer
     {
-        $params[static::PARAM_MERCHANT_REFERENCE] = 'MER000001';
-        if (!isset($params[static::PARAM_MERCHANT_REFERENCE]) || !$params[static::PARAM_MERCHANT_REFERENCE]) {
+        if (empty($params[static::PARAM_MERCHANT_REFERENCE])) {
+            return $itemTransfer;
+        }
+        $productConcreteStorageData = $this->getFactory()
+            ->getProductStorageClient()
+            ->findProductConcreteStorageDataByMapping(
+                static::PRODUCT_CONCRETE_MAPPING_TYPE,
+                $itemTransfer->getSku(),
+                $this->getLocale()
+            );
+
+        if (!isset($productConcreteStorageData['id_product_abstract'])) {
+            return $itemTransfer;
+        }
+
+        $productAbstractStorageData = $this->getFactory()
+            ->getProductStorageClient()
+            ->findProductAbstractStorageData(
+                $productConcreteStorageData['id_product_abstract'],
+                $this->getLocale()
+            );
+
+        if (
+            !isset($productAbstractStorageData[static::PARAM_MERCHANT_REFERENCE]) ||
+            $params[static::PARAM_MERCHANT_REFERENCE] !== $productAbstractStorageData[static::PARAM_MERCHANT_REFERENCE]
+        ) {
             return $itemTransfer;
         }
 

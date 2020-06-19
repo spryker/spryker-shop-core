@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\MerchantProductWidget;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToMerchantProductStorageClientInterface;
 use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToMerchantStorageClientInterface;
+use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToProductStorageClientInterface;
 
 class MerchantProductWidgetFactory extends AbstractFactory
 {
@@ -27,5 +28,13 @@ class MerchantProductWidgetFactory extends AbstractFactory
     public function getMerchantStorageClient(): MerchantProductWidgetToMerchantStorageClientInterface
     {
         return $this->getProvidedDependency(MerchantProductWidgetDependencyProvider::CLIENT_MERCHANT_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToProductStorageClientInterface
+     */
+    public function getProductStorageClient(): MerchantProductWidgetToProductStorageClientInterface
+    {
+        return $this->getProvidedDependency(MerchantProductWidgetDependencyProvider::CLIENT_PRODUCT_STORAGE);
     }
 }
