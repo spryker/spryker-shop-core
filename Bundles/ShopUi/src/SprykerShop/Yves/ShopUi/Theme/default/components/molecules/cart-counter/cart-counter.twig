@@ -1,0 +1,59 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'cart-counter',
+    tag: 'cart-counter',
+} %}
+
+{% define data = {
+    label: 'global.cart' | trans,
+    url: url('cart'),
+    quantity: null,
+    iconName: 'shopping-cart',
+} %}
+
+{% define attributes = {
+    'hidden-quantity-class-name': config.name ~ '__quantity--hidden',
+} %}
+
+{% block body %}
+    {% set linkClass = '' %}
+    {% set label = data.label %}
+    {% set labelClass = '' %}
+    {% set iconName = data.iconName %}
+    {% set iconModifiers = [] %}
+    {% set quantity = data.quantity ?: 0 %}
+    {% set hiddenQuantityClass = not quantity ? attributes['hidden-quantity-class-name'] %}
+
+    {% block content %}
+        <a class="{{ linkClass }}" href="{{ data.url }}">
+            {% block link %}
+                {% block label %}
+                    {% if label %}
+                        <span class="{{ labelClass }}">
+                            {{- label -}}
+                        </span>
+                    {% endif %}
+                {% endblock %}
+
+                {% block icon %}
+                    {% if iconName %}
+                        {% include atom('icon') with {
+                            class: config.name ~ '__icon',
+                            modifiers: iconModifiers,
+                            data: {
+                                name: iconName,
+                            },
+                        } only %}
+                    {% endif %}
+                {% endblock %}
+
+                {% block quantity %}
+                    <span class="{{ config.name }}__quantity {{ config.jsName }}__quantity {{ hiddenQuantityClass }}">
+                        {{- quantity -}}
+                    </span>
+                {% endblock %}
+            {% endblock %}
+        </a>
+    {% endblock %}
+{% endblock %}
