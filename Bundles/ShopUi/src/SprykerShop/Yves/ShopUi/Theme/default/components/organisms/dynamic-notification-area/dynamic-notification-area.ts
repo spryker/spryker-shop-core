@@ -29,7 +29,6 @@ export default class DynamicNotificationArea extends Component {
 
     protected updateMessages(responseHtml: string): void {
         if (!responseHtml) {
-
             return;
         }
         const notificationArea = this.target || this;

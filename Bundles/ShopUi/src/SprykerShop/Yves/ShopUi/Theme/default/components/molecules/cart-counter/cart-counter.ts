@@ -17,10 +17,10 @@ export default class CartCounter extends Component {
     }
 
     protected mapEvents(): void {
-        this.mapButtonClickEvent();
+        this.mapTriggerCustomUpdateQuantityEvent();
     }
 
-    protected mapButtonClickEvent(): void {
+    protected mapTriggerCustomUpdateQuantityEvent(): void {
         document.addEventListener(EVENT_UPDATE_CART_QUANTITY,
             (event: CustomEvent) => this.updateQuantity(Number(event.detail)));
     }
