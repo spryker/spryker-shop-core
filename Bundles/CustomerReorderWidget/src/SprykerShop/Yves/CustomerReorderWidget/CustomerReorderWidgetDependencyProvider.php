@@ -63,11 +63,11 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addLocaleClient(Container $container): Container
     {
-        $container[static::CLIENT_LOCALE] = function (Container $container) {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
             return new CustomerReorderWidgetToLocaleClientBridge(
                 $container->getLocator()->locale()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -79,11 +79,11 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addAvailabilityStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_AVAILABILITY_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_AVAILABILITY_STORAGE, function (Container $container) {
             return new CustomerReorderWidgetToAvailabilityStorageClientBridge(
                 $container->getLocator()->availabilityStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -95,11 +95,11 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addCartClient(Container $container): Container
     {
-        $container[static::CLIENT_CART] = function (Container $container) {
+        $container->set(static::CLIENT_CART, function (Container $container) {
             return new CustomerReorderWidgetToCartClientBridge(
                 $container->getLocator()->cart()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -111,11 +111,11 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addSalesClient(Container $container): Container
     {
-        $container[static::CLIENT_SALES] = function (Container $container) {
+        $container->set(static::CLIENT_SALES, function (Container $container) {
             return new CustomerReorderWidgetToSalesClientBridge(
                 $container->getLocator()->sales()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -127,11 +127,11 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new CustomerReorderWidgetToCustomerClientBridge(
                 $container->getLocator()->customer()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -143,11 +143,11 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addMessengerClient(Container $container): Container
     {
-        $container[static::CLIENT_MESSENGER] = function (Container $container) {
+        $container->set(static::CLIENT_MESSENGER, function (Container $container) {
             return new CustomerReorderWidgetToMessengerClientBridge(
                 $container->getLocator()->messenger()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -159,11 +159,11 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addGlossaryStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_GLOSSARY_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
             return new CustomerReorderWidgetToGlossaryStorageClientBridge(
                 $container->getLocator()->glossaryStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -175,11 +175,11 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addProductBundleClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_BUNDLE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_BUNDLE, function (Container $container) {
             return new CustomerReorderWidgetToProductBundleClientBridge(
                 $container->getLocator()->productBundle()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -191,11 +191,11 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addProductStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new CustomerReorderWidgetToProductStorageClientBridge(
                 $container->getLocator()->productStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -207,11 +207,11 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addZedRequestClient(Container $container): Container
     {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new CustomerReorderWidgetToZedRequestClientBridge(
                 $container->getLocator()->zedRequest()->client()
             );
-        };
+        });
 
         return $container;
     }

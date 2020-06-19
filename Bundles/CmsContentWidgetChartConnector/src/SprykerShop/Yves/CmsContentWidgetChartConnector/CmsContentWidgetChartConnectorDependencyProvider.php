@@ -34,9 +34,9 @@ class CmsContentWidgetChartConnectorDependencyProvider extends AbstractBundleDep
      */
     protected function addCmsChartContentWidgetPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_CMS_CHART_CONTENT_WIDGETS] = function () {
+        $container->set(static::PLUGIN_CMS_CHART_CONTENT_WIDGETS, function () {
             return $this->getCmsChartContentWidgetPlugins();
-        };
+        });
 
         return $container;
     }

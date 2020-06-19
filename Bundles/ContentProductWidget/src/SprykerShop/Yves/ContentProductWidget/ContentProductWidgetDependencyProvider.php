@@ -37,9 +37,9 @@ class ContentProductWidgetDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addContentProductClient(Container $container): Container
     {
-        $container[self::CLIENT_CONTENT_PRODUCT] = function (Container $container) {
+        $container->set(static::CLIENT_CONTENT_PRODUCT, function (Container $container) {
             return new ContentProductWidgetToContentProductClientBridge($container->getLocator()->contentProduct()->client());
-        };
+        });
 
         return $container;
     }
@@ -51,9 +51,9 @@ class ContentProductWidgetDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addProductStorageClient(Container $container): Container
     {
-        $container[self::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ContentProductWidgetToProductStorageClientBridge($container->getLocator()->productStorage()->client());
-        };
+        });
 
         return $container;
     }

@@ -43,11 +43,11 @@ class ShopRouterDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addApplicationPlugin(Container $container)
     {
-        $container[self::PLUGIN_APPLICATION] = function () {
+        $container->set(static::PLUGIN_APPLICATION, function () {
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
-        };
+        });
 
         return $container;
     }
@@ -59,9 +59,9 @@ class ShopRouterDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUrlStorageClient(Container $container): Container
     {
-        $container[self::CLIENT_URL_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_URL_STORAGE, function (Container $container) {
             return new ShopRouterToUrlStorageClientBridge($container->getLocator()->urlStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -73,9 +73,9 @@ class ShopRouterDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addResourceCreatorPlugins(Container $container): Container
     {
-        $container[self::PLUGIN_RESOURCE_CREATORS] = function () {
+        $container->set(static::PLUGIN_RESOURCE_CREATORS, function () {
             return $this->getResourceCreatorPlugins();
-        };
+        });
 
         return $container;
     }

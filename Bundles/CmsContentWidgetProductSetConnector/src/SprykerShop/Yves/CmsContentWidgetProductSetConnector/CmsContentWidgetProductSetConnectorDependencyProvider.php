@@ -40,9 +40,9 @@ class CmsContentWidgetProductSetConnectorDependencyProvider extends SprykerCmsCo
      */
     protected function addCmsProductSetContentWidgetPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_CMS_PRODUCT_SET_CONTENT_WIDGETS] = function () {
+        $container->set(static::PLUGIN_CMS_PRODUCT_SET_CONTENT_WIDGETS, function () {
             return $this->getCmsProductSetContentWidgetPlugins();
-        };
+        });
 
         return $container;
     }
@@ -62,9 +62,9 @@ class CmsContentWidgetProductSetConnectorDependencyProvider extends SprykerCmsCo
      */
     protected function addProductSetStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_SET_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_SET_STORAGE, function (Container $container) {
             return new CmsContentWidgetProductSetConnectorToProductSetStorageClientBridge($container->getLocator()->productSetStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -76,9 +76,9 @@ class CmsContentWidgetProductSetConnectorDependencyProvider extends SprykerCmsCo
      */
     protected function addProductStorageClient(Container $container)
     {
-        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new CmsContentWidgetProductSetConnectorToProductStorageClientBridge($container->getLocator()->productStorage()->client());
-        };
+        });
 
         return $container;
     }
