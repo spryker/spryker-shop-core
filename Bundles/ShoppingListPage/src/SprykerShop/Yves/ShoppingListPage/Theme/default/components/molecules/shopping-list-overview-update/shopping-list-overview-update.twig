@@ -4,6 +4,7 @@
     idShoppingList: required,
     shoppingListItemProducts: required,
     form: required,
+    removeItemForm: required,
 } %}
 
 {% block contentInner %}
@@ -85,12 +86,9 @@
 {% block buttonCol %}
     <td class="{{ config.name }}__cell text-center">
         {% block buttonColInner %}
-            <a class="button button--alert" href="{{ path('shopping-list/remove-item', {
-                idShoppingList: data.idShoppingList,
-                idShoppingListItem: idShoppingListItem,
-            }) }}">
-                {{- 'customer.account.shopping_list.remove' | trans -}}
-            </a>
+            {{ form_start(data.removeItemForm, {'action': path('shopping-list/remove-item', {'idShoppingList': data.idShoppingList, 'idShoppingListItem': idShoppingListItem }), 'name': 'removeItemForm_' ~ idShoppingListItem}) }}
+                <input type="submit"  class="button button--alert" value="{{- 'customer.account.shopping_list.remove' | trans -}}"/>
+            {{ form_end(data.removeItemForm) }}
         {% endblock %}
     </td>
 {% endblock %}

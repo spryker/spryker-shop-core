@@ -4,6 +4,7 @@
     title: _view.shoppingList.name,
     form: _view.shoppingListForm,
     shoppingList: _view.shoppingList,
+    removeItemForm: _view.removeItemForm,
     shoppingListItemProducts: _view.productViewTransfers,
     idShoppingList: _view.shoppingList.idShoppingList | default,
 } %}
@@ -92,6 +93,7 @@
                                 shoppingList: data.shoppingList,
                                 shoppingListItemProducts: data.shoppingListItemProducts,
                                 form: data.form,
+                                removeItemForm: _view.removeItemForm,
                             },
                         } only %}
                     {% else %}
