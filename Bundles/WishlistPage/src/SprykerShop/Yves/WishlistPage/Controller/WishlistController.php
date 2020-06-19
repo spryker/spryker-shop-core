@@ -99,6 +99,7 @@ class WishlistController extends AbstractController
             'wishlistName' => $wishlistName,
             'addAllAvailableProductsToCartForm' => $addAllAvailableProductsToCartForm->createView(),
             'wishlistRemoveItemFormCloner' => $this->getFactory()->getFormCloner($this->getFactory()->getWishlistRemoveItemForm()),
+            'wishlistMoveToCartFormCloner' => $this->getFactory()->getFormCloner($this->getFactory()->getWishlistMoveToCartForm()),
         ];
     }
 
@@ -112,6 +113,16 @@ class WishlistController extends AbstractController
         $wishlistItemTransfer = $this->getWishlistItemTransferFromRequest($request);
         if (!$wishlistItemTransfer) {
             return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_LOGIN);
+        }
+
+        $wishlistAddItemForm = $this->getFactory()->getWishlistAddItemForm()->handleRequest($request);
+
+        if (!$wishlistAddItemForm->isSubmitted() || !$wishlistAddItemForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_DETAILS, [
+                'wishlistName' => $wishlistItemTransfer->getWishlistName(),
+            ]);
         }
 
         $wishlistItemTransfer = $this->getFactory()
@@ -169,6 +180,16 @@ class WishlistController extends AbstractController
         $wishlistItemTransfer = $this->getWishlistItemTransferFromRequest($request);
         if (!$wishlistItemTransfer) {
             return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_LOGIN);
+        }
+
+        $wishlistMoveToCartForm = $this->getFactory()->getWishlistMoveToCartForm()->handleRequest($request);
+
+        if (!$wishlistMoveToCartForm->isSubmitted() || !$wishlistMoveToCartForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_DETAILS, [
+                'wishlistName' => $wishlistItemTransfer->getWishlistName(),
+            ]);
         }
 
         $wishlistItemMetaTransferCollection = [

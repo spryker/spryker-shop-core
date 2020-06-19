@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\WishlistPage\Plugin\Router;
 
 use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
 use Spryker\Yves\Router\Route\RouteCollection;
+use Symfony\Component\HttpFoundation\Request;
 
 class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -138,6 +139,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addRemoveItemRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/wishlist/remove-item', 'WishlistPage', 'Wishlist', 'removeItemAction');
+        $route = $route->setMethods(Request::METHOD_POST);
         $routeCollection->add(static::ROUTE_REMOVE_ITEM, $route);
 
         return $routeCollection;
@@ -152,6 +154,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/wishlist/move-to-cart', 'WishlistPage', 'Wishlist', 'moveToCartAction');
         $route = $route->setRequirement('sku', static::SKU_PATTERN);
+        $route = $route->setMethods(Request::METHOD_POST);
         $routeCollection->add(static::ROUTE_MOVE_TO_CART, $route);
 
         return $routeCollection;
