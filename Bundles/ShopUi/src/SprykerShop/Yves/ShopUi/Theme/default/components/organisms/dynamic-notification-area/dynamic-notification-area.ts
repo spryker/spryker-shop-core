@@ -12,9 +12,7 @@ export default class DynamicNotificationArea extends Component {
     protected readyCallback(): void {}
 
     protected init(): void {
-        if (this.targetClassName) {
-            this.target = <HTMLElement>document.getElementsByClassName(this.targetClassName)[0];
-        }
+        this.target = <HTMLElement>document.getElementsByClassName(this.targetClassName)[0];
         this.mapEvents();
     }
 
