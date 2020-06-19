@@ -27,13 +27,9 @@
             </div>
         {% endblock %}
 
-        <div class="{{config.name}}__navigation">
+        <div class="{{ config.name }}__navigation">
             {% block mobileNavigation %}
-                {% widget 'NavigationWidget' args ['MAIN_NAVIGATION', 'navigation-main-mobile'] %}
-                {% nowidget %}
-                    {# @deprecated Kept for BC reasons, will be removed in next major. #}
-                    {{ widgetGlobal('NavigationWidgetPlugin', 'MAIN_NAVIGATION', 'navigation-main-mobile') }}
-                {% endwidget %}
+                <div class="{{ config.jsName }}__navigation-wrapper"></div>
             {% endblock %}
             <hr>
             {% include organism('navigation-top') with {
