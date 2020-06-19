@@ -31,6 +31,6 @@ class MerchantProductWidgetToMerchantProductStorageClientBridge implements Merch
      */
     public function findOne(int $idProductAbstract): MerchantProductStorageTransfer
     {
-        return $this->merchantProductStorageClient->findOne($sku);
+        return $this->merchantProductStorageClient->findOne($idProductAbstract);
     }
 }

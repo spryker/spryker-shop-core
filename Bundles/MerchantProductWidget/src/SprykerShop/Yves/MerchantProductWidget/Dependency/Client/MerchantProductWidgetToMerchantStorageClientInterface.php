@@ -17,4 +17,11 @@ interface MerchantProductWidgetToMerchantStorageClientInterface
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
      */
     public function findOneByMerchantReference(string $merchantReference): ?MerchantStorageTransfer;
+
+    /**
+     * @param int $idMerchant
+     *
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
+     */
+    public function findOne(int $idMerchant): ?MerchantStorageTransfer;
 }
