@@ -66,9 +66,12 @@
                             {% endif %}
                         </td>
                         <td>
-                            <a class="button button--success" href="{{ url('wishlist/add-item', {sku: item.sku, 'product-id': item.idProductConcrete, 'wishlist-name': data.wishlistName}) }}">
-                                {{ 'product_alternative_widget.add_to_wishlist' | trans}}
-                            </a>
+                            <form method="POST" action="{{ path('wishlist/add-item', {sku: item.sku, 'product-id': item.idProductConcrete, 'wishlist-name': data.wishlistName}) }}">
+                                <button type="submit" class="button button--successd" {{ disableAddToWishlist ? 'disabled' : '' }}>
+                                    {{ 'product_alternative_widget.add_to_wishlist' | trans}}
+                                </button>
+                                <input id="wishlist_add_item_form__token" name="wishlist_add_item_form[_token]" class="input input--expand" type="hidden" value="{{ csrf_token('wishlist_add_item_form') }}">
+                            </form>
                         </td>
                     </tr>
                 {% endfor %}
