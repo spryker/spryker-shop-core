@@ -5,7 +5,8 @@
     isQuoteDeletable: _view.isQuoteDeletable,
 
     title: 'page.multi_cart.shopping_cart.list.title' | trans,
-    activePage: 'multiCart'
+    activePage: 'multiCart',
+    multiCartDuplicateFormCloner: _view.multiCartDuplicateFormCloner
 } %}
 
 
@@ -24,7 +25,8 @@
                         delete: true,
                         duplicate: true
                     },
-                    isQuoteDeletable: data.isQuoteDeletable
+                    isQuoteDeletable: data.isQuoteDeletable,
+                    multiCartDuplicateFormCloner: data.multiCartDuplicateFormCloner
                 }
             } only %}
         {% endif %}

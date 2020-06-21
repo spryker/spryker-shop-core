@@ -28,16 +28,18 @@
         {% endif %}
         {% if data.actions.duplicate %}
             <li class="menu__item">
-                <a href="{{ path('multi-cart/duplicate', {idQuote: data.cart.idQuote}) }}" class="button duplicate">
-                    {{ "multi_cart_widget.cart.action.duplicate" | trans }}
-                </a>
+                <form method="POST" action="{{ path('multi-cart/duplicate', {idQuote: data.cart.idQuote}) }}">
+                    <button type="submit" class="button duplicate">{{ "multi_cart_widget.cart.action.duplicate" | trans }}</button>
+                    <input id="multi_cart_duplicate_form__token" name="multi_cart_duplicate_form[_token]" type="hidden" value="{{ csrf_token('multi_cart_duplicate_form') }}">
+                </form>
             </li>
         {% endif %}
         {% if data.actions.clear %}
             <li class="menu__item">
-                <a href="{{ path('multi-cart/clear', {idQuote: data.cart.idQuote}) }}" class="button clear">
-                    {{ "multi_cart_widget.cart.action.clear" | trans }}
-                </a>
+                <form method="POST" action="{{ path('multi-cart/clear', {idQuote: data.cart.idQuote}) }}">
+                    <button type="submit" class="button clear">{{ "multi_cart_widget.cart.action.clear" | trans }}</button>
+                    <input id="multi_cart_clear_form__token" name="multi_cart_clear_form[_token]" type="hidden" value="{{ csrf_token('multi_cart_clear_form') }}">
+                </form>
             </li>
         {% endif %}
         {% if data.actions.delete %}
