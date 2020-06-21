@@ -15,10 +15,10 @@
     {% block checkboxColumn %}
         <div class="{{ checkboxColumnClass }}">
             {% block checkboxColumnInner %}
-                {% include atom('thumbnail') with {
-                    modifiers: ['small'],
-                    attributes: {
-                        src: data.item.metadata.image,
+                {% include molecule('lazy-image') with {
+                    modifiers: ['thumbnail', 'small'],
+                    data: {
+                        imageSrc: data.item.metadata.image,
                     },
                 } only %}
             {% endblock %}

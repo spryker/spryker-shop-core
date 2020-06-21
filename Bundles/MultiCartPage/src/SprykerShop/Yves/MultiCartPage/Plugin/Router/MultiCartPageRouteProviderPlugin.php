@@ -81,7 +81,7 @@ class MultiCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected function addMultiCartDeleteRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/multi-cart/delete/{idQuote}', 'MultiCartPage', 'MultiCart', 'deleteAction');
+        $route = $this->buildPostRoute('/multi-cart/delete/{idQuote}', 'MultiCartPage', 'MultiCart', 'deleteAction');
         $route = $route->setRequirement(static::PARAM_ID_QUOTE, '\d+');
         $routeCollection->add(static::ROUTE_MULTI_CART_DELETE, $route);
 

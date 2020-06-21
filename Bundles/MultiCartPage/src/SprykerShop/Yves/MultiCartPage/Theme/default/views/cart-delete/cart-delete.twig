@@ -43,10 +43,8 @@
                 } only %}
                 {{ "general.back.button" | trans }}
             </a>
-            {{ form_start(data.multiCartDeleteForm, {'action': path('multi-cart/delete', {'idQuote': data.cartIdQuote}) }) }}
-                <button type="submit" class="button button--alert" data-init-single-click >
-                    {{ "multi_cart_page.cart_delete_confirmation.delete" | trans }}
-                </button>
+            {{ form_start(data.multiCartDeleteForm, {'attr': {'class': 'link'}, 'action': url('multi-cart/delete', { 'idQuote' : data.cartIdQuote })}) }}
+                <button data-init-single-click class="button button--alert">{{ 'multi_cart_page.cart_delete_confirmation.delete' | trans }}</button>
             {{ form_end(data.multiCartDeleteForm) }}
         </div>
     </div>

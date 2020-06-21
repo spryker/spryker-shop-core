@@ -36,13 +36,12 @@
                     <td>
                         {% set imageUrl = item.images[0].externalUrlSmall %}
                         {% if imageUrl %}
-                            {% include atom('thumbnail') with {
-                                modifiers: ['small', 'min-size'],
-                                attributes: {
-                                    alt: item.name,
-                                    src: imageUrl,
-                                    title: item.name,
-                                }
+                            {% include molecule('lazy-image') with {
+                                modifiers: ['thumbnail', 'small', 'min-size'],
+                                data: {
+                                    imageSrc: imageUrl,
+                                    imageTitle: item.name | default,
+                                },
                             } only %}
                         {% endif %}
                     </td>

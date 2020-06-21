@@ -96,7 +96,7 @@ class ShoppingListPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected function addShoppingListDeleteRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/shopping-list/delete/{idShoppingList}', 'ShoppingListPage', 'ShoppingListDelete', 'deleteAction');
+        $route = $this->buildPostRoute('/shopping-list/delete/{idShoppingList}', 'ShoppingListPage', 'ShoppingListDelete', 'deleteAction');
         $route = $route->setRequirement('idShoppingList', '\d+');
         $routeCollection->add(static::ROUTE_SHOPPING_LIST_DELETE, $route);
 
