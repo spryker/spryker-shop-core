@@ -29,6 +29,7 @@ use SprykerShop\Yves\CustomerPage\Expander\ShipmentExpander;
 use SprykerShop\Yves\CustomerPage\Expander\ShipmentExpanderInterface;
 use SprykerShop\Yves\CustomerPage\Expander\ShipmentGroupExpander;
 use SprykerShop\Yves\CustomerPage\Expander\ShipmentGroupExpanderInterface;
+use SprykerShop\Yves\CustomerPage\Form\Cloner\FormCloner;
 use SprykerShop\Yves\CustomerPage\Form\DataProvider\CheckoutAddressFormDataProvider;
 use SprykerShop\Yves\CustomerPage\Form\FormFactory;
 use SprykerShop\Yves\CustomerPage\Form\Transformer\AddressSelectTransformer;
@@ -47,6 +48,7 @@ use SprykerShop\Yves\CustomerPage\Security\Customer;
 use SprykerShop\Yves\CustomerPage\Twig\GetUsernameTwigFunction;
 use SprykerShop\Yves\CustomerPage\Twig\IsLoggedTwigFunction;
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -477,5 +479,15 @@ class CustomerPageFactory extends AbstractFactory
     public function getOrderSearchFormHandlerPlugins(): array
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGINS_ORDER_SEARCH_FORM_HANDLER);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return \SprykerShop\Yves\CustomerPage\Form\Cloner\FormCloner
+     */
+    public function createFormCloner(FormInterface $form): FormCloner
+    {
+        return new FormCloner($form);
     }
 }
