@@ -396,6 +396,10 @@ class CartController extends AbstractController
             ->getZedRequestClient()
             ->getLastResponseErrorMessages();
 
+        $cartQuantity = $this->getFactory()
+            ->getCartClient()
+            ->getItemCount();
+
         if ($messageTransfers) {
             $this->addErrorMessages($messageTransfers);
             $flashMessageListHtml = $this->renderView(static::FLASH_MESSAGE_LIST_TEMPLATE_PATH)->getContent();
@@ -413,7 +417,7 @@ class CartController extends AbstractController
         return [
             static::KEY_CODE => Response::HTTP_OK,
             static::KEY_MESSAGES => $this->renderView(static::FLASH_MESSAGE_LIST_TEMPLATE_PATH)->getContent(),
-            static::REQUEST_PARAMETER_QUANTITY => $quantity,
+            static::REQUEST_PARAMETER_QUANTITY => $cartQuantity,
         ];
     }
 

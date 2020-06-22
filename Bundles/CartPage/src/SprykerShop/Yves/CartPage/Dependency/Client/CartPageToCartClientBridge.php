@@ -122,14 +122,6 @@ class CartPageToCartClientBridge implements CartPageToCartClientInterface
     }
 
     /**
-     * @return int
-     */
-    public function getItemsQuantity(): int
-    {
-        return $this->cartClient->getItemsQuantity();
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function validateQuote(): QuoteResponseTransfer

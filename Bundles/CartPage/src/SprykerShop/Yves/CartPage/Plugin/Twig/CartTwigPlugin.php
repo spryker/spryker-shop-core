@@ -63,7 +63,7 @@ class CartTwigPlugin extends AbstractPlugin implements TwigPluginInterface
         return new TwigFunction(static::FUNCTION_NAME_GET_CART_QUANTITY, function () {
             return $this->getFactory()
                 ->getCartClient()
-                ->getItemsQuantity();
+                ->getItemCount();
         });
     }
 
