@@ -13,7 +13,7 @@ use SprykerShop\Yves\CustomerPage\Dependency\Plugin\NewsletterWidget\NewsletterS
 use SprykerShop\Yves\NewsletterWidget\Widget\NewsletterSubscriptionSummaryWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\NewsletterWidget\Widget\NewsletterSubscriptionSummaryWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\NewsletterWidget\Widget\NewsletterSubscriptionSummaryWidget} instead.
  *
  * @method \SprykerShop\Yves\NewsletterWidget\NewsletterWidgetFactory getFactory()
  */

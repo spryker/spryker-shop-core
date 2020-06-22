@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\CartNoteWidget\Widget\CartNoteFormWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\CartNoteWidget\Widget\CartNoteFormWidget} instead.
  */
 interface CartNoteQuoteWidgetPluginInterface extends WidgetPluginInterface
 {

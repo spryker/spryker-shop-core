@@ -15,13 +15,13 @@ use SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPlugin
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated Use `\SprykerShop\Yves\ProductSetDetailPage\Plugin\StorageRouter\ProductSetDetailPageResourceCreatorPlugin` instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductSetDetailPage\Plugin\StorageRouter\ProductSetDetailPageResourceCreatorPlugin} instead.
  *
  * @method \SprykerShop\Yves\ProductSetDetailPage\ProductSetDetailPageFactory getFactory()
  */
 class ProductSetDetailPageResourceCreatorPlugin extends AbstractPlugin implements ResourceCreatorPluginInterface
 {
-    private const SERVICE_REQUEST = 'request';
+    protected const SERVICE_REQUEST = 'request';
 
     /**
      * @return string
@@ -97,7 +97,8 @@ class ProductSetDetailPageResourceCreatorPlugin extends AbstractPlugin implement
      */
     protected function getSelectedAttributes($idProductAbstract): array
     {
-        $attributes = $this->getRequest()->query->get(DetailController::PARAM_ATTRIBUTE, []);
+        /** @var array $attributes */
+        $attributes = $this->getRequest()->query->get(DetailController::PARAM_ATTRIBUTE) ?: [];
 
         return isset($attributes[$idProductAbstract]) ? array_filter($attributes[$idProductAbstract]) : [];
     }

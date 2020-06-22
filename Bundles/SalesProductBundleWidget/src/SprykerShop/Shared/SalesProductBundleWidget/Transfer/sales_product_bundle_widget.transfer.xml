@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ReturnCreateRequest">
+        <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
+    </transfer>
+
+    <transfer name="ReturnItem">
+        <property name="reason" type="string"/>
+        <property name="orderItem" type="Item"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+        <property name="state" type="ItemState"/>
+        <property name="isReturnable" type="bool"/>
+        <property name="relatedBundleItemIdentifier" type="string"/>
+        <property name="productBundle" type="Item"/>
+        <property name="bundleItemIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="ItemState">
+        <property name="name" type="string"/>
+    </transfer>
+
+</transfers>

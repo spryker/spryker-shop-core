@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CartPage\Dependency\Plugin\MultiCartWidget;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
- * @deprecated Use \SprykerShop\Yves\MultiCartWidget\Widget\CartOperationsWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\MultiCartWidget\Widget\CartOperationsWidget} instead.
  */
 interface CartOperationsWidgetPluginInterface
 {

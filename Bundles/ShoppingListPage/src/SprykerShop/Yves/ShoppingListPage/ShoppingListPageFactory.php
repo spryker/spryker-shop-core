@@ -29,6 +29,7 @@ use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShoppingListFormDataProv
 use SprykerShop\Yves\ShoppingListPage\Form\Handler\AddToCartFormHandler;
 use SprykerShop\Yves\ShoppingListPage\Form\Handler\AddToCartFormHandlerInterface;
 use SprykerShop\Yves\ShoppingListPage\Form\ShareShoppingListForm;
+use SprykerShop\Yves\ShoppingListPage\Form\ShoppingListDeleteForm;
 use SprykerShop\Yves\ShoppingListPage\Form\ShoppingListForm;
 use SprykerShop\Yves\ShoppingListPage\Form\ShoppingListUpdateForm;
 use Symfony\Component\Form\FormFactory;
@@ -75,6 +76,17 @@ class ShoppingListPageFactory extends AbstractFactory
     public function getShoppingListUpdateForm(ShoppingListTransfer $data, array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(ShoppingListUpdateForm::class, $data, $options);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $data
+     * @param mixed[] $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getShoppingListDeleteForm(ShoppingListTransfer $data, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(ShoppingListDeleteForm::class, $data, $options);
     }
 
     /**

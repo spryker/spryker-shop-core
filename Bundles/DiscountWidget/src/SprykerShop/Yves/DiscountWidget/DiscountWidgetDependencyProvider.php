@@ -40,9 +40,9 @@ class DiscountWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCalculationClient(Container $container): Container
     {
-        $container[self::CLIENT_CALCULATION] = function (Container $container) {
+        $container->set(static::CLIENT_CALCULATION, function (Container $container) {
             return new DiscountWidgetToCalculationClientBridge($container->getLocator()->calculation()->client());
-        };
+        });
 
         return $container;
     }
@@ -54,9 +54,9 @@ class DiscountWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteClient(Container $container): Container
     {
-        $container[self::CLIENT_QUOTE] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new DiscountWidgetToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }
@@ -68,11 +68,11 @@ class DiscountWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addApplication(Container $container): Container
     {
-        $container[self::PLUGIN_APPLICATION] = function () {
+        $container->set(static::PLUGIN_APPLICATION, function () {
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
-        };
+        });
 
         return $container;
     }

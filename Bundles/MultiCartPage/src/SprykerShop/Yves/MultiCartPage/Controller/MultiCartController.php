@@ -30,6 +30,7 @@ class MultiCartController extends AbstractController
 
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
     protected const GLOSSARY_KEY_CART_UPDATED_ERROR = 'multi_cart_widget.cart.updated.error';
+    protected const GLOSSARY_KEY_CART_DELETE_ERROR = 'multi_cart_widget.cart.delete.error';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -198,13 +199,26 @@ class MultiCartController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $idQuote
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(int $idQuote)
+    public function deleteAction(Request $request, int $idQuote)
     {
-        $quoteTransfer = $this->findQuoteOrFail($idQuote);
+        $multiCartDeleteForm = $this->getFactory()
+            ->getMultiCartDeleteForm(new QuoteTransfer())
+            ->handleRequest($request);
+
+        if (!$multiCartDeleteForm->isSubmitted() || !$multiCartDeleteForm->isValid()) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_CART_DELETE_ERROR);
+
+            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+        }
+
+        $quoteTransfer = $this->findQuoteOrFail(
+            $multiCartDeleteForm->getData()->getIdQuote()
+        );
 
         if (!$this->canWriteQuote($quoteTransfer)) {
             $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
@@ -264,8 +278,12 @@ class MultiCartController extends AbstractController
      */
     protected function executeConfirmDeleteAction(int $idQuote): array
     {
+        $quoteTransfer = $this->findQuoteOrFail($idQuote);
+        $multiCartDeleteForm = $this->getFactory()->getMultiCartDeleteForm($quoteTransfer);
+
         return [
-            'cart' => $this->findQuoteOrFail($idQuote),
+            'cart' => $quoteTransfer,
+            'multiCartDeleteForm' => $multiCartDeleteForm->createView(),
         ];
     }
 

@@ -12,7 +12,7 @@ use SprykerShop\Yves\ProductGroupWidget\Widget\ProductGroupWidget;
 use SprykerShop\Yves\ShopUi\Dependency\Plugin\ProductGroupWidget\ProductGroupWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductGroupWidget\Widget\ProductGroupWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductGroupWidget\Widget\ProductGroupWidget} instead.
  *
  * @method \SprykerShop\Yves\ProductGroupWidget\ProductGroupWidgetFactory getFactory()
  */

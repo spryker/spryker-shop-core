@@ -12,7 +12,7 @@ use SprykerShop\Yves\ProductReviewWidget\Widget\DisplayProductAbstractReviewWidg
 use SprykerShop\Yves\ProductWidget\Dependency\Plugin\ProductReviewWidget\ProductAbstractReviewWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductReviewWidget\Widget\DisplayProductAbstractReviewWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductReviewWidget\Widget\DisplayProductAbstractReviewWidget} instead.
  *
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
  */

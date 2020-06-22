@@ -16,12 +16,13 @@
             {% widget 'CustomerReorderItemCheckboxWidget' args [data.product] only %}{% endwidget %}
         </div>
         <div class="col col--expand grid grid--middle">
+            {% set thumbnailModifiers = ['small', 'expand'] %}
             {% block image %}
-                {% include atom('thumbnail') with {
-                    modifiers: ['small', 'full-width'],
-                    attributes: {
-                        src: data.image,
-                        alt: data.name,
+                {% include molecule('lazy-image') with {
+                    modifiers: thumbnailModifiers | merge(['thumbnail']),
+                    data: {
+                        imageSrc: data.image,
+                        imageTitle: data.name,
                     },
                 } only %}
             {% endblock %}
@@ -99,7 +100,7 @@
                                                 {% endblock %}
 
                                                 {%- block totalValue -%}
-                                                    {{ data.product.sumSubtotalAggregation | money(true, data.currencyIsoCode) }}
+                                                    {{ data.product.sumPriceToPayAggregation | money(true, data.currencyIsoCode) }}
                                                 {% endblock %}
                                             {% else %}
                                                 {{ 'customer.access.cannot_see_price' | trans }}

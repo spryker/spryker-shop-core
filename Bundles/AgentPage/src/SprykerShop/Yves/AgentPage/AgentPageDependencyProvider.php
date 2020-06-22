@@ -50,11 +50,11 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addAgentClient(Container $container): Container
     {
-        $container[static::CLIENT_AGENT] = function (Container $container): AgentPageToAgentClientInterface {
+        $container->set(static::CLIENT_AGENT, function (Container $container): AgentPageToAgentClientInterface {
             return new AgentPageToAgentClientBridge(
                 $container->getLocator()->agent()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -66,11 +66,11 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container): AgentPageToCustomerClientInterface {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container): AgentPageToCustomerClientInterface {
             return new AgentPageToCustomerClientBridge(
                 $container->getLocator()->customer()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -82,11 +82,11 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMessengerClient(Container $container): Container
     {
-        $container[static::CLIENT_MESSENGER] = function (Container $container): AgentPageToMessengerClientInterface {
+        $container->set(static::CLIENT_MESSENGER, function (Container $container): AgentPageToMessengerClientInterface {
             return new AgentPageToMessengerClientBridge(
                 $container->getLocator()->messenger()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -98,11 +98,11 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteClient(Container $container): Container
     {
-        $container[static::CLIENT_QUOTE] = function (Container $container): AgentPageToQuoteClientInterface {
+        $container->set(static::CLIENT_QUOTE, function (Container $container): AgentPageToQuoteClientInterface {
             return new AgentPageToQuoteClientBridge(
                 $container->getLocator()->quote()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -114,9 +114,9 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addApplication(Container $container): Container
     {
-        $container[static::APPLICATION] = function () {
+        $container->set(static::APPLICATION, function () {
             return (new Pimple())->getApplication();
-        };
+        });
 
         return $container;
     }

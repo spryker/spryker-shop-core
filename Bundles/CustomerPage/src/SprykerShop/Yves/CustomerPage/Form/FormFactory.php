@@ -109,6 +109,14 @@ class FormFactory extends AbstractFactory
     }
 
     /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCustomerDeleteForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(CustomerDeleteForm::class);
+    }
+
+    /**
      * @return \SprykerShop\Yves\CustomerPage\Form\DataProvider\OrderSearchFormDataProvider
      */
     public function createOrderSearchFormDataProvider(): OrderSearchFormDataProvider

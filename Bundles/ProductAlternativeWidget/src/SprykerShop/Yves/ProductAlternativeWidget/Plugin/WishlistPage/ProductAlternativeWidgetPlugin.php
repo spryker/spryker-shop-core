@@ -13,7 +13,7 @@ use SprykerShop\Yves\ProductAlternativeWidget\Widget\WishlistProductAlternativeW
 use SprykerShop\Yves\WishlistPage\Dependency\Plugin\ProductAlternativeWidget\ProductAlternativeWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductAlternativeWidget\Widget\WishlistProductAlternativeWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductAlternativeWidget\Widget\WishlistProductAlternativeWidget} instead.
  *
  * @method \SprykerShop\Yves\ProductAlternativeWidget\ProductAlternativeWidgetFactory getFactory()
  */

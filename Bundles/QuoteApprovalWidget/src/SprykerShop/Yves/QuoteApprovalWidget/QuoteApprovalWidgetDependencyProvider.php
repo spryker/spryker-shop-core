@@ -47,9 +47,9 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addQuoteApprovalClient($container): Container
     {
-        $container[static::CLIENT_QUOTE_APPROVAL] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE_APPROVAL, function (Container $container) {
             return new QuoteApprovalWidgetToQuoteApprovalClientBridge($container->getLocator()->quoteApproval()->client());
-        };
+        });
 
         return $container;
     }
@@ -61,9 +61,9 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addQuoteClient($container): Container
     {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new QuoteApprovalWidgetToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }
@@ -75,9 +75,9 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addCustomerClient($container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new QuoteApprovalWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }
@@ -89,9 +89,9 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addMoneyClient($container): Container
     {
-        $container[static::CLIENT_MONEY] = function (Container $container) {
+        $container->set(static::CLIENT_MONEY, function (Container $container) {
             return new QuoteApprovalWidgetToMoneyClientBridge($container->getLocator()->money()->client());
-        };
+        });
 
         return $container;
     }
@@ -103,9 +103,9 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addGlossaryStorageClient($container): Container
     {
-        $container[static::CLIENT_GLOSSARY_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
             return new QuoteApprovalWidgetToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());
-        };
+        });
 
         return $container;
     }

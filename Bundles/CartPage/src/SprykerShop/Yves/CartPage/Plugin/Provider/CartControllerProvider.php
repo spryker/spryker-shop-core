@@ -12,7 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated Use `\SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin` instead.
+ * @deprecated Use {@link \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin} instead.
  */
 class CartControllerProvider extends AbstractYvesControllerProvider
 {
@@ -184,52 +184,52 @@ class CartControllerProvider extends AbstractYvesControllerProvider
      * @param mixed $unusedParameter
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return int
+     * @return array
      */
     public function getSelectedAttributesFromRequest($unusedParameter, Request $request)
     {
         if ($request->isMethod('POST')) {
-            return $request->request->get('selectedAttributes', []);
+            return $request->request->get('selectedAttributes') ?: [];
         }
 
-        return $request->query->get('selectedAttributes', []);
+        return $request->query->get('selectedAttributes') ?: [];
     }
 
     /**
      * @param mixed $unusedParameter
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return int
+     * @return array
      */
     public function getPreSelectedAttributesFromRequest($unusedParameter, Request $request)
     {
         if ($request->isMethod('POST')) {
-            return $request->request->get('preselectedAttributes', []);
+            return $request->request->get('preselectedAttributes') ?: [];
         }
 
-        return $request->query->get('preselectedAttributes', []);
+        return $request->query->get('preselectedAttributes')  ?: [];
     }
 
     /**
      * @param mixed $unusedParameter
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return int
+     * @return int[]
      */
     public function getProductOptionsFromRequest($unusedParameter, Request $request)
     {
         if ($request->isMethod('POST')) {
-            return $request->request->get('product-option', []);
+            return $request->request->get('product-option') ?: [];
         }
 
-        return $request->query->get('product-option', []);
+        return $request->query->get('product-option') ?: [];
     }
 
     /**
      * @param mixed $unusedParameter
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return int
+     * @return string
      */
     public function getGroupKeyFromRequest($unusedParameter, Request $request)
     {

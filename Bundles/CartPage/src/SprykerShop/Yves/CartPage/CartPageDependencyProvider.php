@@ -63,9 +63,9 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCartClient(Container $container): Container
     {
-        $container[self::CLIENT_CART] = function (Container $container) {
+        $container->set(static::CLIENT_CART, function (Container $container) {
             return new CartPageToCartClientBridge($container->getLocator()->cart()->client());
-        };
+        });
 
         return $container;
     }
@@ -77,9 +77,9 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteClient(Container $container): Container
     {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new CartPageToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }
@@ -91,9 +91,9 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new CartPageToProductStorageClientBridge($container->getLocator()->productStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -105,9 +105,9 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addAvailabilityStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_AVAILABILITY_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_AVAILABILITY_STORAGE, function (Container $container) {
             return new CartPageToAvailabilityStorageClientBridge($container->getLocator()->availabilityStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -119,9 +119,9 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addZedRequestClient(Container $container): Container
     {
-        $container[self::CLIENT_ZED_REQUEST] = function (Container $container) {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new CartPageToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
-        };
+        });
 
         return $container;
     }
@@ -133,11 +133,11 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addApplication(Container $container): Container
     {
-        $container[self::PLUGIN_APPLICATION] = function () {
+        $container->set(static::PLUGIN_APPLICATION, function () {
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
-        };
+        });
 
         return $container;
     }
@@ -149,9 +149,9 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCartVariantAttributeMapperPlugin(Container $container): Container
     {
-        $container[self::PLUGIN_CART_VARIANT] = function () {
+        $container->set(static::PLUGIN_CART_VARIANT, function () {
             return new CartVariantAttributeMapperPlugin();
-        };
+        });
 
         return $container;
     }
@@ -163,16 +163,16 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCartPageWidgetPlugins(Container $container)
     {
-        $container[self::PLUGIN_CART_PAGE_WIDGETS] = function () {
+        $container->set(static::PLUGIN_CART_PAGE_WIDGETS, function () {
             return $this->getCartPageWidgetPlugins();
-        };
+        });
 
         return $container;
     }
 
     /**
      * Returns a list of widget plugin class names that implement
-     * Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
+     * {@link \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface}.
      *
      * @return string[]
      */
@@ -188,9 +188,9 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCartItemTransformerPlugins(Container $container)
     {
-        $container[static::PLUGIN_CART_ITEM_TRANSFORMERS] = function () {
+        $container->set(static::PLUGIN_CART_ITEM_TRANSFORMERS, function () {
             return $this->getCartItemTransformerPlugins();
-        };
+        });
 
         return $container;
     }

@@ -40,9 +40,9 @@ class CartCodeWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCartCodeClient(Container $container): Container
     {
-        $container[static::CLIENT_CART_CODE] = function (Container $container) {
+        $container->set(static::CLIENT_CART_CODE, function (Container $container) {
             return new CartCodeWidgetToCartCodeClientBridge($container->getLocator()->cartCode()->client());
-        };
+        });
 
         return $container;
     }
@@ -54,9 +54,9 @@ class CartCodeWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteClient(Container $container): Container
     {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new CartCodeWidgetToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }
@@ -68,9 +68,9 @@ class CartCodeWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addZedRequestClient(Container $container): Container
     {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new CartCodeWidgetToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
-        };
+        });
 
         return $container;
     }

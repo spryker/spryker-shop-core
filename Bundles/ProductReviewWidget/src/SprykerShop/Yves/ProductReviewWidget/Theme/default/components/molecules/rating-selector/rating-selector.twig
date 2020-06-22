@@ -109,6 +109,6 @@
             {% if data.inputId %}id="{{ data.inputId }}"{% endif %}
             name="{{ data.inputName }}"
             value="{{ data.value }}"
-            {% if attributes['disable-if-empty-value'] and data.value is empty %}disabled{% endif %}>
+            {% if attributes['disable-if-empty-value'] and data.value is empty or attributes['readonly'] %}disabled{% endif %}>
     {% endblock %}
 {% endblock %}

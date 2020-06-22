@@ -11,7 +11,7 @@ use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
 /**
- * @deprecated Use `\SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin` instead.
+ * @deprecated Use {@link \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin} instead.
  */
 class MultiCartPageControllerProvider extends AbstractYvesControllerProvider
 {

@@ -294,7 +294,9 @@ class ConfiguratorController extends AbstractController
 
         $form = $this->getFactory()->getConfiguratorStateForm();
 
-        $formData = $request->request->get($form->getName())[ConfiguratorStateForm::FIELD_SLOTS] ?? null;
+        /** @var array $data */
+        $data = $request->request->get($form->getName()) ?: [];
+        $formData = $data[ConfiguratorStateForm::FIELD_SLOTS] ?? null;
 
         if (!$formData) {
             return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_TEMPLATE_SELECTION);

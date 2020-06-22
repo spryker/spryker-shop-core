@@ -42,21 +42,11 @@
 
     <table class="shopping-list-items">
         <tbody>
-            {% set productBarcodeWidgetExists = null %}
-            {% set isNotesSupported = null %}
+            {% set isNotesSupported = data.shoppingListItems | filter(item => item.shoppingListItem.shoppingListItemNote.note is not null) %}
 
             {% for item in data.shoppingListItems %}
-                {% if productBarcodeWidgetExists is null %}
-                    {% set productBarcodeWidget = findWidget('ProductBarcodeWidget', [item, data.barcodeGeneratorPlugin]) %}
-                    {% set productBarcodeWidgetExists = productBarcodeWidget is not null %}
-                {% endif %}
-
-                {% if isNotesSupported is null %}
-                    {% set shoppingListItemNoteWidget = findWidget('ShoppingListItemNoteWidget', [item.shoppingListItem]) %}
-                    {% set isNotesSupported = shoppingListItemNoteWidget is not null %}
-                {% endif %}
                 <tr>
-                    {% widget productBarcodeWidget only %}
+                    {% widget 'ProductBarcodeWidget' args [item, data.barcodeGeneratorPlugin] only %}
                         {% block body %}
                             <td>{{ parent() }}</td>
                         {% endblock %}
@@ -76,7 +66,7 @@
         </tbody>
         <thead>
             <tr>
-                {% if productBarcodeWidgetExists %}
+                {% if widgetExists('ProductBarcodeWidget') %}
                     <th>{{ 'customer.account.print_shopping_list.table.barcode' | trans }}</th>
                 {% endif %}
                 <th>{{ 'customer.account.print_shopping_list.table.product_sku' | trans }}</th>
