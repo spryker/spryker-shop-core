@@ -35,7 +35,7 @@
         'data-product-original-price': item.prices['ORIGINAL'] is defined ? (item.prices['ORIGINAL'] | money),
         'data-product-detail-page-url': item.url ?: '',
         'data-product-add-to-cart-url': productSku ? path('cart/add', {sku: productSku}),
-        'data-product-ajax-add-to-cart-url': productSku ? path('cart/addAjax', {sku: productSku}),
+        'data-product-ajax-add-to-cart-url': productSku ? path('cart/add-ajax', {sku: productSku}),
     } %}
 
     {{ parent() }}
