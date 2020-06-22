@@ -8,6 +8,8 @@
 namespace SprykerShop\Yves\MerchantProductWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\MerchantProductOfferWidget\Sorter\MerchantProductViewCollectionSorter;
+use SprykerShop\Yves\MerchantProductOfferWidget\Sorter\MerchantProductViewCollectionSorterInterface;
 use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToMerchantProductStorageClientInterface;
 use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToMerchantStorageClientInterface;
 use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToPriceProductClientInterface;
@@ -28,8 +30,17 @@ class MerchantProductWidgetFactory extends AbstractFactory
             $this->getPriceProductClient(),
             $this->getPriceProductStorageClient(),
             $this->getMerchantStorageClient(),
-            $this->createMerchantProductMapper()
+            $this->createMerchantProductMapper(),
+            $this->createMerchantProductViewCollectionSorter()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MerchantProductOfferWidget\Sorter\MerchantProductViewCollectionSorterInterface
+     */
+    public function createMerchantProductViewCollectionSorter(): MerchantProductViewCollectionSorterInterface
+    {
+        return new MerchantProductViewCollectionSorter();
     }
 
     /**

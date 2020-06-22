@@ -8,6 +8,8 @@
 namespace SprykerShop\Yves\MerchantProductOfferWidget\Reader;
 
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
+use Generated\Shared\Transfer\MerchantProductViewCollectionTransfer;
+use Generated\Shared\Transfer\MerchantProductViewTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
@@ -17,7 +19,9 @@ use SprykerShop\Shared\MerchantProductOfferWidget\MerchantProductOfferWidgetConf
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToPriceProductStorageClientInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Service\MerchantProductOfferWidgetToPriceProductClientInterface;
+use SprykerShop\Yves\MerchantProductOfferWidget\Mapper\MerchantProductViewMapper;
 use SprykerShop\Yves\MerchantProductOfferWidget\Resolver\ShopContextResolverInterface;
+use SprykerShop\Yves\MerchantProductOfferWidget\Sorter\MerchantProductViewCollectionSorterInterface;
 
 class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
 {
@@ -42,61 +46,116 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
     protected $shopContextResolver;
 
     /**
+     * @var \SprykerShop\Yves\MerchantProductOfferWidget\Mapper\MerchantProductViewMapper
+     */
+    protected $merchantProductOfferMapper;
+
+    /**
+     * @var \SprykerShop\Yves\MerchantProductOfferWidgetExtension\Dependency\Plugin\MerchantProductViewCollectionExpanderPluginInterface[]
+     */
+    protected $merchantProductViewCollectionExpanderPlugins;
+
+    /**
+     * @var \SprykerShop\Yves\MerchantProductOfferWidget\Sorter\MerchantProductViewCollectionSorterInterface
+     */
+    protected $merchantProductSorter;
+
+    /**
      * @param \SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface $merchantProductOfferStorageClient
      * @param \SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Service\MerchantProductOfferWidgetToPriceProductClientInterface $priceProductClient
      * @param \SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToPriceProductStorageClientInterface $priceProductStorageClient
      * @param \SprykerShop\Yves\MerchantProductOfferWidget\Resolver\ShopContextResolverInterface $shopContextResolver
+     * @param \SprykerShop\Yves\MerchantProductOfferWidget\Mapper\MerchantProductViewMapper $merchantProductOfferMapper
+     * @param \SprykerShop\Yves\MerchantProductOfferWidgetExtension\Dependency\Plugin\MerchantProductViewCollectionExpanderPluginInterface[] $merchantProductViewCollectionExpanderPlugins
+     * @param \SprykerShop\Yves\MerchantProductOfferWidget\Sorter\MerchantProductViewCollectionSorterInterface $merchantProductSorter
      */
     public function __construct(
         MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface $merchantProductOfferStorageClient,
         MerchantProductOfferWidgetToPriceProductClientInterface $priceProductClient,
         MerchantProductOfferWidgetToPriceProductStorageClientInterface $priceProductStorageClient,
-        ShopContextResolverInterface $shopContextResolver
+        ShopContextResolverInterface $shopContextResolver,
+        MerchantProductViewMapper $merchantProductOfferMapper,
+        array $merchantProductViewCollectionExpanderPlugins,
+        MerchantProductViewCollectionSorterInterface $merchantProductSorter
     ) {
         $this->merchantProductOfferStorageClient = $merchantProductOfferStorageClient;
         $this->priceProductClient = $priceProductClient;
         $this->priceProductStorageClient = $priceProductStorageClient;
         $this->shopContextResolver = $shopContextResolver;
+        $this->merchantProductOfferMapper = $merchantProductOfferMapper;
+        $this->merchantProductViewCollectionExpanderPlugins = $merchantProductViewCollectionExpanderPlugins;
+        $this->merchantProductSorter = $merchantProductSorter;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
+     * @return \Generated\Shared\Transfer\MerchantProductViewCollection[]
      */
     public function getProductOfferCollection(ProductViewTransfer $productViewTransfer, string $localeName): array
     {
         if (!$productViewTransfer->getIdProductConcrete()) {
             return [];
         }
-        $productOfferStorageList = [];
+        $merchantProductViewCollectionTransfer = new MerchantProductViewCollectionTransfer();
 
         $productOfferStorageCriteriaTransfer = (new ProductOfferStorageCriteriaTransfer())
             ->fromArray($this->shopContextResolver->resolve()->modifiedToArray(), true);
-        $productOfferStorageCriteriaTransfer->addProductConcreteSku($productViewTransfer->getSku());
+        $productOfferStorageCriteriaTransfer->setSku($productViewTransfer->getSku());
 
-        $productOfferStorageCollection = $this->merchantProductOfferStorageClient->getProductOffersBySkus($productOfferStorageCriteriaTransfer);
-        $productOffersStorageTransfers = $productOfferStorageCollection->getProductOffersStorage();
+        $productOfferStorageCollectionTransfer = $this->merchantProductOfferStorageClient->getProductOffersBySkus($productOfferStorageCriteriaTransfer);
+        $productOffersStorageTransfers = $productOfferStorageCollectionTransfer->getProductOffersStorage();
 
         $priceProductTransfers = $this->getPriceProductTransfers($productViewTransfer);
 
         foreach ($productOffersStorageTransfers as $productOfferStorageTransfer) {
             $merchantStorageTransfer = $productOfferStorageTransfer->getMerchantStorage();
-            $merchantStorageTransfer->setMerchantUrl($this->getResolvedUrl($merchantStorageTransfer, $localeName));
-            $productOfferStorageTransfer->setMerchantStorage($merchantStorageTransfer);
+            $merchantProductViewTransfer = $this->merchantProductOfferMapper
+                ->mapProductOfferStorageTransferToMerchantProductViewTransfer($productOfferStorageTransfer, new MerchantProductViewTransfer());
+
+            $merchantProductViewTransfer->setMerchantUrl($this->getResolvedUrl($merchantStorageTransfer, $localeName));
 
             $currentProductPriceTransfer = $this->getCurrentProductPriceTransferForOffer(
                 $priceProductTransfers,
                 $productOfferStorageTransfer->getProductOfferReference()
             );
 
-            $productOfferStorageTransfer->setPrice($currentProductPriceTransfer);
+            $merchantProductViewTransfer->setPrice($currentProductPriceTransfer);
 
-            $productOfferStorageList[] = $productOfferStorageTransfer;
+            $merchantProductViewCollectionTransfer->addMerchantProductView($merchantProductViewTransfer);
         }
 
-        return $productOfferStorageList;
+        $externalMerchantProductOfferTransfers = [];
+
+        foreach ($this->merchantProductViewCollectionExpanderPlugins as $merchantProductViewCollectionExpanderPlugin) {
+            $externalMerchantProductOfferTransfers = $merchantProductViewCollectionExpanderPlugin->expand(
+                $externalMerchantProductOfferTransfers,
+                $productViewTransfer
+            );
+        }
+
+        $merchantProductViewCollectionTransfer = $this->mergeMerchantProductTransfers(
+            $merchantProductViewCollectionTransfer,
+            $externalMerchantProductOfferTransfers
+        );
+
+        return $this->merchantProductSorter->sort($merchantProductViewCollectionTransfer);
+    }
+
+    protected function mergeMerchantProductTransfers(array $merchantProductTransfers, array $externalMerchantProductTransfers): array
+    {
+        foreach ($externalMerchantProductTransfers as $externalMerchantProductTransfer) {
+            foreach ($merchantProductTransfers as $key => $merchantProductTransfer) {
+                if ($externalMerchantProductTransfer->getMerchantReference()
+                    && $externalMerchantProductTransfer->getMerchantReference() === $merchantProductTransfer->getMerchantReference()
+                ) {
+                    unset($merchantProductTransfers[$key]);
+                }
+            }
+        }
+
+        return array_merge($merchantProductTransfers, $externalMerchantProductTransfers);
     }
 
     /**
