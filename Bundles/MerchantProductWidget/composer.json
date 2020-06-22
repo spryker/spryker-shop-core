@@ -8,7 +8,7 @@
     "spryker/kernel": "^3.33.0",
     "spryker-shop/cart-page-extension": "^1.0.0",
     "spryker/merchant-product-storage": "^0.1.0",
-    "spryker/merchant-storage": "^0.1.2",
+    "spryker/merchant-storage": "^0.1.2"
   },
   "require-dev": {
     "spryker/code-sniffer": "*"

@@ -96,7 +96,7 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
     public function getMerchantProductViewCollection(ProductViewTransfer $productViewTransfer, string $localeName): MerchantProductViewCollectionTransfer
     {
         if (!$productViewTransfer->getIdProductConcrete()) {
-            return [];
+            return (new MerchantProductViewCollectionTransfer());
         }
         $merchantProductViewCollectionTransfer = new MerchantProductViewCollectionTransfer();
 
@@ -135,7 +135,7 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
             );
         }
 
-        $merchantProductViewCollectionTransfer = $this->mergeMerchantProductTransfers(
+        $merchantProductViewCollectionTransfer = $this->mergeMerchantProductViewCollection(
             $merchantProductViewCollectionTransfer,
             $externalMerchantProductViewCollectionTransfer
         );
@@ -143,20 +143,32 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
         return $this->merchantProductSorter->sort($merchantProductViewCollectionTransfer);
     }
 
-    protected function mergeMerchantProductTransfers(
-        MerchantProductViewCollectionTransfer $merchantProductTransfer,
-        MerchantProductViewCollectionTransfer $externalMerchantProductTransfer
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProductViewCollectionTransfer $merchantProductViewCollectionTransfer
+     * @param \Generated\Shared\Transfer\MerchantProductViewCollectionTransfer $externalMerchantProductViewCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductViewCollectionTransfer
+     */
+    protected function mergeMerchantProductViewCollection(
+        MerchantProductViewCollectionTransfer $merchantProductViewCollectionTransfer,
+        MerchantProductViewCollectionTransfer $externalMerchantProductViewCollectionTransfer
     ): MerchantProductViewCollectionTransfer {
-        foreach ($externalMerchantProductTransfer->getMerchantProductViews() as $externalMerchantProductViewTransfer) {
-            foreach ($merchantProductTransfer->getMerchantProductViews() as $key => $merchantProductViewTransfer) {
-                if ($externalMerchantProductViewTransfer->getMerchantReference() !== $merchantProductViewTransfer->getMerchantReference()
+        foreach ($externalMerchantProductViewCollectionTransfer->getMerchantProductViews() as $key => $externalMerchantProductViewTransfer) {
+            $mergeItemFlag = true;
+            foreach ($merchantProductViewCollectionTransfer->getMerchantProductViews() as $merchantProductViewTransfer) {
+                if (
+                    !$externalMerchantProductViewTransfer->getMerchantReference() ||
+                    $externalMerchantProductViewTransfer->getMerchantReference() !== $merchantProductViewTransfer->getMerchantReference()
                 ) {
-                    $merchantProductTransfer->addMerchantProductView($externalMerchantProductViewTransfer);
+                    $mergeItemFlag = false;
                 }
+            }
+            if ($mergeItemFlag) {
+                $merchantProductViewCollectionTransfer->addMerchantProductView($externalMerchantProductViewTransfer);
             }
         }
 
-        return $merchantProductTransfer;
+        return $merchantProductViewCollectionTransfer;
     }
 
     /**

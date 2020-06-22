@@ -27,9 +27,9 @@ class MerchantProductWidgetToMerchantProductStorageClientBridge implements Merch
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\MerchantProductStorageTransfer
+     * @return \Generated\Shared\Transfer\MerchantProductStorageTransfer|null
      */
-    public function findOne(int $idProductAbstract): MerchantProductStorageTransfer
+    public function findOne(int $idProductAbstract): ?MerchantProductStorageTransfer
     {
         return $this->merchantProductStorageClient->findOne($idProductAbstract);
     }

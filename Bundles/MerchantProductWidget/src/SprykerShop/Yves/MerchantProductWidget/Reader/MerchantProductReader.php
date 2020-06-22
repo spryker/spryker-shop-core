@@ -102,6 +102,7 @@ class MerchantProductReader implements MerchantProductReaderInterface
             return new MerchantProductViewTransfer();
         }
         $merchantProductViewTransfer->setMerchantUrl($this->getResolvedUrl($merchantStorageTransfer, $localeName));
+        $merchantProductViewTransfer->setMerchantName($merchantStorageTransfer->getName());
         $merchantProductViewTransfer->setPrice($currentProductPriceTransfer);
 
         return $merchantProductViewTransfer;

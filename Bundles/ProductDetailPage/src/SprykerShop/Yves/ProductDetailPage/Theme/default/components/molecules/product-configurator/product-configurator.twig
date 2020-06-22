@@ -139,7 +139,11 @@
             {% elsewidget 'MultiCartWidgetPlugin' args [data.product, data.isDisabled] only %} {# @deprecated Use AddToMultiCartWidget instead. #}
             {% endwidget %}
 
-            {% widget 'MerchantProductOfferWidget' args [data.product] only %}{% endwidget %}
+            {% if widgetGlobalExists('MerchantProductOfferWidget') %}
+                {% widget 'MerchantProductOfferWidget' args [data.product] only %}{% endwidget %}
+            {% elseif widgetGlobalExists('MerchantProductWidget') %}
+                {% widget 'MerchantProductWidget' args [data.product] only %}{% endwidget %}
+            {% endif %}
 
             {% if widgetExists('AvailabilityWidgetPlugin') %}
                 {{ widget('AvailabilityWidgetPlugin', data.product) }} {# @deprecated Use molecule('availability-product', 'AvailabilityWidget') instead. #}

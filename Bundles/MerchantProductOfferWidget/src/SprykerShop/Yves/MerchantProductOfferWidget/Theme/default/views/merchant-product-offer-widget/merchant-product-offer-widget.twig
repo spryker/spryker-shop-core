@@ -18,33 +18,59 @@
                     {% endblock %}
 
                     {% block productOfferList %}
-                        {% for productOffer in data.merchantProductViews  %}
+                        {% for merchantProductView in data.merchantProductViews  %}
                             {% block productOffer %}
-                                {% set isSameMerchantOffer = data.productView.productOfferReference == productOffer.productOfferReference %}
-
-                                {% embed molecule('merchant-product-offer-item', 'MerchantProductOfferWidget') with {
-                                    data: {
-                                        checked: isSameMerchantOffer,
-                                        radioGroupName: 'product_offer_reference',
-                                        productOfferReference: productOffer.productOfferReference | default,
-                                        merchantName: productOffer.merchantStorage.name | default,
-                                        merchantUrl: productOffer.merchantStorage.merchantUrl | default,
-                                        price: productOffer.price.price | default(null),
-                                        currencyIsoCode: productOffer.price.currency.code | default(null),
-                                        shouldShowRadioButton: merchantProductViews | length > 1,
-                                    },
-                                    embed : {
-                                        currentProductPrice: productOffer.price,
-                                    }
-                                } only %}
-                                    {% block price %}
-                                        {% widget 'CurrentProductPriceVolumeWidget' args [embed.currentProductPrice] only %}
-                                            {% block priceTable %}{% endblock %}
-                                        {% nowidget %}
-                                            {{ parent() }}
-                                        {% endwidget %}
-                                    {% endblock %}
-                                {% endembed %}
+                                {% if merchantProductView.productOfferReference != null %}
+                                    {% embed molecule('merchant-product-offer-item', 'MerchantProductOfferWidget') with {
+                                        data: {
+                                            checked: data.productView.productOfferReference == merchantProductView.productOfferReference,
+                                            radioGroupName: 'product_offer_reference',
+                                            productOfferReference: merchantProductView.productOfferReference | default,
+                                            merchantName: merchantProductView.merchantName | default,
+                                            merchantUrl: merchantProductView.merchantUrl | default,
+                                            price: merchantProductView.price.price | default(null),
+                                            currencyIsoCode: merchantProductView.price.currency.code | default(null),
+                                            shouldShowRadioButton: data.merchantProductViews | length > 1,
+                                        },
+                                        embed : {
+                                            currentProductPrice: merchantProductView.price,
+                                        }
+                                    } only %}
+                                        {% block price %}
+                                            {% widget 'CurrentProductPriceVolumeWidget' args [embed.currentProductPrice] only %}
+                                                {% block priceTable %}{% endblock %}
+                                            {% nowidget %}
+                                                {{ parent() }}
+                                            {% endwidget %}
+                                        {% endblock %}
+                                    {% endembed %}
+                                {% else %}
+                                    {% if widgetGlobalExists('MerchantProductWidget') %}
+                                        {% embed molecule('merchant-product-item', 'MerchantProductWidget') with {
+                                            data: {
+                                                checked: not data.productView.productOfferReference,
+                                                radioGroupName: 'merchant_reference',
+                                                merchantReference: merchantProductView.merchantReference | default,
+                                                merchantName: merchantProductView.merchantName | default,
+                                                merchantUrl: merchantProductView.merchantUrl | default,
+                                                price: merchantProductView.price.price | default(null),
+                                                currencyIsoCode: merchantProductView.price.currency.code | default(null),
+                                                shouldShowRadioButton: data.merchantProductViews | length > 1,
+                                            },
+                                            embed : {
+                                                currentProductPrice: merchantProductView.price,
+                                            }
+                                        } only %}
+                                            {% block price %}
+                                                {% widget 'CurrentProductPriceVolumeWidget' args [embed.currentProductPrice] only %}
+                                                    {% block priceTable %}{% endblock %}
+                                                {% nowidget %}
+                                                    {{ parent() }}
+                                                {% endwidget %}
+                                            {% endblock %}
+                                        {% endembed %}
+                                    {% endif %}
+                                {% endif %}
                             {% endblock %}
                         {% endfor %}
                     {% endblock %}
