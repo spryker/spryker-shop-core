@@ -360,11 +360,7 @@ class CartController extends AbstractController
      */
     protected function executeAddAjaxAction(Request $request): array
     {
-        $csrfToken = new CsrfToken(
-            static::CSRF_TOKEN_ID,
-            $request->get(static::REQUEST_PARAMETER_TOKEN)
-        );
-
+        $csrfToken = $this->createCsrfToken($request);
         if (!$this->getFactory()->getCsrfTokenManager()->isTokenValid($csrfToken)) {
             return $this->createAjaxErrorResponse(
                 Response::HTTP_BAD_REQUEST,
@@ -419,6 +415,19 @@ class CartController extends AbstractController
             static::KEY_MESSAGES => $this->renderView(static::FLASH_MESSAGE_LIST_TEMPLATE_PATH)->getContent(),
             static::REQUEST_PARAMETER_QUANTITY => $cartQuantity,
         ];
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\Security\Csrf\CsrfToken
+     */
+    protected function createCsrfToken(Request $request): CsrfToken
+    {
+        return new CsrfToken(
+            static::CSRF_TOKEN_ID,
+            $request->get(static::REQUEST_PARAMETER_TOKEN)
+        );
     }
 
     /**
