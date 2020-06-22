@@ -12,7 +12,7 @@
     {% include molecule('ajax-add-to-cart') with {
         class: extraClasses,
         data: {
-            url: path('cart/addAjax', {'sku': data.productAbstract['add_to_cart_sku']}),
+            url: path('cart/add-ajax', {'sku': data.productAbstract['add_to_cart_sku']}),
             csrfToken: csrf_token('add-to-cart-ajax'),
             buttonClasses: data.buttonClasses,
             buttonExtraClasses: data.buttonExtraClasses,
