@@ -43,9 +43,9 @@ class SharedCartWidgetDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addCustomerClient($container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new SharedCartWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }
@@ -57,9 +57,9 @@ class SharedCartWidgetDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addMultiCartClient($container): Container
     {
-        $container[static::CLIENT_MULTI_CART] = function (Container $container) {
+        $container->set(static::CLIENT_MULTI_CART, function (Container $container) {
             return new SharedCartWidgetToMultiCartClientBridge($container->getLocator()->multiCart()->client());
-        };
+        });
 
         return $container;
     }
@@ -71,9 +71,9 @@ class SharedCartWidgetDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addQuoteClient($container): Container
     {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new SharedCartWidgetToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }
@@ -85,9 +85,9 @@ class SharedCartWidgetDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addSharedCartClient($container): Container
     {
-        $container[static::CLIENT_SHARED_CART] = function (Container $container) {
+        $container->set(static::CLIENT_SHARED_CART, function (Container $container) {
             return new SharedCartWidgetToSharedCartClientBridge($container->getLocator()->sharedCart()->client());
-        };
+        });
 
         return $container;
     }

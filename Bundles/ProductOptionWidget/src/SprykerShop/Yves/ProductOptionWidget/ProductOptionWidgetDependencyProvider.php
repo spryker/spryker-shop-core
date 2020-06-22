@@ -34,9 +34,9 @@ class ProductOptionWidgetDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addProductOptionClient(Container $container)
     {
-        $container[self::CLIENT_PRODUCT_OPTION_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_OPTION_STORAGE, function (Container $container) {
             return new ProductOptionWidgetToProductOptionStorageClientBridge($container->getLocator()->productOptionStorage()->client());
-        };
+        });
 
         return $container;
     }

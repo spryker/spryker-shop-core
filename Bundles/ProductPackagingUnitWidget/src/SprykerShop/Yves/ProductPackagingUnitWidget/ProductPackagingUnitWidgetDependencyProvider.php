@@ -43,11 +43,11 @@ class ProductPackagingUnitWidgetDependencyProvider extends AbstractBundleDepende
      */
     protected function addProductMeasurementUnitStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE, function (Container $container) {
             return new ProductPackagingUnitWidgetToProductMeasurementUnitStorageClientBridge(
                 $container->getLocator()->productMeasurementUnitStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -59,11 +59,11 @@ class ProductPackagingUnitWidgetDependencyProvider extends AbstractBundleDepende
      */
     protected function addProductPackagingUnitStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_PACKAGING_UNIT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_PACKAGING_UNIT_STORAGE, function (Container $container) {
             return new ProductPackagingUnitWidgetToProductPackagingUnitStorageClientBridge(
                 $container->getLocator()->productPackagingUnitStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -75,11 +75,11 @@ class ProductPackagingUnitWidgetDependencyProvider extends AbstractBundleDepende
      */
     protected function addProductQuantityStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_QUANTITY_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_QUANTITY_STORAGE, function (Container $container) {
             return new ProductPackagingUnitWidgetToProductQuantityStorageClientBridge(
                 $container->getLocator()->productQuantityStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -91,11 +91,11 @@ class ProductPackagingUnitWidgetDependencyProvider extends AbstractBundleDepende
      */
     protected function addEncodeService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductPackagingUnitWidgetToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service()
             );
-        };
+        });
 
         return $container;
     }

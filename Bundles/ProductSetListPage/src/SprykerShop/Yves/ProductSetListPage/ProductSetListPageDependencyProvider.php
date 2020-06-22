@@ -36,9 +36,9 @@ class ProductSetListPageDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addProductSetClient(Container $container)
     {
-        $container[self::CLIENT_PRODUCT_SET_PAGE_SEARCH] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_SET_PAGE_SEARCH, function (Container $container) {
             return new ProductSetListPageToProductSetPageSearchClientBridge($container->getLocator()->productSetPageSearch()->client());
-        };
+        });
     }
 
     /**
@@ -48,9 +48,9 @@ class ProductSetListPageDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addProductSetListPageWidgetPlugins(Container $container)
     {
-        $container[self::PLUGIN_PRODUCT_SET_LIST_PAGE_WIDGETS] = function () {
+        $container->set(static::PLUGIN_PRODUCT_SET_LIST_PAGE_WIDGETS, function () {
             return $this->getProductSetListPageWidgetPlugins();
-        };
+        });
     }
 
     /**

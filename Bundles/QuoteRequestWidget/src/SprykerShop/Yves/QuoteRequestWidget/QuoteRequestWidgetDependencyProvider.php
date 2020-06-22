@@ -51,9 +51,9 @@ class QuoteRequestWidgetDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addCompanyUserClient(Container $container): Container
     {
-        $container[static::CLIENT_COMPANY_USER] = function (Container $container) {
+        $container->set(static::CLIENT_COMPANY_USER, function (Container $container) {
             return new QuoteRequestWidgetToCompanyUserClientBridge($container->getLocator()->companyUser()->client());
-        };
+        });
 
         return $container;
     }
@@ -65,9 +65,9 @@ class QuoteRequestWidgetDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addQuoteRequestClient(Container $container): Container
     {
-        $container[static::CLIENT_QUOTE_REQUEST] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE_REQUEST, function (Container $container) {
             return new QuoteRequestWidgetToQuoteRequestClientBridge($container->getLocator()->quoteRequest()->client());
-        };
+        });
 
         return $container;
     }
@@ -79,9 +79,9 @@ class QuoteRequestWidgetDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addQuoteClient(Container $container): Container
     {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new QuoteRequestWidgetToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }
@@ -93,9 +93,9 @@ class QuoteRequestWidgetDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addPersistentCartClient(Container $container): Container
     {
-        $container[static::CLIENT_PERSISTENT_CART] = function (Container $container) {
+        $container->set(static::CLIENT_PERSISTENT_CART, function (Container $container) {
             return new QuoteRequestWidgetToPersistentCartClientBridge($container->getLocator()->persistentCart()->client());
-        };
+        });
 
         return $container;
     }
@@ -107,9 +107,9 @@ class QuoteRequestWidgetDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new QuoteRequestWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }
