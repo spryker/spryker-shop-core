@@ -33,4 +33,14 @@ class MerchantProductOfferWidgetToMerchantStorageClientBridge implements Merchan
     {
         return $this->merchantStorageClient->findOne($idMerchant);
     }
+
+    /**
+     * @param string $merchantReference
+     *
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
+     */
+    public function findOneByMerchantReference(string $merchantReference): ?MerchantStorageTransfer
+    {
+        return $this->merchantStorageClient->findOneByMerchantReference($merchantReference);
+    }
 }
