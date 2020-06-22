@@ -29,9 +29,8 @@ export default class CartCounter extends Component {
         if (!quantity) {
             return;
         }
-        const total = Number(this.quantity.textContent) + quantity;
-        this.quantity.textContent = String(total);
-        this.quantity.classList.toggle(this.hiddenQuantityClassName, !total);
+        this.quantity.textContent = String(quantity);
+        this.quantity.classList.toggle(this.hiddenQuantityClassName, !quantity);
     }
 
     protected get hiddenQuantityClassName(): string {
