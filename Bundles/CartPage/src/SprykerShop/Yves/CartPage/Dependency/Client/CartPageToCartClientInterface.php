@@ -82,6 +82,11 @@ interface CartPageToCartClientInterface
     public function getItemCount();
 
     /**
+     * @return int
+     */
+    public function getItemsQuantity(): int;
+
+    /**
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function validateQuote(): QuoteResponseTransfer;
