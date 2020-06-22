@@ -31,6 +31,6 @@ class CartPageToGlossaryStorageClientBridge implements CartPageToGlossaryStorage
      */
     public function translate($id, $localeName, array $parameters = [])
     {
-        return $this->translate($id, $localeName, $parameters);
+        return $this->glossaryStorageClient->translate($id, $localeName, $parameters);
     }
 }
