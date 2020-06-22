@@ -30,11 +30,13 @@ class MerchantProductWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     public function provideDependencies(Container $container): Container
     {
+
         parent::provideDependencies($container);
 
         $container = $this->addMerchantProductStorageClient($container);
         $container = $this->addMerchantStorageClient($container);
         $container = $this->addProductStorageClient($container);
+        $container = $this->addMerchantProductStorageClient($container);
         $container = $this->addPriceProductClient($container);
         $container = $this->addPriceProductStorageClient($container);
 
@@ -65,7 +67,9 @@ class MerchantProductWidgetDependencyProvider extends AbstractBundleDependencyPr
     protected function addMerchantStorageClient(Container $container): Container
     {
         $container->set(static::CLIENT_MERCHANT_STORAGE, function (Container $container) {
-            return new MerchantProductWidgetToMerchantStorageClientBridge($container->getLocator()->merchantStorage()->client());
+            return new MerchantProductWidgetToMerchantStorageClientBridge(
+              $container->getLocator()->merchantStorage()->client()
+            );
         });
 
         return $container;
@@ -84,19 +88,12 @@ class MerchantProductWidgetDependencyProvider extends AbstractBundleDependencyPr
 
         return $container;
     }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
+  
     protected function addPriceProductClient(Container $container): Container
     {
         $container->set(static::CLIENT_PRICE_PRODUCT, function (Container $container) {
             return new MerchantProductWidgetToPriceProductClientBridge(
-                $container->getLocator()
-                    ->priceProduct()
-                    ->client()
+                $container->getLocator()->priceProduct()->client()
             );
         });
 
@@ -112,9 +109,7 @@ class MerchantProductWidgetDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_PRICE_PRODUCT_STORAGE, function (Container $container) {
             return new MerchantProductWidgetToPriceProductStorageClientBridge(
-                $container->getLocator()
-                    ->priceProductStorage()
-                    ->client()
+                $container->getLocator()->priceProductStorage()->client()
             );
         });
 

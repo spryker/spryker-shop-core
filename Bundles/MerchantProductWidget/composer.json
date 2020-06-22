@@ -9,7 +9,6 @@
     "spryker-shop/cart-page-extension": "^1.0.0",
     "spryker/merchant-product-storage": "^0.1.0",
     "spryker/merchant-storage": "^0.1.2",
-    "spryker/product-storage": "^1.25.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*"

@@ -22,6 +22,7 @@ class MerchantProductOfferWidgetDependencyProvider extends AbstractBundleDepende
     public const CLIENT_PRICE_PRODUCT_STORAGE = 'CLIENT_PRICE_PRODUCT_STORAGE';
     public const CLIENT_PRICE_PRODUCT_SERVICE = 'CLIENT_PRICE_PRODUCT_SERVICE';
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+    public const PLUGINS_MERCHANT_PRODUCT_VIEW_COLLECTION_EXPANDER = 'PLUGINS_MERCHANT_PRODUCT_VIEW_COLLECTION_EXPANDER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -37,6 +38,7 @@ class MerchantProductOfferWidgetDependencyProvider extends AbstractBundleDepende
         $container = $this->addPriceProductStorageClient($container);
         $container = $this->addPriceProductClient($container);
         $container = $this->addApplication($container);
+        $container = $this->addMerchantProductViewCollectionExpanderPlugins($container);
 
         return $container;
     }
@@ -111,5 +113,27 @@ class MerchantProductOfferWidgetDependencyProvider extends AbstractBundleDepende
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addMerchantProductViewCollectionExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_PRODUCT_VIEW_COLLECTION_EXPANDER, function (Container $container) {
+            return $this->getMerchantProductViewCollectionExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MerchantProductOfferWidgetExtension\Dependency\Plugin\MerchantProductViewCollectionExpanderPluginInterface[]
+     */
+    protected function getMerchantProductViewCollectionExpanderPlugins(): array
+    {
+        return [];
     }
 }
