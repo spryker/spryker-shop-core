@@ -16,5 +16,5 @@ interface MerchantProductViewCollectionSorterInterface
      *
      * @return array
      */
-    public function sort(MerchantProductViewCollectionTransfer $merchantProductViewCollectionTransfer): array;
+    public function sort(MerchantProductViewCollectionTransfer $merchantProductViewCollectionTransfer): MerchantProductViewCollectionTransfer;
 }

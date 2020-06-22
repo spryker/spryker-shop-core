@@ -16,9 +16,10 @@ class MerchantProductViewCollectionSorter implements MerchantProductViewCollecti
      *
      * @return array
      */
-    public function sort(MerchantProductViewCollectionTransfer $merchantProductViewCollectionTransfer): array
+    public function sort(MerchantProductViewCollectionTransfer $merchantProductViewCollectionTransfer): MerchantProductViewCollectionTransfer
     {
-        $coutElements = count($merchantProductViewCollectionTransfer);
+        $merchantProductViewTransfers = $merchantProductViewCollectionTransfer->getMerchantProductViews();
+        $coutElements = count($merchantProductViewTransfers);
         $iterations = $coutElements - 1;
 
         for ($i = 0; $i < $coutElements; $i++) {
@@ -26,18 +27,18 @@ class MerchantProductViewCollectionSorter implements MerchantProductViewCollecti
 
             for ($j = 0; $j < $iterations; $j++) {
                 $nextKey = $j + 1;
-                if ($merchantProductViewCollectionTransfer[$j]->getPrice() > $merchantProductViewCollectionTransfer[$nextKey]->getPrice()) {
+                if ($merchantProductViewTransfers[$j]->getPrice() > $merchantProductViewTransfers[$nextKey]->getPrice()) {
                     $changes = true;
-                    list($merchantProductViewCollectionTransfer[$j], $merchantProductViewCollectionTransfer[$nextKey]) = [$merchantProductViewCollectionTransfer[$nextKey], $merchantProductViewCollectionTransfer[$j]];
+                    list($merchantProductViewTransfers[$j], $merchantProductViewTransfers[$nextKey]) = [$merchantProductViewTransfers[$nextKey], $merchantProductViewCollectionTransfer[$j]];
                 }
             }
             $iterations--;
 
             if (!$changes) {
-                return $merchantProductViewCollectionTransfer;
+                break;
             }
         }
 
-        return $merchantProductViewCollectionTransfer;
+        return  $merchantProductViewCollectionTransfer->setMerchantProductViews($merchantProductViewTransfers);
     }
 }

@@ -91,9 +91,9 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\MerchantProductViewCollection[]
+     * @return \Generated\Shared\Transfer\MerchantProductViewCollectionTransfer
      */
-    public function getProductOfferCollection(ProductViewTransfer $productViewTransfer, string $localeName): array
+    public function getMerchantProductViewCollection(ProductViewTransfer $productViewTransfer, string $localeName): MerchantProductViewCollectionTransfer
     {
         if (!$productViewTransfer->getIdProductConcrete()) {
             return [];
@@ -102,7 +102,7 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
 
         $productOfferStorageCriteriaTransfer = (new ProductOfferStorageCriteriaTransfer())
             ->fromArray($this->shopContextResolver->resolve()->modifiedToArray(), true);
-        $productOfferStorageCriteriaTransfer->setSku($productViewTransfer->getSku());
+        $productOfferStorageCriteriaTransfer->addProductConcreteSku($productViewTransfer->getSku());
 
         $productOfferStorageCollectionTransfer = $this->merchantProductOfferStorageClient->getProductOffersBySkus($productOfferStorageCriteriaTransfer);
         $productOffersStorageTransfers = $productOfferStorageCollectionTransfer->getProductOffersStorage();
@@ -126,36 +126,37 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
             $merchantProductViewCollectionTransfer->addMerchantProductView($merchantProductViewTransfer);
         }
 
-        $externalMerchantProductOfferTransfers = [];
+        $externalMerchantProductViewCollectionTransfer = new MerchantProductViewCollectionTransfer();
 
         foreach ($this->merchantProductViewCollectionExpanderPlugins as $merchantProductViewCollectionExpanderPlugin) {
-            $externalMerchantProductOfferTransfers = $merchantProductViewCollectionExpanderPlugin->expand(
-                $externalMerchantProductOfferTransfers,
+            $externalMerchantProductViewCollectionTransfer = $merchantProductViewCollectionExpanderPlugin->expand(
+                $externalMerchantProductViewCollectionTransfer,
                 $productViewTransfer
             );
         }
 
         $merchantProductViewCollectionTransfer = $this->mergeMerchantProductTransfers(
             $merchantProductViewCollectionTransfer,
-            $externalMerchantProductOfferTransfers
+            $externalMerchantProductViewCollectionTransfer
         );
 
         return $this->merchantProductSorter->sort($merchantProductViewCollectionTransfer);
     }
 
-    protected function mergeMerchantProductTransfers(array $merchantProductTransfers, array $externalMerchantProductTransfers): array
-    {
-        foreach ($externalMerchantProductTransfers as $externalMerchantProductTransfer) {
-            foreach ($merchantProductTransfers as $key => $merchantProductTransfer) {
-                if ($externalMerchantProductTransfer->getMerchantReference()
-                    && $externalMerchantProductTransfer->getMerchantReference() === $merchantProductTransfer->getMerchantReference()
+    protected function mergeMerchantProductTransfers(
+        MerchantProductViewCollectionTransfer $merchantProductTransfer,
+        MerchantProductViewCollectionTransfer $externalMerchantProductTransfer
+    ): MerchantProductViewCollectionTransfer {
+        foreach ($externalMerchantProductTransfer->getMerchantProductViews() as $externalMerchantProductViewTransfer) {
+            foreach ($merchantProductTransfer->getMerchantProductViews() as $key => $merchantProductViewTransfer) {
+                if ($externalMerchantProductViewTransfer->getMerchantReference() !== $merchantProductViewTransfer->getMerchantReference()
                 ) {
-                    unset($merchantProductTransfers[$key]);
+                    $merchantProductTransfer->addMerchantProductView($externalMerchantProductViewTransfer);
                 }
             }
         }
 
-        return array_merge($merchantProductTransfers, $externalMerchantProductTransfers);
+        return $merchantProductTransfer;
     }
 
     /**

@@ -2,12 +2,12 @@
 
 {% define data = {
     locale: app.locale | slice(0, 2),
-    productOfferCollection: _widget.productOfferCollection,
+    merchantProductViews: _widget.merchantProductViews,
     productView: _widget.productView,
 } %}
 
 {% block template %}
-    {% if data.productOfferCollection %}
+    {% if data.merchantProductViews %}
         {% block content %}
             <div class="box box--dark box--spacingless spacing spacing--inner spacing-y">
                 {% block contentInner %}
@@ -18,7 +18,7 @@
                     {% endblock %}
 
                     {% block productOfferList %}
-                        {% for productOffer in data.productOfferCollection  %}
+                        {% for productOffer in data.merchantProductViews  %}
                             {% block productOffer %}
                                 {% set isSameMerchantOffer = data.productView.productOfferReference == productOffer.productOfferReference %}
 
@@ -31,7 +31,7 @@
                                         merchantUrl: productOffer.merchantStorage.merchantUrl | default,
                                         price: productOffer.price.price | default(null),
                                         currencyIsoCode: productOffer.price.currency.code | default(null),
-                                        shouldShowRadioButton: data.productOfferCollection | length > 1,
+                                        shouldShowRadioButton: merchantProductViews | length > 1,
                                     },
                                     embed : {
                                         currentProductPrice: productOffer.price,

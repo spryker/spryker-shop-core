@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\MerchantProductOfferWidget\Reader;
 
+use Generated\Shared\Transfer\MerchantProductViewCollectionTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 
 interface MerchantProductOfferReaderInterface
@@ -15,7 +16,7 @@ interface MerchantProductOfferReaderInterface
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
+     * @return \Generated\Shared\Transfer\MerchantProductViewCollectionTransfer
      */
-    public function getProductOfferCollection(ProductViewTransfer $productViewTransfer, string $localeName): array;
+    public function getMerchantProductViewCollection(ProductViewTransfer $productViewTransfer, string $localeName): MerchantProductViewCollectionTransfer;
 }

@@ -18,6 +18,8 @@ use SprykerShop\Yves\MerchantProductOfferWidget\Reader\MerchantProductOfferReade
 use SprykerShop\Yves\MerchantProductOfferWidget\Reader\MerchantProductOfferReaderInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Resolver\ShopContextResolver;
 use SprykerShop\Yves\MerchantProductOfferWidget\Resolver\ShopContextResolverInterface;
+use SprykerShop\Yves\MerchantProductOfferWidget\Sorter\MerchantProductViewCollectionSorter;
+use SprykerShop\Yves\MerchantProductOfferWidget\Sorter\MerchantProductViewCollectionSorterInterface;
 
 class MerchantProductOfferWidgetFactory extends AbstractFactory
 {
@@ -31,8 +33,18 @@ class MerchantProductOfferWidgetFactory extends AbstractFactory
             $this->getPriceProductServiceClient(),
             $this->getPriceProductStorageClient(),
             $this->createShopContextResolver(),
-            $this->getMerchantProductViewCollectionExpanderPlugins()
+            $this->createMerchantProductViewMapper(),
+            $this->getMerchantProductViewCollectionExpanderPlugins(),
+            $this->createMerchantProductViewCollectionSorter()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MerchantProductOfferWidget\Sorter\MerchantProductViewCollectionSorterInterface
+     */
+    public function createMerchantProductViewCollectionSorter(): MerchantProductViewCollectionSorterInterface
+    {
+        return new MerchantProductViewCollectionSorter();
     }
 
     /**
