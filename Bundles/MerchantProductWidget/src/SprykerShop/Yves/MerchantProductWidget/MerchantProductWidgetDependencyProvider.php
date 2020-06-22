@@ -13,13 +13,15 @@ use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidg
 use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToMerchantStorageClientBridge;
 use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToPriceProductClientBridge;
 use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToPriceProductStorageClientBridge;
+use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToProductStorageClientBridge;
 
 class MerchantProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CLIENT_MERCHANT_STORAGE = 'merchant storage client';
-    public const CLIENT_PRICE_PRODUCT_STORAGE = 'price product storage client';
-    public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
     public const CLIENT_MERCHANT_PRODUCT_STORAGE = 'CLIENT_MERCHANT_PRODUCT_STORAGE';
+    public const CLIENT_MERCHANT_STORAGE = 'CLIENT_MERCHANT_STORAGE';
+    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    public const CLIENT_PRICE_PRODUCT_STORAGE = 'CLIENT_PRICE_PRODUCT_STORAGE';
+    public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -28,6 +30,12 @@ class MerchantProductWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     public function provideDependencies(Container $container): Container
     {
+
+        parent::provideDependencies($container);
+
+        $container = $this->addMerchantProductStorageClient($container);
+        $container = $this->addMerchantStorageClient($container);
+        $container = $this->addProductStorageClient($container);
         $container = $this->addMerchantProductStorageClient($container);
         $container = $this->addPriceProductClient($container);
         $container = $this->addPriceProductStorageClient($container);
@@ -56,13 +64,36 @@ class MerchantProductWidgetDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Yves\Kernel\Container
      */
+    protected function addMerchantStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_MERCHANT_STORAGE, function (Container $container) {
+            return new MerchantProductWidgetToMerchantStorageClientBridge(
+              $container->getLocator()->merchantStorage()->client()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
+            return new MerchantProductWidgetToProductStorageClientBridge($container->getLocator()->productStorage()->client());
+        });
+
+        return $container;
+    }
+  
     protected function addPriceProductClient(Container $container): Container
     {
         $container->set(static::CLIENT_PRICE_PRODUCT, function (Container $container) {
             return new MerchantProductWidgetToPriceProductClientBridge(
-                $container->getLocator()
-                    ->priceProduct()
-                    ->client()
+                $container->getLocator()->priceProduct()->client()
             );
         });
 
@@ -78,27 +109,7 @@ class MerchantProductWidgetDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_PRICE_PRODUCT_STORAGE, function (Container $container) {
             return new MerchantProductWidgetToPriceProductStorageClientBridge(
-                $container->getLocator()
-                    ->priceProductStorage()
-                    ->client()
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addMerchantStorageClient(Container $container): Container
-    {
-        $container->set(static::CLIENT_MERCHANT_STORAGE, function (Container $container) {
-            return new MerchantProductWidgetToMerchantStorageClientBridge(
-                $container->getLocator()
-                    ->merchantStorage()
-                    ->client()
+                $container->getLocator()->priceProductStorage()->client()
             );
         });
 

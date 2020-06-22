@@ -9,7 +9,7 @@
     <transfer name="MerchantProductViewCollection">
         <property name="MerchantProductViews" type="MerchantProductView[]" singular="MerchantProductView"/>
     </transfer>
-
+  
     <transfer name="MerchantProductView">
         <property name="merchantReference" type="string"/>
         <property name="merchantName" type="string"/>

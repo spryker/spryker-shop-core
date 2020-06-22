@@ -11,7 +11,11 @@
 {% block body %}
     <div class="grid grid--justify">
         <span class="spacing-right col col--sm-9">
-            {% widget 'ProductOfferSoldByMerchantWidget' args [data.orderItem] only %}{% endwidget %}
+            {% if widgetGlobalExists('ProductOfferSoldByMerchantWidget') %}
+                {% widget 'ProductOfferSoldByMerchantWidget' args [data.orderItem] only %}{% endwidget %}
+            {% elseif widgetGlobalExists('ProductSoldByMerchantWidget') %}
+                {% widget 'ProductSoldByMerchantWidget' args [data.orderItem] only %}{% endwidget %}
+            {% endif %}
         </span>
         <span class="spacing-right col col--sm-3 text-right">
             {% if data.orderItem.state is not empty %}
