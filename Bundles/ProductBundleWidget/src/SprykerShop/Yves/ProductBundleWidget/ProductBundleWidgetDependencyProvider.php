@@ -34,9 +34,9 @@ class ProductBundleWidgetDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addProductBundleClient(Container $container): Container
     {
-        $container[self::CLIENT_PRODUCT_BUNDLE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_BUNDLE, function (Container $container) {
             return new ProductBundleWidgetToProductBundleClientBridge($container->getLocator()->productBundle()->client());
-        };
+        });
 
         return $container;
     }

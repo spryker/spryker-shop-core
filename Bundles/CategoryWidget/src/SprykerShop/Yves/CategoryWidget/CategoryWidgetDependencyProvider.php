@@ -34,9 +34,9 @@ class CategoryWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCategoryStorageClient(Container $container)
     {
-        $container[self::CLIENT_CATEGORY_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_CATEGORY_STORAGE, function (Container $container) {
             return new CategoryWidgetToCategoryStorageClientBridge($container->getLocator()->categoryStorage()->client());
-        };
+        });
 
         return $container;
     }

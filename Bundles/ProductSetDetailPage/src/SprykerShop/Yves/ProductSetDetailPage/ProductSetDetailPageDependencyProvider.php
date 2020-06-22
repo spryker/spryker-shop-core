@@ -39,9 +39,9 @@ class ProductSetDetailPageDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addProductStorageClient(Container $container)
     {
-        $container[self::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductSetDetailPageToProductStorageClientBridge($container->getLocator()->productStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -53,9 +53,9 @@ class ProductSetDetailPageDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addProductSetStorageClient(Container $container)
     {
-        $container[self::CLIENT_PRODUCT_SET_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_SET_STORAGE, function (Container $container) {
             return new ProductSetDetailPageToProductSetStorageClientBridge($container->getLocator()->productSetStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -67,9 +67,9 @@ class ProductSetDetailPageDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addProductSetDetailPageWidgetPlugins(Container $container)
     {
-        $container[self::PLUGIN_PRODUCT_SET_DETAIL_PAGE_WIDGETS] = function () {
+        $container->set(static::PLUGIN_PRODUCT_SET_DETAIL_PAGE_WIDGETS, function () {
             return $this->getProductSetDetailPageWidgetPlugins();
-        };
+        });
 
         return $container;
     }

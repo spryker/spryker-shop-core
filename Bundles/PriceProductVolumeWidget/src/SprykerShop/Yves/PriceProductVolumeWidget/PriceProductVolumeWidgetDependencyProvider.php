@@ -49,11 +49,11 @@ class PriceProductVolumeWidgetDependencyProvider extends AbstractBundleDependenc
      */
     protected function addProductStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new PriceProductVolumeWidgetToPriceProductStorageClientBridge(
                 $container->getLocator()->priceProductStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -65,11 +65,11 @@ class PriceProductVolumeWidgetDependencyProvider extends AbstractBundleDependenc
      */
     protected function addPriceClient(Container $container): Container
     {
-        $container[static::CLIENT_PRICE] = function (Container $container) {
+        $container->set(static::CLIENT_PRICE, function (Container $container) {
             return new PriceProductVolumeWidgetToPriceClientBridge(
                 $container->getLocator()->price()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -81,11 +81,11 @@ class PriceProductVolumeWidgetDependencyProvider extends AbstractBundleDependenc
      */
     protected function addCurrencyClient(Container $container): Container
     {
-        $container[static::CLIENT_CURRENCY] = function (Container $container) {
+        $container->set(static::CLIENT_CURRENCY, function (Container $container) {
             return new PriceProductVolumeWidgetToCurrencyClientBridge(
                 $container->getLocator()->currency()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -97,11 +97,11 @@ class PriceProductVolumeWidgetDependencyProvider extends AbstractBundleDependenc
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new PriceProductVolumeWidgetToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service()
             );
-        };
+        });
 
         return $container;
     }

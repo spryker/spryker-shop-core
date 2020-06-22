@@ -37,9 +37,9 @@ class ProductLabelWidgetDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addProductLabelStorageClient(Container $container): Container
     {
-        $container[self::CLIENT_PRODUCT_LABEL_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_LABEL_STORAGE, function (Container $container) {
             return new ProductLabelWidgetToProductLabelStorageClientBridge($container->getLocator()->productLabelStorage()->client());
-        };
+        });
 
         return $container;
     }
