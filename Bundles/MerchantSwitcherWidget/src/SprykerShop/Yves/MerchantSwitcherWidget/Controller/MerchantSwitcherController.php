@@ -25,6 +25,15 @@ class MerchantSwitcherController extends AbstractController
      */
     public function switchMerchantAction(Request $request): Response
     {
+        $form = $this->getFactory()->getMerchantSwitcherSelectorForm()->handleRequest($request);
+
+//        var_dump($form->isSubmitted());var_dump($request->request);
+//
+//        die;
+//
+//        $csrfToken = $request->query->get('csrf-token');
+
+
         $merchantReference = $request->query->get('merchant-reference');
 
         $this->getFactory()->createMerchantSwitcher()->switchMerchantInQuote($merchantReference);

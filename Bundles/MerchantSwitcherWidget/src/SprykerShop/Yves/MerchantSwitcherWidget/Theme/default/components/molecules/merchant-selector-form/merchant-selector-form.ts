@@ -48,6 +48,8 @@ export default class MerchantSelectorForm extends Component {
         }
 
         this.ajaxProvider.queryParams.set('merchant-reference', this.select.value);
+        this.ajaxProvider.queryParams.set('merchant_switcher_selector_form[_token]', this.csrfToken);
+        this.ajaxProvider.queryParams.set('merchant_switcher_selector_form[_token]', this.csrfToken);
 
         try {
             await this.ajaxProvider.fetch();
@@ -67,5 +69,9 @@ export default class MerchantSelectorForm extends Component {
 
     protected get newMerchantNameTemplate(): string {
         return this.getAttribute('new-merchant-name-template');
+    }
+
+    protected get csrfToken(): string {
+        return this.getAttribute('csrf-token');
     }
 }
