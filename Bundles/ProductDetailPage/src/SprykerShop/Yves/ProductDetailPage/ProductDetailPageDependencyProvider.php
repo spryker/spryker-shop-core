@@ -39,9 +39,9 @@ class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductStorageClient(Container $container)
     {
-        $container[self::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductDetailPageToProductStorageClientBridge($container->getLocator()->productStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -53,9 +53,9 @@ class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductDetailPageWidgetPlugins(Container $container)
     {
-        $container[self::PLUGIN_PRODUCT_DETAIL_PAGE_WIDGETS] = function () {
+        $container->set(static::PLUGIN_PRODUCT_DETAIL_PAGE_WIDGETS, function () {
             return $this->getProductDetailPageWidgetPlugins();
-        };
+        });
 
         return $container;
     }
@@ -77,11 +77,11 @@ class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addApplication(Container $container): Container
     {
-        $container[static::PLUGIN_APPLICATION] = function () {
+        $container->set(static::PLUGIN_APPLICATION, function () {
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
-        };
+        });
 
         return $container;
     }

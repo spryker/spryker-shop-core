@@ -46,9 +46,9 @@ class CmsPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsTwigContentRendererPlugin(Container $container): Container
     {
-        $container[static::CMS_TWIG_CONTENT_RENDERER_PLUGIN] = function (Container $container) {
+        $container->set(static::CMS_TWIG_CONTENT_RENDERER_PLUGIN, function (Container $container) {
             return new CmsTwigContentRendererPlugin();
-        };
+        });
 
         return $container;
     }
@@ -60,9 +60,9 @@ class CmsPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsClient(Container $container)
     {
-        $container[static::CLIENT_CMS] = function (Container $container) {
+        $container->set(static::CLIENT_CMS, function (Container $container) {
             return new CmsPageToCmsClientBridge($container->getLocator()->cms()->client());
-        };
+        });
 
         return $container;
     }
@@ -74,9 +74,9 @@ class CmsPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsStorageClient(Container $container)
     {
-        $container[static::CLIENT_CMS_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_CMS_STORAGE, function (Container $container) {
             return new CmsPageToCmsStorageClientBridge($container->getLocator()->cmsStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -88,9 +88,9 @@ class CmsPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerClient(Container $container)
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new CmsPageToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }
@@ -102,9 +102,9 @@ class CmsPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStore(Container $container)
     {
-        $container[static::STORE] = function (Container $container) {
+        $container->set(static::STORE, function (Container $container) {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }

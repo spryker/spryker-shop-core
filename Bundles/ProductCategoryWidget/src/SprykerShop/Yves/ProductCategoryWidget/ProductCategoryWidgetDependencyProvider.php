@@ -34,9 +34,9 @@ class ProductCategoryWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addProductCategoryStorageClient(Container $container)
     {
-        $container[self::CLIENT_PRODUCT_CATEGORY_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_CATEGORY_STORAGE, function (Container $container) {
             return new ProductCategoryWidgetToProductCategoryStorageClientBridge($container->getLocator()->productCategoryStorage()->client());
-        };
+        });
 
         return $container;
     }

@@ -34,9 +34,9 @@ class DiscountPromotionWidgetDependencyProvider extends AbstractBundleDependency
      */
     protected function addProductStorageClient(Container $container)
     {
-        $container[self::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new DiscountPromotionWidgetToProductStorageClientBridge($container->getLocator()->productStorage()->client());
-        };
+        });
 
         return $container;
     }
