@@ -1,0 +1,67 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/LanguageSwitcherWidget/src/SprykerShop/Yves/LanguageSwitcherWidget/LanguageSwitcherWidgetDependencyProvider.php",
+            "snippet": "            return new LanguageSwitcherWidgetToUrlStorageClientBridge($container->getLocator()->urlStorage()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\UrlStorageTransfer> variable ",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/LanguageSwitcherWidget/src/SprykerShop/Yves/LanguageSwitcherWidget/Widget/LanguageSwitcherWidget.php",
+            "snippet": "        if ($currentUrlStorage !== null && $currentUrlStorage->getLocaleUrls()->count() !== 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 160,
+            "line_to": 160,
+            "type": "PossiblyFalseArgument",
+            "message": "Argument 3 of substr cannot be false, possibly false value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/LanguageSwitcherWidget/src/SprykerShop/Yves/LanguageSwitcherWidget/Widget/LanguageSwitcherWidget.php",
+            "snippet": "        return substr($locale, 0, strpos($locale, '_'));",
+            "selected_text": "strpos($locale, '_')",
+            "error_level": 3,
+            "shortcode": 104
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 17,
+            "line_to": 17,
+            "type": "DeprecatedInterface",
+            "message": "SprykerShop\\Yves\\ShopUi\\Dependency\\Plugin\\LanguageSwitcherWidget\\LanguageSwitcherWidgetPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/LanguageSwitcherWidget/src/SprykerShop/Yves/LanguageSwitcherWidget/Plugin/ShopUi/LanguageSwitcherWidgetPlugin.php",
+            "snippet": "class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements LanguageSwitcherWidgetPluginInterface",
+            "selected_text": "LanguageSwitcherWidgetPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 17,
+            "line_to": 17,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Yves\\Kernel\\Widget\\AbstractWidgetPlugin is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/LanguageSwitcherWidget/src/SprykerShop/Yves/LanguageSwitcherWidget/Plugin/ShopUi/LanguageSwitcherWidgetPlugin.php",
+            "snippet": "class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements LanguageSwitcherWidgetPluginInterface",
+            "selected_text": "AbstractWidgetPlugin",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}

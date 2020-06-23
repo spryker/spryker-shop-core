@@ -1,0 +1,91 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, array<array-key, string>>' for SprykerShop\\Yves\\ProductSetDetailPage\\OptionResetUrlGenerator\\OptionResetUrlGenerator::getProductOptionResetUrls is incorrect, got 'non-empty-array<int|null, array<array-key, string>>'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductSetDetailPage/src/SprykerShop/Yves/ProductSetDetailPage/OptionResetUrlGenerator/OptionResetUrlGenerator.php",
+            "snippet": "     * @return string[][]",
+            "selected_text": "string[][]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'non-empty-array<int|null, array<array-key, string>>' does not match the declared return type 'array<array-key, array<array-key, string>>' for SprykerShop\\Yves\\ProductSetDetailPage\\OptionResetUrlGenerator\\OptionResetUrlGenerator::getProductOptionResetUrls",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductSetDetailPage/src/SprykerShop/Yves/ProductSetDetailPage/OptionResetUrlGenerator/OptionResetUrlGenerator.php",
+            "snippet": "        return [$idProductAbstract => $productOptionResetUrls];",
+            "selected_text": "[$idProductAbstract => $productOptionResetUrls]",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getSuperAttributes on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductSetDetailPage/src/SprykerShop/Yves/ProductSetDetailPage/OptionResetUrlGenerator/OptionResetUrlGenerator.php",
+            "snippet": "            ->getSuperAttributes();",
+            "selected_text": "getSuperAttributes",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of SprykerShop\\Yves\\ProductSetDetailPage\\OptionResetUrlGenerator\\OptionResetUrlGenerator::getOptionResetUrl cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductSetDetailPage/src/SprykerShop/Yves/ProductSetDetailPage/OptionResetUrlGenerator/OptionResetUrlGenerator.php",
+            "snippet": "            $productOptionResetUrls[$optionName] = $this->getOptionResetUrl($queryParamsArray, $idProductAbstract, $optionName);",
+            "selected_text": "$idProductAbstract",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 83,
+            "line_to": 83,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of parse_str cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductSetDetailPage/src/SprykerShop/Yves/ProductSetDetailPage/OptionResetUrlGenerator/OptionResetUrlGenerator.php",
+            "snippet": "        parse_str($request->getQueryString(), $result);",
+            "selected_text": "$request->getQueryString()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductSetDetailPage/src/SprykerShop/Yves/ProductSetDetailPage/ProductSetDetailPageDependencyProvider.php",
+            "snippet": "            return new ProductSetDetailPageToProductStorageClientBridge($container->getLocator()->productStorage()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductSetDetailPage/src/SprykerShop/Yves/ProductSetDetailPage/ProductSetDetailPageDependencyProvider.php",
+            "snippet": "            return new ProductSetDetailPageToProductSetStorageClientBridge($container->getLocator()->productSetStorage()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

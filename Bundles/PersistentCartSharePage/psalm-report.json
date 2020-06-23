@@ -1,0 +1,127 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\PersistentCartSharePage\\Controller\\CartController::addErrorMessage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/PersistentCartSharePage/src/SprykerShop/Yves/PersistentCartSharePage/Controller/CartController.php",
+            "snippet": "                $this->addErrorMessage($quoteErrorTransfer->getMessage());",
+            "selected_text": "$quoteErrorTransfer->getMessage()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getItems on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/PersistentCartSharePage/src/SprykerShop/Yves/PersistentCartSharePage/Controller/CartController.php",
+            "snippet": "        $cartItems = $quoteTransfer->getItems() ?? [];",
+            "selected_text": "getItems",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/PersistentCartSharePage/src/SprykerShop/Yves/PersistentCartSharePage/PersistentCartSharePageDependencyProvider.php",
+            "snippet": "                $container->getLocator()->persistentCartShare()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getResourceType on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/PersistentCartSharePage/src/SprykerShop/Yves/PersistentCartSharePage/Plugin/ResourceSharePage/CartPreviewRouterStrategyPlugin.php",
+            "snippet": "        if ($resourceShareTransfer->getResourceType() !== static::RESOURCE_TYPE_QUOTE) {",
+            "selected_text": "getResourceType",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 62,
+            "line_to": 62,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getShareOption on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/PersistentCartSharePage/src/SprykerShop/Yves/PersistentCartSharePage/Plugin/ResourceSharePage/CartPreviewRouterStrategyPlugin.php",
+            "snippet": "        return $resourceShareDataTransfer->getShareOption() === static::SHARE_OPTION_KEY_PREVIEW;",
+            "selected_text": "getShareOption",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 80,
+            "line_to": 80,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getUuid on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/PersistentCartSharePage/src/SprykerShop/Yves/PersistentCartSharePage/Plugin/ResourceSharePage/CartPreviewRouterStrategyPlugin.php",
+            "snippet": "                static::PARAM_RESOURCE_SHARE_UUID => $resourceShareRequestTransfer->getResourceShare()->getUuid(),",
+            "selected_text": "getUuid",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/PersistentCartSharePage/src/SprykerShop/Yves/PersistentCartSharePage/PersistentCartSharePageFactory.php",
+            "snippet": "     * @return \\Spryker\\Yves\\Kernel\\Application",
+            "selected_text": "\\Spryker\\Yves\\Kernel\\Application",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 27,
+            "line_to": 27,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/PersistentCartSharePage/src/SprykerShop/Yves/PersistentCartSharePage/PersistentCartSharePageFactory.php",
+            "snippet": "    public function getApplication(): Application",
+            "selected_text": "Application",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Yves\\Application\\Plugin\\Provider\\ControllerProviderInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/PersistentCartSharePage/src/SprykerShop/Yves/PersistentCartSharePage/Plugin/Provider/PersistentCartSharePageControllerProvider.php",
+            "snippet": "class PersistentCartSharePageControllerProvider extends AbstractYvesControllerProvider",
+            "selected_text": "PersistentCartSharePageControllerProvider",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "DeprecatedClass",
+            "message": "SprykerShop\\Yves\\ShopApplication\\Plugin\\Provider\\AbstractYvesControllerProvider is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/PersistentCartSharePage/src/SprykerShop/Yves/PersistentCartSharePage/Plugin/Provider/PersistentCartSharePageControllerProvider.php",
+            "snippet": "class PersistentCartSharePageControllerProvider extends AbstractYvesControllerProvider",
+            "selected_text": "AbstractYvesControllerProvider",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}

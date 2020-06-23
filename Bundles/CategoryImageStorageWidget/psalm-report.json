@@ -1,0 +1,42 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CategoryImageStorageWidget/src/SprykerShop/Yves/CategoryImageStorageWidget/CategoryImageStorageWidgetDependencyProvider.php",
+            "snippet": "                $container->getLocator()->categoryImageStorage()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 103,
+            "line_to": 103,
+            "type": "MismatchingDocblockReturnType",
+            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\CategoryImageStorageTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CategoryImageStorageWidget/src/SprykerShop/Yves/CategoryImageStorageWidget/Widget/CategoryImageStorageWidget.php",
+            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\CategoryImageStorageTransfer[]",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\CategoryImageStorageTransfer[]",
+            "error_level": 4,
+            "shortcode": 142
+        },
+        {
+            "severity": "info",
+            "line_from": 127,
+            "line_to": 127,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $imageSetImages has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\CategoryImageStorageTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CategoryImageStorageWidget/src/SprykerShop/Yves/CategoryImageStorageWidget/Widget/CategoryImageStorageWidget.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\CategoryImageStorageTransfer[] $imageSetImages",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\CategoryImageStorageTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        }
+    ],
+    "deprecation": []
+}
