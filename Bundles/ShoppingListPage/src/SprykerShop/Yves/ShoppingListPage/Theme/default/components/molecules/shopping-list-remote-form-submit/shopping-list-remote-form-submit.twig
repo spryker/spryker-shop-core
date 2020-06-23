@@ -21,6 +21,5 @@
 } %}
 
 {% block body %}
-        <button type="button" class="{{ data.buttonClass }} {{ config.jsName }}__submit" target-form-id="{{ attributes['form-name'] }}">{{ data.label }}</button>
-        {% block additionalContent %}{% endblock %}
+    <button type="button" class="{{ data.buttonClass }} {{ config.jsName }}__submit" target-form-id="{{ attributes['form-name'] }}">{{ data.label }}</button>
 {% endblock %}

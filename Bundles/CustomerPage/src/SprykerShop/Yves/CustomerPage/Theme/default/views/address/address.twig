@@ -25,7 +25,7 @@
                     {% set customerDeleteFrom = data.customerDeleteFromCloner.getForm.createView %}
 
                     {{ form_start(customerDeleteFrom, {'action': path('customer/address/delete', {'id': address.idCustomerAddress}) }) }}
-                        <button type="submit" class="link" data-init-single-click>{{ "customer.profile.address.delete" | trans }}</button>
+                        <button class="link" data-init-single-click>{{ "customer.profile.address.delete" | trans }}</button>
                     {{ form_end(customerDeleteFrom) }}
                 </li>
             </ul>

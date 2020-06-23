@@ -5,7 +5,7 @@
     cartName: _view.cart.name | default,
     cartIdQuote: _view.cart.idQuote | default,
     cartShareDetails: _view.cart.shareDetails | default,
-    multiCartDeleteForm: _view.multiCartDeleteForm
+    multiCartDeleteForm: _view.multiCartDeleteForm,
 } %}
 
 {% block breadcrumbs %}
@@ -19,8 +19,8 @@
                 url: url('multi-cart'),
             },{
                 label: 'multi_cart_page.cart_delete_confirmation.warning' | trans
-            }]
-        }
+            }],
+        },
     } only %}
 {% endblock %}
 
@@ -38,8 +38,8 @@
                 {% include atom('icon') with {
                     modifiers: ['small'],
                     data: {
-                        name: 'chevron-left'
-                    }
+                        name: 'chevron-left',
+                    },
                 } only %}
                 {{ "general.back.button" | trans }}
             </a>

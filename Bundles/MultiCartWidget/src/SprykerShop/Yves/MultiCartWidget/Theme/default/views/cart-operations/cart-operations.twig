@@ -4,15 +4,15 @@
     cart: _widget.cart,
     isMultiCartAllowed: _widget.isMultiCartAllowed,
     isDeleteCartAllowed: _widget.isDeleteCartAllowed,
-    multiCartClearForm: _widget.multiCartClearForm
-    multiCartDuplicateForm: _widget.multiCartDuplicateForm
-    multiCartSetDefaultForm: _widget.multiCartSetDefaultForm
+    multiCartClearForm: _widget.multiCartClearForm,
+    multiCartDuplicateForm: _widget.multiCartDuplicateForm,
+    multiCartSetDefaultForm: _widget.multiCartSetDefaultForm,
 } %}
 
 {% block actions %}
     <li class="menu__item">
         {{ form_start(data.multiCartClearForm, {'action': path('multi-cart/clear', {'idQuote': _widget.cart.idQuote}) }) }}
-            <button type="submit" class="button clear">
+            <button class="button clear">
                 {{ "multi_cart_widget.cart.action.clear" | trans }}
             </button>
         {{ form_end(data.multiCartClearForm) }}
@@ -37,7 +37,7 @@
                 {% if data.cart.isDefault == false %}
                 <li class="menu__item">
                     {{ form_start(data.multiCartSetDefaultForm, {'action': path('multi-cart/set-default', {'idQuote': data.cart.idQuote}) }) }}
-                    <button type="submit" class="button set-default">
+                    <button class="button set-default">
                         {{ 'multi_cart_widget.cart.action.set_default' | trans }}
                     </button>
                     {{ form_end(data.multiCartSetDefaultForm) }}
@@ -45,14 +45,14 @@
                 {% endif %}
                 <li class="menu__item">
                     {{ form_start(data.multiCartDuplicateForm, {'action': path('multi-cart/duplicate', {'idQuote': data.cart.idQuote}) }) }}
-                    <button type="submit" class="button duplicate">
+                    <button class="button duplicate">
                         {{ "multi_cart_widget.cart.action.duplicate" | trans }}
                     </button>
                     {{ form_end(data.multiCartDuplicateForm) }}
                 </li>
                 <li class="menu__item">
                     {{ form_start(data.multiCartClearForm, {'action': path('multi-cart/clear', {'idQuote': data.cart.idQuote}) }) }}
-                        <button type="submit" class="button clear">
+                        <button class="button clear">
                             {{ "multi_cart_widget.cart.action.clear" | trans }}
                         </button>
                     {{ form_end(data.multiCartClearForm) }}

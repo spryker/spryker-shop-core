@@ -3,7 +3,7 @@
 {% define data = {
     item: _widget.item,
     wishlistName: _widget.wishlistName,
-    products: _widget.products
+    products: _widget.products,
 } %}
 
 {% set wishlistItemSku = data.item.sku %}
@@ -47,7 +47,7 @@
                             <div><small>{{ item.sku }}</small></div>
                             {% for attribute in item.superAttributesDefinition %}
                                 {% if item.attributes[attribute] is defined %}
-                                    {{ ('product.attribute.'~attribute) | trans }}: {{ item.attributes[attribute] }} <br>
+                                    {{ ('product.attribute.' ~ attribute) | trans }}: {{ item.attributes[attribute] }} <br>
                                 {% endif %}
                             {% endfor %}
                             <span class="text-alert">{{ 'product_alternative_widget.alternative_for' | trans({name: data.item.name}) }}</span>
@@ -57,8 +57,8 @@
                                 {% include molecule('money-price') with {
                                     data: {
                                         amount: item.price,
-                                        originalAmount: item.prices.ORIGINAL is not defined or item.prices.ORIGINAL is empty ? null : item.prices.ORIGINAL
-                                    }
+                                        originalAmount: item.prices.ORIGINAL is not defined or item.prices.ORIGINAL is empty ? null : item.prices.ORIGINAL,
+                                    },
                                 } only %}
                             {% else %}
                                 N/A
@@ -66,10 +66,10 @@
                         </td>
                         <td>
                             <form method="POST" action="{{ path('wishlist/add-item', {sku: item.sku, 'product-id': item.idProductConcrete, 'wishlist-name': data.wishlistName}) }}">
-                                <button type="submit" class="button button--successd" {{ disableAddToWishlist ? 'disabled' : '' }}>
+                                <button class="button button--success" {{ disableAddToWishlist ? 'disabled' : '' }}>
                                     {{ 'product_alternative_widget.add_to_wishlist' | trans}}
                                 </button>
-                                <input id="wishlist_add_item_form__token" name="wishlist_add_item_form[_token]" class="input input--expand" type="hidden" value="{{ csrf_token('wishlist_add_item_form') }}">
+                                <input id="wishlist_add_item_form__token" name="wishlist_add_item_form[_token]" type="hidden" value="{{ csrf_token('wishlist_add_item_form') }}">
                             </form>
                         </td>
                     </tr>

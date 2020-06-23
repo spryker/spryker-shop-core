@@ -3,7 +3,7 @@
 {% define data = {
     wishlists: _view.wishlistCollection.wishlists,
     wishlistForm: _view.wishlistForm,
-    wishlistDeleteFormCloner: _view.wishlistDeleteFormCloner
+    wishlistDeleteFormCloner: _view.wishlistDeleteFormCloner,
 } %}
 
 {% block customerContent %}
@@ -26,7 +26,7 @@
             {% include molecule('wishlist-overview-table', 'WishlistPage') with {
                 data: {
                     wishlists: data.wishlists,
-                    wishlistDeleteFormCloner: data.wishlistDeleteFormCloner
+                    wishlistDeleteFormCloner: data.wishlistDeleteFormCloner,
                 }
             } only %}
         {% endif %}

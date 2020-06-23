@@ -102,7 +102,7 @@
                                         <li class="menu__item">
                                             {% set multiCartDuplicateForm = data.multiCartDuplicateFormCloner.getForm.createView %}
                                             {{ form_start(multiCartDuplicateForm, {'action': path('multi-cart/duplicate', {'idQuote': quote.idQuote}) }) }}
-                                                <button type="submit" class="link">{{ 'page.multi_cart.shopping_cart.list.link.duplicate' | trans }}</button>
+                                                <button class="link">{{ 'page.multi_cart.shopping_cart.list.link.duplicate' | trans }}</button>
                                             {{ form_end(multiCartDuplicateForm) }}
                                         </li>
                                     {% endif %}

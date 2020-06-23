@@ -10,24 +10,27 @@
     label: null,
     itemProp: null,
     withChevron: true,
-    isFormElement: false,
     form: null,
     formName: '',
     tokenFieldName: '',
 } %}
 
-{% set isLink = data.url is not empty and not data.isFormElement %}
+{% set isFormElement = data.form is not empty or data.formName is not empty %}
+{% set isLink = data.url is not empty and not isFormElement %}
 
 {% block body %}
-    {%- if isLink -%}<a href="{{data.url}}">{%- endif -%}
+    {%- if isLink -%}<a href="{{ data.url }}">{%- endif -%}
     {%- if data.itemProp -%}<span itemprop="{{-data.itemProp-}}">{%- endif -%}
-    {%- if data.isFormElement -%}
+    {%- if isFormElement -%}
         <form class="{{ config.name }}__form" name="{{ data.formName }}" method="post" action="{{ data.url }}">
             <input name="{{ data.tokenFieldName }}" type="hidden" value="{{ csrf_token(data.formName) }}">
-            <button type="submit" class="link">
+            <button class="link">
     {%- endif -%}
             {{-data.label-}}
-    {%- if data.isFormElement -%}</button></form>{%- endif -%}
+    {%- if isFormElement -%}
+            </button>
+        </form>
+    {%- endif -%}
     {%- if data.itemProp -%}</span>{%- endif -%}
     {%- if isLink -%}</a>{%- endif -%}
     
