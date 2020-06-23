@@ -2,22 +2,32 @@
 
 {% define config = {
     name: 'breadcrumb-step',
-    tag: 'li'
+    tag: 'li',
 } %}
 
 {% define data = {
     url: null,
     label: null,
     itemProp: null,
-    withChevron: true
+    withChevron: true,
+    isFormElement: false,
+    form: null,
+    formName: '',
+    tokenFieldName: '',
 } %}
 
-{% set isLink = data.url is not empty %}
+{% set isLink = data.url is not empty and not data.isFormElement %}
 
 {% block body %}
     {%- if isLink -%}<a href="{{data.url}}">{%- endif -%}
     {%- if data.itemProp -%}<span itemprop="{{-data.itemProp-}}">{%- endif -%}
-    {{-data.label-}}
+    {%- if data.isFormElement -%}
+        <form class="{{ config.name }}__form" name="{{ data.formName }}" method="post" action="{{ data.url }}">
+            <input name="{{ data.tokenFieldName }}" type="hidden" value="{{ csrf_token(data.formName) }}">
+            <button type="submit" class="link">
+    {%- endif -%}
+            {{-data.label-}}
+    {%- if data.isFormElement -%}</button></form>{%- endif -%}
     {%- if data.itemProp -%}</span>{%- endif -%}
     {%- if isLink -%}</a>{%- endif -%}
     
@@ -26,8 +36,8 @@
             modifiers: ['small'],
             class: config.name ~ '__separator',
             data: {
-                name: 'angle-double-right'
-            }
+                name: 'angle-double-right',
+            },
         } only %}
     {% endif %}
 {% endblock %}
