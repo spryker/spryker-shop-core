@@ -1,0 +1,27 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'shopping-list-remote-form-submit',
+    tag: 'shopping-list-remote-form-submit',
+} %}
+
+{% define data = {
+    buttonClass: 'button button--alert',
+    removeItemForm: required,
+    idShoppingList: required,
+    idShoppingListItem: required,
+} %}
+
+{% define attributes = {
+    'form-holder-class-name': 'js-page-layout-main',
+    'form-name': 'removeItemForm_' ~ data.idShoppingListItem,
+    'form-action': path('shopping-list/remove-item', {'idShoppingList': data.idShoppingList, 'idShoppingListItem': data.idShoppingListItem }),
+    'form-token': csrf_token('removeItemForm_' ~ data.idShoppingListItem),
+} %}
+
+{% block body %}
+    {{ form_start(data.removeItemForm, {'action': attributes['form-action'], 'name': attributes['form-name']}) }}
+        <button type="button" class="{{ data.buttonClass }} {{ config.jsName }}__submit" target-form-id="{{ attributes['form-name'] }}">{{ 'customer.account.shopping_list.remove' | trans }}</button>
+        {% block additionalContent %}{% endblock %}
+    {{ form_end(data.removeItemForm) }}
+{% endblock %}

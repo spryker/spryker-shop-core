@@ -86,9 +86,13 @@
 {% block buttonCol %}
     <td class="{{ config.name }}__cell text-center">
         {% block buttonColInner %}
-            {{ form_start(data.removeItemForm, {'action': path('shopping-list/remove-item', {'idShoppingList': data.idShoppingList, 'idShoppingListItem': idShoppingListItem }), 'name': 'removeItemForm_' ~ idShoppingListItem}) }}
-                <input type="submit"  class="button button--alert" value="{{- 'customer.account.shopping_list.remove' | trans -}}"/>
-            {{ form_end(data.removeItemForm) }}
+            {% include molecule('shopping-list-remote-form-submit', 'ShoppingListPage') with {
+                data: {
+                    removeItemForm: data.removeItemForm,
+                    idShoppingList: data.idShoppingList,
+                    idShoppingListItem: idShoppingListItem,
+                },
+            } only %}
         {% endblock %}
     </td>
 {% endblock %}
