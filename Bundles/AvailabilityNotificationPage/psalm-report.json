@@ -1,0 +1,79 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationPage/src/SprykerShop/Yves/AvailabilityNotificationPage/AvailabilityNotificationPageDependencyProvider.php",
+            "snippet": "            return new AvailabilityNotificationPageToAvailabilityNotificationClientBridge($container->getLocator()->availabilityNotification()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationPage/src/SprykerShop/Yves/AvailabilityNotificationPage/AvailabilityNotificationPageDependencyProvider.php",
+            "snippet": "            return new AvailabilityNotificationPageToCustomerClientBridge($container->getLocator()->customer()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\AvailabilityNotificationPage\\Controller\\AvailabilityNotificationPageController::removeAvailabilityNotificationSubscriptionFromCustomer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationPage/src/SprykerShop/Yves/AvailabilityNotificationPage/Controller/AvailabilityNotificationPageController.php",
+            "snippet": "        $this->removeAvailabilityNotificationSubscriptionFromCustomer($availabilityNotificationSubscriptionResponseTransfer->getAvailabilityNotificationSubscription()->getSku());",
+            "selected_text": "$availabilityNotificationSubscriptionResponseTransfer->getAvailabilityNotificationSubscription()->getSku()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getSku on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationPage/src/SprykerShop/Yves/AvailabilityNotificationPage/Controller/AvailabilityNotificationPageController.php",
+            "snippet": "        $this->removeAvailabilityNotificationSubscriptionFromCustomer($availabilityNotificationSubscriptionResponseTransfer->getAvailabilityNotificationSubscription()->getSku());",
+            "selected_text": "getSku",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Yves\\Application\\Plugin\\Provider\\ControllerProviderInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationPage/src/SprykerShop/Yves/AvailabilityNotificationPage/Plugin/Provider/AvailabilityNotificationPageControllerProvider.php",
+            "snippet": "class AvailabilityNotificationPageControllerProvider extends AbstractYvesControllerProvider",
+            "selected_text": "AvailabilityNotificationPageControllerProvider",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "DeprecatedClass",
+            "message": "SprykerShop\\Yves\\ShopApplication\\Plugin\\Provider\\AbstractYvesControllerProvider is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationPage/src/SprykerShop/Yves/AvailabilityNotificationPage/Plugin/Provider/AvailabilityNotificationPageControllerProvider.php",
+            "snippet": "class AvailabilityNotificationPageControllerProvider extends AbstractYvesControllerProvider",
+            "selected_text": "AbstractYvesControllerProvider",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}
