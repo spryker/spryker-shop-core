@@ -32,8 +32,11 @@ class MerchantProductViewCollectionExpanderPlugin extends AbstractPlugin impleme
         MerchantProductViewCollectionTransfer $merchantProductViewCollectionTransfer,
         ProductViewTransfer $productViewTransfer
     ): MerchantProductViewCollectionTransfer {
-        return $merchantProductViewCollectionTransfer->addMerchantProductView(
-            $this->getFactory()->createMerchantProductReader()->getMerchantProductView($productViewTransfer, $this->getLocale())
-        );
+        $merchantProductViewTransfer = $this->getFactory()->createMerchantProductReader()->findMerchantProductView($productViewTransfer, $this->getLocale());
+        if ($merchantProductViewTransfer) {
+            $merchantProductViewCollectionTransfer->addMerchantProductView($merchantProductViewTransfer);
+        }
+
+        return $merchantProductViewCollectionTransfer;
     }
 }

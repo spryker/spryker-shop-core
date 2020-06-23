@@ -69,18 +69,18 @@ class MerchantProductReader implements MerchantProductReaderInterface
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\MerchantProductViewTransfer
+     * @return \Generated\Shared\Transfer\MerchantProductViewTransfer|null
      */
-    public function getMerchantProductView(ProductViewTransfer $productViewTransfer, string $localeName): MerchantProductViewTransfer
+    public function findMerchantProductView(ProductViewTransfer $productViewTransfer, string $localeName): ?MerchantProductViewTransfer
     {
         if (!$productViewTransfer->getIdProductAbstract()) {
-            return new MerchantProductViewTransfer();
+            return null;
         }
 
         $merchantProductStorageTransfer = $this->merchantProductStorageClient->findOne($productViewTransfer->getIdProductAbstract());
 
         if (!$merchantProductStorageTransfer) {
-            return new MerchantProductViewTransfer();
+            return null;
         }
 
         $priceProductTransfers = $this->getPriceProductTransfers($productViewTransfer);
@@ -99,7 +99,7 @@ class MerchantProductReader implements MerchantProductReaderInterface
         $merchantStorageTransfer = $this->merchantStorageClient->findOne($merchantProductStorageTransfer->getIdMerchant());
 
         if (!$merchantStorageTransfer) {
-            return new MerchantProductViewTransfer();
+            return null;
         }
         $merchantProductViewTransfer->setMerchantUrl($this->getResolvedUrl($merchantStorageTransfer, $localeName));
         $merchantProductViewTransfer->setMerchantName($merchantStorageTransfer->getName());

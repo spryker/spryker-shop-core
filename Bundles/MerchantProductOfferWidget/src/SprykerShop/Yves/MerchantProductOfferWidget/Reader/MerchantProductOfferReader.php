@@ -157,8 +157,8 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
             $mergeItemFlag = true;
             foreach ($merchantProductViewCollectionTransfer->getMerchantProductViews() as $merchantProductViewTransfer) {
                 if (
-                    !$externalMerchantProductViewTransfer->getMerchantReference() ||
-                    $externalMerchantProductViewTransfer->getMerchantReference() !== $merchantProductViewTransfer->getMerchantReference()
+                    $externalMerchantProductViewTransfer->getMerchantReference() &&
+                    $externalMerchantProductViewTransfer->getMerchantReference() === $merchantProductViewTransfer->getMerchantReference()
                 ) {
                     $mergeItemFlag = false;
                 }
