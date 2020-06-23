@@ -1,0 +1,78 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentFileWidget/src/SprykerShop/Yves/ContentFileWidget/ContentFileWidgetDependencyProvider.php",
+            "snippet": "            return new ContentFileWidgetToContentFileClientBridge($container->getLocator()->contentFile()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentFileWidget/src/SprykerShop/Yves/ContentFileWidget/ContentFileWidgetDependencyProvider.php",
+            "snippet": "            return new ContentFileWidgetToFileManagerStorageClientBridge($container->getLocator()->fileManagerStorage()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $iconNames using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentFileWidget/src/SprykerShop/Yves/ContentFileWidget/Expander/IconNameFileStorageDataExpander.php",
+            "snippet": "        if (isset($iconNames[$fileStorageDataTransfer->getType()]) && $iconNames[$fileStorageDataTransfer->getType()] !== static::KEY_DEFAULT_ICON_NAME) {",
+            "selected_text": "$iconNames",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $iconNames using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentFileWidget/src/SprykerShop/Yves/ContentFileWidget/Expander/IconNameFileStorageDataExpander.php",
+            "snippet": "            return $fileStorageDataTransfer->setIconName($iconNames[$fileStorageDataTransfer->getType()]);",
+            "selected_text": "$iconNames",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of explode cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentFileWidget/src/SprykerShop/Yves/ContentFileWidget/Expander/IconNameFileStorageDataExpander.php",
+            "snippet": "        $fileType = explode('/', $fileStorageDataTransfer->getType())[0];",
+            "selected_text": "$fileStorageDataTransfer->getType()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\ContentFileWidget\\Expander\\IconNameFileStorageDataExpander::getFileIconNameByExtension cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentFileWidget/src/SprykerShop/Yves/ContentFileWidget/Expander/IconNameFileStorageDataExpander.php",
+            "snippet": "            $fileStorageDataTransfer->requireFileName()->getFileName()",
+            "selected_text": "$fileStorageDataTransfer->requireFileName()->getFileName()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}
