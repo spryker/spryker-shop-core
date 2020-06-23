@@ -8,8 +8,9 @@
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Shared\Customer\Code\Messages;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
+use SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -18,6 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RegisterController extends AbstractCustomerController
 {
+    protected const MESSAGE_CUSTOMER_CONFIRMED = 'customer.registration.confirmed';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -55,9 +58,9 @@ class RegisterController extends AbstractCustomerController
             $customerResponseTransfer = $this->registerCustomer($registerForm->getData());
 
             if ($customerResponseTransfer->getIsSuccess()) {
-                $this->addSuccessMessage(Messages::CUSTOMER_AUTHORIZATION_SUCCESS);
+                $this->addSuccessMessage($customerResponseTransfer->getSuccessMessage());
 
-                return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_OVERVIEW);
+                return $this->redirectResponseInternal($customerResponseTransfer->getSuccessRedirectRoute());
             }
 
             $this->processResponseErrors($customerResponseTransfer);
@@ -90,5 +93,34 @@ class RegisterController extends AbstractCustomerController
             ->registerCustomer($customerTransfer);
 
         return $customerResponseTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function confirmAction(Request $request): RedirectResponse
+    {
+        $response = $this->executeConfirmAction($request);
+
+        return $response;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeConfirmAction(Request $request): RedirectResponse
+    {
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer->setRegistrationKey($request->request->get('token'));
+
+        $this->getClient()->confirmRegistration($customerTransfer);
+
+        $this->addSuccessMessage(static::MESSAGE_CUSTOMER_CONFIRMED);
+
+        return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_LOGIN);
     }
 }

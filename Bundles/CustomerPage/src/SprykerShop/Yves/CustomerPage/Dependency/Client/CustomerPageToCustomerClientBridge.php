@@ -205,4 +205,12 @@ class CustomerPageToCustomerClientBridge implements CustomerPageToCustomerClient
     {
         return $this->customerClient->getCustomerByAccessToken($accessToken);
     }
+
+    /**
+     * @return bool
+     */
+    public function isDoubleOptInEnabled(): bool
+    {
+        return $this->customerClient->isDoubleOptInEnabled();
+    }
 }

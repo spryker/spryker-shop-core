@@ -9,12 +9,16 @@ namespace SprykerShop\Yves\CustomerPage\Plugin;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin;
 
 /**
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
  */
 class AuthenticationHandler extends AbstractPlugin
 {
+    protected const MESSAGE_CUSTOMER_REGISTRATION_SUCCESS = 'customer.registration.success';
+    protected const MESSAGE_CUSTOMER_REGISTRATION_EMAIL_CONFIRMATION = 'customer.registration.email_confirmation';
+
     /**
      * @var \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreRegistrationCustomerTransferExpanderPluginInterface[]
      */
@@ -41,6 +45,17 @@ class AuthenticationHandler extends AbstractPlugin
             ->registerCustomer($customerTransfer);
 
         if ($customerResponseTransfer->getIsSuccess()) {
+            $isDoubleOptInEnabled = $this->getFactory()->getCustomerClient()->isDoubleOptInEnabled();
+            if ($isDoubleOptInEnabled) {
+                $customerResponseTransfer->setSuccessMessage(static::MESSAGE_CUSTOMER_REGISTRATION_EMAIL_CONFIRMATION);
+                $customerResponseTransfer->setSuccessRedirectRoute(CustomerPageRouteProviderPlugin::ROUTE_LOGIN);
+
+                return $customerResponseTransfer;
+            }
+
+            $customerResponseTransfer->setSuccessMessage(static::MESSAGE_CUSTOMER_REGISTRATION_SUCCESS);
+            $customerResponseTransfer->setSuccessRedirectRoute(CustomerPageRouteProviderPlugin::ROUTE_LOGIN);
+
             $this->loginAfterSuccessfulRegistration($customerResponseTransfer->getCustomerTransfer());
         }
 
