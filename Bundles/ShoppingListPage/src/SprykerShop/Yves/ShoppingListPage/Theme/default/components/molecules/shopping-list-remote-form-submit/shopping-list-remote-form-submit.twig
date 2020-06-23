@@ -6,8 +6,8 @@
 } %}
 
 {% define data = {
+    label: required,
     buttonClass: 'button button--alert',
-    removeItemForm: required,
     idShoppingList: required,
     idShoppingListItem: required,
 } %}
@@ -16,12 +16,11 @@
     'form-holder-class-name': 'js-page-layout-main',
     'form-name': 'removeItemForm_' ~ data.idShoppingListItem,
     'form-action': path('shopping-list/remove-item', {'idShoppingList': data.idShoppingList, 'idShoppingListItem': data.idShoppingListItem }),
-    'form-token': csrf_token('removeItemForm_' ~ data.idShoppingListItem),
+    'form-token': csrf_token('shopping_list_remove_item_form'),
+    'field-name': 'shopping_list_remove_item_form[_token]',
 } %}
 
 {% block body %}
-    {{ form_start(data.removeItemForm, {'action': attributes['form-action'], 'name': attributes['form-name']}) }}
-        <button type="button" class="{{ data.buttonClass }} {{ config.jsName }}__submit" target-form-id="{{ attributes['form-name'] }}">{{ 'customer.account.shopping_list.remove' | trans }}</button>
+        <button type="button" class="{{ data.buttonClass }} {{ config.jsName }}__submit" target-form-id="{{ attributes['form-name'] }}">{{ data.label }}</button>
         {% block additionalContent %}{% endblock %}
-    {{ form_end(data.removeItemForm) }}
 {% endblock %}

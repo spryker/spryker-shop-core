@@ -34,7 +34,7 @@ export default class ShoppingListRemoteFormSubmit extends Component {
         const container = document.createElement('div');
         const formTemplate = `
             <form id="${this.formName}" name="${this.formName}" method="post" action="${this.formAction}">
-                <input id="shopping_list_remove_item_form__token[${this.formName}]" name="shopping_list_remove_item_form[_token]" class="input input--expand" type="hidden" placeholder="" value="${this.formToken}">
+                <input id="shopping_list_remove_item_form__token[${this.formName}]" name="${this.fieldName}" class="input input--expand" type="hidden" placeholder="" value="${this.formToken}">
             </form>
         `;
         container.innerHTML = formTemplate;
@@ -55,5 +55,9 @@ export default class ShoppingListRemoteFormSubmit extends Component {
 
     protected get formToken(): string {
         return this.getAttribute('form-token');
+    }
+
+    protected get fieldName(): string {
+        return this.getAttribute('field-name');
     }
 }
