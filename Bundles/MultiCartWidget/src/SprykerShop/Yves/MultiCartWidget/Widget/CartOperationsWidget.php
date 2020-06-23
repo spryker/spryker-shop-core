@@ -25,7 +25,8 @@ class CartOperationsWidget extends AbstractWidget
             ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed())
             ->addParameter('isDeleteCartAllowed', $this->isDeleteCartAllowed())
             ->addParameter('multiCartClearForm', $this->getMultiCartClearFormView())
-            ->addParameter('multiCartDuplicateForm', $this->getMultiCartDuplicateFormView());
+            ->addParameter('multiCartDuplicateForm', $this->getMultiCartDuplicateFormView())
+            ->addParameter('multiCartSetDefaultForm', $this->getMultiCartSetDefaultFormView());
 
         /** @deprecated Use global widgets instead. */
         $this->addWidgets($this->getFactory()->getViewExtendWidgetPlugins());
@@ -84,5 +85,13 @@ class CartOperationsWidget extends AbstractWidget
     protected function getMultiCartDuplicateFormView(): FormView
     {
         return $this->getFactory()->getMultiCartDuplicateForm()->createView();
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormView
+     */
+    protected function getMultiCartSetDefaultFormView(): FormView
+    {
+        return $this->getFactory()->getMultiCartSetDefaultForm()->createView();
     }
 }

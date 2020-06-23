@@ -13,6 +13,7 @@ use SprykerShop\Yves\MultiCartWidget\Dependency\Client\MultiCartWidgetToMultiCar
 use SprykerShop\Yves\MultiCartWidget\Dependency\Client\MultiCartWidgetToQuoteClientInterface;
 use SprykerShop\Yves\MultiCartWidget\Form\MultiCartClearForm;
 use SprykerShop\Yves\MultiCartWidget\Form\MultiCartDuplicateForm;
+use SprykerShop\Yves\MultiCartWidget\Form\MultiCartSetDefaultForm;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -64,5 +65,13 @@ class MultiCartWidgetFactory extends AbstractFactory
     public function getMultiCartDuplicateForm(): FormInterface
     {
         return $this->getFormFactory()->create(MultiCartDuplicateForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getMultiCartSetDefaultForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(MultiCartSetDefaultForm::class);
     }
 }

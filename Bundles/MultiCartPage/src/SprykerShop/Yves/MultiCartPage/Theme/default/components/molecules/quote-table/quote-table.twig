@@ -12,6 +12,7 @@
         duplicate: false,
     },
     isQuoteDeletable: required,
+    multiCartSetDefaultFormCloner: required,
     multiCartDuplicateFormCloner: required,
 } %}
 
@@ -52,9 +53,10 @@
                             </strong>
                         </a>
                         {% else %}
-                        <a href="{{ url('multi-cart/set-default', {idQuote: quote.idQuote}) }}">
-                            {{ quote.name }}
-                        </a>
+                            {% set multiCartSetDefaultFormCloner = data.multiCartSetDefaultFormCloner.getForm.createView %}
+                            {{ form_start(multiCartSetDefaultFormCloner, {'action': path('multi-cart/set-default', {'idQuote': quote.idQuote}) }) }}
+                                <button type="submit" class="link">{{ quote.name }}</button>
+                            {{ form_end(multiCartSetDefaultFormCloner) }}
                         {% endif %}
                     </td>
                     {% widget 'CartListPermissionGroupWidget' args [quote, isQuoteDeletable] use view('multi-cart-permission-show', 'SharedCartWidget') only %}{% endwidget %}
@@ -99,7 +101,6 @@
                                     {% if data.actions.duplicate %}
                                         <li class="menu__item">
                                             {% set multiCartDuplicateForm = data.multiCartDuplicateFormCloner.getForm.createView %}
-
                                             {{ form_start(multiCartDuplicateForm, {'action': path('multi-cart/duplicate', {'idQuote': quote.idQuote}) }) }}
                                                 <button type="submit" class="link">{{ 'page.multi_cart.shopping_cart.list.link.duplicate' | trans }}</button>
                                             {{ form_end(multiCartDuplicateForm) }}

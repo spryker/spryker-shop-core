@@ -6,7 +6,8 @@
 
     title: 'page.multi_cart.shopping_cart.list.title' | trans,
     activePage: 'multiCart',
-    multiCartDuplicateFormCloner: _view.multiCartDuplicateFormCloner
+    multiCartDuplicateFormCloner: _view.multiCartDuplicateFormCloner,
+    multiCartSetDefaultFormCloner: _view.multiCartSetDefaultFormCloner
 } %}
 
 
@@ -26,6 +27,7 @@
                         duplicate: true
                     },
                     isQuoteDeletable: data.isQuoteDeletable,
+                    multiCartSetDefaultFormCloner: data.multiCartSetDefaultFormCloner,
                     multiCartDuplicateFormCloner: data.multiCartDuplicateFormCloner
                 }
             } only %}

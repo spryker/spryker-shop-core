@@ -28,9 +28,10 @@
                 <strong>{{ data.cart.name }}</strong>
             </a>
             {% else %}
-            <a href="{{ url('multi-cart/set-default', {idQuote: data.cart.idQuote}) }}">
-                <strong>{{ data.cart.name }}</strong>
-            </a>
+            <form method="POST" action="{{ path('multi-cart/set-default', {idQuote: data.cart.idQuote}) }}">
+                <button type="submit" class="link"> <strong>{{ data.cart.name }}</strong></button>
+                <input id="multi_cart_set_default_form__token" name="multi_cart_set_default_form[_token]" type="hidden" value="{{ csrf_token('multi_cart_set_default_form') }}">
+            </form>
             {% endif %}
 
             {% if data.cart.isDefault %}

@@ -137,11 +137,20 @@ class MultiCartController extends AbstractController
 
     /**
      * @param int $idQuote
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function setDefaultAction(int $idQuote)
+    public function setDefaultAction(int $idQuote, Request $request)
     {
+        $multiCartSetDefaultForm = $this->getFactory()->getMultiCartSetDefaultForm()->handleRequest($request);
+
+        if (!$multiCartSetDefaultForm->isSubmitted() || !$multiCartSetDefaultForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+        }
+
         $quoteTransfer = $this->findQuoteOrFail($idQuote);
 
         $this->getFactory()
@@ -271,6 +280,7 @@ class MultiCartController extends AbstractController
             'quoteCollection' => $quoteCollectionTransfer->getQuotes(),
             'isQuoteDeletable' => $this->getFactory()->getMultiCartClient()->isQuoteDeletable(),
             'multiCartDuplicateFormCloner' => $this->getFactory()->getFormCloner($this->getFactory()->getMultiCartDuplicateForm()),
+            'multiCartSetDefaultFormCloner' => $this->getFactory()->getFormCloner($this->getFactory()->getMultiCartSetDefaultForm()),
         ];
     }
 
