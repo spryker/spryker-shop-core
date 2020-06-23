@@ -58,7 +58,7 @@
     </transfer>
 
     <transfer name="ProductOfferStorageCriteria">
-        <property name="sku" type="string"/>
+        <property name="productConcreteSkus" type="string[]" singular="productConcreteSku"/>
     </transfer>
 
     <transfer name="ShopContext">

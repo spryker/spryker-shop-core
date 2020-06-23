@@ -41,9 +41,9 @@ class MerchantProductOfferWidgetToMerchantProductOfferStorageClientBridge implem
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
-    public function getProductOfferStorageCollection(
+    public function getProductOffersBySkus(
         ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
     ): ProductOfferStorageCollectionTransfer {
-        return $this->merchantProductOfferStorageClient->getProductOfferStorageCollection($productOfferStorageCriteriaTransfer);
+        return $this->merchantProductOfferStorageClient->getProductOffersBySkus($productOfferStorageCriteriaTransfer);
     }
 }

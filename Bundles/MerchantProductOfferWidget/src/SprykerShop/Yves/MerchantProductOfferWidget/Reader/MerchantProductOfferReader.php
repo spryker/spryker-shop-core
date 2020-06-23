@@ -74,9 +74,9 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
 
         $productOfferStorageCriteriaTransfer = (new ProductOfferStorageCriteriaTransfer())
             ->fromArray($this->shopContextResolver->resolve()->modifiedToArray(), true);
-        $productOfferStorageCriteriaTransfer->setSku($productViewTransfer->getSku());
+        $productOfferStorageCriteriaTransfer->addProductConcreteSku($productViewTransfer->getSku());
 
-        $productOfferStorageCollection = $this->merchantProductOfferStorageClient->getProductOfferStorageCollection($productOfferStorageCriteriaTransfer);
+        $productOfferStorageCollection = $this->merchantProductOfferStorageClient->getProductOffersBySkus($productOfferStorageCriteriaTransfer);
         $productOffersStorageTransfers = $productOfferStorageCollection->getProductOffersStorage();
 
         $priceProductTransfers = $this->getPriceProductTransfers($productViewTransfer);
