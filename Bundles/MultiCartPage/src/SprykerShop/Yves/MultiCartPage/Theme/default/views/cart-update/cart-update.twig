@@ -21,8 +21,10 @@
                 },
                 {
                     label: data.cart.name,
-                    url: data.cart.isDefault ? url('cart') : url('multi-cart/set-default', {idQuote: data.cart.idQuote}),
-                }
+                    url: data.cart.isDefault ? url('cart') : url('multi-cart/set-default', { idQuote: data.cart.idQuote }),
+                    isFormElement: true,
+                    formName: '',
+                },
             ]
         }
     } only %}
