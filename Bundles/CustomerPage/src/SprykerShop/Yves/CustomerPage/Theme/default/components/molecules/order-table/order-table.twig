@@ -47,6 +47,7 @@
                     <th>{{ 'customer.order.number_of_items' | trans }}</th>
                 {% endif %}
                 <th>{{ 'customer.order.total' | trans }}</th>
+                <th>{{ 'customer.order.items_state' | trans }}</th>
                 <th>{{ 'customer.table.actions' | trans }}</th>
             </tr>
         </thead>
@@ -71,6 +72,18 @@
                         <td>{{ order.items.count }}</td>
                     {% endif %}
                     <td>{{ order.totals.grandTotal | default(0) | money(true, order.currencyIsoCode) }}</td>
+                    <td>
+                        {% for status, label in order.itemStateDisplayNames %}
+                            {% block state %}
+                                {% include molecule('status') with {
+                                    data: {
+                                        label: label | trans,
+                                        status: status,
+                                    },
+                                } only %}
+                            {% endblock %}
+                        {% endfor %}
+                    </td>
                     <td>
                         {% block actions %}
                             <ul class="menu menu--inline">
