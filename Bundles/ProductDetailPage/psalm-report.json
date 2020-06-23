@@ -1,0 +1,91 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 101,
+            "line_to": 101,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\ProductDetailPage\\Dependency\\Client\\ProductDetailPageToProductStorageClientInterface::isProductAbstractRestricted cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductDetailPage/src/SprykerShop/Yves/ProductDetailPage/Controller/ProductController.php",
+            "snippet": "            ->isProductAbstractRestricted($productViewTransfer->getIdProductAbstract());",
+            "selected_text": "$productViewTransfer->getIdProductAbstract()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 123,
+            "line_to": 123,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\ProductDetailPage\\Dependency\\Client\\ProductDetailPageToProductStorageClientInterface::isProductConcreteRestricted cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductDetailPage/src/SprykerShop/Yves/ProductDetailPage/Controller/ProductController.php",
+            "snippet": "            ->isProductConcreteRestricted($productViewTransfer->getIdProductConcrete());",
+            "selected_text": "$productViewTransfer->getIdProductConcrete()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 133,
+            "line_to": 133,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for SprykerShop\\Yves\\ProductDetailPage\\Controller\\ProductController::getProductUrl is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductDetailPage/src/SprykerShop/Yves/ProductDetailPage/Controller/ProductController.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 138,
+            "line_to": 138,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for SprykerShop\\Yves\\ProductDetailPage\\Controller\\ProductController::getProductUrl is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductDetailPage/src/SprykerShop/Yves/ProductDetailPage/Controller/ProductController.php",
+            "snippet": "            return $productViewTransfer->getUrl();",
+            "selected_text": "$productViewTransfer->getUrl()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 147,
+            "line_to": 147,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductDetailPage/src/SprykerShop/Yves/ProductDetailPage/Controller/ProductController.php",
+            "snippet": "            $productViewTransfer->getUrl(),",
+            "selected_text": "$productViewTransfer->getUrl()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductDetailPage/src/SprykerShop/Yves/ProductDetailPage/ProductDetailPageDependencyProvider.php",
+            "snippet": "            return new ProductDetailPageToProductStorageClientBridge($container->getLocator()->productStorage()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductDetailPage/src/SprykerShop/Yves/ProductDetailPage/Resolver/ShopContextResolver.php",
+            "snippet": "        return $this->application[static::SERVICE_SHOP_CONTEXT] ?? new ShopContextTransfer();",
+            "selected_text": "$this->application",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

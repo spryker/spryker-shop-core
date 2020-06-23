@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CmsContentWidgetProductSetConnector/src/SprykerShop/Yves/CmsContentWidgetProductSetConnector/CmsContentWidgetProductSetConnectorDependencyProvider.php",
+            "snippet": "            return new CmsContentWidgetProductSetConnectorToProductSetStorageClientBridge($container->getLocator()->productSetStorage()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 80,
+            "line_to": 80,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CmsContentWidgetProductSetConnector/src/SprykerShop/Yves/CmsContentWidgetProductSetConnector/CmsContentWidgetProductSetConnectorDependencyProvider.php",
+            "snippet": "            return new CmsContentWidgetProductSetConnectorToProductStorageClientBridge($container->getLocator()->productStorage()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

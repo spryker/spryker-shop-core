@@ -1,0 +1,91 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "InternalMethod",
+            "message": "The method Twig\\Environment::getFunction has been marked as internal",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Plugin/Twig/FunctionTwigPlugin.php",
+            "snippet": "                return $twig->getFunction($name) !== false;",
+            "selected_text": "getFunction",
+            "error_level": 4,
+            "shortcode": 175
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/ShopUiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->twig()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "InternalMethod",
+            "message": "The method Twig\\ExpressionParser::parseExpression has been marked as internal",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Twig/TokenParser/ShopUiDefineTwigTokenParser.php",
+            "snippet": "        $value = $parser->getExpressionParser()->parseExpression();",
+            "selected_text": "parseExpression",
+            "error_level": 4,
+            "shortcode": 175
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Plugin/Provider/ShopUiTwigServiceProvider.php",
+            "snippet": "        $app['twig'] = $app->share(",
+            "selected_text": "$app",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Plugin/Provider/ShopUiTwigServiceProvider.php",
+            "snippet": "        $app['twig'] = $app->share(",
+            "selected_text": "share",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "DeprecatedClass",
+            "message": "Class Twig_Function is marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Plugin/Twig/FunctionTwigPlugin.php",
+            "snippet": "                return $twig->getFunction($name) !== false;",
+            "selected_text": "$twig->getFunction($name)",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 14,
+            "line_to": 14,
+            "type": "DeprecatedInterface",
+            "message": "Twig_NodeInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Twig/Node/ShopUiDefineTwigNode.php",
+            "snippet": "class ShopUiDefineTwigNode extends Node",
+            "selected_text": "ShopUiDefineTwigNode",
+            "error_level": 2,
+            "shortcode": 152
+        }
+    ]
+}

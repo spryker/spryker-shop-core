@@ -1,0 +1,175 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CartCodeWidget/src/SprykerShop/Yves/CartCodeWidget/CartCodeWidgetDependencyProvider.php",
+            "snippet": "            return new CartCodeWidgetToCartCodeClientBridge($container->getLocator()->cartCode()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CartCodeWidget/src/SprykerShop/Yves/CartCodeWidget/CartCodeWidgetDependencyProvider.php",
+            "snippet": "            return new CartCodeWidgetToQuoteClientBridge($container->getLocator()->quote()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CartCodeWidget/src/SprykerShop/Yves/CartCodeWidget/CartCodeWidgetDependencyProvider.php",
+            "snippet": "            return new CartCodeWidgetToZedRequestClientBridge($container->getLocator()->zedRequest()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\CartCodeWidget\\Controller\\CodeController::redirectResponseExternal cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CartCodeWidget/src/SprykerShop/Yves/CartCodeWidget/Controller/CodeController.php",
+            "snippet": "            return $this->redirectResponseExternal($request->headers->get('referer'));",
+            "selected_text": "$request->headers->get('referer')",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 67,
+            "line_to": 67,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\CartCodeWidget\\Controller\\CodeController::redirectResponseExternal cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CartCodeWidget/src/SprykerShop/Yves/CartCodeWidget/Controller/CodeController.php",
+            "snippet": "            return $this->redirectResponseExternal($request->headers->get('referer'));",
+            "selected_text": "$request->headers->get('referer')",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 104,
+            "line_to": 104,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\CartCodeWidget\\Dependency\\Client\\CartCodeWidgetToQuoteClientInterface::setQuote cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CartCodeWidget/src/SprykerShop/Yves/CartCodeWidget/Controller/CodeController.php",
+            "snippet": "        $this->getFactory()->getQuoteClient()->setQuote($cartCodeResponseTransfer->getQuote());",
+            "selected_text": "$cartCodeResponseTransfer->getQuote()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 111,
+            "line_to": 111,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\CartCodeWidget\\Controller\\CodeController::redirectResponseExternal cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CartCodeWidget/src/SprykerShop/Yves/CartCodeWidget/Controller/CodeController.php",
+            "snippet": "        return $this->redirectResponseExternal($request->headers->get('referer'));",
+            "selected_text": "$request->headers->get('referer')",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 172,
+            "line_to": 172,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\CartCodeWidget\\Controller\\CodeController::addSuccessMessage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CartCodeWidget/src/SprykerShop/Yves/CartCodeWidget/Controller/CodeController.php",
+            "snippet": "                $this->addSuccessMessage($messageTransfer->getValue());",
+            "selected_text": "$messageTransfer->getValue()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 176,
+            "line_to": 176,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\CartCodeWidget\\Controller\\CodeController::addInfoMessage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CartCodeWidget/src/SprykerShop/Yves/CartCodeWidget/Controller/CodeController.php",
+            "snippet": "                $this->addInfoMessage($messageTransfer->getValue());",
+            "selected_text": "$messageTransfer->getValue()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Yves\\Kernel\\Controller\\AbstractController::redirectResponseExternal has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CartCodeWidget/src/SprykerShop/Yves/CartCodeWidget/Controller/CodeController.php",
+            "snippet": "            return $this->redirectResponseExternal($request->headers->get('referer'));",
+            "selected_text": "redirectResponseExternal",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 67,
+            "line_to": 67,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Yves\\Kernel\\Controller\\AbstractController::redirectResponseExternal has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CartCodeWidget/src/SprykerShop/Yves/CartCodeWidget/Controller/CodeController.php",
+            "snippet": "            return $this->redirectResponseExternal($request->headers->get('referer'));",
+            "selected_text": "redirectResponseExternal",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 111,
+            "line_to": 111,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Yves\\Kernel\\Controller\\AbstractController::redirectResponseExternal has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CartCodeWidget/src/SprykerShop/Yves/CartCodeWidget/Controller/CodeController.php",
+            "snippet": "        return $this->redirectResponseExternal($request->headers->get('referer'));",
+            "selected_text": "redirectResponseExternal",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Yves\\Application\\Plugin\\Provider\\ControllerProviderInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CartCodeWidget/src/SprykerShop/Yves/CartCodeWidget/Plugin/Provider/CartCodeWidgetControllerProvider.php",
+            "snippet": "class CartCodeWidgetControllerProvider extends AbstractYvesControllerProvider",
+            "selected_text": "CartCodeWidgetControllerProvider",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "DeprecatedClass",
+            "message": "SprykerShop\\Yves\\ShopApplication\\Plugin\\Provider\\AbstractYvesControllerProvider is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CartCodeWidget/src/SprykerShop/Yves/CartCodeWidget/Plugin/Provider/CartCodeWidgetControllerProvider.php",
+            "snippet": "class CartCodeWidgetControllerProvider extends AbstractYvesControllerProvider",
+            "selected_text": "AbstractYvesControllerProvider",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}

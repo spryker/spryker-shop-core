@@ -1,0 +1,55 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductReplacementForWidget/src/SprykerShop/Yves/ProductReplacementForWidget/ProductReplacementForWidgetDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productAlternativeStorage()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductReplacementForWidget/src/SprykerShop/Yves/ProductReplacementForWidget/ProductReplacementForWidgetDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productStorage()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 19,
+            "line_to": 19,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Yves\\Kernel\\Dependency\\Plugin\\WidgetPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductReplacementForWidget/src/SprykerShop/Yves/ProductReplacementForWidget/Plugin/ProductDetailPage/ProductReplacementForWidgetPlugin.php",
+            "snippet": "class ProductReplacementForWidgetPlugin extends AbstractWidgetPlugin implements ProductReplacementForWidgetPluginInterface",
+            "selected_text": "ProductReplacementForWidgetPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 19,
+            "line_to": 19,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Yves\\Kernel\\Widget\\AbstractWidgetPlugin is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductReplacementForWidget/src/SprykerShop/Yves/ProductReplacementForWidget/Plugin/ProductDetailPage/ProductReplacementForWidgetPlugin.php",
+            "snippet": "class ProductReplacementForWidgetPlugin extends AbstractWidgetPlugin implements ProductReplacementForWidgetPluginInterface",
+            "selected_text": "AbstractWidgetPlugin",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}

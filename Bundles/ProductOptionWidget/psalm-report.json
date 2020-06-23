@@ -1,0 +1,224 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, int>' for SprykerShop\\Yves\\ProductOptionWidget\\Mapper\\ProductAbstractOptionStorageMapper::getSelectedProductOptionIds is incorrect, got 'list<int|mixed|null>'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductOptionWidget/src/SprykerShop/Yves/ProductOptionWidget/Mapper/ProductAbstractOptionStorageMapper.php",
+            "snippet": "     * @return int[]",
+            "selected_text": "int[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<int|mixed|null>' does not match the declared return type 'array<array-key, int>' for SprykerShop\\Yves\\ProductOptionWidget\\Mapper\\ProductAbstractOptionStorageMapper::getSelectedProductOptionIds",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductOptionWidget/src/SprykerShop/Yves/ProductOptionWidget/Mapper/ProductAbstractOptionStorageMapper.php",
+            "snippet": "        return $selectedProductOptionIds;",
+            "selected_text": "$selectedProductOptionIds",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "MismatchingDocblockReturnType",
+            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ProductOptionGroupStorageTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductOptionWidget/src/SprykerShop/Yves/ProductOptionWidget/Form/DataProvider/ShoppingListItemProductOptionFormDataProvider.php",
+            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\ProductOptionGroupStorageTransfer[]",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ProductOptionGroupStorageTransfer[]",
+            "error_level": 4,
+            "shortcode": 142
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\ProductOptionWidget\\Dependency\\Client\\ProductOptionWidgetToProductOptionStorageClientInterface::getProductOptionsForCurrentStore cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductOptionWidget/src/SprykerShop/Yves/ProductOptionWidget/Form/DataProvider/ShoppingListItemProductOptionFormDataProvider.php",
+            "snippet": "            ->getProductOptionsForCurrentStore($shoppingListItemTransfer->getIdProductAbstract());",
+            "selected_text": "$shoppingListItemTransfer->getIdProductAbstract()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 18,
+            "line_to": 18,
+            "type": "MismatchingDocblockReturnType",
+            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ProductOptionGroupStorageTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductOptionWidget/src/SprykerShop/Yves/ProductOptionWidget/Form/DataProvider/ShoppingListItemProductOptionFormDataProviderInterface.php",
+            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\ProductOptionGroupStorageTransfer[]",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ProductOptionGroupStorageTransfer[]",
+            "error_level": 4,
+            "shortcode": 142
+        },
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\ProductOptionWidget\\Form\\ShoppingListItemProductOptionForm::generateFormTypeName cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductOptionWidget/src/SprykerShop/Yves/ProductOptionWidget/Form/ShoppingListItemProductOptionForm.php",
+            "snippet": "                $form->add($this->generateFormTypeName($option->getName()), ChoiceType::class, [",
+            "selected_text": "$option->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 75,
+            "line_to": 75,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductOptionValueStorageTransfer> variable ",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductOptionWidget/src/SprykerShop/Yves/ProductOptionWidget/Form/ShoppingListItemProductOptionForm.php",
+            "snippet": "                    'choices' => $option->getProductOptionValues()->getArrayCopy(),",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 105,
+            "line_to": 105,
+            "type": "MismatchingDocblockReturnType",
+            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ProductOptionTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductOptionWidget/src/SprykerShop/Yves/ProductOptionWidget/Mapper/ShoppingListTransferMapper.php",
+            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\ProductOptionTransfer[]",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ProductOptionTransfer[]",
+            "error_level": 4,
+            "shortcode": 142
+        },
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductOptionGroupStorageTransfer> variable $productOptionGroupStorageTransfers",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductOptionWidget/src/SprykerShop/Yves/ProductOptionWidget/Plugin/ShoppingListPage/ShoppingListItemProductOptionFormExpanderPlugin.php",
+            "snippet": "            if ($productOptionGroupStorageTransfers->count()) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductOptionWidget/src/SprykerShop/Yves/ProductOptionWidget/ProductOptionWidgetDependencyProvider.php",
+            "snippet": "            return new ProductOptionWidgetToProductOptionStorageClientBridge($container->getLocator()->productOptionStorage()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "MismatchingDocblockReturnType",
+            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ProductOptionGroupStorageTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductOptionWidget/src/SprykerShop/Yves/ProductOptionWidget/Widget/ProductOptionConfiguratorWidget.php",
+            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\ProductOptionGroupStorageTransfer[]",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ProductOptionGroupStorageTransfer[]",
+            "error_level": 4,
+            "shortcode": 142
+        },
+        {
+            "severity": "info",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\ProductOptionWidget\\Dependency\\Client\\ProductOptionWidgetToProductOptionStorageClientInterface::getProductOptionsForCurrentStore cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductOptionWidget/src/SprykerShop/Yves/ProductOptionWidget/Widget/ProductOptionConfiguratorWidget.php",
+            "snippet": "            ->getProductOptionsForCurrentStore($productViewTransfer->getIdProductAbstract());",
+            "selected_text": "$productViewTransfer->getIdProductAbstract()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 17,
+            "line_to": 17,
+            "type": "DeprecatedInterface",
+            "message": "SprykerShop\\Yves\\CartPage\\Dependency\\Plugin\\ProductOptionWidget\\CartItemProductOptionWidgetPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductOptionWidget/src/SprykerShop/Yves/ProductOptionWidget/Plugin/CartPage/CartItemProductOptionWidgetPlugin.php",
+            "snippet": "class CartItemProductOptionWidgetPlugin extends AbstractWidgetPlugin implements CartItemProductOptionWidgetPluginInterface",
+            "selected_text": "CartItemProductOptionWidgetPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 17,
+            "line_to": 17,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Yves\\Kernel\\Widget\\AbstractWidgetPlugin is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductOptionWidget/src/SprykerShop/Yves/ProductOptionWidget/Plugin/CartPage/CartItemProductOptionWidgetPlugin.php",
+            "snippet": "class CartItemProductOptionWidgetPlugin extends AbstractWidgetPlugin implements CartItemProductOptionWidgetPluginInterface",
+            "selected_text": "AbstractWidgetPlugin",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 20,
+            "line_to": 20,
+            "type": "DeprecatedInterface",
+            "message": "SprykerShop\\Yves\\ProductDetailPage\\Dependency\\Plugin\\ProductOptionWidget\\ProductOptionWidgetPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductOptionWidget/src/SprykerShop/Yves/ProductOptionWidget/Plugin/ProductDetailPage/ProductOptionWidgetPlugin.php",
+            "snippet": "class ProductOptionWidgetPlugin extends AbstractWidgetPlugin implements ProductOptionWidgetPluginInterface",
+            "selected_text": "ProductOptionWidgetPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 20,
+            "line_to": 20,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Yves\\Kernel\\Widget\\AbstractWidgetPlugin is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductOptionWidget/src/SprykerShop/Yves/ProductOptionWidget/Plugin/ProductDetailPage/ProductOptionWidgetPlugin.php",
+            "snippet": "class ProductOptionWidgetPlugin extends AbstractWidgetPlugin implements ProductOptionWidgetPluginInterface",
+            "selected_text": "AbstractWidgetPlugin",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 19,
+            "line_to": 19,
+            "type": "DeprecatedInterface",
+            "message": "SprykerShop\\Yves\\ShoppingListPage\\Dependency\\Plugin\\ProductOptionWidget\\ShoppingListItemProductOptionWidgetPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductOptionWidget/src/SprykerShop/Yves/ProductOptionWidget/Plugin/ShoppingListPage/ShoppingListItemProductOptionWidgetPlugin.php",
+            "snippet": "class ShoppingListItemProductOptionWidgetPlugin extends AbstractWidgetPlugin implements ShoppingListItemProductOptionWidgetPluginInterface",
+            "selected_text": "ShoppingListItemProductOptionWidgetPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 19,
+            "line_to": 19,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Yves\\Kernel\\Widget\\AbstractWidgetPlugin is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductOptionWidget/src/SprykerShop/Yves/ProductOptionWidget/Plugin/ShoppingListPage/ShoppingListItemProductOptionWidgetPlugin.php",
+            "snippet": "class ShoppingListItemProductOptionWidgetPlugin extends AbstractWidgetPlugin implements ShoppingListItemProductOptionWidgetPluginInterface",
+            "selected_text": "AbstractWidgetPlugin",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 27,
+            "line_to": 27,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Yves\\Kernel\\Controller\\AbstractController::redirectResponseExternal has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/RedirectPage/src/SprykerShop/Yves/RedirectPage/Controller/RedirectController.php",
+            "snippet": "        $response = $this->redirectResponseExternal(",
+            "selected_text": "redirectResponseExternal",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}
