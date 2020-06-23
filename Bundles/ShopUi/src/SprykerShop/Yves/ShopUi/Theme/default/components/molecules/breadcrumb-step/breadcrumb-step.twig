@@ -13,6 +13,7 @@
     isFormElement: false,
     form: null,
     formName: '',
+    tokenFieldName: '',
 } %}
 
 {% set isLink = data.url is not empty and not data.isFormElement %}
@@ -22,7 +23,7 @@
     {%- if data.itemProp -%}<span itemprop="{{-data.itemProp-}}">{%- endif -%}
     {%- if data.isFormElement -%}
         <form class="{{ config.name }}__form" name="{{ data.formName }}" method="post" action="{{ data.url }}">
-            <input name="{{ data.formName }}[_token]" type="hidden" value="{{ csrf_token(data.formName) }}">
+            <input name="{{ data.tokenFieldName }}" type="hidden" value="{{ csrf_token(data.formName) }}">
             <button type="submit" class="link">
     {%- endif -%}
             {{-data.label-}}
