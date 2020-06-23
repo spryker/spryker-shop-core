@@ -11,18 +11,18 @@ use Generated\Shared\Transfer\MerchantProductViewTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
-use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToMerchantProductStorageClientInterface;
 use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToMerchantStorageClientInterface;
 use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToPriceProductClientInterface;
 use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToPriceProductStorageClientInterface;
+use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToProductStorageClientInterface;
 use SprykerShop\Yves\MerchantProductWidget\Mapper\MerchantProductMapper;
 
 class MerchantProductReader implements MerchantProductReaderInterface
 {
     /**
-     * @var \SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToMerchantProductStorageClientInterface
+     * @var \SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToProductStorageClientInterface
      */
-    protected $merchantProductStorageClient;
+    protected $productStorageClient;
 
     /**
      * @var \SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToPriceProductClientInterface
@@ -45,20 +45,20 @@ class MerchantProductReader implements MerchantProductReaderInterface
     protected $merchantProductWidgetMapper;
 
     /**
-     * @param \SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToMerchantProductStorageClientInterface $merchantProductStorageClient
+     * @param \SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToProductStorageClientInterface $productStorageClient
      * @param \SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToPriceProductClientInterface $priceProductClient
      * @param \SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToPriceProductStorageClientInterface $priceProductStorageClient
      * @param \SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToMerchantStorageClientInterface $merchantStorageClient
      * @param \SprykerShop\Yves\MerchantProductWidget\Mapper\MerchantProductMapper $merchantProductWidgetMapper
      */
     public function __construct(
-        MerchantProductWidgetToMerchantProductStorageClientInterface $merchantProductStorageClient,
+        MerchantProductWidgetToProductStorageClientInterface $productStorageClient,
         MerchantProductWidgetToPriceProductClientInterface $priceProductClient,
         MerchantProductWidgetToPriceProductStorageClientInterface $priceProductStorageClient,
         MerchantProductWidgetToMerchantStorageClientInterface $merchantStorageClient,
         MerchantProductMapper $merchantProductWidgetMapper
     ) {
-        $this->merchantProductStorageClient = $merchantProductStorageClient;
+        $this->productStorageClient = $productStorageClient;
         $this->priceProductClient = $priceProductClient;
         $this->priceProductStorageClient = $priceProductStorageClient;
         $this->merchantStorageClient = $merchantStorageClient;
@@ -77,9 +77,12 @@ class MerchantProductReader implements MerchantProductReaderInterface
             return null;
         }
 
-        $merchantProductStorageTransfer = $this->merchantProductStorageClient->findOne($productViewTransfer->getIdProductAbstract());
+        $productAbstractStorageData = $this->productStorageClient->findProductAbstractStorageData(
+            $productViewTransfer->getIdProductAbstract(),
+            $localeName
+        );
 
-        if (!$merchantProductStorageTransfer) {
+        if (!$productAbstractStorageData) {
             return null;
         }
 
@@ -92,11 +95,11 @@ class MerchantProductReader implements MerchantProductReaderInterface
             $priceProductFilterTransfer
         );
 
-        $merchantProductViewTransfer = $this->merchantProductWidgetMapper->mapMerchantProductStorageTransferToMerchantProductViewTransfer(
-            $merchantProductStorageTransfer,
+        $merchantProductViewTransfer = $this->merchantProductWidgetMapper->mapProductAbstractStorageDataToMerchantProductViewTransfer(
+            $productAbstractStorageData,
             new MerchantProductViewTransfer()
         );
-        $merchantStorageTransfer = $this->merchantStorageClient->findOne($merchantProductStorageTransfer->getIdMerchant());
+        $merchantStorageTransfer = $this->merchantStorageClient->findOneByMerchantReference($merchantProductViewTransfer->getMerchantReference());
 
         if (!$merchantStorageTransfer) {
             return null;

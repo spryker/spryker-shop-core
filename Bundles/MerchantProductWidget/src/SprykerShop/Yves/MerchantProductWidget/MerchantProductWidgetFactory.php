@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\MerchantProductWidget;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\MerchantProductOfferWidget\Sorter\MerchantProductViewCollectionSorter;
 use SprykerShop\Yves\MerchantProductOfferWidget\Sorter\MerchantProductViewCollectionSorterInterface;
-use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToMerchantProductStorageClientInterface;
 use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToMerchantStorageClientInterface;
 use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToPriceProductClientInterface;
 use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToPriceProductStorageClientInterface;
@@ -27,12 +26,11 @@ class MerchantProductWidgetFactory extends AbstractFactory
     public function createMerchantProductReader(): MerchantProductReaderInterface
     {
         return new MerchantProductReader(
-            $this->getMerchantProductStorageClient(),
+            $this->getProductStorageClient(),
             $this->getPriceProductClient(),
             $this->getPriceProductStorageClient(),
             $this->getMerchantStorageClient(),
-            $this->createMerchantProductMapper(),
-            $this->createMerchantProductViewCollectionSorter()
+            $this->createMerchantProductMapper()
         );
     }
 
@@ -50,14 +48,6 @@ class MerchantProductWidgetFactory extends AbstractFactory
     public function createMerchantProductMapper(): MerchantProductMapper
     {
         return new MerchantProductMapper();
-    }
-
-    /**
-     * @return \SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToMerchantProductStorageClientInterface
-     */
-    public function getMerchantProductStorageClient(): MerchantProductWidgetToMerchantProductStorageClientInterface
-    {
-        return $this->getProvidedDependency(MerchantProductWidgetDependencyProvider::CLIENT_MERCHANT_PRODUCT_STORAGE);
     }
 
     /**

@@ -20,10 +20,12 @@
                     {% block productOfferList %}
                         {% for merchantProductView in data.merchantProductViews  %}
                             {% block productOffer %}
+                                {% set isSameMerchantOffer = data.productView.productOfferReference == merchantProductView.productOfferReference %}
+
                                 {% if merchantProductView.productOfferReference != null %}
                                     {% embed molecule('merchant-product-offer-item', 'MerchantProductOfferWidget') with {
                                         data: {
-                                            checked: data.productView.productOfferReference == merchantProductView.productOfferReference,
+                                            checked: isSameMerchantOffer,
                                             radioGroupName: 'product_offer_reference',
                                             productOfferReference: merchantProductView.productOfferReference | default,
                                             merchantName: merchantProductView.merchantName | default,
@@ -46,9 +48,12 @@
                                     {% endembed %}
                                 {% else %}
                                     {% if widgetGlobalExists('MerchantProductWidget') %}
+                                        {% if isSameMerchantOffer == false %}
+                                            {% set isSameMerchantOffer = data.productView.merchantReference == merchantProductView.merchantReference %}
+                                        {% endif %}
                                         {% embed molecule('merchant-product-item', 'MerchantProductWidget') with {
                                             data: {
-                                                checked: not data.productView.productOfferReference,
+                                                checked: isSameMerchantOffer,
                                                 radioGroupName: 'merchant_reference',
                                                 merchantReference: merchantProductView.merchantReference | default,
                                                 merchantName: merchantProductView.merchantName | default,
