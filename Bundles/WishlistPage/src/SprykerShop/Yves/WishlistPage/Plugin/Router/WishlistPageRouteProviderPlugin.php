@@ -99,6 +99,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/wishlist/delete/{wishlistName}', 'WishlistPage', 'WishlistOverview', 'deleteAction');
         $route = $route->setRequirement('wishlistName', static::WISHLIST_NAME_PATTERN);
+        $route = $route->setMethods(Request::METHOD_POST);
         $routeCollection->add(static::ROUTE_WISHLIST_DELETE, $route);
 
         return $routeCollection;
@@ -126,6 +127,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addAddItemRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/wishlist/add-item', 'WishlistPage', 'Wishlist', 'addItemAction');
+        $route = $route->setMethods(Request::METHOD_POST);
         $routeCollection->add(static::ROUTE_ADD_ITEM, $route);
 
         return $routeCollection;
