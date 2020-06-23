@@ -28,14 +28,14 @@
             {% endblock %}
 
             {% block headScripts %}
-                {% if not isNewFrontendBuildSupported %}
-                    {% block oldHeadScripts %}
-                        <script src="{{ publicPath('js/yves_default.runtime.js') }}"></script>
-                    {% endblock %}
-                {% esle %}
-                    {% block newHeadScripts %}
+                {% if isNewFrontendBuildSupported %}
+                    {% block esmHeadScripts %}
                         <script nomodule type="application/javascript" src="{{ publicPath('js/yves_default.runtime.legacy.js') }}"></script>
                         <script type="module" src="{{ publicPath('js/yves_default.runtime.js') }}" crossorigin="anonymous"></script>
+                    {% endblock %}
+                {% esle %}
+                    {% block legacyHeadScripts %}
+                        <script src="{{ publicPath('js/yves_default.runtime.js') }}"></script>
                     {% endblock %}
                 {% endif %}
             {% endblock %}
@@ -48,19 +48,19 @@
             {{ parent() }}
 
             {% block footerScripts %}
-                {% if not isNewFrontendBuildSupported %}
-                    {% block oldFooterScripts %}
-                        <script src="{{ publicPath('js/yves_default.es6-polyfill.js') }}"></script>
-                        <script src="{{ publicPath('js/yves_default.vendor.js') }}"></script>
-                        <script src="{{ publicPath('js/yves_default.app.js') }}"></script>
-                    {% endblock %}
-                {% esle %}
-                    {% block newFooterScripts %}
+                {% if isNewFrontendBuildSupported %}
+                    {% block esmFooterScripts %}
                         <script nomodule type="application/javascript" src="{{ publicPath('js/yves_default.es6-polyfill.legacy.js') }}"></script>
                         <script nomodule type="application/javascript" src="{{ publicPath('js/yves_default.vendor.legacy.js') }}"></script>
                         <script nomodule type="application/javascript" src="{{ publicPath('js/yves_default.app.legacy.js') }}"></script>
                         <script type="module" src="{{ publicPath('js/yves_default.vendor.js') }}" crossorigin="anonymous"></script>
                         <script type="module" src="{{ publicPath('js/yves_default.app.js') }}" crossorigin="anonymous"></script>
+                    {% endblock %}
+                {% esle %}
+                    {% block legacyFooterScripts %}
+                        <script src="{{ publicPath('js/yves_default.es6-polyfill.js') }}"></script>
+                        <script src="{{ publicPath('js/yves_default.vendor.js') }}"></script>
+                        <script src="{{ publicPath('js/yves_default.app.js') }}"></script>
                     {% endblock %}
                 {% endif %}
             {% endblock %}
