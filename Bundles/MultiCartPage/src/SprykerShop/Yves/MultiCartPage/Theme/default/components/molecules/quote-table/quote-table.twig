@@ -12,6 +12,7 @@
         duplicate: false,
     },
     isQuoteDeletable: required,
+    multiCartDuplicateFormCloner: required,
 } %}
 
 {% set showActions = data.actions.update or data.actions.delete or data.actions.duplicate %}
@@ -97,9 +98,11 @@
                                     {% endif %}
                                     {% if data.actions.duplicate %}
                                         <li class="menu__item">
-                                            <a href="{{ url('multi-cart/duplicate', {idQuote: quote.idQuote}) }}">
-                                                {{ 'page.multi_cart.shopping_cart.list.link.duplicate' | trans }}
-                                            </a>
+                                            {% set multiCartDuplicateForm = data.multiCartDuplicateFormCloner.getForm.createView %}
+
+                                            {{ form_start(multiCartDuplicateForm, {'action': path('multi-cart/duplicate', {'idQuote': quote.idQuote}) }) }}
+                                                <button type="submit" class="link">{{ 'page.multi_cart.shopping_cart.list.link.duplicate' | trans }}</button>
+                                            {{ form_end(multiCartDuplicateForm) }}
                                         </li>
                                     {% endif %}
                                 {% endif %}

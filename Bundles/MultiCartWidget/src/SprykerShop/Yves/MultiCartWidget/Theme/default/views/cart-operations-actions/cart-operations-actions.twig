@@ -2,12 +2,15 @@
 
 {% define data = {
     idQuote: _widget.cart.idQuote,
+    multiCartClearForm: _widget.multiCartClearForm,
 } %}
 
 {% block body %}
     <div class="box box--borderless">
-        <a href="{{ path('multi-cart/clear', {idQuote: data.idQuote}) }}" class="button clear" data-init-single-click>
-            {{ "multi_cart_widget.cart.action.clear" | trans }}
-        </a>
+        {{ form_start(data.multiCartClearForm, {'action': path('multi-cart/clear', {'idQuote': data.idQuote}) }) }}
+            <button type="submit" class="button clear" data-init-single-click >
+                {{ "multi_cart_widget.cart.action.clear" | trans }}
+            </button>
+        {{ form_end(data.multiCartClearForm) }}
     </div>
 {% endblock %}

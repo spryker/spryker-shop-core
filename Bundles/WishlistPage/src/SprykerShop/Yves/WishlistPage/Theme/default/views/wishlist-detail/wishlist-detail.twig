@@ -7,6 +7,7 @@
     addAllProductsToCart: _view.addAllAvailableProductsToCartForm,
     activeWishlistId: _view.wishlistOverview.wishlist.idWishlist,
     wishlistRemoveItemFormCloner: _view.wishlistRemoveItemFormCloner,
+    wishlistMoveToCartFormCloner: _view.wishlistMoveToCartFormCloner,
 
     pagination: {
         currentPage: _view.currentPage,
@@ -53,7 +54,8 @@
                 data: {
                     wishlistItems: data.wishlistItems,
                     wishlistName: data.wishlistName,
-                    wishlistRemoveItemFormCloner: data.wishlistRemoveItemFormCloner
+                    wishlistRemoveItemFormCloner: data.wishlistRemoveItemFormCloner,
+                    wishlistMoveToCartFormCloner: data.wishlistMoveToCartFormCloner
                 }
             } only %}
 

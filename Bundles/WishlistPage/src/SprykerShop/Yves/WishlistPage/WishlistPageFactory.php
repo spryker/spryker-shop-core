@@ -17,8 +17,10 @@ use SprykerShop\Yves\WishlistPage\Form\AddAllAvailableProductsToCartFormType;
 use SprykerShop\Yves\WishlistPage\Form\Cloner\FormCloner;
 use SprykerShop\Yves\WishlistPage\Form\DataProvider\AddAllAvailableProductsToCartFormDataProvider;
 use SprykerShop\Yves\WishlistPage\Form\DataProvider\WishlistFormDataProvider;
+use SprykerShop\Yves\WishlistPage\Form\WishlistAddItemFormType;
 use SprykerShop\Yves\WishlistPage\Form\WishlistDeleteFormType;
 use SprykerShop\Yves\WishlistPage\Form\WishlistFormType;
+use SprykerShop\Yves\WishlistPage\Form\WishlistMoveToCartFormType;
 use SprykerShop\Yves\WishlistPage\Form\WishlistRemoveItemFormType;
 use Symfony\Component\Form\FormInterface;
 
@@ -67,6 +69,22 @@ class WishlistPageFactory extends AbstractFactory
     public function getWishlistRemoveItemForm(): FormInterface
     {
         return $this->getFormFactory()->create(WishlistRemoveItemFormType::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getWishlistAddItemForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(WishlistAddItemFormType::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getWishlistMoveToCartForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(WishlistMoveToCartFormType::class);
     }
 
     /**

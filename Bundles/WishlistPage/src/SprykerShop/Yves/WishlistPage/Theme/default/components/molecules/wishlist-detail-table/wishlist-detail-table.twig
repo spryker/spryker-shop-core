@@ -9,7 +9,8 @@
 {% define data = {
     wishlistItems: required,
     wishlistName: required,
-    wishlistRemoveItemFormCloner: null,
+    wishlistRemoveItemFormCloner: required,
+    wishlistMoveToCartFormCloner: required,
 } %}
 
 {% block body %}
@@ -35,13 +36,12 @@
                     <td>
                         {% set imageUrl = item.images[0].externalUrlSmall %}
                         {% if imageUrl %}
-                            {% include atom('thumbnail') with {
-                                modifiers: ['small', 'min-size'],
-                                attributes: {
-                                    alt: item.name,
-                                    src: imageUrl,
-                                    title: item.name,
-                                }
+                            {% include molecule('lazy-image') with {
+                                modifiers: ['thumbnail', 'small', 'min-size'],
+                                data: {
+                                    imageSrc: imageUrl,
+                                    imageTitle: item.name | default,
+                                },
                             } only %}
                         {% endif %}
                     </td>
@@ -90,18 +90,17 @@
                         <ul class="menu menu--inline float-right">
                             {% if isItemAvailable %}
                                 <li class="menu__item">
-                                    <form id="addToCart_{{ loop.index }}"
-                                          class="col"
-                                          method="POST"
-                                          action="{{ path('wishlist/move-to-cart', {sku: item.sku, 'wishlist-name': data.wishlistName}) }}">
-                                                <button type="submit" class="link" title="{{ 'customer.account.wishlist.add-to-cart' | trans }}">
-                                                    {% include atom('icon') with {
-                                                        data: {
-                                                            name: 'cart-plus'
-                                                        }
-                                                    } only %}
-                                                </button>
-                                    </form>
+                                    {% set wishlistMoveToCartFormCloner = data.wishlistMoveToCartFormCloner.getForm.createView %}
+
+                                    {{ form_start(wishlistMoveToCartFormCloner, {'action':path('wishlist/move-to-cart', {sku: item.sku, 'wishlist-name': data.wishlistName}), 'name': 'addToCart_' ~ loop.index, 'attr': {'id': 'addToCart_' ~ loop.index, 'class': 'col'}}) }}
+                                    <button type="submit" class="link" title="{{ 'customer.account.wishlist.add-to-cart' | trans }}">
+                                        {% include atom('icon') with {
+                                            data: {
+                                                name: 'cart-plus'
+                                            }
+                                        } only %}
+                                    </button>
+                                    {{ form_end(wishlistMoveToCartFormCloner) }}
                                 </li>
                             {% endif %}
                             <li class="menu__item">

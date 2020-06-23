@@ -18,13 +18,12 @@
                 <div class="col col--sm-3 col--md-2 col--middle">
                     {% block image %}
                         <a href="{{ data.url }}">
-                            {% include atom('thumbnail') with {
-                                modifiers: ['small'],
-                                attributes: {
-                                    alt: data.name,
-                                    src: data.imageUrl,
-                                    title: data.name
-                                }
+                            {% include molecule('lazy-image') with {
+                                modifiers: ['thumbnail', 'small'],
+                                data: {
+                                    imageSrc: data.imageUrl,
+                                    imageTitle: data.name,
+                                },
                             } only %}
                         </a>
                     {% endblock %}

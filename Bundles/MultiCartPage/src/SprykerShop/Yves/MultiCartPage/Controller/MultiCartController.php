@@ -30,6 +30,7 @@ class MultiCartController extends AbstractController
 
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
     protected const GLOSSARY_KEY_CART_UPDATED_ERROR = 'multi_cart_widget.cart.updated.error';
+    protected const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -152,11 +153,20 @@ class MultiCartController extends AbstractController
 
     /**
      * @param int $idQuote
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function duplicateAction(int $idQuote)
+    public function duplicateAction(int $idQuote, Request $request)
     {
+        $multiCartDuplicateForm = $this->getFactory()->getMultiCartDuplicateForm()->handleRequest($request);
+
+        if (!$multiCartDuplicateForm->isSubmitted() || !$multiCartDuplicateForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+        }
+
         $quoteTransfer = $this->findQuoteOrFail($idQuote);
 
         $idNewQuote = $this->getFactory()
@@ -173,11 +183,20 @@ class MultiCartController extends AbstractController
 
     /**
      * @param int $idQuote
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function clearAction(int $idQuote)
+    public function clearAction(int $idQuote, Request $request)
     {
+        $multiCartClearForm = $this->getFactory()->getMultiCartClearForm()->handleRequest($request);
+
+        if (!$multiCartClearForm->isSubmitted() || !$multiCartClearForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(static::ROUTE_CART);
+        }
+
         $quoteTransfer = $this->findQuoteOrFail($idQuote);
 
         if (!$this->isQuoteEditable($quoteTransfer) || !$this->can('RemoveCartItemPermissionPlugin')) {
@@ -199,11 +218,20 @@ class MultiCartController extends AbstractController
 
     /**
      * @param int $idQuote
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(int $idQuote)
+    public function deleteAction(int $idQuote, Request $request)
     {
+        $multiCartDeleteForm = $this->getFactory()->getMultiCartDeleteForm()->handleRequest($request);
+
+        if (!$multiCartDeleteForm->isSubmitted() || !$multiCartDeleteForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+        }
+
         $quoteTransfer = $this->findQuoteOrFail($idQuote);
 
         if (!$this->canWriteQuote($quoteTransfer)) {
@@ -242,6 +270,7 @@ class MultiCartController extends AbstractController
         return [
             'quoteCollection' => $quoteCollectionTransfer->getQuotes(),
             'isQuoteDeletable' => $this->getFactory()->getMultiCartClient()->isQuoteDeletable(),
+            'multiCartDuplicateFormCloner' => $this->getFactory()->getFormCloner($this->getFactory()->getMultiCartDuplicateForm()),
         ];
     }
 
@@ -265,6 +294,7 @@ class MultiCartController extends AbstractController
     protected function executeConfirmDeleteAction(int $idQuote): array
     {
         return [
+            'multiCartDeleteForm' => $this->getFactory()->getMultiCartDeleteForm()->createView(),
             'cart' => $this->findQuoteOrFail($idQuote),
         ];
     }
