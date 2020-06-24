@@ -19,7 +19,9 @@
 
 {% block component %}
     {% if isActiveAndValid %}
-        {{ parent() }}
+        {% block componentInner %}
+            {{ parent() }}
+        {% endblock %}
     {% endif %}
 {% endblock %}
 
