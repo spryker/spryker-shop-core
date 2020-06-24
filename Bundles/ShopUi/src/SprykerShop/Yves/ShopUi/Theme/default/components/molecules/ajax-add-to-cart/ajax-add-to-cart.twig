@@ -9,6 +9,7 @@
     url: required,
     csrfToken: required,
     quantity: 1,
+    separateProduct: 1,
     iconName: 'cart-plus',
     buttonText: '',
     buttonTitle: data.buttonText | default is empty ? 'global.add-to-cart' | trans,
@@ -31,6 +32,7 @@
             data-url="{{ data.url }}"
             data-csrf-token="{{ data.csrfToken }}"
             data-quantity="{{ data.quantity }}"
+            data-separate-product="{{ data.separateProduct }}"
             {{ component.renderAttributes(data.extraAttributes) }}
         >
             {% block buttonContent %}
