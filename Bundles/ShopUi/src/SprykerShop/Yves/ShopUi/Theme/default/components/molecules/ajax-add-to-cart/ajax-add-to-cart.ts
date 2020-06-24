@@ -31,6 +31,7 @@ export default class AjaxAddToCart extends Component {
 
         formData.append('_token', this.button.dataset.csrfToken);
         formData.append('quantity', this.button.dataset.quantity);
+        formData.append('separate_product', this.button.dataset.separateProduct);
         fetch(this.button.dataset.url, { method: 'POST', body: formData })
             .then(response => response.json())
             .then(parsedResponse => {
