@@ -207,10 +207,12 @@ class CustomerPageToCustomerClientBridge implements CustomerPageToCustomerClient
     }
 
     /**
-     * @return bool
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function isDoubleOptInEnabled(): bool
+    public function confirmRegistration(CustomerTransfer $customerTransfer)
     {
-        return $this->customerClient->isDoubleOptInEnabled();
+        return $this->customerClient->confirmRegistration($customerTransfer);
     }
 }

@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CustomerPage\Plugin;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use SprykerShop\Yves\CustomerPage\Controller\RegisterController;
 
 /**
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
@@ -30,6 +31,12 @@ class RegistrationCheckoutAuthenticationHandlerPlugin extends AbstractPlugin imp
         $this->processErrorMessages($customerResponseTransfer);
 
         if ($customerResponseTransfer->getIsSuccess() === true) {
+            if ($customerResponseTransfer->getIsDoubleOptInEnabled()) {
+                $this->getMessenger()->addSuccessMessage(RegisterController::MESSAGE_CUSTOMER_REGISTRATION_EMAIL_CONFIRMATION);
+
+                return $quoteTransfer;
+            }
+
             $quoteTransfer = $this->getQuoteClient()->getQuote();
             $quoteTransfer->setCustomer($customerResponseTransfer->getCustomerTransfer());
         }

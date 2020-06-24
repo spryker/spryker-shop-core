@@ -282,8 +282,7 @@
         <property name="customerTransfer" type="Customer"/>
         <property name="isSuccess" type="bool"/>
         <property name="errors" type="CustomerError[]" singular="error"/>
-        <property name="successMessage" type="string"/>
-        <property name="successRedirectRoute" type="string"/>
+        <property name="isDoubleOptInEnabled" type="bool"/>
     </transfer>
 
     <transfer name="CommentThread">

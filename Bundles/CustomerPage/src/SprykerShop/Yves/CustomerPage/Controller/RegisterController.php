@@ -19,7 +19,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RegisterController extends AbstractCustomerController
 {
-    protected const MESSAGE_CUSTOMER_CONFIRMED = 'customer.registration.confirmed';
+    public const MESSAGE_CUSTOMER_CONFIRMED = 'customer.authorization.account_validated';
+    public const MESSAGE_MISSING_CONFIRMATION_TOKEN = 'customer.token.invalid';
+    public const MESSAGE_CUSTOMER_REGISTRATION_SUCCESS = 'customer.registration.success';
+    public const MESSAGE_CUSTOMER_REGISTRATION_EMAIL_CONFIRMATION = 'customer.authorization.validate_email_address';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -58,9 +61,16 @@ class RegisterController extends AbstractCustomerController
             $customerResponseTransfer = $this->registerCustomer($registerForm->getData());
 
             if ($customerResponseTransfer->getIsSuccess()) {
-                $this->addSuccessMessage($customerResponseTransfer->getSuccessMessage());
+                $message = $customerResponseTransfer->getIsDoubleOptInEnabled()
+                    ? static::MESSAGE_CUSTOMER_REGISTRATION_EMAIL_CONFIRMATION
+                    : static::MESSAGE_CUSTOMER_REGISTRATION_SUCCESS;
+                $this->addSuccessMessage($message);
 
-                return $this->redirectResponseInternal($customerResponseTransfer->getSuccessRedirectRoute());
+                $route = $message = $customerResponseTransfer->getIsDoubleOptInEnabled()
+                    ? CustomerPageRouteProviderPlugin::ROUTE_LOGIN
+                    : CustomerPageRouteProviderPlugin::ROUTE_CUSTOMER_OVERVIEW;
+
+                return $this->redirectResponseInternal($route);
             }
 
             $this->processResponseErrors($customerResponseTransfer);
@@ -114,10 +124,17 @@ class RegisterController extends AbstractCustomerController
      */
     protected function executeConfirmAction(Request $request): RedirectResponse
     {
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setRegistrationKey($request->request->get('token'));
+        $token = $request->query->get('token');
+        if (!$token) {
+            $this->addErrorMessage(static::MESSAGE_MISSING_CONFIRMATION_TOKEN);
 
-        $this->getClient()->confirmRegistration($customerTransfer);
+            return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_LOGIN);
+        }
+
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer->setRegistrationKey($token);
+
+        $this->getFactory()->getCustomerClient()->confirmRegistration($customerTransfer);
 
         $this->addSuccessMessage(static::MESSAGE_CUSTOMER_CONFIRMED);
 

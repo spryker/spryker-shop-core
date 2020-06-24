@@ -137,7 +137,9 @@ interface CustomerPageToCustomerClientInterface
     public function getCustomerByAccessToken(string $accessToken): CustomerResponseTransfer;
 
     /**
-     * @return bool
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function isDoubleOptInEnabled(): bool;
+    public function confirmRegistration(CustomerTransfer $customerTransfer);
 }
