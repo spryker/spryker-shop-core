@@ -2,23 +2,26 @@
 
 {% define config = {
     name: 'node',
-    tag: 'span'
+    tag: 'span',
 } %}
 
 {% define data = {
-    node: required
+    node: required,
 } %}
 
 {% set today = 'now' | date('Ymd') %}
-{% set type = data.node.nodeType %}
-{% set isActive = data.node.isActive %}
-{% set isValidFrom = data.node.validFrom is empty or data.node.validFrom | date('Ymd') <= today %}
-{% set isValidTo = data.node.validTo is empty or data.node.validTo | date('Ymd') >= today %}
+{% set node = data.node %}
+{% set type = node.nodeType %}
+{% set isActive = node.isActive %}
+{% set isValidFrom = node.validFrom is empty or node.validFrom | date('Ymd') <= today %}
+{% set isValidTo = node.validTo is empty or node.validTo | date('Ymd') >= today %}
 {% set isActiveAndValid = isActive and isValidFrom and isValidTo %}
 
 {% block component %}
     {% if isActiveAndValid %}
-        {{ parent() }}
+        {% block componentInner %}
+            {{ parent() }}
+        {% endblock %}
     {% endif %}
 {% endblock %}
 
