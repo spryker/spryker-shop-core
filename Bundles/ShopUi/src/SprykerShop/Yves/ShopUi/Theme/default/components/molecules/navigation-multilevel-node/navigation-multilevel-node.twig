@@ -2,39 +2,39 @@
 
 {% define config = {
     name: 'navigation-multilevel-node',
-    tag: 'li'
+    tag: 'li',
 } %}
 
 {% block body %}
     {{ parent() }}
 
     <ul class="menu">
-        {% for childNode in data.node.children %}
+        {% for childNode in node.children %}
             {% set hasChildren = childNode.children | length > 0 %}
 
             {% include molecule('navigation-multilevel-node') with {
                 class: 'menu__item' ~ (hasChildren ? ' menu__item--has-children-list' : '') ~ (childNode.url ? '' : ' ' ~ childNode.cssClass),
                 data: {
-                    node: childNode
-                }
+                    node: childNode,
+                },
             } only %}
         {% endfor %}
     </ul>
 {% endblock %}
 
 {% block url %}
-    <a class="link {{ data.node.cssClass }}" href="{{ data.node.url }}">{{ data.node.title }}</a>
+    <a class="link {{ node.cssClass }}" href="{{ node.url }}">{{ node.title }}</a>
 {% endblock %}
 
 {% block link %}
-    <a class="link {{ data.node.cssClass }}" href="{{ data.node.url }}">{{ data.node.title }}</a>
+    <a class="link {{ node.cssClass }}" href="{{ node.url }}">{{ node.title }}</a>
 {% endblock %}
 
 {% block externalUrl %}
-    <a class="link {{ data.node.cssClass }}" href="{{ data.node.url }}" target="_blank">{{ data.node.title }}</a>
+    <a class="link {{ node.cssClass }}" href="{{ node.url }}" target="_blank">{{ node.title }}</a>
 {% endblock %}
 
 {% block other %}
-    {{ data.node.title }}
+    {{ node.title }}
 {% endblock %}
 
