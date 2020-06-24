@@ -1,0 +1,260 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'Spryker\\Yves\\Kernel\\View\\View|Symfony\\Component\\HttpFoundation\\RedirectResponse' for SprykerShop\\Yves\\ShoppingListWidget\\Controller\\CartToShoppingListController::createFromCartAction is incorrect, got 'Symfony\\Component\\HttpFoundation\\RedirectResponse|array<array-key, mixed>'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListWidget/src/SprykerShop/Yves/ShoppingListWidget/Controller/CartToShoppingListController.php",
+            "snippet": "     * @return \\Spryker\\Yves\\Kernel\\View\\View|\\Symfony\\Component\\HttpFoundation\\RedirectResponse",
+            "selected_text": "\\Spryker\\Yves\\Kernel\\View\\View|\\Symfony\\Component\\HttpFoundation\\RedirectResponse",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Symfony\\Component\\HttpFoundation\\RedirectResponse|array<array-key, mixed>' does not match the declared return type 'Spryker\\Yves\\Kernel\\View\\View|Symfony\\Component\\HttpFoundation\\RedirectResponse' for SprykerShop\\Yves\\ShoppingListWidget\\Controller\\CartToShoppingListController::createFromCartAction",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListWidget/src/SprykerShop/Yves/ShoppingListWidget/Controller/CartToShoppingListController.php",
+            "snippet": "        return $response;",
+            "selected_text": "$response",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, int>' for SprykerShop\\Yves\\ShoppingListWidget\\Form\\DataProvider\\ShoppingListFromCartFormDataProvider::getShoppingListCollection is incorrect, got 'non-empty-array<array-key, int|mixed|null|string()>'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListWidget/src/SprykerShop/Yves/ShoppingListWidget/Form/DataProvider/ShoppingListFromCartFormDataProvider.php",
+            "snippet": "     * @return int[]",
+            "selected_text": "int[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'non-empty-array<array-key, int|mixed|null|string()>' does not match the declared return type 'array<array-key, int>' for SprykerShop\\Yves\\ShoppingListWidget\\Form\\DataProvider\\ShoppingListFromCartFormDataProvider::getShoppingListCollection",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListWidget/src/SprykerShop/Yves/ShoppingListWidget/Form/DataProvider/ShoppingListFromCartFormDataProvider.php",
+            "snippet": "        return $shoppingListCollection;",
+            "selected_text": "$shoppingListCollection",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 97,
+            "line_to": 97,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\ShoppingListWidget\\Controller\\CartToShoppingListController::redirectResponseExternal cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListWidget/src/SprykerShop/Yves/ShoppingListWidget/Controller/CartToShoppingListController.php",
+            "snippet": "        return $this->redirectResponseExternal($referer);",
+            "selected_text": "$referer",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 110,
+            "line_to": 110,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCustomerReference on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListWidget/src/SprykerShop/Yves/ShoppingListWidget/Controller/ShoppingListWidgetController.php",
+            "snippet": "            ->setCustomerReference($customerTransfer->getCustomerReference())",
+            "selected_text": "getCustomerReference",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 111,
+            "line_to": 111,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListWidget/src/SprykerShop/Yves/ShoppingListWidget/Controller/ShoppingListWidgetController.php",
+            "snippet": "            ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 83,
+            "line_to": 83,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListWidget/src/SprykerShop/Yves/ShoppingListWidget/Form/DataProvider/ShoppingListFromCartFormDataProvider.php",
+            "snippet": "        return sprintf('%s (%s)', $shoppingListTransfer->getName(), $shoppingListTransfer->getOwner());",
+            "selected_text": "$shoppingListTransfer->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 83,
+            "line_to": 83,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListWidget/src/SprykerShop/Yves/ShoppingListWidget/Form/DataProvider/ShoppingListFromCartFormDataProvider.php",
+            "snippet": "        return sprintf('%s (%s)', $shoppingListTransfer->getName(), $shoppingListTransfer->getOwner());",
+            "selected_text": "$shoppingListTransfer->getOwner()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 65,
+            "line_to": 65,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\ShoppingListWidget\\Plugin\\QuickOrderPage\\ShoppingListQuickOrderFormHandlerStrategyPlugin::assertCustomerTransfer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListWidget/src/SprykerShop/Yves/ShoppingListWidget/Plugin/QuickOrderPage/ShoppingListQuickOrderFormHandlerStrategyPlugin.php",
+            "snippet": "        $this->assertCustomerTransfer($customerTransfer);",
+            "selected_text": "$customerTransfer",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 111,
+            "line_to": 111,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdShoppingList on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListWidget/src/SprykerShop/Yves/ShoppingListWidget/Plugin/QuickOrderPage/ShoppingListQuickOrderFormHandlerStrategyPlugin.php",
+            "snippet": "                    static::PARAM_ID_SHOPPING_LIST => $shoppingListResponseTransfer->getShoppingList()->getIdShoppingList(),",
+            "selected_text": "getIdShoppingList",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 127,
+            "line_to": 127,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method requireIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListWidget/src/SprykerShop/Yves/ShoppingListWidget/Plugin/QuickOrderPage/ShoppingListQuickOrderFormHandlerStrategyPlugin.php",
+            "snippet": "                ->requireIdCompanyUser();",
+            "selected_text": "requireIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 147,
+            "line_to": 147,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListWidget/src/SprykerShop/Yves/ShoppingListWidget/Plugin/QuickOrderPage/ShoppingListQuickOrderFormHandlerStrategyPlugin.php",
+            "snippet": "            ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser())",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 153,
+            "line_to": 153,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $itemTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\QuickOrderItemTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListWidget/src/SprykerShop/Yves/ShoppingListWidget/Plugin/QuickOrderPage/ShoppingListQuickOrderFormHandlerStrategyPlugin.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\QuickOrderItemTransfer[] $itemTransfers",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\QuickOrderItemTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 155,
+            "line_to": 155,
+            "type": "MismatchingDocblockReturnType",
+            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ShoppingListItemTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListWidget/src/SprykerShop/Yves/ShoppingListWidget/Plugin/QuickOrderPage/ShoppingListQuickOrderFormHandlerStrategyPlugin.php",
+            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\ShoppingListItemTransfer[]",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ShoppingListItemTransfer[]",
+            "error_level": 4,
+            "shortcode": 142
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListWidget/src/SprykerShop/Yves/ShoppingListWidget/ShoppingListWidgetDependencyProvider.php",
+            "snippet": "            return new ShoppingListWidgetToShoppingListClientBridge($container->getLocator()->shoppingList()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListWidget/src/SprykerShop/Yves/ShoppingListWidget/ShoppingListWidgetDependencyProvider.php",
+            "snippet": "            return new ShoppingListWidgetToCustomerClientBridge($container->getLocator()->customer()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListWidget/src/SprykerShop/Yves/ShoppingListWidget/ShoppingListWidgetDependencyProvider.php",
+            "snippet": "            return new ShoppingListWidgetToShoppingListSessionClientBridge($container->getLocator()->shoppingListSession()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/PermissionAwareTrait.php",
+            "snippet": "            return Locator::getInstance()->permission()->client()->can($permissionKey, $context);",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 97,
+            "line_to": 97,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Yves\\Kernel\\Controller\\AbstractController::redirectResponseExternal has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListWidget/src/SprykerShop/Yves/ShoppingListWidget/Controller/CartToShoppingListController.php",
+            "snippet": "        return $this->redirectResponseExternal($referer);",
+            "selected_text": "redirectResponseExternal",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Client\\ShoppingList\\ShoppingListClientInterface::addItem has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListWidget/src/SprykerShop/Yves/ShoppingListWidget/Dependency/Client/ShoppingListWidgetToShoppingListClientBridge.php",
+            "snippet": "        return $this->shoppingListClient->addItem($shoppingListItemTransfer, $params);",
+            "selected_text": "addItem",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}
