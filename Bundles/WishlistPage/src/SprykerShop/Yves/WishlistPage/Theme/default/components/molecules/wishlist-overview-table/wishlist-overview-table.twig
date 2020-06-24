@@ -61,9 +61,9 @@
                                 </a>
                             </li>
                             <li class="menu__item">
-                                {% set wishlistDeleteForm = data.wishlistDeleteFormCloner.getForm.createView %}
-
-                                {{ form_start(wishlistDeleteForm, {'action': path('wishlist/delete', {'wishlistName': wishlist.name}), 'name': 'wishlistDeleteForm_' ~ wishlist.name }) }}
+                                {% if data.wishlistDeleteFormCloner %}
+                                    {% set wishlistDeleteForm = data.wishlistDeleteFormCloner.getForm.createView %}
+                                    {{ form_start(wishlistDeleteForm, {'action': path('wishlist/delete', {'wishlistName': wishlist.name}), 'name': 'wishlistDeleteForm_' ~ wishlist.name }) }}
                                     <button data-init-single-click type="submit" class="link"
                                             title="{{ 'customer.account.wishlist.overview.delete' | trans }}">
                                         {% include atom('icon') with {
@@ -72,7 +72,21 @@
                                             }
                                         } only %}
                                     </button>
-                                {{ form_end(wishlistDeleteForm) }}
+                                    {{ form_end(wishlistDeleteForm) }}
+                                {% else %}
+                                    <form id="wishlistDeleteForm_{{ loop.index }}" class="col" name="wishlistDeleteForm_{{ loop.index }}" method="POST" action="{{ path('wishlist/delete', {'wishlistName': wishlist.name}) }}">
+                                        <input type="hidden" name="wishlist_delete_form[_token]" value="{{ csrf_token('wishlist_delete_form')}}">
+                                        <button data-init-single-click type="submit" class="link"
+                                                title="{{ 'customer.account.wishlist.overview.delete' | trans }}">
+                                            {% include atom('icon') with {
+                                                data: {
+                                                    name: 'remove'
+                                                }
+                                            } only %}
+                                        </button>
+                                    </form>
+                                {% endif %}
+
                             </li>
                         </ul>
                     </td>

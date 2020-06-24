@@ -47,12 +47,13 @@ export default class MerchantSelectorForm extends Component {
             return;
         }
 
-        this.ajaxProvider.queryParams.set('merchant-reference', this.select.value);
-        this.ajaxProvider.queryParams.set('merchant_switcher_selector_form[_token]', this.csrfToken);
-        this.ajaxProvider.queryParams.set('merchant_switcher_selector_form[_token]', this.csrfToken);
+        const data = new FormData(this.form);
+        const appendData = {'merchant_switcher_selector_form[_token]': this.csrfToken};
+
+        Object.keys(appendData).forEach((key: string) => data.append(key, appendData[key]));
 
         try {
-            await this.ajaxProvider.fetch();
+            await this.ajaxProvider.fetch(data);
             document.location.reload();
         } catch (e) {
             console.error(e);

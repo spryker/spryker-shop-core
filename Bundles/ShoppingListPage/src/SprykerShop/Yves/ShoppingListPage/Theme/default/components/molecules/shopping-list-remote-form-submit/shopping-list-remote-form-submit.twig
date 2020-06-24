@@ -8,14 +8,12 @@
 {% define data = {
     label: required,
     buttonClass: 'button button--alert',
-    idShoppingList: required,
-    idShoppingListItem: required,
 } %}
 
 {% define attributes = {
     'form-holder-class-name': 'js-page-layout-main',
-    'form-name': 'removeItemForm_' ~ data.idShoppingListItem,
-    'form-action': path('shopping-list/remove-item', {'idShoppingList': data.idShoppingList, 'idShoppingListItem': data.idShoppingListItem }),
+    'form-name': '',
+    'form-action': '',
     'form-token': csrf_token('shopping_list_remove_item_form'),
     'field-name': 'shopping_list_remove_item_form[_token]',
 } %}

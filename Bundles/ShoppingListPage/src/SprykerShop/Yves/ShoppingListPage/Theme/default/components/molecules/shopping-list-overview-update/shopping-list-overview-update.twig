@@ -4,7 +4,6 @@
     idShoppingList: required,
     shoppingListItemProducts: required,
     form: required,
-    removeItemForm: null,
 } %}
 
 {% block contentInner %}
@@ -22,15 +21,13 @@
             {% include molecule('shopping-list-remote-form-submit', 'ShoppingListPage') with {
                 data: {
                     label: 'shopping_list.remove_all_items' | trans,
-                    idShoppingList: data.idShoppingList,
-                    idShoppingListItem: 1,
                 },
                 attributes: {
                     'form-name': 'clearForm',
                     'form-action': path('shopping-list/clear', { idShoppingList: data.idShoppingList }),
                     'form-token': csrf_token('shopping_list_clear_form'),
                     'field-name': 'shopping_list_clear_form[_token]',
-                }
+                },
             } only %}
         </td>
     </tr>
@@ -100,8 +97,10 @@
             {% include molecule('shopping-list-remote-form-submit', 'ShoppingListPage') with {
                 data: {
                     label: 'customer.account.shopping_list.remove' | trans,
-                    idShoppingList: data.idShoppingList,
-                    idShoppingListItem: idShoppingListItem,
+                },
+                attributes: {
+                    'form-name': 'removeItemForm_' ~ idShoppingListItem,
+                    'form-action': path('shopping-list/remove-item', {'idShoppingList': data.idShoppingList, 'idShoppingListItem': idShoppingListItem })
                 },
             } only %}
         {% endblock %}

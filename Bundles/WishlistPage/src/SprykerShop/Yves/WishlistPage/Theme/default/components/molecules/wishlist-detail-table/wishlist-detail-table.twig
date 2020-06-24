@@ -9,8 +9,8 @@
 {% define data = {
     wishlistItems: required,
     wishlistName: required,
-    wishlistRemoveItemFormCloner: required,
-    wishlistMoveToCartFormCloner: required,
+    wishlistRemoveItemFormCloner: null,
+    wishlistMoveToCartFormCloner: null,
 } %}
 
 {% block body %}
@@ -90,9 +90,10 @@
                         <ul class="menu menu--inline float-right">
                             {% if isItemAvailable %}
                                 <li class="menu__item">
-                                    {% set wishlistMoveToCartFormCloner = data.wishlistMoveToCartFormCloner.getForm.createView %}
+                                    {% if data.wishlistMoveToCartFormCloner %}
+                                        {% set wishlistMoveToCartForm = data.wishlistMoveToCartFormCloner.getForm.createView %}
 
-                                    {{ form_start(wishlistMoveToCartFormCloner, { 'action': path('wishlist/move-to-cart', {sku: item.sku, 'wishlist-name': data.wishlistName}), 'name': 'addToCart_' ~ loop.index, 'attr': {'id': 'addToCart_' ~ loop.index, 'class': 'col'}}) }}
+                                        {{ form_start(wishlistMoveToCartForm, { 'action': path('wishlist/move-to-cart', {sku: item.sku, 'wishlist-name': data.wishlistName}), 'name': 'addToCart_' ~ loop.index, 'attr': {'id': 'addToCart_' ~ loop.index, 'class': 'col'}}) }}
                                         <button class="link" title="{{ 'customer.account.wishlist.add-to-cart' | trans }}">
                                             {% include atom('icon') with {
                                                 data: {
@@ -100,13 +101,27 @@
                                                 },
                                             } only %}
                                         </button>
-                                    {{ form_end(wishlistMoveToCartFormCloner) }}
+                                        {{ form_end(wishlistMoveToCartForm) }}
+                                    {% else %}
+                                        <form id="addToCart_{{ loop.index }}" class="col" name="addToCart_{{ loop.index }}" method="POST" action="{{ path('wishlist/move-to-cart', {sku: item.sku, 'wishlist-name': data.wishlistName}) }}">
+                                            <input type="hidden" name="wishlist_move_to_cart_form[_token]" value="{{ csrf_token('wishlist_move_to_cart_form')}}">
+                                            <button class="link" title="{{ 'customer.account.wishlist.add-to-cart' | trans }}">
+                                                {% include atom('icon') with {
+                                                    data: {
+                                                        name: 'cart-plus',
+                                                    },
+                                                } only %}
+                                            </button>
+                                        </form>
+                                    {% endif %}
+
                                 </li>
                             {% endif %}
                             <li class="menu__item">
-                                {% set wishlistRemoveItemFormCloner = data.wishlistRemoveItemFormCloner.getForm.createView %}
+                                {% if data.wishlistRemoveItemFormCloner %}
+                                    {% set wishlistRemoveItemFormCloner = data.wishlistRemoveItemFormCloner.getForm.createView %}
 
-                                {{ form_start(wishlistRemoveItemFormCloner, {'action':path('wishlist/remove-item', {sku: item.sku, 'wishlist-name': data.wishlistName}), 'name': 'deleteWishlistItem_' ~ loop.index, 'attr': {'id': 'deleteWishlistItem_' ~ loop.index, 'class': 'col'}}) }}
+                                    {{ form_start(wishlistRemoveItemFormCloner, {'action':path('wishlist/remove-item', {sku: item.sku, 'wishlist-name': data.wishlistName}), 'name': 'deleteWishlistItem_' ~ loop.index, 'attr': {'id': 'deleteWishlistItem_' ~ loop.index, 'class': 'col'}}) }}
                                     <button class="link" title="{{ 'customer.account.wishlist.remove' | trans }}">
                                         {% include atom('icon') with {
                                             data: {
@@ -114,7 +129,19 @@
                                             },
                                         } only %}
                                     </button>
-                                {{ form_end(wishlistRemoveItemFormCloner) }}
+                                    {{ form_end(wishlistRemoveItemFormCloner) }}
+                                {% else %}
+                                    <form id="deleteWishlistItem_{{ loop.index }}" class="col" name="deleteWishlistItem_{{ loop.index }}" method="POST" action="{{ path('wishlist/remove-item', {sku: item.sku, 'wishlist-name': data.wishlistName}) }}">
+                                        <input type="hidden" name="wishlist_remove_item_form[_token]" value="{{ csrf_token('wishlist_remove_item_form')}}">
+                                        <button class="link" title="{{ 'customer.account.wishlist.remove' | trans }}">
+                                            {% include atom('icon') with {
+                                                data: {
+                                                    name: 'remove',
+                                                },
+                                            } only %}
+                                        </button>
+                                    </form>
+                                {% endif %}
                             </li>
                         </ul>
                     </td>

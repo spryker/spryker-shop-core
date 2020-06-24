@@ -57,6 +57,7 @@ export default class AjaxProvider extends Component {
         this.isFetchingRequest = true;
         this.dispatchCustomEvent(EVENT_FETCHING);
 
+        console.log(data);
         return new Promise<T>((resolve, reject) => {
             this.xhr.open(this.method, this.url);
             this.headers.forEach((value: string, key: string) => this.xhr.setRequestHeader(key, value));

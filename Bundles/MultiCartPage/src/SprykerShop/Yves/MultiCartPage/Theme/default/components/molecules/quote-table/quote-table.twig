@@ -12,8 +12,8 @@
         duplicate: false,
     },
     isQuoteDeletable: required,
-    multiCartSetDefaultFormCloner: required,
-    multiCartDuplicateFormCloner: required,
+    multiCartSetDefaultFormCloner: null,
+    multiCartDuplicateFormCloner: null,
 } %}
 
 {% set showActions = data.actions.update or data.actions.delete or data.actions.duplicate %}
@@ -53,10 +53,17 @@
                             </strong>
                         </a>
                         {% else %}
-                            {% set multiCartSetDefaultFormCloner = data.multiCartSetDefaultFormCloner.getForm.createView %}
-                            {{ form_start(multiCartSetDefaultFormCloner, {'action': path('multi-cart/set-default', {'idQuote': quote.idQuote}) }) }}
-                                <button type="submit" class="link">{{ quote.name }}</button>
-                            {{ form_end(multiCartSetDefaultFormCloner) }}
+                            {% if data.multiCartSetDefaultFormCloner %}
+                                {% set multiCartSetDefaultForm = data.multiCartSetDefaultFormCloner.getForm.createView %}
+                                {{ form_start(multiCartSetDefaultForm, {'action': path('multi-cart/set-default', {'idQuote': quote.idQuote}) }) }}
+                                    <button type="submit" class="link">{{ quote.name }}</button>
+                                {{ form_end(multiCartSetDefaultForm) }}
+                            {% else %}
+                                <form id="multiCartSetDefaultForm_{{ loop.index }}" name="multiCartSetDefaultForm_{{ loop.index }}" method="POST" action="{{ path('multi-cart/set-default', {'idQuote': quote.idQuote}) }}">
+                                    <input type="hidden" name="multi_cart_set_default_form[_token]" value="{{ csrf_token('multi_cart_set_default_form')}}">
+                                    <button type="submit" class="link">{{ quote.name }}</button>
+                                </form>
+                            {% endif %}
                         {% endif %}
                     </td>
                     {% widget 'CartListPermissionGroupWidget' args [quote, isQuoteDeletable] use view('multi-cart-permission-show', 'SharedCartWidget') only %}{% endwidget %}
@@ -100,10 +107,17 @@
                                     {% endif %}
                                     {% if data.actions.duplicate %}
                                         <li class="menu__item">
-                                            {% set multiCartDuplicateForm = data.multiCartDuplicateFormCloner.getForm.createView %}
-                                            {{ form_start(multiCartDuplicateForm, {'action': path('multi-cart/duplicate', {'idQuote': quote.idQuote}) }) }}
+                                            {% if data.multiCartDuplicateFormCloner %}
+                                                {% set multiCartDuplicateForm = data.multiCartDuplicateFormCloner.getForm.createView %}
+                                                {{ form_start(multiCartDuplicateForm, {'action': path('multi-cart/duplicate', {'idQuote': quote.idQuote}) }) }}
                                                 <button class="link">{{ 'page.multi_cart.shopping_cart.list.link.duplicate' | trans }}</button>
-                                            {{ form_end(multiCartDuplicateForm) }}
+                                                {{ form_end(multiCartDuplicateForm) }}
+                                            {% else %}
+                                                <form id="multiCartDuplicateForm_{{ loop.index }}" name="multiCartDuplicateForm_{{ loop.index }}" method="POST" action="{{ path('multi-cart/duplicate', {'idQuote': quote.idQuote}) }}">
+                                                    <input type="hidden" name="multi_cart_duplicate_form[_token]" value="{{ csrf_token('multi_cart_duplicate_form')}}">
+                                                    <button class="link">{{ 'page.multi_cart.shopping_cart.list.link.duplicate' | trans }}</button>
+                                                </form>
+                                            {% endif %}
                                         </li>
                                     {% endif %}
                                 {% endif %}

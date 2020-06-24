@@ -6,7 +6,7 @@
 
 {% define data = {
     companyBusinessUnit: required,
-    form: required,
+    form: null,
 } %}
 
 {% block body %}
@@ -29,7 +29,16 @@
         {{ "label.button.cancel" | trans }}
     </a>
 
-    {{ form_start(data.form, {'action': path('company/business-unit/delete', {'id': data.companyBusinessUnit.idCompanyBusinessUnit}) }) }}
+    {% if data.form %}
+        {{ form_start(data.form, {'action': path('company/business-unit/delete', {'id': data.companyBusinessUnit.idCompanyBusinessUnit}) }) }}
         <input data-init-single-click class="button" value="{{ "label.button.submit" | trans }}">
-    {{ form_end(data.form) }}
+        {{ form_end(data.form) }}
+    {% else %}
+        <form id="companyBusinesUnitDeleteForm" name="companyBusinesUnitDeleteForm" method="POST"
+              action="{{ path('company/business-unit/delete', {'id': data.companyBusinessUnit.idCompanyBusinessUnit}) }}">
+            <input type="hidden" name="company_business_unit_delete_form[_token]" value="{{ csrf_token('company_business_unit_delete_form')}}">
+            <input data-init-single-click class="button" value="{{ "label.button.submit" | trans }}">
+        </form>
+    {% endif %}
+
 {% endblock %}
