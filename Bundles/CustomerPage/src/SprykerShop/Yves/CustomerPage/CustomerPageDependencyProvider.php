@@ -188,7 +188,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addFlashMessenger(Container $container): Container
     {
         $container->set(static::FLASH_MESSENGER, function (Container $container) {
-            return $container[static::PLUGIN_APPLICATION]['flash_messenger'];
+            return $container->get(static::PLUGIN_APPLICATION)['flash_messenger'];
         });
 
         return $container;
