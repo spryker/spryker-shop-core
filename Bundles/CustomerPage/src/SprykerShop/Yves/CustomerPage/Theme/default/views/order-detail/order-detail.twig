@@ -43,6 +43,15 @@
         {% endblock %}
     {% endembed %}
 
+        {% widget 'OrderCancelButtonWidget' args [data.order, app.request.requestUri] only %}
+            {% block formContent %}
+                <div class="box text-right">
+                    {% set buttonClasses = 'button button--alert' %}
+                    {{ parent() }}
+                </div>
+            {% endblock %}
+        {% endwidget %}
+
     <div class="box">
         {% widget 'CommentThreadWidget' args [
             data.order.idSalesOrder,
