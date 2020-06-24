@@ -8,7 +8,6 @@
 } %}
 
 {% block breadcrumbs %}
-    {#todo: change formName and tokenFieldName to not daummy #}
     {% include molecule('breadcrumb') with {
         data: {
             steps: [
@@ -23,7 +22,6 @@
                 {
                     label: data.cart.name,
                     url: data.cart.isDefault ? url('cart') : url('multi-cart/set-default', { idQuote: data.cart.idQuote }),
-                    isFormElement: true,
                     formName: 'multi_cart_set_default_form',
                     tokenFieldName: 'multi_cart_set_default_form[_token]',
                 },
