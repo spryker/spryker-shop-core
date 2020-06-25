@@ -48,7 +48,6 @@ use SprykerShop\Yves\CustomerPage\Security\Customer;
 use SprykerShop\Yves\CustomerPage\Twig\GetUsernameTwigFunction;
 use SprykerShop\Yves\CustomerPage\Twig\IsLoggedTwigFunction;
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -482,12 +481,10 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     *
      * @return \SprykerShop\Yves\CustomerPage\Form\Cloner\FormCloner
      */
-    public function createFormCloner(FormInterface $form): FormCloner
+    public function createFormCloner(): FormCloner
     {
-        return new FormCloner($form);
+        return new FormCloner();
     }
 }

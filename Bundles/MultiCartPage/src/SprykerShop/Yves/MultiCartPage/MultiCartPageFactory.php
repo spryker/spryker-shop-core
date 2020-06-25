@@ -82,13 +82,11 @@ class MultiCartPageFactory extends AbstractFactory
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     *
      * @return \SprykerShop\Yves\MultiCartPage\Form\Cloner\FormCloner
      */
-    public function getFormCloner(FormInterface $form): FormCloner
+    public function getFormCloner(): FormCloner
     {
-        return new FormCloner($form);
+        return new FormCloner();
     }
 
     /**

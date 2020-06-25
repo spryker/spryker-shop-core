@@ -284,8 +284,8 @@ class MultiCartController extends AbstractController
         return [
             'quoteCollection' => $quoteCollectionTransfer->getQuotes(),
             'isQuoteDeletable' => $this->getFactory()->getMultiCartClient()->isQuoteDeletable(),
-            'multiCartDuplicateFormCloner' => $this->getFactory()->getFormCloner($this->getFactory()->getMultiCartDuplicateForm()),
-            'multiCartSetDefaultFormCloner' => $this->getFactory()->getFormCloner($this->getFactory()->getMultiCartSetDefaultForm()),
+            'multiCartDuplicateFormCloner' => $this->getFactory()->getFormCloner()->setForm($this->getFactory()->getMultiCartDuplicateForm()),
+            'multiCartSetDefaultFormCloner' => $this->getFactory()->getFormCloner()->setForm($this->getFactory()->getMultiCartSetDefaultForm()),
         ];
     }
 

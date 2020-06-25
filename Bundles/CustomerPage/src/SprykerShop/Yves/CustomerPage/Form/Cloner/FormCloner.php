@@ -21,18 +21,22 @@ class FormCloner extends AbstractType
     protected $form;
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $form
+     * @return \Symfony\Component\Form\FormInterface
      */
-    public function __construct(FormInterface $form)
+    public function getForm(): FormInterface
     {
-        $this->form = $form;
+        return clone $this->form;
     }
 
     /**
-     * @return \Symfony\Component\Form\FormInterface
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return $this
      */
-    public function getForm()
+    public function setForm(FormInterface $form)
     {
-        return clone $this->form;
+        $this->form = $form;
+
+        return $this;
     }
 }
