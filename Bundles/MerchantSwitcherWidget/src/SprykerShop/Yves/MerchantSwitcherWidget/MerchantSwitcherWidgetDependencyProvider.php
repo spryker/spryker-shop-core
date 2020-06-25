@@ -16,6 +16,10 @@ use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWi
 
 class MerchantSwitcherWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @see \Spryker\Shared\Application\ApplicationConstants::FORM_FACTORY
+     */
+    public const FORM_FACTORY = 'FORM_FACTORY';
     public const CLIENT_MERCHANT_SEARCH = 'CLIENT_MERCHANT_SEARCH';
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';

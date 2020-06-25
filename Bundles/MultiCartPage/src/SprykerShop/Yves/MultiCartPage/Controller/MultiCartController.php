@@ -30,6 +30,7 @@ class MultiCartController extends AbstractController
 
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
     protected const GLOSSARY_KEY_CART_UPDATED_ERROR = 'multi_cart_widget.cart.updated.error';
+    protected const GLOSSARY_KEY_CART_DELETE_ERROR = 'multi_cart_widget.cart.delete.error';
     protected const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
 
     /**
@@ -226,22 +227,26 @@ class MultiCartController extends AbstractController
     }
 
     /**
-     * @param int $idQuote
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $idQuote
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(int $idQuote, Request $request)
+    public function deleteAction(Request $request, int $idQuote)
     {
-        $multiCartDeleteForm = $this->getFactory()->getMultiCartDeleteForm()->handleRequest($request);
+        $multiCartDeleteForm = $this->getFactory()
+            ->getMultiCartDeleteForm(new QuoteTransfer())
+            ->handleRequest($request);
 
         if (!$multiCartDeleteForm->isSubmitted() || !$multiCartDeleteForm->isValid()) {
-            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+            $this->addErrorMessage(static::GLOSSARY_KEY_CART_DELETE_ERROR);
 
             return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
         }
 
-        $quoteTransfer = $this->findQuoteOrFail($idQuote);
+        $quoteTransfer = $this->findQuoteOrFail(
+            $multiCartDeleteForm->getData()->getIdQuote()
+        );
 
         if (!$this->canWriteQuote($quoteTransfer)) {
             $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
@@ -304,7 +309,7 @@ class MultiCartController extends AbstractController
     protected function executeConfirmDeleteAction(int $idQuote): array
     {
         return [
-            'multiCartDeleteForm' => $this->getFactory()->getMultiCartDeleteForm()->createView(),
+            'multiCartDeleteForm' => $this->getFactory()->getMultiCartDeleteForm(new QuoteTransfer())->createView(),
             'cart' => $this->findQuoteOrFail($idQuote),
         ];
     }

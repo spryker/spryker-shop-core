@@ -7,15 +7,20 @@
 
 namespace SprykerShop\Yves\MultiCartPage\Form;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Positive;
 
 class MultiCartDeleteForm extends AbstractType
 {
+    public const FIELD_ID_QUOTE = 'idQuote';
+
     /**
-     * This method is empty, because this form needs to implement csrf protection and all options and form content
-     * will be defined in twig templates.
-     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -23,5 +28,36 @@ class MultiCartDeleteForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $this->addIdQuoteField($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => QuoteTransfer::class,
+            'method' => Request::METHOD_POST,
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIdQuoteField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_ID_QUOTE, HiddenType::class, [
+            'constraints' => [
+                new NotBlank(),
+                new Positive(),
+            ],
+        ]);
+
+        return $this;
     }
 }

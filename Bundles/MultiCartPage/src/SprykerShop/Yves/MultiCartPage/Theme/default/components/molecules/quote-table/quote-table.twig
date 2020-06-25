@@ -56,12 +56,12 @@
                             {% if data.multiCartSetDefaultFormCloner %}
                                 {% set multiCartSetDefaultForm = data.multiCartSetDefaultFormCloner.getForm.createView %}
                                 {{ form_start(multiCartSetDefaultForm, {'action': path('multi-cart/set-default', {'idQuote': quote.idQuote}) }) }}
-                                    <button type="submit" class="link">{{ quote.name }}</button>
+                                    <button class="link">{{ quote.name }}</button>
                                 {{ form_end(multiCartSetDefaultForm) }}
                             {% else %}
                                 <form id="multiCartSetDefaultForm_{{ loop.index }}" name="multiCartSetDefaultForm_{{ loop.index }}" method="POST" action="{{ path('multi-cart/set-default', {'idQuote': quote.idQuote}) }}">
                                     <input type="hidden" name="multi_cart_set_default_form[_token]" value="{{ csrf_token('multi_cart_set_default_form')}}">
-                                    <button type="submit" class="link">{{ quote.name }}</button>
+                                    <button class="link">{{ quote.name }}</button>
                                 </form>
                             {% endif %}
                         {% endif %}

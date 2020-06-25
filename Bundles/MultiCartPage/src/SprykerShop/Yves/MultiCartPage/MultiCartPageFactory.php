@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\MultiCartPage;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToCartClientInterface;
@@ -99,11 +100,14 @@ class MultiCartPageFactory extends AbstractFactory
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $data
+     * @param mixed[] $options
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getMultiCartDeleteForm(): FormInterface
+    public function getMultiCartDeleteForm(QuoteTransfer $data, array $options = []): FormInterface
     {
-        return $this->getFormFactory()->create(MultiCartDeleteForm::class);
+        return $this->getFormFactory()->create(MultiCartDeleteForm::class, $data, $options);
     }
 
     /**

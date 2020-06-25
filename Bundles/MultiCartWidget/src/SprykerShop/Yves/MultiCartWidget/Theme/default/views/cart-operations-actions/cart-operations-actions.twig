@@ -8,7 +8,7 @@
 {% block body %}
     <div class="box box--borderless">
         {{ form_start(data.multiCartClearForm, {'action': path('multi-cart/clear', {'idQuote': data.idQuote}) }) }}
-            <button class="button clear" data-init-single-click >
+            <button class="button clear" data-init-single-click>
                 {{ "multi_cart_widget.cart.action.clear" | trans }}
             </button>
         {{ form_end(data.multiCartClearForm) }}
