@@ -169,14 +169,8 @@ export default class ProductItem extends Component {
      * @param ajaxAddToCartUrl A product card AJAX 'add to cart' URL.
      */
     set ajaxAddToCartUrl(ajaxAddToCartUrl: string) {
-        if (!ajaxAddToCartUrl) {
-            this.productAjaxButtonAddToCart.disabled = true;
-
-            return;
-        }
-
         if (this.productAjaxButtonAddToCart) {
-            this.productAjaxButtonAddToCart.disabled = false;
+            this.productAjaxButtonAddToCart.disabled = !ajaxAddToCartUrl;
             this.productAjaxButtonAddToCart.dataset.url = ajaxAddToCartUrl;
         }
 

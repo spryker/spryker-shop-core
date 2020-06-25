@@ -24,7 +24,7 @@
     {% endfor %}
 
     {% set productSku = item.sku %}
-    {% set isAvailable = item.sku and item.available and item.idProductConcrete %}
+    {% set isAvailable = productSku and item.available and item.idProductConcrete %}
 
     {% set dataAttributesList = {
         type: 'button',
