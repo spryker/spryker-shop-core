@@ -1,0 +1,67 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CmsSearchPage/src/SprykerShop/Yves/CmsSearchPage/CmsSearchPageDependencyProvider.php",
+            "snippet": "            return new CmsSearchPageToCmsSearchPageClientBridge($container->getLocator()->cmsPageSearch()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\CmsSearchPage\\Dependency\\Client\\CmsSearchPageToCmsPageSearchClientInterface::search cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CmsSearchPage/src/SprykerShop/Yves/CmsSearchPage/Controller/CmsSearchController.php",
+            "snippet": "            ->search($searchString, $request->query->all());",
+            "selected_text": "$searchString",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "DeprecatedClass",
+            "message": "Class SprykerShop\\Yves\\CmsSearchPage\\Plugin\\Provider\\CmsSearchPageControllerProvider is deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CmsSearchPage/src/SprykerShop/Yves/CmsSearchPage/Plugin/FullTextSearchCmsPageTabPlugin.php",
+            "snippet": "            ->setRoute(CmsSearchPageControllerProvider::ROUTE_SEARCH);",
+            "selected_text": "CmsSearchPageControllerProvider::ROUTE_SEARCH",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Yves\\Application\\Plugin\\Provider\\ControllerProviderInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CmsSearchPage/src/SprykerShop/Yves/CmsSearchPage/Plugin/Provider/CmsSearchPageControllerProvider.php",
+            "snippet": "class CmsSearchPageControllerProvider extends AbstractYvesControllerProvider",
+            "selected_text": "CmsSearchPageControllerProvider",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "DeprecatedClass",
+            "message": "SprykerShop\\Yves\\ShopApplication\\Plugin\\Provider\\AbstractYvesControllerProvider is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CmsSearchPage/src/SprykerShop/Yves/CmsSearchPage/Plugin/Provider/CmsSearchPageControllerProvider.php",
+            "snippet": "class CmsSearchPageControllerProvider extends AbstractYvesControllerProvider",
+            "selected_text": "AbstractYvesControllerProvider",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}

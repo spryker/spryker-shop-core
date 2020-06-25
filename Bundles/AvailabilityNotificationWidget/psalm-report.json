@@ -1,0 +1,187 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationWidget/src/SprykerShop/Yves/AvailabilityNotificationWidget/AvailabilityNotificationWidgetDependencyProvider.php",
+            "snippet": "            return new AvailabilityNotificationWidgetToAvailabilityNotificationClientBridge($container->getLocator()->availabilityNotification()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationWidget/src/SprykerShop/Yves/AvailabilityNotificationWidget/AvailabilityNotificationWidgetDependencyProvider.php",
+            "snippet": "            return new AvailabilityNotificationWidgetToCustomerClientBridge($container->getLocator()->customer()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\AvailabilityNotificationWidget\\Controller\\AvailabilityNotificationSubscriptionController::redirectResponseExternal cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationWidget/src/SprykerShop/Yves/AvailabilityNotificationWidget/Controller/AvailabilityNotificationSubscriptionController.php",
+            "snippet": "        return $this->redirectResponseExternal($request->headers->get('referer'));",
+            "selected_text": "$request->headers->get('referer')",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Symfony\\Component\\Form\\FormErrorIterator::getmessage does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationWidget/src/SprykerShop/Yves/AvailabilityNotificationWidget/Controller/AvailabilityNotificationSubscriptionController.php",
+            "snippet": "                $this->addErrorMessage($error->getMessage());",
+            "selected_text": "getMessage",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\AvailabilityNotificationWidget\\Controller\\AvailabilityNotificationSubscriptionController::addErrorMessage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationWidget/src/SprykerShop/Yves/AvailabilityNotificationWidget/Controller/AvailabilityNotificationSubscriptionController.php",
+            "snippet": "            $this->addErrorMessage($responseTransfer->getErrorMessage());",
+            "selected_text": "$responseTransfer->getErrorMessage()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 76,
+            "line_to": 76,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\CustomerTransfer::addAvailabilityNotificationSubscriptionSku cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationWidget/src/SprykerShop/Yves/AvailabilityNotificationWidget/Controller/AvailabilityNotificationSubscriptionController.php",
+            "snippet": "            $customerTransfer->addAvailabilityNotificationSubscriptionSku($responseTransfer->getAvailabilityNotificationSubscription()->getSku());",
+            "selected_text": "$responseTransfer->getAvailabilityNotificationSubscription()->getSku()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 76,
+            "line_to": 76,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getSku on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationWidget/src/SprykerShop/Yves/AvailabilityNotificationWidget/Controller/AvailabilityNotificationSubscriptionController.php",
+            "snippet": "            $customerTransfer->addAvailabilityNotificationSubscriptionSku($responseTransfer->getAvailabilityNotificationSubscription()->getSku());",
+            "selected_text": "getSku",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 89,
+            "line_to": 89,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\AvailabilityNotificationWidget\\Controller\\AvailabilityNotificationSubscriptionController::redirectResponseExternal cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationWidget/src/SprykerShop/Yves/AvailabilityNotificationWidget/Controller/AvailabilityNotificationSubscriptionController.php",
+            "snippet": "        return $this->redirectResponseExternal($request->headers->get('referer'));",
+            "selected_text": "$request->headers->get('referer')",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 122,
+            "line_to": 122,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\AvailabilityNotificationWidget\\Controller\\AvailabilityNotificationSubscriptionController::addErrorMessage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationWidget/src/SprykerShop/Yves/AvailabilityNotificationWidget/Controller/AvailabilityNotificationSubscriptionController.php",
+            "snippet": "            $this->addErrorMessage($responseTransfer->getErrorMessage());",
+            "selected_text": "$responseTransfer->getErrorMessage()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 127,
+            "line_to": 127,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\AvailabilityNotificationWidget\\Controller\\AvailabilityNotificationSubscriptionController::removeAvailabilityNotificationSubscriptionFromCustomer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationWidget/src/SprykerShop/Yves/AvailabilityNotificationWidget/Controller/AvailabilityNotificationSubscriptionController.php",
+            "snippet": "        $this->removeAvailabilityNotificationSubscriptionFromCustomer($responseTransfer->getAvailabilityNotificationSubscription()->getSku());",
+            "selected_text": "$responseTransfer->getAvailabilityNotificationSubscription()->getSku()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 127,
+            "line_to": 127,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getSku on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationWidget/src/SprykerShop/Yves/AvailabilityNotificationWidget/Controller/AvailabilityNotificationSubscriptionController.php",
+            "snippet": "        $this->removeAvailabilityNotificationSubscriptionFromCustomer($responseTransfer->getAvailabilityNotificationSubscription()->getSku());",
+            "selected_text": "getSku",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Yves\\Kernel\\Controller\\AbstractController::redirectResponseExternal has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationWidget/src/SprykerShop/Yves/AvailabilityNotificationWidget/Controller/AvailabilityNotificationSubscriptionController.php",
+            "snippet": "        return $this->redirectResponseExternal($request->headers->get('referer'));",
+            "selected_text": "redirectResponseExternal",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 89,
+            "line_to": 89,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Yves\\Kernel\\Controller\\AbstractController::redirectResponseExternal has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationWidget/src/SprykerShop/Yves/AvailabilityNotificationWidget/Controller/AvailabilityNotificationSubscriptionController.php",
+            "snippet": "        return $this->redirectResponseExternal($request->headers->get('referer'));",
+            "selected_text": "redirectResponseExternal",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Yves\\Application\\Plugin\\Provider\\ControllerProviderInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationWidget/src/SprykerShop/Yves/AvailabilityNotificationWidget/Plugin/Provider/AvailabilityNotificationWidgetControllerProvider.php",
+            "snippet": "class AvailabilityNotificationWidgetControllerProvider extends AbstractYvesControllerProvider",
+            "selected_text": "AvailabilityNotificationWidgetControllerProvider",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "DeprecatedClass",
+            "message": "SprykerShop\\Yves\\ShopApplication\\Plugin\\Provider\\AbstractYvesControllerProvider is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationWidget/src/SprykerShop/Yves/AvailabilityNotificationWidget/Plugin/Provider/AvailabilityNotificationWidgetControllerProvider.php",
+            "snippet": "class AvailabilityNotificationWidgetControllerProvider extends AbstractYvesControllerProvider",
+            "selected_text": "AbstractYvesControllerProvider",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}

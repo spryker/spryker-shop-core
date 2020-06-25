@@ -1,0 +1,224 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 76,
+            "line_to": 76,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for SprykerShop\\Yves\\ConfigurableBundleWidget\\Grouper\\ConfiguredBundleGrouper::getItemGroupKeysFromConfiguredBundle is incorrect, got 'list<mixed|null|string>'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/Grouper/ConfiguredBundleGrouper.php",
+            "snippet": "     * @return string[]",
+            "selected_text": "string[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 86,
+            "line_to": 86,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<mixed|null|string>' does not match the declared return type 'array<array-key, string>' for SprykerShop\\Yves\\ConfigurableBundleWidget\\Grouper\\ConfiguredBundleGrouper::getItemGroupKeysFromConfiguredBundle",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/Grouper/ConfiguredBundleGrouper.php",
+            "snippet": "        return $itemGroupKeys;",
+            "selected_text": "$itemGroupKeys",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/ConfigurableBundleWidgetDependencyProvider.php",
+            "snippet": "            return new ConfigurableBundleWidgetToQuoteClientBridge($container->getLocator()->quote()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/ConfigurableBundleWidgetDependencyProvider.php",
+            "snippet": "            return new ConfigurableBundleWidgetToConfigurableBundleCartClientBridge($container->getLocator()->configurableBundleCart()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 195,
+            "line_to": 195,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\ConfigurableBundleWidget\\Controller\\CartController::addErrorMessage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/Controller/CartController.php",
+            "snippet": "            $this->addErrorMessage($errorTransfer->getMessage());",
+            "selected_text": "$errorTransfer->getMessage()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of count expects Countable|ResourceBundle|SimpleXMLElement|array<array-key, mixed>, possibly different type array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>|iterable<mixed, mixed> provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/Grouper/ConfiguredBundleGrouper.php",
+            "snippet": "        if (count($quoteTransfer->getItems()) === count($itemTransfers)) {",
+            "selected_text": "$itemTransfers",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ConfiguredBundleTransfer> variable ",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/Grouper/ConfiguredBundleGrouper.php",
+            "snippet": "            return $configuredBundleCollectionTransfer->getConfiguredBundles()->getArrayCopy();",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method requireSlot on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/Mapper/ConfiguredBundleMapper.php",
+            "snippet": "            ->requireSlot()",
+            "selected_text": "requireSlot",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method requireUuid on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/Mapper/ConfiguredBundleMapper.php",
+            "snippet": "                ->requireUuid();",
+            "selected_text": "requireUuid",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method requireGroupKey on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/Mapper/ConfiguredBundleMapper.php",
+            "snippet": "            ->requireGroupKey()",
+            "selected_text": "requireGroupKey",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method requireUuid on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/Mapper/ConfiguredBundleMapper.php",
+            "snippet": "                ->requireUuid()",
+            "selected_text": "requireUuid",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 62,
+            "line_to": 62,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $configuredBundleTransfers[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/Mapper/ConfiguredBundleMapper.php",
+            "snippet": "            $configuredBundleTransfers[$configuredBundleTransfer->getGroupKey()] = (new ConfiguredBundleTransfer())",
+            "selected_text": "$configuredBundleTransfers",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $configuredBundleTransfers using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/Mapper/ConfiguredBundleMapper.php",
+            "snippet": "        $configuredBundleTransfers[$configuredBundleTransfer->getGroupKey()]->addItem($itemTransfer);",
+            "selected_text": "$configuredBundleTransfers",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of count expects Countable|ResourceBundle|SimpleXMLElement|array<array-key, mixed>, possibly different type array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>|iterable<mixed, mixed> provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/Widget/QuoteConfiguredBundleWidget.php",
+            "snippet": "        if ($itemTransfers === null || !count($itemTransfers)) {",
+            "selected_text": "$itemTransfers",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 102,
+            "line_to": 102,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $items[mixed|null|string] using possibly null offset mixed|null|string",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/Widget/QuoteConfiguredBundleWidget.php",
+            "snippet": "            $items[$itemTransfer->getGroupKey()] = $itemTransfer;",
+            "selected_text": "$items",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/PermissionAwareTrait.php",
+            "snippet": "            return Locator::getInstance()->permission()->client()->can($permissionKey, $context);",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Yves\\Application\\Plugin\\Provider\\ControllerProviderInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/Plugin/Provider/ConfigurableBundleWidgetControllerProvider.php",
+            "snippet": "class ConfigurableBundleWidgetControllerProvider extends AbstractYvesControllerProvider",
+            "selected_text": "ConfigurableBundleWidgetControllerProvider",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "DeprecatedClass",
+            "message": "SprykerShop\\Yves\\ShopApplication\\Plugin\\Provider\\AbstractYvesControllerProvider is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/Plugin/Provider/ConfigurableBundleWidgetControllerProvider.php",
+            "snippet": "class ConfigurableBundleWidgetControllerProvider extends AbstractYvesControllerProvider",
+            "selected_text": "AbstractYvesControllerProvider",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}
