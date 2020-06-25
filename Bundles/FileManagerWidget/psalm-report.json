@@ -1,0 +1,91 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\FileManagerWidget\\Dependency\\Service\\FileManagerWidgetToFileManagerServiceInterface::readStream cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/FileManagerWidget/src/SprykerShop/Yves/FileManagerWidget/Controller/DownloadController.php",
+            "snippet": "            ->readStream($storageFileName);",
+            "selected_text": "$storageFileName",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Symfony\\Component\\HttpFoundation\\ResponseHeaderBag::set cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/FileManagerWidget/src/SprykerShop/Yves/FileManagerWidget/Controller/DownloadController.php",
+            "snippet": "        $response->headers->set(static::CONTENT_TYPE, $contentType);",
+            "selected_text": "$contentType",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/FileManagerWidget/src/SprykerShop/Yves/FileManagerWidget/FileManagerWidgetDependencyProvider.php",
+            "snippet": "                $container->getLocator()->fileManager()->service()",
+            "selected_text": "service",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/FileManagerWidget/src/SprykerShop/Yves/FileManagerWidget/FileManagerWidgetDependencyProvider.php",
+            "snippet": "                $container->getLocator()->fileManagerStorage()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Yves\\Application\\Plugin\\Provider\\ControllerProviderInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/FileManagerWidget/src/SprykerShop/Yves/FileManagerWidget/Plugin/Provider/FileManagerWidgetControllerProvider.php",
+            "snippet": "class FileManagerWidgetControllerProvider extends AbstractYvesControllerProvider",
+            "selected_text": "FileManagerWidgetControllerProvider",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "DeprecatedClass",
+            "message": "SprykerShop\\Yves\\ShopApplication\\Plugin\\Provider\\AbstractYvesControllerProvider is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/FileManagerWidget/src/SprykerShop/Yves/FileManagerWidget/Plugin/Provider/FileManagerWidgetControllerProvider.php",
+            "snippet": "class FileManagerWidgetControllerProvider extends AbstractYvesControllerProvider",
+            "selected_text": "AbstractYvesControllerProvider",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "DeprecatedClass",
+            "message": "SprykerShop\\Yves\\ShopApplication\\Plugin\\Provider\\AbstractYvesControllerProvider is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/FileManagerWidget/src/SprykerShop/Yves/FileManagerWidget/Plugin/Provider/FileManagerWidgetControllerProvider.php",
+            "snippet": "        parent::__construct($sslEnabled);",
+            "selected_text": "parent::__construct($sslEnabled)",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}
