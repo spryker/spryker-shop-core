@@ -8,8 +8,10 @@
 namespace SprykerShop\Yves\CustomerPage\Plugin\Provider;
 
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
+use SprykerShop\Yves\CustomerPage\CustomerChecker\CustomerChecker;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Exception\DisabledException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
 
 /**
@@ -19,6 +21,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerI
 class CustomerAuthenticationFailureHandler extends BaseCustomerAuthenticationHandler implements AuthenticationFailureHandlerInterface
 {
     public const MESSAGE_CUSTOMER_AUTHENTICATION_FAILED = 'customer.authentication.failed';
+    public const MESSAGE_CUSTOMER_NOT_CONFIRMED_ACCOUNT = 'mail.authorization.invalid_account';
 
     /**
      * @var \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
@@ -48,8 +51,22 @@ class CustomerAuthenticationFailureHandler extends BaseCustomerAuthenticationHan
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        $this->flashMessenger->addErrorMessage(static::MESSAGE_CUSTOMER_AUTHENTICATION_FAILED);
+        $this->flashMessenger->addErrorMessage($this->buildErrorMessage($exception));
 
         return $this->createRefererRedirectResponse($request, $this->targetUrl);
+    }
+
+    /**
+     * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $exception
+     *
+     * @return string
+     */
+    protected function buildErrorMessage(AuthenticationException $exception): string
+    {
+        if (($exception instanceof DisabledException) && $exception->getMessage() === CustomerChecker::ERROR_NOT_CONFIRMED_ACCOUNT) {
+            return static::MESSAGE_CUSTOMER_NOT_CONFIRMED_ACCOUNT;
+        }
+
+        return static::MESSAGE_CUSTOMER_AUTHENTICATION_FAILED;
     }
 }

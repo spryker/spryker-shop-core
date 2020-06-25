@@ -41,7 +41,9 @@ class AuthenticationHandler extends AbstractPlugin
             ->registerCustomer($customerTransfer);
 
         if ($customerResponseTransfer->getIsSuccess()) {
-            $this->loginAfterSuccessfulRegistration($customerResponseTransfer->getCustomerTransfer());
+            if (!$customerResponseTransfer->getIsDoubleOptInEnabled()) {
+                $this->loginAfterSuccessfulRegistration($customerResponseTransfer->getCustomerTransfer());
+            }
         }
 
         return $customerResponseTransfer;

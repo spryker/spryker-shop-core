@@ -12,12 +12,12 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    protected const ROUTE_LOGIN = 'login';
+    public const ROUTE_LOGIN = 'login';
     protected const ROUTE_LOGOUT = 'logout';
     protected const ROUTE_REGISTER = 'register';
     protected const ROUTE_PASSWORD_FORGOTTEN = 'password/forgotten';
     protected const ROUTE_PASSWORD_RESTORE = 'password/restore';
-    protected const ROUTE_CUSTOMER_OVERVIEW = 'customer/overview';
+    public const ROUTE_CUSTOMER_OVERVIEW = 'customer/overview';
     protected const ROUTE_CUSTOMER_PROFILE = 'customer/profile';
     protected const ROUTE_CUSTOMER_ADDRESS = 'customer/address';
     protected const ROUTE_CUSTOMER_NEW_ADDRESS = 'customer/address/new';
@@ -29,6 +29,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected const ROUTE_CUSTOMER_DELETE = 'customer/delete';
     protected const ROUTE_CUSTOMER_DELETE_CONFIRM = 'customer/delete/confirm';
     protected const ROUTE_TOKEN = 'token';
+    public const ROUTE_CONFIRM_REGISTRATION = 'register/confirm';
 
     protected const TOKEN_PATTERN = '[a-zA-Z0-9-_\.]+';
 
@@ -61,6 +62,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $routeCollection = $this->addCustomerDeleteRoute($routeCollection);
         $routeCollection = $this->addCustomerDeleteConfirmRoute($routeCollection);
         $routeCollection = $this->addAccessTokenRoute($routeCollection);
+        $routeCollection = $this->addRegistrationConfirmedRoute($routeCollection);
 
         return $routeCollection;
     }
@@ -285,6 +287,22 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $route = $this->buildRoute('/access-token/{token}', 'CustomerPage', 'AccessToken', 'indexAction');
         $route = $route->setRequirement('token', static::TOKEN_PATTERN);
         $routeCollection->add(static::ROUTE_TOKEN, $route);
+
+        return $routeCollection;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\CustomerPage\Controller\RegisterController::confirmAction()
+     *
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Yves\Router\Route\RouteCollection
+     */
+    protected function addRegistrationConfirmedRoute(RouteCollection $routeCollection): RouteCollection
+    {
+        $route = $this->buildRoute('/register/confirm', 'CustomerPage', 'Register', 'confirmAction');
+        $route = $route->setRequirement('token', static::TOKEN_PATTERN);
+        $routeCollection->add(static::ROUTE_CONFIRM_REGISTRATION, $route);
 
         return $routeCollection;
     }

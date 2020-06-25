@@ -8,8 +8,9 @@
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Shared\Customer\Code\Messages;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
+use SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -18,6 +19,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RegisterController extends AbstractCustomerController
 {
+    public const MESSAGE_CUSTOMER_CONFIRMED = 'customer.authorization.account_validated';
+    public const MESSAGE_MISSING_CONFIRMATION_TOKEN = 'customer.token.invalid';
+    public const MESSAGE_CUSTOMER_REGISTRATION_SUCCESS = 'customer.registration.success';
+    public const MESSAGE_CUSTOMER_REGISTRATION_EMAIL_CONFIRMATION = 'customer.authorization.validate_email_address';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -55,9 +61,16 @@ class RegisterController extends AbstractCustomerController
             $customerResponseTransfer = $this->registerCustomer($registerForm->getData());
 
             if ($customerResponseTransfer->getIsSuccess()) {
-                $this->addSuccessMessage(Messages::CUSTOMER_AUTHORIZATION_SUCCESS);
+                $message = $customerResponseTransfer->getIsDoubleOptInEnabled()
+                    ? static::MESSAGE_CUSTOMER_REGISTRATION_EMAIL_CONFIRMATION
+                    : static::MESSAGE_CUSTOMER_REGISTRATION_SUCCESS;
+                $this->addSuccessMessage($message);
 
-                return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_OVERVIEW);
+                $route = $message = $customerResponseTransfer->getIsDoubleOptInEnabled()
+                    ? CustomerPageRouteProviderPlugin::ROUTE_LOGIN
+                    : CustomerPageRouteProviderPlugin::ROUTE_CUSTOMER_OVERVIEW;
+
+                return $this->redirectResponseInternal($route);
             }
 
             $this->processResponseErrors($customerResponseTransfer);
@@ -90,5 +103,41 @@ class RegisterController extends AbstractCustomerController
             ->registerCustomer($customerTransfer);
 
         return $customerResponseTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function confirmAction(Request $request): RedirectResponse
+    {
+        $response = $this->executeConfirmAction($request);
+
+        return $response;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeConfirmAction(Request $request): RedirectResponse
+    {
+        $token = $request->query->get('token');
+        if (!$token) {
+            $this->addErrorMessage(static::MESSAGE_MISSING_CONFIRMATION_TOKEN);
+
+            return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_LOGIN);
+        }
+
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer->setRegistrationKey($token);
+
+        $this->getFactory()->getCustomerClient()->confirmRegistration($customerTransfer);
+
+        $this->addSuccessMessage(static::MESSAGE_CUSTOMER_CONFIRMED);
+
+        return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_LOGIN);
     }
 }

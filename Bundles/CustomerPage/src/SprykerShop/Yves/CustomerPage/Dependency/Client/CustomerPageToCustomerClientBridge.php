@@ -205,4 +205,14 @@ class CustomerPageToCustomerClientBridge implements CustomerPageToCustomerClient
     {
         return $this->customerClient->getCustomerByAccessToken($accessToken);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function confirmRegistration(CustomerTransfer $customerTransfer)
+    {
+        return $this->customerClient->confirmRegistration($customerTransfer);
+    }
 }

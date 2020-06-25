@@ -16,6 +16,7 @@ use SprykerShop\Yves\CustomerPage\Authenticator\CustomerAuthenticator;
 use SprykerShop\Yves\CustomerPage\Authenticator\CustomerAuthenticatorInterface;
 use SprykerShop\Yves\CustomerPage\CustomerAddress\AddressChoicesResolver;
 use SprykerShop\Yves\CustomerPage\CustomerAddress\AddressChoicesResolverInterface;
+use SprykerShop\Yves\CustomerPage\CustomerChecker\CustomerChecker;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface;
@@ -50,6 +51,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
 
 /**
@@ -477,5 +479,13 @@ class CustomerPageFactory extends AbstractFactory
     public function getOrderSearchFormHandlerPlugins(): array
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGINS_ORDER_SEARCH_FORM_HANDLER);
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Core\User\UserCheckerInterface
+     */
+    public function createCustomerChecker(): UserCheckerInterface
+    {
+        return new CustomerChecker();
     }
 }
