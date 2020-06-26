@@ -26,7 +26,7 @@ class FormCloner extends AbstractType
     public function getForm(): FormInterface
     {
         if ($this->form === null) {
-            throw new FormNotFoundException('Form not found! You need to provide form for FormCloner class.');
+            throw new FormNotFoundException('Form to clone not provided. You need to provide the form for the FormCloner by calling \SprykerShop\Yves\MultiCartPage\Form\Cloner\FormCloner::setForm().');
         }
 
         return clone $this->form;
