@@ -8,20 +8,27 @@
 namespace SprykerShop\Yves\MultiCartPage\Form\Cloner;
 
 use Spryker\Yves\Kernel\Form\AbstractType;
+use SprykerShop\Yves\MultiCartPage\Exception\FormNotFoundException;
 use Symfony\Component\Form\FormInterface;
 
 class FormCloner extends AbstractType
 {
     /**
-     * @var \Symfony\Component\Form\FormInterface
+     * @var \Symfony\Component\Form\FormInterface|null
      */
     protected $form;
 
     /**
+     * @throws \SprykerShop\Yves\MultiCartPage\Exception\FormNotFoundException
+
      * @return \Symfony\Component\Form\FormInterface
      */
     public function getForm(): FormInterface
     {
+        if ($this->form === null) {
+            throw new FormNotFoundException('Form to clone not provided. You need to provide the form for the FormCloner by calling \SprykerShop\Yves\MultiCartPage\Form\Cloner\FormCloner::setForm().');
+        }
+
         return clone $this->form;
     }
 
