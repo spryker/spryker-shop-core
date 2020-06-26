@@ -98,8 +98,8 @@ class WishlistController extends AbstractController
             'totalPages' => $wishlistOverviewResponse->getPagination()->getPagesTotal(),
             'wishlistName' => $wishlistName,
             'addAllAvailableProductsToCartForm' => $addAllAvailableProductsToCartForm->createView(),
-            'wishlistRemoveItemFormCloner' => $this->getFactory()->getFormCloner($this->getFactory()->getWishlistRemoveItemForm()),
-            'wishlistMoveToCartFormCloner' => $this->getFactory()->getFormCloner($this->getFactory()->getWishlistMoveToCartForm()),
+            'wishlistRemoveItemFormCloner' => $this->getFactory()->getFormCloner()->setForm($this->getFactory()->getWishlistRemoveItemForm()),
+            'wishlistMoveToCartFormCloner' => $this->getFactory()->getFormCloner()->setForm($this->getFactory()->getWishlistMoveToCartForm()),
         ];
     }
 

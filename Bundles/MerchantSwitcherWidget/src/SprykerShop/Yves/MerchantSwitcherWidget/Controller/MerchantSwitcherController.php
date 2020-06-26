@@ -28,7 +28,7 @@ class MerchantSwitcherController extends AbstractController
         $form = $this->getFactory()->getMerchantSwitcherSelectorForm()->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
-            return new JsonResponse('Csrt token is Invalid!', Response::HTTP_UNPROCESSABLE_ENTITY);
+            return new JsonResponse('CSRF token is not valid', Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         $merchantReference = $request->request->get('merchant-reference');

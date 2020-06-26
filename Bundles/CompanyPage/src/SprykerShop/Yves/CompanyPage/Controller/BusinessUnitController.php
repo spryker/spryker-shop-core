@@ -202,9 +202,9 @@ class BusinessUnitController extends AbstractCompanyController
      */
     public function deleteAction(Request $request)
     {
-        $deleteForm = $this->getFactory()->createCompanyPageFormFactory()->getBusinessUnitDeleteForm()->handleRequest($request);
+        $companyBusinessUnitDeleteForm = $this->getFactory()->createCompanyPageFormFactory()->getCompanyBusinessUnitDeleteForm()->handleRequest($request);
 
-        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+        if (!$companyBusinessUnitDeleteForm->isSubmitted() || !$companyBusinessUnitDeleteForm->isValid()) {
             $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
 
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
@@ -275,7 +275,7 @@ class BusinessUnitController extends AbstractCompanyController
         }
 
         return [
-            'companyBusinessUnitDeleteForm' => $this->getFactory()->createCompanyPageFormFactory()->getBusinessUnitDeleteForm()->createView(),
+            'companyBusinessUnitDeleteForm' => $this->getFactory()->createCompanyPageFormFactory()->getCompanyBusinessUnitDeleteForm()->createView(),
             'companyBusinessUnit' => $companyBusinessUnitTransfer,
         ];
     }

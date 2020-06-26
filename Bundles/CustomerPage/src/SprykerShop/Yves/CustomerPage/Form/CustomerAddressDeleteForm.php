@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\CustomerPage\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
@@ -16,11 +16,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CustomerAddressDeleteForm extends AbstractType
 {
     /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
     }
 }

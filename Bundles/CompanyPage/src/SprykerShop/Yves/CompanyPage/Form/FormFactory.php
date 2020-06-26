@@ -59,7 +59,7 @@ class FormFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getBusinessUnitDeleteForm(): FormInterface
+    public function getCompanyBusinessUnitDeleteForm(): FormInterface
     {
         return $this->getFormFactory()->create(CompanyBusinessUnitDeleteForm::class);
     }

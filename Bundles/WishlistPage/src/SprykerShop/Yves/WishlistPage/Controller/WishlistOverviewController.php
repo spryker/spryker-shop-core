@@ -78,7 +78,7 @@ class WishlistOverviewController extends AbstractController
         return [
             'wishlistCollection' => $wishlistCollection,
             'wishlistForm' => $wishlistForm->createView(),
-            'wishlistDeleteFormCloner' => $this->getFactory()->getFormCloner($this->getFactory()->getWishlistDeleteForm()),
+            'wishlistDeleteFormCloner' => $this->getFactory()->getFormCloner()->setForm($this->getFactory()->getWishlistDeleteForm()),
         ];
     }
 
@@ -132,7 +132,7 @@ class WishlistOverviewController extends AbstractController
         return [
             'wishlistCollection' => $wishlistCollection,
             'wishlistForm' => $wishlistForm->createView(),
-            'wishlistDeleteFormCloner' => $this->getFactory()->getFormCloner($this->getFactory()->getWishlistDeleteForm()),
+            'wishlistDeleteFormCloner' => $this->getFactory()->getFormCloner()->setForm($this->getFactory()->getWishlistDeleteForm()),
         ];
     }
 

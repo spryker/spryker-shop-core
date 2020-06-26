@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\MultiCartWidget;
 
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\MultiCartWidget\Dependency\Client\MultiCartWidgetToMultiCartClientInterface;
 use SprykerShop\Yves\MultiCartWidget\Dependency\Client\MultiCartWidgetToQuoteClientInterface;
@@ -48,7 +47,7 @@ class MultiCartWidgetFactory extends AbstractFactory
      */
     public function getFormFactory(): FormFactoryInterface
     {
-        return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
+        return $this->getProvidedDependency(MultiCartWidgetDependencyProvider::FORM_FACTORY);
     }
 
     /**

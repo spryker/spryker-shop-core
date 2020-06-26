@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\MerchantSwitcherWidget;
 
 use ArrayObject;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\MerchantSwitcherWidget\Cookie\SelectedMerchantCookie;
@@ -118,7 +117,7 @@ class MerchantSwitcherWidgetFactory extends AbstractFactory
      */
     public function getFormFactory(): FormFactory
     {
-        return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
+        return $this->getProvidedDependency(MerchantSwitcherWidgetDependencyProvider::FORM_FACTORY);
     }
 
     /**
