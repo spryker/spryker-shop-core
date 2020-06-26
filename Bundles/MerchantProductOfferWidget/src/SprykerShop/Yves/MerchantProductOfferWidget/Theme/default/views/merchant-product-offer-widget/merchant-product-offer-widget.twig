@@ -7,6 +7,7 @@
 } %}
 
 {% block template %}
+    {% set showRadioButton = data.merchantProductOffers | length > 1 %}
     {% if data.merchantProductOffers %}
         {% block content %}
             <div class="box box--dark box--spacingless spacing spacing--inner spacing-y">
@@ -22,14 +23,14 @@
                             {% block productOffer %}
                                 {% embed molecule('merchant-product-offer-item', 'MerchantProductOfferWidget') with {
                                     data: {
-                                        checked: ata.productView.productOfferReference == productOffer.productOfferReference,
+                                        checked: data.productView.productOfferReference == merchantProductOffer.productOfferReference,
                                         radioGroupName: 'product_offer_reference',
                                         productOfferReference: merchantProductOffer.productOfferReference | default,
                                         merchantName: merchantProductOffer.merchantName | default,
                                         merchantUrl: merchantProductOffer.merchantUrl | default,
                                         price: merchantProductOffer.price.price | default(null),
                                         currencyIsoCode: merchantProductOffer.price.currency.code | default(null),
-                                        shouldShowRadioButton: data.merchantProductOffers | length > 1,
+                                        shouldShowRadioButton: showRadioButton,
                                     },
                                     embed : {
                                         currentProductPrice: merchantProductOffer.price,

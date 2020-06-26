@@ -142,7 +142,7 @@
             {% set merchantProductOfferWidget = findWidget('MerchantProductOfferWidget', [data.product]) %}
             {% set merchantProductWidget = findWidget('MerchantProductWidget', [
                 data.product,
-                merchantProductOfferWidget.productOfferCollection | length ? true: false,
+                merchantProductOfferWidget.merchantProductOffers | length ? true: false,
                 not merchantProductOfferWidget.productView.productOfferReference
             ]) %}
 
@@ -154,12 +154,12 @@
             {% if merchantProductOfferWidget %}
                 {% widget merchantProductOfferWidget with
                     {
-                        embed: {hasMerchantProduct: merchantProductWidget.merchantProduct, merchantProductOfferWidget:merchantProductOfferWidget}
+                        embed: {hasMerchantProduct: merchantProductWidget.merchantProductView, merchantProductOfferWidget:merchantProductOfferWidget}
                     }
                 %}
 
                     {% block content %}
-                        {% set showRadioButton = (merchantProductOfferWidget.productOfferCollection | length + (merchantProductWidget.merchantProduct ? 1: 0))  > 1  %}
+                        {% set showRadioButton = (merchantProductOfferWidget.merchantProductOffers | length + (merchantProductWidget.merchantProductView ? 1: 0))  > 1  %}
                         {{ parent() }}
                     {% endblock %}
 

@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\MerchantProductOfferWidget\Reader;
 
+use Generated\Shared\Transfer\MerchantProductOfferTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
@@ -58,14 +59,14 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
             return [];
         }
 
-        $merchantProductOfferTransfers = [];
-
         $productOfferStorageCriteriaTransfer = (new ProductOfferStorageCriteriaTransfer())
             ->fromArray($this->shopContextResolver->resolve()->modifiedToArray(), true);
         $productOfferStorageCriteriaTransfer->addProductConcreteSku($productViewTransfer->getSku());
 
         $productOfferStorageCollectionTransfer = $this->merchantProductOfferStorageClient->getProductOffersBySkus($productOfferStorageCriteriaTransfer);
         $productOffersStorageTransfers = $productOfferStorageCollectionTransfer->getProductOffersStorage();
+
+        $merchantProductOfferTransfers = [];
 
         foreach ($productOffersStorageTransfers as $productOfferStorageTransfer) {
             $merchantStorageTransfer = $productOfferStorageTransfer->getMerchantStorage();

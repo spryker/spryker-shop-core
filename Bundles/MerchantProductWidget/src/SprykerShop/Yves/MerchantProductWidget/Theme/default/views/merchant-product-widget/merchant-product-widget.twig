@@ -4,47 +4,50 @@
     locale: app.locale | slice(0, 2),
     merchantProductView: _widget.merchantProductView,
     productView: _widget.productView,
+    showRadioButton: _widget.showRadioButton,
+    checked: _widget.checked
 } %}
 
 {% block template %}
+
     {% if data.merchantProductView %}
         {% block content %}
             <div class="box box--dark box--spacingless spacing spacing--inner spacing-y">
                 {% block contentInner %}
                     {% block title %}
                         <div>
-                            <strong>{{ 'merchant_product_offer.sold_by' | trans }}</strong>
+                            <strong>{{ 'merchant_product.sold_by' | trans }}</strong>
                         </div>
                     {% endblock %}
 
-                    {% block merchantProduct %}
-                        {% set isSameMerchantOffer = data.productView.merchantReference == data.merchantProductView.merchantReference %}
+                    {% block merchantProductList %}
+                        {% block merchantProduct %}
 
-                        {% embed molecule('merchant-product-item', 'MerchantProductWidget') with {
-                            data: {
-                                checked: isSameMerchantOffer,
-                                radioGroupName: 'merchant_reference',
-                                merchantReference: data.merchantProductView.merchantReference | default,
-                                merchantName: data.merchantProductView.merchantName | default,
-                                merchantUrl: data.merchantProductView.merchantUrl | default,
-                                price: data.merchantProductView.price.price | default(null),
-                                currencyIsoCode: data.merchantProductView.price.currency.code | default(null),
-                                shouldShowRadioButton: false,
-                            },
-                            embed : {
-                                currentProductPrice: data.merchantProductView.price,
-                            }
-                        } only %}
-                            {% block price %}
-                                {% widget 'CurrentProductPriceVolumeWidget' args [embed.currentProductPrice] only %}
-                                    {% block priceTable %}{% endblock %}
-                                {% nowidget %}
-                                    {{ parent() }}
-                                {% endwidget %}
-                            {% endblock %}
-                        {% endembed %}
+                            {% embed molecule('merchant-product-item', 'MerchantProductWidget') with {
+                                data: {
+                                    checked: data.checked,
+                                    radioGroupName: 'merchant_reference',
+                                    merchantReference: data.merchantProductView.merchantReference | default,
+                                    merchantName: data.merchantProductView.merchantName | default,
+                                    merchantUrl: data.merchantProductView.merchantUrl | default,
+                                    price: data.merchantProductView.price.price | default(null),
+                                    currencyIsoCode: data.merchantProductView.price.currency.code | default(null),
+                                    shouldShowRadioButton: data.showRadioButton,
+                                },
+                                embed : {
+                                    currentProductPrice: data.merchantProductView.price,
+                                }
+                            } only %}
+                                {% block price %}
+                                    {% widget 'CurrentProductPriceVolumeWidget' args [embed.currentProductPrice] only %}
+                                        {% block priceTable %}{% endblock %}
+                                    {% nowidget %}
+                                        {{ parent() }}
+                                    {% endwidget %}
+                                {% endblock %}
+                            {% endembed %}
+                        {% endblock %}
                     {% endblock %}
-
                 {% endblock %}
             </div>
         {% endblock %}
