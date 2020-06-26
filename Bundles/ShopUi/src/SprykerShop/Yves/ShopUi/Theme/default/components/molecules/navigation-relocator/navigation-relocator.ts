@@ -64,7 +64,7 @@ export default class NavigationRelocator extends Component {
     }
 
     protected get listClassesToReplace(): string {
-        return this.getAttribute('toggle-classes');
+        return this.getAttribute('toggle-list-classes');
     }
 
     protected get listItemClassesToReplace(): string {
