@@ -12,8 +12,8 @@
         duplicate: false,
     },
     isQuoteDeletable: required,
-    multiCartSetDefaultFormCloner: null,
-    multiCartDuplicateFormCloner: null,
+    multiCartSetDefaultFormClone: null,
+    multiCartDuplicateFormClone: null,
 } %}
 
 {% set showActions = data.actions.update or data.actions.delete or data.actions.duplicate %}
@@ -53,8 +53,8 @@
                             </strong>
                         </a>
                         {% else %}
-                            {% if data.multiCartSetDefaultFormCloner %}
-                                {% set multiCartSetDefaultForm = data.multiCartSetDefaultFormCloner.getForm.createView %}
+                            {% if data.multiCartSetDefaultFormClone %}
+                                {% set multiCartSetDefaultForm = data.multiCartSetDefaultFormClone.getForm.createView %}
                                 {{ form_start(multiCartSetDefaultForm, {'action': path('multi-cart/set-default', {'idQuote': quote.idQuote}) }) }}
                                     <button class="link">{{ quote.name }}</button>
                                 {{ form_end(multiCartSetDefaultForm) }}
@@ -107,8 +107,8 @@
                                     {% endif %}
                                     {% if data.actions.duplicate %}
                                         <li class="menu__item">
-                                            {% if data.multiCartDuplicateFormCloner %}
-                                                {% set multiCartDuplicateForm = data.multiCartDuplicateFormCloner.getForm.createView %}
+                                            {% if data.multiCartDuplicateFormClone %}
+                                                {% set multiCartDuplicateForm = data.multiCartDuplicateFormClone.getForm.createView %}
                                                 {{ form_start(multiCartDuplicateForm, {'action': path('multi-cart/duplicate', {'idQuote': quote.idQuote}) }) }}
                                                 <button class="link">{{ 'page.multi_cart.shopping_cart.list.link.duplicate' | trans }}</button>
                                                 {{ form_end(multiCartDuplicateForm) }}

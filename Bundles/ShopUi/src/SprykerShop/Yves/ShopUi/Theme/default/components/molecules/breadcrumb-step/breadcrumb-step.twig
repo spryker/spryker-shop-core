@@ -19,20 +19,26 @@
 {% set isLink = data.url is not empty and not isFormElement %}
 
 {% block body %}
-    {%- if isLink -%}<a href="{{ data.url }}">{%- endif -%}
-    {%- if data.itemProp -%}<span itemprop="{{-data.itemProp-}}">{%- endif -%}
-    {%- if isFormElement -%}
-        <form class="{{ config.name }}__form" name="{{ data.formName }}" method="post" action="{{ data.url }}">
-            <input name="{{ data.tokenFieldName }}" type="hidden" value="{{ csrf_token(data.formName) }}">
-            <button class="link">
+    {%- if isLink -%}
+        {% block link %}
+            <a href="{{ data.url }}">{{-data.label-}}</a>
+        {% endblock %}
     {%- endif -%}
-            {{-data.label-}}
+
     {%- if isFormElement -%}
-            </button>
-        </form>
+        {% block form %}
+            <form class="{{ config.name }}__form" name="{{ data.formName }}" method="post" action="{{ data.url }}">
+                <input name="{{ data.tokenFieldName }}" type="hidden" value="{{ csrf_token(data.formName) }}">
+                <button class="link">{{-data.label-}}</button>
+            </form>
+        {% endblock %}
     {%- endif -%}
-    {%- if data.itemProp -%}</span>{%- endif -%}
-    {%- if isLink -%}</a>{%- endif -%}
+
+    {%- if data.itemProp -%}
+        {% block itemProp %}
+            <span itemprop="{{-data.itemProp-}}">{{-data.label-}}</span>
+        {% endblock %}
+    {%- endif -%}
     
     {% if data.withChevron %}
         {% include atom('icon') with {
