@@ -2,7 +2,7 @@
 
 {% define data = {
     addresses: _view.addresses,
-    customerDeleteFromCloner: _view.customerDeleteFromCloner,
+    customerDeleteFormClone: _view.customerDeleteFromCloner,
 
     title: 'customer.account.address' | trans,
     activePage: 'address',
@@ -22,7 +22,7 @@
                     </a>
                 </li>
                 <li class="menu__item">
-                    {% set customerDeleteFrom = data.customerDeleteFromCloner.getForm.createView %}
+                    {% set customerDeleteFrom = data.customerDeleteFormClone.getForm.createView %}
 
                     {{ form_start(customerDeleteFrom, {'action': path('customer/address/delete', {'id': address.idCustomerAddress}) }) }}
                         <button class="link" data-init-single-click>{{ "customer.profile.address.delete" | trans }}</button>

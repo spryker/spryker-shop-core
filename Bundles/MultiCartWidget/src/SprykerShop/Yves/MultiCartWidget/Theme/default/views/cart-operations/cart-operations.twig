@@ -37,7 +37,7 @@
                 {% if data.cart.isDefault == false %}
                 <li class="menu__item">
                     {{ form_start(data.multiCartSetDefaultForm, {'action': path('multi-cart/set-default', {'idQuote': data.cart.idQuote}) }) }}
-                    <button class="button set-default">
+                    <button class="button">
                         {{ 'multi_cart_widget.cart.action.set_default' | trans }}
                     </button>
                     {{ form_end(data.multiCartSetDefaultForm) }}
@@ -45,14 +45,14 @@
                 {% endif %}
                 <li class="menu__item">
                     {{ form_start(data.multiCartDuplicateForm, {'action': path('multi-cart/duplicate', {'idQuote': data.cart.idQuote}) }) }}
-                    <button class="button duplicate">
+                    <button class="button">
                         {{ "multi_cart_widget.cart.action.duplicate" | trans }}
                     </button>
                     {{ form_end(data.multiCartDuplicateForm) }}
                 </li>
                 <li class="menu__item">
                     {{ form_start(data.multiCartClearForm, {'action': path('multi-cart/clear', {'idQuote': data.cart.idQuote}) }) }}
-                        <button class="button clear">
+                        <button class="button">
                             {{ "multi_cart_widget.cart.action.clear" | trans }}
                         </button>
                     {{ form_end(data.multiCartClearForm) }}
