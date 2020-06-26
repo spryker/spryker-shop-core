@@ -40,11 +40,11 @@ class ProductReplacementForWidgetDependencyProvider extends AbstractBundleDepend
      */
     protected function addProductAlternativeStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_ALTERNATIVE_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_ALTERNATIVE_STORAGE, function (Container $container) {
             return new ProductReplacementForWidgetToProductAlternativeStorageClientBridge(
                 $container->getLocator()->productAlternativeStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -56,11 +56,11 @@ class ProductReplacementForWidgetDependencyProvider extends AbstractBundleDepend
      */
     protected function addProductStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductReplacementForWidgetToProductStorageClientBridge(
                 $container->getLocator()->productStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -72,9 +72,9 @@ class ProductReplacementForWidgetDependencyProvider extends AbstractBundleDepend
      */
     protected function addProductDetailPageProductReplacementsForWidgetPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_PRODUCT_DETAIL_PAGE_PRODUCT_REPLACEMENTS_FOR_WIDGETS] = function () {
+        $container->set(static::PLUGIN_PRODUCT_DETAIL_PAGE_PRODUCT_REPLACEMENTS_FOR_WIDGETS, function () {
             return $this->getProductDetailPageProductReplacementsForWidgetPlugins();
-        };
+        });
 
         return $container;
     }

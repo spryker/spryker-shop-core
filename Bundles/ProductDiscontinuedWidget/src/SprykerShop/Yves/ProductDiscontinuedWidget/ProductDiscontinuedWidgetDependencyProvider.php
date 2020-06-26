@@ -35,11 +35,11 @@ class ProductDiscontinuedWidgetDependencyProvider extends AbstractBundleDependen
      */
     protected function addProductDiscontinuedStorageClient($container): Container
     {
-        $container[static::CLIENT_PRODUCT_DISCONTINUED_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_DISCONTINUED_STORAGE, function (Container $container) {
             return new ProductDiscontinuedWidgetToProductDiscontinuedStorageClientBridge(
                 $container->getLocator()->productDiscontinuedStorage()->client()
             );
-        };
+        });
 
         return $container;
     }

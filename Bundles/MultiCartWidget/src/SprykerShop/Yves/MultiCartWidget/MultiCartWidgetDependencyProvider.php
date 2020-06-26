@@ -43,9 +43,9 @@ class MultiCartWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMultiCartClient($container)
     {
-        $container[static::CLIENT_MULTI_CART] = function (Container $container) {
+        $container->set(static::CLIENT_MULTI_CART, function (Container $container) {
             return new MultiCartWidgetToMultiCartClientBridge($container->getLocator()->multiCart()->client());
-        };
+        });
 
         return $container;
     }
@@ -57,9 +57,9 @@ class MultiCartWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteClient($container)
     {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new MultiCartWidgetToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }
@@ -71,9 +71,9 @@ class MultiCartWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addViewExtendWidgetPlugins(Container $container)
     {
-        $container[static::PLUGINS_VIEW_EXTEND] = function () {
+        $container->set(static::PLUGINS_VIEW_EXTEND, function () {
             return $this->getViewExtendWidgetPlugins();
-        };
+        });
 
         return $container;
     }

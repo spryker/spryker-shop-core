@@ -18,6 +18,11 @@
   "scripts": {
     "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p --ignore=/node_modules/ Bundles/"
   },
+  "autoload": {
+    "files": [
+      "autoload.php"
+    ]
+  },
   "replace": {
     "spryker-shop/agent-page": "*",
     "spryker-shop/agent-widget": "*",
@@ -82,6 +87,7 @@
     "spryker-shop/multi-cart-widget": "*",
     "spryker-shop/newsletter-page": "*",
     "spryker-shop/newsletter-widget": "*",
+    "spryker-shop/order-cancel-widget": "*",
     "spryker-shop/order-custom-reference-widget": "*",
     "spryker-shop/persistent-cart-share-page": "*",
     "spryker-shop/persistent-cart-share-widget": "*",

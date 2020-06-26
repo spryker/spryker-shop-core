@@ -37,9 +37,9 @@ class LanguageSwitcherWidgetDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addStore(Container $container)
     {
-        $container[static::STORE] = function () {
+        $container->set(static::STORE, function () {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }
@@ -51,9 +51,9 @@ class LanguageSwitcherWidgetDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addUrlStorageClient(Container $container)
     {
-        $container[static::CLIENT_URL_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_URL_STORAGE, function (Container $container) {
             return new LanguageSwitcherWidgetToUrlStorageClientBridge($container->getLocator()->urlStorage()->client());
-        };
+        });
 
         return $container;
     }

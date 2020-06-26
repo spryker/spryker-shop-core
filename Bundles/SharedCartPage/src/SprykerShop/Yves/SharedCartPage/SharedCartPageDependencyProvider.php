@@ -46,9 +46,9 @@ class SharedCartPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new SharedCartPageToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }
@@ -60,9 +60,9 @@ class SharedCartPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteClient(Container $container): Container
     {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new SharedCartPageToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }
@@ -74,9 +74,9 @@ class SharedCartPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserClient(Container $container): Container
     {
-        $container[static::CLIENT_COMPANY_USER] = function (Container $container) {
+        $container->set(static::CLIENT_COMPANY_USER, function (Container $container) {
             return new SharedCartPageToCompanyUserClientBridge($container->getLocator()->companyUser()->client());
-        };
+        });
 
         return $container;
     }
@@ -88,9 +88,9 @@ class SharedCartPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSharedCartClient(Container $container): Container
     {
-        $container[static::CLIENT_SHARED_CART] = function (Container $container) {
+        $container->set(static::CLIENT_SHARED_CART, function (Container $container) {
             return new SharedCartPageToSharedCartClientBridge($container->getLocator()->sharedCart()->client());
-        };
+        });
 
         return $container;
     }
@@ -102,11 +102,11 @@ class SharedCartPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMultiCartClient(Container $container): Container
     {
-        $container[static::CLIENT_MULTI_CART] = function (Container $container) {
+        $container->set(static::CLIENT_MULTI_CART, function (Container $container) {
             return new SharedCartPageToMultiCartClientBridge(
                 $container->getLocator()->multiCart()->client()
             );
-        };
+        });
 
         return $container;
     }

@@ -37,9 +37,9 @@ class CartNoteWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCartNoteClient(Container $container): Container
     {
-        $container[static::CLIENT_CART_NOTE] = function (Container $container) {
+        $container->set(static::CLIENT_CART_NOTE, function (Container $container) {
             return new CartNoteWidgetToCartNoteClientBridge($container->getLocator()->cartNote()->client());
-        };
+        });
 
         return $container;
     }
@@ -51,9 +51,9 @@ class CartNoteWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addGlossaryClient(Container $container): Container
     {
-        $container[static::CLIENT_GLOSSARY] = function (Container $container) {
+        $container->set(static::CLIENT_GLOSSARY, function (Container $container) {
             return new CartNoteWidgetToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());
-        };
+        });
 
         return $container;
     }
