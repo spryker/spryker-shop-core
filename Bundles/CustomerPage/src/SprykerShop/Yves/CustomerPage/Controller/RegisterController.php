@@ -134,9 +134,15 @@ class RegisterController extends AbstractCustomerController
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setRegistrationKey($token);
 
-        $this->getFactory()->getCustomerClient()->confirmRegistration($customerTransfer);
+        $customerResponseTransfer = $this->getFactory()->getCustomerClient()->confirmCustomerRegistration($customerTransfer);
 
-        $this->addSuccessMessage(static::MESSAGE_CUSTOMER_CONFIRMED);
+        if (!$customerResponseTransfer->getErrors()->count()) {
+            $this->addSuccessMessage(static::MESSAGE_CUSTOMER_CONFIRMED);
+
+            return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_LOGIN);
+        }
+
+        $this->processResponseErrors($customerResponseTransfer);
 
         return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_LOGIN);
     }
