@@ -38,7 +38,6 @@ export default class ShoppingListRemoteFormSubmit extends Component {
     protected createForm(): void {
         const formTemplate = `
             <form id="${this.formName}" class="is-hidden" name="${this.formName}" method="post" action="${this.formAction}">
-                <!--<input id="shopping_list_remove_item_form__token[${this.formName}]" name="${this.fieldName}" type="hidden" value="${this.formToken}">-->
                 <input id="${this.tokenId}" name="${this.fieldName}" type="hidden" value="${this.formToken}">
             </form>
         `;
