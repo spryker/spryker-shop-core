@@ -139,10 +139,36 @@
             {% elsewidget 'MultiCartWidgetPlugin' args [data.product, data.isDisabled] only %} {# @deprecated Use AddToMultiCartWidget instead. #}
             {% endwidget %}
 
-            {% if widgetGlobalExists('MerchantProductOfferWidget') %}
-                {% widget 'MerchantProductOfferWidget' args [data.product] only %}{% endwidget %}
-            {% elseif widgetGlobalExists('MerchantProductWidget') %}
-                {% widget 'MerchantProductWidget' args [data.product] only %}{% endwidget %}
+            {% set merchantProductOfferWidget = findWidget('MerchantProductOfferWidget', [data.product]) %}
+            {% set merchantProductWidget = findWidget('MerchantProductWidget', [
+                data.product,
+                merchantProductOfferWidget.productOfferCollection | length ? true: false,
+                not merchantProductOfferWidget.productView.productOfferReference
+            ]) %}
+
+            {% if merchantProductWidget %}
+                {% widget merchantProductWidget %}
+                {% endwidget %}
+            {% endif %}
+
+            {% if merchantProductOfferWidget %}
+                {% widget merchantProductOfferWidget with
+                    {
+                        embed: {hasMerchantProduct: merchantProductWidget.merchantProduct, merchantProductOfferWidget:merchantProductOfferWidget}
+                    }
+                %}
+
+                    {% block content %}
+                        {% set showRadioButton = (merchantProductOfferWidget.productOfferCollection | length + (merchantProductWidget.merchantProduct ? 1: 0))  > 1  %}
+                        {{ parent() }}
+                    {% endblock %}
+
+                    {% block title %}
+                        {% if not merchantProductOfferWidget %}
+                            {{ parent() }}
+                        {% endif %}
+                    {% endblock %}
+                {% endwidget %}
             {% endif %}
 
             {% if widgetExists('AvailabilityWidgetPlugin') %}

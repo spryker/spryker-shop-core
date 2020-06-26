@@ -7,21 +7,21 @@
 
 namespace SprykerShop\Yves\MerchantProductOfferWidget\Mapper;
 
-use Generated\Shared\Transfer\MerchantProductViewTransfer;
+use Generated\Shared\Transfer\MerchantProductOfferTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 
 class MerchantProductViewMapper
 {
     /**
      * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer $productOfferStorageTransfer
-     * @param \Generated\Shared\Transfer\MerchantProductViewTransfer $merchantProductViewTransfer
+     * @param \Generated\Shared\Transfer\MerchantProductOfferTransfer $merchantProductViewTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantProductViewTransfer
+     * @return \Generated\Shared\Transfer\MerchantProductOfferTransfer
      */
-    public function mapProductOfferStorageTransferToMerchantProductViewTransfer(
+    public function mapProductOfferStorageTransferToMerchantProductOfferTransfer(
         ProductOfferStorageTransfer $productOfferStorageTransfer,
-        MerchantProductViewTransfer $merchantProductViewTransfer
-    ): MerchantProductViewTransfer {
+        MerchantProductOfferTransfer $merchantProductViewTransfer
+    ): MerchantProductOfferTransfer {
         return $merchantProductViewTransfer->fromArray($productOfferStorageTransfer->toArray(), true)
             ->setMerchantName($productOfferStorageTransfer->getMerchantStorage()->getName());
     }
