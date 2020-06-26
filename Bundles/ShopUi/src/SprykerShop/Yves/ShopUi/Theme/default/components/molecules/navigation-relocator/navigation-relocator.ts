@@ -1,11 +1,11 @@
 import Component from 'ShopUi/models/component';
+import debounce from 'lodash-es/debounce';
 
-export default class NavigationDisplacer extends Component {
+export default class NavigationRelocator extends Component {
     protected blockToMove: HTMLElement;
     protected blockToPlace: HTMLElement;
     protected listSelector: string = 'nav > ul';
     protected listItemSelector: string = 'nav > ul > li';
-    protected timeout: number = 300;
 
     protected readyCallback(): void {}
 
@@ -13,7 +13,7 @@ export default class NavigationDisplacer extends Component {
         this.blockToMove = <HTMLElement>document.getElementsByClassName(this.blockToMoveClassName)[0];
         this.blockToPlace = <HTMLElement>document.getElementsByClassName(this.blockToPlaceClassName)[0];
 
-        this.initBlockMoving();
+        this.discplaceNavigation();
         this.mapEvents();
     }
 
@@ -22,12 +22,10 @@ export default class NavigationDisplacer extends Component {
     }
 
     protected mapWindowResizeEvent(): void {
-        window.addEventListener('resize', () => {
-            setTimeout(() => this.initBlockMoving(), this.timeout);
-        });
+        window.addEventListener('resize', debounce(() => this.discplaceNavigation(), this.debounceDelay));
     }
 
-    protected initBlockMoving(): void {
+    protected discplaceNavigation(): void {
         const clonedNavigation = <HTMLElement>this.blockToPlace.getElementsByClassName(this.blockToMoveClassName)[0];
 
         if (window.innerWidth > this.breakpoint || clonedNavigation) {
@@ -35,8 +33,8 @@ export default class NavigationDisplacer extends Component {
         }
 
         this.cloneNavigation();
-        this.listReplaceClasses();
-        this.listItemReplaceClasses();
+        this.replaceListClasses();
+        this.replaceListItemClasses();
     }
 
     protected cloneNavigation(): void {
@@ -45,13 +43,13 @@ export default class NavigationDisplacer extends Component {
         this.blockToPlace.appendChild(cloneNavigation);
     }
 
-    protected listReplaceClasses(): void {
+    protected replaceListClasses(): void {
         const list = <HTMLElement>this.blockToPlace.querySelector(this.listSelector);
 
         list.className = this.listClassesToReplace;
     }
 
-    protected listItemReplaceClasses(): void {
+    protected replaceListItemClasses(): void {
         const listItems = <HTMLElement[]>Array.from(this.blockToPlace.querySelectorAll(this.listItemSelector));
 
         listItems.forEach((element: HTMLElement) => element.className = this.listItemClassesToReplace);
@@ -66,14 +64,18 @@ export default class NavigationDisplacer extends Component {
     }
 
     protected get listClassesToReplace(): string {
-        return this.getAttribute('list-classes-to-replace');
+        return this.getAttribute('toggle-classes');
     }
 
     protected get listItemClassesToReplace(): string {
-        return this.getAttribute('list-item-classes-to-replace');
+        return this.getAttribute('toggle-list-item-classes');
     }
 
     protected get breakpoint(): number {
         return Number(this.getAttribute('breakpoint'));
+    }
+
+    protected get debounceDelay(): number {
+        return Number(this.getAttribute('debounce-delay'));
     }
 }
