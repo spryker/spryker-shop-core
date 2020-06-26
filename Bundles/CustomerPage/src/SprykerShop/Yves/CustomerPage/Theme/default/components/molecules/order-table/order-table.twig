@@ -73,12 +73,12 @@
                     {% endif %}
                     <td>{{ order.totals.grandTotal | default(0) | money(true, order.currencyIsoCode) }}</td>
                     <td>
-                        {% for status, label in order.itemStateDisplayNames %}
+                        {% for aggregatedItemState in order.aggregatedItemStates %}
                             {% block state %}
                                 {% include molecule('status') with {
                                     data: {
-                                        label: label | trans,
-                                        status: status,
+                                        label: aggregatedItemState.displayName | trans,
+                                        status: aggregatedItemState.name,
                                     },
                                 } only %}
                             {% endblock %}
