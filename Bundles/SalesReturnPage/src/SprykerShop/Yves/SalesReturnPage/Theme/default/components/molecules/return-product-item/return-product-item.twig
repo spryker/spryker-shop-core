@@ -74,7 +74,7 @@
                 {% endblock %}
 
                 {% set state = data.item.state.name | replace({' ': '-'}) | lower %}
-                {% set stateLabel = data.product.state.displayName ?? ('oms.state.' ~ state) %}
+                {% set stateLabel = data.item.state.displayName ?? ('oms.state.' ~ state) %}
 
                 {% block productState %}
                     <div class="{{ productStatusColumnClass }}">
