@@ -8,37 +8,41 @@ export default class ShoppingListRemoteFormSubmit extends Component {
 
     protected init(): void {
         this.submitButton = <HTMLButtonElement>Array.from(this.getElementsByClassName(`${this.jsName}__submit`))[0];
-        this.formHolder = <HTMLElement>Array.from(document.getElementsByClassName(this.formHolderClassName))[0];
 
+        this.getFormHolder();
         this.createForm();
         this.mapEvents();
     }
 
     protected mapEvents(): void {
-        this.submitButton.addEventListener('click', (event: Event) => this.onClick(event));
+        this.submitButton.addEventListener('click', (event: Event) => this.submitTargetForm());
     }
 
-    protected onClick(event: Event): void {
-        this.submitTargetForm(event);
-    }
-
-    protected submitTargetForm(event: Event): void {
-        const target = <HTMLButtonElement>event.currentTarget;
-        const formId = target.getAttribute('target-form-id');
+    protected submitTargetForm(): void {
+        const formId = this.submitButton.getAttribute('target-form-id');
         const form = <HTMLFormElement>document.getElementById(formId);
 
         form.submit();
     }
 
+    protected getFormHolder(): void {
+        if (this.formHolderClassName) {
+            this.formHolder = <HTMLElement>Array.from(document.getElementsByClassName(this.formHolderClassName))[0];
+
+            return;
+        }
+
+        this.formHolder = document.body;
+    }
+
     protected createForm(): void {
-        const container = document.createElement('div');
         const formTemplate = `
-            <form id="${this.formName}" name="${this.formName}" method="post" action="${this.formAction}">
-                <input id="shopping_list_remove_item_form__token[${this.formName}]" name="${this.fieldName}" type="hidden" value="${this.formToken}">
+            <form id="${this.formName}" class="is-hidden" name="${this.formName}" method="post" action="${this.formAction}">
+                <!--<input id="shopping_list_remove_item_form__token[${this.formName}]" name="${this.fieldName}" type="hidden" value="${this.formToken}">-->
+                <input id="${this.tokenId}" name="${this.fieldName}" type="hidden" value="${this.formToken}">
             </form>
         `;
-        container.innerHTML = formTemplate;
-        this.formHolder.appendChild(container);
+        this.formHolder.insertAdjacentHTML('beforeend', formTemplate);
     }
 
     protected get formHolderClassName(): string {
@@ -59,5 +63,9 @@ export default class ShoppingListRemoteFormSubmit extends Component {
 
     protected get fieldName(): string {
         return this.getAttribute('field-name');
+    }
+
+    protected get tokenId(): string {
+        return this.getAttribute('token-id');
     }
 }

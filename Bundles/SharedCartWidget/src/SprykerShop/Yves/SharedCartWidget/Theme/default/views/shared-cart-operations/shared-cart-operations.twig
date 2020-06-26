@@ -22,7 +22,7 @@
         {% if data.actions.set_default %}
             <li class="menu__item">
                 <form method="POST" action="{{ path('multi-cart/set-default', {idQuote: data.cart.idQuote}) }}">
-                    <button class="button set-default">{{ 'multi_cart_widget.cart.action.set_default' | trans }}</button>
+                    <button class="button">{{ 'multi_cart_widget.cart.action.set_default' | trans }}</button>
                     <input id="multi_cart_set_default_form__token" name="multi_cart_set_default_form[_token]" type="hidden" value="{{ csrf_token('multi_cart_set_default_form') }}">
                 </form>
             </li>
@@ -30,7 +30,7 @@
         {% if data.actions.duplicate %}
             <li class="menu__item">
                 <form method="POST" action="{{ path('multi-cart/duplicate', {idQuote: data.cart.idQuote}) }}">
-                    <button class="button duplicate">{{ "multi_cart_widget.cart.action.duplicate" | trans }}</button>
+                    <button class="button">{{ "multi_cart_widget.cart.action.duplicate" | trans }}</button>
                     <input id="multi_cart_duplicate_form__token" name="multi_cart_duplicate_form[_token]" type="hidden" value="{{ csrf_token('multi_cart_duplicate_form') }}">
                 </form>
             </li>
@@ -38,7 +38,7 @@
         {% if data.actions.clear %}
             <li class="menu__item">
                 <form method="POST" action="{{ path('multi-cart/clear', {idQuote: data.cart.idQuote}) }}">
-                    <button class="button clear">{{ "multi_cart_widget.cart.action.clear" | trans }}</button>
+                    <button class="button">{{ "multi_cart_widget.cart.action.clear" | trans }}</button>
                     <input id="multi_cart_clear_form__token" name="multi_cart_clear_form[_token]" type="hidden" value="{{ csrf_token('multi_cart_clear_form') }}">
                 </form>
             </li>

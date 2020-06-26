@@ -12,7 +12,7 @@
 {% block actions %}
     <li class="menu__item">
         {{ form_start(data.multiCartClearForm, {'action': path('multi-cart/clear', {'idQuote': _widget.cart.idQuote}) }) }}
-            <button class="button clear">
+            <button class="button">
                 {{ "multi_cart_widget.cart.action.clear" | trans }}
             </button>
         {{ form_end(data.multiCartClearForm) }}

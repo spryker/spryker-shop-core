@@ -1,21 +1,22 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'shopping-list-remote-form-submit',
-    tag: 'shopping-list-remote-form-submit',
+    name: 'remote-form-submit',
+    tag: 'remote-form-submit',
 } %}
 
 {% define data = {
-    label: required,
+    label: '',
     buttonClass: 'button button--alert',
 } %}
 
 {% define attributes = {
-    'form-holder-class-name': 'js-page-layout-main',
-    'form-name': '',
-    'form-action': '',
-    'form-token': csrf_token('shopping_list_remove_item_form'),
-    'field-name': 'shopping_list_remove_item_form[_token]',
+    'form-holder-class-name': '',
+    'token-id': '',
+    'form-name': required,
+    'form-action': required,
+    'form-token': required,
+    'field-name': required,
 } %}
 
 {% block body %}

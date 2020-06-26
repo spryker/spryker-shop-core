@@ -18,7 +18,7 @@
     <tr class="{{ config.name }}__row">
         <td class="{{ config.name }}__cell" colspan="6">&nbsp;</td>
         <td class="{{ config.name }}__cell text-right">
-            {% include molecule('shopping-list-remote-form-submit', 'ShoppingListPage') with {
+            {% include molecule('remote-form-submit') with {
                 data: {
                     label: 'shopping_list.remove_all_items' | trans,
                 },
@@ -27,6 +27,7 @@
                     'form-action': path('shopping-list/clear', { idShoppingList: data.idShoppingList }),
                     'form-token': csrf_token('shopping_list_clear_form'),
                     'field-name': 'shopping_list_clear_form[_token]',
+                    'token-id': 'shopping_list_remove_item_form__token[clearForm]',
                 },
             } only %}
         </td>
@@ -94,13 +95,16 @@
 {% block buttonCol %}
     <td class="{{ config.name }}__cell text-center">
         {% block buttonColInner %}
-            {% include molecule('shopping-list-remote-form-submit', 'ShoppingListPage') with {
+            {% include molecule('remote-form-submit') with {
                 data: {
                     label: 'customer.account.shopping_list.remove' | trans,
                 },
                 attributes: {
                     'form-name': 'removeItemForm_' ~ idShoppingListItem,
-                    'form-action': path('shopping-list/remove-item', {'idShoppingList': data.idShoppingList, 'idShoppingListItem': idShoppingListItem })
+                    'form-action': path('shopping-list/remove-item', {'idShoppingList': data.idShoppingList, 'idShoppingListItem': idShoppingListItem }),
+                    'form-token': csrf_token('shopping_list_remove_item_form'),
+                    'field-name': 'shopping_list_remove_item_form[_token]',
+                    'token-id': 'shopping_list_remove_item_form__token[removeItemForm_' ~ idShoppingListItem ~ ']',
                 },
             } only %}
         {% endblock %}
