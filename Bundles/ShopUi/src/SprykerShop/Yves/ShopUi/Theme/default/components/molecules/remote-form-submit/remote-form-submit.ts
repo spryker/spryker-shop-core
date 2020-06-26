@@ -15,7 +15,7 @@ export default class ShoppingListRemoteFormSubmit extends Component {
     }
 
     protected mapEvents(): void {
-        this.submitButton.addEventListener('click', (event: Event) => this.submitTargetForm());
+        this.submitButton.addEventListener('click', () => this.submitTargetForm());
     }
 
     protected submitTargetForm(): void {
