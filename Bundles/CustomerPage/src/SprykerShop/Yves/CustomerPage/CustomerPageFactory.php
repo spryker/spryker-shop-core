@@ -29,6 +29,7 @@ use SprykerShop\Yves\CustomerPage\Expander\ShipmentExpander;
 use SprykerShop\Yves\CustomerPage\Expander\ShipmentExpanderInterface;
 use SprykerShop\Yves\CustomerPage\Expander\ShipmentGroupExpander;
 use SprykerShop\Yves\CustomerPage\Expander\ShipmentGroupExpanderInterface;
+use SprykerShop\Yves\CustomerPage\Form\Cloner\FormCloner;
 use SprykerShop\Yves\CustomerPage\Form\DataProvider\CheckoutAddressFormDataProvider;
 use SprykerShop\Yves\CustomerPage\Form\FormFactory;
 use SprykerShop\Yves\CustomerPage\Form\Transformer\AddressSelectTransformer;
@@ -477,5 +478,13 @@ class CustomerPageFactory extends AbstractFactory
     public function getOrderSearchFormHandlerPlugins(): array
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGINS_ORDER_SEARCH_FORM_HANDLER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Form\Cloner\FormCloner
+     */
+    public function createFormCloner(): FormCloner
+    {
+        return new FormCloner();
     }
 }

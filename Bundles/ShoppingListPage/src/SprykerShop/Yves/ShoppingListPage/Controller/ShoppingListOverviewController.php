@@ -31,6 +31,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     protected const GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND = 'shopping_list.not_found';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CLEAR_SUCCESS = 'customer.account.shopping_list.clear.success';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_OVERVIEW_CREATE_SUCCESSFUL = 'customer.account.shopping_list.overview.create.success';
+    protected const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
 
     /**
      * @use \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_CART
@@ -154,17 +155,29 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         return [
             'shoppingList' => $shoppingListTransfer,
             'shoppingListForm' => $shoppingListForm->createView(),
+            'removeItemForm' => $this->getFactory()->getShoppingListRemoveItemForm()->createView(),
             'productViewTransfers' => $productViewTransfers,
         ];
     }
 
     /**
      * @param int $idShoppingList
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function clearAction(int $idShoppingList)
+    public function clearAction(int $idShoppingList, Request $request)
     {
+        $shoppingListClearForm = $this->getFactory()->getShoppingListClearForm()->handleRequest($request);
+
+        if (!$shoppingListClearForm->isSubmitted() || !$shoppingListClearForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST_UPDATE, [
+                static::ROUTE_PARAM_ID_SHOPPING_LIST => $idShoppingList,
+            ]);
+        }
+
         $shoppingListTransfer = new ShoppingListTransfer();
         $shoppingListTransfer
             ->setIdShoppingList($idShoppingList)

@@ -27,6 +27,9 @@ class AddressController extends AbstractCustomerController
     {
         $responseData = $this->executeIndexAction();
 
+        $responseData['customerDeleteFromCloner'] = $this->getFactory()->createFormCloner()
+            ->setForm($this->getFactory()->createCustomerFormFactory()->getCustomerAddressDeleteForm());
+
         return $this->view($responseData, [], '@CustomerPage/views/address/address.twig');
     }
 
@@ -161,6 +164,15 @@ class AddressController extends AbstractCustomerController
      */
     public function deleteAction(Request $request)
     {
+        $customerAddressDeleteForm = $this->getFactory()
+            ->createCustomerFormFactory()->getCustomerAddressDeleteForm()->handleRequest($request);
+
+        if (!$customerAddressDeleteForm->isSubmitted() || !$customerAddressDeleteForm->isValid()) {
+            $this->addErrorMessage(Messages::CUSTOMER_ADDRESS_DELETE_FAILED);
+
+            return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_ADDRESS);
+        }
+
         $customerTransfer = $this->getLoggedInCustomerTransfer();
 
         $addressTransfer = new AddressTransfer();

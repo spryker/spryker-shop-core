@@ -3,11 +3,11 @@
 {% define data = {
     quotes: _view.quoteCollection,
     isQuoteDeletable: _view.isQuoteDeletable,
-
     title: 'page.multi_cart.shopping_cart.list.title' | trans,
-    activePage: 'multiCart'
+    activePage: 'multiCart',
+    multiCartDuplicateFormCloner: _view.multiCartDuplicateFormCloner,
+    multiCartSetDefaultFormCloner: _view.multiCartSetDefaultFormCloner,
 } %}
-
 
 {% block customerContent %}
     <div class="box">
@@ -22,12 +22,13 @@
                     actions: {
                         update: true,
                         delete: true,
-                        duplicate: true
+                        duplicate: true,
                     },
-                    isQuoteDeletable: data.isQuoteDeletable
-                }
+                    isQuoteDeletable: data.isQuoteDeletable,
+                    multiCartSetDefaultFormCloner: data.multiCartSetDefaultFormCloner,
+                    multiCartDuplicateFormCloner: data.multiCartDuplicateFormCloner,
+                },
             } only %}
         {% endif %}
     </div>
-
 {% endblock %}

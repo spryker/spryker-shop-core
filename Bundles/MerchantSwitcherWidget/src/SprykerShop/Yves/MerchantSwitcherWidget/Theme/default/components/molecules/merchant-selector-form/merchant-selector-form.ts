@@ -47,10 +47,13 @@ export default class MerchantSelectorForm extends Component {
             return;
         }
 
-        this.ajaxProvider.queryParams.set('merchant-reference', this.select.value);
+        const data = new FormData(this.form);
+        const appendData = {'merchant_switcher_selector_form[_token]': this.csrfToken};
+
+        Object.keys(appendData).forEach((key: string) => data.append(key, appendData[key]));
 
         try {
-            await this.ajaxProvider.fetch();
+            await this.ajaxProvider.fetch(data);
             document.location.reload();
         } catch (e) {
             console.error(e);
@@ -67,5 +70,9 @@ export default class MerchantSelectorForm extends Component {
 
     protected get newMerchantNameTemplate(): string {
         return this.getAttribute('new-merchant-name-template');
+    }
+
+    protected get csrfToken(): string {
+        return this.getAttribute('csrf-token');
     }
 }

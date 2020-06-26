@@ -14,6 +14,10 @@ use SprykerShop\Yves\MultiCartWidget\Dependency\Client\MultiCartWidgetToQuoteCli
 
 class MultiCartWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @see \Spryker\Shared\Application\ApplicationConstants::FORM_FACTORY
+     */
+    public const FORM_FACTORY = 'FORM_FACTORY';
     public const CLIENT_MULTI_CART = 'CLIENT_MULTI_CART';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const PLUGINS_VIEW_EXTEND = 'PLUGINS_VIEW_EXTEND';

@@ -6,16 +6,17 @@
     wishlistItems: _view.wishlistItems,
     addAllProductsToCart: _view.addAllAvailableProductsToCartForm,
     activeWishlistId: _view.wishlistOverview.wishlist.idWishlist,
-
+    wishlistRemoveItemFormCloner: _view.wishlistRemoveItemFormCloner,
+    wishlistMoveToCartFormCloner: _view.wishlistMoveToCartFormCloner,
     pagination: {
         currentPage: _view.currentPage,
         maxPage: _view.totalPages,
         paginationPath: 'wishlist/details',
         showAlwaysFirstAndLast: true,
         parameters: {
-            wishlistName: _view.wishlistName
-        }
-    }
+            wishlistName: _view.wishlistName,
+        },
+    },
 } %}
 
 {% block customerContent %}
@@ -51,13 +52,15 @@
             {% include molecule('wishlist-detail-table', 'WishlistPage') with {
                 data: {
                     wishlistItems: data.wishlistItems,
-                    wishlistName: data.wishlistName
-                }
+                    wishlistName: data.wishlistName,
+                    wishlistRemoveItemFormCloner: data.wishlistRemoveItemFormCloner,
+                    wishlistMoveToCartFormCloner: data.wishlistMoveToCartFormCloner,
+                },
             } only %}
 
             <hr class="box__separator">
             {% include molecule('pagination') with {
-                data: data.pagination
+                data: data.pagination,
             } only %}
         {% endif %}
     </div>

@@ -12,6 +12,8 @@
         duplicate: false,
     },
     isQuoteDeletable: required,
+    multiCartSetDefaultFormClone: null,
+    multiCartDuplicateFormClone: null,
 } %}
 
 {% set showActions = data.actions.update or data.actions.delete or data.actions.duplicate %}
@@ -51,9 +53,17 @@
                             </strong>
                         </a>
                         {% else %}
-                        <a href="{{ url('multi-cart/set-default', {idQuote: quote.idQuote}) }}">
-                            {{ quote.name }}
-                        </a>
+                            {% if data.multiCartSetDefaultFormClone %}
+                                {% set multiCartSetDefaultForm = data.multiCartSetDefaultFormClone.getForm.createView %}
+                                {{ form_start(multiCartSetDefaultForm, {'action': path('multi-cart/set-default', {'idQuote': quote.idQuote}) }) }}
+                                    <button class="link">{{ quote.name }}</button>
+                                {{ form_end(multiCartSetDefaultForm) }}
+                            {% else %}
+                                <form id="multiCartSetDefaultForm_{{ loop.index }}" name="multiCartSetDefaultForm_{{ loop.index }}" method="POST" action="{{ path('multi-cart/set-default', {'idQuote': quote.idQuote}) }}">
+                                    <input type="hidden" name="multi_cart_set_default_form[_token]" value="{{ csrf_token('multi_cart_set_default_form')}}">
+                                    <button class="link">{{ quote.name }}</button>
+                                </form>
+                            {% endif %}
                         {% endif %}
                     </td>
                     {% widget 'CartListPermissionGroupWidget' args [quote, isQuoteDeletable] use view('multi-cart-permission-show', 'SharedCartWidget') only %}{% endwidget %}
@@ -97,9 +107,17 @@
                                     {% endif %}
                                     {% if data.actions.duplicate %}
                                         <li class="menu__item">
-                                            <a href="{{ url('multi-cart/duplicate', {idQuote: quote.idQuote}) }}">
-                                                {{ 'page.multi_cart.shopping_cart.list.link.duplicate' | trans }}
-                                            </a>
+                                            {% if data.multiCartDuplicateFormClone %}
+                                                {% set multiCartDuplicateForm = data.multiCartDuplicateFormClone.getForm.createView %}
+                                                {{ form_start(multiCartDuplicateForm, {'action': path('multi-cart/duplicate', {'idQuote': quote.idQuote}) }) }}
+                                                <button class="link">{{ 'page.multi_cart.shopping_cart.list.link.duplicate' | trans }}</button>
+                                                {{ form_end(multiCartDuplicateForm) }}
+                                            {% else %}
+                                                <form id="multiCartDuplicateForm_{{ loop.index }}" name="multiCartDuplicateForm_{{ loop.index }}" method="POST" action="{{ path('multi-cart/duplicate', {'idQuote': quote.idQuote}) }}">
+                                                    <input type="hidden" name="multi_cart_duplicate_form[_token]" value="{{ csrf_token('multi_cart_duplicate_form')}}">
+                                                    <button class="link">{{ 'page.multi_cart.shopping_cart.list.link.duplicate' | trans }}</button>
+                                                </form>
+                                            {% endif %}
                                         </li>
                                     {% endif %}
                                 {% endif %}
