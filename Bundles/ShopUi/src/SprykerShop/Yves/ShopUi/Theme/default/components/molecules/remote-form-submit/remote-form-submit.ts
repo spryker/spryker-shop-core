@@ -1,6 +1,6 @@
 import Component from 'ShopUi/models/component';
 
-export default class ShoppingListRemoteFormSubmit extends Component {
+export default class RemoteFormSubmit extends Component {
     protected formHolder: HTMLElement;
     protected submitButton: HTMLButtonElement;
 
