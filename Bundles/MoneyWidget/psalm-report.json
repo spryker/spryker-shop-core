@@ -1,0 +1,55 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 137,
+            "line_to": 137,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getSymbol on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MoneyWidget/src/SprykerShop/Yves/MoneyWidget/Plugin/ServiceProvider/TwigMoneyServiceProvider.php",
+            "snippet": "        if ($money->getCurrency() === null || $money->getCurrency()->getSymbol() === null) {",
+            "selected_text": "getSymbol",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 141,
+            "line_to": 141,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getSymbol on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MoneyWidget/src/SprykerShop/Yves/MoneyWidget/Plugin/ServiceProvider/TwigMoneyServiceProvider.php",
+            "snippet": "        return $money->getCurrency()->getSymbol();",
+            "selected_text": "getSymbol",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MoneyWidget/src/SprykerShop/Yves/MoneyWidget/Plugin/ServiceProvider/TwigMoneyServiceProvider.php",
+            "snippet": "        $app['twig'] = $app->share(",
+            "selected_text": "$app",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MoneyWidget/src/SprykerShop/Yves/MoneyWidget/Plugin/ServiceProvider/TwigMoneyServiceProvider.php",
+            "snippet": "        $app['twig'] = $app->share(",
+            "selected_text": "share",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

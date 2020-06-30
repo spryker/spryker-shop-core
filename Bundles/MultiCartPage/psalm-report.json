@@ -1,0 +1,199 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 167,
+            "line_to": 167,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdQuote on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MultiCartPage/src/SprykerShop/Yves/MultiCartPage/Controller/MultiCartController.php",
+            "snippet": "            ->getIdQuote();",
+            "selected_text": "getIdQuote",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 317,
+            "line_to": 317,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCustomerReference on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MultiCartPage/src/SprykerShop/Yves/MultiCartPage/Controller/MultiCartController.php",
+            "snippet": "        return $quoteTransfer->getCustomerReference() === $quoteTransfer->getCustomer()->getCustomerReference()",
+            "selected_text": "getCustomerReference",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MultiCartPage/src/SprykerShop/Yves/MultiCartPage/MultiCartPageDependencyProvider.php",
+            "snippet": "            return new MultiCartPageToMultiCartClientBridge($container->getLocator()->multiCart()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MultiCartPage/src/SprykerShop/Yves/MultiCartPage/MultiCartPageDependencyProvider.php",
+            "snippet": "            return new MultiCartPageToCartClientBridge($container->getLocator()->cart()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MultiCartPage/src/SprykerShop/Yves/MultiCartPage/MultiCartPageDependencyProvider.php",
+            "snippet": "            return new MultiCartPageToQuoteClientBridge($container->getLocator()->quote()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/PermissionAwareTrait.php",
+            "snippet": "            return Locator::getInstance()->permission()->client()->can($permissionKey, $context);",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 113,
+            "line_to": 113,
+            "type": "DeprecatedClass",
+            "message": "Class SprykerShop\\Yves\\MultiCartPage\\Plugin\\Provider\\MultiCartPageControllerProvider is deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MultiCartPage/src/SprykerShop/Yves/MultiCartPage/Controller/MultiCartController.php",
+            "snippet": "            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);",
+            "selected_text": "MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 124,
+            "line_to": 124,
+            "type": "DeprecatedClass",
+            "message": "Class SprykerShop\\Yves\\MultiCartPage\\Plugin\\Provider\\MultiCartPageControllerProvider is deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MultiCartPage/src/SprykerShop/Yves/MultiCartPage/Controller/MultiCartController.php",
+            "snippet": "                return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);",
+            "selected_text": "MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 129,
+            "line_to": 129,
+            "type": "DeprecatedClass",
+            "message": "Class SprykerShop\\Yves\\MultiCartPage\\Plugin\\Provider\\MultiCartPageControllerProvider is deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MultiCartPage/src/SprykerShop/Yves/MultiCartPage/Controller/MultiCartController.php",
+            "snippet": "            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);",
+            "selected_text": "MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 170,
+            "line_to": 170,
+            "type": "DeprecatedClass",
+            "message": "Class SprykerShop\\Yves\\MultiCartPage\\Plugin\\Provider\\MultiCartPageControllerProvider is deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MultiCartPage/src/SprykerShop/Yves/MultiCartPage/Controller/MultiCartController.php",
+            "snippet": "            MultiCartPageControllerProvider::ROUTE_MULTI_CART_UPDATE,",
+            "selected_text": "MultiCartPageControllerProvider::ROUTE_MULTI_CART_UPDATE",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 171,
+            "line_to": 171,
+            "type": "DeprecatedClass",
+            "message": "Class SprykerShop\\Yves\\MultiCartPage\\Plugin\\Provider\\MultiCartPageControllerProvider is deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MultiCartPage/src/SprykerShop/Yves/MultiCartPage/Controller/MultiCartController.php",
+            "snippet": "            [MultiCartPageControllerProvider::PARAM_ID_QUOTE => $idNewQuote]",
+            "selected_text": "MultiCartPageControllerProvider::PARAM_ID_QUOTE",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 216,
+            "line_to": 216,
+            "type": "DeprecatedClass",
+            "message": "Class SprykerShop\\Yves\\MultiCartPage\\Plugin\\Provider\\MultiCartPageControllerProvider is deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MultiCartPage/src/SprykerShop/Yves/MultiCartPage/Controller/MultiCartController.php",
+            "snippet": "            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);",
+            "selected_text": "MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 226,
+            "line_to": 226,
+            "type": "DeprecatedClass",
+            "message": "Class SprykerShop\\Yves\\MultiCartPage\\Plugin\\Provider\\MultiCartPageControllerProvider is deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MultiCartPage/src/SprykerShop/Yves/MultiCartPage/Controller/MultiCartController.php",
+            "snippet": "            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);",
+            "selected_text": "MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 231,
+            "line_to": 231,
+            "type": "DeprecatedClass",
+            "message": "Class SprykerShop\\Yves\\MultiCartPage\\Plugin\\Provider\\MultiCartPageControllerProvider is deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MultiCartPage/src/SprykerShop/Yves/MultiCartPage/Controller/MultiCartController.php",
+            "snippet": "        return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);",
+            "selected_text": "MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Yves\\Application\\Plugin\\Provider\\ControllerProviderInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MultiCartPage/src/SprykerShop/Yves/MultiCartPage/Plugin/Provider/MultiCartPageControllerProvider.php",
+            "snippet": "class MultiCartPageControllerProvider extends AbstractYvesControllerProvider",
+            "selected_text": "MultiCartPageControllerProvider",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "DeprecatedClass",
+            "message": "SprykerShop\\Yves\\ShopApplication\\Plugin\\Provider\\AbstractYvesControllerProvider is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MultiCartPage/src/SprykerShop/Yves/MultiCartPage/Plugin/Provider/MultiCartPageControllerProvider.php",
+            "snippet": "class MultiCartPageControllerProvider extends AbstractYvesControllerProvider",
+            "selected_text": "AbstractYvesControllerProvider",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}

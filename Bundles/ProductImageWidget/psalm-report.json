@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 17,
+            "line_to": 17,
+            "type": "DeprecatedInterface",
+            "message": "SprykerShop\\Yves\\ProductDetailPage\\Dependency\\Plugin\\ProductImageWidget\\ProductImageWidgetPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductImageWidget/src/SprykerShop/Yves/ProductImageWidget/Plugin/ProductDetailPage/ProductImageWidgetPlugin.php",
+            "snippet": "class ProductImageWidgetPlugin extends AbstractWidgetPlugin implements ProductImageWidgetPluginInterface",
+            "selected_text": "ProductImageWidgetPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 17,
+            "line_to": 17,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Yves\\Kernel\\Widget\\AbstractWidgetPlugin is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductImageWidget/src/SprykerShop/Yves/ProductImageWidget/Plugin/ProductDetailPage/ProductImageWidgetPlugin.php",
+            "snippet": "class ProductImageWidgetPlugin extends AbstractWidgetPlugin implements ProductImageWidgetPluginInterface",
+            "selected_text": "AbstractWidgetPlugin",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}
