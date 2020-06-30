@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\MerchantProductWidget\Mapper;
 
 use Generated\Shared\Transfer\MerchantProductViewTransfer;
 
-class MerchantProductMapper implements MerchantProductMapperInterface
+interface MerchantProductMapperInterface
 {
     /**
      * @param array<mixed> $productAbstractStorageData
@@ -20,7 +20,5 @@ class MerchantProductMapper implements MerchantProductMapperInterface
     public function mapProductAbstractStorageDataToMerchantProductViewTransfer(
         array $productAbstractStorageData,
         MerchantProductViewTransfer $merchantProductViewTransfer
-    ): MerchantProductViewTransfer {
-        return $merchantProductViewTransfer->fromArray($productAbstractStorageData, true);
-    }
+    ): MerchantProductViewTransfer;
 }

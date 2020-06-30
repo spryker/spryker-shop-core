@@ -2,14 +2,12 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\MerchantProductWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\MerchantProductOfferWidget\Sorter\MerchantProductViewCollectionSorter;
-use SprykerShop\Yves\MerchantProductOfferWidget\Sorter\MerchantProductViewCollectionSorterInterface;
 use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToMerchantStorageClientInterface;
 use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToPriceProductClientInterface;
 use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToPriceProductStorageClientInterface;
@@ -32,14 +30,6 @@ class MerchantProductWidgetFactory extends AbstractFactory
             $this->getMerchantStorageClient(),
             $this->createMerchantProductMapper()
         );
-    }
-
-    /**
-     * @return \SprykerShop\Yves\MerchantProductOfferWidget\Sorter\MerchantProductViewCollectionSorterInterface
-     */
-    public function createMerchantProductViewCollectionSorter(): MerchantProductViewCollectionSorterInterface
-    {
-        return new MerchantProductViewCollectionSorter();
     }
 
     /**

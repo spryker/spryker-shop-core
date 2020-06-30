@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker-shop/merchant-product-widget.svg)](https://travis-ci.org/spryker-shop/merchant-product-widget)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
-{{ADD DESCRIPTION HERE}}
+This module provides merchant product abstract information.
 
 ## Installation
 
