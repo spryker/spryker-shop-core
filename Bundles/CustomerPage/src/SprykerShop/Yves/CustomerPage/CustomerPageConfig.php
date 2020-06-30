@@ -143,14 +143,4 @@ class CustomerPageConfig extends AbstractBundleConfig
     {
         return static::ORDER_SEARCH_TYPES;
     }
-
-    /**
-     * @api
-     *
-     * @return bool
-     */
-    public function isDoubleOptInEnabled(): bool
-    {
-        return true;
-    }
 }

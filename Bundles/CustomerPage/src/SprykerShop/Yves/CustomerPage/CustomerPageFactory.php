@@ -16,7 +16,6 @@ use SprykerShop\Yves\CustomerPage\Authenticator\CustomerAuthenticator;
 use SprykerShop\Yves\CustomerPage\Authenticator\CustomerAuthenticatorInterface;
 use SprykerShop\Yves\CustomerPage\CustomerAddress\AddressChoicesResolver;
 use SprykerShop\Yves\CustomerPage\CustomerAddress\AddressChoicesResolverInterface;
-use SprykerShop\Yves\CustomerPage\CustomerChecker\CustomerChecker;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface;
@@ -47,6 +46,7 @@ use SprykerShop\Yves\CustomerPage\Reader\OrderReaderInterface;
 use SprykerShop\Yves\CustomerPage\Security\Customer;
 use SprykerShop\Yves\CustomerPage\Twig\GetUsernameTwigFunction;
 use SprykerShop\Yves\CustomerPage\Twig\IsLoggedTwigFunction;
+use SprykerShop\Yves\CustomerPage\UserChecker\CustomerConfirmationUserChecker;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -484,8 +484,8 @@ class CustomerPageFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Security\Core\User\UserCheckerInterface
      */
-    public function createCustomerChecker(): UserCheckerInterface
+    public function createUserChecker(): UserCheckerInterface
     {
-        return new CustomerChecker();
+        return new CustomerConfirmationUserChecker();
     }
 }

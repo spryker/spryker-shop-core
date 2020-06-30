@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CustomerPage\Plugin\Security;
+namespace SprykerShop\Yves\CustomerPage\Plugin\Application;
 
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\User\UserCheckerInterface;
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
  */
-class CustomerCheckerSecurityPlugin extends AbstractPlugin implements ApplicationPluginInterface
+class CustomerConfirmationUserCheckerApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
     /**
      * @see \Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_USER_CHECKER
@@ -37,7 +37,7 @@ class CustomerCheckerSecurityPlugin extends AbstractPlugin implements Applicatio
     public function provide(ContainerInterface $container): ContainerInterface
     {
         $container->extend(static::SERVICE_SECURITY_USER_CHECKER, function (UserCheckerInterface $userChecker) {
-            return $this->getFactory()->createCustomerChecker();
+            return $this->getFactory()->createUserChecker();
         });
 
         return $container;

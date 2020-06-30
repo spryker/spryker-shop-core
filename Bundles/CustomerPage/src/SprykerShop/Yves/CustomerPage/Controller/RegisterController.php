@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\CustomerPage\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
-use SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,10 +18,20 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RegisterController extends AbstractCustomerController
 {
-    public const MESSAGE_CUSTOMER_CONFIRMED = 'customer.authorization.account_validated';
-    public const MESSAGE_MISSING_CONFIRMATION_TOKEN = 'customer.token.invalid';
-    public const MESSAGE_CUSTOMER_REGISTRATION_SUCCESS = 'customer.registration.success';
-    public const MESSAGE_CUSTOMER_REGISTRATION_EMAIL_CONFIRMATION = 'customer.authorization.validate_email_address';
+    protected const GLOSSARY_KEY_CUSTOMER_CONFIRMED = 'customer.authorization.account_validated';
+    protected const GLOSSARY_KEY_MISSING_CONFIRMATION_TOKEN = 'customer.token.invalid';
+    protected const GLOSSARY_KEY_CUSTOMER_REGISTRATION_SUCCESS = 'customer.registration.success';
+    protected const GLOSSARY_KEY_CUSTOMER_REGISTRATION_EMAIL_CONFIRMATION = 'customer.authorization.validate_email_address';
+
+    /**
+     * @see CustomerPageRouteProviderPlugin::ROUTE_CUSTOMER_OVERVIEW
+     */
+    protected const ROUTE_CUSTOMER_OVERVIEW = 'customer/overview';
+
+    /**
+     * @see CustomerPageRouteProviderPlugin::ROUTE_LOGIN
+     */
+    protected const ROUTE_LOGIN = 'login';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -61,14 +70,13 @@ class RegisterController extends AbstractCustomerController
             $customerResponseTransfer = $this->registerCustomer($registerForm->getData());
 
             if ($customerResponseTransfer->getIsSuccess()) {
-                $message = $customerResponseTransfer->getIsDoubleOptInEnabled()
-                    ? static::MESSAGE_CUSTOMER_REGISTRATION_EMAIL_CONFIRMATION
-                    : static::MESSAGE_CUSTOMER_REGISTRATION_SUCCESS;
+                $message = static::GLOSSARY_KEY_CUSTOMER_REGISTRATION_SUCCESS;
+                $route = static::ROUTE_CUSTOMER_OVERVIEW;
+                if ($customerResponseTransfer->getIsDoubleOptInEnabled()) {
+                    $message = static::GLOSSARY_KEY_CUSTOMER_REGISTRATION_EMAIL_CONFIRMATION;
+                    $route = static::ROUTE_LOGIN;
+                }
                 $this->addSuccessMessage($message);
-
-                $route = $message = $customerResponseTransfer->getIsDoubleOptInEnabled()
-                    ? CustomerPageRouteProviderPlugin::ROUTE_LOGIN
-                    : CustomerPageRouteProviderPlugin::ROUTE_CUSTOMER_OVERVIEW;
 
                 return $this->redirectResponseInternal($route);
             }
@@ -126,24 +134,24 @@ class RegisterController extends AbstractCustomerController
     {
         $token = $request->query->get('token');
         if (!$token) {
-            $this->addErrorMessage(static::MESSAGE_MISSING_CONFIRMATION_TOKEN);
+            $this->addErrorMessage(static::GLOSSARY_KEY_MISSING_CONFIRMATION_TOKEN);
 
-            return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_LOGIN);
+            return $this->redirectResponseInternal(static::ROUTE_LOGIN);
         }
 
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setRegistrationKey($token);
+        $customerTransfer = (new CustomerTransfer())
+            ->setRegistrationKey($token);
 
         $customerResponseTransfer = $this->getFactory()->getCustomerClient()->confirmCustomerRegistration($customerTransfer);
 
         if (!$customerResponseTransfer->getErrors()->count()) {
-            $this->addSuccessMessage(static::MESSAGE_CUSTOMER_CONFIRMED);
+            $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_CONFIRMED);
 
-            return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_LOGIN);
+            return $this->redirectResponseInternal(static::ROUTE_LOGIN);
         }
 
         $this->processResponseErrors($customerResponseTransfer);
 
-        return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_LOGIN);
+        return $this->redirectResponseInternal(static::ROUTE_LOGIN);
     }
 }

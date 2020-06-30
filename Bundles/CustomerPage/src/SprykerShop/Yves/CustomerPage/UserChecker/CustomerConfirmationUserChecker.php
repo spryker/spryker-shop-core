@@ -5,17 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CustomerPage\CustomerChecker;
+namespace SprykerShop\Yves\CustomerPage\UserChecker;
 
+use SprykerShop\Yves\CustomerPage\Exception\NotConfirmedAccountException;
 use SprykerShop\Yves\CustomerPage\Exception\WrongUserInterfaceException;
 use SprykerShop\Yves\CustomerPage\Security\CustomerUserInterface;
-use Symfony\Component\Security\Core\Exception\DisabledException;
 use Symfony\Component\Security\Core\User\UserChecker;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class CustomerChecker extends UserChecker
+class CustomerConfirmationUserChecker extends UserChecker
 {
-    public const ERROR_NOT_CONFIRMED_ACCOUNT = 'User account is not confirmed.';
     /**
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
      *
@@ -23,7 +22,7 @@ class CustomerChecker extends UserChecker
      *
      * @return void
      */
-    public function checkPreAuth(UserInterface $user)
+    public function checkPreAuth(UserInterface $user): void
     {
         if (!$user instanceof CustomerUserInterface) {
             throw new WrongUserInterfaceException(sprintf('User should be an instance of %s', CustomerUserInterface::class));
@@ -33,7 +32,7 @@ class CustomerChecker extends UserChecker
 
         $customerTransfer = $user->getCustomerTransfer();
         if ($customerTransfer->getRegistered() === null) {
-            $ex = new DisabledException(static::ERROR_NOT_CONFIRMED_ACCOUNT);
+            $ex = new NotConfirmedAccountException();
             $ex->setUser($user);
 
             throw $ex;
