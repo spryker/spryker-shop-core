@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ResponseMessageTransfer;
 use Spryker\Shared\Company\Code\Messages;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -21,6 +22,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RegisterController extends AbstractController
 {
+    /**
+     * @uses \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_COMPANY_OVERVIEW
+     */
+    protected const ROUTE_COMPANY_OVERVIEW = 'company/overview';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -60,9 +66,13 @@ class RegisterController extends AbstractController
             $companyResponseTransfer = $this->registerCompany($registerForm->getData());
 
             if ($companyResponseTransfer->getIsSuccessful()) {
-                $this->addSuccessMessage(Messages::COMPANY_AUTHORIZATION_SUCCESS);
+                if (!$companyResponseTransfer->getMessages()->count()) {
+                    $companyResponseTransfer->addMessage((new ResponseMessageTransfer())->setText(Messages::COMPANY_AUTHORIZATION_SUCCESS));
+                }
 
-                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_OVERVIEW);
+                $this->addSuccessMessagesFromResponse($companyResponseTransfer);
+
+                return $this->redirectResponseInternal(static::ROUTE_COMPANY_OVERVIEW);
             }
 
             foreach ($companyResponseTransfer->getMessages() as $responseMessage) {
@@ -105,5 +115,17 @@ class RegisterController extends AbstractController
         $companyUserTransfer->setCustomer($customerTransfer);
 
         return $companyUserTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
+     *
+     * @return void
+     */
+    protected function addSuccessMessagesFromResponse(CompanyResponseTransfer $companyResponseTransfer): void
+    {
+        foreach ($companyResponseTransfer->getMessages() as $responseMessageTransfer) {
+            $this->addSuccessMessage($responseMessageTransfer->getText());
+        }
     }
 }
