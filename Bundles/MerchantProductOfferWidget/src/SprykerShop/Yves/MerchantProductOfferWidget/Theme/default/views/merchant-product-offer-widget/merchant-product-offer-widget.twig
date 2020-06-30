@@ -23,7 +23,7 @@
                             {% block productOffer %}
                                 {% embed molecule('merchant-product-offer-item', 'MerchantProductOfferWidget') with {
                                     data: {
-                                        checked: data.productView.productOfferReference == merchantProductOffer.productOfferReference,
+                                        checked: data.productView.productOfferReference is same as(merchantProductOffer.productOfferReference),
                                         radioGroupName: 'product_offer_reference',
                                         productOfferReference: merchantProductOffer.productOfferReference | default,
                                         merchantName: merchantProductOffer.merchantName | default,
