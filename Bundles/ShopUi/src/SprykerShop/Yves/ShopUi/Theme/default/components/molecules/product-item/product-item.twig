@@ -177,7 +177,7 @@
                         {% endif %}
 
                         {% if data.product.add_to_cart_sku is defined and data.product.add_to_cart_sku is not empty and can('SeeAddToCartPermissionPlugin') %}
-                            {% widget 'ProductAbstractAddToCartAjaxWidget' args [data.product] with {
+                            {% widget 'ProductAbstractAddToCartButtonWidget' args [data.product] with {
                                 data: {
                                     buttonExtraClasses: config.jsName ~ '__ajax-button-add-to-cart',
                                 },
