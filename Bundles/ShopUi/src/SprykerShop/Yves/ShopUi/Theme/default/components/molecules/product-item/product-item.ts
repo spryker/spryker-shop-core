@@ -170,6 +170,7 @@ export default class ProductItem extends Component {
      */
     set ajaxAddToCartUrl(ajaxAddToCartUrl: string) {
         if (this.productAjaxButtonAddToCart) {
+            this.productAjaxButtonAddToCart.disabled = !ajaxAddToCartUrl;
             this.productAjaxButtonAddToCart.dataset.url = ajaxAddToCartUrl;
         }
 

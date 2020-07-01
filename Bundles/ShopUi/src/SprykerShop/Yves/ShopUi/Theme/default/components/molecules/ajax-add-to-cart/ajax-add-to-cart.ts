@@ -49,7 +49,7 @@ export default class AjaxAddToCart extends Component {
                 });
                 document.dispatchEvent(cartCounterCustomEvent);
             }).catch(error => {
-            console.error(error);
-        });
+                console.error(error);
+            });
     }
 }

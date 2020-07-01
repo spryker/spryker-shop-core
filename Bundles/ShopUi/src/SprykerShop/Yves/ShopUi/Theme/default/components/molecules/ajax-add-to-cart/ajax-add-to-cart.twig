@@ -12,7 +12,7 @@
     separateProduct: 1,
     iconName: 'cart-plus',
     buttonText: '',
-    buttonTitle: data.buttonText | default is empty ? 'global.add-to-cart' | trans,
+    buttonTitle: data.buttonText | default('global.add-to-cart' | trans),
     buttonClasses: 'button button--success button--expand',
     buttonExtraClasses: '',
     extraAttributes: {},
