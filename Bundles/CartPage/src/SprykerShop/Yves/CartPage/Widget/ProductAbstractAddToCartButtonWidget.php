@@ -10,9 +10,11 @@ namespace SprykerShop\Yves\CartPage\Widget;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
+ * Displays a button for adding single concrete if it fulfilled the excluding rules.
+ *
  * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
  */
-class ProductAbstractAddToCartAjaxWidget extends AbstractWidget
+class ProductAbstractAddToCartButtonWidget extends AbstractWidget
 {
     protected const PARAMETER_PRODUCT_ABSTRACT = 'productAbstract';
 
@@ -29,7 +31,7 @@ class ProductAbstractAddToCartAjaxWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'ProductAbstractAddToCartAjaxWidget';
+        return 'ProductAbstractAddToCartButtonWidget';
     }
 
     /**
