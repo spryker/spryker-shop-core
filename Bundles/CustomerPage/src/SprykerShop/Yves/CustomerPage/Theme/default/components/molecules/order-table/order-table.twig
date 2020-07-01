@@ -88,11 +88,11 @@
                                                 buttonClass: 'link',
                                             },
                                             attributes: {
-                                                'form-name': 'customerReorderWidgetForm',
+                                                'form-name': 'customerReorderWidgetForm_' ~ order.idSalesOrder,
                                                 'form-action': path('customer/order/reorder', {'idSalesOrder': order.idSalesOrder}),
-                                                'form-token': csrf_token('customerReorderWidgetForm'),
+                                                'field-id': 'customerReorderWidgetForm__token_' ~ order.idSalesOrder,
                                                 'field-name': 'customerReorderWidgetForm[_token]',
-                                                'token-id': 'customerReorderWidgetForm__token',
+                                                'field-value': csrf_token('customerReorderWidgetForm'),
                                             },
                                         } only %}
                                     </li>

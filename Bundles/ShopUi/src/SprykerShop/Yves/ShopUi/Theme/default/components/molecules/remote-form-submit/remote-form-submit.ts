@@ -2,11 +2,13 @@ import Component from 'ShopUi/models/component';
 
 export default class RemoteFormSubmit extends Component {
     protected formHolder: HTMLElement;
+    protected fieldsContainer: HTMLElement;
     protected submitButton: HTMLButtonElement;
 
     protected readyCallback(): void {}
 
     protected init(): void {
+        this.fieldsContainer = <HTMLElement>Array.from(this.getElementsByClassName(`${this.jsName}__container`))[0];
         this.submitButton = <HTMLButtonElement>Array.from(this.getElementsByClassName(`${this.jsName}__submit`))[0];
 
         this.getFormHolder();
@@ -15,12 +17,15 @@ export default class RemoteFormSubmit extends Component {
     }
 
     protected mapEvents(): void {
+        this.mapSubmitEvent();
+    }
+
+    protected mapSubmitEvent(): void {
         this.submitButton.addEventListener('click', () => this.submitTargetForm());
     }
 
     protected submitTargetForm(): void {
-        const formId = this.submitButton.getAttribute('target-form-id');
-        const form = <HTMLFormElement>document.getElementById(formId);
+        const form = <HTMLFormElement>document.getElementById(this.formName);
 
         form.submit();
     }
@@ -38,7 +43,7 @@ export default class RemoteFormSubmit extends Component {
     protected createForm(): void {
         const formTemplate = `
             <form id="${this.formName}" class="is-hidden" name="${this.formName}" method="post" action="${this.formAction}">
-                <input id="${this.tokenId}" name="${this.fieldName}" type="hidden" value="${this.formToken}">
+                ${this.fieldsContainer.innerHTML}
             </form>
         `;
         this.formHolder.insertAdjacentHTML('beforeend', formTemplate);
@@ -54,17 +59,5 @@ export default class RemoteFormSubmit extends Component {
 
     protected get formAction(): string {
         return this.getAttribute('form-action');
-    }
-
-    protected get formToken(): string {
-        return this.getAttribute('form-token');
-    }
-
-    protected get fieldName(): string {
-        return this.getAttribute('field-name');
-    }
-
-    protected get tokenId(): string {
-        return this.getAttribute('token-id');
     }
 }
