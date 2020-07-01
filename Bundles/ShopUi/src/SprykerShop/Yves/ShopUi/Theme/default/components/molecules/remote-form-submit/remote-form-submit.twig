@@ -11,14 +11,22 @@
 } %}
 
 {% define attributes = {
-    'form-holder-class-name': '',
-    'token-id': '',
     'form-name': required,
     'form-action': required,
-    'form-token': required,
-    'field-name': required,
+    'field-id': '',
+    'field-name': '',
+    'field-value': '',
+    'form-holder-class-name': '',
 } %}
 
 {% block body %}
+    {% block container %}
+        <div class="{{ config.jsName }}__container">
+            {% block fields %}
+                <input id="{{ attributes['field-id'] }}" name="{{ attributes['field-name'] }}" type="hidden" value="{{ attributes['field-value'] }}">
+            {% endblock %}
+        </div>
+    {% endblock %}
+
     <button type="button" class="{{ data.buttonClass }} {{ config.jsName }}__submit" target-form-id="{{ attributes['form-name'] }}">{{ data.label }}</button>
 {% endblock %}

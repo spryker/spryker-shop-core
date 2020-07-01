@@ -25,9 +25,9 @@
                 attributes: {
                     'form-name': 'clearForm',
                     'form-action': path('shopping-list/clear', { idShoppingList: data.idShoppingList }),
-                    'form-token': csrf_token('shopping_list_clear_form'),
+                    'field-id': 'shopping_list_remove_item_form__token[clearForm]',
                     'field-name': 'shopping_list_clear_form[_token]',
-                    'token-id': 'shopping_list_remove_item_form__token[clearForm]',
+                    'field-value': csrf_token('shopping_list_clear_form'),
                 },
             } only %}
         </td>
@@ -102,9 +102,9 @@
                 attributes: {
                     'form-name': 'removeItemForm_' ~ idShoppingListItem,
                     'form-action': path('shopping-list/remove-item', {'idShoppingList': data.idShoppingList, 'idShoppingListItem': idShoppingListItem }),
-                    'form-token': csrf_token('shopping_list_remove_item_form'),
+                    'field-id': 'shopping_list_remove_item_form__token[removeItemForm_' ~ idShoppingListItem ~ ']',
                     'field-name': 'shopping_list_remove_item_form[_token]',
-                    'token-id': 'shopping_list_remove_item_form__token[removeItemForm_' ~ idShoppingListItem ~ ']',
+                    'field-value': csrf_token('shopping_list_remove_item_form'),
                 },
             } only %}
         {% endblock %}
