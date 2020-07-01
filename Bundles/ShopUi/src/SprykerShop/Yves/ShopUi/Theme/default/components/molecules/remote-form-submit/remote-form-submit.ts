@@ -17,6 +17,10 @@ export default class RemoteFormSubmit extends Component {
     }
 
     protected mapEvents(): void {
+        this.mapSubmitEvent();
+    }
+
+    protected mapSubmitEvent(): void {
         this.submitButton.addEventListener('click', () => this.submitTargetForm());
     }
 
