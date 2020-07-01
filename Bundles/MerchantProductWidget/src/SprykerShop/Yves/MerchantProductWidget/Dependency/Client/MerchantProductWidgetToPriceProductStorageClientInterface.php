@@ -13,7 +13,7 @@ interface MerchantProductWidgetToPriceProductStorageClientInterface
      * @param int $idProductConcrete
      * @param int $idProductAbstract
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function getResolvedPriceProductConcreteTransfers(int $idProductConcrete, int $idProductAbstract): array;
 }

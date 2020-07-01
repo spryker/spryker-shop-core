@@ -3,13 +3,6 @@
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="MerchantProductStorage">
-    </transfer>
-
-    <transfer name="MerchantProductViewCollection">
-        <property name="MerchantProductViews" type="MerchantProductView[]" singular="MerchantProductView"/>
-    </transfer>
-  
     <transfer name="MerchantProductView">
         <property name="merchantReference" type="string"/>
         <property name="merchantName" type="string"/>

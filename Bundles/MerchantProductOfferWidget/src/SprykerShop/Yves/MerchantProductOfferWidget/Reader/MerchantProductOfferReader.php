@@ -7,12 +7,10 @@
 
 namespace SprykerShop\Yves\MerchantProductOfferWidget\Reader;
 
-use Generated\Shared\Transfer\MerchantProductOfferTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface;
-use SprykerShop\Yves\MerchantProductOfferWidget\Mapper\MerchantProductViewMapper;
 use SprykerShop\Yves\MerchantProductOfferWidget\Resolver\ShopContextResolverInterface;
 
 class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
@@ -28,23 +26,15 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
     protected $shopContextResolver;
 
     /**
-     * @var \SprykerShop\Yves\MerchantProductOfferWidget\Mapper\MerchantProductViewMapper
-     */
-    protected $merchantProductOfferMapper;
-
-    /**
      * @param \SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface $merchantProductOfferStorageClient
      * @param \SprykerShop\Yves\MerchantProductOfferWidget\Resolver\ShopContextResolverInterface $shopContextResolver
-     * @param \SprykerShop\Yves\MerchantProductOfferWidget\Mapper\MerchantProductViewMapper $merchantProductOfferMapper
      */
     public function __construct(
         MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface $merchantProductOfferStorageClient,
-        ShopContextResolverInterface $shopContextResolver,
-        MerchantProductViewMapper $merchantProductOfferMapper
+        ShopContextResolverInterface $shopContextResolver
     ) {
         $this->merchantProductOfferStorageClient = $merchantProductOfferStorageClient;
         $this->shopContextResolver = $shopContextResolver;
-        $this->merchantProductOfferMapper = $merchantProductOfferMapper;
     }
 
     /**
@@ -64,21 +54,15 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
         $productOfferStorageCriteriaTransfer->addProductConcreteSku($productViewTransfer->getSku());
 
         $productOfferStorageCollectionTransfer = $this->merchantProductOfferStorageClient->getProductOffersBySkus($productOfferStorageCriteriaTransfer);
-        $productOffersStorageTransfers = $productOfferStorageCollectionTransfer->getProductOffersStorage();
+        $productOffersStorageTransfers = $productOfferStorageCollectionTransfer->getProductOffersStorage()->getArrayCopy();
 
-        $merchantProductOfferTransfers = [];
-
-        foreach ($productOffersStorageTransfers as $productOfferStorageTransfer) {
+        foreach ($productOffersStorageTransfers as $key => $productOfferStorageTransfer) {
             $merchantStorageTransfer = $productOfferStorageTransfer->getMerchantStorage();
-            $merchantProductOfferTransfer = $this->merchantProductOfferMapper
-                ->mapProductOfferStorageTransferToMerchantProductOfferTransfer($productOfferStorageTransfer, new MerchantProductOfferTransfer());
 
-            $merchantProductOfferTransfer->setMerchantUrl($this->getResolvedUrl($merchantStorageTransfer, $localeName));
-
-            $merchantProductOfferTransfers[] = $merchantProductOfferTransfer;
+            $productOffersStorageTransfers[$key]->getMerchantStorage()->setMerchantUrl($this->getResolvedUrl($merchantStorageTransfer, $localeName));
         }
 
-        return $merchantProductOfferTransfers;
+        return $productOffersStorageTransfers;
     }
 
     /**

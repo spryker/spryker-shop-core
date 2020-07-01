@@ -17,6 +17,7 @@ use SprykerShop\Yves\CartPageExtension\Dependency\Plugin\PreAddToCartPluginInter
 class MerchantProductPreAddToCartPlugin extends AbstractPlugin implements PreAddToCartPluginInterface
 {
     protected const PARAM_MERCHANT_REFERENCE = 'merchant_reference';
+    protected const PARAM_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
 
     /**
@@ -43,14 +44,14 @@ class MerchantProductPreAddToCartPlugin extends AbstractPlugin implements PreAdd
                 $this->getLocale()
             );
 
-        if (!isset($productConcreteStorageData['id_product_abstract'])) {
+        if (!isset($productConcreteStorageData[static::PARAM_ID_PRODUCT_ABSTRACT])) {
             return $itemTransfer;
         }
 
         $productAbstractStorageData = $this->getFactory()
             ->getProductStorageClient()
             ->findProductAbstractStorageData(
-                $productConcreteStorageData['id_product_abstract'],
+                $productConcreteStorageData[static::PARAM_ID_PRODUCT_ABSTRACT],
                 $this->getLocale()
             );
 

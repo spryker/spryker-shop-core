@@ -2,13 +2,13 @@
 
 {% define data = {
     locale: app.locale | slice(0, 2),
-    merchantProductOffers: _widget.merchantProductOffers,
+    productOffers: _widget.productOffers,
     productView: _widget.productView,
 } %}
 
 {% block template %}
-    {% set showRadioButton = data.merchantProductOffers | length > 1 %}
-    {% if data.merchantProductOffers %}
+    {% set showRadioButton = data.productOffers | length > 1 %}
+    {% if data.productOffers %}
         {% block content %}
             <div class="box box--dark box--spacingless spacing spacing--inner spacing-y">
                 {% block contentInner %}
@@ -19,21 +19,21 @@
                     {% endblock %}
 
                     {% block productOfferList %}
-                        {% for merchantProductOffer in data.merchantProductOffers  %}
+                        {% for productOffer in data.productOffers  %}
                             {% block productOffer %}
                                 {% embed molecule('merchant-product-offer-item', 'MerchantProductOfferWidget') with {
                                     data: {
-                                        checked: data.productView.productOfferReference is same as(merchantProductOffer.productOfferReference),
+                                        checked: data.productView.productOfferReference is same as(productOffer.productOfferReference),
                                         radioGroupName: 'product_offer_reference',
-                                        productOfferReference: merchantProductOffer.productOfferReference | default,
-                                        merchantName: merchantProductOffer.merchantName | default,
-                                        merchantUrl: merchantProductOffer.merchantUrl | default,
-                                        price: merchantProductOffer.price.price | default(null),
-                                        currencyIsoCode: merchantProductOffer.price.currency.code | default(null),
+                                        productOfferReference: productOffer.productOfferReference | default,
+                                        merchantName: productOffer.merchantStorage.name | default,
+                                        merchantUrl: productOffer.merchantStorage.merchantUrl | default,
+                                        price: productOffer.price.price | default(null),
+                                        currencyIsoCode: productOffer.price.currency.code | default(null),
                                         shouldShowRadioButton: showRadioButton,
                                     },
                                     embed : {
-                                        currentProductPrice: merchantProductOffer.price,
+                                        currentProductPrice: productOffer.price,
                                     }
                                 } only %}
                                     {% block price %}

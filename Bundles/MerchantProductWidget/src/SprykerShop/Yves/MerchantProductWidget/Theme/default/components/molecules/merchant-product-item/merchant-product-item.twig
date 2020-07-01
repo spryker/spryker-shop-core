@@ -12,7 +12,7 @@
     merchantUrl: required,
     price: required,
     currencyIsoCode: required,
-    shouldShowRadioButton: false,
+    isRadioButtonVisible: false,
 } %}
 
 {% block extraClass %} spacing-y{% endblock %}
@@ -21,14 +21,14 @@
     <div class="grid grid--nowrap">
         {% block offerInner %}
             {% block radioCol %}
-                {% set radioColVisibilityClass = not data.shouldShowRadioButton ? 'is-hidden' %}
+                {% set radioColVisibilityClass = not data.isRadioButtonVisible ? 'is-hidden' %}
 
                 <div class="col {{ radioColVisibilityClass }}">
                     {% block radio %}
                         {% include atom('radio') with {
                             class: config.jsName ~ '__trigger-' ~ data.merchantReference,
                             attributes: {
-                                checked: data.checked,
+                                checked: data.isChecked,
                                 name: data.radioGroupName,
                                 value: data.merchantReference,
                             },

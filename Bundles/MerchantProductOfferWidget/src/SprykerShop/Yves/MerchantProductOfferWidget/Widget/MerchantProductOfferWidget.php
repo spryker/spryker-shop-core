@@ -20,7 +20,7 @@ class MerchantProductOfferWidget extends AbstractWidget
      */
     public function __construct(ProductViewTransfer $productViewTransfer)
     {
-        $this->getProductOfferCollection($productViewTransfer);
+        $this->addProductOfferCollection($productViewTransfer);
         $this->addProductViewParameter($productViewTransfer);
     }
 
@@ -45,10 +45,10 @@ class MerchantProductOfferWidget extends AbstractWidget
      *
      * @return void
      */
-    protected function getProductOfferCollection(ProductViewTransfer $productViewTransfer): void
+    protected function addProductOfferCollection(ProductViewTransfer $productViewTransfer): void
     {
         $this->addParameter(
-            'merchantProductOffers',
+            'productOffers',
             $this->getFactory()
                 ->createProductOfferReader()
                 ->getProductOfferCollection($productViewTransfer, $this->getLocale())

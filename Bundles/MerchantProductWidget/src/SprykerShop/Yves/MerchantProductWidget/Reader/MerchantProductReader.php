@@ -99,6 +99,11 @@ class MerchantProductReader implements MerchantProductReaderInterface
             $productAbstractStorageData,
             new MerchantProductViewTransfer()
         );
+
+        if (!$merchantProductViewTransfer->getMerchantReference()) {
+            return null;
+        }
+
         $merchantStorageTransfer = $this->merchantStorageClient->findOneByMerchantReference($merchantProductViewTransfer->getMerchantReference());
 
         if (!$merchantStorageTransfer) {
