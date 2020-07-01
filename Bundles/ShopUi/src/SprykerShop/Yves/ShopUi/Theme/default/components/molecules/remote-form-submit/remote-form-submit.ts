@@ -21,8 +21,7 @@ export default class RemoteFormSubmit extends Component {
     }
 
     protected submitTargetForm(): void {
-        const formId = this.submitButton.getAttribute('target-form-id');
-        const form = <HTMLFormElement>document.getElementById(formId);
+        const form = <HTMLFormElement>document.getElementById(this.formName);
 
         form.submit();
     }
