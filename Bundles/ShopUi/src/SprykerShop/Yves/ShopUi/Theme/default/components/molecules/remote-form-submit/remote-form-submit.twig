@@ -28,5 +28,9 @@
         </div>
     {% endblock %}
 
-    <button type="button" class="{{ data.buttonClass }} {{ config.jsName }}__submit">{{ data.label }}</button>
+    {% block submitAction %}
+        <button type="button" class="{{ data.buttonClass }} {{ config.jsName }}__submit">
+            {% block innerSubmitActionContent %}{{ data.label }}{% endblock %}
+        </button>
+    {% endblock %}
 {% endblock %}
