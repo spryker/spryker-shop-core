@@ -1,0 +1,5 @@
+{
+    "include": {
+        "spryker-shop/shop-ui": "ShopUi is used to display the navigation from the storage."
+    }
+}

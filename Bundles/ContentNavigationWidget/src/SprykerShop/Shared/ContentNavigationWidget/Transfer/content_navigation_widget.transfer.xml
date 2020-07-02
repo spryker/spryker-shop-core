@@ -7,4 +7,11 @@
         <property name="navigationKey" type="string"/>
     </transfer>
 
+    <transfer name="NavigationNodeStorage">
+        <property name="hasChildren" type="bool"/>
+        <property name="isValidTo" type="bool"/>
+        <property name="isValidFrom" type="bool"/>
+        <property name="isActiveAndValid" type="bool"/>
+    </transfer>
+
 </transfers>
