@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RegisterController extends AbstractCustomerController
 {
-    protected const GLOSSARY_KEY_CUSTOMER_CONFIRMED = 'customer.authorization.account_validated';
+    protected const GLOSSARY_KEY_CUSTOMER_CONFIRMED = 'customer.authorization.account_confirmed';
     protected const GLOSSARY_KEY_MISSING_CONFIRMATION_TOKEN = 'customer.token.invalid';
 
     /**
