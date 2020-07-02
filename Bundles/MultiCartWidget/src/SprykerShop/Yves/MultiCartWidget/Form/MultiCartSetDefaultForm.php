@@ -10,8 +10,8 @@ namespace SprykerShop\Yves\MultiCartWidget\Form;
 use Symfony\Component\Form\AbstractType;
 
 /**
- * This class is empty, because this form needs to implement csrf protection and all options and form content
- * will be defined in twig templates.
+ * This class is empty, because this form needs to implement CSRF protection and all options and form content
+ * will be defined in Twig templates.
  */
 class MultiCartSetDefaultForm extends AbstractType
 {
