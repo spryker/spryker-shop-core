@@ -7,7 +7,7 @@
 } %}
 
 {% block template %}
-    {% set showRadioButton = data.productOffers | length > 1 %}
+    {% set isRadioButtonVisible = data.productOffers | length > 1 %}
     {% if data.productOffers %}
         {% block content %}
             <div class="box box--dark box--spacingless spacing spacing--inner">
@@ -23,14 +23,14 @@
                             {% block productOffer %}
                                 {% embed molecule('merchant-product-offer-item', 'MerchantProductOfferWidget') with {
                                     data: {
-                                        checked: data.productView.productOfferReference is same as(productOffer.productOfferReference),
+                                        isChecked: data.productView.productOfferReference is same as(productOffer.productOfferReference),
                                         radioGroupName: 'product_offer_reference',
                                         productOfferReference: productOffer.productOfferReference | default,
                                         merchantName: productOffer.merchantStorage.name | default,
                                         merchantUrl: productOffer.merchantStorage.merchantUrl | default,
                                         price: productOffer.price.price | default(null),
                                         currencyIsoCode: productOffer.price.currency.code | default(null),
-                                        shouldShowRadioButton: showRadioButton,
+                                        isRadioButtonVisible: isRadioButtonVisible,
                                     },
                                     embed : {
                                         currentProductPrice: productOffer.price,

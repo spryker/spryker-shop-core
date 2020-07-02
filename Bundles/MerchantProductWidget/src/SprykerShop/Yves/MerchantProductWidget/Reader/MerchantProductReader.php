@@ -73,10 +73,6 @@ class MerchantProductReader implements MerchantProductReaderInterface
      */
     public function findMerchantProductView(ProductViewTransfer $productViewTransfer, string $localeName): ?MerchantProductViewTransfer
     {
-        if (!$productViewTransfer->getIdProductAbstract()) {
-            return null;
-        }
-
         $productAbstractStorageData = $this->productStorageClient->findProductAbstractStorageData(
             $productViewTransfer->getIdProductAbstract(),
             $localeName

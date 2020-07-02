@@ -28,7 +28,7 @@ class MerchantProductWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     public function provideDependencies(Container $container): Container
     {
-        parent::provideDependencies($container);
+        $container = parent::provideDependencies($container);
 
         $container = $this->addMerchantStorageClient($container);
         $container = $this->addProductStorageClient($container);

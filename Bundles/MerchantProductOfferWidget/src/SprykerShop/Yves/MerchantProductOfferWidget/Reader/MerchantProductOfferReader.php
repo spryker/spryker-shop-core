@@ -41,9 +41,9 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\MerchantProductOfferTransfer[]
+     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
      */
-    public function getProductOfferCollection(ProductViewTransfer $productViewTransfer, string $localeName): array
+    public function getProductOffers(ProductViewTransfer $productViewTransfer, string $localeName): array
     {
         if (!$productViewTransfer->getIdProductConcrete()) {
             return [];
@@ -56,10 +56,10 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
         $productOfferStorageCollectionTransfer = $this->merchantProductOfferStorageClient->getProductOffersBySkus($productOfferStorageCriteriaTransfer);
         $productOffersStorageTransfers = $productOfferStorageCollectionTransfer->getProductOffersStorage()->getArrayCopy();
 
-        foreach ($productOffersStorageTransfers as $key => $productOfferStorageTransfer) {
+        foreach ($productOffersStorageTransfers as $productOfferStorageTransfer) {
             $merchantStorageTransfer = $productOfferStorageTransfer->getMerchantStorage();
 
-            $productOffersStorageTransfers[$key]->getMerchantStorage()->setMerchantUrl($this->getResolvedUrl($merchantStorageTransfer, $localeName));
+            $productOffersStorageTransfers->getMerchantStorage()->setMerchantUrl($this->getResolvedUrl($merchantStorageTransfer, $localeName));
         }
 
         return $productOffersStorageTransfers;

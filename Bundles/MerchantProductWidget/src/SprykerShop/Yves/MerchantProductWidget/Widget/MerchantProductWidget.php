@@ -17,18 +17,18 @@ class MerchantProductWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param bool $showRadioButton
-     * @param bool $checked
+     * @param bool $isRadioButtonVisible
+     * @param bool $isChecked
      */
     public function __construct(
         ProductViewTransfer $productViewTransfer,
-        bool $showRadioButton = false,
-        bool $checked = true
+        bool $isRadioButtonVisible = false,
+        bool $isChecked = true
     ) {
         $this->addMerchantProductViewParameter($productViewTransfer);
         $this->addProductViewParameter($productViewTransfer);
-        $this->addIsRadioButtonVisible($showRadioButton);
-        $this->addIsChecked($checked);
+        $this->addIsRadioButtonVisibleParameter($isRadioButtonVisible);
+        $this->addIsCheckedParameter($isChecked);
     }
 
     /**
@@ -75,7 +75,7 @@ class MerchantProductWidget extends AbstractWidget
      *
      * @return void
      */
-    protected function addIsRadioButtonVisible(bool $isRadioButtonVisible): void
+    protected function addIsRadioButtonVisibleParameter(bool $isRadioButtonVisible): void
     {
         $this->addParameter('isRadioButtonVisible', $isRadioButtonVisible);
     }
@@ -85,7 +85,7 @@ class MerchantProductWidget extends AbstractWidget
      *
      * @return void
      */
-    protected function addIsChecked(bool $isChecked): void
+    protected function addIsCheckedParameter(bool $isChecked): void
     {
         $this->addParameter('isChecked', $isChecked);
     }
