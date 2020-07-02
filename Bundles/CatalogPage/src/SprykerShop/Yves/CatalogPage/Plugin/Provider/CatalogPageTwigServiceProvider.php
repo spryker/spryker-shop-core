@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig\Environment;
 
 /**
- * @deprecated Use {@link SprykerShop\Yves\CatalogPage\Plugin\Twig\CatalogPageTwigPlugin} instead.
+ * @deprecated Use @link \SprykerShop\Yves\CatalogPage\Plugin\Twig\CatalogPageTwigPlugin} instead.
  *
  * @method \SprykerShop\Yves\CatalogPage\CatalogPageFactory getFactory()
  */

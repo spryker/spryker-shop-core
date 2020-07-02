@@ -12,7 +12,7 @@ use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
- * @deprecated Use {@link SprykerShop\Yves\CartPage\Plugin\Twig\CartTwigPlugin} instead.
+ * @deprecated Use @link \SprykerShop\Yves\CartPage\Plugin\Twig\CartTwigPlugin} instead.
  *
  * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
  */
