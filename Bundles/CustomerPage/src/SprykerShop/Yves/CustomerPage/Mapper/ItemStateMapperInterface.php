@@ -14,7 +14,7 @@ interface ItemStateMapperInterface
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
      *
-     * @return string[][]
+     * @return string[][][]
      */
     public function aggregateItemStatesDisplayNamesByOrderReference(ArrayObject $orderTransfers): array;
 }
