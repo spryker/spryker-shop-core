@@ -59,7 +59,7 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
         foreach ($productOffersStorageTransfers as $productOfferStorageTransfer) {
             $merchantStorageTransfer = $productOfferStorageTransfer->getMerchantStorage();
 
-            $productOffersStorageTransfers->getMerchantStorage()->setMerchantUrl($this->getResolvedUrl($merchantStorageTransfer, $localeName));
+            $productOfferStorageTransfer->getMerchantStorage()->setMerchantUrl($this->getResolvedUrl($merchantStorageTransfer, $localeName));
         }
 
         return $productOffersStorageTransfers;
