@@ -8,20 +8,11 @@
 namespace SprykerShop\Yves\WishlistPage\Form;
 
 use Spryker\Yves\Kernel\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * This class is empty, because this form needs to implement csrf protection and all options and form content
+ * will be defined in twig templates.
+ */
 class WishlistAddItemFormType extends AbstractType
 {
-    /**
-     * This method is empty, because this form needs to implement csrf protection and all options and form content
-     * will be defined in twig templates.
-     *
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return void
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-    }
 }

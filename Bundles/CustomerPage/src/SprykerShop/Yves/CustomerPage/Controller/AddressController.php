@@ -27,7 +27,7 @@ class AddressController extends AbstractCustomerController
     {
         $responseData = $this->executeIndexAction();
 
-        $responseData['customerDeleteFromCloner'] = $this->getFactory()->createFormCloner()
+        $responseData['customerDeleteFormCloner'] = $this->getFactory()->createFormCloner()
             ->setForm($this->getFactory()->createCustomerFormFactory()->getCustomerAddressDeleteForm());
 
         return $this->view($responseData, [], '@CustomerPage/views/address/address.twig');
