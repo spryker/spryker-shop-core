@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\ResponseMessageTransfer;
 use Spryker\Shared\Company\Code\Messages;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -121,7 +120,7 @@ class RegisterController extends AbstractController
     protected function addSuccessMessages(CompanyResponseTransfer $companyResponseTransfer): void
     {
         if (!$companyResponseTransfer->getMessages()->count()) {
-            $companyResponseTransfer->addMessage((new ResponseMessageTransfer())->setText(Messages::COMPANY_AUTHORIZATION_SUCCESS));
+            $this->addSuccessMessage(Messages::COMPANY_AUTHORIZATION_SUCCESS);
 
             return;
         }

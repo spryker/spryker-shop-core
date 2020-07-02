@@ -23,7 +23,7 @@ class RegisterController extends AbstractCustomerController
     protected const GLOSSARY_KEY_MISSING_CONFIRMATION_TOKEN = 'customer.token.invalid';
 
     /**
-     * @see \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_CUSTOMER_OVERVIEW
+     * @uses \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_CUSTOMER_OVERVIEW
      */
     protected const ROUTE_CUSTOMER_OVERVIEW = 'customer/overview';
 
@@ -70,8 +70,7 @@ class RegisterController extends AbstractCustomerController
 
             if ($customerResponseTransfer->getIsSuccess()) {
                 $route = static::ROUTE_CUSTOMER_OVERVIEW;
-                $customerPageConfig = $this->getFactory()->getConfig();
-                if ($customerPageConfig->isDoubleOptInEnabled()) {
+                if ($this->getFactory()->getConfig()->isDoubleOptInEnabled()) {
                     $route = static::ROUTE_LOGIN;
                 }
 
@@ -143,7 +142,7 @@ class RegisterController extends AbstractCustomerController
 
         $customerResponseTransfer = $this->getFactory()->getCustomerClient()->confirmCustomerRegistration($customerTransfer);
 
-        if (!$customerResponseTransfer->getErrors()->count()) {
+        if ($customerResponseTransfer->getIsSuccess()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_CONFIRMED);
 
             return $this->redirectResponseInternal(static::ROUTE_LOGIN);

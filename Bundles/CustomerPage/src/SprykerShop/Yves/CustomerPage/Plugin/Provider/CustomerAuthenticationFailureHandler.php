@@ -20,7 +20,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerI
 class CustomerAuthenticationFailureHandler extends BaseCustomerAuthenticationHandler implements AuthenticationFailureHandlerInterface
 {
     public const MESSAGE_CUSTOMER_AUTHENTICATION_FAILED = 'customer.authentication.failed';
-    public const GLOSSARY_KEY_CUSTOMER_NOT_CONFIRMED_ACCOUNT = 'customer.authorization.invalid_account';
+    protected const GLOSSARY_KEY_CUSTOMER_NOT_CONFIRMED_ACCOUNT = 'customer.authorization.invalid_account';
 
     /**
      * @var \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface

@@ -20,7 +20,7 @@ use Symfony\Component\Security\Core\User\UserCheckerInterface;
 class CustomerConfirmationUserCheckerApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
     /**
-     * @see \Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_USER_CHECKER
+     * @uses \Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_USER_CHECKER
      */
     protected const SERVICE_SECURITY_USER_CHECKER = 'security.user_checker';
 

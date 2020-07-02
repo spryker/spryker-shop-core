@@ -147,7 +147,7 @@ class CustomerPageConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @see \Spryker\Shared\Customer\CustomerConfig::isDoubleOptInEnabled()
+     * @uses \Spryker\Shared\Customer\CustomerConfig::isDoubleOptInEnabled()
      *
      * @return bool
      */
