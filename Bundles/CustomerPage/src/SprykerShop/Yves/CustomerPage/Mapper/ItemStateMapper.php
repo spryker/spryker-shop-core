@@ -15,7 +15,7 @@ class ItemStateMapper implements ItemStateMapperInterface
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
      *
-     * @return array
+     * @return string[][]
      */
     public function aggregateItemStatesDisplayNamesByOrderReference(ArrayObject $orderTransfers): array
     {
@@ -36,11 +36,12 @@ class ItemStateMapper implements ItemStateMapperInterface
     {
         $displayNames = [];
         foreach ($orderTransfer->getAggregatedItemStates() as $aggregatedItemStateTransfer) {
-            if (!$aggregatedItemStateTransfer->getDisplayName()) {
+            $displayName = $aggregatedItemStateTransfer->getDisplayName();
+            if (!$displayName) {
                 continue;
             }
 
-            $displayNames[$aggregatedItemStateTransfer->getDisplayName()] = $aggregatedItemStateTransfer->getDisplayName();
+            $displayNames[$displayName] = $displayName;
         }
 
         return array_values($displayNames);
