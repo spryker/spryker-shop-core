@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class RemoveForm extends AbstractType
 {
     /**
-     * This method is empty because this form needs to implement csrf protection and all options and form content
+     * This method is empty, because this form needs to implement csrf protection and all options and form content
      * will be defined in twig templates.
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
