@@ -37,7 +37,7 @@ class CustomerConfirmationUserCheckerApplicationPlugin extends AbstractPlugin im
     public function provide(ContainerInterface $container): ContainerInterface
     {
         $container->extend(static::SERVICE_SECURITY_USER_CHECKER, function (UserCheckerInterface $userChecker) {
-            return $this->getFactory()->createUserChecker();
+            return $this->getFactory()->createCustomerConfirmationUserChecker();
         });
 
         return $container;

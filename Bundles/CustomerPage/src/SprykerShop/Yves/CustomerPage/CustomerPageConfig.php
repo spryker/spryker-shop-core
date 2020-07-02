@@ -143,4 +143,16 @@ class CustomerPageConfig extends AbstractBundleConfig
     {
         return static::ORDER_SEARCH_TYPES;
     }
+
+    /**
+     * @api
+     *
+     * @see \Spryker\Shared\Customer\CustomerConfig::isDoubleOptInEnabled()
+     *
+     * @return bool
+     */
+    public function isDoubleOptInEnabled(): bool
+    {
+        return false;
+    }
 }

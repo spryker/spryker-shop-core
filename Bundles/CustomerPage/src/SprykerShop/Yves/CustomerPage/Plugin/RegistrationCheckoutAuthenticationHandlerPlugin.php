@@ -13,6 +13,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
  */
 class RegistrationCheckoutAuthenticationHandlerPlugin extends AbstractPlugin implements CheckoutAuthenticationHandlerPluginInterface
 {
@@ -32,7 +33,7 @@ class RegistrationCheckoutAuthenticationHandlerPlugin extends AbstractPlugin imp
         $this->processErrorMessages($customerResponseTransfer);
 
         if ($customerResponseTransfer->getIsSuccess() === true) {
-            if ($customerResponseTransfer->getIsDoubleOptInEnabled()) {
+            if ($this->getConfig()->isDoubleOptInEnabled()) {
                 $this->getMessenger()->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_REGISTRATION_EMAIL_CONFIRMATION);
 
                 return $quoteTransfer;

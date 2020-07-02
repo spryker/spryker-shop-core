@@ -24,12 +24,12 @@ class RegisterController extends AbstractCustomerController
     protected const GLOSSARY_KEY_CUSTOMER_REGISTRATION_EMAIL_CONFIRMATION = 'customer.authorization.validate_email_address';
 
     /**
-     * @see CustomerPageRouteProviderPlugin::ROUTE_CUSTOMER_OVERVIEW
+     * @see \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_CUSTOMER_OVERVIEW
      */
     protected const ROUTE_CUSTOMER_OVERVIEW = 'customer/overview';
 
     /**
-     * @see CustomerPageRouteProviderPlugin::ROUTE_LOGIN
+     * @see \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_LOGIN
      */
     protected const ROUTE_LOGIN = 'login';
 
@@ -72,7 +72,7 @@ class RegisterController extends AbstractCustomerController
             if ($customerResponseTransfer->getIsSuccess()) {
                 $message = static::GLOSSARY_KEY_CUSTOMER_REGISTRATION_SUCCESS;
                 $route = static::ROUTE_CUSTOMER_OVERVIEW;
-                if ($customerResponseTransfer->getIsDoubleOptInEnabled()) {
+                if ($this->getFactory()->getConfig()->isDoubleOptInEnabled()) {
                     $message = static::GLOSSARY_KEY_CUSTOMER_REGISTRATION_EMAIL_CONFIRMATION;
                     $route = static::ROUTE_LOGIN;
                 }

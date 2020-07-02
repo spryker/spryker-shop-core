@@ -484,7 +484,7 @@ class CustomerPageFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Security\Core\User\UserCheckerInterface
      */
-    public function createUserChecker(): UserCheckerInterface
+    public function createCustomerConfirmationUserChecker(): UserCheckerInterface
     {
         return new CustomerConfirmationUserChecker();
     }
