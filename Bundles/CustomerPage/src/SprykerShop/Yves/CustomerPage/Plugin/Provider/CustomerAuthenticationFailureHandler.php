@@ -20,7 +20,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerI
 class CustomerAuthenticationFailureHandler extends BaseCustomerAuthenticationHandler implements AuthenticationFailureHandlerInterface
 {
     public const MESSAGE_CUSTOMER_AUTHENTICATION_FAILED = 'customer.authentication.failed';
-    public const MESSAGE_CUSTOMER_NOT_CONFIRMED_ACCOUNT = 'mail.authorization.invalid_account';
+    public const GLOSSARY_KEY_CUSTOMER_NOT_CONFIRMED_ACCOUNT = 'customer.authorization.invalid_account';
 
     /**
      * @var \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
@@ -63,7 +63,7 @@ class CustomerAuthenticationFailureHandler extends BaseCustomerAuthenticationHan
     protected function buildErrorMessage(AuthenticationException $exception): string
     {
         if ($exception instanceof NotConfirmedAccountException) {
-            return static::MESSAGE_CUSTOMER_NOT_CONFIRMED_ACCOUNT;
+            return static::GLOSSARY_KEY_CUSTOMER_NOT_CONFIRMED_ACCOUNT;
         }
 
         return static::MESSAGE_CUSTOMER_AUTHENTICATION_FAILED;

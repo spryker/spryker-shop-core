@@ -14,14 +14,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
  * @method \Spryker\Client\Customer\CustomerClientInterface getClient()
  */
 class RegisterController extends AbstractCustomerController
 {
     protected const GLOSSARY_KEY_CUSTOMER_CONFIRMED = 'customer.authorization.account_validated';
     protected const GLOSSARY_KEY_MISSING_CONFIRMATION_TOKEN = 'customer.token.invalid';
-    protected const GLOSSARY_KEY_CUSTOMER_REGISTRATION_SUCCESS = 'customer.registration.success';
-    protected const GLOSSARY_KEY_CUSTOMER_REGISTRATION_EMAIL_CONFIRMATION = 'customer.authorization.validate_email_address';
 
     /**
      * @see \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_CUSTOMER_OVERVIEW
@@ -70,13 +69,13 @@ class RegisterController extends AbstractCustomerController
             $customerResponseTransfer = $this->registerCustomer($registerForm->getData());
 
             if ($customerResponseTransfer->getIsSuccess()) {
-                $message = static::GLOSSARY_KEY_CUSTOMER_REGISTRATION_SUCCESS;
                 $route = static::ROUTE_CUSTOMER_OVERVIEW;
-                if ($this->getFactory()->getConfig()->isDoubleOptInEnabled()) {
-                    $message = static::GLOSSARY_KEY_CUSTOMER_REGISTRATION_EMAIL_CONFIRMATION;
+                $customerPageConfig = $this->getFactory()->getConfig();
+                if ($customerPageConfig->isDoubleOptInEnabled()) {
                     $route = static::ROUTE_LOGIN;
                 }
-                $this->addSuccessMessage($message);
+
+                $this->addSuccessMessage($customerResponseTransfer->getMessage()->getMessage());
 
                 return $this->redirectResponseInternal($route);
             }

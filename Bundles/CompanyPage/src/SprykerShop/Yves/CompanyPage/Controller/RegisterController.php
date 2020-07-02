@@ -66,11 +66,7 @@ class RegisterController extends AbstractController
             $companyResponseTransfer = $this->registerCompany($registerForm->getData());
 
             if ($companyResponseTransfer->getIsSuccessful()) {
-                if (!$companyResponseTransfer->getMessages()->count()) {
-                    $companyResponseTransfer->addMessage((new ResponseMessageTransfer())->setText(Messages::COMPANY_AUTHORIZATION_SUCCESS));
-                }
-
-                $this->addSuccessMessagesFromResponse($companyResponseTransfer);
+                $this->addSuccessMessages($companyResponseTransfer);
 
                 return $this->redirectResponseInternal(static::ROUTE_COMPANY_OVERVIEW);
             }
@@ -122,8 +118,14 @@ class RegisterController extends AbstractController
      *
      * @return void
      */
-    protected function addSuccessMessagesFromResponse(CompanyResponseTransfer $companyResponseTransfer): void
+    protected function addSuccessMessages(CompanyResponseTransfer $companyResponseTransfer): void
     {
+        if (!$companyResponseTransfer->getMessages()->count()) {
+            $companyResponseTransfer->addMessage((new ResponseMessageTransfer())->setText(Messages::COMPANY_AUTHORIZATION_SUCCESS));
+
+            return;
+        }
+
         foreach ($companyResponseTransfer->getMessages() as $responseMessageTransfer) {
             $this->addSuccessMessage($responseMessageTransfer->getText());
         }

@@ -17,8 +17,6 @@ use Spryker\Yves\Kernel\AbstractPlugin;
  */
 class RegistrationCheckoutAuthenticationHandlerPlugin extends AbstractPlugin implements CheckoutAuthenticationHandlerPluginInterface
 {
-    protected const GLOSSARY_KEY_CUSTOMER_REGISTRATION_EMAIL_CONFIRMATION = 'customer.authorization.validate_email_address';
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -34,7 +32,7 @@ class RegistrationCheckoutAuthenticationHandlerPlugin extends AbstractPlugin imp
 
         if ($customerResponseTransfer->getIsSuccess() === true) {
             if ($this->getConfig()->isDoubleOptInEnabled()) {
-                $this->getMessenger()->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_REGISTRATION_EMAIL_CONFIRMATION);
+                $this->getMessenger()->addSuccessMessage($customerResponseTransfer->getMessage()->getMessage());
 
                 return $quoteTransfer;
             }
