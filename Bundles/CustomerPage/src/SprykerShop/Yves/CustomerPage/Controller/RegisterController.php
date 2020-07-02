@@ -28,7 +28,7 @@ class RegisterController extends AbstractCustomerController
     protected const ROUTE_CUSTOMER_OVERVIEW = 'customer/overview';
 
     /**
-     * @see \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_LOGIN
+     * @uses \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_LOGIN
      */
     protected const ROUTE_LOGIN = 'login';
 
