@@ -74,7 +74,7 @@ class RegisterController extends AbstractCustomerController
                     $route = static::ROUTE_LOGIN;
                 }
 
-                $this->addSuccessMessage($customerResponseTransfer->getMessage()->getMessage());
+                $this->addSuccessMessage($customerResponseTransfer->getMessage()->getValue());
 
                 return $this->redirectResponseInternal($route);
             }
