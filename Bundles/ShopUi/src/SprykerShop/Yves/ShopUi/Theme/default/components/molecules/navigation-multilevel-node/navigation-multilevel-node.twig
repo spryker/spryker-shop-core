@@ -10,7 +10,7 @@
 
     <ul class="menu">
         {% for childNode in node.children %}
-            {% set hasChildren = childNode.children | length %}
+            {% set hasChildren = childNode.hasChildren | default(childNode.children | length) %}
 
             {% include molecule('navigation-multilevel-node') with {
                 class: 'menu__item' ~ (hasChildren ? ' menu__item--has-children-list') ~ (not childNode.url ? ' ' ~ childNode.cssClass),

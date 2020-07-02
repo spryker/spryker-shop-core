@@ -13,9 +13,9 @@
 {% set node = data.node %}
 {% set type = node.nodeType %}
 {% set isActive = node.isActive %}
-{% set isValidFrom = node.validFrom is empty or node.validFrom | date('Ymd') <= today %}
-{% set isValidTo = node.validTo is empty or node.validTo | date('Ymd') >= today %}
-{% set isActiveAndValid = isActive and isValidFrom and isValidTo %}
+{% set isValidFrom = node.isValidFrom | default(node.validFrom is empty or node.validFrom | date('Ymd') <= today) %}
+{% set isValidTo = node.isValidTo | default(node.validTo is empty or node.validTo | date('Ymd') >= today) %}
+{% set isActiveAndValid = node.isActiveAndValid | default(isActive and isValidFrom and isValidTo) %}
 
 {% block component %}
     {% if isActiveAndValid %}
