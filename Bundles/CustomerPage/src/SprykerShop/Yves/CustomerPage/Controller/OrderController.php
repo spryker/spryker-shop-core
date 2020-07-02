@@ -75,10 +75,12 @@ class OrderController extends AbstractCustomerController
 
         if (!$isOrderSearchEnabled) {
             $orderListTransfer = $customerPageFactory->createOrderReader()->getOrderList($request, $orderListTransfer);
+            $aggregatedDisplayNames = $this->getFactory()->createItemStateMapper()->aggregateItemStatesDisplayNamesByOrderReference($orderListTransfer->getOrders());
 
             return [
                 'pagination' => $orderListTransfer->getPagination(),
                 'orderList' => $orderListTransfer->getOrders(),
+                'ordersAggregatedItemStateDisplayNames' => $aggregatedDisplayNames,
                 'isOrderSearchEnabled' => $isOrderSearchEnabled,
                 'isOrderSearchOrderItemsVisible' => true,
             ];
@@ -89,10 +91,12 @@ class OrderController extends AbstractCustomerController
 
         $orderListTransfer = $customerPageFactory->createOrderReader()
             ->getOrderList($request, $orderListTransfer);
+        $aggregatedDisplayNames = $this->getFactory()->createItemStateMapper()->aggregateItemStatesDisplayNamesByOrderReference($orderListTransfer->getOrders());
 
         return [
             'pagination' => $orderListTransfer->getPagination(),
             'orderList' => $orderListTransfer->getOrders(),
+            'ordersAggregatedItemStateDisplayNames' => $aggregatedDisplayNames,
             'isOrderSearchEnabled' => $isOrderSearchEnabled,
             'isOrderSearchOrderItemsVisible' => $orderListTransfer->getFormat()->getExpandWithItems(),
             'orderSearchForm' => $orderSearchForm->createView(),

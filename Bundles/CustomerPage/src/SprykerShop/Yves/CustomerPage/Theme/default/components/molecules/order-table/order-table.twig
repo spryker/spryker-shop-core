@@ -6,6 +6,7 @@
 
 {% define data = {
     orders: required,
+    ordersAggregatedItemStateDisplayNames: [],
     orderSearchForm: null,
     isOrderSearchEnabled: false,
     isOrderSearchOrderItemsVisible: true,
@@ -73,16 +74,20 @@
                     {% endif %}
                     <td>{{ order.totals.grandTotal | default(0) | money(true, order.currencyIsoCode) }}</td>
                     <td>
-                        {% for aggregatedItemState in order.aggregatedItemStates %}
-                            {% block state %}
-                                {% include molecule('status') with {
-                                    data: {
-                                        label: aggregatedItemState.displayName | trans,
-                                        status: aggregatedItemState.name,
-                                    },
-                                } only %}
-                            {% endblock %}
-                        {% endfor %}
+                        {% block stateWrapper %}
+                            {% if order.orderReference and data.ordersAggregatedItemStateDisplayNames[order.orderReference] %}
+                                {% for displayName, stateNames in data.ordersAggregatedItemStateDisplayNames[order.orderReference] %}
+                                    {% block state %}
+                                        {% include molecule('status') with {
+                                            data: {
+                                                label: displayName | trans,
+                                                status: stateNames | first | replace({' ': '-'}) | lower,
+                                            },
+                                        } only %}
+                                    {% endblock %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endblock %}
                     </td>
                     <td>
                         {% block actions %}
