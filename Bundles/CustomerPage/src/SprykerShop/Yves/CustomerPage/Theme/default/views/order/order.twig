@@ -2,7 +2,7 @@
 
 {% define data = {
     orders: _view.orderList,
-    ordersAggregatedItemStateDisplayNames: _view.ordersAggregatedItemStateDisplayNames | default(null),
+    ordersAggregatedItemStateDisplayNames: _view.ordersAggregatedItemStateDisplayNames | default([]),
     isOrderSearchEnabled: _view.isOrderSearchEnabled,
     isOrderSearchOrderItemsVisible: _view.isOrderSearchOrderItemsVisible,
     orderSearchForm: _view.orderSearchForm | default(null),
