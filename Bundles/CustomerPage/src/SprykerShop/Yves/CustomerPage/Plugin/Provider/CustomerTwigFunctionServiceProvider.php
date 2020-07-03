@@ -14,7 +14,7 @@ use Twig\Environment;
 use Twig\TwigFunction;
 
 /**
- * @deprecated Use @link \SprykerShop\Yves\CustomerPage\Plugin\Twig\CustomerTwigPlugin} instead.
+ * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Twig\CustomerTwigPlugin} instead.
  *
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
  */
