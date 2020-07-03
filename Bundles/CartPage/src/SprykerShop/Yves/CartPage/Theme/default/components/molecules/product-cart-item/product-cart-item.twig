@@ -58,7 +58,11 @@
                 {% widget 'ProductBundleCartItemsListWidget' args [data.product, data.cart] only %}{% endwidget %}
             {% endif %}
 
-            {% widget 'ProductOfferSoldByMerchantWidget' args [data.product] only %}{% endwidget %}
+            {% if widgetGlobalExists('ProductOfferSoldByMerchantWidget') %}
+                {% widget 'ProductOfferSoldByMerchantWidget' args [data.product] only %}{% endwidget %}
+            {% elseif widgetGlobalExists('ProductSoldByMerchantWidget') %}
+                {% widget 'ProductSoldByMerchantWidget' args [data.product] only %}{% endwidget %}
+            {% endif %}
 
             {% include molecule('cart-item-summary', 'CartPage') with {
                 data: {

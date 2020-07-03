@@ -48,8 +48,10 @@ class MerchantProductOfferWidget extends AbstractWidget
     protected function addProductOfferCollection(ProductViewTransfer $productViewTransfer): void
     {
         $this->addParameter(
-            'productOfferCollection',
-            $this->getFactory()->createProductOfferReader()->getProductOfferCollection($productViewTransfer, $this->getLocale())
+            'productOffers',
+            $this->getFactory()
+                ->createProductOfferReader()
+                ->getProductOffers($productViewTransfer, $this->getLocale())
         );
     }
 

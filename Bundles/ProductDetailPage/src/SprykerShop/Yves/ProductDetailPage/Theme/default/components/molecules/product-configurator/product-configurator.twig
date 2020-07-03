@@ -139,7 +139,37 @@
             {% elsewidget 'MultiCartWidgetPlugin' args [data.product, data.isDisabled] only %} {# @deprecated Use AddToMultiCartWidget instead. #}
             {% endwidget %}
 
-            {% widget 'MerchantProductOfferWidget' args [data.product] only %}{% endwidget %}
+            {% set merchantProductOfferWidget = findWidget('MerchantProductOfferWidget', [data.product]) %}
+            {% set merchantProductWidget = findWidget('MerchantProductWidget', [
+                data.product,
+                merchantProductOfferWidget.productOffers | length ? true: false,
+                not merchantProductOfferWidget.productView.productOfferReference
+            ]) %}
+
+            {% if merchantProductWidget %}
+                {% widget merchantProductWidget %}
+                {% endwidget %}
+            {% endif %}
+
+            {% if merchantProductOfferWidget %}
+                {% widget merchantProductOfferWidget with
+                    {
+                        embed: {hasMerchantProduct: merchantProductWidget.merchantProductView, merchantProductOfferWidget:merchantProductOfferWidget}
+                    }
+                %}
+
+                    {% block content %}
+                        {% set isRadioButtonVisible = ((merchantProductOfferWidget.productOffers | length) + (merchantProductWidget.merchantProductView ? 1 : 0))  > 1  %}
+                        {{ parent() }}
+                    {% endblock %}
+
+                    {% block title %}
+                        {% if not merchantProductOfferWidget %}
+                            {{ parent() }}
+                        {% endif %}
+                    {% endblock %}
+                {% endwidget %}
+            {% endif %}
 
             {% if widgetExists('AvailabilityWidgetPlugin') %}
                 {{ widget('AvailabilityWidgetPlugin', data.product) }} {# @deprecated Use molecule('availability-product', 'AvailabilityWidget') instead. #}
