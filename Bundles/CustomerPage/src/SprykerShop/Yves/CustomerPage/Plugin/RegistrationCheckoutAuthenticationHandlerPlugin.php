@@ -32,7 +32,7 @@ class RegistrationCheckoutAuthenticationHandlerPlugin extends AbstractPlugin imp
 
         if ($customerResponseTransfer->getIsSuccess() === true) {
             if ($this->getConfig()->isDoubleOptInEnabled()) {
-                $this->getMessenger()->addSuccessMessage($customerResponseTransfer->getMessage()->getMessage());
+                $this->getMessenger()->addSuccessMessage($customerResponseTransfer->getMessage()->getValue());
 
                 return $quoteTransfer;
             }
