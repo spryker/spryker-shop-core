@@ -276,12 +276,15 @@
         <property name="isDirty" type="bool"/>
         <property name="isGuest" type="bool"/>
         <property name="customerReference" type="string"/>
+        <property name="registrationKey" type="string"/>
+        <property name="registered" type="string"/>
     </transfer>
 
     <transfer name="CustomerResponse">
         <property name="customerTransfer" type="Customer"/>
         <property name="isSuccess" type="bool"/>
         <property name="errors" type="CustomerError[]" singular="error"/>
+        <property name="message" type="Message"/>
     </transfer>
 
     <transfer name="CommentThread">
