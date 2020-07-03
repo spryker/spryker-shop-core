@@ -75,6 +75,14 @@ class FormFactory extends AbstractFactory
     }
 
     /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCompanyUnitAddressDeleteForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(CompanyUnitAddressDeleteForm::class);
+    }
+
+    /**
      * @param array $formOptions
      * @param array|null $formData
      *

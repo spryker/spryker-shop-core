@@ -21,6 +21,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class AddressController extends AbstractCompanyController
 {
+    protected const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
+
     protected const COMPANY_UNIT_ADDRESS_LIST_SORT_FIELD = 'id_company_unit_address';
     protected const REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT = 'idCompanyBusinessUnit';
     protected const REQUEST_PARAM_ID = 'id';
@@ -214,6 +216,15 @@ class AddressController extends AbstractCompanyController
      */
     public function deleteAction(Request $request)
     {
+        $companyBusinessUnitDeleteForm = $this->getFactory()->createCompanyPageFormFactory()->getCompanyUnitAddressDeleteForm()
+            ->handleRequest($request);
+
+        if (!$companyBusinessUnitDeleteForm->isSubmitted() || !$companyBusinessUnitDeleteForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
+        }
+
         $idCompanyUnitAddress = $request->query->getInt(static::REQUEST_PARAM_ID);
         $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
         $companyUnitAddressTransfer = new CompanyUnitAddressTransfer();
@@ -269,6 +280,8 @@ class AddressController extends AbstractCompanyController
             'companyUnitAddress' => $companyUnitAddressTransfer,
             'idCompanyBusinessUnit' => $idCompanyBusinessUnit,
             'cancelUrl' => $referer,
+            'companyUnitAddressDeleteForm' => $this->getFactory()
+                ->createCompanyPageFormFactory()->getCompanyUnitAddressDeleteForm()->createView(),
         ], [], '@CompanyPage/views/address-delete-confirmation-page/address-delete-confirmation-page.twig');
     }
 

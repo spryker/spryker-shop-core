@@ -7,6 +7,7 @@
     companyBusinessUnits: _view.companyUnitAddress.companyBusinessUnits.companyBusinessUnits | default([]),
     idCompanyBusinessUnit: _view.idCompanyBusinessUnit,
     cancelUrl: _view.cancelUrl,
+    companyUnitAddressDeleteForm: _view.companyUnitAddressDeleteForm,
 } %}
 
 {% block breadcrumbs %}
@@ -37,6 +38,7 @@
                 companyBusinessUnits: data.companyBusinessUnits,
                 idCompanyBusinessUnit: data.idCompanyBusinessUnit,
                 cancelUrl: data.cancelUrl,
+                companyUnitAddressDeleteForm: data.companyUnitAddressDeleteForm,
             },
         } only %}
     </div>
