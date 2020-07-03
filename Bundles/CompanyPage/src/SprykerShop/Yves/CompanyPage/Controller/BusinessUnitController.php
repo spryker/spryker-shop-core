@@ -337,6 +337,8 @@ class BusinessUnitController extends AbstractCompanyController
             'addresses' => $addresses,
             'pagination' => $criteriaFilterTransfer->getPagination(),
             'businessUnit' => $companyBusinessUnitTransfer,
+            'companyUnitAddressDeleteFormCloner' => $this->getFactory()->createFormCloner()
+                ->setForm($this->getFactory()->createCompanyPageFormFactory()->getCompanyUnitAddressDeleteForm()),
         ];
     }
 
