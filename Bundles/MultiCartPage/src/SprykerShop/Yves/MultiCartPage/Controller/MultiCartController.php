@@ -308,8 +308,11 @@ class MultiCartController extends AbstractController
      */
     protected function executeConfirmDeleteAction(int $idQuote): array
     {
+        $quoteTransfer = $this->findQuoteOrFail($idQuote);
+        $multiCartDeleteForm = $this->getFactory()->getMultiCartDeleteForm($quoteTransfer);
+
         return [
-            'multiCartDeleteForm' => $this->getFactory()->getMultiCartDeleteForm(new QuoteTransfer())->createView(),
+            'multiCartDeleteForm' => $multiCartDeleteForm->createView(),
             'cart' => $this->findQuoteOrFail($idQuote),
         ];
     }
