@@ -159,7 +159,7 @@
                 %}
 
                     {% block content %}
-                        {% set showRadioButton = (merchantProductOfferWidget.productOffers | length + (merchantProductWidget.merchantProductView ? 1: 0))  > 1  %}
+                        {% set isRadioButtonVisible = ((merchantProductOfferWidget.productOffers | length) + (merchantProductWidget.merchantProductView ? 1 : 0))  > 1  %}
                         {{ parent() }}
                     {% endblock %}
 
