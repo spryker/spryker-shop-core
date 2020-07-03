@@ -13,6 +13,8 @@
         <property name="isValidFrom" type="bool"/>
         <property name="isActiveAndValid" type="bool"/>
         <property name="isActive" type="bool"/>
+        <property name="validTo" type="string"/>
+        <property name="validFrom" type="string"/>
         <property name="children" type="NavigationNodeStorage[]" singular="children"/>
     </transfer>
 
