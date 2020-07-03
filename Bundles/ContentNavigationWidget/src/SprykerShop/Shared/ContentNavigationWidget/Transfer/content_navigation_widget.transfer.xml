@@ -14,4 +14,9 @@
         <property name="isActiveAndValid" type="bool"/>
     </transfer>
 
+    <transfer name="NavigationStorage">
+        <property name="isActive" type="bool"/>
+        <property name="nodes" type="NavigationNodeStorage[]" singular="nodes"/>
+    </transfer>
+
 </transfers>
