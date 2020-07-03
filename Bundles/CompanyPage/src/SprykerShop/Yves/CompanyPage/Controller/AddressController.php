@@ -60,6 +60,8 @@ class AddressController extends AbstractCompanyController
         return [
             'pagination' => $companyUnitAddressCollectionTransfer->getPagination(),
             'addresses' => $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses(),
+            'companyUnitAddressDeleteFormCloner' => $this->getFactory()->createFormCloner()
+                ->setForm($this->getFactory()->createCompanyPageFormFactory()->getCompanyUnitAddressDeleteForm()),
         ];
     }
 

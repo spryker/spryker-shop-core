@@ -2,6 +2,7 @@
 
 {% define data = {
     addresses: _view.addresses,
+    companyUnitAddressDeleteFormClone: _view.companyUnitAddressDeleteFormCloner,
 
     title: 'company.account.address' | trans,
     activePage: 'address'
@@ -21,10 +22,11 @@
                     </a>
                 </li>
                 <li class="menu__item">
-                    <a data-init-single-click
-                       href="{{ url('company/address/delete', {'id': address.idCompanyUnitAddress }) }}">
-                        {{ "company.account.address.delete" | trans }}
-                    </a>
+                    {% set companyUnitAddressDeleteForm = data.companyUnitAddressDeleteFormClone.getForm.createView %}
+
+                    {{ form_start(companyUnitAddressDeleteForm, {'action': path('company/address/delete', {'id': address.idCompanyUnitAddress }) }) }}
+                    <button data-init-single-click class="link">{{ "company.account.address.delete" | trans }} </button>
+                    {{ form_end(companyUnitAddressDeleteForm) }}
                 </li>
             </ul>
             
