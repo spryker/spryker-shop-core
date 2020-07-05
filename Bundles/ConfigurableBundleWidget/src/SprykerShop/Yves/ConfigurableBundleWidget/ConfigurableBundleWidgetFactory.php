@@ -11,6 +11,7 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToConfigurableBundleCartClientInterface;
 use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToQuoteClientInterface;
 use SprykerShop\Yves\ConfigurableBundleWidget\Form\ChangeConfiguredBundleQuantityForm;
+use SprykerShop\Yves\ConfigurableBundleWidget\Form\ConfiguredBundleRemoveItemForm;
 use SprykerShop\Yves\ConfigurableBundleWidget\Grouper\ConfiguredBundleGrouper;
 use SprykerShop\Yves\ConfigurableBundleWidget\Grouper\ConfiguredBundleGrouperInterface;
 use SprykerShop\Yves\ConfigurableBundleWidget\Mapper\ConfiguredBundleMapper;
@@ -79,5 +80,13 @@ class ConfigurableBundleWidgetFactory extends AbstractFactory
     public function getChangeConfiguredBundleQuantityForm(): FormInterface
     {
         return $this->getFormFactory()->create(ChangeConfiguredBundleQuantityForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getConfiguredBundleRemoveItemForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(ConfiguredBundleRemoveItemForm::class);
     }
 }

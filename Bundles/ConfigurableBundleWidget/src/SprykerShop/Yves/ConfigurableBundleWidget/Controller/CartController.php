@@ -81,6 +81,14 @@ class CartController extends AbstractController
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
+        $form = $this->getFactory()->getConfiguredBundleRemoveItemForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(static::ROUTE_CART);
+        }
+
         $updateConfiguredBundleRequestTransfer = $this->createUpdateConfiguredBundleRequest($configuredBundleGroupKey);
 
         $quoteResponseTransfer = $this->getFactory()
