@@ -10,10 +10,13 @@ namespace SprykerShop\Yves\ConfigurableBundleWidget;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToConfigurableBundleCartClientInterface;
 use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToQuoteClientInterface;
+use SprykerShop\Yves\ConfigurableBundleWidget\Form\ChangeConfiguredBundleQuantityForm;
 use SprykerShop\Yves\ConfigurableBundleWidget\Grouper\ConfiguredBundleGrouper;
 use SprykerShop\Yves\ConfigurableBundleWidget\Grouper\ConfiguredBundleGrouperInterface;
 use SprykerShop\Yves\ConfigurableBundleWidget\Mapper\ConfiguredBundleMapper;
 use SprykerShop\Yves\ConfigurableBundleWidget\Mapper\ConfiguredBundleMapperInterface;
+use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \SprykerShop\Yves\ConfigurableBundleWidget\ConfigurableBundleWidgetConfig getConfig()
@@ -60,5 +63,21 @@ class ConfigurableBundleWidgetFactory extends AbstractFactory
     public function getQuoteClient(): ConfigurableBundleWidgetToQuoteClientInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleWidgetDependencyProvider::CLIENT_QUOTE);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormFactory
+     */
+    public function getFormFactory(): FormFactory
+    {
+        return $this->getProvidedDependency(ConfigurableBundleWidgetDependencyProvider::FORM_FACTORY);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getChangeConfiguredBundleQuantityForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(ChangeConfiguredBundleQuantityForm::class);
     }
 }

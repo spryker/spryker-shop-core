@@ -24,6 +24,7 @@ class CartController extends AbstractController
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_REMOVED = 'configured_bundle_widget.configured_bundle.removed';
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_UPDATED = 'configured_bundle_widget.configured_bundle.updated';
+    protected const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
 
     /**
      * @uses \SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin::KEY
@@ -107,6 +108,14 @@ class CartController extends AbstractController
 
         if (!$this->canChangeCartItem($quantity)) {
             $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(static::ROUTE_CART);
+        }
+
+        $form = $this->getFactory()->getChangeConfiguredBundleQuantityForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
