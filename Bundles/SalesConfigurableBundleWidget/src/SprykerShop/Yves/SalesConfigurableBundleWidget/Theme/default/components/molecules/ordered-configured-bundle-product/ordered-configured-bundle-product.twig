@@ -43,6 +43,26 @@
                         {{- 'configured_bundle.item_sku' | trans }} {{ data.sku -}}
                     </small>
                 {%- endblock %}
+
+                {% block stateWrapper %}
+                    {% set stateWrapperClass = '' %}
+
+                    {% if data.product.state is not null %}
+                        {% set state = data.product.state.name | replace({' ': '-'}) | lower %}
+                        {% set stateLabel = data.product.state.displayName ?? ('oms.state.' ~ state) %}
+
+                        <div class="{{ stateWrapperClass }}">
+                            {% block state %}
+                                {% include molecule('status') with {
+                                    data: {
+                                        label: stateLabel | trans,
+                                        status: state,
+                                    },
+                                } only %}
+                            {% endblock %}
+                        </div>
+                    {% endif %}
+                {% endblock %}
             {% endblock %}
 
             {% block priceInformation %}
