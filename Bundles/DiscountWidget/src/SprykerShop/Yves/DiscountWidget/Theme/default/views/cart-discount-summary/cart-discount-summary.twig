@@ -12,12 +12,15 @@
     {% if data.discountTotal %}
         {% if data.voucherDiscounts is not empty %}
             <li>
-                {% include [molecule('cart-code-clear-link', 'CartCodeWidget'), molecule('voucher-clear-link', 'DiscountWidget')] with {
-                    class: 'float-right text-small',
-                    data: {
-                        isQuoteEditable: data.isQuoteEditable
-                    }
-                } only %}
+                {% if data.isQuoteEditable %}
+                    {% include molecule('single-button-form') with {
+                        class: 'float-right text-small',
+                        data: {
+                            formAction: url('cart-code/code/clear'),
+                            buttonText: 'cart.vouchers.clear-all' | trans,
+                        }
+                    } only %}
+                {% endif %}
 
                 <strong>{{ 'cart.vouchers' | trans }}</strong>
 
@@ -27,13 +30,15 @@
                             <span class="col col--sm-8">
                                 {{ voucherDiscount.displayName }}
 
-                                {% include [molecule('cart-code-remove-link', 'CartCodeWidget'), molecule('voucher-remove-link', 'DiscountWidget')] with {
-                                    class: 'text-small',
-                                    data: {
-                                        isQuoteEditable: data.isQuoteEditable,
-                                        code: voucherDiscount.voucherCode
-                                    }
-                                } only %}
+                                {% if data.isQuoteEditable %}
+                                    {% include molecule('single-button-form') with {
+                                        class: 'text-small',
+                                        data: {
+                                            formAction: url('cart-code/code/remove', {'code': voucherDiscount.voucherCode}),
+                                            buttonText: 'cart.voucher.remove' | trans,
+                                        }
+                                    } only %}
+                                {% endif %}
                             </span>
                             <span class="col col--expand text-right">- {{ voucherDiscount.amount | money(true, data.currencyIsoCode) }}</span>
                         </li>

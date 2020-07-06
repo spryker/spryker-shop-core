@@ -1,0 +1,37 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'single-button-form',
+} %}
+
+{% define data = {
+    formAction: null,
+    isIconAllowed: true,
+    iconName: 'times',
+    iconModifiers: ['smaller'],
+    buttonText: '',
+    buttonClass: config.name ~ '__button',
+} %}
+
+{% block body %}
+    <form action="{{ data.formAction }}">
+        {% block button %}
+            <button class="{{ data.buttonClass }}">
+                {% block icon %}
+                    {% if data.isIconAllowed %}
+                        {% include atom('icon') with {
+                            modifiers: data.iconModifiers,
+                            data: {
+                                name: data.iconName,
+                            },
+                        } only %}
+                    {% endif %}
+                {% endblock %}
+
+                {% block text %}
+                    {{ data.buttonText }}
+                {% endblock %}
+            </button>
+        {% endblock %}
+    </form>
+{% endblock %}

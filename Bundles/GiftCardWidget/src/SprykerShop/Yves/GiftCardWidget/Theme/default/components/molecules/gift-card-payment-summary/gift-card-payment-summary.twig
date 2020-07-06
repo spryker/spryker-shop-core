@@ -16,13 +16,15 @@
             <li class="list__item spacing-y">
                 {{ 'cart.giftcard.label' | trans }}: {{ payment.giftCard.code }}
 
-                {% include molecule('cart-code-remove-link', 'CartCodeWidget') with {
-                    class: 'text-small',
-                    data: {
-                        isQuoteEditable: data.isQuoteEditable,
-                        code: payment.giftCard.code
-                    }
-                } only %}
+                {% if data.isQuoteEditable %}
+                    {% include molecule('single-button-form') with {
+                        class: 'text-small',
+                        data: {
+                            formAction: url('cart-code/code/remove', {'code': payment.giftCard.code}),
+                            buttonText: 'cart.voucher.remove' | trans,
+                        }
+                    } only %}
+                {% endif %}
                 <span class="float-right">- {{ payment.amount | money }}</span>
             </li>
         {% else %}
