@@ -68,7 +68,7 @@ class CartTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     }
 
     /**
-     * @deprecated Use getCartQuantityFunction instead
+     * @deprecated Use {@link getCartQuantityFunction()} instead
      *
      * @param \Twig\Environment $twig
      *

@@ -15,7 +15,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated Use CreateController instead
+ * @deprecated Use {@link CreateController} instead
  *
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
  */
