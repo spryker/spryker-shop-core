@@ -158,7 +158,7 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
     }
 
     /**
-     * @deprecated
+     * @deprecated Will be removed with next major.
      *
      * @param string $voucherCode
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CmsContentWidgetChartConnector\Dependency\Plugin\Char
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use "chart()" function instead.
+ * @deprecated Use `chart()` function instead.
  */
 interface ChartWidgetPluginInterface extends WidgetPluginInterface
 {
