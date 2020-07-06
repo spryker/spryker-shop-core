@@ -22,11 +22,11 @@
                     </a>
                 </li>
                 <li class="menu__item">
-                    {% set customerDeleteFrom = data.customerDeleteFormClone.getForm.createView %}
+                    {% set customerDeleteForm = data.customerDeleteFormClone.getForm.createView %}
 
-                    {{ form_start(customerDeleteFrom, {'action': path('customer/address/delete', {'id': address.idCustomerAddress}) }) }}
+                    {{ form_start(customerDeleteForm, {'action': path('customer/address/delete', {'id': address.idCustomerAddress}) }) }}
                         <button class="link" data-init-single-click>{{ "customer.profile.address.delete" | trans }}</button>
-                    {{ form_end(customerDeleteFrom) }}
+                    {{ form_end(customerDeleteForm) }}
                 </li>
             </ul>
 
