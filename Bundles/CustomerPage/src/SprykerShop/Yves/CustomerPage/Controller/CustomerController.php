@@ -112,10 +112,12 @@ class CustomerController extends AbstractCustomerController
 
         $orderListTransfer = $this->createOrderListTransfer($loggedInCustomerTransfer);
         $orderList = $this->getFactory()->getSalesClient()->getPaginatedCustomerOrdersOverview($orderListTransfer);
+        $aggregatedDisplayNames = $this->getFactory()->createItemStateMapper()->aggregateItemStatesDisplayNamesByOrderReference($orderList->getOrders());
 
         return [
             'customer' => $loggedInCustomerTransfer,
             'orderList' => $orderList->getOrders(),
+            'ordersAggregatedItemStateDisplayNames' => $aggregatedDisplayNames,
             'addresses' => $this->getDefaultAddresses($loggedInCustomerTransfer),
         ];
     }

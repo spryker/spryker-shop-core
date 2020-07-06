@@ -52,13 +52,21 @@
                             <tbody>
                             {% for return in data.returns %}
                                 {% set orderReferences = [] %}
-                                {% set itemStates = [] %}
+                                {% set uniqueItemStates = [] %}
+                                {% set itemStates = {} %}
+
                                 {% for returnItem in return.returnItems %}
                                     {% if returnItem.orderItem.orderReference not in orderReferences %}
                                         {% set orderReferences = orderReferences | merge([returnItem.orderItem.orderReference]) %}
                                     {% endif %}
-                                    {% if returnItem.orderItem.state.name not in itemStates %}
-                                        {% set itemStates = itemStates | merge([returnItem.orderItem.state.name]) %}
+
+                                    {% if returnItem.orderItem.state.name not in uniqueItemStates %}
+                                        {% set uniqueItemStates = uniqueItemStates | merge([returnItem.orderItem.state.name]) %}
+
+                                        {% set itemStates = itemStates | merge([{
+                                            'status': returnItem.orderItem.state.name,
+                                            'label': returnItem.orderItem.state.displayName ?? ('oms.state.' ~ returnItem.orderItem.state.name),
+                                        }]) %}
                                     {% endif %}
                                 {% endfor %}
                                 <tr>
@@ -72,14 +80,14 @@
                                         <td>{{ return.returnItems| length }}</td>
                                         <td>{{ date(return.createdAt) | formatDateTime }}</td>
                                         <td>
-                                            {% for itemState in itemStates %}
-                                                {% set state = itemState | replace({' ': '-'}) | lower %}
+                                            {% for state in itemStates %}
+                                                {% set stateName = state.status | replace({' ': '-'}) | lower %}
 
                                                 {% block state %}
                                                     {% include molecule('status') with {
                                                         data: {
-                                                            label: ('oms.state.' ~ state) | trans,
-                                                            status: state,
+                                                            label: state.label | trans,
+                                                            status: stateName,
                                                         },
                                                     } only %}
                                                 {% endblock %}
