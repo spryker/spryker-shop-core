@@ -24,6 +24,19 @@
 
     <transfer name="MerchantStorage">
         <property name="urlCollection" type="Url[]" singular="url"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="Url">
+        <property name="url" type="string"/>
+    </transfer>
+
+    <transfer name="CurrentProductPrice">
     </transfer>
 
 </transfers>
