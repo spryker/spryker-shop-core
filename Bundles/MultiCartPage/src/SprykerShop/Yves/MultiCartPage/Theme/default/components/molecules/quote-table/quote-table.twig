@@ -12,8 +12,8 @@
         duplicate: false,
     },
     isQuoteDeletable: required,
-    multiCartSetDefaultFormClone: null,
-    multiCartDuplicateFormClone: null,
+    multiCartSetDefaultFormClone: {},
+    multiCartDuplicateFormClone: {},
 } %}
 
 {% set showActions = data.actions.update or data.actions.delete or data.actions.duplicate %}
@@ -59,7 +59,9 @@
                                     <button class="link">{{ quote.name }}</button>
                                 {{ form_end(multiCartSetDefaultForm) }}
                             {% else %}
-                                <form id="multiCartSetDefaultForm_{{ loop.index }}" name="multiCartSetDefaultForm_{{ loop.index }}" method="POST" action="{{ path('multi-cart/set-default', {'idQuote': quote.idQuote}) }}">
+                                {% set formIdentifier = 'multiCartSetDefaultForm_' ~ loop.index %}
+
+                                <form id="{{ formIdentifier }}" name="{{ formIdentifier }}" method="POST" action="{{ path('multi-cart/set-default', {'idQuote': quote.idQuote}) }}">
                                     <input type="hidden" name="multi_cart_set_default_form[_token]" value="{{ csrf_token('multi_cart_set_default_form')}}">
                                     <button class="link">{{ quote.name }}</button>
                                 </form>
@@ -113,7 +115,9 @@
                                                 <button class="link">{{ 'page.multi_cart.shopping_cart.list.link.duplicate' | trans }}</button>
                                                 {{ form_end(multiCartDuplicateForm) }}
                                             {% else %}
-                                                <form id="multiCartDuplicateForm_{{ loop.index }}" name="multiCartDuplicateForm_{{ loop.index }}" method="POST" action="{{ path('multi-cart/duplicate', {'idQuote': quote.idQuote}) }}">
+                                                {% set formIdentifier = 'multiCartDuplicateForm_' ~ loop.index %}
+
+                                                <form id="{{ formIdentifier }}" name="{{ formIdentifier }}" method="POST" action="{{ path('multi-cart/duplicate', {'idQuote': quote.idQuote}) }}">
                                                     <input type="hidden" name="multi_cart_duplicate_form[_token]" value="{{ csrf_token('multi_cart_duplicate_form')}}">
                                                     <button class="link">{{ 'page.multi_cart.shopping_cart.list.link.duplicate' | trans }}</button>
                                                 </form>

@@ -113,7 +113,7 @@
         {% if data.isEditable %}
             {% block bundleActionsInner %}
                 <form method="POST" action="{{ path('cart/configured-bundle/remove', {'configuredBundleGroupKey': data.bundle.groupKey}) }}">
-                    <input type="hidden" name="configured_bundle_remove_item_form[_token]" value="{{ csrf_token('configured_bundle_remove_item_form')}}">
+                    <input type="hidden" name="configured_bundle_remove_item_form[_token]" value="{{ csrf_token('configured_bundle_remove_item_form') }}">
                     <button data-init-single-click class="link {{ bundleActionClassName }}">
                         {% block removeLinkInner %}
                             {{- 'configured_bundle.remove' | trans | raw -}}

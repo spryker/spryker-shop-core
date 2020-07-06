@@ -9,8 +9,8 @@
 {% define data = {
     wishlistItems: required,
     wishlistName: required,
-    wishlistRemoveItemFormCloner: null,
-    wishlistMoveToCartFormCloner: null,
+    wishlistRemoveItemFormCloner: {},
+    wishlistMoveToCartFormCloner: {},
 } %}
 
 {% block body %}
@@ -103,8 +103,10 @@
                                         </button>
                                         {{ form_end(wishlistMoveToCartForm) }}
                                     {% else %}
-                                        <form id="addToCart_{{ loop.index }}" class="col" name="addToCart_{{ loop.index }}" method="POST" action="{{ path('wishlist/move-to-cart', {sku: item.sku, 'wishlist-name': data.wishlistName}) }}">
-                                            <input type="hidden" name="wishlist_move_to_cart_form[_token]" value="{{ csrf_token('wishlist_move_to_cart_form')}}">
+                                        {% set formIdentifier = 'addToCart_' ~ loop.index %}
+
+                                        <form id="{{ formIdentifier }}" class="col" name="{{ formIdentifier }}" method="POST" action="{{ path('wishlist/move-to-cart', {sku: item.sku, 'wishlist-name': data.wishlistName}) }}">
+                                            <input type="hidden" name="wishlist_move_to_cart_form[_token]" value="{{ csrf_token('wishlist_move_to_cart_form') }}">
                                             <button class="link" title="{{ 'customer.account.wishlist.add-to-cart' | trans }}">
                                                 {% include atom('icon') with {
                                                     data: {
@@ -130,8 +132,10 @@
                                     </button>
                                     {{ form_end(wishlistRemoveItemFormCloner) }}
                                 {% else %}
-                                    <form id="deleteWishlistItem_{{ loop.index }}" class="col" name="deleteWishlistItem_{{ loop.index }}" method="POST" action="{{ path('wishlist/remove-item', {sku: item.sku, 'wishlist-name': data.wishlistName}) }}">
-                                        <input type="hidden" name="wishlist_remove_item_form[_token]" value="{{ csrf_token('wishlist_remove_item_form')}}">
+                                    {% set formIdentifier = 'deleteWishlistItem_' ~ loop.index %}
+
+                                    <form id="{{ formIdentifier }}" class="col" name="{{ formIdentifier }}" method="POST" action="{{ path('wishlist/remove-item', {sku: item.sku, 'wishlist-name': data.wishlistName}) }}">
+                                        <input type="hidden" name="wishlist_remove_item_form[_token]" value="{{ csrf_token('wishlist_remove_item_form') }}">
                                         <button class="link" title="{{ 'customer.account.wishlist.remove' | trans }}">
                                             {% include atom('icon') with {
                                                 data: {

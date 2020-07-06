@@ -8,8 +8,8 @@ export default class RemoteFormSubmit extends Component {
     protected readyCallback(): void {}
 
     protected init(): void {
-        this.fieldsContainer = <HTMLElement>Array.from(this.getElementsByClassName(`${this.jsName}__container`))[0];
-        this.submitButton = <HTMLButtonElement>Array.from(this.getElementsByClassName(`${this.jsName}__submit`))[0];
+        this.fieldsContainer = <HTMLElement>this.getElementsByClassName(`${this.jsName}__container`)[0];
+        this.submitButton = <HTMLButtonElement>this.getElementsByClassName(`${this.jsName}__submit`)[0];
 
         this.getFormHolder();
         this.createForm();
@@ -17,10 +17,10 @@ export default class RemoteFormSubmit extends Component {
     }
 
     protected mapEvents(): void {
-        this.mapSubmitEvent();
+        this.mapSubmitButtonClickEvent();
     }
 
-    protected mapSubmitEvent(): void {
+    protected mapSubmitButtonClickEvent(): void {
         this.submitButton.addEventListener('click', () => this.submitTargetForm());
     }
 
@@ -32,7 +32,7 @@ export default class RemoteFormSubmit extends Component {
 
     protected getFormHolder(): void {
         if (this.formHolderClassName) {
-            this.formHolder = <HTMLElement>Array.from(document.getElementsByClassName(this.formHolderClassName))[0];
+            this.formHolder = <HTMLElement>document.getElementsByClassName(this.formHolderClassName)[0];
 
             return;
         }
