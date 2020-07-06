@@ -1,5 +1,0 @@
-{
-    "include": {
-        "spryker/merchant-product-storage": "Provides plugin for expandinf product storage."
-    }
-}
