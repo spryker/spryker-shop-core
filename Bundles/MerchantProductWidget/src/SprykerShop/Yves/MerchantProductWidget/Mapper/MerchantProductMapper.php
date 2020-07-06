@@ -12,7 +12,9 @@ use Generated\Shared\Transfer\MerchantProductViewTransfer;
 class MerchantProductMapper implements MerchantProductMapperInterface
 {
     /**
-     * @param array<mixed> $productAbstractStorageData
+     * @phpstan-param array<string, mixed> $productAbstractStorageData
+     *
+     * @param array $productAbstractStorageData
      * @param \Generated\Shared\Transfer\MerchantProductViewTransfer $merchantProductViewTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProductViewTransfer
