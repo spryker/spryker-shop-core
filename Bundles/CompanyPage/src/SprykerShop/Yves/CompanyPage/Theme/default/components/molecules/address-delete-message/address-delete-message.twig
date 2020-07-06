@@ -9,7 +9,7 @@
     companyBusinessUnits: null,
     idCompanyBusinessUnit: null,
     cancelUrl: required,
-    companyUnitAddressDeleteForm: null,
+    companyUnitAddressDeleteForm: '',
 } %}
 
 {% block body %}
@@ -52,13 +52,13 @@
 
     {% if data.companyUnitAddressDeleteForm %}
         {{ form_start(data.companyUnitAddressDeleteForm, {'action': path('company/address/delete', {'id': data.companyUnitAddress.idCompanyUnitAddress, 'idCompanyBusinessUnit': data.idCompanyBusinessUnit }) }) }}
-        <button data-init-single-click class="button button--alert">{{ "company.account.company_user.delete" | trans }} </button>
+            <button data-init-single-click class="button button--alert">{{ 'company.account.company_user.delete' | trans }} </button>
         {{ form_end(data.companyUnitAddressDeleteForm) }}
     {% else %}
         <form id="companyUnitAddressDeleteForm" name="companyUnitAddressDeleteForm" method="POST"
               action="{{ path('company/address/delete', {'id': data.companyUnitAddress.idCompanyUnitAddress, 'idCompanyBusinessUnit': data.idCompanyBusinessUnit }) }}">
             <input type="hidden" name="company_unit_address_delete_form[_token]" value="{{ csrf_token('company_unit_address_delete_form')}}">
-            <button data-init-single-click class="button button--alert">{{ "company.account.company_user.delete" | trans }} </button>
+            <button data-init-single-click class="button button--alert">{{ 'company.account.company_user.delete' | trans }} </button>
         </form>
     {% endif %}
 {% endblock %}

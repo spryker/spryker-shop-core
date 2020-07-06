@@ -25,7 +25,7 @@
                     {% set companyUnitAddressDeleteForm = data.companyUnitAddressDeleteFormClone.getForm.createView %}
 
                     {{ form_start(companyUnitAddressDeleteForm, {'action': path('company/address/delete', {'id': address.idCompanyUnitAddress }) }) }}
-                    <button data-init-single-click class="link">{{ "company.account.address.delete" | trans }} </button>
+                        <button data-init-single-click class="link">{{ 'company.account.address.delete' | trans }}</button>
                     {{ form_end(companyUnitAddressDeleteForm) }}
                 </li>
             </ul>

@@ -7,7 +7,7 @@
 {% define data = {
     wishlists: required,
     wishlistForm: null,
-    wishlistDeleteFormCloner: null,
+    wishlistDeleteFormCloner: {},
 } %}
 
 {% block body %}
@@ -63,20 +63,20 @@
                             <li class="menu__item">
                                 {% if data.wishlistDeleteFormCloner %}
                                     {% set wishlistDeleteForm = data.wishlistDeleteFormCloner.getForm.createView %}
+
                                     {{ form_start(wishlistDeleteForm, {'action': path('wishlist/delete', {'wishlistName': wishlist.name}), 'name': 'wishlistDeleteForm_' ~ wishlist.name }) }}
-                                    <button data-init-single-click class="link"
-                                            title="{{ 'customer.account.wishlist.overview.delete' | trans }}">
-                                        {% include atom('icon') with {
-                                            data: {
-                                                name: 'remove'
-                                            }
-                                        } only %}
-                                    </button>
+                                        <button data-init-single-click class="link" title="{{ 'customer.account.wishlist.overview.delete' | trans }}">
+                                            {% include atom('icon') with {
+                                                data: {
+                                                    name: 'remove',
+                                                },
+                                            } only %}
+                                        </button>
                                     {{ form_end(wishlistDeleteForm) }}
                                 {% else %}
-                                    {% set formIdentifier = 'wishlistDeleteForm_' ~ loop.index %}
+                                    {% set formName = 'wishlistDeleteForm_' ~ loop.index %}
 
-                                    <form id="{{ formIdentifier }}" class="col" name="{{ formIdentifier }}" method="POST" action="{{ path('wishlist/delete', {'wishlistName': wishlist.name}) }}">
+                                    <form id="{{ formName }}" class="col" name="{{ formName }}" method="POST" action="{{ path('wishlist/delete', {'wishlistName': wishlist.name}) }}">
                                         <input type="hidden" name="wishlist_delete_form[_token]" value="{{ csrf_token('wishlist_delete_form') }}">
                                         <button data-init-single-click class="link" title="{{ 'customer.account.wishlist.overview.delete' | trans }}">
                                             {% include atom('icon') with {
@@ -87,7 +87,6 @@
                                         </button>
                                     </form>
                                 {% endif %}
-
                             </li>
                         </ul>
                     </td>
