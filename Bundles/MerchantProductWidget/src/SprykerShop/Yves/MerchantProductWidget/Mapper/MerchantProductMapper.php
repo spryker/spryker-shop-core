@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\MerchantProductViewTransfer;
 class MerchantProductMapper implements MerchantProductMapperInterface
 {
     /**
-     * @param array $productAbstractStorageData
+     * @param array<mixed> $productAbstractStorageData
      * @param \Generated\Shared\Transfer\MerchantProductViewTransfer $merchantProductViewTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProductViewTransfer
