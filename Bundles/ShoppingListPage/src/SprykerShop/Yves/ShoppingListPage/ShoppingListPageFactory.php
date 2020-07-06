@@ -23,6 +23,7 @@ use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToProduc
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToZedRequestClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Service\ShoppingListPageToUtilEncodingServiceInterface;
+use SprykerShop\Yves\ShoppingListPage\Form\AddShoppingListToCartForm;
 use SprykerShop\Yves\ShoppingListPage\Form\Constraint\ShareShoppingListRequiredIdConstraint;
 use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShareShoppingListDataProvider;
 use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShoppingListFormDataProvider;
@@ -275,5 +276,13 @@ class ShoppingListPageFactory extends AbstractFactory
     public function getShoppingListClearForm(): FormInterface
     {
         return $this->getFormFactory()->create(ShoppingListClearForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getAddShoppingListToCartForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(AddShoppingListToCartForm::class);
     }
 }

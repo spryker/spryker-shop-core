@@ -90,6 +90,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         return [
             'shoppingListCollection' => $this->getCustomerShoppingListCollection(),
             'shoppingListForm' => $shoppingListForm->createView(),
+            'addShoppingListFormToCartForm' => $this->getFactory()->getAddShoppingListToCartForm()->createView(),
             'shoppingListResponse' => $shoppingListResponseTransfer,
         ];
     }
@@ -209,6 +210,14 @@ class ShoppingListOverviewController extends AbstractShoppingListController
      */
     public function addShoppingListToCartAction(Request $request): RedirectResponse
     {
+        $addShoppingListToCartForm = $this->getFactory()->getAddShoppingListToCartForm()->handleRequest($request);
+
+        if (!$addShoppingListToCartForm->isSubmitted() || !$addShoppingListToCartForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST);
+        }
+
         $shoppingListItems = $this->getFactory()
             ->getShoppingListClient()
             ->getShoppingListItemCollection($this->getShoppingListCollectionTransfer($request));
