@@ -11,10 +11,12 @@
     iconModifiers: ['smaller'],
     buttonText: '',
     buttonClass: config.name ~ '__button',
+    csrfFieldName: '',
+    csrfFieldValue: '',
 } %}
 
 {% block body %}
-    <form action="{{ data.formAction }}">
+    <form method="POST" action="{{ data.formAction }}">
         {% block button %}
             <button class="{{ data.buttonClass }}">
                 {% block icon %}
@@ -33,5 +35,6 @@
                 {% endblock %}
             </button>
         {% endblock %}
+        <input name="{{ data.csrfFieldName }}" type="hidden" value="{{ data.csrfFieldValue }}">
     </form>
 {% endblock %}
