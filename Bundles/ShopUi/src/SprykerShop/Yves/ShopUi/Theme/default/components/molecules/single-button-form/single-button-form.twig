@@ -5,7 +5,7 @@
 } %}
 
 {% define data = {
-    formAction: null,
+    formAction: '   ',
     isIconAllowed: true,
     iconName: 'times',
     iconModifiers: ['smaller'],
@@ -35,6 +35,8 @@
                 {% endblock %}
             </button>
         {% endblock %}
-        <input name="{{ data.csrfFieldName }}" type="hidden" value="{{ data.csrfFieldValue }}">
+        {% block csrf_field %}
+            <input name="{{ data.csrfFieldName }}" type="hidden" value="{{ data.csrfFieldValue }}">
+        {% endblock %}
     </form>
 {% endblock %}

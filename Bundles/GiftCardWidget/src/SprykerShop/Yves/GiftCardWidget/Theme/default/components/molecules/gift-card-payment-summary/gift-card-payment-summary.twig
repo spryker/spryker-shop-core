@@ -24,7 +24,7 @@
                             buttonText: 'cart.voucher.remove' | trans,
                             csrfFieldName: 'cart_code_remove_form[_token]',
                             csrfFieldValue: csrf_token('cart_code_remove_form'),
-                        }
+                        },
                     } only %}
                 {% endif %}
                 <span class="float-right">- {{ payment.amount | money }}</span>
