@@ -67,7 +67,7 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Instead of this we make use of `Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin`. Method will be removed without replacement.
+     * @deprecated Instead of this we make use of {@link \Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin}. Method will be removed without replacement.
      *
      * @return \Silex\Provider\TwigServiceProvider
      */

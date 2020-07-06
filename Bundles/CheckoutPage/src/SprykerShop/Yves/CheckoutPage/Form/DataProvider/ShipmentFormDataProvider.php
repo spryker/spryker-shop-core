@@ -236,7 +236,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     }
 
     /**
-     * @deprecated Use {@link getAvailableMethodsByShipment()} instead.
+     * @deprecated Use {@link getAvailableShipmentMethodsByShipment()} instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
