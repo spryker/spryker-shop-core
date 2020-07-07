@@ -10,7 +10,7 @@
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.40.0",
     "spryker/application": "^3.8.0",
-    "spryker/application-extension": "1.0.0",
+    "spryker/application-extension": "^1.0.0",
     "spryker/customer": "^7.30.0",
     "spryker/kernel": "^3.33.0",
     "spryker/product-bundle": "^4.1.0 || ^6.0.0 || ^7.0.0",
