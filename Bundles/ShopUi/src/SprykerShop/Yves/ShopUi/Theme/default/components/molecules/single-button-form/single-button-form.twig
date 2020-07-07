@@ -5,7 +5,7 @@
 } %}
 
 {% define data = {
-    formAction: '',
+    formAction: required,
     iconName: 'times',
     iconModifiers: ['smaller'],
     iconClasses: '',
@@ -15,17 +15,19 @@
     csrfFieldValue: '',
 } %}
 
+{% set iconName = data.iconName %}
+
 {% block body %}
     <form method="POST" action="{{ data.formAction }}">
         {% block button %}
             <button class="{{ data.buttonClass }}">
                 {% block icon %}
-                    {% if data.iconName is not empty %}
+                    {% if iconName %}
                         {% include atom('icon') with {
                             modifiers: data.iconModifiers,
                             class: data.iconClasses,
                             data: {
-                                name: data.iconName,
+                                name: iconName,
                             },
                         } only %}
                     {% endif %}
