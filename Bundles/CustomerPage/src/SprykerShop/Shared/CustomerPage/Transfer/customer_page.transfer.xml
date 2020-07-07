@@ -293,6 +293,10 @@
         <property name="message" type="Message"/>
     </transfer>
 
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
     <transfer name="CommentThread">
         <property name="idCommentThread" type="int"/>
     </transfer>
