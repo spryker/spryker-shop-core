@@ -36,6 +36,8 @@ use SprykerShop\Yves\CustomerPage\Handler\OrderSearchFormHandler;
 use SprykerShop\Yves\CustomerPage\Handler\OrderSearchFormHandlerInterface;
 use SprykerShop\Yves\CustomerPage\Mapper\CustomerMapper;
 use SprykerShop\Yves\CustomerPage\Mapper\CustomerMapperInterface;
+use SprykerShop\Yves\CustomerPage\Mapper\ItemStateMapper;
+use SprykerShop\Yves\CustomerPage\Mapper\ItemStateMapperInterface;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\AccessDeniedHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationFailureHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationSuccessHandler;
@@ -396,6 +398,14 @@ class CustomerPageFactory extends AbstractFactory
     public function createCustomerMapper(): CustomerMapperInterface
     {
         return new CustomerMapper();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Mapper\ItemStateMapperInterface
+     */
+    public function createItemStateMapper(): ItemStateMapperInterface
+    {
+        return new ItemStateMapper();
     }
 
     /**

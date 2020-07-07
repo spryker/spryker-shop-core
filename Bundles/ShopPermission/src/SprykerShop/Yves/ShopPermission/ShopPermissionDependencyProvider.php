@@ -14,7 +14,7 @@ use SprykerShop\Yves\ShopPermission\Dependency\Client\ShopPermissionToPermission
 class ShopPermissionDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**
-     * @deprecated Use `static::PERMISSION_TWIG_EXTENSION_PLUGINS` instead.
+     * @deprecated Use {@link PERMISSION_TWIG_EXTENSION_PLUGINS} instead.
      */
     public const PERMISSION_TWIG_FUNCTION_PLUGINS = 'PERMISSION_TWIG_FUNCTION_PLUGINS';
 
@@ -51,7 +51,7 @@ class ShopPermissionDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `addPermissionTwigExtensionPlugins` instead.
+     * @deprecated Use {@link addPermissionTwigExtensionPlugins()} instead.
      *
      * @param \Spryker\Yves\Kernel\Container $container
      *
@@ -67,7 +67,7 @@ class ShopPermissionDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `getPermissionTwigExtensionPlugins` instead.
+     * @deprecated Use {@link getPermissionTwigExtensionPlugins()} instead.
      *
      * @return \Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface[]
      */
