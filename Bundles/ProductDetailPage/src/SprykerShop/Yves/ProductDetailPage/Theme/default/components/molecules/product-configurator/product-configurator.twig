@@ -140,10 +140,14 @@
             {% endwidget %}
 
             {% set merchantProductOfferWidget = findWidget('MerchantProductOfferWidget', [data.product]) %}
+
+            {% set productOffersCount = merchantProductOfferWidget ? merchantProductOfferWidget.productOffers | length : 0 %}
+            {% set isRadioButtonVisible = productOffersCount > 0  %}
+            {% set isChecked = merchantProductOfferWidget ? not merchantProductOfferWidget.productView.productOfferReference: true %}
             {% set merchantProductWidget = findWidget('MerchantProductWidget', [
                 data.product,
-                merchantProductOfferWidget.productOffers | length ? true: false,
-                not merchantProductOfferWidget.productView.productOfferReference
+                isRadioButtonVisible,
+                isChecked
             ]) %}
 
             {% if merchantProductWidget %}
@@ -154,12 +158,14 @@
             {% if merchantProductOfferWidget %}
                 {% widget merchantProductOfferWidget with
                     {
-                        embed: {hasMerchantProduct: merchantProductWidget.merchantProductView, merchantProductOfferWidget:merchantProductOfferWidget}
+                        embed: {
+                            hasMerchantProduct: merchantProductWidget ? merchantProductWidget.merchantProductView is defined : false,
+                            productOffersCount: merchantProductOfferWidget.productOffers | length
+                        }
                     }
                 %}
-
                     {% block content %}
-                        {% set isRadioButtonVisible = ((merchantProductOfferWidget.productOffers | length) + (merchantProductWidget.merchantProductView ? 1 : 0))  > 1  %}
+                        {% set isRadioButtonVisible = productOffersCount and embed.hasMerchantProduct %}
                         {{ parent() }}
                     {% endblock %}
 
