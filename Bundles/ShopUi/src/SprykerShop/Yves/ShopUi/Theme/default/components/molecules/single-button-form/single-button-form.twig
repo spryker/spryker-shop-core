@@ -1,0 +1,46 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'single-button-form',
+} %}
+
+{% define data = {
+    formAction: required,
+    iconName: 'times',
+    iconModifiers: ['smaller'],
+    iconClasses: '',
+    buttonText: '',
+    buttonClass: config.name ~ '__button',
+    csrfFieldName: '',
+    csrfFieldValue: '',
+} %}
+
+{% set iconName = data.iconName %}
+
+{% block body %}
+    <form method="POST" action="{{ data.formAction }}">
+        {% block button %}
+            <button class="{{ data.buttonClass }}">
+                {% block icon %}
+                    {% if iconName %}
+                        {% include atom('icon') with {
+                            modifiers: data.iconModifiers,
+                            class: data.iconClasses,
+                            data: {
+                                name: iconName,
+                            },
+                        } only %}
+                    {% endif %}
+                {% endblock %}
+
+                {% block text %}
+                    {{ data.buttonText }}
+                {% endblock %}
+            </button>
+        {% endblock %}
+
+        {% block csrfField %}
+            <input name="{{ data.csrfFieldName }}" type="hidden" value="{{ data.csrfFieldValue }}">
+        {% endblock %}
+    </form>
+{% endblock %}
