@@ -23,6 +23,8 @@ class MerchantProductWidgetToProductStorageClientBridge implements MerchantProdu
     }
 
     /**
+     * @phpstan-return array<mixed>
+     *
      * @param string $mappingType
      * @param string $identifier
      * @param string $localeName
@@ -35,6 +37,8 @@ class MerchantProductWidgetToProductStorageClientBridge implements MerchantProdu
     }
 
     /**
+     * @phpstan-return array<mixed>
+     *
      * @param int $idProductAbstract
      * @param string $localeName
      *
