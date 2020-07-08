@@ -3,7 +3,7 @@
 {% define data = {
     wishlists: _view.wishlistCollection.wishlists,
     wishlistForm: _view.wishlistForm,
-    wishlistDeleteFormCloner: _view.wishlistDeleteFormCloner,
+    wishlistDeleteFormClone: _view.wishlistDeleteFormCloner,
 } %}
 
 {% block customerContent %}
@@ -20,7 +20,7 @@
                 data: {
                     wishlists: data.wishlists,
                     wishlistForm: data.wishlistForm,
-                    wishlistDeleteFormCloner: data.wishlistDeleteFormCloner,
+                    wishlistDeleteFormClone: data.wishlistDeleteFormClone,
                 },
             } only %}
         {% endif %}

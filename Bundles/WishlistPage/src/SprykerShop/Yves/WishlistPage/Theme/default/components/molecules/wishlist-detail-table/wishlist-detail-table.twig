@@ -9,8 +9,8 @@
 {% define data = {
     wishlistItems: required,
     wishlistName: required,
-    wishlistRemoveItemFormCloner: {},
-    wishlistMoveToCartFormCloner: {},
+    wishlistRemoveItemFormClone: {},
+    wishlistMoveToCartFormClone: {},
 } %}
 
 {% block body %}
@@ -90,8 +90,8 @@
                         <ul class="menu menu--inline float-right">
                             {% if isItemAvailable %}
                                 <li class="menu__item">
-                                    {% if data.wishlistMoveToCartFormCloner %}
-                                        {% set wishlistMoveToCartForm = data.wishlistMoveToCartFormCloner.getForm.createView %}
+                                    {% if data.wishlistMoveToCartFormClone %}
+                                        {% set wishlistMoveToCartForm = data.wishlistMoveToCartFormClone.getForm.createView %}
 
                                         {{ form_start(wishlistMoveToCartForm, { 'action': path('wishlist/move-to-cart', {sku: item.sku, 'wishlist-name': data.wishlistName}), 'name': 'addToCart_' ~ loop.index, 'attr': {'id': 'addToCart_' ~ loop.index, 'class': 'col'}}) }}
                                             <button class="link" title="{{ 'customer.account.wishlist.add-to-cart' | trans }}">
@@ -119,10 +119,10 @@
                                 </li>
                             {% endif %}
                             <li class="menu__item">
-                                {% if data.wishlistRemoveItemFormCloner %}
-                                    {% set wishlistRemoveItemFormCloner = data.wishlistRemoveItemFormCloner.getForm.createView %}
+                                {% if data.wishlistRemoveItemFormClone %}
+                                    {% set wishlistRemoveItemForm = data.wishlistRemoveItemFormClone.getForm.createView %}
 
-                                    {{ form_start(wishlistRemoveItemFormCloner, {'action':path('wishlist/remove-item', {sku: item.sku, 'wishlist-name': data.wishlistName}), 'name': 'deleteWishlistItem_' ~ loop.index, 'attr': {'id': 'deleteWishlistItem_' ~ loop.index, 'class': 'col'}}) }}
+                                    {{ form_start(wishlistRemoveItemForm, {'action':path('wishlist/remove-item', {sku: item.sku, 'wishlist-name': data.wishlistName}), 'name': 'deleteWishlistItem_' ~ loop.index, 'attr': {'id': 'deleteWishlistItem_' ~ loop.index, 'class': 'col'}}) }}
                                         <button class="link" title="{{ 'customer.account.wishlist.remove' | trans }}">
                                             {% include atom('icon') with {
                                                 data: {
@@ -130,7 +130,7 @@
                                                 },
                                             } only %}
                                         </button>
-                                    {{ form_end(wishlistRemoveItemFormCloner) }}
+                                    {{ form_end(wishlistRemoveItemForm) }}
                                 {% else %}
                                     {% set formName = 'deleteWishlistItem_' ~ loop.index %}
 
