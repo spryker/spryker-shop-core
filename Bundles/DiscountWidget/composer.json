@@ -17,7 +17,6 @@
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
-    "spryker-shop/cart-code-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/router": "*",
     "spryker/silex": "*"
