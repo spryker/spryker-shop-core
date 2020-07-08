@@ -92,7 +92,7 @@
 
     <hr>
 
-    {% widget 'AddToCartFormWidget'  args [config, data.product, isDisabled, options] only %}
+    {% widget 'AddToCartFormWidget' args [config, data.product, isDisabled, options] only %}
         {% block embeddedData %}
             {% widget 'ProductOptionConfiguratorWidget' args [data.product] only %}
             {% elsewidget 'ProductOptionWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductOptionConfiguratorWidget instead. #}
@@ -191,5 +191,4 @@
     {% widget 'ProductDiscontinuedNoteWidget' args [sku] only %}
     {% elsewidget 'ProductDiscontinuedWidgetPlugin' args [sku] only %} {# @deprecated Use ProductDiscontinuedNoteWidget instead. #}
     {% endwidget %}
-
 {% endblock %}

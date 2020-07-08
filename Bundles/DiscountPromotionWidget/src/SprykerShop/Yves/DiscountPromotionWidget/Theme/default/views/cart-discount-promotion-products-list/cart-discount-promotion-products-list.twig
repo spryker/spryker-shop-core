@@ -63,15 +63,14 @@
                                         {{- buttonContent -}}
                                     </button>
                                 {% else %}
-                                    {% widget 'AddToCartFormWidget'  args [config, data.product, isDisabled] only %}
+                                    {% widget 'AddToCartFormWidget' args [config, data.product, isDisabled] with {
+                                        embed: {
+                                            buttonContent: buttonContent,
+                                        },
+                                    } only %}
                                         {% block embeddedData %}
-                                            <button type="submit" class="button button--expand {{ data.config.jsName }}__link-add-to-cart" data-init-single-click {{ qa('add-to-cart-button') }}>
-                                                {% include atom('icon') with {
-                                                    data: {
-                                                        name: 'cart-plus',
-                                                    },
-                                                } only %}
-                                                {{- 'page.detail.add-to-cart' | trans -}}
+                                            <button class="button button--expand" data-init-single-click {{ qa('add-to-cart-button') }}>
+                                                {{- embed.buttonContent -}}
                                             </button>
                                         {% endblock %}
                                     {% endwidget %}

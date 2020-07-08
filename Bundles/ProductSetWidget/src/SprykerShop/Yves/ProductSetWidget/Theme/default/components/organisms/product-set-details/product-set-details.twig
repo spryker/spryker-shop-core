@@ -13,6 +13,8 @@
     optionResetUrls: [],
 } %}
 
+{% set productSetAddToCartButtonClass = 'float-right' %}
+
 {% block body %}
     <div class="box">
         {% block carousel %}
@@ -40,23 +42,27 @@
 
     <div class="box">
         {% block header %}
-            {% widget 'AddItemsFormWidget'  args [config, data, data.products] only %}
+            {% widget 'AddItemsFormWidget' args [config, data, data.products] with {
+                embed: {
+                    productSetAddToCartButtonClass: productSetAddToCartButtonClass,
+                },
+            } only %}
                 {% block embeddedData %}
                     {% set isDisabled = false %}
 
                     {% for product in data.data.products %}
-                        {% if product.idProductConcrete is not empty %}
-                            {% if product.available %}
-                                <input type="hidden" name="items[{{ loop.index }}][sku]" class="{{ data.config.jsName }}__product-sku-hidden-input" value="{{ product.sku }}">
-                                <input type="hidden" name="items[{{ loop.index }}][quantity]" value="1">
-                            {% endif %}
-                        {% else %}
+                        {% if product.idProductConcrete is not empty and product.available %}
+                            <input type="hidden" name="items[{{ loop.index }}][sku]" class="{{ data.config.jsName }}__product-sku-hidden-input" value="{{ product.sku }}">
+                            <input type="hidden" name="items[{{ loop.index }}][quantity]" value="1">
+                        {% endif %}
+
+                        {% if product.idProductConcrete is empty %}
                             {% set isDisabled = true %}
                         {% endif %}
                     {% endfor %}
 
                     {% if (data.data.products | length) %}
-                        <button type="submit" class="button float-right" {{ isDisabled ? 'disabled' : 'data-init-single-click' }}>
+                        <button class="button {{ embed.productSetAddToCartButtonClass }}" {{ isDisabled ? 'disabled' : 'data-init-single-click' }}>
                             {{ 'product.set.detail.add-all-to-cart' | trans }}
                         </button>
                     {% endif %}
@@ -64,15 +70,16 @@
                     {% block title %}
                         <h5>{{ 'product.set.detail.set-contents' | trans }}</h5>
                     {% endblock %}
-
                 {% endblock %}
             {% endwidget %}
 
             <hr class="box__separator">
             {% block description %}
-                {% if data.description is not empty %}
-                    <h6>{{ 'product.attribute.long_description' | trans }}</h6>
-                    <p>{{ data.description }}</p>
+                {% if data.description %}
+                    {% block descriptionInner %}
+                        <h6>{{ 'product.attribute.long_description' | trans }}</h6>
+                        <p>{{ data.description }}</p>
+                    {% endblock %}
                 {% endif %}
             {% endblock %}
         {% endblock %}
@@ -138,12 +145,12 @@
                                     {% set isDisabled = not data.product.idProductConcrete or not data.product.available %}
 
                                     {% set buttonContent %}
-                                            {% include atom('icon') with {
-                                                data: {
-                                                    name: 'cart-plus',
-                                                },
-                                            } only %}
-                                            {{- 'page.detail.add-to-cart' | trans -}}
+                                        {% include atom('icon') with {
+                                            data: {
+                                                name: 'cart-plus',
+                                            },
+                                        } only %}
+                                        {{- 'page.detail.add-to-cart' | trans -}}
                                     {% endset %}
 
                                     {% if isDisabled %}
@@ -151,20 +158,40 @@
                                             {{- buttonContent -}}
                                         </button>
                                     {% else %}
-                                        {% widget 'AddToCartFormWidget'  args [config, data.product, isDisabled] only %}
-                                            {% block embeddedData %}
-                                                <button type="submit" class="button button--expand {{ data.config.jsName }}__link-add-to-cart" data-init-single-click {{ qa('add-to-cart-button') }}>
-                                                    {% include atom('icon') with {
-                                                        data: {
-                                                            name: 'cart-plus',
+                                        {% widget 'AddToCartFormWidget' args [config, data.product, isDisabled] with {
+                                            embed: {
+                                                buttonContent: buttonContent,
+                                            },
+                                        } only %}
+                                            {% block body %}
+                                                {% set formAction = path('cart/add', {'sku': data.product.sku}) %}
+
+                                                {% embed molecule('remote-form-submit') with {
+                                                    data: {
+                                                        buttonClass: 'button button--expand ' ~ data.config.jsName ~ '__button-add-to-cart',
+                                                        buttonExtraAttributes: {
+                                                            'data-form-action': formAction,
+                                                            'data-init-single-click': true,
+                                                            'data-qa': 'add-to-cart-button',
                                                         },
-                                                    } only %}
-                                                    {{ 'page.detail.add-to-cart' | trans }}
-                                                </button>
+                                                    },
+                                                    attributes: {
+                                                        'form-name': 'addToCartForm_' ~ data.product.sku,
+                                                        'form-action': formAction,
+                                                        'field-name': data.form._token.vars.full_name,
+                                                        'field-value': data.form._token.vars.value,
+                                                    },
+                                                    embed: {
+                                                        buttonContent: embed.buttonContent,
+                                                    },
+                                                } only %}
+                                                    {% block innerSubmitActionContent %}
+                                                        {{- embed.buttonContent -}}
+                                                    {% endblock %}
+                                                {% endembed %}
                                             {% endblock %}
                                         {% endwidget %}
                                     {% endif %}
-
                                 {% endblock %}
                             {% endembed %}
                         </div>

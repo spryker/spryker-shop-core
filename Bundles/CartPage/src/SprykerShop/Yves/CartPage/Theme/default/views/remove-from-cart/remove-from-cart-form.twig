@@ -3,15 +3,20 @@
 {% define data = {
     form: _widget.removeFromCartForm,
     cartItem: _widget.cartItem,
-    formNamePostfix: _widget.cartItem,
+    formNamePostfix: _widget.formNamePostfix,
 } %}
 
 {% block body %}
-    {{ form_start(data.form, {
-        'action': path('cart/remove', {'sku': data.cartItem.sku, 'groupKey': data.cartItem.groupKey }),
-        'name': 'removeFromCartForm_' ~ data.cartItem.groupKey,
-    }) }}
-        {% block embeddedData %}{% endblock %}
-        {{ form_row(data.form._token, {id: ''}) }}
-    {{ form_end(data.form) }}
+    {% set cartItemGroupKey = data.cartItem.groupKey %}
+    {% set formNamePostfix = data.formNamePostfix %}
+
+    {% block form %}
+        {{ form_start(data.form, {
+            'action': path('cart/remove', {'sku': data.cartItem.sku, 'groupKey': cartItemGroupKey }),
+            'name': 'removeFromCartForm_' ~ cartItemGroupKey ~ (formNamePostfix ? '-' ~ formNamePostfix),
+        }) }}
+            {% block embeddedData %}{% endblock %}
+            {{ form_row(data.form._token, {id: ''}) }}
+        {{ form_end(data.form) }}
+    {% endblock %}
 {% endblock %}
