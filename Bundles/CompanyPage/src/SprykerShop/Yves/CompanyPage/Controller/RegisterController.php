@@ -22,6 +22,11 @@ use Symfony\Component\HttpFoundation\Request;
 class RegisterController extends AbstractController
 {
     /**
+     * @uses \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_COMPANY_OVERVIEW
+     */
+    protected const ROUTE_COMPANY_OVERVIEW = 'company/overview';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -60,9 +65,9 @@ class RegisterController extends AbstractController
             $companyResponseTransfer = $this->registerCompany($registerForm->getData());
 
             if ($companyResponseTransfer->getIsSuccessful()) {
-                $this->addSuccessMessage(Messages::COMPANY_AUTHORIZATION_SUCCESS);
+                $this->addSuccessMessages($companyResponseTransfer);
 
-                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_OVERVIEW);
+                return $this->redirectResponseInternal(static::ROUTE_COMPANY_OVERVIEW);
             }
 
             foreach ($companyResponseTransfer->getMessages() as $responseMessage) {
@@ -105,5 +110,23 @@ class RegisterController extends AbstractController
         $companyUserTransfer->setCustomer($customerTransfer);
 
         return $companyUserTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
+     *
+     * @return void
+     */
+    protected function addSuccessMessages(CompanyResponseTransfer $companyResponseTransfer): void
+    {
+        if (!$companyResponseTransfer->getMessages()->count()) {
+            $this->addSuccessMessage(Messages::COMPANY_AUTHORIZATION_SUCCESS);
+
+            return;
+        }
+
+        foreach ($companyResponseTransfer->getMessages() as $responseMessageTransfer) {
+            $this->addSuccessMessage($responseMessageTransfer->getText());
+        }
     }
 }

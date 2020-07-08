@@ -48,10 +48,12 @@ use SprykerShop\Yves\CustomerPage\Reader\OrderReaderInterface;
 use SprykerShop\Yves\CustomerPage\Security\Customer;
 use SprykerShop\Yves\CustomerPage\Twig\GetUsernameTwigFunction;
 use SprykerShop\Yves\CustomerPage\Twig\IsLoggedTwigFunction;
+use SprykerShop\Yves\CustomerPage\UserChecker\CustomerConfirmationUserChecker;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
 
 /**
@@ -487,5 +489,13 @@ class CustomerPageFactory extends AbstractFactory
     public function getOrderSearchFormHandlerPlugins(): array
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGINS_ORDER_SEARCH_FORM_HANDLER);
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Core\User\UserCheckerInterface
+     */
+    public function createCustomerConfirmationUserChecker(): UserCheckerInterface
+    {
+        return new CustomerConfirmationUserChecker();
     }
 }
