@@ -18,11 +18,13 @@ class RemoveFromCartFormWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $cartItem
+     * @param string|null $formNamePostfix
      */
-    public function __construct(ItemTransfer $cartItem)
+    public function __construct(ItemTransfer $cartItem, ?string $formNamePostfix = null)
     {
         $this->addParameter('removeFromCartForm', $this->createRemoveFromCartFormView());
         $this->addParameter('cartItem', $cartItem);
+        $this->addParameter('formNamePostfix', $formNamePostfix);
     }
 
     /**
