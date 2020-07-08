@@ -7,6 +7,9 @@
 
 namespace SprykerShop\Yves\ContentNavigationWidget\Twig;
 
+use ArrayObject;
+use DateTime;
+use Generated\Shared\Transfer\NavigationStorageTransfer;
 use Spryker\Client\ContentNavigation\Exception\MissingNavigationTermException;
 use Spryker\Shared\Twig\TwigFunction;
 use SprykerShop\Yves\ContentNavigationWidget\Dependency\Client\ContentNavigationWidgetToContentNavigationClientInterface;
@@ -123,6 +126,8 @@ class ContentNavigationTwigFunction extends TwigFunction
                 return '';
             }
 
+            $navigationStorageTransfer = $this->optimizeNavigationStorageNodes($navigationStorageTransfer);
+
             return $this->twig->render(
                 $availableTemplate,
                 ['navigation' => $navigationStorageTransfer]
@@ -143,7 +148,7 @@ class ContentNavigationTwigFunction extends TwigFunction
             static::WIDGET_TEMPLATE_IDENTIFIER_LIST_INLINE => '@ContentNavigationWidget/views/navigation/list-inline.twig',
             static::WIDGET_TEMPLATE_IDENTIFIER_LIST => '@ContentNavigationWidget/views/navigation/list.twig',
         ];
-        
+
         return $availableTemplates[$templateIdentifier] ?? null;
     }
 
@@ -175,5 +180,34 @@ class ContentNavigationTwigFunction extends TwigFunction
     protected function getMessageNavigationWrongType(string $contentKey): string
     {
         return sprintf(static::MESSAGE_NAVIGATION_WRONG_TYPE, $contentKey);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationStorageTransfer $navigationStorageTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationStorageTransfer
+     */
+    protected function optimizeNavigationStorageNodes(NavigationStorageTransfer $navigationStorageTransfer): NavigationStorageTransfer
+    {
+        $now = new DateTime();
+
+        $optimizedNavigationNodeStorageTransfers = new ArrayObject();
+
+        foreach ($navigationStorageTransfer->getNodes() as $navigationNodeStorageTransfer) {
+            $isValidFrom = $navigationNodeStorageTransfer->getValidFrom() === null || new DateTime($navigationNodeStorageTransfer->getValidFrom()) <= $now;
+            $isValidTo = $navigationNodeStorageTransfer->getValidTo() === null || new DateTime($navigationNodeStorageTransfer->getValidTo()) >= $now;
+            $isActiveAndValid = $navigationNodeStorageTransfer->getIsActive() && $isValidFrom && $isValidTo;
+            $hasChildren = $navigationNodeStorageTransfer->getChildren()->count() > 0;
+
+            $navigationNodeStorageTransfer->setIsValidFrom($isValidFrom);
+            $navigationNodeStorageTransfer->setIsValidTo($isValidTo);
+            $navigationNodeStorageTransfer->setIsActiveAndValid($isActiveAndValid);
+            $navigationNodeStorageTransfer->setHasChildren($hasChildren);
+
+            $optimizedNavigationNodeStorageTransfers->append($navigationNodeStorageTransfer);
+        }
+        $navigationStorageTransfer->setNodes($optimizedNavigationNodeStorageTransfers);
+
+        return $navigationStorageTransfer;
     }
 }

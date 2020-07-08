@@ -53,4 +53,12 @@ class CartPageToZedRequestClientBridge implements CartPageToZedRequestClientInte
     {
         return $this->zedRequestClient->getResponsesErrorMessages();
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getLastResponseSuccessMessages(): array
+    {
+        return $this->zedRequestClient->getLastResponseSuccessMessages();
+    }
 }

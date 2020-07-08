@@ -168,7 +168,7 @@
         <div class="grid grid--stretch grid--justify">
             <div class="col col--sm-12 col--lg-6">
                 <div class="box">
-                    <h6>{{ data.transfer.payment.paymentMethod | capitalize }}</h6>
+                    <h6>{{ data.transfer.payment.paymentMethod | trans | capitalize }}</h6>
                     <hr>
 
                     {% block payment %}

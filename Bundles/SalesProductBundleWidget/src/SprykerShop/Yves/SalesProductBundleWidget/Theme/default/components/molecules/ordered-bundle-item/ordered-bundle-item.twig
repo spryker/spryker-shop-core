@@ -42,13 +42,14 @@
     {% endblock %}
 
     {% set state = data.state | replace({' ': '-'}) | lower %}
+    {% set stateLabel = data.item.state.displayName ?? ('oms.state.' ~ state) %}
 
     {% block state %}
         <div class="{{ stateWrapperClass }}">
             {% block stateText %}
                 {% include molecule('status') with {
                     data: {
-                        label: ('oms.state.' ~ state) | trans,
+                        label: stateLabel | trans,
                         status: state,
                     },
                 } only %}

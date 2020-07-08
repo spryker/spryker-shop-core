@@ -1,0 +1,10 @@
+@mixin shop-ui-ajax-add-to-cart($name: '.ajax-add-to-cart') {
+    #{$name} {
+        &__button {
+            height: 100%;
+            white-space: nowrap;
+        }
+
+        @content;
+    }
+}
