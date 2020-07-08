@@ -29,6 +29,7 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_CART_PAGE_WIDGETS = 'PLUGIN_CART_PAGE_WIDGETS';
     public const PLUGIN_PRE_ADD_TO_CART = 'PLUGIN_PRE_ADD_TO_CART';
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    public const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
 
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER

@@ -29,7 +29,8 @@ export default class ProductItemColorSelector extends ColorSelector {
             defaultPrice: this.defaultPrice,
             originalPrice: this.originalPrice,
             detailPageUrl: this.detailPageUrl,
-            addToCartUrl: this.addToCartUrl
+            addToCartUrl: this.addToCartUrl,
+            ajaxAddToCartUrl: this.ajaxAddToCartUrl,
         };
     }
 
@@ -63,6 +64,10 @@ export default class ProductItemColorSelector extends ColorSelector {
 
     protected get addToCartUrl(): string {
         return this.currentSelection.getAttribute('data-product-add-to-cart-url');
+    }
+
+    protected get ajaxAddToCartUrl(): string {
+        return this.currentSelection.getAttribute('data-product-ajax-add-to-cart-url');
     }
 
     protected get productItemClassName(): string {
