@@ -7,7 +7,7 @@
 {% define data = {
     wishlists: required,
     wishlistForm: null,
-    wishlistDeleteFormCloner: {},
+    wishlistDeleteFormClone: {},
 } %}
 
 {% block body %}
@@ -61,8 +61,8 @@
                                 </a>
                             </li>
                             <li class="menu__item">
-                                {% if data.wishlistDeleteFormCloner %}
-                                    {% set wishlistDeleteForm = data.wishlistDeleteFormCloner.getForm.createView %}
+                                {% if data.wishlistDeleteFormClone %}
+                                    {% set wishlistDeleteForm = data.wishlistDeleteFormClone.getForm.createView %}
 
                                     {{ form_start(wishlistDeleteForm, {'action': path('wishlist/delete', {'wishlistName': wishlist.name}), 'name': 'wishlistDeleteForm_' ~ wishlist.name }) }}
                                         <button data-init-single-click class="link" title="{{ 'customer.account.wishlist.overview.delete' | trans }}">

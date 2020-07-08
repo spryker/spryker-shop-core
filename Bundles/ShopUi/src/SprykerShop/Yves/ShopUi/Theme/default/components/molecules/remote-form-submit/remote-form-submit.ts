@@ -13,6 +13,7 @@ export default class RemoteFormSubmit extends Component {
 
         this.getFormHolder();
         this.createForm();
+        this.removeFieldsContainer()
         this.mapEvents();
     }
 
@@ -47,6 +48,10 @@ export default class RemoteFormSubmit extends Component {
             </form>
         `;
         this.formHolder.insertAdjacentHTML('beforeend', formTemplate);
+    }
+
+    protected removeFieldsContainer(): void {
+        this.fieldsContainer.remove();
     }
 
     protected get formHolderClassName(): string {

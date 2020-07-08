@@ -18,8 +18,8 @@
                         data: {
                             formAction: url('cart-code/code/clear'),
                             buttonText: 'cart.vouchers.clear-all' | trans,
-                            csrfFieldName: 'cart_code_clear_form[_token]',
-                            csrfFieldValue: csrf_token('cart_code_clear_form'),
+                            fieldName: 'cart_code_clear_form[_token]',
+                            fieldValue: csrf_token('cart_code_clear_form'),
                         },
                     } only %}
                 {% endif %}
@@ -38,8 +38,8 @@
                                         data: {
                                             formAction: url('cart-code/code/remove', {'code': voucherDiscount.voucherCode}),
                                             buttonText: 'cart.voucher.remove' | trans,
-                                            csrfFieldName: 'cart_code_remove_form[_token]',
-                                            csrfFieldValue: csrf_token('cart_code_remove_form'),
+                                            fieldName: 'cart_code_remove_form[_token]',
+                                            fieldValue: csrf_token('cart_code_remove_form'),
                                         },
                                     } only %}
                                 {% endif %}

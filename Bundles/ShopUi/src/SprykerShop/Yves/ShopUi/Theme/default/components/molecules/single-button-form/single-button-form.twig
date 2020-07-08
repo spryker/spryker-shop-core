@@ -11,8 +11,8 @@
     iconClasses: '',
     buttonText: '',
     buttonClass: config.name ~ '__button',
-    csrfFieldName: '',
-    csrfFieldValue: '',
+    fieldName: '',
+    fieldValue: '',
 } %}
 
 {% set iconName = data.iconName %}
@@ -39,8 +39,8 @@
             </button>
         {% endblock %}
 
-        {% block csrfField %}
-            <input name="{{ data.csrfFieldName }}" type="hidden" value="{{ data.csrfFieldValue }}">
+        {% block field %}
+            <input name="{{ data.fieldName }}" type="hidden" value="{{ data.fieldValue }}">
         {% endblock %}
     </form>
 {% endblock %}

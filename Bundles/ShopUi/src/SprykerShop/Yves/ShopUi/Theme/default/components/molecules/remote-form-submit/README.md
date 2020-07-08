@@ -1,1 +1,1 @@
-Provides submit of a remote target form.
+Provides submit of a remote form.
