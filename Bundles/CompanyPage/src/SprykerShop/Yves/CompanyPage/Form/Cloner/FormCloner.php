@@ -8,11 +8,11 @@
 namespace SprykerShop\Yves\CompanyPage\Form\Cloner;
 
 use Spryker\Yves\Kernel\Form\AbstractType;
-use SprykerShop\Yves\CustomerPage\Exception\FormNotFoundException;
+use SprykerShop\Yves\CompanyPage\Exception\FormNotFoundException;
 use Symfony\Component\Form\FormInterface;
 
 /**
- * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
+ * @method \SprykerShop\Yves\CompanyPage\CompanyPageConfig getConfig()
  */
 class FormCloner extends AbstractType
 {
@@ -22,14 +22,14 @@ class FormCloner extends AbstractType
     protected $form;
 
     /**
-     * @throws \SprykerShop\Yves\CustomerPage\Exception\FormNotFoundException
+     * @throws \SprykerShop\Yves\CompanyPage\Exception\FormNotFoundException
 
      * @return \Symfony\Component\Form\FormInterface
      */
     public function getForm(): FormInterface
     {
         if ($this->form === null) {
-            throw new FormNotFoundException('Form to clone not provided. You need to provide the form for the FormCloner by calling \SprykerShop\Yves\CustomerPage\Form\Cloner\FormCloner::setForm().');
+            throw new FormNotFoundException('Form to clone not provided. You need to provide the form for the FormCloner by calling \SprykerShop\Yves\CompanyPage\Form\Cloner\FormCloner::setForm().');
         }
 
         return clone $this->form;

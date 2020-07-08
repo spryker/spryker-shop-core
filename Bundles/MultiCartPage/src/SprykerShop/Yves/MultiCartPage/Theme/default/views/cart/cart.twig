@@ -5,8 +5,8 @@
     isQuoteDeletable: _view.isQuoteDeletable,
     title: 'page.multi_cart.shopping_cart.list.title' | trans,
     activePage: 'multiCart',
-    multiCartDuplicateFormCloner: _view.multiCartDuplicateFormCloner,
-    multiCartSetDefaultFormCloner: _view.multiCartSetDefaultFormCloner,
+    multiCartDuplicateFormClone: _view.multiCartDuplicateFormCloner,
+    multiCartSetDefaultFormClone: _view.multiCartSetDefaultFormCloner,
 } %}
 
 {% block customerContent %}
@@ -25,8 +25,8 @@
                         duplicate: true,
                     },
                     isQuoteDeletable: data.isQuoteDeletable,
-                    multiCartSetDefaultFormCloner: data.multiCartSetDefaultFormCloner,
-                    multiCartDuplicateFormCloner: data.multiCartDuplicateFormCloner,
+                    multiCartSetDefaultFormClone: data.multiCartSetDefaultFormClone,
+                    multiCartDuplicateFormClone: data.multiCartDuplicateFormClone,
                 },
             } only %}
         {% endif %}
