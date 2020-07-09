@@ -2,7 +2,7 @@
 
 {% define data = {
     idQuote: _widget.cart.idQuote,
-    form: _widget.cartNoteForm
+    form: _widget.cartNoteForm,
 } %}
 
 {% set canWrite = not is_granted('ROLE_USER') or not data.idQuote or can('WriteSharedCartPermissionPlugin', data.idQuote) %}
@@ -13,16 +13,18 @@
             data: {
                 form: data.form,
                 options: {
-                    action: url('cart-note/item')
+                    action: url('cart-note/item'),
                 },
                 resetFieldsId: true,
                 submit: {
                     enable: true,
-                    text: 'cart_note.form.save' | trans
-                }
-            }
+                    text: 'cart_note.form.save' | trans,
+                },
+            },
         } only %}
-    {% elseif data.form.cartNote.vars.value is not empty %}
+    {% endif %}
+
+    {% if not canWrite and data.form.cartNote.vars.value is not empty %}
         <div class="form">
             {{ 'cart_note.checkout_page.item_note' | trans }}: {{ data.form.cartNote.vars.value }}
         </div>
