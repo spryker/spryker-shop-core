@@ -40,7 +40,7 @@ class RemoveFromCartFormWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@CartPage/views/remove-from-cart/remove-from-cart-form.twig';
+        return '@CartPage/views/remove-from-cart-form/remove-from-cart-form.twig';
     }
 
     /**

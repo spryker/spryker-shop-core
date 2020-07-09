@@ -34,6 +34,7 @@ class WishlistController extends AbstractController
     public const PARAM_PRODUCT_ID = 'product-id';
     public const PARAM_SKU = 'sku';
     public const PARAM_WISHLIST_NAME = 'wishlist-name';
+    protected const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
 
     /**
      * @param string $wishlistName
@@ -97,6 +98,8 @@ class WishlistController extends AbstractController
             'totalPages' => $wishlistOverviewResponse->getPagination()->getPagesTotal(),
             'wishlistName' => $wishlistName,
             'addAllAvailableProductsToCartForm' => $addAllAvailableProductsToCartForm->createView(),
+            'wishlistRemoveItemFormCloner' => $this->getFactory()->getFormCloner()->setForm($this->getFactory()->getWishlistRemoveItemForm()),
+            'wishlistMoveToCartFormCloner' => $this->getFactory()->getFormCloner()->setForm($this->getFactory()->getWishlistMoveToCartForm()),
         ];
     }
 
@@ -110,6 +113,16 @@ class WishlistController extends AbstractController
         $wishlistItemTransfer = $this->getWishlistItemTransferFromRequest($request);
         if (!$wishlistItemTransfer) {
             return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_LOGIN);
+        }
+
+        $wishlistAddItemForm = $this->getFactory()->getWishlistAddItemForm()->handleRequest($request);
+
+        if (!$wishlistAddItemForm->isSubmitted() || !$wishlistAddItemForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_DETAILS, [
+                'wishlistName' => $wishlistItemTransfer->getWishlistName(),
+            ]);
         }
 
         $wishlistItemTransfer = $this->getFactory()
@@ -136,6 +149,16 @@ class WishlistController extends AbstractController
             return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_LOGIN);
         }
 
+        $wishlistRemoveItemForm = $this->getFactory()->getWishlistRemoveItemForm()->handleRequest($request);
+
+        if (!$wishlistRemoveItemForm->isSubmitted() || !$wishlistRemoveItemForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_DETAILS, [
+                'wishlistName' => $wishlistItemTransfer->getWishlistName(),
+            ]);
+        }
+
         $this->getFactory()
             ->getWishlistClient()
             ->removeItem($wishlistItemTransfer);
@@ -157,6 +180,16 @@ class WishlistController extends AbstractController
         $wishlistItemTransfer = $this->getWishlistItemTransferFromRequest($request);
         if (!$wishlistItemTransfer) {
             return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_LOGIN);
+        }
+
+        $wishlistMoveToCartForm = $this->getFactory()->getWishlistMoveToCartForm()->handleRequest($request);
+
+        if (!$wishlistMoveToCartForm->isSubmitted() || !$wishlistMoveToCartForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_DETAILS, [
+                'wishlistName' => $wishlistItemTransfer->getWishlistName(),
+            ]);
         }
 
         $wishlistItemMetaTransferCollection = [

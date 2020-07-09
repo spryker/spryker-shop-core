@@ -24,6 +24,7 @@ use SprykerShop\Yves\CompanyPage\Expander\CompanyBusinessUnitOrderSearchFormExpa
 use SprykerShop\Yves\CompanyPage\Expander\CompanyBusinessUnitOrderSearchFormExpanderInterface;
 use SprykerShop\Yves\CompanyPage\Expander\CompanyUnitAddressExpander;
 use SprykerShop\Yves\CompanyPage\Expander\CompanyUnitAddressExpanderInterface;
+use SprykerShop\Yves\CompanyPage\Form\Cloner\FormCloner;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyBusinessUnitOrderSearchFormDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\FormFactory;
 use SprykerShop\Yves\CompanyPage\FormHandler\OrderSearchFormHandler;
@@ -249,5 +250,13 @@ class CompanyPageFactory extends AbstractFactory
     public function createCompanyUnitAddressExpander(): CompanyUnitAddressExpanderInterface
     {
         return new CompanyUnitAddressExpander($this->createCompanyUnitMapper());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Form\Cloner\FormCloner
+     */
+    public function createFormCloner(): FormCloner
+    {
+        return new FormCloner();
     }
 }

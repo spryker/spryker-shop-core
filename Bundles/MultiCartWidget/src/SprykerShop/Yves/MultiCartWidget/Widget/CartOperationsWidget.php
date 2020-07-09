@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\MultiCartWidget\Widget;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
+use Symfony\Component\Form\FormView;
 
 /**
  * @method \SprykerShop\Yves\MultiCartWidget\MultiCartWidgetFactory getFactory()
@@ -22,7 +23,10 @@ class CartOperationsWidget extends AbstractWidget
     {
         $this->addParameter('cart', $quoteTransfer)
             ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed())
-            ->addParameter('isDeleteCartAllowed', $this->isDeleteCartAllowed());
+            ->addParameter('isDeleteCartAllowed', $this->isDeleteCartAllowed())
+            ->addParameter('multiCartClearForm', $this->getMultiCartClearFormView())
+            ->addParameter('multiCartDuplicateForm', $this->getMultiCartDuplicateFormView())
+            ->addParameter('multiCartSetDefaultForm', $this->getMultiCartSetDefaultFormView());
 
         /** @deprecated Use global widgets instead. */
         $this->addWidgets($this->getFactory()->getViewExtendWidgetPlugins());
@@ -65,5 +69,29 @@ class CartOperationsWidget extends AbstractWidget
             ->getQuotes());
 
         return $numberOfQuotes > 1;
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormView
+     */
+    protected function getMultiCartClearFormView(): FormView
+    {
+        return $this->getFactory()->getMultiCartClearForm()->createView();
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormView
+     */
+    protected function getMultiCartDuplicateFormView(): FormView
+    {
+        return $this->getFactory()->getMultiCartDuplicateForm()->createView();
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormView
+     */
+    protected function getMultiCartSetDefaultFormView(): FormView
+    {
+        return $this->getFactory()->getMultiCartSetDefaultForm()->createView();
     }
 }
