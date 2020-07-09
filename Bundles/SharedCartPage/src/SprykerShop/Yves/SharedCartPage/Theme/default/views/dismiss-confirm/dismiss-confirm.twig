@@ -19,7 +19,10 @@
                 label: 'shared_cart.share.breadcrumbs.shopping_carts' | trans
             },{
                 url: data.quote.isDefault ? url('cart') : url('multi-cart/set-default', {idQuote: data.idQuote}),
-                label: data.quoteName
+                label: data.quoteName,
+                isFormElement: true,
+                formName: 'multi_cart_set_default_form',
+                tokenFieldName: 'multi_cart_set_default_form[_token]',
             },{
                 label: 'shared_cart_page.share.breadcrumbs.dismiss' | trans
             }]
