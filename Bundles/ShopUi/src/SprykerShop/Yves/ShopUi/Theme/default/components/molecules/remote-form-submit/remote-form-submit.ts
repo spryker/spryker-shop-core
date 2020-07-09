@@ -13,7 +13,7 @@ export default class RemoteFormSubmit extends Component {
 
         this.getFormHolder();
         this.createForm();
-        this.removeFieldsContainer()
+        this.removeFieldsContainer();
         this.mapEvents();
     }
 
