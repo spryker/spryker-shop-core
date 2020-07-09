@@ -29,10 +29,12 @@
     {% set imagePlaceholder = data.imagePlaceholder ?: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=' %}
     {% set imageTitle = data.imageTitle %}
     {% set extraAttributes = data.extraAttributes %}
+    {% set backgroundStyleAttribute = 'background-image:' ~ imagePlaceholder ~ '; ' ~ (extraAttributes.style ?? '') %}
 
     {% block content %}
         {% set fallbackImageClasses = imageExtraClasses %}
         {% set fallbackBackgroundClasses = backgroundExtraClasses %}
+        {% set fallbackBackgroundStyleAttribute = 'background-image:' ~ imageSrc ~ '; ' ~ (extraAttributes.style ?? '') %}
 
         {% block imageContainer %}
             {% if data.isBackground %}
@@ -40,7 +42,7 @@
                     <div class="{{ backgroundClasses }} {{ config.jsName }}__background {{ backgroundExtraClasses }}"
                          data-background-image="url('{{ imageSrc }}')"
                          title="{{ imageTitle }}"
-                        {{ component.renderAttributes(extraAttributes | merge({'background-image': imagePlaceholder})) }}></div>
+                        {{ component.renderAttributes(extraAttributes | merge({style: backgroundStyleAttribute})) }}></div>
                 {% endblock %}
             {% else %}
                 {% block image %}
@@ -59,7 +61,7 @@
                     {% block backgroundNoScript %}
                         <div class="{{ backgroundClasses }} {{ fallbackBackgroundClasses }}"
                              title="{{ imageTitle }}"
-                            {{ component.renderAttributes(extraAttributes | merge({'background-image': imageSrc})) }}></div>
+                            {{ component.renderAttributes(extraAttributes | merge({style: fallbackBackgroundStyleAttribute})) }}></div>
                     {% endblock %}
                 {% else %}
                     {% block imageNoScript %}
