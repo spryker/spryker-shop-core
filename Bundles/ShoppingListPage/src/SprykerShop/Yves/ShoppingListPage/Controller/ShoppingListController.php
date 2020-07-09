@@ -37,6 +37,7 @@ class ShoppingListController extends AbstractShoppingListController
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_NOT_ADDED = 'customer.account.shopping_list.item.not_added';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ADD_ITEM_SUCCESS = 'customer.account.shopping_list.add_item.success';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART_SELECT_LIST = 'customer.account.shopping_list.items.added_to_cart.select_list';
+    protected const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
 
     /**
      * @uses \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_SHOPPING_LIST
@@ -109,6 +110,7 @@ class ShoppingListController extends AbstractShoppingListController
         $shoppingListItems = $this->getShoppingListItems($shoppingListOverviewResponseTransfer);
 
         return [
+            'addItemToCartForm' => $this->getFactory()->getShoppingListAddItemToCartForm()->createView(),
             'shoppingListItems' => $shoppingListItems,
             'shoppingListOverview' => $shoppingListOverviewResponseTransfer,
         ];
@@ -117,11 +119,22 @@ class ShoppingListController extends AbstractShoppingListController
     /**
      * @param int $idShoppingList
      * @param int $idShoppingListItem
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function removeItemAction(int $idShoppingList, int $idShoppingListItem): RedirectResponse
+    public function removeItemAction(int $idShoppingList, int $idShoppingListItem, Request $request): RedirectResponse
     {
+        $removeItemForm = $this->getFactory()->getShoppingListRemoveItemForm()->handleRequest($request);
+
+        if (!$removeItemForm->isSubmitted() || !$removeItemForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST_DETAILS, [
+                'idShoppingList' => $idShoppingList,
+            ]);
+        }
+
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
             ->setIdShoppingListItem($idShoppingListItem)
             ->setFkShoppingList($idShoppingList)
@@ -153,6 +166,16 @@ class ShoppingListController extends AbstractShoppingListController
      */
     public function addToCartAction(Request $request): RedirectResponse
     {
+        $addItemToCartForm = $this->getFactory()->getShoppingListAddItemToCartForm()->handleRequest($request);
+
+        if (!$addItemToCartForm->isSubmitted() || !$addItemToCartForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST_DETAILS, [
+                'idShoppingList' => $request->get(static::PARAM_ID_SHOPPING_LIST),
+            ]);
+        }
+
         $shoppingListItemTransferCollection = $this->getFactory()->createAddToCartFormHandler()->handleAddToCartRequest($request);
         if (!$shoppingListItemTransferCollection->getItems()->count()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_SELECT_ITEM);

@@ -25,7 +25,13 @@ class MerchantSwitcherController extends AbstractController
      */
     public function switchMerchantAction(Request $request): Response
     {
-        $merchantReference = $request->query->get('merchant-reference');
+        $form = $this->getFactory()->getMerchantSwitcherSelectorForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return new JsonResponse('CSRF token is not valid', Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $merchantReference = $request->request->get('merchant-reference');
 
         $this->getFactory()->createMerchantSwitcher()->switchMerchantInQuote($merchantReference);
         $this->getFactory()->createSelectedMerchantCookie()->setMerchantReference($merchantReference);
