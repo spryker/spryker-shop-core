@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CompanyPage\Plugin\Router;
 
 use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
 use Spryker\Yves\Router\Route\RouteCollection;
+use Symfony\Component\HttpFoundation\Request;
 
 class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -113,6 +114,7 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $route = $this->buildRoute('/company/address/delete', 'CompanyPage', 'Address', 'deleteAction');
         $routeCollection->add(static::ROUTE_COMPANY_ADDRESS_DELETE, $route);
         $route = $this->buildRoute('/company/address/delete-confirmation', 'CompanyPage', 'Address', 'confirmDeleteAction');
+        $route = $route->setMethods(Request::METHOD_POST);
         $routeCollection->add(static::ROUTE_COMPANY_ADDRESS_DELETE_CONFIRMATION, $route);
 
         return $routeCollection;
@@ -134,6 +136,7 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $route = $this->buildRoute('/company/business-unit/update', 'CompanyPage', 'BusinessUnit', 'updateAction');
         $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, $route);
         $route = $this->buildRoute('/company/business-unit/delete', 'CompanyPage', 'BusinessUnit', 'deleteAction');
+        $route = $route->setMethods(Request::METHOD_POST);
         $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_DELETE, $route);
         $route = $this->buildRoute('/company/business-unit/delete-confirmation', 'CompanyPage', 'BusinessUnit', 'confirmDeleteAction');
         $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_DELETE_CONFIRMATION, $route);

@@ -14,6 +14,10 @@ use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBund
 
 class ConfigurableBundleWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @see \Spryker\Shared\Application\ApplicationConstants::FORM_FACTORY
+     */
+    public const FORM_FACTORY = 'FORM_FACTORY';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const CLIENT_CONFIGURABLE_BUNDLE_CART = 'CLIENT_CONFIGURABLE_BUNDLE_CART';
 

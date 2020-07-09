@@ -1,0 +1,16 @@
+@mixin shop-ui-single-button-form($name: '.single-button-form') {
+    #{$name} {
+        &__button {
+            background-color: $setting-color-transparent;
+            color: $setting-color-main;
+            cursor: pointer;
+
+            &:hover,
+            &:focus {
+                text-decoration: underline;
+            }
+        }
+
+        @content;
+    }
+}

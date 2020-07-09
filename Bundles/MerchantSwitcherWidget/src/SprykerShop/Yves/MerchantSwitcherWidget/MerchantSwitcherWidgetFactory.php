@@ -15,10 +15,13 @@ use SprykerShop\Yves\MerchantSwitcherWidget\Cookie\SelectedMerchantCookieInterfa
 use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToMerchantSearchClientInterface;
 use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToMerchantSwitcherClientInterface;
 use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToQuoteClientInterface;
+use SprykerShop\Yves\MerchantSwitcherWidget\Form\MerchantSwitcherSelectorForm;
 use SprykerShop\Yves\MerchantSwitcherWidget\MerchantReader\MerchantReader;
 use SprykerShop\Yves\MerchantSwitcherWidget\MerchantReader\MerchantReaderInterface;
 use SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcher\MerchantSwitcher;
 use SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcher\MerchantSwitcherInterface;
+use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -107,5 +110,21 @@ class MerchantSwitcherWidgetFactory extends AbstractFactory
     public function getMerchantSwitcherClient(): MerchantSwitcherWidgetToMerchantSwitcherClientInterface
     {
         return $this->getProvidedDependency(MerchantSwitcherWidgetDependencyProvider::CLIENT_MERCHANT_SWITCHER);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormFactory
+     */
+    public function getFormFactory(): FormFactory
+    {
+        return $this->getProvidedDependency(MerchantSwitcherWidgetDependencyProvider::FORM_FACTORY);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getMerchantSwitcherSelectorForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(MerchantSwitcherSelectorForm::class);
     }
 }

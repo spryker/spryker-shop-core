@@ -35,6 +35,8 @@ class CodeController extends AbstractController
 
     protected const GLOSSARY_KEY_CODE_APPLY_FAILED = 'cart.code.apply.failed';
 
+    public const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -69,6 +71,14 @@ class CodeController extends AbstractController
      */
     public function removeAction(Request $request)
     {
+        $cartCodeRemoveForm = $this->getFactory()->getCartCodeRemoveForm()->handleRequest($request);
+
+        if (!$cartCodeRemoveForm->isSubmitted() || !$cartCodeRemoveForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseExternal($request->headers->get('referer'));
+        }
+
         $code = (string)$request->query->get(static::PARAM_CODE);
         if (empty($code)) {
             return $this->redirectResponseExternal($request->headers->get('referer'));
@@ -89,6 +99,14 @@ class CodeController extends AbstractController
      */
     public function clearAction(Request $request)
     {
+        $cartCodeClearForm = $this->getFactory()->getCartCodeClearForm()->handleRequest($request);
+
+        if (!$cartCodeClearForm->isSubmitted() || !$cartCodeClearForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseExternal($request->headers->get('referer'));
+        }
+
         $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
 
         $cartCodeResponseTransfer = $this->getFactory()
