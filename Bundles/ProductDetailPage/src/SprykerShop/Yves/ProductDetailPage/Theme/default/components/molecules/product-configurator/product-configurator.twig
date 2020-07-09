@@ -165,12 +165,12 @@
                     }
                 %}
                     {% block content %}
-                        {% set isRadioButtonVisible = productOffersCount + embed.hasMerchantProduct > 1 %}
+                        {% set isRadioButtonVisible = embed.productOffersCount + embed.hasMerchantProduct > 1 %}
                         {{ parent() }}
                     {% endblock %}
 
                     {% block title %}
-                        {% if not merchantProductOfferWidget %}
+                        {% if not embed.hasMerchantProduct %}
                             {{ parent() }}
                         {% endif %}
                     {% endblock %}
