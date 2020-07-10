@@ -164,7 +164,9 @@
                                             },
                                         } only %}
                                             {% block body %}
-                                                {% set formAction = path('cart/add', {'sku': data.product.sku}) %}
+                                                {% set productSku = data.product.sku %}
+                                                {% set formAction = path('cart/add', {'sku': productSku}) %}
+                                                {% set tokenField = data.form._token.vars %}
 
                                                 {% embed molecule('remote-form-submit') with {
                                                     data: {
@@ -176,10 +178,10 @@
                                                         },
                                                     },
                                                     attributes: {
-                                                        'form-name': 'addToCartForm_' ~ data.product.sku,
+                                                        'form-name': 'addToCartForm_' ~ productSku,
                                                         'form-action': formAction,
-                                                        'field-name': data.form._token.vars.full_name,
-                                                        'field-value': data.form._token.vars.value,
+                                                        'field-name': tokenField.full_name,
+                                                        'field-value': tokenField.value,
                                                     },
                                                     embed: {
                                                         buttonContent: embed.buttonContent,

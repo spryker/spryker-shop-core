@@ -84,15 +84,15 @@ export default class ProductItem extends Component {
         this.originalPrice = data.originalPrice;
         this.detailPageUrl = data.detailPageUrl;
         this.addToCartUrl = data.addToCartUrl;
-        this.ajaxAddToCartUrl = data.ajaxAddToCartUrl;
-        this.addToCartFormAction = data.addToCartFormAction;
+        this.ajaxAddToCartUrl = data.ajaxAddToCartUrl ?? '';
+        this.addToCartFormAction = data.addToCartFormAction ?? '';
     }
 
     protected getSkuFromUrl(url: string): string {
         const lastPartOfUrl = new RegExp(`([^\\/])+$`, 'g');
         const sku = url.match(lastPartOfUrl);
 
-        return sku ? sku[0] : '';
+        return sku ? sku[0] : null;
     }
 
     /**
