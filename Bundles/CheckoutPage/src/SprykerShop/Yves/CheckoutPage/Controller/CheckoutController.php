@@ -243,10 +243,6 @@ class CheckoutController extends AbstractController
             return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_SUMMARY);
         }
 
-        if ($quoteTransfer->getOrderReference() !== null) {
-            return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_SUCCESS);
-        }
-
         return $this->createStepProcess()->process($request);
     }
 
