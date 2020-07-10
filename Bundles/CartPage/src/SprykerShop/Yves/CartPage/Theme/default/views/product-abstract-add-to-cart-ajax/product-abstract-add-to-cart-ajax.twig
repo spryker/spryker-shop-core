@@ -9,7 +9,7 @@
 {% set extraClasses = 'spacing-left' %}
 
 {% block body %}
-    {% set addToCartSku = data.productAbstract['add_to_cart_sku'] ?? null %}
+    {% set addToCartSku = data.productAbstract['add_to_cart_sku'] ?? '' %}
 
     {% include molecule('ajax-add-to-cart') with {
         class: extraClasses,
