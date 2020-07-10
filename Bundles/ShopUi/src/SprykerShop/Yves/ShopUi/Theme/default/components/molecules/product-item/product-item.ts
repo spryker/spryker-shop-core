@@ -33,6 +33,8 @@ export interface ProductItemLabelsData {
     type: string;
 }
 
+type Url = string | null;
+
 export default class ProductItem extends Component {
     protected productImage: HTMLImageElement;
     protected productName: HTMLElement;
@@ -88,9 +90,9 @@ export default class ProductItem extends Component {
         this.addToCartFormAction = data.addToCartFormAction ?? null;
     }
 
-    protected getSkuFromUrl(url: string): string {
+    protected getSkuFromUrl(url: Url): Url {
         if (!url) {
-            return;
+            return null;
         }
 
         const lastPartOfUrl = new RegExp(`([^\\/])+$`, 'g');
@@ -191,7 +193,7 @@ export default class ProductItem extends Component {
      * Sets the product card AJAX 'add to cart' URL.
      * @param ajaxAddToCartUrl A product card AJAX 'add to cart' URL.
      */
-    set ajaxAddToCartUrl(ajaxAddToCartUrl: string) {
+    set ajaxAddToCartUrl(ajaxAddToCartUrl: Url) {
         if (this.productAjaxButtonAddToCart) {
             this.productAjaxButtonAddToCart.disabled = !ajaxAddToCartUrl;
             this.productAjaxButtonAddToCart.dataset.url = ajaxAddToCartUrl;
@@ -204,7 +206,7 @@ export default class ProductItem extends Component {
      * Sets the product card 'add to cart' form action.
      * @param addToCartFormAction A product card 'add to cart' form action.
      */
-    set addToCartFormAction(addToCartFormAction: string) {
+    set addToCartFormAction(addToCartFormAction: Url) {
         if (this.productFormAddToCart) {
             this.productFormAddToCart.action = addToCartFormAction;
         }
