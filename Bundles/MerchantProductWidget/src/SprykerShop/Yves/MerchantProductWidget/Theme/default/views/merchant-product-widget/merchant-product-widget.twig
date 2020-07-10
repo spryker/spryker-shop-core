@@ -1,0 +1,55 @@
+{% extends template('widget') %}
+
+{% define data = {
+    locale: app.locale | slice(0, 2),
+    merchantProductView: _widget.merchantProductView,
+    productView: _widget.productView,
+    isRadioButtonVisible: _widget.isRadioButtonVisible,
+    isChecked: _widget.isChecked
+} %}
+
+{% block template %}
+
+    {% if data.merchantProductView %}
+        {% block content %}
+            <div class="box box--dark box--spacingless spacing spacing--inner">
+                {% block contentInner %}
+                    {% block title %}
+                        <div>
+                            <strong>{{ 'merchant_product.sold_by' | trans }}</strong>
+                        </div>
+                    {% endblock %}
+
+                    {% block merchantProductList %}
+                        {% block merchantProduct %}
+
+                            {% embed molecule('merchant-product-item', 'MerchantProductWidget') with {
+                                data: {
+                                    isChecked: data.isChecked,
+                                    radioGroupName: 'merchant_reference',
+                                    merchantReference: data.merchantProductView.merchantReference | default,
+                                    merchantName: data.merchantProductView.merchantName | default,
+                                    merchantUrl: data.merchantProductView.merchantUrl | default,
+                                    price: data.merchantProductView.price.price | default(null),
+                                    currencyIsoCode: data.merchantProductView.price.currency.code | default(null),
+                                    isRadioButtonVisible: data.isRadioButtonVisible,
+                                },
+                                embed : {
+                                    currentProductPrice: data.merchantProductView.price,
+                                }
+                            } only %}
+                                {% block price %}
+                                    {% widget 'CurrentProductPriceVolumeWidget' args [embed.currentProductPrice] only %}
+                                        {% block priceTable %}{% endblock %}
+                                    {% nowidget %}
+                                        {{ parent() }}
+                                    {% endwidget %}
+                                {% endblock %}
+                            {% endembed %}
+                        {% endblock %}
+                    {% endblock %}
+                {% endblock %}
+            </div>
+        {% endblock %}
+    {% endif %}
+{% endblock %}

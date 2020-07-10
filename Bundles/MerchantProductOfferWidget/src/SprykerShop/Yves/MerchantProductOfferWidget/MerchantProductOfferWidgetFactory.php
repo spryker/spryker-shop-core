@@ -11,8 +11,6 @@ use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantStorageClientInterface;
-use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToPriceProductStorageClientInterface;
-use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Service\MerchantProductOfferWidgetToPriceProductClientInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Reader\MerchantProductOfferReader;
 use SprykerShop\Yves\MerchantProductOfferWidget\Reader\MerchantProductOfferReaderInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Resolver\ShopContextResolver;
@@ -27,10 +25,16 @@ class MerchantProductOfferWidgetFactory extends AbstractFactory
     {
         return new MerchantProductOfferReader(
             $this->getMerchantProductOfferStorageClient(),
-            $this->getPriceProductServiceClient(),
-            $this->getPriceProductStorageClient(),
             $this->createShopContextResolver()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MerchantProductOfferWidget\Resolver\ShopContextResolverInterface
+     */
+    public function createShopContextResolver(): ShopContextResolverInterface
+    {
+        return new ShopContextResolver($this->getApplication());
     }
 
     /**
@@ -50,34 +54,10 @@ class MerchantProductOfferWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Service\MerchantProductOfferWidgetToPriceProductClientInterface
-     */
-    public function getPriceProductServiceClient(): MerchantProductOfferWidgetToPriceProductClientInterface
-    {
-        return $this->getProvidedDependency(MerchantProductOfferWidgetDependencyProvider::CLIENT_PRICE_PRODUCT_SERVICE);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToPriceProductStorageClientInterface
-     */
-    public function getPriceProductStorageClient(): MerchantProductOfferWidgetToPriceProductStorageClientInterface
-    {
-        return $this->getProvidedDependency(MerchantProductOfferWidgetDependencyProvider::CLIENT_PRICE_PRODUCT_STORAGE);
-    }
-
-    /**
      * @return \Spryker\Shared\Kernel\Communication\Application
      */
     public function getApplication(): Application
     {
         return $this->getProvidedDependency(MerchantProductOfferWidgetDependencyProvider::PLUGIN_APPLICATION);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\MerchantProductOfferWidget\Resolver\ShopContextResolverInterface
-     */
-    public function createShopContextResolver(): ShopContextResolverInterface
-    {
-        return new ShopContextResolver($this->getApplication());
     }
 }

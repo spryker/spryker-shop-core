@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Service;
+namespace SprykerShop\Yves\MerchantProductWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 
-class MerchantProductOfferWidgetToPriceProductClientBridge implements MerchantProductOfferWidgetToPriceProductClientInterface
+class MerchantProductWidgetToPriceProductClientBridge implements MerchantProductWidgetToPriceProductClientInterface
 {
     /**
      * @var \Spryker\Client\PriceProduct\PriceProductClientInterface
