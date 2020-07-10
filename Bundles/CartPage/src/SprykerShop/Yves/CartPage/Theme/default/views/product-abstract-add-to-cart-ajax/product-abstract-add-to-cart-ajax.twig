@@ -14,11 +14,11 @@
     {% include molecule('ajax-add-to-cart') with {
         class: extraClasses,
         data: {
-            url: addToCartSku ? (path('cart/add-ajax', {'sku': data.productAbstract['add_to_cart_sku']})) : '',
+            url: addToCartSku ? (path('cart/add-ajax', {'sku': addToCartSku})),
             csrfToken: csrf_token('add-to-cart-ajax'),
             buttonClasses: data.buttonClasses,
             buttonExtraClasses: data.buttonExtraClasses,
-            extraAttributes: addToCartSku ? '' : {'disabled': true}
+            extraAttributes: not addToCartSku ? {disabled: true},
         },
     } only %}
 {% endblock %}
