@@ -16,12 +16,13 @@
             {% widget 'CustomerReorderItemCheckboxWidget' args [data.product] only %}{% endwidget %}
         </div>
         <div class="col col--expand grid grid--middle">
+            {% set thumbnailModifiers = ['small', 'expand'] %}
             {% block image %}
-                {% include atom('thumbnail') with {
-                    modifiers: ['small', 'full-width'],
-                    attributes: {
-                        src: data.image,
-                        alt: data.name,
+                {% include molecule('lazy-image') with {
+                    modifiers: thumbnailModifiers | merge(['thumbnail']),
+                    data: {
+                        imageSrc: data.image,
+                        imageTitle: data.name,
                     },
                 } only %}
             {% endblock %}
@@ -42,6 +43,26 @@
                         {{- 'configured_bundle.item_sku' | trans }} {{ data.sku -}}
                     </small>
                 {%- endblock %}
+
+                {% block stateWrapper %}
+                    {% set stateWrapperClass = '' %}
+
+                    {% if data.product.state is not null %}
+                        {% set state = data.product.state.name | replace({' ': '-'}) | lower %}
+                        {% set stateLabel = data.product.state.displayName ?? ('oms.state.' ~ state) %}
+
+                        <div class="{{ stateWrapperClass }}">
+                            {% block state %}
+                                {% include molecule('status') with {
+                                    data: {
+                                        label: stateLabel | trans,
+                                        status: state,
+                                    },
+                                } only %}
+                            {% endblock %}
+                        </div>
+                    {% endif %}
+                {% endblock %}
             {% endblock %}
 
             {% block priceInformation %}
@@ -99,7 +120,7 @@
                                                 {% endblock %}
 
                                                 {%- block totalValue -%}
-                                                    {{ data.product.sumSubtotalAggregation | money(true, data.currencyIsoCode) }}
+                                                    {{ data.product.sumPriceToPayAggregation | money(true, data.currencyIsoCode) }}
                                                 {% endblock %}
                                             {% else %}
                                                 {{ 'customer.access.cannot_see_price' | trans }}

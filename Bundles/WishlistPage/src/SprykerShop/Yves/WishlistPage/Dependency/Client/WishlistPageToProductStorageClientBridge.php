@@ -23,7 +23,7 @@ class WishlistPageToProductStorageClientBridge implements WishlistPageToProductS
     }
 
     /**
-     * @deprecated Use findProductConcreteStorageData($idProductConcrete, $localeName): ?array
+     * @deprecated Use {@link findProductConcreteStorageData()} instead.
      *
      * @param int $idProductConcrete
      * @param string $localeName

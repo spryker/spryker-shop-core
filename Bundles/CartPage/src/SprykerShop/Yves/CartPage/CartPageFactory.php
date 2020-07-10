@@ -21,6 +21,7 @@ use SprykerShop\Yves\CartPage\Plugin\Provider\AttributeVariantsProvider;
 use SprykerShop\Yves\CartPage\ProductViewExpander\ProductViewExpander;
 use SprykerShop\Yves\CartPage\ProductViewExpander\ProductViewExpanderInterface;
 use Symfony\Cmf\Component\Routing\ChainRouterInterface;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class CartPageFactory extends AbstractFactory
 {
@@ -93,7 +94,7 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
-     * @return mixed
+     * @return string[]
      */
     public function getCartPageWidgetPlugins()
     {
@@ -200,5 +201,13 @@ class CartPageFactory extends AbstractFactory
     public function createCartPageFormFactory(): FormFactory
     {
         return new FormFactory();
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface
+     */
+    public function getCsrfTokenManager(): CsrfTokenManagerInterface
+    {
+        return $this->getApplication()->get(CartPageDependencyProvider::SERVICE_FORM_CSRF_PROVIDER);
     }
 }

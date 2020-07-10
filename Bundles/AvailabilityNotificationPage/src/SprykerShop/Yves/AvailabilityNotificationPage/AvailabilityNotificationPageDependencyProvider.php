@@ -37,9 +37,9 @@ class AvailabilityNotificationPageDependencyProvider extends AbstractBundleDepen
      */
     protected function addAvailabilityNotificationClient(Container $container): Container
     {
-        $container[static::CLIENT_AVAILABILITY_NOTIFICATION] = function (Container $container) {
+        $container->set(static::CLIENT_AVAILABILITY_NOTIFICATION, function (Container $container) {
             return new AvailabilityNotificationPageToAvailabilityNotificationClientBridge($container->getLocator()->availabilityNotification()->client());
-        };
+        });
 
         return $container;
     }
@@ -51,9 +51,9 @@ class AvailabilityNotificationPageDependencyProvider extends AbstractBundleDepen
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new AvailabilityNotificationPageToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }

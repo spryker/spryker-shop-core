@@ -75,10 +75,12 @@ class OrderController extends AbstractCustomerController
 
         if (!$isOrderSearchEnabled) {
             $orderListTransfer = $customerPageFactory->createOrderReader()->getOrderList($request, $orderListTransfer);
+            $aggregatedDisplayNames = $this->getFactory()->createItemStateMapper()->aggregateItemStatesDisplayNamesByOrderReference($orderListTransfer->getOrders());
 
             return [
                 'pagination' => $orderListTransfer->getPagination(),
                 'orderList' => $orderListTransfer->getOrders(),
+                'ordersAggregatedItemStateDisplayNames' => $aggregatedDisplayNames,
                 'isOrderSearchEnabled' => $isOrderSearchEnabled,
                 'isOrderSearchOrderItemsVisible' => true,
             ];
@@ -89,10 +91,12 @@ class OrderController extends AbstractCustomerController
 
         $orderListTransfer = $customerPageFactory->createOrderReader()
             ->getOrderList($request, $orderListTransfer);
+        $aggregatedDisplayNames = $this->getFactory()->createItemStateMapper()->aggregateItemStatesDisplayNamesByOrderReference($orderListTransfer->getOrders());
 
         return [
             'pagination' => $orderListTransfer->getPagination(),
             'orderList' => $orderListTransfer->getOrders(),
+            'ordersAggregatedItemStateDisplayNames' => $aggregatedDisplayNames,
             'isOrderSearchEnabled' => $isOrderSearchEnabled,
             'isOrderSearchOrderItemsVisible' => $orderListTransfer->getFormat()->getExpandWithItems(),
             'orderSearchForm' => $orderSearchForm->createView(),
@@ -128,7 +132,9 @@ class OrderController extends AbstractCustomerController
         FormInterface $orderSearchForm,
         OrderListTransfer $orderListTransfer
     ): OrderListTransfer {
-        $isReset = $request->query->get(OrderSearchForm::FORM_NAME)[OrderSearchForm::FIELD_RESET] ?? null;
+        /** @var array $data */
+        $data = $request->query->get(OrderSearchForm::FORM_NAME) ?: [];
+        $isReset = $data[OrderSearchForm::FIELD_RESET] ?? null;
 
         if ($isReset) {
             return $this->getFactory()

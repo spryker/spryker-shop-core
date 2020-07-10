@@ -17,7 +17,7 @@ use Twig\TokenParser\AbstractTokenParser;
 use Twig\TokenStream;
 
 /**
- * @deprecated Please use `\SprykerShop\Yves\ShopApplication\Twig\Widget\TokenParser\WidgetTagTwigTokenParser` instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ShopApplication\Twig\Widget\TokenParser\WidgetTagTwigTokenParser} instead.
  */
 class WidgetTagTokenParser extends AbstractTokenParser
 {

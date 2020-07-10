@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CompanyPage\Plugin\Router;
 
 use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
 use Spryker\Yves\Router\Route\RouteCollection;
+use Symfony\Component\HttpFoundation\Request;
 
 class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -113,6 +114,7 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $route = $this->buildRoute('/company/address/delete', 'CompanyPage', 'Address', 'deleteAction');
         $routeCollection->add(static::ROUTE_COMPANY_ADDRESS_DELETE, $route);
         $route = $this->buildRoute('/company/address/delete-confirmation', 'CompanyPage', 'Address', 'confirmDeleteAction');
+        $route = $route->setMethods(Request::METHOD_POST);
         $routeCollection->add(static::ROUTE_COMPANY_ADDRESS_DELETE_CONFIRMATION, $route);
 
         return $routeCollection;
@@ -134,6 +136,7 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $route = $this->buildRoute('/company/business-unit/update', 'CompanyPage', 'BusinessUnit', 'updateAction');
         $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, $route);
         $route = $this->buildRoute('/company/business-unit/delete', 'CompanyPage', 'BusinessUnit', 'deleteAction');
+        $route = $route->setMethods(Request::METHOD_POST);
         $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_DELETE, $route);
         $route = $this->buildRoute('/company/business-unit/delete-confirmation', 'CompanyPage', 'BusinessUnit', 'confirmDeleteAction');
         $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_DELETE_CONFIRMATION, $route);
@@ -193,7 +196,7 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $routeCollection->add(static::ROUTE_COMPANY_ROLE_CREATE, $route);
         $route = $this->buildRoute('/company/company-role/update', 'CompanyPage', 'CompanyRole', 'updateAction');
         $routeCollection->add(static::ROUTE_COMPANY_ROLE_UPDATE, $route);
-        $route = $this->buildRoute('/company/company-role/delete', 'CompanyPage', 'CompanyRole', 'deleteAction');
+        $route = $this->buildPostRoute('/company/company-role/delete', 'CompanyPage', 'CompanyRole', 'deleteAction');
         $routeCollection->add(static::ROUTE_COMPANY_ROLE_DELETE, $route);
         $route = $this->buildRoute('/company/company-role/confirm-delete', 'CompanyPage', 'CompanyRole', 'confirmDeleteAction');
         $routeCollection->add(static::ROUTE_COMPANY_ROLE_CONFIRM_DELETE, $route);
@@ -233,7 +236,7 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $routeCollection->add(static::ROUTE_COMPANY_USER_CREATE, $route);
         $route = $this->buildRoute('/company/user/update', 'CompanyPage', 'User', 'updateAction');
         $routeCollection->add(static::ROUTE_COMPANY_USER_UPDATE, $route);
-        $route = $this->buildRoute('/company/user/delete', 'CompanyPage', 'User', 'deleteAction');
+        $route = $this->buildPostRoute('/company/user/delete', 'CompanyPage', 'User', 'deleteAction');
         $routeCollection->add(static::ROUTE_COMPANY_USER_DELETE, $route);
         $route = $this->buildRoute('/company/user/confirm-delete', 'CompanyPage', 'User', 'confirmDeleteAction');
         $routeCollection->add(static::ROUTE_COMPANY_USER_CONFIRM_DELETE, $route);

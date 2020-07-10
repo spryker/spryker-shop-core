@@ -29,6 +29,7 @@ use SprykerShop\Yves\CustomerPage\Expander\ShipmentExpander;
 use SprykerShop\Yves\CustomerPage\Expander\ShipmentExpanderInterface;
 use SprykerShop\Yves\CustomerPage\Expander\ShipmentGroupExpander;
 use SprykerShop\Yves\CustomerPage\Expander\ShipmentGroupExpanderInterface;
+use SprykerShop\Yves\CustomerPage\Form\Cloner\FormCloner;
 use SprykerShop\Yves\CustomerPage\Form\DataProvider\CheckoutAddressFormDataProvider;
 use SprykerShop\Yves\CustomerPage\Form\FormFactory;
 use SprykerShop\Yves\CustomerPage\Form\Transformer\AddressSelectTransformer;
@@ -36,6 +37,8 @@ use SprykerShop\Yves\CustomerPage\Handler\OrderSearchFormHandler;
 use SprykerShop\Yves\CustomerPage\Handler\OrderSearchFormHandlerInterface;
 use SprykerShop\Yves\CustomerPage\Mapper\CustomerMapper;
 use SprykerShop\Yves\CustomerPage\Mapper\CustomerMapperInterface;
+use SprykerShop\Yves\CustomerPage\Mapper\ItemStateMapper;
+use SprykerShop\Yves\CustomerPage\Mapper\ItemStateMapperInterface;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\AccessDeniedHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationFailureHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationSuccessHandler;
@@ -46,10 +49,12 @@ use SprykerShop\Yves\CustomerPage\Reader\OrderReaderInterface;
 use SprykerShop\Yves\CustomerPage\Security\Customer;
 use SprykerShop\Yves\CustomerPage\Twig\GetUsernameTwigFunction;
 use SprykerShop\Yves\CustomerPage\Twig\IsLoggedTwigFunction;
+use SprykerShop\Yves\CustomerPage\UserChecker\CustomerConfirmationUserChecker;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
 
 /**
@@ -397,6 +402,14 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\CustomerPage\Mapper\ItemStateMapperInterface
+     */
+    public function createItemStateMapper(): ItemStateMapperInterface
+    {
+        return new ItemStateMapper();
+    }
+
+    /**
      * @return \SprykerShop\Yves\CustomerPage\Expander\CustomerAddressExpanderInterface
      */
     public function createCustomerExpander(): CustomerAddressExpanderInterface
@@ -477,5 +490,21 @@ class CustomerPageFactory extends AbstractFactory
     public function getOrderSearchFormHandlerPlugins(): array
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGINS_ORDER_SEARCH_FORM_HANDLER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Form\Cloner\FormCloner
+     */
+    public function createFormCloner(): FormCloner
+    {
+        return new FormCloner();
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Core\User\UserCheckerInterface
+     */
+    public function createCustomerConfirmationUserChecker(): UserCheckerInterface
+    {
+        return new CustomerConfirmationUserChecker();
     }
 }

@@ -1,0 +1,139 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 84,
+            "line_to": 84,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getQuoteRequestReference on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestWidget/src/SprykerShop/Yves/QuoteRequestWidget/Controller/QuoteRequestCartController.php",
+            "snippet": "                static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),",
+            "selected_text": "getQuoteRequestReference",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 133,
+            "line_to": 133,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\QuoteRequestWidget\\Controller\\QuoteRequestCartController::addErrorMessage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestWidget/src/SprykerShop/Yves/QuoteRequestWidget/Controller/QuoteRequestCartController.php",
+            "snippet": "            $this->addErrorMessage($messageTransfer->getValue());",
+            "selected_text": "$messageTransfer->getValue()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 82,
+            "line_to": 82,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getLatestVersion on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestWidget/src/SprykerShop/Yves/QuoteRequestWidget/Handler/QuoteRequestCartHandler.php",
+            "snippet": "        $quoteRequestTransfer->getLatestVersion()->setQuote($quoteTransfer);",
+            "selected_text": "getLatestVersion",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 82,
+            "line_to": 82,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method setQuote on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestWidget/src/SprykerShop/Yves/QuoteRequestWidget/Handler/QuoteRequestCartHandler.php",
+            "snippet": "        $quoteRequestTransfer->getLatestVersion()->setQuote($quoteTransfer);",
+            "selected_text": "setQuote",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestWidget/src/SprykerShop/Yves/QuoteRequestWidget/QuoteRequestWidgetDependencyProvider.php",
+            "snippet": "            return new QuoteRequestWidgetToCompanyUserClientBridge($container->getLocator()->companyUser()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 69,
+            "line_to": 69,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestWidget/src/SprykerShop/Yves/QuoteRequestWidget/QuoteRequestWidgetDependencyProvider.php",
+            "snippet": "            return new QuoteRequestWidgetToQuoteRequestClientBridge($container->getLocator()->quoteRequest()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 83,
+            "line_to": 83,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestWidget/src/SprykerShop/Yves/QuoteRequestWidget/QuoteRequestWidgetDependencyProvider.php",
+            "snippet": "            return new QuoteRequestWidgetToQuoteClientBridge($container->getLocator()->quote()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 97,
+            "line_to": 97,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestWidget/src/SprykerShop/Yves/QuoteRequestWidget/QuoteRequestWidgetDependencyProvider.php",
+            "snippet": "            return new QuoteRequestWidgetToPersistentCartClientBridge($container->getLocator()->persistentCart()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 111,
+            "line_to": 111,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestWidget/src/SprykerShop/Yves/QuoteRequestWidget/QuoteRequestWidgetDependencyProvider.php",
+            "snippet": "            return new QuoteRequestWidgetToCustomerClientBridge($container->getLocator()->customer()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Yves\\Application\\Plugin\\Provider\\ControllerProviderInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestWidget/src/SprykerShop/Yves/QuoteRequestWidget/Plugin/Provider/QuoteRequestWidgetControllerProvider.php",
+            "snippet": "class QuoteRequestWidgetControllerProvider extends AbstractYvesControllerProvider",
+            "selected_text": "QuoteRequestWidgetControllerProvider",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "DeprecatedClass",
+            "message": "SprykerShop\\Yves\\ShopApplication\\Plugin\\Provider\\AbstractYvesControllerProvider is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestWidget/src/SprykerShop/Yves/QuoteRequestWidget/Plugin/Provider/QuoteRequestWidgetControllerProvider.php",
+            "snippet": "class QuoteRequestWidgetControllerProvider extends AbstractYvesControllerProvider",
+            "selected_text": "AbstractYvesControllerProvider",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}

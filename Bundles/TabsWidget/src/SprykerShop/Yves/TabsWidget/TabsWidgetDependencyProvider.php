@@ -33,9 +33,9 @@ class TabsWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function addFullTextSearchPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_FULL_TEXT_SEARCH_TAB] = function () {
+        $container->set(static::PLUGINS_FULL_TEXT_SEARCH_TAB, function () {
             return $this->createFullTextSearchPlugins();
-        };
+        });
 
         return $container;
     }

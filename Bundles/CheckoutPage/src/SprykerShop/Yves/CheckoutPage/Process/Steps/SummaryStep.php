@@ -125,6 +125,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
             'isPlaceableOrder' => $isPlaceableOrderResponseTransfer->getIsSuccess(),
             'isPlaceableOrderErrors' => $isPlaceableOrderResponseTransfer->getErrors(),
             'shipmentExpenses' => $this->getShipmentExpenses($quoteTransfer),
+            'acceptTermsFieldName' => QuoteTransfer::ACCEPT_TERMS_AND_CONDITIONS,
         ];
     }
 

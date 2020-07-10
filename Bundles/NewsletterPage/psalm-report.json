@@ -1,0 +1,115 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\NewsletterPage\\Controller\\NewsletterController::createNewsletterSubscriptionRequest cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/NewsletterPage/src/SprykerShop/Yves/NewsletterPage/Controller/NewsletterController.php",
+            "snippet": "        $newsletterSubscriptionRequestTransfer = $this->createNewsletterSubscriptionRequest($customerTransfer);",
+            "selected_text": "$customerTransfer",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 131,
+            "line_to": 131,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\NewsletterSubscriptionResultTransfer> variable ",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/NewsletterPage/src/SprykerShop/Yves/NewsletterPage/Controller/NewsletterController.php",
+            "snippet": "        $newsletterSubscriptionResultTransfer = $subscriptionResponse->getSubscriptionResults()->getIterator()->current();",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 138,
+            "line_to": 138,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\NewsletterPage\\Controller\\NewsletterController::addErrorMessage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/NewsletterPage/src/SprykerShop/Yves/NewsletterPage/Controller/NewsletterController.php",
+            "snippet": "        $this->addErrorMessage($newsletterSubscriptionResultTransfer->getErrorMessage());",
+            "selected_text": "$newsletterSubscriptionResultTransfer->getErrorMessage()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'bool' for SprykerShop\\Yves\\NewsletterPage\\Form\\DataProvider\\NewsletterSubscriptionFormDataProvider::isSubscribed is not nullable, but the function returns 'bool|mixed|null'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/NewsletterPage/src/SprykerShop/Yves/NewsletterPage/Form/DataProvider/NewsletterSubscriptionFormDataProvider.php",
+            "snippet": "        return $subscriptionResultTransfer->getSubscriptionResults()[0]->getIsSuccess();",
+            "selected_text": "$subscriptionResultTransfer->getSubscriptionResults()[0]->getIsSuccess()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/NewsletterPage/src/SprykerShop/Yves/NewsletterPage/NewsletterPageDependencyProvider.php",
+            "snippet": "            return new NewsletterPageToNewsletterClientBridge($container->getLocator()->newsletter()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/NewsletterPage/src/SprykerShop/Yves/NewsletterPage/NewsletterPageDependencyProvider.php",
+            "snippet": "            return new NewsletterPageToCustomerClientBridge($container->getLocator()->customer()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 69,
+            "line_to": 69,
+            "type": "DeprecatedClass",
+            "message": "Class SprykerShop\\Yves\\NewsletterPage\\Plugin\\Provider\\NewsletterPageControllerProvider is deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/NewsletterPage/src/SprykerShop/Yves/NewsletterPage/Controller/NewsletterController.php",
+            "snippet": "            return $this->redirectResponseInternal(NewsletterPageControllerProvider::ROUTE_CUSTOMER_NEWSLETTER);",
+            "selected_text": "NewsletterPageControllerProvider::ROUTE_CUSTOMER_NEWSLETTER",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Yves\\Application\\Plugin\\Provider\\ControllerProviderInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/NewsletterPage/src/SprykerShop/Yves/NewsletterPage/Plugin/Provider/NewsletterPageControllerProvider.php",
+            "snippet": "class NewsletterPageControllerProvider extends AbstractYvesControllerProvider",
+            "selected_text": "NewsletterPageControllerProvider",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "DeprecatedClass",
+            "message": "SprykerShop\\Yves\\ShopApplication\\Plugin\\Provider\\AbstractYvesControllerProvider is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/NewsletterPage/src/SprykerShop/Yves/NewsletterPage/Plugin/Provider/NewsletterPageControllerProvider.php",
+            "snippet": "class NewsletterPageControllerProvider extends AbstractYvesControllerProvider",
+            "selected_text": "AbstractYvesControllerProvider",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}

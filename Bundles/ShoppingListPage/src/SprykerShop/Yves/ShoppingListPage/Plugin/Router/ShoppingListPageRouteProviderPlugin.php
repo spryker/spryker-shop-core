@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ShoppingListPage\Plugin\Router;
 
 use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
 use Spryker\Yves\Router\Route\RouteCollection;
+use Symfony\Component\HttpFoundation\Request;
 
 class ShoppingListPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -95,7 +96,7 @@ class ShoppingListPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected function addShoppingListDeleteRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/shopping-list/delete/{idShoppingList}', 'ShoppingListPage', 'ShoppingListDelete', 'deleteAction');
+        $route = $this->buildPostRoute('/shopping-list/delete/{idShoppingList}', 'ShoppingListPage', 'ShoppingListDelete', 'deleteAction');
         $route = $route->setRequirement('idShoppingList', '\d+');
         $routeCollection->add(static::ROUTE_SHOPPING_LIST_DELETE, $route);
 
@@ -152,6 +153,7 @@ class ShoppingListPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/shopping-list/clear/{idShoppingList}', 'ShoppingListPage', 'ShoppingListOverview', 'clearAction');
         $route = $route->setRequirement('idShoppingList', '\d+');
+        $route = $route->setMethods(Request::METHOD_POST);
         $routeCollection->add(static::ROUTE_SHOPPING_LIST_CLEAR, $route);
 
         return $routeCollection;
@@ -167,6 +169,7 @@ class ShoppingListPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $route = $this->buildRoute('/shopping-list/remove-item/{idShoppingList}/{idShoppingListItem}', 'ShoppingListPage', 'ShoppingList', 'removeItemAction');
         $route = $route->setRequirement('idShoppingList', '\d+');
         $route = $route->setRequirement('idShoppingListItem', '\d+');
+        $route = $route->setMethods(Request::METHOD_POST);
         $routeCollection->add(static::ROUTE_REMOVE_ITEM, $route);
 
         return $routeCollection;
@@ -180,6 +183,7 @@ class ShoppingListPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addShoppingListAddToCartRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/shopping-list/add-to-cart', 'ShoppingListPage', 'ShoppingList', 'addToCartAction');
+        $route = $route->setMethods(Request::METHOD_POST);
         $routeCollection->add(static::ROUTE_ADD_TO_CART, $route);
 
         return $routeCollection;

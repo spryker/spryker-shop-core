@@ -34,9 +34,9 @@ class CompanyWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideCustomerClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new CompanyWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }

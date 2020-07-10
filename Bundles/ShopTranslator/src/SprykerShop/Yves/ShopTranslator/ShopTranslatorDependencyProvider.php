@@ -37,9 +37,9 @@ class ShopTranslatorDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addGlossaryStorageClient(Container $container): Container
     {
-        $container[self::CLIENT_GLOSSARY_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
             return new ShopTranslatorToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());
-        };
+        });
 
         return $container;
     }

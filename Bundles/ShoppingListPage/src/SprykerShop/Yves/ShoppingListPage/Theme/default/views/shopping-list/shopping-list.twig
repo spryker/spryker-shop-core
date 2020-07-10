@@ -5,6 +5,7 @@
     shoppingList: _view.shoppingListOverview.shoppingList,
     shoppingListCollection: _view.shoppingListOverview.shoppingLists,
     shoppingListItems: _view.shoppingListItems,
+    addItemToCartForm: _view.addItemToCartForm,
 } %}
 
 {% block breadcrumbs %}
@@ -81,7 +82,7 @@
 
     {% block form %}
         {% if data.shoppingListItems | length %}
-            <form method="POST" action="{{ path('shopping-list/add-to-cart') }}">
+            {{ form_start(data.addItemToCartForm, {'action': path('shopping-list/add-to-cart')}) }}
                 {% block formInner %}
                     {% set formButtonClasses = 'button button--success' %}
 
@@ -119,7 +120,7 @@
                         </div>
                     {% endblock %}
                 {% endblock %}
-            </form>
+            {{ form(data.addItemToCartForm) }}
         {% endif %}
     {% endblock %}
 

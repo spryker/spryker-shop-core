@@ -86,6 +86,7 @@ class ConfiguratorController extends AbstractController
     protected const GLOSSARY_KEY_INVALID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_COMBINATION = 'configurable_bundle_page.invalid_template_slot_combination';
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_ADDED_TO_CART = 'configurable_bundle_page.configurator.added_to_cart';
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
+    protected const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
 
     /**
      * @return \Spryker\Yves\Kernel\View\View
@@ -294,7 +295,16 @@ class ConfiguratorController extends AbstractController
 
         $form = $this->getFactory()->getConfiguratorStateForm();
 
-        $formData = $request->request->get($form->getName())[ConfiguratorStateForm::FIELD_SLOTS] ?? null;
+        /** @var array $data */
+        $data = $request->request->get($form->getName()) ?: [];
+        $formData = $data[ConfiguratorStateForm::FIELD_SLOTS] ?? null;
+
+        $form->submit($data);
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_TEMPLATE_SELECTION);
+        }
 
         if (!$formData) {
             return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_TEMPLATE_SELECTION);

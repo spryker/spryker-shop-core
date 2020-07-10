@@ -1,0 +1,14 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'viewport-intersection-observer',
+    tag: 'viewport-intersection-observer',
+} %}
+
+{% define attributes = {
+    'viewport-class-name': '',
+    'viewport-margin': '0px',
+    'visibility-threshold': 0,
+    'observe-visible-targets': false,
+    'target-class-name': 'js-' ~ config.name ~ '__target',
+} %}

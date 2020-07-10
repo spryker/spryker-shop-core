@@ -36,11 +36,11 @@ class ErrorPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addApplicationPlugin(Container $container)
     {
-        $container[self::PLUGIN_APPLICATION] = function () {
+        $container->set(static::PLUGIN_APPLICATION, function () {
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
-        };
+        });
 
         return $container;
     }
@@ -52,9 +52,9 @@ class ErrorPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function createExceptionHandlerPlugins(Container $container)
     {
-        $container[self::PLUGIN_EXCEPTION_HANDLERS] = function () {
+        $container->set(static::PLUGIN_EXCEPTION_HANDLERS, function () {
             return $this->getExceptionHandlerPlugins();
-        };
+        });
 
         return $container;
     }

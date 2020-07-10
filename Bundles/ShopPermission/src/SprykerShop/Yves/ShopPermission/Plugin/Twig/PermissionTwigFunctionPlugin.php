@@ -13,7 +13,7 @@ use Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface;
 use Twig\TwigFunction;
 
 /**
- * @deprecated Please use PermissionTwigExtensionPlugin instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ShopPermission\Plugin\Twig\PermissionTwigExtensionPlugin} instead.
  *
  * @method \SprykerShop\Yves\ShopPermission\ShopPermissionFactory getFactory()
  */

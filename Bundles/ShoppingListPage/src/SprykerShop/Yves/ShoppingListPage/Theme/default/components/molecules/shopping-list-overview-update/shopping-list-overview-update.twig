@@ -18,9 +18,18 @@
     <tr class="{{ config.name }}__row">
         <td class="{{ config.name }}__cell" colspan="6">&nbsp;</td>
         <td class="{{ config.name }}__cell text-right">
-            <a class="button button--alert" href="{{ path('shopping-list/clear', { idShoppingList: data.idShoppingList }) }}">
-                {{- 'shopping_list.remove_all_items' | trans -}}
-            </a>
+            {% include molecule('remote-form-submit') with {
+                data: {
+                    label: 'shopping_list.remove_all_items' | trans,
+                },
+                attributes: {
+                    'form-name': 'clearForm',
+                    'form-action': path('shopping-list/clear', { idShoppingList: data.idShoppingList }),
+                    'field-id': 'shopping_list_remove_item_form__token[clearForm]',
+                    'field-name': 'shopping_list_clear_form[_token]',
+                    'field-value': csrf_token('shopping_list_clear_form'),
+                },
+            } only %}
         </td>
     </tr>
 {% endblock %}
@@ -46,6 +55,7 @@
 {% block thumbnailColInner %}
     {% set hasImage = item.images is defined and item.images is not empty and item.images.0.externalUrlSmall is not empty %}
     {% if hasImage %}
+        {% set thumbnailModifiers = ['thumbnail', 'small', 'min-size'] %}
         {% block thumbnail %}
             {{ parent() }}
         {% endblock %}
@@ -85,12 +95,18 @@
 {% block buttonCol %}
     <td class="{{ config.name }}__cell text-center">
         {% block buttonColInner %}
-            <a class="button button--alert" href="{{ path('shopping-list/remove-item', {
-                idShoppingList: data.idShoppingList,
-                idShoppingListItem: idShoppingListItem,
-            }) }}">
-                {{- 'customer.account.shopping_list.remove' | trans -}}
-            </a>
+            {% include molecule('remote-form-submit') with {
+                data: {
+                    label: 'customer.account.shopping_list.remove' | trans,
+                },
+                attributes: {
+                    'form-name': 'removeItemForm_' ~ idShoppingListItem,
+                    'form-action': path('shopping-list/remove-item', {'idShoppingList': data.idShoppingList, 'idShoppingListItem': idShoppingListItem }),
+                    'field-id': 'shopping_list_remove_item_form__token[removeItemForm_' ~ idShoppingListItem ~ ']',
+                    'field-name': 'shopping_list_remove_item_form[_token]',
+                    'field-value': csrf_token('shopping_list_remove_item_form'),
+                },
+            } only %}
         {% endblock %}
     </td>
 {% endblock %}

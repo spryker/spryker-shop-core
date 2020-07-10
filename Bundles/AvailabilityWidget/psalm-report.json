@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 17,
+            "line_to": 17,
+            "type": "DeprecatedInterface",
+            "message": "SprykerShop\\Yves\\ProductDetailPage\\Dependency\\Plugin\\AvailabilityWidget\\AvailabilityWidgetPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityWidget/src/SprykerShop/Yves/AvailabilityWidget/Plugin/ProductDetailPage/AvailabilityWidgetPlugin.php",
+            "snippet": "class AvailabilityWidgetPlugin extends AbstractWidgetPlugin implements AvailabilityWidgetPluginInterface",
+            "selected_text": "AvailabilityWidgetPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 17,
+            "line_to": 17,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Yves\\Kernel\\Widget\\AbstractWidgetPlugin is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityWidget/src/SprykerShop/Yves/AvailabilityWidget/Plugin/ProductDetailPage/AvailabilityWidgetPlugin.php",
+            "snippet": "class AvailabilityWidgetPlugin extends AbstractWidgetPlugin implements AvailabilityWidgetPluginInterface",
+            "selected_text": "AbstractWidgetPlugin",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}

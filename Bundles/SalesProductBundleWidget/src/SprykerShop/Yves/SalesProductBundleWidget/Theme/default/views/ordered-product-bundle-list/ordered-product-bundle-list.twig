@@ -1,0 +1,18 @@
+{% extends template('widget') %}
+
+{% define data = {
+    productBundleItems: _widget.productBundles,
+} %}
+
+{% block body %}
+    {% for productBundle in data.productBundleItems %}
+        {% block bundle %}
+            {% include molecule('ordered-product-bundle', 'SalesProductBundleWidget') with {
+                class: 'grid',
+                data: {
+                    productBundle: productBundle,
+                },
+            } only %}
+        {% endblock %}
+    {% endfor %}
+{% endblock %}

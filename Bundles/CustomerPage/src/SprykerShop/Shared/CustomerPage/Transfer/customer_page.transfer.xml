@@ -3,6 +3,11 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
+    <transfer name="AggregatedItemState">
+        <property name="name" type="string"/>
+        <property name="displayName" type="string"/>
+    </transfer>
+
     <transfer name="Order">
         <property name="idSalesOrder" type="int"/>
         <property name="email" type="string"/>
@@ -14,6 +19,7 @@
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="customer" type="Customer"/>
         <property name="items" type="Item[]"  singular="item"/>
+        <property name="aggregatedItemStates" type="AggregatedItemState[]" singular="aggregatedItemState"/>
         <property name="createdAt" type="string"/>
         <property name="isTest" type="string"/>
         <property name="expenses" type="Expense[]" singular="expense"/>
@@ -276,12 +282,19 @@
         <property name="isDirty" type="bool"/>
         <property name="isGuest" type="bool"/>
         <property name="customerReference" type="string"/>
+        <property name="registrationKey" type="string"/>
+        <property name="registered" type="string"/>
     </transfer>
 
     <transfer name="CustomerResponse">
         <property name="customerTransfer" type="Customer"/>
         <property name="isSuccess" type="bool"/>
         <property name="errors" type="CustomerError[]" singular="error"/>
+        <property name="message" type="Message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
     </transfer>
 
     <transfer name="CommentThread">
@@ -306,6 +319,13 @@
     </transfer>
 
     <transfer name="Totals">
+        <property name="refundTotal" type="int"/>
+        <property name="grandTotal" type="int"/>
+        <property name="taxTotal" type="TaxTotal"/>
+        <property name="expenseTotal" type="int"/>
+        <property name="subtotal" type="int"/>
+        <property name="remunerationTotal" type="int"/>
+        <property name="canceledTotal" type="int"/>
     </transfer>
 
     <transfer name="Locale">
@@ -324,6 +344,10 @@
     </transfer>
 
     <transfer name="ShipmentMethod">
+    </transfer>
+
+    <transfer name="TaxTotal">
+        <property name="amount" type="int"/>
     </transfer>
 
 </transfers>

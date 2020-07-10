@@ -15,6 +15,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     protected const ROUTE_CART = 'cart';
     protected const ROUTE_CART_ADD = 'cart/add';
+    protected const ROUTE_CART_ADD_AJAX = 'cart/add-ajax';
     protected const ROUTE_CART_QUICK_ADD = 'cart/quick-add';
     protected const ROUTE_CART_REMOVE = 'cart/remove';
     protected const ROUTE_CART_CHANGE = 'cart/change';
@@ -40,6 +41,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $routeCollection = $this->addCartRoute($routeCollection);
         $routeCollection = $this->addCartAddItemsRoute($routeCollection);
         $routeCollection = $this->addCartAddRoute($routeCollection);
+        $routeCollection = $this->addCartAddAjaxRoute($routeCollection);
         $routeCollection = $this->addCartRemoveRoute($routeCollection);
         $routeCollection = $this->addCartChangeQuantityRoute($routeCollection);
         $routeCollection = $this->addCartUpdateRoute($routeCollection);
@@ -102,6 +104,23 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $route = $route->setRequirement('sku', static::SKU_PATTERN);
         $route = $route->setMethods(Request::METHOD_POST);
         $routeCollection->add(static::ROUTE_CART_ADD, $route);
+
+        return $routeCollection;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\CartPage\Controller\CartController::addAjaxAction()
+     *
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Yves\Router\Route\RouteCollection
+     */
+    protected function addCartAddAjaxRoute(RouteCollection $routeCollection): RouteCollection
+    {
+        $route = $this->buildRoute('/cart/add-ajax/{sku}', 'CartPage', 'Cart', 'addAjaxAction');
+        $route = $route->setRequirement('sku', static::SKU_PATTERN);
+        $route = $route->setMethods(Request::METHOD_POST);
+        $routeCollection->add(static::ROUTE_CART_ADD_AJAX, $route);
 
         return $routeCollection;
     }

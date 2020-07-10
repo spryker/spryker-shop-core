@@ -47,9 +47,9 @@ class ProductReviewWidgetDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addCustomerClient(Container $container)
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new ProductReviewWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }
@@ -61,9 +61,9 @@ class ProductReviewWidgetDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addProductReviewClient(Container $container)
     {
-        $container[static::CLIENT_PRODUCT_REVIEW] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_REVIEW, function (Container $container) {
             return new ProductReviewWidgetToProductReviewClientBridge($container->getLocator()->productReview()->client());
-        };
+        });
 
         return $container;
     }
@@ -75,9 +75,9 @@ class ProductReviewWidgetDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addProductReviewStorageClient(Container $container)
     {
-        $container[static::CLIENT_PRODUCT_REVIEW_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_REVIEW_STORAGE, function (Container $container) {
             return new ProductReviewWidgetToProductReviewStorageClientBridge($container->getLocator()->productReviewStorage()->client());
-        };
+        });
 
         return $container;
     }

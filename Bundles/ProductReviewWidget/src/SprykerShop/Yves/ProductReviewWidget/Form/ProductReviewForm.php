@@ -34,7 +34,7 @@ class ProductReviewForm extends AbstractType
     public const MINIMUM_RATING = 1;
 
     /**
-     * @deprecated Use `ProductReviewWidgetConfig::GLOSSARY_KEY_INVALID_RATING_VALIDATION_MESSAGE` instead.
+     * @deprecated Use {@link ProductReviewWidgetConfig::GLOSSARY_KEY_INVALID_RATING_VALIDATION_MESSAGE} instead.
      */
     protected const VALIDATION_RATING_MESSAGE = 'validation.choice';
 

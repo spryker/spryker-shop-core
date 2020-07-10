@@ -21,6 +21,11 @@
             }
         }
 
+        &__actions-row {
+            display: flex;
+            width: 100%;
+        }
+
         @content;
     }
 }

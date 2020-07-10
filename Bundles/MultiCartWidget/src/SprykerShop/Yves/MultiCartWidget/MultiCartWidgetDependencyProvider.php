@@ -14,6 +14,10 @@ use SprykerShop\Yves\MultiCartWidget\Dependency\Client\MultiCartWidgetToQuoteCli
 
 class MultiCartWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @see \Spryker\Shared\Application\ApplicationConstants::FORM_FACTORY
+     */
+    public const FORM_FACTORY = 'FORM_FACTORY';
     public const CLIENT_MULTI_CART = 'CLIENT_MULTI_CART';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const PLUGINS_VIEW_EXTEND = 'PLUGINS_VIEW_EXTEND';
@@ -39,9 +43,9 @@ class MultiCartWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMultiCartClient($container)
     {
-        $container[static::CLIENT_MULTI_CART] = function (Container $container) {
+        $container->set(static::CLIENT_MULTI_CART, function (Container $container) {
             return new MultiCartWidgetToMultiCartClientBridge($container->getLocator()->multiCart()->client());
-        };
+        });
 
         return $container;
     }
@@ -53,9 +57,9 @@ class MultiCartWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteClient($container)
     {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new MultiCartWidgetToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }
@@ -67,9 +71,9 @@ class MultiCartWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addViewExtendWidgetPlugins(Container $container)
     {
-        $container[static::PLUGINS_VIEW_EXTEND] = function () {
+        $container->set(static::PLUGINS_VIEW_EXTEND, function () {
             return $this->getViewExtendWidgetPlugins();
-        };
+        });
 
         return $container;
     }

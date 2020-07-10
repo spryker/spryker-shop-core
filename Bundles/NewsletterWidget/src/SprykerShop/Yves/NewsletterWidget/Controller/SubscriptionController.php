@@ -17,7 +17,7 @@ use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated Use SubscriptionWidgetController instead
+ * @deprecated Use {@link SubscriptionWidgetController} instead
  * @method \SprykerShop\Yves\NewsletterWidget\NewsletterWidgetFactory getFactory()
  */
 class SubscriptionController extends AbstractController
