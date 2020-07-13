@@ -103,7 +103,7 @@ class CheckoutControllerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerShop\Yves\CheckoutPage\CheckoutPageFactory
      */
-    protected function createCheckoutPageFactoryMock()
+    protected function createCheckoutPageFactoryMock(): CheckoutPageFactory
     {
         $checkoutPageFactoryMock = $this->createMock(CheckoutPageFactory::class);
         $checkoutPageFactoryMock->method('getQuoteClient')->willReturn($this->createCheckoutPageToQuoteClientBridgeMock());
