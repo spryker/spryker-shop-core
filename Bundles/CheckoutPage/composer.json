@@ -39,7 +39,8 @@
     "spryker-shop/product-packaging-unit-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/router": "*",
-    "spryker/silex": "*"
+    "spryker/silex": "*",
+    "spryker/testify ": "*"
   },
   "suggest": {
     "spryker-shop/cart-code-widget": "If you want to use components from module CartCodeWidget or CheckoutVoucherFormWidget or CheckoutVoucherFormWidgetPlugin",

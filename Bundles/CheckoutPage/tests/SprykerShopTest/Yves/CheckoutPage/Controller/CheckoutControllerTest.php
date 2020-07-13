@@ -20,9 +20,9 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Shared\Checkout\CheckoutConfig;
 use Spryker\Shared\Price\PriceConfig;
 use Spryker\Yves\StepEngine\Process\StepEngine;
+use Spryker\Yves\StepEngine\Process\StepEngineInterface;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageFactory;
 use SprykerShop\Yves\CheckoutPage\Controller\CheckoutController;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 use SprykerShop\Yves\CustomerPage\Form\AddressForm;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -64,12 +64,18 @@ class CheckoutControllerTest extends Unit
     /**
      * @return void
      */
-    public function testPlaceOrderAction(): void
+    public function testPlaceOrderActionExecutesCheckoutPlaceOrderStep(): void
     {
-        $request = Request::create(self::PLACE_ORDER_URL, Request::METHOD_POST);
-        $request->request->set('_route', self::PLACE_ORDER_ROUTE);
+        // Arrange
+        $request = Request::create(static::PLACE_ORDER_URL, Request::METHOD_POST);
+        $request->request->set('_route', static::PLACE_ORDER_ROUTE);
 
+        // Act
         $response = $this->controller->placeOrderAction($request);
+
+        // Assert
+        $this->assertInstanceOf(RedirectResponse::class, $response);
+        $this->assertSame($response->getTargetUrl(), static::SUCCESS_URL);
     }
 
     /**
@@ -78,10 +84,18 @@ class CheckoutControllerTest extends Unit
     protected function createCheckoutControllerMock(): CheckoutController
     {
         $checkoutControllerMock = $this->getMockBuilder(CheckoutController::class)
-            ->onlyMethods(['getFactory'])
+            ->onlyMethods([
+                'getFactory',
+                'redirectResponseInternal',
+                'canProceedCheckout',
+                'createStepProcess',
+            ])
             ->getMock();
 
         $checkoutControllerMock->method('getFactory')->willReturn($this->createCheckoutPageFactoryMock());
+        $checkoutControllerMock->method('redirectResponseInternal')->willReturn(new RedirectResponse(static::SUCCESS_URL));
+        $checkoutControllerMock->method('canProceedCheckout')->willReturn((new QuoteValidationResponseTransfer())->setIsSuccessful(true));
+        $checkoutControllerMock->method('createStepProcess')->willReturn($this->createStepEngineMock());
 
         return $checkoutControllerMock;
     }
@@ -89,12 +103,10 @@ class CheckoutControllerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerShop\Yves\CheckoutPage\CheckoutPageFactory
      */
-    protected function createCheckoutPageFactoryMock(): CheckoutPageFactory
+    protected function createCheckoutPageFactoryMock()
     {
         $checkoutPageFactoryMock = $this->createMock(CheckoutPageFactory::class);
         $checkoutPageFactoryMock->method('getQuoteClient')->willReturn($this->createCheckoutPageToQuoteClientBridgeMock());
-        $checkoutPageFactoryMock->method('getCheckoutClient')->willReturn($this->createCheckoutPageToCheckoutClientBridgeMock());
-        $checkoutPageFactoryMock->method('createCheckoutProcess')->willReturn($this->createPlaceOrderStepMock());
 
         return $checkoutPageFactoryMock;
     }
@@ -102,7 +114,7 @@ class CheckoutControllerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface
      */
-    protected function createCheckoutPageToQuoteClientBridgeMock():CheckoutPageToQuoteClientInterface
+    protected function createCheckoutPageToQuoteClientBridgeMock(): CheckoutPageToQuoteClientInterface
     {
         $checkoutPageToQuoteClientBridgeMock = $this->createMock(CheckoutPageToQuoteClientInterface::class);
         $checkoutPageToQuoteClientBridgeMock->method('getQuote')->willReturn($this->createQuoteTransfer());
@@ -111,23 +123,12 @@ class CheckoutControllerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Process\StepEngineInterface
      */
-    protected function createCheckoutPageToCheckoutClientBridgeMock(): CheckoutPageToCheckoutClientInterface
-    {
-        $checkoutPageToCheckoutClientBridgeMock = $this->createMock(CheckoutPageToCheckoutClientInterface::class);
-        $checkoutPageToCheckoutClientBridgeMock->method('isQuoteApplicableForCheckout')->willReturn($this->createQuoteValidationResponseTransfer());
-
-        return $checkoutPageToCheckoutClientBridgeMock;
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Process\StepEngine
-     */
-    protected function createPlaceOrderStepMock(): StepEngine
+    protected function createStepEngineMock(): StepEngineInterface
     {
         $placeOrderStepMock = $this->createMock(StepEngine::class);
-        $placeOrderStepMock->expects($this->once())->method('process')->willReturn(new RedirectResponse(self::SUCCESS_URL));
+        $placeOrderStepMock->expects($this->once())->method('process')->willReturn(new RedirectResponse(static::SUCCESS_URL));
 
         return $placeOrderStepMock;
     }
@@ -182,13 +183,5 @@ class CheckoutControllerTest extends Unit
         $quoteTransfer->setOrderReference('order-reference');
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
-     */
-    protected function createQuoteValidationResponseTransfer(): QuoteValidationResponseTransfer
-    {
-        return (new QuoteValidationResponseTransfer())->setIsSuccessful(true);
     }
 }
