@@ -3,11 +3,17 @@
 {% define data = {
     form: _widget.cartChangeQuantityForm,
     cartItem: _widget.cartItem,
-    readOnly: _widget.readOnly
+    readOnly: _widget.readOnly,
 } %}
 
 {% block body %}
-    {{ form_start(data.form, {'action': path('cart/change/quantity', {'sku': data.cartItem.sku }), 'name': 'cartChangeQuantityForm_' ~ data.cartItem.groupKey }) }}
+    {% set cartItem = data.cartItem %}
+
+    {{ form_start(data.form, {
+        'action': path('cart/change/quantity', {'sku': cartItem.sku }),
+        'name': 'cartChangeQuantityForm_' ~ cartItem.groupKey,
+    }) }}
         {% block embeddedData %}{% endblock %}
+        {{ form_row(data.form._token, {id: ''}) }}
     {{ form_end(data.form) }}
 {% endblock %}

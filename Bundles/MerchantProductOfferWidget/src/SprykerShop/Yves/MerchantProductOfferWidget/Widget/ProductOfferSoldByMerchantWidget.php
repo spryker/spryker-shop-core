@@ -50,14 +50,10 @@ class ProductOfferSoldByMerchantWidget extends AbstractWidget
     {
         $merchantStorageTransfer = null;
 
-        if ($itemTransfer->getProductOfferReference()) {
-            $productOfferStorageTransfer = $this->getFactory()
-                ->getMerchantProductOfferStorageClient()
-                ->findProductOfferStorageByReference($itemTransfer->getProductOfferReference());
-
+        if ($itemTransfer->getMerchantReference()) {
             $merchantStorageTransfer = $this->getFactory()
                 ->getMerchantStorageClient()
-                ->findOne($productOfferStorageTransfer->getIdMerchant());
+                ->findOneByMerchantReference($itemTransfer->getMerchantReference());
         }
 
         $this->addParameter(static::PARAMETER_MERCHANT, $merchantStorageTransfer);

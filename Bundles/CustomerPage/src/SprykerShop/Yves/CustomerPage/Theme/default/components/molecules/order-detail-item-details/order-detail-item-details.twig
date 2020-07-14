@@ -13,29 +13,20 @@
 {% set stateColumnClass = 'spacing-left spacing-left--inner col col--sm-4 text-right' %}
 
 {% block body %}
-    <div class="{{ wrapperClass }}">
-        {% block merchantColumn %}
-            <span class="{{ merchantColumnClass }}">
+    <div class="grid grid--justify">
+        <span class="spacing-right col col--sm-9">
+            {% if widgetGlobalExists('ProductOfferSoldByMerchantWidget') %}
                 {% widget 'ProductOfferSoldByMerchantWidget' args [data.orderItem] only %}{% endwidget %}
-            </span>
-        {% endblock %}
-
-        {% block stateColumn %}
-            <span class="{{ stateColumnClass }}">
-                {% if data.orderItem.state is not null %}
-                    {% set state = data.orderItem.state.name | replace({' ': '-'}) | lower %}
-                    {% set stateLabel = data.orderItem.state.displayName ?? ('oms.state.' ~ state) %}
-
-                    {% block state %}
-                        {% include molecule('status') with {
-                            data: {
-                                label: stateLabel | trans,
-                                status: state,
-                            },
-                        } only %}
-                    {% endblock %}
-                {% endif %}
-            </span>
-        {% endblock %}
+            {% elseif widgetGlobalExists('ProductSoldByMerchantWidget') %}
+                {% widget 'ProductSoldByMerchantWidget' args [data.orderItem] only %}{% endwidget %}
+            {% endif %}
+        </span>
+        <span class="spacing-right col col--sm-3 text-right">
+            {% if data.orderItem.state is not empty %}
+                <p>
+                    <strong>{{ data.orderItem.state.name | capitalize }}</strong>
+                </p>
+            {% endif %}
+        </span>
     </div>
 {% endblock %}

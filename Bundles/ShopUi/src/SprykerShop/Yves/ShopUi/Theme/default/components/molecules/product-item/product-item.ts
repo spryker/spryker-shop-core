@@ -6,11 +6,13 @@ import Component from '../../../models/component';
  * @event updateLabels An event emitted when the product labels has been updated.
  * @event updateAddToCartUrl An event emitted when the product 'add to cart' URL has been updated.
  * @event updateAjaxAddToCartUrl An event emitted when the product AJAX 'add to cart' URL has been updated.
+ * @event updateAddToCartFormAction An event emitted when the product 'add to cart' form action has been updated.
  */
 export const EVENT_UPDATE_RATING = 'updateRating';
 export const EVENT_UPDATE_LABELS = 'updateLabels';
 export const EVENT_UPDATE_ADD_TO_CART_URL = 'updateAddToCartUrl';
 export const EVENT_UPDATE_AJAX_ADD_TO_CART_URL = 'updateAjaxAddToCartUrl';
+export const EVENT_UPDATE_ADD_TO_CART_FORM_ACTION = 'updateAddToCartFormAction';
 
 export interface ProductItemData {
     imageUrl: string;
@@ -23,12 +25,15 @@ export interface ProductItemData {
     detailPageUrl: string;
     addToCartUrl: string;
     ajaxAddToCartUrl?: string;
+    addToCartFormAction?: string;
 }
 
 export interface ProductItemLabelsData {
     text: string;
     type: string;
 }
+
+type Url = string | null;
 
 export default class ProductItem extends Component {
     protected productImage: HTMLImageElement;
@@ -39,6 +44,8 @@ export default class ProductItem extends Component {
     protected productLinkDetailPage: HTMLAnchorElement[];
     protected productLinkAddToCart: HTMLAnchorElement;
     protected productAjaxButtonAddToCart: HTMLButtonElement;
+    protected productFormAddToCart: HTMLFormElement;
+    protected productButtonAddToCart: HTMLButtonElement;
 
     protected readyCallback(): void {}
 
@@ -57,6 +64,12 @@ export default class ProductItem extends Component {
         this.productAjaxButtonAddToCart = <HTMLButtonElement>this.getElementsByClassName(
             `${this.jsName}__ajax-button-add-to-cart`
         )[0];
+        this.productFormAddToCart = <HTMLFormElement>this.getElementsByClassName(
+            `${this.jsName}__form-add-to-cart`
+        )[0];
+        this.productButtonAddToCart = <HTMLButtonElement>this.getElementsByClassName(
+            `${this.jsName}__button-add-to-cart`
+        )[0];
     }
 
     /**
@@ -73,7 +86,19 @@ export default class ProductItem extends Component {
         this.originalPrice = data.originalPrice;
         this.detailPageUrl = data.detailPageUrl;
         this.addToCartUrl = data.addToCartUrl;
-        this.ajaxAddToCartUrl = data.ajaxAddToCartUrl;
+        this.ajaxAddToCartUrl = data.ajaxAddToCartUrl ?? null;
+        this.addToCartFormAction = data.addToCartFormAction ?? null;
+    }
+
+    protected getSkuFromUrl(url: Url): Url {
+        if (!url) {
+            return null;
+        }
+
+        const lastPartOfUrl = new RegExp(`([^\\/])+$`, 'g');
+        const sku = url.match(lastPartOfUrl);
+
+        return sku[0];
     }
 
     /**
@@ -161,20 +186,36 @@ export default class ProductItem extends Component {
             this.productLinkAddToCart.href = addToCartUrl;
         }
 
-        this.dispatchCustomEvent(EVENT_UPDATE_ADD_TO_CART_URL, {sku: addToCartUrl.split('/').pop()});
+        this.dispatchCustomEvent(EVENT_UPDATE_ADD_TO_CART_URL, {sku: this.getSkuFromUrl(addToCartUrl)});
     }
 
     /**
      * Sets the product card AJAX 'add to cart' URL.
      * @param ajaxAddToCartUrl A product card AJAX 'add to cart' URL.
      */
-    set ajaxAddToCartUrl(ajaxAddToCartUrl: string) {
+    set ajaxAddToCartUrl(ajaxAddToCartUrl: Url) {
         if (this.productAjaxButtonAddToCart) {
             this.productAjaxButtonAddToCart.disabled = !ajaxAddToCartUrl;
             this.productAjaxButtonAddToCart.dataset.url = ajaxAddToCartUrl;
         }
 
-        this.dispatchCustomEvent(EVENT_UPDATE_AJAX_ADD_TO_CART_URL, {sku: ajaxAddToCartUrl.split('/').pop()});
+        this.dispatchCustomEvent(EVENT_UPDATE_AJAX_ADD_TO_CART_URL, {sku: this.getSkuFromUrl(ajaxAddToCartUrl)});
+    }
+
+    /**
+     * Sets the product card 'add to cart' form action.
+     * @param addToCartFormAction A product card 'add to cart' form action.
+     */
+    set addToCartFormAction(addToCartFormAction: Url) {
+        if (this.productFormAddToCart) {
+            this.productFormAddToCart.action = addToCartFormAction;
+        }
+
+        if (this.productButtonAddToCart) {
+            this.productButtonAddToCart.dataset.formAction = addToCartFormAction;
+        }
+
+        this.dispatchCustomEvent(EVENT_UPDATE_ADD_TO_CART_FORM_ACTION, {sku: this.getSkuFromUrl(addToCartFormAction)});
     }
 
     /**
@@ -246,6 +287,19 @@ export default class ProductItem extends Component {
     get ajaxAddToCartUrl(): string {
         if (this.productAjaxButtonAddToCart) {
             return this.productAjaxButtonAddToCart.dataset.url;
+        }
+    }
+
+    /**
+     * Gets the product card 'add to cart' form action.
+     */
+    get addToCartFormAction(): string {
+        if (this.productFormAddToCart) {
+            return this.productFormAddToCart.action;
+        }
+
+        if (this.productButtonAddToCart) {
+            return this.productButtonAddToCart.dataset.formAction;
         }
     }
 }

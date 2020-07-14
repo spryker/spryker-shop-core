@@ -58,7 +58,11 @@
                 {% widget 'ProductBundleCartItemsListWidget' args [data.product, data.cart] only %}{% endwidget %}
             {% endif %}
 
-            {% widget 'ProductOfferSoldByMerchantWidget' args [data.product] only %}{% endwidget %}
+            {% if widgetGlobalExists('ProductOfferSoldByMerchantWidget') %}
+                {% widget 'ProductOfferSoldByMerchantWidget' args [data.product] only %}{% endwidget %}
+            {% elseif widgetGlobalExists('ProductSoldByMerchantWidget') %}
+                {% widget 'ProductSoldByMerchantWidget' args [data.product] only %}{% endwidget %}
+            {% endif %}
 
             {% include molecule('cart-item-summary', 'CartPage') with {
                 data: {
@@ -110,7 +114,7 @@
             {% if canEditCart %}
                 {% widget 'RemoveFromCartFormWidget' args [data.product] only %}
                     {% block embeddedData %}
-                        <button type="submit" class="float-right link" data-init-single-click {{ qa('add-to-cart-button') }}>
+                        <button class="float-right link" data-init-single-click>
                             {{ 'product_cart_item.remove' | trans }}
                         </button>
                     {% endblock %}

@@ -17,5 +17,5 @@ interface MerchantProductOfferReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
      */
-    public function getProductOfferCollection(ProductViewTransfer $productViewTransfer, string $localeName): array;
+    public function getProductOffers(ProductViewTransfer $productViewTransfer, string $localeName): array;
 }

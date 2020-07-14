@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client;
+namespace SprykerShop\Yves\MerchantProductWidget\Dependency\Client;
 
-interface MerchantProductOfferWidgetToPriceProductStorageClientInterface
+interface MerchantProductWidgetToPriceProductStorageClientInterface
 {
     /**
      * @param int $idProductConcrete
