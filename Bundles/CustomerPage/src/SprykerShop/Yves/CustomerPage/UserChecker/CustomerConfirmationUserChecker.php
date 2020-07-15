@@ -16,6 +16,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class CustomerConfirmationUserChecker extends UserChecker
 {
     /**
+     * @see \SprykerShop\Yves\AgentPage\Plugin\Security\AgentPageSecurityPlugin::ROLE_AGENT
+     */
+    protected const ROLE_AGENT = 'ROLE_AGENT';
+
+    /**
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
      *
      * @throws \SprykerShop\Yves\CustomerPage\Exception\WrongUserInterfaceException
@@ -24,6 +29,10 @@ class CustomerConfirmationUserChecker extends UserChecker
      */
     public function checkPreAuth(UserInterface $user): void
     {
+        if (in_array(static::ROLE_AGENT, $user->getRoles())) {
+            return;
+        }
+
         if (!$user instanceof CustomerUserInterface) {
             throw new WrongUserInterfaceException(sprintf('User should be an instance of %s', CustomerUserInterface::class));
         }
