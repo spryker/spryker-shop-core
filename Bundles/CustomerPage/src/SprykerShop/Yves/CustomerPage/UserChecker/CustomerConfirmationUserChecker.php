@@ -29,7 +29,7 @@ class CustomerConfirmationUserChecker extends UserChecker
      */
     public function checkPreAuth(UserInterface $user): void
     {
-        if (in_array(static::ROLE_AGENT, $user->getRoles())) {
+        if (in_array(static::ROLE_AGENT, $user->getRoles(), true)) {
             return;
         }
 
