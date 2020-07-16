@@ -1,3 +1,5 @@
-import './style';
-import register from '../../../app/registry';
-export default register('suggest-search', () => import(/* webpackMode: "eager" */'./suggest-search'));
+import './style.scss';
+import register from 'ShopUi/app/registry';
+export default register('suggest-search', () => import(
+    /* webpackMode: "eager" */
+    './suggest-search'));
