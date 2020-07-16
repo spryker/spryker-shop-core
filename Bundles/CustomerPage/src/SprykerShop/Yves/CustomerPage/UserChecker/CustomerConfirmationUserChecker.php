@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class CustomerConfirmationUserChecker extends UserChecker
 {
     /**
-     * @see \SprykerShop\Yves\AgentPage\Plugin\Security\AgentPageSecurityPlugin::ROLE_AGENT
+     * @uses \SprykerShop\Yves\AgentPage\Plugin\Security\AgentPageSecurityPlugin::ROLE_AGENT
      */
     protected const ROLE_AGENT = 'ROLE_AGENT';
 
