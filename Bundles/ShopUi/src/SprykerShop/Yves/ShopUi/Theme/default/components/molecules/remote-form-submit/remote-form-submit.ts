@@ -28,6 +28,10 @@ export default class RemoteFormSubmit extends Component {
     protected submitTargetForm(): void {
         const form = <HTMLFormElement>document.getElementById(this.formName);
 
+        if (this.submitButton.dataset.formAction) {
+            form.action = this.submitButton.dataset.formAction;
+        }
+
         form.submit();
     }
 
@@ -42,6 +46,10 @@ export default class RemoteFormSubmit extends Component {
     }
 
     protected createForm(): void {
+        if (document.getElementById(this.formName)) {
+            return;
+        }
+
         const formTemplate = `
             <form id="${this.formName}" class="is-hidden" name="${this.formName}" method="post" action="${this.formAction}">
                 ${this.fieldsContainer.innerHTML}

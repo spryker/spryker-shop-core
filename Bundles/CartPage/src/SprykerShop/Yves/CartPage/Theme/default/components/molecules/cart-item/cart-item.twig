@@ -103,8 +103,8 @@
             {% if canEditCart %}
                 {% widget 'RemoveFromCartFormWidget' args [data.product] only %}
                     {% block embeddedData %}
-                        <button type="submit" class="float-right link" data-init-single-click {{ qa('add-to-cart-button') }}>
-                            {{ 'product_cart_item.remove' | trans }}
+                        <button class="float-right link" data-init-single-click>
+                            {{- 'product_cart_item.remove' | trans -}}
                         </button>
                     {% endblock %}
                 {% endwidget %}

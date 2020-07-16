@@ -5,11 +5,21 @@
     config: _widget.config,
     product: _widget.product,
     isDisabled: _widget.isAddToCartDisabled,
-    options: _widget.quantityOptions
+    options: _widget.quantityOptions,
 } %}
 
 {% block body %}
-    {{ form_start(data.form, {'action': path('cart/add', {'sku': data.product.sku}), 'name': 'addToCartForm_' ~ data.product.sku }) }}
-        {% block embeddedData %}{% endblock %}
-    {{ form_end(data.form) }}
+    {% set formClass = data.config.jsName ~ '__form-add-to-cart' %}
+    {% set productSku = data.product.sku %}
+
+    {% block form %}
+        {{ form_start(data.form, {
+            'action': path('cart/add', {'sku': productSku}),
+            'name': 'addToCartForm_' ~ productSku,
+            attr: { class: formClass },
+        }) }}
+            {% block embeddedData %}{% endblock %}
+            {{ form_row(data.form._token, {id: ''}) }}
+        {{ form_end(data.form) }}
+    {% endblock %}
 {% endblock %}
