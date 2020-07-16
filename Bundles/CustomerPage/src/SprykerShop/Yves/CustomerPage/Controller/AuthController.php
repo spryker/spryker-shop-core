@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
-use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
+use SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin;
 
 /**
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
@@ -31,7 +31,7 @@ class AuthController extends AbstractCustomerController
             return $this->redirectResponseExternal($redirectUrl);
         }
 
-        return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_OVERVIEW);
+        return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_OVERVIEW);
     }
 
     /**

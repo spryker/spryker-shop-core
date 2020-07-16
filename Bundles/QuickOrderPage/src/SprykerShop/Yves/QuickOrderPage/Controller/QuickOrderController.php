@@ -12,12 +12,10 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
-use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
-use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\QuickOrderPage\Form\QuickOrderForm;
 use SprykerShop\Yves\QuickOrderPage\Form\TextOrderForm;
 use SprykerShop\Yves\QuickOrderPage\Form\UploadOrderForm;
-use SprykerShop\Yves\QuickOrderPage\Plugin\Provider\QuickOrderPageControllerProvider;
+use SprykerShop\Yves\QuickOrderPage\Plugin\Router\QuickOrderPageRouteProviderPlugin;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -39,6 +37,16 @@ class QuickOrderController extends AbstractController
     protected const ERROR_MESSAGE_QUANTITY_INVALID = 'quick-order.errors.quantity-invalid';
     protected const MESSAGE_TYPE_WARNING = 'warning';
     protected const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
+
+    /**
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
+     */
+    protected const ROUTE_NAME_CART = 'cart';
+
+    /**
+     * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_INDEX
+     */
+    protected const ROUTE_NAME_CHECKOUT_INDEX = 'checkout-index';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -384,7 +392,7 @@ class QuickOrderController extends AbstractController
     {
         $this->addSuccessMessage(static::MESSAGE_CLEAR_ALL_ROWS_SUCCESS);
 
-        return $this->redirectResponseInternal(QuickOrderPageControllerProvider::ROUTE_QUICK_ORDER);
+        return $this->redirectResponseInternal(QuickOrderPageRouteProviderPlugin::ROUTE_NAME_QUICK_ORDER);
     }
 
     /**
@@ -574,7 +582,7 @@ class QuickOrderController extends AbstractController
             return null;
         }
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(static::ROUTE_NAME_CART);
     }
 
     /**
@@ -598,7 +606,7 @@ class QuickOrderController extends AbstractController
             return null;
         }
 
-        return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_INDEX);
+        return $this->redirectResponseInternal(static::ROUTE_NAME_CHECKOUT_INDEX);
     }
 
     /**

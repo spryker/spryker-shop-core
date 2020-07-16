@@ -12,7 +12,11 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class ConfigurableBundleNoteWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\ConfigurableBundleNoteWidget\Plugin\Router\ConfigurableBundleNoteWidgetRouteProviderPlugin::ROUTE_NAME_CONFIGURABLE_BUNDLE_NOTE_ADD} instead.
+     */
     protected const ROUTE_CONFIGURABLE_BUNDLE_NOTE_ADD = 'configurable-bundle-note/add';
+    public const ROUTE_NAME_CONFIGURABLE_BUNDLE_NOTE_ADD = 'configurable-bundle-note/add';
 
     /**
      * {@inheritDoc}
@@ -46,7 +50,7 @@ class ConfigurableBundleNoteWidgetRouteProviderPlugin extends AbstractRouteProvi
             'Note',
             'addAction'
         );
-        $routeCollection->add(static::ROUTE_CONFIGURABLE_BUNDLE_NOTE_ADD, $route);
+        $routeCollection->add(static::ROUTE_NAME_CONFIGURABLE_BUNDLE_NOTE_ADD, $route);
 
         return $routeCollection;
     }

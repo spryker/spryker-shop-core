@@ -12,11 +12,31 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CommentWidget\Plugin\Router\CommentWidgetRouteProviderPlugin::ROUTE_NAME_COMMENT_ADD} instead.
+     */
     protected const ROUTE_COMMENT_ADD = 'comment/add';
+    public const ROUTE_NAME_COMMENT_ADD = 'comment/add';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CommentWidget\Plugin\Router\CommentWidgetRouteProviderPlugin::ROUTE_NAME_COMMENT_UPDATE} instead.
+     */
     protected const ROUTE_COMMENT_UPDATE = 'comment/update';
+    public const ROUTE_NAME_COMMENT_UPDATE = 'comment/update';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CommentWidget\Plugin\Router\CommentWidgetRouteProviderPlugin::ROUTE_NAME_COMMENT_REMOVE} instead.
+     */
     protected const ROUTE_COMMENT_REMOVE = 'comment/remove';
+    public const ROUTE_NAME_COMMENT_REMOVE = 'comment/remove';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CommentWidget\Plugin\Router\CommentWidgetRouteProviderPlugin::ROUTE_NAME_COMMENT_TAG_ADD} instead.
+     */
     protected const ROUTE_COMMENT_TAG_ADD = 'comment/tag/add';
+    public const ROUTE_NAME_COMMENT_TAG_ADD = 'comment/tag/add';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CommentWidget\Plugin\Router\CommentWidgetRouteProviderPlugin::ROUTE_NAME_COMMENT_TAG_REMOVE} instead.
+     */
     protected const ROUTE_COMMENT_TAG_REMOVE = 'comment/tag/remove';
+    public const ROUTE_NAME_COMMENT_TAG_REMOVE = 'comment/tag/remove';
 
     protected const UUID_PATTERN = '[a-zA-Z0-9-_\.]+';
 
@@ -51,7 +71,7 @@ class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addAddCommentRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/comment/add', 'CommentWidget', 'Comment', 'addAction');
-        $routeCollection->add(static::ROUTE_COMMENT_ADD, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMMENT_ADD, $route);
 
         return $routeCollection;
     }
@@ -66,7 +86,7 @@ class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addUpdateCommentRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/comment/update', 'CommentWidget', 'Comment', 'updateAction');
-        $routeCollection->add(static::ROUTE_COMMENT_UPDATE, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMMENT_UPDATE, $route);
 
         return $routeCollection;
     }
@@ -81,7 +101,7 @@ class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addRemoveCommentRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/comment/remove', 'CommentWidget', 'Comment', 'removeAction');
-        $routeCollection->add(static::ROUTE_COMMENT_REMOVE, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMMENT_REMOVE, $route);
 
         return $routeCollection;
     }
@@ -97,7 +117,7 @@ class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/comment/{uuid}/tag/add', 'CommentWidget', 'CommentTag', 'addAction');
         $route = $route->setRequirement('uuid', static::UUID_PATTERN);
-        $routeCollection->add(static::ROUTE_COMMENT_TAG_ADD, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMMENT_TAG_ADD, $route);
 
         return $routeCollection;
     }
@@ -113,7 +133,7 @@ class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/comment/{uuid}/tag/remove', 'CommentWidget', 'CommentTag', 'removeAction');
         $route = $route->setRequirement('uuid', static::UUID_PATTERN);
-        $routeCollection->add(static::ROUTE_COMMENT_TAG_REMOVE, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMMENT_TAG_REMOVE, $route);
 
         return $routeCollection;
     }

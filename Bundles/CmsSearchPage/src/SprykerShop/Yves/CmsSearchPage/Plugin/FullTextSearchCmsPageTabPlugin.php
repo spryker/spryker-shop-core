@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\CmsSearchPage\Plugin;
 
 use Generated\Shared\Transfer\TabMetaDataTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\CmsSearchPage\Plugin\Provider\CmsSearchPageControllerProvider;
+use SprykerShop\Yves\CmsSearchPage\Plugin\Router\CmsSearchPageRouteProviderPlugin;
 use SprykerShop\Yves\TabsWidgetExtension\Plugin\FullTextSearchTabPluginInterface;
 
 /**
@@ -52,7 +52,7 @@ class FullTextSearchCmsPageTabPlugin extends AbstractPlugin implements FullTextS
         $tabsMetaDataTransfer = (new TabMetaDataTransfer())
             ->setName(static::NAME)
             ->setTitle(static::TAB_TRANSLATED_TITLE)
-            ->setRoute(CmsSearchPageControllerProvider::ROUTE_SEARCH);
+            ->setRoute(CmsSearchPageRouteProviderPlugin::ROUTE_NAME_SEARCH);
 
         return $tabsMetaDataTransfer;
     }

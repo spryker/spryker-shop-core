@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -58,7 +59,7 @@ class QuoteRequestEditItemsController extends QuoteRequestAbstractController
         $quoteTransfer = $this->getFactory()->getCartClient()->getQuote();
 
         if ($quoteTransfer->getQuoteRequestReference() && ($quoteTransfer->getQuoteRequestReference() !== $quoteRequestReference)) {
-            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM, [
+            return $this->redirectResponseInternal(QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM, [
                 static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
             ]);
         }
@@ -79,7 +80,7 @@ class QuoteRequestEditItemsController extends QuoteRequestAbstractController
         $quoteTransfer = $this->getFactory()->getCartClient()->getQuote();
 
         if ($quoteTransfer->getQuoteRequestReference() === $quoteRequestReference) {
-            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT_ITEMS, [
+            return $this->redirectResponseInternal(QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_EDIT_ITEMS, [
                 static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
             ]);
         }

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use SprykerShop\Yves\CompanyPage\Form\CompanyBusinessUnitAddressForm;
-use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
+use SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -28,12 +28,12 @@ class BusinessUnitAddressController extends AbstractCompanyController
     protected const GLOSSARY_MESSAGE_PARAM_ADDRESS = '%address%';
 
     /**
-     * @uses \SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT} instead.
      */
     protected const ROUTE_COMPANY_BUSINESS_UNIT = 'company/business-unit';
 
     /**
-     * @uses \SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT_UPDATE} instead.
      */
     protected const ROUTE_COMPANY_BUSINESS_UNIT_UPDATE = 'company/business-unit/update';
 
@@ -112,7 +112,7 @@ class BusinessUnitAddressController extends AbstractCompanyController
                     '%address%' => $companyUnitAddressTransfer->getAddress1(),
                 ]);
 
-                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
+                return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT_UPDATE, [
                     'id' => $idCompanyBusinessUnit,
                 ]);
             }
@@ -135,7 +135,7 @@ class BusinessUnitAddressController extends AbstractCompanyController
         $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
 
         if (!$idCompanyBusinessUnit || !$idCompanyUnitAddress) {
-            return $this->redirectResponseInternal(static::ROUTE_COMPANY_BUSINESS_UNIT);
+            return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT);
         }
 
         $companyBusinessUnitAddressForm = $this->getCompanyBusinessUnitAddressForm($idCompanyUnitAddress, $idCompanyBusinessUnit)
@@ -151,7 +151,7 @@ class BusinessUnitAddressController extends AbstractCompanyController
                     static::GLOSSARY_MESSAGE_PARAM_ADDRESS => $companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getAddress1(),
                 ]);
 
-                return $this->redirectResponseInternal(static::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
+                return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT_UPDATE, [
                     static::REQUEST_COMPANY_BUSINESS_UNIT_ID => $idCompanyBusinessUnit,
                 ]);
             }

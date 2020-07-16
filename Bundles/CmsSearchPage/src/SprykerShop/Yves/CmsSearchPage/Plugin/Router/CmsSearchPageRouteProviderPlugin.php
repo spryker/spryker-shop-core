@@ -12,7 +12,11 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class CmsSearchPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CmsSearchPage\Plugin\Router\CmsSearchPageRouteProviderPlugin::ROUTE_NAME_SEARCH} instead.
+     */
     protected const ROUTE_SEARCH = 'search-cms';
+    public const ROUTE_NAME_SEARCH = 'search-cms';
 
     /**
      * Specification:
@@ -39,7 +43,7 @@ class CmsSearchPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addFulltextSearchRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/search/cms', 'CmsSearchPage', 'CmsSearch', 'fulltextSearchAction');
-        $routeCollection->add(static::ROUTE_SEARCH, $route);
+        $routeCollection->add(static::ROUTE_NAME_SEARCH, $route);
 
         return $routeCollection;
     }

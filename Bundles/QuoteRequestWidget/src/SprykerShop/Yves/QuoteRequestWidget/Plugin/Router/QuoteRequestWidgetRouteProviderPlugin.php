@@ -12,8 +12,16 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class QuoteRequestWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestWidget\Plugin\Router\QuoteRequestWidgetRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_SAVE_CART} instead.
+     */
     protected const ROUTE_QUOTE_REQUEST_SAVE_CART = 'quote-request/cart/save';
+    public const ROUTE_NAME_QUOTE_REQUEST_SAVE_CART = 'quote-request/cart/save';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestWidget\Plugin\Router\QuoteRequestWidgetRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_CLEAR_CART} instead.
+     */
     protected const ROUTE_QUOTE_REQUEST_CLEAR_CART = 'quote-request/cart/clear';
+    public const ROUTE_NAME_QUOTE_REQUEST_CLEAR_CART = 'quote-request/cart/clear';
 
     /**
      * Specification:
@@ -43,7 +51,7 @@ class QuoteRequestWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addQuoteRequestSaveCartRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/quote-request/cart/save', 'QuoteRequestWidget', 'QuoteRequestCart', 'saveAction');
-        $routeCollection->add(static::ROUTE_QUOTE_REQUEST_SAVE_CART, $route);
+        $routeCollection->add(static::ROUTE_NAME_QUOTE_REQUEST_SAVE_CART, $route);
 
         return $routeCollection;
     }
@@ -58,7 +66,7 @@ class QuoteRequestWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addQuoteRequestClearCartRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/quote-request/cart/clear', 'QuoteRequestWidget', 'QuoteRequestCart', 'clearAction');
-        $routeCollection->add(static::ROUTE_QUOTE_REQUEST_CLEAR_CART, $route);
+        $routeCollection->add(static::ROUTE_NAME_QUOTE_REQUEST_CLEAR_CART, $route);
 
         return $routeCollection;
     }

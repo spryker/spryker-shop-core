@@ -12,8 +12,16 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class CustomerReorderWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerReorderWidget\Plugin\Router\CustomerReorderWidgetRouteProviderPlugin::ROUTE_NAME_CART_ORDER_REPEAT} instead.
+     */
     protected const ROUTE_CART_ORDER_REPEAT = 'customer/order/reorder';
+    public const ROUTE_NAME_CART_ORDER_REPEAT = 'customer/order/reorder';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerReorderWidget\Plugin\Router\CustomerReorderWidgetRouteProviderPlugin::ROUTE_NAME_CART_ORDER_ITEMS_REPEAT} instead.
+     */
     protected const ROUTE_CART_ORDER_ITEMS_REPEAT = 'customer/order/reorder-items';
+    public const ROUTE_NAME_CART_ORDER_ITEMS_REPEAT = 'customer/order/reorder-items';
     protected const PATTERN_ID = '\d+';
 
     /**
@@ -45,7 +53,7 @@ class CustomerReorderWidgetRouteProviderPlugin extends AbstractRouteProviderPlug
     {
         $route = $this->buildRoute('/customer/order/{idSalesOrder}/reorder', 'CustomerReorderWidget', 'Order', 'reorderAction');
         $route = $route->setRequirement('idSalesOrder', static::PATTERN_ID);
-        $routeCollection->add(static::ROUTE_CART_ORDER_REPEAT, $route);
+        $routeCollection->add(static::ROUTE_NAME_CART_ORDER_REPEAT, $route);
 
         return $routeCollection;
     }
@@ -61,7 +69,7 @@ class CustomerReorderWidgetRouteProviderPlugin extends AbstractRouteProviderPlug
     {
         $route = $this->buildRoute('/customer/order/reorder-items', 'CustomerReorderWidget', 'Order', 'reorderItemsAction');
         $route = $route->setMethods(['POST']);
-        $routeCollection->add(static::ROUTE_CART_ORDER_ITEMS_REPEAT, $route);
+        $routeCollection->add(static::ROUTE_NAME_CART_ORDER_ITEMS_REPEAT, $route);
 
         return $routeCollection;
     }

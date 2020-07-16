@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
+use SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -56,7 +56,7 @@ class RegisterController extends AbstractCustomerController
     protected function executeIndexAction(Request $request)
     {
         if ($this->isLoggedInCustomer()) {
-            return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_OVERVIEW);
+            return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_OVERVIEW);
         }
 
         $registerForm = $this

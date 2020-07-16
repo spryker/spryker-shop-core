@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\CmsPage\Controller;
 
 use Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerShop\Yves\CmsPage\Plugin\Provider\PreviewControllerProvider;
+use SprykerShop\Yves\CmsPage\Plugin\Router\CmsPageRouteProviderPlugin;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -32,7 +32,7 @@ class PreviewController extends AbstractController
             return $this->view([], [], '@CmsPage/views/preview-denied/preview-denied.twig');
         }
 
-        $idCmsPage = (int)$request->attributes->get(PreviewControllerProvider::PARAM_PAGE);
+        $idCmsPage = (int)$request->attributes->get(CmsPageRouteProviderPlugin::ID_CMS_PAGE);
         $metaData = $this->getMetaData($idCmsPage);
 
         $this->assertTemplate($metaData['template']);
@@ -129,8 +129,8 @@ class PreviewController extends AbstractController
     protected function getCurrentPreviewPageUri($idCmsPage)
     {
         return $this->getRouter()->generate(
-            PreviewControllerProvider::ROUTE_PREVIEW,
-            [PreviewControllerProvider::PARAM_PAGE => $idCmsPage]
+            CmsPageRouteProviderPlugin::ROUTE_NAME_PREVIEW,
+            [CmsPageRouteProviderPlugin::ID_CMS_PAGE => $idCmsPage]
         );
     }
 

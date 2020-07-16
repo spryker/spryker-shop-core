@@ -47,7 +47,7 @@ use Symfony\Component\Form\FormInterface;
 class QuoteRequestPageFactory extends AbstractFactory
 {
     /**
-     * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::CHECKOUT_INDEX
+     * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_INDEX
      */
     protected const ROUTE_CHECKOUT_INDEX = 'checkout-index';
 

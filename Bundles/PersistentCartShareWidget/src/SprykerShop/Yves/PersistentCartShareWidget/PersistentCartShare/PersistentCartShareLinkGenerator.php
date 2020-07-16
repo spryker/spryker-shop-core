@@ -17,12 +17,10 @@ use SprykerShop\Yves\PersistentCartShareWidget\ResourceShare\ResourceShareReques
 class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGeneratorInterface
 {
     /**
-     * @uses \SprykerShop\Yves\ResourceSharePage\Plugin\Provider\ResourceSharePageControllerProvider::ROUTE_RESOURCE_SHARE_LINK
+     * @uses \SprykerShop\Yves\ResourceSharePage\Plugin\Router\ResourceSharePageRouteProviderPlugin::ROUTE_NAME_RESOURCE_SHARE_LINK
      */
     protected const LINK_ROUTE = 'resource-share/link';
-    /**
-     * @uses \SprykerShop\Yves\ResourceSharePage\Plugin\Provider\ResourceSharePageControllerProvider::PARAM_RESOURCE_SHARE_UUID
-     */
+    
     protected const PARAM_RESOURCE_SHARE_UUID = 'resourceShareUuid';
 
     /**

@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -45,7 +46,7 @@ class QuoteRequestCheckoutController extends QuoteRequestAbstractController
         $this->handleQuoteResponseErrors($quoteResponseTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_DETAILS, [
+            return $this->redirectResponseInternal(QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_DETAILS, [
                 static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
             ]);
         }

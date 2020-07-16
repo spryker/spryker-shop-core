@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -62,7 +63,7 @@ class QuoteRequestEditShipmentController extends QuoteRequestAbstractController
             && $quoteTransfer->getQuoteRequestReference() !== $quoteRequestReference
         ) {
             return $this->redirectResponseInternal(
-                static::ROUTE_QUOTE_REQUEST_EDIT_SHIPMENT_CONFIRM,
+                QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_EDIT_SHIPMENT_CONFIRM,
                 [static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference]
             );
         }
@@ -84,7 +85,7 @@ class QuoteRequestEditShipmentController extends QuoteRequestAbstractController
 
         if ($quoteTransfer->getQuoteRequestReference() === $quoteRequestReference) {
             return $this->redirectResponseInternal(
-                static::ROUTE_QUOTE_REQUEST_EDIT_SHIPMENT,
+                QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_EDIT_SHIPMENT,
                 [static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference]
             );
         }

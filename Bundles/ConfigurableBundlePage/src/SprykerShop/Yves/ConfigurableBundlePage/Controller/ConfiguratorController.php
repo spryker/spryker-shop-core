@@ -47,7 +47,7 @@ class ConfiguratorController extends AbstractController
     protected const ROUTE_CONFIGURATOR_SUMMARY = 'configurable-bundle/configurator/summary';
 
     /**
-     * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_CART
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
      */
     protected const ROUTE_CART = 'cart';
 

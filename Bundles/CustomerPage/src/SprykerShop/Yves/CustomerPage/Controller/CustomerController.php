@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CustomerPage\Controller;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
-use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
+use SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin;
 
 /**
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
@@ -107,7 +107,7 @@ class CustomerController extends AbstractCustomerController
         $loggedInCustomerTransfer = $this->getLoggedInCustomerTransfer();
 
         if (!$loggedInCustomerTransfer->getIdCustomer()) {
-            return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_LOGOUT);
+            return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_NAME_LOGOUT);
         }
 
         $orderListTransfer = $this->createOrderListTransfer($loggedInCustomerTransfer);

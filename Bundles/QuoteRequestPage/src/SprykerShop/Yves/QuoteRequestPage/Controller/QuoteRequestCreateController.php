@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
+use SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -65,7 +66,7 @@ class QuoteRequestCreateController extends QuoteRequestAbstractController
         if ($quoteRequestResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CREATED);
 
-            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_DETAILS, [
+            return $this->redirectResponseInternal(QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_DETAILS, [
                 static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
             ]);
         }
