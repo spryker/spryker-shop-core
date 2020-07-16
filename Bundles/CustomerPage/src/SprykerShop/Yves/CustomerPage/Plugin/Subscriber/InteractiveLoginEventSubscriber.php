@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CustomerPage\Plugin\Subscriber;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use SprykerShop\Yves\CustomerPage\Security\Customer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Http\SecurityEvents;
@@ -37,7 +38,9 @@ class InteractiveLoginEventSubscriber extends AbstractPlugin implements EventSub
     {
         /** @var \SprykerShop\Yves\CustomerPage\Security\Customer $customer */
         $customer = $interactiveLoginEvent->getAuthenticationToken()->getUser();
-        $this->setCustomerSession($customer->getCustomerTransfer());
+        if ($customer instanceof Customer) {
+            $this->setCustomerSession($customer->getCustomerTransfer());
+        }
     }
 
     /**
