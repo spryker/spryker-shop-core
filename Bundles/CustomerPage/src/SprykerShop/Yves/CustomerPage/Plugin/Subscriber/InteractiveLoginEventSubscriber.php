@@ -22,7 +22,7 @@ class InteractiveLoginEventSubscriber extends AbstractPlugin implements EventSub
     /**
      * @return array
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             SecurityEvents::INTERACTIVE_LOGIN => 'onInteractiveLogin',
@@ -34,7 +34,7 @@ class InteractiveLoginEventSubscriber extends AbstractPlugin implements EventSub
      *
      * @return void
      */
-    public function onInteractiveLogin(InteractiveLoginEvent $interactiveLoginEvent)
+    public function onInteractiveLogin(InteractiveLoginEvent $interactiveLoginEvent): void
     {
         /** @var \SprykerShop\Yves\CustomerPage\Security\Customer $customer */
         $customer = $interactiveLoginEvent->getAuthenticationToken()->getUser();
@@ -48,7 +48,7 @@ class InteractiveLoginEventSubscriber extends AbstractPlugin implements EventSub
      *
      * @return void
      */
-    protected function setCustomerSession(CustomerTransfer $customerTransfer)
+    protected function setCustomerSession(CustomerTransfer $customerTransfer): void
     {
         $this->getFactory()
             ->getCustomerClient()
