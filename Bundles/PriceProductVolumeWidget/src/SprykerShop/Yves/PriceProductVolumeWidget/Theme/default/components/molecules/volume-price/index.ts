@@ -1,5 +1,6 @@
 import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register('volume-price', () => import(
-    /* webpackMode: "eager" */
+    /* webpackMode: "lazy" */
+    /* webpackChunkName: "volume-price" */
     './volume-price'));
