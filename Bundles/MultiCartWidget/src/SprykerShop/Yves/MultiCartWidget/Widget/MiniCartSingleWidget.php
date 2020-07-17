@@ -23,8 +23,7 @@ class MiniCartSingleWidget extends AbstractWidget
      */
     public function __construct(int $idQuote)
     {
-        $this->addParameter('idQuote', $idQuote)
-            ->addParameter('form', $this->addMiniCartRadioForm($idQuote));
+        $this->addParameter('form', $this->addMiniCartRadioForm($idQuote));
     }
 
     /**
