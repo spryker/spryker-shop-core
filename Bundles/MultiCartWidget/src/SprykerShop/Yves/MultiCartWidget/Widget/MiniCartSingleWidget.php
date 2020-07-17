@@ -49,12 +49,12 @@ class MiniCartSingleWidget extends AbstractWidget
      */
     protected function addMiniCartRadioForm(int $idQuote): FormView
     {
-        $data = [
+        $options = [
             'idQuote' => $idQuote,
         ];
 
         return $this->getFactory()
-            ->getMultiCartRadioForm($data, $data)
+            ->getMultiCartRadioForm([], $options)
             ->createView();
     }
 }
