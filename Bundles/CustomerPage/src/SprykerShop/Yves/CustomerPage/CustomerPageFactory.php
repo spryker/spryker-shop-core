@@ -43,8 +43,8 @@ use SprykerShop\Yves\CustomerPage\Mapper\ItemStateMapperInterface;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\AccessDeniedHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationFailureHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationSuccessHandler;
-use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerSecurityServiceProvider;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerUserProvider;
+use SprykerShop\Yves\CustomerPage\Plugin\Security\CustomerPageSecurityPlugin;
 use SprykerShop\Yves\CustomerPage\Reader\OrderReader;
 use SprykerShop\Yves\CustomerPage\Reader\OrderReaderInterface;
 use SprykerShop\Yves\CustomerPage\Security\Customer;
@@ -119,7 +119,7 @@ class CustomerPageFactory extends AbstractFactory
             $customerTransfer,
             $customerTransfer->getEmail(),
             $customerTransfer->getPassword(),
-            [CustomerSecurityServiceProvider::ROLE_USER]
+            [CustomerPageSecurityPlugin::ROLE_NAME_USER]
         );
     }
 
@@ -136,7 +136,7 @@ class CustomerPageFactory extends AbstractFactory
             $user,
             $user->getPassword(),
             CustomerPageConfig::SECURITY_FIREWALL_NAME,
-            [CustomerSecurityServiceProvider::ROLE_USER]
+            [CustomerPageSecurityPlugin::ROLE_NAME_USER]
         );
     }
 
