@@ -11,6 +11,9 @@
 } %}
 
 {% block body %}
+    {% widget 'MiniCartSingleWidget' args [data.idCart] only %}
+    {% endwidget %}
+
     {% embed atom('radio') with {
         attributes: {
             name: 'cart-isDefault',

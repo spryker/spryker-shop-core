@@ -56,17 +56,21 @@
             {% endwidget %}
         </li>
         {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
-        <li class="menu__item menu__item--has-children-dropdown">
-            {% widget 'MiniCartWidget' args [cartQuantity] only %}
-            {% elsewidget 'MiniCartWidgetPlugin' args [cartQuantity] only %} {# @deprecated Use MiniCartWidget instead. #}
-            {% nowidget %}
-                {% include molecule('cart-counter') with {
-                    data: {
-                        quantity: data.cartQuantity,
-                    },
-                } only %}
-            {% endwidget %}
-        </li>
+
+        {% block multiCart %}
+            <li class="menu__item menu__item--has-children-dropdown">
+                {% widget 'MiniCartWidget' args [cartQuantity] only %}
+                {% elsewidget 'MiniCartWidgetPlugin' args [cartQuantity] only %} {# @deprecated Use MiniCartWidget instead. #}
+                {% nowidget %}
+                    {% include molecule('cart-counter') with {
+                        data: {
+                            quantity: data.cartQuantity,
+                        },
+                    } only %}
+                {% endwidget %}
+            </li>
+        {% endblock %}
+
         {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
         <li class="menu__item"><a href="{{ url('quick-order') }}">{{ 'quick-order.page-title'|trans }}</a></li>
         {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}

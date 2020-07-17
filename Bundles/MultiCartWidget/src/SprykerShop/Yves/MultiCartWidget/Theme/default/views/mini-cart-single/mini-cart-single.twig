@@ -1,0 +1,14 @@
+{% extends template('widget') %}
+
+{% define data = {
+    idQuote: _widget.idQuote,
+    form: _widget.form,
+} %}
+
+{% block body %}
+    {{ form(_widget.form, {
+        attr: {
+            class: "js-mini-cart-radio__form",
+        }
+    }) }}
+{% endblock %}

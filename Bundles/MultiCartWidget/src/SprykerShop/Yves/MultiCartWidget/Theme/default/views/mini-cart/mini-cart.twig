@@ -18,7 +18,8 @@
             },
         } only %}
 
-        <ul class="menu menu--wide">
+        {% block cartList %}
+            <ul class="menu menu--wide">
             {% if data.activeCart is not empty %}
                 <li class="menu__item">
                     {% include molecule('mini-cart-detail', 'MultiCartWidget') with {
@@ -55,6 +56,7 @@
                 </div>
             </li>
         </ul>
+        {% endblock %}
     {% else %}
         {% include molecule('cart-counter') with {
             data: {
