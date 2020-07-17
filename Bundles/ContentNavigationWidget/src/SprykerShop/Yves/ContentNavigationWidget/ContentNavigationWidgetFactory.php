@@ -13,6 +13,9 @@ use SprykerShop\Yves\ContentNavigationWidget\Dependency\Client\ContentNavigation
 use SprykerShop\Yves\ContentNavigationWidget\Twig\ContentNavigationTwigFunction;
 use Twig\Environment;
 
+/**
+ * @method \SprykerShop\Yves\ContentNavigationWidget\ContentNavigationWidgetConfig getConfig()
+ */
 class ContentNavigationWidgetFactory extends AbstractFactory
 {
     /**
@@ -27,7 +30,8 @@ class ContentNavigationWidgetFactory extends AbstractFactory
             $twig,
             $localeName,
             $this->getContentNavigationClient(),
-            $this->getNavigationStorageClient()
+            $this->getNavigationStorageClient(),
+            $this->getConfig()
         );
     }
 
