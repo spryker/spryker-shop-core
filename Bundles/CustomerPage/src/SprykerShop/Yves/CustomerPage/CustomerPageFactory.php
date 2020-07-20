@@ -204,7 +204,7 @@ class CustomerPageFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\HttpFoundation\RequestStack
      */
-    public function getReuqestStack(): RequestStack
+    public function getRequestStack(): RequestStack
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::SERVICE_REQUEST_STACK);
     }
