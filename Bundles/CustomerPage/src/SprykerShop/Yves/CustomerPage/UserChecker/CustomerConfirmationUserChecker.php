@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\CustomerPage\UserChecker;
 
 use SprykerShop\Yves\CustomerPage\Exception\NotConfirmedAccountException;
-use SprykerShop\Yves\CustomerPage\Exception\WrongUserInterfaceException;
 use SprykerShop\Yves\CustomerPage\Security\CustomerUserInterface;
 use Symfony\Component\Security\Core\User\UserChecker;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -18,14 +17,14 @@ class CustomerConfirmationUserChecker extends UserChecker
     /**
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
      *
-     * @throws \SprykerShop\Yves\CustomerPage\Exception\WrongUserInterfaceException
+     * @throws \SprykerShop\Yves\CustomerPage\Exception\NotConfirmedAccountException
      *
      * @return void
      */
     public function checkPreAuth(UserInterface $user): void
     {
         if (!$user instanceof CustomerUserInterface) {
-            throw new WrongUserInterfaceException(sprintf('User should be an instance of %s', CustomerUserInterface::class));
+            return;
         }
 
         parent::checkPreAuth($user);
