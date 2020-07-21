@@ -1,3 +1,6 @@
-import './style';
-import register from '../../../app/registry';
-export default register('flash-message', () => import(/* webpackMode: "lazy" */'./flash-message'));
+import './style.scss';
+import register from 'ShopUi/app/registry';
+export default register('flash-message', () => import(
+    /* webpackMode: "lazy" */
+    /* webpackChunkName: "flash-message" */
+    './flash-message'));
