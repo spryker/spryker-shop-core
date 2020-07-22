@@ -13,6 +13,10 @@
 {% block template %}
     <!doctype html>
     <html lang="{{ data.locale }}">
+<pre>
+
+{{ dump(app.request.cookies.get('last-visit')) }}
+</pre>
         <head>
             {% block meta %}
                 <meta charset="utf-8">
