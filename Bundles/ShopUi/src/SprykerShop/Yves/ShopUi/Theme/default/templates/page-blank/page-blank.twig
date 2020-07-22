@@ -24,7 +24,8 @@
             {% endblock %}
 
             {% block headStyles %}
-                <link rel="stylesheet" href="{{publicPath('css/yves_default.app.css')}}">
+                <link rel="stylesheet" href="{{publicPath('css/yves_default.critical.css')}}">
+                <link rel="stylesheet" href="{{publicPath('css/yves_default.non-critical.css')}}">
             {% endblock %}
 
             {% block headScripts %}
@@ -46,6 +47,8 @@
             {%- block attributes %} {{qa('page')}} {% endblock -%}>
 
             {{ parent() }}
+
+            {% block footerStyles %}{% endblock %}
 
             {% block footerScripts %}
                 {% if isNewFrontendBuildSupported %}
