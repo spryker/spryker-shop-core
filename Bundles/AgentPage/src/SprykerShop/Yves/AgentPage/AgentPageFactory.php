@@ -19,8 +19,8 @@ use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToQuoteClientInterface
 use SprykerShop\Yves\AgentPage\Form\AgentLoginForm;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationFailureHandler;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationSuccessHandler;
-use SprykerShop\Yves\AgentPage\Plugin\Provider\AgentPageSecurityServiceProvider;
 use SprykerShop\Yves\AgentPage\Plugin\Provider\AgentUserProvider;
+use SprykerShop\Yves\AgentPage\Plugin\Security\AgentPageSecurityPlugin;
 use SprykerShop\Yves\AgentPage\Plugin\Subscriber\SwitchUserEventSubscriber;
 use SprykerShop\Yves\AgentPage\Security\Agent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -87,7 +87,7 @@ class AgentPageFactory extends AbstractFactory
     {
         return new Agent(
             $userTransfer,
-            [AgentPageSecurityServiceProvider::ROLE_AGENT, AgentPageSecurityServiceProvider::ROLE_ALLOWED_TO_SWITCH]
+            [AgentPageSecurityPlugin::ROLE_AGENT, AgentPageSecurityPlugin::ROLE_ALLOWED_TO_SWITCH]
         );
     }
 
