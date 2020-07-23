@@ -11,7 +11,7 @@
     "spryker/application": "^3.0.0",
     "spryker/company-user": "^2.8.0",
     "spryker/customer": "^7.0.0",
-    "spryker/kernel": "^3.30.0",
+    "spryker/kernel": "^3.52.0",
     "spryker/multi-cart": "^1.1.0",
     "spryker/quote": "^2.8.0",
     "spryker/shared-cart": "^1.4.0",
