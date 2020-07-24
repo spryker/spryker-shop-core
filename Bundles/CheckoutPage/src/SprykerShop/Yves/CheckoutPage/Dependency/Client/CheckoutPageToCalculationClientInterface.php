@@ -19,7 +19,7 @@ interface CheckoutPageToCalculationClientInterface
     public function recalculate(QuoteTransfer $quoteTransfer);
 
     /**
-     * @return \Spryker\Client\Calculation\Zed\CalculationStub
+     * @return \Spryker\Client\Calculation\Zed\CalculationStubInterface
      */
     public function getZedStub();
 }

@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\MultiCartPage\Controller;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\MultiCartPage\Plugin\Provider\MultiCartPageControllerProvider;
+use SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -22,7 +23,7 @@ class MultiCartController extends AbstractController
     use PermissionAwareTrait;
 
     /**
-     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
      */
     protected const ROUTE_CART = 'cart';
 
@@ -111,7 +112,7 @@ class MultiCartController extends AbstractController
         if (!$quoteTransfer || !$this->canWriteQuote($quoteTransfer)) {
             $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
 
-            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+            return $this->redirectResponseInternal(MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_INDEX);
         }
 
         if ($quoteForm->isSubmitted() && $quoteForm->isValid()) {
@@ -122,12 +123,12 @@ class MultiCartController extends AbstractController
             if ($quoteResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(static::GLOSSARY_KEY_CART_UPDATED_SUCCESS);
 
-                return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+                return $this->redirectResponseInternal(MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_INDEX);
             }
 
             $this->addErrorMessage(static::GLOSSARY_KEY_CART_UPDATED_ERROR);
 
-            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+            return $this->redirectResponseInternal(MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_INDEX);
         }
 
         return [
@@ -149,7 +150,7 @@ class MultiCartController extends AbstractController
         if (!$multiCartSetDefaultForm->isSubmitted() || !$multiCartSetDefaultForm->isValid()) {
             $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
 
-            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+            return $this->redirectResponseInternal(MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_INDEX);
         }
 
         $quoteTransfer = $this->findQuoteOrFail($idQuote);
@@ -174,7 +175,7 @@ class MultiCartController extends AbstractController
         if (!$multiCartDuplicateForm->isSubmitted() || !$multiCartDuplicateForm->isValid()) {
             $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
 
-            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+            return $this->redirectResponseInternal(MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_INDEX);
         }
 
         $quoteTransfer = $this->findQuoteOrFail($idQuote);
@@ -186,7 +187,7 @@ class MultiCartController extends AbstractController
             ->getIdQuote();
 
         return $this->redirectResponseInternal(
-            MultiCartPageControllerProvider::ROUTE_MULTI_CART_UPDATE,
+            MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_UPDATE,
             [MultiCartPageControllerProvider::PARAM_ID_QUOTE => $idNewQuote]
         );
     }
@@ -241,7 +242,7 @@ class MultiCartController extends AbstractController
         if (!$multiCartDeleteForm->isSubmitted() || !$multiCartDeleteForm->isValid()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CART_DELETE_ERROR);
 
-            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+            return $this->redirectResponseInternal(MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_INDEX);
         }
 
         $quoteTransfer = $this->findQuoteOrFail(
@@ -251,12 +252,12 @@ class MultiCartController extends AbstractController
         if (!$this->canWriteQuote($quoteTransfer)) {
             $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
 
-            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+            return $this->redirectResponseInternal(MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_INDEX);
         }
 
         $this->getFactory()->getMultiCartClient()->deleteQuote($quoteTransfer);
 
-        return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+        return $this->redirectResponseInternal(MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_INDEX);
     }
 
     /**

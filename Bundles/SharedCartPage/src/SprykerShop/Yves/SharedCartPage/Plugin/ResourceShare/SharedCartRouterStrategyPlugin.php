@@ -14,7 +14,7 @@ use SprykerShop\Yves\ResourceSharePageExtension\Dependency\Plugin\ResourceShareR
 class SharedCartRouterStrategyPlugin implements ResourceShareRouterStrategyPluginInterface
 {
     /**
-     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
      */
     protected const ROUTE_CART = 'cart';
 

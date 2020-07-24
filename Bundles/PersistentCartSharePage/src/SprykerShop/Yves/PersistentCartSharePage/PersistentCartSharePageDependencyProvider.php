@@ -15,6 +15,10 @@ use SprykerShop\Yves\PersistentCartSharePage\Dependency\Client\PersistentCartSha
 class PersistentCartSharePageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_PERSISTENT_CART_SHARE = 'CLIENT_PERSISTENT_CART_SHARE';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
@@ -48,6 +52,8 @@ class PersistentCartSharePageDependencyProvider extends AbstractBundleDependency
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container

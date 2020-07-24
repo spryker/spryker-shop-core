@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Controller;
 
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentCreateForm;
+use SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -67,7 +68,7 @@ class QuoteRequestAgentCreateController extends QuoteRequestAgentAbstractControl
 
         $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CREATED);
 
-        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_EDIT, [
+        return $this->redirectResponseInternal(QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_EDIT, [
             static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
         ]);
     }

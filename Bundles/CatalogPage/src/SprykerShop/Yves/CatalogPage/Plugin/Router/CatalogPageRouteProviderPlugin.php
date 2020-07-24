@@ -12,8 +12,16 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class CatalogPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CatalogPage\Plugin\Router\CatalogPageRouteProviderPlugin::ROUTE_NAME_SEARCH} instead.
+     */
     protected const ROUTE_SEARCH = 'search';
+    public const ROUTE_NAME_SEARCH = 'search';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CatalogPage\Plugin\Router\CatalogPageRouteProviderPlugin::ROUTE_NAME_SUGGESTION} instead.
+     */
     protected const ROUTE_SUGGESTION = 'search/suggestion';
+    public const ROUTE_NAME_SUGGESTION = 'search/suggestion';
     protected const ROUTER_CHANGE_VIEW_MODE = 'change-view-mode';
 
     /**
@@ -43,7 +51,7 @@ class CatalogPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addFulltextSearchRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/search', 'CatalogPage', 'Catalog', 'fulltextSearchAction');
-        $routeCollection->add(static::ROUTE_SEARCH, $route);
+        $routeCollection->add(static::ROUTE_NAME_SEARCH, $route);
 
         return $routeCollection;
     }
@@ -56,7 +64,7 @@ class CatalogPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addSuggestionRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/search/suggestion', 'CatalogPage', 'Suggestion', 'indexAction');
-        $routeCollection->add(static::ROUTE_SUGGESTION, $route);
+        $routeCollection->add(static::ROUTE_NAME_SUGGESTION, $route);
 
         return $routeCollection;
     }

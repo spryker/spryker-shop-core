@@ -54,6 +54,9 @@ class ContentFileListTwigPluginTest extends Unit
      */
     public function testContentFileNotFound(): void
     {
+        // Arrange
+        $this->setContentFileClientReturn();
+
         // Act
         $fileContent = call_user_func($this->getContentFileListTwigPlugin()->getCallable(), static::CONTENT_WRONG_KEY, static::TEMPLATE_TEXT_LINK);
 

@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CompanyUserInvitationPage\Controller;
 use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer;
 use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConfig;
-use SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Provider\CompanyUserInvitationPageControllerProvider;
+use SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Router\CompanyUserInvitationPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -65,13 +65,13 @@ class DeleteController extends AbstractController
 
         if ($companyUserInvitationUpdateStatusResponseTransfer->getIsSuccess()) {
             return $this->redirectToRouteWithSuccessMessage(
-                CompanyUserInvitationPageControllerProvider::ROUTE_OVERVIEW,
+                CompanyUserInvitationPageRouteProviderPlugin::ROUTE_NAME_OVERVIEW,
                 'company.user.invitation.deleted.success.message'
             );
         }
 
         return $this->redirectToRouteWithErrorMessage(
-            CompanyUserInvitationPageControllerProvider::ROUTE_OVERVIEW,
+            CompanyUserInvitationPageRouteProviderPlugin::ROUTE_NAME_OVERVIEW,
             'company.user.invitation.deleted.error.message'
         );
     }

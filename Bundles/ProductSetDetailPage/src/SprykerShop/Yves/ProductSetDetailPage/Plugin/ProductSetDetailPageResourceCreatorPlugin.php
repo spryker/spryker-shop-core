@@ -108,6 +108,6 @@ class ProductSetDetailPageResourceCreatorPlugin extends AbstractPlugin implement
      */
     protected function getRequest(): Request
     {
-        return $this->getApplication()->get(static::SERVICE_REQUEST);
+        return $this->getContainer()->get(static::SERVICE_REQUEST);
     }
 }

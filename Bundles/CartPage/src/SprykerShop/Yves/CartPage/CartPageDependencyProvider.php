@@ -23,18 +23,36 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const CLIENT_AVAILABILITY_STORAGE = 'CLIENT_AVAILABILITY_STORAGE';
-    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     public const PLUGIN_CART_VARIANT = 'PLUGIN_CART_VARIANT';
     public const PLUGIN_CART_ITEM_TRANSFORMERS = 'PLUGIN_CART_ITEM_TRANSFORMERS';
     public const PLUGIN_CART_PAGE_WIDGETS = 'PLUGIN_CART_PAGE_WIDGETS';
     public const PLUGIN_PRE_ADD_TO_CART = 'PLUGIN_PRE_ADD_TO_CART';
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+
+    /**
+     * @uses \Spryker\Yves\Form\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
+     */
     public const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
+    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
      */
     public const SERVICE_ROUTER = 'routers';
+
+    /**
+     * @uses \Spryker\Yves\Locale\Plugin\Application\LocaleApplicationPlugin::SERVICE_LOCALE
+     */
+    public const SERVICE_LOCALE = 'locale';
+
+    /**
+     * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     */
+    public const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -53,6 +71,10 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCartItemTransformerPlugins($container);
         $container = $this->addPreAddToCartPlugins($container);
         $container = $this->addZedRequestClient($container);
+        $container = $this->addCsrfProviderService($container);
+        $container = $this->addRouter($container);
+        $container = $this->addLocale($container);
+        $container = $this->addRequestStack($container);
 
         return $container;
     }
@@ -128,6 +150,64 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCsrfProviderService(Container $container): Container
+    {
+        $container->set(static::SERVICE_FORM_CSRF_PROVIDER, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_FORM_CSRF_PROVIDER);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addRouter(Container $container): Container
+    {
+        $container->set(static::SERVICE_ROUTER, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_ROUTER);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addLocale(Container $container): Container
+    {
+        $container->set(static::SERVICE_LOCALE, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_LOCALE);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addRequestStack(Container $container): Container
+    {
+        $container->set(static::SERVICE_REQUEST_STACK, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_REQUEST_STACK);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container

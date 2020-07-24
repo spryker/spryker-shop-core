@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
-use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
+use SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 class DeleteController extends AbstractCustomerController
@@ -45,7 +45,7 @@ class DeleteController extends AbstractCustomerController
         if (!$customerDeleteForm->isSubmitted() || !$customerDeleteForm->isValid()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_DELETE_ERROR);
 
-            return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_DELETE);
+            return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_DELETE);
         }
 
         $loggedInCustomerTransfer = $this->getLoggedInCustomerTransfer();
@@ -54,6 +54,6 @@ class DeleteController extends AbstractCustomerController
             ->getCustomerClient()
             ->anonymizeCustomer($loggedInCustomerTransfer);
 
-        return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_LOGOUT);
+        return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_NAME_LOGOUT);
     }
 }

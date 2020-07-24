@@ -20,7 +20,7 @@ class AcceptController extends AbstractController
     public const COMPANY_USER_WITH_PERMISSIONS_REQUIRED = false;
 
     /**
-     * @see \SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider::ROUTE_REGISTER
+     * @see \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_REGISTER
      */
     protected const REDIRECT_URL = 'register';
 

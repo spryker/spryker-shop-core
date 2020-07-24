@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
+use SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -32,7 +33,7 @@ class QuoteRequestSaveController extends QuoteRequestAbstractController
         if (!$quoteTransfer->getQuoteRequestReference()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS);
 
-            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST);
+            return $this->redirectResponseInternal(QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST);
         }
 
         $quoteRequestTransfer = $this->getCompanyUserQuoteRequestByReference($quoteTransfer->getQuoteRequestReference());
@@ -47,12 +48,12 @@ class QuoteRequestSaveController extends QuoteRequestAbstractController
 
             $this->reloadQuoteForCustomer();
 
-            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT, [
+            return $this->redirectResponseInternal(QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_EDIT, [
                 static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
             ]);
         }
 
-        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST);
+        return $this->redirectResponseInternal(QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST);
     }
 
     /**

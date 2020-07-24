@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Shared\Customer\Code\Messages;
-use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
+use SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 class AddressController extends AbstractCustomerController
@@ -97,7 +97,7 @@ class AddressController extends AbstractCustomerController
 
             $this->addSuccessMessage(Messages::CUSTOMER_ADDRESS_ADDED);
 
-            return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_ADDRESS);
+            return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_ADDRESS);
         }
 
         return [
@@ -148,7 +148,7 @@ class AddressController extends AbstractCustomerController
 
             $this->addSuccessMessage(Messages::CUSTOMER_ADDRESS_UPDATED);
 
-            return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_ADDRESS);
+            return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_ADDRESS);
         }
 
         return [
@@ -170,7 +170,7 @@ class AddressController extends AbstractCustomerController
         if (!$customerAddressDeleteForm->isSubmitted() || !$customerAddressDeleteForm->isValid()) {
             $this->addErrorMessage(Messages::CUSTOMER_ADDRESS_DELETE_FAILED);
 
-            return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_ADDRESS);
+            return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_ADDRESS);
         }
 
         $customerTransfer = $this->getLoggedInCustomerTransfer();
@@ -193,12 +193,12 @@ class AddressController extends AbstractCustomerController
 
             $this->addSuccessMessage(Messages::CUSTOMER_ADDRESS_DELETE_SUCCESS);
 
-            return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_REFRESH_ADDRESS);
+            return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_REFRESH_ADDRESS);
         }
 
         $this->addErrorMessage(Messages::CUSTOMER_ADDRESS_DELETE_FAILED);
 
-        return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_ADDRESS);
+        return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_ADDRESS);
     }
 
     /**
@@ -206,7 +206,7 @@ class AddressController extends AbstractCustomerController
      */
     public function refreshAction()
     {
-        return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_ADDRESS);
+        return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_ADDRESS);
     }
 
     /**

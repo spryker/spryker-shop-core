@@ -19,7 +19,7 @@ class OrderController extends AbstractController
     protected const GLOSSARY_KEY_ERROR_MESSAGE_UNABLE_TO_REORDER_ITEMS = 'customer.order.reorder.error.unable_to_reorder_items';
 
     /**
-     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
      */
     protected const ROUTE_SUCCESSFUL_REDIRECT = 'cart';
     protected const ROUTE_FAILURE_REDIRECT = 'customer/order';

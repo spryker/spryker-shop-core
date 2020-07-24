@@ -48,7 +48,7 @@ class SubscriptionController extends AbstractController
             ->getFactory()
             ->getNewsletterSubscriptionForm();
 
-        $parentRequest = $this->getApplication()['request_stack']->getParentRequest();
+        $parentRequest = $this->getRequestStack()->getParentRequest();
 
         if ($parentRequest !== null) {
             $request = $parentRequest;

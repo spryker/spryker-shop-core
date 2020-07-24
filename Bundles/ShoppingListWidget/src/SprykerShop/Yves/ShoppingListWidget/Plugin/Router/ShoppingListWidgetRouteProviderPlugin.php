@@ -12,8 +12,16 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class ShoppingListWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\ShoppingListWidget\Plugin\Router\ShoppingListWidgetRouteProviderPlugin::ROUTE_NAME_ADD_ITEM} instead.
+     */
     protected const ROUTE_ADD_ITEM = 'shopping-list/add-item';
+    public const ROUTE_NAME_ADD_ITEM = 'shopping-list/add-item';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\ShoppingListWidget\Plugin\Router\ShoppingListWidgetRouteProviderPlugin::ROUTE_NAME_CART_TO_SHOPPING_LIST} instead.
+     */
     protected const ROUTE_CART_TO_SHOPPING_LIST = 'shopping-list/create-from-cart';
+    public const ROUTE_NAME_CART_TO_SHOPPING_LIST = 'shopping-list/create-from-cart';
 
     /**
      * Specification:
@@ -41,7 +49,7 @@ class ShoppingListWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addAddItemRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/shopping-list/add-item', 'ShoppingListWidget', 'ShoppingListWidget', 'indexAction');
-        $routeCollection->add(static::ROUTE_ADD_ITEM, $route);
+        $routeCollection->add(static::ROUTE_NAME_ADD_ITEM, $route);
 
         return $routeCollection;
     }
@@ -54,7 +62,7 @@ class ShoppingListWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCreateShoppingListFromCartRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/shopping-list/create-from-cart', 'ShoppingListWidget', 'CartToShoppingList', 'createFromCartAction');
-        $routeCollection->add(static::ROUTE_CART_TO_SHOPPING_LIST, $route);
+        $routeCollection->add(static::ROUTE_NAME_CART_TO_SHOPPING_LIST, $route);
 
         return $routeCollection;
     }

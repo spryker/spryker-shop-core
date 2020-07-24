@@ -36,7 +36,12 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
 
     public const PLUGIN_AFTER_CUSTOMER_AUTHENTICATION_SUCCESS = 'PLUGIN_AFTER_CUSTOMER_AUTHENTICATION_SUCCESS';
     public const PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT = 'PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+
     public const PLUGIN_AUTHENTICATION_HANDLER = 'PLUGIN_AUTHENTICATION_HANDLER';
     public const PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS = 'PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS';
     public const PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS = 'PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS';
@@ -52,11 +57,35 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
 
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\CustomerPageDependencyProvider::SERVICE_FLASH_MESSENGER} instead
+     */
     public const FLASH_MESSENGER = 'FLASH_MESSENGER';
-    public const STORE = 'STORE';
 
+    public const STORE = 'STORE';
     public const PLUGINS_ORDER_SEARCH_FORM_EXPANDER = 'PLUGINS_ORDER_SEARCH_FORM_EXPANDER';
+
     public const PLUGINS_ORDER_SEARCH_FORM_HANDLER = 'PLUGINS_ORDER_SEARCH_FORM_HANDLER';
+
+    /**
+     * @uses \Spryker\Yves\Messenger\Plugin\Application\FlashMessengerApplicationPlugin::SERVICE_FLASH_MESSENGER
+     */
+    public const SERVICE_FLASH_MESSENGER = 'flash_messenger';
+
+    /**
+     * @uses \Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_TOKEN_STORAGE
+     */
+    public const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
+
+    /**
+     * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     */
+    public const SERVICE_ROUTER = 'routers';
+
+    /**
+     * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     */
+    public const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -76,6 +105,9 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addGuestCheckoutAuthenticationHandlerPlugin($container);
         $container = $this->addRegistrationCheckoutAuthenticationHandlerPlugin($container);
         $container = $this->addFlashMessenger($container);
+        $container = $this->addSecurityTokenStorage($container);
+        $container = $this->addRouter($container);
+        $container = $this->addRequestStack($container);
         $container = $this->addStore($container);
         $container = $this->addCustomerOverviewWidgetPlugins($container);
         $container = $this->addCustomerOrderListWidgetPlugins($container);
@@ -109,6 +141,8 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -187,8 +221,50 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFlashMessenger(Container $container): Container
     {
-        $container->set(static::FLASH_MESSENGER, function (Container $container) {
-            return $container->get(static::PLUGIN_APPLICATION)['flash_messenger'];
+        $container->set(static::SERVICE_FLASH_MESSENGER, function (Container $container) {
+            return $container->getApplicationService('flash_messenger');
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSecurityTokenStorage(Container $container): Container
+    {
+        $container->set(static::SERVICE_SECURITY_TOKEN_STORAGE, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_SECURITY_TOKEN_STORAGE);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addRouter(Container $container): Container
+    {
+        $container->set(static::SERVICE_ROUTER, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_ROUTER);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addRequestStack(Container $container): Container
+    {
+        $container->set(static::SERVICE_REQUEST_STACK, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_REQUEST_STACK);
         });
 
         return $container;
