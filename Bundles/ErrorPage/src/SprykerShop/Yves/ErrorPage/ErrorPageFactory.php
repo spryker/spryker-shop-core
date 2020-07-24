@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\ErrorPage;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Router\Router\ChainRouter;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
  * @method \SprykerShop\Yves\ErrorPage\ErrorPageConfig getConfig()
@@ -34,9 +34,9 @@ class ErrorPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Symfony\Component\HttpKernel\KernelInterface
+     * @return \Symfony\Component\HttpKernel\HttpKernelInterface
      */
-    public function getKernel(): KernelInterface
+    public function getKernel(): HttpKernelInterface
     {
         return $this->getProvidedDependency(ErrorPageDependencyProvider::SERVICE_KERNEL);
     }
