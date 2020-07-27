@@ -8,23 +8,12 @@
 namespace SprykerShopTest\Yves\CheckoutPage\Controller;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\PaymentTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
-use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Shared\Checkout\CheckoutConfig;
-use Spryker\Shared\Price\PriceConfig;
 use Spryker\Yves\StepEngine\Process\StepEngine;
 use Spryker\Yves\StepEngine\Process\StepEngineInterface;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageFactory;
 use SprykerShop\Yves\CheckoutPage\Controller\CheckoutController;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
-use SprykerShop\Yves\CustomerPage\Form\AddressForm;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -117,7 +106,8 @@ class CheckoutControllerTest extends Unit
     protected function createCheckoutPageToQuoteClientBridgeMock(): CheckoutPageToQuoteClientInterface
     {
         $checkoutPageToQuoteClientBridgeMock = $this->createMock(CheckoutPageToQuoteClientInterface::class);
-        $checkoutPageToQuoteClientBridgeMock->method('getQuote')->willReturn($this->createQuoteTransfer());
+        $checkoutPageToQuoteClientBridgeMock->method('getQuote')
+            ->willReturn($this->tester->createQuoteTransferWithMultiShipment());
 
         return $checkoutPageToQuoteClientBridgeMock;
     }
@@ -131,57 +121,5 @@ class CheckoutControllerTest extends Unit
         $placeOrderStepMock->expects($this->once())->method('process')->willReturn(new RedirectResponse(static::SUCCESS_URL));
 
         return $placeOrderStepMock;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function createQuoteTransfer(): QuoteTransfer
-    {
-        $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setPriceMode(PriceConfig::PRICE_MODE_GROSS);
-
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setIsGuest(false);
-        $quoteTransfer->setCustomer($customerTransfer);
-
-        $addressTransfer = new AddressTransfer();
-        $address = [
-            AddressForm::FIELD_SALUTATION => 'Mr',
-            AddressForm::FIELD_FIRST_NAME => 'Hans',
-            AddressForm::FIELD_LAST_NAME => 'Muster',
-            AddressForm::FIELD_ADDRESS_1 => 'Any Street',
-            AddressForm::FIELD_ADDRESS_2 => '23',
-            AddressForm::FIELD_CITY => 'Berlin',
-            AddressForm::FIELD_ZIP_CODE => '12347',
-            AddressForm::FIELD_ISO_2_CODE => 'DE',
-        ];
-        $addressTransfer->fromArray($address);
-        $quoteTransfer->setBillingAddress($addressTransfer);
-
-        $shipmentTransfer = new ShipmentTransfer();
-        $shipmentTransfer->setShippingAddress($addressTransfer);
-
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setShipment($shipmentTransfer);
-        $quoteTransfer->addItem($itemTransfer);
-
-        $expenseTransfer = new ExpenseTransfer();
-        $expenseTransfer->setType(CheckoutConfig::SHIPMENT_EXPENSE_TYPE);
-        $expenseTransfer->setUnitGrossPrice(1000);
-        $expenseTransfer->setQuantity(1);
-        $quoteTransfer->addExpense($expenseTransfer);
-
-        $totalsTransfer = new TotalsTransfer();
-        $totalsTransfer->setGrandTotal(50000);
-        $quoteTransfer->setTotals($totalsTransfer);
-
-        $paymentTransfer = new PaymentTransfer();
-        $paymentTransfer->setPaymentProvider('paymentProvider');
-        $paymentTransfer->setPaymentMethod('paymentMethod');
-        $quoteTransfer->setPayment($paymentTransfer);
-        $quoteTransfer->setOrderReference('order-reference');
-
-        return $quoteTransfer;
     }
 }
