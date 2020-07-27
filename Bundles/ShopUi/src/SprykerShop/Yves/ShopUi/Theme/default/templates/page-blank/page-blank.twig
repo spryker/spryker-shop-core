@@ -5,7 +5,8 @@
     title: 'global.spryker.shop' | trans,
     metaTitle: 'global.spryker.shop' | trans,
     metaDescription: '',
-    metaKeywords: ''
+    metaKeywords: '',
+    hasCookies: app.request.cookies.get('last-visit'),
 } %}
 
 {% set isNewFrontendBuildSupported = false %}
@@ -13,10 +14,6 @@
 {% block template %}
     <!doctype html>
     <html lang="{{ data.locale }}">
-<pre>
-
-{{ dump(app.request.cookies.get('last-visit')) }}
-</pre>
         <head>
             {% block meta %}
                 <meta charset="utf-8">
@@ -28,8 +25,11 @@
             {% endblock %}
 
             {% block headStyles %}
-                <link rel="stylesheet" href="{{publicPath('css/yves_default.critical.css')}}">
-                <link rel="stylesheet" href="{{publicPath('css/yves_default.non-critical.css')}}">
+                <link rel="stylesheet" href="{{ publicPath('css/yves_default.critical.css') }}">
+
+                {% if data.hasCookies %}
+                    <link rel="stylesheet" href="{{ publicPath('css/yves_default.non-critical.css') }}">
+                {% endif %}
             {% endblock %}
 
             {% block headScripts %}
@@ -50,9 +50,9 @@
         <body {%- if block('class') is not empty %} class="{%- block class -%}{%- endblock -%}"{%- endif %}
             {%- block attributes %} {{qa('page')}} {% endblock -%}>
 
-            {{ parent() }}
+            {%- block bodyTop %}{% endblock -%}
 
-            {% block footerStyles %}{% endblock %}
+            {{ parent() }}
 
             {% block footerScripts %}
                 {% if isNewFrontendBuildSupported %}

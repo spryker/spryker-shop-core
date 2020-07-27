@@ -1,8 +1,19 @@
-{% extends template('page-blank') %}
+{% extends template('page-layout-main') %}
 
 {% block headStyles %}
-    <link rel="stylesheet" href="{{publicPath('css/yves_default.critical.css')}}">
-    <link rel="stylesheet" href="{{publicPath('css/yves_default.non-critical.css')}}">
+    {{ parent() }}
+
+    {% if not data.hasCookies %}
+        <link rel="stylesheet" href="{{ publicPath('css/yves_default.util.css') }}">
+    {% endif %}
 {% endblock %}
 
-{% block footerStyles %}{% endblock %}
+{% block bodyTop %}
+    {% if not data.hasCookies %}
+        {% include molecule('style-loader') with {
+            attributes: {
+                'path-to-css': publicPath('css/yves_default.non-critical.css'),
+            },
+        } only %}
+    {% endif %}
+{% endblock %}
