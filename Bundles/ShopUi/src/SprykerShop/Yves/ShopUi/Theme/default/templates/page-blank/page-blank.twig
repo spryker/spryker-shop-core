@@ -27,9 +27,9 @@
             {% block headStyles %}
                 <link rel="stylesheet" href="{{ publicPath('css/yves_default.critical.css') }}">
 
-                {% if data.hasCookies %}
+                {% block nonCtriticalStyles %}
                     <link rel="stylesheet" href="{{ publicPath('css/yves_default.non-critical.css') }}">
-                {% endif %}
+                {% endblock %}
             {% endblock %}
 
             {% block headScripts %}

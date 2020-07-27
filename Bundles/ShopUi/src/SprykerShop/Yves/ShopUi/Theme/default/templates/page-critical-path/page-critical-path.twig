@@ -1,9 +1,9 @@
 {% extends template('page-layout-main') %}
 
-{% block headStyles %}
-    {{ parent() }}
-
-    {% if not data.hasCookies %}
+{% block nonCtriticalStyles %}
+    {% if data.hasCookies %}
+        {{ parent() }}
+    {% else %}
         <link rel="stylesheet" href="{{ publicPath('css/yves_default.util.css') }}">
     {% endif %}
 {% endblock %}
