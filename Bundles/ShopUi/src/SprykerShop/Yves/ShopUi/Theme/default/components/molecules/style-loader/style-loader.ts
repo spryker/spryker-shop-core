@@ -1,5 +1,4 @@
 import Component from 'ShopUi/models/component';
-import {EVENT_UPDATE_CART_QUANTITY} from "ShopUi/components/molecules/cart-counter/cart-counter";
 
 export default class StyleLoader extends Component {
     protected readyCallback(): void {}
