@@ -16,11 +16,8 @@ export default class StyleLoader extends Component {
     }
 
     protected addCss(): void {
-        var link = document.createElement('link');
-        link.href = this.pathToCSS;
-        link.rel = 'stylesheet';
-
-        document.getElementsByTagName('head')[0].appendChild(link);
+        const linkTemplate = `<link rel="stylesheet" href="${this.pathToCSS}">`;
+        document.getElementsByTagName('head')[0].insertAdjacentHTML('beforeend', linkTemplate);
     }
 
     protected get pathToCSS(): string {
