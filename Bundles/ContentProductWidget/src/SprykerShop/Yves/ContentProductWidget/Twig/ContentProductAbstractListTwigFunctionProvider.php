@@ -8,14 +8,14 @@
 namespace SprykerShop\Yves\ContentProductWidget\Twig;
 
 use Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTermException;
-use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Shared\Twig\TwigFunctionProvider;
 use SprykerShop\Yves\ContentProductWidget\Reader\ContentProductAbstractReaderInterface;
 use Twig\Environment;
 
 /**
  * @method \SprykerShop\Yves\ContentProductWidget\ContentProductWidgetFactory getFactory()
  */
-class ContentProductAbstractListTwigFunction extends TwigFunction
+class ContentProductAbstractListTwigFunctionProvider extends TwigFunctionProvider
 {
     /**
      * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::TWIG_FUNCTION_NAME
@@ -61,8 +61,6 @@ class ContentProductAbstractListTwigFunction extends TwigFunction
         string $localeName,
         ContentProductAbstractReaderInterface $contentProductAbstractReader
     ) {
-        parent::__construct();
-
         $this->twig = $twig;
         $this->localeName = $localeName;
         $this->contentProductAbstractReader = $contentProductAbstractReader;
@@ -71,7 +69,7 @@ class ContentProductAbstractListTwigFunction extends TwigFunction
     /**
      * @return string
      */
-    protected function getFunctionName(): string
+    public function getFunctionName(): string
     {
         return static::FUNCTION_CONTENT_PRODUCT_ABSTRACT_LIST;
     }

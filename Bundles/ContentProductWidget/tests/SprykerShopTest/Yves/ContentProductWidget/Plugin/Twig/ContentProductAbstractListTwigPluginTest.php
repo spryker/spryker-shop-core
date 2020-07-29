@@ -18,7 +18,7 @@ use SprykerShop\Yves\ContentProductWidget\ContentProductWidgetDependencyProvider
 use SprykerShop\Yves\ContentProductWidget\Dependency\Client\ContentProductWidgetToContentProductClientBridgeInterface;
 use SprykerShop\Yves\ContentProductWidget\Dependency\Client\ContentProductWidgetToProductStorageClientBridgeInterface;
 use SprykerShop\Yves\ContentProductWidget\Plugin\Twig\ContentProductAbstractListTwigPlugin;
-use SprykerShop\Yves\ContentProductWidget\Twig\ContentProductAbstractListTwigFunction;
+use SprykerShop\Yves\ContentProductWidget\Twig\ContentProductAbstractListTwigFunctionProvider;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -168,7 +168,7 @@ class ContentProductAbstractListTwigPluginTest extends Unit
      */
     protected function getContentProductAbstractListTwigPlugin()
     {
-        $functionName = new ReflectionClassConstant(ContentProductAbstractListTwigFunction::class, 'FUNCTION_CONTENT_PRODUCT_ABSTRACT_LIST');
+        $functionName = new ReflectionClassConstant(ContentProductAbstractListTwigFunctionProvider::class, 'FUNCTION_CONTENT_PRODUCT_ABSTRACT_LIST');
 
         return $this->getTwig()->getFunction($functionName->getValue());
     }

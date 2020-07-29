@@ -11,13 +11,13 @@ use ArrayObject;
 use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer;
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
-use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Shared\Twig\TwigFunctionProvider;
 use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientInterface;
 use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToStoreClientInterface;
 use SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidatorInterface;
 use Twig\Environment;
 
-class CmsBlockTwigFunction extends TwigFunction
+class CmsBlockTwigFunctionProvider extends TwigFunctionProvider
 {
     protected const SPY_CMS_BLOCK_TWIG_FUNCTION = 'spyCmsBlock';
     protected const STORAGE_DATA_KEY_CMS_BLOCK_GLOSSARY_KEY_MAPPINGS = 'SpyCmsBlockGlossaryKeyMappings';
@@ -57,7 +57,6 @@ class CmsBlockTwigFunction extends TwigFunction
         CmsBlockValidatorInterface $cmsBlockValidator,
         string $localeName
     ) {
-        parent::__construct();
         $this->cmsBlockStorageClient = $cmsBlockStorageClient;
         $this->storeClient = $storeClient;
         $this->cmsBlockValidator = $cmsBlockValidator;
@@ -67,7 +66,7 @@ class CmsBlockTwigFunction extends TwigFunction
     /**
      * @return string
      */
-    protected function getFunctionName(): string
+    public function getFunctionName(): string
     {
         return static::SPY_CMS_BLOCK_TWIG_FUNCTION;
     }
@@ -75,7 +74,7 @@ class CmsBlockTwigFunction extends TwigFunction
     /**
      * @return callable
      */
-    protected function getFunction(): callable
+    public function getFunction(): callable
     {
         return function (Environment $twig, array $context, array $blockOptions = []): string {
             $storeName = $this->storeClient->getCurrentStore()->getName();
@@ -93,7 +92,7 @@ class CmsBlockTwigFunction extends TwigFunction
     /**
      * @return array
      */
-    protected function getOptions(): array
+    public function getOptions(): array
     {
         return [
             'needs_context' => true,

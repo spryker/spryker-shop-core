@@ -16,7 +16,7 @@ use SprykerShop\Yves\ContentFileWidget\ContentFileWidgetDependencyProvider;
 use SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToContentFileClientInterface;
 use SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToFileManagerStorageClientInterface;
 use SprykerShop\Yves\ContentFileWidget\Plugin\Twig\ContentFileListTwigPlugin;
-use SprykerShop\Yves\ContentFileWidget\Twig\ContentFileListTwigFunction;
+use SprykerShop\Yves\ContentFileWidget\Twig\ContentFileListTwigFunctionProvider;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -151,7 +151,7 @@ class ContentFileListTwigPluginTest extends Unit
      */
     protected function getContentFileListTwigPlugin()
     {
-        $functionName = new ReflectionClassConstant(ContentFileListTwigFunction::class, 'FUNCTION_CONTENT_FILE_LIST');
+        $functionName = new ReflectionClassConstant(ContentFileListTwigFunctionProvider::class, 'FUNCTION_CONTENT_FILE_LIST');
 
         return $this->getTwig()->getFunction($functionName->getValue());
     }

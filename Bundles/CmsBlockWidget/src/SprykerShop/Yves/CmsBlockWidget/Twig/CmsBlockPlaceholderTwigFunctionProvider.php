@@ -7,11 +7,11 @@
 
 namespace SprykerShop\Yves\CmsBlockWidget\Twig;
 
-use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Shared\Twig\TwigFunctionProvider;
 use Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPluginInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class CmsBlockPlaceholderTwigFunction extends TwigFunction
+class CmsBlockPlaceholderTwigFunctionProvider extends TwigFunctionProvider
 {
     protected const SPY_CMS_BLOCK_PLACEHOLDER_TWIG_FUNCTION = 'spyCmsBlockPlaceholder';
     protected const CMS_BLOCK_PREFIX_KEY = 'generated.cms.cms-block';
@@ -34,7 +34,6 @@ class CmsBlockPlaceholderTwigFunction extends TwigFunction
         TranslatorInterface $translator,
         CmsTwigContentRendererPluginInterface $cmsTwigContentRendererPlugin
     ) {
-        parent::__construct();
         $this->translator = $translator;
         $this->cmsTwigContentRendererPlugin = $cmsTwigContentRendererPlugin;
     }
@@ -42,7 +41,7 @@ class CmsBlockPlaceholderTwigFunction extends TwigFunction
     /**
      * @return string
      */
-    protected function getFunctionName(): string
+    public function getFunctionName(): string
     {
         return static::SPY_CMS_BLOCK_PLACEHOLDER_TWIG_FUNCTION;
     }
@@ -50,7 +49,7 @@ class CmsBlockPlaceholderTwigFunction extends TwigFunction
     /**
      * @return array
      */
-    protected function getOptions(): array
+    public function getOptions(): array
     {
         return [
             'needs_context' => true,
@@ -60,7 +59,7 @@ class CmsBlockPlaceholderTwigFunction extends TwigFunction
     /**
      * @return callable
      */
-    protected function getFunction(): callable
+    public function getFunction(): callable
     {
         return function (array $context, $identifier) {
             $translation = $this->getTranslation($identifier, $context);

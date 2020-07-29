@@ -11,13 +11,13 @@ use ArrayObject;
 use DateTime;
 use Generated\Shared\Transfer\NavigationStorageTransfer;
 use Spryker\Client\ContentNavigation\Exception\MissingNavigationTermException;
-use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Shared\Twig\TwigFunctionProvider;
 use SprykerShop\Yves\ContentNavigationWidget\ContentNavigationWidgetConfig;
 use SprykerShop\Yves\ContentNavigationWidget\Dependency\Client\ContentNavigationWidgetToContentNavigationClientInterface;
 use SprykerShop\Yves\ContentNavigationWidget\Dependency\Client\ContentNavigationWidgetToNavigationStorageClientInterface;
 use Twig\Environment;
 
-class ContentNavigationTwigFunction extends TwigFunction
+class ContentNavigationTwigFunctionProvider extends TwigFunctionProvider
 {
     /**
      * @uses \Spryker\Shared\ContentNavigation\ContentNavigationWidgetConfig::TWIG_FUNCTION_NAME
@@ -67,7 +67,6 @@ class ContentNavigationTwigFunction extends TwigFunction
         ContentNavigationWidgetToNavigationStorageClientInterface $navigationStorageClient,
         ContentNavigationWidgetConfig $contentNavigationWidgetConfig
     ) {
-        parent::__construct();
         $this->twig = $twig;
         $this->localeName = $localeName;
         $this->contentNavigationClient = $contentNavigationClient;
@@ -78,7 +77,7 @@ class ContentNavigationTwigFunction extends TwigFunction
     /**
      * @return string
      */
-    protected function getFunctionName(): string
+    public function getFunctionName(): string
     {
         return static::TWIG_FUNCTION_NAME_CONTENT_NAVIGATION;
     }
@@ -86,7 +85,7 @@ class ContentNavigationTwigFunction extends TwigFunction
     /**
      * @return callable
      */
-    protected function getFunction(): callable
+    public function getFunction(): callable
     {
         return function (string $contentKey, string $templateIdentifier) {
             $availableTemplate = $this->findTemplate($templateIdentifier);
