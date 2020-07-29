@@ -12,24 +12,96 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_LOGIN} instead.
+     */
     protected const ROUTE_LOGIN = 'login';
+    public const ROUTE_NAME_LOGIN = 'login';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_LOGOUT} instead.
+     */
     protected const ROUTE_LOGOUT = 'logout';
+    public const ROUTE_NAME_LOGOUT = 'logout';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_REGISTER} instead.
+     */
     protected const ROUTE_REGISTER = 'register';
+    public const ROUTE_NAME_REGISTER = 'register';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_PASSWORD_FORGOTTEN} instead.
+     */
     protected const ROUTE_PASSWORD_FORGOTTEN = 'password/forgotten';
+    public const ROUTE_NAME_PASSWORD_FORGOTTEN = 'password/forgotten';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_PASSWORD_RESTORE} instead.
+     */
     protected const ROUTE_PASSWORD_RESTORE = 'password/restore';
+    public const ROUTE_NAME_PASSWORD_RESTORE = 'password/restore';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_OVERVIEW} instead.
+     */
     protected const ROUTE_CUSTOMER_OVERVIEW = 'customer/overview';
+    public const ROUTE_NAME_CUSTOMER_OVERVIEW = 'customer/overview';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_PROFILE} instead.
+     */
     protected const ROUTE_CUSTOMER_PROFILE = 'customer/profile';
+    public const ROUTE_NAME_CUSTOMER_PROFILE = 'customer/profile';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_ADDRESS} instead.
+     */
     protected const ROUTE_CUSTOMER_ADDRESS = 'customer/address';
+    public const ROUTE_NAME_CUSTOMER_ADDRESS = 'customer/address';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_NEW_ADDRESS} instead.
+     */
     protected const ROUTE_CUSTOMER_NEW_ADDRESS = 'customer/address/new';
+    public const ROUTE_NAME_CUSTOMER_NEW_ADDRESS = 'customer/address/new';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_UPDATE_ADDRESS} instead.
+     */
     protected const ROUTE_CUSTOMER_UPDATE_ADDRESS = 'customer/address/update';
+    public const ROUTE_NAME_CUSTOMER_UPDATE_ADDRESS = 'customer/address/update';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_DELETE_ADDRESS} instead.
+     */
     protected const ROUTE_CUSTOMER_DELETE_ADDRESS = 'customer/address/delete';
+    public const ROUTE_NAME_CUSTOMER_DELETE_ADDRESS = 'customer/address/delete';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_REFRESH_ADDRESS} instead.
+     */
     protected const ROUTE_CUSTOMER_REFRESH_ADDRESS = 'customer/address/refresh';
+    public const ROUTE_NAME_CUSTOMER_REFRESH_ADDRESS = 'customer/address/refresh';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_ORDER} instead.
+     */
     protected const ROUTE_CUSTOMER_ORDER = 'customer/order';
+    public const ROUTE_NAME_CUSTOMER_ORDER = 'customer/order';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_ORDER_DETAILS} instead.
+     */
     protected const ROUTE_CUSTOMER_ORDER_DETAILS = 'customer/order/details';
+    public const ROUTE_NAME_CUSTOMER_ORDER_DETAILS = 'customer/order/details';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_DELETE} instead.
+     */
     protected const ROUTE_CUSTOMER_DELETE = 'customer/delete';
+    public const ROUTE_NAME_CUSTOMER_DELETE = 'customer/delete';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_DELETE_CONFIRM} instead.
+     */
     protected const ROUTE_CUSTOMER_DELETE_CONFIRM = 'customer/delete/confirm';
+    public const ROUTE_NAME_CUSTOMER_DELETE_CONFIRM = 'customer/delete/confirm';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_TOKEN} instead.
+     */
     protected const ROUTE_TOKEN = 'token';
+    public const ROUTE_NAME_TOKEN = 'token';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CONFIRM_REGISTRATION} instead.
+     */
     protected const ROUTE_CONFIRM_REGISTRATION = 'register/confirm';
+    public const ROUTE_NAME_CONFIRM_REGISTRATION = 'register/confirm';
 
     protected const TOKEN_PATTERN = '[a-zA-Z0-9-_\.]+';
 
@@ -75,7 +147,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addLoginRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/login', 'CustomerPage', 'Auth', 'loginAction');
-        $routeCollection->add(static::ROUTE_LOGIN, $route);
+        $routeCollection->add(static::ROUTE_NAME_LOGIN, $route);
 
         return $routeCollection;
     }
@@ -88,7 +160,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addLogoutRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/logout', 'CustomerPage', 'Auth', 'logoutAction');
-        $routeCollection->add(static::ROUTE_LOGOUT, $route);
+        $routeCollection->add(static::ROUTE_NAME_LOGOUT, $route);
 
         return $routeCollection;
     }
@@ -101,7 +173,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addRegisterRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/register', 'CustomerPage', 'Register', 'indexAction');
-        $routeCollection->add(static::ROUTE_REGISTER, $route);
+        $routeCollection->add(static::ROUTE_NAME_REGISTER, $route);
 
         return $routeCollection;
     }
@@ -114,7 +186,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addForgottenPasswordRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/password/forgotten', 'CustomerPage', 'Password', 'forgottenPasswordAction');
-        $routeCollection->add(static::ROUTE_PASSWORD_FORGOTTEN, $route);
+        $routeCollection->add(static::ROUTE_NAME_PASSWORD_FORGOTTEN, $route);
 
         return $routeCollection;
     }
@@ -127,7 +199,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addRestorePasswordRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/password/restore', 'CustomerPage', 'Password', 'restorePasswordAction');
-        $routeCollection->add(static::ROUTE_PASSWORD_RESTORE, $route);
+        $routeCollection->add(static::ROUTE_NAME_PASSWORD_RESTORE, $route);
 
         return $routeCollection;
     }
@@ -140,7 +212,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCustomerOverviewRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/customer/overview', 'CustomerPage', 'Customer', 'indexAction');
-        $routeCollection->add(static::ROUTE_CUSTOMER_OVERVIEW, $route);
+        $routeCollection->add(static::ROUTE_NAME_CUSTOMER_OVERVIEW, $route);
 
         return $routeCollection;
     }
@@ -153,7 +225,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCustomerProfileRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/customer/profile', 'CustomerPage', 'Profile', 'indexAction');
-        $routeCollection->add(static::ROUTE_CUSTOMER_PROFILE, $route);
+        $routeCollection->add(static::ROUTE_NAME_CUSTOMER_PROFILE, $route);
 
         return $routeCollection;
     }
@@ -166,7 +238,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCustomerAddressRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/customer/address', 'CustomerPage', 'Address', 'indexAction');
-        $routeCollection->add(static::ROUTE_CUSTOMER_ADDRESS, $route);
+        $routeCollection->add(static::ROUTE_NAME_CUSTOMER_ADDRESS, $route);
 
         return $routeCollection;
     }
@@ -179,7 +251,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addNewCustomerAddressRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/customer/address/new', 'CustomerPage', 'Address', 'createAction');
-        $routeCollection->add(static::ROUTE_CUSTOMER_NEW_ADDRESS, $route);
+        $routeCollection->add(static::ROUTE_NAME_CUSTOMER_NEW_ADDRESS, $route);
 
         return $routeCollection;
     }
@@ -192,7 +264,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addUpdateCustomerAddressRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/customer/address/update', 'CustomerPage', 'Address', 'updateAction');
-        $routeCollection->add(static::ROUTE_CUSTOMER_UPDATE_ADDRESS, $route);
+        $routeCollection->add(static::ROUTE_NAME_CUSTOMER_UPDATE_ADDRESS, $route);
 
         return $routeCollection;
     }
@@ -205,7 +277,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addDeleteCustomerAddressRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/customer/address/delete', 'CustomerPage', 'Address', 'deleteAction');
-        $routeCollection->add(static::ROUTE_CUSTOMER_DELETE_ADDRESS, $route);
+        $routeCollection->add(static::ROUTE_NAME_CUSTOMER_DELETE_ADDRESS, $route);
 
         return $routeCollection;
     }
@@ -218,7 +290,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addRefreshCustomerAddressRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/customer/address/refresh', 'CustomerPage', 'Address', 'refreshAction');
-        $routeCollection->add(static::ROUTE_CUSTOMER_REFRESH_ADDRESS, $route);
+        $routeCollection->add(static::ROUTE_NAME_CUSTOMER_REFRESH_ADDRESS, $route);
 
         return $routeCollection;
     }
@@ -231,7 +303,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCustomerOrderRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/customer/order', 'CustomerPage', 'Order', 'indexAction');
-        $routeCollection->add(static::ROUTE_CUSTOMER_ORDER, $route);
+        $routeCollection->add(static::ROUTE_NAME_CUSTOMER_ORDER, $route);
 
         return $routeCollection;
     }
@@ -244,7 +316,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCustomerOrderDetailsRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/customer/order/details', 'CustomerPage', 'Order', 'detailsAction');
-        $routeCollection->add(static::ROUTE_CUSTOMER_ORDER_DETAILS, $route);
+        $routeCollection->add(static::ROUTE_NAME_CUSTOMER_ORDER_DETAILS, $route);
 
         return $routeCollection;
     }
@@ -257,7 +329,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCustomerDeleteRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/customer/delete', 'CustomerPage', 'Delete', 'indexAction');
-        $routeCollection->add(static::ROUTE_CUSTOMER_DELETE, $route);
+        $routeCollection->add(static::ROUTE_NAME_CUSTOMER_DELETE, $route);
 
         return $routeCollection;
     }
@@ -270,7 +342,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCustomerDeleteConfirmRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildPostRoute('/customer/delete/confirm', 'CustomerPage', 'Delete', 'confirmAction');
-        $routeCollection->add(static::ROUTE_CUSTOMER_DELETE_CONFIRM, $route);
+        $routeCollection->add(static::ROUTE_NAME_CUSTOMER_DELETE_CONFIRM, $route);
 
         return $routeCollection;
     }
@@ -286,7 +358,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/access-token/{token}', 'CustomerPage', 'AccessToken', 'indexAction');
         $route = $route->setRequirement('token', static::TOKEN_PATTERN);
-        $routeCollection->add(static::ROUTE_TOKEN, $route);
+        $routeCollection->add(static::ROUTE_NAME_TOKEN, $route);
 
         return $routeCollection;
     }
@@ -301,7 +373,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addRegistrationConfirmedRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/register/confirm', 'CustomerPage', 'Register', 'confirmAction');
-        $routeCollection->add(static::ROUTE_CONFIRM_REGISTRATION, $route);
+        $routeCollection->add(static::ROUTE_NAME_CONFIRM_REGISTRATION, $route);
 
         return $routeCollection;
     }

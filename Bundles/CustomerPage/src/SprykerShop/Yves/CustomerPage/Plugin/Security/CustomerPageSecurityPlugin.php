@@ -22,7 +22,12 @@ use SprykerShop\Yves\CustomerPage\Form\LoginForm;
  */
 class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Security\CustomerPageSecurityPlugin::ROLE_NAME_USER} instead.
+     */
     protected const ROLE_USER = 'ROLE_USER';
+    public const ROLE_NAME_USER = 'ROLE_USER';
+
     protected const IS_AUTHENTICATED_ANONYMOUSLY = 'IS_AUTHENTICATED_ANONYMOUSLY';
 
     /**

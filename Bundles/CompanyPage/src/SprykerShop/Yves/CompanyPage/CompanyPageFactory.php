@@ -7,8 +7,9 @@
 
 namespace SprykerShop\Yves\CompanyPage;
 
+use Spryker\Service\Container\ContainerInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
-use Spryker\Yves\Kernel\Application;
+use Spryker\Yves\Router\Router\ChainRouter;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyClientInterface;
@@ -201,9 +202,19 @@ class CompanyPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\Kernel\Application
+     * @return \Spryker\Yves\Router\Router\ChainRouter
      */
-    public function getApplication(): Application
+    public function getRouter(): ChainRouter
+    {
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::SERVICE_ROUTER);
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return \Spryker\Service\Container\ContainerInterface
+     */
+    public function getApplication(): ContainerInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::PLUGIN_APPLICATION);
     }

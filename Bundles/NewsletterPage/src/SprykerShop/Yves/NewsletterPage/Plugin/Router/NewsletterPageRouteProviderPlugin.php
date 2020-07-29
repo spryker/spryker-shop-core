@@ -12,7 +12,11 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class NewsletterPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\NewsletterPage\Plugin\Router\NewsletterPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_NEWSLETTER} instead.
+     */
     protected const ROUTE_CUSTOMER_NEWSLETTER = 'customer/newsletter';
+    public const ROUTE_NAME_CUSTOMER_NEWSLETTER = 'customer/newsletter';
 
     /**
      * Specification:
@@ -39,7 +43,7 @@ class NewsletterPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addNewsletterRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/customer/newsletter', 'NewsletterPage', 'Newsletter', 'indexAction');
-        $routeCollection->add(static::ROUTE_CUSTOMER_NEWSLETTER, $route);
+        $routeCollection->add(static::ROUTE_NAME_CUSTOMER_NEWSLETTER, $route);
 
         return $routeCollection;
     }

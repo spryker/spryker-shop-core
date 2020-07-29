@@ -93,6 +93,8 @@ class ProductReviewWidgetFactory extends SprykerProductReviewFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Yves\Kernel\Application
      */
     public function getApplication(): Application
@@ -105,7 +107,7 @@ class ProductReviewWidgetFactory extends SprykerProductReviewFactory
      */
     public function getApplicationRequest(): Request
     {
-        return $this->getApplication()['request'];
+        return $this->getProvidedDependency(ProductReviewWidgetDependencyProvider::SERVICE_REQUEST_STACK)->getCurrentRequest();
     }
 
     /**

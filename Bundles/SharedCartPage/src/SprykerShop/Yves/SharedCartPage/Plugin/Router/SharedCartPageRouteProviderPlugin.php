@@ -12,9 +12,21 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class SharedCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\SharedCartPage\Plugin\Router\SharedCartPageRouteProviderPlugin::ROUTE_NAME_SHARED_CART_SHARE} instead.
+     */
     protected const ROUTE_SHARED_CART_SHARE = 'shared-cart/share';
+    public const ROUTE_NAME_SHARED_CART_SHARE = 'shared-cart/share';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\SharedCartPage\Plugin\Router\SharedCartPageRouteProviderPlugin::ROUTE_NAME_SHARED_CART_DISMISS} instead.
+     */
     protected const ROUTE_SHARED_CART_DISMISS = 'shared-cart/dismiss';
+    public const ROUTE_NAME_SHARED_CART_DISMISS = 'shared-cart/dismiss';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\SharedCartPage\Plugin\Router\SharedCartPageRouteProviderPlugin::ROUTE_NAME_SHARED_CART_DISMISS_CONFIRM} instead.
+     */
     protected const ROUTE_SHARED_CART_DISMISS_CONFIRM = 'shared-cart/dismiss-confirm';
+    public const ROUTE_NAME_SHARED_CART_DISMISS_CONFIRM = 'shared-cart/dismiss-confirm';
 
     /**
      * Specification:
@@ -43,7 +55,7 @@ class SharedCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addShareRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/shared-cart/share/{idQuote}', 'SharedCartPage', 'Share', 'indexAction');
-        $routeCollection->add(static::ROUTE_SHARED_CART_SHARE, $route);
+        $routeCollection->add(static::ROUTE_NAME_SHARED_CART_SHARE, $route);
 
         return $routeCollection;
     }
@@ -56,7 +68,7 @@ class SharedCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addDismissRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/shared-cart/dismiss/{idQuote}', 'SharedCartPage', 'Dismiss', 'indexAction');
-        $routeCollection->add(static::ROUTE_SHARED_CART_DISMISS, $route);
+        $routeCollection->add(static::ROUTE_NAME_SHARED_CART_DISMISS, $route);
 
         return $routeCollection;
     }
@@ -69,7 +81,7 @@ class SharedCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addDismissConfirmRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/shared-cart/dismiss-confirm/{idQuote}', 'SharedCartPage', 'Dismiss', 'ConfirmAction');
-        $routeCollection->add(static::ROUTE_SHARED_CART_DISMISS_CONFIRM, $route);
+        $routeCollection->add(static::ROUTE_NAME_SHARED_CART_DISMISS_CONFIRM, $route);
 
         return $routeCollection;
     }

@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CompanyPage\Plugin\CustomerPage;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use Spryker\Yves\Router\Router\ChainRouter;
 use SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CustomerRedirectStrategyPluginInterface;
 
 /**
@@ -16,6 +17,11 @@ use SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CustomerRedirectStr
  */
 class BusinessOnBehalfCompanyUserRedirectAfterLoginStrategyPlugin extends AbstractPlugin implements CustomerRedirectStrategyPluginInterface
 {
+    /**
+     * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin
+     */
+    protected const SERVICE_ROUTER = 'routers';
+
     protected const COMPANY_REDIRECT_ROUTE = 'company/user/select';
 
     /**
@@ -46,7 +52,7 @@ class BusinessOnBehalfCompanyUserRedirectAfterLoginStrategyPlugin extends Abstra
      */
     public function getRedirectUrl(CustomerTransfer $customerTransfer): string
     {
-        return $this->getFactory()->getApplication()->path(static::COMPANY_REDIRECT_ROUTE);
+        return $this->getRouter()->generate(static::COMPANY_REDIRECT_ROUTE);
     }
 
     /**
@@ -59,5 +65,13 @@ class BusinessOnBehalfCompanyUserRedirectAfterLoginStrategyPlugin extends Abstra
         return $this->getFactory()
             ->getBusinessOnBehalfClient()
             ->isCompanyUserChangeAllowed($customerTransfer);
+    }
+
+    /**
+     * @return \Spryker\Yves\Router\Router\ChainRouter
+     */
+    protected function getRouter(): ChainRouter
+    {
+        return $this->getFactory()->getRouter();
     }
 }

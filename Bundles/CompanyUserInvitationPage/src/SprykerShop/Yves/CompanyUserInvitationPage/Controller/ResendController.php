@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\CompanyUserInvitationPage\Controller;
 
 use Generated\Shared\Transfer\CompanyUserInvitationSendRequestTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
-use SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Provider\CompanyUserInvitationPageControllerProvider;
+use SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Router\CompanyUserInvitationPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -64,13 +64,13 @@ class ResendController extends AbstractController
 
         if ($companyUserInvitationSendResponseTransfer->getIsSuccess()) {
             return $this->redirectToRouteWithSuccessMessage(
-                CompanyUserInvitationPageControllerProvider::ROUTE_OVERVIEW,
+                CompanyUserInvitationPageRouteProviderPlugin::ROUTE_NAME_OVERVIEW,
                 'company.user.invitation.resent.success.message'
             );
         }
 
         return $this->redirectToRouteWithErrorMessage(
-            CompanyUserInvitationPageControllerProvider::ROUTE_OVERVIEW,
+            CompanyUserInvitationPageRouteProviderPlugin::ROUTE_NAME_OVERVIEW,
             'company.user.invitation.resent.error.message'
         );
     }

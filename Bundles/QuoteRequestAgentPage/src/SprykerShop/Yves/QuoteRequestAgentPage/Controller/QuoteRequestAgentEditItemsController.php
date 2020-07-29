@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class QuoteRequestAgentEditItemsController extends QuoteRequestAgentAbstractController
 {
     /**
-     * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_CART
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
      */
     protected const ROUTE_CART = 'cart';
 

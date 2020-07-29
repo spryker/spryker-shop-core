@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
+use SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 class ProfileController extends AbstractCustomerController
@@ -57,7 +57,7 @@ class ProfileController extends AbstractCustomerController
         }
 
         if ($profileForm->isSubmitted() && $profileForm->isValid() && $this->processProfileUpdate($profileForm->getData()) === true) {
-            return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_PROFILE);
+            return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_PROFILE);
         }
 
         $passwordForm = $this
@@ -67,7 +67,7 @@ class ProfileController extends AbstractCustomerController
             ->handleRequest($request);
 
         if ($passwordForm->isSubmitted() && $passwordForm->isValid() && $this->processPasswordUpdate($passwordForm->getData()) === true) {
-            return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_CUSTOMER_PROFILE);
+            return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_PROFILE);
         }
 
         return [

@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
+use SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -46,7 +47,7 @@ class QuoteRequestAgentReviseController extends QuoteRequestAgentAbstractControl
 
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
-        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_EDIT, [
+        return $this->redirectResponseInternal(QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_EDIT, [
             static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
         ]);
     }

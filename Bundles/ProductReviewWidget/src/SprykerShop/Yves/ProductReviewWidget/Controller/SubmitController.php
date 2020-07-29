@@ -115,6 +115,6 @@ class SubmitController extends AbstractController
      */
     protected function getParentRequest()
     {
-        return $this->getApplication()['request_stack']->getParentRequest();
+        return $this->getRequestStack()->getParentRequest();
     }
 }

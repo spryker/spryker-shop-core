@@ -7,11 +7,11 @@
 
 namespace SprykerShop\Yves\CmsBlockWidget;
 
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPlugin;
 use Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPluginInterface;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientBridge;
 use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToStoreClientBridge;
 
@@ -113,8 +113,8 @@ class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function addTranslatorService(Container $container): Container
     {
-        $container->set(static::SERVICE_TRANSLATOR, function () {
-            return (new Pimple())->getApplication()->get(static::SERVICE_TRANSLATOR);
+        $container->set(static::SERVICE_TRANSLATOR, function (ContainerInterface $container) {
+            return $container->getApplicationService(static::SERVICE_TRANSLATOR);
         });
 
         return $container;

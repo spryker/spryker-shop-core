@@ -141,10 +141,12 @@ class CatalogPageFactory extends AbstractFactory
      */
     public function createShopContextResolver(): ShopContextResolverInterface
     {
-        return new ShopContextResolver($this->getApplication());
+        return new ShopContextResolver($this->getContainer());
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Yves\Kernel\AbstractFactory::getContainer()} instead.
+     *
      * @return \Spryker\Yves\Kernel\Application
      */
     public function getApplication(): Application

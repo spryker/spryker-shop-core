@@ -15,7 +15,7 @@ use Spryker\Shared\CompanyUser\Plugin\AddCompanyUserPermissionPlugin;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\CompanyPage\Form\CompanyUserForm;
-use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
+use SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -124,7 +124,7 @@ class UserController extends AbstractCompanyController
             if ($companyUserResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(static::SUCCESS_MESSAGE_COMPANY_USER_CREATE);
 
-                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+                return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER);
             }
 
             $this->processResponseMessages($companyUserResponseTransfer);
@@ -190,7 +190,7 @@ class UserController extends AbstractCompanyController
             if ($companyUserResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(static::SUCCESS_MESSAGE_COMPANY_USER_UPDATE);
 
-                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+                return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER);
             }
 
             $this->processResponseMessages($companyUserResponseTransfer);
@@ -218,7 +218,7 @@ class UserController extends AbstractCompanyController
         if (!$companyUserDeleteForm->isSubmitted() || !$companyUserDeleteForm->isValid()) {
             $this->addErrorMessage(static::ERROR_MESSAGE_DELETE_COMPANY_USER);
 
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+            return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER);
         }
 
         $companyUserTransfer = $companyUserDeleteForm->getData();
@@ -230,7 +230,7 @@ class UserController extends AbstractCompanyController
         ) {
             $this->addErrorMessage(static::ERROR_MESSAGE_DELETE_YOURSELF);
 
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+            return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER);
         }
 
         $companyUserTransfer = $this->getFactory()
@@ -248,12 +248,12 @@ class UserController extends AbstractCompanyController
         if ($companyUserResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::SUCCESS_MESSAGE_COMPANY_USER_DELETE);
 
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+            return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER);
         }
 
         $this->addErrorMessage(static::ERROR_MESSAGE_DELETE_COMPANY_USER);
 
-        return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+        return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER);
     }
 
     /**

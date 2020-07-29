@@ -12,7 +12,11 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class OrderCustomReferenceWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\OrderCustomReferenceWidget\Plugin\Router\OrderCustomReferenceWidgetRouteProviderPlugin::ROUTE_NAME_ORDER_CUSTOM_REFERENCE_SAVE} instead.
+     */
     protected const ROUTE_ORDER_CUSTOM_REFERENCE_SAVE = 'order-custom-reference/save';
+    public const ROUTE_NAME_ORDER_CUSTOM_REFERENCE_SAVE = 'order-custom-reference/save';
 
     /**
      * {@inheritDoc}
@@ -46,7 +50,7 @@ class OrderCustomReferenceWidgetRouteProviderPlugin extends AbstractRouteProvide
             'OrderCustomReference',
             'saveAction'
         );
-        $routeCollection->add(static::ROUTE_ORDER_CUSTOM_REFERENCE_SAVE, $route);
+        $routeCollection->add(static::ROUTE_NAME_ORDER_CUSTOM_REFERENCE_SAVE, $route);
 
         return $routeCollection;
     }

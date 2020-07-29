@@ -12,8 +12,16 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class ProductSearchWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\ProductSearchWidget\Plugin\Router\ProductSearchWidgetRouteProviderPlugin::ROUTE_NAME_PRODUCT_CONCRETE_SEARCH} instead.
+     */
     protected const ROUTE_PRODUCT_CONCRETE_SEARCH = 'product-search/product-concrete-search';
+    public const ROUTE_NAME_PRODUCT_CONCRETE_SEARCH = 'product-search/product-concrete-search';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\ProductSearchWidget\Plugin\Router\ProductSearchWidgetRouteProviderPlugin::ROUTE_NAME_PRODUCT_QUICK_ADD} instead.
+     */
     protected const ROUTE_PRODUCT_QUICK_ADD = 'product-quick-add';
+    public const ROUTE_NAME_PRODUCT_QUICK_ADD = 'product-quick-add';
 
     /**
      * Specification:
@@ -43,7 +51,7 @@ class ProductSearchWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCartQuickAddRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/product-search/product-quick-add', 'ProductSearchWidget', 'ProductConcreteAdd', 'indexAction');
-        $routeCollection->add(static::ROUTE_PRODUCT_QUICK_ADD, $route);
+        $routeCollection->add(static::ROUTE_NAME_PRODUCT_QUICK_ADD, $route);
 
         return $routeCollection;
     }
@@ -58,7 +66,7 @@ class ProductSearchWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addProductConcreteSearchRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/product-search/product-concrete-search', 'ProductSearchWidget', 'ProductConcreteSearch', 'indexAction');
-        $routeCollection->add(static::ROUTE_PRODUCT_CONCRETE_SEARCH, $route);
+        $routeCollection->add(static::ROUTE_NAME_PRODUCT_CONCRETE_SEARCH, $route);
 
         return $routeCollection;
     }

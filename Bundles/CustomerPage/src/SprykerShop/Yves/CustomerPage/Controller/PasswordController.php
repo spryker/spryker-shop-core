@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CustomerPage\Controller;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Shared\Customer\Code\Messages;
 use SprykerShop\Yves\CustomerPage\Form\RestorePasswordForm;
-use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
+use SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -115,7 +115,7 @@ class PasswordController extends AbstractCustomerController
 
                 $this->addSuccessMessage(Messages::CUSTOMER_PASSWORD_CHANGED);
 
-                return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_LOGIN);
+                return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_NAME_LOGIN);
             }
 
             $this->processResponseErrors($customerResponseTransfer);

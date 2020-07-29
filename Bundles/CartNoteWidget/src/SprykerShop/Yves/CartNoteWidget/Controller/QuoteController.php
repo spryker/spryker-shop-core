@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\CartNoteWidget\Controller;
 use Spryker\Shared\CartNote\Code\Messages;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use SprykerShop\Yves\CartNoteWidget\Form\QuoteCartNoteForm;
-use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -19,6 +18,11 @@ use Symfony\Component\HttpFoundation\Request;
 class QuoteController extends AbstractController
 {
     public const REQUEST_HEADER_REFERER = 'referer';
+
+    /**
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
+     */
+    protected const ROUTE_NAME_CART = 'cart';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -58,7 +62,7 @@ class QuoteController extends AbstractController
             return $request->headers->get(static::REQUEST_HEADER_REFERER);
         }
 
-        return CartControllerProvider::ROUTE_CART;
+        return static::ROUTE_NAME_CART;
     }
 
     /**

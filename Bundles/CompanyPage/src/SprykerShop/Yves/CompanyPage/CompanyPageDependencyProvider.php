@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CompanyPage;
 
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
@@ -41,7 +42,16 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
     public const STORE = 'STORE';
 
     public const PLUGIN_COMPANY_OVERVIEW_WIDGETS = 'PLUGIN_COMPANY_OVERVIEW_WIDGETS';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+
+    /**
+     * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     */
+    public const SERVICE_ROUTER = 'routers';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -65,6 +75,7 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addBusinessOnBehalfClient($container);
         $container = $this->addMessengerClient($container);
         $container = $this->addGlossaryStorageClient($container);
+        $container = $this->addRouter($container);
         $container = $this->addApplication($container);
 
         return $container;
@@ -263,6 +274,24 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addRouter(Container $container): Container
+    {
+        $container->set(static::SERVICE_ROUTER, function (ContainerInterface $container) {
+            return $container->getApplicationService(static::SERVICE_ROUTER);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container

@@ -13,14 +13,46 @@ use Symfony\Component\HttpFoundation\Request;
 
 class MultiCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_INDEX} instead.
+     */
     protected const ROUTE_MULTI_CART_INDEX = 'multi-cart';
+    public const ROUTE_NAME_MULTI_CART_INDEX = 'multi-cart';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_CREATE} instead.
+     */
     protected const ROUTE_MULTI_CART_CREATE = 'multi-cart/create';
+    public const ROUTE_NAME_MULTI_CART_CREATE = 'multi-cart/create';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_UPDATE} instead.
+     */
     protected const ROUTE_MULTI_CART_UPDATE = 'multi-cart/update';
+    public const ROUTE_NAME_MULTI_CART_UPDATE = 'multi-cart/update';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_DELETE} instead.
+     */
     protected const ROUTE_MULTI_CART_DELETE = 'multi-cart/delete';
+    public const ROUTE_NAME_MULTI_CART_DELETE = 'multi-cart/delete';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_CONFIRM_DELETE} instead.
+     */
     protected const ROUTE_MULTI_CART_CONFIRM_DELETE = 'multi-cart/confirm-delete';
+    public const ROUTE_NAME_MULTI_CART_CONFIRM_DELETE = 'multi-cart/confirm-delete';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_SET_DEFAULT} instead.
+     */
     protected const ROUTE_MULTI_CART_SET_DEFAULT = 'multi-cart/set-default';
+    public const ROUTE_NAME_MULTI_CART_SET_DEFAULT = 'multi-cart/set-default';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_CLEAR} instead.
+     */
     protected const ROUTE_MULTI_CART_CLEAR = 'multi-cart/clear';
+    public const ROUTE_NAME_MULTI_CART_CLEAR = 'multi-cart/clear';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_DUPLICATE} instead.
+     */
     protected const ROUTE_MULTI_CART_DUPLICATE = 'multi-cart/duplicate';
+    public const ROUTE_NAME_MULTI_CART_DUPLICATE = 'multi-cart/duplicate';
 
     protected const PARAM_ID_QUOTE = 'idQuote';
 
@@ -56,7 +88,7 @@ class MultiCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addMultiCartCreateRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/multi-cart/create', 'MultiCartPage', 'MultiCart', 'createAction');
-        $routeCollection->add(static::ROUTE_MULTI_CART_CREATE, $route);
+        $routeCollection->add(static::ROUTE_NAME_MULTI_CART_CREATE, $route);
 
         return $routeCollection;
     }
@@ -70,7 +102,7 @@ class MultiCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/multi-cart/update/{idQuote}', 'MultiCartPage', 'MultiCart', 'updateAction');
         $route = $route->setRequirement(static::PARAM_ID_QUOTE, '\d+');
-        $routeCollection->add(static::ROUTE_MULTI_CART_UPDATE, $route);
+        $routeCollection->add(static::ROUTE_NAME_MULTI_CART_UPDATE, $route);
 
         return $routeCollection;
     }
@@ -85,7 +117,7 @@ class MultiCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $route = $this->buildPostRoute('/multi-cart/delete/{idQuote}', 'MultiCartPage', 'MultiCart', 'deleteAction');
         $route = $route->setRequirement(static::PARAM_ID_QUOTE, '\d+');
         $route = $route->setMethods(Request::METHOD_POST);
-        $routeCollection->add(static::ROUTE_MULTI_CART_DELETE, $route);
+        $routeCollection->add(static::ROUTE_NAME_MULTI_CART_DELETE, $route);
 
         return $routeCollection;
     }
@@ -99,7 +131,7 @@ class MultiCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/multi-cart/confirm-delete/{idQuote}', 'MultiCartPage', 'MultiCart', 'confirmDeleteAction');
         $route = $route->setRequirement(static::PARAM_ID_QUOTE, '\d+');
-        $routeCollection->add(static::ROUTE_MULTI_CART_CONFIRM_DELETE, $route);
+        $routeCollection->add(static::ROUTE_NAME_MULTI_CART_CONFIRM_DELETE, $route);
 
         return $routeCollection;
     }
@@ -114,7 +146,7 @@ class MultiCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $route = $this->buildRoute('/multi-cart/clear/{idQuote}', 'MultiCartPage', 'MultiCart', 'clearAction');
         $route = $route->setRequirement(static::PARAM_ID_QUOTE, '\d+');
         $route = $route->setMethods(Request::METHOD_POST);
-        $routeCollection->add(static::ROUTE_MULTI_CART_CLEAR, $route);
+        $routeCollection->add(static::ROUTE_NAME_MULTI_CART_CLEAR, $route);
 
         return $routeCollection;
     }
@@ -129,7 +161,7 @@ class MultiCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $route = $this->buildRoute('/multi-cart/duplicate/{idQuote}', 'MultiCartPage', 'MultiCart', 'duplicateAction');
         $route = $route->setRequirement(static::PARAM_ID_QUOTE, '\d+');
         $route = $route->setMethods(Request::METHOD_POST);
-        $routeCollection->add(static::ROUTE_MULTI_CART_DUPLICATE, $route);
+        $routeCollection->add(static::ROUTE_NAME_MULTI_CART_DUPLICATE, $route);
 
         return $routeCollection;
     }
@@ -144,7 +176,7 @@ class MultiCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $route = $this->buildRoute('/multi-cart/set-default/{idQuote}', 'MultiCartPage', 'MultiCart', 'setDefaultAction');
         $route = $route->setRequirement(static::PARAM_ID_QUOTE, '\d+');
         $route = $route->setMethods(Request::METHOD_POST);
-        $routeCollection->add(static::ROUTE_MULTI_CART_SET_DEFAULT, $route);
+        $routeCollection->add(static::ROUTE_NAME_MULTI_CART_SET_DEFAULT, $route);
 
         return $routeCollection;
     }
@@ -157,7 +189,7 @@ class MultiCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addMultiCartIndexRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/multi-cart', 'MultiCartPage', 'MultiCart', 'indexAction');
-        $routeCollection->add(static::ROUTE_MULTI_CART_INDEX, $route);
+        $routeCollection->add(static::ROUTE_NAME_MULTI_CART_INDEX, $route);
 
         return $routeCollection;
     }

@@ -22,10 +22,10 @@ use SprykerShop\Yves\AgentPage\Form\AgentLoginForm;
  */
 class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface
 {
-    protected const ROLE_AGENT = 'ROLE_AGENT';
-    protected const ROLE_ALLOWED_TO_SWITCH = 'ROLE_ALLOWED_TO_SWITCH';
-    protected const ROLE_USER = 'ROLE_USER';
-    protected const ROLE_PREVIOUS_ADMIN = 'ROLE_PREVIOUS_ADMIN';
+    public const ROLE_AGENT = 'ROLE_AGENT';
+    public const ROLE_ALLOWED_TO_SWITCH = 'ROLE_ALLOWED_TO_SWITCH';
+    public const ROLE_USER = 'ROLE_USER';
+    public const ROLE_PREVIOUS_ADMIN = 'ROLE_PREVIOUS_ADMIN';
 
     /**
      * @uses \Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin::SERVICE_DISPATCHER

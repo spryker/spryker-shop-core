@@ -12,7 +12,11 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class MerchantSwitcherWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\MerchantSwitcherWidget\Plugin\Router\MerchantSwitcherWidgetRouteProviderPlugin::ROUTE_NAME_SWITCH_MERCHANT} instead.
+     */
     protected const ROUTE_SWITCH_MERCHANT = 'switch-merchant';
+    public const ROUTE_NAME_SWITCH_MERCHANT = 'switch-merchant';
 
     /**
      * Specification:
@@ -41,7 +45,7 @@ class MerchantSwitcherWidgetRouteProviderPlugin extends AbstractRouteProviderPlu
     protected function addSwitchMerchantRoute(RouteCollection $routeCollection): RouteCollection
     {
         $routeCollection->add(
-            static::ROUTE_SWITCH_MERCHANT,
+            static::ROUTE_NAME_SWITCH_MERCHANT,
             $this->buildPostRoute('/merchant/switch', 'MerchantSwitcherWidget', 'MerchantSwitcher', 'switchMerchant')
         );
 

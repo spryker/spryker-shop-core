@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\DiscountWidget\Form;
 
 use Spryker\Yves\Kernel\Form\AbstractType;
-use SprykerShop\Yves\DiscountWidget\Plugin\Provider\DiscountWidgetControllerProvider;
+use SprykerShop\Yves\DiscountWidget\Plugin\Router\DiscountWidgetRouteProviderPlugin;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -33,7 +33,7 @@ class CartVoucherForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->setAction(DiscountWidgetControllerProvider::ROUTE_DISCOUNT_VOUCHER_ADD);
+        $builder->setAction(DiscountWidgetRouteProviderPlugin::ROUTE_NAME_DISCOUNT_VOUCHER_ADD);
 
         $this->addVoucherCodeField($builder);
     }
