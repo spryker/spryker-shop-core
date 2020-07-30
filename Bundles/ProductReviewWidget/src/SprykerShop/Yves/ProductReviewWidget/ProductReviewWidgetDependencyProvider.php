@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ProductReviewWidget;
 
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
@@ -21,7 +22,15 @@ class ProductReviewWidgetDependencyProvider extends AbstractBundleDependencyProv
     public const CLIENT_PRODUCT_REVIEW = 'CLIENT_PRODUCT_REVIEW';
     public const CLIENT_PRODUCT_REVIEW_STORAGE = 'CLIENT_PRODUCT_REVIEW_STORAGE';
 
+    /**
+     * @deprecated Use {@link \Spryker\Yves\Kernel\AbstractFactory::getContainer()} instead.
+     */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+
+    /**
+     * @uses `\Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK`
+     */
+    public const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -36,6 +45,7 @@ class ProductReviewWidgetDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addProductReviewClient($container);
         $container = $this->addProductReviewStorageClient($container);
         $container = $this->addPluginApplication($container);
+        $container = $this->addRequestStack($container);
 
         return $container;
     }
@@ -83,6 +93,8 @@ class ProductReviewWidgetDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Yves\Kernel\AbstractFactory::getContainer()} instead.
+     *
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -91,6 +103,20 @@ class ProductReviewWidgetDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::PLUGIN_APPLICATION, function () {
             return (new Pimple())->getApplication();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addRequestStack(Container $container): Container
+    {
+        $container->set(static::SERVICE_REQUEST_STACK, function (ContainerInterface $container) {
+            return $container->getApplicationService(static::SERVICE_REQUEST_STACK);
         });
 
         return $container;

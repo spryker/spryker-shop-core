@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\AgentPage\Plugin\Handler;
 
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\AgentPage\Plugin\Provider\AgentPageControllerProvider;
 use SprykerShop\Yves\AgentPage\Security\Agent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +20,11 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerI
  */
 class AgentAuthenticationSuccessHandler extends AbstractPlugin implements AuthenticationSuccessHandlerInterface
 {
+    /**
+     * @uses \SprykerShop\Yves\AgentPage\Plugin\Router\AgentPageRouteProviderPlugin::ROUTE_AGENT_OVERVIEW
+     */
+    protected const ROUTE_AGENT_OVERVIEW = 'agent/overview';
+
     /**
      * @var string|null
      */
@@ -84,11 +88,9 @@ class AgentAuthenticationSuccessHandler extends AbstractPlugin implements Authen
         }
 
         $targetUrl = $this->getFactory()
-            ->getApplication()
-            ->url(AgentPageControllerProvider::ROUTE_AGENT_OVERVIEW);
+            ->getRouter()
+            ->generate(static::ROUTE_AGENT_OVERVIEW);
 
-        $response = $this->getFactory()->createRedirectResponse($targetUrl);
-
-        return $response;
+        return new RedirectResponse($targetUrl);
     }
 }

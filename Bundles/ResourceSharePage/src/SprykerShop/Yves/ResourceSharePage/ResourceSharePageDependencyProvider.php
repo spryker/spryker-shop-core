@@ -20,7 +20,11 @@ class ResourceSharePageDependencyProvider extends AbstractBundleDependencyProvid
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
 
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+
     public const PLUGINS_RESOURCE_SHARE_ROUTER_STRATEGY = 'PLUGINS_RESOURCE_SHARE_ROUTER_STRATEGY';
 
     /**
@@ -76,6 +80,8 @@ class ResourceSharePageDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container

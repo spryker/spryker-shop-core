@@ -14,10 +14,10 @@ use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
+use SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use SprykerShop\Yves\WishlistPage\Form\AddAllAvailableProductsToCartFormType;
-use SprykerShop\Yves\WishlistPage\Plugin\Provider\WishlistPageControllerProvider;
+use SprykerShop\Yves\WishlistPage\Plugin\Router\WishlistPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -112,7 +112,7 @@ class WishlistController extends AbstractController
     {
         $wishlistItemTransfer = $this->getWishlistItemTransferFromRequest($request);
         if (!$wishlistItemTransfer) {
-            return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_LOGIN);
+            return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_NAME_LOGIN);
         }
 
         $wishlistAddItemForm = $this->getFactory()->getWishlistAddItemForm()->handleRequest($request);
@@ -120,7 +120,7 @@ class WishlistController extends AbstractController
         if (!$wishlistAddItemForm->isSubmitted() || !$wishlistAddItemForm->isValid()) {
             $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
 
-            return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_DETAILS, [
+            return $this->redirectResponseInternal(WishlistPageRouteProviderPlugin::ROUTE_NAME_WISHLIST_DETAILS, [
                 'wishlistName' => $wishlistItemTransfer->getWishlistName(),
             ]);
         }
@@ -132,7 +132,7 @@ class WishlistController extends AbstractController
             $this->addErrorMessage('customer.account.wishlist.item.not_added');
         }
 
-        return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_DETAILS, [
+        return $this->redirectResponseInternal(WishlistPageRouteProviderPlugin::ROUTE_NAME_WISHLIST_DETAILS, [
             'wishlistName' => $wishlistItemTransfer->getWishlistName(),
         ]);
     }
@@ -146,7 +146,7 @@ class WishlistController extends AbstractController
     {
         $wishlistItemTransfer = $this->getWishlistItemTransferFromRequest($request);
         if (!$wishlistItemTransfer) {
-            return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_LOGIN);
+            return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_NAME_LOGIN);
         }
 
         $wishlistRemoveItemForm = $this->getFactory()->getWishlistRemoveItemForm()->handleRequest($request);
@@ -154,7 +154,7 @@ class WishlistController extends AbstractController
         if (!$wishlistRemoveItemForm->isSubmitted() || !$wishlistRemoveItemForm->isValid()) {
             $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
 
-            return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_DETAILS, [
+            return $this->redirectResponseInternal(WishlistPageRouteProviderPlugin::ROUTE_NAME_WISHLIST_DETAILS, [
                 'wishlistName' => $wishlistItemTransfer->getWishlistName(),
             ]);
         }
@@ -165,7 +165,7 @@ class WishlistController extends AbstractController
 
         $this->addSuccessMessage('customer.account.wishlist.item.removed');
 
-        return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_DETAILS, [
+        return $this->redirectResponseInternal(WishlistPageRouteProviderPlugin::ROUTE_NAME_WISHLIST_DETAILS, [
             'wishlistName' => $wishlistItemTransfer->getWishlistName(),
         ]);
     }
@@ -179,7 +179,7 @@ class WishlistController extends AbstractController
     {
         $wishlistItemTransfer = $this->getWishlistItemTransferFromRequest($request);
         if (!$wishlistItemTransfer) {
-            return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_LOGIN);
+            return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_NAME_LOGIN);
         }
 
         $wishlistMoveToCartForm = $this->getFactory()->getWishlistMoveToCartForm()->handleRequest($request);
@@ -187,7 +187,7 @@ class WishlistController extends AbstractController
         if (!$wishlistMoveToCartForm->isSubmitted() || !$wishlistMoveToCartForm->isValid()) {
             $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
 
-            return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_DETAILS, [
+            return $this->redirectResponseInternal(WishlistPageRouteProviderPlugin::ROUTE_NAME_WISHLIST_DETAILS, [
                 'wishlistName' => $wishlistItemTransfer->getWishlistName(),
             ]);
         }
@@ -207,14 +207,14 @@ class WishlistController extends AbstractController
         if ($result->getRequests()->count()) {
             $this->addErrorMessage('customer.account.wishlist.item.moved_to_cart.failed');
 
-            return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_DETAILS, [
+            return $this->redirectResponseInternal(WishlistPageRouteProviderPlugin::ROUTE_NAME_WISHLIST_DETAILS, [
                 'wishlistName' => $wishlistItemTransfer->getWishlistName(),
             ]);
         }
 
         $this->addSuccessMessage('customer.account.wishlist.item.moved_to_cart');
 
-        return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_DETAILS, [
+        return $this->redirectResponseInternal(WishlistPageRouteProviderPlugin::ROUTE_NAME_WISHLIST_DETAILS, [
             'wishlistName' => $wishlistItemTransfer->getWishlistName(),
         ]);
     }
@@ -244,7 +244,7 @@ class WishlistController extends AbstractController
                 $this->addErrorMessage('customer.account.wishlist.item.moved_all_available_to_cart.failed');
 
                 if ($result->getRequests()->count() === count($wishlistItemMetaTransferCollection)) {
-                    return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_DETAILS, [
+                    return $this->redirectResponseInternal(WishlistPageRouteProviderPlugin::ROUTE_NAME_WISHLIST_DETAILS, [
                         'wishlistName' => $wishlistName,
                     ]);
                 }
@@ -253,7 +253,7 @@ class WishlistController extends AbstractController
             $this->addSuccessMessage('customer.account.wishlist.item.moved_all_available_to_cart');
         }
 
-        return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_DETAILS, [
+        return $this->redirectResponseInternal(WishlistPageRouteProviderPlugin::ROUTE_NAME_WISHLIST_DETAILS, [
             'wishlistName' => $wishlistName,
         ]);
     }

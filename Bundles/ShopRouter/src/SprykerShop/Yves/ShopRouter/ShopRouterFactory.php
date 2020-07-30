@@ -56,6 +56,8 @@ class ShopRouterFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Silex\Application
      */
     public function getApplication()
@@ -64,6 +66,8 @@ class ShopRouterFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Symfony\Component\Routing\RouterInterface
      */
     public function createSharedSilexRouter()
@@ -72,6 +76,8 @@ class ShopRouterFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Symfony\Component\Routing\RouteCollection $routeCollection
      * @param \Symfony\Component\Routing\RequestContext $requestContext
      *
@@ -83,6 +89,8 @@ class ShopRouterFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \SprykerShop\Yves\ShopRouter\Creator\ResourceCreatorHandlerInterface
      */
     public function createResourceCreatorHandler()

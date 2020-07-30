@@ -7,11 +7,14 @@
 
 namespace SprykerShop\Yves\ErrorPage\Plugin\ExceptionHandler;
 
+use Spryker\Service\Container\ContainerInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use Spryker\Yves\Router\Router\ChainRouter;
 use SprykerShop\Yves\ErrorPage\Dependency\Plugin\ExceptionHandlerPluginInterface;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @method \SprykerShop\Yves\ErrorPage\ErrorPageFactory getFactory()
@@ -20,10 +23,32 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 class SubRequestExceptionHandlerPlugin extends AbstractPlugin implements ExceptionHandlerPluginInterface
 {
     /**
-     * @see \Spryker\Shared\Application\Application::SERVICE_REQUEST
+     * @deprecated Use `\SprykerShop\Yves\ErrorPage\Plugin\ExceptionHandler\SubRequestExceptionHandlerPlugin::SERVICE_REQUEST_STACK` instead.
      */
     public const SERVICE_REQUEST = 'request';
+
     public const URL_NAME_PREFIX = 'error/';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @see \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     */
+    protected const SERVICE_ROUTERS = 'routers';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @see \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     */
+    protected const SERVICE_REQUEST_STACK = 'request_stack';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @see \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_KERNEL
+     */
+    protected const SERVICE_KERNEL = 'kernel';
 
     /**
      * @param int $statusCode
@@ -42,28 +67,65 @@ class SubRequestExceptionHandlerPlugin extends AbstractPlugin implements Excepti
      */
     public function handleException(FlattenException $exception)
     {
-        $application = $this->getFactory()->getApplication();
+        $request = $this->getFactory()->getRequestStack()->getCurrentRequest();
+        $router = $this->getFactory()->getRouter();
 
-        $request = $application[static::SERVICE_REQUEST];
-        $errorPageUrl = $application->url(static::URL_NAME_PREFIX . $exception->getStatusCode());
+        $errorPageUrl = $router->generate(static::URL_NAME_PREFIX . $exception->getStatusCode(), [], UrlGeneratorInterface::ABSOLUTE_URL);
+
         $cookies = $request->cookies->all();
 
         $subRequest = Request::create(
             $errorPageUrl,
             Request::METHOD_GET,
             [
-            'exception' => $exception,
+                'exception' => $exception,
             ],
             $cookies
         );
 
-        $session = $request->getSession();
-
-        if ($session) {
-            $subRequest->setSession($session);
+        if ($request->hasSession()) {
+            $subRequest->setSession($request->getSession());
         }
-        $response = $application->handle($subRequest, HttpKernelInterface::MASTER_REQUEST, false);
 
-        return $response;
+        return $this->getFactory()->getKernel()->handle($subRequest, HttpKernelInterface::SUB_REQUEST, false);
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Spryker\Yves\Router\Router\ChainRouter
+     */
+    protected function getRouter(ContainerInterface $container): ChainRouter
+    {
+        return $container->get(static::SERVICE_ROUTERS);
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    protected function getRequest(ContainerInterface $container): Request
+    {
+        /**@var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
+        $requestStack = $container->get(static::SERVICE_REQUEST_STACK);
+
+        return $requestStack->getCurrentRequest();
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Symfony\Component\HttpKernel\HttpKernelInterface
+     */
+    protected function getKernel(ContainerInterface $container): HttpKernelInterface
+    {
+        return $container->get(static::SERVICE_KERNEL);
     }
 }

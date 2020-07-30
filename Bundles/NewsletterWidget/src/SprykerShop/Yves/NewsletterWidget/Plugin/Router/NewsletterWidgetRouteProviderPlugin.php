@@ -12,9 +12,17 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class NewsletterWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\NewsletterWidget\Plugin\Router\NewsletterWidgetRouteProviderPlugin::ROUTE_NAME_NEWSLETTER_SUBSCRIBE} instead.
+     */
     protected const ROUTE_NEWSLETTER_SUBSCRIBE = 'newsletter/subscribe';
+    public const ROUTE_NAME_NEWSLETTER_SUBSCRIBE = 'newsletter/subscribe';
 
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\NewsletterWidget\Plugin\Router\NewsletterWidgetRouteProviderPlugin::ROUTE_NAME_NEWSLETTER_WIDGET_SUBSCRIBE} instead.
+     */
     protected const ROUTE_NEWSLETTER_WIDGET_SUBSCRIBE = 'newsletter-widget/subscribe';
+    public const ROUTE_NAME_NEWSLETTER_WIDGET_SUBSCRIBE = 'newsletter-widget/subscribe';
 
     /**
      * Specification:
@@ -42,7 +50,7 @@ class NewsletterWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addNewsletterSubscribeRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/newsletter/subscribe', 'NewsletterWidget', 'Subscription', 'subscribeAction');
-        $routeCollection->add(static::ROUTE_NEWSLETTER_SUBSCRIBE, $route);
+        $routeCollection->add(static::ROUTE_NAME_NEWSLETTER_SUBSCRIBE, $route);
 
         return $routeCollection;
     }
@@ -55,7 +63,7 @@ class NewsletterWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addNewsletterWidgetSubscribeRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/newsletter-widget/subscribe', 'NewsletterWidget', 'SubscriptionWidget', 'subscribeAction');
-        $routeCollection->add(static::ROUTE_NEWSLETTER_WIDGET_SUBSCRIBE, $route);
+        $routeCollection->add(static::ROUTE_NAME_NEWSLETTER_WIDGET_SUBSCRIBE, $route);
 
         return $routeCollection;
     }

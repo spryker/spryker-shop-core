@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuickOrderPage;
 
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
@@ -29,7 +30,12 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_PRODUCT_QUANTITY_STORAGE = 'CLIENT_PRODUCT_QUANTITY_STORAGE';
     public const CLIENT_PRICE_PRODUCT_STORAGE = 'CLIENT_PRICE_PRODUCT_STORAGE';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+
     public const PLUGINS_QUICK_ORDER_PAGE_WIDGETS = 'PLUGINS_QUICK_ORDER_PAGE_WIDGETS';
     public const PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER = 'PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER';
     public const PLUGINS_QUICK_ORDER_FORM_HANDLER_STRATEGY = 'PLUGINS_QUICK_ORDER_FORM_HANDLER_STRATEGY';
@@ -41,12 +47,18 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_CSV = 'SERVICE_UTIL_CSV';
 
     /**
+     * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     */
+    public const SERVICE_REQUEST_STACK = 'request_stack';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
      */
     public function provideDependencies(Container $container): Container
     {
+        $container = $this->addRequestStack($container);
         $container = $this->addApplication($container);
         $container = $this->addCartClient($container);
         $container = $this->addQuoteClient($container);
@@ -69,6 +81,8 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -79,6 +93,20 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addRequestStack(Container $container): Container
+    {
+        $container->set(static::SERVICE_REQUEST_STACK, function (ContainerInterface $container) {
+            return $container->getApplicationService(static::SERVICE_REQUEST_STACK);
         });
 
         return $container;

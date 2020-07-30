@@ -12,10 +12,26 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class ErrorPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\ErrorPage\Plugin\Router\ErrorPageRouteProviderPlugin::ROUTE_NAME_ERROR_404} instead.
+     */
     protected const ROUTE_ERROR_404 = 'error/404';
+    public const ROUTE_NAME_ERROR_404 = 'error/404';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\ErrorPage\Plugin\Router\ErrorPageRouteProviderPlugin::ROUTE_NAME_ERROR_404_PATH} instead.
+     */
     protected const ROUTE_ERROR_404_PATH = '/error/404';
+    public const ROUTE_NAME_ERROR_404_PATH = '/error/404';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\ErrorPage\Plugin\Router\ErrorPageRouteProviderPlugin::ROUTE_NAME_ERROR_403} instead.
+     */
     protected const ROUTE_ERROR_403 = 'error/403';
+    public const ROUTE_NAME_ERROR_403 = 'error/403';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\ErrorPage\Plugin\Router\ErrorPageRouteProviderPlugin::ROUTE_NAME_ERROR_403_PATH} instead.
+     */
     protected const ROUTE_ERROR_403_PATH = '/error/403';
+    public const ROUTE_NAME_ERROR_403_PATH = '/error/403';
 
     /**
      * Specification:
@@ -45,7 +61,7 @@ class ErrorPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addError404Route(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/error/404', 'ErrorPage', 'Error404', 'indexAction');
-        $routeCollection->add(static::ROUTE_ERROR_404, $route);
+        $routeCollection->add(static::ROUTE_NAME_ERROR_404, $route);
 
         return $routeCollection;
     }
@@ -60,7 +76,7 @@ class ErrorPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addError403Route(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/error/403', 'ErrorPage', 'Error403', 'indexAction');
-        $routeCollection->add(static::ROUTE_ERROR_403, $route);
+        $routeCollection->add(static::ROUTE_NAME_ERROR_403, $route);
 
         return $routeCollection;
     }

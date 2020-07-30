@@ -12,8 +12,16 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class QuoteRequestAgentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentWidget\Plugin\Router\QuoteRequestAgentWidgetRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_SAVE_CART} instead.
+     */
     protected const ROUTE_QUOTE_REQUEST_AGENT_SAVE_CART = 'agent/quote-request/cart/save';
+    public const ROUTE_NAME_QUOTE_REQUEST_AGENT_SAVE_CART = 'agent/quote-request/cart/save';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentWidget\Plugin\Router\QuoteRequestAgentWidgetRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_CLEAR_CART} instead.
+     */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CLEAR_CART = 'agent/quote-request/cart/clear';
+    public const ROUTE_NAME_QUOTE_REQUEST_AGENT_CLEAR_CART = 'agent/quote-request/cart/clear';
 
     /**
      * Specification:
@@ -43,7 +51,7 @@ class QuoteRequestAgentWidgetRouteProviderPlugin extends AbstractRouteProviderPl
     protected function addQuoteRequestSaveCartRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/agent/quote-request/cart/save', 'QuoteRequestAgentWidget', 'QuoteRequestAgentCart', 'saveAction');
-        $routeCollection->add(static::ROUTE_QUOTE_REQUEST_AGENT_SAVE_CART, $route);
+        $routeCollection->add(static::ROUTE_NAME_QUOTE_REQUEST_AGENT_SAVE_CART, $route);
 
         return $routeCollection;
     }
@@ -58,7 +66,7 @@ class QuoteRequestAgentWidgetRouteProviderPlugin extends AbstractRouteProviderPl
     protected function addQuoteRequestClearCartRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/agent/quote-request/cart/clear', 'QuoteRequestAgentWidget', 'QuoteRequestAgentCart', 'clearAction');
-        $routeCollection->add(static::ROUTE_QUOTE_REQUEST_AGENT_CLEAR_CART, $route);
+        $routeCollection->add(static::ROUTE_NAME_QUOTE_REQUEST_AGENT_CLEAR_CART, $route);
 
         return $routeCollection;
     }

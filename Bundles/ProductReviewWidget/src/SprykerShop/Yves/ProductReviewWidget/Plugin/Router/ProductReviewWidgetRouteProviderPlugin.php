@@ -12,8 +12,16 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class ProductReviewWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\ProductReviewWidget\Plugin\Router\ProductReviewWidgetRouteProviderPlugin::ROUTE_NAME_PRODUCT_REVIEW_INDEX} instead.
+     */
     protected const ROUTE_PRODUCT_REVIEW_INDEX = 'product-review/index';
+    public const ROUTE_NAME_PRODUCT_REVIEW_INDEX = 'product-review/index';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\ProductReviewWidget\Plugin\Router\ProductReviewWidgetRouteProviderPlugin::ROUTE_NAME_PRODUCT_REVIEW_CREATE} instead.
+     */
     protected const ROUTE_PRODUCT_REVIEW_CREATE = 'product-review/create';
+    public const ROUTE_NAME_PRODUCT_REVIEW_CREATE = 'product-review/create';
 
     protected const ID_ABSTRACT_PRODUCT_REGEX = '[1-9][0-9]*';
 
@@ -44,7 +52,7 @@ class ProductReviewWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/product-review/index/{idProductAbstract}', 'ProductReviewWidget', 'Index', 'indexAction');
         $route = $route->setRequirement('idProductAbstract', static::ID_ABSTRACT_PRODUCT_REGEX);
-        $routeCollection->add(static::ROUTE_PRODUCT_REVIEW_INDEX, $route);
+        $routeCollection->add(static::ROUTE_NAME_PRODUCT_REVIEW_INDEX, $route);
 
         return $routeCollection;
     }
@@ -58,7 +66,7 @@ class ProductReviewWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/product-review/create/{idProductAbstract}', 'ProductReviewWidget', 'Create', 'indexAction');
         $route = $route->setRequirement('idProductAbstract', static::ID_ABSTRACT_PRODUCT_REGEX);
-        $routeCollection->add(static::ROUTE_PRODUCT_REVIEW_CREATE, $route);
+        $routeCollection->add(static::ROUTE_NAME_PRODUCT_REVIEW_CREATE, $route);
 
         return $routeCollection;
     }

@@ -52,6 +52,7 @@ use SprykerShop\Yves\QuickOrderPage\TextOrder\TextOrderParserInterface;
 use SprykerShop\Yves\QuickOrderPage\ViewDataTransformer\ViewDataTransformer;
 use SprykerShop\Yves\QuickOrderPage\ViewDataTransformer\ViewDataTransformerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -180,6 +181,8 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Yves\Kernel\Application
      */
     public function getApplication(): Application
@@ -200,7 +203,15 @@ class QuickOrderPageFactory extends AbstractFactory
      */
     public function getRequest(): Request
     {
-        return $this->getApplication()['request'];
+        return $this->getRequestStack()->getCurrentRequest();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RequestStack
+     */
+    public function getRequestStack(): RequestStack
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::SERVICE_REQUEST_STACK);
     }
 
     /**

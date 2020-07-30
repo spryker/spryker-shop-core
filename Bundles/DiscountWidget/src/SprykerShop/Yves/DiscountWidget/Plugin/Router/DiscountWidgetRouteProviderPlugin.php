@@ -12,9 +12,21 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class DiscountWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\DiscountWidget\Plugin\Router\DiscountWidgetRouteProviderPlugin::ROUTE_NAME_DISCOUNT_VOUCHER_ADD} instead.
+     */
     protected const ROUTE_DISCOUNT_VOUCHER_ADD = 'discount/voucher/add';
+    public const ROUTE_NAME_DISCOUNT_VOUCHER_ADD = 'discount/voucher/add';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\DiscountWidget\Plugin\Router\DiscountWidgetRouteProviderPlugin::ROUTE_NAME_DISCOUNT_VOUCHER_REMOVE} instead.
+     */
     protected const ROUTE_DISCOUNT_VOUCHER_REMOVE = 'discount/voucher/remove';
+    public const ROUTE_NAME_DISCOUNT_VOUCHER_REMOVE = 'discount/voucher/remove';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\DiscountWidget\Plugin\Router\DiscountWidgetRouteProviderPlugin::ROUTE_NAME_DISCOUNT_VOUCHER_CLEAR} instead.
+     */
     protected const ROUTE_DISCOUNT_VOUCHER_CLEAR = 'discount/voucher/clear';
+    public const ROUTE_NAME_DISCOUNT_VOUCHER_CLEAR = 'discount/voucher/clear';
     protected const CHECKOUT_VOUCHER_ADD = 'checkout-voucher-add';
 
     protected const SKU_PATTERN = '[a-zA-Z0-9-_\.]+';
@@ -47,7 +59,7 @@ class DiscountWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addAddVoucherRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/discount/voucher/add', 'DiscountWidget', 'Voucher', 'addAction');
-        $routeCollection->add(static::ROUTE_DISCOUNT_VOUCHER_ADD, $route);
+        $routeCollection->add(static::ROUTE_NAME_DISCOUNT_VOUCHER_ADD, $route);
 
         return $routeCollection;
     }
@@ -60,7 +72,7 @@ class DiscountWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addRemoveVoucherRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/discount/voucher/remove', 'DiscountWidget', 'Voucher', 'removeAction');
-        $routeCollection->add(static::ROUTE_DISCOUNT_VOUCHER_REMOVE, $route);
+        $routeCollection->add(static::ROUTE_NAME_DISCOUNT_VOUCHER_REMOVE, $route);
 
         return $routeCollection;
     }
@@ -73,7 +85,7 @@ class DiscountWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addClearVoucherRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/discount/voucher/clear', 'DiscountWidget', 'Voucher', 'clearAction');
-        $routeCollection->add(static::ROUTE_DISCOUNT_VOUCHER_CLEAR, $route);
+        $routeCollection->add(static::ROUTE_NAME_DISCOUNT_VOUCHER_CLEAR, $route);
 
         return $routeCollection;
     }

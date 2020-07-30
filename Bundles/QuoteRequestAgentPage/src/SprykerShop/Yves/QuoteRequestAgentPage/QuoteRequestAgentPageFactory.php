@@ -47,6 +47,7 @@ use SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouper;
 use SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouperInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Impersonator\CompanyUserImpersonator;
 use SprykerShop\Yves\QuoteRequestAgentPage\Impersonator\CompanyUserImpersonatorInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin;
 use SprykerShop\Yves\QuoteRequestAgentPage\Resolver\CheckoutStepResolver;
 use SprykerShop\Yves\QuoteRequestAgentPage\Resolver\CheckoutStepResolverInterface;
 use Symfony\Component\Form\FormFactory;
@@ -58,17 +59,17 @@ use Symfony\Component\Form\FormInterface;
 class QuoteRequestAgentPageFactory extends AbstractFactory
 {
     /**
-     * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::CHECKOUT_INDEX
+     * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_INDEX
      */
     protected const ROUTE_CHECKOUT_INDEX = 'checkout-index';
 
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_QUOTE_REQUEST_AGENT
+     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT = 'agent/quote-request';
 
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SAVE
+     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_SAVE
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SAVE = 'agent/quote-request/checkout-save';
 
@@ -219,7 +220,7 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     {
         return new EntryStep(
             static::ROUTE_CHECKOUT_INDEX,
-            static::ROUTE_QUOTE_REQUEST_AGENT
+            QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT
         );
     }
 
@@ -230,7 +231,7 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     {
         return new SaveRequestForQuoteStep(
             static::ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SAVE,
-            static::ROUTE_QUOTE_REQUEST_AGENT
+            QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT
         );
     }
 

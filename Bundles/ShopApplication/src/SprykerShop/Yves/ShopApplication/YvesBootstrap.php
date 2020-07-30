@@ -16,6 +16,9 @@ use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorInterface;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 
+/**
+ * @deprecated Use {@link \SprykerShop\Yves\ShopApplication\Bootstrap\YvesBootstrap} instead.
+ */
 abstract class YvesBootstrap
 {
     use BundleDependencyProviderResolverAwareTrait;

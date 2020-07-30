@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\CustomerPage\Plugin\Provider;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\HomePage\Plugin\Provider\HomePageControllerProvider;
+use SprykerShop\Yves\HomePage\Plugin\Router\HomePageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -68,6 +68,6 @@ class BaseCustomerAuthenticationHandler extends AbstractPlugin
      */
     protected function getHomeUrl()
     {
-        return $this->getFactory()->getApplication()->url(HomePageControllerProvider::ROUTE_HOME);
+        return $this->getFactory()->getRouter()->generate(HomePageRouteProviderPlugin::ROUTE_NAME_HOME);
     }
 }

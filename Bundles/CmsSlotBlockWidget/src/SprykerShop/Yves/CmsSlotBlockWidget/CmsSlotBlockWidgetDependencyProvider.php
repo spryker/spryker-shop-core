@@ -7,9 +7,9 @@
 
 namespace SprykerShop\Yves\CmsSlotBlockWidget;
 
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client\CmsSlotBlockWidgetToCmsSlotBlockClientBridge;
 use SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client\CmsSlotBlockWidgetToCmsSlotBlockStorageClientBridge;
 
@@ -73,8 +73,8 @@ class CmsSlotBlockWidgetDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addTwigEnvironment(Container $container): Container
     {
-        $container->set(static::SERVICE_TWIG, function () {
-            return (new Pimple())->getApplication()->get(static::SERVICE_TWIG);
+        $container->set(static::SERVICE_TWIG, function (ContainerInterface $container) {
+            return $container->getApplicationService(static::SERVICE_TWIG);
         });
 
         return $container;

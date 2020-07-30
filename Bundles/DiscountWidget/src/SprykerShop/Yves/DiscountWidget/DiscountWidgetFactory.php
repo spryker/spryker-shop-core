@@ -58,10 +58,12 @@ class DiscountWidgetFactory extends AbstractFactory
      */
     public function getFlashMessenger()
     {
-        return $this->getApplication()['flash_messenger'];
+        return $this->getProvidedDependency(DiscountWidgetDependencyProvider::SERVICE_FLASH_MESSENGER);
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Yves\Kernel\Application
      */
     public function getApplication()

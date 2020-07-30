@@ -5,14 +5,12 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker-shop/cart-page": "^1.0.0 || ^3.0.0",
-    "spryker-shop/checkout-page": "^1.0.0 || ^2.0.0 || ^3.0.0",
     "spryker-shop/quick-order-page-extension": "^1.1.0",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.28.1",
     "spryker/application": "^3.0.0",
     "spryker/cart": "^4.0.0 || ^5.0.0 || ^7.0.0",
-    "spryker/kernel": "^3.30.0",
+    "spryker/kernel": "^3.52.0",
     "spryker/price-product-storage": "^2.9.0 || ^4.0.0",
     "spryker/product-quantity-storage": "^1.2.0 || ^3.0.0",
     "spryker/product-storage": "^1.7.0",
@@ -28,6 +26,8 @@
     "spryker/silex": "*"
   },
   "suggest": {
+    "spryker-shop/cart-page": "Widget plugins are available for this module.",
+    "spryker-shop/checkout-page": "Widget plugins are available for this module.",
     "spryker/router": "If you want to use RouteProviderPlugins to be added to the Route Module.",
     "spryker/silex": "If you want to use ServiceProvider."
   },
