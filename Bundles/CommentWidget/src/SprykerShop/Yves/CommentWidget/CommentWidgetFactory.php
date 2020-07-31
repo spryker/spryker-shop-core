@@ -7,13 +7,18 @@
 
 namespace SprykerShop\Yves\CommentWidget;
 
+use Generated\Shared\Transfer\CommentTransfer;
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CommentWidget\Checker\CommentChecker;
 use SprykerShop\Yves\CommentWidget\Checker\CommentCheckerInterface;
 use SprykerShop\Yves\CommentWidget\Dependency\Client\CommentWidgetToCommentClientInterface;
 use SprykerShop\Yves\CommentWidget\Dependency\Client\CommentWidgetToCustomerClientInterface;
+use SprykerShop\Yves\CommentWidget\Form\AddCommentForm;
 use SprykerShop\Yves\CommentWidget\Operation\CommentOperation;
 use SprykerShop\Yves\CommentWidget\Operation\CommentOperationInterface;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \SprykerShop\Yves\CommentWidget\CommentWidgetConfig getConfig()
@@ -36,6 +41,24 @@ class CommentWidgetFactory extends AbstractFactory
     public function createCommentChecker(): CommentCheckerInterface
     {
         return new CommentChecker();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTransfer|null $commentTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getAddCommentForm(?CommentTransfer $commentTransfer = null): FormInterface
+    {
+        return $this->getFormFactory()->create(AddCommentForm::class, $commentTransfer);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormFactoryInterface
+     */
+    public function getFormFactory(): FormFactoryInterface
+    {
+        return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
     }
 
     /**

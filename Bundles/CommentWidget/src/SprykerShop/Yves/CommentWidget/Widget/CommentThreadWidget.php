@@ -24,6 +24,7 @@ class CommentThreadWidget extends AbstractWidget
     protected const PARAMETER_CUSTOMER = 'customer';
     protected const PARAMETER_TAGGED_COMMENTS = 'taggedComments';
     protected const PARAMETER_AVAILABLE_COMMENT_TAGS = 'availableCommentTags';
+    protected const PARAMETER_ADD_COMMENT_FORM = 'addCommentForm';
 
     /**
      * @param int $ownerId
@@ -52,6 +53,7 @@ class CommentThreadWidget extends AbstractWidget
         $this->addCustomerParameter($customerTransfer);
         $this->addTaggedCommentsParameter($taggedComments);
         $this->addAvailableCommentTags();
+        $this->addAddCommentFormParameter($ownerId, $ownerType, $returnUrl);
     }
 
     /**
@@ -68,6 +70,25 @@ class CommentThreadWidget extends AbstractWidget
     public static function getTemplate(): string
     {
         return '@CommentWidget/views/comment-thread/comment-thread.twig';
+    }
+
+    /**
+     * @param int $ownerId
+     * @param string $ownerType
+     * @param string $returnUrl
+     *
+     * @return void
+     */
+    protected function addAddCommentFormParameter(int $ownerId, string $ownerType, string $returnUrl): void
+    {
+        $noteForm = $this->getFactory()
+            ->getAddCommentForm(
+                (new CommentTransfer())
+                    ->setOwnerId($ownerId)
+                    ->setOwnerType($ownerType)
+                    ->setReturnUrl($returnUrl)
+            );
+        $this->addParameter(static::PARAMETER_ADD_COMMENT_FORM, $noteForm->createView());
     }
 
     /**

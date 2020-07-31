@@ -1,0 +1,27 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'add-comment-form',
+} %}
+
+{% define data = {
+    form: required,
+} %}
+
+{% block body %}
+    {% block addCommentForm %}
+        {% include molecule('form') with {
+            data: {
+                form: data.form,
+                options: {
+                    action: url('comment/add'),
+                },
+                submit: {
+                    class: 'button',
+                    enable: true,
+                    text: 'comment_widget.form.add_comment' | trans,
+                },
+            },
+        } only %}
+    {% endblock %}
+{% endblock %}

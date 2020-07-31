@@ -62,17 +62,26 @@ class CommentController extends CommentWidgetAbstractController
      */
     protected function executeAddAction(Request $request): RedirectResponse
     {
-        $returnUrl = $request->request->get(static::PARAMETER_RETURN_URL);
-        $commentTransfer = $this->createCommentTransferFromRequest($request);
+        $addCommentForm = $this->getFactory()
+            ->getAddCommentForm()
+            ->handleRequest($request);
+
+        /** @var \Generated\Shared\Transfer\CommentTransfer $commentTransfer */
+        $commentTransfer = $addCommentForm->getData();
+        $commentTransfer->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
+
+        if (!$addCommentForm->isSubmitted() || !$addCommentForm->isValid()) {
+            return $this->createRedirectResponseExternal($commentTransfer->getReturnUrl());
+        }
 
         if (!$this->getFactory()->createCommentChecker()->checkCommentMessageLength($commentTransfer)) {
             $this->addErrorMessage(static::GLOSSARY_KEY_COMMENT_INVALID_MESSAGE_LENGTH);
 
-            return $this->redirectResponseExternal($returnUrl);
+            return $this->createRedirectResponseExternal($commentTransfer->getReturnUrl());
         }
 
         $commentRequestTransfer = (new CommentRequestTransfer())
-            ->fromArray($request->request->all(), true)
+            ->fromArray($commentTransfer->toArray(), true)
             ->setComment($commentTransfer);
 
         $commentThreadResponseTransfer = $this->getFactory()
@@ -82,7 +91,7 @@ class CommentController extends CommentWidgetAbstractController
         $this->executeCommentThreadAfterSuccessfulOperation($commentThreadResponseTransfer);
         $this->handleResponseMessages($commentThreadResponseTransfer);
 
-        return $this->redirectResponseExternal($returnUrl);
+        return new RedirectResponse($commentTransfer->getReturnUrl());
     }
 
     /**

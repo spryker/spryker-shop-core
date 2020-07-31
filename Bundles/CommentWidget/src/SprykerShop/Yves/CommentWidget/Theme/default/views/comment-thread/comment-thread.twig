@@ -7,6 +7,7 @@
     customer: _widget.customer,
     taggedComments: _widget.taggedComments,
     availableCommentTags: _widget.availableCommentTags,
+    addCommentForm: _widget.addCommentForm
 } %}
 
 {% set commentListOptions = [] %}
@@ -62,16 +63,9 @@
 
     {% block newCommentForm %}
         {% if data.customer %}
-            {% include molecule('comment-form', 'CommentWidget') with {
+            {% include molecule('add-comment-form', 'CommentWidget') with {
                 data: {
-                    formView: 'add',
-                    returnUrl: data.returnUrl,
-                    ownerId: data.ownerId,
-                    ownerType: data.ownerType,
-                    submit: {
-                        text: 'comment_widget.form.add_comment' | trans,
-                        action: path('comment/add'),
-                    },
+                    form: data.addCommentForm,
                 },
             } only %}
         {% endif %}

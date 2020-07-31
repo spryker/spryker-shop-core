@@ -71,6 +71,7 @@ class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addAddCommentRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/comment/add', 'CommentWidget', 'Comment', 'addAction');
+        $route = $route->setMethods(['POST']);
         $routeCollection->add(static::ROUTE_NAME_COMMENT_ADD, $route);
 
         return $routeCollection;
