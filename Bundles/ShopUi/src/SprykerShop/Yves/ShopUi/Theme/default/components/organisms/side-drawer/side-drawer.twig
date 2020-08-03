@@ -47,7 +47,6 @@
                     <li class="menu__item">
                         {% widget 'MiniCartWidget' args [cartQuantity] only %}
                             {% block cartList %}{% endblock %}
-                        {% elsewidget 'MiniCartWidgetPlugin' args [cartQuantity] only %} {# @deprecated Use MiniCartWidget instead. #}
                         {% nowidget %}
                             {% include molecule('cart-counter') with {
                                 data: {

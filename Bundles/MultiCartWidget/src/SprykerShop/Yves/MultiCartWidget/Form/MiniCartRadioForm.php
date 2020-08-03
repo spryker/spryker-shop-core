@@ -13,6 +13,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MiniCartRadioForm extends AbstractType
 {
+    protected const FORM_NAME = 'multiCartSetDefaultForm';
+    protected const OPTION_ID_QUOTE = 'idQuote';
+
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -20,7 +23,7 @@ class MiniCartRadioForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setRequired('idQuote');
+        $resolver->setRequired(static::OPTION_ID_QUOTE);
     }
 
     /**
@@ -28,7 +31,7 @@ class MiniCartRadioForm extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return 'multi_cart_set_default_form';
+        return static::FORM_NAME;
     }
 
     /**

@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\MultiCartWidget\Widget;
 
-use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 use Symfony\Component\Form\FormView;
 
@@ -16,14 +15,23 @@ use Symfony\Component\Form\FormView;
  */
 class MiniCartSingleWidget extends AbstractWidget
 {
-    use PermissionAwareTrait;
+    protected const PARAMETER_FORM = 'form';
+    protected const OPTION_ID_QUOTE = 'idQuote';
 
     /**
      * @param int $idQuote
      */
     public function __construct(int $idQuote)
     {
-        $this->addParameter('form', $this->addMiniCartRadioForm($idQuote));
+        $this->addFormParameter();
+    }
+
+    /**
+     * @return void
+     */
+    protected function addFormParameter(): void
+    {
+        $this->addParameter(static::PARAMETER_FORM, $this->addMiniCartRadioForm($idQuote));
     }
 
     /**
@@ -50,7 +58,7 @@ class MiniCartSingleWidget extends AbstractWidget
     protected function addMiniCartRadioForm(int $idQuote): FormView
     {
         $options = [
-            'idQuote' => $idQuote,
+            static::OPTION_ID_QUOTE => $idQuote,
         ];
 
         return $this->getFactory()
