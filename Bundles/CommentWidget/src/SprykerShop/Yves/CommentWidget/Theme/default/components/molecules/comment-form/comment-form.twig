@@ -72,6 +72,8 @@
                 {% endif %}
             {% endblock %}
 
+            <input type="hidden" name="_token" value="{{ csrf_token(data.formView ~ '-' ~ config.name)}}">
+
             {% block formHandlers %}
                 <div class="{{ config.name }}__handlers">
                     <button action="{{ data.submit.action }}" class="button button--primary {{ config.jsName }}__submit-button" data-init-single-click>

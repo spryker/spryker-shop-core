@@ -7,18 +7,14 @@
 
 namespace SprykerShop\Yves\CommentWidget;
 
-use Generated\Shared\Transfer\CommentTransfer;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CommentWidget\Checker\CommentChecker;
 use SprykerShop\Yves\CommentWidget\Checker\CommentCheckerInterface;
 use SprykerShop\Yves\CommentWidget\Dependency\Client\CommentWidgetToCommentClientInterface;
 use SprykerShop\Yves\CommentWidget\Dependency\Client\CommentWidgetToCustomerClientInterface;
-use SprykerShop\Yves\CommentWidget\Form\AddCommentForm;
 use SprykerShop\Yves\CommentWidget\Operation\CommentOperation;
 use SprykerShop\Yves\CommentWidget\Operation\CommentOperationInterface;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * @method \SprykerShop\Yves\CommentWidget\CommentWidgetConfig getConfig()
@@ -44,24 +40,6 @@ class CommentWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CommentTransfer|null $commentTransfer
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function getAddCommentForm(?CommentTransfer $commentTransfer = null): FormInterface
-    {
-        return $this->getFormFactory()->create(AddCommentForm::class, $commentTransfer);
-    }
-
-    /**
-     * @return \Symfony\Component\Form\FormFactoryInterface
-     */
-    public function getFormFactory(): FormFactoryInterface
-    {
-        return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
-    }
-
-    /**
      * @return \SprykerShop\Yves\CommentWidget\Dependency\Client\CommentWidgetToCommentClientInterface
      */
     public function getCommentClient(): CommentWidgetToCommentClientInterface
@@ -83,5 +61,13 @@ class CommentWidgetFactory extends AbstractFactory
     public function getCommentThreadAfterOperationStrategyPlugins(): array
     {
         return $this->getProvidedDependency(CommentWidgetDependencyProvider::PLUGINS_COMMENT_THREAD_AFTER_OPERATION_STRATEGY);
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface
+     */
+    public function getCsrfTokenManager(): CsrfTokenManagerInterface
+    {
+        return $this->getProvidedDependency(CommentWidgetDependencyProvider::SERVICE_FORM_CSRF_PROVIDER);
     }
 }

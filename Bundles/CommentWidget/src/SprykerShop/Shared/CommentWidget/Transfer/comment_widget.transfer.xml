@@ -17,9 +17,6 @@
         <property name="uuid" type="string"/>
         <property name="customer" type="Customer"/>
         <property name="message" type="string"/>
-        <property name="ownerId" type="int"/>
-        <property name="ownerType" type="string"/>
-        <property name="returnUrl" type="string"/>
         <property name="commentTags" type="CommentTag[]" singular="commentTag"/>
         <property name="tagNames" type="array" singular="tagNames"/>
         <property name="isUpdated" type="bool"/>
