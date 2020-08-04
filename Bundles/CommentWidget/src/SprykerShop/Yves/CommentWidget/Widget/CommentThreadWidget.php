@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CommentWidget\Widget;
 
-use Generated\Shared\Transfer\CommentFormTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;

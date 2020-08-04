@@ -87,6 +87,7 @@ class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addUpdateCommentRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/comment/update', 'CommentWidget', 'Comment', 'updateAction');
+        $route = $route->setMethods(['POST']);
         $routeCollection->add(static::ROUTE_NAME_COMMENT_UPDATE, $route);
 
         return $routeCollection;
@@ -102,6 +103,7 @@ class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addRemoveCommentRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/comment/remove', 'CommentWidget', 'Comment', 'removeAction');
+        $route = $route->setMethods(['POST']);
         $routeCollection->add(static::ROUTE_NAME_COMMENT_REMOVE, $route);
 
         return $routeCollection;

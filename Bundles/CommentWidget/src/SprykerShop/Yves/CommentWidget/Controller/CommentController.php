@@ -70,7 +70,7 @@ class CommentController extends CommentWidgetAbstractController
         $returnUrl = $request->request->get(static::PARAMETER_RETURN_URL);
         $tokenValue = $request->get(static::REQUEST_PARAMETER_TOKEN);
 
-        if (!$this->validateCsfrToken(static::CSRF_TOKEN_ID_ADD_COMMENT_FORM, $tokenValue)) {
+        if (!$this->validateCsrfToken(static::CSRF_TOKEN_ID_ADD_COMMENT_FORM, $tokenValue)) {
             $this->addErrorMessage(static::GLOSSARY_KEY_ERROR_MESSAGE_UNEXPECTED_ERROR);
 
             return $this->redirectResponseExternal($returnUrl);
@@ -108,7 +108,7 @@ class CommentController extends CommentWidgetAbstractController
         $returnUrl = $request->request->get(static::PARAMETER_RETURN_URL);
         $tokenValue = $request->get(static::REQUEST_PARAMETER_TOKEN);
 
-        if (!$this->validateCsfrToken(static::CSRF_TOKEN_ID_UPDATE_COMMENT_FORM, $tokenValue)) {
+        if (!$this->validateCsrfToken(static::CSRF_TOKEN_ID_UPDATE_COMMENT_FORM, $tokenValue)) {
             $this->addErrorMessage(static::GLOSSARY_KEY_ERROR_MESSAGE_UNEXPECTED_ERROR);
 
             return $this->redirectResponseExternal($returnUrl);
@@ -145,7 +145,7 @@ class CommentController extends CommentWidgetAbstractController
         $returnUrl = $request->request->get(static::PARAMETER_RETURN_URL);
         $tokenValue = $request->get(static::REQUEST_PARAMETER_TOKEN);
 
-        if (!$this->validateCsfrToken(static::CSRF_TOKEN_ID_UPDATE_COMMENT_FORM, $tokenValue)) {
+        if (!$this->validateCsrfToken(static::CSRF_TOKEN_ID_UPDATE_COMMENT_FORM, $tokenValue)) {
             $this->addErrorMessage(static::GLOSSARY_KEY_ERROR_MESSAGE_UNEXPECTED_ERROR);
 
             return $this->redirectResponseExternal($returnUrl);
@@ -189,7 +189,7 @@ class CommentController extends CommentWidgetAbstractController
      *
      * @return bool
      */
-    protected function validateCsfrToken(string $tokenId, string $value): bool
+    protected function validateCsrfToken(string $tokenId, string $value): bool
     {
         $csrfToken = new CsrfToken($tokenId, $value);
 
