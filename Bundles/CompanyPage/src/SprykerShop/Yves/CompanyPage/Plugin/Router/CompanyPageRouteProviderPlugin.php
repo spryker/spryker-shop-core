@@ -258,7 +258,6 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $route = $this->buildRoute('/company/address/delete', 'CompanyPage', 'Address', 'deleteAction');
         $routeCollection->add(static::ROUTE_NAME_COMPANY_ADDRESS_DELETE, $route);
         $route = $this->buildRoute('/company/address/delete-confirmation', 'CompanyPage', 'Address', 'confirmDeleteAction');
-        $route = $route->setMethods(Request::METHOD_POST);
         $routeCollection->add(static::ROUTE_NAME_COMPANY_ADDRESS_DELETE_CONFIRMATION, $route);
 
         return $routeCollection;
