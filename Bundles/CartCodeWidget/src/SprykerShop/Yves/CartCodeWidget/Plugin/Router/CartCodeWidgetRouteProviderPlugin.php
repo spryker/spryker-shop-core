@@ -12,9 +12,21 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class CartCodeWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CartCodeWidget\Plugin\Router\CartCodeWidgetRouteProviderPlugin::ROUTE_NAME_CART_CODE_ADD} instead.
+     */
     protected const ROUTE_CART_CODE_ADD = 'cart-code/code/add';
+    public const ROUTE_NAME_CART_CODE_ADD = 'cart-code/code/add';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CartCodeWidget\Plugin\Router\CartCodeWidgetRouteProviderPlugin::ROUTE_NAME_CART_CODE_REMOVE} instead.
+     */
     protected const ROUTE_CART_CODE_REMOVE = 'cart-code/code/remove';
+    public const ROUTE_NAME_CART_CODE_REMOVE = 'cart-code/code/remove';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CartCodeWidget\Plugin\Router\CartCodeWidgetRouteProviderPlugin::ROUTE_NAME_CART_CODE_CLEAR} instead.
+     */
     protected const ROUTE_CART_CODE_CLEAR = 'cart-code/code/clear';
+    public const ROUTE_NAME_CART_CODE_CLEAR = 'cart-code/code/clear';
 
     /**
      * Specification:
@@ -43,7 +55,7 @@ class CartCodeWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addAddCodeRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cart-code/code/add', 'CartCodeWidget', 'Code', 'addAction');
-        $routeCollection->add(static::ROUTE_CART_CODE_ADD, $route);
+        $routeCollection->add(static::ROUTE_NAME_CART_CODE_ADD, $route);
 
         return $routeCollection;
     }
@@ -56,7 +68,7 @@ class CartCodeWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addRemoveCodeRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cart-code/code/remove', 'CartCodeWidget', 'Code', 'removeAction');
-        $routeCollection->add(static::ROUTE_CART_CODE_REMOVE, $route);
+        $routeCollection->add(static::ROUTE_NAME_CART_CODE_REMOVE, $route);
 
         return $routeCollection;
     }
@@ -69,7 +81,7 @@ class CartCodeWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addClearCodeRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cart-code/code/clear', 'CartCodeWidget', 'Code', 'clearAction');
-        $routeCollection->add(static::ROUTE_CART_CODE_CLEAR, $route);
+        $routeCollection->add(static::ROUTE_NAME_CART_CODE_CLEAR, $route);
 
         return $routeCollection;
     }

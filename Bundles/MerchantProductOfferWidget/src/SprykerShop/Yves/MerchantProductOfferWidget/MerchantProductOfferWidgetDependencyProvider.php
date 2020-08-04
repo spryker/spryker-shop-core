@@ -17,6 +17,10 @@ class MerchantProductOfferWidgetDependencyProvider extends AbstractBundleDepende
 {
     public const CLIENT_MERCHANT_STORAGE = 'CLIENT_MERCHANT_STORAGE';
     public const CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE = 'CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
@@ -64,6 +68,8 @@ class MerchantProductOfferWidgetDependencyProvider extends AbstractBundleDepende
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container

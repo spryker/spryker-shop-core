@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\RatingAggregationTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
@@ -25,7 +26,7 @@ class ProductDetailPageReviewWidget extends AbstractWidget
     public function __construct(int $idProductAbstract)
     {
         $form = $this->getProductReviewForm($idProductAbstract);
-        $request = $this->getApplication()['request'];
+        $request = $this->getCurrentRequest();
         $productReviews = $this->findProductReviews($idProductAbstract, $request);
 
         $ratingAggregationTransfer = (new RatingAggregationTransfer());
@@ -93,11 +94,27 @@ class ProductDetailPageReviewWidget extends AbstractWidget
      */
     protected function getProductReviewForm(int $idProductAbstract): FormInterface
     {
-        $request = $this->getApplication()['request'];
+        $request = $this->getCurrentRequest();
 
         return $this->getFactory()
             ->createProductReviewForm($idProductAbstract)
             ->handleRequest($request);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    protected function getCurrentRequest(): Request
+    {
+        return $this->getRequestStack()->getCurrentRequest();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RequestStack
+     */
+    protected function getRequestStack(): RequestStack
+    {
+        return $this->getGlobalContainer()->get('request_stack');
     }
 
     /**

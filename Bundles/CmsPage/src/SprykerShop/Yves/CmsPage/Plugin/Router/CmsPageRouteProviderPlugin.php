@@ -12,8 +12,18 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class CmsPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CmsPage\Plugin\Router\CmsPageRouteProviderPlugin::ROUTE_NAME_PREVIEW} instead.
+     */
     protected const ROUTE_PREVIEW = 'cms-preview';
+    public const ROUTE_NAME_PREVIEW = 'cms-preview';
+
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CmsPage\Plugin\Router\CmsPageRouteProviderPlugin::ID_CMS_PAGE} instead.
+     */
     protected const PARAM_PAGE = 'page';
+    public const ID_CMS_PAGE = 'page';
+
     protected const PAGE_NUMBER_PATTERN = '[0-9]+';
 
     /**
@@ -42,7 +52,7 @@ class CmsPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/cms/preview/{page}', 'CmsPage', 'Preview', 'indexAction');
         $route = $route->setRequirement(static::PARAM_PAGE, static::PAGE_NUMBER_PATTERN);
-        $routeCollection->add(static::ROUTE_PREVIEW, $route);
+        $routeCollection->add(static::ROUTE_NAME_PREVIEW, $route);
 
         return $routeCollection;
     }

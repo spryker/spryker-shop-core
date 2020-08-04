@@ -19,7 +19,12 @@ use SprykerShop\Yves\ShopRouter\Dependency\Client\ShopRouterToUrlStorageClientBr
 class ShopRouterDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_URL_STORAGE = 'CLIENT_URL_STORAGE';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+
     public const PLUGIN_RESOURCE_CREATORS = 'PLUGIN_RESOURCE_CREATORS';
 
     /**
@@ -37,6 +42,8 @@ class ShopRouterDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container

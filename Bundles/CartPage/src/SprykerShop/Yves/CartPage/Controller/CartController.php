@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Shared\CartPage\Plugin\AddCartItemPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\ChangeCartItemPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
-use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
+use SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -115,7 +115,7 @@ class CartController extends AbstractController
         if (!$form->isSubmitted() || !$form->isValid()) {
             $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
 
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
         }
 
         $quantity = $request->get('quantity', 1);
@@ -123,7 +123,7 @@ class CartController extends AbstractController
         if (!$this->canAddCartItem()) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
         }
 
         $itemTransfer = new ItemTransfer();
@@ -143,7 +143,7 @@ class CartController extends AbstractController
             ->getZedRequestClient()
             ->addResponseMessagesToMessenger();
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
     }
 
     /**
@@ -159,7 +159,7 @@ class CartController extends AbstractController
         if (!$this->canAddCartItem()) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
         }
 
         return $this->executeQuickAddAction($sku, $quantity);
@@ -187,7 +187,7 @@ class CartController extends AbstractController
             ->getZedRequestClient()
             ->addFlashMessagesFromLastZedRequest();
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
     }
 
     /**
@@ -203,7 +203,7 @@ class CartController extends AbstractController
         if (!$this->canRemoveCartItem()) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
         }
 
         $form = $this->getFactory()->createCartPageFormFactory()->getRemoveForm()->handleRequest($request);
@@ -211,7 +211,7 @@ class CartController extends AbstractController
         if (!$form->isSubmitted() || !$form->isValid()) {
             $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
 
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
         }
 
         $this->getFactory()
@@ -222,7 +222,7 @@ class CartController extends AbstractController
             ->getZedRequestClient()
             ->addResponseMessagesToMessenger();
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
     }
 
     /**
@@ -238,7 +238,7 @@ class CartController extends AbstractController
         if (!$this->canChangeCartItem($quantity)) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
         }
 
         $form = $this->getFactory()->createCartPageFormFactory()->getCartChangeQuantityForm()->handleRequest($request);
@@ -246,7 +246,7 @@ class CartController extends AbstractController
         if (!$form->isSubmitted() || !$form->isValid()) {
             $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
 
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
         }
 
         $this->getFactory()
@@ -257,7 +257,7 @@ class CartController extends AbstractController
             ->getZedRequestClient()
             ->addResponseMessagesToMessenger();
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
     }
 
     /**
@@ -270,7 +270,7 @@ class CartController extends AbstractController
         if (!$this->canAddCartItem()) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
         }
 
         $form = $this->getFactory()->createCartPageFormFactory()->getAddItemsForm()->handleRequest($request);
@@ -278,7 +278,7 @@ class CartController extends AbstractController
         if (!$form->isSubmitted() || !$form->isValid()) {
             $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
 
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
         }
 
         $items = (array)$request->request->get(self::PARAM_ITEMS);
@@ -292,7 +292,7 @@ class CartController extends AbstractController
             ->getZedRequestClient()
             ->addResponseMessagesToMessenger();
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
     }
 
     /**
@@ -308,7 +308,7 @@ class CartController extends AbstractController
         if (!$this->canChangeCartItem($quantity)) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
         }
 
         $quoteTransfer = $this->getFactory()
@@ -328,13 +328,13 @@ class CartController extends AbstractController
             );
 
         if ($isItemReplacedInCart) {
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
         }
 
         $this->addInfoMessage('cart.item_attributes_needed');
 
         return $this->redirectResponseInternal(
-            CartControllerProvider::ROUTE_CART,
+            CartPageRouteProviderPlugin::ROUTE_NAME_CART,
             $this->getFactory()
                 ->createCartItemsAttributeProvider()
                 ->formatUpdateActionResponse($sku, $request->get('selectedAttributes', []))

@@ -12,7 +12,11 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class HomePageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\HomePage\Plugin\Router\HomePageRouteProviderPlugin::ROUTE_NAME_HOME} instead.
+     */
     protected const ROUTE_HOME = 'home';
+    public const ROUTE_NAME_HOME = 'home';
 
     /**
      * Specification:
@@ -39,7 +43,7 @@ class HomePageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addHomeRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/', 'HomePage', 'Index', 'indexAction');
-        $routeCollection->add(static::ROUTE_HOME, $route);
+        $routeCollection->add(static::ROUTE_NAME_HOME, $route);
 
         return $routeCollection;
     }

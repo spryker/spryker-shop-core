@@ -13,50 +13,194 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_LOGIN} instead.
+     */
     protected const ROUTE_COMPANY_LOGIN = 'company/login';
+    public const ROUTE_NAME_COMPANY_LOGIN = 'company/login';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_REGISTER} instead.
+     */
     protected const ROUTE_COMPANY_REGISTER = 'company/register';
+    public const ROUTE_NAME_COMPANY_REGISTER = 'company/register';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_OVERVIEW} instead.
+     */
     protected const ROUTE_COMPANY_OVERVIEW = 'company/overview';
+    public const ROUTE_NAME_COMPANY_OVERVIEW = 'company/overview';
 
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ADDRESS} instead.
+     */
     protected const ROUTE_COMPANY_ADDRESS = 'company/address';
+    public const ROUTE_NAME_COMPANY_ADDRESS = 'company/address';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ADDRESS_CREATE} instead.
+     */
     protected const ROUTE_COMPANY_ADDRESS_CREATE = 'company/address/create';
+    public const ROUTE_NAME_COMPANY_ADDRESS_CREATE = 'company/address/create';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ADDRESS_UPDATE} instead.
+     */
     protected const ROUTE_COMPANY_ADDRESS_UPDATE = 'company/address/update';
+    public const ROUTE_NAME_COMPANY_ADDRESS_UPDATE = 'company/address/update';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ADDRESS_DELETE} instead.
+     */
     protected const ROUTE_COMPANY_ADDRESS_DELETE = 'company/address/delete';
+    public const ROUTE_NAME_COMPANY_ADDRESS_DELETE = 'company/address/delete';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ADDRESS_DELETE_CONFIRMATION} instead.
+     */
     protected const ROUTE_COMPANY_ADDRESS_DELETE_CONFIRMATION = 'company/address/delete-confirmation';
+    public const ROUTE_NAME_COMPANY_ADDRESS_DELETE_CONFIRMATION = 'company/address/delete-confirmation';
 
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT} instead.
+     */
     protected const ROUTE_COMPANY_BUSINESS_UNIT = 'company/business-unit';
+    public const ROUTE_NAME_COMPANY_BUSINESS_UNIT = 'company/business-unit';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT_DETAILS} instead.
+     */
     protected const ROUTE_COMPANY_BUSINESS_UNIT_DETAILS = 'company/business-unit/details';
+    public const ROUTE_NAME_COMPANY_BUSINESS_UNIT_DETAILS = 'company/business-unit/details';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT_CREATE} instead.
+     */
     protected const ROUTE_COMPANY_BUSINESS_UNIT_CREATE = 'company/business-unit/create';
+    public const ROUTE_NAME_COMPANY_BUSINESS_UNIT_CREATE = 'company/business-unit/create';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT_UPDATE} instead.
+     */
     protected const ROUTE_COMPANY_BUSINESS_UNIT_UPDATE = 'company/business-unit/update';
+    public const ROUTE_NAME_COMPANY_BUSINESS_UNIT_UPDATE = 'company/business-unit/update';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT_DELETE} instead.
+     */
     protected const ROUTE_COMPANY_BUSINESS_UNIT_DELETE = 'company/business-unit/delete';
+    public const ROUTE_NAME_COMPANY_BUSINESS_UNIT_DELETE = 'company/business-unit/delete';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT_ADDRESS_CREATE} instead.
+     */
     protected const ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_CREATE = 'company/business-unit/address/create';
+    public const ROUTE_NAME_COMPANY_BUSINESS_UNIT_ADDRESS_CREATE = 'company/business-unit/address/create';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT_DELETE_CONFIRMATION} instead.
+     */
     protected const ROUTE_COMPANY_BUSINESS_UNIT_DELETE_CONFIRMATION = 'company/business-unit/delete-confirmation';
+    public const ROUTE_NAME_COMPANY_BUSINESS_UNIT_DELETE_CONFIRMATION = 'company/business-unit/delete-confirmation';
 
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE} instead.
+     */
     protected const ROUTE_COMPANY_ROLE = 'company/company-role';
+    public const ROUTE_NAME_COMPANY_ROLE = 'company/company-role';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_CREATE} instead.
+     */
     protected const ROUTE_COMPANY_ROLE_CREATE = 'company/company-role/create';
+    public const ROUTE_NAME_COMPANY_ROLE_CREATE = 'company/company-role/create';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_UPDATE} instead.
+     */
     protected const ROUTE_COMPANY_ROLE_UPDATE = 'company/company-role/update';
+    public const ROUTE_NAME_COMPANY_ROLE_UPDATE = 'company/company-role/update';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_DELETE} instead.
+     */
     protected const ROUTE_COMPANY_ROLE_DELETE = 'company/company-role/delete';
+    public const ROUTE_NAME_COMPANY_ROLE_DELETE = 'company/company-role/delete';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_CONFIRM_DELETE} instead.
+     */
     protected const ROUTE_COMPANY_ROLE_CONFIRM_DELETE = 'company/company-role/confirm-delete';
+    public const ROUTE_NAME_COMPANY_ROLE_CONFIRM_DELETE = 'company/company-role/confirm-delete';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_DETAILS} instead.
+     */
     protected const ROUTE_COMPANY_ROLE_DETAILS = 'company/company-role/details';
+    public const ROUTE_NAME_COMPANY_ROLE_DETAILS = 'company/company-role/details';
 
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_USER_MANAGE} instead.
+     */
     protected const ROUTE_COMPANY_ROLE_USER_MANAGE = 'company/company-role/user/manage';
+    public const ROUTE_NAME_COMPANY_ROLE_USER_MANAGE = 'company/company-role/user/manage';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_USER_ASSIGN} instead.
+     */
     protected const ROUTE_COMPANY_ROLE_USER_ASSIGN = 'company/company-role/user/assign';
+    public const ROUTE_NAME_COMPANY_ROLE_USER_ASSIGN = 'company/company-role/user/assign';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_USER_UNASSIGN} instead.
+     */
     protected const ROUTE_COMPANY_ROLE_USER_UNASSIGN = 'company/company-role/user/unassign';
+    public const ROUTE_NAME_COMPANY_ROLE_USER_UNASSIGN = 'company/company-role/user/unassign';
 
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_PERMISSION_CONFIGURE} instead.
+     */
     protected const ROUTE_COMPANY_ROLE_PERMISSION_CONFIGURE = 'company/company-role-permission/configure';
+    public const ROUTE_NAME_COMPANY_ROLE_PERMISSION_CONFIGURE = 'company/company-role-permission/configure';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_PERMISSION_ASSIGN} instead.
+     */
     protected const ROUTE_COMPANY_ROLE_PERMISSION_ASSIGN = 'company/company-role-permission/assign';
+    public const ROUTE_NAME_COMPANY_ROLE_PERMISSION_ASSIGN = 'company/company-role-permission/assign';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_PERMISSION_UNASSIGN} instead.
+     */
     protected const ROUTE_COMPANY_ROLE_PERMISSION_UNASSIGN = 'company/company-role-permission/unassign';
+    public const ROUTE_NAME_COMPANY_ROLE_PERMISSION_UNASSIGN = 'company/company-role-permission/unassign';
 
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER} instead.
+     */
     protected const ROUTE_COMPANY_USER = 'company/user';
+    public const ROUTE_NAME_COMPANY_USER = 'company/user';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER_CREATE} instead.
+     */
     protected const ROUTE_COMPANY_USER_CREATE = 'company/user/create';
+    public const ROUTE_NAME_COMPANY_USER_CREATE = 'company/user/create';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER_UPDATE} instead.
+     */
     protected const ROUTE_COMPANY_USER_UPDATE = 'company/user/update';
+    public const ROUTE_NAME_COMPANY_USER_UPDATE = 'company/user/update';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER_DELETE} instead.
+     */
     protected const ROUTE_COMPANY_USER_DELETE = 'company/user/delete';
+    public const ROUTE_NAME_COMPANY_USER_DELETE = 'company/user/delete';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER_CONFIRM_DELETE} instead.
+     */
     protected const ROUTE_COMPANY_USER_CONFIRM_DELETE = 'company/user/confirm-delete';
+    public const ROUTE_NAME_COMPANY_USER_CONFIRM_DELETE = 'company/user/confirm-delete';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER_SELECT} instead.
+     */
     protected const ROUTE_COMPANY_USER_SELECT = 'company/user/select';
+    public const ROUTE_NAME_COMPANY_USER_SELECT = 'company/user/select';
 
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER_STATUS_ENABLE} instead.
+     */
     protected const ROUTE_COMPANY_USER_STATUS_ENABLE = 'company/company-user-status/enable';
+    public const ROUTE_NAME_COMPANY_USER_STATUS_ENABLE = 'company/company-user-status/enable';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER_STATUS_DISABLE} instead.
+     */
     protected const ROUTE_COMPANY_USER_STATUS_DISABLE = 'company/company-user-status/disable';
+    public const ROUTE_NAME_COMPANY_USER_STATUS_DISABLE = 'company/company-user-status/disable';
 
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT_ADDRESS_UPDATE} instead.
+     */
     protected const ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_UPDATE = 'company/business-unit/address/update';
+    public const ROUTE_NAME_COMPANY_BUSINESS_UNIT_ADDRESS_UPDATE = 'company/business-unit/address/update';
 
     /**
      * Specification:
@@ -91,9 +235,9 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCompanyRoutes(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/company/register', 'CompanyPage', 'Register', 'indexAction');
-        $routeCollection->add(static::ROUTE_COMPANY_REGISTER, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_REGISTER, $route);
         $route = $this->buildRoute('/company/overview', 'CompanyPage', 'Company', 'indexAction');
-        $routeCollection->add(static::ROUTE_COMPANY_OVERVIEW, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_OVERVIEW, $route);
 
         return $routeCollection;
     }
@@ -106,16 +250,16 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCompanyAddressRoutes(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/company/address', 'CompanyPage', 'Address', 'indexAction');
-        $routeCollection->add(static::ROUTE_COMPANY_ADDRESS, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_ADDRESS, $route);
         $route = $this->buildRoute('/company/address/create', 'CompanyPage', 'Address', 'createAction');
-        $routeCollection->add(static::ROUTE_COMPANY_ADDRESS_CREATE, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_ADDRESS_CREATE, $route);
         $route = $this->buildRoute('/company/address/update', 'CompanyPage', 'Address', 'updateAction');
-        $routeCollection->add(static::ROUTE_COMPANY_ADDRESS_UPDATE, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_ADDRESS_UPDATE, $route);
         $route = $this->buildRoute('/company/address/delete', 'CompanyPage', 'Address', 'deleteAction');
-        $routeCollection->add(static::ROUTE_COMPANY_ADDRESS_DELETE, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_ADDRESS_DELETE, $route);
         $route = $this->buildRoute('/company/address/delete-confirmation', 'CompanyPage', 'Address', 'confirmDeleteAction');
         $route = $route->setMethods(Request::METHOD_POST);
-        $routeCollection->add(static::ROUTE_COMPANY_ADDRESS_DELETE_CONFIRMATION, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_ADDRESS_DELETE_CONFIRMATION, $route);
 
         return $routeCollection;
     }
@@ -128,18 +272,18 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCompanyBusinessUnitRoutes(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/company/business-unit', 'CompanyPage', 'BusinessUnit', 'indexAction');
-        $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_BUSINESS_UNIT, $route);
         $route = $this->buildRoute('/company/business-unit/details', 'CompanyPage', 'BusinessUnit', 'detailsAction');
-        $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_DETAILS, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_BUSINESS_UNIT_DETAILS, $route);
         $route = $this->buildRoute('/company/business-unit/create', 'CompanyPage', 'BusinessUnit', 'createAction');
-        $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_CREATE, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_BUSINESS_UNIT_CREATE, $route);
         $route = $this->buildRoute('/company/business-unit/update', 'CompanyPage', 'BusinessUnit', 'updateAction');
-        $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_BUSINESS_UNIT_UPDATE, $route);
         $route = $this->buildRoute('/company/business-unit/delete', 'CompanyPage', 'BusinessUnit', 'deleteAction');
         $route = $route->setMethods(Request::METHOD_POST);
-        $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_DELETE, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_BUSINESS_UNIT_DELETE, $route);
         $route = $this->buildRoute('/company/business-unit/delete-confirmation', 'CompanyPage', 'BusinessUnit', 'confirmDeleteAction');
-        $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_DELETE_CONFIRMATION, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_BUSINESS_UNIT_DELETE_CONFIRMATION, $route);
 
         return $routeCollection;
     }
@@ -165,7 +309,7 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCompanyBusinessUnitAddressCreateRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/company/business-unit/address/create', 'CompanyPage', 'BusinessUnitAddress', 'createAction');
-        $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_CREATE, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_BUSINESS_UNIT_ADDRESS_CREATE, $route);
 
         return $routeCollection;
     }
@@ -178,7 +322,7 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCompanyBusinessUnitAddressUpdateRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/company/business-unit/address/update', 'CompanyPage', 'BusinessUnitAddress', 'updateAction');
-        $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_UPDATE, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_BUSINESS_UNIT_ADDRESS_UPDATE, $route);
 
         return $routeCollection;
     }
@@ -191,17 +335,17 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCompanyRoleRoutes(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/company/company-role', 'CompanyPage', 'CompanyRole', 'indexAction');
-        $routeCollection->add(static::ROUTE_COMPANY_ROLE, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_ROLE, $route);
         $route = $this->buildRoute('/company/company-role/create', 'CompanyPage', 'CompanyRole', 'createAction');
-        $routeCollection->add(static::ROUTE_COMPANY_ROLE_CREATE, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_ROLE_CREATE, $route);
         $route = $this->buildRoute('/company/company-role/update', 'CompanyPage', 'CompanyRole', 'updateAction');
-        $routeCollection->add(static::ROUTE_COMPANY_ROLE_UPDATE, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_ROLE_UPDATE, $route);
         $route = $this->buildPostRoute('/company/company-role/delete', 'CompanyPage', 'CompanyRole', 'deleteAction');
-        $routeCollection->add(static::ROUTE_COMPANY_ROLE_DELETE, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_ROLE_DELETE, $route);
         $route = $this->buildRoute('/company/company-role/confirm-delete', 'CompanyPage', 'CompanyRole', 'confirmDeleteAction');
-        $routeCollection->add(static::ROUTE_COMPANY_ROLE_CONFIRM_DELETE, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_ROLE_CONFIRM_DELETE, $route);
         $route = $this->buildRoute('/company/company-role/details', 'CompanyPage', 'CompanyRole', 'detailsAction');
-        $routeCollection->add(static::ROUTE_COMPANY_ROLE_DETAILS, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_ROLE_DETAILS, $route);
 
         return $routeCollection;
     }
@@ -214,11 +358,11 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addPermissionRoutes(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/company/company-role-permission/configure', 'CompanyPage', 'CompanyRolePermission', 'configureAction');
-        $routeCollection->add(static::ROUTE_COMPANY_ROLE_PERMISSION_CONFIGURE, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_ROLE_PERMISSION_CONFIGURE, $route);
         $route = $this->buildRoute('/company/company-role-permission/assign', 'CompanyPage', 'CompanyRolePermission', 'assignAction');
-        $routeCollection->add(static::ROUTE_COMPANY_ROLE_PERMISSION_ASSIGN, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_ROLE_PERMISSION_ASSIGN, $route);
         $route = $this->buildRoute('/company/company-role-permission/unassign', 'CompanyPage', 'CompanyRolePermission', 'unassignAction');
-        $routeCollection->add(static::ROUTE_COMPANY_ROLE_PERMISSION_UNASSIGN, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_ROLE_PERMISSION_UNASSIGN, $route);
 
         return $routeCollection;
     }
@@ -231,17 +375,17 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCompanyUserRoutes(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/company/user', 'CompanyPage', 'User', 'indexAction');
-        $routeCollection->add(static::ROUTE_COMPANY_USER, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_USER, $route);
         $route = $this->buildRoute('/company/user/create', 'CompanyPage', 'User', 'createAction');
-        $routeCollection->add(static::ROUTE_COMPANY_USER_CREATE, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_USER_CREATE, $route);
         $route = $this->buildRoute('/company/user/update', 'CompanyPage', 'User', 'updateAction');
-        $routeCollection->add(static::ROUTE_COMPANY_USER_UPDATE, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_USER_UPDATE, $route);
         $route = $this->buildPostRoute('/company/user/delete', 'CompanyPage', 'User', 'deleteAction');
-        $routeCollection->add(static::ROUTE_COMPANY_USER_DELETE, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_USER_DELETE, $route);
         $route = $this->buildRoute('/company/user/confirm-delete', 'CompanyPage', 'User', 'confirmDeleteAction');
-        $routeCollection->add(static::ROUTE_COMPANY_USER_CONFIRM_DELETE, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_USER_CONFIRM_DELETE, $route);
         $route = $this->buildRoute('/company/user/select', 'CompanyPage', 'BusinessOnBehalf', 'selectCompanyUserAction');
-        $routeCollection->add(static::ROUTE_COMPANY_USER_SELECT, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_USER_SELECT, $route);
 
         return $routeCollection;
     }
@@ -254,11 +398,11 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCompanyRoleUserRoutes(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/company/company-role/user/manage', 'CompanyPage', 'CompanyRoleUser', 'manageAction');
-        $routeCollection->add(static::ROUTE_COMPANY_ROLE_USER_MANAGE, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_ROLE_USER_MANAGE, $route);
         $route = $this->buildRoute('/company/company-role/user/assign', 'CompanyPage', 'CompanyRoleUser', 'assignAction');
-        $routeCollection->add(static::ROUTE_COMPANY_ROLE_USER_ASSIGN, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_ROLE_USER_ASSIGN, $route);
         $route = $this->buildRoute('/company/company-role/user/unassign', 'CompanyPage', 'CompanyRoleUser', 'unassignAction');
-        $routeCollection->add(static::ROUTE_COMPANY_ROLE_USER_UNASSIGN, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_ROLE_USER_UNASSIGN, $route);
 
         return $routeCollection;
     }
@@ -271,9 +415,9 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCompanyUserStatusRoutes(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/company/company-user-status/enable', 'CompanyPage', 'CompanyUserStatus', 'enableAction');
-        $routeCollection->add(static::ROUTE_COMPANY_USER_STATUS_ENABLE, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_USER_STATUS_ENABLE, $route);
         $route = $this->buildRoute('/company/company-user-status/disable', 'CompanyPage', 'CompanyUserStatus', 'disableAction');
-        $routeCollection->add(static::ROUTE_COMPANY_USER_STATUS_DISABLE, $route);
+        $routeCollection->add(static::ROUTE_NAME_COMPANY_USER_STATUS_DISABLE, $route);
 
         return $routeCollection;
     }

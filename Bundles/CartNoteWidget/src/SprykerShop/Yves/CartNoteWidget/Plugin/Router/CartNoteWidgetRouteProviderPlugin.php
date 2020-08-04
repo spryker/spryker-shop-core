@@ -12,8 +12,16 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class CartNoteWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CartNoteWidget\Plugin\Router\CartNoteWidgetRouteProviderPlugin::ROUTE_NAME_CART_NOTE_QUOTE} instead.
+     */
     protected const ROUTE_CART_NOTE_QUOTE = 'cart-note/quote';
+    public const ROUTE_NAME_CART_NOTE_QUOTE = 'cart-note/quote';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CartNoteWidget\Plugin\Router\CartNoteWidgetRouteProviderPlugin::ROUTE_NAME_CART_NOTE_ITEM} instead.
+     */
     protected const ROUTE_CART_NOTE_ITEM = 'cart-note/item';
+    public const ROUTE_NAME_CART_NOTE_ITEM = 'cart-note/item';
 
     /**
      * Specification:
@@ -41,7 +49,7 @@ class CartNoteWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addQuoteRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cart-note/quote', 'CartNoteWidget', 'Quote', 'indexAction');
-        $routeCollection->add(static::ROUTE_CART_NOTE_QUOTE, $route);
+        $routeCollection->add(static::ROUTE_NAME_CART_NOTE_QUOTE, $route);
 
         return $routeCollection;
     }
@@ -54,7 +62,7 @@ class CartNoteWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addItemRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cart-note/item', 'CartNoteWidget', 'Item', 'indexAction');
-        $routeCollection->add(static::ROUTE_CART_NOTE_ITEM, $route);
+        $routeCollection->add(static::ROUTE_NAME_CART_NOTE_ITEM, $route);
 
         return $routeCollection;
     }

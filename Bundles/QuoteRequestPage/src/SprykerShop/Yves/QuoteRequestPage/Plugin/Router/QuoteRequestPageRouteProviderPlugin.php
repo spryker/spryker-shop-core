@@ -13,70 +13,119 @@ use Spryker\Yves\Router\Route\RouteCollection;
 class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST
+     * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST} instead.
      */
     protected const ROUTE_QUOTE_REQUEST = 'quote-request';
 
+    public const ROUTE_NAME_QUOTE_REQUEST = 'quote-request';
+
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_CREATE
+     * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_CREATE} instead.
      */
     protected const ROUTE_QUOTE_REQUEST_CREATE = 'quote-request/create';
 
+    public const ROUTE_NAME_QUOTE_REQUEST_CREATE = 'quote-request/create';
+
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_REVISE
+     * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_REVISE} instead.
      */
     protected const ROUTE_QUOTE_REQUEST_REVISE = 'quote-request/revise';
 
+    public const ROUTE_NAME_QUOTE_REQUEST_REVISE = 'quote-request/revise';
+
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_SEND_TO_USER
+     * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_SEND_TO_USER} instead.
      */
     protected const ROUTE_QUOTE_REQUEST_SEND_TO_USER = 'quote-request/send-to-user';
 
+    public const ROUTE_NAME_QUOTE_REQUEST_SEND_TO_USER = 'quote-request/send-to-user';
+
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_EDIT
+     * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_EDIT} instead.
      */
     protected const ROUTE_QUOTE_REQUEST_EDIT = 'quote-request/edit';
 
+    public const ROUTE_NAME_QUOTE_REQUEST_EDIT = 'quote-request/edit';
+
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_EDIT_ITEMS
+     * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_EDIT_ITEMS} instead.
      */
     protected const ROUTE_QUOTE_REQUEST_EDIT_ITEMS = 'quote-request/edit-items';
 
+    public const ROUTE_NAME_QUOTE_REQUEST_EDIT_ITEMS = 'quote-request/edit-items';
+
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM
+     * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM} instead.
      */
     protected const ROUTE_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM = 'quote-request/edit-items-confirm';
 
+    public const ROUTE_NAME_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM = 'quote-request/edit-items-confirm';
+
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_CANCEL
+     * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_CANCEL} instead.
      */
     protected const ROUTE_QUOTE_REQUEST_CANCEL = 'quote-request/cancel';
 
+    public const ROUTE_NAME_QUOTE_REQUEST_CANCEL = 'quote-request/cancel';
+
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_DETAILS
+     * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_DETAILS} instead.
      */
     protected const ROUTE_QUOTE_REQUEST_DETAILS = 'quote-request/details';
 
+    public const ROUTE_NAME_QUOTE_REQUEST_DETAILS = 'quote-request/details';
+
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_CONVERT_TO_CART
+     * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_CONVERT_TO_CART} instead.
      */
     protected const ROUTE_QUOTE_REQUEST_CONVERT_TO_CART = 'quote-request/convert-to-cart';
 
+    public const ROUTE_NAME_QUOTE_REQUEST_CONVERT_TO_CART = 'quote-request/convert-to-cart';
+
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE
+     * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST} instead.
      */
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::QUOTE_REQUEST_REFERENCE_REGEX
+     * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST} instead.
      */
     protected const QUOTE_REQUEST_REFERENCE_REGEX = '[a-zA-Z0-9-]+';
 
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_EDIT_ADDRESS} instead.
+     */
     protected const ROUTE_QUOTE_REQUEST_EDIT_ADDRESS = 'quote-request/edit-address';
+
+    public const ROUTE_NAME_QUOTE_REQUEST_EDIT_ADDRESS = 'quote-request/edit-address';
+
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_EDIT_ADDRESS_CONFIRM} instead.
+     */
     protected const ROUTE_QUOTE_REQUEST_EDIT_ADDRESS_CONFIRM = 'quote-request/edit-address-confirm';
+
+    public const ROUTE_NAME_QUOTE_REQUEST_EDIT_ADDRESS_CONFIRM = 'quote-request/edit-address-confirm';
+
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_EDIT_SHIPMENT} instead.
+     */
     protected const ROUTE_QUOTE_REQUEST_EDIT_SHIPMENT = 'quote-request/edit-shipment';
+
+    public const ROUTE_NAME_QUOTE_REQUEST_EDIT_SHIPMENT = 'quote-request/edit-shipment';
+
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_EDIT_SHIPMENT_CONFIRM} instead.
+     */
     protected const ROUTE_QUOTE_REQUEST_EDIT_SHIPMENT_CONFIRM = 'quote-request/edit-shipment-confirm';
+
+    public const ROUTE_NAME_QUOTE_REQUEST_EDIT_SHIPMENT_CONFIRM = 'quote-request/edit-shipment-confirm';
+
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_SAVE} instead.
+     */
     protected const ROUTE_QUOTE_REQUEST_SAVE = 'quote-request/save';
+
+    public const ROUTE_NAME_QUOTE_REQUEST_SAVE = 'quote-request/save';
 
     /**
      * Specification:
@@ -119,7 +168,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addQuoteRequestRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/quote-request', 'QuoteRequestPage', 'QuoteRequestView', 'indexAction');
-        $routeCollection->add(static::ROUTE_QUOTE_REQUEST, $route);
+        $routeCollection->add(static::ROUTE_NAME_QUOTE_REQUEST, $route);
 
         return $routeCollection;
     }
@@ -134,7 +183,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addQuoteRequestCreateRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/quote-request/create', 'QuoteRequestPage', 'QuoteRequestCreate', 'createAction');
-        $routeCollection->add(static::ROUTE_QUOTE_REQUEST_CREATE, $route);
+        $routeCollection->add(static::ROUTE_NAME_QUOTE_REQUEST_CREATE, $route);
 
         return $routeCollection;
     }
@@ -150,7 +199,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/quote-request/revise/{quoteRequestReference}', 'QuoteRequestPage', 'QuoteRequestRevise', 'indexAction');
         $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
-        $routeCollection->add(static::ROUTE_QUOTE_REQUEST_REVISE, $route);
+        $routeCollection->add(static::ROUTE_NAME_QUOTE_REQUEST_REVISE, $route);
 
         return $routeCollection;
     }
@@ -166,7 +215,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/quote-request/edit/{quoteRequestReference}', 'QuoteRequestPage', 'QuoteRequestEdit', 'indexAction');
         $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
-        $routeCollection->add(static::ROUTE_QUOTE_REQUEST_EDIT, $route);
+        $routeCollection->add(static::ROUTE_NAME_QUOTE_REQUEST_EDIT, $route);
 
         return $routeCollection;
     }
@@ -182,7 +231,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/quote-request/edit-items/{quoteRequestReference}', 'QuoteRequestPage', 'QuoteRequestEditItems', 'indexAction');
         $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
-        $routeCollection->add(static::ROUTE_QUOTE_REQUEST_EDIT_ITEMS, $route);
+        $routeCollection->add(static::ROUTE_NAME_QUOTE_REQUEST_EDIT_ITEMS, $route);
 
         return $routeCollection;
     }
@@ -198,7 +247,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/quote-request/edit-items-confirm/{quoteRequestReference}', 'QuoteRequestPage', 'QuoteRequestEditItems', 'confirmAction');
         $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
-        $routeCollection->add(static::ROUTE_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM, $route);
+        $routeCollection->add(static::ROUTE_NAME_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM, $route);
 
         return $routeCollection;
     }
@@ -214,7 +263,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/quote-request/send-to-user/{quoteRequestReference}', 'QuoteRequestPage', 'QuoteRequestEdit', 'sendToUserAction');
         $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
-        $routeCollection->add(static::ROUTE_QUOTE_REQUEST_SEND_TO_USER, $route);
+        $routeCollection->add(static::ROUTE_NAME_QUOTE_REQUEST_SEND_TO_USER, $route);
 
         return $routeCollection;
     }
@@ -230,7 +279,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/quote-request/cancel/{quoteRequestReference}', 'QuoteRequestPage', 'QuoteRequestDelete', 'cancelAction');
         $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
-        $routeCollection->add(static::ROUTE_QUOTE_REQUEST_CANCEL, $route);
+        $routeCollection->add(static::ROUTE_NAME_QUOTE_REQUEST_CANCEL, $route);
 
         return $routeCollection;
     }
@@ -246,7 +295,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/quote-request/details/{quoteRequestReference}', 'QuoteRequestPage', 'QuoteRequestView', 'detailsAction');
         $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
-        $routeCollection->add(static::ROUTE_QUOTE_REQUEST_DETAILS, $route);
+        $routeCollection->add(static::ROUTE_NAME_QUOTE_REQUEST_DETAILS, $route);
 
         return $routeCollection;
     }
@@ -262,7 +311,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/quote-request/convert-to-cart/{quoteRequestReference}', 'QuoteRequestPage', 'QuoteRequestCheckout', 'convertToCartAction');
         $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
-        $routeCollection->add(static::ROUTE_QUOTE_REQUEST_CONVERT_TO_CART, $route);
+        $routeCollection->add(static::ROUTE_NAME_QUOTE_REQUEST_CONVERT_TO_CART, $route);
 
         return $routeCollection;
     }
@@ -278,7 +327,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/quote-request/edit-address/{quoteRequestReference}', 'QuoteRequestPage', 'QuoteRequestEditAddress', 'indexAction');
         $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
-        $routeCollection->add(static::ROUTE_QUOTE_REQUEST_EDIT_ADDRESS, $route);
+        $routeCollection->add(static::ROUTE_NAME_QUOTE_REQUEST_EDIT_ADDRESS, $route);
 
         return $routeCollection;
     }
@@ -294,7 +343,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/quote-request/edit-address-confirm/{quoteRequestReference}', 'QuoteRequestPage', 'QuoteRequestEditAddress', 'confirmAction');
         $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
-        $routeCollection->add(static::ROUTE_QUOTE_REQUEST_EDIT_ADDRESS_CONFIRM, $route);
+        $routeCollection->add(static::ROUTE_NAME_QUOTE_REQUEST_EDIT_ADDRESS_CONFIRM, $route);
 
         return $routeCollection;
     }
@@ -310,7 +359,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/quote-request/edit-shipment/{quoteRequestReference}', 'QuoteRequestPage', 'QuoteRequestEditShipment', 'indexAction');
         $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
-        $routeCollection->add(static::ROUTE_QUOTE_REQUEST_EDIT_SHIPMENT, $route);
+        $routeCollection->add(static::ROUTE_NAME_QUOTE_REQUEST_EDIT_SHIPMENT, $route);
 
         return $routeCollection;
     }
@@ -326,7 +375,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/quote-request/edit-shipment-confirm/{quoteRequestReference}', 'QuoteRequestPage', 'QuoteRequestEditShipment', 'confirmAction');
         $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
-        $routeCollection->add(static::ROUTE_QUOTE_REQUEST_EDIT_SHIPMENT_CONFIRM, $route);
+        $routeCollection->add(static::ROUTE_NAME_QUOTE_REQUEST_EDIT_SHIPMENT_CONFIRM, $route);
 
         return $routeCollection;
     }
@@ -341,7 +390,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCheckoutSaveRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/quote-request/save', 'QuoteRequestPage', 'QuoteRequestSave', 'saveAction');
-        $routeCollection->add(static::ROUTE_QUOTE_REQUEST_SAVE, $route);
+        $routeCollection->add(static::ROUTE_NAME_QUOTE_REQUEST_SAVE, $route);
 
         return $routeCollection;
     }

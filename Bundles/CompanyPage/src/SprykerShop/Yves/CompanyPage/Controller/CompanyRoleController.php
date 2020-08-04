@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use SprykerShop\Yves\CompanyPage\Form\CompanyRoleForm;
-use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
+use SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -124,7 +124,7 @@ class CompanyRoleController extends AbstractCompanyController
         if (!$companyRoleDeleteForm->isSubmitted() || !$companyRoleDeleteForm->isValid()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_COMPANY_ROLE_DELETE_ERROR);
 
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ROLE);
+            return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE);
         }
 
         $companyRoleTransfer = $companyRoleDeleteForm->getData();
@@ -147,7 +147,7 @@ class CompanyRoleController extends AbstractCompanyController
 
         $this->processResponseMessages($companyRoleResponseTransfer);
 
-        return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ROLE);
+        return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE);
     }
 
     /**
@@ -175,7 +175,7 @@ class CompanyRoleController extends AbstractCompanyController
         if ($companyRoleTransfer->getIsDefault()) {
             $this->addErrorMessage(static::ERROR_MESSAGE_DEFAULT_COMPANY_ROLE_DELETE);
 
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ROLE);
+            return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE);
         }
 
         return $this->executeConfirmDeleteAction($request);
@@ -259,7 +259,7 @@ class CompanyRoleController extends AbstractCompanyController
             if ($companyRoleResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(static::SUCCESS_MESSAGE_COMPANY_ROLE_CREATE);
 
-                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ROLE);
+                return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE);
             }
 
             $this->processResponseMessages($companyRoleResponseTransfer);
@@ -321,7 +321,7 @@ class CompanyRoleController extends AbstractCompanyController
             $this->updateCompanyRole($companyRoleForm->getData());
             $this->addSuccessMessage(static::SUCCESS_MESSAGE_COMPANY_ROLE_UPDATE);
 
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ROLE);
+            return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE);
         }
 
         return [

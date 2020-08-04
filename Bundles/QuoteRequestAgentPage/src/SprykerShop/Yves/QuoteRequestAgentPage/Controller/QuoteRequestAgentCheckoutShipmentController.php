@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class QuoteRequestAgentCheckoutShipmentController extends QuoteRequestAgentAbstractController
 {
     /**
-     * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::CHECKOUT_SHIPMENT
+     * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_SHIPMENT
      */
     protected const ROUTE_CHECKOUT_SHIPMENT = 'checkout-shipment';
 

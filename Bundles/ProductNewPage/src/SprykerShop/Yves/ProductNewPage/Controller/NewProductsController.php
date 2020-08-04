@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\ProductNewPage\Controller;
 
 use Spryker\Yves\Kernel\Controller\AbstractController;
-use SprykerShop\Yves\ProductNewPage\Plugin\Provider\ProductNewPageControllerProvider;
+use SprykerShop\Yves\ProductNewPage\Plugin\Router\ProductNewPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -66,7 +66,7 @@ class NewProductsController extends AbstractController
             ->findNewProducts($parameters);
 
         $searchResults['category'] = $categoryNode;
-        $searchResults['filterPath'] = ProductNewPageControllerProvider::ROUTE_NEW_PRODUCTS;
+        $searchResults['filterPath'] = ProductNewPageRouteProviderPlugin::ROUTE_NAME_NEW_PRODUCTS;
         $searchResults['viewMode'] = $this->getFactory()
             ->getCatalogClient()
             ->getCatalogViewMode($request);

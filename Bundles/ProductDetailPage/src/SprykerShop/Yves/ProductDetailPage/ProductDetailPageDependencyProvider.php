@@ -16,6 +16,10 @@ class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvid
 {
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const PLUGIN_PRODUCT_DETAIL_PAGE_WIDGETS = 'PLUGIN_PRODUCT_DETAIL_PAGE_WIDGETS';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
@@ -71,6 +75,8 @@ class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container

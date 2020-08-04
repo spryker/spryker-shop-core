@@ -21,6 +21,7 @@ use SprykerShop\Yves\CartPage\Plugin\Provider\AttributeVariantsProvider;
 use SprykerShop\Yves\CartPage\ProductViewExpander\ProductViewExpander;
 use SprykerShop\Yves\CartPage\ProductViewExpander\ProductViewExpanderInterface;
 use Symfony\Cmf\Component\Routing\ChainRouterInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class CartPageFactory extends AbstractFactory
@@ -54,6 +55,8 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Yves\Kernel\Application
      */
     public function getApplication()
@@ -62,6 +65,8 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
      */
     public function getFlashMessenger()
@@ -74,7 +79,7 @@ class CartPageFactory extends AbstractFactory
      */
     public function getLocale()
     {
-        return $this->getApplication()['locale'];
+        return $this->getProvidedDependency(CartPageDependencyProvider::SERVICE_LOCALE);
     }
 
     /**
@@ -82,7 +87,15 @@ class CartPageFactory extends AbstractFactory
      */
     public function getRequest()
     {
-        return $this->getApplication()['request'];
+        return $this->getRequestStack()->getCurrentRequest();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RequestStack
+     */
+    public function getRequestStack(): RequestStack
+    {
+        return $this->getProvidedDependency(CartPageDependencyProvider::SERVICE_REQUEST_STACK);
     }
 
     /**
@@ -192,7 +205,7 @@ class CartPageFactory extends AbstractFactory
      */
     public function getRouter(): ChainRouterInterface
     {
-        return $this->getApplication()->get(CartPageDependencyProvider::SERVICE_ROUTER);
+        return $this->getProvidedDependency(CartPageDependencyProvider::SERVICE_ROUTER);
     }
 
     /**
@@ -208,6 +221,6 @@ class CartPageFactory extends AbstractFactory
      */
     public function getCsrfTokenManager(): CsrfTokenManagerInterface
     {
-        return $this->getApplication()->get(CartPageDependencyProvider::SERVICE_FORM_CSRF_PROVIDER);
+        return $this->getProvidedDependency(CartPageDependencyProvider::SERVICE_FORM_CSRF_PROVIDER);
     }
 }

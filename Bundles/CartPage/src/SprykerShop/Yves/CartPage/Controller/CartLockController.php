@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CartPage\Controller;
 
+use SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -18,7 +19,7 @@ class CartLockController extends AbstractController
     protected const GLOSSARY_KEY_CART_PAGE_RESET_LOCK_SUCCESS = 'cart_page.quote.reset_lock.success';
 
     /**
-     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
+     * @deprecated Use {@link \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART} instead.
      */
     protected const ROUTE_CART = 'cart';
 
@@ -45,6 +46,6 @@ class CartLockController extends AbstractController
             $this->addSuccessMessage(static::GLOSSARY_KEY_CART_PAGE_RESET_LOCK_SUCCESS);
         }
 
-        return $this->redirectResponseInternal(static::ROUTE_CART);
+        return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
     }
 }

@@ -34,7 +34,7 @@ class MerchantProductOfferWidgetFactory extends AbstractFactory
      */
     public function createShopContextResolver(): ShopContextResolverInterface
     {
-        return new ShopContextResolver($this->getApplication());
+        return new ShopContextResolver($this->getContainer());
     }
 
     /**
@@ -54,6 +54,8 @@ class MerchantProductOfferWidgetFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Yves\Kernel\AbstractFactory::getContainer()} instead.
+     *
      * @return \Spryker\Shared\Kernel\Communication\Application
      */
     public function getApplication(): Application

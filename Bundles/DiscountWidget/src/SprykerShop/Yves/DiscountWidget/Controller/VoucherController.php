@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\DiscountWidget\Controller;
 
-use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\DiscountWidget\Form\CartVoucherForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +18,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class VoucherController extends AbstractController
 {
+    /**
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
+     */
+    protected const ROUTE_NAME_CART = 'cart';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -38,7 +42,7 @@ class VoucherController extends AbstractController
                 ->add($voucherCode);
         }
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(static::ROUTE_NAME_CART);
     }
 
     /**
@@ -55,7 +59,7 @@ class VoucherController extends AbstractController
                 ->remove($voucherCode);
         }
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(static::ROUTE_NAME_CART);
     }
 
     /**
@@ -65,6 +69,6 @@ class VoucherController extends AbstractController
     {
         $this->getFactory()->createVoucherHandler()->clear();
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(static::ROUTE_NAME_CART);
     }
 }

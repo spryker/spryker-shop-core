@@ -12,8 +12,16 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class AgentPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\AgentPage\Plugin\Router\AgentPageRouteProviderPlugin::ROUTE_NAME_LOGIN} instead.
+     */
     protected const ROUTE_LOGIN = 'agent/login';
+    public const ROUTE_NAME_LOGIN = 'agent/login';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\AgentPage\Plugin\Router\AgentPageRouteProviderPlugin::ROUTE_NAME_AGENT_OVERVIEW} instead.
+     */
     protected const ROUTE_AGENT_OVERVIEW = 'agent/overview';
+    public const ROUTE_NAME_AGENT_OVERVIEW = 'agent/overview';
 
     /**
      * Specification:
@@ -41,7 +49,7 @@ class AgentPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addLoginRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/agent/login', 'AgentPage', 'Auth', 'loginAction');
-        $routeCollection->add(static::ROUTE_LOGIN, $route);
+        $routeCollection->add(static::ROUTE_NAME_LOGIN, $route);
 
         return $routeCollection;
     }
@@ -56,7 +64,7 @@ class AgentPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addOverviewRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/agent/overview', 'AgentPage', 'Agent', 'indexAction');
-        $routeCollection->add(static::ROUTE_AGENT_OVERVIEW, $route);
+        $routeCollection->add(static::ROUTE_NAME_AGENT_OVERVIEW, $route);
 
         return $routeCollection;
     }

@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\PersistentCartShareWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Application;
+use Spryker\Yves\Router\Router\ChainRouter;
 use SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartShareWidgetToCustomerClientInterface;
 use SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartShareWidgetToPersistentCartShareClientInterface;
 use SprykerShop\Yves\PersistentCartShareWidget\PersistentCartShare\PersistentCartShareLinkGenerator;
@@ -34,6 +35,8 @@ class PersistentCartShareWidgetFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Yves\Kernel\Application
      */
     public function getApplication(): Application
@@ -58,9 +61,17 @@ class PersistentCartShareWidgetFactory extends AbstractFactory
     {
         return new PersistentCartShareLinkGenerator(
             $this->getPersistentCartShareClient(),
-            $this->getApplication(),
+            $this->getRouter(),
             $this->createResourceShareRequestBuilder(),
             $this->getCustomerClient()
         );
+    }
+
+    /**
+     * @return \Spryker\Yves\Router\Router\ChainRouter
+     */
+    public function getRouter(): ChainRouter
+    {
+        return $this->getProvidedDependency(PersistentCartShareWidgetDependencyProvider::SERVICE_ROUTER);
     }
 }

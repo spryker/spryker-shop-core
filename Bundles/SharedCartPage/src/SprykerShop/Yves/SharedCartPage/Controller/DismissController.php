@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class DismissController extends AbstractController
 {
     /**
-     * @uses \SprykerShop\Yves\MultiCartPage\Plugin\Provider\MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX
+     * @uses \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_INDEX
      */
     public const URL_REDIRECT_MULTI_CART_PAGE = 'multi-cart';
     public const KEY_GLOSSARY_SHARED_CART_PAGE_DISMISS_SUCCESS = 'shared_cart_page.dismiss.success';

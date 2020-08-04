@@ -13,15 +13,51 @@ use Symfony\Component\HttpFoundation\Request;
 
 class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\WishlistPage\Plugin\Router\WishlistPageRouteProviderPlugin::ROUTE_NAME_ADD_TO_WISHLIST} instead.
+     */
     protected const ROUTE_ADD_TO_WISHLIST = 'wishlist/add-to-wishlist';
+    public const ROUTE_NAME_ADD_TO_WISHLIST = 'wishlist/add-to-wishlist';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\WishlistPage\Plugin\Router\WishlistPageRouteProviderPlugin::ROUTE_NAME_WISHLIST_OVERVIEW} instead.
+     */
     protected const ROUTE_WISHLIST_OVERVIEW = 'wishlist/overview';
+    public const ROUTE_NAME_WISHLIST_OVERVIEW = 'wishlist/overview';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\WishlistPage\Plugin\Router\WishlistPageRouteProviderPlugin::ROUTE_NAME_WISHLIST_UPDATE} instead.
+     */
     protected const ROUTE_WISHLIST_UPDATE = 'wishlist/update';
+    public const ROUTE_NAME_WISHLIST_UPDATE = 'wishlist/update';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\WishlistPage\Plugin\Router\WishlistPageRouteProviderPlugin::ROUTE_NAME_WISHLIST_DELETE} instead.
+     */
     protected const ROUTE_WISHLIST_DELETE = 'wishlist/delete';
+    public const ROUTE_NAME_WISHLIST_DELETE = 'wishlist/delete';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\WishlistPage\Plugin\Router\WishlistPageRouteProviderPlugin::ROUTE_NAME_WISHLIST_DETAILS} instead.
+     */
     protected const ROUTE_WISHLIST_DETAILS = 'wishlist/details';
+    public const ROUTE_NAME_WISHLIST_DETAILS = 'wishlist/details';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\WishlistPage\Plugin\Router\WishlistPageRouteProviderPlugin::ROUTE_NAME_ADD_ITEM} instead.
+     */
     protected const ROUTE_ADD_ITEM = 'wishlist/add-item';
+    public const ROUTE_NAME_ADD_ITEM = 'wishlist/add-item';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\WishlistPage\Plugin\Router\WishlistPageRouteProviderPlugin::ROUTE_NAME_REMOVE_ITEM} instead.
+     */
     protected const ROUTE_REMOVE_ITEM = 'wishlist/remove-item';
+    public const ROUTE_NAME_REMOVE_ITEM = 'wishlist/remove-item';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\WishlistPage\Plugin\Router\WishlistPageRouteProviderPlugin::ROUTE_NAME_MOVE_TO_CART} instead.
+     */
     protected const ROUTE_MOVE_TO_CART = 'wishlist/move-to-cart';
+    public const ROUTE_NAME_MOVE_TO_CART = 'wishlist/move-to-cart';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\WishlistPage\Plugin\Router\WishlistPageRouteProviderPlugin::ROUTE_NAME_MOVE_ALL_AVAILABLE_TO_CART} instead.
+     */
     protected const ROUTE_MOVE_ALL_AVAILABLE_TO_CART = 'wishlist/move-all-available-to-cart';
+    public const ROUTE_NAME_MOVE_ALL_AVAILABLE_TO_CART = 'wishlist/move-all-available-to-cart';
     protected const WISHLIST_NAME_PATTERN = '.+';
     protected const SKU_PATTERN = '[a-zA-Z0-9-_.]+';
 
@@ -58,7 +94,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addAddToWishlistRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/wishlist/add-to-wishlist', 'WishlistPage', 'AddToWishlist', 'indexAction');
-        $routeCollection->add(static::ROUTE_ADD_TO_WISHLIST, $route);
+        $routeCollection->add(static::ROUTE_NAME_ADD_TO_WISHLIST, $route);
 
         return $routeCollection;
     }
@@ -71,7 +107,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addWishlistOverviewRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/wishlist', 'WishlistPage', 'WishlistOverview', 'indexAction');
-        $routeCollection->add(static::ROUTE_WISHLIST_OVERVIEW, $route);
+        $routeCollection->add(static::ROUTE_NAME_WISHLIST_OVERVIEW, $route);
 
         return $routeCollection;
     }
@@ -85,7 +121,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/wishlist/update/{wishlistName}', 'WishlistPage', 'WishlistOverview', 'updateAction');
         $route = $route->setRequirement('wishlistName', static::WISHLIST_NAME_PATTERN);
-        $routeCollection->add(static::ROUTE_WISHLIST_UPDATE, $route);
+        $routeCollection->add(static::ROUTE_NAME_WISHLIST_UPDATE, $route);
 
         return $routeCollection;
     }
@@ -100,7 +136,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $route = $this->buildRoute('/wishlist/delete/{wishlistName}', 'WishlistPage', 'WishlistOverview', 'deleteAction');
         $route = $route->setRequirement('wishlistName', static::WISHLIST_NAME_PATTERN);
         $route = $route->setMethods(Request::METHOD_POST);
-        $routeCollection->add(static::ROUTE_WISHLIST_DELETE, $route);
+        $routeCollection->add(static::ROUTE_NAME_WISHLIST_DELETE, $route);
 
         return $routeCollection;
     }
@@ -114,7 +150,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/wishlist/details/{wishlistName}', 'WishlistPage', 'Wishlist', 'indexAction');
         $route = $route->setRequirement('wishlistName', static::WISHLIST_NAME_PATTERN);
-        $routeCollection->add(static::ROUTE_WISHLIST_DETAILS, $route);
+        $routeCollection->add(static::ROUTE_NAME_WISHLIST_DETAILS, $route);
 
         return $routeCollection;
     }
@@ -128,7 +164,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/wishlist/add-item', 'WishlistPage', 'Wishlist', 'addItemAction');
         $route = $route->setMethods(Request::METHOD_POST);
-        $routeCollection->add(static::ROUTE_ADD_ITEM, $route);
+        $routeCollection->add(static::ROUTE_NAME_ADD_ITEM, $route);
 
         return $routeCollection;
     }
@@ -142,7 +178,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/wishlist/remove-item', 'WishlistPage', 'Wishlist', 'removeItemAction');
         $route = $route->setMethods(Request::METHOD_POST);
-        $routeCollection->add(static::ROUTE_REMOVE_ITEM, $route);
+        $routeCollection->add(static::ROUTE_NAME_REMOVE_ITEM, $route);
 
         return $routeCollection;
     }
@@ -157,7 +193,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $route = $this->buildRoute('/wishlist/move-to-cart', 'WishlistPage', 'Wishlist', 'moveToCartAction');
         $route = $route->setRequirement('sku', static::SKU_PATTERN);
         $route = $route->setMethods(Request::METHOD_POST);
-        $routeCollection->add(static::ROUTE_MOVE_TO_CART, $route);
+        $routeCollection->add(static::ROUTE_NAME_MOVE_TO_CART, $route);
 
         return $routeCollection;
     }
@@ -171,7 +207,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/wishlist/move-all-available-to-cart/{wishlistName}', 'WishlistPage', 'Wishlist', 'moveAllAvailableToCartAction');
         $route = $route->setRequirement('wishlistName', static::WISHLIST_NAME_PATTERN);
-        $routeCollection->add(static::ROUTE_MOVE_ALL_AVAILABLE_TO_CART, $route);
+        $routeCollection->add(static::ROUTE_NAME_MOVE_ALL_AVAILABLE_TO_CART, $route);
 
         return $routeCollection;
     }

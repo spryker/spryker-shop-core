@@ -16,7 +16,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConfig;
 use SprykerShop\Yves\CompanyUserInvitationPage\Form\CompanyUserInvitationForm;
-use SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Provider\CompanyUserInvitationPageControllerProvider;
+use SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Router\CompanyUserInvitationPageRouteProviderPlugin;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,7 +65,7 @@ class ImportController extends AbstractController
             $companyUserInvitationImportResponseTransfer = $this->importCompanyUserInvitations($companyUserInvitationForm);
             if (!$companyUserInvitationImportResponseTransfer->getIsSuccess() && !$companyUserInvitationImportResponseTransfer->getErrors()) {
                 return $this->redirectToRouteWithErrorMessage(
-                    CompanyUserInvitationPageControllerProvider::ROUTE_OVERVIEW,
+                    CompanyUserInvitationPageRouteProviderPlugin::ROUTE_NAME_OVERVIEW,
                     'company.user.invitation.import.error.message'
                 );
             }

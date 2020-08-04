@@ -12,7 +12,11 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class FileManagerWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\FileManagerWidget\Plugin\Router\FileManagerWidgetRouteProviderPlugin::ROUTE_NAME_FILES_DOWNLOAD} instead.
+     */
     protected const ROUTE_FILES_DOWNLOAD = 'files/download';
+    public const ROUTE_NAME_FILES_DOWNLOAD = 'files/download';
 
     /**
      * @var string
@@ -32,7 +36,7 @@ class FileManagerWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/files/download', 'FileManagerWidget', 'Download', 'indexAction');
-        $routeCollection->add(static::ROUTE_FILES_DOWNLOAD, $route);
+        $routeCollection->add(static::ROUTE_NAME_FILES_DOWNLOAD, $route);
 
         return $routeCollection;
     }

@@ -51,7 +51,9 @@ class CheckoutVoucherFormWidget extends AbstractWidget
     {
         $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
 
-        return $this->addParameter('isQuoteEditable', $this->getFactory()->getQuoteClient()->isQuoteEditable($quoteTransfer));
+        $this->addParameter('isQuoteEditable', $this->getFactory()->getQuoteClient()->isQuoteEditable($quoteTransfer));
+
+        return $this;
     }
 
     /**
