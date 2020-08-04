@@ -8,7 +8,7 @@
     {% endif %}
 {% endblock %}
 
-{% block bodyTop %}
+{% block styleLazyLoader %}
     {% if not data.hasCookies %}
         {% include molecule('style-loader') with {
             attributes: {
