@@ -34,7 +34,7 @@ class CommentWidgetDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideDependencies($container);
         $container = $this->addCommentClient($container);
         $container = $this->addCustomerClient($container);
-        $container = $this->addCsrfProviderService($container);
+        $container = $this->addFormCsrfProviderService($container);
         $container = $this->addCommentThreadAfterOperationStrategyPlugins($container);
 
         return $container;
@@ -87,7 +87,7 @@ class CommentWidgetDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCsrfProviderService(Container $container): Container
+    protected function addFormCsrfProviderService(Container $container): Container
     {
         $container->set(static::SERVICE_FORM_CSRF_PROVIDER, function (Container $container) {
             return $container->getApplicationService(static::SERVICE_FORM_CSRF_PROVIDER);

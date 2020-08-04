@@ -72,7 +72,9 @@
                 {% endif %}
             {% endblock %}
 
-            <input type="hidden" name="_token" value="{{ csrf_token(data.formView ~ '-' ~ config.name)}}">
+            {% block csrfTokenField %}
+                <input type="hidden" name="_token" value="{{ csrf_token(data.formView ~ '-' ~ config.name)}}">
+            {% endblock %}
 
             {% block formHandlers %}
                 <div class="{{ config.name }}__handlers">
