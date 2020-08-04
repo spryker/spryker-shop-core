@@ -1,4 +1,5 @@
 import Component from 'ShopUi/models/component';
+import { debug } from 'ShopUi/app/logger';
 
 export default class StyleLoader extends Component {
     protected readyCallback(): void {}
@@ -18,6 +19,8 @@ export default class StyleLoader extends Component {
     protected addCss(): void {
         const linkTemplate = `<link rel="stylesheet" href="${this.pathToCSS}">`;
         document.getElementsByTagName('head')[0].insertAdjacentHTML('beforeend', linkTemplate);
+
+        debug(`Style file ${this.pathToCSS} has been loaded`);
     }
 
     protected get pathToCSS(): string {
