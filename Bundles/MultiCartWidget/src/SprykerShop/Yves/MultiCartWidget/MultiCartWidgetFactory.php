@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\MultiCartWidget;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\MultiCartWidget\Dependency\Client\MultiCartWidgetToMultiCartClientInterface;
 use SprykerShop\Yves\MultiCartWidget\Dependency\Client\MultiCartWidgetToQuoteClientInterface;
-use SprykerShop\Yves\MultiCartWidget\Form\MiniCartRadioForm;
 use SprykerShop\Yves\MultiCartWidget\Form\MultiCartClearForm;
 use SprykerShop\Yves\MultiCartWidget\Form\MultiCartDuplicateForm;
 use SprykerShop\Yves\MultiCartWidget\Form\MultiCartSetDefaultForm;
@@ -73,16 +72,5 @@ class MultiCartWidgetFactory extends AbstractFactory
     public function getMultiCartSetDefaultForm(): FormInterface
     {
         return $this->getFormFactory()->create(MultiCartSetDefaultForm::class);
-    }
-
-    /**
-     * @param array $data
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function getMultiCartRadioForm(array $data = [], array $options = []): FormInterface
-    {
-        return $this->getFormFactory()->create(MiniCartRadioForm::class, $data, $options);
     }
 }
