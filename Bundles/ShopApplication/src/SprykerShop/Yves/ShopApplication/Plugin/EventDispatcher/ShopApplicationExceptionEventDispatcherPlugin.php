@@ -11,7 +11,7 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -36,8 +36,8 @@ class ShopApplicationExceptionEventDispatcherPlugin extends AbstractPlugin imple
      */
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        $eventDispatcher->addListener(KernelEvents::EXCEPTION, function (GetResponseForExceptionEvent $event) {
-            throw $event->getException();
+        $eventDispatcher->addListener(KernelEvents::EXCEPTION, function (ExceptionEvent $event) {
+            throw $event->getThrowable();
         }, static::PRIORITY);
 
         return $eventDispatcher;

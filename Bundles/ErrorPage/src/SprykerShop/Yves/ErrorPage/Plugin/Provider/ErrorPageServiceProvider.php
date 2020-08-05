@@ -12,7 +12,7 @@ use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -43,13 +43,13 @@ class ErrorPageServiceProvider extends AbstractPlugin implements ServiceProvider
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
      *
      * @return void
      */
-    public function onKernelException(GetResponseForExceptionEvent $event)
+    public function onKernelException(ExceptionEvent $event)
     {
-        $exception = $event->getException();
+        $exception = $event->getThrowable();
 
         $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR;
         if ($exception instanceof HttpExceptionInterface) {
@@ -62,7 +62,7 @@ class ErrorPageServiceProvider extends AbstractPlugin implements ServiceProvider
                 continue;
             }
 
-            $response = $exceptionHandlerPlugin->handleException(FlattenException::create($exception));
+            $response = $exceptionHandlerPlugin->handleException(FlattenException::createFromThrowable($exception));
 
             $event->setResponse($response);
             $event->stopPropagation();
