@@ -19,6 +19,7 @@ use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToQuoteClientInterface
 use SprykerShop\Yves\AgentPage\Form\AgentLoginForm;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationFailureHandler;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationSuccessHandler;
+use SprykerShop\Yves\AgentPage\Plugin\Provider\AccessDeniedHandler;
 use SprykerShop\Yves\AgentPage\Plugin\Provider\AgentUserProvider;
 use SprykerShop\Yves\AgentPage\Plugin\Security\AgentPageSecurityPlugin;
 use SprykerShop\Yves\AgentPage\Plugin\Subscriber\SwitchUserEventSubscriber;
@@ -31,6 +32,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
+use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
 
 class AgentPageFactory extends AbstractFactory
 {
@@ -167,6 +169,16 @@ class AgentPageFactory extends AbstractFactory
     public function getSecurityAuthorizationChecker(): AuthorizationCheckerInterface
     {
         return $this->getProvidedDependency(AgentPageDependencyProvider::SERVICE_SECURITY_AUTHORIZATION_CHECKER);
+    }
+
+    /**
+     * @param string $targetUrl
+     *
+     * @return \Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface
+     */
+    public function createAccessDeniedHandler(string $targetUrl): AccessDeniedHandlerInterface
+    {
+        return new AccessDeniedHandler($targetUrl);
     }
 
     /**
