@@ -183,7 +183,7 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
                 $route->setMethods('GET');
                 $route->setDefault('_controller', $controller);
 
-                $routeCollection->add($routeName, $route);
+                $routeCollection->add($routeName, $route, 0);
             }
 
             return $routeCollection;
