@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\ErrorPage\Dependency\Plugin;
 
-use Symfony\Component\Debug\Exception\FlattenException;
+use Symfony\Component\ErrorHandler\Exception\FlattenException;
 
 interface ExceptionHandlerPluginInterface
 {
@@ -23,7 +23,7 @@ interface ExceptionHandlerPluginInterface
     /**
      * @api
      *
-     * @param \Symfony\Component\Debug\Exception\FlattenException $exception
+     * @param \Symfony\Component\ErrorHandler\Exception\FlattenException $exception
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
