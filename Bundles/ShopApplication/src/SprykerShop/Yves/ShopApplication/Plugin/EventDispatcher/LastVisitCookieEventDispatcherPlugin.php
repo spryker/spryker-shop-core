@@ -19,12 +19,11 @@ use Symfony\Component\HttpKernel\KernelEvents;
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationFactory getFactory()
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationConfig getConfig()
  */
-class ShopApplicationLastVisitCookieEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
+class LastVisitCookieEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
-    protected const COOKIES_HANDLER_PRIORITY = -255;
-    protected const COOKIES_NAME = 'last-visit';
-    protected const COOKIES_VALUE = 'last-visit';
-    protected const COOKIES_LIFETIME = 108000;
+    protected const EVENT_PRIORITY = -255;
+    protected const COOKIE_NAME = 'last-visit';
+    protected const COOKIE_LIFETIME = 108000;
 
     /**
      * {@inheritDoc}
@@ -41,9 +40,9 @@ class ShopApplicationLastVisitCookieEventDispatcherPlugin extends AbstractPlugin
     {
         $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event): void {
             $event->getResponse()->headers->setCookie(
-                (Cookie::create(static::COOKIES_NAME, static::COOKIES_VALUE, time() + static::COOKIES_LIFETIME))
+                (Cookie::create(static::COOKIE_NAME, (string)time(), time() + static::COOKIE_LIFETIME))
             );
-        }, static::COOKIES_HANDLER_PRIORITY);
+        }, static::EVENT_PRIORITY);
 
         return $eventDispatcher;
     }
