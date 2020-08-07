@@ -27,7 +27,7 @@ class LastVisitCookieEventDispatcherPlugin extends AbstractPlugin implements Eve
 
     /**
      * {@inheritDoc}
-     * - Adds a listener to handle cookie insertion for shop application.
+     * - Adds a listener to handle cookie insertion with data about last time visit.
      *
      * @api
      *
