@@ -16,7 +16,6 @@ use SprykerShop\Yves\ContentFileWidget\Expander\IconNameFileStorageDataExpander;
 use SprykerShop\Yves\ContentFileWidget\Reader\ContentFileReader;
 use SprykerShop\Yves\ContentFileWidget\Reader\ContentFileReaderInterface;
 use SprykerShop\Yves\ContentFileWidget\Twig\ContentFileListTwigFunctionProvider;
-use SprykerShop\Yves\ContentFileWidget\Twig\ReadableByteSizeTwigFilter;
 use Twig\Environment;
 use Twig\TwigFunction;
 
@@ -56,14 +55,6 @@ class ContentFileWidgetFactory extends AbstractFactory
             $functionProvider->getFunction(),
             $functionProvider->getOptions()
         );
-    }
-
-    /**
-     * @return \SprykerShop\Yves\ContentFileWidget\Twig\ReadableByteSizeTwigFilter
-     */
-    public function createReadableByteSizeTwigFilter(): ReadableByteSizeTwigFilter
-    {
-        return new ReadableByteSizeTwigFilter();
     }
 
     /**

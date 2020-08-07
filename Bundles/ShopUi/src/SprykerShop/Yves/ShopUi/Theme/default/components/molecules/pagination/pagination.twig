@@ -39,10 +39,12 @@
                 <a class="{{config.name}}__step {{config.name}}__step--previous" href="{{ path(data.paginationPath, data.parameters|merge({page: data.currentPage-1})) }}{{ data.anchor }}">{{ 'pagination.previous' | trans }}</a>
             </li>
 
-            {% for i in range(1, data.extremePagesLimit) if ( i < data.currentPage - data.nearbyPagesLimit ) %}
-                <li class="{{config.name}}__item">
-                    <a class="{{config.name}}__step" href="{{ path(data.paginationPath, data.parameters|merge({page: i})) }}{{ data.anchor }}">{{ i }}</a>
-                </li>
+            {% for i in range(1, data.extremePagesLimit) %}
+                {% if i < data.currentPage - data.nearbyPagesLimit %}
+                    <li class="{{config.name}}__item">
+                        <a class="{{config.name}}__step" href="{{ path(data.paginationPath, data.parameters|merge({page: i})) }}{{ data.anchor }}">{{ i }}</a>
+                    </li>
+                {% endif %}
             {% endfor %}
 
             {% if data.extremePagesLimit + 1 < data.currentPage - data.nearbyPagesLimit %}
@@ -51,10 +53,12 @@
                 </li>
             {% endif %}
 
-            {% for i in range(data.currentPage - data.nearbyPagesLimit, data.currentPage - 1) if (i > 0) %}
-                <li class="{{config.name}}__item">
-                    <a class="{{config.name}}__step" href="{{ path(data.paginationPath, data.parameters|merge({page: i})) }}{{ data.anchor }}">{{ i }}</a>
-                </li>
+            {% for i in range(data.currentPage - data.nearbyPagesLimit, data.currentPage - 1) %}
+                {% if (i > 0) %}
+                    <li class="{{config.name}}__item">
+                        <a class="{{config.name}}__step" href="{{ path(data.paginationPath, data.parameters|merge({page: i})) }}{{ data.anchor }}">{{ i }}</a>
+                    </li>
+                {% endif %}
             {% endfor %}
         {% elseif data.showAlwaysFirstAndLast %}
             <li class="{{config.name}}__item">
@@ -67,10 +71,12 @@
         </li>
 
         {% if data.currentPage < data.maxPage %}
-            {% for i in range(data.currentPage + 1, data.currentPage + data.nearbyPagesLimit) if ( i <= data.maxPage ) %}
-                <li class="{{config.name}}__item">
-                    <a class="{{config.name}}__step" href="{{ path(data.paginationPath, data.parameters|merge({page: i})) }}{{ data.anchor }}">{{ i }}</a>
-                </li>
+            {% for i in range(data.currentPage + 1, data.currentPage + data.nearbyPagesLimit) %}
+                {% if ( i <= data.maxPage ) %}
+                    <li class="{{config.name}}__item">
+                        <a class="{{config.name}}__step" href="{{ path(data.paginationPath, data.parameters|merge({page: i})) }}{{ data.anchor }}">{{ i }}</a>
+                    </li>
+                {% endif %}
             {% endfor %}
 
             {% if  (data.maxPage - data.extremePagesLimit) > (data.currentPage + data.nearbyPagesLimit) %}
@@ -79,10 +85,12 @@
                 </li>
             {% endif %}
 
-            {% for i in range(data.maxPage - data.extremePagesLimit + 1, data.maxPage) if ( i > data.currentPage + data.nearbyPagesLimit ) %}
-                <li class="{{config.name}}__item">
-                    <a class="{{config.name}}__step" href="{{ path(data.paginationPath, data.parameters|merge({page: i})) }}{{ data.anchor }}">{{ i }}</a>
-                </li>
+            {% for i in range(data.maxPage - data.extremePagesLimit + 1, data.maxPage) %}
+                {% if ( i > data.currentPage + data.nearbyPagesLimit ) %}
+                    <li class="{{config.name}}__item">
+                        <a class="{{config.name}}__step" href="{{ path(data.paginationPath, data.parameters|merge({page: i})) }}{{ data.anchor }}">{{ i }}</a>
+                    </li>
+                {% endif %}
             {% endfor %}
 
             <li class="{{config.name}}__item">

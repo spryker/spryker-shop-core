@@ -7,10 +7,12 @@
 
 {% block body %}
     <div class="grid grid--stretch">
-        {% for availableProduct in data.products if availableProduct.available %}
-            {% widget 'CmsProductWidget' args [availableProduct] only %}
-            {% elsewidget 'ProductWidgetPlugin' args [availableProduct] only %} {# @deprecated Use CmsProductWidget instead. #}
-            {% endwidget %}
+        {% for availableProduct in data.products %}
+            {% if availableProduct.available %}
+                {% widget 'CmsProductWidget' args [availableProduct] only %}
+                {% elsewidget 'ProductWidgetPlugin' args [availableProduct] only %} {# @deprecated Use CmsProductWidget instead. #}
+                {% endwidget %}
+            {% endif %}
         {% endfor %}
     </div>
 

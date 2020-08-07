@@ -40,7 +40,7 @@ class ChartTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     protected function registerChartTwigFunctions(Environment $twig): Environment
     {
         foreach ($this->getChartTwigFunctions() as $function) {
-            $twig->addFunction($function->getName(), $function);
+            $twig->addFunction($function);
         }
 
         return $twig;
