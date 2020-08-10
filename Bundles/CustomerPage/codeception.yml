@@ -1,6 +1,6 @@
 namespace: CustomerPage
 include:
-  - tests/SprykerShopTest/Yves/CustomerPage
+    - tests/SprykerShopTest/Yves/CustomerPage
 actor: Tester
 paths:
     tests: tests
@@ -15,6 +15,3 @@ settings:
     log: true
 coverage:
     enabled: true
-    whitelist:
-        include:
-            - 'src/*.php'
