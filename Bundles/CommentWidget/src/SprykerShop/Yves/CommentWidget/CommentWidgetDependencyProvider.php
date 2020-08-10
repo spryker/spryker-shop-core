@@ -20,6 +20,11 @@ class CommentWidgetDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_COMMENT_THREAD_AFTER_OPERATION_STRATEGY = 'PLUGINS_COMMENT_THREAD_AFTER_OPERATION_STRATEGY';
 
     /**
+     * @uses \Spryker\Yves\Form\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
+     */
+    public const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -29,6 +34,7 @@ class CommentWidgetDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideDependencies($container);
         $container = $this->addCommentClient($container);
         $container = $this->addCustomerClient($container);
+        $container = $this->addFormCsrfProviderService($container);
         $container = $this->addCommentThreadAfterOperationStrategyPlugins($container);
 
         return $container;
@@ -71,6 +77,20 @@ class CommentWidgetDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::PLUGINS_COMMENT_THREAD_AFTER_OPERATION_STRATEGY, function () {
             return $this->getCommentThreadAfterOperationStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addFormCsrfProviderService(Container $container): Container
+    {
+        $container->set(static::SERVICE_FORM_CSRF_PROVIDER, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_FORM_CSRF_PROVIDER);
         });
 
         return $container;
