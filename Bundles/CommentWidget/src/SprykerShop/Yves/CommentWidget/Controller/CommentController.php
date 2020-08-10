@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
  * @method \SprykerShop\Yves\CommentWidget\CommentWidgetFactory getFactory()
@@ -18,6 +19,10 @@ use Symfony\Component\HttpFoundation\Request;
 class CommentController extends CommentWidgetAbstractController
 {
     protected const GLOSSARY_KEY_COMMENT_INVALID_MESSAGE_LENGTH = 'comment.validation.error.invalid_message_length';
+    protected const GLOSSARY_KEY_ERROR_MESSAGE_UNEXPECTED_ERROR = 'comment_widget.error_message.unexpected_error';
+    protected const CSRF_TOKEN_ID_ADD_COMMENT_FORM = 'add-comment-form';
+    protected const CSRF_TOKEN_ID_UPDATE_COMMENT_FORM = 'update-comment-form';
+    protected const REQUEST_PARAMETER_TOKEN = '_token';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -63,6 +68,14 @@ class CommentController extends CommentWidgetAbstractController
     protected function executeAddAction(Request $request): RedirectResponse
     {
         $returnUrl = $request->request->get(static::PARAMETER_RETURN_URL);
+        $tokenValue = $request->get(static::REQUEST_PARAMETER_TOKEN);
+
+        if (!$this->validateCsrfToken(static::CSRF_TOKEN_ID_ADD_COMMENT_FORM, $tokenValue)) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_ERROR_MESSAGE_UNEXPECTED_ERROR);
+
+            return $this->redirectResponseExternal($returnUrl);
+        }
+
         $commentTransfer = $this->createCommentTransferFromRequest($request);
 
         if (!$this->getFactory()->createCommentChecker()->checkCommentMessageLength($commentTransfer)) {
@@ -93,6 +106,14 @@ class CommentController extends CommentWidgetAbstractController
     protected function executeUpdateAction(Request $request): RedirectResponse
     {
         $returnUrl = $request->request->get(static::PARAMETER_RETURN_URL);
+        $tokenValue = $request->get(static::REQUEST_PARAMETER_TOKEN);
+
+        if (!$this->validateCsrfToken(static::CSRF_TOKEN_ID_UPDATE_COMMENT_FORM, $tokenValue)) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_ERROR_MESSAGE_UNEXPECTED_ERROR);
+
+            return $this->redirectResponseExternal($returnUrl);
+        }
+
         $commentTransfer = $this->createCommentTransferFromRequest($request);
 
         if (!$this->getFactory()->createCommentChecker()->checkCommentMessageLength($commentTransfer)) {
@@ -122,6 +143,14 @@ class CommentController extends CommentWidgetAbstractController
     protected function executeRemoveAction(Request $request): RedirectResponse
     {
         $returnUrl = $request->request->get(static::PARAMETER_RETURN_URL);
+        $tokenValue = $request->get(static::REQUEST_PARAMETER_TOKEN);
+
+        if (!$this->validateCsrfToken(static::CSRF_TOKEN_ID_UPDATE_COMMENT_FORM, $tokenValue)) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_ERROR_MESSAGE_UNEXPECTED_ERROR);
+
+            return $this->redirectResponseExternal($returnUrl);
+        }
+
         $commentTransfer = $this->createCommentTransferFromRequest($request);
         $commentRequestTransfer = (new CommentRequestTransfer())
             ->setComment($commentTransfer);
@@ -152,5 +181,18 @@ class CommentController extends CommentWidgetAbstractController
             ->setCustomer($customerTransfer);
 
         return $commentTransfer;
+    }
+
+    /**
+     * @param string $tokenId
+     * @param string $value
+     *
+     * @return bool
+     */
+    protected function validateCsrfToken(string $tokenId, string $value): bool
+    {
+        $csrfToken = new CsrfToken($tokenId, $value);
+
+        return $this->getFactory()->getCsrfTokenManager()->isTokenValid($csrfToken);
     }
 }

@@ -14,6 +14,7 @@ use SprykerShop\Yves\CommentWidget\Dependency\Client\CommentWidgetToCommentClien
 use SprykerShop\Yves\CommentWidget\Dependency\Client\CommentWidgetToCustomerClientInterface;
 use SprykerShop\Yves\CommentWidget\Operation\CommentOperation;
 use SprykerShop\Yves\CommentWidget\Operation\CommentOperationInterface;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * @method \SprykerShop\Yves\CommentWidget\CommentWidgetConfig getConfig()
@@ -60,5 +61,13 @@ class CommentWidgetFactory extends AbstractFactory
     public function getCommentThreadAfterOperationStrategyPlugins(): array
     {
         return $this->getProvidedDependency(CommentWidgetDependencyProvider::PLUGINS_COMMENT_THREAD_AFTER_OPERATION_STRATEGY);
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface
+     */
+    public function getCsrfTokenManager(): CsrfTokenManagerInterface
+    {
+        return $this->getProvidedDependency(CommentWidgetDependencyProvider::SERVICE_FORM_CSRF_PROVIDER);
     }
 }

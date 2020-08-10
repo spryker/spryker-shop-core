@@ -70,7 +70,10 @@
                         <td>{{ order.email }}</td>
                     {% endif %}
                     {% if data.isOrderSearchEnabled and data.isOrderSearchOrderItemsVisible %}
-                        <td>{{ order.items.count }}</td>
+                        {% set itemCount = order.items.count %}
+                        {% set label = (itemCount == 1) ? 'customer.order.item' : 'customer.order.items' %}
+
+                        <td>{{ itemCount }}&nbsp;{{ label | trans }}</td>
                     {% endif %}
                     <td>{{ order.totals.grandTotal | default(0) | money(true, order.currencyIsoCode) }}</td>
                     <td>
