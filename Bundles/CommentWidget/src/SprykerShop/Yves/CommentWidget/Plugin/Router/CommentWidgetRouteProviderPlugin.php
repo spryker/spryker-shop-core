@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CommentWidget\Plugin\Router;
 
 use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
 use Spryker\Yves\Router\Route\RouteCollection;
+use Symfony\Component\HttpFoundation\Request;
 
 class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -71,6 +72,7 @@ class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addAddCommentRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/comment/add', 'CommentWidget', 'Comment', 'addAction');
+        $route = $route->setMethods(Request::METHOD_POST);
         $routeCollection->add(static::ROUTE_NAME_COMMENT_ADD, $route);
 
         return $routeCollection;
@@ -86,6 +88,7 @@ class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addUpdateCommentRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/comment/update', 'CommentWidget', 'Comment', 'updateAction');
+        $route = $route->setMethods(Request::METHOD_POST);
         $routeCollection->add(static::ROUTE_NAME_COMMENT_UPDATE, $route);
 
         return $routeCollection;
@@ -101,6 +104,7 @@ class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addRemoveCommentRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/comment/remove', 'CommentWidget', 'Comment', 'removeAction');
+        $route = $route->setMethods(Request::METHOD_POST);
         $routeCollection->add(static::ROUTE_NAME_COMMENT_REMOVE, $route);
 
         return $routeCollection;
