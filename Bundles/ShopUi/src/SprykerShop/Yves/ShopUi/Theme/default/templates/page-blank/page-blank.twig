@@ -10,6 +10,7 @@
 } %}
 
 {% set isNewFrontendBuildSupported = false %}
+{% set isCssLazyLoadSupported = false %}
 
 {% block template %}
     <!doctype html>
@@ -25,11 +26,15 @@
             {% endblock %}
 
             {% block headStyles %}
-                <link rel="stylesheet" href="{{ publicPath('css/yves_default.critical.css') }}">
+                {% if isCssLazyLoadSupported %}
+                    <link rel="stylesheet" href="{{ publicPath('css/yves_default.critical.css') }}">
 
-                {% block nonCtriticalStyles %}
-                    <link rel="stylesheet" href="{{ publicPath('css/yves_default.non-critical.css') }}">
-                {% endblock %}
+                    {% block nonCtriticalStyles %}
+                        <link rel="stylesheet" href="{{ publicPath('css/yves_default.non-critical.css') }}">
+                    {% endblock %}
+                {% else %}
+                    <link rel="stylesheet" href="{{ publicPath('css/yves_default.app.css') }}">
+                {% endif %}
             {% endblock %}
 
             {% block headScripts %}
