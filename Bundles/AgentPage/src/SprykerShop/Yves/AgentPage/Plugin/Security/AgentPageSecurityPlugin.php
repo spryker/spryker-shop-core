@@ -71,6 +71,7 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
         $securityBuilder = $this->addAccessRules($securityBuilder);
         $securityBuilder = $this->addAuthenticationSuccessHandler($securityBuilder);
         $securityBuilder = $this->addAuthenticationFailureHandler($securityBuilder);
+        $securityBuilder = $this->addAccessDeniedHandler($securityBuilder);
 
         $this->addSwitchUserEventSubscriber($securityBuilder);
 
@@ -183,6 +184,22 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
         $securityBuilder->addEventSubscriber(function () {
             return $this->getFactory()->createSwitchUserEventSubscriber();
         });
+    }
+
+    /**
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
+     *
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
+     */
+    protected function addAccessDeniedHandler(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
+    {
+        $securityBuilder->addAccessDeniedHandler(AgentPageConfig::SECURITY_FIREWALL_NAME, function (ContainerInterface $container) {
+            return $this->getFactory()->createAccessDeniedHandler(
+                $this->getRouter($container)->generate(static::ROUTE_LOGIN)
+            );
+        });
+
+        return $securityBuilder;
     }
 
     /**
