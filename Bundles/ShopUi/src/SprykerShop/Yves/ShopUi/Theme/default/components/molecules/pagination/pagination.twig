@@ -72,7 +72,7 @@
 
         {% if data.currentPage < data.maxPage %}
             {% for i in range(data.currentPage + 1, data.currentPage + data.nearbyPagesLimit) %}
-                {% if ( i <= data.maxPage ) %}
+                {% if i <= data.maxPage %}
                     <li class="{{config.name}}__item">
                         <a class="{{config.name}}__step" href="{{ path(data.paginationPath, data.parameters|merge({page: i})) }}{{ data.anchor }}">{{ i }}</a>
                     </li>
