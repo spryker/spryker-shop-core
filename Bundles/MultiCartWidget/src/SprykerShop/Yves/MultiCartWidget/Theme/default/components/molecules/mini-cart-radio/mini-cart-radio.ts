@@ -5,6 +5,9 @@ export default class MiniCartRadio extends Component {
      * The radio button element.
      */
     radio: HTMLElement;
+    /**
+     * The form element.
+     */
     form: HTMLFormElement;
 
     protected readyCallback(): void {}
