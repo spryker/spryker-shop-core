@@ -29,7 +29,7 @@
                 {% if isCssLazyLoadSupported %}
                     <link rel="stylesheet" href="{{ publicPath('css/yves_default.critical.css') }}">
 
-                    {% block nonCtriticalStyles %}
+                    {% block nonCriticalStyles %}
                         <link rel="stylesheet" href="{{ publicPath('css/yves_default.non-critical.css') }}">
                     {% endblock %}
                 {% else %}
