@@ -54,7 +54,7 @@
             {% endif %}
 
             {% for i in range(data.currentPage - data.nearbyPagesLimit, data.currentPage - 1) %}
-                {% if (i > 0) %}
+                {% if i > 0 %}
                     <li class="{{config.name}}__item">
                         <a class="{{config.name}}__step" href="{{ path(data.paginationPath, data.parameters|merge({page: i})) }}{{ data.anchor }}">{{ i }}</a>
                     </li>
