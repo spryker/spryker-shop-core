@@ -55,7 +55,7 @@
             {% endblock %}
         {% endembed %}
 
-        <li class="menu__item {{macros.isActive('newsletter', data.activePage)}}">
+        <li class="menu__item {{ macros.isActive('newsletter', data.activePage) }}">
             <a href="{{ path('customer/newsletter') }}"
                class="{{ macros.isActive('newsletter', data.activePage) }}"
                data-id="sidebar-newsletter">{{ 'customer.account.newsletter' | trans }}</a>
