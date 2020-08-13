@@ -211,7 +211,7 @@
 
                     {% for itemForm in embed.itemForms %}
                         {% if data.product.groupKey == itemForm.vars.value.groupKey %}
-                            {% set unitSourcePrice = itemForm.sourceUnitGrossPrice is defined ? itemForm.sourceUnitGrossPrice.vars.value : null %}
+                            {% set unitSourcePrice = itemForm.sourceUnitGrossPrice.vars.value ?? null %}
                             {% set unitSourcePrice = itemForm.sourceUnitNetPrice is defined ? itemForm.sourceUnitNetPrice.vars.value : unitSourcePrice %}
 
                             {% include molecule('source-price-form', 'QuoteRequestAgentPage') with {
