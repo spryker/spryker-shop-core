@@ -22,8 +22,10 @@
     {% endapply %}
 {%- endmacro -%}
 
+{% import _self as macros %}
+
 {% block extraClass %}
-    {% if data.status %}{{ _self.escapeStatusModifier(config.name, data.status) }}{% endif %}
+    {% if data.status %}{{ macros.escapeStatusModifier(config.name, data.status) }}{% endif %}
 {% endblock %}
 
 {% block body %}

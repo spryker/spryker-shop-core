@@ -23,6 +23,8 @@
 {% set urlEditAddress = 'quote-request/edit-address' %}
 {% set urlEditShipment = 'quote-request/edit-shipment' %}
 
+{% import _self as macros %}
+
 {% block body %}
     {% block address %}
         <div class="box">
@@ -63,7 +65,7 @@
 
                 {% if data.hasMultiShipments %}
                     {% block deliverySubtitle1 %}
-                        {{ _self.titleDeliveryAddress() }}
+                        {{ macros.titleDeliveryAddress() }}
                     {% endblock %}
 
                     {% block textMultipleDelivery %}
@@ -73,7 +75,7 @@
 
                 {% if not data.hasMultiShipments and hasSingleShippingAddress %}
                     {% block deliverySubtitle2 %}
-                        {{ _self.titleDeliveryAddress() }}
+                        {{ macros.titleDeliveryAddress() }}
                     {% endblock %}
 
                     {% block deliveryAddress %}
@@ -89,7 +91,7 @@
 
                 {% if hasBillingAddress and not hasShipmentAddress %}
                     {% block deliverySubtitle3 %}
-                        {{ _self.titleDeliveryAddress() }}
+                        {{ macros.titleDeliveryAddress() }}
                     {% endblock %}
 
                     {% block textEmptyDeliveryAddress %}

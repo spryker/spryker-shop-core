@@ -25,9 +25,11 @@
         {%- block total -%}
             {% set bundleSumPriceToPayAggregation = 0 %}
 
-            {% for item in data.bundle.salesOrderConfiguredBundleItems if data.items[item.IdSalesOrderItem] is defined %}
-                {% set product = data.items[item.IdSalesOrderItem] %}
-                {% set bundleSumPriceToPayAggregation = bundleSumPriceToPayAggregation + product.sumPriceToPayAggregation %}
+            {% for item in data.bundle.salesOrderConfiguredBundleItems %}
+                {% if data.items[item.IdSalesOrderItem] is defined %}
+                    {% set product = data.items[item.IdSalesOrderItem] %}
+                    {% set bundleSumPriceToPayAggregation = bundleSumPriceToPayAggregation + product.sumPriceToPayAggregation %}
+                {% endif %}
             {% endfor %}
 
             {{ bundleSumPriceToPayAggregation | money(true, data.currencyIsoCode) }}

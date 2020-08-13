@@ -15,26 +15,6 @@
     currencyIsoCode: null,
 } %}
 
-{% macro thumbnail(src, alt='', extraClass='', modifiers=[], jsName='') %}
-    {% embed molecule('lazy-image') with {
-        class: extraClass,
-        modifiers: modifiers | merge(['thumbnail']),
-        data: {
-            imageSrc: src,
-            imageTitle: alt,
-        },
-        embed: {
-            jsName: jsName,
-        },
-    } only %}
-        {% block content %}
-            {% set imageExtraClasses = embed.jsName ? embed.jsName ~ '__image' %}
-
-            {{ parent() }}
-        {% endblock %}
-    {% endembed %}
-{% endmacro %}
-
 {% import _self as macros %}
 
 {%- block extraClass %} box {{ config.jsName }}{% endblock -%}
@@ -45,6 +25,25 @@
         {% set modifiers = [] %}
 
         {% block imageContainer %}
+            {% macro thumbnail(src, alt='', extraClass='', modifiers=[], jsName='') %}
+                {% embed molecule('lazy-image') with {
+                    class: extraClass,
+                    modifiers: modifiers | merge(['thumbnail']),
+                    data: {
+                        imageSrc: src,
+                        imageTitle: alt,
+                    },
+                    embed: {
+                        jsName: jsName,
+                    },
+                } only %}
+                    {% block content %}
+                        {% set imageExtraClasses = embed.jsName ? embed.jsName ~ '__image' %}
+
+                        {{ parent() }}
+                    {% endblock %}
+                {% endembed %}
+            {% endmacro %}
 
             {% block image %}
                 {% if data.url %}

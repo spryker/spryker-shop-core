@@ -8,6 +8,8 @@
     templates: required,
 } %}
 
+{% import _self as macros %}
+
 {% block body %}
     {% block title %}
         {% set titleClasses = 'spacing-bottom--big' %}
@@ -63,12 +65,12 @@
                                                                         {% endblock %}
 
                                                                         {% block templateItemNameInner %}
-                                                                            {{ _self.templateText(templateItemNameClasses, templateName) }}
+                                                                            {{ macros.templateText(templateItemNameClasses, templateName) }}
                                                                         {% endblock %}
                                                                     {% else %}
                                                                         {% block templateTitleText %}
                                                                             {% set templateItemNameClasses = component.renderClass(config.name ~ '__item-name', ['secondary']) %}
-                                                                            {{ _self.templateText(templateItemNameClasses, templateName) }}
+                                                                            {{ macros.templateText(templateItemNameClasses, templateName) }}
                                                                         {% endblock %}
                                                                     {% endif %}
                                                                 {% endblock %}
