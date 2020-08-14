@@ -58,20 +58,23 @@
                 {% block fields %}
                     {% for fieldName in data.form.children | keys %}
                         {% set field = attribute(data.form.children, fieldName) %}
-                        {% set fieldLayoutClass = 'col col--sm-12' %}
 
-                        {% if fieldName in data.layout | keys %}
-                            {% set fieldLayoutClass = attribute(data.layout, fieldName) %}
+                        {% if not field.isRendered %}
+                            {% set fieldLayoutClass = 'col col--sm-12' %}
+
+                            {% if fieldName in data.layout | keys %}
+                                {% set fieldLayoutClass = attribute(data.layout, fieldName) %}
+                            {% endif %}
+
+                            {% block field %}
+                                {{ form_row(field, {
+                                    id: not data.resetFieldsId ? field.vars.id,
+                                    rowAttr: {
+                                        class: config.name ~ '__field ' ~ fieldLayoutClass,
+                                    },
+                                }) }}
+                            {% endblock %}
                         {% endif %}
-
-                        {% block field %}
-                            {{ form_row(field, {
-                                id: not data.resetFieldsId ? field.vars.id,
-                                rowAttr: {
-                                    class: config.name ~ '__field ' ~ fieldLayoutClass
-                                }
-                            }) }}
-                        {% endblock %}
                     {% endfor %}
                 {% endblock %}
             </div>
@@ -118,6 +121,6 @@
     </div>
 
     {% if data.enableEnd %}
-        {{ form_end(data.form) }}
+        {{ form_end(data.form, {'render_rest' : false}) }}
     {% endif %}
 {% endblock %}
