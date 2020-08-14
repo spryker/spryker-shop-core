@@ -72,8 +72,10 @@
                 <small>{{ item.sku }}</small>
             </div>
         {% endif %}
-        {% for attribute in item.superAttributesDefinition if item.attributes[attribute] is defined %}
-            <div>{{ ('product.attribute.' ~ attribute) | trans }}: {{ item.attributes[attribute] }}</div>
+        {% for attribute in item.superAttributesDefinition %}
+            {% if item.attributes[attribute] is defined %}
+                <div>{{ ('product.attribute.' ~ attribute) | trans }}: {{ item.attributes[attribute] }}</div>
+            {% endif %}
         {% endfor %}
     </td>
 {% endblock %}

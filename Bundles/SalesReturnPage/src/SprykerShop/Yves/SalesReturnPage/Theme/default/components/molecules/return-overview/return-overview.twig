@@ -51,8 +51,10 @@
     {% set infoClass = '' %}
     {% set orderReferences = [] %}
 
-    {% for returnItem in data.returnItems if returnItem.orderItem.orderReference not in orderReferences %}
-        {% set orderReferences = orderReferences | merge([returnItem.orderItem.orderReference]) %}
+    {% for returnItem in data.returnItems %}
+        {% if returnItem.orderItem.orderReference not in orderReferences %}
+            {% set orderReferences = orderReferences | merge([returnItem.orderItem.orderReference]) %}
+        {% endif %}
     {% endfor %}
 
     {% block info %}
