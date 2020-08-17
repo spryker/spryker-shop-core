@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Shared\Company\Code\Messages;
-use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
+use SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -52,7 +52,7 @@ class RegisterController extends AbstractController
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
         if ($customerTransfer && $customerTransfer->getCompanyUserTransfer()) {
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_OVERVIEW);
+            return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_OVERVIEW);
         }
 
         $registerForm = $this

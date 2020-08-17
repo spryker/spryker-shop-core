@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class QuoteRequestAgentCheckoutAddressController extends QuoteRequestAgentAbstractController
 {
     /**
-     * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::CHECKOUT_ADDRESS
+     * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_ADDRESS
      */
     protected const ROUTE_CHECKOUT_ADDRESS = 'checkout-address';
 

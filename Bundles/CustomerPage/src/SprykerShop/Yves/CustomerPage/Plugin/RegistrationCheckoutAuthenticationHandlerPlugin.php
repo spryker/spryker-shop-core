@@ -61,7 +61,7 @@ class RegistrationCheckoutAuthenticationHandlerPlugin extends AbstractPlugin imp
      */
     protected function getMessenger()
     {
-        return $this->getFactory()->getMessenger();
+        return $this->getFactory()->getFlashMessenger();
     }
 
     /**

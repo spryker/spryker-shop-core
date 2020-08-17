@@ -16,18 +16,22 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnSlipPrintController::printAction()
      */
     protected const ROUTE_RETURN_SLIP_PRINT = 'return/slip-print';
+    public const ROUTE_NAME_RETURN_SLIP_PRINT = 'return/slip-print';
     /**
      * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnViewController::viewAction()
      */
     protected const ROUTE_RETURN_VIEW = 'return/view';
+    public const ROUTE_NAME_RETURN_VIEW = 'return/view';
     /**
      * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnListController::listAction()
      */
     protected const ROUTE_RETURN_LIST = 'return/list';
+    public const ROUTE_NAME_RETURN_LIST = 'return/list';
     /**
      * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnCreateController::createAction()
      */
     protected const ROUTE_RETURN_CREATE = 'return/create';
+    public const ROUTE_NAME_RETURN_CREATE = 'return/create';
 
     protected const PARAM_ORDER_REFERENCE = 'orderReference';
     protected const PARAM_RETURN_REFERENCE = 'returnReference';
@@ -65,7 +69,7 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/return/create/{orderReference}', 'SalesReturnPage', 'ReturnCreate', 'createAction');
         $route = $route->setRequirement(static::PARAM_ORDER_REFERENCE, static::REFERENCE_REGEX);
-        $routeCollection->add(static::ROUTE_RETURN_CREATE, $route);
+        $routeCollection->add(static::ROUTE_NAME_RETURN_CREATE, $route);
 
         return $routeCollection;
     }
@@ -80,7 +84,7 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addReturnListRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/return/list', 'SalesReturnPage', 'ReturnList', 'listAction');
-        $routeCollection->add(static::ROUTE_RETURN_LIST, $route);
+        $routeCollection->add(static::ROUTE_NAME_RETURN_LIST, $route);
 
         return $routeCollection;
     }
@@ -96,7 +100,7 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/return/view/{returnReference}', 'SalesReturnPage', 'ReturnView', 'viewAction');
         $route = $route->setRequirement(static::PARAM_RETURN_REFERENCE, static::REFERENCE_REGEX);
-        $routeCollection->add(static::ROUTE_RETURN_VIEW, $route);
+        $routeCollection->add(static::ROUTE_NAME_RETURN_VIEW, $route);
 
         return $routeCollection;
     }
@@ -112,7 +116,7 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/return/slip-print/{returnReference}', 'SalesReturnPage', 'ReturnSlipPrint', 'printAction');
         $route = $route->setRequirement(static::PARAM_RETURN_REFERENCE, static::REFERENCE_REGEX);
-        $routeCollection->add(static::ROUTE_RETURN_SLIP_PRINT, $route);
+        $routeCollection->add(static::ROUTE_NAME_RETURN_SLIP_PRINT, $route);
 
         return $routeCollection;
     }

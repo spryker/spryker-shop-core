@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use SprykerShop\Yves\CompanyPage\Form\CompanyBusinessUnitForm;
-use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
+use SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -109,7 +109,7 @@ class BusinessUnitController extends AbstractCompanyController
                 $this->applyErrorMessage($companyBusinessUnitResponseTransfer);
             }
 
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
+            return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT_UPDATE, [
                 'id' => $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getIdCompanyBusinessUnit(),
             ]);
         }
@@ -182,7 +182,7 @@ class BusinessUnitController extends AbstractCompanyController
                 $this->applyErrorMessage($companyBusinessUnitResponseTransfer);
             }
 
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
+            return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT_UPDATE, [
                 'id' => $idCompanyBusinessUnit,
             ]);
         }
@@ -207,7 +207,7 @@ class BusinessUnitController extends AbstractCompanyController
         if (!$companyBusinessUnitDeleteForm->isSubmitted() || !$companyBusinessUnitDeleteForm->isValid()) {
             $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
 
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
+            return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT);
         }
 
         $companyBusinessUnitId = $request->query->getInt(static::REQUEST_PARAM_ID);
@@ -234,7 +234,7 @@ class BusinessUnitController extends AbstractCompanyController
             $this->applyErrorMessage($companyBusinessUnitResponseTransfer);
         }
 
-        return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
+        return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT);
     }
 
     /**

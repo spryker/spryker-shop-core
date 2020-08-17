@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Twig\TwigFunction;
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\Router\Router\ChainRouter;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Authenticator\CustomerAuthenticator;
 use SprykerShop\Yves\CustomerPage\Authenticator\CustomerAuthenticatorInterface;
@@ -42,8 +43,8 @@ use SprykerShop\Yves\CustomerPage\Mapper\ItemStateMapperInterface;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\AccessDeniedHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationFailureHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationSuccessHandler;
-use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerSecurityServiceProvider;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerUserProvider;
+use SprykerShop\Yves\CustomerPage\Plugin\Security\CustomerPageSecurityPlugin;
 use SprykerShop\Yves\CustomerPage\Plugin\Subscriber\InteractiveLoginEventSubscriber;
 use SprykerShop\Yves\CustomerPage\Reader\OrderReader;
 use SprykerShop\Yves\CustomerPage\Reader\OrderReaderInterface;
@@ -54,6 +55,7 @@ use SprykerShop\Yves\CustomerPage\UserChecker\CustomerConfirmationUserChecker;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
@@ -71,7 +73,7 @@ class CustomerPageFactory extends AbstractFactory
     {
         return new InteractiveLoginEventSubscriber();
     }
-    
+
     /**
      * @return \SprykerShop\Yves\CustomerPage\Form\FormFactory
      */
@@ -127,7 +129,7 @@ class CustomerPageFactory extends AbstractFactory
             $customerTransfer,
             $customerTransfer->getEmail(),
             $customerTransfer->getPassword(),
-            [CustomerSecurityServiceProvider::ROLE_USER]
+            [CustomerPageSecurityPlugin::ROLE_NAME_USER]
         );
     }
 
@@ -144,7 +146,7 @@ class CustomerPageFactory extends AbstractFactory
             $user,
             $user->getPassword(),
             CustomerPageConfig::SECURITY_FIREWALL_NAME,
-            [CustomerSecurityServiceProvider::ROLE_USER]
+            [CustomerPageSecurityPlugin::ROLE_NAME_USER]
         );
     }
 
@@ -198,9 +200,23 @@ class CustomerPageFactory extends AbstractFactory
      */
     public function getTokenStorage(): TokenStorageInterface
     {
-        $application = $this->getApplication();
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::SERVICE_SECURITY_TOKEN_STORAGE);
+    }
 
-        return $application['security.token_storage'];
+    /**
+     * @return \Spryker\Yves\Router\Router\ChainRouter
+     */
+    public function getRouter(): ChainRouter
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::SERVICE_ROUTER);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RequestStack
+     */
+    public function getRequestStack(): RequestStack
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::SERVICE_REQUEST_STACK);
     }
 
     /**
@@ -252,7 +268,7 @@ class CustomerPageFactory extends AbstractFactory
      */
     public function getFlashMessenger()
     {
-        return $this->getApplication()['flash_messenger'];
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::SERVICE_FLASH_MESSENGER);
     }
 
     /**
@@ -292,11 +308,13 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\CustomerPageFactory::getFlashMessenger()} instead.
+     *
      * @return \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
      */
     public function getMessenger()
     {
-        return $this->getProvidedDependency(CustomerPageDependencyProvider::FLASH_MESSENGER);
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::SERVICE_FLASH_MESSENGER);
     }
 
     /**

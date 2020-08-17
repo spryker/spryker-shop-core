@@ -8,20 +8,14 @@
 namespace SprykerShop\Yves\ShopApplication\Twig;
 
 use LogicException;
-use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceInterface;
 
 class RoutingHelper implements RoutingHelperInterface
 {
     /**
-     * @var \Silex\Application
+     * @var \Spryker\Service\Container\ContainerInterface
      */
     protected $app;
-
-    /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
 
     /**
      * @var \SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceInterface
@@ -29,10 +23,10 @@ class RoutingHelper implements RoutingHelperInterface
     protected $utilTextService;
 
     /**
-     * @param \Silex\Application $app
+     * @param \Spryker\Service\Container\ContainerInterface $app
      * @param \SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceInterface $utilTextService
      */
-    public function __construct(Application $app, ShopApplicationToUtilTextServiceInterface $utilTextService)
+    public function __construct($app, ShopApplicationToUtilTextServiceInterface $utilTextService)
     {
         $this->app = $app;
         $this->utilTextService = $utilTextService;
@@ -51,7 +45,7 @@ class RoutingHelper implements RoutingHelperInterface
             [$controllerNamespaceName, $actionName] = explode('::', $destination);
         } elseif (strpos($destination, ':') !== false) {
             [$serviceName, $actionName] = explode(':', $destination);
-            $controllerNamespaceName = get_class($this->app[$serviceName]);
+            $controllerNamespaceName = get_class($this->app->get($serviceName));
         } else {
             throw new LogicException('Cannot parse destination');
         }

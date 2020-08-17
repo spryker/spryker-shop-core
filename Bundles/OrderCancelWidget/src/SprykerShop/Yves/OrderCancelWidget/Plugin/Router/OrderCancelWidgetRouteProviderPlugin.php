@@ -12,7 +12,11 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class OrderCancelWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\OrderCancelWidget\Plugin\Router\OrderCancelWidgetRouteProviderPlugin::ROUTE_NAME_ORDER_CANCEL} instead.
+     */
     protected const ROUTE_ORDER_CANCEL = 'order/cancel';
+    public const ROUTE_NAME_ORDER_CANCEL = 'order/cancel';
 
     /**
      * {@inheritDoc}
@@ -41,7 +45,7 @@ class OrderCancelWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addOrderCancelRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildPostRoute('/order/cancel', 'OrderCancelWidget', 'OrderCancel');
-        $routeCollection->add(static::ROUTE_ORDER_CANCEL, $route);
+        $routeCollection->add(static::ROUTE_NAME_ORDER_CANCEL, $route);
 
         return $routeCollection;
     }

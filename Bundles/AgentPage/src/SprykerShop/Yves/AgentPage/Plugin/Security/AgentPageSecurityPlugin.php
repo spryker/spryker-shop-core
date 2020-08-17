@@ -22,10 +22,10 @@ use SprykerShop\Yves\AgentPage\Form\AgentLoginForm;
  */
 class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface
 {
-    protected const ROLE_AGENT = 'ROLE_AGENT';
-    protected const ROLE_ALLOWED_TO_SWITCH = 'ROLE_ALLOWED_TO_SWITCH';
-    protected const ROLE_USER = 'ROLE_USER';
-    protected const ROLE_PREVIOUS_ADMIN = 'ROLE_PREVIOUS_ADMIN';
+    public const ROLE_AGENT = 'ROLE_AGENT';
+    public const ROLE_ALLOWED_TO_SWITCH = 'ROLE_ALLOWED_TO_SWITCH';
+    public const ROLE_USER = 'ROLE_USER';
+    public const ROLE_PREVIOUS_ADMIN = 'ROLE_PREVIOUS_ADMIN';
 
     /**
      * @uses \Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin::SERVICE_DISPATCHER
@@ -71,6 +71,7 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
         $securityBuilder = $this->addAccessRules($securityBuilder);
         $securityBuilder = $this->addAuthenticationSuccessHandler($securityBuilder);
         $securityBuilder = $this->addAuthenticationFailureHandler($securityBuilder);
+        $securityBuilder = $this->addAccessDeniedHandler($securityBuilder);
 
         $this->addSwitchUserEventSubscriber($securityBuilder);
 
@@ -183,6 +184,22 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
         $securityBuilder->addEventSubscriber(function () {
             return $this->getFactory()->createSwitchUserEventSubscriber();
         });
+    }
+
+    /**
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
+     *
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
+     */
+    protected function addAccessDeniedHandler(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
+    {
+        $securityBuilder->addAccessDeniedHandler(AgentPageConfig::SECURITY_FIREWALL_NAME, function (ContainerInterface $container) {
+            return $this->getFactory()->createAccessDeniedHandler(
+                $this->getRouter($container)->generate(static::ROUTE_LOGIN)
+            );
+        });
+
+        return $securityBuilder;
     }
 
     /**

@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\MerchantSwitcherWidget;
 
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
@@ -21,9 +22,24 @@ class MerchantSwitcherWidgetDependencyProvider extends AbstractBundleDependencyP
      */
     public const FORM_FACTORY = 'FORM_FACTORY';
     public const CLIENT_MERCHANT_SEARCH = 'CLIENT_MERCHANT_SEARCH';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const CLIENT_MERCHANT_SWITCHER = 'CLIENT_MERCHANT_SWITCHER';
+
+    /**
+     * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_COOKIES
+     */
+    public const SERVICE_COOKIES = 'cookies';
+
+    /**
+     * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     */
+    public const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -35,6 +51,8 @@ class MerchantSwitcherWidgetDependencyProvider extends AbstractBundleDependencyP
         $container = parent::provideDependencies($container);
 
         $container = $this->addMerchantSearchClient($container);
+        $container = $this->addRequestStack($container);
+        $container = $this->addCookies($container);
         $container = $this->addApplication($container);
         $container = $this->addQuoteClient($container);
         $container = $this->addMerchantSwitcherClient($container);
@@ -57,6 +75,36 @@ class MerchantSwitcherWidgetDependencyProvider extends AbstractBundleDependencyP
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addRequestStack(Container $container): Container
+    {
+        $container->set(static::SERVICE_REQUEST_STACK, function (ContainerInterface $container) {
+            return $container->getApplicationService(static::SERVICE_REQUEST_STACK);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCookies(Container $container): Container
+    {
+        $container->set(static::SERVICE_COOKIES, function (ContainerInterface $container) {
+            return $container->getApplicationService(static::SERVICE_COOKIES);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container

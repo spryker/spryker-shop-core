@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
+use SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -71,7 +71,7 @@ class CompanyRoleUserController extends AbstractCompanyController
         $this->saveCompanyUser($idCompanyUser, $companyRoles);
 
         return $this->redirectResponseInternal(
-            CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_USER_MANAGE,
+            CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_USER_MANAGE,
             ['id' => $idCompanyRole]
         );
     }
@@ -103,7 +103,7 @@ class CompanyRoleUserController extends AbstractCompanyController
         $this->saveCompanyUser($idCompanyUser, $companyRoles);
 
         return $this->redirectResponseInternal(
-            CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_USER_MANAGE,
+            CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_USER_MANAGE,
             ['id' => $idCompanyRole]
         );
     }

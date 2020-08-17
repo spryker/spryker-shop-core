@@ -12,6 +12,7 @@ use DateTime;
 use Generated\Shared\Transfer\NavigationStorageTransfer;
 use Spryker\Client\ContentNavigation\Exception\MissingNavigationTermException;
 use Spryker\Shared\Twig\TwigFunction;
+use SprykerShop\Yves\ContentNavigationWidget\ContentNavigationWidgetConfig;
 use SprykerShop\Yves\ContentNavigationWidget\Dependency\Client\ContentNavigationWidgetToContentNavigationClientInterface;
 use SprykerShop\Yves\ContentNavigationWidget\Dependency\Client\ContentNavigationWidgetToNavigationStorageClientInterface;
 use Twig\Environment;
@@ -19,33 +20,13 @@ use Twig\Environment;
 class ContentNavigationTwigFunction extends TwigFunction
 {
     /**
-     * @uses \Spryker\Shared\ContentNavigation\ContentNavigationConfig::TWIG_FUNCTION_NAME
+     * @uses \Spryker\Shared\ContentNavigation\ContentNavigationWidgetConfig::TWIG_FUNCTION_NAME
      */
     protected const TWIG_FUNCTION_NAME_CONTENT_NAVIGATION = 'content_navigation';
 
     protected const MESSAGE_NAVIGATION_NOT_FOUND = '<b>Content Navigation with key %s not found.</b>';
     protected const MESSAGE_NAVIGATION_WRONG_TYPE = '<b>Content Navigation could not be rendered because the content item with key %s is not an navigation.</b>';
     protected const MESSAGE_NAVIGATION_WRONG_TEMPLATE = '<b>"%s" is not supported name of template.</b>';
-
-    /**
-     * @uses \Spryker\Shared\ContentNavigation\ContentNavigationConfig::WIDGET_TEMPLATE_IDENTIFIER_TREE_INLINE
-     */
-    protected const WIDGET_TEMPLATE_IDENTIFIER_TREE_INLINE = 'tree-inline';
-
-    /**
-     * @uses \Spryker\Shared\ContentNavigation\ContentNavigationConfig::WIDGET_TEMPLATE_IDENTIFIER_TREE
-     */
-    protected const WIDGET_TEMPLATE_IDENTIFIER_TREE = 'tree';
-
-    /**
-     * @uses \Spryker\Shared\ContentNavigation\ContentNavigationConfig::WIDGET_TEMPLATE_IDENTIFIER_LIST_INLINE
-     */
-    protected const WIDGET_TEMPLATE_IDENTIFIER_LIST_INLINE = 'list-inline';
-
-    /**
-     * @uses \Spryker\Shared\ContentNavigation\ContentNavigationConfig::WIDGET_TEMPLATE_IDENTIFIER_LIST
-     */
-    protected const WIDGET_TEMPLATE_IDENTIFIER_LIST = 'list';
 
     /**
      * @var \Twig\Environment
@@ -68,22 +49,30 @@ class ContentNavigationTwigFunction extends TwigFunction
     protected $navigationStorageClient;
 
     /**
+     * @var \SprykerShop\Yves\ContentNavigationWidget\ContentNavigationWidgetConfig
+     */
+    protected $contentNavigationWidgetConfig;
+
+    /**
      * @param \Twig\Environment $twig
      * @param string $localeName
      * @param \SprykerShop\Yves\ContentNavigationWidget\Dependency\Client\ContentNavigationWidgetToContentNavigationClientInterface $contentNavigationClient
      * @param \SprykerShop\Yves\ContentNavigationWidget\Dependency\Client\ContentNavigationWidgetToNavigationStorageClientInterface $navigationStorageClient
+     * @param \SprykerShop\Yves\ContentNavigationWidget\ContentNavigationWidgetConfig $contentNavigationWidgetConfig
      */
     public function __construct(
         Environment $twig,
         string $localeName,
         ContentNavigationWidgetToContentNavigationClientInterface $contentNavigationClient,
-        ContentNavigationWidgetToNavigationStorageClientInterface $navigationStorageClient
+        ContentNavigationWidgetToNavigationStorageClientInterface $navigationStorageClient,
+        ContentNavigationWidgetConfig $contentNavigationWidgetConfig
     ) {
         parent::__construct();
         $this->twig = $twig;
         $this->localeName = $localeName;
         $this->contentNavigationClient = $contentNavigationClient;
         $this->navigationStorageClient = $navigationStorageClient;
+        $this->contentNavigationWidgetConfig = $contentNavigationWidgetConfig;
     }
 
     /**
@@ -142,14 +131,9 @@ class ContentNavigationTwigFunction extends TwigFunction
      */
     protected function findTemplate(string $templateIdentifier): ?string
     {
-        $availableTemplates = [
-            static::WIDGET_TEMPLATE_IDENTIFIER_TREE_INLINE => '@ContentNavigationWidget/views/navigation/tree-inline.twig',
-            static::WIDGET_TEMPLATE_IDENTIFIER_TREE => '@ContentNavigationWidget/views/navigation/tree.twig',
-            static::WIDGET_TEMPLATE_IDENTIFIER_LIST_INLINE => '@ContentNavigationWidget/views/navigation/list-inline.twig',
-            static::WIDGET_TEMPLATE_IDENTIFIER_LIST => '@ContentNavigationWidget/views/navigation/list.twig',
-        ];
+        $availableTemplateList = $this->contentNavigationWidgetConfig->getAvailableTemplateList();
 
-        return $availableTemplates[$templateIdentifier] ?? null;
+        return $availableTemplateList[$templateIdentifier] ?? null;
     }
 
     /**

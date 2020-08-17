@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\CompanyPage\Controller;
 
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
+use SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -42,19 +42,19 @@ class CompanyUserStatusController extends AbstractCompanyController
         if ($this->isCurrentCompanyUser($idCompanyUser)) {
             $this->addErrorMessage(static::ERROR_MESSAGE_STATUS_ENABLE_YOURSELF);
 
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+            return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER);
         }
 
         $companyUserResponseTransfer = $this->enableCompanyUser($idCompanyUser);
         if (!$companyUserResponseTransfer->getIsSuccessful()) {
             $this->addErrorMessage(static::ERROR_MESSAGE_STATUS_ENABLE_COMPANY_USER);
 
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+            return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER);
         }
 
         $this->addSuccessMessage(static::SUCCESS_MESSAGE_STATUS_ENABLE_COMPANY_USER);
 
-        return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+        return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER);
     }
 
     /**
@@ -69,19 +69,19 @@ class CompanyUserStatusController extends AbstractCompanyController
         if ($this->isCurrentCompanyUser($idCompanyUser)) {
             $this->addErrorMessage(static::ERROR_MESSAGE_STATUS_DISABLE_YOURSELF);
 
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+            return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER);
         }
 
         $companyUserResponseTransfer = $this->disableCompanyUser($idCompanyUser);
         if (!$companyUserResponseTransfer->getIsSuccessful()) {
             $this->addErrorMessage(static::ERROR_MESSAGE_STATUS_DISABLE_COMPANY_USER);
 
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+            return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER);
         }
 
         $this->addSuccessMessage(static::SUCCESS_MESSAGE_STATUS_DISABLE_COMPANY_USER);
 
-        return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_USER);
+        return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER);
     }
 
     /**

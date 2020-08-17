@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class RouteResolver implements RouteResolverInterface
 {
     /**
-     * @uses \SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider::ROUTE_LOGIN
+     * @uses \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_LOGIN
      */
     protected const ROUTE_LOGIN = 'login';
 

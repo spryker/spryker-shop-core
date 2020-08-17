@@ -69,6 +69,9 @@ class ContentBannerTwigPluginTest extends Unit
      */
     public function testContentBannerNotFound(): void
     {
+        // Arrange
+        $this->setContentBannerToContentStorageClientReturn();
+
         // Act
         $bannerContent = call_user_func($this->getContentBannerTwigFunction()->getCallable(), static::CONTENT_KEY, static::DEFAULT_TEMPLATE);
 

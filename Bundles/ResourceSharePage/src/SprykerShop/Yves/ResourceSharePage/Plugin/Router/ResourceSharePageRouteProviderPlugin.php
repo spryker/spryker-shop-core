@@ -12,7 +12,11 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class ResourceSharePageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\ResourceSharePage\Plugin\Router\ResourceSharePageRouteProviderPlugin::ROUTE_NAME_RESOURCE_SHARE_LINK} instead.
+     */
     protected const ROUTE_RESOURCE_SHARE_LINK = 'resource-share/link';
+    public const ROUTE_NAME_RESOURCE_SHARE_LINK = 'resource-share/link';
 
     /**
      * Specification:
@@ -41,7 +45,7 @@ class ResourceSharePageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addLinkRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/resource-share/link/{resourceShareUuid}', 'ResourceSharePage', 'Link', 'indexAction');
-        $routeCollection->add(static::ROUTE_RESOURCE_SHARE_LINK, $route);
+        $routeCollection->add(static::ROUTE_NAME_RESOURCE_SHARE_LINK, $route);
 
         return $routeCollection;
     }

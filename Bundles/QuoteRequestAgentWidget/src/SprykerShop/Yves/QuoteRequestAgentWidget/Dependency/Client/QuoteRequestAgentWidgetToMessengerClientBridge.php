@@ -27,7 +27,7 @@ class QuoteRequestAgentWidgetToMessengerClientBridge implements QuoteRequestAgen
      *
      * @return void
      */
-    public function addSuccessMessage($message)
+    public function addSuccessMessage(string $message)
     {
         $this->messengerClient->addSuccessMessage($message);
     }

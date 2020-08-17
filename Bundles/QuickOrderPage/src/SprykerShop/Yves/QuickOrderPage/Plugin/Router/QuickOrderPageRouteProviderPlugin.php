@@ -12,12 +12,36 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class QuickOrderPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\QuickOrderPage\Plugin\Router\QuickOrderPageRouteProviderPlugin::ROUTE_NAME_QUICK_ORDER} instead.
+     */
     protected const ROUTE_QUICK_ORDER = 'quick-order';
+    public const ROUTE_NAME_QUICK_ORDER = 'quick-order';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\QuickOrderPage\Plugin\Router\QuickOrderPageRouteProviderPlugin::ROUTE_NAME_QUICK_ORDER_ADD_ROWS} instead.
+     */
     protected const ROUTE_QUICK_ORDER_ADD_ROWS = 'quick-order/add-rows';
+    public const ROUTE_NAME_QUICK_ORDER_ADD_ROWS = 'quick-order/add-rows';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\QuickOrderPage\Plugin\Router\QuickOrderPageRouteProviderPlugin::ROUTE_NAME_QUICK_ORDER_DELETE_ROW} instead.
+     */
     protected const ROUTE_QUICK_ORDER_DELETE_ROW = 'quick-order/delete-row';
+    public const ROUTE_NAME_QUICK_ORDER_DELETE_ROW = 'quick-order/delete-row';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\QuickOrderPage\Plugin\Router\QuickOrderPageRouteProviderPlugin::ROUTE_NAME_QUICK_ORDER_CLEAR_ALL_ROWS} instead.
+     */
     protected const ROUTE_QUICK_ORDER_CLEAR_ALL_ROWS = 'quick-order/clear-all-rows';
+    public const ROUTE_NAME_QUICK_ORDER_CLEAR_ALL_ROWS = 'quick-order/clear-all-rows';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\QuickOrderPage\Plugin\Router\QuickOrderPageRouteProviderPlugin::ROUTE_NAME_QUICK_ORDER_PRODUCT_ADDITIONAL_DATA} instead.
+     */
     protected const ROUTE_QUICK_ORDER_PRODUCT_ADDITIONAL_DATA = 'quick-order/product-additional-data';
+    public const ROUTE_NAME_QUICK_ORDER_PRODUCT_ADDITIONAL_DATA = 'quick-order/product-additional-data';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\QuickOrderPage\Plugin\Router\QuickOrderPageRouteProviderPlugin::ROUTE_NAME_QUICK_ORDER_DOWNLOAD_TEMPLATE} instead.
+     */
     protected const ROUTE_QUICK_ORDER_DOWNLOAD_TEMPLATE = 'quick-order/download-template';
+    public const ROUTE_NAME_QUICK_ORDER_DOWNLOAD_TEMPLATE = 'quick-order/download-template';
 
     /**
      * Specification:
@@ -52,7 +76,7 @@ class QuickOrderPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addQuickOrderRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/quick-order', 'QuickOrderPage', 'QuickOrder', 'indexAction');
-        $routeCollection->add(static::ROUTE_QUICK_ORDER, $route);
+        $routeCollection->add(static::ROUTE_NAME_QUICK_ORDER, $route);
 
         return $routeCollection;
     }
@@ -67,7 +91,7 @@ class QuickOrderPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addQuickOrderAddRowsRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/quick-order/add-rows', 'QuickOrderPage', 'QuickOrder', 'addRowsAction');
-        $routeCollection->add(static::ROUTE_QUICK_ORDER_ADD_ROWS, $route);
+        $routeCollection->add(static::ROUTE_NAME_QUICK_ORDER_ADD_ROWS, $route);
 
         return $routeCollection;
     }
@@ -82,7 +106,7 @@ class QuickOrderPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addQuickOrderDeleteRowRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/quick-order/delete-row', 'QuickOrderPage', 'QuickOrder', 'deleteRowAction');
-        $routeCollection->add(static::ROUTE_QUICK_ORDER_DELETE_ROW, $route);
+        $routeCollection->add(static::ROUTE_NAME_QUICK_ORDER_DELETE_ROW, $route);
 
         return $routeCollection;
     }
@@ -97,7 +121,7 @@ class QuickOrderPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addQuickOrderClearAllRowsRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/quick-order/clear-all-rows', 'QuickOrderPage', 'QuickOrder', 'clearAllRowsAction');
-        $routeCollection->add(static::ROUTE_QUICK_ORDER_CLEAR_ALL_ROWS, $route);
+        $routeCollection->add(static::ROUTE_NAME_QUICK_ORDER_CLEAR_ALL_ROWS, $route);
 
         return $routeCollection;
     }
@@ -112,7 +136,7 @@ class QuickOrderPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addQuickOrderProductAdditionalDataRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/quick-order/product-additional-data', 'QuickOrderPage', 'QuickOrder', 'productAdditionalDataAction');
-        $routeCollection->add(static::ROUTE_QUICK_ORDER_PRODUCT_ADDITIONAL_DATA, $route);
+        $routeCollection->add(static::ROUTE_NAME_QUICK_ORDER_PRODUCT_ADDITIONAL_DATA, $route);
 
         return $routeCollection;
     }
@@ -127,7 +151,7 @@ class QuickOrderPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addQuickOrderDownloadTemplateRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/quick-order/download-template', 'QuickOrderPage', 'QuickOrder', 'downloadTemplateAction');
-        $routeCollection->add(static::ROUTE_QUICK_ORDER_DOWNLOAD_TEMPLATE, $route);
+        $routeCollection->add(static::ROUTE_NAME_QUICK_ORDER_DOWNLOAD_TEMPLATE, $route);
 
         return $routeCollection;
     }

@@ -32,6 +32,8 @@ class ProductDetailPageFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Yves\Kernel\AbstractFactory::getContainer()} instead.
+     *
      * @return \Spryker\Shared\Kernel\Communication\Application
      */
     public function getApplication(): Application
@@ -44,6 +46,6 @@ class ProductDetailPageFactory extends AbstractFactory
      */
     public function createShopContextResolver(): ShopContextResolverInterface
     {
-        return new ShopContextResolver($this->getApplication());
+        return new ShopContextResolver($this->getContainer());
     }
 }

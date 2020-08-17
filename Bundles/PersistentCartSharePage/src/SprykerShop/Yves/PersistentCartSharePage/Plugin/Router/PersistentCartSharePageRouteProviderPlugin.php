@@ -16,6 +16,7 @@ class PersistentCartSharePageRouteProviderPlugin extends AbstractRouteProviderPl
      * @uses \SprykerShop\Yves\PersistentCartSharePage\Controller\CartController::previewAction()
      */
     protected const ROUTE_CART_PREVIEW = 'cart/preview';
+    public const ROUTE_NAME_CART_PREVIEW = 'cart/preview';
 
     /**
      * Specification:
@@ -44,7 +45,7 @@ class PersistentCartSharePageRouteProviderPlugin extends AbstractRouteProviderPl
     protected function addPersistentCartSharePagePreviewRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cart/preview/{resourceShareUuid}', 'PersistentCartSharePage', 'Cart', 'previewAction');
-        $routeCollection->add(static::ROUTE_CART_PREVIEW, $route);
+        $routeCollection->add(static::ROUTE_NAME_CART_PREVIEW, $route);
 
         return $routeCollection;
     }
