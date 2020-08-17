@@ -77,7 +77,8 @@ class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPlugi
             'anonymous' => true,
             'pattern' => '^/',
             'remember_me' => [
-                'secret' => 'hundnase',
+                'secret' => $this->getConfig()->getRememberMeSecret(),
+                'lifetime' => $this->getConfig()->getRememberMeLifetime(),
                 'remember_me_parameter' => LoginForm::FORM_NAME . '[' . LoginForm::FIELD_REMEMBER_ME . ']',
             ],
             'form' => [
@@ -185,11 +186,11 @@ class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPlugi
     /**
      * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
      *
-     * @return void
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
-    protected function addInteractiveLoginEventSubscriber(SecurityBuilderInterface $securityBuilder): void
+    protected function addInteractiveLoginEventSubscriber(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
     {
-        $securityBuilder->addEventSubscriber(function () {
+        return $securityBuilder->addEventSubscriber(function () {
             return $this->getFactory()->createInteractiveLoginEventSubscriber();
         });
     }

@@ -80,6 +80,26 @@ class CustomerPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
+     * @return string
+     */
+    public function getRememberMeSecret(): string
+    {
+        return $this->get(CustomerConstants::CUSTOMER_REMEMBER_ME_SECRET);
+    }
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getRememberMeLifetime(): int
+    {
+        return $this->get(CustomerConstants::CUSTOMER_REMEMBER_ME_LIFETIME);
+    }
+
+    /**
      * URL to redirect to in case of authentication failure if login form is placed on non-login page (e.g. header or register page).
      * URL could be relative or absolute with domain defined in CustomerPageConfig::getYvesHost().
      * If null it will use referer URL.

@@ -96,7 +96,7 @@ class LoginForm extends AbstractType
      */
     protected function addRememberMeField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_REMEMBER_ME, CheckboxType::class, [
+        $builder->add(static::FIELD_REMEMBER_ME, CheckboxType::class, [
             'label' => 'customer.login.remember_me',
             'required' => false,
         ]);

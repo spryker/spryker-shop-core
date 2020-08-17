@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CustomerPage\Plugin\Subscriber;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CustomerPage\Security\Customer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -39,19 +38,9 @@ class InteractiveLoginEventSubscriber extends AbstractPlugin implements EventSub
         /** @var \SprykerShop\Yves\CustomerPage\Security\Customer $customer */
         $customer = $interactiveLoginEvent->getAuthenticationToken()->getUser();
         if ($customer instanceof Customer) {
-            $this->setCustomerSession($customer->getCustomerTransfer());
+            $this->getFactory()
+                ->getCustomerClient()
+                ->setCustomer($customer->getCustomerTransfer());
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return void
-     */
-    protected function setCustomerSession(CustomerTransfer $customerTransfer): void
-    {
-        $this->getFactory()
-            ->getCustomerClient()
-            ->setCustomer($customerTransfer);
     }
 }
