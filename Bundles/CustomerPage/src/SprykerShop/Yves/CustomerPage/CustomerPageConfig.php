@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CustomerPage;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Yves\Kernel\AbstractBundleConfig;
+use SprykerShop\Shared\CustomerPage\CustomerPageConstants;
 
 class CustomerPageConfig extends AbstractBundleConfig
 {
@@ -86,7 +87,7 @@ class CustomerPageConfig extends AbstractBundleConfig
      */
     public function getRememberMeSecret(): string
     {
-        return $this->get(CustomerConstants::CUSTOMER_REMEMBER_ME_SECRET);
+        return $this->get(CustomerPageConstants::CUSTOMER_REMEMBER_ME_SECRET);
     }
 
     /**
@@ -96,7 +97,7 @@ class CustomerPageConfig extends AbstractBundleConfig
      */
     public function getRememberMeLifetime(): int
     {
-        return $this->get(CustomerConstants::CUSTOMER_REMEMBER_ME_LIFETIME);
+        return $this->get(CustomerPageConstants::CUSTOMER_REMEMBER_ME_LIFETIME);
     }
 
     /**
