@@ -1,3 +1,6 @@
 import './style.scss';
-import register from '../../../app/registry';
-export default register('product-item', () => import(/* webpackMode: "lazy" */'./product-item'));
+import register from 'ShopUi/app/registry';
+export default register('product-item', () => import(
+    /* webpackMode: "lazy" */
+    /* webpackChunkName: "product-item" */
+    './product-item'));

@@ -1,3 +1,5 @@
 import register from 'ShopUi/app/registry';
-
-export default register('mini-cart-radio', () => import(/* webpackMode: "lazy" */'./mini-cart-radio'));
+export default register('mini-cart-radio', () => import(
+    /* webpackMode: "lazy" */
+    /* webpackChunkName: "mini-cart-radio" */
+    './mini-cart-radio'));
