@@ -36,18 +36,29 @@
 
 {% block row %}
     {{ parent() }}
-    <tr>
-        <td></td>
-        <td colspan="5">
-            {% for subForm in data.form.items[key].children if not subForm.rendered and subForm.vars.template_path is defined %}
-                {% include subForm.vars.template_path with {
-                    attributes: { 'data-product-unavailable': not isItemAvailable },
-                    'form': subForm,
-                    'rowClass': config.name ~ '__row ' ~ config.name ~ '__row--borderless ' ~ (not isItemAvailable ? config.name ~ '__row--disable' : null),
-                } only %}
-            {% endfor %}
-        </td>
-    </tr>
+
+    {% for subForm in data.form.items[key].children if not subForm.rendered and subForm.vars.template_path is defined %}
+        {% if loop.index0 == 0 %}
+            <tr>
+                <td></td>
+                <td colspan="5">
+                    {% include subForm.vars.template_path with {
+                        form: subForm,
+                    } only %}
+                </td>
+            </tr>
+        {% endif %}
+
+        {% if loop.index0 == 1 %}
+            {% include subForm.vars.template_path with {
+                attributes: {
+                    'data-product-unavailable': not isItemAvailable,
+                },
+                form: subForm,
+                rowClass: config.name ~ '__row ' ~ config.name ~ '__row--borderless ' ~ (not isItemAvailable ? config.name ~ '__row--disable' : null),
+            } only %}
+        {% endif %}
+    {% endfor %}
 {% endblock %}
 
 {% block checkboxCol %}{% endblock %}
