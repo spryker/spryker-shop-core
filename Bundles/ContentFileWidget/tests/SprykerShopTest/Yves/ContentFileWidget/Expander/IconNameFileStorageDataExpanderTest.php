@@ -45,7 +45,7 @@ class IconNameFileStorageDataExpanderTest extends Unit
         $fileStorageDataTransfer = $this->createIconNameFileStorageDataExpander()->expand($fileStorageDataTransfer);
 
         // Assert
-        $this->assertEquals($expectedFileIconName, $fileStorageDataTransfer->getIconName());
+        $this->assertSame($expectedFileIconName, $fileStorageDataTransfer->getIconName());
     }
 
     /**

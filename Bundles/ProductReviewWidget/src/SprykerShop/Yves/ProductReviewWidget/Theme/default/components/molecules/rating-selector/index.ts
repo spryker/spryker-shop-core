@@ -1,3 +1,6 @@
-import './style';
+import './style.scss';
 import register from 'ShopUi/app/registry';
-export default register('rating-selector', () => import(/* webpackMode: "lazy" */'./rating-selector'));
+export default register('rating-selector', () => import(
+    /* webpackMode: "lazy" */
+    /* webpackChunkName: "rating-selector" */
+    './rating-selector'));
