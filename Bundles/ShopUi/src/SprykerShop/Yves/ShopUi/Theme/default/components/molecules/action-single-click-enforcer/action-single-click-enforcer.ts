@@ -18,6 +18,7 @@ export default class ActionSingleClickEnforcer extends Component {
     }
 
     protected onTargetClick(event: Event): void {
+        event.preventDefault();
         const targetElement = <HTMLElement>event.currentTarget;
         const isLink: boolean = targetElement.matches('a');
 
@@ -46,8 +47,6 @@ export default class ActionSingleClickEnforcer extends Component {
     }
 
     protected disableLink(event: Event, targetElement: HTMLLinkElement): void {
-        event.preventDefault();
-
         if (targetElement.dataset && targetElement.dataset.disabled) {
             return;
         }
