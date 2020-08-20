@@ -69,7 +69,7 @@
                                                                         {% endblock %}
                                                                     {% else %}
                                                                         {% block templateTitleText %}
-                                                                            {% set templateItemNameClasses = component.renderClass(config.name ~ '__item-name', ['secondary']) %}
+                                                                            {% set templateItemNameClasses = _self.renderClass(config.name ~ '__item-name', ['secondary']) %}
                                                                             {{ macros.templateText(templateItemNameClasses, templateName) }}
                                                                         {% endblock %}
                                                                     {% endif %}
