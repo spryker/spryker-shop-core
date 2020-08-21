@@ -186,10 +186,12 @@ class PaymentForm extends AbstractType
     {
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
-                return [
-                    Constraint::DEFAULT_GROUP,
-                    $form->get(self::PAYMENT_SELECTION)->getData(),
-                ];
+                $validationGroups = [Constraint::DEFAULT_GROUP];
+                if ($form->get(self::PAYMENT_SELECTION)->getData() !== null) {
+                    $validationGroups[] = $form->get(self::PAYMENT_SELECTION)->getData();
+                }
+
+                return $validationGroups;
             },
             'attr' => [
                 'novalidate' => 'novalidate',
