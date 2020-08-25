@@ -8,6 +8,7 @@
     templates: required,
 } %}
 
+{% import _self as component %}
 {% import _self as macros %}
 
 {% block body %}
@@ -69,7 +70,7 @@
                                                                         {% endblock %}
                                                                     {% else %}
                                                                         {% block templateTitleText %}
-                                                                            {% set templateItemNameClasses = _self.renderClass(config.name ~ '__item-name', ['secondary']) %}
+                                                                            {% set templateItemNameClasses = component.renderClass(config.name ~ '__item-name', ['secondary']) %}
                                                                             {{ macros.templateText(templateItemNameClasses, templateName) }}
                                                                         {% endblock %}
                                                                     {% endif %}

@@ -1,5 +1,7 @@
 {% extends model('component') %}
 
+{% import _self as component %}
+
 {% define config = {
     name: 'shopping-list',
     tag: 'table',
@@ -38,7 +40,7 @@
                         {% block row %}
                             {% set disableModifiers = not isItemAvailable ? ['disable'] : [] %}
 
-                            <tr class="{{ _self.renderClass(config.name ~ '__row', disableModifiers) }}">
+                            <tr class="{{ component.renderClass(config.name ~ '__row', disableModifiers) }}">
                                 {% block rowInner %}
                                     {% block checkboxCol %}
                                         <td class="{{ config.name }}__cell">
