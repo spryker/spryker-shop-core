@@ -11,7 +11,7 @@
 
 {% for item in data.dictionary %}
     {% set labels = labels | merge([{
-        text: item.name | default,
+        text: item.name | default(item.key),
         type: (item.frontEndReference | lower | replace(' ', '-')) | default,
     }]) %}
 {% endfor %}
