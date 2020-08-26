@@ -1,3 +1,5 @@
+{# @var item \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer #}
+
 {% extends template('widget') %}
 
 {% define data = {
@@ -9,8 +11,8 @@
 
 {% for item in data.dictionary %}
     {% set labels = labels | merge([{
-        text: item.getKey() | default,
-        type: (item.getFrontEndReference() | lower | replace(' ', '-')) | default,
+        text: item.name | default,
+        type: (item.frontEndReference | lower | replace(' ', '-')) | default,
     }]) %}
 {% endfor %}
 
