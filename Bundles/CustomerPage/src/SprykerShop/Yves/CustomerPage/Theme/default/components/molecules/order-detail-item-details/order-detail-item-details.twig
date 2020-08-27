@@ -23,13 +23,14 @@
         </span>
         <span class="spacing-right col col--sm-3 text-right">
             {% if data.orderItem.state is not empty %}
+                {% set state = data.orderItem.state %}
                 {% block state %}
                     <p>
                         <strong>
                             {% include molecule('status') with {
                                 data: {
-                                    label: data.orderItem.state.displayName | trans,
-                                    status: data.orderItem.state.name | replace({' ': '-'}) | lower,
+                                    label: state.displayName | trans,
+                                    status: state.name | replace({' ': '-'}) | lower,
                                 },
                             } only %}
                         </strong>
