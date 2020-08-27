@@ -23,7 +23,7 @@
         </span>
         <span class="spacing-right col col--sm-3 text-right">
             {% set state = data.orderItem.state %}
-            {% if data.orderItem.state is not empty %}
+            {% if state is not empty %}
                 {% block state %}
                     <p>
                         <strong>
