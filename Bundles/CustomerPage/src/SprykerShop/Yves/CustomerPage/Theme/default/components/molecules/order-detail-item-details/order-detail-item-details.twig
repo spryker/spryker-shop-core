@@ -23,9 +23,18 @@
         </span>
         <span class="spacing-right col col--sm-3 text-right">
             {% if data.orderItem.state is not empty %}
-                <p>
-                    <strong>{{ data.orderItem.state.name | capitalize }}</strong>
-                </p>
+                {% block state %}
+                    <p>
+                        <strong>
+                            {% include molecule('status') with {
+                                data: {
+                                    label: data.orderItem.state.displayName | trans,
+                                    status: data.orderItem.state.name | replace({' ': '-'}) | lower,
+                                },
+                            } only %}
+                        </strong>
+                    </p>
+                {% endblock %}
             {% endif %}
         </span>
     </div>
