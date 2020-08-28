@@ -18,6 +18,7 @@ class InvitationMapper implements InvitationMapperInterface
     public const COLUMN_BUSINESS_UNIT = 'business_unit';
     public const COLUMN_LAST_NAME = 'last_name';
     public const COLUMN_FIRST_NAME = 'first_name';
+
     /**
      * @var \SprykerShop\Yves\CompanyUserInvitationPage\Dependency\Client\CompanyUserInvitationPageToCustomerClientInterface
      */

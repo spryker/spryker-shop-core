@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
+ * @method \SprykerShop\Yves\CompanyPage\CompanyPageConfig getConfig()
  */
 class CurrentStoreMultiCurrencyType extends AbstractType
 {

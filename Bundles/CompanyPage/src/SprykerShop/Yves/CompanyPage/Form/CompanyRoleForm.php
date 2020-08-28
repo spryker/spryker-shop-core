@@ -14,6 +14,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \SprykerShop\Yves\CompanyPage\CompanyPageConfig getConfig()
+ */
 class CompanyRoleForm extends AbstractType
 {
     public const FIELD_ID_COMPANY_ROLE = 'id_company_role';

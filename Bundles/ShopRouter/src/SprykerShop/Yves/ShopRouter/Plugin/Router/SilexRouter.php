@@ -12,7 +12,7 @@ use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * @deprecated Use `\Spryker\Yves\Router\Plugin\Router\YvesRouterPlugin` instead. Make sure that you don't have any ControllerProvider registered anymore before you remove this one.
+ * @deprecated Use {@link \Spryker\Yves\Router\Plugin\Router\YvesRouterPlugin} instead. Make sure that you don't have any ControllerProvider registered anymore before you remove this one.
  *
  * @method \SprykerShop\Yves\ShopRouter\ShopRouterFactory getFactory()
  */
@@ -59,7 +59,7 @@ class SilexRouter extends AbstractPlugin implements RouterInterface
      * @param array $parameters
      * @param int $referenceType
      *
-     * @return mixed|string
+     * @return string
      */
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {

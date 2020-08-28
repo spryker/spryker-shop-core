@@ -27,11 +27,16 @@ class CheckoutAddressForm extends AddressForm
     public const OPTION_VALIDATION_GROUP = 'validation_group';
     public const OPTION_ADDRESS_CHOICES = 'addresses_choices';
     public const OPTION_IS_CUSTOMER_LOGGED_IN = 'is_customer_logged_in';
+    public const OPTION_PLACEHOLDER = 'placeholder';
 
-    public const VALUE_DELIVER_TO_MULTIPLE_ADDRESSES = "-1";
-    public const VALUE_ADD_NEW_ADDRESS = null;
+    public const VALUE_DELIVER_TO_MULTIPLE_ADDRESSES = '-1';
+    public const VALUE_ADD_NEW_ADDRESS = '0';
+    public const VALUE_NEW_ADDRESS_IS_EMPTY = null;
 
-    protected const GLOSSARY_KEY_SAVE_NEW_ADDRESS = 'customer.address.save_new_address';
+    public const GLOSSARY_KEY_ACCOUNT_ADD_NEW_ADDRESS = 'customer.account.add_new_address';
+    public const GLOSSARY_KEY_SAVE_NEW_ADDRESS = 'customer.address.save_new_address';
+    public const GLOSSARY_KEY_DELIVER_TO_MULTIPLE_ADDRESSES = 'customer.account.deliver_to_multiple_addresses';
+    public const GLOSSARY_PAGE_CHECKOUT_ADDRESS_ADDRESS_SELECT_LABEL = 'page.checkout.address.address_select.label';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -44,10 +49,12 @@ class CheckoutAddressForm extends AddressForm
 
         $resolver->setDefaults([
             static::OPTION_ADDRESS_CHOICES => [],
+            static::OPTION_PLACEHOLDER => false,
             'allow_extra_fields' => true,
         ]);
 
         $resolver->setDefined(static::OPTION_ADDRESS_CHOICES)
+            ->setDefined(static::OPTION_PLACEHOLDER)
             ->setRequired(static::OPTION_IS_CUSTOMER_LOGGED_IN)
             ->setRequired(static::OPTION_VALIDATION_GROUP);
     }
@@ -88,9 +95,12 @@ class CheckoutAddressForm extends AddressForm
         $builder->add(static::FIELD_ID_CUSTOMER_ADDRESS, ChoiceType::class, [
             'choices' => $options[static::OPTION_ADDRESS_CHOICES],
             'required' => false,
-            'placeholder' => 'customer.account.add_new_address',
-            'label' => 'page.checkout.address.address_select',
+            'placeholder' => $options[static::OPTION_PLACEHOLDER],
+            'label' => static::GLOSSARY_PAGE_CHECKOUT_ADDRESS_ADDRESS_SELECT_LABEL,
         ]);
+
+        $builder->get(static::FIELD_ID_CUSTOMER_ADDRESS)
+            ->addModelTransformer($this->getFactory()->createAddressSelectTransformer());
 
         return $this;
     }

@@ -38,7 +38,7 @@ class CompanyMenuItemWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@CompanyWidget/views/shop-ui/menu-item-company-widget.twig';
+        return '@CompanyWidget/views/menu-item-company-widget/menu-item-company-widget.twig';
     }
 
     /**
@@ -48,7 +48,8 @@ class CompanyMenuItemWidget extends AbstractWidget
      */
     protected function getCompanyName(?CustomerTransfer $customerTransfer): string
     {
-        if ($customerTransfer !== null
+        if (
+            $customerTransfer !== null
             && $customerTransfer->getCompanyUserTransfer() !== null
             && $customerTransfer->getCompanyUserTransfer()->getCompanyBusinessUnit() !== null
             && $customerTransfer->getCompanyUserTransfer()->getCompanyBusinessUnit()->getCompany() !== null

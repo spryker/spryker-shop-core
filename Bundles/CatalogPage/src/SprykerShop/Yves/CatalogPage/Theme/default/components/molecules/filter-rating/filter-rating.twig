@@ -1,15 +1,16 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'filter-rating'
+    name: 'filter-rating',
 } %}
 
 {% define data = {
-    filter: required
+    filter: required,
+    request: app.request,
 } %}
 
 {% block body %}
-    {% widget 'ProductRatingFilterWidget' args [data.filter, app.request] only %}
-    {% elsewidget 'ProductRatingFilterWidgetPlugin' args [data.filter, app.request] only %} {# @deprecated Use ProductRatingFilterWidget instead. #}
+    {% widget 'ProductRatingFilterWidget' args [data.filter, data.request] only %}
+    {% elsewidget 'ProductRatingFilterWidgetPlugin' args [data.filter, data.request] only %} {# @deprecated Use ProductRatingFilterWidget instead. #}
     {% endwidget %}
 {% endblock %}

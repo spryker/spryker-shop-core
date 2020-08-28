@@ -1,0 +1,3 @@
+@include helper-import(molecule, ajax-add-to-cart) {
+    @include shop-ui-ajax-add-to-cart();
+}

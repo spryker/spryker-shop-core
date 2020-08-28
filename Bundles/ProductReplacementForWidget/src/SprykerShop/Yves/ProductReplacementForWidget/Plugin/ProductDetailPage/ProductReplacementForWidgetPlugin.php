@@ -12,7 +12,7 @@ use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductReplacementForWi
 use SprykerShop\Yves\ProductReplacementForWidget\Widget\ProductReplacementForListWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductReplacementForWidget\Widget\ProductReplacementForListWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductReplacementForWidget\Widget\ProductReplacementForListWidget} instead.
  *
  * @method \SprykerShop\Yves\ProductReplacementForWidget\ProductReplacementForWidgetFactory getFactory()
  */

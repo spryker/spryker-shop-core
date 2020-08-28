@@ -97,7 +97,8 @@ class CartDiscountPromotionProductListWidget extends AbstractWidget
      */
     protected function getSelectedAttributes(Request $request, $abstractSku): array
     {
-        $selectedAttributes = $request->query->get(static::PARAM_VARIANT_ATTRIBUTES, []);
+        /** @var array $selectedAttributes */
+        $selectedAttributes = $request->query->get(static::PARAM_VARIANT_ATTRIBUTES) ?: [];
 
         return isset($selectedAttributes[$abstractSku]) ? array_filter($selectedAttributes[$abstractSku]) : [];
     }

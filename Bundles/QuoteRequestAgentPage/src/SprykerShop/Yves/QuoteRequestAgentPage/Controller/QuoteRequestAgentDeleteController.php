@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\QuoteRequestAgentPage\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
+use SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -35,7 +36,7 @@ class QuoteRequestAgentDeleteController extends QuoteRequestAgentAbstractControl
 
         $this->processResponseMessages($quoteRequestResponseTransfer);
 
-        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT);
+        return $this->redirectResponseInternal(QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT);
     }
 
     /**

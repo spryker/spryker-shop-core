@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ShopApplication;
 
+use Spryker\Shared\Kernel\Container\GlobalContainer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
@@ -20,7 +21,14 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     public const PLUGIN_GLOBAL_WIDGETS = 'PLUGIN_GLOBAL_WIDGETS';
     public const WIDGET_GLOBAL = 'WIDGET_GLOBAL';
+
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\ShopApplication\ShopApplicationDependencyProvider::GLOBAL_CONTAINER} instead.
+     */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+
+    public const GLOBAL_CONTAINER = 'GLOBAL_CONTAINER';
+
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
     public const STORE = 'STORE';
     public const PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER = 'PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER';
@@ -33,6 +41,7 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container)
     {
+        $container = $this->addGlobalContainer($container);
         $container = $this->addApplicationPlugin($container);
         $container = $this->addGlobalWidgets($container);
         $container = $this->addStore($container);
@@ -48,13 +57,29 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
+    protected function addGlobalContainer(Container $container)
+    {
+        $container->set(static::GLOBAL_CONTAINER, function () {
+            return (new GlobalContainer())->getContainer();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\ShopApplication\ShopApplicationDependencyProvider::addGlobalContainer()} instead.
+     *
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
     protected function addApplicationPlugin(Container $container)
     {
-        $container[self::PLUGIN_APPLICATION] = function () {
+        $container->set(static::PLUGIN_APPLICATION, function () {
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
-        };
+        });
 
         return $container;
     }
@@ -66,9 +91,9 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStore(Container $container)
     {
-        $container[self::STORE] = function () {
+        $container->set(static::STORE, function () {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }
@@ -80,9 +105,9 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilTextService(Container $container)
     {
-        $container[self::SERVICE_UTIL_TEXT] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
             return new ShopApplicationToUtilTextServiceBridge($container->getLocator()->utilText()->service());
-        };
+        });
 
         return $container;
     }
@@ -106,14 +131,14 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addGlobalWidgets(Container $container)
     {
-        $container[self::WIDGET_GLOBAL] = function () {
+        $container->set(static::WIDGET_GLOBAL, function () {
             return array_unique(array_merge($this->getGlobalWidgets(), $this->getGlobalWidgetPlugins()));
-        };
+        });
 
         // Kept for BC reasons
-        $container[self::PLUGIN_GLOBAL_WIDGETS] = function () {
+        $container->set(static::PLUGIN_GLOBAL_WIDGETS, function () {
             return $this->getGlobalWidgetPlugins();
-        };
+        });
 
         return $container;
     }
@@ -143,9 +168,9 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFilterControllerEventSubscriberPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER] = function () {
+        $container->set(static::PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER, function () {
             return $this->getFilterControllerEventSubscriberPlugins();
-        };
+        });
 
         return $container;
     }

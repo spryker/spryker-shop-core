@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CatalogPage;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCatalogClientBridge;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCategoryStorageClientBridge;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToLocaleClientBridge;
@@ -25,6 +26,7 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_CATALOG_PAGE_WIDGETS = 'PLUGIN_CATALOG_PAGE_WIDGETS';
     public const CLIENT_PRODUCT_CATEGORY_FILTER = 'CLIENT_PRODUCT_CATEGORY_FILTER';
     public const CLIENT_PRODUCT_CATEGORY_FILTER_STORAGE = 'CLIENT_PRODUCT_CATEGORY_FILTER_STORAGE';
+    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -40,6 +42,7 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductCategoryFilterClient($container);
         $container = $this->addProductCategoryFilterStorageClient($container);
         $container = $this->addCatalogPageWidgetPlugins($container);
+        $container = $this->addApplication($container);
 
         return $container;
     }
@@ -51,9 +54,9 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSearchClient(Container $container)
     {
-        $container[self::CLIENT_SEARCH] = function (Container $container) {
+        $container->set(static::CLIENT_SEARCH, function (Container $container) {
             return new CatalogPageToSearchClientBridge($container->getLocator()->search()->client());
-        };
+        });
 
         return $container;
     }
@@ -65,9 +68,9 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCategoryStorageClient(Container $container)
     {
-        $container[static::CLIENT_CATEGORY_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_CATEGORY_STORAGE, function (Container $container) {
             return new CatalogPageToCategoryStorageClientBridge($container->getLocator()->categoryStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -79,9 +82,9 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleClient(Container $container)
     {
-        $container[static::CLIENT_LOCALE] = function (Container $container) {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
             return new CatalogPageToLocaleClientBridge($container->getLocator()->locale()->client());
-        };
+        });
 
         return $container;
     }
@@ -93,9 +96,9 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCatalogClient(Container $container)
     {
-        $container[static::CLIENT_CATALOG] = function (Container $container) {
+        $container->set(static::CLIENT_CATALOG, function (Container $container) {
             return new CatalogPageToCatalogClientBridge($container->getLocator()->catalog()->client());
-        };
+        });
 
         return $container;
     }
@@ -107,9 +110,9 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductCategoryFilterClient(Container $container)
     {
-        $container[static::CLIENT_PRODUCT_CATEGORY_FILTER] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_CATEGORY_FILTER, function (Container $container) {
             return new CatalogPageToProductCategoryFilterClientBridge($container->getLocator()->productCategoryFilter()->client());
-        };
+        });
 
         return $container;
     }
@@ -121,9 +124,9 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductCategoryFilterStorageClient(Container $container)
     {
-        $container[static::CLIENT_PRODUCT_CATEGORY_FILTER_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_CATEGORY_FILTER_STORAGE, function (Container $container) {
             return new CatalogPageToProductCategoryFilterStorageClientBridge($container->getLocator()->productCategoryFilterStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -135,9 +138,9 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCatalogPageWidgetPlugins(Container $container)
     {
-        $container[static::PLUGIN_CATALOG_PAGE_WIDGETS] = function () {
+        $container->set(static::PLUGIN_CATALOG_PAGE_WIDGETS, function () {
             return $this->getCatalogPageWidgetPlugins();
-        };
+        });
 
         return $container;
     }
@@ -148,5 +151,21 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function getCatalogPageWidgetPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addApplication(Container $container): Container
+    {
+        $container->set(static::PLUGIN_APPLICATION, function () {
+            $pimplePlugin = new Pimple();
+
+            return $pimplePlugin->getApplication();
+        });
+
+        return $container;
     }
 }

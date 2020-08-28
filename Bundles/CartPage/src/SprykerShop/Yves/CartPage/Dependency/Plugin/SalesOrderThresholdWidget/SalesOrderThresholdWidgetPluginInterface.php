@@ -11,7 +11,7 @@ use ArrayObject;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\SalesOrderThresholdWidget\Widget\SalesOrderThresholdWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\SalesOrderThresholdWidget\Widget\SalesOrderThresholdWidget} instead.
  */
 interface SalesOrderThresholdWidgetPluginInterface extends WidgetPluginInterface
 {

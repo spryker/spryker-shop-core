@@ -13,7 +13,7 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Plugin\DiscountWidget\CheckoutVouch
 use SprykerShop\Yves\DiscountWidget\Widget\CheckoutVoucherFormWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\DiscountWidget\Widget\CheckoutVoucherFormWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\DiscountWidget\Widget\CheckoutVoucherFormWidget} instead.
  */
 class CheckoutVoucherFormWidgetPlugin extends AbstractWidgetPlugin implements CheckoutVoucherFormWidgetPluginInterface
 {

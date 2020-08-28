@@ -14,10 +14,11 @@ interface ProductRelationWidgetToProductRelationStorageClientInterface
     /**
      * @param int $idProductAbstract
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function findRelatedProducts($idProductAbstract, $localeName);
+    public function findRelatedProducts($idProductAbstract, $localeName, string $storeName);
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

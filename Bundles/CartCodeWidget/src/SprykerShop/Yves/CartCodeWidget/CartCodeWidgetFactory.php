@@ -12,7 +12,9 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CartCodeWidget\Dependency\Client\CartCodeWidgetToCartCodeClientInterface;
 use SprykerShop\Yves\CartCodeWidget\Dependency\Client\CartCodeWidgetToQuoteClientInterface;
 use SprykerShop\Yves\CartCodeWidget\Dependency\Client\CartCodeWidgetToZedRequestClientInterface;
+use SprykerShop\Yves\CartCodeWidget\Form\CartCodeClearForm;
 use SprykerShop\Yves\CartCodeWidget\Form\CartCodeForm;
+use SprykerShop\Yves\CartCodeWidget\Form\CartCodeRemoveForm;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -48,6 +50,22 @@ class CartCodeWidgetFactory extends AbstractFactory
     public function getCartCodeForm(): FormInterface
     {
         return $this->getFormFactory()->create(CartCodeForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCartCodeRemoveForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(CartCodeRemoveForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCartCodeClearForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(CartCodeClearForm::class);
     }
 
     /**

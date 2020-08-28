@@ -22,6 +22,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \SprykerShop\Yves\CompanyPage\CompanyPageConfig getConfig()
+ */
 class CompanyBusinessUnitForm extends AbstractType
 {
     public const FIELD_NAME = 'name';

@@ -2,6 +2,14 @@
 
 {# widgets #}
 
+{%- block widget_attributes -%}
+    {%- if id %}id="{{ id }}"{% endif -%}
+    name="{{ full_name }}"
+    {%- if disabled %} disabled{% endif -%}
+    {%- if required %} required{% endif -%}
+    {{ block('attributes') }}
+{%- endblock widget_attributes -%}
+
 {%- block form_widget_simple -%}
     {%- set label = (label | default('')) | trans -%}
 
@@ -118,6 +126,7 @@
     {%- set component = component | default(atom(type)) -%}
     {%- set label = label | default(name | humanize) | trans -%}
     {%- set modifiers = errors is empty ? ['expand'] : ['expand', 'error'] -%}
+    {%- set inputClass = attr.class | default() -%}
 
     {% define attributes = {
         id: id,
@@ -125,15 +134,16 @@
         checked: checked | default(false),
         required: required | default(false),
         disabled: disabled | default(false),
-        value: value | default()
+        value: value | default(),
     } %}
 
     {% include component with {
         modifiers: modifiers,
         data: {
-            label: label
+            label: label,
+            inputClass: inputClass,
         },
-        attributes: attributes
+        attributes: attributes,
     } only %}
 {%- endblock -%}
 

@@ -20,7 +20,11 @@ class ResourceSharePageDependencyProvider extends AbstractBundleDependencyProvid
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
 
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+
     public const PLUGINS_RESOURCE_SHARE_ROUTER_STRATEGY = 'PLUGINS_RESOURCE_SHARE_ROUTER_STRATEGY';
 
     /**
@@ -46,9 +50,9 @@ class ResourceSharePageDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addResourceShareClient(Container $container): Container
     {
-        $container[static::CLIENT_RESOURCE_SHARE] = function (Container $container) {
+        $container->set(static::CLIENT_RESOURCE_SHARE, function (Container $container) {
             return new ResourceSharePageToResourceShareClientBridge($container->getLocator()->resourceShare()->client());
-        };
+        });
 
         return $container;
     }
@@ -68,25 +72,27 @@ class ResourceSharePageDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addResourceShareRouterStrategyPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_RESOURCE_SHARE_ROUTER_STRATEGY] = function () {
+        $container->set(static::PLUGINS_RESOURCE_SHARE_ROUTER_STRATEGY, function () {
             return $this->getResourceShareRouterStrategyPlugins();
-        };
+        });
 
         return $container;
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
      */
     protected function addApplication(Container $container): Container
     {
-        $container[static::PLUGIN_APPLICATION] = function () {
+        $container->set(static::PLUGIN_APPLICATION, function () {
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
-        };
+        });
 
         return $container;
     }
@@ -98,11 +104,11 @@ class ResourceSharePageDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new ResourceSharePageToCustomerClientBridge(
                 $container->getLocator()->customer()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -114,11 +120,11 @@ class ResourceSharePageDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addMessengerClient(Container $container): Container
     {
-        $container[static::CLIENT_MESSENGER] = function (Container $container) {
+        $container->set(static::CLIENT_MESSENGER, function (Container $container) {
             return new ResourceSharePageToMessengerClientBridge(
                 $container->getLocator()->messenger()->client()
             );
-        };
+        });
 
         return $container;
     }

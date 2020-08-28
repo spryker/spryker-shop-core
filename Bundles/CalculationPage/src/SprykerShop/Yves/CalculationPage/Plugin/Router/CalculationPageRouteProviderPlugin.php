@@ -12,7 +12,11 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class CalculationPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CalculationPage\Plugin\Router\CalculationPageRouteProviderPlugin::ROUTE_NAME_CALCULATION_DEBUG} instead.
+     */
     protected const ROUTE_CALCULATION_DEBUG = 'calculation-debug';
+    public const ROUTE_NAME_CALCULATION_DEBUG = 'calculation-debug';
 
     /**
      * Specification:
@@ -40,7 +44,7 @@ class CalculationPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/calculation/debug', 'CalculationPage', 'Debug', 'cartAction');
         $route = $route->setMethods(['GET']);
-        $routeCollection->add(static::ROUTE_CALCULATION_DEBUG, $route);
+        $routeCollection->add(static::ROUTE_NAME_CALCULATION_DEBUG, $route);
 
         return $routeCollection;
     }

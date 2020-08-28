@@ -12,14 +12,14 @@ use SprykerShop\Yves\CatalogPage\Dependency\Plugin\ProductWidget\ProductWidgetPl
 use SprykerShop\Yves\ProductWidget\Widget\CatalogPageProductWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductWidget\Widget\CatalogPageProductWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductWidget\Widget\CatalogPageProductWidget} instead.
  *
  * @method \SprykerShop\Yves\ProductWidget\ProductWidgetFactory getFactory()
  */
 class ProductWidgetPlugin extends AbstractWidgetPlugin implements ProductWidgetPluginInterface
 {
     /**
-     * @param array $product
+     * @param mixed[] $product
      * @param string|null $viewMode
      *
      * @return void

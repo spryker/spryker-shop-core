@@ -12,7 +12,7 @@ use SprykerShop\Yves\CustomerPage\Dependency\Plugin\CustomerPage\CustomerNavigat
 use SprykerShop\Yves\CustomerPage\Widget\CustomerNavigationWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\CustomerPage\Widget\CustomerNavigationWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Widget\CustomerNavigationWidget} instead.
  *
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
  */

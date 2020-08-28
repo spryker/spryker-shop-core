@@ -11,7 +11,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 use Symfony\Component\Form\FormView;
 
 /**
- * @deprecated Use \SprykerShop\Yves\CartCodeWidget\Widget\CartCodeFormWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\CartCodeWidget\Widget\CartCodeFormWidget} instead.
  *
  * @method \SprykerShop\Yves\DiscountWidget\DiscountWidgetFactory getFactory()
  */
@@ -49,7 +49,9 @@ class DiscountVoucherFormWidget extends AbstractWidget
     {
         $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
 
-        return $this->addParameter('isQuoteEditable', $this->getFactory()->getQuoteClient()->isQuoteEditable($quoteTransfer));
+        $this->addParameter('isQuoteEditable', $this->getFactory()->getQuoteClient()->isQuoteEditable($quoteTransfer));
+
+        return $this;
     }
 
     /**

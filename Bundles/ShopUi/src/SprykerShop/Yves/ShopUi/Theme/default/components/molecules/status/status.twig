@@ -1,0 +1,41 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'status',
+    tag: 'span',
+} %}
+
+{% define data = {
+    label: required,
+    status: required,
+} %}
+
+{%- macro escapeStatusModifier(className, status) -%}
+    {% spaceless %}
+        {% set forbiddenSymbols = ['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '=', '+', '[', ']', '{', '}', '\\', '|', ':', ';', '\'', '"', '<', '>', ',', '.', '/', '?', '§', '№'] %}
+        {% set status = status | replace({' ': '-'}) | lower %}
+
+        {% for symbol in forbiddenSymbols %}
+            {% set status = status | replace({("#{symbol}"): ''}) %}
+        {% endfor %}
+        {{ className }}--{{ status }}
+    {% endspaceless %}
+{%- endmacro -%}
+
+{% block extraClass %}
+    {% if data.status %}{{ _self.escapeStatusModifier(config.name, data.status) }}{% endif %}
+{% endblock %}
+
+{% block body %}
+    {% if data.status %}
+        {% block label %}
+            {{ data.label }}
+        {% endblock %}
+    {% else %}
+        {% block emptyState %}
+            <span class="text-secondary">
+                --
+            </span>
+        {% endblock %}
+    {% endif %}
+{% endblock %}

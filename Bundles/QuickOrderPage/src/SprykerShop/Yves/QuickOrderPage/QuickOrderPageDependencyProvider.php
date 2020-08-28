@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuickOrderPage;
 
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
@@ -29,7 +30,12 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_PRODUCT_QUANTITY_STORAGE = 'CLIENT_PRODUCT_QUANTITY_STORAGE';
     public const CLIENT_PRICE_PRODUCT_STORAGE = 'CLIENT_PRICE_PRODUCT_STORAGE';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+
     public const PLUGINS_QUICK_ORDER_PAGE_WIDGETS = 'PLUGINS_QUICK_ORDER_PAGE_WIDGETS';
     public const PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER = 'PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER';
     public const PLUGINS_QUICK_ORDER_FORM_HANDLER_STRATEGY = 'PLUGINS_QUICK_ORDER_FORM_HANDLER_STRATEGY';
@@ -41,12 +47,18 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_CSV = 'SERVICE_UTIL_CSV';
 
     /**
+     * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     */
+    public const SERVICE_REQUEST_STACK = 'request_stack';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
      */
     public function provideDependencies(Container $container): Container
     {
+        $container = $this->addRequestStack($container);
         $container = $this->addApplication($container);
         $container = $this->addCartClient($container);
         $container = $this->addQuoteClient($container);
@@ -69,17 +81,33 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
      */
     protected function addApplication(Container $container): Container
     {
-        $container[static::PLUGIN_APPLICATION] = function () {
+        $container->set(static::PLUGIN_APPLICATION, function () {
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
-        };
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addRequestStack(Container $container): Container
+    {
+        $container->set(static::SERVICE_REQUEST_STACK, function (ContainerInterface $container) {
+            return $container->getApplicationService(static::SERVICE_REQUEST_STACK);
+        });
 
         return $container;
     }
@@ -91,11 +119,11 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuickOrderUtilCsvService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_CSV] = function (Container $container): QuickOrderPageToUtilCsvServiceInterface {
+        $container->set(static::SERVICE_UTIL_CSV, function (Container $container): QuickOrderPageToUtilCsvServiceInterface {
             return new QuickOrderPageToUtilCsvServiceBridge(
                 $container->getLocator()->utilCsv()->service()
             );
-        };
+        });
 
         return $container;
     }
@@ -107,9 +135,9 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCartClient(Container $container): Container
     {
-        $container[static::CLIENT_CART] = function (Container $container) {
+        $container->set(static::CLIENT_CART, function (Container $container) {
             return new QuickOrderPageToCartClientBridge($container->getLocator()->cart()->client());
-        };
+        });
 
         return $container;
     }
@@ -121,9 +149,9 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteClient(Container $container): Container
     {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new QuickOrderPageToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }
@@ -135,9 +163,9 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new QuickOrderPageToProductStorageClientBridge($container->getLocator()->productStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -149,9 +177,9 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPriceProductStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRICE_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRICE_PRODUCT_STORAGE, function (Container $container) {
             return new QuickOrderPageToPriceProductStorageClientBridge($container->getLocator()->priceProductStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -163,9 +191,9 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductQuantityStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_QUANTITY_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_QUANTITY_STORAGE, function (Container $container) {
             return new QuickOrderPageToProductQuantityStorageClientBridge($container->getLocator()->productQuantityStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -177,11 +205,11 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuickOrderClient(Container $container): Container
     {
-        $container[static::CLIENT_QUICK_ORDER] = function (Container $container) {
+        $container->set(static::CLIENT_QUICK_ORDER, function (Container $container) {
             return new QuickOrderPageToQuickOrderClientBridge(
                 $container->getLocator()->quickOrder()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -193,9 +221,9 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuickOrderPageWidgetPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUICK_ORDER_PAGE_WIDGETS] = function () {
+        $container->set(static::PLUGINS_QUICK_ORDER_PAGE_WIDGETS, function () {
             return $this->getQuickOrderPageWidgetPlugins();
-        };
+        });
 
         return $container;
     }
@@ -207,9 +235,9 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuickOrderItemTransferExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER] = function () {
+        $container->set(static::PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER, function () {
             return $this->getQuickOrderItemTransferExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -221,9 +249,9 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addZedRequestClient($container): Container
     {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new QuickOrderPageToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
-        };
+        });
 
         return $container;
     }
@@ -235,9 +263,9 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuickOrderFormHandlerStrategyPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUICK_ORDER_FORM_HANDLER_STRATEGY] = function () {
+        $container->set(static::PLUGINS_QUICK_ORDER_FORM_HANDLER_STRATEGY, function () {
             return $this->getQuickOrderFormHandlerStrategyPlugins();
-        };
+        });
 
         return $container;
     }
@@ -249,9 +277,9 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuickOrderItemFilterPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUICK_ORDER_ITEM_FILTER] = function () {
+        $container->set(static::PLUGINS_QUICK_ORDER_ITEM_FILTER, function () {
             return $this->getQuickOrderItemFilterPlugins();
-        };
+        });
 
         return $container;
     }
@@ -263,9 +291,9 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuickOrderFormAdditionalDataColumnProviderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUICK_ORDER_FORM_COLUMN] = function () {
+        $container->set(static::PLUGINS_QUICK_ORDER_FORM_COLUMN, function () {
             return $this->getQuickOrderFormColumnPlugins();
-        };
+        });
 
         return $container;
     }
@@ -277,9 +305,9 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuickOrderUploadedFileParserPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUICK_ORDER_UPLOADED_FILE_PARSER] = function (): array {
+        $container->set(static::PLUGINS_QUICK_ORDER_UPLOADED_FILE_PARSER, function (): array {
             return $this->getQuickOrderUploadedFileParserPlugins();
-        };
+        });
 
         return $container;
     }
@@ -291,9 +319,9 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuickOrderUploadedFileValidatorPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUICK_ORDER_UPLOADED_FILE_VALIDATOR] = function (): array {
+        $container->set(static::PLUGINS_QUICK_ORDER_UPLOADED_FILE_VALIDATOR, function (): array {
             return $this->getQuickOrderUploadedFileValidatorPlugins();
-        };
+        });
 
         return $container;
     }
@@ -305,9 +333,9 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuickOrderFileTemplatePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUICK_ORDER_FILE_TEMPLATE] = function (): array {
+        $container->set(static::PLUGINS_QUICK_ORDER_FILE_TEMPLATE, function (): array {
             return $this->getQuickOrderFileTemplatePlugins();
-        };
+        });
 
         return $container;
     }

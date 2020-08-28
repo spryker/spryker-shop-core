@@ -14,8 +14,11 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 use Spryker\Yves\StepEngine\Form\FormCollectionHandler;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageDependencyProvider;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToLocaleClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Form\DataProvider\SubFormDataProviders;
+use SprykerShop\Yves\CheckoutPage\Form\DataProvider\SummaryFormDataProvider;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\PaymentForm;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentCollectionForm;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm;
@@ -47,7 +50,7 @@ class FormFactory extends AbstractFactory
      */
     public function createAddressFormCollection()
     {
-        return $this->createFormCollection($this->getAddressFormTypes(), $this->getAddressFormDataProvider());
+        return $this->createFormCollection($this->getAddressFormTypes(), $this->getCheckoutAddressFormDataProviderPlugin());
     }
 
     /**
@@ -69,7 +72,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use getShipmentCollectionForm() instead.
+     * @deprecated Use {@link getShipmentCollectionForm()} instead.
      *
      * @return string
      */
@@ -120,7 +123,19 @@ class FormFactory extends AbstractFactory
      */
     public function createSummaryFormCollection()
     {
-        return $this->createFormCollection($this->getSummaryFormTypes());
+        return $this->createFormCollection($this->getSummaryFormTypes(), $this->createSummaryFormDataProvider());
+    }
+
+    /**
+     * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
+     */
+    public function createSummaryFormDataProvider(): StepEngineFormDataProviderInterface
+    {
+        return new SummaryFormDataProvider(
+            $this->getConfig(),
+            $this->getLocaleClient(),
+            $this->getGlossaryStorageClient()
+        );
     }
 
     /**
@@ -188,6 +203,8 @@ class FormFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Yves\Kernel\Application
      */
     public function getApplication()
@@ -212,6 +229,22 @@ class FormFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToLocaleClientInterface
+     */
+    public function getLocaleClient(): CheckoutPageToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_LOCALE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface
+     */
+    public function getGlossaryStorageClient(): CheckoutPageToGlossaryStorageClientInterface
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
+    }
+
+    /**
      * @return \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateServiceInterface
      */
     public function getUtilValidateService(): CheckoutPageToUtilValidateServiceInterface
@@ -220,10 +253,10 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface|null
+     * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
      */
-    public function getAddressFormDataProvider()
+    public function getCheckoutAddressFormDataProviderPlugin(): StepEngineFormDataProviderInterface
     {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::ADDRESS_STEP_FORM_DATA_PROVIDER);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_CHECKOUT_ADDRESS_FORM_DATA_PROVIDER);
     }
 }

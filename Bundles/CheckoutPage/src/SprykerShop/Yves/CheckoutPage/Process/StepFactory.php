@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CheckoutPage\Process;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\StepEngine\Dependency\Step\StepInterface;
 use Spryker\Yves\StepEngine\Process\StepBreadcrumbGenerator;
 use Spryker\Yves\StepEngine\Process\StepCollection;
 use Spryker\Yves\StepEngine\Process\StepCollectionInterface;
@@ -26,22 +27,23 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServi
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsChecker;
 use SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface;
-use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
+use SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep\AddressStepExecutor;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep\PostConditionChecker as AddressStepPostConditionChecker;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\CustomerStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\EntryStep;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\ErrorStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\PaymentStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\PlaceOrderStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\Resolver\StepResolver;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\Resolver\StepResolverInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep\PostConditionChecker as ShipmentStepPostConditionChecker;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\StepExecutorInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\SuccessStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\SummaryStep;
-use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
-use SprykerShop\Yves\HomePage\Plugin\Provider\HomePageControllerProvider;
 
 /**
  * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
@@ -50,6 +52,16 @@ class StepFactory extends AbstractFactory
 {
     protected const ERROR_CODE_GENERAL_FAILURE = 399;
     protected const ROUTE_CART = 'cart';
+
+    /**
+     * @uses \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_LOGOUT
+     */
+    protected const ROUTE_LOGOUT = 'logout';
+
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_CUSTOMER} instead.
+     */
+    protected const CHECKOUT_CUSTOMER = 'checkout-customer';
 
     /**
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection
@@ -82,7 +94,12 @@ class StepFactory extends AbstractFactory
      */
     public function createStepEngine(StepCollectionInterface $stepCollection)
     {
-        return new StepEngine($stepCollection, $this->createDataContainer(), $this->createStepBreadcrumbGenerator());
+        return new StepEngine(
+            $stepCollection,
+            $this->createDataContainer(),
+            $this->createStepBreadcrumbGenerator(),
+            $this->getCheckoutPageStepEnginePreRenderPlugins()
+        );
     }
 
     /**
@@ -90,22 +107,41 @@ class StepFactory extends AbstractFactory
      */
     public function createStepCollection()
     {
-        $stepCollection = new StepCollection(
-            $this->getUrlGenerator(),
-            CheckoutPageControllerProvider::CHECKOUT_ERROR
+        return new StepCollection(
+            $this->getRouter(),
+            CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_ERROR
         );
+    }
 
-        $stepCollection
-            ->addStep($this->createEntryStep())
-            ->addStep($this->createCustomerStep())
-            ->addStep($this->createAddressStep())
-            ->addStep($this->createShipmentStep())
-            ->addStep($this->createPaymentStep())
-            ->addStep($this->createSummaryStep())
-            ->addStep($this->createPlaceOrderStep())
-            ->addStep($this->createSuccessStep());
+    /**
+     * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
+     */
+    public function getSteps(): array
+    {
+        return [
+            $this->createEntryStep(),
+            $this->createCustomerStep(),
+            $this->createAddressStep(),
+            $this->createShipmentStep(),
+            $this->createPaymentStep(),
+            $this->createSummaryStep(),
+            $this->createPlaceOrderStep(),
+            $this->createSuccessStep(),
+            $this->createErrorStep(),
+        ];
+    }
 
-        return $stepCollection;
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\Resolver\StepResolverInterface
+     */
+    public function createStepResolver(): StepResolverInterface
+    {
+        return new StepResolver(
+            $this->getQuoteClient(),
+            $this->getCheckoutStepResolverStrategyPlugins(),
+            $this->getSteps(),
+            $this->createStepCollection()
+        );
     }
 
     /**
@@ -115,7 +151,7 @@ class StepFactory extends AbstractFactory
     {
         return new EntryStep(
             static::ROUTE_CART,
-            HomePageControllerProvider::ROUTE_HOME
+            $this->getConfig()->getEscapeRoute()
         );
     }
 
@@ -127,9 +163,9 @@ class StepFactory extends AbstractFactory
         return new CustomerStep(
             $this->getCustomerClient(),
             $this->getCustomerStepHandler(),
-            CheckoutPageControllerProvider::CHECKOUT_CUSTOMER,
-            HomePageControllerProvider::ROUTE_HOME,
-            $this->getApplication()->path(CustomerPageControllerProvider::ROUTE_LOGOUT)
+            CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_CUSTOMER,
+            $this->getConfig()->getEscapeRoute(),
+            $this->getRouter()->generate(static::ROUTE_LOGOUT)
         );
     }
 
@@ -143,8 +179,8 @@ class StepFactory extends AbstractFactory
             $this->createAddressStepExecutor(),
             $this->createAddressStepPostConditionChecker(),
             $this->getConfig(),
-            CheckoutPageControllerProvider::CHECKOUT_ADDRESS,
-            HomePageControllerProvider::ROUTE_HOME,
+            CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_ADDRESS,
+            $this->getConfig()->getEscapeRoute(),
             $this->getCheckoutAddressStepEnterPreCheckPlugins()
         );
     }
@@ -159,8 +195,8 @@ class StepFactory extends AbstractFactory
             $this->getShipmentPlugins(),
             $this->createShipmentStepPostConditionChecker(),
             $this->createGiftCardItemsChecker(),
-            CheckoutPageControllerProvider::CHECKOUT_SHIPMENT,
-            HomePageControllerProvider::ROUTE_HOME,
+            CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_SHIPMENT,
+            $this->getConfig()->getEscapeRoute(),
             $this->getCheckoutShipmentStepEnterPreCheckPlugins()
         );
     }
@@ -189,8 +225,8 @@ class StepFactory extends AbstractFactory
         return new PaymentStep(
             $this->getPaymentClient(),
             $this->getPaymentMethodHandler(),
-            CheckoutPageControllerProvider::CHECKOUT_PAYMENT,
-            HomePageControllerProvider::ROUTE_HOME,
+            CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_PAYMENT,
+            $this->getConfig()->getEscapeRoute(),
             $this->getFlashMessenger(),
             $this->getCalculationClient(),
             $this->getCheckoutPaymentStepEnterPreCheckPlugins()
@@ -206,8 +242,8 @@ class StepFactory extends AbstractFactory
             $this->getProductBundleClient(),
             $this->getShipmentService(),
             $this->getConfig(),
-            CheckoutPageControllerProvider::CHECKOUT_SUMMARY,
-            HomePageControllerProvider::ROUTE_HOME,
+            CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_SUMMARY,
+            $this->getConfig()->getEscapeRoute(),
             $this->getCheckoutClient()
         );
     }
@@ -222,12 +258,12 @@ class StepFactory extends AbstractFactory
             $this->getFlashMessenger(),
             $this->getStore()->getCurrentLocale(),
             $this->getGlossaryStorageClient(),
-            CheckoutPageControllerProvider::CHECKOUT_PLACE_ORDER,
-            HomePageControllerProvider::ROUTE_HOME,
+            CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_PLACE_ORDER,
+            $this->getConfig()->getEscapeRoute(),
             [
                 static::ERROR_CODE_GENERAL_FAILURE => self::ROUTE_CART,
-                'payment failed' => CheckoutPageControllerProvider::CHECKOUT_PAYMENT,
-                'shipment failed' => CheckoutPageControllerProvider::CHECKOUT_SHIPMENT,
+                'payment failed' => CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_PAYMENT,
+                'shipment failed' => CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_SHIPMENT,
             ]
         );
     }
@@ -241,8 +277,19 @@ class StepFactory extends AbstractFactory
             $this->getCustomerClient(),
             $this->getCartClient(),
             $this->getConfig(),
-            CheckoutPageControllerProvider::CHECKOUT_SUCCESS,
-            HomePageControllerProvider::ROUTE_HOME
+            CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_SUCCESS,
+            $this->getConfig()->getEscapeRoute()
+        );
+    }
+
+    /**
+     * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface
+     */
+    public function createErrorStep(): StepInterface
+    {
+        return new ErrorStep(
+            CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_ERROR,
+            $this->getConfig()->getEscapeRoute()
         );
     }
 
@@ -267,10 +314,12 @@ class StepFactory extends AbstractFactory
      */
     public function getFlashMessenger()
     {
-        return $this->getApplication()['flash_messenger'];
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::SERVICE_FLASH_MESSENGER);
     }
 
     /**
+     * @deprecated Use {@link \SprykerShop\Yves\CheckoutPage\Process\StepFactory::getRouter()} instead.
+     *
      * @return \Symfony\Component\Routing\Generator\UrlGeneratorInterface
      */
     public function getUrlGenerator()
@@ -279,6 +328,16 @@ class StepFactory extends AbstractFactory
     }
 
     /**
+     * @return \Symfony\Component\Routing\Generator\UrlGeneratorInterface
+     */
+    public function getRouter()
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::SERVICE_ROUTER);
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Yves\Kernel\Application
      */
     public function getApplication()
@@ -375,6 +434,14 @@ class StepFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepResolverStrategyPluginInterface[]
+     */
+    public function getCheckoutStepResolverStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_STEP_RESOLVER_STRATEGY);
+    }
+
+    /**
      * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\StepExecutorInterface
      */
     public function createAddressStepExecutor(): StepExecutorInterface
@@ -424,5 +491,13 @@ class StepFactory extends AbstractFactory
     public function getShoppingListItemExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_ADDRESS_STEP_EXECUTOR_ADDRESS_TRANSFER_EXPANDERS);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\StepEngine\CheckoutPageStepEnginePreRenderPluginInterface[]
+     */
+    public function getCheckoutPageStepEnginePreRenderPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_PAGE_STEP_ENGINE_PRE_RENDER);
     }
 }

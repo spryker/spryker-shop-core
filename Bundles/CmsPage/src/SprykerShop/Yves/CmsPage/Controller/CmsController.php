@@ -57,7 +57,7 @@ class CmsController extends AbstractController
         }
 
         /** @var \Twig\Loader\ExistsLoaderInterface $loader */
-        $loader = $this->getApplication()['twig']->getLoader();
+        $loader = $this->getTwig()->getLoader();
         if (!$loader->exists($localeCmsPageDataTransfer->getTemplatePath())) {
             throw new NotFoundHttpException('The Cms Page template is not found.');
         }

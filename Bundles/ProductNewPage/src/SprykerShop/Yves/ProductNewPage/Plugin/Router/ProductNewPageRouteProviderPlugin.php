@@ -12,7 +12,11 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class ProductNewPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\ProductNewPage\Plugin\Router\ProductNewPageRouteProviderPlugin::ROUTE_NAME_NEW_PRODUCTS} instead.
+     */
     protected const ROUTE_NEW_PRODUCTS = 'new-products';
+    public const ROUTE_NAME_NEW_PRODUCTS = 'new-products';
 
     /**
      * Specification:
@@ -41,7 +45,7 @@ class ProductNewPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $route = $this->buildRoute('/new{categoryPath}', 'ProductNewPage', 'NewProducts', 'indexAction');
         $route = $route->setRequirement('categoryPath', '\/.+');
         $route = $route->setDefault('categoryPath', null);
-        $routeCollection->add(static::ROUTE_NEW_PRODUCTS, $route);
+        $routeCollection->add(static::ROUTE_NAME_NEW_PRODUCTS, $route);
 
         return $routeCollection;
     }

@@ -1,0 +1,47 @@
+@mixin shop-ui-status($name: '.status') {
+    @include shop-ui-badge($name) {
+        &--in-progress,
+        &--refunded {
+            background-color: helper-color-light(map-get($setting-color-actions, 'alert'));
+            color: helper-color-dark(map-get($setting-color-actions, 'alert'));
+        }
+
+        &--ready,
+        &--paid,
+        &--delivered {
+            background-color: helper-color-light(map-get($setting-color-actions, 'success'));
+            color: helper-color-dark(map-get($setting-color-actions, 'success'));
+        }
+
+        &--waiting,
+        &--payment-pending,
+        &--confirmed,
+        &--sent-to-merchant,
+        &--shipped-by-merchant,
+        &--exported {
+            background-color: helper-color-light(map-get($setting-color-actions, 'warning'));
+            color: helper-color-dark(map-get($setting-color-actions, 'warning'));
+        }
+
+        &--closed {
+            background-color: helper-color-light($setting-color-darkest);
+            color: helper-color-dark($setting-color-darkest);
+        }
+
+        &--canceled,
+        &--ready-for-return,
+        &--returned,
+        &--waiting-for-return,
+        &--return-canceled {
+            background-color: helper-color-light($setting-color-darker);
+            color: helper-color-dark($setting-color-darker);
+        }
+
+        &--draft {
+            background-color: helper-color-light($setting-color-alt);
+            color: helper-color-dark($setting-color-alt);
+        }
+
+        @content;
+    }
+}

@@ -5,8 +5,12 @@
     title: 'global.spryker.shop' | trans,
     metaTitle: 'global.spryker.shop' | trans,
     metaDescription: '',
-    metaKeywords: ''
+    metaKeywords: '',
+    hasCookies: app.request.cookies.get('last-visit'),
 } %}
+
+{% set isNewFrontendBuildSupported = false %}
+{% set isCssLazyLoadSupported = false %}
 
 {% block template %}
     <!doctype html>
@@ -22,11 +26,28 @@
             {% endblock %}
 
             {% block headStyles %}
-                <link rel="stylesheet" href="{{publicPath('css/yves_default.app.css')}}">
+                {% if isCssLazyLoadSupported %}
+                    <link rel="stylesheet" href="{{ publicPath('css/yves_default.critical.css') }}">
+
+                    {% block nonCriticalStyles %}
+                        <link rel="stylesheet" href="{{ publicPath('css/yves_default.non-critical.css') }}">
+                    {% endblock %}
+                {% else %}
+                    <link rel="stylesheet" href="{{ publicPath('css/yves_default.app.css') }}">
+                {% endif %}
             {% endblock %}
 
             {% block headScripts %}
-                <script src="{{publicPath('js/yves_default.runtime.js')}}"></script>
+                {% if isNewFrontendBuildSupported %}
+                    {% block esmHeadScripts %}
+                        <script nomodule type="application/javascript" src="{{ publicPath('js/yves_default.runtime.legacy.js') }}"></script>
+                        <script type="module" src="{{ publicPath('js/yves_default.runtime.js') }}" crossorigin="anonymous"></script>
+                    {% endblock %}
+                {% else %}
+                    {% block legacyHeadScripts %}
+                        <script src="{{ publicPath('js/yves_default.runtime.js') }}"></script>
+                    {% endblock %}
+                {% endif %}
             {% endblock %}
 
             <title>{% block headTitle %}{{ data.title }}{% endblock %}</title>
@@ -34,12 +55,26 @@
         <body {%- if block('class') is not empty %} class="{%- block class -%}{%- endblock -%}"{%- endif %}
             {%- block attributes %} {{qa('page')}} {% endblock -%}>
 
-            {{parent()}}
+            {{ parent() }}
 
             {% block footerScripts %}
-                <script src="{{publicPath('js/yves_default.es6-polyfill.js')}}"></script>
-                <script src="{{publicPath('js/yves_default.vendor.js')}}"></script>
-                <script src="{{publicPath('js/yves_default.app.js')}}"></script>
+                {% if isNewFrontendBuildSupported %}
+                    {% block esmFooterScripts %}
+                        <script nomodule type="application/javascript" src="{{ publicPath('js/yves_default.es6-polyfill.legacy.js') }}"></script>
+                        <script nomodule type="application/javascript" src="{{ publicPath('js/yves_default.vendor.legacy.js') }}"></script>
+                        <script nomodule type="application/javascript" src="{{ publicPath('js/yves_default.app.legacy.js') }}"></script>
+                        <script type="module" src="{{ publicPath('js/yves_default.vendor.js') }}" crossorigin="anonymous"></script>
+                        <script type="module" src="{{ publicPath('js/yves_default.app.js') }}" crossorigin="anonymous"></script>
+                    {% endblock %}
+                {% else %}
+                    {% block legacyFooterScripts %}
+                        <script src="{{ publicPath('js/yves_default.es6-polyfill.js') }}"></script>
+                        <script src="{{ publicPath('js/yves_default.vendor.js') }}"></script>
+                        <script src="{{ publicPath('js/yves_default.app.js') }}"></script>
+                    {% endblock %}
+                {% endif %}
+
+                {%- block styleLazyLoader %}{% endblock -%}
             {% endblock %}
         </body>
     </html>

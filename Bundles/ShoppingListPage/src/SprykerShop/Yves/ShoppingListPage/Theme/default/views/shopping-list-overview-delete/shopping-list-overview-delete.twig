@@ -6,6 +6,7 @@
     shoppingList: _view.shoppingList,
     sharedCompanyUsers: _view.sharedCompanyUsers,
     sharedCompanyBusinessUnits: _view.sharedCompanyBusinessUnits,
+    shoppingListDeleteForm: _view.shoppingListDeleteForm,
 } %}
 
 {% block breadcrumbs %}
@@ -44,6 +45,7 @@
             idShoppingList: data.shoppingList.idShoppingList,
             sharedCompanyUsers: data.sharedCompanyUsers,
             sharedCompanyBusinessUnits: data.sharedCompanyBusinessUnits,
+            shoppingListDeleteForm: data.shoppingListDeleteForm,
         },
     } only %}
 {% endblock %}

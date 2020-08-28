@@ -22,7 +22,7 @@ class CmsChartContentWidgetConfigurationProvider implements CmsContentWidgetConf
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getAvailableTemplates(): array
     {

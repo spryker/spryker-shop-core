@@ -7,6 +7,7 @@
         <property name="id" type="int"/>
         <property name="sku" type="string"/>
         <property name="idSalesOrderItem" type="int"/>
+        <property name="uuid" type="string"/>
         <property name="salesOrderConfiguredBundleItem" type="SalesOrderConfiguredBundleItem"/>
         <property name="productOptions" type="ProductOption[]" singular="productOption"/>
         <property name="isOrdered" type="bool"/>
@@ -14,6 +15,9 @@
         <property name="quantitySalesUnit" type="ProductMeasurementSalesUnit"/>
         <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
         <property name="shipment" type="Shipment"/>
+        <property name="bundleItemIdentifier" type="string"/>
+        <property name="relatedBundleItemIdentifier" type="string"/>
+        <property name="state" type="ItemState"/>
     </transfer>
 
     <transfer name="Shipment">
@@ -35,6 +39,7 @@
         <property name="items" type="Item[]"  singular="item"/>
         <property name="orderReference" type="string"/>
         <property name="bundleItems" type="Item[]" singular="bundleItem"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="Quote">
@@ -58,4 +63,11 @@
     <transfer name="Address">
         <property name="idSalesOrderAddress" type="int"/>
     </transfer>
+
+    <transfer name="SalesOrderConfiguredBundleItem">
+    </transfer>
+
+    <transfer name="ItemState">
+    </transfer>
+
 </transfers>

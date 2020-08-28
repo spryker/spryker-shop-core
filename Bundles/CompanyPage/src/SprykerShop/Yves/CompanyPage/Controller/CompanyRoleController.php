@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use SprykerShop\Yves\CompanyPage\Form\CompanyRoleForm;
-use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
+use SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -28,6 +28,8 @@ class CompanyRoleController extends AbstractCompanyController
     protected const SUCCESS_MESSAGE_COMPANY_ROLE_UPDATE = 'company.account.company_role.update.successful';
     protected const PARAMETER_ID_COMPANY_ROLE = 'id';
     protected const ERROR_MESSAGE_DEFAULT_COMPANY_ROLE_DELETE = 'company.account.company_role.delete.error.default_role';
+
+    protected const GLOSSARY_KEY_COMPANY_ROLE_DELETE_ERROR = 'company.account.company_role.delete.error.cannot_remove';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -114,9 +116,18 @@ class CompanyRoleController extends AbstractCompanyController
      */
     public function deleteAction(Request $request): RedirectResponse
     {
-        $idCompanyRole = $request->query->getInt('id');
-        $companyRoleTransfer = new CompanyRoleTransfer();
-        $companyRoleTransfer->setIdCompanyRole($idCompanyRole);
+        $companyRoleDeleteForm = $this->getFactory()
+            ->createCompanyPageFormFactory()
+            ->getCompanyRoleDeleteForm(new CompanyRoleTransfer())
+            ->handleRequest($request);
+
+        if (!$companyRoleDeleteForm->isSubmitted() || !$companyRoleDeleteForm->isValid()) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_COMPANY_ROLE_DELETE_ERROR);
+
+            return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE);
+        }
+
+        $companyRoleTransfer = $companyRoleDeleteForm->getData();
 
         $companyRoleTransfer = $this->getFactory()
             ->getCompanyRoleClient()
@@ -126,7 +137,9 @@ class CompanyRoleController extends AbstractCompanyController
             throw new NotFoundHttpException();
         }
 
-        $companyRoleResponseTransfer = $this->getFactory()->getCompanyRoleClient()->deleteCompanyRole($companyRoleTransfer);
+        $companyRoleResponseTransfer = $this->getFactory()
+            ->getCompanyRoleClient()
+            ->deleteCompanyRole($companyRoleTransfer);
 
         if ($companyRoleResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::SUCCESS_MESSAGE_COMPANY_ROLE_DELETE);
@@ -134,7 +147,7 @@ class CompanyRoleController extends AbstractCompanyController
 
         $this->processResponseMessages($companyRoleResponseTransfer);
 
-        return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ROLE);
+        return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE);
     }
 
     /**
@@ -162,7 +175,7 @@ class CompanyRoleController extends AbstractCompanyController
         if ($companyRoleTransfer->getIsDefault()) {
             $this->addErrorMessage(static::ERROR_MESSAGE_DEFAULT_COMPANY_ROLE_DELETE);
 
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ROLE);
+            return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE);
         }
 
         return $this->executeConfirmDeleteAction($request);
@@ -190,9 +203,14 @@ class CompanyRoleController extends AbstractCompanyController
             throw new NotFoundHttpException();
         }
 
+        $companyRoleDeleteForm = $this->getFactory()
+            ->createCompanyPageFormFactory()
+            ->getCompanyRoleDeleteForm($companyRoleTransfer);
+
         $viewData = [
             'idCompanyRole' => $idCompanyRole,
             'role' => $companyRoleTransfer,
+            'companyRoleDeleteForm' => $companyRoleDeleteForm->createView(),
         ];
 
         return $this->view($viewData, [], '@CompanyPage/views/role-delete/role-delete.twig');
@@ -241,7 +259,7 @@ class CompanyRoleController extends AbstractCompanyController
             if ($companyRoleResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(static::SUCCESS_MESSAGE_COMPANY_ROLE_CREATE);
 
-                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ROLE);
+                return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE);
             }
 
             $this->processResponseMessages($companyRoleResponseTransfer);
@@ -303,7 +321,7 @@ class CompanyRoleController extends AbstractCompanyController
             $this->updateCompanyRole($companyRoleForm->getData());
             $this->addSuccessMessage(static::SUCCESS_MESSAGE_COMPANY_ROLE_UPDATE);
 
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_ROLE);
+            return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE);
         }
 
         return [

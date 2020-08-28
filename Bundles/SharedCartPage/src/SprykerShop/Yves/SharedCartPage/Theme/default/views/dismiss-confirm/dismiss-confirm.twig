@@ -19,7 +19,10 @@
                 label: 'shared_cart.share.breadcrumbs.shopping_carts' | trans
             },{
                 url: data.quote.isDefault ? url('cart') : url('multi-cart/set-default', {idQuote: data.idQuote}),
-                label: data.quoteName
+                label: data.quoteName,
+                isFormElement: true,
+                formName: 'multi_cart_set_default_form',
+                tokenFieldName: 'multi_cart_set_default_form[_token]',
             },{
                 label: 'shared_cart_page.share.breadcrumbs.dismiss' | trans
             }]
@@ -42,14 +45,14 @@
         </div>
 
         <div class="float-right">
-            <a href="{{ data.backUrl }}" class="button button--secondary button--hollow">
+            <a href="{{ path('multi-cart') }}" class="button button--secondary button--hollow">
                 {% include atom('icon') with {
                     modifiers: ['small'],
                     data: {
                         name: 'chevron-left'
                     }
                 } only %}
-                {{ "general.back.button" | trans }}
+                {{ 'shared_cart.dismiss_confirmation.carts_list' | trans }}
             </a>
             <a href="{{ url('shared-cart/dismiss', { 'idQuote' : data.idQuote }) }}" class="button button--alert">
                 {{ "shared_cart_page.cart.dismiss" | trans }}

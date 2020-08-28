@@ -8,7 +8,7 @@
 }
 
 /**
- * @deprecated use agent-widget-agent-control-bar mixin instead.
+ * @deprecated Use agent-widget-agent-control-bar mixin instead.
  */
 @mixin agent-control-bar($name: '.agent-control-bar') {
     @include agent-widget-agent-control-bar();

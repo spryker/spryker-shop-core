@@ -1,15 +1,11 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'filter-category',
+    name: 'filter-category'
 } %}
 
 {% define data = {
-    filter: null,
-    filterPath: null,
-    categories: [],
-    isEmptyCategoryFilterValueVisible: null,
-    parentJsName: '',
+    prepareFilterCategoriesDefined: data.prepareFilterCategoriesDefined ?? app.twig.function('prepareFilterCategories')
 } %}
 
 {% block component %}
@@ -17,39 +13,9 @@
 {% endblock %}
 
 {% block body %}
-    <ul class="menu">
-        {% for categoryNode in data.categories %}
-            {% set quantity = 0 %}
-            {% set hasChildren = categoryNode.children is defined and categoryNode.children is not empty %}
-
-            {% for filterValue in data.filter.values if (filterValue.value == categoryNode.nodeId) %}
-                {% set quantity = filterValue.docCount %}
-            {% endfor %}
-
-            {% set categoryUrl = data.filterPath is not empty ? url(data.filterPath, {categoryPath: ( categoryNode.url | trimLocale )}) : categoryNode.url %}
-
-            {% if (quantity > 0) or (quantity <= 0 and data.isEmptyCategoryFilterValueVisible == true) %}
-                {% set childrenClass = hasChildren ? 'menu__item--has-children-list' %}
-                {% set isDisabled = quantity == 0 ? 'disabled' %}
-
-                <li class="menu__item {{ childrenClass }}">
-                    <button class="link {{ data.parentJsName }}__trigger" type="button" {{ isDisabled }} data-url={{ categoryUrl }}>
-                        {{ categoryNode.name }} ({{ quantity }})
-                    </button>
-
-                    {% if hasChildren %}
-                        {% include molecule('filter-category', 'CatalogPage') with {
-                            data: {
-                                filter: data.filter,
-                                filterPath: data.filterPath,
-                                categories: categoryNode.children,
-                                isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible,
-                                parentJsName: data.parentJsName,
-                            },
-                        } only %}
-                    {% endif %}
-                </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
+    {% if data.prepareFilterCategoriesDefined %}
+        {% include molecule('filter-category-prepared', 'CatalogPage') %}
+    {% else %}
+        {% include molecule('filter-category-fallback', 'CatalogPage') %}
+    {% endif %}
 {% endblock %}

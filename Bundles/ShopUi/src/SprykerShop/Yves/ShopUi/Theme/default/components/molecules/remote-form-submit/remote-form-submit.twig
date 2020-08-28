@@ -1,0 +1,53 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'remote-form-submit',
+    tag: 'remote-form-submit',
+} %}
+
+{% define data = {
+    label: 'forms.submit-btn' | trans,
+    iconName: '',
+    buttonClass: 'button button--alert',
+    buttonExtraAttributes: {},
+} %}
+
+{% define attributes = {
+    'form-name': required,
+    'form-action': required,
+    'field-id': 'field-' ~ attributes['form-name'],
+    'field-name': '',
+    'field-value': '',
+    'form-holder-class-name': '',
+} %}
+
+{% set iconName = data.iconName %}
+{% set fieldValue = attributes['field-value'] %}
+
+{% block body %}
+    {% block container %}
+        <div class="{{ config.jsName }}__container">
+            {% block fields %}
+                {% if fieldValue %}
+                    <input id="{{ attributes['field-id'] }}" name="{{ attributes['field-name'] }}" type="hidden" value="{{ fieldValue }}">
+                {% endif %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block submitAction %}
+        <button type="button" class="{{ data.buttonClass }} {{ config.jsName }}__submit" {{ component.renderAttributes(data.buttonExtraAttributes) }}>
+            {% block submitActionIcon %}
+                {% if iconName %}
+                    {% include atom('icon') with {
+                        data: {
+                            name: iconName,
+                        },
+                    } only %}
+                {% endif %}
+            {% endblock %}
+
+            {% block innerSubmitActionContent %}{{ data.label }}{% endblock %}
+        </button>
+    {% endblock %}
+{% endblock %}

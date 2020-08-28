@@ -1,0 +1,27 @@
+{% extends template('widget') %}
+
+{% define data = {
+    form: _widget.form,
+    order: _widget.order,
+    isVisible: _widget.isVisible,
+    returnUrl: _widget.returnUrl,
+} %}
+
+{% set buttonClasses = 'link' %}
+
+{% block body %}
+    {% if data.isVisible %}
+
+        {% block formContent %}
+            {{ form_start(data.form, {'action': path('order/cancel', {
+                'id-sales-order': data.order.idSalesOrder,
+                'return-url': data.returnUrl
+            })}) }}
+
+            <button class="{{ buttonClasses }}">{{ 'order_cancel_widget.cancel_order' | trans }}</button>
+
+            {{ form_end(data.form) }}
+        {% endblock %}
+
+    {% endif %}
+{% endblock %}

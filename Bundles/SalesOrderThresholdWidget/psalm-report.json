@@ -1,0 +1,139 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $expenseTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ExpenseTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/SalesOrderThresholdWidget/src/SprykerShop/Yves/SalesOrderThresholdWidget/Plugin/CartPage/SalesOrderThresholdWidgetPlugin.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ExpenseTransfer[] $expenseTransfers",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ExpenseTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 24,
+            "line_to": 24,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $expenseTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ExpenseTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/SalesOrderThresholdWidget/src/SprykerShop/Yves/SalesOrderThresholdWidget/Plugin/CheckoutPage/SalesOrderThresholdWidgetPlugin.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ExpenseTransfer[] $expenseTransfers",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ExpenseTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $expenseTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ExpenseTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/SalesOrderThresholdWidget/src/SprykerShop/Yves/SalesOrderThresholdWidget/Plugin/CheckoutPage/SalesOrderThresholdWidgetPlugin.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ExpenseTransfer[] $expenseTransfers",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ExpenseTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ExpenseTransfer> variable $expenseTransfers",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/SalesOrderThresholdWidget/src/SprykerShop/Yves/SalesOrderThresholdWidget/Plugin/CheckoutPage/SalesOrderThresholdWidgetPlugin.php",
+            "snippet": "        $filteredResult = array_filter($expenseTransfers->getArrayCopy(), function (ExpenseTransfer $expenseTransfer) {",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $expenseTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ExpenseTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/SalesOrderThresholdWidget/src/SprykerShop/Yves/SalesOrderThresholdWidget/Widget/SalesOrderThresholdWidget.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ExpenseTransfer[] $expenseTransfers",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ExpenseTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $expenseTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ExpenseTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/SalesOrderThresholdWidget/src/SprykerShop/Yves/SalesOrderThresholdWidget/Widget/SalesOrderThresholdWidget.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ExpenseTransfer[] $expenseTransfers",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ExpenseTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ExpenseTransfer> variable $expenseTransfers",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/SalesOrderThresholdWidget/src/SprykerShop/Yves/SalesOrderThresholdWidget/Widget/SalesOrderThresholdWidget.php",
+            "snippet": "        $filteredResult = array_filter($expenseTransfers->getArrayCopy(), function (ExpenseTransfer $expenseTransfer) {",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 20,
+            "line_to": 20,
+            "type": "DeprecatedInterface",
+            "message": "SprykerShop\\Yves\\CartPage\\Dependency\\Plugin\\SalesOrderThresholdWidget\\SalesOrderThresholdWidgetPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/SalesOrderThresholdWidget/src/SprykerShop/Yves/SalesOrderThresholdWidget/Plugin/CartPage/SalesOrderThresholdWidgetPlugin.php",
+            "snippet": "class SalesOrderThresholdWidgetPlugin extends AbstractWidgetPlugin implements SalesOrderThresholdWidgetPluginInterface",
+            "selected_text": "SalesOrderThresholdWidgetPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 20,
+            "line_to": 20,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Yves\\Kernel\\Widget\\AbstractWidgetPlugin is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/SalesOrderThresholdWidget/src/SprykerShop/Yves/SalesOrderThresholdWidget/Plugin/CartPage/SalesOrderThresholdWidgetPlugin.php",
+            "snippet": "class SalesOrderThresholdWidgetPlugin extends AbstractWidgetPlugin implements SalesOrderThresholdWidgetPluginInterface",
+            "selected_text": "AbstractWidgetPlugin",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 19,
+            "line_to": 19,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Yves\\Kernel\\Dependency\\Plugin\\WidgetPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/SalesOrderThresholdWidget/src/SprykerShop/Yves/SalesOrderThresholdWidget/Plugin/CheckoutPage/SalesOrderThresholdWidgetPlugin.php",
+            "snippet": "class SalesOrderThresholdWidgetPlugin extends AbstractWidgetPlugin implements SalesOrderThresholdWidgetPluginInterface",
+            "selected_text": "SalesOrderThresholdWidgetPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 19,
+            "line_to": 19,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Yves\\Kernel\\Widget\\AbstractWidgetPlugin is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/SalesOrderThresholdWidget/src/SprykerShop/Yves/SalesOrderThresholdWidget/Plugin/CheckoutPage/SalesOrderThresholdWidgetPlugin.php",
+            "snippet": "class SalesOrderThresholdWidgetPlugin extends AbstractWidgetPlugin implements SalesOrderThresholdWidgetPluginInterface",
+            "selected_text": "AbstractWidgetPlugin",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}

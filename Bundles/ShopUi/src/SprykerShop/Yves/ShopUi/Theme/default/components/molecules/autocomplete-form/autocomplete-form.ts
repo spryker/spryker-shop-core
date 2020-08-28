@@ -124,8 +124,10 @@ export default class AutocompleteForm extends Component {
         this.ajaxProvider.queryParams.set(this.queryString, this.inputText);
         await this.ajaxProvider.fetch();
         /* tslint:disable: deprecation */
-        this.suggestionItems = <HTMLElement[]>Array.from(this.suggestionsContainer.getElementsByClassName(
-            this.suggestedItemClassName || this.suggestedItemSelector));
+        this.suggestionItems = <HTMLElement[]>Array.from(
+            this.suggestionsContainer.getElementsByClassName(this.suggestedItemClassName)
+            || this.suggestionsContainer.querySelectorAll(this.suggestedItemSelector)
+        );
         /* tslint:enable: deprecation */
         this.lastSelectedItem = this.suggestionItems[0];
         this.mapSuggestionItemsEvents();
@@ -133,22 +135,19 @@ export default class AutocompleteForm extends Component {
     }
 
     protected mapSuggestionItemsEvents(): void {
-        const self = this;
         this.suggestionItems.forEach((item: HTMLElement) => {
-            item.addEventListener('click', (event: Event) => self.onItemClick(event));
-            item.addEventListener('mouseover', (event: Event) => this.onItemSelected(event));
+            item.addEventListener('click', () => this.onItemClick(item));
+            item.addEventListener('mouseover', () => this.onItemSelected(item));
         });
     }
 
-    protected onItemClick(event: Event): void {
-        const targetElement = <HTMLElement>event.target;
-        this.inputText = targetElement.textContent.trim();
-        this.inputValue = targetElement.getAttribute(this.valueAttributeName);
+    protected onItemClick(item: HTMLElement): void {
+        this.inputText = item.textContent.trim();
+        this.inputValue = item.getAttribute(this.valueAttributeName);
         this.dispatchCustomEvent(Events.SET, {text: this.inputText, value: this.inputValue});
     }
 
-    protected onItemSelected(event: Event): void {
-        const item = <HTMLElement>event.target;
+    protected onItemSelected(item: HTMLElement): void {
         this.changeSelectedItem(item);
     }
 
@@ -165,7 +164,7 @@ export default class AutocompleteForm extends Component {
         switch (event.key) {
             case 'ArrowUp': this.onKeyDownArrowUp(); break;
             case 'ArrowDown': this.onKeyDownArrowDown(); break;
-            case 'Enter': this.onKeyDownEnter(); break;
+            case 'Enter': this.onKeyDownEnter(event); break;
         }
     }
 
@@ -185,7 +184,8 @@ export default class AutocompleteForm extends Component {
         this.changeSelectedItem(item);
     }
 
-    protected onKeyDownEnter(): void {
+    protected onKeyDownEnter(event: KeyboardEvent): void {
+        event.preventDefault();
         this.lastSelectedItem.click();
     }
 
@@ -202,7 +202,7 @@ export default class AutocompleteForm extends Component {
      */
     get selectedInputClass(): string {
         /* tslint:disable: deprecation */
-        return `${this.suggestedItemClassName || this.suggestedItemSelector}--selected`.substr(1);
+        return `${this.suggestedItemClassName}--selected` || `${this.suggestedItemSelector}--selected`.substr(1);
         /* tslint:enable: deprecation */
     }
 

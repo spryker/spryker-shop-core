@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use SprykerShop\Yves\QuoteRequestPage\Form\QuoteRequestForm;
+use SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,7 +55,7 @@ class QuoteRequestEditController extends QuoteRequestAbstractController
         if (!$quoteRequestClient->isQuoteRequestEditable($quoteRequestTransfer)) {
             $this->addErrorMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS);
 
-            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_DETAILS, [
+            return $this->redirectResponseInternal(QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_DETAILS, [
                 static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
             ]);
         }
@@ -67,8 +68,20 @@ class QuoteRequestEditController extends QuoteRequestAbstractController
             return $this->processQuoteRequestForm($quoteRequestForm, $request);
         }
 
+        $quoteTransfer = $quoteRequestTransfer->getLatestVisibleVersion()->getQuote();
+        $shipmentGroupTransfers = $this->getFactory()
+            ->createShipmentGrouper()
+            ->groupItemsByShippingAddress($quoteTransfer);
+
+        $itemExtractor = $this->getFactory()->createItemExtractor();
+
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),
+            'shipmentGroups' => $shipmentGroupTransfers,
+            'quoteRequestReference' => $quoteRequestTransfer->getQuoteRequestReference(),
+            'itemsWithShipment' => $itemExtractor->extractItemsWithShipment($quoteTransfer),
+            'itemsWithoutShipment' => $itemExtractor->extractItemsWithoutShipment($quoteTransfer),
+            'shipmentExpenses' => $this->getFactory()->createExpenseExtractor()->extractShipmentExpenses($quoteTransfer),
         ];
     }
 
@@ -109,7 +122,7 @@ class QuoteRequestEditController extends QuoteRequestAbstractController
 
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
-        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_DETAILS, [
+        return $this->redirectResponseInternal(QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_DETAILS, [
             static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
         ]);
     }
@@ -136,12 +149,12 @@ class QuoteRequestEditController extends QuoteRequestAbstractController
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
         if ($request->get(QuoteRequestForm::SUBMIT_BUTTON_SEND_TO_USER) !== null && $quoteRequestResponseTransfer->getIsSuccessful()) {
-            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_SEND_TO_USER, [
+            return $this->redirectResponseInternal(QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_SEND_TO_USER, [
                 static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestTransfer->getQuoteRequestReference(),
             ]);
         }
 
-        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT, [
+        return $this->redirectResponseInternal(QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_EDIT, [
             static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestTransfer->getQuoteRequestReference(),
         ]);
     }

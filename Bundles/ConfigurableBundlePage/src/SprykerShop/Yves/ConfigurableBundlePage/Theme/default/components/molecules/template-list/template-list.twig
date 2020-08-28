@@ -45,16 +45,21 @@
                                                                     {% endmacro %}
 
                                                                     {% if isTitleImage %}
-                                                                        {% set imageModifiers = ['without-spaces'] %}
+                                                                        {% set imageClass = '' %}
+                                                                        {% set imageModifiers = [] %}
+                                                                        {% set imageUrl = template.images.0.externalUrlSmall | default %}
 
                                                                         {% block templateTitleImage %}
-                                                                            {% include atom('thumbnail') with {
-                                                                                modifiers: imageModifiers,
-                                                                                attributes: {
-                                                                                    src: publicPath(template.images.0.externalUrlSmall),
-                                                                                    alt: template.name | trans,
-                                                                                },
-                                                                            } only %}
+                                                                            {% if imageUrl %}
+                                                                                {% include molecule('lazy-image') with {
+                                                                                    class: imageClass,
+                                                                                    modifiers: imageModifiers,
+                                                                                    data: {
+                                                                                        imageSrc: imageUrl,
+                                                                                        imageTitle: template.name | trans,
+                                                                                    },
+                                                                                } only %}
+                                                                            {% endif %}
                                                                         {% endblock %}
 
                                                                         {% block templateItemNameInner %}

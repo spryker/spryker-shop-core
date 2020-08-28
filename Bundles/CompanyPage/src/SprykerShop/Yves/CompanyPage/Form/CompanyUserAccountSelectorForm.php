@@ -13,6 +13,9 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \SprykerShop\Yves\CompanyPage\CompanyPageConfig getConfig()
+ */
 class CompanyUserAccountSelectorForm extends AbstractType
 {
     public const FIELD_COMPANY_USER_ACCOUNT_CHOICE = 'companyUserAccount';

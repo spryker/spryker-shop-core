@@ -62,7 +62,8 @@ class PostConditionChecker implements PostConditionCheckerInterface
     protected function hasItemsWithEmptyShippingAddresses(QuoteTransfer $quoteTransfer): bool
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() === null
+            if (
+                $itemTransfer->getShipment() === null
                 || $this->isAddressEmpty($itemTransfer->getShipment()->getShippingAddress())
             ) {
                 return true;

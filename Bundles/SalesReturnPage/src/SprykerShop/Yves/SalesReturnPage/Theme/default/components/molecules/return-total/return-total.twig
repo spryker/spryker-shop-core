@@ -1,0 +1,63 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'return-total',
+} %}
+
+{% define data = {
+    returnItemsCount: required,
+    remunerationTotal: required,
+    currencyIsoCode: null,
+} %}
+
+{% block body %}
+    {% block separatorTop %}
+        <hr class="box__separator">
+    {% endblock %}
+
+    {% set itemsToReturnClass = 'grid grid--justify' %}
+
+    {% block itemsToReturn %}
+        {% set itemsToReturnTitleClass = 'col' %}
+        {% set itemsToReturnValueClass = 'col spacing-left spacing-left--inner' %}
+
+        <div class="{{ itemsToReturnClass }}">
+            {% block itemsToReturnInner %}
+                {% block itemsToReturnInnerTitle %}
+                    <span class="{{ itemsToReturnTitleClass }}">{{ 'return_page.details.total.items_to_return' | trans }}</span>
+                {% endblock %}
+
+                {% block itemsToReturnInnerValue %}
+                    <span class="{{ itemsToReturnValueClass }}">
+                        {{ data.returnItemsCount }} {{ 'return_page.details.total.items_to_return.count' | trans }}
+                    </span>
+                {% endblock %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block separatorMiddle %}
+        <hr class="box__separator">
+    {% endblock %}
+
+    {% set remunerationTotalClass = 'grid grid--justify' %}
+
+    {% block remunerationTotal %}
+        {% set remunerationTotalTitleClass = 'col' %}
+        {% set remunerationTotalValueClass = 'col spacing-left spacing-left--inner' %}
+
+        <div class="{{ remunerationTotalClass }}">
+            {% block remunerationTotalInner %}
+                {% block remunerationTotalInnerTitle %}
+                    <span class="{{ remunerationTotalTitleClass }}">{{ 'return_page.details.total.remuneration_total' | trans }}</span>
+                {% endblock %}
+
+                {% block remunerationTotalInnerValue %}
+                    <span class="{{ remunerationTotalValueClass }}">
+                        {{ data.remunerationTotal | money(true, data.currencyIsoCode) }}
+                    </span>
+                {% endblock %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}

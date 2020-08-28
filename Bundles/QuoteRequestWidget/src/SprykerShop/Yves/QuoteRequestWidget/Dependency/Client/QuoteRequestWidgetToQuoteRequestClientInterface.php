@@ -48,4 +48,11 @@ interface QuoteRequestWidgetToQuoteRequestClientInterface
      * @return bool
      */
     public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isEditableQuoteRequestVersion(QuoteTransfer $quoteTransfer): bool;
 }

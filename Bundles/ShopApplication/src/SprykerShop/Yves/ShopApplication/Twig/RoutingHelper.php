@@ -8,21 +8,14 @@
 namespace SprykerShop\Yves\ShopApplication\Twig;
 
 use LogicException;
-use Silex\Application;
-use Spryker\Shared\Kernel\Store;
 use SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceInterface;
 
 class RoutingHelper implements RoutingHelperInterface
 {
     /**
-     * @var \Silex\Application
+     * @var \Spryker\Service\Container\ContainerInterface
      */
     protected $app;
-
-    /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
 
     /**
      * @var \SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceInterface
@@ -30,14 +23,12 @@ class RoutingHelper implements RoutingHelperInterface
     protected $utilTextService;
 
     /**
-     * @param \Silex\Application $app
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Service\Container\ContainerInterface $app
      * @param \SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceInterface $utilTextService
      */
-    public function __construct(Application $app, Store $store, ShopApplicationToUtilTextServiceInterface $utilTextService)
+    public function __construct($app, ShopApplicationToUtilTextServiceInterface $utilTextService)
     {
         $this->app = $app;
-        $this->store = $store;
         $this->utilTextService = $utilTextService;
     }
 
@@ -54,17 +45,34 @@ class RoutingHelper implements RoutingHelperInterface
             [$controllerNamespaceName, $actionName] = explode('::', $destination);
         } elseif (strpos($destination, ':') !== false) {
             [$serviceName, $actionName] = explode(':', $destination);
-            $controllerNamespaceName = get_class($this->app[$serviceName]);
+            $controllerNamespaceName = get_class($this->app->get($serviceName));
         } else {
             throw new LogicException('Cannot parse destination');
         }
         [$namespace, $application, $module, $layer, $controllerName] = explode('\\', $controllerNamespaceName);
 
-        $module = str_replace($this->store->getStoreName(), '', $module);
+        $module = $this->resolveModuleName($module);
 
         $controller = $this->utilTextService->camelCaseToSeparator(str_replace('Controller', '', $controllerName));
         $action = $this->utilTextService->camelCaseToSeparator((str_replace('Action', '', $actionName)));
 
         return $module . '/' . $controller . '/' . $action;
+    }
+
+    /**
+     * @param string $moduleName
+     *
+     * @return string
+     */
+    protected function resolveModuleName(string $moduleName): string
+    {
+        $codeBucketIdentifierLength = mb_strlen(APPLICATION_CODE_BUCKET);
+        $codeBucketSuffix = mb_substr($moduleName, -$codeBucketIdentifierLength);
+
+        if ($codeBucketSuffix === APPLICATION_CODE_BUCKET) {
+            $moduleName = mb_substr($moduleName, 0, -$codeBucketIdentifierLength);
+        }
+
+        return $moduleName;
     }
 }

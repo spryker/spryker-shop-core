@@ -12,11 +12,17 @@ use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageCli
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToQuoteClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToZedRequestClientInterface;
+use SprykerShop\Yves\CartPage\Form\FormFactory;
 use SprykerShop\Yves\CartPage\Handler\CartItemHandler;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAttributeMapper;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAvailabilityMapper;
 use SprykerShop\Yves\CartPage\Model\CartItemReader;
 use SprykerShop\Yves\CartPage\Plugin\Provider\AttributeVariantsProvider;
+use SprykerShop\Yves\CartPage\ProductViewExpander\ProductViewExpander;
+use SprykerShop\Yves\CartPage\ProductViewExpander\ProductViewExpanderInterface;
+use Symfony\Cmf\Component\Routing\ChainRouterInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class CartPageFactory extends AbstractFactory
 {
@@ -49,6 +55,8 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Yves\Kernel\Application
      */
     public function getApplication()
@@ -57,6 +65,8 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
      */
     public function getFlashMessenger()
@@ -69,7 +79,7 @@ class CartPageFactory extends AbstractFactory
      */
     public function getLocale()
     {
-        return $this->getApplication()['locale'];
+        return $this->getProvidedDependency(CartPageDependencyProvider::SERVICE_LOCALE);
     }
 
     /**
@@ -77,7 +87,15 @@ class CartPageFactory extends AbstractFactory
      */
     public function getRequest()
     {
-        return $this->getApplication()['request'];
+        return $this->getRequestStack()->getCurrentRequest();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RequestStack
+     */
+    public function getRequestStack(): RequestStack
+    {
+        return $this->getProvidedDependency(CartPageDependencyProvider::SERVICE_REQUEST_STACK);
     }
 
     /**
@@ -89,7 +107,7 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
-     * @return mixed
+     * @return string[]
      */
     public function getCartPageWidgetPlugins()
     {
@@ -172,5 +190,37 @@ class CartPageFactory extends AbstractFactory
     public function createCartItemsAvailabilityMapper()
     {
         return new CartItemsAvailabilityMapper($this->getAvailabilityStorageClient());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CartPage\ProductViewExpander\ProductViewExpanderInterface
+     */
+    public function createProductViewExpander(): ProductViewExpanderInterface
+    {
+        return new ProductViewExpander($this->getRouter());
+    }
+
+    /**
+     * @return \Symfony\Cmf\Component\Routing\ChainRouterInterface
+     */
+    public function getRouter(): ChainRouterInterface
+    {
+        return $this->getProvidedDependency(CartPageDependencyProvider::SERVICE_ROUTER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CartPage\Form\FormFactory
+     */
+    public function createCartPageFormFactory(): FormFactory
+    {
+        return new FormFactory();
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface
+     */
+    public function getCsrfTokenManager(): CsrfTokenManagerInterface
+    {
+        return $this->getProvidedDependency(CartPageDependencyProvider::SERVICE_FORM_CSRF_PROVIDER);
     }
 }

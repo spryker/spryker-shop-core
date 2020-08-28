@@ -12,8 +12,8 @@ use ArrayObject;
 interface CustomerPageToProductBundleClientInterface
 {
     /**
-     * @param \ArrayObject $items
-     * @param \ArrayObject $bundleItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $bundleItems
      *
      * @return array
      */

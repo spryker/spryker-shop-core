@@ -13,7 +13,7 @@ use SprykerShop\Yves\ProductCategoryWidget\Widget\ProductBreadcrumbsWithCategori
 use SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductCategoryWidget\ProductCategoryWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductCategoryWidget\Widget\ProductBreadcrumbsWithCategoriesWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductCategoryWidget\Widget\ProductBreadcrumbsWithCategoriesWidget} instead.
  *
  * @method \SprykerShop\Yves\ProductCategoryWidget\ProductCategoryWidgetFactory getFactory()
  */

@@ -19,7 +19,7 @@ class OrderController extends AbstractController
     protected const GLOSSARY_KEY_ERROR_MESSAGE_UNABLE_TO_REORDER_ITEMS = 'customer.order.reorder.error.unable_to_reorder_items';
 
     /**
-     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
      */
     protected const ROUTE_SUCCESSFUL_REDIRECT = 'cart';
     protected const ROUTE_FAILURE_REDIRECT = 'customer/order';
@@ -28,12 +28,20 @@ class OrderController extends AbstractController
     protected const PARAM_ID_ORDER = 'id';
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $idSalesOrder
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function reorderAction(int $idSalesOrder): RedirectResponse
+    public function reorderAction(Request $request, int $idSalesOrder): RedirectResponse
     {
+        $form = $this->getFactory()->createCustomerReorderWidgetFormFactory()
+            ->getCustomerReorderWidgetForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return $this->getFailureRedirect();
+        }
+
         $orderReader = $this->getFactory()
             ->createOrderReader();
 
@@ -64,6 +72,13 @@ class OrderController extends AbstractController
      */
     public function reorderItemsAction(Request $request): RedirectResponse
     {
+        $form = $this->getFactory()->createCustomerReorderWidgetFormFactory()
+            ->getCustomerReorderItemsWidgetForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return $this->getFailureRedirect();
+        }
+
         $idSalesOrder = $request->request->getInt(static::PARAM_ID_ORDER);
         $items = (array)$request->request->get(static::PARAM_ITEMS);
 

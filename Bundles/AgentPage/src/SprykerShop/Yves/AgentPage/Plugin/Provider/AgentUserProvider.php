@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\AgentPage\Plugin\Provider;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\AgentPage\Security\Agent;
+use SprykerShop\Yves\CustomerPage\Security\Customer;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -61,7 +62,7 @@ class AgentUserProvider extends AbstractPlugin implements UserProviderInterface
      */
     public function supportsClass($class)
     {
-        return $class === Agent::class;
+        return is_a($class, Agent::class, true) || is_a($class, Customer::class, true);
     }
 
     /**

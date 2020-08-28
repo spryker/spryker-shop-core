@@ -20,7 +20,7 @@ class NoteController extends AbstractController
     protected const REQUEST_HEADER_REFERER = 'referer';
 
     /**
-     * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_CART
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
      */
     protected const ROUTE_CART = 'cart';
 

@@ -1,0 +1,140 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'return-product-item',
+} %}
+
+{% define data = {
+    item: required,
+} %}
+
+{% set checkboxColumnClass = 'col col--middle col--sm-2' %}
+{% set productItemColumnClass = 'col col--sm-10 grid' %}
+
+{% block body %}
+    {% block checkboxColumn %}
+        <div class="{{ checkboxColumnClass }}">
+            {% block checkboxColumnInner %}
+                {% include molecule('lazy-image') with {
+                    modifiers: ['thumbnail', 'small'],
+                    data: {
+                        imageSrc: data.item.metadata.image,
+                    },
+                } only %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block productItemColumn %}
+        <div class="{{ productItemColumnClass }}">
+            {% set productInfoColumnClass = 'col col--sm-4' %}
+            {% set productStatusColumnClass = 'col col--sm-2 text-center' %}
+            {% set productPriceColumnClass = 'col col--sm-2 text-center' %}
+            {% set productQuantityColumnClass = 'col col--sm-2 text-center' %}
+            {% set productPriceTotalColumnClass = 'col col--sm-2 text-center' %}
+
+            {% block productItemColumnInner %}
+                {% block productItemInfo %}
+                    <div class="{{ productInfoColumnClass }}">
+                        {% set productNameClass = '' %}
+                        {% set skuClass = 'text-secondary' %}
+                        {% set productOptionWrapperClass = 'spacing-bottom' %}
+                        {% set productOptionListClass = '' %}
+
+                        {% block productItemInfoInner %}
+                            {% block productItemName %}
+                                <h6 class="{{ productNameClass }}">
+                                    {{ data.item.name }}
+                                </h6>
+                            {% endblock %}
+
+                            {% block productItemSku %}
+                                <small class="{{ skuClass }}">
+                                    {{ 'return_page.item_sku' | trans }} {{ data.item.sku }}
+                                </small>
+                            {% endblock %}
+
+                            {% if data.item.productOptions is not empty %}
+                                <div class="{{ productOptionWrapperClass }}">
+                                    {% block productOptions %}
+                                        {{ 'return_page.item.options' | trans }}
+                                        <ul class="{{ productOptionListClass }}">
+                                            {% for productOption in data.item.productOptions %}
+                                                <li>
+                                                    &nbsp; + {{ productOption.value | trans }}
+                                                    <strong>{{ productOption.sumPrice | money(true, data.item.currencyIsoCode) }}</strong>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endblock %}
+                                </div>
+                            {% endif %}
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+
+                {% set state = data.item.state.name | replace({' ': '-'}) | lower %}
+                {% set stateLabel = data.item.state.displayName ?? ('oms.state.' ~ state) %}
+
+                {% block productState %}
+                    <div class="{{ productStatusColumnClass }}">
+                        {% block state %}
+                            {% include molecule('status') with {
+                                data: {
+                                    label: stateLabel | trans,
+                                    status: state,
+                                },
+                            } only %}
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+
+                {% set isDiscount = data.item.sumDiscountAmountFullAggregation is defined and data.item.sumDiscountAmountFullAggregation is not null %}
+
+                {% block productItemPrice %}
+                    <div class="{{ productPriceColumnClass }}">
+                        {% if isDiscount -%}
+                            {% block currentProductItemPrice %}
+                                <div>
+                                    <strong>{{ (data.item.sumPrice - data.item.sumDiscountAmountFullAggregation) | money(true, data.item.currencyIsoCode) }}</strong>
+                                </div>
+                            {% endblock %}
+
+                            {% block oldProductItemPrice %}
+                                <div>
+                                    <del class="text-secondary">{{ data.item.sumPrice | money(true, data.item.currencyIsoCode) }}</del>
+                                </div>
+                            {% endblock %}
+                        {% else %}
+                            {% block originalProductItemPrice %}
+                                <div>
+                                    <strong>{{ data.item.sumPrice | money(true, data.item.currencyIsoCode) }}</strong>
+                                </div>
+                            {% endblock %}
+                        {% endif %}
+                    </div>
+                {% endblock %}
+
+                {% block productItemQuantityAmount %}
+                    <div class="{{ productQuantityColumnClass }}">
+                        {% block productItemQuantity %}
+                            <div>{{ 'return_page.quantity' | trans }} {{ data.item.quantity }}</div>
+                        {% endblock %}
+
+                        {% if data.item.amount %}
+                            {% block productItemAmount %}
+                                <div>{{ 'customer.order.item_amount' | trans }}: {{ data.item.amount.toFloat() }}</div>
+                            {% endblock %}
+                        {% endif %}
+                    </div>
+                {% endblock %}
+
+                {% block productItemTotalPrice %}
+                    <div class="{{ productPriceTotalColumnClass }}">
+                        <strong>{{ data.item.sumPriceToPayAggregation | money(true, data.item.currencyIsoCode) }}</strong>
+                    </div>
+                {% endblock %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}

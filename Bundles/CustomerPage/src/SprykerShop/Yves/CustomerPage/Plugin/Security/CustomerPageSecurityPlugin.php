@@ -22,7 +22,12 @@ use SprykerShop\Yves\CustomerPage\Form\LoginForm;
  */
 class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Security\CustomerPageSecurityPlugin::ROLE_NAME_USER} instead.
+     */
     protected const ROLE_USER = 'ROLE_USER';
+    public const ROLE_NAME_USER = 'ROLE_USER';
+
     protected const IS_AUTHENTICATED_ANONYMOUSLY = 'IS_AUTHENTICATED_ANONYMOUSLY';
 
     /**
@@ -79,6 +84,9 @@ class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPlugi
                 'check_path' => '/login_check',
                 'username_parameter' => LoginForm::FORM_NAME . '[' . LoginForm::FIELD_EMAIL . ']',
                 'password_parameter' => LoginForm::FORM_NAME . '[' . LoginForm::FIELD_PASSWORD . ']',
+                'with_csrf' => true,
+                'csrf_parameter' => LoginForm::FORM_NAME . '[_token]',
+                'csrf_token_id' => LoginForm::FORM_NAME,
             ],
             'logout' => [
                 'logout_path' => static::ROUTE_LOGOUT,

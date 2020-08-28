@@ -19,19 +19,20 @@ use Symfony\Component\HttpFoundation\Request;
 class QuoteRequestAgentCartController extends AbstractController
 {
     protected const GLOSSARY_KEY_QUOTE_REQUEST_UPDATED = 'quote_request_page.quote_request.updated';
+    protected const PARAM_REFERER = 'referer';
 
     /**
-     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
      */
     protected const ROUTE_CART = 'cart';
 
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Provider\QuoteRequestAgentPageControllerProvider::ROUTE_QUOTE_REQUEST_AGENT_EDIT
+     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_QUOTE_REQUEST_AGENT_EDIT
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_EDIT = 'agent/quote-request/edit';
 
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Provider\QuoteRequestAgentPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE
+     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::PARAM_QUOTE_REQUEST_REFERENCE
      */
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
@@ -82,10 +83,11 @@ class QuoteRequestAgentCartController extends AbstractController
 
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
-        if ($request->get(QuoteRequestAgentCartForm::SUBMIT_BUTTON_SAVE_AND_BACK) === null
+        if (
+            $request->get(QuoteRequestAgentCartForm::SUBMIT_BUTTON_SAVE_AND_BACK) === null
             || !$quoteRequestResponseTransfer->getIsSuccessful()
         ) {
-            return $this->redirectResponseInternal(static::ROUTE_CART);
+            return $this->createRefererRedirect($request);
         }
 
         $this->reloadQuoteForCustomer();
@@ -93,6 +95,21 @@ class QuoteRequestAgentCartController extends AbstractController
         return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_EDIT, [
             static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function createRefererRedirect(Request $request): RedirectResponse
+    {
+        $redirectUrl = $request->headers->get(
+            static::PARAM_REFERER,
+            $this->getRouter()->generate(static::ROUTE_CART)
+        );
+
+        return $this->redirectResponseExternal($redirectUrl);
     }
 
     /**

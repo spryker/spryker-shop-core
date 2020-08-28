@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
+use SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -48,9 +49,7 @@ class QuoteRequestCreateController extends QuoteRequestAbstractController
             return $this->processQuoteRequestForm($quoteRequestForm);
         }
 
-        return [
-            'quoteRequestForm' => $quoteRequestForm->createView(),
-        ];
+        return $this->getViewParameters($quoteRequestForm);
     }
 
     /**
@@ -67,15 +66,39 @@ class QuoteRequestCreateController extends QuoteRequestAbstractController
         if ($quoteRequestResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CREATED);
 
-            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_DETAILS, [
+            return $this->redirectResponseInternal(QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_DETAILS, [
                 static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
             ]);
         }
 
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
+        return $this->getViewParameters($quoteRequestForm);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $quoteRequestForm
+     *
+     * @return array
+     */
+    protected function getViewParameters(FormInterface $quoteRequestForm): array
+    {
+        /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
+        $quoteRequestTransfer = $quoteRequestForm->getData();
+
+        $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();
+        $shipmentGroupTransfers = $this->getFactory()
+            ->createShipmentGrouper()
+            ->groupItemsByShippingAddress($quoteTransfer);
+
+        $itemExtractor = $this->getFactory()->createItemExtractor();
+
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),
+            'shipmentGroups' => $shipmentGroupTransfers,
+            'itemsWithShipment' => $itemExtractor->extractItemsWithShipment($quoteTransfer),
+            'itemsWithoutShipment' => $itemExtractor->extractItemsWithoutShipment($quoteTransfer),
+            'shipmentExpenses' => $this->getFactory()->createExpenseExtractor()->extractShipmentExpenses($quoteTransfer),
         ];
     }
 }

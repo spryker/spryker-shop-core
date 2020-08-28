@@ -32,6 +32,7 @@ class ProductBundleCartItemTransformerPlugin extends AbstractPlugin implements C
         foreach ($groupedItems as $groupedItem) {
             if ($groupedItem instanceof ItemTransfer) {
                 $transformedCartItems[] = $groupedItem;
+
                 continue;
             }
 

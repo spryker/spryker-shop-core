@@ -48,6 +48,6 @@ class ProductConcreteLabelWidget extends AbstractWidget
     {
         return $this->getFactory()
             ->getProductLabelStorageClient()
-            ->findLabels($idProductLabels, $this->getLocale());
+            ->findLabels($idProductLabels, $this->getLocale(), APPLICATION_STORE);
     }
 }

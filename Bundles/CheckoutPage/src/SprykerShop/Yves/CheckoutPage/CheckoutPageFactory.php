@@ -8,10 +8,9 @@
 namespace SprykerShop\Yves\CheckoutPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
@@ -19,8 +18,6 @@ use SprykerShop\Yves\CheckoutPage\Form\DataProvider\ShipmentFormDataProvider;
 use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilter;
 use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilterInterface;
 use SprykerShop\Yves\CheckoutPage\Form\FormFactory;
-use SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsChecker;
-use SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface;
 use SprykerShop\Yves\CheckoutPage\Process\StepFactory;
 
 /**
@@ -34,7 +31,7 @@ class CheckoutPageFactory extends AbstractFactory
     public function createCheckoutProcess()
     {
         return $this->createStepFactory()->createStepEngine(
-            $this->createStepFactory()->createStepCollection()
+            $this->createStepFactory()->createStepResolver()->resolveSteps()
         );
     }
 
@@ -63,30 +60,6 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
-     */
-    public function getAddressPageWidgetPlugins(): array
-    {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_ADDRESS_PAGE_WIDGETS);
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getShipmentPageWidgetPlugins(): array
-    {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_SHIPMENT_PAGE_WIDGETS);
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getPaymentPageWidgetPlugins(): array
-    {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_PAYMENT_PAGE_WIDGETS);
-    }
-
-    /**
      * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface
      */
     public function getCheckoutClient(): CheckoutPageToCheckoutClientInterface
@@ -103,54 +76,6 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
-     */
-    public function getSuccessPageWidgetPlugins(): array
-    {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_SUCCESS_PAGE_WIDGETS);
-    }
-
-    /**
-     * @return \Symfony\Component\Routing\Generator\UrlGeneratorInterface
-     */
-    public function getUrlGenerator()
-    {
-        return $this->getApplication()['url_generator'];
-    }
-
-    /**
-     * @return \Spryker\Yves\Kernel\Application
-     */
-    public function getApplication()
-    {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_APPLICATION);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface
-     */
-    public function getCalculationClient(): CheckoutPageToCalculationClientInterface
-    {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CALCULATION);
-    }
-
-    /**
-     * @return \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
-     */
-    public function getFlashMessenger()
-    {
-        return $this->getApplication()['flash_messenger'];
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CheckoutPage\Plugin\CheckoutBreadcrumbPlugin
-     */
-    public function getCheckoutBreadcrumbPlugin()
-    {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_CHECKOUT_BREADCRUMB);
-    }
-
-    /**
      * @return \SprykerShop\Yves\CheckoutPage\Form\DataProvider\ShipmentFormDataProvider
      */
     public function createShipmentDataProvider()
@@ -161,7 +86,8 @@ class CheckoutPageFactory extends AbstractFactory
             $this->getStore(),
             $this->getMoneyPlugin(),
             $this->getShipmentService(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getProductBundleClient()
         );
     }
 
@@ -179,6 +105,14 @@ class CheckoutPageFactory extends AbstractFactory
     public function getGlossaryStorageClient(): CheckoutPageToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface
+     */
+    public function getProductBundleClient(): CheckoutPageToProductBundleClientInterface
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_PRODUCT_BUNDLE);
     }
 
     /**
@@ -214,14 +148,6 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface
-     */
-    public function getPriceClient(): CheckoutPageToPriceClientInterface
-    {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_PRICE);
-    }
-
-    /**
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
      */
     public function getPaymentMethodSubForms()
@@ -246,13 +172,5 @@ class CheckoutPageFactory extends AbstractFactory
     protected function getSubFormFilterPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_SUB_FORM_FILTERS);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface
-     */
-    public function createGiftCardItemsChecker(): GiftCardItemsCheckerInterface
-    {
-        return new GiftCardItemsChecker();
     }
 }

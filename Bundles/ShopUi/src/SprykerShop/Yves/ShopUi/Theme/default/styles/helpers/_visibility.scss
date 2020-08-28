@@ -5,6 +5,8 @@
     pointer-events: all;
     visibility: visible;
     opacity: 1;
+
+    @content;
 }
 
 /**
@@ -14,4 +16,6 @@
     pointer-events: none;
     visibility: hidden;
     opacity: 0;
+
+    @content;
 }

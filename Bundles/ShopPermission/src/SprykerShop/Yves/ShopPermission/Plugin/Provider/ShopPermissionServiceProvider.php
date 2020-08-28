@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig\Environment;
 
 /**
- * @deprecated Use `SprykerShop\Yves\ShopPermission\Plugin\Twig\ShopPermissionTwigPlugin` instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ShopPermission\Plugin\Twig\ShopPermissionTwigPlugin} instead.
  *
  * @method \SprykerShop\Yves\ShopPermission\ShopPermissionFactory getFactory()
  */

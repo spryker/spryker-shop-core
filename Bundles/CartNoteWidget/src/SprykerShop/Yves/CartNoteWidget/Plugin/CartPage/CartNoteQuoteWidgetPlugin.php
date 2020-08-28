@@ -13,7 +13,7 @@ use SprykerShop\Yves\CartNoteWidget\Widget\CartNoteFormWidget;
 use SprykerShop\Yves\CartPage\Dependency\Plugin\CartNoteWidget\CartNoteQuoteWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\CartNoteWidget\Widget\CartNoteFormWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\CartNoteWidget\Widget\CartNoteFormWidget} instead.
  *
  * @method \SprykerShop\Yves\CartNoteWidget\CartNoteWidgetFactory getFactory()
  */

@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\QuoteRequestAgentPage\Controller;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentForm;
+use SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -71,14 +72,14 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
         if ($quoteRequestResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_SENT_TO_CUSTOMER);
 
-            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_DETAILS, [
+            return $this->redirectResponseInternal(QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_DETAILS, [
                 static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
             ]);
         }
 
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
-        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_EDIT, [
+        return $this->redirectResponseInternal(QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_EDIT, [
             static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
         ]);
     }
@@ -95,7 +96,7 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
         $quoteRequestTransfer = $this->getQuoteRequestByReference($quoteRequestReference);
 
         if ($quoteRequestAgentClient->isQuoteRequestRevisable($quoteRequestTransfer)) {
-            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_REVISE, [
+            return $this->redirectResponseInternal(QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_REVISE, [
                 static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
             ]);
         }
@@ -103,7 +104,7 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
         if (!$quoteRequestAgentClient->isQuoteRequestEditable($quoteRequestTransfer)) {
             $this->addErrorMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS);
 
-            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_DETAILS, [
+            return $this->redirectResponseInternal(QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_DETAILS, [
                 static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
             ]);
         }
@@ -118,8 +119,19 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
 
         $quoteRequestForm = $this->assertQuoteRequestVersion($quoteRequestForm);
 
+        $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();
+        $shipmentGroupTransfers = $this->getFactory()
+            ->createShipmentGrouper()
+            ->groupItemsByShippingAddress($quoteTransfer);
+
+        $itemExtractor = $this->getFactory()->createItemExtractor();
+
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),
+            'shipmentGroups' => $shipmentGroupTransfers,
+            'itemsWithShipment' => $itemExtractor->extractItemsWithShipmentAddress($quoteTransfer),
+            'itemsWithoutShipment' => $itemExtractor->extractItemsWithoutShipmentAddress($quoteTransfer),
+            'shipmentExpenses' => $this->getFactory()->createExpenseExtractor()->extractShipmentExpenses($quoteTransfer),
         ];
     }
 
@@ -174,12 +186,12 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
         if ($request->get(QuoteRequestAgentForm::SUBMIT_BUTTON_SEND_TO_CUSTOMER) !== null && $quoteRequestResponseTransfer->getIsSuccessful()) {
-            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_SEND_TO_CUSTOMER, [
+            return $this->redirectResponseInternal(QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_SEND_TO_CUSTOMER, [
                 static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestTransfer->getQuoteRequestReference(),
             ]);
         }
 
-        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_EDIT, [
+        return $this->redirectResponseInternal(QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_EDIT, [
             static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestTransfer->getQuoteRequestReference(),
         ]);
     }

@@ -15,7 +15,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated use CreateController instead
+ * @deprecated Use {@link CreateController} instead
  *
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
  */
@@ -115,6 +115,6 @@ class SubmitController extends AbstractController
      */
     protected function getParentRequest()
     {
-        return $this->getApplication()['request_stack']->getParentRequest();
+        return $this->getRequestStack()->getParentRequest();
     }
 }

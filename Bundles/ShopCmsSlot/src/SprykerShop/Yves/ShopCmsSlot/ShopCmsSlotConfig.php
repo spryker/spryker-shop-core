@@ -12,6 +12,8 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 class ShopCmsSlotConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return bool
      */
     public function isDebugModeEnabled(): bool

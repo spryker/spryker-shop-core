@@ -12,14 +12,17 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
+use Spryker\Yves\StepEngine\Dependency\Step\StepWithCodeInterface;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageDependencyProvider;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
 use SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
+class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterface, StepWithCodeInterface
 {
+    protected const STEP_CODE = 'shipment';
+
     /**
      * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface
      */
@@ -119,18 +122,50 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     protected function setDefaultNoShipmentMethod(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
+        $quoteTransfer = $this->setDefaultShipmentSelectionForItems($quoteTransfer);
+        $quoteTransfer = $this->setDefaultShipmentSelectionForBundleItems($quoteTransfer);
+
         $shipmentTransfer = (new ShipmentTransfer())
             ->setShipmentSelection(CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT);
 
+        if ($quoteTransfer->getShipment() === null) {
+            $quoteTransfer->setShipment($shipmentTransfer);
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setDefaultShipmentSelectionForItems(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemShipmentTransfer = $itemTransfer->getShipment();
+
             if ($itemShipmentTransfer !== null && $itemShipmentTransfer->getShipmentSelection() === null) {
                 $itemShipmentTransfer->setShipmentSelection(CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT);
             }
         }
 
-        if ($quoteTransfer->getShipment() === null) {
-            $quoteTransfer->setShipment($shipmentTransfer);
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setDefaultShipmentSelectionForBundleItems(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
+            $shipmentTransfer = $itemTransfer->getShipment();
+
+            if ($shipmentTransfer !== null && $shipmentTransfer->getShipmentSelection() === null) {
+                $shipmentTransfer->setShipmentSelection(CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT);
+            }
         }
 
         return $quoteTransfer;
@@ -178,5 +213,13 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
         }
 
         return true;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCode(): string
+    {
+        return static::STEP_CODE;
     }
 }

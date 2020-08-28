@@ -33,7 +33,7 @@ class SubscriptionWidgetController extends AbstractController
             ->getFactory()
             ->getNewsletterSubscriptionForm();
 
-        $parentRequest = $this->getApplication()['request_stack']->getParentRequest();
+        $parentRequest = $this->getRequestStack()->getParentRequest();
         $redirectUrl = $this->getRefererUrl($request);
 
         if ($parentRequest !== null) {

@@ -12,7 +12,7 @@ use SprykerShop\Yves\CustomerPage\Dependency\Plugin\WishlistWidget\WishlistMenuI
 use SprykerShop\Yves\WishlistWidget\Widget\WishlistMenuItemWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\WishlistWidget\Widget\WishlistMenuItemWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\WishlistWidget\Widget\WishlistMenuItemWidget} instead.
  *
  * @method \SprykerShop\Yves\WishlistWidget\WishlistWidgetFactory getFactory()
  */

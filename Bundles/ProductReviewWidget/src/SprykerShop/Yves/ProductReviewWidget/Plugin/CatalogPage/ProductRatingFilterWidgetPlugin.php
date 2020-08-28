@@ -14,7 +14,7 @@ use SprykerShop\Yves\ProductReviewWidget\Widget\ProductRatingFilterWidget;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductReviewWidget\Widget\ProductRatingFilterWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductReviewWidget\Widget\ProductRatingFilterWidget} instead.
  *
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
  */

@@ -1,0 +1,108 @@
+{% extends molecule('ordered-configured-bundle-product', 'SalesConfigurableBundleWidget') %}
+
+{% define config = {
+    name: 'ordered-configured-bundle-product-secondary',
+} %}
+
+{% block extraClass %}
+    spacing-y spacing-y--inner
+{% endblock %}
+
+{% block imageContainer %}
+    <div class="col grid grid--middle">
+        {% widget 'CustomerReorderItemCheckboxWidget' args [data.product] only %}{% endwidget %}
+    </div>
+{% endblock %}
+
+{% set contentWrapperClass = 'col col--expand grid' %}
+{% set imageColumnClass = 'col col--middle col--sm-2' %}
+{% set productItemColumnClass = 'col col--sm-10 grid spacing-y' %}
+{% set productInfoColumnClass = 'col col--sm-4' %}
+{% set productStatusColumnClass = 'col col--sm-2 text-center' %}
+{% set productPriceColumnClass = 'col col--sm-2 text-center' %}
+{% set productQuantityColumnClass = 'col col--sm-2 text-center' %}
+{% set productPriceTotalColumnClass = 'col col--sm-2 text-center' %}
+
+{% block content %}
+    <div class="{{ contentWrapperClass }}">
+        {% block imageColumn %}
+            <div class="{{ imageColumnClass }}">
+                {% block image %}
+                    {% set thumbnailModifiers = ['small'] %}
+                    {{ parent() }}
+                {% endblock %}
+            </div>
+        {% endblock %}
+
+        {% block productItemColumn %}
+            <div class="{{ productItemColumnClass }}">
+                {% set returnPolicyMessageClass = 'badge badge--hollow spacing-bottom spacing-bottom--small' %}
+                {% set returnableInfoClass = 'badge badge--hollow spacing-bottom' %}
+
+                {% block productInfo %}
+                    <div class="{{ productInfoColumnClass }}">
+                        {{ block('generalInformation') }}
+                    </div>
+                {% endblock %}
+
+                {% set state = data.product.state.name | replace({' ': '-'}) | lower %}
+                {% set stateLabel = data.product.state.displayName ?? ('oms.state.' ~ state) %}
+
+                {% block state %}
+                    <div class="{{ productStatusColumnClass }}">
+                        {% block stateInner %}
+                            {% include molecule('status') with {
+                                data: {
+                                    label: stateLabel | trans,
+                                    status: state,
+                                },
+                            } only %}
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+
+                {% set isDiscount = data.product.sumDiscountAmountFullAggregation is defined and data.product.sumDiscountAmountFullAggregation is not null %}
+
+                {% block price %}
+                    <div class="{{ productPriceColumnClass }}">
+                        {% if isDiscount -%}
+                            {% block currentProductItemPrice %}
+                                <div>
+                                    <strong>{{ (data.product.unitPriceToPayAggregation) | money(true, data.product.currencyIsoCode) }}</strong>
+                                </div>
+                            {% endblock %}
+
+                            {% block oldProductItemPrice %}
+                                <div>
+                                    <del class="text-secondary">{{ data.product.unitSubtotalAggregation | money(true, data.product.currencyIsoCode) }}</del>
+                                </div>
+                            {% endblock %}
+                        {% else %}
+                            {% block originalProductItemPrice %}
+                                <div>
+                                    <strong>{{ data.product.unitSubtotalAggregation | money(true, data.product.currencyIsoCode) }}</strong>
+                                </div>
+                            {% endblock %}
+                        {% endif %}
+                    </div>
+                {% endblock %}
+
+                {% block quantity %}
+                    <div class="{{ productQuantityColumnClass }}">
+                        {{ 'configured_bundle.quantity' | trans }} {{ data.product.quantity }}
+                    </div>
+                {% endblock %}
+
+                {% block total %}
+                    <div class="{{ productPriceTotalColumnClass }}">
+                        {% block totalInner %}
+                            <strong>{{ data.product.sumPriceToPayAggregation | money(true, data.product.currencyIsoCode) }}</strong>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block stateWrapper %}{% endblock %}

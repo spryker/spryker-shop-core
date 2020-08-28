@@ -9,12 +9,18 @@ namespace SprykerShop\Yves\ProductDetailPage;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Client\ProductDetailPageToProductStorageClientBridge;
 
 class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const PLUGIN_PRODUCT_DETAIL_PAGE_WIDGETS = 'PLUGIN_PRODUCT_DETAIL_PAGE_WIDGETS';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
+    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -25,6 +31,7 @@ class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container = $this->addProductStorageClient($container);
         $container = $this->addProductDetailPageWidgetPlugins($container);
+        $container = $this->addApplication($container);
 
         return $container;
     }
@@ -36,9 +43,9 @@ class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductStorageClient(Container $container)
     {
-        $container[self::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductDetailPageToProductStorageClientBridge($container->getLocator()->productStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -50,9 +57,9 @@ class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductDetailPageWidgetPlugins(Container $container)
     {
-        $container[self::PLUGIN_PRODUCT_DETAIL_PAGE_WIDGETS] = function () {
+        $container->set(static::PLUGIN_PRODUCT_DETAIL_PAGE_WIDGETS, function () {
             return $this->getProductDetailPageWidgetPlugins();
-        };
+        });
 
         return $container;
     }
@@ -65,5 +72,23 @@ class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvid
     protected function getProductDetailPageWidgetPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addApplication(Container $container): Container
+    {
+        $container->set(static::PLUGIN_APPLICATION, function () {
+            $pimplePlugin = new Pimple();
+
+            return $pimplePlugin->getApplication();
+        });
+
+        return $container;
     }
 }

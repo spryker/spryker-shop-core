@@ -10,4 +10,10 @@
         <property name="selectedAttributes" type="array" singular="selectedAttribute"/>
     </transfer>
 
+    <transfer name="ShopContext">
+    </transfer>
+
+    <transfer name="ProductStorageCriteria">
+    </transfer>
+
 </transfers>

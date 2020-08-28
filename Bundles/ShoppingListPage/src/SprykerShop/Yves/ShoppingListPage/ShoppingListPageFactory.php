@@ -18,17 +18,23 @@ use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompan
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyUserClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToMultiCartClientInterface;
+use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToPriceClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToProductStorageClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToZedRequestClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Service\ShoppingListPageToUtilEncodingServiceInterface;
+use SprykerShop\Yves\ShoppingListPage\Form\AddShoppingListToCartForm;
 use SprykerShop\Yves\ShoppingListPage\Form\Constraint\ShareShoppingListRequiredIdConstraint;
 use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShareShoppingListDataProvider;
 use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShoppingListFormDataProvider;
 use SprykerShop\Yves\ShoppingListPage\Form\Handler\AddToCartFormHandler;
 use SprykerShop\Yves\ShoppingListPage\Form\Handler\AddToCartFormHandlerInterface;
 use SprykerShop\Yves\ShoppingListPage\Form\ShareShoppingListForm;
+use SprykerShop\Yves\ShoppingListPage\Form\ShoppingListAddItemToCartForm;
+use SprykerShop\Yves\ShoppingListPage\Form\ShoppingListClearForm;
+use SprykerShop\Yves\ShoppingListPage\Form\ShoppingListDeleteForm;
 use SprykerShop\Yves\ShoppingListPage\Form\ShoppingListForm;
+use SprykerShop\Yves\ShoppingListPage\Form\ShoppingListRemoveItemForm;
 use SprykerShop\Yves\ShoppingListPage\Form\ShoppingListUpdateForm;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
@@ -74,6 +80,17 @@ class ShoppingListPageFactory extends AbstractFactory
     public function getShoppingListUpdateForm(ShoppingListTransfer $data, array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(ShoppingListUpdateForm::class, $data, $options);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $data
+     * @param mixed[] $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getShoppingListDeleteForm(ShoppingListTransfer $data, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(ShoppingListDeleteForm::class, $data, $options);
     }
 
     /**
@@ -227,5 +244,45 @@ class ShoppingListPageFactory extends AbstractFactory
     public function getUtilEncodingService(): ShoppingListPageToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(ShoppingListPageDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToPriceClientInterface
+     */
+    public function getPriceClient(): ShoppingListPageToPriceClientInterface
+    {
+        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::CLIENT_PRICE);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getShoppingListAddItemToCartForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(ShoppingListAddItemToCartForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getShoppingListRemoveItemForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(ShoppingListRemoveItemForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getShoppingListClearForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(ShoppingListClearForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getAddShoppingListToCartForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(AddShoppingListToCartForm::class);
     }
 }

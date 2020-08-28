@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductWidget\Widget\CmsProductGroupWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductWidget\Widget\CmsProductGroupWidget} instead.
  */
 interface ProductGroupWidgetPluginInterface extends WidgetPluginInterface
 {

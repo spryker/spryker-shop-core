@@ -27,16 +27,27 @@ class ShoppingListDeleteController extends AbstractShoppingListController
     protected const ROUTE_SHOPPING_LIST = 'shopping-list';
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $idShoppingList
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(int $idShoppingList): RedirectResponse
+    public function deleteAction(Request $request, int $idShoppingList): RedirectResponse
     {
-        $shoppingListTransfer = new ShoppingListTransfer();
-        $shoppingListTransfer
-            ->setIdShoppingList($idShoppingList)
-            ->setIdCompanyUser($this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
+        $shoppingListDeleteForm = $this->getFactory()
+            ->getShoppingListDeleteForm(new ShoppingListTransfer())
+            ->handleRequest($request);
+
+        if (!$shoppingListDeleteForm->isSubmitted() || !$shoppingListDeleteForm->isValid()) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED);
+
+            return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST);
+        }
+
+        $shoppingListTransfer = $shoppingListDeleteForm->getData();
+        $shoppingListTransfer->setIdCompanyUser(
+            $this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser()
+        );
 
         $shoppingListResponseTransfer = $this->getFactory()
             ->getShoppingListClient()
@@ -86,11 +97,15 @@ class ShoppingListDeleteController extends AbstractShoppingListController
             ->createSharedShoppingListReader()
             ->getSharedShoppingListEntities($shoppingListTransfer, $customerTransfer);
 
+        $shoppingListDeleteForm = $this->getFactory()
+            ->getShoppingListDeleteForm($shoppingListTransfer);
+
         return [
             'shoppingList' => $shoppingListTransfer,
             'sharedCompanyUsers' => $sharedShoppingListEntities[SharedShoppingListReader::SHARED_COMPANY_USERS],
             'sharedCompanyBusinessUnits' => $sharedShoppingListEntities[SharedShoppingListReader::SHARED_COMPANY_BUSINESS_UNITS],
             'backUrl' => $request->headers->get('referer'),
+            'shoppingListDeleteForm' => $shoppingListDeleteForm->createView(),
         ];
     }
 }

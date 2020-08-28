@@ -18,12 +18,30 @@ class CustomerPageConfig extends AbstractBundleConfig
      */
     protected const MIN_LENGTH_CUSTOMER_PASSWORD = 1;
 
+    protected const IS_ORDER_HISTORY_SEARCH_ENABLED = false;
+
+    protected const DEFAULT_ORDER_HISTORY_PER_PAGE = 10;
+    protected const DEFAULT_ORDER_HISTORY_SORT_FIELD = 'created_at';
+    protected const DEFAULT_ORDER_HISTORY_SORT_DIRECTION = 'DESC';
+
+    /**
+     * @uses \Spryker\Shared\Sales\SalesConfig::ORDER_SEARCH_TYPES
+     */
+    protected const ORDER_SEARCH_TYPES = [
+        'all',
+        'orderReference',
+        'itemName',
+        'itemSku',
+    ];
+
     /**
      * @uses \Spryker\Zed\Customer\CustomerConfig::MAX_LENGTH_CUSTOMER_PASSWORD
      */
     protected const MAX_LENGTH_CUSTOMER_PASSWORD = 72;
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getYvesHost()
@@ -32,6 +50,8 @@ class CustomerPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getCustomerPasswordMinLength(): int
@@ -40,6 +60,8 @@ class CustomerPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getCustomerPasswordMaxLength(): int
@@ -48,6 +70,8 @@ class CustomerPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getAnonymousPattern(): string
@@ -61,10 +85,74 @@ class CustomerPageConfig extends AbstractBundleConfig
      * If null it will use referer URL.
      * If referer URL is not available, it will redirect to home page.
      *
+     * @api
+     *
      * @return string|null
      */
     public function loginFailureRedirectUrl(): ?string
     {
         return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isOrderSearchEnabled(): bool
+    {
+        return static::IS_ORDER_HISTORY_SEARCH_ENABLED;
+    }
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getDefaultOrderHistoryPerPage(): int
+    {
+        return static::DEFAULT_ORDER_HISTORY_PER_PAGE;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getDefaultOrderHistorySortField(): string
+    {
+        return static::DEFAULT_ORDER_HISTORY_SORT_FIELD;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getDefaultOrderHistorySortDirection(): string
+    {
+        return static::DEFAULT_ORDER_HISTORY_SORT_DIRECTION;
+    }
+
+    /**
+     * @api
+     *
+     * @return string[]
+     */
+    public function getOrderSearchTypes(): array
+    {
+        return static::ORDER_SEARCH_TYPES;
+    }
+
+    /**
+     * @api
+     *
+     * @uses \Spryker\Shared\Customer\CustomerConfig::isDoubleOptInEnabled()
+     *
+     * @return bool
+     */
+    public function isDoubleOptInEnabled(): bool
+    {
+        return false;
     }
 }

@@ -8,6 +8,10 @@
             color: $setting-color-light;
         }
 
+        &__form {
+            display: inline-block;
+        }
+
         &--active {
             @include helper-font-weight(bold);
         }

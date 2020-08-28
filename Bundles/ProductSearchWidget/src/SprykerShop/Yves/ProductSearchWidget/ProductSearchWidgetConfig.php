@@ -14,6 +14,8 @@ class ProductSearchWidgetConfig extends AbstractBundleConfig
     protected const SEARCH_RESULT_LIMIT = 10;
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getSearchResultLimit(): int

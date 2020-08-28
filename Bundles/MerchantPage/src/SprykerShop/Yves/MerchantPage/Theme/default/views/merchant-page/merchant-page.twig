@@ -1,0 +1,33 @@
+{% extends template('page-layout-main') %}
+
+{% define data = {
+    merchant: _view.merchant,
+} %}
+
+{% set merchantName = data.merchant.name | default %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: merchantName,
+                    withChevron: false,
+                },
+            ],
+        },
+    } only %}
+{% endblock %}
+
+{% block title %}
+    <h3>{{ merchantName }}</h3>
+{% endblock %}
+
+{% block content %}
+    {% include molecule('merchant-profile', 'MerchantProfileWidget') ignore missing with {
+        data: {
+            merchantStorageProfile: data.merchant.merchantProfile | default,
+            idMerchant: data.merchant.idMerchant | default,
+        },
+    } only %}
+{% endblock %}

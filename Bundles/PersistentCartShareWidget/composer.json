@@ -8,16 +8,15 @@
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.28.1",
     "spryker/customer": "^7.0.0",
-    "spryker/kernel": "^3.30.0",
-    "spryker/persistent-cart-share": "^1.0.0"
+    "spryker/kernel": "^3.52.0",
+    "spryker/persistent-cart-share": "^1.0.0",
+    "spryker/router": "^1.6.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/router": "*",
     "spryker/silex": "*"
   },
   "suggest": {
-    "spryker/router": "Use this module when you want to use the Router.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {

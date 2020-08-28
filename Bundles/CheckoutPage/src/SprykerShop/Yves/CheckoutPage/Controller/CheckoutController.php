@@ -25,7 +25,7 @@ class CheckoutController extends AbstractController
     public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
 
     /**
-     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
      */
     protected const ROUTE_CART = 'cart';
 
@@ -243,10 +243,6 @@ class CheckoutController extends AbstractController
             return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_SUMMARY);
         }
 
-        if ($quoteTransfer->getOrderReference() !== null) {
-            return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_SUCCESS);
-        }
-
         return $this->createStepProcess()->process($request);
     }
 
@@ -271,11 +267,23 @@ class CheckoutController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request|null $request
+     *
      * @return mixed
      */
-    public function errorAction()
+    public function errorAction(?Request $request = null)
     {
-        return $this->view([], [], '@CheckoutPage/views/order-fail/order-fail.twig');
+        if ($request === null) {
+            return $this->view([], [], '@CheckoutPage/views/order-fail/order-fail.twig');
+        }
+
+        $response = $this->createStepProcess()->process($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@CheckoutPage/views/order-fail/order-fail.twig');
     }
 
     /**

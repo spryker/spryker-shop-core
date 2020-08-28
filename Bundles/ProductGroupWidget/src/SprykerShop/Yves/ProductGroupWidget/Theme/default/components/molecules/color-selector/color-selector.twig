@@ -1,0 +1,34 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'color-selector',
+    tag: 'color-selector',
+} %}
+
+{% define data = {
+    items: required,
+    colorAttributeName: 'colorCode',
+    selectionTag: 'button',
+} %}
+
+{% define attributes = {
+    'active-item-class-name': config.name ~ '__item--active',
+} %}
+
+{% block body %}
+    {% for item in data.items %}
+        {% block item %}
+            {% set activeClassName = loop.first ? attributes['active-item-class-name'] %}
+            {% set backgroundColor = item[data.colorAttributeName] is defined ? 'background-color: ' ~ item[data.colorAttributeName] ~ ';' %}
+            {% set dataAttributesList = {} %}
+
+            {% block selection %}
+                <{{ data.selectionTag }}
+                    class="{{ config.name }}__item {{ activeClassName }} {{ config.jsName }}__item"
+                    style="{{ backgroundColor }}"
+                    {{ component.renderAttributes(dataAttributesList) }}>
+                </{{ data.selectionTag }}>
+            {% endblock %}
+        {% endblock %}
+    {% endfor %}
+{% endblock %}

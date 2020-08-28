@@ -89,9 +89,9 @@ class AddItemsToShoppingListWidget extends AbstractWidget
     }
 
     /**
-     * @uses WriteShoppingListPermissionPlugin
+     * @uses \Spryker\Client\ShoppingList\Plugin\WriteShoppingListPermissionPlugin
      *
-     * @return array[]
+     * @return array
      */
     protected function getShoppingListOptions(): array
     {

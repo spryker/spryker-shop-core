@@ -17,7 +17,7 @@
 }
 
 /**
- * @deprecated use product-search-widget-product-quick-add-form mixin instead.
+ * @deprecated Use product-search-widget-product-quick-add-form mixin instead.
  */
 @mixin product-quick-add-widget-product-quick-add-form($name: '.product-quick-add-form') {
     @include product-search-widget-product-quick-add-form();

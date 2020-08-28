@@ -1,0 +1,11 @@
+{% extends molecule('address-item-form-field-list', 'CheckoutPage') %}
+
+{% define config = {
+    name: 'address-bundle-item-form-field-list',
+} %}
+
+{% block multiShippingAddressesInner %}
+    {% set formFieldUniqueName = 'multiShippingAddressesForBundleItems' %}
+
+    {{ parent() }}
+{% endblock %}

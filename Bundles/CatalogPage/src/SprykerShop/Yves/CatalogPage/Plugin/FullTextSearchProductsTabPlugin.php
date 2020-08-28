@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\CatalogPage\Plugin;
 
 use Generated\Shared\Transfer\TabMetaDataTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\CatalogPage\Plugin\Provider\CatalogPageControllerProvider;
+use SprykerShop\Yves\CatalogPage\Plugin\Router\CatalogPageRouteProviderPlugin;
 use SprykerShop\Yves\TabsWidgetExtension\Plugin\FullTextSearchTabPluginInterface;
 
 /**
@@ -51,7 +51,7 @@ class FullTextSearchProductsTabPlugin extends AbstractPlugin implements FullText
     {
         $tabsMetaDataTransfer = (new TabMetaDataTransfer())
             ->setName(static::NAME)
-            ->setRoute(CatalogPageControllerProvider::ROUTE_SEARCH)
+            ->setRoute(CatalogPageRouteProviderPlugin::ROUTE_NAME_SEARCH)
             ->setTitle(static::TAB_TRANSLATED_TITLE);
 
         return $tabsMetaDataTransfer;
