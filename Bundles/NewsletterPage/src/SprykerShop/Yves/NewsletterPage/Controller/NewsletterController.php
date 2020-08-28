@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 use Generated\Shared\Transfer\NewsletterTypeTransfer;
 use Spryker\Shared\Newsletter\NewsletterConstants;
 use SprykerShop\Yves\NewsletterPage\Form\NewsletterSubscriptionForm;
-use SprykerShop\Yves\NewsletterPage\Plugin\Provider\NewsletterPageControllerProvider;
+use SprykerShop\Yves\NewsletterPage\Plugin\Router\NewsletterPageRouteProviderPlugin;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,7 +66,7 @@ class NewsletterController extends AbstractController
         if ($newsletterSubscriptionForm->isSubmitted() && $newsletterSubscriptionForm->isValid()) {
             $this->processForm($newsletterSubscriptionForm, $newsletterSubscriptionRequestTransfer);
 
-            return $this->redirectResponseInternal(NewsletterPageControllerProvider::ROUTE_CUSTOMER_NEWSLETTER);
+            return $this->redirectResponseInternal(NewsletterPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_NEWSLETTER);
         }
 
         return [

@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\ConfigurableBundlePage\Form\ConfiguratorStateForm;
 use SprykerShop\Yves\ConfigurableBundlePage\Form\SlotStateForm;
@@ -28,6 +29,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ConfiguratorController extends AbstractController
 {
+    use PermissionAwareTrait;
+
     /**
      * @uses \SprykerShop\Yves\ConfigurableBundlePage\Plugin\Router\ConfigurableBundlePageRouteProviderPlugin::ROUTE_CONFIGURATOR_TEMPLATE_SELECTION
      */
@@ -44,7 +47,7 @@ class ConfiguratorController extends AbstractController
     protected const ROUTE_CONFIGURATOR_SUMMARY = 'configurable-bundle/configurator/summary';
 
     /**
-     * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_CART
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
      */
     protected const ROUTE_CART = 'cart';
 
@@ -82,6 +85,8 @@ class ConfiguratorController extends AbstractController
     protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND = 'configurable_bundle_page.template_not_found';
     protected const GLOSSARY_KEY_INVALID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_COMBINATION = 'configurable_bundle_page.invalid_template_slot_combination';
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_ADDED_TO_CART = 'configurable_bundle_page.configurator.added_to_cart';
+    protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
+    protected const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
 
     /**
      * @return \Spryker\Yves\Kernel\View\View
@@ -278,9 +283,28 @@ class ConfiguratorController extends AbstractController
     public function executeAddToCartAction(Request $request): RedirectResponse
     {
         $idConfigurableBundleTemplate = $request->attributes->getInt(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE);
+
+        if (!$this->can('AddCartItemPermissionPlugin')) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
+
+            $parameters = $request->request->all();
+            $parameters[static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE] = $idConfigurableBundleTemplate;
+
+            return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_SUMMARY, $parameters);
+        }
+
         $form = $this->getFactory()->getConfiguratorStateForm();
 
-        $formData = $request->request->get($form->getName())[ConfiguratorStateForm::FIELD_SLOTS] ?? null;
+        /** @var array $data */
+        $data = $request->request->get($form->getName()) ?: [];
+        $formData = $data[ConfiguratorStateForm::FIELD_SLOTS] ?? null;
+
+        $form->submit($data);
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_TEMPLATE_SELECTION);
+        }
 
         if (!$formData) {
             return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_TEMPLATE_SELECTION);

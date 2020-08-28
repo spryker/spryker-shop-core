@@ -10,6 +10,8 @@ namespace SprykerShop\Yves\CustomerPage\Form;
 use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,8 +27,11 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
     public const OPTION_IS_CUSTOMER_LOGGED_IN = 'is_customer_logged_in';
     public const OPTION_VALIDATION_GROUP = 'validation_group';
+    public const OPTION_PLACEHOLDER = 'placeholder';
 
     protected const PROPERTY_PATH_SHIPPING_ADDRESS = 'shipment.shippingAddress';
+
+    protected const GLOSSARY_KEY_SELECT_ADDRESS = 'checkout.step.address.select_address';
 
     /**
      * @return string|null
@@ -47,9 +52,11 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
 
         $resolver->setDefaults([
             static::OPTION_ADDRESS_CHOICES => [],
+            static::OPTION_PLACEHOLDER => false,
         ]);
 
         $resolver->setDefined(static::OPTION_ADDRESS_CHOICES)
+            ->setDefined(static::OPTION_PLACEHOLDER)
             ->setRequired(static::OPTION_COUNTRY_CHOICES)
             ->setRequired(static::OPTION_IS_CUSTOMER_LOGGED_IN)
             ->setRequired(static::OPTION_VALIDATION_GROUP);
@@ -74,7 +81,30 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
      */
     protected function addShippingAddressField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_SHIPPING_ADDRESS, CheckoutAddressForm::class, [
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
+            $this->addShippingAddressFieldForRegularItem($event, $options);
+        });
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormEvent $event
+     * @param array $options
+     *
+     * @return void
+     */
+    protected function addShippingAddressFieldForRegularItem(FormEvent $event, array $options): void
+    {
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $event->getData();
+        $form = $event->getForm();
+
+        if ($itemTransfer->getRelatedBundleItemIdentifier()) {
+            return;
+        }
+
+        $form->add(static::FIELD_SHIPPING_ADDRESS, CheckoutAddressForm::class, [
             'property_path' => static::PROPERTY_PATH_SHIPPING_ADDRESS,
             'data_class' => AddressTransfer::class,
             'required' => true,
@@ -100,11 +130,10 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
             },
             CheckoutAddressForm::OPTION_VALIDATION_GROUP => $options[static::OPTION_VALIDATION_GROUP],
             CheckoutAddressForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_ADDRESS_CHOICES],
+            CheckoutAddressForm::OPTION_PLACEHOLDER => static::GLOSSARY_KEY_SELECT_ADDRESS,
             CheckoutAddressForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
             CheckoutAddressForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
         ]);
-
-        return $this;
     }
 
     /**
@@ -174,13 +203,8 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
      */
     protected function isNewAddressFormShouldNotBeValidated(FormInterface $form): bool
     {
-        if ($this->isNewCustomerAddress($form)
-            || $this->isIdCustomerAddressEmpty($form)
-            || $this->isIdCompanyUnitAddressEmpty($form)
-        ) {
-            return true;
-        }
-
-        return false;
+        return $this->isNewCustomerAddress($form)
+            || !$this->isIdCustomerAddressEmpty($form)
+            || !$this->isIdCompanyUnitAddressEmpty($form);
     }
 }

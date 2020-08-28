@@ -21,18 +21,15 @@ class QuoteRequestCartController extends AbstractController
     protected const GLOSSARY_KEY_QUOTE_REQUEST_UPDATED = 'quote_request_page.quote_request.updated';
 
     /**
-     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
      */
     protected const ROUTE_CART = 'cart';
 
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_EDIT
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_EDIT
      */
     protected const ROUTE_QUOTE_REQUEST_EDIT = 'quote-request/edit';
 
-    /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE
-     */
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
     /**
@@ -64,14 +61,6 @@ class QuoteRequestCartController extends AbstractController
      */
     protected function executeSaveAction(Request $request): RedirectResponse
     {
-        $quoteRequestCartForm = $this->getFactory()
-            ->getQuoteRequestCartForm()
-            ->handleRequest($request);
-
-        if (!$quoteRequestCartForm->isSubmitted()) {
-            return $this->redirectResponseInternal(static::ROUTE_CART);
-        }
-
         $quoteRequestResponseTransfer = $this->getFactory()
             ->createQuoteRequestCartHandler()
             ->updateQuoteRequestQuote();
@@ -82,17 +71,18 @@ class QuoteRequestCartController extends AbstractController
 
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
-        if ($request->get(QuoteRequestCartForm::SUBMIT_BUTTON_SAVE_AND_BACK) === null
-            || !$quoteRequestResponseTransfer->getIsSuccessful()
+        if (
+            $request->get(QuoteRequestCartForm::SUBMIT_BUTTON_SAVE) === null
+            && $quoteRequestResponseTransfer->getIsSuccessful()
         ) {
-            return $this->redirectResponseInternal(static::ROUTE_CART);
+            $this->reloadQuoteForCustomer();
+
+            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT, [
+                static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
+            ]);
         }
 
-        $this->reloadQuoteForCustomer();
-
-        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT, [
-            static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
-        ]);
+        return $this->redirectResponseInternal(static::ROUTE_CART);
     }
 
     /**

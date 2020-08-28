@@ -6,7 +6,9 @@
         shipping: _view.addressesForm.shippingAddress,
         billing: _view.addressesForm.billingAddress,
         items: _view.addressesForm.multiShippingAddresses | default([]),
+        bundleItems: _view.addressesForm.multiShippingAddressesForBundleItems | default([]),
     },
+    backUrl: _view.previousStepUrl,
     isMultipleShipmentEnabled: _view.addressesForm.isMultipleShipmentEnabled.vars.value,
     title: 'checkout.step.address.title' | trans,
 } %}
@@ -21,6 +23,7 @@
         data: {
             title: 'page.checkout.address.shipping-address' | trans,
             form: data.forms.address,
+            backUrl: data.backUrl,
             submit: {
                 enable: true,
                 text: 'general.next.button' | trans,
@@ -32,6 +35,7 @@
                 shipping: data.forms.shipping,
                 billing: data.forms.billing,
                 items: data.forms.items,
+                bundleItems: data.forms.bundleItems,
             },
             isMultipleShipmentEnabled: data.isMultipleShipmentEnabled,
             companyBusinessUnitShippingAddressWidget: companyBusinessUnitShippingAddressWidget,
@@ -69,12 +73,13 @@
 
                             {% else %}
                                 <li class="list__item spacing-y">
-                                    {{
-                                    form_row(embed.forms.shipping.id_customer_address, {
+                                    {{ form_row(embed.forms.shipping.id_customer_address, {
                                         label: 'page.checkout.address.delivery.address_select' | trans,
                                         component: molecule('select'),
-                                    })
-                                    }}
+                                        attr: {
+                                            class: embed.jsAddressClass ~ '__form-select-shippingAddress',
+                                        },
+                                    }) }}
                                 </li>
                             {% endif %}
                         </ul>
@@ -106,6 +111,7 @@
                     class: embed.jsAddressClass ~ '__items-target col col--sm-12 is-hidden',
                     data: {
                         form: embed.forms.items,
+                        formBundle: embed.forms.bundleItems,
                         shippingForm: embed.forms.shipping,
                         jsAddressClass: embed.jsAddressClass,
                     },
@@ -175,12 +181,13 @@
 
                                     {% else %}
                                         <li class="list__item spacing-y">
-                                            {{
-                                            form_row(data.form.id_customer_address, {
+                                            {{ form_row(data.form.id_customer_address, {
                                                 label: 'page.checkout.address.billing.address_select' | trans,
                                                 component: molecule('select'),
-                                            })
-                                            }}
+                                                attr: {
+                                                    class: embed.jsAddressClass ~ '__form-select-billingAddress',
+                                                },
+                                            }) }}
                                         </li>
                                     {% endif %}
                                 </ul>
@@ -199,17 +206,10 @@
             <div class="grid grid--middle grid--justify">
                 <div class="col">
                     {% set optionValueDeliverToMultipleAddresses = '-1' %}
-                    {% if not embed.isCompanyBusinessUnitShippingAddressApplicable %}
-                        {% set existingShippingAddressSelectSelector = embed.forms.shipping.id_customer_address is defined ? '[name="' ~ embed.forms.shipping.id_customer_address.vars.full_name ~ '"]' : '' %}
-                        {% set existingBillingAddressSelectSelector = embed.forms.billing.id_customer_address is defined ? '[name="' ~ embed.forms.billing.id_customer_address.vars.full_name ~ '"]' : '' %}
-                    {% else %}
-                        {% set existingShippingAddressSelectSelector = '.' ~ embed.jsAddressClass ~ '__form-select-shippingAddress' %}
-                        {% set existingBillingAddressSelectSelector = '.' ~ embed.jsAddressClass ~ '__form-select-billingAddress' %}
-                    {% endif %}
 
                     {% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {
                         attributes: {
-                            'trigger-selector': existingShippingAddressSelectSelector | default(''),
+                            'trigger-selector': '.' ~ embed.jsAddressClass ~ '__form-select-shippingAddress',
                             'target-selector': '.' ~ embed.jsAddressClass ~ '__shipping',
                             'sub-target-selector': '.' ~ embed.jsAddressClass ~ '__items-target',
                             'container-billing-address-selector': '.' ~ embed.jsAddressClass ~ '__billing-same-as-shipping',
@@ -221,13 +221,18 @@
 
                     {% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {
                         attributes: {
-                            'trigger-selector': existingBillingAddressSelectSelector | default(''),
+                            'trigger-selector': '.' ~ embed.jsAddressClass ~ '__form-select-billingAddress',
                             'target-selector': '.' ~ embed.jsAddressClass ~ '__billing',
                         },
                     } only %}
                 </div>
 
                 <div class="col">
+                    {% widget 'QuoteRequestActionsWidget' args [data.form.vars.value, data.backUrl] only %}
+                        {% block saveButton %}{% endblock %}
+                        {% block backButton %}{% endblock %}
+                    {% endwidget %}
+
                     {{ parent() }}
                 </div>
             </div>

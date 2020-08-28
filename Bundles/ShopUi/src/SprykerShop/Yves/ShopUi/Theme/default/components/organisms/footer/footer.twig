@@ -10,67 +10,73 @@
         {% widget 'NewsletterSubscriptionWidget' only %}
         {% nowidget %}
             {# @deprecated Kept for BC reasons, will be removed in next major. #}
-            {{ render(path('newsletter/subscribe')) }}
+            {% include molecule('subscription', 'NewsletterWidget') ignore missing %}
         {% endwidget %}
     </div>
 
-    <div class="grid">
-        <div class="col col--sm-12 col--md-6">
-            <div class="box">
-                <h5>{{ 'global.payment_providers' | trans }}</h5>
-                {% widget 'NavigationWidget' args ['PAYMENT_PROVIDERS', 'navigation-providers-payment'] %}
-                {% nowidget %}
-                    {# @deprecated Kept for BC reasons, will be removed in next major. #}
-                    {{ widgetGlobal('NavigationWidgetPlugin', 'PAYMENT_PROVIDERS', 'navigation-providers-payment') }}
-                {% endwidget %}
-            </div>
-        </div>
-
-        <div class="col col--sm-12 col--md-6">
-            <div class="box">
-                <h5>{{ 'global.shipment_providers' | trans }}</h5>
-                {% widget 'NavigationWidget' args ['SHIPMENT_PROVIDERS', 'navigation-providers-shipment'] %}
-                {% nowidget %}
-                    {# @deprecated Kept for BC reasons, will be removed in next major. #}
-                    {{ widgetGlobal('NavigationWidgetPlugin', 'SHIPMENT_PROVIDERS', 'navigation-providers-shipment') }}
-                {% endwidget %}
-            </div>
-        </div>
-    </div>
-
-    <div class="box">
+    {% block footerNavigation %}
         <div class="grid">
-            <div class="col col--sm-12 col--md-6 col--lg-6">
-                {% widget 'NavigationWidget' args ['FOOTER_NAVIGATION', 'navigation-footer'] %}
-                {% nowidget %}
-                    {# @deprecated Kept for BC reasons, will be removed in next major. #}
-                    {{ widgetGlobal('NavigationWidgetPlugin', 'FOOTER_NAVIGATION', 'navigation-footer') }}
-                {% endwidget %}
+            <div class="col col--sm-12 col--md-6">
+                <div class="box">
+                    <h5>{{ 'global.payment_providers' | trans }}</h5>
+                    {% widget 'NavigationWidget' args ['PAYMENT_PROVIDERS', 'navigation-providers-payment'] %}
+                    {% nowidget %}
+                        {# @deprecated Kept for BC reasons, will be removed in next major. #}
+                        {{ widgetGlobal('NavigationWidgetPlugin', 'PAYMENT_PROVIDERS', 'navigation-providers-payment') }}
+                    {% endwidget %}
+                </div>
             </div>
 
-            <ul class="col col--sm-12 col--md-6 col--lg-3">
-                <li><h5>{{ 'global.get_in_touch' | trans }}</h5></li>
-                <li>+49 (0)30 2084983 50</li>
-                <li><a href="mailto:info@spryker.com">info@spryker.com</a></li>
-            </ul>
-
-            <div class="col col--lg-3 is-hidden-sm-md">
-                <h5>{{ 'global.social' | trans }}</h5>
-                {% widget 'NavigationWidget' args ['SOCIAL_LINKS', 'navigation-social'] %}
-                {% nowidget %}
-                    {# @deprecated Kept for BC reasons, will be removed in next major. #}
-                    {{ widgetGlobal('NavigationWidgetPlugin', 'SOCIAL_LINKS', 'navigation-social') }}
-                {% endwidget %}
+            <div class="col col--sm-12 col--md-6">
+                <div class="box">
+                    <h5>{{ 'global.shipment_providers' | trans }}</h5>
+                    {% widget 'NavigationWidget' args ['SHIPMENT_PROVIDERS', 'navigation-providers-shipment'] %}
+                    {% nowidget %}
+                        {# @deprecated Kept for BC reasons, will be removed in next major. #}
+                        {{ widgetGlobal('NavigationWidgetPlugin', 'SHIPMENT_PROVIDERS', 'navigation-providers-shipment') }}
+                    {% endwidget %}
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="box is-hidden-lg-xl">
-        <h5>{{ 'global.social' | trans }}</h5>
-        {% widget 'NavigationWidget' args ['SOCIAL_LINKS', 'navigation-social'] %}
-        {% nowidget %}
-            {# @deprecated Kept for BC reasons, will be removed in next major. #}
-            {{ widgetGlobal('NavigationWidgetPlugin', 'SOCIAL_LINKS', 'navigation-social') }}
-        {% endwidget %}
-    </div>
+        <div class="box">
+            <div class="grid">
+                <div class="col col--sm-12 col--md-6 col--lg-6">
+                    {% widget 'NavigationWidget' args ['FOOTER_NAVIGATION', 'navigation-footer'] %}
+                    {% nowidget %}
+                        {# @deprecated Kept for BC reasons, will be removed in next major. #}
+                        {{ widgetGlobal('NavigationWidgetPlugin', 'FOOTER_NAVIGATION', 'navigation-footer') }}
+                    {% endwidget %}
+                </div>
+
+                <ul class="col col--sm-12 col--md-6 col--lg-3">
+                    <li><h5>{{ 'global.get_in_touch' | trans }}</h5></li>
+                    <li>+49 (0)30 2084983 50</li>
+                    <li><a href="mailto:info@spryker.com">info@spryker.com</a></li>
+                </ul>
+
+                <div class="col col--lg-3 is-hidden-sm-md">
+                    <h5>{{ 'global.social' | trans }}</h5>
+                    {% widget 'NavigationWidget' args ['SOCIAL_LINKS', 'navigation-social'] %}
+                    {% nowidget %}
+                        {# @deprecated Kept for BC reasons, will be removed in next major. #}
+                        {{ widgetGlobal('NavigationWidgetPlugin', 'SOCIAL_LINKS', 'navigation-social') }}
+                    {% endwidget %}
+                </div>
+            </div>
+        </div>
+
+        <div class="box is-hidden-lg-xl">
+            <h5>{{ 'global.social' | trans }}</h5>
+            {% widget 'NavigationWidget' args ['SOCIAL_LINKS', 'navigation-social'] %}
+            {% nowidget %}
+                {# @deprecated Kept for BC reasons, will be removed in next major. #}
+                {{ widgetGlobal('NavigationWidgetPlugin', 'SOCIAL_LINKS', 'navigation-social') }}
+            {% endwidget %}
+        </div>
+    {% endblock %}
+
+    {% block copyright %}
+        {% include molecule('copyright') only %}
+    {% endblock %}
 {% endblock %}

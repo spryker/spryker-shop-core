@@ -9,9 +9,11 @@ namespace SprykerShop\Yves\ProductReviewWidget\Widget;
 
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewStorageTransfer;
+use Generated\Shared\Transfer\RatingAggregationTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
@@ -24,8 +26,11 @@ class ProductDetailPageReviewWidget extends AbstractWidget
     public function __construct(int $idProductAbstract)
     {
         $form = $this->getProductReviewForm($idProductAbstract);
-        $request = $this->getApplication()['request'];
+        $request = $this->getCurrentRequest();
         $productReviews = $this->findProductReviews($idProductAbstract, $request);
+
+        $ratingAggregationTransfer = (new RatingAggregationTransfer());
+        $ratingAggregationTransfer->setRatingAggregation($productReviews['ratingAggregation']);
 
         $this->addParameter('idProductAbstract', $idProductAbstract)
             ->addParameter('productReviewStorageTransfer', $this->findProductAbstractReview($idProductAbstract))
@@ -35,7 +40,12 @@ class ProductDetailPageReviewWidget extends AbstractWidget
             ->addParameter('hasCustomer', $this->hasCustomer())
             ->addParameter('productReviews', $productReviews['productReviews'])
             ->addParameter('pagination', $productReviews['pagination'])
-            ->addParameter('summary', $this->getFactory()->createProductReviewSummaryCalculator()->execute($productReviews['ratingAggregation']))
+            ->addParameter(
+                'summary',
+                $this->getFactory()
+                    ->getProductReviewClient()
+                    ->calculateProductReviewSummary($ratingAggregationTransfer)
+            )
             ->addParameter('maximumRating', $this->getFactory()->getProductReviewClient()->getMaximumRating());
     }
 
@@ -84,11 +94,27 @@ class ProductDetailPageReviewWidget extends AbstractWidget
      */
     protected function getProductReviewForm(int $idProductAbstract): FormInterface
     {
-        $request = $this->getApplication()['request'];
+        $request = $this->getCurrentRequest();
 
         return $this->getFactory()
             ->createProductReviewForm($idProductAbstract)
             ->handleRequest($request);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    protected function getCurrentRequest(): Request
+    {
+        return $this->getRequestStack()->getCurrentRequest();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RequestStack
+     */
+    protected function getRequestStack(): RequestStack
+    {
+        return $this->getGlobalContainer()->get('request_stack');
     }
 
     /**

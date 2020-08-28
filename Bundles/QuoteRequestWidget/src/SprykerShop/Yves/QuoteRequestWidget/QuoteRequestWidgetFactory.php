@@ -17,8 +17,10 @@ use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToQu
 use SprykerShop\Yves\QuoteRequestWidget\Form\QuoteRequestCartForm;
 use SprykerShop\Yves\QuoteRequestWidget\Handler\QuoteRequestCartHandler;
 use SprykerShop\Yves\QuoteRequestWidget\Handler\QuoteRequestCartHandlerInterface;
+use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestWidget\QuoteRequestWidgetConfig getConfig()
@@ -35,6 +37,16 @@ class QuoteRequestWidgetFactory extends AbstractFactory
             $this->getQuoteRequestClient(),
             $this->getCompanyUserClient()
         );
+    }
+
+    /**
+     * @param string $targetUrl
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function createRedirectResponse(string $targetUrl): RedirectResponse
+    {
+        return new RedirectResponse($targetUrl);
     }
 
     /**
@@ -91,5 +103,13 @@ class QuoteRequestWidgetFactory extends AbstractFactory
     public function getCustomerClient(): QuoteRequestWidgetToCustomerClientInterface
     {
         return $this->getProvidedDependency(QuoteRequestWidgetDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \Symfony\Cmf\Component\Routing\ChainRouterInterface
+     */
+    public function getRouterService(): ChainRouterInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestWidgetDependencyProvider::SERVICE_ROUTER);
     }
 }

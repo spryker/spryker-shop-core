@@ -7,6 +7,9 @@
 
 namespace SprykerShop\Yves\PriceProductVolumeWidget\Dependency\Client;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class PriceProductVolumeWidgetToCurrencyClientBridge implements PriceProductVolumeWidgetToCurrencyClientInterface
 {
     /**

@@ -47,7 +47,7 @@ class CmsContentWidgetProductConnectorToProductStorageClientBridge implements Cm
     }
 
     /**
-     * @deprecated Use findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
+     * @deprecated Use {@link findProductAbstractStorageData()} instead.
      *
      * @param int $idProductAbstract
      * @param string $localeName

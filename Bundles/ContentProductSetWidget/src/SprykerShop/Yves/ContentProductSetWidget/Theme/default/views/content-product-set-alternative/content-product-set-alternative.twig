@@ -18,20 +18,18 @@
             images: data.images,
         },
     } only %}
-        {% block productSetTitle %}
-            <h5>{{ data.name }}</h5>
-        {% endblock %}
-
         {% block title %}{% endblock %}
 
         {% block header %}
             {{ block('productSetTitle') }}
 
             {% block description %}
-                {% if data.description %}
-                    <p>{{ data.description }}</p>
-                {% endif %}
+                {{ parent() }}
             {% endblock %}
+        {% endblock %}
+
+        {% block descriptionInner %}
+            <p>{{ data.description }}</p>
         {% endblock %}
 
         {% block productSet %}

@@ -12,8 +12,16 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class AvailabilityNotificationWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\AvailabilityNotificationWidget\Plugin\Router\AvailabilityNotificationWidgetRouteProviderPlugin::ROUTE_NAME_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE} instead.
+     */
     protected const ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE = 'availability-notification/unsubscribe';
+    public const ROUTE_NAME_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE = 'availability-notification/unsubscribe';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\AvailabilityNotificationWidget\Plugin\Router\AvailabilityNotificationWidgetRouteProviderPlugin::ROUTE_NAME_AVAILABILITY_NOTIFICATION_SUBSCRIBE} instead.
+     */
     protected const ROUTE_AVAILABILITY_NOTIFICATION_SUBSCRIBE = 'availability-notification/subscribe';
+    public const ROUTE_NAME_AVAILABILITY_NOTIFICATION_SUBSCRIBE = 'availability-notification/subscribe';
 
     /**
      * Specification:
@@ -41,7 +49,7 @@ class AvailabilityNotificationWidgetRouteProviderPlugin extends AbstractRoutePro
     protected function addAvailabilityNotificationSubscribeRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/availability-notification/subscribe', 'AvailabilityNotificationWidget', 'AvailabilityNotificationSubscription', 'subscribeAction');
-        $routeCollection->add(static::ROUTE_AVAILABILITY_NOTIFICATION_SUBSCRIBE, $route);
+        $routeCollection->add(static::ROUTE_NAME_AVAILABILITY_NOTIFICATION_SUBSCRIBE, $route);
 
         return $routeCollection;
     }
@@ -54,7 +62,7 @@ class AvailabilityNotificationWidgetRouteProviderPlugin extends AbstractRoutePro
     protected function addAvailabilityNotificationUnsubscribeRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/availability-notification/unsubscribe', 'AvailabilityNotificationWidget', 'AvailabilityNotificationSubscription', 'unsubscribeAction');
-        $routeCollection->add(static::ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE, $route);
+        $routeCollection->add(static::ROUTE_NAME_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE, $route);
 
         return $routeCollection;
     }

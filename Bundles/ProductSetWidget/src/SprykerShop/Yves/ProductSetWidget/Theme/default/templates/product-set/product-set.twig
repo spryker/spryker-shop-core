@@ -7,6 +7,8 @@
 } %}
 
 {% block body %}
+    {% set productSetAddToCartButtonClass = 'float-right' %}
+
     {% block carousel %}
         {% embed molecule('simple-carousel') with {
             data: {
@@ -15,11 +17,13 @@
         } only %}
             {% block slide %}
                 <div class="text-center">
-                    {% include atom('thumbnail') with {
-                        modifiers: ['bigger'],
-                        attributes: {
-                            itemprop: 'image',
-                            src: slide.externalUrlLarge,
+                    {% include molecule('lazy-image') with {
+                        modifiers: ['thumbnail', 'bigger'],
+                        data: {
+                            imageSrc: slide.externalUrlLarge,
+                            extraAttributes: {
+                                itemprop: 'image',
+                            },
                         },
                     } only %}
                 </div>
@@ -28,35 +32,43 @@
     {% endblock %}
 
     {% block header %}
-        <form method="POST" action="{{ path('cart/add-items') }}">
-            {% set isDisabled = false %}
+        {% widget 'AddItemsFormWidget' args [config, data, data.products] with {
+            embed: {
+                productSetAddToCartButtonClass: productSetAddToCartButtonClass,
+            },
+        } only %}
+            {% block embeddedData %}
+                {% set isDisabled = false %}
 
-            {% for product in data.products %}
-                {% if product.idProductConcrete is not empty %}
-                    {% if product.available %}
+                {% for product in data.data.products %}
+                    {% if product.idProductConcrete is not empty and product.available %}
                         <input type="hidden" name="items[{{ loop.index }}][sku]" value="{{ product.sku }}">
                         <input type="hidden" name="items[{{ loop.index }}][quantity]" value="1">
                     {% endif %}
-                {% else %}
-                    {% set isDisabled = true %}
+
+                    {% if product.idProductConcrete is empty %}
+                        {% set isDisabled = true %}
+                    {% endif %}
+                {% endfor %}
+
+                {% if can('SeeAddToCartPermissionPlugin') %}
+                    <button class="button {{ embed.productSetAddToCartButtonClass }}" {{ isDisabled ? 'disabled' : 'data-init-single-click' }}>
+                        {{ 'product.set.detail.add-all-to-cart' | trans }}
+                    </button>
                 {% endif %}
-            {% endfor %}
-
-            {% if can('SeeAddToCartPermissionPlugin') %}
-                <button type="submit" class="button float-right" {{ isDisabled ? 'disabled' : 'data-init-single-click' }}>
-                    {{ 'product.set.detail.add-all-to-cart' | trans }}
-                </button>
-            {% endif %}
-
-            {% block title %}
-                <h5>{{ 'product.set.detail.set-contents' | trans }}</h5>
             {% endblock %}
-        </form>
+        {% endwidget %}
+
+        {% block title %}
+            <h5>{{ 'product.set.detail.set-contents' | trans }}</h5>
+        {% endblock %}
 
         {% block description %}
             {% if data.description %}
-                <h6>{{ 'product.attribute.long_description' | trans }}</h6>
-                <p>{{ data.description }}</p>
+                {% block descriptionInner %}
+                    <h6>{{ 'product.attribute.long_description' | trans }}</h6>
+                    <p>{{ data.description }}</p>
+                {% endblock %}
             {% endif %}
         {% endblock %}
     {% endblock %}
@@ -128,9 +140,41 @@
                                             {{- buttonContent -}}
                                         </button>
                                     {% else %}
-                                        <a href="{{ path('cart/add', {sku: data.product.sku}) }}" class="button button--expand" data-init-single-click>
-                                            {{- buttonContent -}}
-                                        </a>
+                                        {% widget 'AddToCartFormWidget' args [config, data.product, isDisabled] with {
+                                            embed: {
+                                                buttonContent: buttonContent,
+                                            },
+                                        } only %}
+                                            {% block body %}
+                                                {% set productSku = data.product.sku %}
+                                                {% set formAction = path('cart/add', {'sku': productSku}) %}
+                                                {% set tokenField = data.form._token.vars %}
+
+                                                {% embed molecule('remote-form-submit') with {
+                                                    data: {
+                                                        buttonClass: 'button button--expand ' ~ data.config.jsName ~ '__button-add-to-cart',
+                                                        buttonExtraAttributes: {
+                                                            'data-form-action': formAction,
+                                                            'data-init-single-click': true,
+                                                            'data-qa': 'add-to-cart-button',
+                                                        },
+                                                    },
+                                                    attributes: {
+                                                        'form-name': 'addToCartForm_' ~ productSku,
+                                                        'form-action': formAction,
+                                                        'field-name': tokenField.full_name,
+                                                        'field-value': tokenField.value,
+                                                    },
+                                                    embed: {
+                                                        buttonContent: embed.buttonContent,
+                                                    },
+                                                } only %}
+                                                    {% block innerSubmitActionContent %}
+                                                        {{- embed.buttonContent -}}
+                                                    {% endblock %}
+                                                {% endembed %}
+                                            {% endblock %}
+                                        {% endwidget %}
                                     {% endif %}
                                 {% endif %}
                             {% endblock %}

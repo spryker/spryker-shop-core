@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\DiscountWidget;
 
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
@@ -16,8 +17,17 @@ use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToQuoteClien
 class DiscountWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CALCULATION = 'CLIENT_CALCULATION';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+
+    /**
+     * @uses \Spryker\Yves\Messenger\Plugin\Application\FlashMessengerApplicationPlugin::SERVICE_FLASH_MESSENGER
+     */
+    public const SERVICE_FLASH_MESSENGER = 'flash_messenger';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -28,6 +38,7 @@ class DiscountWidgetDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addCalculationClient($container);
         $container = $this->addQuoteClient($container);
+        $container = $this->addServiceFlashMessenger($container);
         $container = $this->addApplication($container);
 
         return $container;
@@ -40,9 +51,9 @@ class DiscountWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCalculationClient(Container $container): Container
     {
-        $container[self::CLIENT_CALCULATION] = function (Container $container) {
+        $container->set(static::CLIENT_CALCULATION, function (Container $container) {
             return new DiscountWidgetToCalculationClientBridge($container->getLocator()->calculation()->client());
-        };
+        });
 
         return $container;
     }
@@ -54,9 +65,9 @@ class DiscountWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteClient(Container $container): Container
     {
-        $container[self::CLIENT_QUOTE] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new DiscountWidgetToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }
@@ -66,13 +77,29 @@ class DiscountWidgetDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
+    protected function addServiceFlashMessenger(Container $container): Container
+    {
+        $container->set(static::SERVICE_FLASH_MESSENGER, function (ContainerInterface $container) {
+            return $container->getApplicationService(static::SERVICE_FLASH_MESSENGER);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
     protected function addApplication(Container $container): Container
     {
-        $container[self::PLUGIN_APPLICATION] = function () {
+        $container->set(static::PLUGIN_APPLICATION, function () {
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
-        };
+        });
 
         return $container;
     }

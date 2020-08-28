@@ -29,8 +29,9 @@ class ConfigurableBundlePageToConfigurableBundlePageSearchClientBridge implement
      *
      * @return array
      */
-    public function searchConfigurableBundleTemplates(ConfigurableBundleTemplatePageSearchRequestTransfer $configurableBundleTemplatePageSearchRequestTransfer): array
-    {
+    public function searchConfigurableBundleTemplates(
+        ConfigurableBundleTemplatePageSearchRequestTransfer $configurableBundleTemplatePageSearchRequestTransfer
+    ): array {
         return $this->configurableBundlePageSearchClient->searchConfigurableBundleTemplates($configurableBundleTemplatePageSearchRequestTransfer);
     }
 }

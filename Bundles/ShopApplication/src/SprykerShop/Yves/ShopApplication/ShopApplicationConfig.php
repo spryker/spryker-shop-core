@@ -16,6 +16,8 @@ class ShopApplicationConfig extends AbstractBundleConfig
     protected const FORM_RESOURCES_DIR = __DIR__ . '/Resources/views/Form';
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getFormThemes()
@@ -26,6 +28,8 @@ class ShopApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function useViewParametersToRenderTwig(): bool
@@ -34,6 +38,8 @@ class ShopApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Will be removed without replacement.
      *
      * @return bool
@@ -44,6 +50,8 @@ class ShopApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getFormResourcesDir(): string
@@ -52,6 +60,8 @@ class ShopApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getShopApplicationResources(): array
@@ -62,6 +72,8 @@ class ShopApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isDebugModeEnabled(): bool
@@ -70,6 +82,8 @@ class ShopApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getTwigEnvironmentName(): string

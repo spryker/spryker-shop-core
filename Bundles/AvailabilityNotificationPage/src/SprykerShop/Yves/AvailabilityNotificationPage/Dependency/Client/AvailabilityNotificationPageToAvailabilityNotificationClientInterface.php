@@ -17,5 +17,7 @@ interface AvailabilityNotificationPageToAvailabilityNotificationClientInterface
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
-    public function unsubscribeBySubscriptionKey(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionRequest): AvailabilityNotificationSubscriptionResponseTransfer;
+    public function unsubscribeBySubscriptionKey(
+        AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionRequest
+    ): AvailabilityNotificationSubscriptionResponseTransfer;
 }

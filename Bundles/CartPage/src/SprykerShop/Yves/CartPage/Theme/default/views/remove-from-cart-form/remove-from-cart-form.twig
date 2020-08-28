@@ -1,0 +1,23 @@
+{% extends template('widget') %}
+
+{% define data = {
+    form: _widget.removeFromCartForm,
+    cartItem: _widget.cartItem,
+    formNamePostfix: _widget.formNamePostfix,
+} %}
+
+{% block body %}
+    {% set cartItem = data.cartItem %}
+    {% set cartItemGroupKey = cartItem.groupKey %}
+    {% set formNamePostfix = data.formNamePostfix %}
+
+    {% block form %}
+        {{ form_start(data.form, {
+            'action': path('cart/remove', {'sku': cartItem.sku, 'groupKey': cartItemGroupKey }),
+            'name': 'removeFromCartForm_' ~ cartItemGroupKey ~ (formNamePostfix ? '-' ~ formNamePostfix),
+        }) }}
+            {% block embeddedData %}{% endblock %}
+            {{ form_row(data.form._token, {id: ''}) }}
+        {{ form_end(data.form) }}
+    {% endblock %}
+{% endblock %}

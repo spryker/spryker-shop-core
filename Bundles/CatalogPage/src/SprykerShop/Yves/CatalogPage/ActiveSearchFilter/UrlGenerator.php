@@ -90,12 +90,12 @@ class UrlGenerator implements UrlGeneratorInterface
         switch (get_class($searchResultTransfer)) {
             case FacetSearchResultTransfer::class:
                 $params = $this->processFacetSearchResultTransfer($params, $searchResultTransfer, $filterValue);
-                break;
 
+                break;
             case RangeSearchResultTransfer::class:
                 $params = $this->processRangeSearchResultTransfer($params, $searchResultTransfer);
-                break;
 
+                break;
             default:
                 throw new InvalidArgumentException(sprintf(
                     'Invalid search result transfer "%s',

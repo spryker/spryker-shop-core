@@ -36,9 +36,9 @@ class NewsletterWidgetDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addNewsletterClient(Container $container)
     {
-        $container[static::CLIENT_NEWSLETTER] = function (Container $container) {
+        $container->set(static::CLIENT_NEWSLETTER, function (Container $container) {
             return new NewsletterWidgetToNewsletterClientBridge($container->getLocator()->newsletter()->client());
-        };
+        });
 
         return $container;
     }

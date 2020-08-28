@@ -1,3 +1,6 @@
-import './style';
-import register from '../../../app/registry';
-export default register('side-drawer', () => import(/* webpackMode: "eager" */'./side-drawer'));
+import './style.scss';
+import register from 'ShopUi/app/registry';
+export default register('side-drawer', () => import(
+    /* webpackMode: "lazy" */
+    /* webpackChunkName: "side-drawer" */
+    './side-drawer'));

@@ -9,7 +9,7 @@
     name: data.node.name | default,
     quantity: data.node.quantity | default(1),
     amount: data.node.amount | default(0),
-    price: data.node.sumPrice | default(0),
+    price: data.node.sumSubtotalAggregation | default(0),
     quantitySalesUnit: data.node.quantitySalesUnit | default(null),
     amountSalesUnit: data.node.amountSalesUnit | default(null),
     images: data.node.images | default([]),
@@ -25,14 +25,14 @@
 
                     {% block imageCondition %}
                         {% if imageUrl %}
-                            {% set thumbnailModifires = ['small'] %}
+                            {% set thumbnailModifiers = ['small'] %}
 
                             {% block image %}
-                                {% include atom('thumbnail') with {
-                                    modifiers: thumbnailModifires,
-                                    attributes: {
-                                        alt: data.name | default,
-                                        src: imageUrl.externalUrlLarge,
+                                {% include molecule('lazy-image') with {
+                                    modifiers: thumbnailModifiers | merge(['thumbnail']),
+                                    data: {
+                                        imageSrc: imageUrl.externalUrlLarge,
+                                        imageTitle: data.name,
                                     },
                                 } only %}
                             {% endblock %}
@@ -79,7 +79,11 @@
                     {% endblock %}
 
                     {% block offerByMerchant %}
-                        {% widget 'ProductOfferSoldByMerchantWidget' args [data.node] only %}{% endwidget %}
+                        {% if widgetGlobalExists('ProductOfferSoldByMerchantWidget') %}
+                            {% widget 'ProductOfferSoldByMerchantWidget' args [data.node] only %}{% endwidget %}
+                        {% elseif widgetGlobalExists('ProductSoldByMerchantWidget') %}
+                            {% widget 'ProductSoldByMerchantWidget' args [data.node] only %}{% endwidget %}
+                        {% endif %}
                     {% endblock %}
 
                     {% block amountSalesUnit %}

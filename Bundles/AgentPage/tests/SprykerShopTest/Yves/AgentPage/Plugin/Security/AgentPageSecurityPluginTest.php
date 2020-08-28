@@ -17,6 +17,13 @@ use SprykerShop\Yves\CustomerPage\CustomerPageDependencyProvider;
 use SprykerShop\Yves\CustomerPage\Plugin\Security\CustomerPageSecurityPlugin;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @group SprykerShop
+ * @group Yves
+ * @group AgentPage
+ * @group Plugin
+ * @group AgentPageSecurityPluginTest
+ */
 class AgentPageSecurityPluginTest extends Unit
 {
     /**

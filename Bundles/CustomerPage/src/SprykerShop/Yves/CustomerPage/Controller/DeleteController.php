@@ -7,29 +7,53 @@
 
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
-use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
+use SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin;
+use Symfony\Component\HttpFoundation\Request;
 
 class DeleteController extends AbstractCustomerController
 {
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_DELETE_ERROR = 'customer.account.delete.error';
+
     /**
      * @return \Spryker\Yves\Kernel\View\View
      */
     public function indexAction()
     {
-        return $this->view([], [], '@CustomerPage/views/profile-delete/profile-delete.twig');
+        $customerDeleteForm = $this->getFactory()
+            ->createCustomerFormFactory()
+            ->getCustomerDeleteForm();
+
+        return $this->view(
+            ['customerDeleteForm' => $customerDeleteForm->createView()],
+            [],
+            '@CustomerPage/views/profile-delete/profile-delete.twig'
+        );
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function confirmAction()
+    public function confirmAction(Request $request)
     {
+        $customerDeleteForm = $this->getFactory()
+            ->createCustomerFormFactory()
+            ->getCustomerDeleteForm()
+            ->handleRequest($request);
+
+        if (!$customerDeleteForm->isSubmitted() || !$customerDeleteForm->isValid()) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_DELETE_ERROR);
+
+            return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_DELETE);
+        }
+
         $loggedInCustomerTransfer = $this->getLoggedInCustomerTransfer();
 
         $this->getFactory()
             ->getCustomerClient()
             ->anonymizeCustomer($loggedInCustomerTransfer);
 
-        return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_LOGOUT);
+        return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_NAME_LOGOUT);
     }
 }

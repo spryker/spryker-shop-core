@@ -27,6 +27,9 @@ class QuoteRequestAgentForm extends AbstractType
 
     public const OPTION_PRICE_MODE = 'option_price_mode';
     public const OPTION_IS_QUOTE_VALID = 'option_is_quote_valid';
+    public const OPTION_SHIPMENT_GROUPS = 'option_shipment_groups';
+
+    public const FIELD_SHIPMENT_GROUPS = 'shipmentGroups';
 
     protected const FORMAT_VALID_UNTIL_DATE = 'Y-m-d H:i:s';
     protected const LABEL_QUOTE_REQUEST_IS_LATEST_VERSION_VISIBLE = 'quote_request_page.quote_request.labels.show_latest_version';
@@ -45,6 +48,7 @@ class QuoteRequestAgentForm extends AbstractType
         $resolver->setRequired([
             static::OPTION_PRICE_MODE,
             static::OPTION_IS_QUOTE_VALID,
+            static::OPTION_SHIPMENT_GROUPS,
         ]);
     }
 
@@ -73,8 +77,9 @@ class QuoteRequestAgentForm extends AbstractType
             QuoteRequestTransfer::LATEST_VERSION,
             QuoteRequestAgentVersionSubForm::class,
             [
-                QuoteRequestAgentForm::OPTION_PRICE_MODE => $options[QuoteRequestAgentForm::OPTION_PRICE_MODE],
-                QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID => $options[QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID],
+                self::OPTION_PRICE_MODE => $options[self::OPTION_PRICE_MODE],
+                self::OPTION_IS_QUOTE_VALID => $options[self::OPTION_IS_QUOTE_VALID],
+                self::OPTION_SHIPMENT_GROUPS => $options[self::OPTION_SHIPMENT_GROUPS],
             ]
         );
 

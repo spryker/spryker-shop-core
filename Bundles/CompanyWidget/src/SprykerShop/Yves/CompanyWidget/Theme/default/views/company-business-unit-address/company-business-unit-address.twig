@@ -21,6 +21,7 @@
     isCustomAddress: app.request.get('customAddress')[_widget.formType]  | default(not _widget.formAddressTransfer.idCustomerAddress),
     currentCompanyBusinessUnitAddress: _widget.currentCompanyBusinessUnitAddress,
     isCurrentAddressEmpty: _widget.isCurrentAddressEmpty,
+    hasPreselectedOption: false,
 } %}
 
 {% block body %}
@@ -75,11 +76,12 @@
             items: data.items,
             shippingAddress: shippingAddress,
             jsAddressClass: data.jsAddressClass,
+            hasPreselectedOption: data.hasPreselectedOption,
         },
     } only %}
         {% block selectClass -%}
-            {{ embed.jsAddressClass }}__form-select-{{ embed.formType }}
-            {{ embed.itemShippingTriggerJsClass ? embed.itemShippingTriggerJsClass }}
+            {{- embed.jsAddressClass ? embed.jsAddressClass ~ '__form-select-' ~ embed.formType -}}
+            {{- embed.itemShippingTriggerJsClass ? embed.itemShippingTriggerJsClass -}}
         {%- endblock %}
         {% block option %}
             {% set isSelected = embed.defaultAddressKey == address.key %}
@@ -93,14 +95,18 @@
                 address.city)
             %}
             {% define option = {
-                selected: isSelected,
+                selected: not embed.hasPreselectedOption ? isSelected,
                 value: address.key,
                 label: fullName
             } %}
             {{ parent() }}
         {% endblock %}
         {% block optionsGroup %}
-            <option value="">{{ 'company.account.add_new_address' | trans }}</option>
+            {% if embed.hasPreselectedOption %}
+                <option value="" disabled selected>{{ 'checkout.step.address.select_address' | trans }}</option>
+            {% endif %}
+
+            <option value="0">{{ 'company.account.add_new_address' | trans }}</option>
 
             {% if embed.customerAddresses %}
                 <optgroup label="{{ 'page.checkout.address.option_group.customer' | trans }}">

@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\CompanyPage\Form;
 
+use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CompanyPage\CompanyPageDependencyProvider;
@@ -55,6 +57,14 @@ class FormFactory extends AbstractFactory
     }
 
     /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCompanyBusinessUnitDeleteForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(CompanyBusinessUnitDeleteForm::class);
+    }
+
+    /**
      * @param array $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -62,6 +72,14 @@ class FormFactory extends AbstractFactory
     public function getCompanyUnitAddressForm(array $formOptions): FormInterface
     {
         return $this->getFormFactory()->create(CompanyUnitAddressForm::class, null, $formOptions);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCompanyUnitAddressDeleteForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(CompanyUnitAddressDeleteForm::class);
     }
 
     /**
@@ -91,6 +109,28 @@ class FormFactory extends AbstractFactory
     public function getCompanyUserForm(array $formOptions): FormInterface
     {
         return $this->getFormFactory()->create(CompanyUserForm::class, null, $formOptions);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $data
+     * @param mixed[] $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCompanyUserDeleteForm(CompanyUserTransfer $data, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(CompanyUserDeleteForm::class, $data, $options);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $data
+     * @param mixed[] $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCompanyRoleDeleteForm(CompanyRoleTransfer $data, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(CompanyRoleDeleteForm::class, $data, $options);
     }
 
     /**

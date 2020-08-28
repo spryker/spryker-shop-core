@@ -84,6 +84,11 @@ $setting-color-shadow: rgba($setting-color-black, 0.1) !default;
 $setting-color-overlay: rgba($setting-color-black, 0.3) !default;
 
 /**
+ * Defines a default image overlay color. Usage: images with overlay - lazy-image.
+ */
+$setting-color-image-overlay: rgba($setting-color-black, 0.05) !default;
+
+/**
  * Defines action colors map.
  */
 $setting-color-actions: (

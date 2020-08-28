@@ -2,6 +2,7 @@
 
 {% define config = {
     name: 'product-set-details',
+    tag: 'product-set-details',
 } %}
 
 {% define data = {
@@ -9,7 +10,10 @@
     products: required,
     description: '',
     images: [],
+    optionResetUrls: [],
 } %}
+
+{% set productSetAddToCartButtonClass = 'float-right' %}
 
 {% block body %}
     <div class="box">
@@ -21,11 +25,13 @@
             } only %}
                 {% block slide %}
                     <div class="text-center">
-                        {% include atom('thumbnail') with {
-                            modifiers: ['bigger'],
-                            attributes: {
-                                itemprop: 'image',
-                                src: slide.externalUrlLarge,
+                        {% include molecule('lazy-image') with {
+                            modifiers: ['thumbnail', 'bigger'],
+                            data: {
+                                imageSrc: slide.externalUrlLarge,
+                                extraAttributes: {
+                                    itemprop: 'image',
+                                },
                             },
                         } only %}
                     </div>
@@ -36,36 +42,44 @@
 
     <div class="box">
         {% block header %}
-            <form method="POST" action="{{ path('cart/add-items') }}">
-                {% set isDisabled = false %}
+            {% widget 'AddItemsFormWidget' args [config, data, data.products] with {
+                embed: {
+                    productSetAddToCartButtonClass: productSetAddToCartButtonClass,
+                },
+            } only %}
+                {% block embeddedData %}
+                    {% set isDisabled = false %}
 
-                {% for product in data.products %}
-                    {% if product.idProductConcrete is not empty %}
-                        {% if product.available %}
-                            <input type="hidden" name="items[{{ loop.index }}][sku]" value="{{ product.sku }}">
+                    {% for product in data.data.products %}
+                        {% if product.idProductConcrete is not empty and product.available %}
+                            <input type="hidden" name="items[{{ loop.index }}][sku]" class="{{ data.config.jsName }}__product-sku-hidden-input" value="{{ product.sku }}">
                             <input type="hidden" name="items[{{ loop.index }}][quantity]" value="1">
                         {% endif %}
-                    {% else %}
-                        {% set isDisabled = true %}
+
+                        {% if product.idProductConcrete is empty %}
+                            {% set isDisabled = true %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if (data.data.products | length) %}
+                        <button class="button {{ embed.productSetAddToCartButtonClass }}" {{ isDisabled ? 'disabled' : 'data-init-single-click' }}>
+                            {{ 'product.set.detail.add-all-to-cart' | trans }}
+                        </button>
                     {% endif %}
-                {% endfor %}
 
-                {% if (data.products | length) %}
-                    <button type="submit" class="button float-right" {{ isDisabled ? 'disabled' : 'data-init-single-click' }}>
-                        {{ 'product.set.detail.add-all-to-cart' | trans }}
-                    </button>
-                {% endif %}
-
-                {% block title %}
-                    <h5>{{ 'product.set.detail.set-contents' | trans }}</h5>
+                    {% block title %}
+                        <h5>{{ 'product.set.detail.set-contents' | trans }}</h5>
+                    {% endblock %}
                 {% endblock %}
-            </form>
+            {% endwidget %}
 
             <hr class="box__separator">
             {% block description %}
-                {% if data.description is not empty %}
-                    <h6>{{ 'product.attribute.long_description' | trans }}</h6>
-                    <p>{{ data.description }}</p>
+                {% if data.description %}
+                    {% block descriptionInner %}
+                        <h6>{{ 'product.attribute.long_description' | trans }}</h6>
+                        <p>{{ data.description }}</p>
+                    {% endblock %}
                 {% endif %}
             {% endblock %}
         {% endblock %}
@@ -78,14 +92,17 @@
                     {% for product in data.products %}
                         <div class="col col--sm-12 col--lg-4">
                             {% embed molecule('product-item') with {
-                                class: 'box--stretch',
+                                class: 'box--stretch ' ~ config.jsName ~ '__product-item',
                                 data: {
                                     product: product,
                                     sku: '',
                                 },
+                                embed: {
+                                    optionResetUrls: data.optionResetUrls[product.idProductAbstract] ?? [],
+                                },
                             } only %}
                                 {% block content %}
-                                    {{parent()}}
+                                    {{ parent() }}
                                     {% set isNotAvailable = data.product.idProductConcrete and not data.product.available %}
 
                                     {% embed molecule('variant-configurator', 'ProductDetailPage') ignore missing with {
@@ -96,8 +113,9 @@
                                             useExternalForm: true,
                                         },
                                         embed: {
-                                        product: data.product,
-                                    },
+                                            product: data.product,
+                                            optionResetUrls: embed.optionResetUrls,
+                                        },
                                     } only %}
                                         {% block variant %}
                                             <li class="list__item">
@@ -109,6 +127,7 @@
                                                         selectedValue: selectedValue,
                                                         label: ('product.attribute.' ~ name) | trans,
                                                         isAvailable: isAvailable,
+                                                        optionResetUrl: embed.optionResetUrls[name] ?? '',
                                                     },
                                                 } only %}
                                             </li>
@@ -126,12 +145,12 @@
                                     {% set isDisabled = not data.product.idProductConcrete or not data.product.available %}
 
                                     {% set buttonContent %}
-                                            {% include atom('icon') with {
-                                                data: {
-                                                    name: 'cart-plus',
-                                                },
-                                            } only %}
-                                            {{- 'page.detail.add-to-cart' | trans -}}
+                                        {% include atom('icon') with {
+                                            data: {
+                                                name: 'cart-plus',
+                                            },
+                                        } only %}
+                                        {{- 'page.detail.add-to-cart' | trans -}}
                                     {% endset %}
 
                                     {% if isDisabled %}
@@ -139,11 +158,42 @@
                                             {{- buttonContent -}}
                                         </button>
                                     {% else %}
-                                        <a href="{{ path('cart/add', {sku: data.product.sku}) }}" class="button button--expand" data-init-single-click>
-                                            {{- buttonContent -}}
-                                        </a>
-                                    {% endif %}
+                                        {% widget 'AddToCartFormWidget' args [config, data.product, isDisabled] with {
+                                            embed: {
+                                                buttonContent: buttonContent,
+                                            },
+                                        } only %}
+                                            {% block body %}
+                                                {% set productSku = data.product.sku %}
+                                                {% set formAction = path('cart/add', {'sku': productSku}) %}
+                                                {% set tokenField = data.form._token.vars %}
 
+                                                {% embed molecule('remote-form-submit') with {
+                                                    data: {
+                                                        buttonClass: 'button button--expand ' ~ data.config.jsName ~ '__button-add-to-cart',
+                                                        buttonExtraAttributes: {
+                                                            'data-form-action': formAction,
+                                                            'data-init-single-click': true,
+                                                            'data-qa': 'add-to-cart-button',
+                                                        },
+                                                    },
+                                                    attributes: {
+                                                        'form-name': 'addToCartForm_' ~ productSku,
+                                                        'form-action': formAction,
+                                                        'field-name': tokenField.full_name,
+                                                        'field-value': tokenField.value,
+                                                    },
+                                                    embed: {
+                                                        buttonContent: embed.buttonContent,
+                                                    },
+                                                } only %}
+                                                    {% block innerSubmitActionContent %}
+                                                        {{- embed.buttonContent -}}
+                                                    {% endblock %}
+                                                {% endembed %}
+                                            {% endblock %}
+                                        {% endwidget %}
+                                    {% endif %}
                                 {% endblock %}
                             {% endembed %}
                         </div>

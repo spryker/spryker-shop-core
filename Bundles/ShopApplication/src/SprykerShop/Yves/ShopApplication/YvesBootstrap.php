@@ -16,6 +16,9 @@ use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorInterface;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 
+/**
+ * @deprecated Use {@link \SprykerShop\Yves\ShopApplication\Bootstrap\YvesBootstrap} instead.
+ */
 abstract class YvesBootstrap
 {
     use BundleDependencyProviderResolverAwareTrait;
@@ -131,7 +134,7 @@ abstract class YvesBootstrap
     }
 
     /**
-     * @deprecated Use `\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface`'s instead.
+     * @deprecated Use {@link \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface}s instead.
      *
      * @return void
      */
@@ -140,7 +143,7 @@ abstract class YvesBootstrap
     }
 
     /**
-     * @deprecated Use `\Spryker\Yves\Router\RouterDependencyProvider::getRouterPlugins()` instead.
+     * @deprecated Use {@link \Spryker\Yves\Router\RouterDependencyProvider::getRouterPlugins()} instead.
      *
      * @return void
      */
@@ -149,7 +152,7 @@ abstract class YvesBootstrap
     }
 
     /**
-     * @deprecated Use `\Spryker\Yves\Router\RouterDependencyProvider::getRouteProvider()` instead.
+     * @deprecated Use {@link \Spryker\Yves\Router\RouterDependencyProvider::getRouteProvider()} instead.
      *
      * @return void
      */

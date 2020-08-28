@@ -12,7 +12,11 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class PriceWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\PriceWidget\Plugin\Router\PriceWidgetRouteProviderPlugin::ROUTE_NAME_PRICE_SWITCH} instead.
+     */
     protected const ROUTE_PRICE_SWITCH = 'price-mode-switch';
+    public const ROUTE_NAME_PRICE_SWITCH = 'price-mode-switch';
 
     /**
      * Specification:
@@ -39,7 +43,7 @@ class PriceWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addPriceModeSwitchRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/price/mode-switch', 'PriceWidget', 'PriceModeSwitch', 'indexAction');
-        $routeCollection->add(static::ROUTE_PRICE_SWITCH, $route);
+        $routeCollection->add(static::ROUTE_NAME_PRICE_SWITCH, $route);
 
         return $routeCollection;
     }

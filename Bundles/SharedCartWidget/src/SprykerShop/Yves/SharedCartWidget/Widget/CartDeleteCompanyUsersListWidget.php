@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\SharedCartWidget\Widget\CartDeleteSharingCompanyUsersListWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\SharedCartWidget\Widget\CartDeleteSharingCompanyUsersListWidget} instead.
  *
  * @method \SprykerShop\Yves\SharedCartWidget\SharedCartWidgetFactory getFactory()
  */

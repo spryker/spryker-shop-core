@@ -101,9 +101,13 @@
             {% endif %}
 
             {% if canEditCart %}
-                <a class="float-right" href="{{ path('cart/remove', {'sku': data.cartItem.sku, 'groupKey': data.cartItem.groupKey }) }}">
-                    &times; {{ 'remove' | trans }}
-                </a>
+                {% widget 'RemoveFromCartFormWidget' args [data.product] only %}
+                    {% block embeddedData %}
+                        <button class="float-right link" data-init-single-click>
+                            {{- 'product_cart_item.remove' | trans -}}
+                        </button>
+                    {% endblock %}
+                {% endwidget %}
             {% endif %}
 
             {% block cartItemNote %}

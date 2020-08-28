@@ -33,4 +33,12 @@ class ShoppingListPageToMultiCartClientBridge implements ShoppingListPageToMulti
     {
         return $this->multiCartClient->findQuoteById($idQuote);
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getDefaultCart(): QuoteTransfer
+    {
+        return $this->multiCartClient->getDefaultCart();
+    }
 }

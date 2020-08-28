@@ -11,18 +11,18 @@
 } %}
 
 {% block component %}
-    {% set isItemVariantReplaceAvailable = data.cartItemAttributes is not empty %}
-
-    {% set quantitySalesUnitWidget = findWidget('CartProductMeasurementUnitQuantitySelectorWidget', [data.cartItem]) %}
-    {% set hasSalesUnit = quantitySalesUnitWidget.hasSalesUnit ?? widgetBlock('QuantitySalesUnitWidgetPlugin', 'hasSalesUnit', data.cartItem) %} {# @deprecated Use CartProductMeasurementUnitQuantitySelectorWidget instead of QuantitySalesUnitWidgetPlugin. #}
-    {% if hasSalesUnit is null %}
-        {% set isItemVariantReplaceAvailable = not hasSalesUnit and isItemVariantReplaceAvailable %}
+    {% if data.cartItemAttributes is not empty %}
+        {{ parent() }}
     {% endif %}
-
-    {% if isItemVariantReplaceAvailable %}{{parent()}}{% endif %}
 {% endblock %}
 
 {% block body %}
+    {% set cartProductMeasurementUnitQuantitySelectorWidget = findWidget('CartProductMeasurementUnitQuantitySelectorWidget', [data.cartItem]) %}
+    {% if cartProductMeasurementUnitQuantitySelectorWidget %}
+        {% set isProductSalesUnit = cartProductMeasurementUnitQuantitySelectorWidget.quantitySalesUnit.idProductMeasurementSalesUnit is defined
+            or cartProductMeasurementUnitQuantitySelectorWidget.parameters.itemTransfer.amountSalesUnit is not null %}
+    {% endif %}
+
     <form method="POST" action="{{ path('cart/update', {'sku': data.cartItem.sku }) }}">
         <ul class="list spacing-y">
             {% for attributeName, attributeOptions in data.cartItemAttributes %}
@@ -49,7 +49,7 @@
                             attributes: {
                                 name: 'preselectedAttributes[' ~ attributeName ~ ']',
                                 'data-form-submitter': true,
-                                disabled: not data.canEditCart,
+                                disabled: not data.canEditCart or isProductSalesUnit,
                             },
                         } only %}
                     </label>

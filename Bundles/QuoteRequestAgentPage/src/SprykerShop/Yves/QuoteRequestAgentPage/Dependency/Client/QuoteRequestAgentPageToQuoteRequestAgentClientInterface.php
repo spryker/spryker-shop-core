@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteRequestAgentPageToQuoteRequestAgentClientInterface
 {
@@ -83,4 +84,11 @@ interface QuoteRequestAgentPageToQuoteRequestAgentClientInterface
      * @return bool
      */
     public function isQuoteRequestEditable(QuoteRequestTransfer $quoteRequestTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isEditableQuoteRequestVersion(QuoteTransfer $quoteTransfer): bool;
 }

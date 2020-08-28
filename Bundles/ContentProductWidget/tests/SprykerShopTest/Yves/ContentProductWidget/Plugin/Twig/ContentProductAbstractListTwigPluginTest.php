@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use ReflectionClassConstant;
 use Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTermException;
-use Spryker\Service\Container\ContainerInterface;
+use Spryker\Service\Container\Container;
 use Spryker\Shared\Kernel\Store;
 use SprykerShop\Yves\ContentProductWidget\ContentProductWidgetDependencyProvider;
 use SprykerShop\Yves\ContentProductWidget\Dependency\Client\ContentProductWidgetToContentProductClientBridgeInterface;
@@ -69,6 +69,9 @@ class ContentProductAbstractListTwigPluginTest extends Unit
      */
     public function testContentProductAbstractNotFound(): void
     {
+        // Arrange
+        $this->setContentProductClientReturn();
+
         // Act
         $productAbstractContent = call_user_func($this->getContentProductAbstractListTwigPlugin()->getCallable(), static::CONTENT_KEY, static::DEFAULT_TEMPLATE);
 
@@ -189,7 +192,7 @@ class ContentProductAbstractListTwigPluginTest extends Unit
 
         $twigMock->method('render')->willReturn(static::RENDERED_STRING);
         $twigPlugin = $this->createTwigPlugin();
-        $twigPlugin->extend($twigMock, $this->getMockBuilder(ContainerInterface::class)->getMock());
+        $twigPlugin->extend($twigMock, new Container());
 
         return $twigMock;
     }

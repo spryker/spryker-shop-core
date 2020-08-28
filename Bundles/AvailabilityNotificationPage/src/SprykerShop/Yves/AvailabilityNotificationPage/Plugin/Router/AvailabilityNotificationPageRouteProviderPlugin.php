@@ -12,7 +12,11 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class AvailabilityNotificationPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\AvailabilityNotificationPage\Plugin\Router\AvailabilityNotificationPageRouteProviderPlugin::ROUTE_NAME_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE} instead.
+     */
     protected const ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE = 'availability-notification/unsubscribe-by-key';
+    public const ROUTE_NAME_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE = 'availability-notification/unsubscribe-by-key';
     protected const SUBSCRIPTION_KEY_PATTERN = '[0-9A-Za-z]{32}';
 
     /**
@@ -41,7 +45,7 @@ class AvailabilityNotificationPageRouteProviderPlugin extends AbstractRouteProvi
     {
         $route = $this->buildRoute('/availability-notification/unsubscribe-by-key/{subscriptionKey}', 'AvailabilityNotificationPage', 'AvailabilityNotificationPage', 'unsubscribeByKeyAction');
         $route = $route->setRequirement('subscriptionKey', static::SUBSCRIPTION_KEY_PATTERN);
-        $routeCollection->add(static::ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE, $route);
+        $routeCollection->add(static::ROUTE_NAME_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE, $route);
 
         return $routeCollection;
     }

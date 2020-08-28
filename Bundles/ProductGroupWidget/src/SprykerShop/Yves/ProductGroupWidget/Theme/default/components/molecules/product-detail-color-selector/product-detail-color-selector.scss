@@ -1,0 +1,5 @@
+@mixin product-group-widget-product-detail-color-selector($name: '.product-detail-color-selector') {
+    @include product-group-widget-color-selector($name) {
+        @content;
+    }
+}

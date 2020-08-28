@@ -1,0 +1,24 @@
+{% extends template('widget') %}
+
+{% define data = {
+    productAbstract: _widget.productAbstract,
+    buttonClasses: 'button button--success button--expand',
+    buttonExtraClasses: '',
+} %}
+
+{% set extraClasses = 'spacing-left' %}
+
+{% block body %}
+    {% set addToCartSku = data.productAbstract['add_to_cart_sku'] ?? '' %}
+
+    {% include molecule('ajax-add-to-cart') with {
+        class: extraClasses,
+        data: {
+            url: addToCartSku ? (path('cart/add-ajax', {'sku': addToCartSku})),
+            csrfToken: csrf_token('add-to-cart-ajax'),
+            buttonClasses: data.buttonClasses,
+            buttonExtraClasses: data.buttonExtraClasses,
+            extraAttributes: not addToCartSku ? {disabled: true},
+        },
+    } only %}
+{% endblock %}

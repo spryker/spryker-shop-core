@@ -13,7 +13,7 @@ use Twig\Compiler;
 use Twig\Node\Node;
 
 /**
- * @deprecated Please use `\SprykerShop\Yves\ShopApplication\Twig\Widget\Node\WidgetTagNode` instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ShopApplication\Twig\Widget\Node\WidgetTagNode} instead.
  */
 class WidgetTagTwigNode extends Node
 {

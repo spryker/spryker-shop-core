@@ -115,4 +115,7 @@
         <property name="message" type="string"/>
     </transfer>
 
+    <transfer name="ProductImageStorage">
+    </transfer>
+
 </transfers>

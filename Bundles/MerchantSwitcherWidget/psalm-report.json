@@ -1,0 +1,211 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\MerchantSwitcherWidget\\MerchantSwitcher\\MerchantSwitcherInterface::switchMerchantInQuote cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantSwitcherWidget/src/SprykerShop/Yves/MerchantSwitcherWidget/Controller/MerchantSwitcherController.php",
+            "snippet": "        $this->getFactory()->createMerchantSwitcher()->switchMerchantInQuote($merchantReference);",
+            "selected_text": "$merchantReference",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $cookies has wrong type 'ArrayObject|array<array-key, Symfony\\Component\\HttpFoundation\\Cookie>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantSwitcherWidget/src/SprykerShop/Yves/MerchantSwitcherWidget/Cookie/SelectedMerchantCookie.php",
+            "snippet": "     * @param \\ArrayObject|\\Symfony\\Component\\HttpFoundation\\Cookie[] $cookies",
+            "selected_text": "\\ArrayObject|\\Symfony\\Component\\HttpFoundation\\Cookie[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 48,
+            "line_to": 48,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for SprykerShop\\Yves\\MerchantSwitcherWidget\\Cookie\\SelectedMerchantCookie::getMerchantReference is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantSwitcherWidget/src/SprykerShop/Yves/MerchantSwitcherWidget/Cookie/SelectedMerchantCookie.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for SprykerShop\\Yves\\MerchantSwitcherWidget\\Cookie\\SelectedMerchantCookie::getMerchantReference is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantSwitcherWidget/src/SprykerShop/Yves/MerchantSwitcherWidget/Cookie/SelectedMerchantCookie.php",
+            "snippet": "        return $this->request->cookies->get($this->merchantSwitcherWidgetConfig->getMerchantSelectorCookieIdentifier(), '');",
+            "selected_text": "$this->request->cookies->get($this->merchantSwitcherWidgetConfig->getMerchantSelectorCookieIdentifier(), '')",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 62,
+            "line_to": 62,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Symfony\\Component\\HttpFoundation\\Cookie> variable $this->cookies",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantSwitcherWidget/src/SprykerShop/Yves/MerchantSwitcherWidget/Cookie/SelectedMerchantCookie.php",
+            "snippet": "        $this->cookies->append(Cookie::create(",
+            "selected_text": "append",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Symfony\\Component\\HttpFoundation\\Cookie> variable $this->cookies",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantSwitcherWidget/src/SprykerShop/Yves/MerchantSwitcherWidget/Cookie/SelectedMerchantCookie.php",
+            "snippet": "        $this->cookies->append(Cookie::create(",
+            "selected_text": "append",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 62,
+            "line_to": 62,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\MerchantTransfer> variable $merchantTransfers",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantSwitcherWidget/src/SprykerShop/Yves/MerchantSwitcherWidget/MerchantReader/MerchantReader.php",
+            "snippet": "        $merchantTransfers->getIterator()->rewind();",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\MerchantTransfer> variable $merchantTransfers",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantSwitcherWidget/src/SprykerShop/Yves/MerchantSwitcherWidget/MerchantReader/MerchantReader.php",
+            "snippet": "        $selectedMerchantTransfer = $merchantTransfers->getIterator()->current();",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 75,
+            "line_to": 75,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\MerchantSwitcherWidget\\Cookie\\SelectedMerchantCookieInterface::setMerchantReference cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantSwitcherWidget/src/SprykerShop/Yves/MerchantSwitcherWidget/MerchantReader/MerchantReader.php",
+            "snippet": "        $this->selectedMerchantCookie->setMerchantReference($selectedMerchantReference);",
+            "selected_text": "$selectedMerchantReference",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\MerchantSwitcherWidget\\Dependency\\Client\\MerchantSwitcherWidgetToQuoteClientInterface::setQuote cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantSwitcherWidget/src/SprykerShop/Yves/MerchantSwitcherWidget/MerchantSwitcher/MerchantSwitcher.php",
+            "snippet": "        $this->quoteClient->setQuote($quoteTransfer);",
+            "selected_text": "$quoteTransfer",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantSwitcherWidget/src/SprykerShop/Yves/MerchantSwitcherWidget/MerchantSwitcherWidgetDependencyProvider.php",
+            "snippet": "            return new MerchantSwitcherWidgetToMerchantSearchClientBridge($container->getLocator()->merchantSearch()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantSwitcherWidget/src/SprykerShop/Yves/MerchantSwitcherWidget/MerchantSwitcherWidgetDependencyProvider.php",
+            "snippet": "            return new MerchantSwitcherWidgetToQuoteClientBridge($container->getLocator()->quote()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 93,
+            "line_to": 93,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantSwitcherWidget/src/SprykerShop/Yves/MerchantSwitcherWidget/MerchantSwitcherWidgetDependencyProvider.php",
+            "snippet": "            return new MerchantSwitcherWidgetToMerchantSwitcherClientBridge($container->getLocator()->merchantSwitcher()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "MismatchingDocblockReturnType",
+            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Symfony\\Component\\HttpFoundation\\Cookie>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantSwitcherWidget/src/SprykerShop/Yves/MerchantSwitcherWidget/MerchantSwitcherWidgetFactory.php",
+            "snippet": "     * @return \\ArrayObject|\\Symfony\\Component\\HttpFoundation\\Cookie[]",
+            "selected_text": "\\ArrayObject|\\Symfony\\Component\\HttpFoundation\\Cookie[]",
+            "error_level": 4,
+            "shortcode": 142
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantSwitcherWidget/src/SprykerShop/Yves/MerchantSwitcherWidget/Plugin/CustomerPage/MerchantSwitchCartAfterCustomerAuthenticationSuccessPlugin.php",
+            "snippet": "        if ($merchantReference && $quoteTransfer->getItems()->count()) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 77,
+            "line_to": 77,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantSwitcherWidget/src/SprykerShop/Yves/MerchantSwitcherWidget/MerchantSwitcherWidgetFactory.php",
+            "snippet": "        return $this->getApplication()['request'];",
+            "selected_text": "$this->getApplication()",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 85,
+            "line_to": 85,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantSwitcherWidget/src/SprykerShop/Yves/MerchantSwitcherWidget/MerchantSwitcherWidgetFactory.php",
+            "snippet": "        return $this->getApplication()['cookies'];",
+            "selected_text": "$this->getApplication()",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

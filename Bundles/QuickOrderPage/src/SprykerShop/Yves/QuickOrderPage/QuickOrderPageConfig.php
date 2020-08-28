@@ -16,8 +16,13 @@ class QuickOrderPageConfig extends AbstractBundleConfig
     protected const UPLOAD_ROW_COUNT_LIMIT = 1000;
     protected const DEFAULT_DISPLAYED_ROW_COUNT = 8;
     protected const MAX_ALLOWED_QUANTITY = 100000;
+    protected const ALLOWED_CSV_FILE_MIME_TYPES = [
+        'text/csv',
+    ];
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getTextOrderRowSplitterPattern(): string
@@ -26,6 +31,8 @@ class QuickOrderPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getTextOrderSeparators(): array
@@ -34,6 +41,8 @@ class QuickOrderPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getDefaultDisplayedRowCount(): int
@@ -42,6 +51,8 @@ class QuickOrderPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getUploadRowCountLimit(): int
@@ -50,10 +61,22 @@ class QuickOrderPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getMaxAllowedQuantity(): int
     {
         return static::MAX_ALLOWED_QUANTITY;
+    }
+
+    /**
+     * @api
+     *
+     * @return string[]
+     */
+    public function getAllowedCsvFileMimeTypes(): array
+    {
+        return static::ALLOWED_CSV_FILE_MIME_TYPES;
     }
 }

@@ -3,6 +3,11 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
+    <transfer name="AggregatedItemState">
+        <property name="name" type="string"/>
+        <property name="displayName" type="string"/>
+    </transfer>
+
     <transfer name="Order">
         <property name="idSalesOrder" type="int"/>
         <property name="email" type="string"/>
@@ -14,6 +19,7 @@
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="customer" type="Customer"/>
         <property name="items" type="Item[]"  singular="item"/>
+        <property name="aggregatedItemStates" type="AggregatedItemState[]" singular="aggregatedItemState"/>
         <property name="createdAt" type="string"/>
         <property name="isTest" type="string"/>
         <property name="expenses" type="Expense[]" singular="expense"/>
@@ -30,13 +36,26 @@
         <property name="priceMode" type="string"/>
         <property name="store" type="string"/>
         <property name="currencyIsoCode" type="string"/>
+        <property name="itemGroups" type="ProductBundleGroup[]" singular="itemGroup"/>
     </transfer>
 
     <transfer name="OrderList">
         <property name="idCustomer" type="int"/>
         <property name="filter" type="Filter"/>
+        <property name="filterFields" type="FilterField[]" singular="filterField"/>
         <property name="orders" type="Order[]" singular="order"/>
         <property name="pagination" type="Pagination"/>
+        <property name="format" type="OrderListFormat"/>
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="OrderListFormat">
+        <property name="expandWithItems" type="bool"/>
+    </transfer>
+
+    <transfer name="FilterField">
+        <property name="type" type="string"/>
+        <property name="value" type="string"/>
     </transfer>
 
     <transfer name="Address">
@@ -106,6 +125,7 @@
         <property name="billingSameAsShipping" type="bool"/>
         <property name="commentThread" type="CommentThread"/>
         <property name="customer" type="Customer"/>
+        <property name="bundleItems" type="Item[]" singular="bundleItem"/>
     </transfer>
 
     <transfer name="Item">
@@ -128,6 +148,8 @@
         <property name="isOrdered" type="bool"/>
         <property name="shipment" type="Shipment"/>
         <property name="giftCardMetadata" type="GiftCardMetadata"/>
+        <property name="relatedBundleItemIdentifier" type="string"/>
+        <property name="bundleItemIdentifier" type="string"/>
     </transfer>
 
     <transfer name="ItemCollection">
@@ -244,6 +266,7 @@
         <property name="shipment" type="Shipment"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="hash" type="string"/>
+        <property name="cartItems" type="array" singular="cartItem"/>
     </transfer>
 
     <transfer name="Customer">
@@ -258,12 +281,20 @@
         <property name="lastName" type="string"/>
         <property name="isDirty" type="bool"/>
         <property name="isGuest" type="bool"/>
+        <property name="customerReference" type="string"/>
+        <property name="registrationKey" type="string"/>
+        <property name="registered" type="string"/>
     </transfer>
 
     <transfer name="CustomerResponse">
         <property name="customerTransfer" type="Customer"/>
         <property name="isSuccess" type="bool"/>
         <property name="errors" type="CustomerError[]" singular="error"/>
+        <property name="message" type="Message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
     </transfer>
 
     <transfer name="CommentThread">
@@ -280,6 +311,43 @@
 
     <transfer name="GiftCardMetadata">
         <property name="isGiftCard" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductBundleGroup">
+        <property name="isBundle" type="bool"/>
+        <property name="bundleItem" type="Item"/>
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="refundTotal" type="int"/>
+        <property name="grandTotal" type="int"/>
+        <property name="taxTotal" type="TaxTotal"/>
+        <property name="expenseTotal" type="int"/>
+        <property name="subtotal" type="int"/>
+        <property name="remunerationTotal" type="int"/>
+        <property name="canceledTotal" type="int"/>
+    </transfer>
+
+    <transfer name="Locale">
+    </transfer>
+
+    <transfer name="Country">
+    </transfer>
+
+    <transfer name="CalculatedDiscount">
+    </transfer>
+
+    <transfer name="ItemState">
+    </transfer>
+
+    <transfer name="ShipmentCarrier">
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+    </transfer>
+
+    <transfer name="TaxTotal">
+        <property name="amount" type="int"/>
     </transfer>
 
 </transfers>

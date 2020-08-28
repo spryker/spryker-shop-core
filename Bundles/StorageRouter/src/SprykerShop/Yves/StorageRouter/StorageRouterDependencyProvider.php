@@ -39,9 +39,9 @@ class StorageRouterDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUrlStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_URL_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_URL_STORAGE, function (Container $container) {
             return new StorageRouterToUrlStorageClientBridge($container->getLocator()->urlStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -53,9 +53,9 @@ class StorageRouterDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addResourceCreatorPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_RESOURCE_CREATORS] = function () {
+        $container->set(static::PLUGIN_RESOURCE_CREATORS, function () {
             return $this->getResourceCreatorPlugins();
-        };
+        });
 
         return $container;
     }

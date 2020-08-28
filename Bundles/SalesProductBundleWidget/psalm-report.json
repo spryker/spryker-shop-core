@@ -1,0 +1,43 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>>' for SprykerShop\\Yves\\SalesProductBundleWidget\\Expander\\ReturnCreateFormExpander::getProductBundleFormFields is incorrect, got 'array<non-empty-string, array{productBundleData: Generated\\Shared\\Transfer\\ItemTransfer|null}>'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/SalesProductBundleWidget/src/SprykerShop/Yves/SalesProductBundleWidget/Expander/ReturnCreateFormExpander.php",
+            "snippet": "     * @return \\Generated\\Shared\\Transfer\\ItemTransfer[][]",
+            "selected_text": "\\Generated\\Shared\\Transfer\\ItemTransfer[][]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 94,
+            "line_to": 94,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'array<non-empty-string, array{productBundleData: Generated\\Shared\\Transfer\\ItemTransfer|null}>' does not match the declared return type 'array<array-key, array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>>' for SprykerShop\\Yves\\SalesProductBundleWidget\\Expander\\ReturnCreateFormExpander::getProductBundleFormFields",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/SalesProductBundleWidget/src/SprykerShop/Yves/SalesProductBundleWidget/Expander/ReturnCreateFormExpander.php",
+            "snippet": "        return $productBundleFormFields;",
+            "selected_text": "$productBundleFormFields",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 83,
+            "line_to": 83,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ReturnItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/SalesProductBundleWidget/src/SprykerShop/Yves/SalesProductBundleWidget/Handler/ReturnCreateFormHandler.php",
+            "snippet": "            $returnCreateRequestTransfer->getReturnItems()->append($returnItemTransfer);",
+            "selected_text": "append",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": []
+}

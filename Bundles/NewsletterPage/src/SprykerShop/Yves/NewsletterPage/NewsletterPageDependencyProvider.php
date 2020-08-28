@@ -37,9 +37,9 @@ class NewsletterPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addNewsletterClient(Container $container)
     {
-        $container[static::CLIENT_NEWSLETTER] = function (Container $container) {
+        $container->set(static::CLIENT_NEWSLETTER, function (Container $container) {
             return new NewsletterPageToNewsletterClientBridge($container->getLocator()->newsletter()->client());
-        };
+        });
 
         return $container;
     }
@@ -51,9 +51,9 @@ class NewsletterPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerClient(Container $container)
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new NewsletterPageToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }

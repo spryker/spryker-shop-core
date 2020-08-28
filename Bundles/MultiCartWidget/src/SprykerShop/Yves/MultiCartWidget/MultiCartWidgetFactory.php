@@ -10,6 +10,11 @@ namespace SprykerShop\Yves\MultiCartWidget;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\MultiCartWidget\Dependency\Client\MultiCartWidgetToMultiCartClientInterface;
 use SprykerShop\Yves\MultiCartWidget\Dependency\Client\MultiCartWidgetToQuoteClientInterface;
+use SprykerShop\Yves\MultiCartWidget\Form\MultiCartClearForm;
+use SprykerShop\Yves\MultiCartWidget\Form\MultiCartDuplicateForm;
+use SprykerShop\Yves\MultiCartWidget\Form\MultiCartSetDefaultForm;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 
 class MultiCartWidgetFactory extends AbstractFactory
 {
@@ -35,5 +40,37 @@ class MultiCartWidgetFactory extends AbstractFactory
     public function getViewExtendWidgetPlugins(): array
     {
         return $this->getProvidedDependency(MultiCartWidgetDependencyProvider::PLUGINS_VIEW_EXTEND);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormFactoryInterface
+     */
+    public function getFormFactory(): FormFactoryInterface
+    {
+        return $this->getProvidedDependency(MultiCartWidgetDependencyProvider::FORM_FACTORY);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getMultiCartClearForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(MultiCartClearForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getMultiCartDuplicateForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(MultiCartDuplicateForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getMultiCartSetDefaultForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(MultiCartSetDefaultForm::class);
     }
 }

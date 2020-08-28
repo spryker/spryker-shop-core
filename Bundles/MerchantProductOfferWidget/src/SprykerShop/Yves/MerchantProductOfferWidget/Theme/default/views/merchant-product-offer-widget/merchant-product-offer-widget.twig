@@ -2,14 +2,15 @@
 
 {% define data = {
     locale: app.locale | slice(0, 2),
-    productOfferCollection: _widget.productOfferCollection,
+    productOffers: _widget.productOffers,
     productView: _widget.productView,
 } %}
 
 {% block template %}
-    {% if data.productOfferCollection %}
+    {% set isRadioButtonVisible = data.productOffers | length > 1 %}
+    {% if data.productOffers %}
         {% block content %}
-            <div class="box box--dark box--spacingless spacing spacing--inner spacing-y">
+            <div class="box box--dark box--spacingless spacing spacing--inner">
                 {% block contentInner %}
                     {% block title %}
                         <div>
@@ -18,22 +19,31 @@
                     {% endblock %}
 
                     {% block productOfferList %}
-                        {% for productOffer in data.productOfferCollection  %}
+                        {% for productOffer in data.productOffers  %}
                             {% block productOffer %}
-                                {% set isSameMerchantOffer = data.productView.productOfferReference == productOffer.productOfferReference %}
-
-                                {% include molecule('merchant-product-offer-item', 'MerchantProductOfferWidget') with {
+                                {% embed molecule('merchant-product-offer-item', 'MerchantProductOfferWidget') with {
                                     data: {
-                                        checked: isSameMerchantOffer,
+                                        isChecked: data.productView.productOfferReference is same as(productOffer.productOfferReference),
                                         radioGroupName: 'product_offer_reference',
-                                        offerReference: productOffer.productOfferReference,
-                                        merchantName: productOffer.merchantProfile.merchantName,
-                                        merchantUrl: productOffer.merchantProfile.merchantUrl,
+                                        productOfferReference: productOffer.productOfferReference | default,
+                                        merchantName: productOffer.merchantStorage.name | default,
+                                        merchantUrl: productOffer.merchantStorage.merchantUrl | default,
                                         price: productOffer.price.price | default(null),
                                         currencyIsoCode: productOffer.price.currency.code | default(null),
-                                        shouldShowRadioButton: data.productOfferCollection | length > 1
+                                        isRadioButtonVisible: isRadioButtonVisible,
                                     },
+                                    embed : {
+                                        currentProductPrice: productOffer.price,
+                                    }
                                 } only %}
+                                    {% block price %}
+                                        {% widget 'CurrentProductPriceVolumeWidget' args [embed.currentProductPrice] only %}
+                                            {% block priceTable %}{% endblock %}
+                                        {% nowidget %}
+                                            {{ parent() }}
+                                        {% endwidget %}
+                                    {% endblock %}
+                                {% endembed %}
                             {% endblock %}
                         {% endfor %}
                     {% endblock %}

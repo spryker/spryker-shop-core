@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuoteRequestWidget\Form;
 
 use Spryker\Yves\Kernel\Form\AbstractType;
+use SprykerShop\Yves\QuoteRequestWidget\Plugin\Router\QuoteRequestWidgetRouteProviderPlugin;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -19,7 +20,7 @@ class QuoteRequestCartForm extends AbstractType
     public const SUBMIT_BUTTON_SAVE_AND_BACK = 'saveAndBack';
 
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestWidget\Plugin\Provider\QuoteRequestWidgetControllerProvider::ROUTE_QUOTE_REQUEST_SAVE_CART
+     * @uses \SprykerShop\Yves\QuoteRequestWidget\Plugin\Router\QuoteRequestWidgetRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_SAVE_CART
      */
     protected const ROUTE_QUOTE_REQUEST_SAVE_CART = '/quote-request/cart/save';
 
@@ -31,6 +32,6 @@ class QuoteRequestCartForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->setAction(static::ROUTE_QUOTE_REQUEST_SAVE_CART);
+        $builder->setAction(QuoteRequestWidgetRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_SAVE_CART);
     }
 }

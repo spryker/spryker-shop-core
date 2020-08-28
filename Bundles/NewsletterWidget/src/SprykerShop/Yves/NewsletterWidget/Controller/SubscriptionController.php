@@ -17,7 +17,7 @@ use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated Use SubscriptionWidgetController instead
+ * @deprecated Use {@link SubscriptionWidgetController} instead
  * @method \SprykerShop\Yves\NewsletterWidget\NewsletterWidgetFactory getFactory()
  */
 class SubscriptionController extends AbstractController
@@ -48,7 +48,7 @@ class SubscriptionController extends AbstractController
             ->getFactory()
             ->getNewsletterSubscriptionForm();
 
-        $parentRequest = $this->getApplication()['request_stack']->getParentRequest();
+        $parentRequest = $this->getRequestStack()->getParentRequest();
 
         if ($parentRequest !== null) {
             $request = $parentRequest;
@@ -65,7 +65,8 @@ class SubscriptionController extends AbstractController
                 ->getNewsletterClient()
                 ->subscribeWithDoubleOptIn($request);
 
-            $subscriptionResult = current($subscriptionResponse->getSubscriptionResults());
+            /** @var \Generated\Shared\Transfer\NewsletterSubscriptionResultTransfer|null $subscriptionResult */
+            $subscriptionResult = $subscriptionResponse->getSubscriptionResults()->getIterator()->current();
 
             if ($subscriptionResult->getIsSuccess()) {
                 $subscriptionForm = $this

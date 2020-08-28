@@ -14,7 +14,7 @@ use SprykerShop\Yves\ShopPermission\Dependency\Client\ShopPermissionToPermission
 class ShopPermissionDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**
-     * @deprecated Use `static::PERMISSION_TWIG_EXTENSION_PLUGINS` instead.
+     * @deprecated Use {@link PERMISSION_TWIG_EXTENSION_PLUGINS} instead.
      */
     public const PERMISSION_TWIG_FUNCTION_PLUGINS = 'PERMISSION_TWIG_FUNCTION_PLUGINS';
 
@@ -43,15 +43,15 @@ class ShopPermissionDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPermissionClient(Container $container)
     {
-        $container[static::CLIENT_PERMISSION] = function (Container $container) {
+        $container->set(static::CLIENT_PERMISSION, function (Container $container) {
             return new ShopPermissionToPermissionClientBridge($container->getLocator()->permission()->client());
-        };
+        });
 
         return $container;
     }
 
     /**
-     * @deprecated Use `addPermissionTwigExtensionPlugins` instead.
+     * @deprecated Use {@link addPermissionTwigExtensionPlugins()} instead.
      *
      * @param \Spryker\Yves\Kernel\Container $container
      *
@@ -59,15 +59,15 @@ class ShopPermissionDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPermissionTwigFunctionPlugins(Container $container)
     {
-        $container[static::PERMISSION_TWIG_FUNCTION_PLUGINS] = function (Container $container) {
+        $container->set(static::PERMISSION_TWIG_FUNCTION_PLUGINS, function (Container $container) {
             return $this->getPermissionTwigFunctionPlugins();
-        };
+        });
 
         return $container;
     }
 
     /**
-     * @deprecated Use `getPermissionTwigExtensionPlugins` instead.
+     * @deprecated Use {@link getPermissionTwigExtensionPlugins()} instead.
      *
      * @return \Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface[]
      */
@@ -83,9 +83,9 @@ class ShopPermissionDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPermissionTwigExtensionPlugins(Container $container)
     {
-        $container[static::PERMISSION_TWIG_EXTENSION_PLUGINS] = function (Container $container) {
+        $container->set(static::PERMISSION_TWIG_EXTENSION_PLUGINS, function (Container $container) {
             return $this->getPermissionTwigExtensionPlugins();
-        };
+        });
 
         return $container;
     }

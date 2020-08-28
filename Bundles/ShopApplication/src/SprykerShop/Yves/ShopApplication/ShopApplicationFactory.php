@@ -9,8 +9,12 @@ namespace SprykerShop\Yves\ShopApplication;
 
 use Silex\Provider\TwigServiceProvider;
 use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\Application\Application;
+use Spryker\Shared\Application\ApplicationInterface;
+use Spryker\Shared\Kernel\Container\ContainerProxy;
 use Spryker\Shared\Twig\Loader\FilesystemLoader;
 use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
+use Spryker\Yves\Application\ApplicationDependencyProvider;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Widget\WidgetCollection;
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
@@ -49,7 +53,7 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use createWidgetFactory() method instead.
+     * @deprecated Use {@link createWidgetFactory()} method instead.
      *
      * @return \Spryker\Yves\Kernel\Widget\WidgetFactoryInterface
      */
@@ -67,7 +71,7 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Instead of this we make use of `Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin`. Method will be removed without replacement.
+     * @deprecated Instead of this we make use of {@link \Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin}. Method will be removed without replacement.
      *
      * @return \Silex\Provider\TwigServiceProvider
      */
@@ -77,7 +81,7 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Communication\Application
+     * @return \Spryker\Service\Container\ContainerInterface
      */
     public function getApplication()
     {
@@ -93,7 +97,7 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use getGlobalWidgetCollection() method instead.
+     * @deprecated Use {@link getGlobalWidgetCollection()} method instead.
      *
      * @return \Spryker\Yves\Kernel\Widget\WidgetContainerInterface
      */
@@ -145,7 +149,15 @@ class ShopApplicationFactory extends AbstractFactory
      */
     public function createRoutingHelper()
     {
-        return new RoutingHelper($this->getApplication(), $this->getStore(), $this->getUtilTextService());
+        return new RoutingHelper($this->getGlobalContainer(), $this->getUtilTextService());
+    }
+
+    /**
+     * @return \Spryker\Service\Container\ContainerInterface
+     */
+    public function getGlobalContainer(): ContainerInterface
+    {
+        return $this->getProvidedDependency(ShopApplicationDependencyProvider::GLOBAL_CONTAINER);
     }
 
     /**
@@ -216,5 +228,29 @@ class ShopApplicationFactory extends AbstractFactory
     public function createShopApplicationTwigEventSubscriber(ContainerInterface $container): EventSubscriberInterface
     {
         return new ShopApplicationTwigEventSubscriber($container, $this->createWidgetContainerRegistry(), $this->createRoutingHelper(), $this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Shared\Application\ApplicationInterface
+     */
+    public function createApplication(): ApplicationInterface
+    {
+        return new Application($this->createServiceContainer(), $this->getApplicationPlugins());
+    }
+
+    /**
+     * @return \Spryker\Service\Container\ContainerInterface
+     */
+    public function createServiceContainer(): ContainerInterface
+    {
+        return new ContainerProxy(['logger' => null, 'debug' => $this->getConfig()->isDebugModeEnabled(), 'charset' => 'UTF-8']);
+    }
+
+    /**
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     */
+    public function getApplicationPlugins(): array
+    {
+        return $this->getProvidedDependency(ApplicationDependencyProvider::PLUGINS_APPLICATION);
     }
 }

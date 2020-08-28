@@ -16,4 +16,7 @@
         <property name="images" singular="image" type="ProductImageStorage[]"/>
     </transfer>
 
+    <transfer name="ProductImageStorage">
+    </transfer>
+
 </transfers>

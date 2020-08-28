@@ -19,6 +19,8 @@
         <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
         <property name="billingAddress" type="Address"/>
         <property name="checkoutConfirmed" type="bool"/>
+        <property name="priceMode" type="string"/>
+        <property name="acceptTermsAndConditions" type="bool"/>
     </transfer>
 
     <transfer name="Message">
@@ -28,6 +30,7 @@
     <transfer name="ShipmentGroup">
         <property name="hash" type="string"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="cartItems" type="array" singular="cartItem"/>
         <property name="shipment" type="Shipment"/>
     </transfer>
 
@@ -82,6 +85,7 @@
     <transfer name="Totals">
         <property name="grandTotal" type="int"/>
         <property name="priceToPay" type="int"/>
+        <property name="shipmentTotal" type="int"/>
     </transfer>
 
     <transfer name="Customer">
@@ -165,6 +169,12 @@
 
     <transfer name="CommentThread">
         <property name="idCommentThread" type="int"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+    </transfer>
+
+    <transfer name="ShipmentCarrier">
     </transfer>
 
 </transfers>

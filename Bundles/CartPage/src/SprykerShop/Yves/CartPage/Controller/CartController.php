@@ -13,10 +13,13 @@ use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Shared\CartPage\Plugin\AddCartItemPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\ChangeCartItemPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
-use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
+use SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
  * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
@@ -27,9 +30,23 @@ class CartController extends AbstractController
 
     public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
 
+    public const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
+
     public const PARAM_ITEMS = 'items';
 
+    protected const REQUEST_PARAMETER_SKU = 'sku';
+    protected const REQUEST_PARAMETER_QUANTITY = 'quantity';
+    protected const REQUEST_PARAMETER_TOKEN = '_token';
+
     protected const FIELD_QUANTITY_TO_NORMALIZE = 'quantity';
+
+    protected const KEY_CODE = 'code';
+    protected const KEY_MESSAGES = 'messages';
+
+    protected const CSRF_TOKEN_ID = 'add-to-cart-ajax';
+    protected const MESSAGE_TYPE_ERROR = 'error';
+    protected const FLASH_MESSAGE_LIST_TEMPLATE_PATH = '@ShopUi/components/organisms/flash-message-list/flash-message-list.twig';
+    protected const GLOSSARY_KEY_ERROR_MESSAGE_UNEXPECTED_ERROR = 'cart_page.error_message.unexpected_error';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -75,6 +92,7 @@ class CartController extends AbstractController
         $quoteClient = $this->getFactory()->getQuoteClient();
 
         return [
+            'removeCartItemForm' => $this->getFactory()->createCartPageFormFactory()->getRemoveForm()->createView(),
             'cart' => $quoteTransfer,
             'isQuoteEditable' => $quoteClient->isQuoteEditable($quoteTransfer),
             'isQuoteLocked' => $quoteClient->isQuoteLocked($quoteTransfer),
@@ -92,12 +110,20 @@ class CartController extends AbstractController
      */
     public function addAction(Request $request, $sku)
     {
+        $form = $this->getFactory()->createCartPageFormFactory()->getAddToCartForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
+        }
+
         $quantity = $request->get('quantity', 1);
 
         if (!$this->canAddCartItem()) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
         }
 
         $itemTransfer = new ItemTransfer();
@@ -117,7 +143,7 @@ class CartController extends AbstractController
             ->getZedRequestClient()
             ->addResponseMessagesToMessenger();
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
     }
 
     /**
@@ -133,7 +159,7 @@ class CartController extends AbstractController
         if (!$this->canAddCartItem()) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
         }
 
         return $this->executeQuickAddAction($sku, $quantity);
@@ -161,7 +187,7 @@ class CartController extends AbstractController
             ->getZedRequestClient()
             ->addFlashMessagesFromLastZedRequest();
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
     }
 
     /**
@@ -177,7 +203,15 @@ class CartController extends AbstractController
         if (!$this->canRemoveCartItem()) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
+        }
+
+        $form = $this->getFactory()->createCartPageFormFactory()->getRemoveForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
         }
 
         $this->getFactory()
@@ -188,7 +222,7 @@ class CartController extends AbstractController
             ->getZedRequestClient()
             ->addResponseMessagesToMessenger();
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
     }
 
     /**
@@ -204,7 +238,15 @@ class CartController extends AbstractController
         if (!$this->canChangeCartItem($quantity)) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
+        }
+
+        $form = $this->getFactory()->createCartPageFormFactory()->getCartChangeQuantityForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
         }
 
         $this->getFactory()
@@ -215,7 +257,7 @@ class CartController extends AbstractController
             ->getZedRequestClient()
             ->addResponseMessagesToMessenger();
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
     }
 
     /**
@@ -228,7 +270,15 @@ class CartController extends AbstractController
         if (!$this->canAddCartItem()) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
+        }
+
+        $form = $this->getFactory()->createCartPageFormFactory()->getAddItemsForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
         }
 
         $items = (array)$request->request->get(self::PARAM_ITEMS);
@@ -242,7 +292,7 @@ class CartController extends AbstractController
             ->getZedRequestClient()
             ->addResponseMessagesToMessenger();
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
     }
 
     /**
@@ -258,7 +308,7 @@ class CartController extends AbstractController
         if (!$this->canChangeCartItem($quantity)) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
         }
 
         $quoteTransfer = $this->getFactory()
@@ -278,17 +328,108 @@ class CartController extends AbstractController
             );
 
         if ($isItemReplacedInCart) {
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
         }
 
         $this->addInfoMessage('cart.item_attributes_needed');
 
         return $this->redirectResponseInternal(
-            CartControllerProvider::ROUTE_CART,
+            CartPageRouteProviderPlugin::ROUTE_NAME_CART,
             $this->getFactory()
                 ->createCartItemsAttributeProvider()
                 ->formatUpdateActionResponse($sku, $request->get('selectedAttributes', []))
         );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function addAjaxAction(Request $request): JsonResponse
+    {
+        $response = $this->executeAddAjaxAction($request);
+
+        return $this->jsonResponse($response);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeAddAjaxAction(Request $request): array
+    {
+        $csrfToken = $this->createCsrfToken(
+            static::CSRF_TOKEN_ID,
+            $request->get(static::REQUEST_PARAMETER_TOKEN)
+        );
+
+        if (!$this->getFactory()->getCsrfTokenManager()->isTokenValid($csrfToken)) {
+            return $this->createAjaxErrorResponse(
+                Response::HTTP_BAD_REQUEST,
+                [static::GLOSSARY_KEY_ERROR_MESSAGE_UNEXPECTED_ERROR]
+            );
+        }
+
+        if (!$this->canAddCartItem()) {
+            return $this->createAjaxErrorResponse(
+                Response::HTTP_FORBIDDEN,
+                [static::MESSAGE_PERMISSION_FAILED]
+            );
+        }
+
+        $sku = $request->get(static::REQUEST_PARAMETER_SKU);
+        $quantity = $request->get(static::REQUEST_PARAMETER_QUANTITY, 1);
+
+        $itemTransfer = (new ItemTransfer())
+            ->setSku($sku)
+            ->setQuantity($quantity);
+
+        $itemTransfer = $this->executePreAddToCartPlugins($itemTransfer, $request->request->all());
+
+        $this->getFactory()
+            ->getCartClient()
+            ->addItem($itemTransfer, $request->request->all());
+
+        $messageTransfers = $this->getFactory()
+            ->getZedRequestClient()
+            ->getLastResponseErrorMessages();
+
+        $cartQuantity = $this->getFactory()
+            ->getCartClient()
+            ->getItemCount();
+
+        if ($messageTransfers) {
+            $this->addErrorMessages($messageTransfers);
+            $flashMessageListHtml = $this->renderView(static::FLASH_MESSAGE_LIST_TEMPLATE_PATH)->getContent();
+
+            return [
+                static::KEY_CODE => Response::HTTP_BAD_REQUEST,
+                static::KEY_MESSAGES => $flashMessageListHtml,
+            ];
+        }
+
+        $this->addSuccessMessages(
+            $this->getFactory()->getZedRequestClient()->getLastResponseSuccessMessages()
+        );
+
+        return [
+            static::KEY_CODE => Response::HTTP_OK,
+            static::KEY_MESSAGES => $this->renderView(static::FLASH_MESSAGE_LIST_TEMPLATE_PATH)->getContent(),
+            static::REQUEST_PARAMETER_QUANTITY => $cartQuantity,
+        ];
+    }
+
+    /**
+     * @param string $tokenId
+     * @param string $value
+     *
+     * @return \Symfony\Component\Security\Csrf\CsrfToken
+     */
+    protected function createCsrfToken(string $tokenId, string $value): CsrfToken
+    {
+        return new CsrfToken($tokenId, $value);
     }
 
     /**
@@ -398,5 +539,49 @@ class CartController extends AbstractController
         }
 
         return $itemTransfer;
+    }
+
+    /**
+     * @param int $code
+     * @param string[] $messages
+     *
+     * @return array
+     */
+    protected function createAjaxErrorResponse(int $code, array $messages): array
+    {
+        foreach ($messages as $message) {
+            $this->addErrorMessage($message);
+        }
+
+        $flashMessageListHtml = $this->renderView(static::FLASH_MESSAGE_LIST_TEMPLATE_PATH)->getContent();
+
+        return [
+            static::KEY_CODE => $code,
+            static::KEY_MESSAGES => $flashMessageListHtml,
+        ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     *
+     * @return void
+     */
+    protected function addErrorMessages(array $messageTransfers): void
+    {
+        foreach ($messageTransfers as $messageTransfer) {
+            $this->addErrorMessage($messageTransfer->getValue());
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     *
+     * @return void
+     */
+    protected function addSuccessMessages(array $messageTransfers): void
+    {
+        foreach ($messageTransfers as $messageTransfer) {
+            $this->addSuccessMessage($messageTransfer->getValue());
+        }
     }
 }

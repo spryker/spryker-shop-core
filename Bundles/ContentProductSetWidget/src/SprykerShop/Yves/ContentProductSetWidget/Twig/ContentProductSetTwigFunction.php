@@ -25,7 +25,7 @@ class ContentProductSetTwigFunction extends TwigFunction
     protected const FUNCTION_CONTENT_PRODUCT_SET = 'content_product_set';
 
     /**
-     * @deprecated Use `\SprykerShop\Yves\ContentProductSetWidget\Twig\ContentProductSetTwigFunction::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_TOP` instead.
+     * @deprecated Use {@link \SprykerShop\Yves\ContentProductSetWidget\Twig\ContentProductSetTwigFunction::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_TOP} instead.
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
 
@@ -121,12 +121,13 @@ class ContentProductSetTwigFunction extends TwigFunction
             if (!$productSetDataStorageTransfer) {
                 return $this->getMessageProductSetNotFound($contentKey);
             }
-
-            $selectedAttributes = $this->getRequest($context)->query->get(static::PARAM_ATTRIBUTE, []);
+            
+            /** @var array $selectedAttributes */
+            $selectedAttributes = $this->getRequest($context)->query->get(static::PARAM_ATTRIBUTE) ?: [];
             $productAbstractViewCollection = $this->contentProductAbstractReader
                 ->findProductAbstractCollection($productSetDataStorageTransfer, $selectedAttributes, $this->localeName);
 
-            return $this->twig->render(
+            return (string)$this->twig->render(
                 $this->getAvailableTemplates()[$templateIdentifier],
                 [
                     'productSet' => $productSetDataStorageTransfer,

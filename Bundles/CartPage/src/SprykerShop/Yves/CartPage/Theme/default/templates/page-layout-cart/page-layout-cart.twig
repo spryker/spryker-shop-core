@@ -9,6 +9,7 @@
     attributes: _view.attributes,
     request: app.request,
     title: 'cart.cart' | trans,
+    requestUri: app.request.requestUri,
 } %}
 
 {% block breadcrumbs %}
@@ -61,7 +62,7 @@
                             {% widget 'CommentThreadWidget' args [
                                 data.cart.idQuote,
                                 'quote',
-                                app.request.requestUri,
+                                data.requestUri,
                                 data.cart.commentThread
                             ] only %}
                             {% endwidget %}
@@ -172,11 +173,23 @@
                                 {% widget 'CommentThreadWidget' args [
                                     data.cart.idQuote,
                                     'quote',
-                                    app.request.requestUri,
+                                    data.requestUri,
                                     data.cart.commentThread
                                 ] only %}
                                 {% endwidget %}
                             </div>
+
+                            {% block orderCustomReference %}
+                                {% widget 'OrderCustomReferenceWidget' args [
+                                    data.cart,
+                                    '/cart'
+                                ] only %}
+                                    {% block body %}
+                                        {{ parent() }}
+                                        <hr>
+                                    {% endblock %}
+                                {% endwidget %}
+                            {% endblock %}
                         {% endif %}
 
                         {% if data.isQuoteEditable and data.cart.idQuote %}

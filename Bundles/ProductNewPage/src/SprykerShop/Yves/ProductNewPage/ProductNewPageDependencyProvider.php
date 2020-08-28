@@ -45,9 +45,9 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductNewClient(Container $container)
     {
-        $container[self::CLIENT_PRODUCT_NEW] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_NEW, function (Container $container) {
             return new ProductNewPageToProductNewClientBridge($container->getLocator()->productNew()->client());
-        };
+        });
 
         return $container;
     }
@@ -59,9 +59,9 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUrlStorageClient(Container $container)
     {
-        $container[self::CLIENT_URL_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_URL_STORAGE, function (Container $container) {
             return new ProductNewPageToUrlStorageClientBridge($container->getLocator()->urlStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -73,9 +73,9 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCatalogClient(Container $container)
     {
-        $container[self::CLIENT_CATALOG] = function (Container $container) {
+        $container->set(static::CLIENT_CATALOG, function (Container $container) {
             return new ProductNewPageToCatalogClientBridge($container->getLocator()->catalog()->client());
-        };
+        });
 
         return $container;
     }
@@ -87,9 +87,9 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStore($container)
     {
-        $container[self::STORE] = function () {
+        $container->set(static::STORE, function () {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }
@@ -101,9 +101,9 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductNewPageWidgetPlugins($container)
     {
-        $container[self::PLUGIN_PRODUCT_NEW_PAGE_WIDGETS] = function () {
+        $container->set(static::PLUGIN_PRODUCT_NEW_PAGE_WIDGETS, function () {
             return $this->getProductNewPageWidgetPlugins();
-        };
+        });
 
         return $container;
     }

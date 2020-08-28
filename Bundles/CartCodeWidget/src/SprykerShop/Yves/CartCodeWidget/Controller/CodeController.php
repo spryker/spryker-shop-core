@@ -23,8 +23,19 @@ class CodeController extends AbstractController
 {
     public const PARAM_CODE = 'code';
 
+    /**
+     * @uses \Spryker\Shared\CartCode\CartCodesConfig::MESSAGE_TYPE_SUCCESS
+     */
     protected const MESSAGE_TYPE_SUCCESS = 'success';
+
+    /**
+     * @uses \Spryker\Shared\CartCode\CartCodesConfig::MESSAGE_TYPE_ERROR
+     */
     protected const MESSAGE_TYPE_ERROR = 'error';
+
+    protected const GLOSSARY_KEY_CODE_APPLY_FAILED = 'cart.code.apply.failed';
+
+    public const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -48,6 +59,8 @@ class CodeController extends AbstractController
             ->getCartCodeClient()
             ->addCartCode($this->createCartCodeRequestTransfer($quoteTransfer, $code));
 
+        $this->processErrorResponseMessage($cartCodeResponseTransfer);
+
         return $this->redirectResponse($cartCodeResponseTransfer, $request);
     }
 
@@ -58,6 +71,14 @@ class CodeController extends AbstractController
      */
     public function removeAction(Request $request)
     {
+        $cartCodeRemoveForm = $this->getFactory()->getCartCodeRemoveForm()->handleRequest($request);
+
+        if (!$cartCodeRemoveForm->isSubmitted() || !$cartCodeRemoveForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseExternal($request->headers->get('referer'));
+        }
+
         $code = (string)$request->query->get(static::PARAM_CODE);
         if (empty($code)) {
             return $this->redirectResponseExternal($request->headers->get('referer'));
@@ -78,6 +99,14 @@ class CodeController extends AbstractController
      */
     public function clearAction(Request $request)
     {
+        $cartCodeClearForm = $this->getFactory()->getCartCodeClearForm()->handleRequest($request);
+
+        if (!$cartCodeClearForm->isSubmitted() || !$cartCodeClearForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseExternal($request->headers->get('referer'));
+        }
+
         $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
 
         $cartCodeResponseTransfer = $this->getFactory()
@@ -108,6 +137,36 @@ class CodeController extends AbstractController
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CartCodeResponseTransfer $cartCodeResponseTransfer
+     *
+     * @return void
+     */
+    protected function processErrorResponseMessage(CartCodeResponseTransfer $cartCodeResponseTransfer): void
+    {
+        if ($this->isSuccessMessageExists($cartCodeResponseTransfer)) {
+            return;
+        }
+
+        $this->addErrorMessage(static::GLOSSARY_KEY_CODE_APPLY_FAILED);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartCodeResponseTransfer $cartCodeResponseTransfer
+     *
+     * @return bool
+     */
+    protected function isSuccessMessageExists(CartCodeResponseTransfer $cartCodeResponseTransfer): bool
+    {
+        foreach ($cartCodeResponseTransfer->getMessages() as $messageTransfer) {
+            if ($messageTransfer->getType() === static::MESSAGE_TYPE_SUCCESS) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string|null $code
      *
@@ -129,12 +188,14 @@ class CodeController extends AbstractController
      */
     protected function handleMessage(MessageTransfer $messageTransfer): void
     {
+        if ($messageTransfer->getType() === static::MESSAGE_TYPE_ERROR) {
+            return;
+        }
+
         switch ($messageTransfer->getType()) {
             case self::MESSAGE_TYPE_SUCCESS:
                 $this->addSuccessMessage($messageTransfer->getValue());
-                break;
-            case self::MESSAGE_TYPE_ERROR:
-                $this->addErrorMessage($messageTransfer->getValue());
+
                 break;
             default:
                 $this->addInfoMessage($messageTransfer->getValue());

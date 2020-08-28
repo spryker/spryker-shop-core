@@ -14,6 +14,7 @@
             novalidate: 'novalidate',
         },
     },
+    resetFieldsId: false,
 
     title: null,
 
@@ -22,6 +23,7 @@
         class: 'button button--success',
         icon: null,
         enable: false,
+        isSingleClickEnforcerEnabled: true,
         qa: 'submit-button',
     },
 
@@ -64,6 +66,7 @@
 
                         {% block field %}
                             {{ form_row(field, {
+                                id: not data.resetFieldsId ? field.vars.id,
                                 rowAttr: {
                                     class: config.name ~ '__field ' ~ fieldLayoutClass
                                 }
@@ -94,7 +97,10 @@
 
                 {% if data.submit.enable %}
                     {% block submit %}
-                        <button type="submit" class="{{config.name}}__action {{data.submit.class}}" data-init-single-click {{qa(data.submit.qa)}}>
+                        <button type="submit"
+                                class="{{config.name}}__action {{data.submit.class}}"
+                                {{ data.submit.isSingleClickEnforcerEnabled ? 'data-init-single-click' }}
+                                {{qa(data.submit.qa)}}>
                             {% if data.submit.icon is not empty %}
                                 {% include atom('icon') with {
                                     modifiers: ['small'],

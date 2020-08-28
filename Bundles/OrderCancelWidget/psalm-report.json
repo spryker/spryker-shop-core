@@ -1,0 +1,67 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\OrderCancelWidget\\Controller\\OrderCancelController::redirectResponseExternal cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/OrderCancelWidget/src/SprykerShop/Yves/OrderCancelWidget/Controller/OrderCancelController.php",
+            "snippet": "            return $this->redirectResponseExternal($returnUrl);",
+            "selected_text": "$returnUrl",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\OrderCancelWidget\\Controller\\OrderCancelController::redirectResponseExternal cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/OrderCancelWidget/src/SprykerShop/Yves/OrderCancelWidget/Controller/OrderCancelController.php",
+            "snippet": "        return $this->redirectResponseExternal($returnUrl);",
+            "selected_text": "$returnUrl",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 92,
+            "line_to": 92,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\OrderCancelWidget\\Controller\\OrderCancelController::addErrorMessage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/OrderCancelWidget/src/SprykerShop/Yves/OrderCancelWidget/Controller/OrderCancelController.php",
+            "snippet": "            $this->addErrorMessage($messageTransfer->getValue());",
+            "selected_text": "$messageTransfer->getValue()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Yves\\Kernel\\Controller\\AbstractController::redirectResponseExternal has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/OrderCancelWidget/src/SprykerShop/Yves/OrderCancelWidget/Controller/OrderCancelController.php",
+            "snippet": "            return $this->redirectResponseExternal($returnUrl);",
+            "selected_text": "redirectResponseExternal",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Yves\\Kernel\\Controller\\AbstractController::redirectResponseExternal has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/OrderCancelWidget/src/SprykerShop/Yves/OrderCancelWidget/Controller/OrderCancelController.php",
+            "snippet": "        return $this->redirectResponseExternal($returnUrl);",
+            "selected_text": "redirectResponseExternal",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

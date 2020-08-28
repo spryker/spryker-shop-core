@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\WishlistPage\Controller;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Yves\Kernel\Controller\AbstractController;
-use SprykerShop\Yves\WishlistPage\Plugin\Provider\WishlistPageControllerProvider;
+use SprykerShop\Yves\WishlistPage\Plugin\Router\WishlistPageRouteProviderPlugin;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +20,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class WishlistOverviewController extends AbstractController
 {
+    protected const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -55,7 +57,7 @@ class WishlistOverviewController extends AbstractController
             if ($wishlistResponseTransfer->getIsSuccess()) {
                 $this->addSuccessMessage('customer.account.wishlist.created');
 
-                return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_OVERVIEW);
+                return $this->redirectResponseInternal(WishlistPageRouteProviderPlugin::ROUTE_NAME_WISHLIST_OVERVIEW);
             }
 
             if (!$wishlistResponseTransfer->getIsSuccess()) {
@@ -63,7 +65,7 @@ class WishlistOverviewController extends AbstractController
                     $this->addErrorMessage($error);
                 }
 
-                return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_OVERVIEW);
+                return $this->redirectResponseInternal(WishlistPageRouteProviderPlugin::ROUTE_NAME_WISHLIST_OVERVIEW);
             }
 
             $this->handleResponseErrors($wishlistResponseTransfer, $wishlistForm);
@@ -76,6 +78,7 @@ class WishlistOverviewController extends AbstractController
         return [
             'wishlistCollection' => $wishlistCollection,
             'wishlistForm' => $wishlistForm->createView(),
+            'wishlistDeleteFormCloner' => $this->getFactory()->getFormCloner()->setForm($this->getFactory()->getWishlistDeleteForm()),
         ];
     }
 
@@ -117,7 +120,7 @@ class WishlistOverviewController extends AbstractController
             if ($wishlistResponseTransfer->getIsSuccess()) {
                 $this->addSuccessMessage('customer.account.wishlist.updated');
 
-                return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_OVERVIEW);
+                return $this->redirectResponseInternal(WishlistPageRouteProviderPlugin::ROUTE_NAME_WISHLIST_OVERVIEW);
             }
 
             $this->handleResponseErrors($wishlistResponseTransfer, $wishlistForm);
@@ -129,27 +132,39 @@ class WishlistOverviewController extends AbstractController
         return [
             'wishlistCollection' => $wishlistCollection,
             'wishlistForm' => $wishlistForm->createView(),
+            'wishlistDeleteFormCloner' => $this->getFactory()->getFormCloner()->setForm($this->getFactory()->getWishlistDeleteForm()),
         ];
     }
 
     /**
      * @param string $wishlistName
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($wishlistName)
+    public function deleteAction($wishlistName, Request $request)
     {
+        $removeWishlistForm = $this->getFactory()->getWishlistDeleteForm()->handleRequest($request);
+
         $wishlistTransfer = new WishlistTransfer();
         $wishlistTransfer
             ->setFkCustomer($this->getIdCustomer())
             ->setName($wishlistName);
+
+        if (!$removeWishlistForm->isSubmitted() || !$removeWishlistForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(WishlistPageRouteProviderPlugin::ROUTE_NAME_WISHLIST_DETAILS, [
+                'wishlistName' => $wishlistTransfer->getName(),
+            ]);
+        }
 
         $this->getFactory()
             ->getWishlistClient()
             ->removeWishlistByName($wishlistTransfer);
         $this->addSuccessMessage('customer.account.wishlist.deleted');
 
-        return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_OVERVIEW);
+        return $this->redirectResponseInternal(WishlistPageRouteProviderPlugin::ROUTE_NAME_WISHLIST_OVERVIEW);
     }
 
     /**

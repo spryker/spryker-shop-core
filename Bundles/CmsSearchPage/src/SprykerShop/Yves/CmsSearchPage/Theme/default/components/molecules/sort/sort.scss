@@ -9,7 +9,7 @@
 }
 
 /**
- * @deprecated use cms-search-page-sort mixin instead.
+ * @deprecated Use cms-search-page-sort mixin instead.
  */
 @mixin cms-page-sort($name: '.sort') {
     @include cms-search-page-sort();

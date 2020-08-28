@@ -125,7 +125,7 @@ class ShopCmsSlotTwigPluginTest extends Unit
             ->getSlotContent($cmsSlotContextTransfer);
 
         // Assert
-        $this->assertEquals('', $shopCmsSlotContent);
+        $this->assertSame('', $shopCmsSlotContent);
     }
 
     /**
@@ -153,7 +153,7 @@ class ShopCmsSlotTwigPluginTest extends Unit
             ->getSlotContent($cmsSlotContextTransfer);
 
         // Assert
-        $this->assertEquals('', $shopCmsSlotContent);
+        $this->assertSame('', $shopCmsSlotContent);
     }
 
     /**

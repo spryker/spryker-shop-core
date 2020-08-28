@@ -141,4 +141,6 @@
             max-width: $setting-grid-max-width;
         }
     }
+
+    @content;
 }

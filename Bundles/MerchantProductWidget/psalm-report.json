@@ -1,0 +1,102 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Generated\\Yves\\Ide\\AutoCompletion::merchantStorage does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantProductWidget/src/SprykerShop/Yves/MerchantProductWidget/MerchantProductWidgetDependencyProvider.php",
+            "snippet": "                $container->getLocator()->merchantStorage()->client()",
+            "selected_text": "merchantStorage",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 2 of SprykerShop\\Yves\\MerchantProductWidget\\Plugin\\CartPage\\MerchantProductPreAddToCartPlugin::preAddToCart has the more specific type 'array<array-key, string>', expecting 'array<array-key, mixed>' as defined by SprykerShop\\Yves\\CartPageExtension\\Dependency\\Plugin\\PreAddToCartPluginInterface::preAddToCart",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantProductWidget/src/SprykerShop/Yves/MerchantProductWidget/Plugin/CartPage/MerchantProductPreAddToCartPlugin.php",
+            "snippet": "    public function preAddToCart(ItemTransfer $itemTransfer, array $params): ItemTransfer",
+            "selected_text": "$params",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of SprykerShop\\Yves\\MerchantProductWidget\\Dependency\\Client\\MerchantProductWidgetToProductStorageClientInterface::findProductConcreteStorageDataByMapping cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantProductWidget/src/SprykerShop/Yves/MerchantProductWidget/Plugin/CartPage/MerchantProductPreAddToCartPlugin.php",
+            "snippet": "                $itemTransfer->getSku(),",
+            "selected_text": "$itemTransfer->getSku()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\MerchantProductWidget\\Dependency\\Client\\MerchantProductWidgetToProductStorageClientInterface::findProductAbstractStorageData cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantProductWidget/src/SprykerShop/Yves/MerchantProductWidget/Reader/MerchantProductReader.php",
+            "snippet": "            $productViewTransfer->getIdProductAbstract(),",
+            "selected_text": "$productViewTransfer->getIdProductAbstract()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 130,
+            "line_to": 130,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of mb_substr cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantProductWidget/src/SprykerShop/Yves/MerchantProductWidget/Reader/MerchantProductReader.php",
+            "snippet": "            $urlLocale = mb_substr($urlTransfer->getUrl(), 1, 2);",
+            "selected_text": "$urlTransfer->getUrl()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 132,
+            "line_to": 132,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for SprykerShop\\Yves\\MerchantProductWidget\\Reader\\MerchantProductReader::getResolvedUrl is not nullable, but the function returns 'mixed|null|string'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantProductWidget/src/SprykerShop/Yves/MerchantProductWidget/Reader/MerchantProductReader.php",
+            "snippet": "                return $urlTransfer->getUrl();",
+            "selected_text": "$urlTransfer->getUrl()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 147,
+            "line_to": 147,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\MerchantProductWidget\\Dependency\\Client\\MerchantProductWidgetToPriceProductStorageClientInterface::getResolvedPriceProductConcreteTransfers cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantProductWidget/src/SprykerShop/Yves/MerchantProductWidget/Reader/MerchantProductReader.php",
+            "snippet": "            $productViewTransfer->getIdProductConcrete(),",
+            "selected_text": "$productViewTransfer->getIdProductConcrete()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 148,
+            "line_to": 148,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of SprykerShop\\Yves\\MerchantProductWidget\\Dependency\\Client\\MerchantProductWidgetToPriceProductStorageClientInterface::getResolvedPriceProductConcreteTransfers cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantProductWidget/src/SprykerShop/Yves/MerchantProductWidget/Reader/MerchantProductReader.php",
+            "snippet": "            $productViewTransfer->getIdProductAbstract()",
+            "selected_text": "$productViewTransfer->getIdProductAbstract()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

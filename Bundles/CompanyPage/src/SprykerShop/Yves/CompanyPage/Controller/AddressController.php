@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use SprykerShop\Yves\CompanyPage\Form\CompanyUnitAddressForm;
-use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
+use SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -21,6 +21,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class AddressController extends AbstractCompanyController
 {
+    protected const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
+
     protected const COMPANY_UNIT_ADDRESS_LIST_SORT_FIELD = 'id_company_unit_address';
     protected const REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT = 'idCompanyBusinessUnit';
     protected const REQUEST_PARAM_ID = 'id';
@@ -58,6 +60,8 @@ class AddressController extends AbstractCompanyController
         return [
             'pagination' => $companyUnitAddressCollectionTransfer->getPagination(),
             'addresses' => $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses(),
+            'companyUnitAddressDeleteFormCloner' => $this->getFactory()->createFormCloner()
+                ->setForm($this->getFactory()->createCompanyPageFormFactory()->getCompanyUnitAddressDeleteForm()),
         ];
     }
 
@@ -114,10 +118,10 @@ class AddressController extends AbstractCompanyController
             ]);
 
             if (empty($idCompanyBusinessUnit)) {
-                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
+                return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT);
             }
 
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
+            return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT_UPDATE, [
                 'id' => $idCompanyBusinessUnit,
             ]);
         }
@@ -190,10 +194,10 @@ class AddressController extends AbstractCompanyController
             ]);
 
             if (empty($idCompanyBusinessUnit)) {
-                return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
+                return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT);
             }
 
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
+            return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT_UPDATE, [
                 'id' => $idCompanyBusinessUnit,
             ]);
         }
@@ -214,6 +218,15 @@ class AddressController extends AbstractCompanyController
      */
     public function deleteAction(Request $request)
     {
+        $companyBusinessUnitDeleteForm = $this->getFactory()->createCompanyPageFormFactory()->getCompanyUnitAddressDeleteForm()
+            ->handleRequest($request);
+
+        if (!$companyBusinessUnitDeleteForm->isSubmitted() || !$companyBusinessUnitDeleteForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_FORM_CSRF_VALIDATION_ERROR);
+
+            return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT);
+        }
+
         $idCompanyUnitAddress = $request->query->getInt(static::REQUEST_PARAM_ID);
         $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
         $companyUnitAddressTransfer = new CompanyUnitAddressTransfer();
@@ -232,10 +245,10 @@ class AddressController extends AbstractCompanyController
         $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_ADDRESS_DELETE_SUCCESS);
 
         if (empty($idCompanyBusinessUnit)) {
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
+            return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT);
         }
 
-        return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
+        return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT_UPDATE, [
             'id' => $idCompanyBusinessUnit,
         ]);
     }
@@ -269,6 +282,8 @@ class AddressController extends AbstractCompanyController
             'companyUnitAddress' => $companyUnitAddressTransfer,
             'idCompanyBusinessUnit' => $idCompanyBusinessUnit,
             'cancelUrl' => $referer,
+            'companyUnitAddressDeleteForm' => $this->getFactory()
+                ->createCompanyPageFormFactory()->getCompanyUnitAddressDeleteForm()->createView(),
         ], [], '@CompanyPage/views/address-delete-confirmation-page/address-delete-confirmation-page.twig');
     }
 

@@ -14,7 +14,7 @@ use Twig\Environment;
 use Twig\TwigFunction;
 
 /**
- * @deprecated Use `SprykerShop\Yves\CmsPage\Plugin\Twig\CmsTwigPlugin` instead.
+ * @deprecated Use {@link \SprykerShop\Yves\CmsPage\Plugin\Twig\CmsTwigPlugin} instead.
  *
  * @method \SprykerShop\Yves\CmsPage\CmsPageFactory getFactory()
  */

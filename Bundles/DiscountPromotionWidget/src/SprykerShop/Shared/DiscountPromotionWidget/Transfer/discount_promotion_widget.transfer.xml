@@ -21,4 +21,7 @@
         <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
     </transfer>
 
+    <transfer name="Discount">
+    </transfer>
+
 </transfers>

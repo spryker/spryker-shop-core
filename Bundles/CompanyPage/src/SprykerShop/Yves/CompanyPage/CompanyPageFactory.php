@@ -7,8 +7,9 @@
 
 namespace SprykerShop\Yves\CompanyPage;
 
+use Spryker\Service\Container\ContainerInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
-use Spryker\Yves\Kernel\Application;
+use Spryker\Yves\Router\Router\ChainRouter;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyClientInterface;
@@ -20,9 +21,15 @@ use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToGlossaryStorageC
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToPermissionClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToStoreClientInterface;
+use SprykerShop\Yves\CompanyPage\Expander\CompanyBusinessUnitOrderSearchFormExpander;
+use SprykerShop\Yves\CompanyPage\Expander\CompanyBusinessUnitOrderSearchFormExpanderInterface;
 use SprykerShop\Yves\CompanyPage\Expander\CompanyUnitAddressExpander;
 use SprykerShop\Yves\CompanyPage\Expander\CompanyUnitAddressExpanderInterface;
+use SprykerShop\Yves\CompanyPage\Form\Cloner\FormCloner;
+use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyBusinessUnitOrderSearchFormDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\FormFactory;
+use SprykerShop\Yves\CompanyPage\FormHandler\OrderSearchFormHandler;
+use SprykerShop\Yves\CompanyPage\FormHandler\OrderSearchFormHandlerInterface;
 use SprykerShop\Yves\CompanyPage\Mapper\CompanyUnitMapper;
 use SprykerShop\Yves\CompanyPage\Mapper\CompanyUnitMapperInterface;
 use SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitAddressReader;
@@ -44,6 +51,35 @@ class CompanyPageFactory extends AbstractFactory
     public function createCompanyPageFormFactory(): FormFactory
     {
         return new FormFactory();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Expander\CompanyBusinessUnitOrderSearchFormExpanderInterface
+     */
+    public function createCompanyBusinessUnitOrderSearchFormExpander(): CompanyBusinessUnitOrderSearchFormExpanderInterface
+    {
+        return new CompanyBusinessUnitOrderSearchFormExpander(
+            $this->createCompanyBusinessUnitOrderSearchFormDataProvider()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\FormHandler\OrderSearchFormHandlerInterface
+     */
+    public function createOrderSearchFormHandler(): OrderSearchFormHandlerInterface
+    {
+        return new OrderSearchFormHandler($this->getCustomerClient());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyBusinessUnitOrderSearchFormDataProvider
+     */
+    public function createCompanyBusinessUnitOrderSearchFormDataProvider(): CompanyBusinessUnitOrderSearchFormDataProvider
+    {
+        return new CompanyBusinessUnitOrderSearchFormDataProvider(
+            $this->getCustomerClient(),
+            $this->getCompanyBusinessUnitClient()
+        );
     }
 
     /**
@@ -166,9 +202,19 @@ class CompanyPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\Kernel\Application
+     * @return \Spryker\Yves\Router\Router\ChainRouter
      */
-    public function getApplication(): Application
+    public function getRouter(): ChainRouter
+    {
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::SERVICE_ROUTER);
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return \Spryker\Service\Container\ContainerInterface
+     */
+    public function getApplication(): ContainerInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::PLUGIN_APPLICATION);
     }
@@ -215,5 +261,13 @@ class CompanyPageFactory extends AbstractFactory
     public function createCompanyUnitAddressExpander(): CompanyUnitAddressExpanderInterface
     {
         return new CompanyUnitAddressExpander($this->createCompanyUnitMapper());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Form\Cloner\FormCloner
+     */
+    public function createFormCloner(): FormCloner
+    {
+        return new FormCloner();
     }
 }

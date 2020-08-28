@@ -22,7 +22,7 @@
 }
 
 /**
- * @deprecated use agent-widget-agent-navigation mixin instead.
+ * @deprecated Use agent-widget-agent-navigation mixin instead.
  */
 @mixin agent-navigation($name: '.agent-navigation') {
     @include agent-widget-agent-navigation();

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductRelationWidget\Widget\UpSellingProductsWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductRelationWidget\Widget\UpSellingProductsWidget} instead.
  */
 interface UpSellingProductsWidgetPluginInterface extends WidgetPluginInterface
 {

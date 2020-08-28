@@ -11,7 +11,7 @@ use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
 /**
- * @deprecated Use `\SprykerShop\Yves\WishlistPage\Plugin\Router\WishlistPageRouteProviderPlugin` instead.
+ * @deprecated Use {@link \SprykerShop\Yves\WishlistPage\Plugin\Router\WishlistPageRouteProviderPlugin} instead.
  */
 class WishlistPageControllerProvider extends AbstractYvesControllerProvider
 {

@@ -1,0 +1,26 @@
+$shop-ui-cart-counter-quantity-size: 1.5rem;
+
+@mixin shop-ui-cart-counter($name: '.cart-counter') {
+    #{$name} {
+        display: inline-block;
+
+        &__quantity {
+            @include helper-font-size(small);
+            display: inline-block;
+            min-width: $shop-ui-cart-counter-quantity-size;
+            height: $shop-ui-cart-counter-quantity-size;
+            background: $setting-color-alt;
+            border-radius: 100%;
+            color: $setting-color-white;
+            text-align: center;
+            line-height: $shop-ui-cart-counter-quantity-size;
+            margin-left: map-get($setting-spacing, 'small');
+
+            &--hidden {
+                display: none;
+            }
+        }
+
+        @content;
+    }
+}

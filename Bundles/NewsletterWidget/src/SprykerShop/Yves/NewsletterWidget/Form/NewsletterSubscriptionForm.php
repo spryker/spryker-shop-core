@@ -30,7 +30,7 @@ class NewsletterSubscriptionForm extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'newsletterSubscriptionForm';
+        return 'newsletterSubscriptionWidgetForm';
     }
 
     /**

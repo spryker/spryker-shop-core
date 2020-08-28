@@ -4,6 +4,7 @@
     @deprecated property "data.shipmentMethod" is deprecated.
     @deprecated property "data.overview.shipmentMethod" is deprecated.
     @deprecated property "data.overview.payments" is deprecated.
+    @deprecated property "data.overview.shipmentGroups" is deprecated.
     @deprecated property "data.overview.prices.storeCurrency" is deprecated.
     @deprecated property "data.overview.prices.priceToPay" is deprecated.
 #}
@@ -19,6 +20,8 @@
     shipmentGroups: _view.shipmentGroups,
     isPlaceableOrder: _view.isPlaceableOrder,
     isPlaceableOrderErrors: _view.isPlaceableOrderErrors,
+    shipmentExpenses: _view.shipmentExpenses,
+    acceptTermsFieldName: _view.acceptTermsFieldName,
 
     forms: {
         summary: _view.summaryForm,
@@ -32,6 +35,7 @@
         cartRuleDiscounts: _view.quoteTransfer.cartRuleDiscounts,
         totalCosts: _view.totalCosts,
         shipmentGroups: _view.shipmentGroups,
+        priceMode: _view.quoteTransfer.priceMode,
 
         prices: {
             subTotal: _view.quoteTransfer.totals.subtotal,
@@ -42,7 +46,7 @@
             discountTotal: _view.quoteTransfer.totals.discounttotal | default,
         },
     },
-
+    requestUri: app.request.requestUri,
     title: 'checkout.step.summary.title' | trans,
 } %}
 
@@ -65,42 +69,39 @@
                     } only %}
                     {% endwidget %}
 
-                    {% set itemsExceptConfiguredBundles = shipmentGroup.items | filter(item => item.configuredBundleItem is not defined or item.configuredBundleItem is empty) %}
+                    {% for item in shipmentGroup.cartItems %}
+                        {% set cartItem = item.bundleProduct ?? item %}
+                        {% set isConfiguredBundle = cartItem.configuredBundleItem is defined and cartItem.configuredBundleItem is not empty %}
+                        {% set isGiftCardExists = cartItem.giftCardMetadata is not null and cartItem.giftCardMetadata.isGiftCard %}
 
-                    {% if itemsExceptConfiguredBundles %}
-                        {% for item in itemsExceptConfiguredBundles %}
-                            {% set isGiftCardExists = item.giftCardMetadata is not null and item.giftCardMetadata.isGiftCard %}
-                            {% set item = item.bundleProduct ?? item %}
-
+                        {% if not isConfiguredBundle %}
                             {% embed molecule('summary-node', 'CheckoutPage') with {
                                 data: {
-                                    node: item,
-                                },
-                                embed: {
-                                    isFirst: loop.first,
+                                    node: cartItem,
+                                    bundleItems: item.bundleItems | default([]),
                                 },
                             } only %}
                                 {% block body %}
-                                    {% if not embed.isFirst %}<hr>{% endif %}
-
                                     {{ parent() }}
 
-                                    {% if widgetExists('CartNoteQuoteItemNoteWidgetPlugin') %}
-                                        {% if data.node.cartNote %}
+                                    {% if data.node.cartNote %}
+                                        {% if widgetExists('CartNoteQuoteItemNoteWidgetPlugin') %}
                                             {{ widget('CartNoteQuoteItemNoteWidgetPlugin', data.node) }} {# @deprecated Use molecule('note-list', 'CartNoteWidget') instead. #}
+                                        {% else %}
+                                            {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
+                                                data: {
+                                                    label: 'cart_note.checkout_page.item_note',
+                                                    note: data.node.cartNote,
+                                                },
+                                            } only %}
                                         {% endif %}
-                                    {% elseif data.node.cartNote %}
-                                        {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
-                                            data: {
-                                                label: 'cart_note.checkout_page.item_note',
-                                                note: data.node.cartNote,
-                                            },
-                                        } only %}
                                     {% endif %}
                                 {% endblock %}
                             {% endembed %}
-                        {% endfor %}
-                    {% endif %}
+
+                            {% if not loop.last %}<hr>{% endif %}
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
             <div class="col col--sm-12 col--lg-6">
@@ -119,25 +120,22 @@
                         {{ 'general.edit.button' | trans }}
                     </a>
                 </div>
-
                 {% if not isGiftCardExists %}
-                    <div class="box">
-                        <h6>{{ 'checkout.step.summary.delivery_method' | trans }}</h6>
-                        <hr>
-                        {% include molecule('delivery-information', 'CustomerPage') ignore missing with {
-                            data: {
-                                carrierName: shipmentGroup.shipment.method.carrierName,
-                                methodName: shipmentGroup.shipment.method.name,
-                                storeCurrencyPrice: shipmentGroup.shipment.method.storeCurrencyPrice,
-                                currencyIsoCode: shipmentGroup.shipment.method.currencyIsoCode,
-                            },
-                        } only %}
+                    {% if data.shipmentExpenses[shipmentGroup.hash] is defined %}
+                        <div class="box">
+                            <h6>{{ 'checkout.step.summary.delivery_method' | trans }}</h6>
+                            <hr>
+                            {% include molecule('shipment-information', 'CustomerPage') ignore missing with {
+                                data: {
+                                    shipmentExpense: data.shipmentExpenses[shipmentGroup.hash],
+                                },
+                            } only %}
 
-                        <a href="{{ url('checkout-shipment') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-shipment') }}>
-                            {{ 'general.edit.button' | trans }}
-                        </a>
-                    </div>
-
+                            <a href="{{ url('checkout-shipment') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-shipment') }}>
+                                {{ 'general.edit.button' | trans }}
+                            </a>
+                        </div>
+                    {% endif %}
                     <div class="box">
                         <h6>{{ 'checkout.step.summary.requested_delivery_date' | trans }}</h6>
                         <hr>
@@ -153,13 +151,24 @@
         {% endfor %}
     </div>
 
+    {% embed molecule('order-custom-reference', 'OrderCustomReferenceWidget') ignore missing with {
+        class: 'box',
+        data: {
+            orderCustomReference: data.cart.orderCustomReference | default,
+        },
+    } only %}
+        {% block title %}
+            <h6 class="{{ classTitle }}">{{ data.title }}</h6>
+        {% endblock %}
+    {% endembed %}
+
     <div class="box">
         <h4>{{ 'checkout.step.summary.payment' | trans }}</h4>
         <hr>
         <div class="grid grid--stretch grid--justify">
             <div class="col col--sm-12 col--lg-6">
                 <div class="box">
-                    <h6>{{ data.transfer.payment.paymentMethod | capitalize }}</h6>
+                    <h6>{{ data.transfer.payment.paymentMethod | trans | capitalize }}</h6>
                     <hr>
 
                     {% block payment %}
@@ -203,7 +212,7 @@
                     {% widget 'CommentThreadWidget' args [
                         data.cart.idQuote,
                         'quote',
-                        app.request.requestUri,
+                        data.requestUri,
                         data.cart.commentThread
                     ] only %}
                     {% endwidget %}
@@ -245,6 +254,7 @@
                 class: 'box',
                 data: {
                     form: data.forms.summary,
+                    acceptTermsFieldName: data.acceptTermsFieldName,
                     submit: {
                         enable: data.isPlaceableOrder
                             and can('SeeOrderPlaceSubmitPermissionPlugin')
@@ -263,6 +273,29 @@
                     isPlaceableOrderErrors: data.isPlaceableOrderErrors,
                 },
             } only %}
+                {% block field %}
+                    {% if fieldName == data.acceptTermsFieldName %}
+                        {{ form_row(field, {
+                            component: molecule('accept-terms-checkbox', 'CheckoutPage'),
+                            label: field.vars.label,
+                            rowAttr: {
+                                class: config.name ~ '__field ' ~ fieldLayoutClass,
+                            },
+                            attributes: {
+                                'target-class-name': 'js-summary__submit-button',
+                            },
+                        }) }}
+                    {% else %}
+                        {{ parent() }}
+                    {% endif %}
+                {% endblock %}
+
+                {% block submit %}
+                    <button class="{{ config.name }}__action {{ data.submit.class }} js-summary__submit-button" data-init-single-click>
+                        {{ data.submit.text }}
+                    </button>
+                {% endblock %}
+
                 {% block body %}
                     {% include molecule('summary-overview', 'CheckoutPage') with {
                         data: embed.overview,

@@ -12,8 +12,16 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class ConfigurableBundleWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\ConfigurableBundleWidget\Plugin\Router\ConfigurableBundleWidgetRouteProviderPlugin::ROUTE_NAME_CART_CONFIGURED_BUNDLE_REMOVE} instead.
+     */
     protected const ROUTE_CART_CONFIGURED_BUNDLE_REMOVE = 'cart/configured-bundle/remove';
+    public const ROUTE_NAME_CART_CONFIGURED_BUNDLE_REMOVE = 'cart/configured-bundle/remove';
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\ConfigurableBundleWidget\Plugin\Router\ConfigurableBundleWidgetRouteProviderPlugin::ROUTE_NAME_CART_CONFIGURED_BUNDLE_CHANGE_QUANTITY} instead.
+     */
     protected const ROUTE_CART_CONFIGURED_BUNDLE_CHANGE_QUANTITY = 'cart/configured-bundle/change';
+    public const ROUTE_NAME_CART_CONFIGURED_BUNDLE_CHANGE_QUANTITY = 'cart/configured-bundle/change';
 
     /**
      * Specification:
@@ -43,7 +51,7 @@ class ConfigurableBundleWidgetRouteProviderPlugin extends AbstractRouteProviderP
     protected function addCartConfiguredBundleRemoveRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cart/configured-bundle/remove/{configuredBundleGroupKey}', 'ConfigurableBundleWidget', 'Cart', 'removeConfiguredBundleAction');
-        $routeCollection->add(static::ROUTE_CART_CONFIGURED_BUNDLE_REMOVE, $route);
+        $routeCollection->add(static::ROUTE_NAME_CART_CONFIGURED_BUNDLE_REMOVE, $route);
 
         return $routeCollection;
     }
@@ -59,7 +67,7 @@ class ConfigurableBundleWidgetRouteProviderPlugin extends AbstractRouteProviderP
     {
         $route = $this->buildRoute('/cart/configured-bundle/change/{configuredBundleGroupKey}', 'ConfigurableBundleWidget', 'Cart', 'changeConfiguredBundleQuantityAction');
         $route = $route->setMethods(['POST']);
-        $routeCollection->add(static::ROUTE_CART_CONFIGURED_BUNDLE_CHANGE_QUANTITY, $route);
+        $routeCollection->add(static::ROUTE_NAME_CART_CONFIGURED_BUNDLE_CHANGE_QUANTITY, $route);
 
         return $routeCollection;
     }

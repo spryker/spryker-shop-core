@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
+use SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -46,7 +46,7 @@ class CompanyRolePermissionController extends AbstractCompanyController
         $this->saveCompanyRolePermissions($idCompanyRole, $companyRolePermissions);
 
         return $this->redirectResponseInternal(
-            CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_UPDATE,
+            CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_UPDATE,
             ['id' => $idCompanyRole]
         );
     }
@@ -73,7 +73,7 @@ class CompanyRolePermissionController extends AbstractCompanyController
         $this->saveCompanyRolePermissions($idCompanyRole, $permissions);
 
         return $this->redirectResponseInternal(
-            CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_UPDATE,
+            CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_UPDATE,
             ['id' => $idCompanyRole]
         );
     }

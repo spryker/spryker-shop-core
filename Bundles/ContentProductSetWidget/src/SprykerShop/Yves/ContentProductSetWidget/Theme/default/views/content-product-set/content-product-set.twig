@@ -17,14 +17,8 @@
             images: data.images,
         },
     } only %}
-        {% block productSetTitle %}
-            <h5>{{ data.name }}</h5>
-        {% endblock %}
-
-        {% block description %}
-            {% if data.description %}
-                <p>{{ data.description }}</p>
-            {% endif %}
+        {% block descriptionInner %}
+            <p>{{ data.description }}</p>
         {% endblock %}
     {% endembed %}
 {% endblock %}

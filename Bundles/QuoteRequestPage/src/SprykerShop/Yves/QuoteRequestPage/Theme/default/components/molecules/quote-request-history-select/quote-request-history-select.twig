@@ -1,0 +1,64 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'quote-request-history-select',
+    tag: 'quote-request-history-select',
+} %}
+
+{% define data = {
+    quoteRequestVersionReferences: required,
+    version: required,
+} %}
+
+{% define attributes = {
+    'version-reference-title': 'quote-request-version-reference',
+} %}
+
+{% block extraClass %}
+    grid grid--middle spacing-bottom
+{% endblock %}
+
+{% set labelClass = 'col' %}
+{% set valueClass = 'col' %}
+
+{% block body %}
+    {% block label %}
+        <span class="{{ labelClass }}">
+            {{ 'quote_request_page.quote_request.labels.history' | trans }}:
+        </span>
+    {% endblock %}
+
+    {% block value %}
+        <span class="{{ valueClass }}">
+            {% if data.quoteRequestVersionReferences %}
+                {% block select %}
+                    {% embed atom('select') with {
+                        modifiers: ['naked'],
+                        attributes: {
+                            name: 'quote-request-versions',
+                        },
+                        embed: {
+                            versionReferences: data.quoteRequestVersionReferences,
+                            currentVersionReference: data.version ? data.version.versionReference : null,
+                            selectJsName: config.jsName ~ '__select',
+                        },
+                    } only %}
+                        {% block selectClass %}{{ embed.selectJsName }}{% endblock %}
+                        {% block options %}
+                            {% for versionReference in embed.versionReferences %}
+                                {% set selectedOption = (versionReference == embed.currentVersionReference) ? 'selected' %}
+                                <option value="{{ versionReference }}" {{ selectedOption }}>{{ versionReference }}</option>
+                            {% endfor %}
+                        {% endblock %}
+                    {% endembed %}
+                {% endblock %}
+            {% else %}
+                {% block emptyValue %}
+                    <span class="text-secondary">
+                        &nbsp;--
+                    </span>
+                {% endblock %}
+            {% endif %}
+        </span>
+    {% endblock %}
+{% endblock %}

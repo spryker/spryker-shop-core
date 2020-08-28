@@ -1,0 +1,30 @@
+{% extends template('widget') %}
+
+{% define data = {
+    items: _widget.items,
+    salesOrderConfiguredBundles: _widget.salesOrderConfiguredBundles,
+} %}
+
+{% block body %}
+    {% for bundle in data.salesOrderConfiguredBundles %}
+        {% block bundleItem %}
+            {% embed molecule('ordered-configured-bundle', 'SalesConfigurableBundleWidget') with {
+                data: {
+                    bundle: bundle,
+                    items: data.items,
+                },
+            } only %}
+                {% block bundleProductItem %}
+                    {% include molecule('ordered-configured-bundle-product-secondary', 'SalesConfigurableBundleWidget') with {
+                        class: 'grid grid--justify grid--middle spacing-top',
+                        data: {
+                            product: data.items[item.IdSalesOrderItem],
+                            currencyIsoCode: item.currencyIsoCode ?? data.currencyIsoCode,
+                            image: data.items[item.IdSalesOrderItem].metadata.image,
+                        },
+                    } only %}
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+    {% endfor %}
+{% endblock %}

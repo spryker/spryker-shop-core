@@ -66,8 +66,11 @@ class ResourceShareRequestBuilder implements ResourceShareRequestBuilderInterfac
      *
      * @return \Generated\Shared\Transfer\ResourceShareDataTransfer
      */
-    protected function createResolvedByShareOptionResourceShareDataTransfer(int $idQuote, string $shareOption, CustomerTransfer $customerTransfer): ResourceShareDataTransfer
-    {
+    protected function createResolvedByShareOptionResourceShareDataTransfer(
+        int $idQuote,
+        string $shareOption,
+        CustomerTransfer $customerTransfer
+    ): ResourceShareDataTransfer {
         if ($shareOption === static::SHARE_OPTION_KEY_PREVIEW) {
             return $this->createCartPreviewResourceShareDataTransfer($idQuote);
         }
@@ -94,8 +97,11 @@ class ResourceShareRequestBuilder implements ResourceShareRequestBuilderInterfac
      *
      * @return \Generated\Shared\Transfer\ResourceShareDataTransfer
      */
-    protected function createCartShareResourceShareDataTransfer(int $idQuote, string $shareOption, CustomerTransfer $customerTransfer): ResourceShareDataTransfer
-    {
+    protected function createCartShareResourceShareDataTransfer(
+        int $idQuote,
+        string $shareOption,
+        CustomerTransfer $customerTransfer
+    ): ResourceShareDataTransfer {
         $customerTransfer->requireCompanyUserTransfer();
         $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
 

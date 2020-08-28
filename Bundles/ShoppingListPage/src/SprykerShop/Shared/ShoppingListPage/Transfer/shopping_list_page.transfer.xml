@@ -76,6 +76,8 @@
 
     <transfer name="ShoppingListOverviewRequest">
         <property name="shoppingList" type="ShoppingList"/>
+        <property name="priceMode" type="string"/>
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="ShoppingListOverviewResponse">
@@ -152,6 +154,11 @@
     </transfer>
 
     <transfer name="Quote">
+        <property name="currency" type="Currency"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
     </transfer>
 
 </transfers>

@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\Container;
 class WebProfilerWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**
-     * @deprecated Use `\SprykerShop\Yves\WebProfilerWidget\WebProfilerWidgetDependencyProvider::PLUGINS_DATA_COLLECTORS` instead.
+     * @deprecated Use {@link \SprykerShop\Yves\WebProfilerWidget\WebProfilerWidgetDependencyProvider::PLUGINS_DATA_COLLECTORS} instead.
      */
     public const PLUGINS_WEB_PROFILER = 'PLUGINS_WEB_PROFILER';
 
@@ -58,9 +58,9 @@ class WebProfilerWidgetDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @deprecated Use `\SprykerShop\Yves\WebProfilerWidget\WebProfilerWidgetDependencyProvider::getDataCollectorPlugins` instead.
+     * @deprecated Use {@link \SprykerShop\Yves\WebProfilerWidget\WebProfilerWidgetDependencyProvider::getDataCollectorPlugins()} instead.
      *
-     * @return array
+     * @return \Silex\ServiceProviderInterface[]
      */
     protected function getWebProfilerPlugins()
     {

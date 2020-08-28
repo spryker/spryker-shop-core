@@ -37,11 +37,11 @@ class ProductAlternativeWidgetDependencyProvider extends AbstractBundleDependenc
      */
     protected function addProductAlternativeStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_ALTERNATIVE_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_ALTERNATIVE_STORAGE, function (Container $container) {
             return new ProductAlternativeWidgetToProductAlternativeStorageClientBridge(
                 $container->getLocator()->productAlternativeStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -53,9 +53,9 @@ class ProductAlternativeWidgetDependencyProvider extends AbstractBundleDependenc
      */
     protected function addProductDetailPageProductAlternativeWidgetPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_PRODUCT_DETAIL_PAGE_PRODUCT_ALTERNATIVE_WIDGETS] = function () {
+        $container->set(static::PLUGIN_PRODUCT_DETAIL_PAGE_PRODUCT_ALTERNATIVE_WIDGETS, function () {
             return $this->getProductDetailPageProductAlternativeWidgetPlugins();
-        };
+        });
 
         return $container;
     }

@@ -14,7 +14,7 @@ use SprykerShop\Yves\ProductAlternativeWidget\Widget\ShoppingListProductAlternat
 use SprykerShop\Yves\ShoppingListPage\Dependency\Plugin\ProductAlternativeWidget\ProductAlternativeWidgetPluginInterface;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductAlternativeWidget\Widget\ShoppingListProductAlternativeWidget instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ProductAlternativeWidget\Widget\ShoppingListProductAlternativeWidget} instead.
  *
  * @method \SprykerShop\Yves\ProductAlternativeWidget\ProductAlternativeWidgetFactory getFactory()
  */

@@ -1,0 +1,54 @@
+{
+    "error": [],
+    "warning": [],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 17,
+            "line_to": 17,
+            "type": "DeprecatedInterface",
+            "message": "SprykerShop\\Yves\\CmsContentWidgetProductSetConnector\\Dependency\\Plugin\\ProductSetWidget\\ProductSetWidgetPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductSetWidget/src/SprykerShop/Yves/ProductSetWidget/Plugin/CmsContentWidgetProductSetConnector/ProductSetWidgetPlugin.php",
+            "snippet": "class ProductSetWidgetPlugin extends AbstractWidgetPlugin implements ProductSetWidgetPluginInterface",
+            "selected_text": "ProductSetWidgetPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 17,
+            "line_to": 17,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Yves\\Kernel\\Widget\\AbstractWidgetPlugin is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductSetWidget/src/SprykerShop/Yves/ProductSetWidget/Plugin/CmsContentWidgetProductSetConnector/ProductSetWidgetPlugin.php",
+            "snippet": "class ProductSetWidgetPlugin extends AbstractWidgetPlugin implements ProductSetWidgetPluginInterface",
+            "selected_text": "AbstractWidgetPlugin",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 17,
+            "line_to": 17,
+            "type": "DeprecatedInterface",
+            "message": "SprykerShop\\Yves\\ProductSetDetailPage\\Dependency\\ProductSetWidget\\ProductSetWidgetPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductSetWidget/src/SprykerShop/Yves/ProductSetWidget/Plugin/ProductSetDetailPage/ProductSetWidgetPlugin.php",
+            "snippet": "class ProductSetWidgetPlugin extends AbstractWidgetPlugin implements ProductSetWidgetPluginInterface",
+            "selected_text": "ProductSetWidgetPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 17,
+            "line_to": 17,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Yves\\Kernel\\Widget\\AbstractWidgetPlugin is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductSetWidget/src/SprykerShop/Yves/ProductSetWidget/Plugin/ProductSetDetailPage/ProductSetWidgetPlugin.php",
+            "snippet": "class ProductSetWidgetPlugin extends AbstractWidgetPlugin implements ProductSetWidgetPluginInterface",
+            "selected_text": "AbstractWidgetPlugin",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}

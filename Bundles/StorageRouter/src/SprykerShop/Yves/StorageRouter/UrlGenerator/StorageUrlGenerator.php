@@ -116,12 +116,15 @@ class StorageUrlGenerator implements UrlGeneratorInterface
             case static::ABSOLUTE_URL:
             case static::NETWORK_PATH:
                 $url = $this->buildUrl($pathInfo, $referenceType);
+
                 break;
             case static::ABSOLUTE_PATH:
                 $url = $pathInfo;
+
                 break;
             case static::RELATIVE_PATH:
                 $url = UrlGenerator::getRelativePath($this->context->getPathInfo(), $pathInfo);
+
                 break;
         }
 
