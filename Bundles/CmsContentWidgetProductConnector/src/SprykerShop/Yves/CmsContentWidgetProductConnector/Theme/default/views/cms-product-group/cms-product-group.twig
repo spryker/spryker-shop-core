@@ -8,10 +8,12 @@
 
 {% block body %}
     <div class="grid grid--stretch">
-        {% for product in data.products if (data.isUnavailableProductsDisplayed or product.available) %}
-            {% widget 'CmsProductGroupWidget' args [product] only %}
-            {% elsewidget 'ProductGroupWidgetPlugin' args [product] only %} {# @deprecated Use CmsProductGroupWidget instead. #}
-            {% endwidget %}
+        {% for product in data.products %}
+            {% if data.isUnavailableProductsDisplayed or product.available %}
+                {% widget 'CmsProductGroupWidget' args [product] only %}
+                {% elsewidget 'ProductGroupWidgetPlugin' args [product] only %} {# @deprecated Use CmsProductGroupWidget instead. #}
+                {% endwidget %}
+            {% endif %}
         {% endfor %}
     </div>
 
