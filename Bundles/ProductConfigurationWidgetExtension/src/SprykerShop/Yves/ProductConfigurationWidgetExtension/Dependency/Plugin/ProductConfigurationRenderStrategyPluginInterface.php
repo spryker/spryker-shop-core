@@ -7,7 +7,7 @@ use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 /**
  * Use this plugin to provide the template and data for product configuration display.
  */
-interface ProductConfigurationRendererPluginInterface
+interface ProductConfigurationRenderStrategyPluginInterface
 {
     /**
      * Specification:
@@ -26,9 +26,9 @@ interface ProductConfigurationRendererPluginInterface
      *
      * @api
      *
-     * @return string|null
+     * @return string
      */
-    public function getTemplatePath(): ?string;
+    public function getTemplatePath(): string;
 
     /**
      * Specification:

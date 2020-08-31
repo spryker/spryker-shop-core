@@ -12,16 +12,17 @@ use Spryker\Yves\Kernel\Container;
 
 class ProductConfigurationWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PLUGIN_PRODUCT_CONFIGURATION_RENDERER = 'PLUGIN_PRODUCT_CONFIGURATION_RENDERER';
+    public const PLUGINS_PRODUCT_CONFIGURATION_RENDER_STRATEGY = 'PLUGINS_PRODUCT_CONFIGURATION_RENDER_STRATEGY';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
-        $container = $this->addProductConfigurationRendererPlugins($container);
+        $container = parent::provideDependencies($container);
+        $container = $this->addProductConfigurationRenderStrategyPlugins($container);
 
         return $container;
     }
@@ -31,19 +32,19 @@ class ProductConfigurationWidgetDependencyProvider extends AbstractBundleDepende
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addProductConfigurationRendererPlugins(Container $container)
+    protected function addProductConfigurationRenderStrategyPlugins(Container $container): Container
     {
-        $container->set(static::PLUGIN_PRODUCT_CONFIGURATION_RENDERER, function () {
-            return $this->getProductConfigurationRendererPlugins();
+        $container->set(static::PLUGINS_PRODUCT_CONFIGURATION_RENDER_STRATEGY, function () {
+            return $this->getProductConfigurationRenderStrategyPlugins();
         });
 
         return $container;
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductConfigurationWidgetExtension\Dependency\Plugin\ProductConfigurationRendererPluginInterface[]
+     * @return \SprykerShop\Yves\ProductConfigurationWidgetExtension\Dependency\Plugin\ProductConfigurationRenderStrategyPluginInterface[]
      */
-    protected function getProductConfigurationRendererPlugins()
+    protected function getProductConfigurationRenderStrategyPlugins(): array
     {
         return [];
     }

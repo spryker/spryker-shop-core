@@ -29,7 +29,7 @@ class ProductConfiguratorProductDetailPageButtonWidget extends AbstractWidget
 
         $this->addParameter(
             'productConfigurationRouteName',
-            $this->getConfig()->getProductConfigurationGateRequestRoute()
+            $this->getConfig()->getProductConfigurationGatewayRequestRoute()
         );
 
         $this->addParameter('sku', $productViewTransfer->getSku());

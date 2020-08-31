@@ -30,7 +30,7 @@ class ProductConfiguratorCartPageButtonWidget extends AbstractWidget
 
         $this->addParameter(
             'productConfigurationRouteName',
-            $this->getConfig()->getProductConfigurationGateRequestRoute()
+            $this->getConfig()->getProductConfigurationGatewayRequestRoute()
         );
 
         $this->addParameter('itemGroupKey', $itemTransfer->getGroupKey());
