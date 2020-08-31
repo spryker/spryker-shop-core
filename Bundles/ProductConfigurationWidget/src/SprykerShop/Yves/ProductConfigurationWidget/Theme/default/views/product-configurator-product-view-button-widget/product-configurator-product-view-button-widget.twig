@@ -1,18 +1,26 @@
 {% extends template('widget') %}
 
 {% define data = {
-    productConfigurationRouteName: _widget.productConfigurationRouteName,
-    sourceType: _widget.sourceType,
-    sku: _widget.sku,
-    quantity: _widget.quantity,
+    isVisible: _widget.isVisible,
+    form: _widget.form | default,
+    productConfigurationRouteName: _widget.productConfigurationRouteName | default,
+    sourceType: _widget.sourceType | default,
+    sku: _widget.sku | default
 } %}
 
 {% block body %}
-    <a href="{{
-        path(
-            data.productConfigurationRouteName,
-            {'sku': data.sku, 'source-type': data.sourceType, 'quantity': data.quantity})
-    }}">
-        {{ 'product_configuration_widget.configure' | trans }}
-    </a>
+    {% if data.isVisible %}
+
+        {% block formContent %}
+            {{ form_start(data.form, {'action': path(data.productConfigurationRouteName, {
+                'source-type': data.sourceType,
+                'sku': data.sku
+            })}) }}
+
+            <button class="button">{{ 'product_configuration_widget.configure' | trans }}</button>
+
+            {{ form_end(data.form) }}
+        {% endblock %}
+
+    {% endif %}
 {% endblock %}

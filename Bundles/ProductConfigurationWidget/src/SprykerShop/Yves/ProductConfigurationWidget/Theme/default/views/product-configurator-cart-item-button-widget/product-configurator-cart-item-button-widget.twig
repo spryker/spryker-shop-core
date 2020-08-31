@@ -2,6 +2,7 @@
 
 {% define data = {
     isVisible: _widget.isVisible,
+    form: _widget.form | default,
     productConfigurationRouteName: _widget.productConfigurationRouteName | default,
     sourceType: _widget.sourceType | default,
     itemGroupKey: _widget.itemGroupKey | default,
@@ -10,12 +11,18 @@
 
 {% block body %}
     {% if data.isVisible %}
-        <a href="{{
-        path(
-            data.productConfigurationRouteName,
-            {'item-group-key': data.itemGroupKey, 'source-type': data.sourceType, 'quantity': data.quantity})
-        }}">
-            {{ 'product_configuration_widget.configure' | trans }}
-        </a>
+
+        {% block formContent %}
+            {{ form_start(data.form, {'action': path(data.productConfigurationRouteName, {
+                'source-type': data.sourceType,
+                'item-group-key': data.itemGroupKey,
+                'quantity': data.quantity
+            })}) }}
+
+            <button class="button">{{ 'product_configuration_widget.configure' | trans }}</button>
+
+            {{ form_end(data.form) }}
+        {% endblock %}
+
     {% endif %}
 {% endblock %}

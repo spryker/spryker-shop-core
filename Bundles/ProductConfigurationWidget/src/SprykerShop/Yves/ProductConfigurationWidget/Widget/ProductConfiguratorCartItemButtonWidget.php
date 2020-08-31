@@ -17,6 +17,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class ProductConfiguratorCartItemButtonWidget extends AbstractWidget
 {
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
+    protected const PARAMETER_FORM = 'form';
     protected const PARAMETER_PRODUCT_CONFIGURATION_ROUTE_NAME = 'productConfigurationRouteName';
     protected const PARAMETER_SOURCE_TYPE = 'sourceType';
     protected const PARAMETER_ITEM_GROUP_KEY = 'itemGroupKey';
@@ -33,8 +34,7 @@ class ProductConfiguratorCartItemButtonWidget extends AbstractWidget
             return;
         }
 
-        // TODO: csrf forms protection
-
+        $this->addFormParameter();
         $this->addProductConfigurationRouteNameParameter();
         $this->addSourceTypeParameter();
         $this->addItemGroupKeyParameter($itemTransfer);
@@ -65,6 +65,14 @@ class ProductConfiguratorCartItemButtonWidget extends AbstractWidget
     protected function addIsVisibleParameter(ItemTransfer $itemTransfer): void
     {
         $this->addParameter(static::PARAMETER_IS_VISIBLE, $itemTransfer->getProductConfigurationInstance());
+    }
+
+    /**
+     * @return void
+     */
+    protected function addFormParameter(): void
+    {
+        $this->addParameter(static::PARAMETER_FORM, $this->getFactory()->getProductConfigurationButtonForm()->createView());
     }
 
     /**

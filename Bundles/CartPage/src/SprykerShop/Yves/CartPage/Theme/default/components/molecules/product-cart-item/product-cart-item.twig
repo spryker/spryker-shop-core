@@ -72,6 +72,12 @@
                     currencyIsoCode: data.cart ? data.cart.currency.code,
                 },
             } only %}
+
+            {% widget 'ProductConfiguratorCartItemDisplayWidget' args [data.product] only %}
+            {% endwidget %}
+            {% widget 'ProductConfiguratorCartItemButtonWidget' args [data.product] only %}
+            {% endwidget %}
+
         {% endblock %}
     </div>
 {% endblock %}
@@ -95,10 +101,6 @@
         {% endif %}
 
         {% block actions %}
-            {% widget 'ProductConfiguratorCartItemDisplayWidget' args [data.product] only %}
-            {% endwidget %}
-            {% widget 'ProductConfiguratorCartItemButtonWidget' args [data.product] only %}
-            {% endwidget %}
 
             {% if data.product.amountSalesUnit is empty %}
                 {% if canEditCart %}

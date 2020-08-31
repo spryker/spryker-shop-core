@@ -12,9 +12,9 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 class ProductConfigurationWidgetConfig extends AbstractBundleConfig
 {
     /**
-     * @uses \SprykerShop\Yves\ProductConfiguratorGatewayPage\Plugin\Router\ProductConfiguratorGatewayPageRouteProviderPlugin::PRODUCT_CONFIGURATION_GATEWAY_REQUEST_ROUTE
+     * TODO: replace from `cart` to `product-configurator-gateway-request`
      */
-    protected const PRODUCT_CONFIGURATION_GATEWAY_REQUEST_ROUTE = 'product-configurator-gateway-request';
+    protected const PRODUCT_CONFIGURATION_GATEWAY_REQUEST_ROUTE = 'cart';
 
     /**
      * @uses \Spryker\Shared\ProductConfiguration\ProductConfigurationConfig::SOURCE_TYPE_PDP

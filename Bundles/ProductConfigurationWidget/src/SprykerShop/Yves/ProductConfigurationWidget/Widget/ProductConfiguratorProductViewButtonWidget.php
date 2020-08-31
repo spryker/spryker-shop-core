@@ -16,26 +16,27 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class ProductConfiguratorProductViewButtonWidget extends AbstractWidget
 {
+    protected const PARAMETER_IS_VISIBLE = 'isVisible';
+    protected const PARAMETER_FORM = 'form';
     protected const PARAMETER_PRODUCT_CONFIGURATION_ROUTE_NAME = 'productConfigurationRouteName';
     protected const PARAMETER_SKU = 'sku';
     protected const PARAMETER_SOURCE_TYPE = 'sourceType';
-    protected const PARAMETER_QUANTITY = 'quantity';
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      */
     public function __construct(ProductViewTransfer $productViewTransfer)
     {
+        $this->addIsVisibleParameter($productViewTransfer);
+
         if (!$productViewTransfer->getProductConfigurationInstance()) {
             return;
         }
 
-        // TODO: csrf forms protection
-
+        $this->addFormParameter();
         $this->addProductConfigurationRouteNameParameter();
         $this->addSourceTypeParameter();
         $this->addSkuParameter($productViewTransfer);
-        $this->addQuantityParameter($productViewTransfer);
     }
 
     /**
@@ -52,6 +53,24 @@ class ProductConfiguratorProductViewButtonWidget extends AbstractWidget
     public static function getTemplate(): string
     {
         return '@ProductConfigurationWidget/views/product-configurator-product-view-button-widget/product-configurator-product-view-button-widget.twig';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return void
+     */
+    protected function addIsVisibleParameter(ProductViewTransfer $productViewTransfer): void
+    {
+        $this->addParameter(static::PARAMETER_IS_VISIBLE, $productViewTransfer->getProductConfigurationInstance());
+    }
+
+    /**
+     * @return void
+     */
+    protected function addFormParameter(): void
+    {
+        $this->addParameter(static::PARAMETER_FORM, $this->getFactory()->getProductConfigurationButtonForm()->createView());
     }
 
     /**
@@ -81,15 +100,5 @@ class ProductConfiguratorProductViewButtonWidget extends AbstractWidget
     protected function addSkuParameter(ProductViewTransfer $productViewTransfer): void
     {
         $this->addParameter(static::PARAMETER_SKU, $productViewTransfer->getSku());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return void
-     */
-    protected function addQuantityParameter(ProductViewTransfer $productViewTransfer): void
-    {
-        $this->addParameter(static::PARAMETER_QUANTITY, $productViewTransfer->getQuantity());
     }
 }

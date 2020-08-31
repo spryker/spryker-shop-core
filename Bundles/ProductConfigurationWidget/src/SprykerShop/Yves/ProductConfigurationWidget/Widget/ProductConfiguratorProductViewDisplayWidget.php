@@ -16,6 +16,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class ProductConfiguratorProductViewDisplayWidget extends AbstractWidget
 {
+    protected const PARAMETER_IS_VISIBLE = 'isVisible';
     protected const PARAMETER_PRODUCT_CONFIGURATION_INSTANCE = 'productConfigurationInstance';
     protected const PARAMETER_PRODUCT_CONFIGURATION_TEMPLATE = 'productConfigurationTemplate';
 
@@ -24,6 +25,8 @@ class ProductConfiguratorProductViewDisplayWidget extends AbstractWidget
      */
     public function __construct(ProductViewTransfer $productViewTransfer)
     {
+        $this->addIsVisibleParameter($productViewTransfer);
+
         if (!$productViewTransfer->getProductConfigurationInstance()) {
             return;
         }
@@ -46,6 +49,16 @@ class ProductConfiguratorProductViewDisplayWidget extends AbstractWidget
     public static function getTemplate(): string
     {
         return '@ProductConfigurationWidget/views/product-configurator-product-view-display-widget/product-configurator-product-view-display-widget.twig';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return void
+     */
+    protected function addIsVisibleParameter(ProductViewTransfer $productViewTransfer): void
+    {
+        $this->addParameter(static::PARAMETER_IS_VISIBLE, $productViewTransfer->getProductConfigurationInstance());
     }
 
     /**

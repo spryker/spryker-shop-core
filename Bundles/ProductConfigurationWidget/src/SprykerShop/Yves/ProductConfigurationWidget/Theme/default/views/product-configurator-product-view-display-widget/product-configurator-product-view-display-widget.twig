@@ -1,23 +1,26 @@
 {% extends template('widget') %}
 
 {% define data = {
-    productConfigurationInstance: _widget.productConfigurationInstance,
-    productConfigurationTemplate: _widget.productConfigurationTemplate,
+    isVisible: _widget.isVisible,
+    productConfigurationInstance: _widget.productConfigurationInstance | default,
+    productConfigurationTemplate: _widget.productConfigurationTemplate | default,
 } %}
 
 {% block body %}
-    <div>
-        {% if data.productConfigurationTemplate.path and data.productConfigurationTemplate.data is defined %}
-            {% include data.productConfigurationTemplate.path with {'data': data.productConfigurationTemplate.data} only %}
-        {% else %}
-            {{ data.productConfigurationInstance.rawData }}
-        {% endif %}
-    </div>
-    <div>
-        {% if data.productConfigurationInstance.isComplete %}
-            {{ 'product_configuration_widget.complete' | trans }}
-        {% else %}
-            {{ 'product_configuration_widget.not_complete' | trans }}
-        {% endif %}
-    </div>
+    {% if data.isVisible %}
+        <div>
+            {% if data.productConfigurationTemplate.path and data.productConfigurationTemplate.data is defined %}
+                {% include data.productConfigurationTemplate.path with {'data': data.productConfigurationTemplate.data} only %}
+            {% else %}
+                {{ data.productConfigurationInstance.displayData }}
+            {% endif %}
+        </div>
+        <div>
+            {% if data.productConfigurationInstance.isComplete %}
+                {{ 'product_configuration_widget.complete' | trans }}
+            {% else %}
+                {{ 'product_configuration_widget.not_complete' | trans }}
+            {% endif %}
+        </div>
+    {% endif %}
 {% endblock %}

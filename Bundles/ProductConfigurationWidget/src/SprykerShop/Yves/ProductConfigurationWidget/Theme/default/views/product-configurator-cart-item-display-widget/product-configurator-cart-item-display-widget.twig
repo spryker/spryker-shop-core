@@ -12,7 +12,7 @@
             {% if data.productConfigurationTemplate.path and data.productConfigurationTemplate.data is defined %}
                 {% include data.productConfigurationTemplate.path with {'data': data.productConfigurationTemplate.data} only %}
             {% else %}
-                {{ data.productConfigurationInstance.rawData }}
+                {{ data.productConfigurationInstance.displayData }}
             {% endif %}
         </div>
         <div>

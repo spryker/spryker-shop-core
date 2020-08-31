@@ -92,8 +92,15 @@
 
     <hr>
 
+    {% widget 'ProductConfiguratorProductViewDisplayWidget' args [data.product] only %}
+    {% endwidget %}
+    {% widget 'ProductConfiguratorProductViewButtonWidget' args [data.product] only %}
+        {% block formContent %}{{ parent() }}<hr>{% endblock %}
+    {% endwidget %}
+
     {% widget 'AddToCartFormWidget' args [config, data.product, isDisabled, options] only %}
         {% block embeddedData %}
+
             {% widget 'ProductOptionConfiguratorWidget' args [data.product] only %}
             {% elsewidget 'ProductOptionWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductOptionConfiguratorWidget instead. #}
             {% endwidget %}
