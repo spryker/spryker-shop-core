@@ -1,0 +1,19 @@
+{% extends template('widget') %}
+
+{% define data = {
+    productConfigurationRouteName: _widget.productConfigurationRouteName,
+    sku: _widget.sku,
+    sourceType: _widget.sourceType,
+    quantity: _widget.quantity
+} %}
+
+
+{% block body %}
+    <a href="{{
+        path(
+            data.productConfigurationRouteName,
+            {'sku': data.sku, 'source-type': data.sourceType, 'quantity': data.quantity})
+    }}">
+        {{ 'Configure' | trans }}
+    </a>
+{% endblock %}
