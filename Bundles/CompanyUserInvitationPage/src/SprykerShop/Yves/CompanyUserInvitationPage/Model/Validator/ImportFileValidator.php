@@ -17,7 +17,7 @@ class ImportFileValidator implements ImportFileValidatorInterface
     /**
      * @var \SprykerShop\Yves\CompanyUserInvitationPage\Model\Reader\InvitationReaderInterface
      */
-    private $invitationReader;
+    protected $invitationReader;
 
     /**
      * @param \SprykerShop\Yves\CompanyUserInvitationPage\Model\Reader\InvitationReaderInterface $invitationReader
