@@ -2,11 +2,10 @@
 
 {% define data = {
     productConfigurationRouteName: _widget.productConfigurationRouteName,
-    sku: _widget.sku,
     sourceType: _widget.sourceType,
-    quantity: _widget.quantity
+    sku: _widget.sku,
+    quantity: _widget.quantity,
 } %}
-
 
 {% block body %}
     <a href="{{
@@ -14,6 +13,6 @@
             data.productConfigurationRouteName,
             {'sku': data.sku, 'source-type': data.sourceType, 'quantity': data.quantity})
     }}">
-        {{ 'Configure' | trans }}
+        {{ 'product_configuration_widget.configure' | trans }}
     </a>
 {% endblock %}

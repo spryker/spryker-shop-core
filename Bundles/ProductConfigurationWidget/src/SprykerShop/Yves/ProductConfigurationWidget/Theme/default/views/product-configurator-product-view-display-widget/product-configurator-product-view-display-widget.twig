@@ -1,0 +1,23 @@
+{% extends template('widget') %}
+
+{% define data = {
+    productConfigurationInstance: _widget.productConfigurationInstance,
+    productConfigurationTemplate: _widget.productConfigurationTemplate,
+} %}
+
+{% block body %}
+    <div>
+        {% if data.productConfigurationTemplate.path and data.productConfigurationTemplate.data is defined %}
+            {% include data.productConfigurationTemplate.path with {'data': data.productConfigurationTemplate.data} only %}
+        {% else %}
+            {{ data.productConfigurationInstance.rawData }}
+        {% endif %}
+    </div>
+    <div>
+        {% if data.productConfigurationInstance.isComplete %}
+            {{ 'product_configuration_widget.complete' | trans }}
+        {% else %}
+            {{ 'product_configuration_widget.not_complete' | trans }}
+        {% endif %}
+    </div>
+{% endblock %}

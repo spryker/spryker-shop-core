@@ -5,18 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductConfigurationWidget\Reader;
+namespace SprykerShop\Yves\ProductConfigurationWidget\Resolver;
 
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
+use Generated\Shared\Transfer\ProductConfigurationTemplateTransfer;
 
-interface ProductConfigurationInstanceDataReaderInterface
+interface ProductConfigurationTemplateResolverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductConfigurationTemplateTransfer
      */
-    public function getProductConfigurationInstanceTemplateData(
+    public function resolveProductConfigurationTemplate(
         ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
-    ): array;
+    ): ProductConfigurationTemplateTransfer;
 }
