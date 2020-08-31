@@ -12,7 +12,7 @@ class CustomerReorderWidgetToZedRequestClientBridge implements CustomerReorderWi
     /**
      * @var \Spryker\Client\ZedRequest\ZedRequestClientInterface
      */
-    private $zedRequestClient;
+    protected $zedRequestClient;
 
     /**
      * @param \Spryker\Client\ZedRequest\ZedRequestClientInterface $zedRequestClient
