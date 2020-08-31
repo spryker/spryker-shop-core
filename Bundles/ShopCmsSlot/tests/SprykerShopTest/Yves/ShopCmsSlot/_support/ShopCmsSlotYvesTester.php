@@ -15,8 +15,6 @@ use Generated\Shared\Transfer\CmsSlotContextTransfer;
 use Generated\Shared\Transfer\CmsSlotStorageTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
