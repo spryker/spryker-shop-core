@@ -19,12 +19,12 @@ class TwigTranslator implements TranslatorInterface
     /**
      * @var \SprykerShop\Yves\ShopTranslator\Dependency\Client\ShopTranslatorToGlossaryStorageClientInterface
      */
-    private $client;
+    protected $client;
 
     /**
      * @var string
      */
-    private $localeName;
+    protected $localeName;
 
     /**
      * @param \SprykerShop\Yves\ShopTranslator\Dependency\Client\ShopTranslatorToGlossaryStorageClientInterface $client
