@@ -17,6 +17,7 @@
         <property name="shipment" type="Shipment"/>
         <property name="bundleItemIdentifier" type="string"/>
         <property name="relatedBundleItemIdentifier" type="string"/>
+        <property name="state" type="ItemState"/>
     </transfer>
 
     <transfer name="Shipment">
@@ -64,6 +65,9 @@
     </transfer>
 
     <transfer name="SalesOrderConfiguredBundleItem">
+    </transfer>
+
+    <transfer name="ItemState">
     </transfer>
 
 </transfers>

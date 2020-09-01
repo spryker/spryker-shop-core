@@ -11,4 +11,10 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="ProductLabelDictionaryItem">
+        <property name="frontEndReference" type="string"/>
+        <property name="key" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
 </transfers>
