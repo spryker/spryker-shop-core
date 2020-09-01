@@ -1,0 +1,71 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerShop\Yves\ProductConfiguratorGatewayPage\Controller;
+
+use Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer;
+use SprykerShop\Yves\ProductConfiguratorGatewayPage\Exception\MissedPropertyException;
+use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+
+/**
+ * @method \SprykerShop\Yves\ProductConfiguratorGatewayPage\ProductConfiguratorGatewayPageFactory getFactory()
+ */
+class GatewayRequestController extends AbstractController
+{
+    public const PARAM_ITEM_GROUP_KEY = 'item-group-key';
+    public const PARAM_SOURCE_TYPE = 'source-type';
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function indexAction(Request $request): RedirectResponse
+    {
+        $productConfiguratorRequestDataTransfer = $this->validateRequestOrThrowException($request);
+
+        $productConfigurationRedirectTransfer = $this->getFactory()->createProductConfigurationRedirectResolver()
+            ->resolveProductConfiguratorRedirect($productConfiguratorRequestDataTransfer);
+
+        if ($productConfigurationRedirectTransfer->getIsSuccessful()) {
+            return $this->redirectResponseExternal($productConfigurationRedirectTransfer->getConfiguratorRedirectUrl());
+        }
+
+        foreach ($productConfigurationRedirectTransfer->getMessages() as $message) {
+            $this->addErrorMessage($message);
+        }
+
+        return $this->redirectResponseInternal($request->getUri());
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \SprykerShop\Yves\ProductConfiguratorGatewayPage\Exception\MissedPropertyException
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer
+     */
+    protected function validateRequestOrThrowException(Request $request): ProductConfiguratorRequestDataTransfer
+    {
+        $form = $this->getFactory()
+            ->getConfiguratorStateForm()->submit($request->query->all());
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $errorList = [];
+
+            foreach ($form->getErrors() as $error) {
+                $errorList[] = $error->getMessage();
+            }
+
+            throw new MissedPropertyException(implode(PHP_EOL, $errorList));
+        }
+
+        return $form->getData();
+    }
+}

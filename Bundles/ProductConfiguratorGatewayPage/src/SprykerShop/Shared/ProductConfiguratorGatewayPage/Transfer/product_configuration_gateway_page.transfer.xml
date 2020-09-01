@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+    <transfer name="ProductConfigurationInstance">
+        <property name="displayData" type="string"/>
+        <property name="configuration" type="string"/>
+        <property name="configuratorKey" type="string"/>
+        <property name="isComplete" type="bool"/>
+    </transfer>
+
+    <transfer name="Quote">
+    </transfer>
+
+    <transfer name="ProductConfiguratorRequest">
+        <property name="accessTokenRequestUrl" type="string"/>
+        <property name="ProductConfiguratorRequestData" type="ProductConfiguratorRequestData"/>
+    </transfer>
+
+    <transfer name="ProductConfiguratorRedirect">
+        <property name="configuratorRedirectUrl" type="string"/>
+        <property name="configuratorRedirectQueryParams" type="array"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="array"/>
+    </transfer>
+
+    <transfer name="ProductConfiguratorRequestData">
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+        <property name="itemGroupKey" type="string"/>
+        <property name="configuration" type="string"/>
+        <property name="configuratorKey" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="storeName" type="string"/>
+        <property name="currencyCode" type="string"/>
+        <property name="localeName" type="string"/>
+        <property name="priceMode" type="string"/>
+        <property name="backUrl" type="string"/>
+        <property name="submitUrl" type="string"/>
+        <property name="sourceType" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+    </transfer>
+</transfers>
