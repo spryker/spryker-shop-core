@@ -1,0 +1,28 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isVisible: _widget.isVisible,
+    form: _widget.form | default,
+    productConfigurationRouteName: _widget.productConfigurationRouteName | default,
+    sourceType: _widget.sourceType | default,
+    itemGroupKey: _widget.itemGroupKey | default,
+    quantity: _widget.quantity | default,
+} %}
+
+{% block body %}
+    {% if data.isVisible %}
+
+        {% block formContent %}
+            {{ form_start(data.form, {'action': path(data.productConfigurationRouteName, {
+                'source-type': data.sourceType,
+                'item-group-key': data.itemGroupKey,
+                'quantity': data.quantity
+            })}) }}
+
+            <button class="button">{{ 'product_configuration_widget.configure' | trans }}</button>
+
+            {{ form_end(data.form) }}
+        {% endblock %}
+
+    {% endif %}
+{% endblock %}

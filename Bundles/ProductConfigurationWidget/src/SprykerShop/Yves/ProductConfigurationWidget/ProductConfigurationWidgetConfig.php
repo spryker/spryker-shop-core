@@ -12,9 +12,9 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 class ProductConfigurationWidgetConfig extends AbstractBundleConfig
 {
     /**
-     * @uses \SprykerShop\Yves\ProductConfiguratorGatewayPage\Plugin\Router\ProductConfiguratorGatewayPageRouteProviderPlugin::PRODUCT_CONFIGURATION_GATEWAY_REQUEST_ROUTE
+     * TODO: replace from `cart` to `product-configurator-gateway-request`
      */
-    protected const PRODUCT_CONFIGURATION_GATEWAY_REQUEST_ROUTE = 'product-configurator-gateway-request';
+    protected const PRODUCT_CONFIGURATION_GATEWAY_REQUEST_ROUTE = 'cart';
 
     /**
      * @uses \Spryker\Shared\ProductConfiguration\ProductConfigurationConfig::SOURCE_TYPE_PDP
@@ -31,7 +31,7 @@ class ProductConfigurationWidgetConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getPdpSourceType()
+    public function getPdpSourceType(): string
     {
         return static::SOURCE_TYPE_PDP;
     }
@@ -41,7 +41,7 @@ class ProductConfigurationWidgetConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getCartSourceType()
+    public function getCartSourceType(): string
     {
         return static::SOURCE_TYPE_CART;
     }
@@ -51,7 +51,7 @@ class ProductConfigurationWidgetConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getProductConfigurationGateRequestRoute()
+    public function getProductConfigurationGatewayRequestRoute(): string
     {
         return static::PRODUCT_CONFIGURATION_GATEWAY_REQUEST_ROUTE;
     }

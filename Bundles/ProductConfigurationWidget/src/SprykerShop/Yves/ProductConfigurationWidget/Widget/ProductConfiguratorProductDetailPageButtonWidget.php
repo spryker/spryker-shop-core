@@ -16,25 +16,27 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class ProductConfiguratorProductDetailPageButtonWidget extends AbstractWidget
 {
+    protected const PARAMETER_IS_VISIBLE = 'isVisible';
+    protected const PARAMETER_FORM = 'form';
+    protected const PARAMETER_PRODUCT_CONFIGURATION_ROUTE_NAME = 'productConfigurationRouteName';
+    protected const PARAMETER_SKU = 'sku';
+    protected const PARAMETER_SOURCE_TYPE = 'sourceType';
+
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      */
     public function __construct(ProductViewTransfer $productViewTransfer)
     {
-        $productConfigurationInstanceTransfer = $productViewTransfer->getProductConfigurationInstance();
+        $this->addIsVisibleParameter($productViewTransfer);
 
-        if (!$productConfigurationInstanceTransfer) {
+        if (!$productViewTransfer->getProductConfigurationInstance()) {
             return;
         }
 
-        $this->addParameter(
-            'productConfigurationRouteName',
-            $this->getConfig()->getProductConfigurationGateRequestRoute()
-        );
-
-        $this->addParameter('sku', $productViewTransfer->getSku());
-        $this->addParameter('quantity', $productViewTransfer->getQuantity());
-        $this->addParameter('sourceType', $this->getConfig()->getPdpSourceType());
+        $this->addFormParameter();
+        $this->addProductConfigurationRouteNameParameter();
+        $this->addSourceTypeParameter();
+        $this->addSkuParameter($productViewTransfer);
     }
 
     /**
@@ -50,6 +52,53 @@ class ProductConfiguratorProductDetailPageButtonWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@ProductConfigurationWidget/views/product-configuration/product-view-product-configuration-button.twig';
+        return '@ProductConfigurationWidget/views/product-configurator-product-detail-page-button-widget/product-configurator-product-detail-page-button-widget.twig';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return void
+     */
+    protected function addIsVisibleParameter(ProductViewTransfer $productViewTransfer): void
+    {
+        $this->addParameter(static::PARAMETER_IS_VISIBLE, $productViewTransfer->getProductConfigurationInstance());
+    }
+
+    /**
+     * @return void
+     */
+    protected function addFormParameter(): void
+    {
+        $this->addParameter(static::PARAMETER_FORM, $this->getFactory()->getProductConfigurationButtonForm()->createView());
+    }
+
+    /**
+     * @return void
+     */
+    protected function addProductConfigurationRouteNameParameter(): void
+    {
+        $this->addParameter(
+            static::PARAMETER_PRODUCT_CONFIGURATION_ROUTE_NAME,
+            $this->getConfig()->getProductConfigurationGatewayRequestRoute()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    protected function addSourceTypeParameter(): void
+    {
+        $this->addParameter(static::PARAMETER_SOURCE_TYPE, $this->getConfig()->getPdpSourceType());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return void
+     */
+    protected function addSkuParameter(ProductViewTransfer $productViewTransfer): void
+    {
+        $this->addParameter(static::PARAMETER_SKU, $productViewTransfer->getSku());
     }
 }

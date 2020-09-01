@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerShop\Yves\ProductConfigurationWidgetExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
@@ -7,12 +12,14 @@ use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 /**
  * Use this plugin to provide the template and data for product configuration display.
  */
-interface ProductConfigurationRendererPluginInterface
+interface ProductConfigurationRenderStrategyPluginInterface
 {
     /**
      * Specification:
      * - Checks if this plugin is applicable for a product configuration.
      * - Hint: mostly the check should be done by the configuratorKey.
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstance
      *
@@ -26,9 +33,9 @@ interface ProductConfigurationRendererPluginInterface
      *
      * @api
      *
-     * @return string|null
+     * @return string
      */
-    public function getTemplatePath(): ?string;
+    public function getTemplatePath(): string;
 
     /**
      * Specification:

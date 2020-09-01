@@ -1,20 +1,22 @@
 {
   "name": "spryker-shop/product-configuration-widget",
+  "type": "library",
   "description": "ProductConfigurationWidget module",
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker-shop/product-configuration-widget-extension": "^0.0.1",
+    "spryker-shop/product-configuration-widget-extension": "^0.1.0",
     "spryker-shop/shop-ui": "^1.43.0",
+    "spryker/application": "^3.8.0",
     "spryker/kernel": "^3.30.0",
-    "spryker/product-configuration-storage": "^0.0.1"
+    "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*"
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "SprykerShop\\": "src/SprykerShop/"
     }
   },
   "minimum-stability": "dev",

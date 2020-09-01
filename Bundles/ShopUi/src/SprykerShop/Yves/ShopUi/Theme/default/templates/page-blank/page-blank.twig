@@ -5,10 +5,12 @@
     title: 'global.spryker.shop' | trans,
     metaTitle: 'global.spryker.shop' | trans,
     metaDescription: '',
-    metaKeywords: ''
+    metaKeywords: '',
+    hasCookies: app.request.cookies.get('last-visit'),
 } %}
 
 {% set isNewFrontendBuildSupported = false %}
+{% set isCssLazyLoadSupported = false %}
 
 {% block template %}
     <!doctype html>
@@ -24,7 +26,15 @@
             {% endblock %}
 
             {% block headStyles %}
-                <link rel="stylesheet" href="{{publicPath('css/yves_default.app.css')}}">
+                {% if isCssLazyLoadSupported %}
+                    <link rel="stylesheet" href="{{ publicPath('css/yves_default.critical.css') }}">
+
+                    {% block nonCriticalStyles %}
+                        <link rel="stylesheet" href="{{ publicPath('css/yves_default.non-critical.css') }}">
+                    {% endblock %}
+                {% else %}
+                    <link rel="stylesheet" href="{{ publicPath('css/yves_default.app.css') }}">
+                {% endif %}
             {% endblock %}
 
             {% block headScripts %}
@@ -63,6 +73,8 @@
                         <script src="{{ publicPath('js/yves_default.app.js') }}"></script>
                     {% endblock %}
                 {% endif %}
+
+                {%- block styleLazyLoader %}{% endblock -%}
             {% endblock %}
         </body>
     </html>

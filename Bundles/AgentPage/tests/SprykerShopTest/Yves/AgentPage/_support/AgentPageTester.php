@@ -10,8 +10,6 @@ namespace SprykerShopTest\Yves\AgentPage;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

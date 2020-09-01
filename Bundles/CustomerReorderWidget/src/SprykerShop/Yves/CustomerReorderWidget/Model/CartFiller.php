@@ -121,6 +121,7 @@ class CartFiller implements CartFillerInterface
         foreach ($orderItems as $itemTransfer) {
             $itemTransfer = $this->removeIdSalesShipmentFromItem($itemTransfer);
             $itemTransfer = $this->removeSalesOrderConfiguredBundleItemFromItemTransfer($itemTransfer);
+            $itemTransfer = $this->removeStateFromItem($itemTransfer);
             $orderItemsSanitized->append($itemTransfer);
         }
 
@@ -167,6 +168,22 @@ class CartFiller implements CartFillerInterface
         }
 
         $itemTransfer->setSalesOrderConfiguredBundleItem(null);
+
+        return $itemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function removeStateFromItem(ItemTransfer $itemTransfer): ItemTransfer
+    {
+        if (!$itemTransfer->getState()) {
+            return $itemTransfer;
+        }
+
+        $itemTransfer->setState(null);
 
         return $itemTransfer;
     }

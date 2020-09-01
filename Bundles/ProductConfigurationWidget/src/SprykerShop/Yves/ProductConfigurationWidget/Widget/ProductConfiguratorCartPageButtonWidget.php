@@ -16,26 +16,29 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class ProductConfiguratorCartPageButtonWidget extends AbstractWidget
 {
+    protected const PARAMETER_IS_VISIBLE = 'isVisible';
+    protected const PARAMETER_FORM = 'form';
+    protected const PARAMETER_PRODUCT_CONFIGURATION_ROUTE_NAME = 'productConfigurationRouteName';
+    protected const PARAMETER_SOURCE_TYPE = 'sourceType';
+    protected const PARAMETER_ITEM_GROUP_KEY = 'itemGroupKey';
+    protected const PARAMETER_QUANTITY = 'quantity';
+
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param int $quantity
      */
-    public function __construct(ItemTransfer $itemTransfer, int $quantity)
+    public function __construct(ItemTransfer $itemTransfer)
     {
-        $productConfigurationInstanceTransfer = $itemTransfer->getProductConfigurationInstance();
+        $this->addIsVisibleParameter($itemTransfer);
 
-        if (!$productConfigurationInstanceTransfer) {
+        if (!$itemTransfer->getProductConfigurationInstance()) {
             return;
         }
 
-        $this->addParameter(
-            'productConfigurationRouteName',
-            $this->getConfig()->getProductConfigurationGateRequestRoute()
-        );
-
-        $this->addParameter('itemGroupKey', $itemTransfer->getGroupKey());
-        $this->addParameter('sourceType', $this->getConfig()->getCartSourceType());
-        $this->addParameter('quantity', $quantity);
+        $this->addFormParameter();
+        $this->addProductConfigurationRouteNameParameter();
+        $this->addSourceTypeParameter();
+        $this->addItemGroupKeyParameter($itemTransfer);
+        $this->addQuantityParameter($itemTransfer);
     }
 
     /**
@@ -51,6 +54,63 @@ class ProductConfiguratorCartPageButtonWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@ProductConfigurationWidget/views/product-configuration/cart-product-configuration-button.twig';
+        return '@ProductConfigurationWidget/views/product-configurator-cart-page-button-widget/product-configurator-cart-page-button-widget.twig';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function addIsVisibleParameter(ItemTransfer $itemTransfer): void
+    {
+        $this->addParameter(static::PARAMETER_IS_VISIBLE, $itemTransfer->getProductConfigurationInstance());
+    }
+
+    /**
+     * @return void
+     */
+    protected function addFormParameter(): void
+    {
+        $this->addParameter(static::PARAMETER_FORM, $this->getFactory()->getProductConfigurationButtonForm()->createView());
+    }
+
+    /**
+     * @return void
+     */
+    protected function addProductConfigurationRouteNameParameter(): void
+    {
+        $this->addParameter(
+            static::PARAMETER_PRODUCT_CONFIGURATION_ROUTE_NAME,
+            $this->getConfig()->getProductConfigurationGatewayRequestRoute()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    protected function addSourceTypeParameter(): void
+    {
+        $this->addParameter(static::PARAMETER_SOURCE_TYPE, $this->getConfig()->getCartSourceType());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function addItemGroupKeyParameter(ItemTransfer $itemTransfer): void
+    {
+        $this->addParameter(static::PARAMETER_ITEM_GROUP_KEY, $itemTransfer->getGroupKey());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function addQuantityParameter(ItemTransfer $itemTransfer): void
+    {
+        $this->addParameter(static::PARAMETER_QUANTITY, $itemTransfer->getQuantity());
     }
 }
