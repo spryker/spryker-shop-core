@@ -14,7 +14,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  * @method \SprykerShop\Yves\ProductConfigurationWidget\ProductConfigurationWidgetFactory getFactory()
  * @method \SprykerShop\Yves\ProductConfigurationWidget\ProductConfigurationWidgetConfig getConfig()
  */
-class ProductConfiguratorCartPageButtonWidget extends AbstractWidget
+class ProductConfigurationCartPageButtonWidget extends AbstractWidget
 {
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
     protected const PARAMETER_FORM = 'form';
@@ -46,7 +46,7 @@ class ProductConfiguratorCartPageButtonWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'ProductConfiguratorCartPageButtonWidget';
+        return 'ProductConfigurationCartPageButtonWidget';
     }
 
     /**
@@ -54,7 +54,7 @@ class ProductConfiguratorCartPageButtonWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@ProductConfigurationWidget/views/product-configurator-cart-page-button-widget/product-configurator-cart-page-button-widget.twig';
+        return '@ProductConfigurationWidget/views/product-configuration-cart-page-button-widget/product-configuration-cart-page-button-widget.twig';
     }
 
     /**
