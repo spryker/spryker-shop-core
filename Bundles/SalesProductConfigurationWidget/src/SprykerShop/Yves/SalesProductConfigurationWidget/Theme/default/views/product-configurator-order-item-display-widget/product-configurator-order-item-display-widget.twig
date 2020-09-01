@@ -9,13 +9,6 @@
 {% block body %}
     {% if data.isVisible %}
         <div>
-            {% if data.salesOrderItemConfiguration.isComplete %}
-                {{ 'product_configuration_widget.complete' | trans }}
-            {% else %}
-                {{ 'product_configuration_widget.not_complete' | trans }}
-            {% endif %}
-        </div>
-        <div>
             {% if data.productConfigurationTemplate.path and data.productConfigurationTemplate.data is defined %}
                 {% include data.productConfigurationTemplate.path with {'data': data.productConfigurationTemplate.data} only %}
             {% else %}

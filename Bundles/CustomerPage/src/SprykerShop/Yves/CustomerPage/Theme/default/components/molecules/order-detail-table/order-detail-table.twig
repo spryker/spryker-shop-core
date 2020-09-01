@@ -63,6 +63,9 @@
                                     <p>{{ 'customer.order.item_amount' | trans }}: {{ concreteItem.amount.toFloat() }}</p>
                                 {% endif %}
 
+                                {% widget 'ProductConfiguratorOrderItemDisplayWidget' args [concreteItem] only %}
+                                {% endwidget %}
+
                                 {% if item.bundleItems is not empty %}
                                     <div class="spacing-bottom">
                                         {% block bundleDetailRow %}
