@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/product-configuration-widget",
+  "type": "library",
   "description": "ProductConfigurationWidget module",
   "license": "proprietary",
   "require": {
@@ -15,7 +16,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "SprykerShop\\": "src/SprykerShop/"
     }
   },
   "minimum-stability": "dev",

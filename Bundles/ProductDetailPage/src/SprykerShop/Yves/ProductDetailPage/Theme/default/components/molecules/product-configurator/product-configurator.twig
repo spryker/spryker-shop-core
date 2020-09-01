@@ -94,7 +94,7 @@
 
     {% widget 'ProductConfiguratorProductViewDisplayWidget' args [data.product] only %}
     {% endwidget %}
-    {% widget 'ProductConfiguratorProductViewButtonWidget' args [data.product] only %}
+    {% widget 'ProductConfiguratorProductDetailPageButtonWidget' args [data.product] only %}
         {% block formContent %}{{ parent() }}<hr>{% endblock %}
     {% endwidget %}
 

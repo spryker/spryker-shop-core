@@ -12,11 +12,18 @@
 
     <transfer name="Item">
         <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+        <property name="quantity" type="int"/>
+        <property name="groupKey" type="string"/>
     </transfer>
 
     <transfer name="ProductConfigurationTemplate">
         <property name="path" type="string"/>
         <property name="data" type="array" singular="data"/>
+    </transfer>
+
+    <transfer name="ProductView">
+        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+        <property name="sku" type="string"/>
     </transfer>
 
 </transfers>
