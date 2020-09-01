@@ -14,7 +14,7 @@ class CategoryImageStorageWidgetToCategoryImageStorageClientBridge implements Ca
     /**
      * @var \Spryker\Client\CategoryImageStorage\CategoryImageStorageClientInterface
      */
-    private $storageClient;
+    protected $storageClient;
 
     /**
      * @param \Spryker\Client\CategoryImageStorage\CategoryImageStorageClientInterface $storageClient

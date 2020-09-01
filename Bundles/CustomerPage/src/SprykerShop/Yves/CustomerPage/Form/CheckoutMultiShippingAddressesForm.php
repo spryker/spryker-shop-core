@@ -204,7 +204,7 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
     protected function isNewAddressFormShouldNotBeValidated(FormInterface $form): bool
     {
         return $this->isNewCustomerAddress($form)
-            || $this->isIdCustomerAddressEmpty($form)
+            || !$this->isIdCustomerAddressEmpty($form)
             || !$this->isIdCompanyUnitAddressEmpty($form);
     }
 }

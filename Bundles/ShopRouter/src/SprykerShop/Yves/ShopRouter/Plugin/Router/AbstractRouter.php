@@ -32,7 +32,7 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
     /**
      * @var bool|null
      */
-    private $sslEnabled;
+    protected $sslEnabled;
 
     /**
      * @inheritDoc
