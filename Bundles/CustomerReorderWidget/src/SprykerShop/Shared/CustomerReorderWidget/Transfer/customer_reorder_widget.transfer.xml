@@ -18,6 +18,7 @@
         <property name="bundleItemIdentifier" type="string"/>
         <property name="relatedBundleItemIdentifier" type="string"/>
         <property name="state" type="ItemState"/>
+        <property name="salesOrderItemConfiguration" type="SalesOrderItemConfiguration"/>
     </transfer>
 
     <transfer name="Shipment">
