@@ -58,7 +58,7 @@ class ProductConfigurationProductViewDisplayWidget extends AbstractWidget
      */
     protected function addIsVisibleParameter(ProductViewTransfer $productViewTransfer): void
     {
-        $this->addParameter(static::PARAMETER_IS_VISIBLE, $productViewTransfer->getProductConfigurationInstance());
+        $this->addParameter(static::PARAMETER_IS_VISIBLE, (bool)$productViewTransfer->getProductConfigurationInstance());
     }
 
     /**
