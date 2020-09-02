@@ -14,7 +14,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  * @method \SprykerShop\Yves\ProductConfigurationWidget\ProductConfigurationWidgetFactory getFactory()
  * @method \SprykerShop\Yves\ProductConfigurationWidget\ProductConfigurationWidgetConfig getConfig()
  */
-class ProductConfiguratorProductViewDisplayWidget extends AbstractWidget
+class ProductConfigurationProductViewDisplayWidget extends AbstractWidget
 {
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
     protected const PARAMETER_PRODUCT_CONFIGURATION_INSTANCE = 'productConfigurationInstance';
@@ -40,7 +40,7 @@ class ProductConfiguratorProductViewDisplayWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'ProductConfiguratorProductViewDisplayWidget';
+        return 'ProductConfigurationProductViewDisplayWidget';
     }
 
     /**
@@ -48,7 +48,7 @@ class ProductConfiguratorProductViewDisplayWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@ProductConfigurationWidget/views/product-configurator-product-view-display-widget/product-configurator-product-view-display-widget.twig';
+        return '@ProductConfigurationWidget/views/product-configuration-product-view-display-widget/product-configuration-product-view-display-widget.twig';
     }
 
     /**
