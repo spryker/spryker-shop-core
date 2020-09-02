@@ -19,7 +19,7 @@
 
     <transfer name="ProductConfiguratorRedirect">
         <property name="configuratorRedirectUrl" type="string"/>
-        <property name="configuratorRedirectQueryParams" type="array"/>
+        <property name="configuratorRedirectQueryParams" type="array" singular="configuratorRedirectQueryParam"/>
         <property name="isSuccessful" type="bool"/>
         <property name="messages" type="array"/>
     </transfer>
