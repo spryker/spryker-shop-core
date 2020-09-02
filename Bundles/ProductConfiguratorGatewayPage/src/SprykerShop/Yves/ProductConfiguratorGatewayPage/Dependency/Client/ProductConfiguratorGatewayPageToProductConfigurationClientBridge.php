@@ -9,6 +9,8 @@ namespace SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client;
 
 use Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
+use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
+use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 
 class ProductConfiguratorGatewayPageToProductConfigurationClientBridge implements ProductConfiguratorGatewayPageToProductConfigurationClientInterface
 {
@@ -34,5 +36,21 @@ class ProductConfiguratorGatewayPageToProductConfigurationClientBridge implement
         ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
     ): ProductConfiguratorRedirectTransfer {
         return $this->productConfigurationClient->resolveProductConfiguratorRedirect($productConfiguratorRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+     * @param array $configuratorResponseData
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
+     */
+    public function processProductConfiguratorResponse(
+        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
+        array $configuratorResponseData
+    ): ProductConfiguratorResponseProcessorResponseTransfer {
+        return $this->productConfigurationClient->processProductConfiguratorResponse(
+            $productConfiguratorResponseTransfer,
+            $configuratorResponseData
+        );
     }
 }

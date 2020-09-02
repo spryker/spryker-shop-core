@@ -12,7 +12,8 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class ProductConfiguratorGatewayPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    protected const PRODUCT_CONFIGURATION_GATEWAY_REQUEST_ROUTE = 'product-configurator-gateway-request';
+    public const ROUTE_NAME_PRODUCT_CONFIGURATION_GATEWAY_REQUEST = 'product-configurator-gateway-request';
+    public const ROUTE_NAME_PRODUCT_CONFIGURATION_GATEWAY_RESPONSE = 'product-configurator-gateway/response';
 
     /**
      * Specification:
@@ -27,12 +28,13 @@ class ProductConfiguratorGatewayPageRouteProviderPlugin extends AbstractRoutePro
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
         $routeCollection = $this->addProductConfiguratorGatewayRequest($routeCollection);
+        $routeCollection = $this->addProductConfiguratorGatewayResponse($routeCollection);
 
         return $routeCollection;
     }
 
     /**
-     * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnCreateController::createAction()
+     * @uses \SprykerShop\Yves\ProductConfiguratorGatewayPage\Controller\ReturnCreateController::createAction()
      *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
@@ -41,7 +43,22 @@ class ProductConfiguratorGatewayPageRouteProviderPlugin extends AbstractRoutePro
     protected function addProductConfiguratorGatewayRequest(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/product-configurator-gateway/request', 'ProductConfiguratorGatewayPage', 'GatewayRequest', 'indexAction');
-        $routeCollection->add(static::PRODUCT_CONFIGURATION_GATEWAY_REQUEST_ROUTE, $route);
+        $routeCollection->add(static::ROUTE_NAME_PRODUCT_CONFIGURATION_GATEWAY_REQUEST, $route);
+
+        return $routeCollection;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\ProductConfiguratorGatewayPage\Controller\GatewayResponseController::indexAction()
+     *
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Yves\Router\Route\RouteCollection
+     */
+    protected function addProductConfiguratorGatewayResponse(RouteCollection $routeCollection): RouteCollection
+    {
+        $route = $this->buildPostRoute('/product-configurator-gateway/response', 'ProductConfiguratorGatewayPage', 'GatewayResponse', 'indexAction');
+        $routeCollection->add(static::ROUTE_NAME_PRODUCT_CONFIGURATION_GATEWAY_RESPONSE, $route);
 
         return $routeCollection;
     }

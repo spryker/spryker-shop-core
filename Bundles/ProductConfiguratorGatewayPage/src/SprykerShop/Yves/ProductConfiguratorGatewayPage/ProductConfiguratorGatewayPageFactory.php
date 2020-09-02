@@ -15,6 +15,8 @@ use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductCon
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\ProductConfiguratorRequestDataForm;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Mapper\ProductConfiguratorRequestDataMapper;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Mapper\ProductConfiguratorRequestDataMapperInterface;
+use SprykerShop\Yves\ProductConfiguratorGatewayPage\Mapper\ProductConfiguratorResponseDataMapper;
+use SprykerShop\Yves\ProductConfiguratorGatewayPage\Mapper\ProductConfiguratorResponseDataMapperInterface;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver\ProductConfigurationRedirectResolver;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver\ProductConfigurationRedirectResolverInterface;
 use Symfony\Component\Form\FormInterface;
@@ -86,5 +88,13 @@ class ProductConfiguratorGatewayPageFactory extends AbstractFactory
     public function getFormFactory()
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductConfiguratorGatewayPage\Mapper\ProductConfiguratorResponseDataMapperInterface
+     */
+    public function createProductConfiguratorResponseDataMapper(): ProductConfiguratorResponseDataMapperInterface
+    {
+        return new ProductConfiguratorResponseDataMapper();
     }
 }
