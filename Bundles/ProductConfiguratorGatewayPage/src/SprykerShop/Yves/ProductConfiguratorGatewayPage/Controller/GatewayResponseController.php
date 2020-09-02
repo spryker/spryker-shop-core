@@ -47,8 +47,11 @@ class GatewayResponseController extends AbstractController
             $this->handleResponseErrors($productConfiguratorResponseProcessorResponseTransfer);
 
             // TODO: use correct $path
-            return $this->redirectResponseInternal('');
+            return $this->redirectResponseInternal('cart');
         }
+
+        // TODO: plugin execution
+        return $this->redirectResponseInternal('cart');
     }
 
     /**
