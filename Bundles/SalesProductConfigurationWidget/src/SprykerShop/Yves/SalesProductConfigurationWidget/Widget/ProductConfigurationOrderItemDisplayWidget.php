@@ -14,7 +14,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  * @method \SprykerShop\Yves\SalesProductConfigurationWidget\SalesProductConfigurationWidgetFactory getFactory()
  * @method \SprykerShop\Yves\SalesProductConfigurationWidget\SalesProductConfigurationWidgetConfig getConfig()
  */
-class ProductConfiguratorOrderItemDisplayWidget extends AbstractWidget
+class ProductConfigurationOrderItemDisplayWidget extends AbstractWidget
 {
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
     protected const PARAMETER_SALES_ORDER_ITEM_CONFIGURATION = 'salesOrderItemConfiguration';
@@ -40,7 +40,7 @@ class ProductConfiguratorOrderItemDisplayWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'ProductConfiguratorOrderItemDisplayWidget';
+        return 'ProductConfigurationOrderItemDisplayWidget';
     }
 
     /**
@@ -48,7 +48,7 @@ class ProductConfiguratorOrderItemDisplayWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@SalesProductConfigurationWidget/views/product-configurator-order-item-display-widget/product-configurator-order-item-display-widget.twig';
+        return '@SalesProductConfigurationWidget/views/product-configuration-order-item-display-widget/product-configuration-order-item-display-widget.twig';
     }
 
     /**
@@ -58,7 +58,7 @@ class ProductConfiguratorOrderItemDisplayWidget extends AbstractWidget
      */
     protected function addIsVisibleParameter(ItemTransfer $itemTransfer): void
     {
-        $this->addParameter(static::PARAMETER_IS_VISIBLE, $itemTransfer->getSalesOrderItemConfiguration());
+        $this->addParameter(static::PARAMETER_IS_VISIBLE, (bool)$itemTransfer->getSalesOrderItemConfiguration());
     }
 
     /**
