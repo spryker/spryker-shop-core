@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\SalesProductConfigurationWidgetExtension\Dependency\P
 use Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer;
 
 /**
- * Use this plugin to provide the template and data for product configuration display.
+ * Use this plugin to provide the template and data for the order item configuration display.
  */
 interface SalesProductConfigurationRenderStrategyPluginInterface
 {
