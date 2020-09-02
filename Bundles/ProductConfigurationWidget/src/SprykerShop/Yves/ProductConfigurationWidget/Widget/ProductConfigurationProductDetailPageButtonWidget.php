@@ -52,7 +52,7 @@ class ProductConfigurationProductDetailPageButtonWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@ProductConfigurationWidget/views/product-configuration-product-detail-page-button-widget/product-configuration-product-detail-page-button-widget.twig';
+        return '@ProductConfigurationWidget/views/product-detail-configuration-button/product-detail-configuration-button.twig';
     }
 
     /**

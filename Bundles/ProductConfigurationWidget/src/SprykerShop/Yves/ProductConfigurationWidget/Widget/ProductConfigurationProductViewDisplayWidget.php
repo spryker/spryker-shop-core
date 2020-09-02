@@ -48,7 +48,7 @@ class ProductConfigurationProductViewDisplayWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@ProductConfigurationWidget/views/product-configuration-product-view-display-widget/product-configuration-product-view-display-widget.twig';
+        return '@ProductConfigurationWidget/views/product-detail-configuration/product-detail-configuration.twig';
     }
 
     /**

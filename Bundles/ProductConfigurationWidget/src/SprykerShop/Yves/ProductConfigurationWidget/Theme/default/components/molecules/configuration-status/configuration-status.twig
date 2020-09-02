@@ -1,0 +1,21 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'configuration-status',
+} %}
+
+{% define data = {
+    isComplete: required,
+} %}
+
+{% block extraClass %}
+    {{ data.isComplete ? config.name ~ '--complete' }}
+{% endblock %}
+
+{% block body %}
+    {% if data.isComplete %}
+        {{ 'product_configuration_widget.complete' | trans }}
+    {% else %}
+        {{ 'product_configuration_widget.not_complete' | trans }}
+    {% endif %}
+{% endblock %}

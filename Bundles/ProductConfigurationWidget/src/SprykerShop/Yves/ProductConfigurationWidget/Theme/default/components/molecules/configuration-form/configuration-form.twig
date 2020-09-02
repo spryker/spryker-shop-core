@@ -1,0 +1,24 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'configuration-form',
+} %}
+
+{% define data = {
+    form: required,
+    productConfigurationRouteName: required,
+    actionParams: {},
+} %}
+
+{% block body %}
+    {{ form_start(data.form, {'action': path(data.productConfigurationRouteName, data.actionParams)}) }}
+        <button class="button button--expand">
+            {% include atom('icon') with {
+                data: {
+                    name: 'wrench',
+                },
+            } only %}
+            {{ 'product_configuration_widget.configure' | trans }}
+        </button>
+    {{ form_end(data.form) }}
+{% endblock %}

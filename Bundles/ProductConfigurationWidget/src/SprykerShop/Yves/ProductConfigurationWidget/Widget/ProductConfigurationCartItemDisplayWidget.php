@@ -47,7 +47,7 @@ class ProductConfigurationCartItemDisplayWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@ProductConfigurationWidget/views/product-configuration-cart-item-display-widget/product-configuration-cart-item-display-widget.twig';
+        return '@ProductConfigurationWidget/views/cart-item-configuration/cart-item-configuration.twig';
     }
 
     /**

@@ -9,20 +9,24 @@
     quantity: _widget.quantity | default,
 } %}
 
-{% block body %}
+{% block component %}
     {% if data.isVisible %}
+        {% block componentInner %}
+            {{ parent() }}
+        {% endblock %}
+    {% endif %}
+{% endblock %}
 
-        {% block formContent %}
-            {{ form_start(data.form, {'action': path(data.productConfigurationRouteName, {
+{% block body %}
+    {% include molecule('configuration-form', 'ProductConfigurationWidget') with {
+        data: {
+            form: data.form,
+            productConfigurationRouteName: data.productConfigurationRouteName,
+            actionParams: {
                 'source-type': data.sourceType,
                 'item-group-key': data.itemGroupKey,
                 'quantity': data.quantity
-            })}) }}
-
-            <button class="button">{{ 'product_configuration_widget.configure' | trans }}</button>
-
-            {{ form_end(data.form) }}
-        {% endblock %}
-
-    {% endif %}
+            },
+        }
+    } only %}
 {% endblock %}

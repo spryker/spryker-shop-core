@@ -1,0 +1,33 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isVisible: _widget.isVisible,
+    productConfigurationInstance: _widget.productConfigurationInstance | default,
+    productConfigurationTemplate: _widget.productConfigurationTemplate | default,
+} %}
+
+{% block component %}
+    {% if data.isVisible %}
+        {% block componentInner %}
+            {{ parent() }}
+        {% endblock %}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% include molecule('configuration-status', 'ProductConfigurationWidget') with {
+        data: {
+            isComplete: data.productConfigurationInstance.isComplete,
+        },
+    } only %}
+
+    {% set productConfigurationTemplate = data.productConfigurationTemplate %}
+
+    {% if productConfigurationTemplate.path and productConfigurationTemplate.data is defined %}
+        {% include productConfigurationTemplate.path with {'data': productConfigurationTemplate.data} only %}
+    {% else %}
+        <div>
+            {{ data.productConfigurationInstance.displayData }}
+        </div>
+    {% endif %}
+{% endblock %}
