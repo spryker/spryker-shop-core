@@ -16,7 +16,7 @@ use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductCon
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Exception\ProductConfigurationInstanceNotFoundException;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Mapper\ProductConfiguratorRequestDataMapperInterface;
 
-class ProductConfigurationRedirectResolver implements ProductConfigurationRedirectResolverInterface
+class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirectResolverInterface
 {
     /**
      * @var \SprykerShop\Yves\ProductConfiguratorGatewayPage\Mapper\ProductConfiguratorRequestDataMapperInterface

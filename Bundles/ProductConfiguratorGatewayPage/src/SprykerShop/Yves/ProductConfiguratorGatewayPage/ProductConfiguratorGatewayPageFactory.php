@@ -15,8 +15,8 @@ use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductCon
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\ProductConfiguratorRequestDataForm;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Mapper\ProductConfiguratorRequestDataMapper;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Mapper\ProductConfiguratorRequestDataMapperInterface;
-use SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver\ProductConfigurationRedirectResolver;
-use SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver\ProductConfigurationRedirectResolverInterface;
+use SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver\ProductConfiguratorRedirectResolver;
+use SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver\ProductConfiguratorRedirectResolverInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
@@ -57,11 +57,11 @@ class ProductConfiguratorGatewayPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver\ProductConfigurationRedirectResolverInterface
+     * @return \SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver\ProductConfiguratorRedirectResolverInterface
      */
-    public function createProductConfigurationRedirectResolver(): ProductConfigurationRedirectResolverInterface
+    public function createProductConfiguratorRedirectResolver(): ProductConfiguratorRedirectResolverInterface
     {
-        return new ProductConfigurationRedirectResolver(
+        return new ProductConfiguratorRedirectResolver(
             $this->createProductConfiguratorRequestDataMapper(),
             $this->getProductConfigurationClient(),
             $this->getProductConfigurationStorageClient(),
