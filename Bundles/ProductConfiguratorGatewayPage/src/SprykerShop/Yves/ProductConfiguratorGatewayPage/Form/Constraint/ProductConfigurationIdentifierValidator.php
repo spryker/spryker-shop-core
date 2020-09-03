@@ -10,17 +10,26 @@ namespace SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\ProductConfiguratorRequestDataForm;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use InvalidArgumentException;
 
 class ProductConfigurationIdentifierValidator extends ConstraintValidator
 {
     /**
      * @param mixed $value
-     * @param \Symfony\Component\Validator\Constraint|\SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint\ProductConfigurationIdentifier  $constraint
+     * @param \SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint\ProductConfigurationIdentifier|\Symfony\Component\Validator\Constraint $constraint
      *
      * @return void
      */
     public function validate($value, Constraint $constraint): void
     {
+        if (!$constraint instanceof ProductConfigurationIdentifier) {
+            throw new InvalidArgumentException(sprintf(
+                'Expected constraint instance of %s, got %s instead.',
+                ProductConfigurationIdentifier::class,
+                get_class($constraint)
+            ));
+        }
+
         $itemGroupKeyValue = $this->context
             ->getRoot()->get(ProductConfiguratorRequestDataForm::FILED_ITEM_GROUP_KEY)->getData();
 
