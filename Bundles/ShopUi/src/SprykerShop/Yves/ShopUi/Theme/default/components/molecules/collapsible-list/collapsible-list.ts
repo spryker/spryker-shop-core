@@ -1,6 +1,6 @@
 import Component from '../../../models/component';
 
-export default class DropDownList extends Component {
+export default class CollapsibleList extends Component {
     protected triggerButton: HTMLElement;
     protected targetList: HTMLElement;
 
@@ -14,6 +14,10 @@ export default class DropDownList extends Component {
     }
 
     protected mapEvents(): void {
+        this.mapClickEvent();
+    }
+
+    protected mapClickEvent(): void {
         this.triggerButton.addEventListener('click', () => this.onClickHandler());
     }
 

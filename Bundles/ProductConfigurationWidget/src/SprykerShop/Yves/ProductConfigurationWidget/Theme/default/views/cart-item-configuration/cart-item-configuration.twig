@@ -6,28 +6,32 @@
     productConfigurationTemplate: _widget.productConfigurationTemplate | default,
 } %}
 
-{% block component %}
-    {% if data.isVisible %}
-        {% block componentInner %}
-            {{ parent() }}
-        {% endblock %}
-    {% endif %}
-{% endblock %}
-
 {% block body %}
-    {% include molecule('configuration-status', 'ProductConfigurationWidget') with {
+    {% set isComplete = data.productConfigurationInstance.isComplete %}
+    {% set configurationLabel = isComplete ? 'product_configuration_widget.complete' : 'product_configuration_widget.not_complete' %}
+    {% set configurationStatus = isComplete ? 'configured' : 'not-configured' %}
+
+    {% include molecule('status') with {
+        class: 'spacing-bottom',
         data: {
-            isComplete: data.productConfigurationInstance.isComplete,
-        },
+            label: configurationLabel | trans,
+            status: 'waiting',
+        }
     } only %}
 
-    {% set productConfigurationTemplate = data.productConfigurationTemplate %}
+    {% if isComplete %}
+        {% set productConfigurationTemplate = data.productConfigurationTemplate %}
 
-    {% if productConfigurationTemplate.path and productConfigurationTemplate.data is defined %}
-        {% include productConfigurationTemplate.path with {'data': productConfigurationTemplate.data} only %}
-    {% else %}
-        <div>
-            {{ data.productConfigurationInstance.displayData }}
-        </div>
+        {% if productConfigurationTemplate.path and productConfigurationTemplate.data is defined %}
+            {% include productConfigurationTemplate.path with {
+                data: {
+                    options: productConfigurationTemplate.data,
+                },
+            } only %}
+        {% else %}
+            <div>
+                {{ data.productConfigurationInstance.displayData }}
+            </div>
+        {% endif %}
     {% endif %}
 {% endblock %}

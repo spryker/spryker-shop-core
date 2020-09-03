@@ -1,9 +1,0 @@
-@mixin product-configuration-widget-configuration-status($name: '.configuration-status') {
-    #{$name} {
-        color: helper-color-dark(map-get($setting-color-actions, 'alert'));
-
-        &--complete {
-            color: helper-color-dark(map-get($setting-color-actions, 'success'));
-        }
-    }
-}

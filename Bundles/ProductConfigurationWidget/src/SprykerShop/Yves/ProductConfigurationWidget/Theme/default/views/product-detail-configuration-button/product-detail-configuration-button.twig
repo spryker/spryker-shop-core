@@ -8,14 +8,6 @@
     sku: _widget.sku | default,
 } %}
 
-{% block component %}
-    {% if data.isVisible %}
-        {% block componentInner %}
-            {{ parent() }}
-        {% endblock %}
-    {% endif %}
-{% endblock %}
-
 {% block body %}
     {% include molecule('configuration-form', 'ProductConfigurationWidget') with {
         data: {
@@ -25,6 +17,6 @@
                 'source-type': data.sourceType,
                 'sku': data.sku,
             },
-        }
+        },
     } only %}
 {% endblock %}

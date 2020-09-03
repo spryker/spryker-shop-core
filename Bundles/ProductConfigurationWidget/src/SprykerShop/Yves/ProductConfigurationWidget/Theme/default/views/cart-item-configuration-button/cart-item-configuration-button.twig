@@ -9,14 +9,6 @@
     quantity: _widget.quantity | default,
 } %}
 
-{% block component %}
-    {% if data.isVisible %}
-        {% block componentInner %}
-            {{ parent() }}
-        {% endblock %}
-    {% endif %}
-{% endblock %}
-
 {% block body %}
     {% include molecule('configuration-form', 'ProductConfigurationWidget') with {
         data: {
@@ -25,8 +17,8 @@
             actionParams: {
                 'source-type': data.sourceType,
                 'item-group-key': data.itemGroupKey,
-                'quantity': data.quantity
+                'quantity': data.quantity,
             },
-        }
+        },
     } only %}
 {% endblock %}
