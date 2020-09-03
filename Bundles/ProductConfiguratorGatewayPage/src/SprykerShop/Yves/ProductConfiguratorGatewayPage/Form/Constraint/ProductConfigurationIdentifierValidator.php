@@ -15,7 +15,7 @@ class ProductConfigurationIdentifierValidator extends ConstraintValidator
 {
     /**
      * @param mixed $value
-     * @param \Symfony\Component\Validator\Constraint $constraint
+     * @param \Symfony\Component\Validator\Constraint|\SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint\ProductConfigurationIdentifier  $constraint
      *
      * @return void
      */

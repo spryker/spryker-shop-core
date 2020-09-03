@@ -138,6 +138,8 @@ class ProductConfiguratorRequestDataForm extends AbstractType implements DataMap
     /**
      * @param \Symfony\Component\Form\FormInterface[]|\Traversable $forms
      * @param mixed $viewData
+     *
+     * @return void
      */
     public function mapFormsToData($forms, &$viewData): void
     {

@@ -29,6 +29,7 @@
         <property name="quantity" type="int"/>
         <property name="itemGroupKey" type="string"/>
         <property name="configuration" type="string"/>
+        <property name="displayData" type="string"/>
         <property name="configuratorKey" type="string"/>
         <property name="customerReference" type="string"/>
         <property name="storeName" type="string"/>

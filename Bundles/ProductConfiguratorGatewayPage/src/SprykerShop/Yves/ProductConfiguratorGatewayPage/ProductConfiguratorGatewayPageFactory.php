@@ -70,9 +70,6 @@ class ProductConfiguratorGatewayPageFactory extends AbstractFactory
     }
 
     /**
-     * @param array $data
-     * @param array $options
-     *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function getConfiguratorStateForm(): FormInterface

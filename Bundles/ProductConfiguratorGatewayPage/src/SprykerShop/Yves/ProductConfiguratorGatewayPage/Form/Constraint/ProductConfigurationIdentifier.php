@@ -11,5 +11,8 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class ProductConfigurationIdentifier extends SymfonyConstraint
 {
+    /**
+     * @var string
+     */
     public $message = 'product_configurator.sku_or_group_key_required';
 }

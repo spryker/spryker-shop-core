@@ -27,10 +27,12 @@ class ProductConfigurationRedirectResolver implements ProductConfigurationRedire
      * @var \SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductConfigurationClientInterface
      */
     protected $productConfigurationClient;
+
     /**
      * @var \SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductConfigurationStorageClientInterface
      */
     protected $productConfigurationStorageClient;
+
     /**
      * @var \SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToQuoteClientInterface
      */
@@ -97,7 +99,7 @@ class ProductConfigurationRedirectResolver implements ProductConfigurationRedire
         if ($itemGroupKey) {
             $quoteTransfer = $this->quoteClient->getQuote();
 
-            $productConfigurationInstanceTransfer =$this->productConfigurationStorageClient
+            $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient
                 ->findProductConfigurationInstanceByGroupKey($itemGroupKey, $quoteTransfer);
         }
 
