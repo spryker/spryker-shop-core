@@ -97,4 +97,12 @@ class ProductConfiguratorGatewayPageFactory extends AbstractFactory
     {
         return new ProductConfiguratorResponseDataMapper();
     }
+
+    /**
+     * @return \SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorGatewayBackUrlResolverStrategyPluginInterface[]
+     */
+    public function getProductConfiguratorGatewayBackUrlResolverStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductConfiguratorGatewayPageDependencyProvider::PLUGINS_PRODUCT_CONFIGURATOR_GATEWAY_BACK_URL_RESOLVER_STRATEGY);
+    }
 }

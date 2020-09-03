@@ -7,6 +7,7 @@
     "php": ">=7.2",
     "spryker-shop/cart-page-extension": "^1.0.0",
     "spryker-shop/comment-widget-extension": "^1.0.0",
+    "spryker-shop/product-configurator-gateway-page-extension": "^0.1.0",
     "spryker-shop/product-group-widget-extension": "^1.0.0",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.41.0",

@@ -101,6 +101,8 @@
     "spryker-shop/product-category-widget": "*",
     "spryker-shop/product-configuration-widget": "*",
     "spryker-shop/product-configuration-widget-extension": "*",
+    "spryker-shop/product-configurator-gateway-page": "*",
+    "spryker-shop/product-configurator-gateway-page-extension": "*",
     "spryker-shop/product-detail-page": "*",
     "spryker-shop/product-discontinued-widget": "*",
     "spryker-shop/product-group-widget": "*",

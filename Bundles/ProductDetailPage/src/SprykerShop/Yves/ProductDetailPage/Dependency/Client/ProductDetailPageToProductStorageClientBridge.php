@@ -60,4 +60,15 @@ class ProductDetailPageToProductStorageClientBridge implements ProductDetailPage
     {
         return $this->productStorageClient->isProductConcreteRestricted($idProductConcrete);
     }
+
+    /**
+     * @param string $mappingType
+     * @param string $identifier
+     *
+     * @return array|null
+     */
+    public function findProductConcreteStorageDataByMappingForCurrentLocale(string $mappingType, string $identifier): ?array
+    {
+        return $this->productStorageClient->findProductConcreteStorageDataByMappingForCurrentLocale($mappingType, $identifier);
+    }
 }

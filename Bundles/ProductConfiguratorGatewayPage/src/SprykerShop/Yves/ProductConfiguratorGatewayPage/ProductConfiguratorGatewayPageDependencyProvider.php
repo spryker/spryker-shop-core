@@ -21,6 +21,7 @@ class ProductConfiguratorGatewayPageDependencyProvider extends AbstractBundleDep
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const CLIENT_PRODUCT_CONFIGURATION_STORAGE = 'CLIENT_PRODUCT_CONFIGURATION_STORAGE';
     public const CLIENT_PRODUCT_CONFIGURATION = 'CLIENT_PRODUCT_CONFIGURATION';
+    public const PLUGINS_PRODUCT_CONFIGURATOR_GATEWAY_BACK_URL_RESOLVER_STRATEGY = 'PLUGINS_PRODUCT_CONFIGURATOR_GATEWAY_BACK_URL_RESOLVER_STRATEGY';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -29,9 +30,12 @@ class ProductConfiguratorGatewayPageDependencyProvider extends AbstractBundleDep
      */
     public function provideDependencies(Container $container)
     {
+        $container = parent::provideDependencies($container);
+
         $container = $this->addQuoteClient($container);
         $container = $this->addProductConfigurationStorageClient($container);
         $container = $this->addProductConfigurationClient($container);
+        $container = $this->addProductConfiguratorGatewayBackUrlResolverStrategyPlugins($container);
 
         return $container;
     }
@@ -88,5 +92,27 @@ class ProductConfiguratorGatewayPageDependencyProvider extends AbstractBundleDep
         );
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductConfiguratorGatewayBackUrlResolverStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_CONFIGURATOR_GATEWAY_BACK_URL_RESOLVER_STRATEGY, function () {
+            return $this->getProductConfiguratorGatewayBackUrlResolverStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorGatewayBackUrlResolverStrategyPluginInterface[]
+     */
+    protected function getProductConfiguratorGatewayBackUrlResolverStrategyPlugins(): array
+    {
+        return [];
     }
 }

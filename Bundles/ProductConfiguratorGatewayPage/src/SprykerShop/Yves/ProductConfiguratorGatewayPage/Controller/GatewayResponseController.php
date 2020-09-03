@@ -45,13 +45,11 @@ class GatewayResponseController extends AbstractController
 
         if (!$productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful()) {
             $this->handleResponseErrors($productConfiguratorResponseProcessorResponseTransfer);
-
-            // TODO: use correct $path
-            return $this->redirectResponseInternal('cart');
         }
 
-        // TODO: plugin execution
-        return $this->redirectResponseInternal('cart');
+        return $this->executeProductConfiguratorGatewayBackUrlResolverStrategyPlugins(
+            $productConfiguratorResponseProcessorResponseTransfer->getProductConfiguratorResponse()
+        );
     }
 
     /**
@@ -64,5 +62,23 @@ class GatewayResponseController extends AbstractController
         foreach ($productConfiguratorResponseProcessorResponseTransfer->getMessages() as $messageTransfer) {
             $this->addErrorMessage($messageTransfer->getValue());
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeProductConfiguratorGatewayBackUrlResolverStrategyPlugins(
+        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+    ): RedirectResponse {
+        foreach ($this->getFactory()->getProductConfiguratorGatewayBackUrlResolverStrategyPlugins() as $productConfiguratorGatewayBackUrlResolverStrategyPlugin) {
+            if ($productConfiguratorGatewayBackUrlResolverStrategyPlugin->isApplicable($productConfiguratorResponseTransfer)) {
+                return $this->redirectResponseInternal($productConfiguratorGatewayBackUrlResolverStrategyPlugin->resolveBackUrl($productConfiguratorResponseTransfer));
+            }
+        }
+
+        // TODO: clarify fallback url
+        return $this->redirectResponseInternal('cart');
     }
 }

@@ -5,6 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
+    "spryker-shop/product-configurator-gateway-page-extension": "^0.1.0",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-router-extension": "^1.0.0",
     "spryker-shop/shop-ui": "^1.44.0",
