@@ -14,7 +14,7 @@
 
     <transfer name="ProductConfiguratorRequest">
         <property name="accessTokenRequestUrl" type="string"/>
-        <property name="ProductConfiguratorRequestData" type="ProductConfiguratorRequestData"/>
+        <property name="productConfiguratorRequestData" type="ProductConfiguratorRequestData"/>
     </transfer>
 
     <transfer name="ProductConfiguratorRedirect">
