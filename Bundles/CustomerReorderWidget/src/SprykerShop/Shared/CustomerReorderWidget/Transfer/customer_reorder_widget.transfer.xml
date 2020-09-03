@@ -71,4 +71,7 @@
     <transfer name="ItemState">
     </transfer>
 
+    <transfer name="SalesOrderItemConfiguration">
+    </transfer>
+
 </transfers>
