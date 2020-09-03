@@ -7,16 +7,18 @@
 
 namespace SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint;
 
+use InvalidArgumentException;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\ProductConfiguratorRequestDataForm;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use InvalidArgumentException;
 
 class ProductConfigurationIdentifierValidator extends ConstraintValidator
 {
     /**
      * @param mixed $value
      * @param \SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint\ProductConfigurationIdentifier|\Symfony\Component\Validator\Constraint $constraint
+     *
+     * @throws \InvalidArgumentException
      *
      * @return void
      */
