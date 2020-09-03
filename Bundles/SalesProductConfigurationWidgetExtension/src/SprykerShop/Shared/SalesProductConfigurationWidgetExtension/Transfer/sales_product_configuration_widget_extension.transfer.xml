@@ -6,4 +6,7 @@
     <transfer name="SalesOrderItemConfiguration">
     </transfer>
 
+    <transfer name="ProductConfigurationTemplate">
+    </transfer>
+
 </transfers>

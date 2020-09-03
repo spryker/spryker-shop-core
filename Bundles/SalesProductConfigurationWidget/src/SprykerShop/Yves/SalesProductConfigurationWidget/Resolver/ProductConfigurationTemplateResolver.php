@@ -35,9 +35,7 @@ class ProductConfigurationTemplateResolver implements ProductConfigurationTempla
     ): ProductConfigurationTemplateTransfer {
         foreach ($this->salesProductConfigurationRenderStrategyPlugins as $salesProductConfigurationRenderStrategyPlugin) {
             if ($salesProductConfigurationRenderStrategyPlugin->isApplicable($salesOrderItemConfigurationTransfer)) {
-                return (new ProductConfigurationTemplateTransfer())
-                    ->setPath($salesProductConfigurationRenderStrategyPlugin->getTemplatePath())
-                    ->setData($salesProductConfigurationRenderStrategyPlugin->getTemplateData($salesOrderItemConfigurationTransfer));
+                return $salesProductConfigurationRenderStrategyPlugin->getTemplate($salesOrderItemConfigurationTransfer);
             }
         }
 

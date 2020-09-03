@@ -22,8 +22,8 @@
     {% if isComplete %}
         {% set productConfigurationTemplate = data.productConfigurationTemplate %}
 
-        {% if productConfigurationTemplate.path is defined and productConfigurationTemplate.data is defined %}
-            {% include productConfigurationTemplate.path with {
+        {% if productConfigurationTemplate.templateName is defined and productConfigurationTemplate.data is defined %}
+            {% include view(productConfigurationTemplate.templateName,productConfigurationTemplate.moduleName) with {
                 data: {
                     options: productConfigurationTemplate.data,
                 },
