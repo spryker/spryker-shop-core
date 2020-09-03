@@ -7,38 +7,36 @@
 
 namespace SprykerShop\Yves\ProductConfigurationWidget\Widget;
 
-use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
  * @method \SprykerShop\Yves\ProductConfigurationWidget\ProductConfigurationWidgetFactory getFactory()
  * @method \SprykerShop\Yves\ProductConfigurationWidget\ProductConfigurationWidgetConfig getConfig()
  */
-class ProductConfiguratorCartPageButtonWidget extends AbstractWidget
+class ProductConfigurationProductDetailPageButtonWidget extends AbstractWidget
 {
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
     protected const PARAMETER_FORM = 'form';
     protected const PARAMETER_PRODUCT_CONFIGURATION_ROUTE_NAME = 'productConfigurationRouteName';
+    protected const PARAMETER_SKU = 'sku';
     protected const PARAMETER_SOURCE_TYPE = 'sourceType';
-    protected const PARAMETER_ITEM_GROUP_KEY = 'itemGroupKey';
-    protected const PARAMETER_QUANTITY = 'quantity';
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      */
-    public function __construct(ItemTransfer $itemTransfer)
+    public function __construct(ProductViewTransfer $productViewTransfer)
     {
-        $this->addIsVisibleParameter($itemTransfer);
+        $this->addIsVisibleParameter($productViewTransfer);
 
-        if (!$itemTransfer->getProductConfigurationInstance()) {
+        if (!$productViewTransfer->getProductConfigurationInstance()) {
             return;
         }
 
         $this->addFormParameter();
         $this->addProductConfigurationRouteNameParameter();
         $this->addSourceTypeParameter();
-        $this->addItemGroupKeyParameter($itemTransfer);
-        $this->addQuantityParameter($itemTransfer);
+        $this->addSkuParameter($productViewTransfer);
     }
 
     /**
@@ -46,7 +44,7 @@ class ProductConfiguratorCartPageButtonWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'ProductConfiguratorCartPageButtonWidget';
+        return 'ProductConfigurationProductDetailPageButtonWidget';
     }
 
     /**
@@ -54,17 +52,17 @@ class ProductConfiguratorCartPageButtonWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@ProductConfigurationWidget/views/product-configurator-cart-page-button-widget/product-configurator-cart-page-button-widget.twig';
+        return '@ProductConfigurationWidget/views/product-configuration-product-detail-page-button-widget/product-configuration-product-detail-page-button-widget.twig';
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return void
      */
-    protected function addIsVisibleParameter(ItemTransfer $itemTransfer): void
+    protected function addIsVisibleParameter(ProductViewTransfer $productViewTransfer): void
     {
-        $this->addParameter(static::PARAMETER_IS_VISIBLE, $itemTransfer->getProductConfigurationInstance());
+        $this->addParameter(static::PARAMETER_IS_VISIBLE, (bool)$productViewTransfer->getProductConfigurationInstance());
     }
 
     /**
@@ -91,26 +89,16 @@ class ProductConfiguratorCartPageButtonWidget extends AbstractWidget
      */
     protected function addSourceTypeParameter(): void
     {
-        $this->addParameter(static::PARAMETER_SOURCE_TYPE, $this->getConfig()->getCartSourceType());
+        $this->addParameter(static::PARAMETER_SOURCE_TYPE, $this->getConfig()->getPdpSourceType());
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return void
      */
-    protected function addItemGroupKeyParameter(ItemTransfer $itemTransfer): void
+    protected function addSkuParameter(ProductViewTransfer $productViewTransfer): void
     {
-        $this->addParameter(static::PARAMETER_ITEM_GROUP_KEY, $itemTransfer->getGroupKey());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
-    protected function addQuantityParameter(ItemTransfer $itemTransfer): void
-    {
-        $this->addParameter(static::PARAMETER_QUANTITY, $itemTransfer->getQuantity());
+        $this->addParameter(static::PARAMETER_SKU, $productViewTransfer->getSku());
     }
 }

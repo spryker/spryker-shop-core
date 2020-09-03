@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 /**
  * @method \SprykerShop\Yves\ProductConfigurationWidget\ProductConfigurationWidgetFactory getFactory()
  */
-class ProductConfiguratorCartItemDisplayWidget extends AbstractWidget
+class ProductConfigurationCartItemDisplayWidget extends AbstractWidget
 {
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
     protected const PARAMETER_PRODUCT_CONFIGURATION_INSTANCE = 'productConfigurationInstance';
@@ -39,7 +39,7 @@ class ProductConfiguratorCartItemDisplayWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'ProductConfiguratorCartItemDisplayWidget';
+        return 'ProductConfigurationCartItemDisplayWidget';
     }
 
     /**
@@ -47,7 +47,7 @@ class ProductConfiguratorCartItemDisplayWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@ProductConfigurationWidget/views/product-configurator-cart-item-display-widget/product-configurator-cart-item-display-widget.twig';
+        return '@ProductConfigurationWidget/views/product-configuration-cart-item-display-widget/product-configuration-cart-item-display-widget.twig';
     }
 
     /**
@@ -57,7 +57,7 @@ class ProductConfiguratorCartItemDisplayWidget extends AbstractWidget
      */
     protected function addIsVisibleParameter(ItemTransfer $itemTransfer): void
     {
-        $this->addParameter(static::PARAMETER_IS_VISIBLE, $itemTransfer->getProductConfigurationInstance());
+        $this->addParameter(static::PARAMETER_IS_VISIBLE, (bool)$itemTransfer->getProductConfigurationInstance());
     }
 
     /**
