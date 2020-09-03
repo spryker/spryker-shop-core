@@ -1,0 +1,35 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isVisible: _widget.isVisible,
+    salesOrderItemConfiguration: _widget.salesOrderItemConfiguration | default,
+    productConfigurationTemplate: _widget.productConfigurationTemplate | default,
+} %}
+
+{%- block template -%}
+    {% if data.isVisible %}
+        {{ parent() }}
+    {% endif %}
+{%- endblock -%}
+
+{% block body %}
+    {% set productConfigurationTemplate = data.productConfigurationTemplate %}
+    {% set isTemplateDefined = productConfigurationTemplate.templateType and productConfigurationTemplate.templateName and productConfigurationTemplate.moduleName %}
+
+    {% if isTemplateDefined %}
+        {% include molecule('component-renderer') with {
+            data: {
+                type: productConfigurationTemplate.templateType,
+                name: productConfigurationTemplate.templateName,
+                module: productConfigurationTemplate.moduleName,
+                data: {
+                    listItems: productConfigurationTemplate.data,
+                },
+            },
+        } only %}
+    {% else %}
+        <div>
+            {{ data.salesOrderItemConfiguration.displayData }}
+        </div>
+    {% endif %}
+{% endblock %}

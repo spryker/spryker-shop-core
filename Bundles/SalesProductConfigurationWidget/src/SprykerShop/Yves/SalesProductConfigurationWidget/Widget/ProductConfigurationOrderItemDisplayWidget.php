@@ -48,7 +48,7 @@ class ProductConfigurationOrderItemDisplayWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@SalesProductConfigurationWidget/views/product-configuration-order-item-display-widget/product-configuration-order-item-display-widget.twig';
+        return '@SalesProductConfigurationWidget/views/order-detail-configuration/order-detail-configuration.twig';
     }
 
     /**

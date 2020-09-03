@@ -6,6 +6,12 @@
     productConfigurationTemplate: _widget.productConfigurationTemplate | default,
 } %}
 
+{%- block template -%}
+    {% if data.isVisible %}
+        {{ parent() }}
+    {% endif %}
+{%- endblock -%}
+
 {% block body %}
     {% set isComplete = data.productConfigurationInstance.isComplete %}
     {% set configurationLabel = isComplete ? 'product_configuration_widget.complete' : 'product_configuration_widget.not_complete' %}
@@ -21,11 +27,17 @@
 
     {% if isComplete %}
         {% set productConfigurationTemplate = data.productConfigurationTemplate %}
+        {% set isTemplateDefined = productConfigurationTemplate.templateType and productConfigurationTemplate.templateName and productConfigurationTemplate.moduleName %}
 
-        {% if productConfigurationTemplate.path is defined and productConfigurationTemplate.data is defined %}
-            {% include productConfigurationTemplate.path with {
+        {% if isTemplateDefined %}
+            {% include molecule('component-renderer') with {
                 data: {
-                    options: productConfigurationTemplate.data,
+                    type: productConfigurationTemplate.templateType,
+                    name: productConfigurationTemplate.templateName,
+                    module: productConfigurationTemplate.moduleName,
+                    data: {
+                        options: productConfigurationTemplate.data,
+                    },
                 },
             } only %}
         {% else %}

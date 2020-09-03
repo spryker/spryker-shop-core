@@ -1,0 +1,39 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'component-renderer',
+} %}
+
+{% define data = {
+    type: required,
+    name: required,
+    module: required,
+    modifiers: [],
+    data: {},
+    attributes: {},
+} %}
+
+{% block body %}
+    {% set componentType = data.type %}
+    {% set componentData = {
+        modifiers: data.modifiers,
+        data: data.data,
+        attributes: data.attributes,
+    } %}
+
+    {% if componentType == 'view' %}
+        {% include view(data.name, data.module) with componentData only %}
+    {% endif %}
+
+    {% if componentType == 'organism' %}
+        {% include organism(data.name, data.module) with componentData only %}
+    {% endif %}
+
+    {% if componentType == 'molecule' %}
+        {% include molecule(data.name, data.module) with componentData only %}
+    {% endif %}
+
+    {% if componentType == 'atom' %}
+        {% include atom(data.name, data.module) with componentData only %}
+    {% endif %}
+{% endblock %}
