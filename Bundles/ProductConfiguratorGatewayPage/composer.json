@@ -4,8 +4,8 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker-shop/shop-application": "*",
-    "spryker/application": "*",
+    "spryker-shop/shop-application": "^1.2.0",
+    "spryker/application": "^3.8.0",
     "spryker/kernel": "^3.30.0",
     "spryker/product-configuration": "^0.1.0",
     "spryker/product-configuration-storage": "^0.1.0",
