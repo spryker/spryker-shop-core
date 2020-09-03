@@ -4,11 +4,17 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/kernel": "^3.30.0"
+    "spryker-shop/shop-application": "*",
+    "spryker/application": "*",
+    "spryker/kernel": "^3.30.0",
+    "spryker/product-configuration": "^0.1.0",
+    "spryker/product-configuration-storage": "^0.1.0",
+    "spryker/quote": "^2.8.0",
+    "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/router": "*"
   },
   "autoload": {
     "psr-4": {
@@ -28,5 +34,8 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "suggest": {
+    "spryker/router": "ADD SUGGEST DESCRIPTION"
   }
 }
