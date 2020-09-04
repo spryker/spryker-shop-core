@@ -6,4 +6,7 @@
     <transfer name="ProductConfigurationInstance">
     </transfer>
 
+    <transfer name="ProductConfigurationTemplate">
+    </transfer>
+
 </transfers>

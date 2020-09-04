@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\SalesProductConfigurationWidgetExtension\Dependency\Plugin;
 
+use Generated\Shared\Transfer\ProductConfigurationTemplateTransfer;
 use Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer;
 
 /**
@@ -29,23 +30,14 @@ interface SalesProductConfigurationRenderStrategyPluginInterface
 
     /**
      * Specification:
-     *  - Returns template path to be rendered.
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getTemplatePath(): string;
-
-    /**
-     * Specification:
-     *  - Returns the data for template.
+     *  - Returns template to be rendered.
+     *  - It includes data to be used for the rendering.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer $salesOrderItemConfigurationTransfer
      *
-     * @return mixed[]
+     * @return \Generated\Shared\Transfer\ProductConfigurationTemplateTransfer
      */
-    public function getTemplateData(SalesOrderItemConfigurationTransfer $salesOrderItemConfigurationTransfer): array;
+    public function getTemplate(SalesOrderItemConfigurationTransfer $salesOrderItemConfigurationTransfer): ProductConfigurationTemplateTransfer;
 }

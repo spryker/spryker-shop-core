@@ -17,7 +17,9 @@
     </transfer>
 
     <transfer name="ProductConfigurationTemplate">
-        <property name="path" type="string"/>
+        <property name="moduleName" type="string"/>
+        <property name="templateType" type="string"/>
+        <property name="templateName" type="string"/>
         <property name="data" type="array" singular="data"/>
     </transfer>
 

@@ -39,7 +39,7 @@ class ProductConfigurationQuoteValidatorWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@ProductConfigurationWidget/views/product-configuration-quote-validator-widget/product-configuration-quote-validator-widget.twig';
+        return '@ProductConfigurationWidget/views/product-quote-configuration/product-quote-configuration.twig';
     }
 
     /**
