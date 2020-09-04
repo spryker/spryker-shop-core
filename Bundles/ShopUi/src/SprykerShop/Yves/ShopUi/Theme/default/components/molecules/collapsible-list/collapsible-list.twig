@@ -25,8 +25,12 @@
 
 {% import _self as macros %}
 
+{% set wrapperClass = 'grid grid--middle' %}
+{% set collapseWrapperClass = 'col col--sm-12 grid grid--middle' %}
+{% set buttonWrapperClass = 'col col--sm-12' %}
+
 {% block body %}
-    <div class="grid grid--middle">
+    <div class="{{ wrapperClass }}">
         {% set showItems = data.showItems %}
         {% set listItems = data.listItems %}
 
@@ -39,7 +43,7 @@
                 {% if loop.index == showItems + 1 %}
                     {% set hiddenClass = not data.isOpen ? attributes['list-trigger-class'] %}
 
-                    <div class="col col--sm-12 grid grid--middle {{ config.jsName }}__list {{ hiddenClass }}">
+                    <div class="{{ collapseWrapperClass }} {{ config.jsName }}__list {{ hiddenClass }}">
                 {% endif %}
 
                 {% block hiddenListItems %}
@@ -53,7 +57,7 @@
         {% endfor %}
 
         {% if listItems | length > showItems %}
-            <div class="col col--sm-12">
+            <div class="{{ buttonWrapperClass }}">
                 {% block triggerButton %}
                     {% set shownModifier = data.isOpen ? config.name ~ '__button--shown' %}
 
