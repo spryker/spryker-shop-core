@@ -13,11 +13,7 @@
     {% if data.isVisible %}
 
         {% block formContent %}
-            {{ form_start(data.form, {'action': path(data.productConfigurationRouteName, {
-                'source-type': data.sourceType,
-                'item-group-key': data.itemGroupKey,
-                'quantity': data.quantity
-            })}) }}
+            {{ form_start(data.form, {'action': path(data.productConfigurationRouteName)}) }}
 
             <button class="button">{{ 'product_configuration_widget.configure' | trans }}</button>
 

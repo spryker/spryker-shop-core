@@ -22,15 +22,4 @@ interface ProductConfiguratorRequestDataMapperInterface
         ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer,
         ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
     ): ProductConfiguratorRequestDataTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer
-     * @param array $forms
-     *
-     * @return \Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer
-     */
-    public function mapProductConfiguratorRequestDataFormToProductConfiguratorRequestDataTransfer(
-        ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer,
-        array $forms
-    ): ProductConfiguratorRequestDataTransfer;
 }

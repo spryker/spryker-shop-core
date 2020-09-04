@@ -33,10 +33,8 @@ class ProductConfigurationProductDetailPageButtonWidget extends AbstractWidget
             return;
         }
 
-        $this->addFormParameter();
+        $this->addFormParameter($productViewTransfer);
         $this->addProductConfigurationRouteNameParameter();
-        $this->addSourceTypeParameter();
-        $this->addSkuParameter($productViewTransfer);
     }
 
     /**
@@ -66,11 +64,21 @@ class ProductConfigurationProductDetailPageButtonWidget extends AbstractWidget
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
      * @return void
      */
-    protected function addFormParameter(): void
+    protected function addFormParameter(ProductViewTransfer $productViewTransfer): void
     {
-        $this->addParameter(static::PARAMETER_FORM, $this->getFactory()->getProductConfigurationButtonForm()->createView());
+        $this->addParameter(
+            static::PARAMETER_FORM,
+            $this->getFactory()->getProductConfigurationButtonForm()->setData(
+                [
+                    static::PARAMETER_SOURCE_TYPE => $this->getConfig()->getPdpSourceType(),
+                    static::PARAMETER_SKU => $productViewTransfer->getSku(),
+                ]
+            )->createView()
+        );
     }
 
     /**
@@ -82,23 +90,5 @@ class ProductConfigurationProductDetailPageButtonWidget extends AbstractWidget
             static::PARAMETER_PRODUCT_CONFIGURATION_ROUTE_NAME,
             $this->getConfig()->getProductConfigurationGatewayRequestRoute()
         );
-    }
-
-    /**
-     * @return void
-     */
-    protected function addSourceTypeParameter(): void
-    {
-        $this->addParameter(static::PARAMETER_SOURCE_TYPE, $this->getConfig()->getPdpSourceType());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return void
-     */
-    protected function addSkuParameter(ProductViewTransfer $productViewTransfer): void
-    {
-        $this->addParameter(static::PARAMETER_SKU, $productViewTransfer->getSku());
     }
 }

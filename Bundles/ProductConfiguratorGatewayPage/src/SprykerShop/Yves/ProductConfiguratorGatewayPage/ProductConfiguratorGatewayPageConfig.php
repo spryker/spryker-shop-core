@@ -21,6 +21,8 @@ class ProductConfiguratorGatewayPageConfig extends AbstractBundleConfig
      */
     protected const SOURCE_TYPE_CART = 'SOURCE_TYPE_CART';
 
+    protected const PRODUCT_CONFIGURATION_GATEWAY_REQUEST_FORM_NAME = 'product_configurator_request_data_form';
+
     /**
      * @api
      *

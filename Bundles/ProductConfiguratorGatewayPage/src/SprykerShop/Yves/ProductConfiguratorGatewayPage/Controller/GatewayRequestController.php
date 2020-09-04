@@ -54,7 +54,7 @@ class GatewayRequestController extends AbstractController
     protected function validateRequestOrThrowException(Request $request): ProductConfiguratorRequestDataTransfer
     {
         $form = $this->getFactory()
-            ->getConfiguratorStateForm()->submit($request->query->all());
+            ->getConfiguratorStateForm()->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
             $errorList = [];

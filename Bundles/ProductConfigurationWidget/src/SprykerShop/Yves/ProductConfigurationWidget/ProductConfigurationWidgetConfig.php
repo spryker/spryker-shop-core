@@ -12,9 +12,14 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 class ProductConfigurationWidgetConfig extends AbstractBundleConfig
 {
     /**
-     * TODO: replace from `cart` to `product-configurator-gateway-request`
+     * @uses \SprykerShop\Yves\ProductConfiguratorGatewayPage\Plugin\Router\ProductConfiguratorGatewayPageRouteProviderPlugin::PRODUCT_CONFIGURATION_GATEWAY_REQUEST_ROUTE
      */
-    protected const PRODUCT_CONFIGURATION_GATEWAY_REQUEST_ROUTE = 'cart';
+    protected const PRODUCT_CONFIGURATION_GATEWAY_REQUEST_ROUTE = 'product-configurator-gateway-request';
+
+    /**
+     * @uses \SprykerShop\Yves\ProductConfiguratorGatewayPage\ProductConfiguratorGatewayPageConfig::PRODUCT_CONFIGURATION_GATEWAY_REQUEST_FORM_NAME
+     */
+    protected const PRODUCT_CONFIGURATION_GATEWAY_REQUEST_FORM_NAME = 'product_configurator_request_data_form';
 
     /**
      * @uses \Spryker\Shared\ProductConfiguration\ProductConfigurationConfig::SOURCE_TYPE_PDP
@@ -44,6 +49,16 @@ class ProductConfigurationWidgetConfig extends AbstractBundleConfig
     public function getCartSourceType(): string
     {
         return static::SOURCE_TYPE_CART;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getProductConfigurationGatewayRequestFormName()
+    {
+        return static::PRODUCT_CONFIGURATION_GATEWAY_REQUEST_FORM_NAME;
     }
 
     /**

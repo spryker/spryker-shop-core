@@ -34,11 +34,8 @@ class ProductConfigurationCartPageButtonWidget extends AbstractWidget
             return;
         }
 
-        $this->addFormParameter();
+        $this->addFormParameter($itemTransfer);
         $this->addProductConfigurationRouteNameParameter();
-        $this->addSourceTypeParameter();
-        $this->addItemGroupKeyParameter($itemTransfer);
-        $this->addQuantityParameter($itemTransfer);
     }
 
     /**
@@ -68,11 +65,20 @@ class ProductConfigurationCartPageButtonWidget extends AbstractWidget
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
      * @return void
      */
-    protected function addFormParameter(): void
+    protected function addFormParameter(ItemTransfer $itemTransfer): void
     {
-        $this->addParameter(static::PARAMETER_FORM, $this->getFactory()->getProductConfigurationButtonForm()->createView());
+        $this->addParameter(static::PARAMETER_FORM, $this->getFactory()->getProductConfigurationButtonForm()
+            ->setData(
+                [
+                    static::PARAMETER_SOURCE_TYPE => $this->getConfig()->getCartSourceType(),
+                    static::PARAMETER_ITEM_GROUP_KEY => $itemTransfer->getGroupKey(),
+                    static::PARAMETER_QUANTITY => $itemTransfer->getQuantity(),
+                ]
+            )->createView());
     }
 
     /**
@@ -84,33 +90,5 @@ class ProductConfigurationCartPageButtonWidget extends AbstractWidget
             static::PARAMETER_PRODUCT_CONFIGURATION_ROUTE_NAME,
             $this->getConfig()->getProductConfigurationGatewayRequestRoute()
         );
-    }
-
-    /**
-     * @return void
-     */
-    protected function addSourceTypeParameter(): void
-    {
-        $this->addParameter(static::PARAMETER_SOURCE_TYPE, $this->getConfig()->getCartSourceType());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
-    protected function addItemGroupKeyParameter(ItemTransfer $itemTransfer): void
-    {
-        $this->addParameter(static::PARAMETER_ITEM_GROUP_KEY, $itemTransfer->getGroupKey());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
-    protected function addQuantityParameter(ItemTransfer $itemTransfer): void
-    {
-        $this->addParameter(static::PARAMETER_QUANTITY, $itemTransfer->getQuantity());
     }
 }

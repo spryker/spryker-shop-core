@@ -16,6 +16,9 @@ use SprykerShop\Yves\ProductConfigurationWidget\Resolver\ProductConfigurationTem
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
+/**
+ * @method \SprykerShop\Yves\ProductConfigurationWidget\ProductConfigurationWidgetConfig getConfig()
+ */
 class ProductConfigurationWidgetFactory extends AbstractFactory
 {
     /**
@@ -33,7 +36,10 @@ class ProductConfigurationWidgetFactory extends AbstractFactory
      */
     public function getProductConfigurationButtonForm(): FormInterface
     {
-        return $this->getFormFactory()->create(ProductConfigurationButtonForm::class);
+        return $this->getFormFactory()->createNamed(
+            $this->getConfig()->getProductConfigurationGatewayRequestFormName(),
+            ProductConfigurationButtonForm::class
+        );
     }
 
     /**
