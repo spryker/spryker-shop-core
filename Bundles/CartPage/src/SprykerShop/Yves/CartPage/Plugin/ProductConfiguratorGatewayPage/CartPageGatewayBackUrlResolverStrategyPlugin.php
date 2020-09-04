@@ -13,7 +13,7 @@ use SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin;
 use SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorGatewayBackUrlResolverStrategyPluginInterface;
 
 /**
- * @method \SprykerShop\Yves\ProductDetailPage\ProductDetailPageFactory getFactory()
+ * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
  */
 class CartPageGatewayBackUrlResolverStrategyPlugin extends AbstractPlugin implements ProductConfiguratorGatewayBackUrlResolverStrategyPluginInterface
 {
@@ -47,6 +47,6 @@ class CartPageGatewayBackUrlResolverStrategyPlugin extends AbstractPlugin implem
      */
     public function resolveBackUrl(ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer): string
     {
-        return CartPageRouteProviderPlugin::ROUTE_NAME_CART;
+        return $this->getFactory()->getRouter()->generate(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
     }
 }

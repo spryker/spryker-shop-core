@@ -79,7 +79,7 @@ class GatewayResponseController extends AbstractController
     ): RedirectResponse {
         foreach ($this->getFactory()->getProductConfiguratorGatewayBackUrlResolverStrategyPlugins() as $productConfiguratorGatewayBackUrlResolverStrategyPlugin) {
             if ($productConfiguratorGatewayBackUrlResolverStrategyPlugin->isApplicable($productConfiguratorResponseTransfer)) {
-                return $this->redirectResponseInternal($productConfiguratorGatewayBackUrlResolverStrategyPlugin->resolveBackUrl($productConfiguratorResponseTransfer));
+                return $this->redirectResponseExternal($productConfiguratorGatewayBackUrlResolverStrategyPlugin->resolveBackUrl($productConfiguratorResponseTransfer));
             }
         }
 
