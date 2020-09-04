@@ -14,8 +14,7 @@
 {% block body %}
     {% set disableButton = not data.canProceedCheckout ? 'button--disabled' %}
 
-    <a class="button button--expand button--success {{ disableButton }}" href="{{ url('checkout-index') }}" {{qa('cart-go-to-checkout')}}>
+    <a class="button button--expand button--success {{ disableButton }}" href="{{ url('checkout-index') }}" {{ qa('cart-go-to-checkout') }}>
         {{ 'cart.checkout' | trans }}
     </a>
 {% endblock %}
-
