@@ -30,14 +30,14 @@ class GatewayRequestController extends AbstractController
     {
         $productConfiguratorRequestDataTransfer = $this->validateRequestOrThrowException($request);
 
-        $productConfigurationRedirectTransfer = $this->getFactory()->createProductConfigurationRedirectResolver()
+        $productConfiguratorRedirectTransfer = $this->getFactory()->createProductConfiguratorRedirectResolver()
             ->resolveProductConfiguratorRedirect($productConfiguratorRequestDataTransfer);
 
-        if ($productConfigurationRedirectTransfer->getIsSuccessful()) {
-            return $this->redirectResponseExternal($productConfigurationRedirectTransfer->getConfiguratorRedirectUrl());
+        if ($productConfiguratorRedirectTransfer->getIsSuccessful()) {
+            return $this->redirectResponseExternal($productConfiguratorRedirectTransfer->getConfiguratorRedirectUrl());
         }
 
-        foreach ($productConfigurationRedirectTransfer->getMessages() as $message) {
+        foreach ($productConfiguratorRedirectTransfer->getMessages() as $message) {
             $this->addErrorMessage($message);
         }
 
@@ -54,7 +54,7 @@ class GatewayRequestController extends AbstractController
     protected function validateRequestOrThrowException(Request $request): ProductConfiguratorRequestDataTransfer
     {
         $form = $this->getFactory()
-            ->getConfiguratorStateForm()->submit($request->query->all());
+            ->getConfiguratorStateForm()->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
             $errorList = [];

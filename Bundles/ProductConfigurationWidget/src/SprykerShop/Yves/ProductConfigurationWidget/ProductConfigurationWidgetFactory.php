@@ -9,12 +9,16 @@ namespace SprykerShop\Yves\ProductConfigurationWidget;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\ProductConfigurationWidget\Dependency\Client\ProductConfigurationWidgetToProductConfigurationClientInterface;
 use SprykerShop\Yves\ProductConfigurationWidget\Form\ProductConfigurationButtonForm;
 use SprykerShop\Yves\ProductConfigurationWidget\Resolver\ProductConfigurationTemplateResolver;
 use SprykerShop\Yves\ProductConfigurationWidget\Resolver\ProductConfigurationTemplateResolverInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
+/**
+ * @method \SprykerShop\Yves\ProductConfigurationWidget\ProductConfigurationWidgetConfig getConfig()
+ */
 class ProductConfigurationWidgetFactory extends AbstractFactory
 {
     /**
@@ -32,7 +36,10 @@ class ProductConfigurationWidgetFactory extends AbstractFactory
      */
     public function getProductConfigurationButtonForm(): FormInterface
     {
-        return $this->getFormFactory()->create(ProductConfigurationButtonForm::class);
+        return $this->getFormFactory()->createNamed(
+            $this->getConfig()->getProductConfigurationGatewayRequestFormName(),
+            ProductConfigurationButtonForm::class
+        );
     }
 
     /**
@@ -49,5 +56,13 @@ class ProductConfigurationWidgetFactory extends AbstractFactory
     public function getProductConfigurationRenderStrategyPlugins(): array
     {
         return $this->getProvidedDependency(ProductConfigurationWidgetDependencyProvider::PLUGINS_PRODUCT_CONFIGURATION_RENDER_STRATEGY);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductConfigurationWidget\Dependency\Client\ProductConfigurationWidgetToProductConfigurationClientInterface
+     */
+    public function getProductConfigurationClient(): ProductConfigurationWidgetToProductConfigurationClientInterface
+    {
+        return $this->getProvidedDependency(ProductConfigurationWidgetDependencyProvider::CLIENT_PRODUCT_CONFIGURATION);
     }
 }

@@ -9,9 +9,11 @@ namespace SprykerShop\Yves\ProductConfigurationWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\ProductConfigurationWidget\Dependency\Client\ProductConfigurationWidgetToProductConfigurationClientBridge;
 
 class ProductConfigurationWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const CLIENT_PRODUCT_CONFIGURATION = 'CLIENT_PRODUCT_CONFIGURATION';
     public const PLUGINS_PRODUCT_CONFIGURATION_RENDER_STRATEGY = 'PLUGINS_PRODUCT_CONFIGURATION_RENDER_STRATEGY';
 
     /**
@@ -23,6 +25,21 @@ class ProductConfigurationWidgetDependencyProvider extends AbstractBundleDepende
     {
         $container = parent::provideDependencies($container);
         $container = $this->addProductConfigurationRenderStrategyPlugins($container);
+        $container = $this->addProductConfigurationClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductConfigurationClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_PRODUCT_CONFIGURATION, function (Container $container) {
+            return new ProductConfigurationWidgetToProductConfigurationClientBridge($container->getLocator()->productConfiguration()->client());
+        });
 
         return $container;
     }

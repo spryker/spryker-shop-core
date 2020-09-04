@@ -120,6 +120,11 @@
         {% endwidget %}
     {% endif %}
 
+    {% block productConfiguration %}
+        {% widget 'ProductConfigurationQuoteValidatorWidget' args [data.cart] only %}
+        {% endwidget %}
+    {% endblock %}
+
     {% if canProceedToCheckout %}
         {% widget 'ProceedToCheckoutButtonWidget' args [data.cart] %}
             {% block body %}

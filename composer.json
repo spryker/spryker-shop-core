@@ -136,6 +136,8 @@
     "spryker-shop/sales-configurable-bundle-widget": "*",
     "spryker-shop/sales-order-threshold-widget": "*",
     "spryker-shop/sales-product-bundle-widget": "*",
+    "spryker-shop/sales-product-configuration-widget": "*",
+    "spryker-shop/sales-product-configuration-widget-extension": "*",
     "spryker-shop/sales-return-page": "*",
     "spryker-shop/sales-return-page-extension": "*",
     "spryker-shop/shared-cart-page": "*",

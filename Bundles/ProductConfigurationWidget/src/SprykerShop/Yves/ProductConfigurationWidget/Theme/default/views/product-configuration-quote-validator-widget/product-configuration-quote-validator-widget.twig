@@ -1,0 +1,13 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isQuoteProductConfigurationValid: _widget.isQuoteProductConfigurationValid,
+} %}
+
+{% block body %}
+    {% if not data.isQuoteProductConfigurationValid %}
+        <div>
+            {{ 'product_configuration_widget.quote_not_valid' | trans }}
+        </div>
+    {% endif %}
+{% endblock %}

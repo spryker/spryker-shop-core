@@ -7,25 +7,29 @@
 
 namespace SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint;
 
+use InvalidArgumentException;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\ProductConfiguratorRequestDataForm;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class ProductConfigurationIdentifierValidator extends ConstraintValidator
 {
     /**
      * @param mixed $value
-     * @param \Symfony\Component\Validator\Constraint $constraint
+     * @param \SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint\ProductConfigurationIdentifier|\Symfony\Component\Validator\Constraint $constraint
      *
-     * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
+     * @throws \InvalidArgumentException
      *
      * @return void
      */
     public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof ProductConfigurationIdentifier) {
-            throw new UnexpectedTypeException($constraint, ProductConfigurationIdentifier::class);
+            throw new InvalidArgumentException(sprintf(
+                'Expected constraint instance of %s, got %s instead.',
+                ProductConfigurationIdentifier::class,
+                get_class($constraint)
+            ));
         }
 
         $itemGroupKeyValue = $this->context
