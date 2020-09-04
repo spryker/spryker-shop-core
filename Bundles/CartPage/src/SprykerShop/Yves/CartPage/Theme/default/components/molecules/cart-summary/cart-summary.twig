@@ -139,7 +139,7 @@
             {% set checkoutButtonText =  'cart.checkout' | trans %}
             {% set disableButton = not canProceedQuoteCheckout ? 'button--disabled' %}
 
-            <a href="{{ url('checkout-index') }}" class="button button--expand button--success {{ disableButton }}" data-init-single-click title={{ checkoutButtonText }} {{ qa('cart-go-to-checkout') }}>
+            <a href="{{ url('checkout-index') }}" class="button button--expand button--success {{ disableButton }}" data-init-single-click {{ qa('cart-go-to-checkout') }}>
                 {{ checkoutButtonText }}
             </a>
         {% endwidget %}
