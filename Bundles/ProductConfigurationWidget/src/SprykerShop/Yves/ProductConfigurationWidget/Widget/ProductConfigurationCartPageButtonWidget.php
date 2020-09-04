@@ -51,7 +51,7 @@ class ProductConfigurationCartPageButtonWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@ProductConfigurationWidget/views/product-configuration-cart-page-button-widget/product-configuration-cart-page-button-widget.twig';
+        return '@ProductConfigurationWidget/views/cart-item-configuration-button/cart-item-configuration-button.twig';
     }
 
     /**

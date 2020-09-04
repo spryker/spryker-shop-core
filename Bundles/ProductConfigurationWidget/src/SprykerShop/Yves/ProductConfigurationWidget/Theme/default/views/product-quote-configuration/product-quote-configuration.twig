@@ -7,7 +7,9 @@
 {% block body %}
     {% if not data.isQuoteProductConfigurationValid %}
         <div>
-            {{ 'product_configuration_widget.quote_not_valid' | trans }}
+            <strong>
+                {{ 'product_configuration_widget.quote_not_valid' | trans }}
+            </strong>
         </div>
     {% endif %}
 {% endblock %}

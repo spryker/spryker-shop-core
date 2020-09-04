@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ProductConfigurationWidgetExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
+use Generated\Shared\Transfer\ProductConfigurationTemplateTransfer;
 
 /**
  * Use this plugin to provide the template and data for product configuration display.
@@ -29,23 +30,14 @@ interface ProductConfigurationRenderStrategyPluginInterface
 
     /**
      * Specification:
-     *  - Returns template path to be rendered.
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getTemplatePath(): string;
-
-    /**
-     * Specification:
-     *  - Returns the data for template.
+     *  - Returns template to be rendered.
+     *  - It includes data to be used for the rendering.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstance
      *
-     * @return mixed[]
+     * @return \Generated\Shared\Transfer\ProductConfigurationTemplateTransfer
      */
-    public function getTemplateData(ProductConfigurationInstanceTransfer $productConfigurationInstance): array;
+    public function getTemplate(ProductConfigurationInstanceTransfer $productConfigurationInstance): ProductConfigurationTemplateTransfer;
 }
