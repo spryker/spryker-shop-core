@@ -8,7 +8,8 @@
 
         &--ready,
         &--paid,
-        &--delivered {
+        &--delivered,
+        &--configured {
             background-color: helper-color-light(map-get($setting-color-actions, 'success'));
             color: helper-color-dark(map-get($setting-color-actions, 'success'));
         }
@@ -18,7 +19,8 @@
         &--confirmed,
         &--sent-to-merchant,
         &--shipped-by-merchant,
-        &--exported {
+        &--exported,
+        &--not-configured {
             background-color: helper-color-light(map-get($setting-color-actions, 'warning'));
             color: helper-color-dark(map-get($setting-color-actions, 'warning'));
         }
