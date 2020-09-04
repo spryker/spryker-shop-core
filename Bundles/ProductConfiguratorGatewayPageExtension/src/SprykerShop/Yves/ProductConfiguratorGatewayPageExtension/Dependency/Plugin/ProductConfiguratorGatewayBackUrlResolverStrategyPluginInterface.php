@@ -20,7 +20,7 @@ interface ProductConfiguratorGatewayBackUrlResolverStrategyPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
      *
      * @return bool
      */
@@ -32,7 +32,7 @@ interface ProductConfiguratorGatewayBackUrlResolverStrategyPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
      *
      * @return string
      */
