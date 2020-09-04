@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ProductConfiguratorGatewayPage\Controller;
 
 use Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Exception\MissedPropertyException;
+use SprykerShop\Yves\ProductConfiguratorGatewayPage\Plugin\Router\ProductConfiguratorGatewayPageRouteProviderPlugin;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +21,7 @@ class GatewayRequestController extends AbstractController
 {
     public const PARAM_ITEM_GROUP_KEY = 'item-group-key';
     public const PARAM_SOURCE_TYPE = 'source-type';
+    protected const PARAM_REFERER = 'referer';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -29,6 +31,13 @@ class GatewayRequestController extends AbstractController
     public function indexAction(Request $request): RedirectResponse
     {
         $productConfiguratorRequestDataTransfer = $this->validateRequestOrThrowException($request);
+        $refererUrl = $request->headers->get(static::PARAM_REFERER);
+
+        $productConfiguratorRequestDataTransfer->setBackUrl($refererUrl)
+            ->setSubmitUrl($this->getRouter()->generate(
+                ProductConfiguratorGatewayPageRouteProviderPlugin::ROUTE_NAME_PRODUCT_CONFIGURATION_GATEWAY_RESPONSE
+            )
+        );
 
         $productConfiguratorRedirectTransfer = $this->getFactory()->createProductConfiguratorRedirectResolver()
             ->resolveProductConfiguratorRedirect($productConfiguratorRequestDataTransfer);
@@ -41,7 +50,7 @@ class GatewayRequestController extends AbstractController
             $this->addErrorMessage($message);
         }
 
-        return $this->redirectResponseInternal($request->getUri());
+        return $this->redirectResponseInternal($refererUrl);
     }
 
     /**
