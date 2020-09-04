@@ -1,7 +1,8 @@
 {% extends template('widget') %}
 
 {% define data = {
-    isVisible: _widget.isVisible
+    isVisible: _widget.isVisible,
+    canProceedCheckout: true,
 } %}
 
 {% block template %}
@@ -11,7 +12,9 @@
 {% endblock %}
 
 {% block body %}
-    <a class="button button--expand button--success" href="{{ url('checkout-index') }}" {{qa('cart-go-to-checkout')}}>
+    {% set disableButton = not data.canProceedCheckout ? 'button--disabled' %}
+
+    <a class="button button--expand button--success {{ disableButton }}" href="{{ url('checkout-index') }}" {{qa('cart-go-to-checkout')}}>
         {{ 'cart.checkout' | trans }}
     </a>
 {% endblock %}
