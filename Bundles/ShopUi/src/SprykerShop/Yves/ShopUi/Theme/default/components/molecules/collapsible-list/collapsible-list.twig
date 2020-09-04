@@ -1,0 +1,74 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'collapsible-list',
+    tag: 'collapsible-list',
+} %}
+
+{% define data = {
+    listItems: required,
+    showItems: 3,
+    isOpen: false,
+} %}
+
+{% define attributes = {
+    'list-trigger-class': 'is-hidden',
+    'button-trigger-class': config.name ~ '__button--shown',
+} %}
+
+{% macro listItem(label, value) %}
+    <div class="col col--sm-5">
+        <strong>{{ label }}</strong>
+    </div>
+    <div class="col col--sm-7 spacing-left spacing-left--inner">{{ value }}</div>
+{% endmacro %}
+
+{% import _self as macros %}
+
+{% set wrapperClass = 'grid grid--middle' %}
+{% set collapseWrapperClass = 'col col--sm-12 grid grid--middle' %}
+{% set buttonWrapperClass = 'col col--sm-12' %}
+
+{% block body %}
+    <div class="{{ wrapperClass }}">
+        {% set showItems = data.showItems %}
+        {% set listItems = data.listItems %}
+
+        {% for key, value in listItems %}
+            {% if loop.index <= showItems %}
+                {% block shownListItems %}
+                    {{ macros.listItem(key, value) }}
+                {% endblock %}
+            {% else %}
+                {% if loop.index == showItems + 1 %}
+                    {% set hiddenClass = not data.isOpen ? attributes['list-trigger-class'] %}
+
+                    <div class="{{ collapseWrapperClass }} {{ config.jsName }}__list {{ hiddenClass }}">
+                {% endif %}
+
+                {% block hiddenListItems %}
+                    {{ macros.listItem(key, value) }}
+                {% endblock %}
+
+                {% if loop.last %}
+                    </div>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+
+        {% if listItems | length > showItems %}
+            <div class="{{ buttonWrapperClass }}">
+                {% block triggerButton %}
+                    {% set shownModifier = data.isOpen ? config.name ~ '__button--shown' %}
+
+                    <button
+                        class="{{ config.name }}__button {{ config.jsName }}__button {{ shownModifier }}"
+                        data-show="{{ 'global.show' | trans }}"
+                        data-hide="{{ 'global.hide' | trans }}"
+                    >
+                    </button>
+                {% endblock %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
