@@ -12,6 +12,26 @@
     {% endif %}
 {%- endblock -%}
 
+{% macro getTemplate(templateType, templateName, moduleName) %}
+    {% if templateType == 'atom' %}
+        {{ atom(templateName, moduleName) }}
+    {% endif %}
+
+    {% if templateType == 'molecule' %}
+        {{ molecule(templateName, moduleName) }}
+    {% endif %}
+
+    {% if templateType == 'organism' %}
+        {{ organism(templateName, moduleName) }}
+    {% endif %}
+
+    {% if templateType == 'view' %}
+        {{ view(templateName, moduleName) }}
+    {% endif %}
+{% endmacro %}
+
+{% import _self as macros %}
+
 {% block body %}
     {% set isComplete = data.productConfigurationInstance.isComplete %}
     {% set configurationLabel = isComplete ? 'product_configuration_widget.complete' : 'product_configuration_widget.not_complete' %}
@@ -22,7 +42,7 @@
         data: {
             label: configurationLabel | trans,
             status: 'waiting',
-        }
+        },
     } only %}
 
     {% if isComplete %}
@@ -30,14 +50,15 @@
         {% set isTemplateDefined = productConfigurationTemplate.templateType and productConfigurationTemplate.templateName and productConfigurationTemplate.moduleName %}
 
         {% if isTemplateDefined %}
-            {% include molecule('component-renderer') with {
+            {% set configurableComponent = macros.getTemplate(
+                productConfigurationTemplate.templateType,
+                productConfigurationTemplate.templateName,
+                productConfigurationTemplate.moduleName,
+                ) | trim %}
+
+            {% include configurableComponent ignore missing with {
                 data: {
-                    type: productConfigurationTemplate.templateType,
-                    name: productConfigurationTemplate.templateName,
-                    module: productConfigurationTemplate.moduleName,
-                    data: {
-                        options: productConfigurationTemplate.data,
-                    },
+                    listItems: productConfigurationTemplate.data,
                 },
             } only %}
         {% else %}

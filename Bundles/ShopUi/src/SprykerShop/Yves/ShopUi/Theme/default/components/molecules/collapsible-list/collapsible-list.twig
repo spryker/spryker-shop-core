@@ -27,13 +27,16 @@
 
 {% block body %}
     <div class="grid grid--middle">
-        {% for key, value in data.listItems %}
-            {% if loop.index <= data.showItems %}
+        {% set showItems = data.showItems %}
+        {% set listItems = data.listItems %}
+
+        {% for key, value in listItems %}
+            {% if loop.index <= showItems %}
                 {% block shownListItems %}
                     {{ macros.listItem(key, value) }}
                 {% endblock %}
             {% else %}
-                {% if loop.index == data.showItems + 1 %}
+                {% if loop.index == showItems + 1 %}
                     {% set hiddenClass = not data.isOpen ? attributes['list-trigger-class'] %}
 
                     <div class="col col--sm-12 grid grid--middle {{ config.jsName }}__list {{ hiddenClass }}">
@@ -49,7 +52,7 @@
             {% endif %}
         {% endfor %}
 
-        {% if data.listItems | length > data.showItems %}
+        {% if listItems | length > showItems %}
             <div class="col col--sm-12">
                 {% block triggerButton %}
                     {% set shownModifier = data.isOpen ? config.name ~ '__button--shown' %}

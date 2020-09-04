@@ -12,19 +12,40 @@
     {% endif %}
 {%- endblock -%}
 
+{% macro getTemplate(templateType, templateName, moduleName) %}
+    {% if templateType == 'atom' %}
+        {{ atom(templateName, moduleName) }}
+    {% endif %}
+
+    {% if templateType == 'molecule' %}
+        {{ molecule(templateName, moduleName) }}
+    {% endif %}
+
+    {% if templateType == 'organism' %}
+        {{ organism(templateName, moduleName) }}
+    {% endif %}
+
+    {% if templateType == 'view' %}
+        {{ view(templateName, moduleName) }}
+    {% endif %}
+{% endmacro %}
+
+{% import _self as macros %}
+
 {% block body %}
     {% set productConfigurationTemplate = data.productConfigurationTemplate %}
     {% set isTemplateDefined = productConfigurationTemplate.templateType and productConfigurationTemplate.templateName and productConfigurationTemplate.moduleName %}
 
     {% if isTemplateDefined %}
-        {% include molecule('component-renderer') with {
+        {% set configurableComponent = macros.getTemplate(
+            productConfigurationTemplate.templateType,
+            productConfigurationTemplate.templateName,
+            productConfigurationTemplate.moduleName,
+            ) | trim %}
+
+        {% include configurableComponent ignore missing with {
             data: {
-                type: productConfigurationTemplate.templateType,
-                name: productConfigurationTemplate.templateName,
-                module: productConfigurationTemplate.moduleName,
-                data: {
-                    listItems: productConfigurationTemplate.data,
-                },
+                listItems: productConfigurationTemplate.data,
             },
         } only %}
     {% else %}

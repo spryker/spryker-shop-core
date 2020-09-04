@@ -8,24 +8,22 @@
     form: required,
     productConfigurationRouteName: required,
     actionParams: {},
-    submitButton: {
-        class: 'button button--expand',
-        iconName: 'wrench',
-        iconModifiers: [],
-    },
+    submitButtonClass: 'button button--expand',
+    submitButtonIcon: 'wrench',
+    submitButtonIconModifiers: [],
 } %}
 
 {% block body %}
     {{ form_start(data.form, {'action': path(data.productConfigurationRouteName, data.actionParams)}) }}
         {% block submitButton %}
-            {% set submitButton = data.submitButton %}
+            <button class="{{ data.submitButtonClass }}">
+                {% set iconName = data.submitButtonIcon %}
 
-            <button class="{{ submitButton.class }}">
-                {% if submitButton.iconName %}
+                {% if iconName %}
                     {% include atom('icon') with {
-                        modifiers: submitButton.iconModifiers,
+                        modifiers: data.submitButtonIconModifiers,
                         data: {
-                            name: submitButton.iconName,
+                            name: iconName,
                         },
                     } only %}
                 {% endif %}

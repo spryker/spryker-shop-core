@@ -18,10 +18,10 @@ export default class CollapsibleList extends Component {
     }
 
     protected mapClickEvent(): void {
-        this.triggerButton.addEventListener('click', () => this.onClickHandler());
+        this.triggerButton.addEventListener('click', () => this.onClick());
     }
 
-    protected onClickHandler(): void {
+    protected onClick(): void {
         this.targetList.classList.toggle(this.listTriggerClass);
         this.triggerButton.classList.toggle(this.buttonTriggerClass);
     }
