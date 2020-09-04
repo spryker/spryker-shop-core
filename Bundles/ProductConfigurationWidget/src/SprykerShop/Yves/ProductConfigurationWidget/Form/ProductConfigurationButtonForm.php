@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\ProductConfigurationWidget\Form;
 
 use Spryker\Yves\Kernel\Form\AbstractType;
-use SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint\ProductConfigurationIdentifier;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -63,9 +62,6 @@ class ProductConfigurationButtonForm extends AbstractType
     {
         $builder->add(static::FILED_SKU, HiddenType::class, [
             'required' => true,
-            'constraints' => [
-                new ProductConfigurationIdentifier(),
-            ],
         ]);
 
         return $this;
