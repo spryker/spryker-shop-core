@@ -36,8 +36,7 @@ class GatewayRequestController extends AbstractController
         $productConfiguratorRequestDataTransfer->setBackUrl($refererUrl)
             ->setSubmitUrl($this->getRouter()->generate(
                 ProductConfiguratorGatewayPageRouteProviderPlugin::ROUTE_NAME_PRODUCT_CONFIGURATION_GATEWAY_RESPONSE
-            )
-        );
+            ));
 
         $productConfiguratorRedirectTransfer = $this->getFactory()->createProductConfiguratorRedirectResolver()
             ->resolveProductConfiguratorRedirect($productConfiguratorRequestDataTransfer);
