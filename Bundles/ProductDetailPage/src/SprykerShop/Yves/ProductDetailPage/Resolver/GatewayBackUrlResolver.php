@@ -7,13 +7,13 @@
 
 namespace SprykerShop\Yves\ProductDetailPage\Resolver;
 
+use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Client\ProductDetailPageToProductStorageClientInterface;
 
 class GatewayBackUrlResolver implements GatewayBackUrlResolverInterface
 {
     protected const MAPPING_TYPE_SKU = 'sku';
-    protected const FALLBACK_ROUTE = 'cart'; // TODO: replace to correct one
 
     /**
      * @var \SprykerShop\Yves\ProductDetailPage\Dependency\Client\ProductDetailPageToProductStorageClientInterface
@@ -42,6 +42,24 @@ class GatewayBackUrlResolver implements GatewayBackUrlResolverInterface
             $productConfiguratorResponseTransfer->getSku()
         );
 
-        return $productConcreteStorageData ? $productConcreteStorageData['url'] : static::FALLBACK_ROUTE;
+        $productConcreteStorageTransfer = $this->mapProductConcreteStorageDataToProductConcreteStorageTransfer(
+            $productConcreteStorageData,
+            new ProductConcreteStorageTransfer()
+        );
+
+        return $this->productStorageClient->resolveProductConcreteUrl($productConcreteStorageTransfer);
+    }
+
+    /**
+     * @param array $productConcreteStorageData
+     * @param \Generated\Shared\Transfer\ProductConcreteStorageTransfer $productConcreteStorageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer
+     */
+    protected function mapProductConcreteStorageDataToProductConcreteStorageTransfer(
+        array $productConcreteStorageData,
+        ProductConcreteStorageTransfer $productConcreteStorageTransfer
+    ): ProductConcreteStorageTransfer {
+        return $productConcreteStorageTransfer->fromArray($productConcreteStorageData, true);
     }
 }

@@ -19,6 +19,11 @@ use Symfony\Component\HttpFoundation\Request;
 class GatewayResponseController extends AbstractController
 {
     /**
+     * @uses \SprykerShop\Yves\HomePage\Plugin\Router\HomePageRouteProviderPlugin::ROUTE_NAME_HOME
+     */
+    protected const FALLBACK_ROUTE_NAME = 'home';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -78,7 +83,6 @@ class GatewayResponseController extends AbstractController
             }
         }
 
-        // TODO: clarify fallback url
-        return $this->redirectResponseInternal('cart');
+        return $this->redirectResponseInternal(static::FALLBACK_ROUTE_NAME);
     }
 }

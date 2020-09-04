@@ -26,7 +26,7 @@ class ProductDetailPageGatewayBackUrlResolverStrategyPlugin extends AbstractPlug
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
      *
      * @return bool
      */
@@ -40,7 +40,7 @@ class ProductDetailPageGatewayBackUrlResolverStrategyPlugin extends AbstractPlug
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
      *
      * @return string
      */
