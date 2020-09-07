@@ -23,12 +23,14 @@ interface ProductConfiguratorGatewayPageToProductConfigurationStorageClientInter
 
     /**
      * @param string $groupKey
+     * @param string $sku
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null
      */
     public function findProductConfigurationInstanceByGroupKey(
         string $groupKey,
+        string $sku,
         QuoteTransfer $quoteTransfer
     ): ?ProductConfigurationInstanceTransfer;
 }

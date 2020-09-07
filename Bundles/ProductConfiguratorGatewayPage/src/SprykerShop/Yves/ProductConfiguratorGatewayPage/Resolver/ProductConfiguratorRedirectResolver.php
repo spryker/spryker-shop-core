@@ -92,16 +92,16 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
         $sku = $productConfiguratorRequestDataTransfer->getSku();
         $itemGroupKey = $productConfiguratorRequestDataTransfer->getItemGroupKey();
 
-        if ($sku) {
-            $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient
-                ->findProductConfigurationInstanceBySku($sku);
-        }
-
         if ($itemGroupKey) {
             $quoteTransfer = $this->quoteClient->getQuote();
 
             $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient
-                ->findProductConfigurationInstanceByGroupKey($itemGroupKey, $quoteTransfer);
+                ->findProductConfigurationInstanceByGroupKey($itemGroupKey, $sku, $quoteTransfer);
+        }
+
+        if ($sku) {
+            $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient
+                ->findProductConfigurationInstanceBySku($sku);
         }
 
         if (!isset($productConfigurationInstanceTransfer)) {
