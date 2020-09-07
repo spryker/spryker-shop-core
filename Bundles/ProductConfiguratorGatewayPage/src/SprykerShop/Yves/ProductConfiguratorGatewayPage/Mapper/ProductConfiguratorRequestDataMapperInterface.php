@@ -13,8 +13,8 @@ use Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer;
 interface ProductConfiguratorRequestDataMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer
      * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
+     * @param \Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer
      */
