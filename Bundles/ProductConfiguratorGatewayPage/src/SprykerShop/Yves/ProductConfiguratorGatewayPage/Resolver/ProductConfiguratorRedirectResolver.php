@@ -65,7 +65,7 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
     public function resolveProductConfiguratorRedirect(
         ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer
     ): ProductConfiguratorRedirectTransfer {
-        $productConfigurationInstanceTransfer = $this->findProductConfigurationInstance($productConfiguratorRequestDataTransfer);
+        $productConfigurationInstanceTransfer = $this->getProductConfigurationInstance($productConfiguratorRequestDataTransfer);
 
         $productConfiguratorRequestDataTransfer = $this->configuratorRequestDataMapper
             ->mapProductConfigurationInstanceTransferToProductConfiguratorRequestDataTransfer(
@@ -86,20 +86,20 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer
      */
-    protected function findProductConfigurationInstance(
+    protected function getProductConfigurationInstance(
         ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer
     ): ProductConfigurationInstanceTransfer {
-        $sku = $productConfiguratorRequestDataTransfer->getSku();
+        $sku = $productConfiguratorRequestDataTransfer->requireSku()->getSku();
         $itemGroupKey = $productConfiguratorRequestDataTransfer->getItemGroupKey();
 
         if ($itemGroupKey) {
             $quoteTransfer = $this->quoteClient->getQuote();
 
             $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient
-                ->findProductConfigurationInstanceByGroupKey($itemGroupKey, $sku, $quoteTransfer);
+                ->findProductConfigurationInstanceInQuote($itemGroupKey, $sku, $quoteTransfer);
         }
 
-        if ($sku) {
+        if (!$itemGroupKey && $sku) {
             $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient
                 ->findProductConfigurationInstanceBySku($sku);
         }

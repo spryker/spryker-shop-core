@@ -43,11 +43,11 @@ class ProductConfiguratorGatewayPageToProductConfigurationStorageClientBridge im
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null
      */
-    public function findProductConfigurationInstanceByGroupKey(
+    public function findProductConfigurationInstanceInQuote(
         string $groupKey,
         string $sku,
         QuoteTransfer $quoteTransfer
     ): ?ProductConfigurationInstanceTransfer {
-        return $this->productConfigurationStorageClient->findProductConfigurationInstanceByGroupKey($groupKey, $sku, $quoteTransfer);
+        return $this->productConfigurationStorageClient->findProductConfigurationInstanceInQuote($groupKey, $sku, $quoteTransfer);
     }
 }

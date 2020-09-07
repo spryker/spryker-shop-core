@@ -58,7 +58,7 @@ class ProductConfigurationOrderItemDisplayWidget extends AbstractWidget
      */
     protected function addIsVisibleParameter(ItemTransfer $itemTransfer): void
     {
-        $this->addParameter(static::PARAMETER_IS_VISIBLE, (bool)$itemTransfer->getSalesOrderItemConfiguration());
+        $this->addParameter(static::PARAMETER_IS_VISIBLE, $itemTransfer->getSalesOrderItemConfiguration() !== null);
     }
 
     /**
