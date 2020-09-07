@@ -58,7 +58,7 @@ class ProductConfigurationCartPageButtonWidget extends AbstractWidget
      */
     protected function addIsVisibleParameter(ItemTransfer $itemTransfer): void
     {
-        $this->addParameter(static::PARAMETER_IS_VISIBLE, (bool)$itemTransfer->getProductConfigurationInstance());
+        $this->addParameter(static::PARAMETER_IS_VISIBLE, $itemTransfer->getProductConfigurationInstance() !== null);
     }
 
     /**
@@ -71,8 +71,12 @@ class ProductConfigurationCartPageButtonWidget extends AbstractWidget
         $productConfiguratorButtonFormCartPageDataProvider = $this->getFactory()
             ->createProductConfiguratorButtonFormCartPageDataProvider();
 
-        $this->addParameter(static::PARAMETER_FORM, $this->getFactory()->getProductConfigurationButtonForm()
-            ->setData($productConfiguratorButtonFormCartPageDataProvider->getData($itemTransfer))->createView());
+        $productConfigurationButtonForm = $this->getFactory()
+            ->getProductConfigurationButtonForm()
+            ->setData($productConfiguratorButtonFormCartPageDataProvider->getData($itemTransfer))
+            ->createView();
+
+        $this->addParameter(static::PARAMETER_FORM, $productConfigurationButtonForm);
     }
 
     /**
