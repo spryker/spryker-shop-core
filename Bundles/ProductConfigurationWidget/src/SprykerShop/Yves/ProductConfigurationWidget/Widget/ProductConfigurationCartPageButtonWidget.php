@@ -18,10 +18,7 @@ class ProductConfigurationCartPageButtonWidget extends AbstractWidget
 {
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
     protected const PARAMETER_FORM = 'form';
-    protected const PARAMETER_PRODUCT_CONFIGURATION_ROUTE_NAME = 'productConfigurationRouteName';
-    protected const PARAMETER_SOURCE_TYPE = 'sourceType';
-    protected const PARAMETER_ITEM_GROUP_KEY = 'itemGroupKey';
-    protected const PARAMETER_QUANTITY = 'quantity';
+    protected const PARAMETER_PRODUCT_CONFIGURATOR_ROUTE_NAME = 'productConfiguratorRouteName';
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -34,11 +31,8 @@ class ProductConfigurationCartPageButtonWidget extends AbstractWidget
             return;
         }
 
-        $this->addFormParameter();
+        $this->addFormParameter($itemTransfer);
         $this->addProductConfigurationRouteNameParameter();
-        $this->addSourceTypeParameter();
-        $this->addItemGroupKeyParameter($itemTransfer);
-        $this->addQuantityParameter($itemTransfer);
     }
 
     /**
@@ -68,11 +62,21 @@ class ProductConfigurationCartPageButtonWidget extends AbstractWidget
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
      * @return void
      */
-    protected function addFormParameter(): void
+    protected function addFormParameter(ItemTransfer $itemTransfer): void
     {
-        $this->addParameter(static::PARAMETER_FORM, $this->getFactory()->getProductConfigurationButtonForm()->createView());
+        $productConfiguratorButtonFormCartPageDataProvider = $this->getFactory()
+            ->createProductConfiguratorButtonFormCartPageDataProvider();
+
+        $productConfigurationButtonForm = $this->getFactory()
+            ->getProductConfigurationButtonForm()
+            ->setData($productConfiguratorButtonFormCartPageDataProvider->getData($itemTransfer))
+            ->createView();
+
+        $this->addParameter(static::PARAMETER_FORM, $productConfigurationButtonForm);
     }
 
     /**
@@ -81,36 +85,8 @@ class ProductConfigurationCartPageButtonWidget extends AbstractWidget
     protected function addProductConfigurationRouteNameParameter(): void
     {
         $this->addParameter(
-            static::PARAMETER_PRODUCT_CONFIGURATION_ROUTE_NAME,
-            $this->getConfig()->getProductConfigurationGatewayRequestRoute()
+            static::PARAMETER_PRODUCT_CONFIGURATOR_ROUTE_NAME,
+            $this->getConfig()->getProductConfiguratorGatewayRequestRoute()
         );
-    }
-
-    /**
-     * @return void
-     */
-    protected function addSourceTypeParameter(): void
-    {
-        $this->addParameter(static::PARAMETER_SOURCE_TYPE, $this->getConfig()->getCartSourceType());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
-    protected function addItemGroupKeyParameter(ItemTransfer $itemTransfer): void
-    {
-        $this->addParameter(static::PARAMETER_ITEM_GROUP_KEY, $itemTransfer->getGroupKey());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
-    protected function addQuantityParameter(ItemTransfer $itemTransfer): void
-    {
-        $this->addParameter(static::PARAMETER_QUANTITY, $itemTransfer->getQuantity());
     }
 }

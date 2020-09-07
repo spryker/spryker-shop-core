@@ -3,7 +3,7 @@
 {% define data = {
     isVisible: _widget.isVisible,
     form: _widget.form | default,
-    productConfigurationRouteName: _widget.productConfigurationRouteName | default,
+    productConfiguratorRouteName: _widget.productConfiguratorRouteName | default,
     sourceType: _widget.sourceType | default,
     sku: _widget.sku | default,
 } %}
@@ -18,11 +18,7 @@
     {% include molecule('configuration-form', 'ProductConfigurationWidget') with {
         data: {
             form: data.form,
-            productConfigurationRouteName: data.productConfigurationRouteName,
-            actionParams: {
-                'source-type': data.sourceType,
-                sku: data.sku,
-            },
+            productConfiguratorRouteName: data.productConfiguratorRouteName,
         },
     } only %}
 {% endblock %}
