@@ -7,11 +7,11 @@
 
 namespace SprykerShop\Yves\ProductConfigurationWidget\Form;
 
+use Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Choice;
 
 /**
  * @method \SprykerShop\Yves\ProductConfigurationWidget\ProductConfigurationWidgetConfig getConfig()
@@ -46,9 +46,10 @@ class ProductConfigurationButtonForm extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
+            'data_class' => ProductConfiguratorRequestDataTransfer::class,
             'csrf_token_id' => static::PRODUCT_CONFIGURATION_CSRF_TOKEN_ID,
         ]);
     }
@@ -60,9 +61,7 @@ class ProductConfigurationButtonForm extends AbstractType
      */
     protected function addSkuField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FILED_SKU, HiddenType::class, [
-            'required' => true,
-        ]);
+        $builder->add(static::FILED_SKU, HiddenType::class);
 
         return $this;
     }
@@ -86,9 +85,7 @@ class ProductConfigurationButtonForm extends AbstractType
      */
     protected function addQuantityField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FILED_QUANTITY, HiddenType::class, [
-            'required' => false,
-        ]);
+        $builder->add(static::FILED_QUANTITY, HiddenType::class);
 
         return $this;
     }
@@ -100,17 +97,7 @@ class ProductConfigurationButtonForm extends AbstractType
      */
     protected function addSourceField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FILED_SOURCE_TYPE, HiddenType::class, [
-            'required' => true,
-            'constraints' => [
-                new Choice([
-                    'choices' => [
-                        $this->getConfig()->getCartSourceType(),
-                        $this->getConfig()->getPdpSourceType(),
-                    ],
-                ]),
-            ],
-        ]);
+        $builder->add(static::FILED_SOURCE_TYPE, HiddenType::class);
 
         return $this;
     }

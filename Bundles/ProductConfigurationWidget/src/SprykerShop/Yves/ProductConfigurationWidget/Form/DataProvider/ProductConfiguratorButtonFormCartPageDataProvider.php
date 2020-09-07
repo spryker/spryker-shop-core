@@ -8,8 +8,8 @@
 namespace SprykerShop\Yves\ProductConfigurationWidget\Form\DataProvider;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer;
 use SprykerShop\Yves\ProductConfigurationWidget\ProductConfigurationWidgetConfig;
-use SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\ProductConfiguratorRequestDataForm;
 
 class ProductConfiguratorButtonFormCartPageDataProvider
 {
@@ -29,15 +29,14 @@ class ProductConfiguratorButtonFormCartPageDataProvider
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer
      */
-    public function getData(ItemTransfer $itemTransfer): array
+    public function getData(ItemTransfer $itemTransfer): ProductConfiguratorRequestDataTransfer
     {
-        return [
-           ProductConfiguratorRequestDataForm::FILED_SOURCE_TYPE => $this->config->getCartSourceType(),
-           ProductConfiguratorRequestDataForm::FILED_ITEM_GROUP_KEY => $itemTransfer->getGroupKey(),
-           ProductConfiguratorRequestDataForm::FILED_QUANTITY => $itemTransfer->getQuantity(),
-           ProductConfiguratorRequestDataForm::FILED_SKU => $itemTransfer->getSku(),
-        ];
+        return (new ProductConfiguratorRequestDataTransfer())
+            ->setSku($itemTransfer->getSku())
+            ->setSourceType($this->config->getCartSourceType())
+            ->setItemGroupKey($itemTransfer->getGroupKey())
+            ->setQuantity($itemTransfer->getQuantity());
     }
 }

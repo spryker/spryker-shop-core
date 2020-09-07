@@ -12,8 +12,8 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class ProductConfiguratorGatewayPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_NAME_PRODUCT_CONFIGURATION_GATEWAY_REQUEST = 'product-configurator-gateway/request';
-    public const ROUTE_NAME_PRODUCT_CONFIGURATION_GATEWAY_RESPONSE = 'product-configurator-gateway/response';
+    public const ROUTE_NAME_PRODUCT_CONFIGURATOR_GATEWAY_REQUEST = 'product-configurator-gateway/request';
+    public const ROUTE_NAME_PRODUCT_CONFIGURATOR_GATEWAY_RESPONSE = 'product-configurator-gateway/response';
 
     /**
      * Specification:
@@ -42,9 +42,8 @@ class ProductConfiguratorGatewayPageRouteProviderPlugin extends AbstractRoutePro
      */
     protected function addProductConfiguratorGatewayRequest(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/product-configurator-gateway/request', 'ProductConfiguratorGatewayPage', 'GatewayRequest', 'indexAction');
-        $route = $route->setMethods(['POST']);
-        $routeCollection->add(static::ROUTE_NAME_PRODUCT_CONFIGURATION_GATEWAY_REQUEST, $route);
+        $route = $this->buildPostRoute('/product-configurator-gateway/request', 'ProductConfiguratorGatewayPage', 'GatewayRequest', 'indexAction');
+        $routeCollection->add(static::ROUTE_NAME_PRODUCT_CONFIGURATOR_GATEWAY_REQUEST, $route);
 
         return $routeCollection;
     }
@@ -59,7 +58,7 @@ class ProductConfiguratorGatewayPageRouteProviderPlugin extends AbstractRoutePro
     protected function addProductConfiguratorGatewayResponse(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildPostRoute('/product-configurator-gateway/response', 'ProductConfiguratorGatewayPage', 'GatewayResponse', 'indexAction');
-        $routeCollection->add(static::ROUTE_NAME_PRODUCT_CONFIGURATION_GATEWAY_RESPONSE, $route);
+        $routeCollection->add(static::ROUTE_NAME_PRODUCT_CONFIGURATOR_GATEWAY_RESPONSE, $route);
 
         return $routeCollection;
     }

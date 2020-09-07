@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ProductConfiguratorGatewayPage\Form;
 
 use Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
+use SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint\ItemGroupKey;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint\Quantity;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -28,8 +29,8 @@ class ProductConfiguratorRequestDataForm extends AbstractType
     public const FILED_ITEM_GROUP_KEY = 'itemGroupKey';
     public const PRODUCT_CONFIGURATION_CSRF_TOKEN_ID = 'product_configuration';
 
-    protected const VALIDATION_SOURCE_NOT_BLANK_MESSAGE = 'product_configuration.source_not_blank';
-    protected const VALIDATION_SKU_NOT_BLANK_MESSAGE = 'product_configurator.sku_not_blank';
+    protected const GLOSSARY_KEY_VALIDATION_SOURCE_NOT_BLANK_MESSAGE = 'product_configurator_gateway_page.source_not_blank';
+    protected const GLOSSARY_KEY_VALIDATION_SKU_NOT_BLANK_MESSAGE = 'product_configurator_gateway_page.sku_not_blank';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -68,7 +69,7 @@ class ProductConfiguratorRequestDataForm extends AbstractType
         $builder->add(static::FILED_SKU, HiddenType::class, [
             'required' => true,
             'constraints' => [
-                new NotBlank(['message' => static::VALIDATION_SKU_NOT_BLANK_MESSAGE]),
+                new NotBlank(['message' => static::GLOSSARY_KEY_VALIDATION_SKU_NOT_BLANK_MESSAGE]),
             ],
         ]);
 
@@ -82,7 +83,13 @@ class ProductConfiguratorRequestDataForm extends AbstractType
      */
     protected function addItemGroupKeyField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FILED_ITEM_GROUP_KEY, HiddenType::class);
+        $builder->add(static::FILED_ITEM_GROUP_KEY, HiddenType::class, [
+            'constraints' => [
+                new ItemGroupKey([
+                    ItemGroupKey::PRODUCT_CONFIGURATOR_GATEWAY_PAGE_CONFIG_KEY => $this->getConfig(),
+                ]),
+            ],
+        ]);
 
         return $this;
     }
@@ -114,7 +121,7 @@ class ProductConfiguratorRequestDataForm extends AbstractType
         $builder->add(static::FILED_SOURCE_TYPE, HiddenType::class, [
             'required' => true,
             'constraints' => [
-                new NotBlank(['message' => static::VALIDATION_SOURCE_NOT_BLANK_MESSAGE]),
+                new NotBlank(['message' => static::GLOSSARY_KEY_VALIDATION_SOURCE_NOT_BLANK_MESSAGE]),
                 new Choice([
                     'choices' => [
                             $this->getConfig()->getCartSourceType(),

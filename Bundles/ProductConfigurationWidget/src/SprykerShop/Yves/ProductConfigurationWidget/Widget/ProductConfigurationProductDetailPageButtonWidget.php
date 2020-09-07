@@ -87,7 +87,7 @@ class ProductConfigurationProductDetailPageButtonWidget extends AbstractWidget
     {
         $this->addParameter(
             static::PARAMETER_PRODUCT_CONFIGURATION_ROUTE_NAME,
-            $this->getConfig()->getProductConfigurationGatewayRequestRoute()
+            $this->getConfig()->getProductConfiguratorGatewayRequestRoute()
         );
     }
 }

@@ -14,5 +14,5 @@ class Quantity extends SymfonyConstraint
     /**
      * @var string
      */
-    public $message = 'product_configurator.quantity_required';
+    public $message = 'product_configurator_gateway_page.quantity_required';
 }

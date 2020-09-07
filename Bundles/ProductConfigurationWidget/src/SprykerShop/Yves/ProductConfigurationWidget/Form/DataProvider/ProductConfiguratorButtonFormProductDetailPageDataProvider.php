@@ -7,9 +7,9 @@
 
 namespace SprykerShop\Yves\ProductConfigurationWidget\Form\DataProvider;
 
+use Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use SprykerShop\Yves\ProductConfigurationWidget\ProductConfigurationWidgetConfig;
-use SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\ProductConfiguratorRequestDataForm;
 
 class ProductConfiguratorButtonFormProductDetailPageDataProvider
 {
@@ -29,13 +29,12 @@ class ProductConfiguratorButtonFormProductDetailPageDataProvider
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer
      */
-    public function getData(ProductViewTransfer $productViewTransfer): array
+    public function getData(ProductViewTransfer $productViewTransfer): ProductConfiguratorRequestDataTransfer
     {
-        return [
-           ProductConfiguratorRequestDataForm::FILED_SOURCE_TYPE => $this->config->getPdpSourceType(),
-           ProductConfiguratorRequestDataForm::FILED_SKU => $productViewTransfer->getSku(),
-        ];
+        return (new ProductConfiguratorRequestDataTransfer())
+            ->setSku($productViewTransfer->getSku())
+            ->setSourceType($this->config->getPdpSourceType());
     }
 }

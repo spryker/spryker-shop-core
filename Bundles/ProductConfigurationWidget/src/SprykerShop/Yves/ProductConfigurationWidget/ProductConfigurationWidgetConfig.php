@@ -12,9 +12,9 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 class ProductConfigurationWidgetConfig extends AbstractBundleConfig
 {
     /**
-     * @uses \SprykerShop\Yves\ProductConfiguratorGatewayPage\Plugin\Router\ProductConfiguratorGatewayPageRouteProviderPlugin::PRODUCT_CONFIGURATION_GATEWAY_REQUEST_ROUTE
+     * @uses \SprykerShop\Yves\ProductConfiguratorGatewayPage\Plugin\Router\ProductConfiguratorGatewayPageRouteProviderPlugin::ROUTE_NAME_PRODUCT_CONFIGURATOR_GATEWAY_REQUEST
      */
-    protected const PRODUCT_CONFIGURATION_GATEWAY_REQUEST_ROUTE = 'product-configurator-gateway-request';
+    protected const ROUTE_NAME_PRODUCT_CONFIGURATOR_GATEWAY_REQUEST = 'product-configurator-gateway/request';
 
     /**
      * @uses \SprykerShop\Yves\ProductConfiguratorGatewayPage\ProductConfiguratorGatewayPageConfig::PRODUCT_CONFIGURATOR_GATEWAY_REQUEST_FORM_NAME
@@ -56,7 +56,7 @@ class ProductConfigurationWidgetConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getProductConfiguratorGatewayRequestFormName()
+    public function getProductConfiguratorGatewayRequestFormName(): string
     {
         return static::PRODUCT_CONFIGURATOR_GATEWAY_REQUEST_FORM_NAME;
     }
@@ -66,8 +66,8 @@ class ProductConfigurationWidgetConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getProductConfigurationGatewayRequestRoute(): string
+    public function getProductConfiguratorGatewayRequestRoute(): string
     {
-        return static::PRODUCT_CONFIGURATION_GATEWAY_REQUEST_ROUTE;
+        return static::ROUTE_NAME_PRODUCT_CONFIGURATOR_GATEWAY_REQUEST;
     }
 }

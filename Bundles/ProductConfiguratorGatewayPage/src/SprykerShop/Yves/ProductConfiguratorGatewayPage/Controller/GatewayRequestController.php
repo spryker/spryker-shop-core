@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class GatewayRequestController extends AbstractController
 {
-    protected const PARAM_REFERER = 'referer';
+    protected const REQUEST_HEADER_REFERER = 'referer';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -30,11 +30,11 @@ class GatewayRequestController extends AbstractController
     public function indexAction(Request $request): RedirectResponse
     {
         $productConfiguratorRequestDataTransfer = $this->validateProductConfiguratorRequestDataForm($request);
-        $refererUrl = $request->headers->get(static::PARAM_REFERER);
+        $refererUrl = $request->headers->get(static::REQUEST_HEADER_REFERER);
 
         $productConfiguratorRequestDataTransfer->setBackUrl($refererUrl)
             ->setSubmitUrl($this->getRouter()->generate(
-                ProductConfiguratorGatewayPageRouteProviderPlugin::ROUTE_NAME_PRODUCT_CONFIGURATION_GATEWAY_RESPONSE
+                ProductConfiguratorGatewayPageRouteProviderPlugin::ROUTE_NAME_PRODUCT_CONFIGURATOR_GATEWAY_RESPONSE
             ));
 
         $productConfiguratorRedirectTransfer = $this->getFactory()->createProductConfiguratorRedirectResolver()
@@ -77,7 +77,7 @@ class GatewayRequestController extends AbstractController
         if (!$form->isSubmitted() || !$form->isValid()) {
             $errorList = [];
 
-            foreach ($form->getErrors() as $error) {
+            foreach ($form->getErrors(true) as $error) {
                 $errorList[] = $error->getMessage();
             }
 

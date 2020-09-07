@@ -28,7 +28,7 @@ class ProductConfiguratorGatewayPageConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getPdpSourceType()
+    public function getPdpSourceType(): string
     {
         return static::SOURCE_TYPE_PDP;
     }
@@ -38,7 +38,7 @@ class ProductConfiguratorGatewayPageConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getCartSourceType()
+    public function getCartSourceType(): string
     {
         return static::SOURCE_TYPE_CART;
     }
@@ -48,7 +48,7 @@ class ProductConfiguratorGatewayPageConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getProductConfiguratorGatewayRequestFormName()
+    public function getProductConfiguratorGatewayRequestFormName(): string
     {
         return static::PRODUCT_CONFIGURATOR_GATEWAY_REQUEST_FORM_NAME;
     }
