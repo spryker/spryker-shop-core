@@ -61,9 +61,9 @@ class ProductConfiguratorGatewayPageDependencyProvider extends AbstractBundleDep
     protected function addProductConfigurationStorageClient(Container $container): Container
     {
         $container->set(static::CLIENT_PRODUCT_CONFIGURATION_STORAGE, function (Container $container) {
-                return new ProductConfiguratorGatewayPageToProductConfigurationStorageClientBridge(
-                    $container->getLocator()->productConfigurationStorage()->client()
-                );
+            return new ProductConfiguratorGatewayPageToProductConfigurationStorageClientBridge(
+                $container->getLocator()->productConfigurationStorage()->client()
+            );
         });
 
         return $container;
@@ -77,9 +77,9 @@ class ProductConfiguratorGatewayPageDependencyProvider extends AbstractBundleDep
     protected function addProductConfigurationClient(Container $container): Container
     {
         $container->set(static::CLIENT_PRODUCT_CONFIGURATION, function (Container $container) {
-                return new ProductConfiguratorGatewayPageToProductConfigurationClientBridge(
-                    $container->getLocator()->productConfiguration()->client()
-                );
+            return new ProductConfiguratorGatewayPageToProductConfigurationClientBridge(
+                $container->getLocator()->productConfiguration()->client()
+            );
         });
 
         return $container;

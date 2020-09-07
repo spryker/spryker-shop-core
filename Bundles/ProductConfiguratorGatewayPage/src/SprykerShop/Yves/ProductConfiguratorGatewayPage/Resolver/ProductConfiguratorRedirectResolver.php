@@ -65,7 +65,7 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
     public function resolveProductConfiguratorRedirect(
         ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer
     ): ProductConfiguratorRedirectTransfer {
-        $productConfigurationInstanceTransfer = $this->findProductConfigurationInstance($productConfiguratorRequestDataTransfer);
+        $productConfigurationInstanceTransfer = $this->getProductConfigurationInstance($productConfiguratorRequestDataTransfer);
 
         $productConfiguratorRequestDataTransfer = $this->configuratorRequestDataMapper
             ->mapProductConfigurationInstanceTransferToProductConfiguratorRequestDataTransfer(
@@ -86,22 +86,22 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer
      */
-    protected function findProductConfigurationInstance(
+    protected function getProductConfigurationInstance(
         ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer
     ): ProductConfigurationInstanceTransfer {
         $sku = $productConfiguratorRequestDataTransfer->getSku();
         $itemGroupKey = $productConfiguratorRequestDataTransfer->getItemGroupKey();
 
-        if ($sku) {
-            $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient
-                ->findProductConfigurationInstanceBySku($sku);
-        }
-
-        if ($itemGroupKey) {
+        if ($itemGroupKey && $sku) {
             $quoteTransfer = $this->quoteClient->getQuote();
 
             $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient
                 ->findProductConfigurationInstanceByGroupKey($itemGroupKey, $quoteTransfer);
+        }
+
+        if (!$itemGroupKey && $sku) {
+            $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient
+                ->findProductConfigurationInstanceBySku($sku);
         }
 
         if (!isset($productConfigurationInstanceTransfer)) {
