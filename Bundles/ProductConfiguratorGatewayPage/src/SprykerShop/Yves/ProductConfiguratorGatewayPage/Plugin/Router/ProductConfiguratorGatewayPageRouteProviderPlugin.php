@@ -12,7 +12,7 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class ProductConfiguratorGatewayPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_NAME_PRODUCT_CONFIGURATION_GATEWAY_REQUEST = 'product-configurator-gateway-request';
+    public const ROUTE_NAME_PRODUCT_CONFIGURATION_GATEWAY_REQUEST = 'product-configurator-gateway/request';
     public const ROUTE_NAME_PRODUCT_CONFIGURATION_GATEWAY_RESPONSE = 'product-configurator-gateway/response';
 
     /**
@@ -34,7 +34,7 @@ class ProductConfiguratorGatewayPageRouteProviderPlugin extends AbstractRoutePro
     }
 
     /**
-     * @uses \SprykerShop\Yves\ProductConfiguratorGatewayPage\Controller\ReturnCreateController::createAction()
+     * @uses \SprykerShop\Yves\ProductConfiguratorGatewayPage\Controller\GatewayRequestController::indexAction().
      *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
@@ -43,6 +43,7 @@ class ProductConfiguratorGatewayPageRouteProviderPlugin extends AbstractRoutePro
     protected function addProductConfiguratorGatewayRequest(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/product-configurator-gateway/request', 'ProductConfiguratorGatewayPage', 'GatewayRequest', 'indexAction');
+        $route = $route->setMethods(['POST']);
         $routeCollection->add(static::ROUTE_NAME_PRODUCT_CONFIGURATION_GATEWAY_REQUEST, $route);
 
         return $routeCollection;

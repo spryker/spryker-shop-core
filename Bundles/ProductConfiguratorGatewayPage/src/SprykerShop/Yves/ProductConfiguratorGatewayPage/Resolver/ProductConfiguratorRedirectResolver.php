@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver;
 
+use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
@@ -68,8 +69,8 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
 
         $productConfiguratorRequestDataTransfer = $this->configuratorRequestDataMapper
             ->mapProductConfigurationInstanceTransferToProductConfiguratorRequestDataTransfer(
-                $productConfiguratorRequestDataTransfer,
-                $productConfigurationInstanceTransfer
+                $productConfigurationInstanceTransfer,
+                $productConfiguratorRequestDataTransfer
             );
 
         return $this->productConfigurationClient->resolveProductConfiguratorRedirect(
@@ -83,11 +84,11 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
      *
      * @throws \SprykerShop\Yves\ProductConfiguratorGatewayPage\Exception\ProductConfigurationInstanceNotFoundException
      *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer
      */
     protected function findProductConfigurationInstance(
         ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer
-    ) {
+    ): ProductConfigurationInstanceTransfer {
         $sku = $productConfiguratorRequestDataTransfer->getSku();
         $itemGroupKey = $productConfiguratorRequestDataTransfer->getItemGroupKey();
 

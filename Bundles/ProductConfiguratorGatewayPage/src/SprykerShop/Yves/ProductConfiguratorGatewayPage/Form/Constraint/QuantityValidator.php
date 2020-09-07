@@ -12,11 +12,11 @@ use SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\ProductConfiguratorRequ
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-class ProductConfigurationIdentifierValidator extends ConstraintValidator
+class QuantityValidator extends ConstraintValidator
 {
     /**
      * @param mixed $value
-     * @param \SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint\ProductConfigurationIdentifier|\Symfony\Component\Validator\Constraint $constraint
+     * @param \SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint\Quantity|\Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \InvalidArgumentException
      *
@@ -24,10 +24,10 @@ class ProductConfigurationIdentifierValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint): void
     {
-        if (!$constraint instanceof ProductConfigurationIdentifier) {
+        if (!$constraint instanceof Quantity) {
             throw new InvalidArgumentException(sprintf(
                 'Expected constraint instance of %s, got %s instead.',
-                ProductConfigurationIdentifier::class,
+                Quantity::class,
                 get_class($constraint)
             ));
         }
@@ -35,7 +35,7 @@ class ProductConfigurationIdentifierValidator extends ConstraintValidator
         $itemGroupKeyValue = $this->context
             ->getRoot()->get(ProductConfiguratorRequestDataForm::FILED_ITEM_GROUP_KEY)->getData();
 
-        if (empty($itemGroupKeyValue) && empty($value)) {
+        if (!empty($itemGroupKeyValue) && empty($value)) {
             $this->context->buildViolation($constraint->message)->addViolation();
         }
     }

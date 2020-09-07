@@ -58,9 +58,12 @@ class ProductConfiguratorGatewayPageFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getConfiguratorStateForm(): FormInterface
+    public function getProductConfiguratorRequestDataForm(): FormInterface
     {
-        return $this->getFormFactory()->create(ProductConfiguratorRequestDataForm::class);
+        return $this->getFormFactory()->createNamed(
+            $this->getConfig()->getProductConfiguratorGatewayRequestFormName(),
+            ProductConfiguratorRequestDataForm::class
+        );
     }
 
     /**

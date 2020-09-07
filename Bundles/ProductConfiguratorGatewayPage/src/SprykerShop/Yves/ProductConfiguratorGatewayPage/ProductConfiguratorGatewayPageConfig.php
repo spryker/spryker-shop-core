@@ -21,7 +21,7 @@ class ProductConfiguratorGatewayPageConfig extends AbstractBundleConfig
      */
     protected const SOURCE_TYPE_CART = 'SOURCE_TYPE_CART';
 
-    protected const PRODUCT_CONFIGURATION_GATEWAY_REQUEST_FORM_NAME = 'product_configurator_request_data_form';
+    protected const PRODUCT_CONFIGURATOR_GATEWAY_REQUEST_FORM_NAME = 'product_configurator_request_data_form';
 
     /**
      * @api
@@ -41,5 +41,15 @@ class ProductConfiguratorGatewayPageConfig extends AbstractBundleConfig
     public function getCartSourceType()
     {
         return static::SOURCE_TYPE_CART;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getProductConfiguratorGatewayRequestFormName()
+    {
+        return static::PRODUCT_CONFIGURATOR_GATEWAY_REQUEST_FORM_NAME;
     }
 }

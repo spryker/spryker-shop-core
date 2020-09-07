@@ -10,11 +10,8 @@ namespace SprykerShop\Yves\ProductConfiguratorGatewayPage;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductConfigurationClientBridge;
-use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductConfigurationClientInterface;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductConfigurationStorageClientBridge;
-use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductConfigurationStorageClientInterface;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToQuoteClientBridge;
-use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToQuoteClientInterface;
 
 class ProductConfiguratorGatewayPageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -47,7 +44,7 @@ class ProductConfiguratorGatewayPageDependencyProvider extends AbstractBundleDep
      */
     protected function addQuoteClient(Container $container): Container
     {
-        $container->set(static::CLIENT_QUOTE, function (Container $container): ProductConfiguratorGatewayPageToQuoteClientInterface {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new ProductConfiguratorGatewayPageToQuoteClientBridge(
                 $container->getLocator()->quote()->client()
             );
@@ -65,7 +62,7 @@ class ProductConfiguratorGatewayPageDependencyProvider extends AbstractBundleDep
     {
         $container->set(
             static::CLIENT_PRODUCT_CONFIGURATION_STORAGE,
-            function (Container $container): ProductConfiguratorGatewayPageToProductConfigurationStorageClientInterface {
+            function (Container $container) {
                 return new ProductConfiguratorGatewayPageToProductConfigurationStorageClientBridge(
                     $container->getLocator()->productConfigurationStorage()->client()
                 );
@@ -84,7 +81,7 @@ class ProductConfiguratorGatewayPageDependencyProvider extends AbstractBundleDep
     {
         $container->set(
             static::CLIENT_PRODUCT_CONFIGURATION,
-            function (Container $container): ProductConfiguratorGatewayPageToProductConfigurationClientInterface {
+            function (Container $container) {
                 return new ProductConfiguratorGatewayPageToProductConfigurationClientBridge(
                     $container->getLocator()->productConfiguration()->client()
                 );

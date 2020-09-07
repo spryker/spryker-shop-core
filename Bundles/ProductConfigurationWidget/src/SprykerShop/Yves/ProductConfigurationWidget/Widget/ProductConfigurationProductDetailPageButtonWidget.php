@@ -19,8 +19,6 @@ class ProductConfigurationProductDetailPageButtonWidget extends AbstractWidget
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
     protected const PARAMETER_FORM = 'form';
     protected const PARAMETER_PRODUCT_CONFIGURATION_ROUTE_NAME = 'productConfigurationRouteName';
-    protected const PARAMETER_SKU = 'sku';
-    protected const PARAMETER_SOURCE_TYPE = 'sourceType';
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
@@ -70,14 +68,15 @@ class ProductConfigurationProductDetailPageButtonWidget extends AbstractWidget
      */
     protected function addFormParameter(ProductViewTransfer $productViewTransfer): void
     {
+        $productConfiguratorButtonFormCartPageDataProvider = $this->getFactory()
+            ->createProductConfiguratorButtonFormProductDetailPageDataProvider();
+
         $this->addParameter(
             static::PARAMETER_FORM,
-            $this->getFactory()->getProductConfigurationButtonForm()->setData(
-                [
-                    static::PARAMETER_SOURCE_TYPE => $this->getConfig()->getPdpSourceType(),
-                    static::PARAMETER_SKU => $productViewTransfer->getSku(),
-                ]
-            )->createView()
+            $this->getFactory()
+                ->getProductConfigurationButtonForm()
+                ->setData($productConfiguratorButtonFormCartPageDataProvider->getData($productViewTransfer))
+                ->createView()
         );
     }
 

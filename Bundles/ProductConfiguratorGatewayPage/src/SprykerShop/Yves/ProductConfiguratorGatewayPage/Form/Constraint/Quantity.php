@@ -9,10 +9,10 @@ namespace SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint;
 
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
-class ProductConfigurationIdentifier extends SymfonyConstraint
+class Quantity extends SymfonyConstraint
 {
     /**
      * @var string
      */
-    public $message = 'product_configurator.sku_or_group_key_required';
+    public $message = 'product_configurator.quantity_required';
 }

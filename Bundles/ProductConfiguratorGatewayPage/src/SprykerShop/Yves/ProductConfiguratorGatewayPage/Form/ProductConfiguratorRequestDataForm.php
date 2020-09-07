@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\ProductConfiguratorGatewayPage\Form;
 
 use Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
-use SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint\ProductConfigurationIdentifier;
+use SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint\Quantity;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -29,6 +29,7 @@ class ProductConfiguratorRequestDataForm extends AbstractType
     public const PRODUCT_CONFIGURATION_CSRF_TOKEN_ID = 'product_configuration';
 
     protected const VALIDATION_SOURCE_NOT_BLANK_MESSAGE = 'product_configuration.source_not_blank';
+    protected const VALIDATION_SKU_NOT_BLANK_MESSAGE = 'product_configurator.sku_not_blank';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -67,7 +68,7 @@ class ProductConfiguratorRequestDataForm extends AbstractType
         $builder->add(static::FILED_SKU, HiddenType::class, [
             'required' => true,
             'constraints' => [
-                new ProductConfigurationIdentifier(),
+                new NotBlank(['message' => static::VALIDATION_SKU_NOT_BLANK_MESSAGE]),
             ],
         ]);
 
@@ -95,6 +96,9 @@ class ProductConfiguratorRequestDataForm extends AbstractType
     {
         $builder->add(static::FILED_QUANTITY, HiddenType::class, [
             'required' => false,
+            'constraints' => [
+               new Quantity(),
+            ],
         ]);
 
         return $this;

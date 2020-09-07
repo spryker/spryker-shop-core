@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ProductConfiguratorGatewayPage\Controller;
 
+use Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Exception\MissedPropertyException;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Plugin\Router\ProductConfiguratorGatewayPageRouteProviderPlugin;
@@ -19,8 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class GatewayRequestController extends AbstractController
 {
-    public const PARAM_ITEM_GROUP_KEY = 'item-group-key';
-    public const PARAM_SOURCE_TYPE = 'source-type';
     protected const PARAM_REFERER = 'referer';
 
     /**
@@ -30,7 +29,7 @@ class GatewayRequestController extends AbstractController
      */
     public function indexAction(Request $request): RedirectResponse
     {
-        $productConfiguratorRequestDataTransfer = $this->validateRequestOrThrowException($request);
+        $productConfiguratorRequestDataTransfer = $this->validateProductConfiguratorRequestDataForm($request);
         $refererUrl = $request->headers->get(static::PARAM_REFERER);
 
         $productConfiguratorRequestDataTransfer->setBackUrl($refererUrl)
@@ -45,11 +44,22 @@ class GatewayRequestController extends AbstractController
             return $this->redirectResponseExternal($productConfiguratorRedirectTransfer->getConfiguratorRedirectUrl());
         }
 
+        $this->handleProductConfigurationRedirectErrors($productConfiguratorRedirectTransfer);
+
+        return $this->redirectResponseInternal($refererUrl);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer $productConfiguratorRedirectTransfer
+     *
+     * @return void
+     */
+    protected function handleProductConfigurationRedirectErrors(
+        ProductConfiguratorRedirectTransfer $productConfiguratorRedirectTransfer
+    ) {
         foreach ($productConfiguratorRedirectTransfer->getMessages() as $message) {
             $this->addErrorMessage($message);
         }
-
-        return $this->redirectResponseInternal($refererUrl);
     }
 
     /**
@@ -59,10 +69,10 @@ class GatewayRequestController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer
      */
-    protected function validateRequestOrThrowException(Request $request): ProductConfiguratorRequestDataTransfer
+    protected function validateProductConfiguratorRequestDataForm(Request $request): ProductConfiguratorRequestDataTransfer
     {
         $form = $this->getFactory()
-            ->getConfiguratorStateForm()->handleRequest($request);
+            ->getProductConfiguratorRequestDataForm()->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
             $errorList = [];

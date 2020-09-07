@@ -19,7 +19,7 @@ interface ProductConfiguratorRequestDataMapperInterface
      * @return \Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer
      */
     public function mapProductConfigurationInstanceTransferToProductConfiguratorRequestDataTransfer(
-        ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer,
-        ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
+        ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer,
+        ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer
     ): ProductConfiguratorRequestDataTransfer;
 }
