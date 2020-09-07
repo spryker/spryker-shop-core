@@ -39,6 +39,12 @@
     <transfer name="ConfigurableBundleTemplatePageSearchRequest">
     </transfer>
 
+    <transfer name="ConfigurableBundleTemplatePageSearch">
+        <property name="fkConfigurableBundleTemplate" type="int"/>
+        <property name="images" type="array" singular="image"/>
+        <property name="name" type="string"/>
+    </transfer>
+
     <transfer name="ProductConcrete">
         <property name="sku" type="string"/>
         <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>

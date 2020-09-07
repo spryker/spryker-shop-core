@@ -1,3 +1,6 @@
+{# @var shoppingListItem \Generated\Shared\Transfer\ShoppingListItemTransfer #}
+{# @var item \Generated\Shared\Transfer\ProductViewTransfer #}
+
 {% extends molecule('shopping-list', 'ShoppingListPage') %}
 
 {% define data = {
@@ -7,9 +10,9 @@
 } %}
 
 {% block contentInner %}
-    {% for key, item in data.shoppingListItems %}
+    {% for key, shoppingListItem in data.shoppingListItems %}
         {% block shoppingListItem %}
-            {% set idShoppingListItem = item.idShoppingListItem %}
+            {% set idShoppingListItem = shoppingListItem.idShoppingListItem %}
             {% set item = data.shoppingListItemProducts[idShoppingListItem] %}
 
             {{ parent() }}

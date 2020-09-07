@@ -1,3 +1,5 @@
+{# @var image \Generated\Shared\Transfer\ProductImageTransfer #}
+
 {% extends model('component') %}
 
 {% define config = {
@@ -21,17 +23,17 @@
         {% block imageCol %}
             <div class="col col--sm-12 col--lg-3">
                 {% block imageColInner %}
-                    {% set imageUrl = data.images ? data.images | first %}
+                    {% set image = data.images ? data.images | first %}
 
                     {% block imageCondition %}
-                        {% if imageUrl %}
+                        {% if image %}
                             {% set thumbnailModifiers = ['small'] %}
 
                             {% block image %}
                                 {% include molecule('lazy-image') with {
                                     modifiers: thumbnailModifiers | merge(['thumbnail']),
                                     data: {
-                                        imageSrc: imageUrl.externalUrlLarge,
+                                        imageSrc: image.externalUrlLarge,
                                         imageTitle: data.name,
                                     },
                                 } only %}

@@ -1,3 +1,7 @@
+{# @var template \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer #}
+{# @var image \Generated\Shared\Transfer\ProductImageStorage #}
+
+
 {% extends model('component') %}
 
 {% define config = {
@@ -47,7 +51,8 @@
                                                                     {% if isTitleImage %}
                                                                         {% set imageClass = '' %}
                                                                         {% set imageModifiers = [] %}
-                                                                        {% set imageUrl = template.images.0.externalUrlSmall | default %}
+                                                                        {% set image = template.images[0] | default %}
+                                                                        {% set imageUrl = image.externalUrlSmall | default %}
 
                                                                         {% block templateTitleImage %}
                                                                             {% if imageUrl %}
