@@ -8,12 +8,26 @@
         <property name="idProductConcrete" type="int"/>
         <property name="url" type="string"/>
         <property name="selectedAttributes" type="array" singular="selectedAttribute"/>
+        <property name="attributes" type="array" singular="attributes"/>
+        <property name="sku" type="string"/>
+        <property name="price" type="int"/>
+        <property name="available" type="bool"/>
+        <property name="currentProductPrice" type="CurrentProductPrice"/>
+        <property name="prices" type="array" singular="prices"/>
+        <property name="attributeMap" type="AttributeMapStorage"/>
+        <property name="availableAttributes" type="array" singular="availableAttribute"/>
     </transfer>
 
     <transfer name="ShopContext">
     </transfer>
 
     <transfer name="ProductStorageCriteria">
+    </transfer>
+
+    <transfer name="CurrentProductPrice">
+    </transfer>
+
+    <transfer name="AttributeMapStorage">
     </transfer>
 
 </transfers>

@@ -17,6 +17,6 @@
     {% if data.defaultBillingAddress is not empty %}
         <span class="{{ config.name }}__title">{{ 'company.account.address' | trans }}:</span>
         {% set mainAddress = data.defaultBillingAddress %}
-        {{ mainAddress.address1 }} {{ mainAddress.address2 }}, {{ mainAddress.zipCode }} {{ mainAddress.city }}, {{ ('countries.iso.' ~ mainAddress.iso2code) | trans }}
+        {{ mainAddress.address1 }} {{ mainAddress.address2 }}, {{ mainAddress.zipCode }} {{ mainAddress.city }}, {{ ('countries.iso.' ~ mainAddress.iso2Code) | trans }}
     {% endif %}
 {% endblock %}

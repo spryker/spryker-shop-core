@@ -14,7 +14,7 @@
 
 {% block body %}
     <li>{{ data.address.address1 }} {{ data.address.address2 }}</li>
-    <li>{{ data.address.zipCode }} {{ data.address.city }}, {{ ('countries.iso.' ~ data.address.iso2code) | trans }}</li>
+    <li>{{ data.address.zipCode }} {{ data.address.city }}, {{ ('countries.iso.' ~ data.address.iso2Code) | trans }}</li>
     {% if data.address.phone is not empty %}
         <li>{{ data.address.phone }}</li>
     {% endif %}

@@ -1,3 +1,8 @@
+{# @var quote \Generated\Shared\Transfer\QuoteTransfer #}
+{# @var quote.totals \Generated\Shared\Transfer\TotalsTransfer #}
+{# @var quote.totals.taxTotal \Generated\Shared\Transfer\TaxTotalTransfer #}
+{# @var expense \Generated\Shared\Transfer\ExpenseTransfer #}
+{# @var option \Generated\Shared\Transfer\ProductOptionTransfer #}
 
 <style>
     th {
@@ -142,7 +147,7 @@
                     <td>{{ expense.sumDiscountAmountAggregation | default(0) | money  }} </td>
                     <td>{{ expense.taxRate | default(0) }}% </td>
                     <td>{{ expense.sumTaxAmount  | default(0) | money }} </td>
-                    <td>{{ expense.dumPriceToPayAggregation | default(0) | money  }} </td>
+                    <td>{{ expense.sumPriceToPayAggregation | default(0) | money  }} </td>
                     <td>{{ expense.canceledAmount | default(0) | money }} </td>
                     <td>{{ expense.refundableAmount | default(0) | money }} </td>
             {% endfor %}

@@ -23,6 +23,7 @@
         <property name="slots" singular="slot" type="ConfigurableBundleTemplateSlotStorage[]"/>
         <property name="name" type="string"/>
         <property name="uuid" type="string"/>
+        <property name="idConfigurableBundleTemplate" type="int"/>
     </transfer>
 
     <transfer name="ProductConcreteCriteriaFilter">
@@ -34,6 +35,7 @@
         <property name="idProductList" type="int"/>
         <property name="idConfigurableBundleTemplateSlot" type="int"/>
         <property name="uuid" type="string"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplatePageSearchRequest">

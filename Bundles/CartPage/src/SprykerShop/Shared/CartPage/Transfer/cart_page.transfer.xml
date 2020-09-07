@@ -10,6 +10,8 @@
         <property name="commentThread" type="CommentThread"/>
         <property name="customer" type="Customer"/>
         <property name="totals" type="Totals"/>
+        <property name="idQuote" type="int"/>
+        <property name="priceMode" type="string"/>
     </transfer>
 
     <transfer name="QuoteApproval">
@@ -25,6 +27,11 @@
         <property name="normalizableFields" type="string[]" singular="normalizableField"/>
         <property name="productOptions" type="ProductOption[]" singular="productOption"/>
         <property name="idProductAbstract" type="int"/>
+        <property name="groupKey" type="string"/>
+        <property name="configuredBundleItem" type="ConfiguredBundleItem"/>
+    </transfer>
+
+    <transfer name="ConfiguredBundleItem">
     </transfer>
 
     <transfer name="QuoteResponse">

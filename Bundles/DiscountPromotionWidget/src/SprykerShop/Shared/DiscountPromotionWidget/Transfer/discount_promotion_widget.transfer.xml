@@ -6,6 +6,11 @@
     <transfer name="ProductView">
         <property name="idProductAbstract" type="int"/>
         <property name="promotionItem" type="PromotionItem"/>
+        <property name="attributeMap" type="AttributeMapStorage"/>
+        <property name="selectedAttributes" type="array" singular="selectedAttribute"/>
+        <property name="availableAttributes" type="array" singular="availableAttribute"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="available" type="bool"/>
     </transfer>
 
     <transfer name="PromotionItem">
@@ -22,6 +27,9 @@
     </transfer>
 
     <transfer name="Discount">
+    </transfer>
+
+    <transfer name="AttributeMapStorage">
     </transfer>
 
 </transfers>
