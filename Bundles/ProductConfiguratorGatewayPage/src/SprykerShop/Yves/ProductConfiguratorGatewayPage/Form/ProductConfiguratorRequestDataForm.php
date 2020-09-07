@@ -9,8 +9,7 @@ namespace SprykerShop\Yves\ProductConfiguratorGatewayPage\Form;
 
 use Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
-use SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint\ItemGroupKey;
-use SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint\Quantity;
+use SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint\QuantityConstraint;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -29,7 +28,7 @@ class ProductConfiguratorRequestDataForm extends AbstractType
     public const FILED_ITEM_GROUP_KEY = 'itemGroupKey';
     public const PRODUCT_CONFIGURATION_CSRF_TOKEN_ID = 'product_configuration';
 
-    protected const GLOSSARY_KEY_VALIDATION_SOURCE_NOT_BLANK_MESSAGE = 'product_configurator_gateway_page.source_not_blank';
+    protected const GLOSSARY_KEY_VALIDATION_SOURCE_TYPE_NOT_BLANK_MESSAGE = 'product_configurator_gateway_page.source_type_not_blank';
     protected const GLOSSARY_KEY_VALIDATION_SKU_NOT_BLANK_MESSAGE = 'product_configurator_gateway_page.sku_not_blank';
 
     /**
@@ -85,9 +84,7 @@ class ProductConfiguratorRequestDataForm extends AbstractType
     {
         $builder->add(static::FILED_ITEM_GROUP_KEY, HiddenType::class, [
             'constraints' => [
-                new ItemGroupKey([
-                    ItemGroupKey::PRODUCT_CONFIGURATOR_GATEWAY_PAGE_CONFIG_KEY => $this->getConfig(),
-                ]),
+              $this->getFactory()->createItemGroupKeyConstraint(),
             ],
         ]);
 
@@ -104,7 +101,7 @@ class ProductConfiguratorRequestDataForm extends AbstractType
         $builder->add(static::FILED_QUANTITY, HiddenType::class, [
             'required' => false,
             'constraints' => [
-               new Quantity(),
+               new QuantityConstraint(),
             ],
         ]);
 
@@ -121,7 +118,7 @@ class ProductConfiguratorRequestDataForm extends AbstractType
         $builder->add(static::FILED_SOURCE_TYPE, HiddenType::class, [
             'required' => true,
             'constraints' => [
-                new NotBlank(['message' => static::GLOSSARY_KEY_VALIDATION_SOURCE_NOT_BLANK_MESSAGE]),
+                new NotBlank(['message' => static::GLOSSARY_KEY_VALIDATION_SOURCE_TYPE_NOT_BLANK_MESSAGE]),
                 new Choice([
                     'choices' => [
                             $this->getConfig()->getCartSourceType(),

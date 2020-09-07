@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint;
 
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
-class ItemGroupKey extends SymfonyConstraint
+class ItemGroupKeyConstraint extends SymfonyConstraint
 {
     public const PRODUCT_CONFIGURATOR_GATEWAY_PAGE_CONFIG_KEY = 'config';
 

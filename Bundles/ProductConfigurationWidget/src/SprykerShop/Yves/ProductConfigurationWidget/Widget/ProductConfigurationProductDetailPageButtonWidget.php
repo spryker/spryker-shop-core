@@ -18,7 +18,7 @@ class ProductConfigurationProductDetailPageButtonWidget extends AbstractWidget
 {
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
     protected const PARAMETER_FORM = 'form';
-    protected const PARAMETER_PRODUCT_CONFIGURATION_ROUTE_NAME = 'productConfigurationRouteName';
+    protected const PARAMETER_PRODUCT_CONFIGURATOR_ROUTE_NAME = 'productConfiguratorRouteName';
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
@@ -86,7 +86,7 @@ class ProductConfigurationProductDetailPageButtonWidget extends AbstractWidget
     protected function addProductConfigurationRouteNameParameter(): void
     {
         $this->addParameter(
-            static::PARAMETER_PRODUCT_CONFIGURATION_ROUTE_NAME,
+            static::PARAMETER_PRODUCT_CONFIGURATOR_ROUTE_NAME,
             $this->getConfig()->getProductConfiguratorGatewayRequestRoute()
         );
     }

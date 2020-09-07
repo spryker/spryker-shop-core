@@ -12,11 +12,11 @@ use SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\ProductConfiguratorRequ
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-class QuantityValidator extends ConstraintValidator
+class QuantityConstraintValidator extends ConstraintValidator
 {
     /**
      * @param mixed $value
-     * @param \SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint\Quantity|\Symfony\Component\Validator\Constraint $constraint
+     * @param \SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint\QuantityConstraint|\Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \InvalidArgumentException
      *
@@ -24,10 +24,10 @@ class QuantityValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint): void
     {
-        if (!$constraint instanceof Quantity) {
+        if (!$constraint instanceof QuantityConstraint) {
             throw new InvalidArgumentException(sprintf(
                 'Expected constraint instance of %s, got %s instead.',
-                Quantity::class,
+                QuantityConstraint::class,
                 get_class($constraint)
             ));
         }

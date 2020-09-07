@@ -12,6 +12,7 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductConfigurationClientInterface;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductConfigurationStorageClientInterface;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToQuoteClientInterface;
+use SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint\ItemGroupKeyConstraint;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\ProductConfiguratorRequestDataForm;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Mapper\ProductConfiguratorRequestDataMapper;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Mapper\ProductConfiguratorRequestDataMapperInterface;
@@ -73,6 +74,18 @@ class ProductConfiguratorGatewayPageFactory extends AbstractFactory
     public function getFormFactory(): FormFactoryInterface
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint\ItemGroupKeyConstraint
+     */
+    public function createItemGroupKeyConstraint(): ItemGroupKeyConstraint
+    {
+        return new ItemGroupKeyConstraint(
+            [
+                ItemGroupKeyConstraint::PRODUCT_CONFIGURATOR_GATEWAY_PAGE_CONFIG_KEY => $this->getConfig(),
+            ]
+        );
     }
 
     /**

@@ -6,7 +6,7 @@
 
 {% define data = {
     form: required,
-    productConfigurationRouteName: required,
+    productConfiguratorRouteName: required,
     actionParams: {},
     submitButtonClass: 'button button--expand',
     submitButtonIcon: 'wrench',
@@ -14,7 +14,7 @@
 } %}
 
 {% block body %}
-    {{ form_start(data.form, {'action': path(data.productConfigurationRouteName, data.actionParams)}) }}
+    {{ form_start(data.form, {'action': path(data.productConfiguratorRouteName, data.actionParams)}) }}
         {% block submitButton %}
             <button class="{{ data.submitButtonClass }}">
                 {% set iconName = data.submitButtonIcon %}

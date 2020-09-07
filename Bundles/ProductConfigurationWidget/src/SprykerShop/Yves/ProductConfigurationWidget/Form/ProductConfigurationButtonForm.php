@@ -37,7 +37,7 @@ class ProductConfigurationButtonForm extends AbstractType
     {
         $this->addSkuField($builder)
             ->addQuantityField($builder)
-            ->addSourceField($builder)
+            ->addSourceTypeField($builder)
             ->addItemGroupKeyField($builder);
     }
 
@@ -95,7 +95,7 @@ class ProductConfigurationButtonForm extends AbstractType
      *
      * @return $this
      */
-    protected function addSourceField(FormBuilderInterface $builder)
+    protected function addSourceTypeField(FormBuilderInterface $builder)
     {
         $builder->add(static::FILED_SOURCE_TYPE, HiddenType::class);
 

@@ -12,11 +12,11 @@ use SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\ProductConfiguratorRequ
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-class ItemGroupKeyValidator extends ConstraintValidator
+class ItemGroupKeyConstraintValidator extends ConstraintValidator
 {
     /**
      * @param mixed $value
-     * @param \SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint\ItemGroupKey|\Symfony\Component\Validator\Constraint $constraint
+     * @param \SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint\ItemGroupKeyConstraint|\Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \InvalidArgumentException
      *
@@ -24,10 +24,10 @@ class ItemGroupKeyValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint): void
     {
-        if (!$constraint instanceof ItemGroupKey) {
+        if (!$constraint instanceof ItemGroupKeyConstraint) {
             throw new InvalidArgumentException(sprintf(
                 'Expected constraint instance of %s, got %s instead.',
-                ItemGroupKey::class,
+                ItemGroupKeyConstraint::class,
                 get_class($constraint)
             ));
         }

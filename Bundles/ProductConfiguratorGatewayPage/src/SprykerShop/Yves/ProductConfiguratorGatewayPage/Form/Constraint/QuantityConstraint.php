@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint;
 
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
-class Quantity extends SymfonyConstraint
+class QuantityConstraint extends SymfonyConstraint
 {
     /**
      * @var string
