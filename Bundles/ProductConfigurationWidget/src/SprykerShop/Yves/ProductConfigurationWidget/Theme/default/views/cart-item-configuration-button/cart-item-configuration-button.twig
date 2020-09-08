@@ -3,7 +3,7 @@
 {% define data = {
     isVisible: _widget.isVisible,
     form: _widget.form | default,
-    productConfigurationRouteName: _widget.productConfigurationRouteName | default,
+    productConfiguratorRouteName: _widget.productConfiguratorRouteName | default,
     sourceType: _widget.sourceType | default,
     itemGroupKey: _widget.itemGroupKey | default,
     quantity: _widget.quantity | default,
@@ -19,12 +19,7 @@
     {% include molecule('configuration-form', 'ProductConfigurationWidget') with {
         data: {
             form: data.form,
-            productConfigurationRouteName: data.productConfigurationRouteName,
-            actionParams: {
-                'source-type': data.sourceType,
-                'item-group-key': data.itemGroupKey,
-                'quantity': data.quantity,
-            },
+            productConfiguratorRouteName: data.productConfiguratorRouteName,
         },
     } only %}
 {% endblock %}

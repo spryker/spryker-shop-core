@@ -18,9 +18,7 @@ class ProductConfigurationProductDetailPageButtonWidget extends AbstractWidget
 {
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
     protected const PARAMETER_FORM = 'form';
-    protected const PARAMETER_PRODUCT_CONFIGURATION_ROUTE_NAME = 'productConfigurationRouteName';
-    protected const PARAMETER_SKU = 'sku';
-    protected const PARAMETER_SOURCE_TYPE = 'sourceType';
+    protected const PARAMETER_PRODUCT_CONFIGURATOR_ROUTE_NAME = 'productConfiguratorRouteName';
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
@@ -33,10 +31,8 @@ class ProductConfigurationProductDetailPageButtonWidget extends AbstractWidget
             return;
         }
 
-        $this->addFormParameter();
+        $this->addFormParameter($productViewTransfer);
         $this->addProductConfigurationRouteNameParameter();
-        $this->addSourceTypeParameter();
-        $this->addSkuParameter($productViewTransfer);
     }
 
     /**
@@ -66,11 +62,21 @@ class ProductConfigurationProductDetailPageButtonWidget extends AbstractWidget
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
      * @return void
      */
-    protected function addFormParameter(): void
+    protected function addFormParameter(ProductViewTransfer $productViewTransfer): void
     {
-        $this->addParameter(static::PARAMETER_FORM, $this->getFactory()->getProductConfigurationButtonForm()->createView());
+        $productConfiguratorButtonFormCartPageDataProvider = $this->getFactory()
+            ->createProductConfiguratorButtonFormProductDetailPageDataProvider();
+
+        $productConfigurationButtonForm = $this->getFactory()
+            ->getProductConfigurationButtonForm()
+            ->setData($productConfiguratorButtonFormCartPageDataProvider->getData($productViewTransfer))
+            ->createView();
+
+        $this->addParameter(static::PARAMETER_FORM, $productConfigurationButtonForm);
     }
 
     /**
@@ -79,26 +85,8 @@ class ProductConfigurationProductDetailPageButtonWidget extends AbstractWidget
     protected function addProductConfigurationRouteNameParameter(): void
     {
         $this->addParameter(
-            static::PARAMETER_PRODUCT_CONFIGURATION_ROUTE_NAME,
-            $this->getConfig()->getProductConfigurationGatewayRequestRoute()
+            static::PARAMETER_PRODUCT_CONFIGURATOR_ROUTE_NAME,
+            $this->getConfig()->getProductConfiguratorGatewayRequestRoute()
         );
-    }
-
-    /**
-     * @return void
-     */
-    protected function addSourceTypeParameter(): void
-    {
-        $this->addParameter(static::PARAMETER_SOURCE_TYPE, $this->getConfig()->getPdpSourceType());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return void
-     */
-    protected function addSkuParameter(ProductViewTransfer $productViewTransfer): void
-    {
-        $this->addParameter(static::PARAMETER_SKU, $productViewTransfer->getSku());
     }
 }
