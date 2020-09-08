@@ -10,8 +10,6 @@ namespace SprykerShopTest\Yves\ContentProductWidget;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -28,8 +26,4 @@ use Codeception\Actor;
 class ContentProductWidgetYvesTester extends Actor
 {
     use _generated\ContentProductWidgetYvesTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }
