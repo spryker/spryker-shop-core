@@ -35,7 +35,7 @@ class ProductConfiguratorGatewayPageToProductConfigurationClientBridge implement
     public function resolveProductConfiguratorRedirect(
         ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
     ): ProductConfiguratorRedirectTransfer {
-        return $this->productConfigurationClient->resolveProductConfiguratorRedirect($productConfiguratorRequestTransfer);
+        return $this->productConfigurationClient->prepareProductConfiguratorRedirect($productConfiguratorRequestTransfer);
     }
 
     /**
