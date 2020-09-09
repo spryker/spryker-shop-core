@@ -13,9 +13,6 @@ use SprykerShop\Yves\ProductDetailPage\Dependency\Client\ProductDetailPageToProd
 
 class GatewayBackUrlResolver implements GatewayBackUrlResolverInterface
 {
-    /**
-     * @uses \SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolver::MAPPING_TYPE_SKU
-     */
     protected const MAPPING_TYPE_SKU = 'sku';
 
     /**
