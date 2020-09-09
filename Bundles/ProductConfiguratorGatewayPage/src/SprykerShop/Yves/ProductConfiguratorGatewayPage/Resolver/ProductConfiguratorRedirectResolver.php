@@ -75,7 +75,7 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
 
         return $this->productConfigurationClient->resolveProductConfiguratorRedirect(
             (new ProductConfiguratorRequestTransfer())
-                    ->setProductConfiguratorRequestData($productConfiguratorRequestDataTransfer)
+                ->setProductConfiguratorRequestData($productConfiguratorRequestDataTransfer)
         );
     }
 
@@ -91,23 +91,36 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
     ): ProductConfigurationInstanceTransfer {
         $sku = $productConfiguratorRequestDataTransfer->requireSku()->getSku();
         $itemGroupKey = $productConfiguratorRequestDataTransfer->getItemGroupKey();
+        $productConfigurationInstanceTransfer = null;
 
         if ($itemGroupKey) {
-            $quoteTransfer = $this->quoteClient->getQuote();
-
-            $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient
-                ->findProductConfigurationInstanceInQuote($itemGroupKey, $sku, $quoteTransfer);
+            $productConfigurationInstanceTransfer = $this->findProductConfigurationInstanceInQuote($itemGroupKey, $sku);
         }
 
-        if (!$itemGroupKey && $sku) {
-            $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient
-                ->findProductConfigurationInstanceBySku($sku);
+        if (!$itemGroupKey) {
+            $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient->findProductConfigurationInstanceBySku($sku);
         }
 
-        if (!isset($productConfigurationInstanceTransfer)) {
+        if (!$productConfigurationInstanceTransfer) {
             throw new ProductConfigurationInstanceNotFoundException();
         }
 
         return $productConfigurationInstanceTransfer;
+    }
+
+    /**
+     * @param string $itemGroupKey
+     * @param string|null $sku
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null
+     */
+    protected function findProductConfigurationInstanceInQuote(
+        string $itemGroupKey,
+        ?string $sku
+    ): ?ProductConfigurationInstanceTransfer {
+        $quoteTransfer = $this->quoteClient->getQuote();
+
+        return $this->productConfigurationStorageClient
+            ->findProductConfigurationInstanceInQuote($itemGroupKey, $sku, $quoteTransfer);
     }
 }

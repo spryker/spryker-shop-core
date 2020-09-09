@@ -84,7 +84,7 @@ class ProductConfiguratorRequestDataForm extends AbstractType
     {
         $builder->add(static::FILED_ITEM_GROUP_KEY, HiddenType::class, [
             'constraints' => [
-              $this->getFactory()->createItemGroupKeyConstraint(),
+                $this->getFactory()->createItemGroupKeyConstraint(),
             ],
         ]);
 
@@ -101,7 +101,7 @@ class ProductConfiguratorRequestDataForm extends AbstractType
         $builder->add(static::FILED_QUANTITY, HiddenType::class, [
             'required' => false,
             'constraints' => [
-               new QuantityConstraint(),
+                new QuantityConstraint(),
             ],
         ]);
 
@@ -121,9 +121,9 @@ class ProductConfiguratorRequestDataForm extends AbstractType
                 new NotBlank(['message' => static::GLOSSARY_KEY_VALIDATION_SOURCE_TYPE_NOT_BLANK_MESSAGE]),
                 new Choice([
                     'choices' => [
-                            $this->getConfig()->getCartSourceType(),
-                            $this->getConfig()->getPdpSourceType(),
-                        ],
+                        $this->getConfig()->getCartSourceType(),
+                        $this->getConfig()->getPdpSourceType(),
+                    ],
                 ]),
             ],
         ]);
