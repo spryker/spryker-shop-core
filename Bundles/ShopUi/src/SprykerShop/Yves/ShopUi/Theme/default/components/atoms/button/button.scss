@@ -52,7 +52,7 @@
         &--disabled {
             background-color: $setting-color-light;
             border-color: $setting-color-light;
-            cursor: not-allowed;
+            pointer-events: none;
 
             &:hover,
             &:focus {

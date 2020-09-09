@@ -17,15 +17,15 @@
 } %}
 
 {% macro listItem(label, value) %}
-    <div class="col col--sm-5">
+    <div class="col col--sm-12">
         <strong>{{ label }}</strong>
     </div>
-    <div class="col col--sm-7 spacing-left spacing-left--inner">{{ value }}</div>
+    <div class="col col--sm-12 spacing-bottom">{{ value }}</div>
 {% endmacro %}
 
 {% import _self as macros %}
 
-{% set wrapperClass = 'grid grid--middle' %}
+{% set wrapperClass = 'grid spacing-top' %}
 {% set collapseWrapperClass = 'col col--sm-12 grid grid--middle' %}
 {% set buttonWrapperClass = 'col col--sm-12' %}
 
