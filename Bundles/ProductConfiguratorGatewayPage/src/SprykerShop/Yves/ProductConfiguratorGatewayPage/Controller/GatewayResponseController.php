@@ -52,9 +52,16 @@ class GatewayResponseController extends AbstractController
             $this->handleResponseErrors($productConfiguratorResponseProcessorResponseTransfer);
         }
 
-        return $this->executeProductConfiguratorGatewayBackUrlResolverStrategyPlugins(
-            $productConfiguratorResponseProcessorResponseTransfer->getProductConfiguratorResponse()
-        );
+        $productConfiguratorResponse = $productConfiguratorResponseProcessorResponseTransfer
+            ->getProductConfiguratorResponse();
+
+        $productConcreteStorageTransfer = $this->getFactory()
+            ->getProductConfigurationStorageClient()
+            ->findProductConcreteStorageBySku($productConfiguratorResponse->getSku());
+
+        $productConfiguratorResponse->setProductConcreteStorage($productConcreteStorageTransfer);
+
+        return $this->executeProductConfiguratorGatewayBackUrlResolverStrategyPlugins($productConfiguratorResponse);
     }
 
     /**

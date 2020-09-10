@@ -35,6 +35,7 @@
     <transfer name="ProductConfiguratorRequestData">
         <property name="sku" type="string"/>
         <property name="sourceType" type="string"/>
+        <property name="itemGroupKey" type="string"/>
     </transfer>
 
 </transfers>

@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client;
 
+use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -20,6 +21,13 @@ interface ProductConfiguratorGatewayPageToProductConfigurationStorageClientInter
     public function findProductConfigurationInstanceBySku(
         string $sku
     ): ?ProductConfigurationInstanceTransfer;
+
+    /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer|null
+     */
+    public function findProductConcreteStorageBySku(string $sku): ?ProductConcreteStorageTransfer;
 
     /**
      * @param string $groupKey
