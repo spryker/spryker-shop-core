@@ -11,6 +11,7 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductConfigurationClientBridge;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductConfigurationStorageClientBridge;
+use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductStorageClientBridge;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToQuoteClientBridge;
 
 class ProductConfiguratorGatewayPageDependencyProvider extends AbstractBundleDependencyProvider
@@ -19,6 +20,7 @@ class ProductConfiguratorGatewayPageDependencyProvider extends AbstractBundleDep
     public const CLIENT_PRODUCT_CONFIGURATION_STORAGE = 'CLIENT_PRODUCT_CONFIGURATION_STORAGE';
     public const CLIENT_PRODUCT_CONFIGURATION = 'CLIENT_PRODUCT_CONFIGURATION';
     public const PLUGINS_PRODUCT_CONFIGURATOR_GATEWAY_BACK_URL_RESOLVER_STRATEGY = 'PLUGINS_PRODUCT_CONFIGURATOR_GATEWAY_BACK_URL_RESOLVER_STRATEGY';
+    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -33,6 +35,21 @@ class ProductConfiguratorGatewayPageDependencyProvider extends AbstractBundleDep
         $container = $this->addProductConfigurationStorageClient($container);
         $container = $this->addProductConfigurationClient($container);
         $container = $this->addProductConfiguratorGatewayBackUrlResolverStrategyPlugins($container);
+        $container = $this->addProductStorageClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductStorageClient(Container $container)
+    {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
+            return new ProductConfiguratorGatewayPageToProductStorageClientBridge($container->getLocator()->productStorage()->client());
+        });
 
         return $container;
     }

@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductDetailPage\Plugin\ProductConfiguratorGatewayPage;
+namespace SprykerShop\Yves\ProductConfiguratorGatewayPage\Plugin;
 
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorGatewayBackUrlResolverStrategyPluginInterface;
 
 /**
- * @method \SprykerShop\Yves\ProductDetailPage\ProductDetailPageFactory getFactory()
+ * @method \SprykerShop\Yves\ProductConfiguratorGatewayPage\ProductConfiguratorGatewayPageFactory getFactory()
  */
 class ProductDetailPageGatewayBackUrlResolverStrategyPlugin extends AbstractPlugin implements ProductConfiguratorGatewayBackUrlResolverStrategyPluginInterface
 {

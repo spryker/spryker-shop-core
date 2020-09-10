@@ -11,6 +11,7 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductConfigurationClientInterface;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductConfigurationStorageClientInterface;
+use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductStorageClientInterface;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToQuoteClientInterface;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\Constraint\ItemGroupKeyConstraint;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\ProductConfiguratorRequestDataForm;
@@ -20,6 +21,8 @@ use SprykerShop\Yves\ProductConfiguratorGatewayPage\Mapper\ProductConfiguratorRe
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Mapper\ProductConfiguratorResponseDataMapperInterface;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver\ProductConfiguratorRedirectResolver;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver\ProductConfiguratorRedirectResolverInterface;
+use SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver\ProductDetailPageGatewayBackUrlResolver;
+use SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver\ProductDetailPageGatewayBackUrlResolverInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -118,5 +121,21 @@ class ProductConfiguratorGatewayPageFactory extends AbstractFactory
     public function getProductConfigurationClient(): ProductConfiguratorGatewayPageToProductConfigurationClientInterface
     {
         return $this->getProvidedDependency(ProductConfiguratorGatewayPageDependencyProvider::CLIENT_PRODUCT_CONFIGURATION);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductStorageClientInterface
+     */
+    public function getProductStorageClient(): ProductConfiguratorGatewayPageToProductStorageClientInterface
+    {
+        return $this->getProvidedDependency(ProductConfiguratorGatewayPageDependencyProvider::CLIENT_PRODUCT_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver\ProductDetailPageGatewayBackUrlResolverInterface
+     */
+    public function createGatewayBackUrlResolver(): ProductDetailPageGatewayBackUrlResolverInterface
+    {
+        return new ProductDetailPageGatewayBackUrlResolver($this->getProductStorageClient());
     }
 }

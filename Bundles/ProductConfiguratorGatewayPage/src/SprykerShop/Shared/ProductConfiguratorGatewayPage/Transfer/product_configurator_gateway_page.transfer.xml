@@ -57,7 +57,6 @@
         <property name="sourceType" type="string"/>
         <property name="timestamp" type="int"/>
         <property name="checkSum" type="string"/>
-        <property name="productConcreteStorage" type="ProductConcreteStorage"/>
     </transfer>
 
     <transfer name="ProductConfiguratorResponseProcessorResponse">
