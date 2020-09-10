@@ -61,6 +61,14 @@ class ProductConfiguratorGatewayPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver\ProductDetailPageGatewayBackUrlResolverInterface
+     */
+    public function createGatewayBackUrlResolver(): ProductDetailPageGatewayBackUrlResolverInterface
+    {
+        return new ProductDetailPageGatewayBackUrlResolver($this->getProductStorageClient());
+    }
+
+    /**
      * @return \Symfony\Component\Form\FormInterface
      */
     public function getProductConfiguratorRequestDataForm(): FormInterface
@@ -129,13 +137,5 @@ class ProductConfiguratorGatewayPageFactory extends AbstractFactory
     public function getProductStorageClient(): ProductConfiguratorGatewayPageToProductStorageClientInterface
     {
         return $this->getProvidedDependency(ProductConfiguratorGatewayPageDependencyProvider::CLIENT_PRODUCT_STORAGE);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver\ProductDetailPageGatewayBackUrlResolverInterface
-     */
-    public function createGatewayBackUrlResolver(): ProductDetailPageGatewayBackUrlResolverInterface
-    {
-        return new ProductDetailPageGatewayBackUrlResolver($this->getProductStorageClient());
     }
 }
