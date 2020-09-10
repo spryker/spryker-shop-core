@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductDetailPage\Resolver;
+namespace SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver;
 
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 
-interface GatewayBackUrlResolverInterface
+interface ProductDetailPageGatewayBackUrlResolverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer

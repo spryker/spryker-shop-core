@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\ProductDetailPage\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 
 interface ProductDetailPageToProductStorageClientInterface
@@ -40,19 +39,4 @@ interface ProductDetailPageToProductStorageClientInterface
      * @return bool
      */
     public function isProductConcreteRestricted(int $idProductConcrete): bool;
-
-    /**
-     * @param string $mappingType
-     * @param string $identifier
-     *
-     * @return array|null
-     */
-    public function findProductConcreteStorageDataByMappingForCurrentLocale(string $mappingType, string $identifier): ?array;
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteStorageTransfer $productConcreteStorageTransfer
-     *
-     * @return string
-     */
-    public function buildProductConcreteUrl(ProductConcreteStorageTransfer $productConcreteStorageTransfer): string;
 }

@@ -16,12 +16,4 @@
     <transfer name="ProductStorageCriteria">
     </transfer>
 
-    <transfer name="ProductConfiguratorResponse">
-        <property name="sourceType" type="string"/>
-        <property name="sku" type="string"/>
-    </transfer>
-
-    <transfer name="ProductConcreteStorage">
-    </transfer>
-
 </transfers>

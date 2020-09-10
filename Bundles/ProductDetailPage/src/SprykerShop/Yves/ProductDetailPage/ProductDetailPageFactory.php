@@ -10,8 +10,6 @@ namespace SprykerShop\Yves\ProductDetailPage;
 use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Client\ProductDetailPageToProductStorageClientInterface;
-use SprykerShop\Yves\ProductDetailPage\Resolver\GatewayBackUrlResolver;
-use SprykerShop\Yves\ProductDetailPage\Resolver\GatewayBackUrlResolverInterface;
 use SprykerShop\Yves\ProductDetailPage\Resolver\ShopContextResolver;
 use SprykerShop\Yves\ProductDetailPage\Resolver\ShopContextResolverInterface;
 
@@ -49,15 +47,5 @@ class ProductDetailPageFactory extends AbstractFactory
     public function createShopContextResolver(): ShopContextResolverInterface
     {
         return new ShopContextResolver($this->getContainer());
-    }
-
-    /**
-     * @return \SprykerShop\Yves\ProductDetailPage\Resolver\GatewayBackUrlResolverInterface
-     */
-    public function createGatewayBackUrlResolver(): GatewayBackUrlResolverInterface
-    {
-        return new GatewayBackUrlResolver(
-            $this->getProductStorageClient()
-        );
     }
 }

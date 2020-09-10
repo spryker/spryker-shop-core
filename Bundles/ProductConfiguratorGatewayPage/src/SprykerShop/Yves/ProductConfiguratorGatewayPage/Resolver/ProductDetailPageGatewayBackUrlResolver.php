@@ -5,25 +5,25 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductDetailPage\Resolver;
+namespace SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver;
 
 use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
-use SprykerShop\Yves\ProductDetailPage\Dependency\Client\ProductDetailPageToProductStorageClientInterface;
+use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductStorageClientInterface;
 
-class GatewayBackUrlResolver implements GatewayBackUrlResolverInterface
+class ProductDetailPageGatewayBackUrlResolver implements ProductDetailPageGatewayBackUrlResolverInterface
 {
     protected const MAPPING_TYPE_SKU = 'sku';
 
     /**
-     * @var \SprykerShop\Yves\ProductDetailPage\Dependency\Client\ProductDetailPageToProductStorageClientInterface
+     * @var \SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductStorageClientInterface
      */
     protected $productStorageClient;
 
     /**
-     * @param \SprykerShop\Yves\ProductDetailPage\Dependency\Client\ProductDetailPageToProductStorageClientInterface $productStorageClient
+     * @param \SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductStorageClientInterface $productStorageClient
      */
-    public function __construct(ProductDetailPageToProductStorageClientInterface $productStorageClient)
+    public function __construct(ProductConfiguratorGatewayPageToProductStorageClientInterface $productStorageClient)
     {
         $this->productStorageClient = $productStorageClient;
     }

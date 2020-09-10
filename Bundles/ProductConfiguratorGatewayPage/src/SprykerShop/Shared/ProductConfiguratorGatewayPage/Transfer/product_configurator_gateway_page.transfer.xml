@@ -72,4 +72,7 @@
         <property name="value" type="string"/>
     </transfer>
 
+    <transfer name="ProductConcreteStorage">
+    </transfer>
+
 </transfers>
