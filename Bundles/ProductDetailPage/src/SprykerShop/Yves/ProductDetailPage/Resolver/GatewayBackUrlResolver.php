@@ -38,6 +38,4 @@ class GatewayBackUrlResolver implements GatewayBackUrlResolverInterface
             $productConfiguratorResponseTransfer->getProductConcreteStorage()
         );
     }
-
-
 }
