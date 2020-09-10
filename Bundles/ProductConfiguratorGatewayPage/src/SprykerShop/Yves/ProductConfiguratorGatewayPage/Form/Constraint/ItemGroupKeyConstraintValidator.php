@@ -33,7 +33,9 @@ class ItemGroupKeyConstraintValidator extends ConstraintValidator
         }
 
         $sourceType = $this->context
-            ->getRoot()->get(ProductConfiguratorRequestDataForm::FILED_SOURCE_TYPE)->getData();
+            ->getRoot()
+            ->get(ProductConfiguratorRequestDataForm::FILED_SOURCE_TYPE)
+            ->getData();
 
         if ($sourceType === $constraint->getCartSourceType() && empty($value)) {
             $this->context->buildViolation($constraint->message)->addViolation();

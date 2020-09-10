@@ -54,5 +54,5 @@ interface ProductDetailPageToProductStorageClientInterface
      *
      * @return string
      */
-    public function resolveProductConcreteUrl(ProductConcreteStorageTransfer $productConcreteStorageTransfer): string;
+    public function buildProductConcreteUrl(ProductConcreteStorageTransfer $productConcreteStorageTransfer): string;
 }

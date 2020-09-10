@@ -29,6 +29,16 @@ class GatewayRequestController extends AbstractController
      */
     public function indexAction(Request $request): RedirectResponse
     {
+        return $this->executeIndexAction($request);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeIndexAction(Request $request): RedirectResponse
+    {
         $productConfiguratorRequestDataTransfer = $this->validateProductConfiguratorRequestDataForm($request);
         $refererUrl = $request->headers->get(static::REQUEST_HEADER_REFERER);
 

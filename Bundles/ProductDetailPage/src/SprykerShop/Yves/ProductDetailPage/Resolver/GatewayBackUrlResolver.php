@@ -47,7 +47,7 @@ class GatewayBackUrlResolver implements GatewayBackUrlResolverInterface
             new ProductConcreteStorageTransfer()
         );
 
-        return $this->productStorageClient->resolveProductConcreteUrl($productConcreteStorageTransfer);
+        return $this->productStorageClient->buildProductConcreteUrl($productConcreteStorageTransfer);
     }
 
     /**

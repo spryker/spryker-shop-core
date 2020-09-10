@@ -33,7 +33,9 @@ class QuantityConstraintValidator extends ConstraintValidator
         }
 
         $itemGroupKeyValue = $this->context
-            ->getRoot()->get(ProductConfiguratorRequestDataForm::FILED_ITEM_GROUP_KEY)->getData();
+            ->getRoot()
+            ->get(ProductConfiguratorRequestDataForm::FILED_ITEM_GROUP_KEY)
+            ->getData();
 
         if (!empty($itemGroupKeyValue) && empty($value)) {
             $this->context->buildViolation($constraint->message)->addViolation();

@@ -78,8 +78,8 @@ class ProductDetailPageToProductStorageClientBridge implements ProductDetailPage
      *
      * @return string
      */
-    public function resolveProductConcreteUrl(ProductConcreteStorageTransfer $productConcreteStorageTransfer): string
+    public function buildProductConcreteUrl(ProductConcreteStorageTransfer $productConcreteStorageTransfer): string
     {
-        return $this->productStorageClient->resolveProductConcreteUrl($productConcreteStorageTransfer);
+        return $this->productStorageClient->buildProductConcreteUrl($productConcreteStorageTransfer);
     }
 }
