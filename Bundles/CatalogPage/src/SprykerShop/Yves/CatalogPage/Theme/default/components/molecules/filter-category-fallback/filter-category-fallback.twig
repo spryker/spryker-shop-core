@@ -19,8 +19,10 @@
             {% set quantity = 0 %}
             {% set hasChildren = categoryNode.children is defined and categoryNode.children is not empty %}
 
-            {% for filterValue in data.filter.values if (filterValue.value == categoryNode.nodeId) %}
-                {% set quantity = filterValue.docCount %}
+            {% for filterValue in data.filter.values %}
+                {% if (filterValue.value == categoryNode.nodeId) %}
+                    {% set quantity = filterValue.docCount %}
+                {% endif %}
             {% endfor %}
 
             {% set categoryUrl = data.filterPath is not empty ? url(data.filterPath, {categoryPath: ( categoryNode.url | trimLocale )}) : categoryNode.url %}

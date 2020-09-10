@@ -106,7 +106,7 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
     protected function registerWidgetTwigFunction(Environment $twig)
     {
         foreach ($this->getFunctions() as $function) {
-            $twig->addFunction($function->getName(), $function);
+            $twig->addFunction($function);
         }
 
         return $twig;

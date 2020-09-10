@@ -8,11 +8,11 @@
 namespace SprykerShop\Yves\ContentBannerWidget\Twig;
 
 use Spryker\Client\ContentBanner\Exception\MissingBannerTermException;
-use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Shared\Twig\TwigFunctionProvider;
 use SprykerShop\Yves\ContentBannerWidget\Dependency\Client\ContentBannerWidgetToContentBannerClientInterface;
 use Twig\Environment;
 
-class ContentBannerTwigFunction extends TwigFunction
+class ContentBannerTwigFunctionProvider extends TwigFunctionProvider
 {
     /**
      * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::TWIG_FUNCTION_NAME
@@ -58,7 +58,6 @@ class ContentBannerTwigFunction extends TwigFunction
         string $localeName,
         ContentBannerWidgetToContentBannerClientInterface $contentBannerClient
     ) {
-        parent::__construct();
         $this->twig = $twig;
         $this->localeName = $localeName;
         $this->contentBannerClient = $contentBannerClient;
@@ -67,7 +66,7 @@ class ContentBannerTwigFunction extends TwigFunction
     /**
      * @return string
      */
-    protected function getFunctionName(): string
+    public function getFunctionName(): string
     {
         return static::TWIG_FUNCTION_NAME_CONTENT_BANNER;
     }
@@ -75,7 +74,7 @@ class ContentBannerTwigFunction extends TwigFunction
     /**
      * @return callable
      */
-    protected function getFunction(): callable
+    public function getFunction(): callable
     {
         return function (string $contentKey, string $templateIdentifier): string {
             if (!isset($this->getAvailableTemplates()[$templateIdentifier])) {

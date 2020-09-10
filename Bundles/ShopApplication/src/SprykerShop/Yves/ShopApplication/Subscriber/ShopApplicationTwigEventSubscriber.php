@@ -16,6 +16,7 @@ use SprykerShop\Yves\ShopApplication\Twig\RoutingHelperInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\ControllerArgumentsEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Twig\Environment;
@@ -72,7 +73,18 @@ class ShopApplicationTwigEventSubscriber implements EventSubscriberInterface
     {
         return [
             KernelEvents::VIEW => 'onKernelView',
+            KernelEvents::CONTROLLER_ARGUMENTS => 'onControllerResolved',
         ];
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\ControllerArgumentsEvent $event
+     *
+     * @return void
+     */
+    public function onControllerResolved(ControllerArgumentsEvent $event): void
+    {
+        $this->addGlobalView(null);
     }
 
     /**
@@ -106,11 +118,11 @@ class ShopApplicationTwigEventSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param \Spryker\Yves\Kernel\View\ViewInterface $view
+     * @param \Spryker\Yves\Kernel\View\ViewInterface|null $view
      *
      * @return void
      */
-    protected function addGlobalView(ViewInterface $view): void
+    protected function addGlobalView(?ViewInterface $view): void
     {
         $twig = $this->getTwig();
         $twig->addGlobal(static::TWIG_GLOBAL_VARIABLE_NAME_VIEW, $view);

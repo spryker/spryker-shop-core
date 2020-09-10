@@ -18,7 +18,7 @@ use Spryker\Shared\Kernel\Store;
 use SprykerShop\Yves\ContentBannerWidget\ContentBannerWidgetDependencyProvider;
 use SprykerShop\Yves\ContentBannerWidget\Dependency\Client\ContentBannerWidgetToContentBannerClientInterface;
 use SprykerShop\Yves\ContentBannerWidget\Plugin\Twig\ContentBannerTwigPlugin;
-use SprykerShop\Yves\ContentBannerWidget\Twig\ContentBannerTwigFunction;
+use SprykerShop\Yves\ContentBannerWidget\Twig\ContentBannerTwigFunctionProvider;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -168,7 +168,7 @@ class ContentBannerTwigPluginTest extends Unit
      */
     protected function getContentBannerTwigFunction()
     {
-        $functionName = new ReflectionClassConstant(ContentBannerTwigFunction::class, 'TWIG_FUNCTION_NAME_CONTENT_BANNER');
+        $functionName = new ReflectionClassConstant(ContentBannerTwigFunctionProvider::class, 'TWIG_FUNCTION_NAME_CONTENT_BANNER');
 
         return $this->getTwig()->getFunction($functionName->getValue());
     }

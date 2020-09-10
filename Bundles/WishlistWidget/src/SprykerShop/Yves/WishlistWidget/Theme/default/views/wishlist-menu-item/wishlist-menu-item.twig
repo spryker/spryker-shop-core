@@ -22,7 +22,7 @@
         {% if hasWishlists %}
             <ul class="menu">
                 {% for wishlist in data.wishlistCollection %}
-                    <li class="menu__item {{macros.isActive(wishlist.idWishlist, data.activeWishlistId)}}">
+                    <li class="menu__item {{ macros.isActive(wishlist.idWishlist, data.activeWishlistId) }}">
                         <a href="{{ path('wishlist/details', {wishlistName: wishlist.name}) }}">{{ wishlist.name }}</a>
                     </li>
                 {% endfor %}
