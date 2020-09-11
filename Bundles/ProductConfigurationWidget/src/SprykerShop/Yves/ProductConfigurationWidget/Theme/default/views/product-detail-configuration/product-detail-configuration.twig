@@ -6,6 +6,8 @@
     productConfigurationTemplate: _widget.productConfigurationTemplate | default,
 } %}
 
+{% import _self as macros %}
+
 {% block body %}
     {% set isComplete = data.productConfigurationInstance.isComplete %}
     {% set configurationLabel = isComplete ? 'product_configuration_widget.complete' : 'product_configuration_widget.not_complete' %}
