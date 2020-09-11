@@ -36,6 +36,7 @@
         <property name="sku" type="string"/>
         <property name="sourceType" type="string"/>
         <property name="itemGroupKey" type="string"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
 </transfers>
