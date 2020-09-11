@@ -68,4 +68,8 @@
         <property name="value" type="string"/>
     </transfer>
 
+    <transfer name="ProductConfiguratorResponse">
+        <property name="sourceType" type="string"/>
+    </transfer>
+
 </transfers>

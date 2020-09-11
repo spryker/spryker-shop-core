@@ -1,0 +1,60 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isVisible: _widget.isVisible,
+    salesOrderItemConfiguration: _widget.salesOrderItemConfiguration | default,
+    productConfigurationTemplate: _widget.productConfigurationTemplate | default,
+} %}
+
+{%- block template -%}
+    {% if data.isVisible %}
+        {{ parent() }}
+    {% endif %}
+{%- endblock -%}
+
+{% macro getTemplate(templateType, templateName, moduleName) %}
+    {% if templateType == 'atom' %}
+        {{ atom(templateName, moduleName) }}
+    {% endif %}
+
+    {% if templateType == 'molecule' %}
+        {{ molecule(templateName, moduleName) }}
+    {% endif %}
+
+    {% if templateType == 'organism' %}
+        {{ organism(templateName, moduleName) }}
+    {% endif %}
+
+    {% if templateType == 'view' %}
+        {{ view(templateName, moduleName) }}
+    {% endif %}
+{% endmacro %}
+
+{% import _self as macros %}
+
+{% block body %}
+    {% set productConfigurationTemplate = data.productConfigurationTemplate %}
+    {% set isTemplateDefined = productConfigurationTemplate.templateType and productConfigurationTemplate.templateName and productConfigurationTemplate.moduleName %}
+
+    {% if isTemplateDefined %}
+        {% set configurableTemplate = macros.getTemplate(
+            productConfigurationTemplate.templateType,
+            productConfigurationTemplate.templateName,
+            productConfigurationTemplate.moduleName
+        ) | trim %}
+
+        {% block optionsTemplate %}
+            {% include configurableTemplate ignore missing with {
+                data: {
+                    listItems: productConfigurationTemplate.data,
+                },
+            } only %}
+        {% endblock %}
+    {% else %}
+        {% block optionsContent %}
+            <div>
+                {{ data.salesOrderItemConfiguration.displayData }}
+            </div>
+        {% endblock %}
+    {% endif %}
+{% endblock %}
