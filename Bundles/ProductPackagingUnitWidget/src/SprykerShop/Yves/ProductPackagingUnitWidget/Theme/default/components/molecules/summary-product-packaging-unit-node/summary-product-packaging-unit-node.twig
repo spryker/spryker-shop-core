@@ -88,6 +88,12 @@
                         {% endif %}
                     {% endblock %}
 
+                    {% block productConfiguration %}
+                        {% widget 'ProductConfigurationCartItemDisplayWidget' args [data.node] only %}
+                        {% endwidget %}
+                    {% endblock %}
+
+
                     {% block amountSalesUnit %}
                         {% if data.amountSalesUnit is not empty %}
                             {% set amountPerQuantity = data.amount.divide(data.quantity, data.countOfDecimalsInAmount).trim %}

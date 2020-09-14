@@ -122,6 +122,7 @@ class CartFiller implements CartFillerInterface
             $itemTransfer = $this->removeIdSalesShipmentFromItem($itemTransfer);
             $itemTransfer = $this->removeSalesOrderConfiguredBundleItemFromItemTransfer($itemTransfer);
             $itemTransfer = $this->removeStateFromItem($itemTransfer);
+            $itemTransfer = $this->removeSalesOrderItemConfigurationFromItem($itemTransfer);
             $orderItemsSanitized->append($itemTransfer);
         }
 
@@ -184,6 +185,22 @@ class CartFiller implements CartFillerInterface
         }
 
         $itemTransfer->setState(null);
+
+        return $itemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function removeSalesOrderItemConfigurationFromItem(ItemTransfer $itemTransfer): ItemTransfer
+    {
+        if (!$itemTransfer->getSalesOrderItemConfiguration()) {
+            return $itemTransfer;
+        }
+
+        $itemTransfer->setSalesOrderItemConfiguration(null);
 
         return $itemTransfer;
     }
