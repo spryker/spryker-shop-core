@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ContentProductSetWidget;
 
+use Spryker\Shared\Twig\TwigFunctionProvider;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ContentProductSetWidget\Dependency\Client\ContentProductSetWidgetToContentProductSetClientInterface;
 use SprykerShop\Yves\ContentProductSetWidget\Dependency\Client\ContentProductSetWidgetToProductSetStorageClientInterface;
@@ -15,8 +16,9 @@ use SprykerShop\Yves\ContentProductSetWidget\Reader\ContentProductAbstractReader
 use SprykerShop\Yves\ContentProductSetWidget\Reader\ContentProductAbstractReaderInterface;
 use SprykerShop\Yves\ContentProductSetWidget\Reader\ContentProductSetReader;
 use SprykerShop\Yves\ContentProductSetWidget\Reader\ContentProductSetReaderInterface;
-use SprykerShop\Yves\ContentProductSetWidget\Twig\ContentProductSetTwigFunction;
+use SprykerShop\Yves\ContentProductSetWidget\Twig\ContentProductSetTwigFunctionProvider;
 use Twig\Environment;
+use Twig\TwigFunction;
 
 class ContentProductSetWidgetFactory extends AbstractFactory
 {
@@ -24,17 +26,36 @@ class ContentProductSetWidgetFactory extends AbstractFactory
      * @param \Twig\Environment $twig
      * @param string $localeName
      *
-     * @return \SprykerShop\Yves\ContentProductSetWidget\Twig\ContentProductSetTwigFunction
+     * @return \Spryker\Shared\Twig\TwigFunctionProvider
      */
-    public function createContentProductSetTwigFunction(
+    public function createContentProductSetTwigFunctionProvider(
         Environment $twig,
         string $localeName
-    ): ContentProductSetTwigFunction {
-        return new ContentProductSetTwigFunction(
+    ): TwigFunctionProvider {
+        return new ContentProductSetTwigFunctionProvider(
             $twig,
             $localeName,
             $this->createContentProductSetReader(),
             $this->createContentProductAbstractReader()
+        );
+    }
+
+    /**
+     * @param \Twig\Environment $twig
+     * @param string $localeName
+     *
+     * @return \Twig\TwigFunction
+     */
+    public function createContentProductSetTwigFunction(
+        Environment $twig,
+        string $localeName
+    ): TwigFunction {
+        $functionProvider = $this->createContentProductSetTwigFunctionProvider($twig, $localeName);
+
+        return new TwigFunction(
+            $functionProvider->getFunctionName(),
+            $functionProvider->getFunction(),
+            $functionProvider->getOptions()
         );
     }
 

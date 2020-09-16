@@ -45,7 +45,7 @@ class ShopPermissionServiceProvider extends AbstractPlugin implements ServicePro
     protected function registerPermissionTwigFunction(Environment $twig, Application $app)
     {
         foreach ($this->getPermissionTwigFunctions($app) as $function) {
-            $twig->addFunction($function->getName(), $function);
+            $twig->addFunction($function);
         }
 
         return $twig;

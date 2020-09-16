@@ -57,10 +57,12 @@
                                             {% set bundleSumPriceToPayAggregation = 0 %}
                                             {% set currencyIsoCode = data.currencyIsoCode %}
 
-                                            {% for item in data.bundle.salesOrderConfiguredBundleItems if data.items[item.idSalesOrderItem] is defined %}
-                                                {% set product = data.items[item.idSalesOrderItem] %}
-                                                {% set currencyIsoCode = product.currencyIsoCode %}
-                                                {% set bundleSumPriceToPayAggregation = bundleSumPriceToPayAggregation + product.sumPriceToPayAggregation %}
+                                            {% for item in data.bundle.salesOrderConfiguredBundleItems %}
+                                                {% if data.items[item.idSalesOrderItem] is defined %}
+                                                    {% set product = data.items[item.idSalesOrderItem] %}
+                                                    {% set currencyIsoCode = product.currencyIsoCode %}
+                                                    {% set bundleSumPriceToPayAggregation = bundleSumPriceToPayAggregation + product.sumPriceToPayAggregation %}
+                                                {% endif %}
                                             {% endfor %}
 
                                             {{ bundleSumPriceToPayAggregation | money(true, currencyIsoCode ?? data.currencyIsoCode) }}
@@ -81,18 +83,20 @@
         <div class="{{ config.name }}__products">
             {% block bundleProductListInner %}
                 {% set partialItemCount = 0 %}
-                {% for item in data.bundle.salesOrderConfiguredBundleItems if data.items[item.idSalesOrderItem] is defined %}
-                    {% block bundleProductItem %}
-                        {% include molecule('ordered-configured-bundle-product', 'SalesConfigurableBundleWidget') with {
-                            data: {
-                                product: data.items[item.idSalesOrderItem],
-                                currencyIsoCode: data.items[item.idSalesOrderItem].currencyIsoCode ?? data.currencyIsoCode,
-                                image: data.items[item.idSalesOrderItem].metadata.image,
-                            },
-                        } only %}
-                    {% endblock %}
+                {% for item in data.bundle.salesOrderConfiguredBundleItems %}
+                    {% if data.items[item.idSalesOrderItem] is defined %}
+                        {% block bundleProductItem %}
+                            {% include molecule('ordered-configured-bundle-product', 'SalesConfigurableBundleWidget') with {
+                                data: {
+                                    product: data.items[item.idSalesOrderItem],
+                                    currencyIsoCode: data.items[item.idSalesOrderItem].currencyIsoCode ?? data.currencyIsoCode,
+                                    image: data.items[item.idSalesOrderItem].metadata.image,
+                                },
+                            } only %}
+                        {% endblock %}
 
-                    {% set partialItemCount = partialItemCount + 1 %}
+                        {% set partialItemCount = partialItemCount + 1 %}
+                    {% endif %}
                 {% endfor %}
 
                 {{ 'configured_bundle_widget.items' | trans }} {{ partialItemCount }} / {{ data.bundle.salesOrderConfiguredBundleItems | length }}

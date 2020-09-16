@@ -42,7 +42,6 @@ class CustomerTwigFunctionServiceProvider extends AbstractPlugin implements Serv
     protected function registerCustomerTwigFunction(Environment $twig)
     {
         $twig->addFunction(
-            'getUsername',
             new TwigFunction('getUsername', function () {
                 if (!$this->getFactory()->getCustomerClient()->isLoggedIn()) {
                     return null;
@@ -53,7 +52,6 @@ class CustomerTwigFunctionServiceProvider extends AbstractPlugin implements Serv
         );
 
         $twig->addFunction(
-            'isLoggedIn',
             new TwigFunction('isLoggedIn', function () {
                 return $this->getFactory()->getCustomerClient()->isLoggedIn();
             })

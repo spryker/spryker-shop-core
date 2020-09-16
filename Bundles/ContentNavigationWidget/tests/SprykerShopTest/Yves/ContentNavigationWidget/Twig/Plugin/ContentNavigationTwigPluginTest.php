@@ -20,7 +20,7 @@ use SprykerShop\Yves\ContentNavigationWidget\ContentNavigationWidgetDependencyPr
 use SprykerShop\Yves\ContentNavigationWidget\Dependency\Client\ContentNavigationWidgetToContentNavigationClientInterface;
 use SprykerShop\Yves\ContentNavigationWidget\Dependency\Client\ContentNavigationWidgetToNavigationStorageClientInterface;
 use SprykerShop\Yves\ContentNavigationWidget\Plugin\Twig\ContentNavigationTwigPlugin;
-use SprykerShop\Yves\ContentNavigationWidget\Twig\ContentNavigationTwigFunction;
+use SprykerShop\Yves\ContentNavigationWidget\Twig\ContentNavigationTwigFunctionProvider;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -233,7 +233,7 @@ class ContentNavigationTwigPluginTest extends Unit
     protected function getContentNavigationTwigFunction()
     {
         $functionName = new ReflectionClassConstant(
-            ContentNavigationTwigFunction::class,
+            ContentNavigationTwigFunctionProvider::class,
             'TWIG_FUNCTION_NAME_CONTENT_NAVIGATION'
         );
 

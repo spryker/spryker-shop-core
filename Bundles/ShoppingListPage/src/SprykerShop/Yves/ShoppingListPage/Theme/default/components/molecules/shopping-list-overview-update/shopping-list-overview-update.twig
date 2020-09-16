@@ -42,12 +42,14 @@
     <tr>
         <td></td>
         <td colspan="5">
-            {% for subForm in data.form.items[key].children if not subForm.rendered and subForm.vars.template_path is defined %}
-                {% include subForm.vars.template_path with {
-                    attributes: { 'data-product-unavailable': not isItemAvailable },
-                    'form': subForm,
-                    'rowClass': config.name ~ '__row ' ~ config.name ~ '__row--borderless ' ~ (not isItemAvailable ? config.name ~ '__row--disable' : null),
-                } only %}
+            {% for subForm in data.form.items[key].children %}
+                {% if not subForm.rendered and subForm.vars.template_path is defined %}
+                    {% include subForm.vars.template_path with {
+                        attributes: { 'data-product-unavailable': not isItemAvailable },
+                        'form': subForm,
+                        'rowClass': config.name ~ '__row ' ~ config.name ~ '__row--borderless ' ~ (not isItemAvailable ? config.name ~ '__row--disable' : null),
+                    } only %}
+                {% endif %}
             {% endfor %}
         </td>
     </tr>
@@ -75,8 +77,10 @@
                 <small>{{ item.sku }}</small>
             </div>
         {% endif %}
-        {% for attribute in item.superAttributesDefinition if item.attributes[attribute] is defined %}
-            <div>{{ ('product.attribute.' ~ attribute) | trans }}: {{ item.attributes[attribute] }}</div>
+        {% for attribute in item.superAttributesDefinition %}
+            {% if item.attributes[attribute] is defined %}
+                <div>{{ ('product.attribute.' ~ attribute) | trans }}: {{ item.attributes[attribute] }}</div>
+            {% endif %}
         {% endfor %}
     </td>
 {% endblock %}

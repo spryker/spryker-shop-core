@@ -23,6 +23,7 @@
     {{ parent() }}
 {% endblock %}
 
+{% import _self as macros %}
 
 {% block content %}
     {% set quote = (data.isQuoteRequestEditable and isLatestVersion) ? data.quoteRequest.latestVersion.quote : data.version.quote %}
@@ -107,7 +108,7 @@
                     {% block actionCancel %}
                         {{ block('separator') }}
 
-                        {{ _self.button(
+                        {{ macros.button(
                             path('agent/quote-request/cancel', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }),
                             'quote_request_page.quote_request.actions.cancel',
                             buttonCancelClass) }}
@@ -118,7 +119,7 @@
                     {% block actionEdit %}
                         {{ block('separator') }}
 
-                        {{ _self.button(
+                        {{ macros.button(
                             path('agent/quote-request/edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }),
                             'quote_request_page.quote_request.actions.edit',
                             buttonEditClass) }}
@@ -130,7 +131,7 @@
                     {% block actionSendToCustomer %}
                         {{ block('separator') }}
 
-                        {{ _self.button(
+                        {{ macros.button(
                             path('agent/quote-request/send-to-customer', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }),
                             'quote_request_page.quote_request.actions.send_to_customer',
                             buttonSendToCustomerClass) }}
@@ -141,7 +142,7 @@
                     {% block actionRevise %}
                         {{ block('separator') }}
 
-                        {{ _self.button(
+                        {{ macros.button(
                             path('agent/quote-request/revise', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }),
                             'quote_request_page.quote_request.actions.revise',
                             buttonReviseClass) }}
@@ -153,7 +154,7 @@
                     {% block actionConvertToCart %}
                         {{ block('separator') }}
 
-                        {{ _self.button(
+                        {{ macros.button(
                             path('agent/quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }),
                             'quote_request_page.quote_request.actions.convert_to_cart',
                             buttonConvertToCartClass) }}

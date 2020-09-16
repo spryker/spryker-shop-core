@@ -8,12 +8,12 @@
 namespace SprykerShop\Yves\ContentFileWidget\Twig;
 
 use Spryker\Client\ContentFile\Exception\InvalidFileListTermException;
-use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Shared\Twig\TwigFunctionProvider;
 use SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToContentFileClientInterface;
 use SprykerShop\Yves\ContentFileWidget\Reader\ContentFileReaderInterface;
 use Twig\Environment;
 
-class ContentFileListTwigFunction extends TwigFunction
+class ContentFileListTwigFunctionProvider extends TwigFunctionProvider
 {
     /**
      * @uses \Spryker\Shared\ContentFile\ContentFileConfig::TWIG_FUNCTION_NAME
@@ -66,8 +66,6 @@ class ContentFileListTwigFunction extends TwigFunction
         ContentFileReaderInterface $contentFileReader,
         ContentFileWidgetToContentFileClientInterface $contentFileClient
     ) {
-        parent::__construct();
-
         $this->twig = $twig;
         $this->localeName = $localeName;
         $this->contentFileReader = $contentFileReader;
@@ -77,7 +75,7 @@ class ContentFileListTwigFunction extends TwigFunction
     /**
      * @return string
      */
-    protected function getFunctionName(): string
+    public function getFunctionName(): string
     {
         return static::FUNCTION_CONTENT_FILE_LIST;
     }
