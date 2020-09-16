@@ -77,9 +77,9 @@ class QuoteRequestAgentForm extends AbstractType
             QuoteRequestTransfer::LATEST_VERSION,
             QuoteRequestAgentVersionSubForm::class,
             [
-                QuoteRequestAgentForm::OPTION_PRICE_MODE => $options[QuoteRequestAgentForm::OPTION_PRICE_MODE],
-                QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID => $options[QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID],
-                QuoteRequestAgentForm::OPTION_SHIPMENT_GROUPS => $options[QuoteRequestAgentForm::OPTION_SHIPMENT_GROUPS],
+                self::OPTION_PRICE_MODE => $options[self::OPTION_PRICE_MODE],
+                self::OPTION_IS_QUOTE_VALID => $options[self::OPTION_IS_QUOTE_VALID],
+                self::OPTION_SHIPMENT_GROUPS => $options[self::OPTION_SHIPMENT_GROUPS],
             ]
         );
 

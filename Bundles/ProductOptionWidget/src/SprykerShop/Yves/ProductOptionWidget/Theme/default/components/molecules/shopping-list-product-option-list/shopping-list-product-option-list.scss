@@ -6,6 +6,7 @@ $shopping-list-product-option-list-padding: map-get($setting-spacing, 'small');
 
         &__item {
             padding: 0 $shopping-list-product-option-list-padding map-get($setting-spacing, 'default');
+            flex-basis: 0;
         }
 
         @content;

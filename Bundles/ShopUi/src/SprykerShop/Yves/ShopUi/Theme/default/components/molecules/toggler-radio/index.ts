@@ -1,3 +1,6 @@
-import './style';
-import register from '../../../app/registry';
-export default register('toggler-radio', () => import(/* webpackMode: "lazy" */'./toggler-radio'));
+import './style.scss';
+import register from 'ShopUi/app/registry';
+export default register('toggler-radio', () => import(
+    /* webpackMode: "lazy" */
+    /* webpackChunkName: "toggler-radio" */
+    './toggler-radio'));

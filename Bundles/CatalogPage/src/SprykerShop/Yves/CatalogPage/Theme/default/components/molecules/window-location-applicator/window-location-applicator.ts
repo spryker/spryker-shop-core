@@ -55,7 +55,7 @@ export default class WindowLocationApplicator extends Component {
         const selectFields = <HTMLSelectElement[]>Array.from(this.form.getElementsByTagName('select'));
 
         const filteredInputFields = inputFields.filter((input: HTMLInputElement) => {
-            return input.checked || input.type === 'number' || input.type === 'hidden';
+            return (input.checked || input.type === 'number' || input.type === 'hidden') && !input.disabled;
         });
         const formFields = [...filteredInputFields, ...selectFields];
         const data: string = formFields.reduce((accumulator: string, field: HTMLInputElement | HTMLSelectElement) => {
