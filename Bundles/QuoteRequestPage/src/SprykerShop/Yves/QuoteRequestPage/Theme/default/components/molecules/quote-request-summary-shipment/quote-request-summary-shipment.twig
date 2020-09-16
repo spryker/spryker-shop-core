@@ -33,19 +33,18 @@
             <strong class="{{ shipmentValueClass }}">{{ data.shipmentTotal | money(true, data.currencyCode) }}</strong>
         </div>
     {% endblock %}
-    {% for expense in data.expenses if expense.type == shipmentExpenseType %}
-        {% set sourceUnitPrice = (data.priceMode == priceModeGross) ? expense.unitGrossPrice : expense.unitNetPrice %}
+    {% for expense in data.expenses %}
+        {% if expense.type == shipmentExpenseType %}
+            {% set sourceUnitPrice = (data.priceMode == priceModeGross) ? expense.unitGrossPrice : expense.unitNetPrice %}
 
-        {% block summaryShipment %}
-            <div class="{{ shipmentClass }}">
-                <span class="{{ shipmentTitleClass }}">
-                    {{ expense.shipment.method.carrierName | default }}
-                    - {{ expense.shipment.method.name | default }}
-                </span>
-                <span class="{{ shipmentValueClass }}">
-                    {{ sourceUnitPrice | money(true, data.currencyCode) }}
-                </span>
-            </div>
-        {% endblock %}
+            {% block summaryShipment %}
+                <div class="{{ shipmentClass }}">
+                    <span class="{{ shipmentTitleClass }}">
+                        {{ expense.shipment.method.carrierName | default }} - {{ expense.shipment.method.name | default }}
+                    </span>
+                    <span class="{{ shipmentValueClass }}">{{ sourceUnitPrice | money(true, data.currencyCode) }}</span>
+                </div>
+            {% endblock %}
+        {% endif %}
     {% endfor %}
 {% endblock %}

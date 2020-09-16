@@ -7,12 +7,12 @@
 
 namespace SprykerShop\Yves\CustomerPage\Twig;
 
-use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Shared\Twig\TwigFunctionProvider;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
 
-class IsLoggedTwigFunction extends TwigFunction
+class GetUsernameTwigFunctionProvider extends TwigFunctionProvider
 {
-    protected const TWIG_FUNCTION_NAME_IS_LOGGED_IN = 'isLoggedIn';
+    protected const TWIG_FUNCTION_NAME_GET_USERNAME = 'getUsername';
 
     /**
      * @var \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface
@@ -24,25 +24,28 @@ class IsLoggedTwigFunction extends TwigFunction
      */
     public function __construct(CustomerPageToCustomerClientInterface $customerClient)
     {
-        parent::__construct();
         $this->customerClient = $customerClient;
     }
 
     /**
      * @return string
      */
-    protected function getFunctionName(): string
+    public function getFunctionName(): string
     {
-        return static::TWIG_FUNCTION_NAME_IS_LOGGED_IN;
+        return static::TWIG_FUNCTION_NAME_GET_USERNAME;
     }
 
     /**
      * @return callable
      */
-    protected function getFunction(): callable
+    public function getFunction(): callable
     {
-        return function (): bool {
-            return $this->customerClient->isLoggedIn();
+        return function (): ?string {
+            if (!$this->customerClient->isLoggedIn()) {
+                return null;
+            }
+
+            return $this->customerClient->getCustomer()->getEmail();
         };
     }
 }

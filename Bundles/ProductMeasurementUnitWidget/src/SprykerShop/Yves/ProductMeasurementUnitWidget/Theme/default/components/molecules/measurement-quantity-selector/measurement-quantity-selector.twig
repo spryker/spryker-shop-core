@@ -27,8 +27,10 @@
 
     {% if hasProductMeasurementUnit %}
         <ul class="text-small">
-            {% for salesUnit in data.salesUnits if salesUnit.conversion != 0 %}
-                {% if salesUnit.productMeasurementUnit.idProductMeasurementUnit != data.baseUnit.idProductMeasurementUnit %}
+            {% for salesUnit in data.salesUnits %}
+                {% set isMeasurementUnitCounted = salesUnit.productMeasurementUnit.idProductMeasurementUnit != data.baseUnit.idProductMeasurementUnit and salesUnit.conversion != 0 %}
+
+                {% if isMeasurementUnitCounted %}
                     <li>
                         1 {{ data.baseUnit.name | trans }}
                         = {{ (1 / salesUnit.conversion)|round(4) }} {{ salesUnit.productMeasurementUnit.name | trans }}

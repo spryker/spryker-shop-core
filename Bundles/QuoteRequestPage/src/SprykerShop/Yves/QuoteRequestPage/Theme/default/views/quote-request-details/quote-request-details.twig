@@ -11,6 +11,8 @@
     shipmentExpenses: _view.shipmentExpenses,
 } %}
 
+{% import _self as macros %}
+
 {% set isLatestVersion = (data.version.idQuoteRequestVersion == data.quoteRequest.latestVisibleVersion.idQuoteRequestVersion) %}
 
 {% block breadcrumbs %}
@@ -98,7 +100,7 @@
                     {% block actionCancel %}
                         {{ block('separator') }}
 
-                        {{ _self.button(
+                        {{ macros.button(
                             path('quote-request/cancel', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }),
                             'quote_request_page.quote_request.actions.cancel',
                             buttonCancelClass) }}
@@ -109,7 +111,7 @@
                     {% block actionRevise %}
                         {{ block('separator') }}
 
-                        {{ _self.button(
+                        {{ macros.button(
                             path('quote-request/revise', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }),
                             'quote_request_page.quote_request.actions.revise',
                             buttonReviseClass) }}
@@ -118,7 +120,7 @@
                     {% block actionConvertToCart %}
                         {{ block('separator') }}
 
-                        {{ _self.button(
+                        {{ macros.button(
                             path('quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }),
                             'quote_request_page.quote_request.actions.convert_to_cart',
                             buttonConvertToCartClass) }}
@@ -129,7 +131,7 @@
                     {% block actionEdit %}
                         {{ block('separator') }}
 
-                        {{ _self.button(
+                        {{ macros.button(
                             path('quote-request/edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }),
                             'quote_request_page.quote_request.actions.edit',
                             buttonEditClass) }}
@@ -138,7 +140,7 @@
                     {% block actionSendToAgent %}
                         {{ block('separator') }}
 
-                        {{ _self.button(
+                        {{ macros.button(
                             path('quote-request/send-to-user', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }),
                             'quote_request_page.quote_request.actions.send_to_agent',
                             buttonSendToAgentClass) }}

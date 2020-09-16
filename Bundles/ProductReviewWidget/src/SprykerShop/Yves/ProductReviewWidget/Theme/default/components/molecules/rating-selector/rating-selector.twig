@@ -33,7 +33,7 @@
 
 {% block body %}
     <span class="{{ config.name }}__steps">
-        {% spaceless %}
+        {% apply spaceless %}
             {% for step in data.steps..1 %}
                 {% set currentStepValue = step * singleStepValue %}
                 {% if value >= currentStepValue %}
@@ -97,7 +97,7 @@
                     </span>
                 {% endif %}
             {% endfor %}
-        {% endspaceless %}
+        {% endapply %}
     </span>
 
     {% block input %}

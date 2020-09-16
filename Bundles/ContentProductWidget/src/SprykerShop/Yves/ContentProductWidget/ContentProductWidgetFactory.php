@@ -7,13 +7,15 @@
 
 namespace SprykerShop\Yves\ContentProductWidget;
 
+use Spryker\Shared\Twig\TwigFunctionProvider;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ContentProductWidget\Dependency\Client\ContentProductWidgetToContentProductClientBridgeInterface;
 use SprykerShop\Yves\ContentProductWidget\Dependency\Client\ContentProductWidgetToProductStorageClientBridgeInterface;
 use SprykerShop\Yves\ContentProductWidget\Reader\ContentProductAbstractReader;
 use SprykerShop\Yves\ContentProductWidget\Reader\ContentProductAbstractReaderInterface;
-use SprykerShop\Yves\ContentProductWidget\Twig\ContentProductAbstractListTwigFunction;
+use SprykerShop\Yves\ContentProductWidget\Twig\ContentProductAbstractListTwigFunctionProvider;
 use Twig\Environment;
+use Twig\TwigFunction;
 
 class ContentProductWidgetFactory extends AbstractFactory
 {
@@ -21,14 +23,31 @@ class ContentProductWidgetFactory extends AbstractFactory
      * @param \Twig\Environment $twig
      * @param string $localeName
      *
-     * @return \SprykerShop\Yves\ContentProductWidget\Twig\ContentProductAbstractListTwigFunction
+     * @return \Spryker\Shared\Twig\TwigFunctionProvider
      */
-    public function createContentProductAbstractListTwigFunction(Environment $twig, string $localeName): ContentProductAbstractListTwigFunction
+    public function createContentProductAbstractListTwigFunctionProvider(Environment $twig, string $localeName): TwigFunctionProvider
     {
-        return new ContentProductAbstractListTwigFunction(
+        return new ContentProductAbstractListTwigFunctionProvider(
             $twig,
             $localeName,
             $this->createContentProductAbstractReader()
+        );
+    }
+
+    /**
+     * @param \Twig\Environment $twig
+     * @param string $localeName
+     *
+     * @return \Twig\TwigFunction
+     */
+    public function createContentProductAbstractListTwigFunction(Environment $twig, string $localeName): TwigFunction
+    {
+        $functionProvider = $this->createContentProductAbstractListTwigFunctionProvider($twig, $localeName);
+
+        return new TwigFunction(
+            $functionProvider->getFunctionName(),
+            $functionProvider->getFunction(),
+            $functionProvider->getOptions()
         );
     }
 

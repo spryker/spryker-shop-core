@@ -45,7 +45,6 @@ class CmsTwigFunctionServiceProvider extends AbstractPlugin implements ServicePr
     protected function registerCmsTwigFunction(Environment $twig, Application $application)
     {
         $twig->addFunction(
-            'spyCms',
             new TwigFunction('spyCms', function (array $context, $identifier) use ($application) {
                 $placeholders = $context['_view']['placeholders'];
 

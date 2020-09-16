@@ -21,7 +21,7 @@ use SprykerShop\Yves\ContentProductSetWidget\Dependency\Client\ContentProductSet
 use SprykerShop\Yves\ContentProductSetWidget\Dependency\Client\ContentProductSetWidgetToProductSetStorageClientInterface;
 use SprykerShop\Yves\ContentProductSetWidget\Dependency\Client\ContentProductSetWidgetToProductStorageClientInterface;
 use SprykerShop\Yves\ContentProductSetWidget\Plugin\Twig\ContentProductSetTwigPlugin;
-use SprykerShop\Yves\ContentProductSetWidget\Twig\ContentProductSetTwigFunction;
+use SprykerShop\Yves\ContentProductSetWidget\Twig\ContentProductSetTwigFunctionProvider;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Twig\Environment;
@@ -207,7 +207,7 @@ class ContentProductSetTwigPluginTest extends Unit
      */
     protected function getContentProductSetTwigPlugin()
     {
-        $functionName = new ReflectionClassConstant(ContentProductSetTwigFunction::class, 'FUNCTION_CONTENT_PRODUCT_SET');
+        $functionName = new ReflectionClassConstant(ContentProductSetTwigFunctionProvider::class, 'FUNCTION_CONTENT_PRODUCT_SET');
 
         return $this->createTwigMock()->getFunction($functionName->getValue());
     }

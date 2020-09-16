@@ -1,5 +1,7 @@
 {% extends model('component') %}
 
+{% import _self as component %}
+
 {% define config = {
     name: 'shopping-list',
     tag: 'table',
@@ -90,8 +92,10 @@
 
                                                     <li class="list__item">
                                                         {% set listOfAttributes = {} %}
-                                                        {% for attribute in item.superAttributesDefinition if item.attributes[attribute] is defined %}
-                                                            {% set listOfAttributes = listOfAttributes | merge({ ('product.attribute.' ~ attribute) | trans: item.attributes[attribute] }) %}
+                                                        {% for attribute in item.superAttributesDefinition %}
+                                                            {% if item.attributes[attribute] is defined %}
+                                                                {% set listOfAttributes = listOfAttributes | merge({ ('product.attribute.' ~ attribute) | trans: item.attributes[attribute] }) %}
+                                                            {% endif %}
                                                         {% endfor %}
 
                                                         {% include molecule('product-item-attributes') with {
