@@ -5,6 +5,11 @@
 
     <transfer name="ProductSetDataStorage">
         <property name="productAbstractIds" type="array" singular="productAbstractIds"/>
+        <property name="name" type="string"/>
+        <property name="description" type="string"/>
+        <property name="imageSets" singular="imageSet" type="ProductImageSetStorage[]"/>
+        <property name="metaDescription" type="string"/>
+        <property name="metaKeywords" type="string"/>
     </transfer>
 
     <transfer name="ProductView">
@@ -14,6 +19,9 @@
 
     <transfer name="AttributeMapStorage">
         <property name="superAttributes" type="array" singular="superAttributes"/>
+    </transfer>
+
+    <transfer name="ProductImageSetStorage">
     </transfer>
 
 </transfers>

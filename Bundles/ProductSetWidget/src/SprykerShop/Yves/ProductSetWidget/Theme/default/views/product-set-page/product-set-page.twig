@@ -1,9 +1,11 @@
+{# @var _view.productSet \Generated\Shared\Transfer\ProductSetDataStorageTransfer #}
+
 {% extends template('product-set', 'ProductSetWidget') %}
 
 {% define data = {
     products: _widget.productViews,
     description: _widget.productSet.description,
-    images: _widget.productSet.imageSets.0.images | default([]),
+    images: _widget.productSet.imageSets[0].images | default([]),
 } %}
 
 {% block carousel %}

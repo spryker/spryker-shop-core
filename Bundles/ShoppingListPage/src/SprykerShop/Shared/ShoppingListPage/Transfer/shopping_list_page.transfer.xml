@@ -13,6 +13,9 @@
         <property name="price" type="int"/>
         <property name="prices" type="array" singular="prices"/>
         <property name="attributes" type="array" singular="attributes"/>
+        <property name="available" type="bool"/>
+        <property name="images" singular="image" type="ProductImageStorage[]"/>
+        <property name="superAttributesDefinition" type="array" singular="superAttributesDefinition"/>
     </transfer>
 
     <transfer name="ShoppingList">
@@ -83,6 +86,8 @@
     <transfer name="ShoppingListOverviewResponse">
         <property name="isSuccess" type="bool"/>
         <property name="itemsCollection" type="ShoppingListItemCollection"/>
+        <property name="shoppingList" type="ShoppingList"/>
+        <property name="shoppingLists" type="ShoppingListCollection"/>
     </transfer>
 
     <transfer name="Message">
@@ -155,10 +160,15 @@
 
     <transfer name="Quote">
         <property name="currency" type="Currency"/>
+        <property name="idQuote" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="Currency">
         <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="ProductImageStorage">
     </transfer>
 
 </transfers>

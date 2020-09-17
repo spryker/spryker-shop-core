@@ -1,3 +1,5 @@
+{# @var node \Generated\Shared\Transfer\NavigationNodeStorageTransfer #}
+
 {% extends model('component') %}
 
 {% define config = {
@@ -18,7 +20,7 @@
     <ul class="menu {{menuClass}}">
         {% for node in data.nodes %}
             {% set hasChildren = node.children | length > 0 %}
-            
+
             {% include molecule('navigation-multilevel-node') with {
                 class: 'menu__item ' ~ (hasChildren ? menuChildrenClass : '') ~ (node.url ? '' : ' ' ~ node.cssClass),
                 data: {

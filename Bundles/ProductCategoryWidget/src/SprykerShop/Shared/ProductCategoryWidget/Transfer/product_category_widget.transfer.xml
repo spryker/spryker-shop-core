@@ -12,6 +12,8 @@
     </transfer>
 
     <transfer name="ProductCategoryStorage">
+        <property name="url" type="string"/>
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

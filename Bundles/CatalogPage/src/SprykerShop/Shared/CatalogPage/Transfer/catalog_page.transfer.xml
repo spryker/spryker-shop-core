@@ -6,14 +6,29 @@
     <transfer name="FacetSearchResult">
         <property name="config" type="FacetConfig"/>
         <property name="values" type="FacetSearchResultValue[]" singular="value"/>
+        <property name="activeValue" type="string"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="RangeSearchResult">
+        <property name="name" type="string"/>
+        <property name="min" type="float"/>
+        <property name="max" type="float"/>
+        <property name="activeMin" type="float"/>
+        <property name="activeMax" type="float"/>
         <property name="config" type="FacetConfig"/>
     </transfer>
 
     <transfer name="PaginationConfig">
         <property name="parameterName" type="string"/>
+    </transfer>
+
+    <transfer name="PaginationSearchResult">
+        <property name="numFound" type="int"/>
+        <property name="currentPage" type="int"/>
+        <property name="maxPage" type="int"/>
+        <property name="currentItemsPerPage" type="int"/>
+        <property name="config" type="PaginationConfig"/>
     </transfer>
 
     <transfer name="CategoryNodeStorage">
@@ -24,6 +39,8 @@
         <property name="isCurrent" type="bool"/>
         <property name="children" type="CategoryNodeStorage[]" singular="children"/>
         <property name="hasChildren" type="bool"/>
+        <property name="url" type="string"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="ProductCategoryFilterStorage">
@@ -38,6 +55,8 @@
 
     <transfer name="FacetConfig">
         <property name="parameterName" type="string"/>
+        <property name="name" type="string"/>
+        <property name="type" type="string"/>
     </transfer>
 
     <transfer name="FacetSearchResultValue">
