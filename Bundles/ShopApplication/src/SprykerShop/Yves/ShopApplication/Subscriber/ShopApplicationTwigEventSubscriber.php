@@ -88,7 +88,6 @@ class ShopApplicationTwigEventSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent $event
      * @param \Symfony\Component\HttpKernel\Event\ViewEvent $event
      *
      * @return void
