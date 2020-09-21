@@ -67,7 +67,7 @@ class CmsSlotBlockWidgetCmsSlotContentPluginTest extends Unit
         );
 
         // Assert
-        $this->assertEquals(static::CONTENT, $cmsSlotContentResponseTransfer->getContent());
+        $this->assertSame(static::CONTENT, $cmsSlotContentResponseTransfer->getContent());
     }
 
     /**

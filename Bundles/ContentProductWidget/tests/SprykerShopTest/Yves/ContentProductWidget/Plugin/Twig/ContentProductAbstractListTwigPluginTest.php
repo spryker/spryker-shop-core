@@ -76,7 +76,7 @@ class ContentProductAbstractListTwigPluginTest extends Unit
         $productAbstractContent = call_user_func($this->getContentProductAbstractListTwigPlugin()->getCallable(), static::CONTENT_KEY, static::DEFAULT_TEMPLATE);
 
         // Assert
-        $this->assertEquals(static::MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND, $productAbstractContent);
+        $this->assertSame(static::MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND, $productAbstractContent);
     }
 
     /**
@@ -91,7 +91,7 @@ class ContentProductAbstractListTwigPluginTest extends Unit
         $productAbstractContent = call_user_func($this->getContentProductAbstractListTwigPlugin()->getCallable(), static::CONTENT_KEY, static::DEFAULT_TEMPLATE);
 
         // Assert
-        $this->assertEquals(static::MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE, $productAbstractContent);
+        $this->assertSame(static::MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE, $productAbstractContent);
     }
 
     /**
@@ -109,7 +109,7 @@ class ContentProductAbstractListTwigPluginTest extends Unit
         $productAbstractContent = call_user_func($this->getContentProductAbstractListTwigPlugin()->getCallable(), static::CONTENT_KEY, static::WRONG_TEMPLATE);
 
         // Assert
-        $this->assertEquals(static::MESSAGE_NOT_SUPPORTED_TEMPLATE, $productAbstractContent);
+        $this->assertSame(static::MESSAGE_NOT_SUPPORTED_TEMPLATE, $productAbstractContent);
     }
 
     /**
@@ -127,7 +127,7 @@ class ContentProductAbstractListTwigPluginTest extends Unit
         $productAbstractContent = call_user_func($this->getContentProductAbstractListTwigPlugin()->getCallable(), static::CONTENT_KEY, static::DEFAULT_TEMPLATE);
 
         // Assert
-        $this->assertEquals(static::RENDERED_STRING, $productAbstractContent);
+        $this->assertSame(static::RENDERED_STRING, $productAbstractContent);
     }
 
     /**
