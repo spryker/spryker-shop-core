@@ -79,7 +79,7 @@ class ContentNavigationTwigPluginTest extends Unit
         );
 
         // Assert
-        $this->assertEquals(static::MESSAGE_NAVIGATION_NOT_FOUND, $navigationContent);
+        $this->assertSame(static::MESSAGE_NAVIGATION_NOT_FOUND, $navigationContent);
     }
 
     /**
@@ -102,7 +102,7 @@ class ContentNavigationTwigPluginTest extends Unit
 
         // Assert
 
-        $this->assertEquals(static::MESSAGE_NAVIGATION_WRONG_TYPE, $navigationContent);
+        $this->assertSame(static::MESSAGE_NAVIGATION_WRONG_TYPE, $navigationContent);
     }
 
     /**
@@ -122,7 +122,7 @@ class ContentNavigationTwigPluginTest extends Unit
         );
 
         // Assert
-        $this->assertEquals(static::MESSAGE_NAVIGATION_WRONG_TEMPLATE, $navigationContent);
+        $this->assertSame(static::MESSAGE_NAVIGATION_WRONG_TEMPLATE, $navigationContent);
     }
 
     /**
@@ -146,7 +146,7 @@ class ContentNavigationTwigPluginTest extends Unit
         );
 
         // Assert
-        $this->assertEquals($navigationContent, '');
+        $this->assertSame('', $navigationContent);
     }
 
     /**
@@ -170,7 +170,7 @@ class ContentNavigationTwigPluginTest extends Unit
         );
 
         // Assert
-        $this->assertEquals($navigationContent, static::RENDERED_STRING);
+        $this->assertSame(static::RENDERED_STRING, $navigationContent);
     }
 
     /**

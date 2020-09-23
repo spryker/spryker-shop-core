@@ -76,7 +76,7 @@ class ContentBannerTwigPluginTest extends Unit
         $bannerContent = call_user_func($this->getContentBannerTwigFunction()->getCallable(), static::CONTENT_KEY, static::DEFAULT_TEMPLATE);
 
         // Assert
-        $this->assertEquals(static::MESSAGE_BANNER_NOT_FOUND, $bannerContent);
+        $this->assertSame(static::MESSAGE_BANNER_NOT_FOUND, $bannerContent);
     }
 
     /**
@@ -99,7 +99,7 @@ class ContentBannerTwigPluginTest extends Unit
 
         // Assert
 
-        $this->assertEquals(static::MESSAGE_BANNER_WRONG_TYPE, $bannerContent);
+        $this->assertSame(static::MESSAGE_BANNER_WRONG_TYPE, $bannerContent);
     }
 
     /**
@@ -119,7 +119,7 @@ class ContentBannerTwigPluginTest extends Unit
         );
 
         // Assert
-        $this->assertEquals(static::MESSAGE_BANNER_WRONG_TEMPLATE, $bannerContent);
+        $this->assertSame(static::MESSAGE_BANNER_WRONG_TEMPLATE, $bannerContent);
     }
 
     /**
@@ -135,8 +135,7 @@ class ContentBannerTwigPluginTest extends Unit
         $bannerContent = call_user_func($this->getContentBannerTwigFunction()->getCallable(), static::CONTENT_KEY, static::DEFAULT_TEMPLATE);
 
         // Assert
-
-        $this->assertEquals($bannerContent, static::RENDERED_STRING);
+        $this->assertSame(static::RENDERED_STRING, $bannerContent);
     }
 
     /**

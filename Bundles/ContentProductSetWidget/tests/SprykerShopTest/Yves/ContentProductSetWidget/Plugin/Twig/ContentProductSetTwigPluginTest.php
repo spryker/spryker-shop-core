@@ -85,7 +85,7 @@ class ContentProductSetTwigPluginTest extends Unit
         );
 
         // Assert
-        $this->assertEquals(static::MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND, $productAbstractContent);
+        $this->assertSame(static::MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND, $productAbstractContent);
     }
 
     /**
@@ -108,7 +108,7 @@ class ContentProductSetTwigPluginTest extends Unit
         );
 
         // Assert
-        $this->assertEquals(static::MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE, $productSetContent);
+        $this->assertSame(static::MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE, $productSetContent);
     }
 
     /**
@@ -131,7 +131,7 @@ class ContentProductSetTwigPluginTest extends Unit
         );
 
         // Assert
-        $this->assertEquals(static::MESSAGE_NOT_SUPPORTED_TEMPLATE, $productSetContent);
+        $this->assertSame(static::MESSAGE_NOT_SUPPORTED_TEMPLATE, $productSetContent);
     }
 
     /**
@@ -156,7 +156,7 @@ class ContentProductSetTwigPluginTest extends Unit
         );
 
         // Assert
-        $this->assertEquals(static::RENDERED_STRING, $productSetContent);
+        $this->assertSame(static::RENDERED_STRING, $productSetContent);
     }
 
     /**
