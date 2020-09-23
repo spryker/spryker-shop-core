@@ -11,12 +11,17 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig\Environment;
+use Twig\TwigFilter;
 
 /**
  * @method \SprykerShop\Yves\ContentFileWidget\ContentFileWidgetFactory getFactory()
  */
 class ContentFileListTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
+    protected const FILTER_NAME = 'readable_bytesize';
+    protected const LABEL_SIZES = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+    protected const NUMBER_OF_DECIMALS = 1;
+
     /**
      * {@inheritDoc}
      * - The plugin displays a content file list.
@@ -34,8 +39,21 @@ class ContentFileListTwigPlugin extends AbstractPlugin implements TwigPluginInte
             ->createContentFileListTwigFunction($twig, $this->getLocale());
 
         $twig->addFunction($contentFileListTwigFunction);
-        $twig->addFilter($this->getFactory()->createReadableByteSizeTwigFilter());
+        $twig->addFilter($this->createFilter());
 
         return $twig;
+    }
+
+    /**
+     * @return \Twig\TwigFilter
+     */
+    protected function createFilter(): TwigFilter
+    {
+        return new TwigFilter(static::FILTER_NAME, function ($fileSize): string {
+            $power = floor(log($fileSize, 1024));
+            $calculatedSize = number_format($fileSize / (1024 ** $power), static::NUMBER_OF_DECIMALS);
+
+            return sprintf('%s %s', $calculatedSize, static::LABEL_SIZES[$power]);
+        });
     }
 }

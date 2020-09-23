@@ -16,7 +16,7 @@ use SprykerShop\Yves\ContentFileWidget\ContentFileWidgetDependencyProvider;
 use SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToContentFileClientInterface;
 use SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToFileManagerStorageClientInterface;
 use SprykerShop\Yves\ContentFileWidget\Plugin\Twig\ContentFileListTwigPlugin;
-use SprykerShop\Yves\ContentFileWidget\Twig\ContentFileListTwigFunction;
+use SprykerShop\Yves\ContentFileWidget\Twig\ContentFileListTwigFunctionProvider;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -61,7 +61,7 @@ class ContentFileListTwigPluginTest extends Unit
         $fileContent = call_user_func($this->getContentFileListTwigPlugin()->getCallable(), static::CONTENT_WRONG_KEY, static::TEMPLATE_TEXT_LINK);
 
         // Assert
-        $this->assertEquals(static::MESSAGE_CONTENT_FILE_LIST_NOT_FOUND, $fileContent);
+        $this->assertSame(static::MESSAGE_CONTENT_FILE_LIST_NOT_FOUND, $fileContent);
     }
 
     /**
@@ -76,7 +76,7 @@ class ContentFileListTwigPluginTest extends Unit
         $fileContent = call_user_func($this->getContentFileListTwigPlugin()->getCallable(), static::CONTENT_WRONG_KEY, static::TEMPLATE_TEXT_LINK);
 
         // Assert
-        $this->assertEquals(static::MESSAGE_WRONG_CONTENT_FILE_LIST_TYPE, $fileContent);
+        $this->assertSame(static::MESSAGE_WRONG_CONTENT_FILE_LIST_TYPE, $fileContent);
     }
 
     /**
@@ -93,7 +93,7 @@ class ContentFileListTwigPluginTest extends Unit
         $fileContent = call_user_func($this->getContentFileListTwigPlugin()->getCallable(), static::CONTENT_WRONG_KEY, static::TEMPLATE_WRONG);
 
         // Assert
-        $this->assertEquals(static::MESSAGE_NOT_SUPPORTED_TEMPLATE, $fileContent);
+        $this->assertSame(static::MESSAGE_NOT_SUPPORTED_TEMPLATE, $fileContent);
     }
 
     /**
@@ -111,7 +111,7 @@ class ContentFileListTwigPluginTest extends Unit
         $fileContent = call_user_func($this->getContentFileListTwigPlugin()->getCallable(), static::CONTENT_WRONG_KEY, static::TEMPLATE_TEXT_LINK);
 
         // Assert
-        $this->assertEquals(static::RENDERED_STRING, $fileContent);
+        $this->assertSame(static::RENDERED_STRING, $fileContent);
     }
 
     /**
@@ -151,7 +151,7 @@ class ContentFileListTwigPluginTest extends Unit
      */
     protected function getContentFileListTwigPlugin()
     {
-        $functionName = new ReflectionClassConstant(ContentFileListTwigFunction::class, 'FUNCTION_CONTENT_FILE_LIST');
+        $functionName = new ReflectionClassConstant(ContentFileListTwigFunctionProvider::class, 'FUNCTION_CONTENT_FILE_LIST');
 
         return $this->getTwig()->getFunction($functionName->getValue());
     }

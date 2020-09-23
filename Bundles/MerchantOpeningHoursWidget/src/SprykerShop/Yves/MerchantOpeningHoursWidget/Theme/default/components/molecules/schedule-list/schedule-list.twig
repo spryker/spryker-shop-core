@@ -27,6 +27,8 @@
     {% endif %}
 {% endmacro %}
 
+{% import _self as macros %}
+
 {% block body %}
     {% set scheduleList = [] %}
     {% set todayTimestamp = "now" | date('Y-m-d') | date('U') %}
@@ -41,7 +43,7 @@
 
         {% if isDayAllowed and isNotPastDay %}
             {% set scheduleItemCounter = scheduleItemCounter + 1 %}
-            {% set time = _self.scheduleTime(scheduleItem, scheduleList, scheduleItem.date) %}
+            {% set time = macros.scheduleTime(scheduleItem, scheduleList, scheduleItem.date) %}
             {% set scheduleList = scheduleList | merge({
                 (scheduleItem.date): {
                     note: scheduleItem.note | trans,

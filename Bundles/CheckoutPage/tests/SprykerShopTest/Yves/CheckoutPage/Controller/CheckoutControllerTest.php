@@ -64,7 +64,7 @@ class CheckoutControllerTest extends Unit
 
         // Assert
         $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertSame($response->getTargetUrl(), static::SUCCESS_URL);
+        $this->assertSame(static::SUCCESS_URL, $response->getTargetUrl());
     }
 
     /**

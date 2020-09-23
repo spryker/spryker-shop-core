@@ -1,0 +1,29 @@
+@mixin shop-ui-collapsible-list($name: '.collapsible-list') {
+    #{$name} {
+        &__button {
+            background-color: $setting-color-transparent;
+            color: $setting-color-main;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+
+            &::after {
+                content: attr(data-show);
+            }
+
+            &--shown {
+                &::after {
+                    content: attr(data-hide);
+                }
+            }
+        }
+
+        &__button-content {
+            display: none;
+        }
+
+        @content;
+    }
+}

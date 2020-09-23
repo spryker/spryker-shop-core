@@ -15,6 +15,8 @@
     currencyIsoCode: null,
 } %}
 
+{% import _self as macros %}
+
 {%- block extraClass %} box {{ config.jsName }}{% endblock -%}
 
 {% block body %}
@@ -42,8 +44,6 @@
                     {% endblock %}
                 {% endembed %}
             {% endmacro %}
-
-            {% import _self as macros %}
 
             {% block image %}
                 {% if data.url %}

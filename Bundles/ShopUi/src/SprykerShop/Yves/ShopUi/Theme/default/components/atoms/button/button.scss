@@ -43,21 +43,21 @@
             width: 100%;
         }
 
+        @each $action, $setting-color-action in $setting-color-actions {
+            @include shop-ui-button-action($action, $setting-color-action);
+        }
+
         &[disabled],
         &[data-disabled],
         &--disabled {
             background-color: $setting-color-light;
             border-color: $setting-color-light;
-            cursor: not-allowed;
+            pointer-events: none;
 
             &:hover,
             &:focus {
                 background-color: $setting-color-light;
             }
-        }
-
-        @each $action, $setting-color-action in $setting-color-actions {
-            @include shop-ui-button-action($action, $setting-color-action);
         }
 
         @content;

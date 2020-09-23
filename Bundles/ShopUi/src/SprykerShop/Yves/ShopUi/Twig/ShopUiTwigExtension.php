@@ -9,10 +9,10 @@ namespace SprykerShop\Yves\ShopUi\Twig;
 
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Twig\TwigExtension;
-use Spryker\Shared\Twig\TwigFilter;
 use SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProviderInterface;
 use SprykerShop\Yves\ShopUi\Twig\Node\ShopUiDefineTwigNode;
 use SprykerShop\Yves\ShopUi\Twig\TokenParser\ShopUiDefineTwigTokenParser;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 class ShopUiTwigExtension extends TwigExtension

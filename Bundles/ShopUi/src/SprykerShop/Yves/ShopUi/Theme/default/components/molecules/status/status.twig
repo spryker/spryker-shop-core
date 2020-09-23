@@ -11,7 +11,7 @@
 } %}
 
 {%- macro escapeStatusModifier(className, status) -%}
-    {% spaceless %}
+    {% apply spaceless %}
         {% set forbiddenSymbols = ['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '=', '+', '[', ']', '{', '}', '\\', '|', ':', ';', '\'', '"', '<', '>', ',', '.', '/', '?', '§', '№'] %}
         {% set status = status | replace({' ': '-'}) | lower %}
 
@@ -19,11 +19,13 @@
             {% set status = status | replace({("#{symbol}"): ''}) %}
         {% endfor %}
         {{ className }}--{{ status }}
-    {% endspaceless %}
+    {% endapply %}
 {%- endmacro -%}
 
+{% import _self as macros %}
+
 {% block extraClass %}
-    {% if data.status %}{{ _self.escapeStatusModifier(config.name, data.status) }}{% endif %}
+    {% if data.status %}{{ macros.escapeStatusModifier(config.name, data.status) }}{% endif %}
 {% endblock %}
 
 {% block body %}

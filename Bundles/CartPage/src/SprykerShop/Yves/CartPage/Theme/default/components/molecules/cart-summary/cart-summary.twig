@@ -120,23 +120,37 @@
         {% endwidget %}
     {% endif %}
 
+    {% set productConfigurationWidget = findWidget('ProductConfigurationQuoteValidatorWidget', [data.cart]) %}
+    {% set canProceedQuoteCheckout = productConfigurationWidget.isQuoteProductConfigurationValid %}
+
+    {% widget 'ProductConfigurationQuoteValidatorWidget' args [data.cart] only %}{% endwidget %}
+
     {% if canProceedToCheckout %}
-        {% widget 'ProceedToCheckoutButtonWidget' args [data.cart] %}
+        {% widget 'ProceedToCheckoutButtonWidget' args [data.cart] with {
+            data: {
+                canProceedCheckout: canProceedQuoteCheckout,
+            },
+        } only %}
             {% block body %}
                 <hr>
                 {{ parent() }}
             {% endblock %}
         {% nowidget %}
             {% set checkoutButtonText =  'cart.checkout' | trans %}
+            {% set disableButton = not canProceedQuoteCheckout ? 'button--disabled' %}
 
-            <a href="{{ url('checkout-index') }}" class="button button--expand button--success" data-init-single-click title={{ checkoutButtonText }} {{ qa('cart-go-to-checkout') }}>
+            <a href="{{ url('checkout-index') }}" class="button button--expand button--success {{ disableButton }}" data-init-single-click {{ qa('cart-go-to-checkout') }}>
                 {{ checkoutButtonText }}
             </a>
         {% endwidget %}
     {% endif %}
 
     {% if is_granted('ROLE_USER') %}
-        {% widget 'QuoteRequestCreateWidget' args [data.cart] only %}
+        {% widget 'QuoteRequestCreateWidget' args [data.cart] with {
+            data: {
+                canProceedCheckout: canProceedQuoteCheckout,
+            },
+        } only %}
             {% block body %}
                 <hr>
                 {{ parent() }}

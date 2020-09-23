@@ -1,3 +1,6 @@
+{# @var data.set \Generated\Shared\Transfer\ProductSetDataStorageTransfer #}
+{# @var _view.productSet \Generated\Shared\Transfer\ProductSetDataStorageTransfer #}
+
 {% extends template('page-layout-main') %}
 
 {% define data = {
@@ -20,7 +23,7 @@
                 products: data.views,
                 name: data.set.name,
                 description: data.set.description,
-                images: data.set.imageSets.0.images | default([]),
+                images: data.set.imageSets[0].images | default([]),
                 optionResetUrls: data.optionResetUrls,
             },
         } only %}
