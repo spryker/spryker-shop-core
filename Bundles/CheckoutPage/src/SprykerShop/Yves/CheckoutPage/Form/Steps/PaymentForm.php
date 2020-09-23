@@ -188,7 +188,7 @@ class PaymentForm extends AbstractType
             'validation_groups' => function (FormInterface $form) {
                 $validationGroups = [Constraint::DEFAULT_GROUP];
 
-                $paymentSelectionFormData = $form->get(self::PAYMENT_SELECTION)->getData();
+                $paymentSelectionFormData = $form->get(static::PAYMENT_SELECTION)->getData();
                 if ($paymentSelectionFormData !== null) {
                     $validationGroups[] = $paymentSelectionFormData;
                 }
