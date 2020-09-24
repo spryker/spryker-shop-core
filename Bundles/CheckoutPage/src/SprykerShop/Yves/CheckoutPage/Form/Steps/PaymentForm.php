@@ -189,7 +189,7 @@ class PaymentForm extends AbstractType
                 $validationGroups = [Constraint::DEFAULT_GROUP];
 
                 $paymentSelectionFormData = $form->get(static::PAYMENT_SELECTION)->getData();
-                if ($paymentSelectionFormData !== null) {
+                if (is_string($paymentSelectionFormData)) {
                     $validationGroups[] = $paymentSelectionFormData;
                 }
 
