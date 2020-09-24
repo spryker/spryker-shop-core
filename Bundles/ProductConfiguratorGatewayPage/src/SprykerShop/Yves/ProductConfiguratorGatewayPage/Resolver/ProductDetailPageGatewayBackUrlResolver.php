@@ -10,9 +10,15 @@ namespace SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver;
 use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductStorageClientInterface;
+use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 
 class ProductDetailPageGatewayBackUrlResolver implements ProductDetailPageGatewayBackUrlResolverInterface
 {
+    /**
+     * @uses \SprykerShop\Yves\HomePage\Plugin\Router\HomePageRouteProviderPlugin::ROUTE_NAME_HOME
+     */
+    protected const ROUTE_NAME_HOME = 'home';
+
     protected const MAPPING_TYPE_SKU = 'sku';
 
     /**
@@ -21,11 +27,20 @@ class ProductDetailPageGatewayBackUrlResolver implements ProductDetailPageGatewa
     protected $productStorageClient;
 
     /**
-     * @param \SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductStorageClientInterface $productStorageClient
+     * @var \Symfony\Cmf\Component\Routing\ChainRouterInterface
      */
-    public function __construct(ProductConfiguratorGatewayPageToProductStorageClientInterface $productStorageClient)
-    {
+    protected $router;
+
+    /**
+     * @param \SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductStorageClientInterface $productStorageClient
+     * @param \Symfony\Cmf\Component\Routing\ChainRouterInterface $router
+     */
+    public function __construct(
+        ProductConfiguratorGatewayPageToProductStorageClientInterface $productStorageClient,
+        ChainRouterInterface $router
+    ) {
         $this->productStorageClient = $productStorageClient;
+        $this->router = $router;
     }
 
     /**
@@ -41,6 +56,10 @@ class ProductDetailPageGatewayBackUrlResolver implements ProductDetailPageGatewa
             static::MAPPING_TYPE_SKU,
             $productConfiguratorResponseTransfer->getSku()
         );
+
+        if (!$productConcreteStorageData) {
+            return $this->router->generate(static::ROUTE_NAME_HOME);
+        }
 
         $productConcreteStorageTransfer = $this->mapProductConcreteStorageDataToProductConcreteStorageTransfer(
             $productConcreteStorageData,

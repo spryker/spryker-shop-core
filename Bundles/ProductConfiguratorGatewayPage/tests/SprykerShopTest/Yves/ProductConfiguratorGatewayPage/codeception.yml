@@ -1,0 +1,36 @@
+namespace: SprykerShopTest\Yves\ProductConfiguratorGatewayPage
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
+coverage:
+    enabled: true
+    remote: false
+    whitelist:
+        include:
+            - '../../../../src/*'
+suites:
+    Yves:
+        path: .
+        class_name: ProductConfiguratorGatewayPageTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Session\Helper\SessionHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Client\Testify\Helper\ClientHelper
+                - \SprykerTest\Yves\Testify\Helper\DependencyProviderHelper
+                - \SprykerTest\Yves\Testify\Helper\FactoryHelper
+                - \SprykerTest\Yves\Application\Helper\ApplicationHelper
+                - \SprykerTest\Yves\EventDispatcher\Helper\EventDispatcherHelper
+                - \SprykerTest\Yves\Router\Helper\RouterHelper
+                - \SprykerTest\Yves\Security\Helper\SecurityHelper
+                - \SprykerTest\Yves\Session\Helper\SessionHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
