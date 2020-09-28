@@ -45,12 +45,14 @@ use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationFailureH
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationSuccessHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerUserProvider;
 use SprykerShop\Yves\CustomerPage\Plugin\Security\CustomerPageSecurityPlugin;
+use SprykerShop\Yves\CustomerPage\Plugin\Subscriber\InteractiveLoginEventSubscriber;
 use SprykerShop\Yves\CustomerPage\Reader\OrderReader;
 use SprykerShop\Yves\CustomerPage\Reader\OrderReaderInterface;
 use SprykerShop\Yves\CustomerPage\Security\Customer;
 use SprykerShop\Yves\CustomerPage\Twig\GetUsernameTwigFunctionProvider;
 use SprykerShop\Yves\CustomerPage\Twig\IsLoggedTwigFunctionProvider;
 use SprykerShop\Yves\CustomerPage\UserChecker\CustomerConfirmationUserChecker;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -65,6 +67,14 @@ use Twig\TwigFunction;
  */
 class CustomerPageFactory extends AbstractFactory
 {
+    /**
+     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
+     */
+    public function createInteractiveLoginEventSubscriber(): EventSubscriberInterface
+    {
+        return new InteractiveLoginEventSubscriber();
+    }
+
     /**
      * @return \SprykerShop\Yves\CustomerPage\Form\FormFactory
      */
