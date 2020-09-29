@@ -32,6 +32,7 @@ class ProductDetailPageGatewayBackUrlResolverStrategyPluginTest extends Unit
     protected const SOURCE_TYPE_PDP = 'SOURCE_TYPE_PDP';
 
     protected const FAKE_SOURCE_TYPE = 'FAKE_SOURCE_TYPE';
+    protected const FAKE_REDIRECT_URL = 'fake/redirect-url';
 
     /**
      * @var \SprykerShopTest\Yves\ProductConfiguratorGatewayPage\ProductConfiguratorGatewayPageTester
@@ -113,7 +114,7 @@ class ProductDetailPageGatewayBackUrlResolverStrategyPluginTest extends Unit
             ->resolveBackUrl($productConfiguratorResponseTransfer);
 
         // Assert
-        $this->assertSame($productConcreteTransfer->getSku(), $backUrl);
+        $this->assertSame(static::FAKE_REDIRECT_URL, $backUrl);
     }
 
     /**
@@ -158,7 +159,7 @@ class ProductDetailPageGatewayBackUrlResolverStrategyPluginTest extends Unit
 
         $productConfiguratorGatewayPageToProductStorageClientBridgeMock
             ->method('buildProductConcreteUrl')
-            ->willReturn($productConcreteTransfer->getSku());
+            ->willReturn(static::FAKE_REDIRECT_URL);
 
         return $productConfiguratorGatewayPageToProductStorageClientBridgeMock;
     }
