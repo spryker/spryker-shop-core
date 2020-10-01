@@ -11,10 +11,10 @@
 } %}
 
 {% block body %}
-    <h5>{{ 'product.attribute.long_description' | trans }}</h5>
+    <h2 class="title--h5">{{ 'product.attribute.long_description' | trans }}</h2>
     <p>{{ data.description }}</p>
 
-    <h5>{{ 'page.product.details' | trans }}</h5>
+    <h2 class="title--h5">{{ 'page.product.details' | trans }}</h2>
     <div class="grid">
         {% for name, value in data.attributes %}
             {% if name %}

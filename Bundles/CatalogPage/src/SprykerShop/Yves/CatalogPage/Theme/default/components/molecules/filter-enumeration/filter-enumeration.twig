@@ -1,7 +1,8 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'filter-enumeration'
+    name: 'filter-enumeration',
+    tag: 'article',
 } %}
 
 {% define data = {
@@ -14,6 +15,8 @@
 {% set inputComponent = isMultiSelect ? atom('checkbox') : atom('radio') %}
 
 {% block body %}
+    <h3 class="title--h6">{{ ('product.filter.' ~ data.filter.name | lower) | trans }}</h3>
+
     <ul class="menu">
         {% for filterValue in data.filter.values %}
             <li class="menu__item">
