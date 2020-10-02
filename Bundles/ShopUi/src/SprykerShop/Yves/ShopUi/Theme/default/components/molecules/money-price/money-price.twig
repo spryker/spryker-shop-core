@@ -12,17 +12,28 @@
     noPriceText: '---',
     currencyIsoCode: null,
     parentJsName: '',
+    pricePrecision: 100,
+} %}
+
+{% define attributes = {
+    itemscope: '',
+    itemprop: 'offers',
+    itemtype: 'https://schema.org/Offer',
 } %}
 
 {% block body %}
+    {% set pricePrecision = data.pricePrecision %}
+
     {% block originalPrice %}
         {% if data.originalAmount is not empty and data.originalAmount > data.amount -%}
             {% block originalPriceInner %}
                 {% set originalPriceJsName = data.parentJsName ? data.parentJsName ~ '__original-price' %}
 
-                <span class="{{ config.name }}__amount {{ config.name }}__amount--original {{ originalPriceJsName }}">
-                    {{- data.originalAmount | money(true, data.currencyIsoCode) -}}
-                </span>
+                {% if data.originalAmount %}
+                    <span itemprop="price" content="{{ data.originalAmount / pricePrecision }}" class="{{ config.name }}__amount {{ config.name }}__amount--original {{ originalPriceJsName }}">
+                        {{- data.originalAmount | money(true, data.currencyIsoCode) -}}
+                    </span>
+                {% endif %}
             {% endblock %}
         {%- endif -%}
     {% endblock %}
@@ -43,7 +54,7 @@
                             name: 'tag',
                         },
                     } only %}
-                    <span class="{{ defaultPriceJsName }}">
+                    <span itemprop="price" content="{{ data.amount / pricePrecision }}" class="{{ defaultPriceJsName }}">
                         {{- data.amount | money(true, data.currencyIsoCode) -}}
                     </span>
                 </span>

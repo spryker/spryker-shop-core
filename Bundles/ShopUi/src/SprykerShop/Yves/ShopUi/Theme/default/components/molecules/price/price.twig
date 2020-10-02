@@ -12,13 +12,19 @@
     noPriceText: '---'
 } %}
 
+{% define attributes = {
+    itemscope: '',
+    itemprop: 'offers',
+    itemtype: 'https://schema.org/Offer',
+} %}
+
 {% block body %}
     {% if data.originalAmount is not empty -%}
-        <span class="{{config.name}}__amount {{config.name}}__amount--original">{{data.originalAmount}}</span>
+        <span itemprop="price" class="{{ config.name }}__amount {{ config.name }}__amount--original">{{ data.originalAmount }}</span>
     {%- endif -%}
 
     {% if data.amount is empty -%}
-        {{data.noPriceText}}
+        {{ data.noPriceText }}
     {%- else -%}
         <span class="{{config.name}}__amount">
             {% include atom('icon') with {
@@ -27,7 +33,7 @@
                     name: 'tag'
                 }
             } only %}
-            {{data.amount}}
+            <span itemprop="price">{{ data.amount }}</span>
         </span>
     {%- endif -%}
 {% endblock %}

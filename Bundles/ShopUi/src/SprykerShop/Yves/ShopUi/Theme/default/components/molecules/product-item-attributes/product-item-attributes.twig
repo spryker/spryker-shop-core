@@ -12,9 +12,9 @@
 {% block body %}
     {% for key, attribute in data.list %}
         {% block listItem %}
-            <li>
+            <li itemprop="additionalProperty" itemscope itemtype="http://schema.org/PropertyValue">
                 {%- block listItemContent -%}
-                    {{ key }}: {{ attribute }}
+                    <span itemprop="name">{{ key }}</span>: <span itemprop="value">{{ attribute }}</span>
                 {%- endblock -%}
             </li>
         {% endblock %}

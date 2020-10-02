@@ -36,7 +36,7 @@
         {% endembed %}
     {% endblock %}
 
-    <div class="container">
+    <div itemscope itemtype="{{ data.microDataItemType }}" class="container">
         {% block pageInfo %}
             <div class="box">
                 {% block breadcrumbs %}
