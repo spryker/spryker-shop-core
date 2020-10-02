@@ -44,7 +44,7 @@
 
 {% block body %}
     {% if brand is not empty %}
-        <h2 class="title--h5"><small>{{'page.product.by' | trans}}</small> <span itemprop="brand">{{ brand }}</span></h2>
+        <h2 class="title--h5"><small>{{ 'page.product.by' | trans }}</small> <span itemprop="brand">{{ brand }}</span></h2>
     {% endif %}
     <small>{{ 'product.attribute.sku' | trans }}: <span itemprop="sku">{{ sku }}</span></small>
 
