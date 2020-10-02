@@ -21,7 +21,7 @@
 } %}
 
 {% block body %}
-    <h5 itemprop="name">{{ data.summary | e('html') }}</h5>
+    <h3 itemprop="name" class="title--h5">{{ data.summary | e('html') }}</h3>
 
     {% include molecule('rating-selector', 'ProductReviewWidget') with {
         data: {
