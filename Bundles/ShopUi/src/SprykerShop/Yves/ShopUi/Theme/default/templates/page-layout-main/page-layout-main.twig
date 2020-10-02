@@ -36,7 +36,7 @@
         {% endembed %}
     {% endblock %}
 
-    <div class="container">
+    <div itemscope itemtype="{{ data.microDataItemType }}" class="container">
         {% block pageInfo %}
             <div class="box">
                 {% block breadcrumbs %}
@@ -46,7 +46,7 @@
                 <hr class="box__separator">
 
                 {% block title %}
-                    <h3>{{data.title}}</h3>
+                    <h3>{{ data.title }}</h3>
                 {% endblock %}
             </div>
         {% endblock %}

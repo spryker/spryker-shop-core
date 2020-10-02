@@ -31,7 +31,18 @@
     {% if attributes.readonly %}{{ config.name }}--readonly{% endif %}
 {% endblock %}
 
+{% define attributes = {
+    itemscope: '',
+    itemtype: 'http://http://schema.org/Reviewg',
+    itemprop: 'review',
+} %}
+
 {% block body %}
+    <span class="is-hidden" itemprop="reviewRating">
+        <meta itemprop="worstRating" content="{{ data.minValue }}">
+        <meta itemprop="ratingValue" content="{{ data.value }}">
+        <meta itemprop="bestRating" content="{{ data.maxValue }}">
+    </span>
     <span class="{{ config.name }}__steps">
         {% apply spaceless %}
             {% for step in data.steps..1 %}

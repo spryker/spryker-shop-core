@@ -87,10 +87,10 @@
                                             {% block productColInner %}
                                                 <ul class="list spacing-y">
                                                     <li class="list__item">
-                                                        <a href="{{ item.url }}">{{ item.name }}</a>
+                                                        <a itemprop="url" href="{{ item.url }}"><span itemprop="name">{{ item.name }}</span></a>
                                                     </li>
                                                     <li class="list__item">
-                                                        <small class="text-secondary">{{ item.sku }}</small>
+                                                        <small itemprop="sku" class="text-secondary">{{ item.sku }}</small>
                                                     </li>
 
                                                     <li class="list__item">

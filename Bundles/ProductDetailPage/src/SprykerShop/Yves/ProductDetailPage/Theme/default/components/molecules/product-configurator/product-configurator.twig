@@ -44,11 +44,12 @@
 
 {% block body %}
     {% if brand is not empty %}
-        <h5><small>{{'page.product.by' | trans}}</small> {{brand}}</h5>
+        <h5><small>{{'page.product.by' | trans}}</small> <span itemprop="brand">{{ brand }}</span></h5>
     {% endif %}
-    <small>{{ 'product.attribute.sku' | trans }}: {{sku}}</small>
+    <small>{{ 'product.attribute.sku' | trans }}: <span itemprop="sku">{{ sku }}</span></small>
 
     <hr>
+
     {% widget 'CurrentProductPriceVolumeWidget' args [data.product.currentProductPrice] only %}
     {% elsewidget 'ProductPriceVolumeWidget' args [data.product] only %} {# @deprecated Use CurrentProductPriceVolumeWidget instead. #}
     {% elsewidget 'PriceProductVolumeWidgetPlugin' args [data.product] only %} {# @deprecated Use CurrentProductPriceVolumeWidget instead. #}
