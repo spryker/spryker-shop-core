@@ -8,7 +8,7 @@
 {% define data = {
     amount: required,
     originalAmount: null,
-    precision: 100,
+    pricePrecision: 100,
 } %}
 
 {% define attributes = {
@@ -18,10 +18,10 @@
 } %}
 
 {% block body %}
-    {% set precision = data.precision %}
+    {% set pricePrecision = data.pricePrecision %}
 
     {% if data.originalAmount is not empty and data.originalAmount > data.amount -%}
-        <span itemprop="price" content="{{ data.originalAmount / precision }}" class="{{ config.name }}__amount {{ config.name }}__amount--original">{{ data.originalAmount | money }}</span>
+        <span itemprop="price" content="{{ data.originalAmount / pricePrecision }}" class="{{ config.name }}__amount {{ config.name }}__amount--original">{{ data.originalAmount | money }}</span>
     {%- endif -%}
 
     <span class="{{ config.name }}__amount">
@@ -32,7 +32,7 @@
                 name: 'tag'
             }
         } only %}
-        <span itemprop="price" content="{{ data.amount / precision }}" class="{{ config.jsName }}__price {{ config.name }}__price">
+        <span itemprop="price" content="{{ data.amount / pricePrecision }}" class="{{ config.jsName }}__price {{ config.name }}__price">
             {{ data.amount | money }}
         </span>
     </span>
