@@ -20,6 +20,9 @@
     'readonly': false,
     'disable-if-empty-value': false,
     'product-item-class-name': data.parentJsName,
+    'itemscope': '',
+    'itemtype': 'http://schema.org/Reviewg',
+    'itemprop': 'review',
 } %}
 
 {% set singleStepValue = (data.maxValue - data.minValue) / (data.steps - 1) %}
@@ -30,12 +33,6 @@
 {% block extraClass %}
     {% if attributes.readonly %}{{ config.name }}--readonly{% endif %}
 {% endblock %}
-
-{% define attributes = {
-    itemscope: '',
-    itemtype: 'http://http://schema.org/Reviewg',
-    itemprop: 'review',
-} %}
 
 {% block body %}
     <span class="is-hidden" itemprop="reviewRating">
