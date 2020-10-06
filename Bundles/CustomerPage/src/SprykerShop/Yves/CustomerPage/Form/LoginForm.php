@@ -99,6 +99,7 @@ class LoginForm extends AbstractType
         $builder->add(static::FIELD_REMEMBER_ME, CheckboxType::class, [
             'label' => 'customer.login.remember_me',
             'required' => false,
+            'mapped' => false,
         ]);
 
         return $this;

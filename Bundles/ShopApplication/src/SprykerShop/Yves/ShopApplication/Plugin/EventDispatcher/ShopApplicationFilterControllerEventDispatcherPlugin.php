@@ -11,7 +11,7 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -22,7 +22,7 @@ class ShopApplicationFilterControllerEventDispatcherPlugin extends AbstractPlugi
 {
     /**
      * {@inheritDoc}
-     * - Adds a listener for the FilterControllerEvent.
+     * - Adds a listener for the ControllerEvent.
      * - Executes FilterControllerEventHandlerPluginInterface's.
      *
      * @api
@@ -34,7 +34,7 @@ class ShopApplicationFilterControllerEventDispatcherPlugin extends AbstractPlugi
      */
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        $eventDispatcher->addListener(KernelEvents::CONTROLLER, function (FilterControllerEvent $event) {
+        $eventDispatcher->addListener(KernelEvents::CONTROLLER, function (ControllerEvent $event) {
             $this->onKernelController($event);
         });
 
@@ -42,11 +42,11 @@ class ShopApplicationFilterControllerEventDispatcherPlugin extends AbstractPlugi
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
      *
      * @return void
      */
-    protected function onKernelController(FilterControllerEvent $event)
+    protected function onKernelController(ControllerEvent $event)
     {
         foreach ($this->getFactory()->getFilterControllerEventSubscriberPlugins() as $filterControllerEventListenerPlugin) {
             $filterControllerEventListenerPlugin->handle($event);

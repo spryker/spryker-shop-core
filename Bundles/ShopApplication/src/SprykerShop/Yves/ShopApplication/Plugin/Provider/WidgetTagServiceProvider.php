@@ -13,7 +13,7 @@ use Spryker\Shared\Kernel\Communication\Application as SprykerApplication;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Kernel\View\ViewInterface;
 use SprykerShop\Yves\ShopApplication\Exception\InvalidApplicationException;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Twig\Environment;
 use Twig\TwigFunction;
@@ -65,7 +65,7 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
             ));
         }
 
-        $app['dispatcher']->addListener(KernelEvents::VIEW, function (GetResponseForControllerResultEvent $event) use ($app) {
+        $app['dispatcher']->addListener(KernelEvents::VIEW, function (ViewEvent $event) use ($app) {
             $this->onKernelView($event, $app);
         }, 0);
     }
@@ -145,12 +145,12 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ViewEvent $event
      * @param \Spryker\Shared\Kernel\Communication\Application $application
      *
      * @return void
      */
-    protected function onKernelView(GetResponseForControllerResultEvent $event, SprykerApplication $application): void
+    protected function onKernelView(ViewEvent $event, SprykerApplication $application): void
     {
         /** @var \Spryker\Yves\Kernel\Widget\WidgetContainerInterface $result */
         $result = $event->getControllerResult();

@@ -34,11 +34,11 @@ class ProductQuickAddForm extends AbstractType
     protected const ERROR_MESSAGE_REDIRECT_SKU_EMPTY = 'product_quick_add_widget.form.error.sku.empty';
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getBlockPrefix(): ?string
+    public function getBlockPrefix(): string
     {
-        return null;
+        return '';
     }
 
     /**

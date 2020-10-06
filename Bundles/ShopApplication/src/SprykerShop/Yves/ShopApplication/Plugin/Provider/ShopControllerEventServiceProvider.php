@@ -12,7 +12,7 @@ use Silex\ServiceProviderInterface;
 use Spryker\Shared\Kernel\Communication\Application as SprykerApplication;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ShopApplication\Exception\InvalidApplicationException;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -48,18 +48,18 @@ class ShopControllerEventServiceProvider extends AbstractPlugin implements Servi
             ));
         }
 
-        $app['dispatcher']->addListener(KernelEvents::CONTROLLER, function (FilterControllerEvent $event) use ($app) {
+        $app['dispatcher']->addListener(KernelEvents::CONTROLLER, function (ControllerEvent $event) use ($app) {
             $this->onKernelController($event, $app);
         }, 0);
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
      * @param \Spryker\Shared\Kernel\Communication\Application $application
      *
      * @return void
      */
-    public function onKernelController(FilterControllerEvent $event, SprykerApplication $application)
+    public function onKernelController(ControllerEvent $event, SprykerApplication $application)
     {
         foreach ($this->getFactory()->getFilterControllerEventSubscriberPlugins() as $filterControllerEventListenerPlugin) {
             $filterControllerEventListenerPlugin->handle($event);
