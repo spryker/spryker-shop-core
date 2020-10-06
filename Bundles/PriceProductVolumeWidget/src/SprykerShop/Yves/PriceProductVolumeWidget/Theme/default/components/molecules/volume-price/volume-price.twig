@@ -17,8 +17,13 @@
 } %}
 
 {% block body %}
+    {% set currencyIsoCode = currencyIsoCode() %}
+
     {% if data.originalAmount is not empty and data.originalAmount > data.amount -%}
-        <span itemprop="price" content="{{ data.originalAmount | moneyRaw }}" class="{{ config.name }}__amount {{ config.name }}__amount--original">{{ data.originalAmount | money }}</span>
+        <span itemprop="price" content="{{ data.originalAmount | moneyRaw }}" class="{{ config.name }}__amount {{ config.name }}__amount--original">
+            <meta itemprop="priceCurrency" content="{{ currencyIsoCode }}">
+            {{ data.originalAmount | money }}
+        </span>
     {%- endif -%}
 
     <span class="{{ config.name }}__amount">
@@ -30,6 +35,7 @@
             }
         } only %}
         <span itemprop="price" content="{{ data.amount | moneyRaw }}" class="{{ config.jsName }}__price {{ config.name }}__price">
+            <meta itemprop="priceCurrency" content="{{ currencyIsoCode }}">
             {{ data.amount | money }}
         </span>
     </span>
