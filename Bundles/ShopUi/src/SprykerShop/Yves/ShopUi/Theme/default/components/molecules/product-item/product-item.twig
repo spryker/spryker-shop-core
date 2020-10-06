@@ -15,6 +15,11 @@
     currencyIsoCode: null,
 } %}
 
+{% define attributes = {
+    itemscope: '',
+    itemtype: 'https://schema.org/Product',
+} %}
+
 {% import _self as macros %}
 
 {%- block extraClass %} box {{ config.jsName }}{% endblock -%}
@@ -94,7 +99,7 @@
         {% block name %}
             {% if data.name and data.url %}
                 {% block link %}
-                    <a itemprop="url" class="{{ config.name }}__name {{ config.jsName }}__name {{ config.jsName }}__link-detail-page" href="{{ path(data.url) }}">
+                    <a class="{{ config.name }}__name {{ config.jsName }}__name {{ config.jsName }}__link-detail-page" href="{{ path(data.url) }}">
                         <span itemprop="name">{{ data.name }}</span>
                     </a>
                 {% endblock %}
@@ -158,7 +163,7 @@
                     {% block actionsContent %}
                         {% if data.url %}
                             {% block action %}
-                                <a itemprop="url" class="button button--expand {{ config.jsName }}__link-detail-page" href="{{ path(data.url) }}">
+                                <a class="button button--expand {{ config.jsName }}__link-detail-page" href="{{ path(data.url) }}">
                                     {% block actionInner %}
                                         {{- 'product.view' | trans -}}
 

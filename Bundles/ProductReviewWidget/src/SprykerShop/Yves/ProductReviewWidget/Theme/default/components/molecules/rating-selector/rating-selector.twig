@@ -20,9 +20,6 @@
     'readonly': false,
     'disable-if-empty-value': false,
     'product-item-class-name': data.parentJsName,
-    'itemscope': '',
-    'itemtype': 'http://schema.org/Review',
-    'itemprop': 'review',
 } %}
 
 {% set singleStepValue = (data.maxValue - data.minValue) / (data.steps - 1) %}
@@ -35,11 +32,6 @@
 {% endblock %}
 
 {% block body %}
-    <span class="is-hidden" itemprop="reviewRating">
-        <meta itemprop="worstRating" content="{{ data.minValue }}">
-        <meta itemprop="ratingValue" content="{{ data.value }}">
-        <meta itemprop="bestRating" content="{{ data.maxValue }}">
-    </span>
     <span class="{{ config.name }}__steps">
         {% apply spaceless %}
             {% for step in data.steps..1 %}
