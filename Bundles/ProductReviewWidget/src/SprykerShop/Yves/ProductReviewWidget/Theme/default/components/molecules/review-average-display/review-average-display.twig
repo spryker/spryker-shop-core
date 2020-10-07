@@ -29,12 +29,17 @@
         }
     } only %}
 
+    <span itemscope itemprop="aggregateRating" itemtype="https://schema.org/AggregateRating">
+        <meta itemprop="ratingValue" content="{{ data.summary.averageRating }}">
+        <meta itemprop="bestRating" content="{{ data.summary.maximumRating }}">
+        <meta itemprop="reviewCount" content="{{ data.summary.totalReview }}">
+    </span>
+
     {% if data.summary.totalReview > 0 %}
-        <span itemscope itemprop="aggregateRating" itemtype="https://schema.org/AggregateRating">
-            <strong itemprop="ratingValue">{{ data.summary.averageRating }}</strong> {{ 'product_review.summary.out_of' | trans }}
-            <span itemprop="bestRating">{{ data.summary.maximumRating }}</span> {{ 'product_review.summary.stars' | trans }}
-            (
-            <span itemprop="reviewCount">{{- data.summary.totalReview }}</span>
+        <strong>{{ data.summary.averageRating }}</strong> {{ 'product_review.summary.out_of' | trans }}
+        {{ data.summary.maximumRating }} {{ 'product_review.summary.stars' | trans }}
+        (
+            {{- data.summary.totalReview }}
 
             {% set amount = data.summary.totalReview > 1 ? 'multiple' : data.summary.totalReview %}
 
@@ -42,8 +47,7 @@
                 '1' : 'product_review.summary.review' | trans,
                 'multiple': 'product_review.summary.reviews' | trans,
             }) -}}
-            )
-        </span>
+        )
     {% else %}
         {{ 'product_review.no_reviews' | trans }}
     {% endif %}
