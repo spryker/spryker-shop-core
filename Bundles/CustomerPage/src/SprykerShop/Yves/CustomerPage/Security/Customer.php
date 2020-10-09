@@ -46,7 +46,7 @@ class Customer implements CustomerUserInterface
     }
 
     /**
-     * @return \Symfony\Component\Security\Core\Role\Role[]
+     * @return string[]
      */
     public function getRoles()
     {

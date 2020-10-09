@@ -13,8 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Positive;
 
 class MultiCartDeleteForm extends AbstractType
 {
@@ -54,7 +54,7 @@ class MultiCartDeleteForm extends AbstractType
         $builder->add(static::FIELD_ID_QUOTE, HiddenType::class, [
             'constraints' => [
                 new NotBlank(),
-                new Positive(),
+                new GreaterThanOrEqual(['value' => 1]),
             ],
         ]);
 

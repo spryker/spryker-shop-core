@@ -39,6 +39,7 @@ class ProductConcreteAddController extends AbstractController
 
             return $this->redirectResponseExternal($referer);
         }
+
         $redirectRouteName = $form->getData()[ProductQuickAddForm::FIELD_REDIRECT_ROUTE_NAME];
 
         return $this->redirectResponseInternal($redirectRouteName, $request->request->all());

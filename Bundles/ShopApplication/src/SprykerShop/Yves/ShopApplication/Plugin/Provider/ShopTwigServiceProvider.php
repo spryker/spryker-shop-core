@@ -14,7 +14,7 @@ use Spryker\Shared\Kernel\Communication\Application as SprykerApplication;
 use Spryker\Shared\Twig\TwigConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ShopApplication\Exception\InvalidApplicationException;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Twig\Environment;
 use Twig\Loader\ChainLoader;
@@ -64,18 +64,18 @@ class ShopTwigServiceProvider extends AbstractPlugin implements ServiceProviderI
             ->createSilexTwigServiceProvider()
             ->boot($app);
 
-        $app['dispatcher']->addListener(KernelEvents::VIEW, function (GetResponseForControllerResultEvent $event) use ($app) {
+        $app['dispatcher']->addListener(KernelEvents::VIEW, function (ViewEvent $event) use ($app) {
             $this->onKernelView($event, $app);
         }, 0);
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ViewEvent $event
      * @param \Spryker\Shared\Kernel\Communication\Application $application
      *
      * @return void
      */
-    public function onKernelView(GetResponseForControllerResultEvent $event, SprykerApplication $application)
+    public function onKernelView(ViewEvent $event, SprykerApplication $application)
     {
         $result = $event->getControllerResult();
 

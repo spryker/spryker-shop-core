@@ -45,7 +45,7 @@ class Agent implements UserInterface
     }
 
     /**
-     * @return \Symfony\Component\Security\Core\Role\Role[]
+     * @return string[]
      */
     public function getRoles()
     {

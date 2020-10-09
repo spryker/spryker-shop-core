@@ -12,7 +12,7 @@ use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Cookie;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -38,7 +38,7 @@ class LastVisitCookieEventDispatcherPlugin extends AbstractPlugin implements Eve
      */
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event): void {
+        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (ResponseEvent $event): void {
             $event->getResponse()->headers->setCookie(
                 (Cookie::create(static::COOKIE_NAME, (string)time(), time() + static::COOKIE_LIFETIME))
             );

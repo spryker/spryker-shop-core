@@ -82,7 +82,7 @@ class CmsTwigFunctionServiceProvider extends AbstractPlugin implements ServicePr
     /**
      * @param \Silex\Application $application
      *
-     * @return \Symfony\Component\Translation\TranslatorInterface
+     * @return \Symfony\Contracts\Translation\TranslatorInterface
      */
     protected function getTranslator(Application $application)
     {

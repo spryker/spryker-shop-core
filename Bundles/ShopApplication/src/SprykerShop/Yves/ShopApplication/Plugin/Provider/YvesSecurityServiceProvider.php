@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\ShopApplication\Plugin\Provider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 
 /**
  * @deprecated Will be removed without replacement. The `\Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder`
@@ -27,7 +27,7 @@ class YvesSecurityServiceProvider extends AbstractPlugin implements ServiceProvi
     public function register(Application $app)
     {
         $app['security.encoder.digest'] = function ($app) {
-            return new BCryptPasswordEncoder(self::BCRYPT_FACTOR);
+            return new NativePasswordEncoder(null, null, static::BCRYPT_FACTOR);
         };
     }
 

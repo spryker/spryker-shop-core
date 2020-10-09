@@ -89,6 +89,7 @@ class MultiShipmentForm extends AbstractType
             'placeholder' => 'checkout.shipment.requested_delivery_date.placeholder',
             'required' => false,
             'input' => 'string',
+            'html5' => false,
             'format' => static::FIELD_REQUESTED_DELIVERY_DATE_FORMAT,
             'constraints' => [
                 $this->createDateTimeConstraint(),
