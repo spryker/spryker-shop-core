@@ -56,7 +56,7 @@ class GatewayRequestController extends AbstractController
 
         $this->handleProductConfigurationRedirectErrors($productConfiguratorRedirectTransfer);
 
-        return $this->redirectResponseInternal($refererUrl);
+        return $this->redirectResponseExternal($refererUrl);
     }
 
     /**
