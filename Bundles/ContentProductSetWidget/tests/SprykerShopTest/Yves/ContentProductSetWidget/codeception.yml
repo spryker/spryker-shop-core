@@ -21,4 +21,7 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Yves\Locale\Helper\LocaleHelper
+                - \SprykerTest\Yves\Testify\Helper\FactoryHelper
                 - \SprykerTest\Yves\Application\Helper\ApplicationHelper
+                - \SprykerTest\Yves\EventDispatcher\Helper\EventDispatcherHelper
+                - \SprykerTest\Yves\Router\Helper\RouterHelper
