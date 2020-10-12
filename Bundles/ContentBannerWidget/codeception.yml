@@ -1,4 +1,6 @@
 namespace: SprykerShopTest
+include:
+    - tests/SprykerShopTest/Yves/ContentBannerWidget
 paths:
     tests: tests/
     log: tests/_output/
