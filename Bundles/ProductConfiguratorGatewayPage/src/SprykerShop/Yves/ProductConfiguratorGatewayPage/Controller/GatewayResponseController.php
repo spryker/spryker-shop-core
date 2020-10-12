@@ -46,7 +46,7 @@ class GatewayResponseController extends AbstractController
 
         $productConfiguratorResponseProcessorResponseTransfer = $this->getFactory()
             ->getProductConfigurationClient()
-            ->processProductConfiguratorResponse($productConfigurationResponseTransfer, $request->request->all());
+            ->processProductConfiguratorResponse($productConfigurationResponseTransfer, json_decode($request->getContent(), true) ?? []);
 
         if (!$productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful()) {
             $this->handleResponseErrors($productConfiguratorResponseProcessorResponseTransfer);
