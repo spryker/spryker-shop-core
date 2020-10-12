@@ -23,6 +23,11 @@ class GatewayRequestController extends AbstractController
     protected const REQUEST_HEADER_REFERER = 'referer';
 
     /**
+     * @uses \Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL
+     */
+    protected const ABSOLUTE_URL = 0;
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -44,7 +49,9 @@ class GatewayRequestController extends AbstractController
 
         $productConfiguratorRequestDataTransfer->setBackUrl($refererUrl)
             ->setSubmitUrl($this->getRouter()->generate(
-                ProductConfiguratorGatewayPageRouteProviderPlugin::ROUTE_NAME_PRODUCT_CONFIGURATOR_GATEWAY_RESPONSE
+                ProductConfiguratorGatewayPageRouteProviderPlugin::ROUTE_NAME_PRODUCT_CONFIGURATOR_GATEWAY_RESPONSE,
+                [],
+                static::ABSOLUTE_URL
             ));
 
         $productConfiguratorRedirectTransfer = $this->getFactory()->createProductConfiguratorRedirectResolver()
