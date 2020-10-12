@@ -91,6 +91,8 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
     ): ProductConfigurationInstanceTransfer {
         $sku = $productConfiguratorRequestDataTransfer->requireSku()->getSku();
         $itemGroupKey = $productConfiguratorRequestDataTransfer->getItemGroupKey();
+        $quantity = $productConfiguratorRequestDataTransfer->getQuantity() ?? 1;
+
         $productConfigurationInstanceTransfer = null;
 
         if ($itemGroupKey) {
@@ -104,6 +106,8 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
         if (!$productConfigurationInstanceTransfer) {
             throw new ProductConfigurationInstanceNotFoundException();
         }
+
+        $productConfigurationInstanceTransfer->setQuantity($quantity);
 
         return $productConfigurationInstanceTransfer;
     }
