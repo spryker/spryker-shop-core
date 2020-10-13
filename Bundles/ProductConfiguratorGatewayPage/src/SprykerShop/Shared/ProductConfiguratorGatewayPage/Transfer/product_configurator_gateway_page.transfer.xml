@@ -25,7 +25,7 @@
         <property name="configuratorRedirectUrl" type="string"/>
         <property name="configuratorRedirectQueryParams" type="array" singular="configuratorRedirectQueryParam"/>
         <property name="isSuccessful" type="bool"/>
-        <property name="messages" type="array" singular="message"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="ProductConfiguratorRequestData">
