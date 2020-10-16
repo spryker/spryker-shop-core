@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\ProductConfiguratorGatewayPage\Mapper;
 
-use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -23,12 +22,7 @@ class ProductConfiguratorResponseDataMapper implements ProductConfiguratorRespon
         Request $request,
         ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
     ): ProductConfiguratorResponseTransfer {
-        $data = $request->request->all();
-
-        $productConfiguratorResponseTransfer
-            ->fromArray($data, true)
-            ->setProductConfigurationInstance((new ProductConfigurationInstanceTransfer())->fromArray($data, true));
-
-        return $productConfiguratorResponseTransfer;
+        return $productConfiguratorResponseTransfer
+            ->fromArray($request->request->all(), true);
     }
 }
