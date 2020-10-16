@@ -23,7 +23,7 @@ class ProductConfiguratorRequestDataMapper implements ProductConfiguratorRequest
         ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer
     ): ProductConfiguratorRequestDataTransfer {
         return $productConfiguratorRequestDataTransfer->fromArray(
-            $productConfigurationInstanceTransfer->modifiedToArray(),
+            $productConfigurationInstanceTransfer->toArray(),
             true
         );
     }
