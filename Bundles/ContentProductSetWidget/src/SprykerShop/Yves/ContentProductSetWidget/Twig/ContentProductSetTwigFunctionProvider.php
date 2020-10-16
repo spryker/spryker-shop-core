@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\ContentProductSetWidget\Twig;
 
 use Spryker\Client\ContentProductSet\Exception\InvalidProductSetTermException;
-use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Shared\Twig\TwigFunctionProvider;
 use SprykerShop\Yves\ContentProductSetWidget\Reader\ContentProductAbstractReaderInterface;
 use SprykerShop\Yves\ContentProductSetWidget\Reader\ContentProductSetReaderInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +17,7 @@ use Twig\Environment;
 /**
  * @method \SprykerShop\Yves\ContentProductSetWidget\ContentProductSetWidgetFactory getFactory()
  */
-class ContentProductSetTwigFunction extends TwigFunction
+class ContentProductSetTwigFunctionProvider extends TwigFunctionProvider
 {
     /**
      * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::TWIG_FUNCTION_NAME
@@ -25,7 +25,7 @@ class ContentProductSetTwigFunction extends TwigFunction
     protected const FUNCTION_CONTENT_PRODUCT_SET = 'content_product_set';
 
     /**
-     * @deprecated Use {@link \SprykerShop\Yves\ContentProductSetWidget\Twig\ContentProductSetTwigFunction::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_TOP} instead.
+     * @deprecated Use {@link \SprykerShop\Yves\ContentProductSetWidget\Twig\ContentProductSetTwigFunctionProvider::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_TOP} instead.
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
 
@@ -85,8 +85,6 @@ class ContentProductSetTwigFunction extends TwigFunction
         ContentProductSetReaderInterface $contentProductSetReader,
         ContentProductAbstractReaderInterface $contentProductAbstractReader
     ) {
-        parent::__construct();
-
         $this->twig = $twig;
         $this->localeName = $localeName;
         $this->contentProductSetReader = $contentProductSetReader;
@@ -96,7 +94,7 @@ class ContentProductSetTwigFunction extends TwigFunction
     /**
      * @return string
      */
-    protected function getFunctionName(): string
+    public function getFunctionName(): string
     {
         return static::FUNCTION_CONTENT_PRODUCT_SET;
     }
@@ -121,7 +119,7 @@ class ContentProductSetTwigFunction extends TwigFunction
             if (!$productSetDataStorageTransfer) {
                 return $this->getMessageProductSetNotFound($contentKey);
             }
-            
+
             /** @var array $selectedAttributes */
             $selectedAttributes = $this->getRequest($context)->query->get(static::PARAM_ATTRIBUTE) ?: [];
             $productAbstractViewCollection = $this->contentProductAbstractReader
@@ -140,7 +138,7 @@ class ContentProductSetTwigFunction extends TwigFunction
     /**
      * @return array
      */
-    protected function getOptions(): array
+    public function getOptions(): array
     {
         return [
             'needs_context' => true,

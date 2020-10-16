@@ -7,19 +7,19 @@
 
 namespace SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin;
 
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
 interface FilterControllerEventHandlerPluginInterface
 {
     /**
      * Specification:
-     * - Subscribes for symfony FilterControllerEvent
+     * - Subscribes for symfony ControllerEvent
      *
      * @api
      *
-     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
      *
      * @return void
      */
-    public function handle(FilterControllerEvent $event): void;
+    public function handle(ControllerEvent $event): void;
 }

@@ -1,5 +1,5 @@
 {% extends molecule('schedule-list', 'MerchantOpeningHoursWidget') %}
-{% import molecule('schedule-list', 'MerchantOpeningHoursWidget') as scheduleMacro %}
+{% import molecule('schedule-list', 'MerchantOpeningHoursWidget') as macros %}
 
 {% define config = {
     name: 'weekday-schedule',
@@ -14,7 +14,7 @@
 
     {% for scheduleItem in data.scheduleData %}
         {% set localizedDayTitleKey = 'merchant_opening_hours.day.title.' ~ scheduleItem.day | lower %}
-        {% set time = scheduleMacro.scheduleTime(scheduleItem, scheduleList, scheduleItem.day) %}
+        {% set time = macros.scheduleTime(scheduleItem, scheduleList, scheduleItem.day) %}
         {% set scheduleList = scheduleList | merge({
             (scheduleItem.day): {
                 note: '',

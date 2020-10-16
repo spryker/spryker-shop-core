@@ -45,7 +45,6 @@ class CmsTwigFunctionServiceProvider extends AbstractPlugin implements ServicePr
     protected function registerCmsTwigFunction(Environment $twig, Application $application)
     {
         $twig->addFunction(
-            'spyCms',
             new TwigFunction('spyCms', function (array $context, $identifier) use ($application) {
                 $placeholders = $context['_view']['placeholders'];
 
@@ -83,7 +82,7 @@ class CmsTwigFunctionServiceProvider extends AbstractPlugin implements ServicePr
     /**
      * @param \Silex\Application $application
      *
-     * @return \Symfony\Component\Translation\TranslatorInterface
+     * @return \Symfony\Contracts\Translation\TranslatorInterface
      */
     protected function getTranslator(Application $application)
     {

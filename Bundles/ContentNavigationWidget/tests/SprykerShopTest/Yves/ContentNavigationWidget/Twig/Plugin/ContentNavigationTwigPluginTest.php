@@ -20,7 +20,7 @@ use SprykerShop\Yves\ContentNavigationWidget\ContentNavigationWidgetDependencyPr
 use SprykerShop\Yves\ContentNavigationWidget\Dependency\Client\ContentNavigationWidgetToContentNavigationClientInterface;
 use SprykerShop\Yves\ContentNavigationWidget\Dependency\Client\ContentNavigationWidgetToNavigationStorageClientInterface;
 use SprykerShop\Yves\ContentNavigationWidget\Plugin\Twig\ContentNavigationTwigPlugin;
-use SprykerShop\Yves\ContentNavigationWidget\Twig\ContentNavigationTwigFunction;
+use SprykerShop\Yves\ContentNavigationWidget\Twig\ContentNavigationTwigFunctionProvider;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -79,7 +79,7 @@ class ContentNavigationTwigPluginTest extends Unit
         );
 
         // Assert
-        $this->assertEquals(static::MESSAGE_NAVIGATION_NOT_FOUND, $navigationContent);
+        $this->assertSame(static::MESSAGE_NAVIGATION_NOT_FOUND, $navigationContent);
     }
 
     /**
@@ -102,7 +102,7 @@ class ContentNavigationTwigPluginTest extends Unit
 
         // Assert
 
-        $this->assertEquals(static::MESSAGE_NAVIGATION_WRONG_TYPE, $navigationContent);
+        $this->assertSame(static::MESSAGE_NAVIGATION_WRONG_TYPE, $navigationContent);
     }
 
     /**
@@ -122,7 +122,7 @@ class ContentNavigationTwigPluginTest extends Unit
         );
 
         // Assert
-        $this->assertEquals(static::MESSAGE_NAVIGATION_WRONG_TEMPLATE, $navigationContent);
+        $this->assertSame(static::MESSAGE_NAVIGATION_WRONG_TEMPLATE, $navigationContent);
     }
 
     /**
@@ -146,7 +146,7 @@ class ContentNavigationTwigPluginTest extends Unit
         );
 
         // Assert
-        $this->assertEquals($navigationContent, '');
+        $this->assertSame('', $navigationContent);
     }
 
     /**
@@ -170,7 +170,7 @@ class ContentNavigationTwigPluginTest extends Unit
         );
 
         // Assert
-        $this->assertEquals($navigationContent, static::RENDERED_STRING);
+        $this->assertSame(static::RENDERED_STRING, $navigationContent);
     }
 
     /**
@@ -233,7 +233,7 @@ class ContentNavigationTwigPluginTest extends Unit
     protected function getContentNavigationTwigFunction()
     {
         $functionName = new ReflectionClassConstant(
-            ContentNavigationTwigFunction::class,
+            ContentNavigationTwigFunctionProvider::class,
             'TWIG_FUNCTION_NAME_CONTENT_NAVIGATION'
         );
 

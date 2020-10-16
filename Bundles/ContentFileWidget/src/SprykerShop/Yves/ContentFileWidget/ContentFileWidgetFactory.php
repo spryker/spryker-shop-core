@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ContentFileWidget;
 
+use Spryker\Shared\Twig\TwigFunctionProvider;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToContentFileClientInterface;
 use SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToFileManagerStorageClientInterface;
@@ -14,9 +15,9 @@ use SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface
 use SprykerShop\Yves\ContentFileWidget\Expander\IconNameFileStorageDataExpander;
 use SprykerShop\Yves\ContentFileWidget\Reader\ContentFileReader;
 use SprykerShop\Yves\ContentFileWidget\Reader\ContentFileReaderInterface;
-use SprykerShop\Yves\ContentFileWidget\Twig\ContentFileListTwigFunction;
-use SprykerShop\Yves\ContentFileWidget\Twig\ReadableByteSizeTwigFilter;
+use SprykerShop\Yves\ContentFileWidget\Twig\ContentFileListTwigFunctionProvider;
 use Twig\Environment;
+use Twig\TwigFunction;
 
 /**
  * @method \SprykerShop\Yves\ContentFileWidget\ContentFileWidgetConfig getConfig()
@@ -27,11 +28,11 @@ class ContentFileWidgetFactory extends AbstractFactory
      * @param \Twig\Environment $twig
      * @param string $localeName
      *
-     * @return \SprykerShop\Yves\ContentFileWidget\Twig\ContentFileListTwigFunction
+     * @return \Spryker\Shared\Twig\TwigFunctionProvider
      */
-    public function createContentFileListTwigFunction(Environment $twig, string $localeName): ContentFileListTwigFunction
+    public function createContentFileListTwigFunctionProvider(Environment $twig, string $localeName): TwigFunctionProvider
     {
-        return new ContentFileListTwigFunction(
+        return new ContentFileListTwigFunctionProvider(
             $twig,
             $localeName,
             $this->createContentFileReader(),
@@ -40,11 +41,20 @@ class ContentFileWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ContentFileWidget\Twig\ReadableByteSizeTwigFilter
+     * @param \Twig\Environment $twig
+     * @param string $localeName
+     *
+     * @return \Twig\TwigFunction
      */
-    public function createReadableByteSizeTwigFilter(): ReadableByteSizeTwigFilter
+    public function createContentFileListTwigFunction(Environment $twig, string $localeName): TwigFunction
     {
-        return new ReadableByteSizeTwigFilter();
+        $functionProvider = $this->createContentFileListTwigFunctionProvider($twig, $localeName);
+
+        return new TwigFunction(
+            $functionProvider->getFunctionName(),
+            $functionProvider->getFunction(),
+            $functionProvider->getOptions()
+        );
     }
 
     /**

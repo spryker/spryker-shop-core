@@ -47,7 +47,7 @@ class ShopCmsSlotTokenParser extends AbstractTokenParser
     /**
      * @param \Twig\Token $token
      *
-     * @return \SprykerShop\Yves\ShopCmsSlot\Twig\Node\ShopCmsSlotNode|\Twig_NodeInterface
+     * @return \SprykerShop\Yves\ShopCmsSlot\Twig\Node\ShopCmsSlotNode|\Twig\Node\Node
      */
     public function parse(Token $token)
     {

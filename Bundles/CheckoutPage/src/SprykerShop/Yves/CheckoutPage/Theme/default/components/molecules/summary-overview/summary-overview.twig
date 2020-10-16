@@ -48,6 +48,8 @@
     {% endif %}
 {% endmacro %}
 
+{% import _self as macros %}
+
 {% block body %}
     {% if can('SeePricePermissionPlugin') %}
         <li>
@@ -60,20 +62,22 @@
         {% endblock %}
 
         {% if data.prices.discountTotal %}
-            {{ _self.itemDiscounts(data.voucherDiscounts, 'cart.vouchers') }}
-            {{ _self.itemDiscounts(data.cartRuleDiscounts, 'cart.discounts') }}
+            {{ macros.itemDiscounts(data.voucherDiscounts, 'cart.vouchers') }}
+            {{ macros.itemDiscounts(data.cartRuleDiscounts, 'cart.discounts') }}
             {{ block('separator') }}
         {% endif %}
 
         <li>
             <strong class="float-right">{{ data.totalCosts | money }}</strong>
             <strong>{{ 'checkout.step.summary.shipment_costs_total' | trans }}</strong>
-            {% for expense in data.expenses if expense.type == shipmentExpenseType %}
-                <div class="grid grid--justify">
-                    <span class="col col--sm-10">{{ expense.shipment.method.carrierName }}
-                        - {{ expense.shipment.method.name }}</span>
-                    <span class="col col--expand text-right">{{ expense.sumPrice | money }}</span>
-                </div>
+            {% for expense in data.expenses %}
+                {% if expense.type == shipmentExpenseType %}
+                    <div class="grid grid--justify">
+                        <span class="col col--sm-10">{{ expense.shipment.method.carrierName }}
+                            - {{ expense.shipment.method.name }}</span>
+                        <span class="col col--expand text-right">{{ expense.sumPrice | money }}</span>
+                    </div>
+                {% endif %}
             {% endfor %}
         </li>
 

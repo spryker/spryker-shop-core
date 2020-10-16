@@ -1,0 +1,5 @@
+parameters:
+    checkMissingIterableValueType: false
+    ignoreErrors:
+        - '#Call to an undefined method Twig\\Loader\\LoaderInterface::exists\(\).#'
+    reportUnmatchedIgnoredErrors: false

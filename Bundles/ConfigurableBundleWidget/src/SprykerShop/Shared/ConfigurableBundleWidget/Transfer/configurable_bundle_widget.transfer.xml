@@ -13,6 +13,7 @@
         <property name="sumSubtotalAggregation" type="int"/>
         <property name="unitPrice" type="int"/>
         <property name="groupKey" type="string"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="ConfiguredBundleCollection">

@@ -7,6 +7,9 @@
         <property name="isLocked" type="bool"/>
         <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
         <property name="customer" type="Customer"/>
+        <property name="name" type="string"/>
+        <property name="idQuote" type="int"/>
+        <property name="isDefault" type="bool"/>
     </transfer>
 
     <transfer name="Customer">
