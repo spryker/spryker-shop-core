@@ -74,8 +74,8 @@ class GatewayRequestController extends AbstractController
     protected function handleProductConfigurationRedirectErrors(
         ProductConfiguratorRedirectTransfer $productConfiguratorRedirectTransfer
     ) {
-        foreach ($productConfiguratorRedirectTransfer->getMessages() as $message) {
-            $this->addErrorMessage($message);
+        foreach ($productConfiguratorRedirectTransfer->getMessages() as $messageTransfer) {
+            $this->addErrorMessage($messageTransfer->getValue());
         }
     }
 
