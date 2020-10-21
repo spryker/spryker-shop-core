@@ -1,4 +1,6 @@
 namespace: ContentProductWidget
+include:
+    - tests/SprykerShopTest/Yves/ContentProductWidget
 actor: Tester
 paths:
     tests: tests
