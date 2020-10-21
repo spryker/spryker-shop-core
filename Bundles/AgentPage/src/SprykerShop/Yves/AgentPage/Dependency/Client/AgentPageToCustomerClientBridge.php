@@ -49,4 +49,12 @@ class AgentPageToCustomerClientBridge implements AgentPageToCustomerClientInterf
     {
         return $this->customerClient->isLoggedIn();
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function getCustomer()
+    {
+        return $this->customerClient->getCustomer();
+    }
 }

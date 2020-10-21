@@ -27,4 +27,9 @@ interface AgentPageToCustomerClientInterface
      * @return bool
      */
     public function isLoggedIn();
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function getCustomer();
 }
