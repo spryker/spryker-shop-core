@@ -135,18 +135,6 @@
         },
         {
             "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CompanyWidget/src/SprykerShop/Yves/CompanyWidget/CompanyWidgetDependencyProvider.php",
-            "snippet": "            return new CompanyWidgetToCustomerClientBridge($container->getLocator()->customer()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 163,
             "line_to": 163,
             "type": "PossiblyNullArrayOffset",

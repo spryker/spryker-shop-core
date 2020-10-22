@@ -3,30 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentFileWidget/src/SprykerShop/Yves/ContentFileWidget/ContentFileWidgetDependencyProvider.php",
-            "snippet": "            return new ContentFileWidgetToContentFileClientBridge($container->getLocator()->contentFile()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 56,
-            "line_to": 56,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentFileWidget/src/SprykerShop/Yves/ContentFileWidget/ContentFileWidgetDependencyProvider.php",
-            "snippet": "            return new ContentFileWidgetToFileManagerStorageClientBridge($container->getLocator()->fileManagerStorage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 40,
             "line_to": 40,
             "type": "PossiblyNullArrayOffset",

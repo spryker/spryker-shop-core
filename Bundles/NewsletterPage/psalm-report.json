@@ -48,45 +48,9 @@
             "selected_text": "$subscriptionResultTransfer->getSubscriptionResults()[0]->getIsSuccess()",
             "error_level": 5,
             "shortcode": 139
-        },
-        {
-            "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/NewsletterPage/src/SprykerShop/Yves/NewsletterPage/NewsletterPageDependencyProvider.php",
-            "snippet": "            return new NewsletterPageToNewsletterClientBridge($container->getLocator()->newsletter()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/NewsletterPage/src/SprykerShop/Yves/NewsletterPage/NewsletterPageDependencyProvider.php",
-            "snippet": "            return new NewsletterPageToCustomerClientBridge($container->getLocator()->customer()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 69,
-            "line_to": 69,
-            "type": "DeprecatedClass",
-            "message": "Class SprykerShop\\Yves\\NewsletterPage\\Plugin\\Provider\\NewsletterPageControllerProvider is deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/NewsletterPage/src/SprykerShop/Yves/NewsletterPage/Controller/NewsletterController.php",
-            "snippet": "            return $this->redirectResponseInternal(NewsletterPageControllerProvider::ROUTE_CUSTOMER_NEWSLETTER);",
-            "selected_text": "NewsletterPageControllerProvider::ROUTE_CUSTOMER_NEWSLETTER",
-            "error_level": 2,
-            "shortcode": 98
-        },
         {
             "severity": "info",
             "line_from": 16,

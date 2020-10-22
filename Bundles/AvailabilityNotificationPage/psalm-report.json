@@ -3,30 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationPage/src/SprykerShop/Yves/AvailabilityNotificationPage/AvailabilityNotificationPageDependencyProvider.php",
-            "snippet": "            return new AvailabilityNotificationPageToAvailabilityNotificationClientBridge($container->getLocator()->availabilityNotification()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationPage/src/SprykerShop/Yves/AvailabilityNotificationPage/AvailabilityNotificationPageDependencyProvider.php",
-            "snippet": "            return new AvailabilityNotificationPageToCustomerClientBridge($container->getLocator()->customer()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 50,
             "line_to": 50,
             "type": "PossiblyNullArgument",
