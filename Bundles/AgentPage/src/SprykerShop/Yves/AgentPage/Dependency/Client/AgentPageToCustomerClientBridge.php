@@ -35,6 +35,14 @@ class AgentPageToCustomerClientBridge implements AgentPageToCustomerClientInterf
     }
 
     /**
+     * @return void
+     */
+    public function logout()
+    {
+        $this->customerClient->logout();
+    }
+
+    /**
      * @return bool
      */
     public function isLoggedIn()

@@ -19,6 +19,11 @@ interface AgentPageToCustomerClientInterface
     public function setCustomer(CustomerTransfer $customerTransfer);
 
     /**
+     * @return void
+     */
+    public function logout();
+
+    /**
      * @return bool
      */
     public function isLoggedIn();
