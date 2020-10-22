@@ -66,8 +66,8 @@ class AgentPageToAgentClientBridge implements AgentPageToAgentClientInterface
      *
      * @return void
      */
-    public function sanitizeCustomerImpersonation(CustomerTransfer $customerTransfer): void
+    public function finishImpersonation(CustomerTransfer $customerTransfer): void
     {
-        $this->agentClient->sanitizeCustomerImpersonation($customerTransfer);
+        $this->agentClient->finishImpersonation($customerTransfer);
     }
 }

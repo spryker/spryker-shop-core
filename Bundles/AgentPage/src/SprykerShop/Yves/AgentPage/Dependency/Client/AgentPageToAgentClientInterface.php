@@ -41,5 +41,5 @@ interface AgentPageToAgentClientInterface
      *
      * @return void
      */
-    public function sanitizeCustomerImpersonation(CustomerTransfer $customerTransfer): void;
+    public function finishImpersonation(CustomerTransfer $customerTransfer): void;
 }
