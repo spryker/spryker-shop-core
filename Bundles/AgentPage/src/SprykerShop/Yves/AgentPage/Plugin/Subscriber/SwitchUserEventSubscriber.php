@@ -61,14 +61,8 @@ class SwitchUserEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function onImpersonationEnd(): void
     {
-        $customerTransfer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
-
-        $this->logoutCustomer();
+        $this->getFactory()->getAgentClient()->finishImpersonationSession();
         $this->clearAgentsQuote();
-
-        $this->getFactory()->getAgentClient()->finishImpersonation($customerTransfer);
     }
 
     /**
@@ -84,17 +78,7 @@ class SwitchUserEventSubscriber extends AbstractPlugin implements EventSubscribe
     }
 
     /**
-     * @return void
-     */
-    protected function logoutCustomer(): void
-    {
-        $this->getFactory()
-            ->getCustomerClient()
-            ->logout();
-    }
-
-    /**
-     * @deprecated Use {@link \Spryker\Client\Quote\Plugin\Agent\SanitizeCustomerQuoteImpersonationFinisherPlugin::finish()} instead.
+     * @deprecated Use {@link \Spryker\Client\Quote\Plugin\Agent\SanitizeCustomerQuoteImpersonationSessionFinisherPlugin::finish()} instead.
      *
      * @return void
      */

@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\AgentPage\Dependency\Client;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
 class AgentPageToAgentClientBridge implements AgentPageToAgentClientInterface
@@ -62,12 +61,10 @@ class AgentPageToAgentClientBridge implements AgentPageToAgentClientInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
      * @return void
      */
-    public function finishImpersonation(CustomerTransfer $customerTransfer): void
+    public function finishImpersonationSession(): void
     {
-        $this->agentClient->finishImpersonation($customerTransfer);
+        $this->agentClient->finishImpersonationSession();
     }
 }
