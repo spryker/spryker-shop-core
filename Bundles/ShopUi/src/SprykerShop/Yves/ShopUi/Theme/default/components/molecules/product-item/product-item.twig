@@ -15,6 +15,11 @@
     currencyIsoCode: null,
 } %}
 
+{% define attributes = {
+    itemscope: '',
+    itemtype: 'https://schema.org/Product',
+} %}
+
 {% import _self as macros %}
 
 {%- block extraClass %} box {{ config.jsName }}{% endblock -%}
@@ -48,7 +53,7 @@
             {% block image %}
                 {% if data.url %}
                     {% block imageLink %}
-                        <a class="{{ config.jsName }}__link-detail-page" href="{{ path(data.url) }}">
+                        <a class="{{ config.jsName }}__link-detail-page" itemprop="url" href="{{ path(data.url) }}">
                             {{ macros.thumbnail(data.image, data.name, extraClass, modifiers, config.jsName) }}
                         </a>
                     {% endblock %}
@@ -94,20 +99,22 @@
         {% block name %}
             {% if data.name and data.url %}
                 {% block link %}
-                    <a class="{{ config.name }}__name {{ config.jsName }}__name {{ config.jsName }}__link-detail-page" href="{{ path(data.url) }}">{{ data.name }}</a>
+                    <a class="{{ config.name }}__name {{ config.jsName }}__name {{ config.jsName }}__link-detail-page" href="{{ path(data.url) }}">
+                        <span itemprop="name">{{ data.name }}</span>
+                    </a>
                 {% endblock %}
             {% endif %}
 
             {% if data.name and not data.url %}
                 {% block title %}
-                    <span class="{{ config.name }}__name {{ config.jsName }}__name">{{ data.name }}</span>
+                    <span itemprop="name" class="{{ config.name }}__name {{ config.jsName }}__name">{{ data.name }}</span>
                 {% endblock %}
             {% endif %}
         {% endblock %}
 
         {% block sku %}
             {% if data.sku %}
-                <div>{{ data.sku }}</div>
+                <div itemprop="sku">{{ data.sku }}</div>
             {% endif %}
         {% endblock %}
 
