@@ -1,31 +1,6 @@
 {
     "error": [],
-    "warning": [
-        {
-            "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/AgentWidget/src/SprykerShop/Yves/AgentWidget/AgentWidgetDependencyProvider.php",
-            "snippet": "                $container->getLocator()->agent()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 60,
-            "line_to": 60,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/AgentWidget/src/SprykerShop/Yves/AgentWidget/AgentWidgetDependencyProvider.php",
-            "snippet": "                $container->getLocator()->customer()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        }
-    ],
+    "warning": [],
     "deprecation": [
         {
             "severity": "info",

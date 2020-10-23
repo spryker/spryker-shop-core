@@ -1,18 +1,5 @@
 {
     "error": [],
-    "warning": [
-        {
-            "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Generated\\Yves\\Ide\\AutoCompletion::merchantstorage does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantPage/src/SprykerShop/Yves/MerchantPage/MerchantPageDependencyProvider.php",
-            "snippet": "            return new MerchantPageToMerchantStorageClientBridge($container->getLocator()->merchantStorage()->client());",
-            "selected_text": "merchantStorage",
-            "error_level": 3,
-            "shortcode": 108
-        }
-    ],
+    "warning": [],
     "deprecation": []
 }

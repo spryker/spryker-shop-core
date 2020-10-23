@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Generated\\Yves\\Ide\\AutoCompletion::merchantStorage does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantProductWidget/src/SprykerShop/Yves/MerchantProductWidget/MerchantProductWidgetDependencyProvider.php",
-            "snippet": "                $container->getLocator()->merchantStorage()->client()",
-            "selected_text": "merchantStorage",
-            "error_level": 3,
-            "shortcode": 108
-        },
-        {
-            "severity": "info",
             "line_from": 36,
             "line_to": 36,
             "type": "MoreSpecificImplementedParamType",
@@ -46,6 +34,18 @@
             "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantProductWidget/src/SprykerShop/Yves/MerchantProductWidget/Reader/MerchantProductReader.php",
             "snippet": "            $productViewTransfer->getIdProductAbstract(),",
             "selected_text": "$productViewTransfer->getIdProductAbstract()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 107,
+            "line_to": 107,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\MerchantProductWidget\\Dependency\\Client\\MerchantProductWidgetToMerchantStorageClientInterface::findOneByMerchantReference cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantProductWidget/src/SprykerShop/Yves/MerchantProductWidget/Reader/MerchantProductReader.php",
+            "snippet": "        $merchantStorageTransfer = $this->merchantStorageClient->findOneByMerchantReference($merchantProductViewTransfer->getMerchantReference());",
+            "selected_text": "$merchantProductViewTransfer->getMerchantReference()",
             "error_level": 3,
             "shortcode": 78
         },
@@ -94,6 +94,18 @@
             "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantProductWidget/src/SprykerShop/Yves/MerchantProductWidget/Reader/MerchantProductReader.php",
             "snippet": "            $productViewTransfer->getIdProductAbstract()",
             "selected_text": "$productViewTransfer->getIdProductAbstract()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\MerchantProductWidget\\Dependency\\Client\\MerchantProductWidgetToMerchantStorageClientInterface::findOneByMerchantReference cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantProductWidget/src/SprykerShop/Yves/MerchantProductWidget/Widget/ProductSoldByMerchantWidget.php",
+            "snippet": "                ->findOneByMerchantReference($itemTransfer->getMerchantReference());",
+            "selected_text": "$itemTransfer->getMerchantReference()",
             "error_level": 3,
             "shortcode": 78
         }

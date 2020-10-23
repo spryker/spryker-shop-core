@@ -1,19 +1,6 @@
 {
     "error": [],
-    "warning": [
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CmsContentWidgetProductConnector/src/SprykerShop/Yves/CmsContentWidgetProductConnector/CmsContentWidgetProductConnectorDependencyProvider.php",
-            "snippet": "            return new CmsContentWidgetProductConnectorToProductStorageClientBridge($container->getLocator()->productStorage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        }
-    ],
+    "warning": [],
     "deprecation": [
         {
             "severity": "info",

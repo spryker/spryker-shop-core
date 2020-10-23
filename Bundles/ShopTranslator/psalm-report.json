@@ -1,5 +1,18 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of SprykerShop\\Yves\\ShopTranslator\\Model\\TwigTranslator::trans has wrong name $identifier, expecting $id as defined by Symfony\\Contracts\\Translation\\TranslatorInterface::trans",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShopTranslator/src/SprykerShop/Yves/ShopTranslator/Model/TwigTranslator.php",
+            "snippet": "    public function trans($identifier, array $parameters = [], ?string $domain = null, ?string $locale = null)",
+            "selected_text": "$identifier",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -12,18 +25,6 @@
             "selected_text": "$localeName",
             "error_level": 3,
             "shortcode": 148
-        },
-        {
-            "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ShopTranslator/src/SprykerShop/Yves/ShopTranslator/ShopTranslatorDependencyProvider.php",
-            "snippet": "            return new ShopTranslatorToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
@@ -36,18 +37,6 @@
             "file_name": "vendor/spryker/spryker-shop/Bundles/ShopTranslator/src/SprykerShop/Yves/ShopTranslator/Dependency/Client/ShopTranslatorToGlossaryStorageClientBridge.php",
             "snippet": "class ShopTranslatorToGlossaryStorageClientBridge implements ShopTranslatorToGlossaryStorageClientInterface",
             "selected_text": "ShopTranslatorToGlossaryStorageClientBridge",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 17,
-            "line_to": 17,
-            "type": "DeprecatedInterface",
-            "message": "Symfony\\Component\\Translation\\TranslatorInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ShopTranslator/src/SprykerShop/Yves/ShopTranslator/Model/TwigTranslator.php",
-            "snippet": "class TwigTranslator implements TranslatorInterface",
-            "selected_text": "TwigTranslator",
             "error_level": 2,
             "shortcode": 152
         },

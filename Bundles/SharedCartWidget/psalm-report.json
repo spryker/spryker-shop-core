@@ -3,54 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/SharedCartWidget/src/SprykerShop/Yves/SharedCartWidget/SharedCartWidgetDependencyProvider.php",
-            "snippet": "            return new SharedCartWidgetToCustomerClientBridge($container->getLocator()->customer()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/SharedCartWidget/src/SprykerShop/Yves/SharedCartWidget/SharedCartWidgetDependencyProvider.php",
-            "snippet": "            return new SharedCartWidgetToMultiCartClientBridge($container->getLocator()->multiCart()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/SharedCartWidget/src/SprykerShop/Yves/SharedCartWidget/SharedCartWidgetDependencyProvider.php",
-            "snippet": "            return new SharedCartWidgetToQuoteClientBridge($container->getLocator()->quote()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 89,
-            "line_to": 89,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/SharedCartWidget/src/SprykerShop/Yves/SharedCartWidget/SharedCartWidgetDependencyProvider.php",
-            "snippet": "            return new SharedCartWidgetToSharedCartClientBridge($container->getLocator()->sharedCart()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 57,
             "line_to": 57,
             "type": "PossiblyNullArgument",
@@ -72,6 +24,18 @@
             "selected_text": "$customerTransfer",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 89,
+            "line_to": 89,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/SharedCartWidget/src/SprykerShop/Yves/SharedCartWidget/Widget/CartListPermissionGroupWidget.php",
+            "snippet": "        return $customerTransfer->getCompanyUserTransfer() && $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser();",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -120,18 +84,6 @@
             "selected_text": "getCustomerReference",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/PermissionAwareTrait.php",
-            "snippet": "            return Locator::getInstance()->permission()->client()->can($permissionKey, $context);",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

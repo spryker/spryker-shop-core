@@ -1,31 +1,6 @@
 {
     "error": [],
-    "warning": [
-        {
-            "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductGroupWidget/src/SprykerShop/Yves/ProductGroupWidget/ProductGroupWidgetDependencyProvider.php",
-            "snippet": "            return new ProductGroupWidgetToProductGroupStorageClientBridge($container->getLocator()->productGroupStorage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductGroupWidget/src/SprykerShop/Yves/ProductGroupWidget/ProductGroupWidgetDependencyProvider.php",
-            "snippet": "            return new ProductGroupWidgetToProductStorageClientBridge($container->getLocator()->productStorage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        }
-    ],
+    "warning": [],
     "deprecation": [
         {
             "severity": "info",

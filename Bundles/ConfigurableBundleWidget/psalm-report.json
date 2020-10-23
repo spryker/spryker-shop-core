@@ -28,32 +28,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/ConfigurableBundleWidgetDependencyProvider.php",
-            "snippet": "            return new ConfigurableBundleWidgetToQuoteClientBridge($container->getLocator()->quote()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 56,
-            "line_to": 56,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/ConfigurableBundleWidgetDependencyProvider.php",
-            "snippet": "            return new ConfigurableBundleWidgetToConfigurableBundleCartClientBridge($container->getLocator()->configurableBundleCart()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 195,
-            "line_to": 195,
+            "line_from": 212,
+            "line_to": 212,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\ConfigurableBundleWidget\\Controller\\CartController::addErrorMessage cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/Controller/CartController.php",
@@ -181,18 +157,6 @@
             "selected_text": "$items",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/PermissionAwareTrait.php",
-            "snippet": "            return Locator::getInstance()->permission()->client()->can($permissionKey, $context);",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
