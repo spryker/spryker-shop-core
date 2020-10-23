@@ -7,18 +7,14 @@
 
 namespace SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\MerchantCollectionTransfer;
-use Generated\Shared\Transfer\MerchantSearchCollectionTransfer;
+use Generated\Shared\Transfer\MerchantSearchRequestTransfer;
 
 interface MerchantSwitcherWidgetToMerchantSearchClientInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
+     * @param \Generated\Shared\Transfer\MerchantSearchRequestTransfer $merchantSearchRequestTransfer
+     *
+     * @return array
      */
-    public function getMerchantCollection(): MerchantCollectionTransfer;
-
-    /**
-     * @return \Generated\Shared\Transfer\MerchantSearchCollectionTransfer
-     */
-    public function merchantSearch(): MerchantSearchCollectionTransfer;
+    public function merchantSearch(MerchantSearchRequestTransfer $merchantSearchRequestTransfer): array;
 }
