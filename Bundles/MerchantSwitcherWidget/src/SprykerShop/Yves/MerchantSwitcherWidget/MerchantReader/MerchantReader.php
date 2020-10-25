@@ -7,12 +7,18 @@
 
 namespace SprykerShop\Yves\MerchantSwitcherWidget\MerchantReader;
 
+use Generated\Shared\Transfer\MerchantSearchRequestTransfer;
 use SprykerShop\Yves\MerchantSwitcherWidget\Cookie\SelectedMerchantCookieInterface;
 use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToMerchantSearchClientInterface;
 use SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcher\MerchantSwitcherInterface;
 
 class MerchantReader implements MerchantReaderInterface
 {
+    /**
+     * @uses \Spryker\Client\MerchantSearch\Plugin\Elasticsearch\ResultFormatter\MerchantSearchResultFormatterPlugin::NAME
+     */
+    protected const MERCHANT_SEARCH_COLLECTION = 'MerchantSearchCollection';
+
     /**
      * @var \SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToMerchantSearchClientInterface
      */
@@ -49,21 +55,21 @@ class MerchantReader implements MerchantReaderInterface
     public function extractSelectedMerchantReference(): ?string
     {
         $selectedMerchantReference = $this->selectedMerchantCookie->getMerchantReference();
-        $merchantTransfers = $this->merchantSearchClient->getMerchantCollection()->getMerchants();
+        $merchantSearchTransfers = $this->getMerchantSearchTransfers();
 
-        foreach ($merchantTransfers as $merchantTransfer) {
-            if ($selectedMerchantReference === $merchantTransfer->getMerchantReference()) {
+        foreach ($merchantSearchTransfers as $merchantSearchTransfer) {
+            if ($selectedMerchantReference === $merchantSearchTransfer->getMerchantReference()) {
                 $this->merchantSwitcher->switchMerchantInQuote($selectedMerchantReference);
 
                 return $selectedMerchantReference;
             }
         }
 
-        $merchantTransfers->getIterator()->rewind();
-        /** @var \Generated\Shared\Transfer\MerchantTransfer|null $selectedMerchantTransfer */
-        $selectedMerchantTransfer = $merchantTransfers->getIterator()->current();
+        $merchantSearchTransfers->getIterator()->rewind();
+        /** @var \Generated\Shared\Transfer\MerchantSearchTransfer|null $merchantSearchTransfer */
+        $merchantSearchTransfer = $merchantSearchTransfers->getIterator()->current();
 
-        if (!$selectedMerchantTransfer) {
+        if (!$merchantSearchTransfers) {
             if ($selectedMerchantReference) {
                 $this->selectedMerchantCookie->removeMerchantReference();
             }
@@ -71,10 +77,20 @@ class MerchantReader implements MerchantReaderInterface
             return null;
         }
 
-        $selectedMerchantReference = $selectedMerchantTransfer->getMerchantReference();
+        $selectedMerchantReference = $merchantSearchTransfer->getMerchantReference();
         $this->selectedMerchantCookie->setMerchantReference($selectedMerchantReference);
         $this->merchantSwitcher->switchMerchantInQuote($selectedMerchantReference);
 
         return $selectedMerchantReference;
+    }
+
+    /**
+     * @return \ArrayObject|\Generated\Shared\Transfer\MerchantSearchTransfer[]
+     */
+    public function getMerchantSearchTransfers()
+    {
+        return $this->merchantSearchClient
+            ->merchantSearch(new MerchantSearchRequestTransfer())[static::MERCHANT_SEARCH_COLLECTION]
+            ->getMerchantSearches();
     }
 }
