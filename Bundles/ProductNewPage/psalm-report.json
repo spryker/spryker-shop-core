@@ -12,57 +12,9 @@
             "selected_text": "$categoryNode['data']",
             "error_level": 3,
             "shortcode": 109
-        },
-        {
-            "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductNewPage/src/SprykerShop/Yves/ProductNewPage/ProductNewPageDependencyProvider.php",
-            "snippet": "            return new ProductNewPageToProductNewClientBridge($container->getLocator()->productNew()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductNewPage/src/SprykerShop/Yves/ProductNewPage/ProductNewPageDependencyProvider.php",
-            "snippet": "            return new ProductNewPageToUrlStorageClientBridge($container->getLocator()->urlStorage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 77,
-            "line_to": 77,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductNewPage/src/SprykerShop/Yves/ProductNewPage/ProductNewPageDependencyProvider.php",
-            "snippet": "            return new ProductNewPageToCatalogClientBridge($container->getLocator()->catalog()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 69,
-            "line_to": 69,
-            "type": "DeprecatedClass",
-            "message": "Class SprykerShop\\Yves\\ProductNewPage\\Plugin\\Provider\\ProductNewPageControllerProvider is deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductNewPage/src/SprykerShop/Yves/ProductNewPage/Controller/NewProductsController.php",
-            "snippet": "        $searchResults['filterPath'] = ProductNewPageControllerProvider::ROUTE_NEW_PRODUCTS;",
-            "selected_text": "ProductNewPageControllerProvider::ROUTE_NEW_PRODUCTS",
-            "error_level": 2,
-            "shortcode": 98
-        },
         {
             "severity": "info",
             "line_from": 16,

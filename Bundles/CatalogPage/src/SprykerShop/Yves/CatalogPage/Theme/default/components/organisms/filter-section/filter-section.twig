@@ -26,11 +26,16 @@
 
         {% if filterHasValues %}
             {% block filters %}
-                <h6>{{ ('product.filter.' ~ filter.name | lower) | trans }}</h6>
+                {% set filterName = filter.config.name %}
+                {% set filterType = filter.config.type %}
+
+               {% if filterType == 'category' %}
+                   <h2 class="title--h6">{{ ('product.filter.' ~ filterName | lower) | trans }}</h2>
+               {% endif %}
 
                 {% include [
-                    molecule('filter-' ~ filter.config.name, 'CatalogPage'),
-                    molecule('filter-' ~ filter.config.type, 'CatalogPage')
+                    molecule('filter-' ~ filterName, 'CatalogPage'),
+                    molecule('filter-' ~ filterType, 'CatalogPage')
                 ] ignore missing with {
                     data: {
                         filterPath: data.filterPath,

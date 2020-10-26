@@ -5,8 +5,20 @@
             "severity": "info",
             "line_from": 63,
             "line_to": 63,
+            "type": "RedundantCondition",
+            "message": "Twig\\TwigFunction|null can never contain false",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Plugin/Twig/FunctionTwigPlugin.php",
+            "snippet": "                return $twig->getFunction($name) !== false;",
+            "selected_text": "$twig->getFunction($name) !== false",
+            "error_level": 4,
+            "shortcode": 122
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
             "type": "InternalMethod",
-            "message": "The method Twig\\Environment::getFunction has been marked as internal",
+            "message": "The method Twig\\Environment::getFunction is internal to Twig but called from SprykerShop\\Yves\\ShopUi\\Plugin\\Twig\\FunctionTwigPlugin",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Plugin/Twig/FunctionTwigPlugin.php",
             "snippet": "                return $twig->getFunction($name) !== false;",
             "selected_text": "getFunction",
@@ -15,22 +27,22 @@
         },
         {
             "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/ShopUiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->twig()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyNullOperand",
+            "message": "Cannot concatenate with a possibly null null|string",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Twig/Node/ShopUiDefineTwigNode.php",
+            "snippet": "            ->raw('throw new RuntimeError(\\'required <em>' . $this->getAttribute('name') . '</em> property \"\\'.$key.\\'\" is not defined for \"' . $this->getTemplateName() . ':' . $this->getTemplateLine() . '\"\\'); }')",
+            "selected_text": "$this->getTemplateName()",
+            "error_level": 1,
+            "shortcode": 80
         },
         {
             "severity": "info",
             "line_from": 35,
             "line_to": 35,
             "type": "InternalMethod",
-            "message": "The method Twig\\ExpressionParser::parseExpression has been marked as internal",
+            "message": "The method Twig\\ExpressionParser::parseExpression is internal to Twig but called from SprykerShop\\Yves\\ShopUi\\Twig\\TokenParser\\ShopUiDefineTwigTokenParser",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Twig/TokenParser/ShopUiDefineTwigTokenParser.php",
             "snippet": "        $value = $parser->getExpressionParser()->parseExpression();",
             "selected_text": "parseExpression",
@@ -62,30 +74,6 @@
             "selected_text": "share",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
-            "type": "DeprecatedClass",
-            "message": "Class Twig_Function is marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Plugin/Twig/FunctionTwigPlugin.php",
-            "snippet": "                return $twig->getFunction($name) !== false;",
-            "selected_text": "$twig->getFunction($name)",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 14,
-            "line_to": 14,
-            "type": "DeprecatedInterface",
-            "message": "Twig_NodeInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Twig/Node/ShopUiDefineTwigNode.php",
-            "snippet": "class ShopUiDefineTwigNode extends Node",
-            "selected_text": "ShopUiDefineTwigNode",
-            "error_level": 2,
-            "shortcode": 152
         }
     ]
 }

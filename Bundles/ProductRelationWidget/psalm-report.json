@@ -3,30 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductRelationWidget/src/SprykerShop/Yves/ProductRelationWidget/ProductRelationWidgetDependencyProvider.php",
-            "snippet": "                $container->getLocator()->store()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductRelationWidget/src/SprykerShop/Yves/ProductRelationWidget/ProductRelationWidgetDependencyProvider.php",
-            "snippet": "            return new ProductRelationWidgetToProductRelationStorageClientBridge($container->getLocator()->productRelationStorage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 57,
             "line_to": 57,
             "type": "PossiblyNullArgument",

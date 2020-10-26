@@ -10,6 +10,8 @@
 } %}
 
 {% block body %}
+    <h3 class="title--h6">{{ ('product.filter.' ~ data.filter.name | lower) | trans }}</h3>
+
     {% widget 'ProductRatingFilterWidget' args [data.filter, data.request] only %}
     {% elsewidget 'ProductRatingFilterWidgetPlugin' args [data.filter, data.request] only %} {# @deprecated Use ProductRatingFilterWidget instead. #}
     {% endwidget %}

@@ -41,12 +41,12 @@
             {{ form_end(data.addAllProductsToCart) }}
         {% endif %}
 
-        <h4>{{ data.wishlistName }}</h4>
+        <h2 class="title--h4">{{ data.wishlistName }}</h2>
 
         <hr class="box__separator">
         {% if data.wishlistItems is empty %}
             <div class="text-center">
-                <h6>{{ 'customer.account.wishlist.empty' | trans }}</h6>
+                <span class="title--h6">{{ 'customer.account.wishlist.empty' | trans }}</span>
             </div>
         {% else %}
             {% include molecule('wishlist-detail-table', 'WishlistPage') with {
