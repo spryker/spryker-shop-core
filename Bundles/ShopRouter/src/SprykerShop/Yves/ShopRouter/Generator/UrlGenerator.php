@@ -174,7 +174,7 @@ class UrlGenerator extends SymfonyUrlGenerator
     protected function isWebProfilerUrl($url)
     {
         if (isset($this->app['profiler.mount_prefix'])) {
-            return preg_match('/^' . preg_quote($this->app['profiler.mount_prefix'], '/') . '/', $url);
+            return (bool)preg_match('/^' . preg_quote($this->app['profiler.mount_prefix'], '/') . '/', $url);
         }
 
         return false;
