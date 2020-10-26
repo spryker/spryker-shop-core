@@ -90,9 +90,9 @@
 
                     {% block productConfiguration %}
                         {% widget 'ProductConfigurationCartItemDisplayWidget' args [data.node] only %}
+                            {% block status %}{% endblock %}
                         {% endwidget %}
                     {% endblock %}
-
 
                     {% block amountSalesUnit %}
                         {% if data.amountSalesUnit is not empty %}
