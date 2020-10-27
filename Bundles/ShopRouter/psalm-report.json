@@ -1,30 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 172,
-            "line_to": 172,
-            "type": "InvalidReturnType",
-            "message": "The declared return type 'bool' for SprykerShop\\Yves\\ShopRouter\\Generator\\UrlGenerator::isWebProfilerUrl is incorrect, got 'false|int'",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ShopRouter/src/SprykerShop/Yves/ShopRouter/Generator/UrlGenerator.php",
-            "snippet": "     * @return bool",
-            "selected_text": "bool",
-            "error_level": 6,
-            "shortcode": 11
-        },
-        {
-            "severity": "error",
-            "line_from": 177,
-            "line_to": 177,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'false|int' does not match the declared return type 'bool' for SprykerShop\\Yves\\ShopRouter\\Generator\\UrlGenerator::isWebProfilerUrl",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ShopRouter/src/SprykerShop/Yves/ShopRouter/Generator/UrlGenerator.php",
-            "snippet": "            return preg_match('/^' . preg_quote($this->app['profiler.mount_prefix'], '/') . '/', $url);",
-            "selected_text": "preg_match('/^' . preg_quote($this->app['profiler.mount_prefix'], '/') . '/', $url)",
-            "error_level": 6,
-            "shortcode": 128
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
@@ -227,7 +202,7 @@
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ShopRouter/src/SprykerShop/Yves/ShopRouter/Generator/UrlGenerator.php",
-            "snippet": "            return preg_match('/^' . preg_quote($this->app['profiler.mount_prefix'], '/') . '/', $url);",
+            "snippet": "            return (bool)preg_match('/^' . preg_quote($this->app['profiler.mount_prefix'], '/') . '/', $url);",
             "selected_text": "$this->app",
             "error_level": 2,
             "shortcode": 1
