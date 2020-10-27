@@ -120,6 +120,10 @@ class CartPageGatewayBackUrlResolverStrategyPluginTest extends Unit
         $backUrl = $this->cartPageGatewayBackUrlResolverStrategyPlugin->resolveBackUrl(new ProductConfiguratorResponseTransfer());
 
         // Assert
-        $this->assertSame('/cart', $backUrl);
+        $this->assertSame(
+            '/cart',
+            $backUrl,
+            'Expected that CartPageGatewayBackUrlResolverStrategyPlugin must resolve back url as cart url'
+        );
     }
 }
