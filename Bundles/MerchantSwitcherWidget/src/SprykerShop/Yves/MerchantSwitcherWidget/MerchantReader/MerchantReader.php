@@ -87,7 +87,7 @@ class MerchantReader implements MerchantReaderInterface
     /**
      * @return \ArrayObject|\Generated\Shared\Transfer\MerchantSearchTransfer[]
      */
-    public function getMerchantSearchTransfers()
+    public function getMerchantSearchTransfers(): ArrayObject
     {
         return $this->merchantSearchClient
             ->merchantSearch(new MerchantSearchRequestTransfer())[static::MERCHANT_SEARCH_COLLECTION]
