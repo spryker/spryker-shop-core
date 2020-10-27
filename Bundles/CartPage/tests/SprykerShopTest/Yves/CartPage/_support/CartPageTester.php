@@ -8,7 +8,6 @@
 namespace SprykerShopTest\Yves\CartPage;
 
 use Codeception\Actor;
-use SprykerShop\Yves\CartPage\Plugin\ProductConfiguratorGatewayPage\CartPageGatewayBackUrlResolverStrategyPlugin;
 
 /**
  * @method void wantToTest($text)
@@ -27,12 +26,4 @@ use SprykerShop\Yves\CartPage\Plugin\ProductConfiguratorGatewayPage\CartPageGate
 class CartPageTester extends Actor
 {
     use _generated\CartPageTesterActions;
-
-    /**
-     * @return \SprykerShop\Yves\CartPage\Plugin\ProductConfiguratorGatewayPage\CartPageGatewayBackUrlResolverStrategyPlugin
-     */
-    public function getCartPageGatewayBackUrlResolverStrategyPlugin(): CartPageGatewayBackUrlResolverStrategyPlugin
-    {
-        return new CartPageGatewayBackUrlResolverStrategyPlugin();
-    }
 }

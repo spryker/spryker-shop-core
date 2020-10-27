@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 use Spryker\Yves\Router\Plugin\Router\YvesDevelopmentRouterPlugin;
 use Spryker\Yves\Router\RouterDependencyProvider;
+use SprykerShop\Yves\CartPage\Plugin\ProductConfiguratorGatewayPage\CartPageGatewayBackUrlResolverStrategyPlugin;
 use SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin;
 
 /**
@@ -30,9 +31,24 @@ class CartPageGatewayBackUrlResolverStrategyPluginTest extends Unit
     protected const FAKE_SOURCE_TYPE = 'FAKE_SOURCE_TYPE';
 
     /**
+     * @var \SprykerShop\Yves\CartPage\Plugin\ProductConfiguratorGatewayPage\CartPageGatewayBackUrlResolverStrategyPlugin
+     */
+    public $cartPageGatewayBackUrlResolverStrategyPlugin;
+
+    /**
      * @var \SprykerShopTest\Yves\CartPage\CartPageTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->cartPageGatewayBackUrlResolverStrategyPlugin = new CartPageGatewayBackUrlResolverStrategyPlugin();
+    }
 
     /**
      * @return void
@@ -44,7 +60,7 @@ class CartPageGatewayBackUrlResolverStrategyPluginTest extends Unit
             ->setSourceType(static::SOURCE_TYPE_CART);
 
         // Act
-        $isApplicable = $this->tester->getCartPageGatewayBackUrlResolverStrategyPlugin()->isApplicable($productConfiguratorResponseTransfer);
+        $isApplicable = $this->cartPageGatewayBackUrlResolverStrategyPlugin->isApplicable($productConfiguratorResponseTransfer);
 
         // Assert
         $this->assertTrue($isApplicable);
@@ -60,7 +76,7 @@ class CartPageGatewayBackUrlResolverStrategyPluginTest extends Unit
             ->setSourceType(static::FAKE_SOURCE_TYPE);
 
         // Act
-        $isApplicable = $this->tester->getCartPageGatewayBackUrlResolverStrategyPlugin()->isApplicable($productConfiguratorResponseTransfer);
+        $isApplicable = $this->cartPageGatewayBackUrlResolverStrategyPlugin->isApplicable($productConfiguratorResponseTransfer);
 
         // Assert
         $this->assertFalse($isApplicable);
@@ -76,7 +92,7 @@ class CartPageGatewayBackUrlResolverStrategyPluginTest extends Unit
             ->setSourceType(null);
 
         // Act
-        $isApplicable = $this->tester->getCartPageGatewayBackUrlResolverStrategyPlugin()->isApplicable($productConfiguratorResponseTransfer);
+        $isApplicable = $this->cartPageGatewayBackUrlResolverStrategyPlugin->isApplicable($productConfiguratorResponseTransfer);
 
         // Assert
         $this->assertFalse($isApplicable);
@@ -92,7 +108,7 @@ class CartPageGatewayBackUrlResolverStrategyPluginTest extends Unit
         $this->tester->setDependency(RouterDependencyProvider::ROUTER_ROUTE_PROVIDER, [new CartPageRouteProviderPlugin()]);
 
         // Act
-        $backUrl = $this->tester->getCartPageGatewayBackUrlResolverStrategyPlugin()->resolveBackUrl(new ProductConfiguratorResponseTransfer());
+        $backUrl = $this->cartPageGatewayBackUrlResolverStrategyPlugin->resolveBackUrl(new ProductConfiguratorResponseTransfer());
 
         // Assert
         $this->assertSame('/cart', $backUrl);
