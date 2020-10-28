@@ -52,7 +52,10 @@ class ProductDetailPageGatewayBackUrlResolverStrategyPluginTest extends Unit
         $isApplicable = $this->tester->getProductDetailPageGatewayBackUrlResolverStrategyPlugin()->isApplicable($productConfiguratorResponseTransfer);
 
         // Assert
-        $this->assertTrue($isApplicable);
+        $this->assertTrue(
+            $isApplicable,
+            'Expects that ProductDetailPageGatewayBackUrlResolverStrategyPlugin will be applicable.'
+        );
     }
 
     /**
@@ -68,7 +71,10 @@ class ProductDetailPageGatewayBackUrlResolverStrategyPluginTest extends Unit
         $isApplicable = $this->tester->getProductDetailPageGatewayBackUrlResolverStrategyPlugin()->isApplicable($productConfiguratorResponseTransfer);
 
         // Assert
-        $this->assertFalse($isApplicable);
+        $this->assertFalse(
+            $isApplicable,
+            'Expects that ProductDetailPageGatewayBackUrlResolverStrategyPlugin wont be applicable for fake source type.'
+        );
     }
 
     /**
@@ -84,7 +90,10 @@ class ProductDetailPageGatewayBackUrlResolverStrategyPluginTest extends Unit
         $isApplicable = $this->tester->getProductDetailPageGatewayBackUrlResolverStrategyPlugin()->isApplicable($productConfiguratorResponseTransfer);
 
         // Assert
-        $this->assertFalse($isApplicable);
+        $this->assertFalse(
+            $isApplicable,
+            'Expects that ProductDetailPageGatewayBackUrlResolverStrategyPlugin wont be applicable for nullable source type.'
+        );
     }
 
     /**
@@ -114,7 +123,11 @@ class ProductDetailPageGatewayBackUrlResolverStrategyPluginTest extends Unit
             ->resolveBackUrl($productConfiguratorResponseTransfer);
 
         // Assert
-        $this->assertSame(static::FAKE_REDIRECT_URL, $backUrl);
+        $this->assertSame(
+            static::FAKE_REDIRECT_URL,
+            $backUrl,
+            'Expects that back url will be equal to the fake/redirect-url'
+        );
     }
 
     /**
@@ -137,7 +150,11 @@ class ProductDetailPageGatewayBackUrlResolverStrategyPluginTest extends Unit
         $backUrl = $this->tester->getProductDetailPageGatewayBackUrlResolverStrategyPlugin()->resolveBackUrl($productConfiguratorResponseTransfer);
 
         // Assert
-        $this->assertSame('/', $backUrl);
+        $this->assertSame(
+            '/',
+            $backUrl,
+            'Expects that back url will be equal to the fallback url'
+        );
     }
 
     /**
