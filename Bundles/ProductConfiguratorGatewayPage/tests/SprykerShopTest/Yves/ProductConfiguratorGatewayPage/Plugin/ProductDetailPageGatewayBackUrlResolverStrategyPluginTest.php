@@ -126,7 +126,7 @@ class ProductDetailPageGatewayBackUrlResolverStrategyPluginTest extends Unit
         $this->assertSame(
             static::FAKE_REDIRECT_URL,
             $backUrl,
-            'Expects that back url will be equal to the fake/redirect-url'
+            'Expects that back URL will be equal to the fake/redirect-url.'
         );
     }
 
@@ -153,7 +153,7 @@ class ProductDetailPageGatewayBackUrlResolverStrategyPluginTest extends Unit
         $this->assertSame(
             '/',
             $backUrl,
-            'Expects that back url will be equal to the fallback url'
+            'Expects that back URL will be equal to the fallback URL.'
         );
     }
 
