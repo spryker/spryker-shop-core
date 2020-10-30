@@ -1,0 +1,39 @@
+@import '../styles/shared.scss';
+
+:host {
+    display: block;
+    background: #f5f5f5;
+    padding: 0 15px;
+}
+
+.list {
+    padding: 8px 0;
+
+    @include helper-breakpoint(xl) {
+        padding: 0;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        padding: 8px 0;
+
+        @include helper-breakpoint(xl) {
+            display: inline-flex;
+            flex-wrap: nowrap;
+            padding: 16px 20px;
+            border-right: 1px solid $setting-color-gray-10;
+        }
+
+        &:first-child {
+            @include helper-breakpoint(xl) {
+                border-left: 1px solid $setting-color-gray-10;
+            }
+        }
+    }
+
+    &__title {
+        text-transform: uppercase;
+        margin-right: 10px;
+    }
+}
