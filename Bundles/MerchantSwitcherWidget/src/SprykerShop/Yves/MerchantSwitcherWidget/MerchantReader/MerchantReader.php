@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\MerchantSwitcherWidget\MerchantReader;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantSearchRequestTransfer;
 use SprykerShop\Yves\MerchantSwitcherWidget\Cookie\SelectedMerchantCookieInterface;
 use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToMerchantSearchClientInterface;
@@ -89,8 +90,13 @@ class MerchantReader implements MerchantReaderInterface
      */
     public function getMerchantSearchTransfers(): ArrayObject
     {
-        return $this->merchantSearchClient
-            ->merchantSearch(new MerchantSearchRequestTransfer())[static::MERCHANT_SEARCH_COLLECTION]
-            ->getMerchantSearches();
+        /**
+         * @var \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer
+         */
+        $merchantSearchCollectionTransfer = $this->merchantSearchClient
+            ->merchantSearch(new MerchantSearchRequestTransfer())[static::MERCHANT_SEARCH_COLLECTION];
+
+        return $merchantSearchCollectionTransfer
+            ->getMerchants();
     }
 }
