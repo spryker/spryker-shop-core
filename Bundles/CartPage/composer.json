@@ -34,11 +34,7 @@
     "spryker-shop/product-packaging-unit-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
-    "spryker/event-dispatcher": "*",
-    "spryker/propel": "*",
     "spryker/router": "*",
-    "spryker/security": "*",
-    "spryker/session": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",
     "spryker/twig": "*"
