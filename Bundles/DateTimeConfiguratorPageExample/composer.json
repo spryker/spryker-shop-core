@@ -15,7 +15,8 @@
     "spryker/log": "^3.0.0",
     "spryker/product-configuration-extension": "^0.1.0",
     "spryker/sales-product-configuration-gui-extension": "^0.1.0",
-    "spryker/symfony": "^3.0.0"
+    "spryker/symfony": "^3.0.0",
+    "spryker/transfer": "^3.18.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

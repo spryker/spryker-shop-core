@@ -1,4 +1,4 @@
-# MerchantPage Module
+# DateTimeConfiguratorPageExample Module
 [![Build Status](https://travis-ci.org/spryker-shop/date-time-configurator-page-example.svg)](https://travis-ci.org/spryker-shop/date-time-configurator-page-example)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
