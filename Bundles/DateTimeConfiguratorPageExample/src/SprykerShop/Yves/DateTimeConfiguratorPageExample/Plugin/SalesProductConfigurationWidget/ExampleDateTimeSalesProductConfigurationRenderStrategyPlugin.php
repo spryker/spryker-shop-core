@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Shared\DateTimeConfiguratorPageExample\DateTimeConfiguratorPageExampleConfig;
 use SprykerShop\Yves\SalesProductConfigurationWidgetExtension\Dependency\Plugin\SalesProductConfigurationRenderStrategyPluginInterface;
 
-class DateTimeSalesProductConfigurationRenderStrategyPlugin extends AbstractPlugin implements SalesProductConfigurationRenderStrategyPluginInterface
+class ExampleDateTimeSalesProductConfigurationRenderStrategyPlugin extends AbstractPlugin implements SalesProductConfigurationRenderStrategyPluginInterface
 {
     /**
      * {@inheritDoc}

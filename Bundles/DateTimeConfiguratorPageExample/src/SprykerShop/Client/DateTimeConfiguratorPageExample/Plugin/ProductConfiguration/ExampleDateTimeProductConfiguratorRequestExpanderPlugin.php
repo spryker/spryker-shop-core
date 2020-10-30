@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestExpanderInterface;
 
-class DateTimeProductConfiguratorRequestExpanderPlugin extends AbstractPlugin implements ProductConfiguratorRequestExpanderInterface
+class ExampleDateTimeProductConfiguratorRequestExpanderPlugin extends AbstractPlugin implements ProductConfiguratorRequestExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer

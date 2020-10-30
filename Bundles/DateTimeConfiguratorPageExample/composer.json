@@ -18,10 +18,8 @@
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "@stable",
+    "spryker/code-sniffer": "*",
     "spryker/decimal-object": "*",
-    "spryker/product": "*",
-    "spryker/product-configuration": "*",
     "spryker/testify": "*"
   },
   "autoload": {

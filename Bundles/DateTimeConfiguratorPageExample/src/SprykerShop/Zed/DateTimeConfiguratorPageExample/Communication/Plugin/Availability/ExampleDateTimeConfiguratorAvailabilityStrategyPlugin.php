@@ -18,7 +18,7 @@ use SprykerShop\Shared\DateTimeConfiguratorPageExample\DateTimeConfiguratorPageE
  * @method \SprykerShop\Zed\DateTimeConfiguratorPageExample\DateTimeConfiguratorPageExampleConfig getConfig()
  * @method \SprykerShop\Zed\DateTimeConfiguratorPageExample\Business\DateTimeConfiguratorPageExampleFacadeInterface getFacade()
  */
-class DateTimeConfiguratorAvailabilityStrategyPlugin extends AbstractPlugin implements AvailabilityStrategyPluginInterface
+class ExampleDateTimeConfiguratorAvailabilityStrategyPlugin extends AbstractPlugin implements AvailabilityStrategyPluginInterface
 {
     /**
      * {@inheritDoc}

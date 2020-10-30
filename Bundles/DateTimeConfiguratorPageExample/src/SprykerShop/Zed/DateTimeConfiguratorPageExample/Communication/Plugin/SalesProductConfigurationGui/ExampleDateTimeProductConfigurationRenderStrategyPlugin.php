@@ -17,7 +17,7 @@ use SprykerShop\Shared\DateTimeConfiguratorPageExample\DateTimeConfiguratorPageE
  * @method \SprykerShop\Zed\DateTimeConfiguratorPageExample\Business\DateTimeConfiguratorPageExampleFacade getFacade()
  * @method \SprykerShop\Zed\DateTimeConfiguratorPageExample\DateTimeConfiguratorPageExampleConfig getConfig()
  */
-class DateTimeProductConfigurationRenderStrategyPlugin extends AbstractPlugin implements ProductConfigurationRenderStrategyPluginInterface
+class ExampleDateTimeProductConfigurationRenderStrategyPlugin extends AbstractPlugin implements ProductConfigurationRenderStrategyPluginInterface
 {
     /**
      * {@inheritDoc}
