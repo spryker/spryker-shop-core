@@ -28,6 +28,18 @@
     "warning": [
         {
             "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdSalesOrderConfiguredBundle on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/SalesConfigurableBundleWidget/src/SprykerShop/Yves/SalesConfigurableBundleWidget/Grouper/SalesOrderConfiguredBundleGrouper.php",
+            "snippet": "                ->getIdSalesOrderConfiguredBundle();",
+            "selected_text": "getIdSalesOrderConfiguredBundle",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 60,
             "line_to": 60,
             "type": "PossiblyNullArrayOffset",
@@ -37,6 +49,18 @@
             "selected_text": "$salesOrderConfiguredBundleTransfers",
             "error_level": 3,
             "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method toArray on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/SalesConfigurableBundleWidget/src/SprykerShop/Yves/SalesConfigurableBundleWidget/Grouper/SalesOrderConfiguredBundleGrouper.php",
+            "snippet": "                ->fromArray($itemTransfer->getSalesOrderConfiguredBundle()->toArray())",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -52,6 +76,18 @@
         },
         {
             "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdSalesOrderConfiguredBundle on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/SalesConfigurableBundleWidget/src/SprykerShop/Yves/SalesConfigurableBundleWidget/Grouper/SalesOrderConfiguredBundleGrouper.php",
+            "snippet": "                $idSalesOrderConfiguredBundle = $itemTransfer->getSalesOrderConfiguredBundle()->getIdSalesOrderConfiguredBundle();",
+            "selected_text": "getIdSalesOrderConfiguredBundle",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 82,
             "line_to": 82,
             "type": "PossiblyNullArrayOffset",
@@ -61,18 +97,6 @@
             "selected_text": "$salesOrderConfiguredBundleItemTransfers",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/SalesConfigurableBundleWidget/src/SprykerShop/Yves/SalesConfigurableBundleWidget/SalesConfigurableBundleWidgetDependencyProvider.php",
-            "snippet": "                $container->getLocator()->messenger()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",

@@ -60,32 +60,56 @@
             "selected_text": "$productViewTransfer->getUrl()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductDetailPage/src/SprykerShop/Yves/ProductDetailPage/ProductDetailPageDependencyProvider.php",
-            "snippet": "            return new ProductDetailPageToProductStorageClientBridge($container->getLocator()->productStorage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
+            "line_from": 34,
+            "line_to": 34,
             "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductDetailPage/src/SprykerShop/Yves/ProductDetailPage/Resolver/ShopContextResolver.php",
-            "snippet": "        return $this->application[static::SERVICE_SHOP_CONTEXT] ?? new ShopContextTransfer();",
-            "selected_text": "$this->application",
+            "message": "The method SprykerShop\\Yves\\ProductDetailPage\\ProductDetailPageDependencyProvider::addApplication has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductDetailPage/src/SprykerShop/Yves/ProductDetailPage/ProductDetailPageDependencyProvider.php",
+            "snippet": "        $container = $this->addApplication($container);",
+            "selected_text": "addApplication",
             "error_level": 2,
             "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 86,
+            "line_to": 86,
+            "type": "DeprecatedConstant",
+            "message": "Constant SprykerShop\\Yves\\ProductDetailPage\\ProductDetailPageDependencyProvider::PLUGIN_APPLICATION is deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductDetailPage/src/SprykerShop/Yves/ProductDetailPage/ProductDetailPageDependencyProvider.php",
+            "snippet": "        $container->set(static::PLUGIN_APPLICATION, function () {",
+            "selected_text": "static::PLUGIN_APPLICATION",
+            "error_level": 2,
+            "shortcode": 170
+        },
+        {
+            "severity": "info",
+            "line_from": 87,
+            "line_to": 87,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Yves\\Kernel\\Plugin\\Pimple is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductDetailPage/src/SprykerShop/Yves/ProductDetailPage/ProductDetailPageDependencyProvider.php",
+            "snippet": "            $pimplePlugin = new Pimple();",
+            "selected_text": "new Pimple()",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "DeprecatedConstant",
+            "message": "Constant SprykerShop\\Yves\\ProductDetailPage\\ProductDetailPageDependencyProvider::PLUGIN_APPLICATION is deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductDetailPage/src/SprykerShop/Yves/ProductDetailPage/ProductDetailPageFactory.php",
+            "snippet": "        return $this->getProvidedDependency(ProductDetailPageDependencyProvider::PLUGIN_APPLICATION);",
+            "selected_text": "ProductDetailPageDependencyProvider::PLUGIN_APPLICATION",
+            "error_level": 2,
+            "shortcode": 170
         }
     ]
 }

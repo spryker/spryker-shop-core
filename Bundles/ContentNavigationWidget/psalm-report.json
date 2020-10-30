@@ -3,39 +3,51 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Generated\\Yves\\Ide\\AutoCompletion::contentnavigation does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentNavigationWidget/src/SprykerShop/Yves/ContentNavigationWidget/ContentNavigationWidgetDependencyProvider.php",
-            "snippet": "                $container->getLocator()->contentNavigation()->client()",
-            "selected_text": "contentNavigation",
-            "error_level": 3,
-            "shortcode": 108
-        },
-        {
-            "severity": "info",
-            "line_from": 59,
-            "line_to": 59,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentNavigationWidget/src/SprykerShop/Yves/ContentNavigationWidget/ContentNavigationWidgetDependencyProvider.php",
-            "snippet": "                $container->getLocator()->navigationStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 114,
-            "line_to": 114,
+            "line_from": 105,
+            "line_to": 105,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\ContentNavigationWidget\\Dependency\\Client\\ContentNavigationWidgetToNavigationStorageClientInterface::findNavigationTreeByKey cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentNavigationWidget/src/SprykerShop/Yves/ContentNavigationWidget/Twig/ContentNavigationTwigFunction.php",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentNavigationWidget/src/SprykerShop/Yves/ContentNavigationWidget/Twig/ContentNavigationTwigFunctionProvider.php",
             "snippet": "                $contentNavigationTypeTransfer->getNavigationKey(),",
             "selected_text": "$contentNavigationTypeTransfer->getNavigationKey()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 180,
+            "line_to": 180,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of DateTime::__construct cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentNavigationWidget/src/SprykerShop/Yves/ContentNavigationWidget/Twig/ContentNavigationTwigFunctionProvider.php",
+            "snippet": "            $isValidFrom = $navigationNodeStorageTransfer->getValidFrom() === null || new DateTime($navigationNodeStorageTransfer->getValidFrom()) <= $now;",
+            "selected_text": "$navigationNodeStorageTransfer->getValidFrom()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 181,
+            "line_to": 181,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of DateTime::__construct cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentNavigationWidget/src/SprykerShop/Yves/ContentNavigationWidget/Twig/ContentNavigationTwigFunctionProvider.php",
+            "snippet": "            $isValidTo = $navigationNodeStorageTransfer->getValidTo() === null || new DateTime($navigationNodeStorageTransfer->getValidTo()) >= $now;",
+            "selected_text": "$navigationNodeStorageTransfer->getValidTo()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 183,
+            "line_to": 183,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\NavigationNodeStorageTransfer> variable ",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentNavigationWidget/src/SprykerShop/Yves/ContentNavigationWidget/Twig/ContentNavigationTwigFunctionProvider.php",
+            "snippet": "            $hasChildren = $navigationNodeStorageTransfer->getChildren()->count() > 0;",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
         }
     ],
     "deprecation": []

@@ -59,4 +59,12 @@ class AgentPageToAgentClientBridge implements AgentPageToAgentClientInterface
     {
         $this->agentClient->setAgent($userTransfer);
     }
+
+    /**
+     * @return void
+     */
+    public function finishImpersonationSession(): void
+    {
+        $this->agentClient->finishImpersonationSession();
+    }
 }

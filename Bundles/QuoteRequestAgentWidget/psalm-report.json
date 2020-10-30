@@ -39,6 +39,18 @@
         },
         {
             "severity": "info",
+            "line_from": 53,
+            "line_to": 53,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\QuoteRequestAgentWidget\\Dependency\\Client\\QuoteRequestAgentWidgetToQuoteRequestAgentClientInterface::findQuoteRequestByReference cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestAgentWidget/src/SprykerShop/Yves/QuoteRequestAgentWidget/Handler/QuoteRequestAgentCartHandler.php",
+            "snippet": "            ->findQuoteRequestByReference($quoteTransfer->getQuoteRequestReference());",
+            "selected_text": "$quoteTransfer->getQuoteRequestReference()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 59,
             "line_to": 59,
             "type": "PossiblyNullReference",
@@ -48,81 +60,9 @@
             "selected_text": "setQuote",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestAgentWidget/src/SprykerShop/Yves/QuoteRequestAgentWidget/QuoteRequestAgentWidgetDependencyProvider.php",
-            "snippet": "            return new QuoteRequestAgentWidgetToQuoteRequestAgentClientBridge($container->getLocator()->quoteRequestAgent()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 69,
-            "line_to": 69,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestAgentWidget/src/SprykerShop/Yves/QuoteRequestAgentWidget/QuoteRequestAgentWidgetDependencyProvider.php",
-            "snippet": "            return new QuoteRequestAgentWidgetToQuoteClientBridge($container->getLocator()->quote()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 83,
-            "line_to": 83,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestAgentWidget/src/SprykerShop/Yves/QuoteRequestAgentWidget/QuoteRequestAgentWidgetDependencyProvider.php",
-            "snippet": "            return new QuoteRequestAgentWidgetToPersistentCartClientBridge($container->getLocator()->persistentCart()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 97,
-            "line_to": 97,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestAgentWidget/src/SprykerShop/Yves/QuoteRequestAgentWidget/QuoteRequestAgentWidgetDependencyProvider.php",
-            "snippet": "            return new QuoteRequestAgentWidgetToCustomerClientBridge($container->getLocator()->customer()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 126,
-            "line_to": 126,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestAgentWidget/src/SprykerShop/Yves/QuoteRequestAgentWidget/QuoteRequestAgentWidgetDependencyProvider.php",
-            "snippet": "                $container->getLocator()->messenger()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 112,
-            "line_to": 112,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Yves\\Kernel\\Controller\\AbstractController::redirectResponseExternal has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestAgentWidget/src/SprykerShop/Yves/QuoteRequestAgentWidget/Controller/QuoteRequestAgentCartController.php",
-            "snippet": "        return $this->redirectResponseExternal($redirectUrl);",
-            "selected_text": "redirectResponseExternal",
-            "error_level": 2,
-            "shortcode": 1
-        },
         {
             "severity": "info",
             "line_from": 16,

@@ -7,7 +7,7 @@
     title: product.metaTitle | default(_view.product.name),
     metaTitle: product.metaTitle | default(_view.product.name),
     metaDescription: _view.product.metaDescription | default,
-    metaKeywords: _view.product.metaKeywords | default
+    metaKeywords: _view.product.metaKeywords | default,
 } %}
 
 {% block breadcrumbs %}
@@ -17,7 +17,7 @@
 {% endblock %}
 
 {% block title %}
-    <h3 itemprop="name">{{ data.product.name }}</h3>
+    <h1 class="title--h3" itemprop="name">{{ data.product.name }}</h1>
     <link itemprop="url" href="{{ data.productUrl }}">
 {% endblock %}
 

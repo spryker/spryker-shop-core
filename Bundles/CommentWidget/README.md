@@ -1,6 +1,6 @@
 # CommentWidget Module
 [![Build Status](https://travis-ci.org/spryker-shop/comment-widget.svg)](https://travis-ci.org/spryker-shop/comment-widget)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Widget module is responsible for displaying a list of comments.
 

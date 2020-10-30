@@ -3,27 +3,27 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/BusinessOnBehalfWidget/src/SprykerShop/Yves/BusinessOnBehalfWidget/BusinessOnBehalfWidgetDependencyProvider.php",
-            "snippet": "            return new BusinessOnBehalfWidgetToCustomerClientBridge($container->getLocator()->customer()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
+            "line_from": 106,
+            "line_to": 106,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getName on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/BusinessOnBehalfWidget/src/SprykerShop/Yves/BusinessOnBehalfWidget/Widget/BusinessOnBehalfStatusWidget.php",
+            "snippet": "            $companyName = $companyUserTransfer->getCompany()->getName();",
+            "selected_text": "getName",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/BusinessOnBehalfWidget/src/SprykerShop/Yves/BusinessOnBehalfWidget/BusinessOnBehalfWidgetDependencyProvider.php",
-            "snippet": "            return new BusinessOnBehalfWidgetToBusinessOnBehalfClientBridge($container->getLocator()->businessOnBehalf()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
+            "line_from": 124,
+            "line_to": 124,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getName on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/BusinessOnBehalfWidget/src/SprykerShop/Yves/BusinessOnBehalfWidget/Widget/BusinessOnBehalfStatusWidget.php",
+            "snippet": "            $companyBusinessUnitName = $companyUserTransfer->getCompanyBusinessUnit()->getName();",
+            "selected_text": "getName",
+            "error_level": 3,
+            "shortcode": 83
         }
     ],
     "deprecation": []

@@ -1,5 +1,30 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 82,
+            "line_to": 82,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\ProductConfigurationWidget\\Resolver\\ProductConfigurationTemplateResolverInterface::resolveProductConfigurationTemplate cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductConfigurationWidget/src/SprykerShop/Yves/ProductConfigurationWidget/Widget/ProductConfigurationCartItemDisplayWidget.php",
+            "snippet": "            ->resolveProductConfigurationTemplate($itemTransfer->getProductConfigurationInstance());",
+            "selected_text": "$itemTransfer->getProductConfigurationInstance()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 83,
+            "line_to": 83,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\ProductConfigurationWidget\\Resolver\\ProductConfigurationTemplateResolverInterface::resolveProductConfigurationTemplate cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductConfigurationWidget/src/SprykerShop/Yves/ProductConfigurationWidget/Widget/ProductConfigurationProductViewDisplayWidget.php",
+            "snippet": "            ->resolveProductConfigurationTemplate($productViewTransfer->getProductConfigurationInstance());",
+            "selected_text": "$productViewTransfer->getProductConfigurationInstance()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
     "deprecation": []
 }

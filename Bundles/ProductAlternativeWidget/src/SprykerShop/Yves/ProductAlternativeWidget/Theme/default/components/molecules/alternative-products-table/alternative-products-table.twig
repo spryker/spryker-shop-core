@@ -16,7 +16,7 @@
 
 {% block body %}
     {% for item in data.products %}
-        <tr class="{{ loop.index > data.maxShownItems ? config.jsName ~ '-' ~ idShoppingListItem ~ '__show-all-target is-hidden' : '' }}">
+        <tr itemscope itemtype="https://schema.org/Product" class="{{ loop.index > data.maxShownItems ? config.jsName ~ '-' ~ idShoppingListItem ~ '__show-all-target is-hidden' : '' }}">
             <td class="text-center">
                 {% if item.images is defined and item.images is not empty and item.images.0.externalUrlSmall is not empty %}
                     {% include molecule('lazy-image') with {
@@ -32,20 +32,22 @@
                 <ul class="list spacing-y">
                     {% if item.name is not empty %}
                         <li class="list__item">
-                            <a href="{% if item.url is not empty %}{{ item.url }}{% endif %}">{{ item.name }}</a>
+                            <a itemprop="url" href="{% if item.url is not empty %}{{ item.url }}{% endif %}">
+                                <span itemprop="name">{{ item.name }}</span>
+                            </a>
                         </li>
                     {% endif %}
                     {% if item.sku is not empty %}
                         <li class="list__item">
-                            <small class="text-secondary">
+                            <small itemprop="sku" class="text-secondary">
                                 {{ item.sku }}
                             </small>
                         </li>
                     {% endif %}
                     {% for attribute in item.superAttributesDefinition %}
                         {% if item.attributes[attribute] is defined %}
-                            <li class="list__item">
-                                <strong>{{ ('product.attribute.' ~ attribute) | trans }}</strong>: {{ item.attributes[attribute] }}
+                            <li itemprop="additionalProperty" itemscope itemtype="https://schema.org/PropertyValue" class="list__item">
+                                <strong itemprop="name">{{ ('product.attribute.' ~ attribute) | trans }}</strong>: <span itemprop="value">{{ item.attributes[attribute] }}</span>
                             </li>
                         {% endif %}
                     {% endfor %}

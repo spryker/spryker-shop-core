@@ -12,13 +12,24 @@
     noPriceText: '---'
 } %}
 
+{% define attributes = {
+    itemscope: '',
+    itemprop: 'offers',
+    itemtype: 'https://schema.org/Offer',
+} %}
+
 {% block body %}
+    {% set currencyIsoCode = currencyIsoCode() %}
+    
     {% if data.originalAmount is not empty -%}
-        <span class="{{config.name}}__amount {{config.name}}__amount--original">{{data.originalAmount}}</span>
+        <span itemprop="price" content="{{ data.originalAmoun }}" class="{{ config.name }}__amount {{ config.name }}__amount--original">
+            <meta itemprop="priceCurrency" content="{{ currencyIsoCode }}">
+            {{ data.originalAmount }}
+        </span>
     {%- endif -%}
 
     {% if data.amount is empty -%}
-        {{data.noPriceText}}
+        {{ data.noPriceText }}
     {%- else -%}
         <span class="{{config.name}}__amount">
             {% include atom('icon') with {
@@ -27,7 +38,10 @@
                     name: 'tag'
                 }
             } only %}
-            {{data.amount}}
+            <span itemprop="price" content="{{ data.amount }}">
+                <meta itemprop="priceCurrency" content="{{ currencyIsoCode }}">
+                {{ data.amount }}
+            </span>
         </span>
     {%- endif -%}
 {% endblock %}

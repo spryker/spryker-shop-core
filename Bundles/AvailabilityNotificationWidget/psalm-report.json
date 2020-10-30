@@ -3,30 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationWidget/src/SprykerShop/Yves/AvailabilityNotificationWidget/AvailabilityNotificationWidgetDependencyProvider.php",
-            "snippet": "            return new AvailabilityNotificationWidgetToAvailabilityNotificationClientBridge($container->getLocator()->availabilityNotification()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationWidget/src/SprykerShop/Yves/AvailabilityNotificationWidget/AvailabilityNotificationWidgetDependencyProvider.php",
-            "snippet": "            return new AvailabilityNotificationWidgetToCustomerClientBridge($container->getLocator()->customer()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 30,
             "line_to": 30,
             "type": "PossiblyNullArgument",
@@ -42,7 +18,7 @@
             "line_from": 50,
             "line_to": 50,
             "type": "PossiblyUndefinedMethod",
-            "message": "Method Symfony\\Component\\Form\\FormErrorIterator::getmessage does not exist",
+            "message": "Method Symfony\\Component\\Form\\FormErrorIterator::getMessage does not exist",
             "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationWidget/src/SprykerShop/Yves/AvailabilityNotificationWidget/Controller/AvailabilityNotificationSubscriptionController.php",
             "snippet": "                $this->addErrorMessage($error->getMessage());",
             "selected_text": "getMessage",
@@ -135,30 +111,6 @@
         }
     ],
     "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Yves\\Kernel\\Controller\\AbstractController::redirectResponseExternal has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationWidget/src/SprykerShop/Yves/AvailabilityNotificationWidget/Controller/AvailabilityNotificationSubscriptionController.php",
-            "snippet": "        return $this->redirectResponseExternal($request->headers->get('referer'));",
-            "selected_text": "redirectResponseExternal",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 89,
-            "line_to": 89,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Yves\\Kernel\\Controller\\AbstractController::redirectResponseExternal has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/AvailabilityNotificationWidget/src/SprykerShop/Yves/AvailabilityNotificationWidget/Controller/AvailabilityNotificationSubscriptionController.php",
-            "snippet": "        return $this->redirectResponseExternal($request->headers->get('referer'));",
-            "selected_text": "redirectResponseExternal",
-            "error_level": 2,
-            "shortcode": 1
-        },
         {
             "severity": "info",
             "line_from": 16,

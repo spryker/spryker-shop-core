@@ -47,7 +47,7 @@
                 {% endblock %}
             {% else %}
                 {% block image %}
-                    <img class="{{ imageClasses }} {{ config.jsName }}__image {{ imageExtraClasses }}"
+                    <img itemprop="image" class="{{ imageClasses }} {{ config.jsName }}__image {{ imageExtraClasses }}"
                          src="{{ imagePlaceholder }}"
                          data-src="{{ imageSrc }}"
                          alt="{{ imageTitle }}"

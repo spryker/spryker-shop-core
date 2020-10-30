@@ -16,18 +16,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/DiscountPromotionWidget/src/SprykerShop/Yves/DiscountPromotionWidget/DiscountPromotionWidgetDependencyProvider.php",
-            "snippet": "            return new DiscountPromotionWidgetToProductStorageClientBridge($container->getLocator()->productStorage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 62,
             "line_to": 62,
             "type": "PossiblyNullArrayOffset",

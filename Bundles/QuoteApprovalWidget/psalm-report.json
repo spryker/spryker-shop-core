@@ -1,5 +1,18 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of SprykerShop\\Yves\\QuoteApprovalWidget\\Form\\QuoteApproveRequestFormDataProvider::getOptions has wrong name $localeName, expecting $localeString as defined by SprykerShop\\Yves\\QuoteApprovalWidget\\Form\\QuoteApproveRequestFormDataProviderInterface::getOptions",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteApprovalWidget/src/SprykerShop/Yves/QuoteApprovalWidget/Form/QuoteApproveRequestFormDataProvider.php",
+            "snippet": "    public function getOptions(QuoteTransfer $quoteTransfer, string $localeName): array",
+            "selected_text": "$localeName",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -9,6 +22,30 @@
             "message": "Cannot call method getIdCompanyUser on possibly null value",
             "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteApprovalWidget/src/SprykerShop/Yves/QuoteApprovalWidget/Controller/QuoteApprovalController.php",
             "snippet": "            ->setRequesterCompanyUserId($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 98,
+            "line_to": 98,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteApprovalWidget/src/SprykerShop/Yves/QuoteApprovalWidget/Controller/QuoteApprovalController.php",
+            "snippet": "            ->setApproverCompanyUserId($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 126,
+            "line_to": 126,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteApprovalWidget/src/SprykerShop/Yves/QuoteApprovalWidget/Controller/QuoteApprovalController.php",
+            "snippet": "            ->setApproverCompanyUserId($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());",
             "selected_text": "getIdCompanyUser",
             "error_level": 3,
             "shortcode": 83
@@ -123,66 +160,6 @@
         },
         {
             "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteApprovalWidget/src/SprykerShop/Yves/QuoteApprovalWidget/QuoteApprovalWidgetDependencyProvider.php",
-            "snippet": "            return new QuoteApprovalWidgetToQuoteApprovalClientBridge($container->getLocator()->quoteApproval()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 65,
-            "line_to": 65,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteApprovalWidget/src/SprykerShop/Yves/QuoteApprovalWidget/QuoteApprovalWidgetDependencyProvider.php",
-            "snippet": "            return new QuoteApprovalWidgetToQuoteClientBridge($container->getLocator()->quote()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 79,
-            "line_to": 79,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteApprovalWidget/src/SprykerShop/Yves/QuoteApprovalWidget/QuoteApprovalWidgetDependencyProvider.php",
-            "snippet": "            return new QuoteApprovalWidgetToCustomerClientBridge($container->getLocator()->customer()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 93,
-            "line_to": 93,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteApprovalWidget/src/SprykerShop/Yves/QuoteApprovalWidget/QuoteApprovalWidgetDependencyProvider.php",
-            "snippet": "            return new QuoteApprovalWidgetToMoneyClientBridge($container->getLocator()->money()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 107,
-            "line_to": 107,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteApprovalWidget/src/SprykerShop/Yves/QuoteApprovalWidget/QuoteApprovalWidgetDependencyProvider.php",
-            "snippet": "            return new QuoteApprovalWidgetToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 105,
             "line_to": 106,
             "type": "PossiblyNullArgument",
@@ -240,33 +217,9 @@
             "selected_text": "$this->findCurrentCompanyUser()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/PermissionAwareTrait.php",
-            "snippet": "            return Locator::getInstance()->permission()->client()->can($permissionKey, $context);",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 207,
-            "line_to": 207,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Yves\\Kernel\\Controller\\AbstractController::redirectResponseExternal has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteApprovalWidget/src/SprykerShop/Yves/QuoteApprovalWidget/Controller/QuoteApprovalController.php",
-            "snippet": "        return $this->redirectResponseExternal($referer);",
-            "selected_text": "redirectResponseExternal",
-            "error_level": 2,
-            "shortcode": 1
-        },
         {
             "severity": "info",
             "line_from": 91,
