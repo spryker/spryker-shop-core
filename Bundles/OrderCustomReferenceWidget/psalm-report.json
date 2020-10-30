@@ -24,44 +24,7 @@
             "selected_text": "$quoteErrorTransfer->getMessage()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/OrderCustomReferenceWidget/src/SprykerShop/Yves/OrderCustomReferenceWidget/OrderCustomReferenceWidgetDependencyProvider.php",
-            "snippet": "                $container->getLocator()->orderCustomReference()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 59,
-            "line_to": 59,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/OrderCustomReferenceWidget/src/SprykerShop/Yves/OrderCustomReferenceWidget/OrderCustomReferenceWidgetDependencyProvider.php",
-            "snippet": "                $container->getLocator()->quote()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Yves\\Kernel\\Controller\\AbstractController::redirectResponseExternal has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/OrderCustomReferenceWidget/src/SprykerShop/Yves/OrderCustomReferenceWidget/Controller/OrderCustomReferenceController.php",
-            "snippet": "        return $this->redirectResponseExternal(",
-            "selected_text": "redirectResponseExternal",
-            "error_level": 2,
-            "shortcode": 1
-        }
-    ]
+    "deprecation": []
 }

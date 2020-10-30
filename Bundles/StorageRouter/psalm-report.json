@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/StorageRouter/src/SprykerShop/Yves/StorageRouter/StorageRouterDependencyProvider.php",
-            "snippet": "            return new StorageRouterToUrlStorageClientBridge($container->getLocator()->urlStorage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 118,
             "line_to": 118,
             "type": "InvalidScalarArgument",
@@ -24,18 +12,6 @@
             "selected_text": "$referenceType",
             "error_level": 4,
             "shortcode": 12
-        },
-        {
-            "severity": "info",
-            "line_from": 174,
-            "line_to": 174,
-            "type": "ImplementedParamTypeMismatch",
-            "message": "Argument 3 of Symfony\\Cmf\\Component\\Routing\\DynamicRouter::generate has wrong type 'bool|string', expecting 'int' as defined by Symfony\\Component\\Routing\\Generator\\UrlGeneratorInterface::generate",
-            "file_name": "vendor/symfony-cmf/routing/src/DynamicRouter.php",
-            "snippet": "    public function generate($name, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)",
-            "selected_text": "$referenceType",
-            "error_level": 4,
-            "shortcode": 199
         }
     ],
     "deprecation": []

@@ -1,19 +1,6 @@
 {
     "error": [],
-    "warning": [
-        {
-            "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductDiscontinuedWidget/src/SprykerShop/Yves/ProductDiscontinuedWidget/ProductDiscontinuedWidgetDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productDiscontinuedStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        }
-    ],
+    "warning": [],
     "deprecation": [
         {
             "severity": "info",

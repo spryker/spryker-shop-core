@@ -1,5 +1,114 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\ProductConfiguratorGatewayPage\\Controller\\GatewayRequestController::redirectResponseExternal cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductConfiguratorGatewayPage/src/SprykerShop/Yves/ProductConfiguratorGatewayPage/Controller/GatewayRequestController.php",
+            "snippet": "            return $this->redirectResponseExternal($productConfiguratorRedirectTransfer->getConfiguratorRedirectUrl());",
+            "selected_text": "$productConfiguratorRedirectTransfer->getConfiguratorRedirectUrl()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\ProductConfiguratorGatewayPage\\Controller\\GatewayRequestController::redirectResponseInternal cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductConfiguratorGatewayPage/src/SprykerShop/Yves/ProductConfiguratorGatewayPage/Controller/GatewayRequestController.php",
+            "snippet": "        return $this->redirectResponseInternal($refererUrl);",
+            "selected_text": "$refererUrl",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 91,
+            "line_to": 91,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Symfony\\Component\\Form\\FormErrorIterator::getMessage does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductConfiguratorGatewayPage/src/SprykerShop/Yves/ProductConfiguratorGatewayPage/Controller/GatewayRequestController.php",
+            "snippet": "                $errorList[] = $error->getMessage();",
+            "selected_text": "getMessage",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\ProductConfiguratorGatewayPage\\Controller\\GatewayResponseController::executeProductConfiguratorGatewayBackUrlResolverStrategyPlugins cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductConfiguratorGatewayPage/src/SprykerShop/Yves/ProductConfiguratorGatewayPage/Controller/GatewayResponseController.php",
+            "snippet": "            $productConfiguratorResponseProcessorResponseTransfer->getProductConfiguratorResponse()",
+            "selected_text": "$productConfiguratorResponseProcessorResponseTransfer->getProductConfiguratorResponse()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\ProductConfiguratorGatewayPage\\Controller\\GatewayResponseController::addErrorMessage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductConfiguratorGatewayPage/src/SprykerShop/Yves/ProductConfiguratorGatewayPage/Controller/GatewayResponseController.php",
+            "snippet": "            $this->addErrorMessage($messageTransfer->getValue());",
+            "selected_text": "$messageTransfer->getValue()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 101,
+            "line_to": 101,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\ProductConfiguratorGatewayPage\\Dependency\\Client\\ProductConfiguratorGatewayPageToProductConfigurationStorageClientInterface::findProductConfigurationInstanceBySku cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductConfiguratorGatewayPage/src/SprykerShop/Yves/ProductConfiguratorGatewayPage/Resolver/ProductConfiguratorRedirectResolver.php",
+            "snippet": "            $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient->findProductConfigurationInstanceBySku($sku);",
+            "selected_text": "$sku",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 124,
+            "line_to": 124,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of SprykerShop\\Yves\\ProductConfiguratorGatewayPage\\Dependency\\Client\\ProductConfiguratorGatewayPageToProductConfigurationStorageClientInterface::findProductConfigurationInstanceInQuote cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductConfiguratorGatewayPage/src/SprykerShop/Yves/ProductConfiguratorGatewayPage/Resolver/ProductConfiguratorRedirectResolver.php",
+            "snippet": "            ->findProductConfigurationInstanceInQuote($itemGroupKey, $sku, $quoteTransfer);",
+            "selected_text": "$sku",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of SprykerShop\\Yves\\ProductConfiguratorGatewayPage\\Dependency\\Client\\ProductConfiguratorGatewayPageToProductStorageClientInterface::findProductConcreteStorageDataByMappingForCurrentLocale cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductConfiguratorGatewayPage/src/SprykerShop/Yves/ProductConfiguratorGatewayPage/Resolver/ProductDetailPageGatewayBackUrlResolver.php",
+            "snippet": "            $productConfiguratorResponseTransfer->getSku()",
+            "selected_text": "$productConfiguratorResponseTransfer->getSku()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\ProductConfiguratorGatewayPage\\Resolver\\ProductDetailPageGatewayBackUrlResolver::mapProductConcreteStorageDataToProductConcreteStorageTransfer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductConfiguratorGatewayPage/src/SprykerShop/Yves/ProductConfiguratorGatewayPage/Resolver/ProductDetailPageGatewayBackUrlResolver.php",
+            "snippet": "            $productConcreteStorageData,",
+            "selected_text": "$productConcreteStorageData",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
     "deprecation": []
 }

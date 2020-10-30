@@ -3,15 +3,39 @@
     "warning": [
         {
             "severity": "info",
+            "line_from": 83,
+            "line_to": 83,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'callable' for SprykerShop\\Yves\\CmsSlotBlockWidget\\Business\\CmsSlotBlockWidgetDataProvider::getCmsBlockTwigFunction is not nullable, but 'callable|null' contains null",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CmsSlotBlockWidget/src/SprykerShop/Yves/CmsSlotBlockWidget/Business/CmsSlotBlockWidgetDataProvider.php",
+            "snippet": "     * @return callable",
+            "selected_text": "callable",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
             "line_from": 87,
             "line_to": 87,
             "type": "InternalMethod",
-            "message": "The method Twig\\Environment::getFunction has been marked as internal",
+            "message": "The method Twig\\Environment::getFunction is internal to Twig but called from SprykerShop\\Yves\\CmsSlotBlockWidget\\Business\\CmsSlotBlockWidgetDataProvider",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CmsSlotBlockWidget/src/SprykerShop/Yves/CmsSlotBlockWidget/Business/CmsSlotBlockWidgetDataProvider.php",
             "snippet": "        $twigFunction = $this->twigEnvironment->getFunction($this->cmsSlotBlockWidgetConfig->getCmsBlockTwigFunctionName());",
             "selected_text": "getFunction",
             "error_level": 4,
             "shortcode": 175
+        },
+        {
+            "severity": "info",
+            "line_from": 96,
+            "line_to": 96,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'callable' for SprykerShop\\Yves\\CmsSlotBlockWidget\\Business\\CmsSlotBlockWidgetDataProvider::getCmsBlockTwigFunction is not nullable, but the function returns 'callable|null'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CmsSlotBlockWidget/src/SprykerShop/Yves/CmsSlotBlockWidget/Business/CmsSlotBlockWidgetDataProvider.php",
+            "snippet": "        return $twigFunction->getCallable();",
+            "selected_text": "$twigFunction->getCallable()",
+            "error_level": 5,
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -72,44 +96,7 @@
             "selected_text": "$cmsSlotContentRequestTransfer->getCmsSlotParams()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CmsSlotBlockWidget/src/SprykerShop/Yves/CmsSlotBlockWidget/CmsSlotBlockWidgetDependencyProvider.php",
-            "snippet": "                $container->getLocator()->cmsSlotBlockStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CmsSlotBlockWidget/src/SprykerShop/Yves/CmsSlotBlockWidget/CmsSlotBlockWidgetDependencyProvider.php",
-            "snippet": "                $container->getLocator()->cmsSlotBlock()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 87,
-            "line_to": 87,
-            "type": "DeprecatedClass",
-            "message": "Class Twig_Function is marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CmsSlotBlockWidget/src/SprykerShop/Yves/CmsSlotBlockWidget/Business/CmsSlotBlockWidgetDataProvider.php",
-            "snippet": "        $twigFunction = $this->twigEnvironment->getFunction($this->cmsSlotBlockWidgetConfig->getCmsBlockTwigFunctionName());",
-            "selected_text": "$this->twigEnvironment->getFunction($this->cmsSlotBlockWidgetConfig->getCmsBlockTwigFunctionName())",
-            "error_level": 2,
-            "shortcode": 98
-        }
-    ]
+    "deprecation": []
 }

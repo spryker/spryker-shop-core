@@ -4,7 +4,7 @@
   "description": "SalesProductConfigurationWidget module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker-shop/sales-product-configuration-widget-extension": "^0.1.0",
     "spryker-shop/shop-ui": "^1.40.0",
     "spryker/kernel": "^3.33.0",

@@ -12,18 +12,6 @@
             "selected_text": "$activeEntityId",
             "error_level": 3,
             "shortcode": 148
-        },
-        {
-            "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/WishlistWidget/src/SprykerShop/Yves/WishlistWidget/WishlistWidgetDependencyProvider.php",
-            "snippet": "            return new WishlistWidgetToWishlistClientBridge($container->getLocator()->wishlist()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

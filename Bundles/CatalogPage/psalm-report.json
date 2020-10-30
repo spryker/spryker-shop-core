@@ -2,6 +2,18 @@
     "error": [
         {
             "severity": "error",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of SprykerShop\\Yves\\CatalogPage\\Dependency\\Client\\CatalogPageToCategoryStorageClientBridge::getCategoryNodeById has wrong name $idCategoryStorageNode, expecting $idCategoryNode as defined by SprykerShop\\Yves\\CatalogPage\\Dependency\\Client\\CatalogPageToCategoryStorageClientInterface::getCategoryNodeById",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CatalogPage/src/SprykerShop/Yves/CatalogPage/Dependency/Client/CatalogPageToCategoryStorageClientBridge.php",
+            "snippet": "    public function getCategoryNodeById($idCategoryStorageNode, $localeName)",
+            "selected_text": "$idCategoryStorageNode",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
             "line_from": 52,
             "line_to": 52,
             "type": "InvalidReturnType",
@@ -85,78 +97,6 @@
             "selected_text": "getParameterName",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CatalogPage/src/SprykerShop/Yves/CatalogPage/CatalogPageDependencyProvider.php",
-            "snippet": "            return new CatalogPageToSearchClientBridge($container->getLocator()->search()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 72,
-            "line_to": 72,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CatalogPage/src/SprykerShop/Yves/CatalogPage/CatalogPageDependencyProvider.php",
-            "snippet": "            return new CatalogPageToCategoryStorageClientBridge($container->getLocator()->categoryStorage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 86,
-            "line_to": 86,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CatalogPage/src/SprykerShop/Yves/CatalogPage/CatalogPageDependencyProvider.php",
-            "snippet": "            return new CatalogPageToLocaleClientBridge($container->getLocator()->locale()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 100,
-            "line_to": 100,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CatalogPage/src/SprykerShop/Yves/CatalogPage/CatalogPageDependencyProvider.php",
-            "snippet": "            return new CatalogPageToCatalogClientBridge($container->getLocator()->catalog()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 114,
-            "line_to": 114,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CatalogPage/src/SprykerShop/Yves/CatalogPage/CatalogPageDependencyProvider.php",
-            "snippet": "            return new CatalogPageToProductCategoryFilterClientBridge($container->getLocator()->productCategoryFilter()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 128,
-            "line_to": 128,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CatalogPage/src/SprykerShop/Yves/CatalogPage/CatalogPageDependencyProvider.php",
-            "snippet": "            return new CatalogPageToProductCategoryFilterStorageClientBridge($container->getLocator()->productCategoryFilterStorage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",
@@ -325,30 +265,18 @@
             "selected_text": "$divider",
             "error_level": 3,
             "shortcode": 163
-        },
-        {
-            "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/PermissionAwareTrait.php",
-            "snippet": "            return Locator::getInstance()->permission()->client()->can($permissionKey, $context);",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 148,
-            "line_to": 148,
+            "line_from": 164,
+            "line_to": 164,
             "type": "DeprecatedClass",
-            "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CatalogPage/src/SprykerShop/Yves/CatalogPage/CatalogPageFactory.php",
-            "snippet": "     * @return \\Spryker\\Yves\\Kernel\\Application",
-            "selected_text": "\\Spryker\\Yves\\Kernel\\Application",
+            "message": "Spryker\\Yves\\Kernel\\Plugin\\Pimple is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CatalogPage/src/SprykerShop/Yves/CatalogPage/CatalogPageDependencyProvider.php",
+            "snippet": "            $pimplePlugin = new Pimple();",
+            "selected_text": "new Pimple()",
             "error_level": 2,
             "shortcode": 98
         },
@@ -359,22 +287,22 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CatalogPage/src/SprykerShop/Yves/CatalogPage/CatalogPageFactory.php",
-            "snippet": "    public function getApplication(): Application",
-            "selected_text": "Application",
+            "snippet": "     * @return \\Spryker\\Yves\\Kernel\\Application",
+            "selected_text": "\\Spryker\\Yves\\Kernel\\Application",
             "error_level": 2,
             "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 159,
-            "line_to": 159,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Yves\\Kernel\\Controller\\AbstractController::redirectResponseExternal has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CatalogPage/src/SprykerShop/Yves/CatalogPage/Controller/CatalogController.php",
-            "snippet": "        $response = $this->redirectResponseExternal($refererUrl);",
-            "selected_text": "redirectResponseExternal",
+            "line_from": 152,
+            "line_to": 152,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CatalogPage/src/SprykerShop/Yves/CatalogPage/CatalogPageFactory.php",
+            "snippet": "    public function getApplication(): Application",
+            "selected_text": "Application",
             "error_level": 2,
-            "shortcode": 1
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -498,18 +426,6 @@
         },
         {
             "severity": "info",
-            "line_from": 54,
-            "line_to": 54,
-            "type": "DeprecatedClass",
-            "message": "Class SprykerShop\\Yves\\CatalogPage\\Plugin\\Provider\\CatalogPageControllerProvider is deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CatalogPage/src/SprykerShop/Yves/CatalogPage/Plugin/FullTextSearchProductsTabPlugin.php",
-            "snippet": "            ->setRoute(CatalogPageControllerProvider::ROUTE_SEARCH)",
-            "selected_text": "CatalogPageControllerProvider::ROUTE_SEARCH",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
             "line_from": 16,
             "line_to": 16,
             "type": "DeprecatedInterface",
@@ -553,42 +469,6 @@
             "file_name": "vendor/spryker/spryker-shop/Bundles/CatalogPage/src/SprykerShop/Yves/CatalogPage/Plugin/Provider/CatalogPageTwigServiceProvider.php",
             "snippet": "        $app['twig'] = $app->share(",
             "selected_text": "share",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 18,
-            "line_to": 18,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CatalogPage/src/SprykerShop/Yves/CatalogPage/Resolver/ShopContextResolver.php",
-            "snippet": "     * @var \\Spryker\\Yves\\Kernel\\Application",
-            "selected_text": "\\Spryker\\Yves\\Kernel\\Application",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CatalogPage/src/SprykerShop/Yves/CatalogPage/Resolver/ShopContextResolver.php",
-            "snippet": "     * @param \\Spryker\\Yves\\Kernel\\Application $application",
-            "selected_text": "\\Spryker\\Yves\\Kernel\\Application",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CatalogPage/src/SprykerShop/Yves/CatalogPage/Resolver/ShopContextResolver.php",
-            "snippet": "        return $this->application[static::SERVICE_SHOP_CONTEXT] ?? new ShopContextTransfer();",
-            "selected_text": "$this->application",
             "error_level": 2,
             "shortcode": 1
         }
