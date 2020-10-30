@@ -5,7 +5,7 @@
   "license": "MIT",
   "require": {
     "php": ">=7.3",
-    "spryker-sdk/product-configuration-sdk": "dev-feature/cc-10508/dev-configurable-product-phase2",
+    "spryker-sdk/product-configuration-sdk": "^0.1.0",
     "spryker-shop/product-configuration-widget-extension": "^0.1.0",
     "spryker-shop/sales-product-configuration-widget-extension": "^0.1.0",
     "spryker-shop/shop-ui": "^1.45.0",
