@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\MerchantSwitcherWidget\MerchantReader;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantSearchRequestTransfer;
 use SprykerShop\Yves\MerchantSwitcherWidget\Cookie\SelectedMerchantCookieInterface;
 use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToMerchantSearchClientInterface;
@@ -57,6 +58,7 @@ class MerchantReader implements MerchantReaderInterface
         $selectedMerchantReference = $this->selectedMerchantCookie->getMerchantReference();
         $merchantSearchTransfers = $this->getMerchantSearchTransfers();
 
+        /** @var \Generated\Shared\Transfer\MerchantSearchTransfer $merchantSearchTransfer */
         foreach ($merchantSearchTransfers as $merchantSearchTransfer) {
             if ($selectedMerchantReference === $merchantSearchTransfer->getMerchantReference()) {
                 $this->merchantSwitcher->switchMerchantInQuote($selectedMerchantReference);
@@ -69,7 +71,7 @@ class MerchantReader implements MerchantReaderInterface
         /** @var \Generated\Shared\Transfer\MerchantSearchTransfer|null $merchantSearchTransfer */
         $merchantSearchTransfer = $merchantSearchTransfers->getIterator()->current();
 
-        if (!$merchantSearchTransfers) {
+        if (!$merchantSearchTransfers->count()) {
             if ($selectedMerchantReference) {
                 $this->selectedMerchantCookie->removeMerchantReference();
             }
@@ -91,6 +93,6 @@ class MerchantReader implements MerchantReaderInterface
     {
         return $this->merchantSearchClient
             ->merchantSearch(new MerchantSearchRequestTransfer())[static::MERCHANT_SEARCH_COLLECTION]
-            ->getMerchantSearches();
+            ->getMerchants();
     }
 }

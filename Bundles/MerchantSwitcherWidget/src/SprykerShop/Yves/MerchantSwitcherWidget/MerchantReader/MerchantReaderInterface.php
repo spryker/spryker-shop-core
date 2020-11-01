@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\MerchantSwitcherWidget\MerchantReader;
 
+use ArrayObject;
+
 interface MerchantReaderInterface
 {
     /**
@@ -17,5 +19,5 @@ interface MerchantReaderInterface
     /**
      * @return \ArrayObject|\Generated\Shared\Transfer\MerchantSearchTransfer[]
      */
-    public function getMerchantSearchTransfers();
+    public function getMerchantSearchTransfers(): ArrayObject;
 }
