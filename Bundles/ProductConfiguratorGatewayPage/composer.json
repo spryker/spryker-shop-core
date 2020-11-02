@@ -24,8 +24,6 @@
     "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/router": "*",
-    "spryker/security": "*",
-    "spryker/session": "*",
     "spryker/storage": "*",
     "spryker/testify": "*"
   },
