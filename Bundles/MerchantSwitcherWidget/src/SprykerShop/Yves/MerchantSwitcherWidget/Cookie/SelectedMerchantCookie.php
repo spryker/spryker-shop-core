@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\MerchantSwitcherWidget\Cookie;
 use ArrayObject;
 use SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcherWidgetConfig;
 use Symfony\Component\HttpFoundation\Cookie;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class SelectedMerchantCookie implements SelectedMerchantCookieInterface
@@ -50,7 +49,8 @@ class SelectedMerchantCookie implements SelectedMerchantCookieInterface
      */
     public function getMerchantReference(): string
     {
-        if(!$request = $this->requestStack->getCurrentRequest()) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (!$request) {
             return '';
         }
 
