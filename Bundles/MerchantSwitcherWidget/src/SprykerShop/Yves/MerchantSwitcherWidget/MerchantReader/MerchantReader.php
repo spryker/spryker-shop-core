@@ -68,8 +68,6 @@ class MerchantReader implements MerchantReaderInterface
         }
 
         $merchantSearchTransfers->getIterator()->rewind();
-        /** @var \Generated\Shared\Transfer\MerchantSearchTransfer|null $merchantSearchTransfer */
-        $merchantSearchTransfer = $merchantSearchTransfers->getIterator()->current();
 
         if (!$merchantSearchTransfers->count()) {
             if ($selectedMerchantReference) {
@@ -78,6 +76,8 @@ class MerchantReader implements MerchantReaderInterface
 
             return null;
         }
+        /** @var \Generated\Shared\Transfer\MerchantSearchTransfer $merchantSearchTransfer */
+        $merchantSearchTransfer = $merchantSearchTransfers->getIterator()->current();
 
         $selectedMerchantReference = $merchantSearchTransfer->getMerchantReference();
         $this->selectedMerchantCookie->setMerchantReference($selectedMerchantReference);

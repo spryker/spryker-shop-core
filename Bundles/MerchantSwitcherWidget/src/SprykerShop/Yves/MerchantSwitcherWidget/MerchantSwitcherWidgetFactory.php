@@ -60,7 +60,7 @@ class MerchantSwitcherWidgetFactory extends AbstractFactory
     {
         return new SelectedMerchantCookie(
             $this->getCookies(),
-            $this->getRequest(),
+            $this->getRequestStack(),
             $this->getConfig()
         );
     }
@@ -71,14 +71,6 @@ class MerchantSwitcherWidgetFactory extends AbstractFactory
     public function getMerchantSearchClient(): MerchantSwitcherWidgetToMerchantSearchClientInterface
     {
         return $this->getProvidedDependency(MerchantSwitcherWidgetDependencyProvider::CLIENT_MERCHANT_SEARCH);
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Request
-     */
-    public function getRequest(): Request
-    {
-        return $this->getRequestStack()->getCurrentRequest();
     }
 
     /**

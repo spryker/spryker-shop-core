@@ -36,11 +36,11 @@ class MerchantSwitcher implements MerchantSwitcherInterface
     }
 
     /**
-     * @param string $merchantReference
+     * @param string|null $merchantReference
      *
      * @return void
      */
-    public function switchMerchantInQuote(string $merchantReference): void
+    public function switchMerchantInQuote(?string $merchantReference): void
     {
         $quoteTransfer = $this->quoteClient->getQuote();
 
@@ -53,6 +53,9 @@ class MerchantSwitcher implements MerchantSwitcherInterface
         $merchantSwitchRequestTransfer->setQuote($quoteTransfer);
 
         $quoteTransfer = $this->merchantSwitcherClient->switchMerchantInQuote($merchantSwitchRequestTransfer)->getQuote();
+        if (!$quoteTransfer) {
+            return;
+        }
 
         $this->quoteClient->setQuote($quoteTransfer);
     }
