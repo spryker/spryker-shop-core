@@ -1,5 +1,5 @@
 # ProductConfiguratorGatewayPage Module
-[![Build Status](https://travis-ci.org/spryker-shop/product-configurator-gateway-page.svg)](https://travis-ci.org/spryker/product-configurator-gateway-page)
+[![Build Status](https://travis-ci.org/spryker-shop/product-configurator-gateway-page.svg)](https://travis-ci.org/spryker-shop/product-configurator-gateway-page)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 This module provides a gateway for a product configurators.
