@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Configurator\DateTimeConfiguratorPageExample;
 
-use SprykerSdk\ProductConfigurationSdk\Checksum\CrcProductConfigurationDataChecksumGenerator;
+use Spryker\Service\ChecksumGenerator\ChecksumGeneratorService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -107,11 +107,10 @@ class ConfiguratorPage
     protected function prepareConfigurationResponseAction(): Response
     {
         $productConfiguration = $this->request->request->all() ?? [];
-        $checkSum = (new CrcProductConfigurationDataChecksumGenerator(
-            getenv('SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR') ?: ''
-        ))->generateProductConfigurationDataChecksum(
+        $checkSum = (new ChecksumGeneratorService())->generateOpenSslChecksum(
             $productConfiguration,
-            getenv('SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY') ?: ''
+            getenv('SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY') ?: '',
+            getenv('SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR') ?: ''
         );
 
         return new JsonResponse(
