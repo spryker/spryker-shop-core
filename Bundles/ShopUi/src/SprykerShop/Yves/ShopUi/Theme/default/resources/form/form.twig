@@ -152,6 +152,37 @@
     {{block('checkbox_widget')}}
 {%- endblock -%}
 
+{%- block password_widget -%}
+    {%- set attr = attr | merge({
+        id: id | default(false),
+        placeholder: attr.placeholder | default(label) | trans(attr_translation_parameters, translation_domain),
+        name: full_name,
+        disabled: disabled | default(false),
+        required: required | default(false),
+    }) -%}
+
+    {% if attr.title | default %}
+        {%- set attr = attr | merge({
+                title: attr.title | trans(attr_translation_parameters, translation_domain),
+            }) -%}
+    {% endif %}
+
+    {#{% include molecule('password-field') with {#}
+        {#data: {#}
+                {#inputAttributes: attr,#}
+                {#inputExtraClasses: ('input input--expand' ~ (errors is not empty ? ' input--error' : ' ') ~ (attr.class | default)) | trim,#}
+            {#},#}
+    {#} only %}#}
+
+    {#{% if withPasswordComplexityIndicator | default %}#}
+        {#{% include molecule('password-complexity-indicator') with {#}
+                {#attributes: {#}
+                        {#'input-class-name': '',#}
+                    {#},#}
+            {#} only %}#}
+    {#{% endif %}#}
+{%- endblock password_widget -%}
+
 {# rows #}
 
 {%- block form_row -%}
