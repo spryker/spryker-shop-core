@@ -44,7 +44,7 @@ class ExampleDateTimeProductConfigurationRenderStrategyPlugin extends AbstractPl
     public function getTemplate(ProductConfigurationInstanceTransfer $productConfigurationInstance): ProductConfigurationTemplateTransfer
     {
         return (new ProductConfigurationTemplateTransfer())
-            ->setData(json_decode($productConfigurationInstance->getDisplayData(), true) ?? [])
+            ->setData(json_decode($productConfigurationInstance->getDisplayDataOrFail(), true) ?? [])
             ->setModuleName('DateTimeConfiguratorPageExample')
             ->setTemplateType('view')
             ->setTemplateName('options-list');

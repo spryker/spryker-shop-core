@@ -20,6 +20,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class GatewayRequestController extends AbstractController
 {
+    /**
+     * @uses \SprykerShop\Yves\HomePage\Plugin\Router\HomePageRouteProviderPlugin::ROUTE_NAME_HOME
+     */
+    protected const FALLBACK_ROUTE_NAME = 'home';
     protected const REQUEST_HEADER_REFERER = 'referer';
 
     /**
@@ -45,7 +49,7 @@ class GatewayRequestController extends AbstractController
     protected function executeIndexAction(Request $request): RedirectResponse
     {
         $productConfiguratorRequestDataTransfer = $this->validateProductConfiguratorRequestDataForm($request);
-        $refererUrl = $request->headers->get(static::REQUEST_HEADER_REFERER);
+        $refererUrl = $request->headers->get(static::REQUEST_HEADER_REFERER) ?? static::FALLBACK_ROUTE_NAME;
 
         $productConfiguratorRequestDataTransfer->setBackUrl($refererUrl)
             ->setSubmitUrl($this->getRouter()->generate(
@@ -58,7 +62,7 @@ class GatewayRequestController extends AbstractController
             ->resolveProductConfiguratorRedirect($productConfiguratorRequestDataTransfer);
 
         if ($productConfiguratorRedirectTransfer->getIsSuccessful()) {
-            return $this->redirectResponseExternal($productConfiguratorRedirectTransfer->getConfiguratorRedirectUrl());
+            return $this->redirectResponseExternal($productConfiguratorRedirectTransfer->getConfiguratorRedirectUrlOrFail());
         }
 
         $this->handleProductConfigurationRedirectErrors($productConfiguratorRedirectTransfer);
@@ -75,7 +79,7 @@ class GatewayRequestController extends AbstractController
         ProductConfiguratorRedirectTransfer $productConfiguratorRedirectTransfer
     ) {
         foreach ($productConfiguratorRedirectTransfer->getMessages() as $messageTransfer) {
-            $this->addErrorMessage($messageTransfer->getValue());
+            $this->addErrorMessage($messageTransfer->getValueOrFail());
         }
     }
 

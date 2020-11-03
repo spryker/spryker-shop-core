@@ -43,7 +43,7 @@ class ExampleDateTimeSalesProductConfigurationRenderStrategyPlugin extends Abstr
     public function getTemplate(SalesOrderItemConfigurationTransfer $salesOrderItemConfigurationTransfer): ProductConfigurationTemplateTransfer
     {
         return (new ProductConfigurationTemplateTransfer())
-            ->setData(json_decode($salesOrderItemConfigurationTransfer->getDisplayData(), true) ?? [])
+            ->setData(json_decode($salesOrderItemConfigurationTransfer->getDisplayDataOrFail(), true) ?? [])
             ->setModuleName('DateTimeConfiguratorPageExample')
             ->setTemplateType('view')
             ->setTemplateName('options-list');
