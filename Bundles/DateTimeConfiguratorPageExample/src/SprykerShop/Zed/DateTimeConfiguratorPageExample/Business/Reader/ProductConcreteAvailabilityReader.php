@@ -49,16 +49,16 @@ class ProductConcreteAvailabilityReader implements ProductConcreteAvailabilityRe
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer|null $productAvailabilityCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
     protected function resolveProductConfigurationAvailability(
         string $sku,
         StoreTransfer $storeTransfer,
-        ?ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer = null
+        ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
     ): ?ProductConcreteAvailabilityTransfer {
-        $productConfigurationAvailabilityQuantity = $productAvailabilityCriteriaTransfer->getProductConfigurationInstance()
+        $productConfigurationAvailabilityQuantity = $productAvailabilityCriteriaTransfer->getProductConfigurationInstanceOrFail()
             ->getAvailableQuantity();
 
         $productConcreteAvailabilityTransfer = $this->availabilityFacade->findOrCreateProductConcreteAvailabilityBySkuForStore(
@@ -76,16 +76,27 @@ class ProductConcreteAvailabilityReader implements ProductConcreteAvailabilityRe
         }
 
         if ($productConfigurationAvailabilityQuantity !== null && !$productConcreteAvailabilityTransfer) {
-            return (new ProductConcreteAvailabilityTransfer())
-                ->setAvailability($productConfigurationAvailabilityQuantity)
-                ->setSku($sku);
+            return $this->createProductConcreteAvailabilityTransfer($sku, $productConfigurationAvailabilityQuantity);
         }
 
-        if ($productConcreteAvailabilityTransfer->getAvailability()->lessThan($productConfigurationAvailabilityQuantity)) {
+        if ($productConcreteAvailabilityTransfer->getAvailabilityOrFail()->lessThan($productConfigurationAvailabilityQuantity)) {
             return $productConcreteAvailabilityTransfer;
         }
 
-        return $productConcreteAvailabilityTransfer->setAvailability($productConfigurationAvailabilityQuantity);
+        return $this->createProductConcreteAvailabilityTransfer($sku, $productConfigurationAvailabilityQuantity);
+    }
+
+    /**
+     * @param string $sku
+     * @param int $productConfigurationAvailabilityQuantity
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer
+     */
+    protected function createProductConcreteAvailabilityTransfer(string $sku, int $productConfigurationAvailabilityQuantity)
+    {
+        return (new ProductConcreteAvailabilityTransfer())
+            ->setAvailability($productConfigurationAvailabilityQuantity)
+            ->setSku($sku);
     }
 
     /**

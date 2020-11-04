@@ -32,7 +32,7 @@ class ExampleDateTimeProductConfigurationRenderStrategyPlugin extends AbstractPl
     public function isApplicable(ItemTransfer $itemTransfer): bool
     {
         return $itemTransfer->getSalesOrderItemConfiguration()
-            && $itemTransfer->getSalesOrderItemConfiguration()->getConfiguratorKey()
+            && $itemTransfer->getSalesOrderItemConfigurationOrFail()->getConfiguratorKey()
             === DateTimeConfiguratorPageExampleConfig::DATE_TIME_CONFIGURATOR_KEY;
     }
 
@@ -49,7 +49,7 @@ class ExampleDateTimeProductConfigurationRenderStrategyPlugin extends AbstractPl
     public function getTemplate(ItemTransfer $itemTransfer): SalesProductConfigurationTemplateTransfer
     {
         return (new SalesProductConfigurationTemplateTransfer())
-            ->setData(json_decode($itemTransfer->getSalesOrderItemConfiguration()->getDisplayData(), true) ?? [])
+            ->setData(json_decode($itemTransfer->getSalesOrderItemConfigurationOrFail()->getDisplayDataOrFail(), true) ?? [])
             ->setTemplatePath('@DateTimeConfiguratorPageExample/_partials/order-item-configuration.twig');
     }
 }

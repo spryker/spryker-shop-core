@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { ConfiguredProduct, VolumePrices } from '../../services/types';
+import { ConfiguredProduct } from '../../services/types';
 import { ConfiguratorService } from '../../services/configurator.service';
 import { ProductService } from '../../services/product.service';
 
@@ -51,20 +51,6 @@ export class ProductDetailsComponent implements OnChanges {
         const isDateEntered = this.productData.display_data.Date.length > 0;
 
         return isDayTimeSelected && isDateEntered;
-    }
-
-    setPrice(): number {
-        const quantity = this.productData.quantity;
-        const productVolumePrices = this.productData.volume_prices;
-
-        if (quantity < 5 || !productVolumePrices) {
-            return this.productData.price / 100;
-        }
-
-        const isNetMode = this.productData.price_mode.toLowerCase().trim() === 'net_mode';
-        const volumePrice = (productVolumePrices as VolumePrices).volume_prices[0];
-
-        return (isNetMode ? volumePrice.net_price : volumePrice.gross_price) / 100;
     }
 
     onDateChange(event: Event): void {

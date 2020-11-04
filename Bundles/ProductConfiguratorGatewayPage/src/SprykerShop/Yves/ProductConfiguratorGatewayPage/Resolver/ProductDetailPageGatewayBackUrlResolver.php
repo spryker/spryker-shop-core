@@ -54,7 +54,7 @@ class ProductDetailPageGatewayBackUrlResolver implements ProductDetailPageGatewa
 
         $productConcreteStorageData = $this->productStorageClient->findProductConcreteStorageDataByMappingForCurrentLocale(
             static::MAPPING_TYPE_SKU,
-            $productConfiguratorResponseTransfer->getSku()
+            $productConfiguratorResponseTransfer->getSkuOrFail()
         );
 
         if (!$productConcreteStorageData) {
