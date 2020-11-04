@@ -54,7 +54,7 @@ class SelectedMerchantCookie implements SelectedMerchantCookieInterface
             return '';
         }
 
-        return (string) $request->cookies->get($this->merchantSwitcherWidgetConfig->getMerchantSelectorCookieIdentifier(), '');
+        return (string)$request->cookies->get($this->merchantSwitcherWidgetConfig->getMerchantSelectorCookieIdentifier(), '');
     }
 
     /**
