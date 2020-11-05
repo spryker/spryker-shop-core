@@ -1,11 +1,11 @@
 <br>
-{% for key, configuration in data | slice(0, 1) %}
+{% for key, configuration in data | slice(0, 3) %}
     <div><strong>{{ key }}</strong>: {{ configuration }}</div>
 {% endfor %}
 
-{% if data | length > 1 %}
+{% if data | length > 3 %}
     <div id="attribute_details_configured-{{ IdSalesOrderItem }}" class="hidden">
-        {% for key, configuration in data | slice(1) %}
+        {% for key, configuration in data | slice(3) %}
             <div><strong>{{ key }}</strong>: {{ configuration }}</div>
         {% endfor %}
     </div>
