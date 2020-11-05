@@ -16,5 +16,5 @@ interface MerchantSwitcherWidgetToMerchantSearchClientInterface
      *
      * @return array
      */
-    public function merchantSearch(MerchantSearchRequestTransfer $merchantSearchRequestTransfer): array;
+    public function search(MerchantSearchRequestTransfer $merchantSearchRequestTransfer): array;
 }

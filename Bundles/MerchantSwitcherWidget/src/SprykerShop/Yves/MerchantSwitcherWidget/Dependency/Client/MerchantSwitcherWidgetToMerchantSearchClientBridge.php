@@ -29,8 +29,8 @@ class MerchantSwitcherWidgetToMerchantSearchClientBridge implements MerchantSwit
      *
      * @return array
      */
-    public function merchantSearch(MerchantSearchRequestTransfer $merchantSearchRequestTransfer): array
+    public function search(MerchantSearchRequestTransfer $merchantSearchRequestTransfer): array
     {
-        return $this->merchantSearchClient->merchantSearch($merchantSearchRequestTransfer);
+        return $this->merchantSearchClient->search($merchantSearchRequestTransfer);
     }
 }
