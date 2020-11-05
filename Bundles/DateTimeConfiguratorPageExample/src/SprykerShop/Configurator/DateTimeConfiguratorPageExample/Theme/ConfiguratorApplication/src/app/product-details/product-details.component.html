@@ -10,10 +10,7 @@
         <ul class="details__list">
             <li *ngIf="productData.price" class="details__list-item">
                 <h3>{{ 'product.priceItem' | translate }}:</h3>
-                <span class="price">{{ productData.price | configurePrice: {
-                    price_mode: productData.price_mode,
-                    volume_prices: productData.volume_prices
-                } | currency: productData.currency_code }}</span>
+                <span class="price">{{ productData | configurePrice | currency: productData.currency_code }}</span>
             </li>
             <li class="details__list-item">
                 <h3>{{ 'product.quantity' | translate }}:</h3>
@@ -35,7 +32,7 @@
                     [min]="today | date: 'yyyy-MM-dd'"
                     max="2100-12-31"
                     (change)="onDateChange($event)"
-                    [value]="setDate(productData.display_data.Date) | date: 'yyyy-MM-dd'"
+                    [value]="productData.display_data.Date | parseDate | date: 'yyyy-MM-dd'"
                 />
             </div>
             <div class="col col--sm-12 col--md-6 col--with-gutter product-form__field">
@@ -44,7 +41,7 @@
                     <option
                         *ngFor="let value of dayTimeOptions; let i = index"
                         [value]="i > 0 ? i - 1 : ''"
-                        [selected]="productData.configuration.time_of_day == i - 1"
+                        [selected]="productData.configuration.time_of_day === i - 1"
                     >
                         {{ value | translate }}
                     </option>
@@ -54,11 +51,7 @@
                 <div class="product-form__total grid grid--justify">
                     <div class="col">{{ 'product.totalPrice' | translate }}:</div>
                     <div class="col">
-                        <div>{{ productData.price | configurePrice: {
-                                price_mode: productData.price_mode,
-                                volume_prices: productData.volume_prices,
-                                quantity: productData.quantity
-                            } | currency: productData.currency_code }}</div>
+                        <div>{{ productData | configurePrice: true | currency: productData.currency_code }}</div>
                     </div>
                 </div>
             </div>
@@ -71,23 +64,23 @@
                 <input type="hidden" name="productConfigurationInstance[displayData]" [value]="productData.display_data | json">
                 <input *ngIf="productData.available_quantity" type="hidden" name="productConfigurationInstance[availableQuantity]" [value]="productData.available_quantity">
 
-                <ng-template [ngIf]="productData.price">
+                <ng-container *ngIf="productData.price">
                     <input type="hidden" name="productConfigurationInstance[prices][{{ productData.currency_code }}][priceData]" [value]="productData.volume_prices | json">
                     <input type="hidden" name="productConfigurationInstance[prices][{{ productData.currency_code }}][GROSS_MODE][DEFAULT]" [value]="productData.price">
                     <input type="hidden" name="productConfigurationInstance[prices][{{ productData.currency_code }}][NET_MODE][DEFAULT]" [value]="productData.price - 5000">
-                </ng-template>
+                </ng-container>
 
-                <ng-template [ngIf]="productData.timestamp && productData.checkSum">
+                <ng-container *ngIf="productData.timestamp && productData.checkSum">
                     <input name="timestamp" type="hidden" [value]="productData.timestamp">
                     <input name="checkSum" type="hidden" [value]="productData.checkSum">
-                </ng-template>
+                </ng-container>
             </div>
             <div class="col col--sm-12 col--with-gutter product-form__field" style="display: none;">
                 <input type="checkbox" name="productConfigurationInstance[isComplete]" [checked]="isComplete()">
             </div>
             <div class="col col col--sm-12 col--with-gutter product-form__actions">
                 <a [href]="productData.back_url" class="product-form__button product-form__button--cancel">{{ 'buttons.cancel' | translate }}</a>
-                <button class="product-form__button">{{ 'buttons.submit' | translate }}</button>
+                <button type="submit" class="product-form__button">{{ 'buttons.submit' | translate }}</button>
             </div>
         </form>
     </div>
