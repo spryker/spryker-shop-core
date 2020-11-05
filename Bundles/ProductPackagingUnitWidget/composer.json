@@ -4,7 +4,7 @@
   "description": "ProductPackagingUnitWidget module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker-shop/quick-order-page-extension": "^1.0.0",
     "spryker-shop/shop-ui": "^1.40.0",
     "spryker/kernel": "^3.30.0",
@@ -23,7 +23,8 @@
     "spryker-shop/checkout-page": "Widgets are available for this module.",
     "spryker-shop/customer-page": "Widgets are available for this module.",
     "spryker-shop/money-widget": "For using moneySymbol twig function: ^1.1.0",
-    "spryker-shop/product-detail-page": "Widgets are available for this module."
+    "spryker-shop/product-detail-page": "Widgets are available for this module.",
+    "spryker-shop/product-configuration-widget": "Add the module if you want to use ProductConfigurationCartItemDisplayWidget."
   },
   "autoload": {
     "psr-4": {

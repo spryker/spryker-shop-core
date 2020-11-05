@@ -205,66 +205,6 @@
             "selected_text": "getShareOption",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/SharedCartPage/src/SprykerShop/Yves/SharedCartPage/SharedCartPageDependencyProvider.php",
-            "snippet": "            return new SharedCartPageToCustomerClientBridge($container->getLocator()->customer()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/SharedCartPage/src/SprykerShop/Yves/SharedCartPage/SharedCartPageDependencyProvider.php",
-            "snippet": "            return new SharedCartPageToQuoteClientBridge($container->getLocator()->quote()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 78,
-            "line_to": 78,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/SharedCartPage/src/SprykerShop/Yves/SharedCartPage/SharedCartPageDependencyProvider.php",
-            "snippet": "            return new SharedCartPageToCompanyUserClientBridge($container->getLocator()->companyUser()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 92,
-            "line_to": 92,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/SharedCartPage/src/SprykerShop/Yves/SharedCartPage/SharedCartPageDependencyProvider.php",
-            "snippet": "            return new SharedCartPageToSharedCartClientBridge($container->getLocator()->sharedCart()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 107,
-            "line_to": 107,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/SharedCartPage/src/SprykerShop/Yves/SharedCartPage/SharedCartPageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->multiCart()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

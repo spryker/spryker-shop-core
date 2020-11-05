@@ -12,7 +12,7 @@ use Spryker\Yves\Router\Router\ChainRouter;
 use SprykerShop\Yves\CompanyPage\Controller\AbstractCompanyController;
 use SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\FilterControllerEventHandlerPluginInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
@@ -33,11 +33,11 @@ class CheckBusinessOnBehalfCompanyUserHandlerPlugin extends AbstractPlugin imple
      *
      * @api
      *
-     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
      *
      * @return void
      */
-    public function handle(FilterControllerEvent $event): void
+    public function handle(ControllerEvent $event): void
     {
         $companySelectUrl = $this->getRouter()->generate(static::COMPANY_REDIRECT_ROUTE);
         if ($companySelectUrl === $event->getRequest()->getRequestUri() || !$this->isCompanyControllerRequested($event)) {
@@ -57,11 +57,11 @@ class CheckBusinessOnBehalfCompanyUserHandlerPlugin extends AbstractPlugin imple
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
      *
      * @return bool
      */
-    protected function isCompanyControllerRequested(FilterControllerEvent $event): bool
+    protected function isCompanyControllerRequested(ControllerEvent $event): bool
     {
         $eventController = $event->getController();
         if (!is_array($eventController)) {

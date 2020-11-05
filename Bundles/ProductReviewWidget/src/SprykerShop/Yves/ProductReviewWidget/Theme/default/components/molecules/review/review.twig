@@ -11,11 +11,17 @@
     ratingMaxValue: required,
     nickname: required,
     createdAt: required,
-    description: required
+    description: required,
+} %}
+
+{% define attributes = {
+    itemscope: '',
+    itemtype: 'https://schema.org/Review',
+    itemprop: 'review',
 } %}
 
 {% block body %}
-    <h5>{{ data.summary | e('html') }}</h5>
+    <h3 itemprop="name" class="title--h5">{{ data.summary | e('html') }}</h3>
 
     {% include molecule('rating-selector', 'ProductReviewWidget') with {
         data: {
@@ -30,12 +36,12 @@
 
     <ul class="list spacing-y text-secondary">
         <li class="list__item">
-            <small>{{ 'page.product.by' | trans }}</small> {{ data.nickname | e('html')}}
+            <small>{{ 'page.product.by' | trans }}</small> <span itemprop="author">{{ data.nickname | e('html') }}</span>
         </li>
         <li class="list__item">
-            <small>{{ 'product_review.on' | trans }}</small> {{ data.createdAt }}
+            <small>{{ 'product_review.on' | trans }}</small> <span itemprop="datePublished">{{ data.createdAt }}</span>
         </li>
     </ul>
 
-    {{ data.description | e('html')}}
+    <span itemprop="reviewBody">{{ data.description | e('html') }}</span>
 {% endblock %}

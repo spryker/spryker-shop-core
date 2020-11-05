@@ -66,6 +66,8 @@ class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPlugi
 
         $securityBuilder = $this->addAccessDeniedHandler($securityBuilder);
 
+        $this->addInteractiveLoginEventSubscriber($securityBuilder);
+
         return $securityBuilder;
     }
 
@@ -79,6 +81,11 @@ class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPlugi
         $securityBuilder->addFirewall(CustomerPageConfig::SECURITY_FIREWALL_NAME, [
             'anonymous' => true,
             'pattern' => '^/',
+            'remember_me' => [
+                'secret' => $this->getConfig()->getRememberMeSecret(),
+                'lifetime' => $this->getConfig()->getRememberMeLifetime(),
+                'remember_me_parameter' => LoginForm::FORM_NAME . '[' . LoginForm::FIELD_REMEMBER_ME . ']',
+            ],
             'form' => [
                 'login_path' => static::ROUTE_LOGIN,
                 'check_path' => '/login_check',
@@ -179,5 +186,17 @@ class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPlugi
     protected function getRouter(ContainerInterface $container): ChainRouter
     {
         return $container->get(static::SERVICE_ROUTER);
+    }
+
+    /**
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
+     *
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
+     */
+    protected function addInteractiveLoginEventSubscriber(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
+    {
+        return $securityBuilder->addEventSubscriber(function () {
+            return $this->getFactory()->createInteractiveLoginEventSubscriber();
+        });
     }
 }

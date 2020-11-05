@@ -1,4 +1,5 @@
 {% extends model('component') %}
+{% import model('component') as component %}
 
 {% define config = {
     name: 'lazy-image',
@@ -46,7 +47,7 @@
                 {% endblock %}
             {% else %}
                 {% block image %}
-                    <img class="{{ imageClasses }} {{ config.jsName }}__image {{ imageExtraClasses }}"
+                    <img itemprop="image" class="{{ imageClasses }} {{ config.jsName }}__image {{ imageExtraClasses }}"
                          src="{{ imagePlaceholder }}"
                          data-src="{{ imageSrc }}"
                          alt="{{ imageTitle }}"

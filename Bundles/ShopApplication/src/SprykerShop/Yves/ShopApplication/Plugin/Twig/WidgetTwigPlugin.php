@@ -43,6 +43,7 @@ class WidgetTwigPlugin extends AbstractPlugin implements TwigPluginInterface
      */
     public function extend(Environment $twig, ContainerInterface $container): Environment
     {
+        $twig->addGlobal(static::TWIG_GLOBAL_VARIABLE_NAME_WIDGET, '');
         $twig = $this->addTwigFunctions($twig);
 
         return $twig;

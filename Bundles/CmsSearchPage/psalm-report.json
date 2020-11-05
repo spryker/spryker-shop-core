@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CmsSearchPage/src/SprykerShop/Yves/CmsSearchPage/CmsSearchPageDependencyProvider.php",
-            "snippet": "            return new CmsSearchPageToCmsSearchPageClientBridge($container->getLocator()->cmsPageSearch()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 47,
             "line_to": 47,
             "type": "PossiblyNullArgument",
@@ -27,18 +15,6 @@
         }
     ],
     "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "DeprecatedClass",
-            "message": "Class SprykerShop\\Yves\\CmsSearchPage\\Plugin\\Provider\\CmsSearchPageControllerProvider is deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CmsSearchPage/src/SprykerShop/Yves/CmsSearchPage/Plugin/FullTextSearchCmsPageTabPlugin.php",
-            "snippet": "            ->setRoute(CmsSearchPageControllerProvider::ROUTE_SEARCH);",
-            "selected_text": "CmsSearchPageControllerProvider::ROUTE_SEARCH",
-            "error_level": 2,
-            "shortcode": 98
-        },
         {
             "severity": "info",
             "line_from": 16,

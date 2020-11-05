@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CmsPage\Plugin\Twig;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\TwigFunction;
 
@@ -96,7 +96,7 @@ class CmsTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return \Symfony\Component\Translation\TranslatorInterface
+     * @return \Symfony\Contracts\Translation\TranslatorInterface
      */
     protected function getTranslator(ContainerInterface $container): TranslatorInterface
     {

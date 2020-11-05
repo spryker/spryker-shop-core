@@ -11,9 +11,9 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Symfony\Component\Debug\Exception\FlattenException;
+use Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -38,7 +38,7 @@ class ErrorPageEventDispatcherPlugin extends AbstractPlugin implements EventDisp
      */
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        $eventDispatcher->addListener(KernelEvents::EXCEPTION, function (GetResponseForExceptionEvent $event) {
+        $eventDispatcher->addListener(KernelEvents::EXCEPTION, function (ExceptionEvent $event) {
             $this->onKernelException($event);
         }, static::PRIORITY);
 
@@ -46,13 +46,13 @@ class ErrorPageEventDispatcherPlugin extends AbstractPlugin implements EventDisp
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
      *
      * @return void
      */
-    protected function onKernelException(GetResponseForExceptionEvent $event): void
+    protected function onKernelException(ExceptionEvent $event): void
     {
-        $exception = $event->getException();
+        $exception = $event->getThrowable();
 
         $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR;
         if ($exception instanceof HttpExceptionInterface) {
@@ -65,7 +65,7 @@ class ErrorPageEventDispatcherPlugin extends AbstractPlugin implements EventDisp
                 continue;
             }
 
-            $response = $exceptionHandlerPlugin->handleException(FlattenException::create($exception));
+            $response = $exceptionHandlerPlugin->handleException(FlattenException::createFromThrowable($exception));
 
             $event->setResponse($response);
             $event->stopPropagation();

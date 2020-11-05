@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CompanyPage\Controller\BusinessUnitController;
 use SprykerShop\Yves\CompanyPage\Exception\CustomerAccessDeniedException;
 use SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\FilterControllerEventHandlerPluginInterface;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
@@ -44,11 +44,11 @@ class CompanyBusinessUnitControllerRestrictionPlugin extends AbstractPlugin impl
      *
      * @api
      *
-     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
      *
      * @return void
      */
-    public function handle(FilterControllerEvent $event): void
+    public function handle(ControllerEvent $event): void
     {
         if (!$this->isEventShouldBeHandled($event)) {
             return;
@@ -70,11 +70,11 @@ class CompanyBusinessUnitControllerRestrictionPlugin extends AbstractPlugin impl
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
      *
      * @return bool
      */
-    protected function isEventShouldBeHandled(FilterControllerEvent $event): bool
+    protected function isEventShouldBeHandled(ControllerEvent $event): bool
     {
         $eventController = $event->getController();
 

@@ -1,3 +1,6 @@
+{# @var data.companyUnitAddress \Generated\Shared\Transfer\CompanyUnitAddressTransfer #}
+{# @var companyBusinessUnit \Generated\Shared\Transfer\CompanyBusinessUnitTransfer #}
+
 {% extends model('component') %}
 
 {% define config = {
@@ -27,7 +30,7 @@
         {{ "company.account.address.delete.message.text" | trans }}
 
         <address class="{{ config.name }}__address">{{ data.companyUnitAddress.address1 }} {{ data.companyUnitAddress.address2 }}</address>
-        <address class="{{ config.name }}__address">{{ data.companyUnitAddress.zipCode }} {{ data.companyUnitAddress.city }}, {{ ('countries.iso.' ~ data.companyUnitAddress.iso2code) | trans }}</address>
+        <address class="{{ config.name }}__address">{{ data.companyUnitAddress.zipCode }} {{ data.companyUnitAddress.city }}, {{ ('countries.iso.' ~ data.companyUnitAddress.iso2Code) | trans }}</address>
 
         {% if data.companyBusinessUnits is not empty %}
             <p class="spacing-bottom spacing-bottom--big">{{ "company_page.address_delete_confirmation.notification" | trans }}</p>

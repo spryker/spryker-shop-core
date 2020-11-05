@@ -1,9 +1,10 @@
 parameters:
+    checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
     dynamicConstantNames:
         - APPLICATION
         - APPLICATION_ENV
         - APPLICATION_STORE
-
     ignoreErrors:
         - '#PHPDoc tag @param for parameter \$arguments with type array is not subtype of native type array<int, mixed>#'
         - '#Class Symfony\\Bridge\\Twig\\Form\\TwigRenderer not found.#'
@@ -11,5 +12,4 @@ parameters:
         - '#Call to an undefined method Spryker\\Yves\\Kernel\\FactoryInterface#'
         - '#Return typehint of method SprykerShop\\Yves\\ShopApplication\\ShopApplicationFactory::createSilexTwigServiceProvider\(\) has invalid type Silex\\Provider\\TwigServiceProvider.#'
         - '#Parameter \#1 \$app of class Spryker\\Yves\\Kernel\\ControllerResolver\\YvesFragmentControllerResolver constructor expects Silex\\Application, Spryker\\Service\\Container\\ContainerInterface given.#'
-
-    reportUnmatchedIgnoredErrors: false
+        - '#Instantiated class .+NativePasswordEncoder not found.#'

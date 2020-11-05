@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\CustomerPage;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Shared\Twig\TwigFunctionProvider;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Router\Router\ChainRouter;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
@@ -45,12 +45,14 @@ use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationFailureH
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationSuccessHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerUserProvider;
 use SprykerShop\Yves\CustomerPage\Plugin\Security\CustomerPageSecurityPlugin;
+use SprykerShop\Yves\CustomerPage\Plugin\Subscriber\InteractiveLoginEventSubscriber;
 use SprykerShop\Yves\CustomerPage\Reader\OrderReader;
 use SprykerShop\Yves\CustomerPage\Reader\OrderReaderInterface;
 use SprykerShop\Yves\CustomerPage\Security\Customer;
-use SprykerShop\Yves\CustomerPage\Twig\GetUsernameTwigFunction;
-use SprykerShop\Yves\CustomerPage\Twig\IsLoggedTwigFunction;
+use SprykerShop\Yves\CustomerPage\Twig\GetUsernameTwigFunctionProvider;
+use SprykerShop\Yves\CustomerPage\Twig\IsLoggedTwigFunctionProvider;
 use SprykerShop\Yves\CustomerPage\UserChecker\CustomerConfirmationUserChecker;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -58,12 +60,21 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
+use Twig\TwigFunction;
 
 /**
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
  */
 class CustomerPageFactory extends AbstractFactory
 {
+    /**
+     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
+     */
+    public function createInteractiveLoginEventSubscriber(): EventSubscriberInterface
+    {
+        return new InteractiveLoginEventSubscriber();
+    }
+
     /**
      * @return \SprykerShop\Yves\CustomerPage\Form\FormFactory
      */
@@ -388,19 +399,47 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Twig\TwigFunction
+     * @return \Spryker\Shared\Twig\TwigFunctionProvider
      */
-    public function createGetUsernameTwigFunction(): TwigFunction
+    public function createGetUsernameTwigFunctionProvider(): TwigFunctionProvider
     {
-        return new GetUsernameTwigFunction($this->getCustomerClient());
+        return new GetUsernameTwigFunctionProvider($this->getCustomerClient());
     }
 
     /**
-     * @return \Spryker\Shared\Twig\TwigFunction
+     * @return \Twig\TwigFunction
+     */
+    public function createGetUsernameTwigFunction(): TwigFunction
+    {
+        $functionProvider = $this->createGetUsernameTwigFunctionProvider();
+
+        return new TwigFunction(
+            $functionProvider->getFunctionName(),
+            $functionProvider->getFunction(),
+            $functionProvider->getOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\TwigFunctionProvider
+     */
+    public function createIsLoggedTwigFunctionProvider(): TwigFunctionProvider
+    {
+        return new IsLoggedTwigFunctionProvider($this->getCustomerClient());
+    }
+
+    /**
+     * @return \Twig\TwigFunction
      */
     public function createIsLoggedTwigFunction(): TwigFunction
     {
-        return new IsLoggedTwigFunction($this->getCustomerClient());
+        $functionProvider = $this->createIsLoggedTwigFunctionProvider();
+
+        return new TwigFunction(
+            $functionProvider->getFunctionName(),
+            $functionProvider->getFunction(),
+            $functionProvider->getOptions()
+        );
     }
 
     /**

@@ -96,11 +96,11 @@
 
                 {% widget 'CompanyMenuItemWidget' only %}
                     {% block body %}
-                        <li class="menu__item">{% spaceless %}{{ parent() }}{% endspaceless %}</li>
+                        <li class="menu__item">{% apply spaceless %}{{ parent() }}{% endapply %}</li>
                     {% endblock %}
                 {% elsewidget 'MenuItemCompanyWidgetPlugin' only %} {# @deprecated Use CompanyMenuItemWidget instead. #}
                     {% block body %}
-                        <li class="menu__item">{% spaceless %}{{ parent() }}{% endspaceless %}</li>
+                        <li class="menu__item">{% apply spaceless %}{{ parent() }}{% endapply %}</li>
                     {% endblock %}
                 {% endwidget %}
 

@@ -2,8 +2,8 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 199,
-            "line_to": 199,
+            "line_from": 200,
+            "line_to": 200,
             "type": "InvalidArgument",
             "message": "Argument 3 of SprykerShop\\Yves\\ConfigurableBundlePage\\Controller\\ConfiguratorController::createProductConcreteCriteriaFilterTransfer expects array<array-key, int>, array{0?: int|null} provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundlePage/src/SprykerShop/Yves/ConfigurableBundlePage/Controller/ConfiguratorController.php",
@@ -64,80 +64,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundlePage/src/SprykerShop/Yves/ConfigurableBundlePage/ConfigurableBundlePageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->configurableBundlePageSearch()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 71,
-            "line_to": 71,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundlePage/src/SprykerShop/Yves/ConfigurableBundlePage/ConfigurableBundlePageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->configurableBundleStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 87,
-            "line_to": 87,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundlePage/src/SprykerShop/Yves/ConfigurableBundlePage/ConfigurableBundlePageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->configurableBundleCart()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 103,
-            "line_to": 103,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundlePage/src/SprykerShop/Yves/ConfigurableBundlePage/ConfigurableBundlePageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productImageStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 119,
-            "line_to": 119,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundlePage/src/SprykerShop/Yves/ConfigurableBundlePage/ConfigurableBundlePageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->priceProductStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 135,
-            "line_to": 135,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundlePage/src/SprykerShop/Yves/ConfigurableBundlePage/ConfigurableBundlePageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->glossaryStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 178,
-            "line_to": 178,
+            "line_from": 179,
+            "line_to": 179,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ConfigurableBundleTemplateSlotStorageTransfer> variable ",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundlePage/src/SprykerShop/Yves/ConfigurableBundlePage/Controller/ConfiguratorController.php",
@@ -148,8 +76,8 @@
         },
         {
             "severity": "info",
-            "line_from": 259,
-            "line_to": 259,
+            "line_from": 260,
+            "line_to": 260,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\ConfigurableBundlePage\\Dependency\\Client\\ConfigurableBundlePageToGlossaryStorageClientInterface::translate cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundlePage/src/SprykerShop/Yves/ConfigurableBundlePage/Controller/ConfiguratorController.php",
@@ -160,8 +88,8 @@
         },
         {
             "severity": "info",
-            "line_from": 273,
-            "line_to": 273,
+            "line_from": 274,
+            "line_to": 274,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductViewTransfer> variable ",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundlePage/src/SprykerShop/Yves/ConfigurableBundlePage/Controller/ConfiguratorController.php",
@@ -172,8 +100,8 @@
         },
         {
             "severity": "info",
-            "line_from": 332,
-            "line_to": 332,
+            "line_from": 340,
+            "line_to": 340,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\ConfigurableBundlePage\\Controller\\ConfiguratorController::addErrorMessage cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundlePage/src/SprykerShop/Yves/ConfigurableBundlePage/Controller/ConfiguratorController.php",
@@ -184,8 +112,8 @@
         },
         {
             "severity": "info",
-            "line_from": 377,
-            "line_to": 377,
+            "line_from": 385,
+            "line_to": 385,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ConfigurableBundleTemplateSlotStorageTransfer> variable ",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundlePage/src/SprykerShop/Yves/ConfigurableBundlePage/Controller/ConfiguratorController.php",
@@ -421,18 +349,6 @@
             "selected_text": "offsetGet",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/PermissionAwareTrait.php",
-            "snippet": "            return Locator::getInstance()->permission()->client()->can($permissionKey, $context);",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

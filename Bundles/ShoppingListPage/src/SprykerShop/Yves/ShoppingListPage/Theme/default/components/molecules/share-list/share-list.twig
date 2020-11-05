@@ -12,11 +12,13 @@
 {% set hasSharedUnit = false %}
 {% set hasNotSharedUnit = false %}
 
-{% for unit in data.shareUnits if not hasSharedUnit or not hasNotSharedUnit %}
-    {% if unit.idShoppingListPermissionGroup is not null %}
-        {% set hasSharedUnit = true %}
-    {% else %}
-        {% set hasNotSharedUnit = true %}
+{% for unit in data.shareUnits %}
+    {% if not hasSharedUnit or not hasNotSharedUnit %}
+        {% if unit.idShoppingListPermissionGroup is not null %}
+            {% set hasSharedUnit = true %}
+        {% else %}
+            {% set hasNotSharedUnit = true %}
+        {% endif %}
     {% endif %}
 {% endfor %}
 
@@ -27,26 +29,28 @@
                 {% block sharedUnitList %}
                     <ul class="{{ config.name }}__list">
                         {% block sharedUnitListInner %}
-                            {% for key, unit in data.shareUnits if unit.idShoppingListPermissionGroup is not null %}
-                                {% block shareListItemContainer %}
-                                    {% set shareListItemClasses = 'spacing-y spacing-y--inner' %}
-                                    {% set user = unit.companyUser is defined ?
-                                        unit.companyUser.customer.firstName ~ ' '
-                                        ~ unit.companyUser.customer.lastName ~ ' ('
-                                        ~ unit.companyUser.companyBusinessUnit.name ~ ')' :
-                                        unit.companyBusinessUnit.name
-                                    %}
+                            {% for key, unit in data.shareUnits %}
+                                {% if unit.idShoppingListPermissionGroup is not null %}
+                                    {% block shareListItemContainer %}
+                                        {% set shareListItemClasses = 'spacing-y spacing-y--inner' %}
+                                        {% set user = unit.companyUser is defined ?
+                                            unit.companyUser.customer.firstName ~ ' '
+                                            ~ unit.companyUser.customer.lastName ~ ' ('
+                                            ~ unit.companyUser.companyBusinessUnit.name ~ ')' :
+                                            unit.companyBusinessUnit.name
+                                        %}
 
-                                    {% block shareListItem %}
-                                        {% include molecule('share-list-item', 'ShoppingListPage') with {
-                                            class: shareListItemClasses,
-                                            data: {
-                                                name: user,
-                                                shareForm: data.shareForm[key],
-                                            },
-                                        } only %}
+                                        {% block shareListItem %}
+                                            {% include molecule('share-list-item', 'ShoppingListPage') with {
+                                                class: shareListItemClasses,
+                                                data: {
+                                                    name: user,
+                                                    shareForm: data.shareForm[key],
+                                                },
+                                            } only %}
+                                        {% endblock %}
                                     {% endblock %}
-                                {% endblock %}
+                                {% endif %}
                             {% endfor %}
                         {% endblock %}
                     </ul>
@@ -61,10 +65,12 @@
                 {% block notSharedUnitList %}
                     <ul class="{{ config.name }}__list">
                         {% block notSharedUnitListInner %}
-                            {% for key, unit in data.shareUnits if unit.idShoppingListPermissionGroup is null %}
-                                {% block notShareListItem %}
-                                    {{ block('shareListItemContainer') }}
-                                {% endblock %}
+                            {% for key, unit in data.shareUnits %}
+                                {% if unit.idShoppingListPermissionGroup is null %}
+                                    {% block notShareListItem %}
+                                        {{ block('shareListItemContainer') }}
+                                    {% endblock %}
+                                {% endif %}
                             {% endfor %}
                         {% endblock %}
                     </ul>

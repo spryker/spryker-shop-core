@@ -54,6 +54,11 @@
                                 </small>
                             {% endblock %}
 
+                            {% block productConfiguration %}
+                                {% widget 'ProductConfigurationOrderItemDisplayWidget' args [data.item] only %}
+                                {% endwidget %}
+                            {% endblock %}
+
                             {% if data.item.productOptions is not empty %}
                                 <div class="{{ productOptionWrapperClass }}">
                                     {% block productOptions %}

@@ -1,4 +1,9 @@
+{# @var shoppingList \Generated\Shared\Transfer\ShoppingListransfer #}
+{# @var item \Generated\Shared\Transfer\ProductViewTransfer #}
+
 {% extends model('component') %}
+
+{% import _self as component %}
 
 {% define config = {
     name: 'shopping-list',
@@ -38,7 +43,7 @@
                         {% block row %}
                             {% set disableModifiers = not isItemAvailable ? ['disable'] : [] %}
 
-                            <tr class="{{ component.renderClass(config.name ~ '__row', disableModifiers) }}">
+                            <tr itemscope itemtype="https://schema.org/Product" class="{{ component.renderClass(config.name ~ '__row', disableModifiers) }}">
                                 {% block rowInner %}
                                     {% block checkboxCol %}
                                         <td class="{{ config.name }}__cell">
@@ -82,16 +87,18 @@
                                             {% block productColInner %}
                                                 <ul class="list spacing-y">
                                                     <li class="list__item">
-                                                        <a href="{{ item.url }}">{{ item.name }}</a>
+                                                        <a itemprop="url" href="{{ item.url }}"><span itemprop="name">{{ item.name }}</span></a>
                                                     </li>
                                                     <li class="list__item">
-                                                        <small class="text-secondary">{{ item.sku }}</small>
+                                                        <small itemprop="sku" class="text-secondary">{{ item.sku }}</small>
                                                     </li>
 
                                                     <li class="list__item">
                                                         {% set listOfAttributes = {} %}
-                                                        {% for attribute in item.superAttributesDefinition if item.attributes[attribute] is defined %}
-                                                            {% set listOfAttributes = listOfAttributes | merge({ ('product.attribute.' ~ attribute) | trans: item.attributes[attribute] }) %}
+                                                        {% for attribute in item.superAttributesDefinition %}
+                                                            {% if item.attributes[attribute] is defined %}
+                                                                {% set listOfAttributes = listOfAttributes | merge({ ('product.attribute.' ~ attribute) | trans: item.attributes[attribute] }) %}
+                                                            {% endif %}
                                                         {% endfor %}
 
                                                         {% include molecule('product-item-attributes') with {

@@ -38,7 +38,7 @@ class ShopApplicationServiceProvider extends AbstractPlugin implements ServicePr
     /**
      * @var \Spryker\Shared\Kernel\Communication\Application
      */
-    private $application;
+    protected $application;
 
     /**
      * @param \Spryker\Shared\Kernel\Communication\Application $app

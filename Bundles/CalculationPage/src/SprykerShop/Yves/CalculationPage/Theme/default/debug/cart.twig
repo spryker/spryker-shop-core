@@ -142,7 +142,7 @@
                     <td>{{ expense.sumDiscountAmountAggregation | default(0) | money  }} </td>
                     <td>{{ expense.taxRate | default(0) }}% </td>
                     <td>{{ expense.sumTaxAmount  | default(0) | money }} </td>
-                    <td>{{ expense.dumPriceToPayAggregation | default(0) | money  }} </td>
+                    <td>{{ expense.sumPriceToPayAggregation | default(0) | money  }} </td>
                     <td>{{ expense.canceledAmount | default(0) | money }} </td>
                     <td>{{ expense.refundableAmount | default(0) | money }} </td>
             {% endfor %}

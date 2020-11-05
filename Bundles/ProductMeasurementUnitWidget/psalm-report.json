@@ -3,42 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductMeasurementUnitWidget/src/SprykerShop/Yves/ProductMeasurementUnitWidget/ProductMeasurementUnitWidgetDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productMeasurementUnitStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductMeasurementUnitWidget/src/SprykerShop/Yves/ProductMeasurementUnitWidget/ProductMeasurementUnitWidgetDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productQuantityStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 78,
-            "line_to": 78,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductMeasurementUnitWidget/src/SprykerShop/Yves/ProductMeasurementUnitWidget/ProductMeasurementUnitWidgetDependencyProvider.php",
-            "snippet": "                $container->getLocator()->utilEncoding()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 39,
             "line_to": 39,
             "type": "PossiblyNullOperand",
@@ -84,6 +48,42 @@
             "selected_text": "getPrecision",
             "error_level": 3,
             "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\ProductMeasurementUnitWidget\\Dependency\\Client\\ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientInterface::findProductMeasurementBaseUnitByIdProductConcrete cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductMeasurementUnitWidget/src/SprykerShop/Yves/ProductMeasurementUnitWidget/Widget/ManageProductMeasurementUnitWidget.php",
+            "snippet": "                ->findProductMeasurementBaseUnitByIdProductConcrete($productViewTransfer->getIdProductConcrete());",
+            "selected_text": "$productViewTransfer->getIdProductConcrete()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\ProductMeasurementUnitWidget\\Dependency\\Client\\ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientInterface::findProductMeasurementSalesUnitByIdProductConcrete cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductMeasurementUnitWidget/src/SprykerShop/Yves/ProductMeasurementUnitWidget/Widget/ManageProductMeasurementUnitWidget.php",
+            "snippet": "                ->findProductMeasurementSalesUnitByIdProductConcrete($productViewTransfer->getIdProductConcrete());",
+            "selected_text": "$productViewTransfer->getIdProductConcrete()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\ProductMeasurementUnitWidget\\Dependency\\Client\\ProductMeasurementUnitWidgetToProductQuantityStorageClientInterface::findProductQuantityStorage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductMeasurementUnitWidget/src/SprykerShop/Yves/ProductMeasurementUnitWidget/Widget/ManageProductMeasurementUnitWidget.php",
+            "snippet": "                ->findProductQuantityStorage($productViewTransfer->getIdProductConcrete());",
+            "selected_text": "$productViewTransfer->getIdProductConcrete()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",

@@ -20,6 +20,12 @@
         <property name="customer" type="Customer"/>
         <property name="customerReference" type="string"/>
         <property name="idQuote" type="int"/>
+        <property name="name" type="string"/>
+        <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
+        <property name="isDefault" type="bool"/>
+    </transfer>
+
+    <transfer name="ShareDetail">
     </transfer>
 
 </transfers>

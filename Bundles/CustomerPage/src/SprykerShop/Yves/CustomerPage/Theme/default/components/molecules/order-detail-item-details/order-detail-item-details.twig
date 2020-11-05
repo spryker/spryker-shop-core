@@ -1,3 +1,5 @@
+{# @var state \Generated\Shared\Transfer\ItemStateTransfer #}
+
 {% extends model('component') %}
 
 {% define config = {
@@ -22,10 +24,20 @@
             {% endif %}
         </span>
         <span class="spacing-right col col--sm-3 text-right">
-            {% if data.orderItem.state is not empty %}
-                <p>
-                    <strong>{{ data.orderItem.state.name | capitalize }}</strong>
-                </p>
+            {% set state = data.orderItem.state %}
+            {% if state is not empty %}
+                {% block state %}
+                    <p>
+                        <strong>
+                            {% include molecule('status') with {
+                                data: {
+                                    label: state.displayName | trans,
+                                    status: state.name | replace({' ': '-'}) | lower,
+                                },
+                            } only %}
+                        </strong>
+                    </p>
+                {% endblock %}
             {% endif %}
         </span>
     </div>

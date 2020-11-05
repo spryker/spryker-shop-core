@@ -19,7 +19,7 @@
     {% for label in item.labels %}
         {% set labels = labels | merge([{
             text: label.key | default,
-            type: (label.frontEndReference | lower | replace(' ', '-')) | default,
+            type: (label.frontEndReference | lower | replace({' ': '-'})) | default,
         }]) %}
     {% endfor %}
 

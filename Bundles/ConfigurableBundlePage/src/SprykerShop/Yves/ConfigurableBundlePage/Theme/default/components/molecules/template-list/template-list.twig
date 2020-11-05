@@ -1,3 +1,6 @@
+{# @var template \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer #}
+{# @var image \Generated\Shared\Transfer\ProductImageStorage #}
+
 {% extends model('component') %}
 
 {% define config = {
@@ -7,6 +10,9 @@
 {% define data = {
     templates: required,
 } %}
+
+{% import _self as component %}
+{% import _self as macros %}
 
 {% block body %}
     {% block title %}
@@ -47,7 +53,8 @@
                                                                     {% if isTitleImage %}
                                                                         {% set imageClass = '' %}
                                                                         {% set imageModifiers = [] %}
-                                                                        {% set imageUrl = template.images.0.externalUrlSmall | default %}
+                                                                        {% set image = template.images[0] | default %}
+                                                                        {% set imageUrl = image.externalUrlSmall | default %}
 
                                                                         {% block templateTitleImage %}
                                                                             {% if imageUrl %}
@@ -63,12 +70,12 @@
                                                                         {% endblock %}
 
                                                                         {% block templateItemNameInner %}
-                                                                            {{ _self.templateText(templateItemNameClasses, templateName) }}
+                                                                            {{ macros.templateText(templateItemNameClasses, templateName) }}
                                                                         {% endblock %}
                                                                     {% else %}
                                                                         {% block templateTitleText %}
                                                                             {% set templateItemNameClasses = component.renderClass(config.name ~ '__item-name', ['secondary']) %}
-                                                                            {{ _self.templateText(templateItemNameClasses, templateName) }}
+                                                                            {{ macros.templateText(templateItemNameClasses, templateName) }}
                                                                         {% endblock %}
                                                                     {% endif %}
                                                                 {% endblock %}

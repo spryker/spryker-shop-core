@@ -2,31 +2,31 @@ language: php
 dist: trusty
 
 git:
-  depth: 3
+    depth: 3
 
 php:
-  - 7.2
+    - 7.3
 
 cache:
-  directories:
-    - $HOME/.composer/cache
+    directories:
+        - $HOME/.composer/cache
 
 env:
-  global:
-    - APPLICATION_ENV=development
-    - APPLICATION_STORE=DE
+    global:
+        - APPLICATION_ENV=development
+        - APPLICATION_STORE=DE
 
 before_install:
-  - phpenv config-rm xdebug.ini
-  - nvm install 10
+    - phpenv config-rm xdebug.ini
+    - nvm install 10
 
 install:
-  - composer install --no-interaction --prefer-dist --optimize-autoloader
-  - npm install -g git+https://github.com/spryker-sdk/frontend-sniffer.git#semver:^0.2.1
+    - composer install --no-interaction --prefer-dist --optimize-autoloader
+    - npm install -g git+https://github.com/spryker-sdk/frontend-sniffer.git#semver:^0.2.2
 
 script:
-  - composer cs-check
-  - frontend-sniffer --config ./ --path ../../ --level-restriction core
+    - composer cs-check
+    - frontend-sniffer --config ./ --path ../../ --level-restriction core
 
 notifications:
-  email: false
+    email: false

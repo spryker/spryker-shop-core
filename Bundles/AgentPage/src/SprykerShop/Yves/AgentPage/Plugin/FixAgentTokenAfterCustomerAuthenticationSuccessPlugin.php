@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\AgentPage\Plugin;
 
-use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Security\Customer;
@@ -15,8 +14,6 @@ use SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\AfterCustomerAuthen
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\Role\Role;
-use Symfony\Component\Security\Core\Role\SwitchUserRole;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -111,32 +108,13 @@ class FixAgentTokenAfterCustomerAuthenticationSuccessPlugin extends AbstractPlug
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     *
-     * @return \Symfony\Component\Security\Core\Role\Role
-     */
-    protected function createSwitchUserRole(UserTransfer $userTransfer): Role
-    {
-        $agent = $this->getFactory()->createSecurityUser($userTransfer);
-
-        $token = new UsernamePasswordToken(
-            $agent,
-            $agent->getPassword(),
-            CustomerPageConfig::SECURITY_FIREWALL_NAME,
-            $agent->getRoles()
-        );
-
-        return new SwitchUserRole(static::ROLE_PREVIOUS_ADMIN, $token);
-    }
-
-    /**
      * @param array $roles
      *
      * @return array
      */
     protected function getCustomerRoles(array $roles): array
     {
-        $roles[] = $this->createSwitchUserRole($this->getFactory()->getAgentClient()->getAgent());
+        $roles[] = static::ROLE_PREVIOUS_ADMIN;
 
         return $roles;
     }

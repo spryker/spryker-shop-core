@@ -51,18 +51,6 @@
         },
         {
             "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductBundleWidget/src/SprykerShop/Yves/ProductBundleWidget/ProductBundleWidgetDependencyProvider.php",
-            "snippet": "            return new ProductBundleWidgetToProductBundleClientBridge($container->getLocator()->productBundle()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 30,
             "line_to": 30,
             "type": "MismatchingDocblockParamType",

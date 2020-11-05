@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CustomerPage;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Yves\Kernel\AbstractBundleConfig;
+use SprykerShop\Shared\CustomerPage\CustomerPageConstants;
 
 class CustomerPageConfig extends AbstractBundleConfig
 {
@@ -77,6 +78,26 @@ class CustomerPageConfig extends AbstractBundleConfig
     public function getAnonymousPattern(): string
     {
         return $this->get(CustomerConstants::CUSTOMER_ANONYMOUS_PATTERN);
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getRememberMeSecret(): string
+    {
+        return $this->get(CustomerPageConstants::CUSTOMER_REMEMBER_ME_SECRET);
+    }
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getRememberMeLifetime(): int
+    {
+        return $this->get(CustomerPageConstants::CUSTOMER_REMEMBER_ME_LIFETIME);
     }
 
     /**

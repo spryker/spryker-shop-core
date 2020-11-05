@@ -1,3 +1,6 @@
+{# @var data.configurableBundleTemplateStorage \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer #}
+{# @var product \Generated\Shared\Transfer\ProductViewTransfer #}
+
 {% extends model('component') %}
 
 {% define config = {
@@ -21,9 +24,9 @@
                 <div class="{{ config.name }}__header grid grid--justify grid--middle">
                     {% block headerInner %}
                         {% block title %}
-                            <h6 class="col col--sm-10">
+                            <h2 class="title--h6 col col--sm-10">
                                 {{- data.configurableBundleTemplateStorage.slots[idSlot].name | trans -}}
-                            </h6>
+                            </h2>
                         {% endblock %}
 
                         {% block form %}

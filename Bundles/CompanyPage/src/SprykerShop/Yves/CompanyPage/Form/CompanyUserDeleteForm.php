@@ -13,8 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Positive;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageConfig getConfig()
@@ -57,7 +57,7 @@ class CompanyUserDeleteForm extends AbstractType
         $builder->add(static::FIELD_ID_COMPANY_USER, HiddenType::class, [
             'constraints' => [
                 new NotBlank(),
-                new Positive(),
+                new GreaterThanOrEqual(['value' => 1]),
             ],
         ]);
 

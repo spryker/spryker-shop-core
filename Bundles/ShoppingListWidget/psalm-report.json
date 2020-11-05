@@ -184,66 +184,18 @@
         },
         {
             "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListWidget/src/SprykerShop/Yves/ShoppingListWidget/ShoppingListWidgetDependencyProvider.php",
-            "snippet": "            return new ShoppingListWidgetToShoppingListClientBridge($container->getLocator()->shoppingList()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 59,
-            "line_to": 59,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListWidget/src/SprykerShop/Yves/ShoppingListWidget/ShoppingListWidgetDependencyProvider.php",
-            "snippet": "            return new ShoppingListWidgetToCustomerClientBridge($container->getLocator()->customer()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 73,
-            "line_to": 73,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListWidget/src/SprykerShop/Yves/ShoppingListWidget/ShoppingListWidgetDependencyProvider.php",
-            "snippet": "            return new ShoppingListWidgetToShoppingListSessionClientBridge($container->getLocator()->shoppingListSession()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/PermissionAwareTrait.php",
-            "snippet": "            return Locator::getInstance()->permission()->client()->can($permissionKey, $context);",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
+            "line_from": 76,
+            "line_to": 76,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListWidget/src/SprykerShop/Yves/ShoppingListWidget/Widget/AddItemsToShoppingListWidget.php",
+            "snippet": "        if (!$customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()) {",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
         }
     ],
     "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 97,
-            "line_to": 97,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Yves\\Kernel\\Controller\\AbstractController::redirectResponseExternal has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListWidget/src/SprykerShop/Yves/ShoppingListWidget/Controller/CartToShoppingListController.php",
-            "snippet": "        return $this->redirectResponseExternal($referer);",
-            "selected_text": "redirectResponseExternal",
-            "error_level": 2,
-            "shortcode": 1
-        },
         {
             "severity": "info",
             "line_from": 47,

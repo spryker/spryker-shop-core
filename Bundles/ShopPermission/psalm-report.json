@@ -84,18 +84,6 @@
             "selected_text": "array",
             "error_level": 5,
             "shortcode": 166
-        },
-        {
-            "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ShopPermission/src/SprykerShop/Yves/ShopPermission/ShopPermissionDependencyProvider.php",
-            "snippet": "            return new ShopPermissionToPermissionClientBridge($container->getLocator()->permission()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
