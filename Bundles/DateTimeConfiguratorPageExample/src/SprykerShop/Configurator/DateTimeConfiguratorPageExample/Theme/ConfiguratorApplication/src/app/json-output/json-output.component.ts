@@ -17,6 +17,6 @@ export class JsonOutputComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.configurationOriginJSON = this.productService.productData;
+        this.configurationOriginJSON = { ...this.productService.productData };
     }
 }
