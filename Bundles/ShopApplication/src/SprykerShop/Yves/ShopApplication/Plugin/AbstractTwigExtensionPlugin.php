@@ -8,14 +8,14 @@
 
 namespace SprykerShop\Yves\ShopApplication\Plugin;
 
-use Spryker\Shared\Twig\TwigGlobalsInterface;
 use Twig\Environment;
+use Twig\Extension\GlobalsInterface;
 
 if (Environment::MAJOR_VERSION < 3) {
     /**
      * @method \Spryker\Yves\Kernel\AbstractFactory getFactory()
      */
-    abstract class AbstractTwigExtensionPlugin extends BaseAbstractTwigExtensionPlugin
+    abstract class AbstractTwigExtensionPlugin extends BaseAbstractTwigExtensionPlugin implements GlobalsInterface
     {
         /**
          * Specification:
@@ -34,7 +34,7 @@ if (Environment::MAJOR_VERSION < 3) {
     /**
      * @method \Spryker\Yves\Kernel\AbstractFactory getFactory()
      */
-    abstract class AbstractTwigExtensionPlugin extends BaseAbstractTwigExtensionPlugin implements TwigGlobalsInterface
+    abstract class AbstractTwigExtensionPlugin extends BaseAbstractTwigExtensionPlugin implements GlobalsInterface
     {
         /**
          * Specification:
