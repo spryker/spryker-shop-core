@@ -13,3 +13,4 @@ parameters:
         - '#Return typehint of method SprykerShop\\Yves\\ShopApplication\\ShopApplicationFactory::createSilexTwigServiceProvider\(\) has invalid type Silex\\Provider\\TwigServiceProvider.#'
         - '#Parameter \#1 \$app of class Spryker\\Yves\\Kernel\\ControllerResolver\\YvesFragmentControllerResolver constructor expects Silex\\Application, Spryker\\Service\\Container\\ContainerInterface given.#'
         - '#Instantiated class .+NativePasswordEncoder not found.#'
+        - '#Comparison operation "<" between [1-9] and 3 is always (true|false).#'
