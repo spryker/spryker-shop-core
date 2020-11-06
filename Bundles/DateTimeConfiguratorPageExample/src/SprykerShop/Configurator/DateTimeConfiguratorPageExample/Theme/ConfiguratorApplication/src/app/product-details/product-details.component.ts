@@ -29,14 +29,11 @@ export class ProductDetailsComponent implements OnChanges {
         'Afternoon',
         'Evening'
     ];
-    setDate: (string) => string;
 
     constructor(
         private productService: ProductService,
         private configuratorService: ConfiguratorService,
-    ) {
-        this.setDate = this.configuratorService.parseDate;
-    }
+    ) {}
 
     ngOnChanges(changes: SimpleChanges): void {
         if (!this.productData.timestamp && !this.productData.checkSum) {

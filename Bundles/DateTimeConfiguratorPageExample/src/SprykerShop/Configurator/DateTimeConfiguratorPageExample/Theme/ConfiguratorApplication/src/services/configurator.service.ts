@@ -138,10 +138,6 @@ export class ConfiguratorService {
         return date.split('-').reverse().join('.');
     }
 
-    parseDate(date: string): string {
-        return date.split('.').reverse().join('-');
-    }
-
     remove(propertyName: string, productData: ConfiguredProduct): void {
         delete productData[propertyName];
 

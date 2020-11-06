@@ -13,7 +13,8 @@ import { FooterComponent } from './footer/footer.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { JsonOutputComponent } from './json-output/json-output.component';
 import { ConfiguratorService } from '../services/configurator.service';
-import { ConfigurePricePipe } from './product-details/configurator-price.pipe';
+import { ConfigurePricePipe } from './product-details/configure-price.pipe';
+import { ParseDatePipe } from './product-details/parse-date.pipe';
 
 export function HttpLoaderFactory(httpClient: HttpClient): TranslateLoader {
     return new TranslateHttpLoader(httpClient, './dist/assets/i18n/');
@@ -28,6 +29,7 @@ export function HttpLoaderFactory(httpClient: HttpClient): TranslateLoader {
         ProductDetailsComponent,
         JsonOutputComponent,
         ConfigurePricePipe,
+        ParseDatePipe,
     ],
     imports: [
         BrowserModule,
