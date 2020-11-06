@@ -10,7 +10,7 @@
     "spryker-shop/shop-ui": "^1.45.0",
     "spryker/availability": "^9.1.0",
     "spryker/availability-extension": "^1.0.0",
-    "spryker/checksum-generator": "^0.1.0",
+    "spryker/checksum-generator": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/log": "^3.0.0",
     "spryker/product-configuration-extension": "^0.1.0",
