@@ -39,7 +39,7 @@ export class ConfiguratorService {
 
     generateDate(displayData: DateConfiguration): DateConfiguration {
         const today = new Date().getTime();
-        const serverDate = new Date(displayData.Date.split('.').reverse().join('-')).getTime();
+        const serverDate = new Date(this.convertDate(displayData.Date)).getTime();
 
         if (serverDate < today) {
             displayData.Date = '';
@@ -142,5 +142,9 @@ export class ConfiguratorService {
         delete productData[propertyName];
 
         this.updateWithGeneratedProductData(productData);
+    }
+
+    convertDate(date: string): string {
+        return date.split('.').reverse().join('-');
     }
 }
