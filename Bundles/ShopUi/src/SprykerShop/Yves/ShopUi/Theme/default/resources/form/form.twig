@@ -167,20 +167,23 @@
             }) -%}
     {% endif %}
 
+    {% set inputComplexityJsCLass = 'js-password-complexity-indicator__' ~ attr.name %}
+
     {% include molecule('password-field') with {
         data: {
             inputAttributes: attr,
-            inputExtraClasses: ('input input--expand' ~ (errors is not empty ? ' input--error' : ' ') ~ (attr.class | default)) | trim,
+            inputExtraClasses: ('input input--expand ' ~ (errors is not empty ? ' input--error ') ~ (attr.class | default) ~ inputComplexityJsCLass) | trim,
         },
     } only %}
+    {% set withPasswordComplexityIndicator = true %}
 
-    {#{% if withPasswordComplexityIndicator | default %}#}
+    {% if withPasswordComplexityIndicator | default %}
         {% include molecule('password-complexity-indicator') with {
             attributes: {
-                'input-class-name': '',
+                'input-class-name': inputComplexityJsCLass,
             },
         } only %}
-    {#{% endif %}#}
+    {% endif %}
 {%- endblock password_widget -%}
 
 {# rows #}

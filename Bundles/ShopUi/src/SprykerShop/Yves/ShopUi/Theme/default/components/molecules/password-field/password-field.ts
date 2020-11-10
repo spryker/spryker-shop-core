@@ -4,6 +4,7 @@ export default class PasswordField extends Component {
     protected isPasswordShown = false;
     protected button: HTMLElement;
     protected input: HTMLInputElement;
+
     protected readyCallback(): void {}
 
     protected init(): void {
@@ -14,7 +15,7 @@ export default class PasswordField extends Component {
     }
 
     protected mapEvents(): void {
-        this.button.addEventListener('click', () => this.onClick())
+        this.button.addEventListener('click', () => this.onClick());
     }
 
     protected onClick(): void {
