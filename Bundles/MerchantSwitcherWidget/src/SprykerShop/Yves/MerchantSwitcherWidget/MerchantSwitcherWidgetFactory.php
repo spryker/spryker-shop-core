@@ -22,7 +22,6 @@ use SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcher\MerchantSwitcher;
 use SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcher\MerchantSwitcherInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -60,7 +59,7 @@ class MerchantSwitcherWidgetFactory extends AbstractFactory
     {
         return new SelectedMerchantCookie(
             $this->getCookies(),
-            $this->getRequest(),
+            $this->getRequestStack(),
             $this->getConfig()
         );
     }
@@ -71,14 +70,6 @@ class MerchantSwitcherWidgetFactory extends AbstractFactory
     public function getMerchantSearchClient(): MerchantSwitcherWidgetToMerchantSearchClientInterface
     {
         return $this->getProvidedDependency(MerchantSwitcherWidgetDependencyProvider::CLIENT_MERCHANT_SEARCH);
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Request
-     */
-    public function getRequest(): Request
-    {
-        return $this->getRequestStack()->getCurrentRequest();
     }
 
     /**
