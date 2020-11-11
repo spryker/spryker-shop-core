@@ -11,13 +11,14 @@ enum MarksGradation {
 }
 
 enum ComplexityGradiation {
-    week = 25,
-    medium = 50,
-    strong = 75,
+    medium = 25,
+    strong = 50,
+    veryStrong = 75,
     percantage = 100,
 }
 
 export default class PasswordComplexityIndicator extends Component {
+    protected availableProperties = ['min', 'lowercase', 'uppercase', 'digits', 'symbols'];
     protected currentValidationStatus = '';
     protected maxPasswordComplexity = 0;
     protected inputElement: HTMLInputElement;
@@ -42,29 +43,30 @@ export default class PasswordComplexityIndicator extends Component {
     }
 
     protected initValidatorWithDefaultConfig(): void {
-        if (this.minLength) {
-            this.setValidation('min', this.minLength, true);
-        }
-
-        if (this.minLowercase) {
-            this.setValidation('lowercase', this.minLowercase);
-        }
-
-        if (this.minUppercase) {
-            this.setValidation('uppercase', this.minUppercase);
-        }
-
-        if (this.minSymbols) {
-            this.setValidation('symbols', this.minSymbols);
-        }
-
-        if (this.minNumbers) {
-            this.setValidation('digits', this.minNumbers);
-        }
+        this.availableProperties.forEach((proterty: string) => {
+            this.setValidation(proterty);
+        });
     }
 
-    protected setValidation(property: string, value: number, is: boolean = false): void {
-        this.schema[is ? 'is' : 'has']()[property](value);
+    protected setValidation(proterty: string): void {
+        const propertyValue = this[proterty];
+
+        if (proterty === 'min') {
+            this.setValidationWithIs(proterty, propertyValue);
+
+            return;
+        }
+
+        this.setValidationWithHas(proterty, propertyValue);
+    }
+
+    protected setValidationWithHas(property: string, value: number): void {
+        this.schema.has()[property](value);
+        this.maxPasswordComplexity += MarksGradation[property];
+    }
+
+    protected setValidationWithIs(property: string, value: number): void {
+        this.schema.is()[property](value);
         this.maxPasswordComplexity += MarksGradation[property];
     }
 
@@ -83,35 +85,35 @@ export default class PasswordComplexityIndicator extends Component {
     protected validatePassword(passwordValidatorMark: number): void {
         const currentStatus = (passwordValidatorMark / this.maxPasswordComplexity) * ComplexityGradiation.percantage;
 
-        if (currentStatus <= ComplexityGradiation.week) {
-            this.updateValidation('week');
+        if (currentStatus > ComplexityGradiation.veryStrong) {
+            this.updateValidation('very-strong');
 
             return;
         }
 
-        if (currentStatus > ComplexityGradiation.week && currentStatus <= ComplexityGradiation.medium) {
-            this.updateValidation('medium');
-
-            return;
-        }
-
-        if (currentStatus > ComplexityGradiation.medium && currentStatus <= ComplexityGradiation.strong) {
+        if (currentStatus > ComplexityGradiation.strong) {
             this.updateValidation('strong');
 
             return;
         }
 
-        this.updateValidation('very-strong');
+        if (currentStatus > ComplexityGradiation.medium) {
+            this.updateValidation('medium');
+
+            return;
+        }
+
+        this.updateValidation('weak');
     }
 
-    protected updateValidation(complexityModifier?: string): void {
+    protected updateValidation(complexityModifier: string): void {
         this.updateModifier(this.indicatorListElement, this.indicatorListClass, complexityModifier);
         this.updateModifier(this.additionalMessageElement, this.additionalMessageClass, complexityModifier);
 
         this.currentValidationStatus = complexityModifier;
     }
 
-    protected updateModifier(element: Element, className: string, complexityModifier?: string): void {
+    protected updateModifier(element: Element, className: string, complexityModifier: string): void {
         const classList = element.classList;
 
         classList.remove(`${className}--${this.currentValidationStatus}`);
@@ -137,23 +139,23 @@ export default class PasswordComplexityIndicator extends Component {
         return Number(this.getAttribute('debounce-delay'));
     }
 
-    protected get minLength(): number {
-        return Number(this.getAttribute('min-length'));
+    protected get min(): number {
+        return Number(this.getAttribute('min'));
     }
 
-    protected get minLowercase(): number {
-        return Number(this.getAttribute('min-lowercase'));
+    protected get lowercase(): number {
+        return Number(this.getAttribute('lowercase'));
     }
 
-    protected get minUppercase(): number {
-        return Number(this.getAttribute('min-uppercase'));
+    protected get uppercase(): number {
+        return Number(this.getAttribute('uppercase'));
     }
 
-    protected get minNumbers(): number {
-        return Number(this.getAttribute('min-numbers'));
+    protected get digits(): number {
+        return Number(this.getAttribute('digits'));
     }
 
-    protected get minSymbols(): number {
-        return Number(this.getAttribute('min-symbols'));
+    protected get symbols(): number {
+        return Number(this.getAttribute('symbols'));
     }
 }

@@ -175,6 +175,8 @@
             inputExtraClasses: ('input input--expand ' ~ (errors is not empty ? ' input--error ') ~ (attr.class | default) ~ inputComplexityJsCLass) | trim,
         },
     } only %}
+
+    {#ToDo: provide flag from BE to enable/disable password complexity indicator#}
     {% set withPasswordComplexityIndicator = true %}
 
     {% if withPasswordComplexityIndicator | default %}
