@@ -8,7 +8,7 @@ export default class PasswordField extends Component {
     protected readyCallback(): void {}
 
     protected init(): void {
-        this.button = <HTMLElement>this.getElementsByClassName(this.buttonClass)[0];
+        this.button = <HTMLElement>this.getElementsByClassName(this.buttonClassName)[0];
         this.input = <HTMLInputElement>this.getElementsByClassName(`${this.jsName}__input`)[0];
 
         this.mapEvents();
@@ -30,14 +30,14 @@ export default class PasswordField extends Component {
     }
 
     protected changeButtonClass(): void {
-        this.button.classList.toggle(this.buttonToggleClass, this.isPasswordShown);
+        this.button.classList.toggle(this.buttonToggleClassName, this.isPasswordShown);
     }
 
-    protected get buttonClass(): string {
-        return this.getAttribute('button-class');
+    protected get buttonClassName(): string {
+        return this.getAttribute('button-class-name');
     }
 
-    protected get buttonToggleClass(): string {
-        return this.getAttribute('button-toggle-class');
+    protected get buttonToggleClassName(): string {
+        return this.getAttribute('button-toggle-class-name');
     }
 }

@@ -29,9 +29,9 @@ export default class PasswordComplexityIndicator extends Component {
     protected readyCallback(): void {}
 
     protected init(): void {
-        this.inputElement = <HTMLInputElement>document.getElementsByClassName(this.inputClass)[0];
-        this.indicatorListElement = <HTMLElement>this.getElementsByClassName(this.indicatorListClass)[0];
-        this.additionalMessageElement = <HTMLElement>this.getElementsByClassName(this.additionalMessageClass)[0];
+        this.inputElement = <HTMLInputElement>document.getElementsByClassName(this.inputClassName)[0];
+        this.indicatorListElement = <HTMLElement>this.getElementsByClassName(this.indicatorListClassName)[0];
+        this.additionalMessageElement = <HTMLElement>this.getElementsByClassName(this.additionalMessageClassName)[0];
         this.schema = new PasswordValidator();
 
         this.initValidatorWithDefaultConfig();
@@ -107,8 +107,8 @@ export default class PasswordComplexityIndicator extends Component {
     }
 
     protected updateValidation(complexityModifier: string): void {
-        this.updateModifier(this.indicatorListElement, this.indicatorListClass, complexityModifier);
-        this.updateModifier(this.additionalMessageElement, this.additionalMessageClass, complexityModifier);
+        this.updateModifier(this.indicatorListElement, this.indicatorListClassName, complexityModifier);
+        this.updateModifier(this.additionalMessageElement, this.additionalMessageClassName, complexityModifier);
 
         this.currentValidationStatus = complexityModifier;
     }
@@ -117,21 +117,18 @@ export default class PasswordComplexityIndicator extends Component {
         const classList = element.classList;
 
         classList.remove(`${className}--${this.currentValidationStatus}`);
-
-        if (complexityModifier) {
-            classList.add(`${className}--${complexityModifier}`);
-        }
+        classList.add(`${className}--${complexityModifier}`);
     }
 
-    protected get inputClass(): string {
+    protected get inputClassName(): string {
         return this.getAttribute('input-class-name');
     }
 
-    protected get indicatorListClass(): string {
+    protected get indicatorListClassName(): string {
         return `${this.name}__indicator-list`;
     }
 
-    protected get additionalMessageClass(): string {
+    protected get additionalMessageClassName(): string {
         return `${this.name}__additional-message`;
     }
 
