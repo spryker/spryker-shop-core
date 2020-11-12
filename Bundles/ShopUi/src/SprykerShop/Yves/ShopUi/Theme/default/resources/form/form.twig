@@ -152,6 +152,42 @@
     {{block('checkbox_widget')}}
 {%- endblock -%}
 
+{%- block password_widget -%}
+    {%- set attr = attr | merge({
+        id: id | default(false),
+        placeholder: attr.placeholder | default(label) | trans(attr_translation_parameters, translation_domain),
+        name: full_name,
+        disabled: disabled | default(false),
+        required: required | default(false),
+    }) -%}
+
+    {% if attr.title | default %}
+        {%- set attr = attr | merge({
+                title: attr.title | trans(attr_translation_parameters, translation_domain),
+            }) -%}
+    {% endif %}
+
+    {% set inputComplexityJsCLass = 'js-password-complexity-indicator__' ~ attr.name %}
+
+    {% include molecule('password-field') with {
+        data: {
+            inputAttributes: attr,
+            inputExtraClasses: ('input input--expand ' ~ (errors is not empty ? ' input--error ') ~ (attr.class | default) ~ inputComplexityJsCLass) | trim,
+        },
+    } only %}
+
+    {#ToDo: provide flag from BE to enable/disable password complexity indicator#}
+    {% set withPasswordComplexityIndicator = true %}
+
+    {% if withPasswordComplexityIndicator | default %}
+        {% include molecule('password-complexity-indicator') with {
+            attributes: {
+                'input-class-name': inputComplexityJsCLass,
+            },
+        } only %}
+    {% endif %}
+{%- endblock password_widget -%}
+
 {# rows #}
 
 {%- block form_row -%}
