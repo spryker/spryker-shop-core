@@ -7,12 +7,27 @@
 
 namespace SprykerShop\Yves\ShopUi\Twig\TokenParser;
 
+use SprykerShop\Yves\ShopUi\ShopUiConfig;
 use SprykerShop\Yves\ShopUi\Twig\Node\ShopUiDefineTwigNode;
 use Twig\Token;
 use Twig\TokenParser\AbstractTokenParser;
 
 class ShopUiDefineTwigTokenParser extends AbstractTokenParser
 {
+
+    /**
+     * @var \SprykerShop\Yves\ShopUi\ShopUiConfig
+     */
+    protected $shopUiConfig;
+
+    /**
+     * @param \SprykerShop\Yves\ShopUi\ShopUiConfig $shopUiConfig
+     */
+    public function __construct(ShopUiConfig $shopUiConfig)
+    {
+        $this->shopUiConfig = $shopUiConfig;
+    }
+
     /**
      * @return string
      */
@@ -37,6 +52,6 @@ class ShopUiDefineTwigTokenParser extends AbstractTokenParser
         $tag = $this->getTag();
         $stream->expect(Token::BLOCK_END_TYPE);
 
-        return new ShopUiDefineTwigNode($name, $value, $line, $tag);
+        return new ShopUiDefineTwigNode($this->shopUiConfig, $name, $value, $line, $tag);
     }
 }
