@@ -15,11 +15,11 @@ interface SelectedMerchantCookieInterface
     public function getMerchantReference(): string;
 
     /**
-     * @param string $selectedMerchantReference
+     * @param string|null $selectedMerchantReference
      *
      * @return void
      */
-    public function setMerchantReference(string $selectedMerchantReference): void;
+    public function setMerchantReference(?string $selectedMerchantReference): void;
 
     /**
      * @return void

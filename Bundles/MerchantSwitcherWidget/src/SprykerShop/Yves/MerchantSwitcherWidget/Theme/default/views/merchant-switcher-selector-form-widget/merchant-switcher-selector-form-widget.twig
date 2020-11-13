@@ -1,7 +1,7 @@
 {% extends template('widget') %}
 
 {% define data = {
-    merchantList: _widget.merchantTransfers | default([]),
+    merchantList: _widget.merchantSearchTransfers | default([]),
     currentMerchantReference: _widget.selectedMerchantReference | default,
 } %}
 
