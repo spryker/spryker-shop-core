@@ -45,5 +45,9 @@ abstract class AbstractCustomerController extends AbstractController
         foreach ($customerResponseTransfer->getErrors() as $errorTransfer) {
             $this->addErrorMessage($errorTransfer->getMessage());
         }
+
+        if ($customerResponseTransfer->getMessage()) {
+            $this->addErrorMessage($customerResponseTransfer->getMessage()->getMessage());
+        }
     }
 }
