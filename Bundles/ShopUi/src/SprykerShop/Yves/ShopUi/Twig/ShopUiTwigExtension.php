@@ -46,6 +46,7 @@ class ShopUiTwigExtension extends TwigExtension
      * @var string
      */
     protected $localesFilterPattern;
+    
     /**
      * @var \SprykerShop\Yves\ShopUi\ShopUiConfig
      */

@@ -14,7 +14,6 @@ use Twig\TokenParser\AbstractTokenParser;
 
 class ShopUiDefineTwigTokenParser extends AbstractTokenParser
 {
-
     /**
      * @var \SprykerShop\Yves\ShopUi\ShopUiConfig
      */
