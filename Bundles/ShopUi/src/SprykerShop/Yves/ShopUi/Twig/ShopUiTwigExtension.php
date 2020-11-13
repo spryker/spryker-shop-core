@@ -171,7 +171,7 @@ class ShopUiTwigExtension extends TwigExtension
     public function getTokenParsers(): array
     {
         return [
-            new ShopUiDefineTwigTokenParser(),
+            new ShopUiDefineTwigTokenParser($this->shopUiConfig),
         ];
     }
 
