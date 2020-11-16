@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
  * @method \SprykerShop\Yves\QuickOrderPage\QuickOrderPageFactory getFactory()
@@ -33,10 +34,12 @@ class QuickOrderController extends AbstractController
     public const PARAM_ROW_INDEX = 'row-index';
     public const PARAM_QUICK_ORDER_FORM = 'quick_order_form';
     protected const PARAM_QUICK_ORDER_FILE_TYPE = 'file-type';
+    protected const PARAM_FORM_TOKEN = '_token';
     protected const MESSAGE_CLEAR_ALL_ROWS_SUCCESS = 'quick-order.message.success.the-form-items-have-been-successfully-cleared';
     protected const ERROR_MESSAGE_QUANTITY_INVALID = 'quick-order.errors.quantity-invalid';
     protected const MESSAGE_TYPE_WARNING = 'warning';
     protected const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
+    protected const MESSAGE_FORM_INVALID_CSRF = 'form.csrf.error.text';
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
@@ -47,6 +50,11 @@ class QuickOrderController extends AbstractController
      * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_INDEX
      */
     protected const ROUTE_NAME_CHECKOUT_INDEX = 'checkout-index';
+
+    protected const FLASH_MESSAGE_LIST_TEMPLATE_PATH = '@ShopUi/components/organisms/flash-message-list/flash-message-list.twig';
+
+    protected const KEY_CODE = 'code';
+    protected const KEY_MESSAGES = 'messages';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -333,6 +341,10 @@ class QuickOrderController extends AbstractController
 
         $viewData = $this->executeDeleteRowAction($request);
 
+        if (isset($viewData[static::KEY_CODE])) {
+            return $this->jsonResponse($viewData);
+        }
+
         return $this->view(
             $viewData,
             $this->getFactory()->getQuickOrderPageWidgetPlugins(),
@@ -351,8 +363,15 @@ class QuickOrderController extends AbstractController
     {
         $rowIndex = $request->get(static::PARAM_ROW_INDEX);
         $formData = $request->get(static::PARAM_QUICK_ORDER_FORM);
-        $formDataItems = $formData['items'] ?? [];
 
+        if (!$this->isQuickOrderFormCsrfTokenValid($formData)) {
+            return $this->createAjaxErrorResponse(
+                Response::HTTP_BAD_REQUEST,
+                [static::MESSAGE_FORM_INVALID_CSRF]
+            );
+        }
+
+        $formDataItems = $formData['items'] ?? [];
         if (!isset($formDataItems[$rowIndex])) {
             throw new HttpException(Response::HTTP_BAD_REQUEST, '"row-index" is out of the bound.');
         }
@@ -671,5 +690,52 @@ class QuickOrderController extends AbstractController
         return $this->getFactory()
             ->createViewDataTransformer()
             ->transformProductData($productConcreteTransfers, $this->getFactory()->getQuickOrderFormColumnPlugins());
+    }
+
+    /**
+     * @param array|null $quickOrderFormData
+     *
+     * @return bool
+     */
+    protected function isQuickOrderFormCsrfTokenValid(?array $quickOrderFormData): bool
+    {
+        if (!$quickOrderFormData || !isset($quickOrderFormData[static::PARAM_FORM_TOKEN])) {
+            return false;
+        }
+
+        $csrfToken = $this->createCsrfToken(static::PARAM_QUICK_ORDER_FORM, $quickOrderFormData[static::PARAM_FORM_TOKEN]);
+
+        return $this->getFactory()->getCsrfTokenManager()->isTokenValid($csrfToken);
+    }
+
+    /**
+     * @param string $tokenId
+     * @param string $value
+     *
+     * @return \Symfony\Component\Security\Csrf\CsrfToken
+     */
+    protected function createCsrfToken(string $tokenId, string $value): CsrfToken
+    {
+        return new CsrfToken($tokenId, $value);
+    }
+
+    /**
+     * @param int $code
+     * @param string[] $messages
+     *
+     * @return array
+     */
+    protected function createAjaxErrorResponse(int $code, array $messages): array
+    {
+        foreach ($messages as $message) {
+            $this->addErrorMessage($message);
+        }
+
+        $flashMessageListHtml = $this->renderView(static::FLASH_MESSAGE_LIST_TEMPLATE_PATH)->getContent();
+
+        return [
+            static::KEY_CODE => $code,
+            static::KEY_MESSAGES => $flashMessageListHtml,
+        ];
     }
 }
