@@ -23,6 +23,11 @@ class ProductConfiguratorGatewayPageDependencyProvider extends AbstractBundleDep
     public const PLUGINS_PRODUCT_CONFIGURATOR_GATEWAY_BACK_URL_RESOLVER_STRATEGY = 'PLUGINS_PRODUCT_CONFIGURATOR_GATEWAY_BACK_URL_RESOLVER_STRATEGY';
 
     /**
+     * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     */
+    public const SERVICE_ROUTER = 'routers';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -36,6 +41,7 @@ class ProductConfiguratorGatewayPageDependencyProvider extends AbstractBundleDep
         $container = $this->addProductConfigurationClient($container);
         $container = $this->addProductConfiguratorGatewayBackUrlResolverStrategyPlugins($container);
         $container = $this->addProductStorageClient($container);
+        $container = $this->addRouter($container);
 
         return $container;
     }
@@ -97,6 +103,20 @@ class ProductConfiguratorGatewayPageDependencyProvider extends AbstractBundleDep
             return new ProductConfiguratorGatewayPageToProductConfigurationClientBridge(
                 $container->getLocator()->productConfiguration()->client()
             );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addRouter(Container $container): Container
+    {
+        $container->set(static::SERVICE_ROUTER, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_ROUTER);
         });
 
         return $container;
