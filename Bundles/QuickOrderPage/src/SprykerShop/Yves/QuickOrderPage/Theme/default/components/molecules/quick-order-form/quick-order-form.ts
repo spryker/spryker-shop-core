@@ -117,8 +117,8 @@ export default class QuickOrderForm extends Component {
         }
     }
 
-    protected hasMessage (obj: object): obj is { messages: string } {
-        return 'messages' in obj;
+    protected hasMessage (response: object): response is { messages: string } {
+        return 'messages' in response;
     }
 
     protected async showFlashMessage(response: object): Promise<void> {
