@@ -176,10 +176,7 @@
         },
     } only %}
 
-    {#ToDo: provide flag from BE to enable/disable password complexity indicator#}
-    {% set withPasswordComplexityIndicator = true %}
-
-    {% if withPasswordComplexityIndicator | default %}
+    {% if form.vars.attr.password_evaluator | default %}
         {% include molecule('password-complexity-indicator') with {
             attributes: {
                 'input-class-name': inputComplexityJsCLass,
