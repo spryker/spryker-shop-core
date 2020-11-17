@@ -70,9 +70,6 @@ class RestorePasswordForm extends AbstractType
             'required' => true,
             'first_options' => [
                 'label' => 'forms.password',
-                'attr' => [
-                    'password_evaluator' => true,
-                ],
             ],
             'second_options' => [
                 'label' => 'forms.confirm-password',
