@@ -1,0 +1,15 @@
+/**
+ * Provides list of properies for reset usage.
+ */
+@mixin helper-reset {
+    // https://www.paulirish.com/2012/box-sizing-border-box-ftw/
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    color: inherit;
+    -webkit-tap-highlight-color: $setting-color-transparent;
+
+    @content;
+}

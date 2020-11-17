@@ -1,0 +1,12 @@
+/**
+ * Adds clearing for element with floated child elements.
+ */
+@mixin helper-ui-clearfix {
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+
+  @content;
+}

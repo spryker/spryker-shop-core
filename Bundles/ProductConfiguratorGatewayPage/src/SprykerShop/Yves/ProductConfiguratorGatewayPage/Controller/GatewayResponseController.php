@@ -53,7 +53,7 @@ class GatewayResponseController extends AbstractController
         }
 
         return $this->executeProductConfiguratorGatewayBackUrlResolverStrategyPlugins(
-            $productConfiguratorResponseProcessorResponseTransfer->getProductConfiguratorResponse()
+            $productConfiguratorResponseProcessorResponseTransfer->getProductConfiguratorResponseOrFail()
         );
     }
 
@@ -65,7 +65,7 @@ class GatewayResponseController extends AbstractController
     protected function handleResponseErrors(ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer): void
     {
         foreach ($productConfiguratorResponseProcessorResponseTransfer->getMessages() as $messageTransfer) {
-            $this->addErrorMessage($messageTransfer->getValue());
+            $this->addErrorMessage($messageTransfer->getValueOrFail());
         }
     }
 

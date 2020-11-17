@@ -3,42 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentProductSetWidget/src/SprykerShop/Yves/ContentProductSetWidget/ContentProductSetWidgetDependencyProvider.php",
-            "snippet": "                $container->getLocator()->contentProductSet()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentProductSetWidget/src/SprykerShop/Yves/ContentProductSetWidget/ContentProductSetWidgetDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productSetStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 77,
-            "line_to": 77,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentProductSetWidget/src/SprykerShop/Yves/ContentProductSetWidget/ContentProductSetWidgetDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 53,
             "line_to": 53,
             "type": "PossiblyNullArgument",
@@ -53,11 +17,11 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 157,
-            "line_to": 157,
+            "line_from": 155,
+            "line_to": 155,
             "type": "DeprecatedConstant",
-            "message": "Constant SprykerShop\\Yves\\ContentProductSetWidget\\Twig\\ContentProductSetTwigFunction::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT is deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentProductSetWidget/src/SprykerShop/Yves/ContentProductSetWidget/Twig/ContentProductSetTwigFunction.php",
+            "message": "Constant SprykerShop\\Yves\\ContentProductSetWidget\\Twig\\ContentProductSetTwigFunctionProvider::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT is deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentProductSetWidget/src/SprykerShop/Yves/ContentProductSetWidget/Twig/ContentProductSetTwigFunctionProvider.php",
             "snippet": "            static::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT => '@ContentProductSetWidget/views/content-product-set/content-product-set.twig',",
             "selected_text": "static::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT",
             "error_level": 2,

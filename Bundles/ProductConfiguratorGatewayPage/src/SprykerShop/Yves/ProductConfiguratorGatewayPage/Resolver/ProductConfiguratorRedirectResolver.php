@@ -89,8 +89,10 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
     protected function getProductConfigurationInstance(
         ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer
     ): ProductConfigurationInstanceTransfer {
-        $sku = $productConfiguratorRequestDataTransfer->requireSku()->getSku();
+        $sku = $productConfiguratorRequestDataTransfer->getSkuOrFail();
         $itemGroupKey = $productConfiguratorRequestDataTransfer->getItemGroupKey();
+        $quantity = $productConfiguratorRequestDataTransfer->getQuantity() ?? 1;
+
         $productConfigurationInstanceTransfer = null;
 
         if ($itemGroupKey) {
@@ -105,18 +107,20 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
             throw new ProductConfigurationInstanceNotFoundException();
         }
 
+        $productConfigurationInstanceTransfer->setQuantity($quantity);
+
         return $productConfigurationInstanceTransfer;
     }
 
     /**
      * @param string $itemGroupKey
-     * @param string|null $sku
+     * @param string $sku
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null
      */
     protected function findProductConfigurationInstanceInQuote(
         string $itemGroupKey,
-        ?string $sku
+        string $sku
     ): ?ProductConfigurationInstanceTransfer {
         $quoteTransfer = $this->quoteClient->getQuote();
 

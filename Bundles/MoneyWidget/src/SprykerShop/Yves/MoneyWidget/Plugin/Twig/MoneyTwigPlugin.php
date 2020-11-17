@@ -23,6 +23,7 @@ use Twig\TwigFunction;
 class MoneyTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     protected const FUNCTION_NAME_MONEY_SYMBOL = 'moneySymbol';
+    protected const FUNCTION_NAME_CURRENCY_ISO_CODE = 'currencyIsoCode';
     protected const FILTER_NAME_MONEY = 'money';
     protected const FILTER_NAME_MONEY_RAW = 'moneyRaw';
 
@@ -67,6 +68,7 @@ class MoneyTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     protected function addTwigFunctions(Environment $twig): Environment
     {
         $twig->addFunction($this->getMoneySymbolFunction());
+        $twig->addFunction($this->getCurrencyIsoCodeFunction());
 
         return $twig;
     }
@@ -126,6 +128,16 @@ class MoneyTwigPlugin extends AbstractPlugin implements TwigPluginInterface
             }
 
             return $this->getFactory()->getCurrencyPlugin()->fromIsoCode($isoCode);
+        });
+    }
+
+    /**
+     * @return \Twig\TwigFunction
+     */
+    protected function getCurrencyIsoCodeFunction(): TwigFunction
+    {
+        return new TwigFunction(static::FUNCTION_NAME_CURRENCY_ISO_CODE, function () {
+            return $this->getFactory()->getCurrencyPlugin()->getCurrent()->getCode();
         });
     }
 

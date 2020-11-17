@@ -3,42 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleNoteWidget/src/SprykerShop/Yves/ConfigurableBundleNoteWidget/ConfigurableBundleNoteWidgetDependencyProvider.php",
-            "snippet": "                $container->getLocator()->configurableBundleNote()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleNoteWidget/src/SprykerShop/Yves/ConfigurableBundleNoteWidget/ConfigurableBundleNoteWidgetDependencyProvider.php",
-            "snippet": "                $container->getLocator()->glossaryStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 78,
-            "line_to": 78,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleNoteWidget/src/SprykerShop/Yves/ConfigurableBundleNoteWidget/ConfigurableBundleNoteWidgetDependencyProvider.php",
-            "snippet": "                $container->getLocator()->quote()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 58,
             "line_to": 58,
             "type": "PossiblyNullArgument",
@@ -50,18 +14,5 @@
             "shortcode": 78
         }
     ],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Yves\\Kernel\\Controller\\AbstractController::redirectResponseExternal has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleNoteWidget/src/SprykerShop/Yves/ConfigurableBundleNoteWidget/Controller/NoteController.php",
-            "snippet": "            return $this->redirectResponseExternal($refererUrl);",
-            "selected_text": "redirectResponseExternal",
-            "error_level": 2,
-            "shortcode": 1
-        }
-    ]
+    "deprecation": []
 }
