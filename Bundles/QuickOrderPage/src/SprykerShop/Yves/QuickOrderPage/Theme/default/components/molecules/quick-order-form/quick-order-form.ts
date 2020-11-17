@@ -98,9 +98,10 @@ export default class QuickOrderForm extends Component {
             'row-index': rowIndex
         });
         const response = await this.removeRowAjaxProvider.fetch(data);
+        const parsedResponse = this.parseResponse(response);
 
-        if (this.isResponseJson(response)) {
-            this.showFlashMessage(response)
+        if (typeof parsedResponse !== 'string') {
+            this.showFlashMessage(parsedResponse);
 
             return;
         }
@@ -116,18 +117,16 @@ export default class QuickOrderForm extends Component {
         }
     }
 
-    protected isResponseJson(response: string): boolean {
-        if (typeof this.parseResponse(response) === 'string') {
-            return false;
-        }
-
-        return true;
+    protected hasMessage (obj: object): obj is { messages: string } {
+        return 'messages' in obj;
     }
 
-    protected async showFlashMessage(response: string): Promise<void> {
-        const { messages } = this.parseResponse(response);
+    protected async showFlashMessage(response: object): Promise<void> {
+        if (!this.hasMessage(response)) {
+            return;
+        }
         const dynamicNotificationCustomEvent = new CustomEvent(EVENT_UPDATE_DYNAMIC_MESSAGES, {
-            detail: messages,
+            detail: response.messages,
         });
         document.dispatchEvent(dynamicNotificationCustomEvent);
     }
