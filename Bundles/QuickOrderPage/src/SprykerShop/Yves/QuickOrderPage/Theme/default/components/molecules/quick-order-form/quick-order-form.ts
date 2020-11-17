@@ -101,7 +101,7 @@ export default class QuickOrderForm extends Component {
         const parsedResponse = this.pareseResponse(response);
 
         if (typeof parsedResponse === 'object') {
-            const messages = parsedResponse.messages;
+            const { messages } = parsedResponse;
             const dynamicNotificationCustomEvent = new CustomEvent(EVENT_UPDATE_DYNAMIC_MESSAGES, {
                 detail: messages,
             });
@@ -117,14 +117,11 @@ export default class QuickOrderForm extends Component {
     }
 
     protected pareseResponse(response: string): string|object {
-        let jsonResponse = {};
         try {
-            jsonResponse = JSON.parse(response);
+            return JSON.parse(response);
         } catch (e) {
             return response;
         }
-
-        return jsonResponse;
     }
 
     /**
