@@ -117,7 +117,7 @@ export default class QuickOrderForm extends Component {
         }
     }
 
-    protected hasMessages (response: object): response is { messages: string } {
+    protected hasMessages(response: object): response is { messages: string } {
         return 'messages' in response;
     }
 
