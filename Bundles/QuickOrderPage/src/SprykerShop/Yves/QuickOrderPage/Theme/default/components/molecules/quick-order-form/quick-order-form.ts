@@ -98,30 +98,45 @@ export default class QuickOrderForm extends Component {
             'row-index': rowIndex
         });
         const response = await this.removeRowAjaxProvider.fetch(data);
-        const parsedResponse = this.pareseResponse(response);
 
-        if (typeof parsedResponse === 'object') {
-            const { messages } = parsedResponse;
-            const dynamicNotificationCustomEvent = new CustomEvent(EVENT_UPDATE_DYNAMIC_MESSAGES, {
-                detail: messages,
-            });
-            document.dispatchEvent(dynamicNotificationCustomEvent);
+        if (this.isResponseJson(response)) {
+            this.showFlashMessage(response)
 
             return;
         }
 
-        this.rows.innerHTML = response;
-        await mount();
-        this.registerRemoveRowTriggers();
-        this.mapRemoveRowTriggersEvents();
+        this.updateHtml(response);
     }
 
-    protected pareseResponse(response: string): string|object {
+    protected parseResponse(response: string): string|object {
         try {
             return JSON.parse(response);
         } catch (e) {
             return response;
         }
+    }
+
+    protected isResponseJson(response: string): boolean {
+        if (typeof this.parseResponse(response) === 'string') {
+            return false;
+        }
+
+        return true;
+    }
+
+    protected async showFlashMessage(response: string): Promise<void> {
+        const { messages } = this.parseResponse(response);
+        const dynamicNotificationCustomEvent = new CustomEvent(EVENT_UPDATE_DYNAMIC_MESSAGES, {
+            detail: messages,
+        });
+        document.dispatchEvent(dynamicNotificationCustomEvent);
+    }
+
+    protected async updateHtml(response: string): Promise<void> {
+        this.rows.innerHTML = response;
+        await mount();
+        this.registerRemoveRowTriggers();
+        this.mapRemoveRowTriggersEvents();
     }
 
     /**
