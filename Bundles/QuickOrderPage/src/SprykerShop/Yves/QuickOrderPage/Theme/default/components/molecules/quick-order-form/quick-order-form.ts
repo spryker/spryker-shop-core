@@ -112,17 +112,17 @@ export default class QuickOrderForm extends Component {
     protected parseResponse(response: string): string|object {
         try {
             return JSON.parse(response);
-        } catch (e) {
+        } catch {
             return response;
         }
     }
 
-    protected hasMessage (response: object): response is { messages: string } {
+    protected hasMessages (response: object): response is { messages: string } {
         return 'messages' in response;
     }
 
     protected async showFlashMessage(response: object): Promise<void> {
-        if (!this.hasMessage(response)) {
+        if (!this.hasMessages(response)) {
             return;
         }
         const dynamicNotificationCustomEvent = new CustomEvent(EVENT_UPDATE_DYNAMIC_MESSAGES, {
