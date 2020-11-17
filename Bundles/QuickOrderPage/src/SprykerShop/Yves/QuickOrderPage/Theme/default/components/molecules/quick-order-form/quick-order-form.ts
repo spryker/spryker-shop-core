@@ -106,7 +106,7 @@ export default class QuickOrderForm extends Component {
             return;
         }
 
-        this.updateHtml(response);
+        this.updateTableHtml(response);
     }
 
     protected parseResponse(response: string): string|object {
@@ -131,7 +131,7 @@ export default class QuickOrderForm extends Component {
         document.dispatchEvent(dynamicNotificationCustomEvent);
     }
 
-    protected async updateHtml(response: string): Promise<void> {
+    protected async updateTableHtml(response: string): Promise<void> {
         this.rows.innerHTML = response;
         await mount();
         this.registerRemoveRowTriggers();
