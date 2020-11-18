@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignoreFile
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
@@ -7,140 +8,45 @@
 
 namespace SprykerShop\Yves\ShopApplication\Plugin;
 
-use Spryker\Service\Container\ContainerInterface;
-use Spryker\Shared\Twig\TwigExtensionInterface;
-use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
-use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig\Environment;
+use Twig\Extension\GlobalsInterface;
 
-/**
- * @method \Spryker\Yves\Kernel\AbstractFactory getFactory()
- */
-abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements TwigPluginInterface, TwigExtensionInterface
-{
+if (Environment::MAJOR_VERSION < 3) {
     /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Twig\Environment $twig
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Twig\Environment
+     * @method \Spryker\Yves\Kernel\AbstractFactory getFactory()
      */
-    public function extend(Environment $twig, ContainerInterface $container): Environment
+    abstract class AbstractTwigExtensionPlugin extends BaseAbstractTwigExtensionPlugin implements GlobalsInterface
     {
-        $twig->addExtension($this);
-
-        return $twig;
+        /**
+         * Specification:
+         * - Returns a list of global variables to add to the existing list.
+         *
+         * @api
+         *
+         * @return array An array of global variables
+         */
+        public function getGlobals()
+        {
+            return [];
+        }
     }
-
+} else {
     /**
-     * Initializes the runtime environment.
-     *
-     * This is where you can load some file that contains filter functions for instance.
-     *
-     * @api
-     *
-     * @param \Twig\Environment $environment The current Environment instance
-     *
-     * @return void
+     * @method \Spryker\Yves\Kernel\AbstractFactory getFactory()
      */
-    public function initRuntime(Environment $environment)
+    abstract class AbstractTwigExtensionPlugin extends BaseAbstractTwigExtensionPlugin implements GlobalsInterface
     {
-    }
-
-    /**
-     * Returns the token parser instances to add to the existing list.
-     *
-     * @api
-     *
-     * @return array An array of TokenParserInterface or TokenParserBrokerInterface instances
-     */
-    public function getTokenParsers()
-    {
-        return [];
-    }
-
-    /**
-     * Returns the node visitor instances to add to the existing list.
-     *
-     * @api
-     *
-     * @return \Twig\NodeVisitor\NodeVisitorInterface[] An array of NodeVisitorInterface instances
-     */
-    public function getNodeVisitors()
-    {
-        return [];
-    }
-
-    /**
-     * Returns a list of filters to add to the existing list.
-     *
-     * @api
-     *
-     * @return array An array of filters
-     */
-    public function getFilters()
-    {
-        return [];
-    }
-
-    /**
-     * Returns a list of tests to add to the existing list.
-     *
-     * @api
-     *
-     * @return array An array of tests
-     */
-    public function getTests()
-    {
-        return [];
-    }
-
-    /**
-     * Returns a list of functions to add to the existing list.
-     *
-     * @api
-     *
-     * @return array An array of functions
-     */
-    public function getFunctions()
-    {
-        return [];
-    }
-
-    /**
-     * Returns a list of operators to add to the existing list.
-     *
-     * @api
-     *
-     * @return array An array of operators
-     */
-    public function getOperators()
-    {
-        return [];
-    }
-
-    /**
-     * Returns a list of global variables to add to the existing list.
-     *
-     * @api
-     *
-     * @return array An array of global variables
-     */
-    public function getGlobals()
-    {
-        return [];
-    }
-
-    /**
-     * @deprecated since 1.26 (to be removed in 2.0), not used anymore internally
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return static::class;
+        /**
+         * Specification:
+         * - Returns a list of global variables to add to the existing list.
+         *
+         * @api
+         *
+         * @return array An array of global variables
+         */
+        public function getGlobals(): array
+        {
+            return [];
+        }
     }
 }

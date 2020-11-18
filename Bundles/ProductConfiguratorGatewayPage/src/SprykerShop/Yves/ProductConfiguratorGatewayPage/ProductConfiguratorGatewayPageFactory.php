@@ -23,6 +23,7 @@ use SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver\ProductConfigurator
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver\ProductConfiguratorRedirectResolverInterface;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver\ProductDetailPageGatewayBackUrlResolver;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver\ProductDetailPageGatewayBackUrlResolverInterface;
+use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -65,7 +66,10 @@ class ProductConfiguratorGatewayPageFactory extends AbstractFactory
      */
     public function createGatewayBackUrlResolver(): ProductDetailPageGatewayBackUrlResolverInterface
     {
-        return new ProductDetailPageGatewayBackUrlResolver($this->getProductStorageClient());
+        return new ProductDetailPageGatewayBackUrlResolver(
+            $this->getProductStorageClient(),
+            $this->getRouter()
+        );
     }
 
     /**
@@ -137,5 +141,13 @@ class ProductConfiguratorGatewayPageFactory extends AbstractFactory
     public function getProductStorageClient(): ProductConfiguratorGatewayPageToProductStorageClientInterface
     {
         return $this->getProvidedDependency(ProductConfiguratorGatewayPageDependencyProvider::CLIENT_PRODUCT_STORAGE);
+    }
+
+    /**
+     * @return \Symfony\Cmf\Component\Routing\ChainRouterInterface
+     */
+    public function getRouter(): ChainRouterInterface
+    {
+        return $this->getProvidedDependency(ProductConfiguratorGatewayPageDependencyProvider::SERVICE_ROUTER);
     }
 }

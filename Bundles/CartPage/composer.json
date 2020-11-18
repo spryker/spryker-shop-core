@@ -36,6 +36,7 @@
     "spryker/container": "*",
     "spryker/router": "*",
     "spryker/silex": "*",
+    "spryker/testify": "*",
     "spryker/twig": "*"
   },
   "suggest": {
@@ -45,10 +46,10 @@
     "spryker-shop/gift-card-widget": "If you want to use components from module GiftCardWidget.",
     "spryker-shop/multi-cart-widget": "If you want to use components from module MultiCartWidget or CartOperationsWidgetPlugin",
     "spryker-shop/order-custom-reference-widget": "Add the module if you want to use order custom reference functionality",
+    "spryker-shop/product-configuration-widget": "Add the module if you want to use ProductConfigurationCartItemDisplayWidget or ProductConfigurationCartPageButtonWidget.",
     "spryker-shop/product-measurement-unit-widget": "^0.7.2: If you want to use measurement-unit-item molecule from module ProductMeasurementUnitWidget",
     "spryker-shop/product-option-widget": "If you want to use components from module ProductOptionWidget or CartItemProductOptionWidgetPlugin",
     "spryker-shop/product-packaging-unit-widget": "If you want to use components from module ProductPackagingUnitWidget or CartProductPackagingUnitWidgetPlugin",
-    "spryker-shop/product-configuration-widget": "Add the module if you want to use ProductConfigurationCartItemDisplayWidget or ProductConfigurationCartPageButtonWidget.",
     "spryker/container": "If you want to use the CartTwigPlugin",
     "spryker/permission": "If you want to use permissions plugins",
     "spryker/router": "Use this module when using plugins that adds routes to the Route Module.",
@@ -61,11 +62,16 @@
       "SprykerShop\\": "src/SprykerShop/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerShopTest\\": "tests/SprykerShopTest/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
   },
   "extra": {
     "branch-alias": {
