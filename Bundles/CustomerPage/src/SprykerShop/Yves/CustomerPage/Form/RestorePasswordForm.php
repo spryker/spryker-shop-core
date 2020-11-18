@@ -72,7 +72,7 @@ class RestorePasswordForm extends AbstractType
                 'label' => 'forms.password',
                 'attr' => [
                     'password_complexity_indicator' => true,
-                ]
+                ],
             ],
             'second_options' => [
                 'label' => 'forms.confirm-password',
