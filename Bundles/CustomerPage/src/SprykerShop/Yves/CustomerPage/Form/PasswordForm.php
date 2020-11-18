@@ -65,7 +65,7 @@ class PasswordForm extends AbstractType
                 'label' => 'customer.password.request.new_password',
                 'attr' => [
                     'autocomplete' => 'off',
-                    'withPasswordComplexityIndicator' => true,
+                    'passwordComplexityIndicator' => true,
                 ],
             ],
             'second_options' => [

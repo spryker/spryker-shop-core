@@ -176,7 +176,7 @@
         },
     } only %}
 
-    {% if form.vars.attr.withPasswordComplexityIndicator | default %}
+    {% if form.vars.attr.passwordComplexityIndicator | default %}
         {% include molecule('password-complexity-indicator') with {
             attributes: {
                 'input-class-name': inputComplexityJsCLass,
