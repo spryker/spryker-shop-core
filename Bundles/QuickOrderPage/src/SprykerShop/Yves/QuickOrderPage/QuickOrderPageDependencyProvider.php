@@ -44,7 +44,13 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_QUICK_ORDER_UPLOADED_FILE_PARSER = 'PLUGINS_QUICK_ORDER_UPLOADED_FILE_PARSER';
     public const PLUGINS_QUICK_ORDER_UPLOADED_FILE_VALIDATOR = 'PLUGINS_QUICK_ORDER_UPLOADED_FILE_VALIDATOR';
     public const PLUGINS_QUICK_ORDER_FILE_TEMPLATE = 'PLUGINS_QUICK_ORDER_FILE_TEMPLATE';
+
     public const SERVICE_UTIL_CSV = 'SERVICE_UTIL_CSV';
+
+    /**
+     * @uses \Spryker\Yves\Form\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
+     */
+    public const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
 
     /**
      * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
@@ -66,6 +72,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuickOrderPageWidgetPlugins($container);
         $container = $this->addZedRequestClient($container);
         $container = $this->addQuickOrderUtilCsvService($container);
+        $container = $this->addCsrfProviderService($container);
         $container = $this->addQuickOrderItemTransferExpanderPlugins($container);
         $container = $this->addQuickOrderFormHandlerStrategyPlugins($container);
         $container = $this->addQuickOrderFormAdditionalDataColumnProviderPlugins($container);
@@ -123,6 +130,20 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
             return new QuickOrderPageToUtilCsvServiceBridge(
                 $container->getLocator()->utilCsv()->service()
             );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCsrfProviderService(Container $container): Container
+    {
+        $container->set(static::SERVICE_FORM_CSRF_PROVIDER, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_FORM_CSRF_PROVIDER);
         });
 
         return $container;
