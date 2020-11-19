@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 class OrderController extends AbstractController
 {
     protected const GLOSSARY_KEY_ERROR_MESSAGE_UNABLE_TO_REORDER_ITEMS = 'customer.order.reorder.error.unable_to_reorder_items';
+    protected const GLOSSARY_KEY_ERROR_MESSAGE_MISSING_INVALID_CSRF_TOKEN = 'customer.order.reorder.error.csrf_token_failure';
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
@@ -39,6 +40,10 @@ class OrderController extends AbstractController
             ->getCustomerReorderWidgetForm()->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->getFactory()
+                ->getMessengerClient()
+                ->addErrorMessage(static::GLOSSARY_KEY_ERROR_MESSAGE_MISSING_INVALID_CSRF_TOKEN);
+
             return $this->getFailureRedirect();
         }
 
