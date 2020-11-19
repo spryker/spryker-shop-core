@@ -1,0 +1,18 @@
+<div *ngIf="isDataLoaded; else loading">
+    <app-header></app-header>
+    <app-information-list [productData]="configuredProductJSON$ | async"></app-information-list>
+    <main class="content-wrap container">
+        <app-product-details [productData]="configuredProductJSON$ | async"></app-product-details>
+
+        <app-json-output [productData]="configuredProductJSON$ | async"></app-json-output>
+    </main>
+    <app-footer></app-footer>
+</div>
+
+<ng-template #loading>
+    <div class="loader">
+        <div>
+            {{ 'global.loading' | translate }}...
+        </div>
+    </div>
+</ng-template>

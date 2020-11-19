@@ -20,7 +20,16 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class GatewayRequestController extends AbstractController
 {
+    /**
+     * @uses \SprykerShop\Yves\HomePage\Plugin\Router\HomePageRouteProviderPlugin::ROUTE_NAME_HOME
+     */
+    protected const FALLBACK_ROUTE_NAME = 'home';
     protected const REQUEST_HEADER_REFERER = 'referer';
+
+    /**
+     * @uses \Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL
+     */
+    protected const ABSOLUTE_URL = 0;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -40,23 +49,25 @@ class GatewayRequestController extends AbstractController
     protected function executeIndexAction(Request $request): RedirectResponse
     {
         $productConfiguratorRequestDataTransfer = $this->validateProductConfiguratorRequestDataForm($request);
-        $refererUrl = $request->headers->get(static::REQUEST_HEADER_REFERER);
+        $refererUrl = $request->headers->get(static::REQUEST_HEADER_REFERER) ?? static::FALLBACK_ROUTE_NAME;
 
         $productConfiguratorRequestDataTransfer->setBackUrl($refererUrl)
             ->setSubmitUrl($this->getRouter()->generate(
-                ProductConfiguratorGatewayPageRouteProviderPlugin::ROUTE_NAME_PRODUCT_CONFIGURATOR_GATEWAY_RESPONSE
+                ProductConfiguratorGatewayPageRouteProviderPlugin::ROUTE_NAME_PRODUCT_CONFIGURATOR_GATEWAY_RESPONSE,
+                [],
+                static::ABSOLUTE_URL
             ));
 
         $productConfiguratorRedirectTransfer = $this->getFactory()->createProductConfiguratorRedirectResolver()
             ->resolveProductConfiguratorRedirect($productConfiguratorRequestDataTransfer);
 
         if ($productConfiguratorRedirectTransfer->getIsSuccessful()) {
-            return $this->redirectResponseExternal($productConfiguratorRedirectTransfer->getConfiguratorRedirectUrl());
+            return $this->redirectResponseExternal($productConfiguratorRedirectTransfer->getConfiguratorRedirectUrlOrFail());
         }
 
         $this->handleProductConfigurationRedirectErrors($productConfiguratorRedirectTransfer);
 
-        return $this->redirectResponseInternal($refererUrl);
+        return $this->redirectResponseExternal($refererUrl);
     }
 
     /**
@@ -67,8 +78,8 @@ class GatewayRequestController extends AbstractController
     protected function handleProductConfigurationRedirectErrors(
         ProductConfiguratorRedirectTransfer $productConfiguratorRedirectTransfer
     ) {
-        foreach ($productConfiguratorRedirectTransfer->getMessages() as $message) {
-            $this->addErrorMessage($message);
+        foreach ($productConfiguratorRedirectTransfer->getMessages() as $messageTransfer) {
+            $this->addErrorMessage($messageTransfer->getValueOrFail());
         }
     }
 
