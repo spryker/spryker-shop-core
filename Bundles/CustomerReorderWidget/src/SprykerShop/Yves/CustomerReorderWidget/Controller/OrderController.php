@@ -39,7 +39,7 @@ class OrderController extends AbstractController
             ->getCustomerReorderWidgetForm()->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
-            foreach($form->getErrors(true) as $error) {
+            foreach ($form->getErrors(true) as $error) {
                 $this->addErrorMessage($error->getMessage());
             }
 
