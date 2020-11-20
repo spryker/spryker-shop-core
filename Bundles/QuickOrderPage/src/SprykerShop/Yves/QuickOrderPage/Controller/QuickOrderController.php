@@ -94,15 +94,15 @@ class QuickOrderController extends AbstractController
             ->getQuickOrderForm($quickOrderTransfer)
             ->handleRequest($request);
 
-        if ($quickOrderForm->isSubmitted() && $quickOrderForm->isValid()) {
-            $response = $this->processQuickOrderForm($quickOrderForm, $request);
-
-            if ($response !== null) {
-                return $response;
+        if (!$quickOrderForm->isSubmitted() || !$quickOrderForm->isValid()) {
+            foreach ($quickOrderForm->getErrors(true) as $formError) {
+                $this->addErrorMessage($formError->getMessage());
             }
+
+            return [];
         }
 
-        return [];
+        return $this->processQuickOrderForm($quickOrderForm, $request) ?? [];
     }
 
     /**
