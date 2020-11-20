@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ShopUi\Twig;
 
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Twig\TwigExtension;
+use SprykerShop\Yves\ShopUi\ShopUiConfig;
 use SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProviderInterface;
 use SprykerShop\Yves\ShopUi\Twig\Node\ShopUiDefineTwigNode;
 use SprykerShop\Yves\ShopUi\Twig\TokenParser\ShopUiDefineTwigTokenParser;
@@ -47,13 +48,23 @@ class ShopUiTwigExtension extends TwigExtension
     protected $localesFilterPattern;
 
     /**
+     * @var \SprykerShop\Yves\ShopUi\ShopUiConfig
+     */
+    protected $shopUiConfig;
+
+    /**
      * @param \Spryker\Shared\Kernel\Store $store
+     * @param \SprykerShop\Yves\ShopUi\ShopUiConfig $shopUiConfig
      * @param \SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProviderInterface|null $assetsUrlProvider
      */
-    public function __construct(Store $store, ?AssetsUrlProviderInterface $assetsUrlProvider = null)
-    {
+    public function __construct(
+        Store $store,
+        ShopUiConfig $shopUiConfig,
+        ?AssetsUrlProviderInterface $assetsUrlProvider = null
+    ) {
         $this->store = $store;
         $this->assetsUrlProvider = $assetsUrlProvider;
+        $this->shopUiConfig = $shopUiConfig;
     }
 
     /**
@@ -161,7 +172,7 @@ class ShopUiTwigExtension extends TwigExtension
     public function getTokenParsers(): array
     {
         return [
-            new ShopUiDefineTwigTokenParser(),
+            new ShopUiDefineTwigTokenParser($this->shopUiConfig),
         ];
     }
 
