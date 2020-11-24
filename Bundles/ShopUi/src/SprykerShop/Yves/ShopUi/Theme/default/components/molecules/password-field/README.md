@@ -1,1 +1,1 @@
-Displays a password filed component with show/hide password functionality.
+Displays a password field component with show/hide password functionality.

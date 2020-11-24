@@ -1,8 +1,8 @@
-import Component from '../../../models/component';
+import Component from 'ShopUi/models/component';
 import debounce from 'lodash-es/debounce';
 import PasswordValidator from 'password-validator';
 
-enum MarksGradation {
+enum ComplexityWeight {
     lowercase = 10,
     digits = 15,
     uppercase = 20,
@@ -10,19 +10,16 @@ enum MarksGradation {
     min = 25,
 }
 
-enum ComplexityGradiation {
-    medium = 25,
-    strong = 50,
-    veryStrong = 75,
-    percantage = 100,
-}
-
 export default class PasswordComplexityIndicator extends Component {
     protected availableProperties = ['min', 'lowercase', 'uppercase', 'digits', 'symbols'];
-    protected currentValidationStatus = '';
+    /* tslint:disable: no-magic-numbers */
+    protected complexityGradation = new Map([['weak', 0], ['medium', 25], ['strong', 50], ['very-strong', 75]]);
+    /* tslint:enable */
+    protected currentComplexity = '';
     protected maxPasswordComplexity = 0;
+    protected factor = 100;
     protected inputElement: HTMLInputElement;
-    protected additionalMessageElement: HTMLElement;
+    protected notificationElement: HTMLElement;
     protected indicatorListElement: HTMLElement;
     protected schema: PasswordValidator;
 
@@ -31,43 +28,50 @@ export default class PasswordComplexityIndicator extends Component {
     protected init(): void {
         this.inputElement = <HTMLInputElement>document.getElementsByClassName(this.inputClassName)[0];
         this.indicatorListElement = <HTMLElement>this.getElementsByClassName(this.indicatorListClassName)[0];
-        this.additionalMessageElement = <HTMLElement>this.getElementsByClassName(this.additionalMessageClassName)[0];
+        this.notificationElement = <HTMLElement>this.getElementsByClassName(this.additionalMessageClassName)[0];
         this.schema = new PasswordValidator();
 
-        this.initValidatorWithDefaultConfig();
+        this.initValidator();
         this.mapEvents();
     }
 
     protected mapEvents(): void {
+        this.mapInputElementKeyUpEvent();
+    }
+
+    protected mapInputElementKeyUpEvent(): void {
         this.inputElement.addEventListener('keyup', debounce(() => this.onInputKeyUp(), this.debounceDelay));
     }
 
-    protected initValidatorWithDefaultConfig(): void {
-        this.availableProperties.forEach((proterty: string) => {
-            this.setValidation(proterty);
+    protected initValidator(): void {
+        this.availableProperties.forEach((property: string) => {
+            this.setValidation(property);
+            this.increaseMaxPasswordComplexity(property);
         });
     }
 
-    protected setValidation(proterty: string): void {
-        const propertyValue = this[proterty];
+    protected increaseMaxPasswordComplexity(property: string): void {
+        this.maxPasswordComplexity += ComplexityWeight[property];
+    }
 
-        if (proterty === 'min') {
-            this.setValidationWithIs(proterty, propertyValue);
+    protected setValidation(property: string): void {
+        const propertyValue = this[property];
+
+        if (property === 'min') {
+            this.setIsValidationType(property, propertyValue);
 
             return;
         }
 
-        this.setValidationWithHas(proterty, propertyValue);
+        this.setHasValidationType(property, propertyValue);
     }
 
-    protected setValidationWithHas(property: string, value: number): void {
+    protected setHasValidationType(property: string, value: number): void {
         this.schema.has()[property](value);
-        this.maxPasswordComplexity += MarksGradation[property];
     }
 
-    protected setValidationWithIs(property: string, value: number): void {
+    protected setIsValidationType(property: string, value: number): void {
         this.schema.is()[property](value);
-        this.maxPasswordComplexity += MarksGradation[property];
     }
 
     protected onInputKeyUp(): void {
@@ -75,49 +79,57 @@ export default class PasswordComplexityIndicator extends Component {
         const failsList = this.schema.validate(inputValue, { list: true });
         let passwordValidatorMark = this.maxPasswordComplexity;
 
-        failsList.forEach((mark: string) => {
-            passwordValidatorMark -= MarksGradation[mark];
+        failsList.forEach((property: string) => {
+            passwordValidatorMark -= ComplexityWeight[property];
         });
 
         this.validatePassword(passwordValidatorMark);
     }
 
     protected validatePassword(passwordValidatorMark: number): void {
-        const currentStatus = (passwordValidatorMark / this.maxPasswordComplexity) * ComplexityGradiation.percantage;
+        const passwordComplexity = (passwordValidatorMark / this.maxPasswordComplexity) * this.factor;
+        const veryStrong = this.complexityGradation.get('very-strong');
+        const strong = this.complexityGradation.get('strong');
+        const medium = this.complexityGradation.get('medium');
+        const weak = this.complexityGradation.get('weak');
 
-        if (currentStatus > ComplexityGradiation.veryStrong) {
-            this.updateValidation('very-strong');
-
-            return;
-        }
-
-        if (currentStatus > ComplexityGradiation.strong) {
-            this.updateValidation('strong');
+        if (passwordComplexity > veryStrong) {
+            this.updateValidation(this.getKey(veryStrong));
 
             return;
         }
 
-        if (currentStatus > ComplexityGradiation.medium) {
-            this.updateValidation('medium');
+        if (passwordComplexity > strong) {
+            this.updateValidation(this.getKey(strong));
 
             return;
         }
 
-        this.updateValidation('weak');
+        if (passwordComplexity > medium) {
+            this.updateValidation(this.getKey(medium));
+
+            return;
+        }
+
+        this.updateValidation(this.getKey(weak));
     }
 
     protected updateValidation(complexityModifier: string): void {
         this.updateModifier(this.indicatorListElement, this.indicatorListClassName, complexityModifier);
-        this.updateModifier(this.additionalMessageElement, this.additionalMessageClassName, complexityModifier);
+        this.updateModifier(this.notificationElement, this.additionalMessageClassName, complexityModifier);
 
-        this.currentValidationStatus = complexityModifier;
+        this.currentComplexity = complexityModifier;
     }
 
     protected updateModifier(element: Element, className: string, complexityModifier: string): void {
         const classList = element.classList;
 
-        classList.remove(`${className}--${this.currentValidationStatus}`);
+        classList.remove(`${className}--${this.currentComplexity}`);
         classList.add(`${className}--${complexityModifier}`);
+    }
+
+    protected getKey(currentValue: number): string {
+        return [...this.complexityGradation].find(([key, value]) => currentValue === value)[0];
     }
 
     protected get inputClassName(): string {

@@ -163,8 +163,8 @@
 
     {% if attr.title | default %}
         {%- set attr = attr | merge({
-                title: attr.title | trans(attr_translation_parameters, translation_domain),
-            }) -%}
+            title: attr.title | trans(attr_translation_parameters, translation_domain),
+        }) -%}
     {% endif %}
 
     {% set inputComplexityJsCLass = 'js-password-complexity-indicator__' ~ attr.name %}

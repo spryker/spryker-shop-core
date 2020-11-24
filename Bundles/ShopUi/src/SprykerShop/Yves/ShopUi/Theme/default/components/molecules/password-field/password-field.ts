@@ -1,4 +1,4 @@
-import Component from '../../../models/component';
+import Component from 'ShopUi/models/component';
 
 export default class PasswordField extends Component {
     protected isPasswordShown = false;
@@ -15,21 +15,25 @@ export default class PasswordField extends Component {
     }
 
     protected mapEvents(): void {
+        this.mapButtonClickEvent();
+    }
+
+    protected mapButtonClickEvent(): void {
         this.button.addEventListener('click', () => this.onClick());
     }
 
     protected onClick(): void {
         this.isPasswordShown = !this.isPasswordShown;
 
-        this.changeInputType();
-        this.changeButtonClass();
+        this.toggleInputType();
+        this.toggleButtonClass();
     }
 
-    protected changeInputType(): void {
+    protected toggleInputType(): void {
         this.input.setAttribute('type', this.isPasswordShown ? 'text' : 'password');
     }
 
-    protected changeButtonClass(): void {
+    protected toggleButtonClass(): void {
         this.button.classList.toggle(this.buttonToggleClassName, this.isPasswordShown);
     }
 
