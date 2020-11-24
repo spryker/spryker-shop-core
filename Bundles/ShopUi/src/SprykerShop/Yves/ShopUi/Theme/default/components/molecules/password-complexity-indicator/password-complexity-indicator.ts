@@ -88,30 +88,12 @@ export default class PasswordComplexityIndicator extends Component {
 
     protected validatePassword(passwordValidatorMark: number): void {
         const passwordComplexity = (passwordValidatorMark / this.maxPasswordComplexity) * this.factor;
-        const veryStrong = this.complexityGradation.get('very-strong');
-        const strong = this.complexityGradation.get('strong');
-        const medium = this.complexityGradation.get('medium');
-        const weak = this.complexityGradation.get('weak');
 
-        if (passwordComplexity > veryStrong) {
-            this.updateValidation(this.getKey(veryStrong));
-
-            return;
-        }
-
-        if (passwordComplexity > strong) {
-            this.updateValidation(this.getKey(strong));
-
-            return;
-        }
-
-        if (passwordComplexity > medium) {
-            this.updateValidation(this.getKey(medium));
-
-            return;
-        }
-
-        this.updateValidation(this.getKey(weak));
+        this.complexityGradation.forEach((value: number, key: string) => {
+            if (passwordComplexity >= value) {
+                this.updateValidation(key);
+            }
+        });
     }
 
     protected updateValidation(complexityModifier: string): void {
@@ -126,10 +108,6 @@ export default class PasswordComplexityIndicator extends Component {
 
         classList.remove(`${className}--${this.currentComplexity}`);
         classList.add(`${className}--${complexityModifier}`);
-    }
-
-    protected getKey(currentValue: number): string {
-        return [...this.complexityGradation].find(([key, value]) => currentValue === value)[0];
     }
 
     protected get inputClassName(): string {
