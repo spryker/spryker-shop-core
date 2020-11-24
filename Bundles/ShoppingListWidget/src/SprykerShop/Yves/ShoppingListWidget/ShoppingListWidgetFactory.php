@@ -18,6 +18,7 @@ use SprykerShop\Yves\ShoppingListWidget\Form\FormHandler\CreateFromCartHandlerIn
 use SprykerShop\Yves\ShoppingListWidget\Form\ShoppingListFromCartForm;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * @method \SprykerShop\Yves\ShoppingListWidget\ShoppingListWidgetConfig getConfig()
@@ -87,5 +88,13 @@ class ShoppingListWidgetFactory extends AbstractFactory
     public function getFormFactory(): FormFactory
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface
+     */
+    public function getCsrfTokenManager(): CsrfTokenManagerInterface
+    {
+        return $this->getProvidedDependency(ShoppingListWidgetDependencyProvider::SERVICE_FORM_CSRF_PROVIDER);
     }
 }

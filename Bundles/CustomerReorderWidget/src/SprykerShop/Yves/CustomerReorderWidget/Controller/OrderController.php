@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CustomerReorderWidget\Controller;
 
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -39,6 +40,8 @@ class OrderController extends AbstractController
             ->getCustomerReorderWidgetForm()->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessagesFromForm($form);
+
             return $this->getFailureRedirect();
         }
 
@@ -76,6 +79,8 @@ class OrderController extends AbstractController
             ->getCustomerReorderItemsWidgetForm()->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessagesFromForm($form);
+
             return $this->getFailureRedirect();
         }
 
@@ -119,5 +124,17 @@ class OrderController extends AbstractController
     protected function getFailureRedirect(): RedirectResponse
     {
         return $this->redirectResponseInternal(static::ROUTE_FAILURE_REDIRECT);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return void
+     */
+    protected function addErrorMessagesFromForm(FormInterface $form): void
+    {
+        foreach ($form->getErrors(true) as $error) {
+            $this->addErrorMessage($error->getMessage());
+        }
     }
 }

@@ -20,6 +20,11 @@ class ShoppingListWidgetDependencyProvider extends AbstractBundleDependencyProvi
     public const CLIENT_SHOPPING_LIST_SESSION = 'CLIENT_SHOPPING_LIST_SESSION';
 
     /**
+     * @uses \Spryker\Yves\Form\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
+     */
+    public const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -30,6 +35,7 @@ class ShoppingListWidgetDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addShoppingListClient($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addShoppingListSessionClient($container);
+        $container = $this->addCsrfProviderService($container);
 
         return $container;
     }
@@ -71,6 +77,20 @@ class ShoppingListWidgetDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::CLIENT_SHOPPING_LIST_SESSION, function (Container $container) {
             return new ShoppingListWidgetToShoppingListSessionClientBridge($container->getLocator()->shoppingListSession()->client());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCsrfProviderService(Container $container): Container
+    {
+        $container->set(static::SERVICE_FORM_CSRF_PROVIDER, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_FORM_CSRF_PROVIDER);
         });
 
         return $container;

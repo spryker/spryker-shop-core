@@ -1,6 +1,7 @@
 import Component from 'ShopUi/models/component';
 import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
 import { mount } from 'ShopUi/app';
+import { EVENT_UPDATE_DYNAMIC_MESSAGES } from 'ShopUi/components/organisms/dynamic-notification-area/dynamic-notification-area';
 
 export default class QuickOrderForm extends Component {
     /**
@@ -97,7 +98,40 @@ export default class QuickOrderForm extends Component {
             'row-index': rowIndex
         });
         const response = await this.removeRowAjaxProvider.fetch(data);
+        const parsedResponse = this.parseResponse(response);
 
+        if (typeof parsedResponse !== 'string') {
+            this.showFlashMessage(parsedResponse);
+
+            return;
+        }
+
+        this.updateTableHtml(response);
+    }
+
+    protected parseResponse(response: string): string|object {
+        try {
+            return JSON.parse(response);
+        } catch {
+            return response;
+        }
+    }
+
+    protected hasMessages(response: object): response is { messages: string } {
+        return 'messages' in response;
+    }
+
+    protected async showFlashMessage(response: object): Promise<void> {
+        if (!this.hasMessages(response)) {
+            return;
+        }
+        const dynamicNotificationCustomEvent = new CustomEvent(EVENT_UPDATE_DYNAMIC_MESSAGES, {
+            detail: response.messages,
+        });
+        document.dispatchEvent(dynamicNotificationCustomEvent);
+    }
+
+    protected async updateTableHtml(response: string): Promise<void> {
         this.rows.innerHTML = response;
         await mount();
         this.registerRemoveRowTriggers();
