@@ -53,6 +53,7 @@ use SprykerShop\Yves\QuickOrderPage\ViewDataTransformer\ViewDataTransformer;
 use SprykerShop\Yves\QuickOrderPage\ViewDataTransformer\ViewDataTransformerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -423,5 +424,13 @@ class QuickOrderPageFactory extends AbstractFactory
     public function getModuleConfig(): QuickOrderPageConfig
     {
         return $this->getConfig();
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface
+     */
+    public function getCsrfTokenManager(): CsrfTokenManagerInterface
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::SERVICE_FORM_CSRF_PROVIDER);
     }
 }

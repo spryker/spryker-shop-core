@@ -18,11 +18,6 @@
   "scripts": {
     "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p --ignore=/node_modules/ Bundles/"
   },
-  "autoload": {
-    "files": [
-      "autoload.php"
-    ]
-  },
   "replace": {
     "spryker-shop/agent-page": "*",
     "spryker-shop/agent-widget": "*",
@@ -69,6 +64,7 @@
     "spryker-shop/customer-page-extension": "*",
     "spryker-shop/customer-reorder-widget": "*",
     "spryker-shop/customer-reorder-widget-extension": "*",
+    "spryker-shop/date-time-configurator-page-example": "*",
     "spryker-shop/discount-promotion-widget": "*",
     "spryker-shop/discount-widget": "*",
     "spryker-shop/error-page": "*",

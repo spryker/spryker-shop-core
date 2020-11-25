@@ -22,8 +22,7 @@ class ProductConfiguratorResponseDataMapper implements ProductConfiguratorRespon
         Request $request,
         ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
     ): ProductConfiguratorResponseTransfer {
-        $productConfiguratorResponseTransfer->fromArray($request->request->all(), true);
-
-        return $productConfiguratorResponseTransfer;
+        return $productConfiguratorResponseTransfer
+            ->fromArray($request->request->all(), true);
     }
 }

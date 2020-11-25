@@ -12,6 +12,7 @@ use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
  * @method \SprykerShop\Yves\ShoppingListWidget\ShoppingListWidgetFactory getFactory()
@@ -21,8 +22,14 @@ class ShoppingListWidgetController extends AbstractController
     public const PARAM_SKU = 'sku';
     public const PARAM_QUANTITY = 'quantity';
     public const PARAM_ID_SHOPPING_LIST = 'idShoppingList';
+    protected const PARAM_FORM_CSRF_TOKEN = '_token';
+    protected const PARAM_FORM_CSRF_TOKEN_ID = 'shopping_list_add_item_form';
+
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_NOT_ADDED = 'customer.account.shopping_list.item.not_added';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ADD_ITEM_SUCCESS = 'customer.account.shopping_list.add_item.success';
+    protected const GLOSSARY_KEY_FORM_CSRF_ERROR = 'form.csrf.error.text';
+
+    protected const REQUEST_HEADER_REFERER = 'referer';
 
     /**
      * @uses \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_SHOPPING_LIST
@@ -69,6 +76,12 @@ class ShoppingListWidgetController extends AbstractController
      */
     protected function executeIndexAction(Request $request): RedirectResponse
     {
+        if (!$this->isCsrfTokenValid($request->get(static::PARAM_FORM_CSRF_TOKEN))) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_FORM_CSRF_ERROR);
+
+            return $this->getCsrfValidationErrorRedirectResponse($request);
+        }
+
         $shoppingListItemTransfer = $this->getShoppingListItemTransferFromRequest($request);
 
         $shoppingListItemTransfer = $this->getFactory()
@@ -111,5 +124,37 @@ class ShoppingListWidgetController extends AbstractController
             ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
 
         return $shoppingListItemTransfer;
+    }
+
+    /**
+     * @param string|null $token
+     *
+     * @return bool
+     */
+    protected function isCsrfTokenValid(?string $token): bool
+    {
+        if (!$token) {
+            return false;
+        }
+
+        $csrfToken = new CsrfToken(static::PARAM_FORM_CSRF_TOKEN_ID, $token);
+
+        return $this->getFactory()->getCsrfTokenManager()->isTokenValid($csrfToken);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function getCsrfValidationErrorRedirectResponse(Request $request): RedirectResponse
+    {
+        if ($request->headers->has(static::REQUEST_HEADER_REFERER)) {
+            $refererUrl = $request->headers->get(static::REQUEST_HEADER_REFERER);
+
+            return $this->redirectResponseExternal($refererUrl);
+        }
+
+        return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST);
     }
 }

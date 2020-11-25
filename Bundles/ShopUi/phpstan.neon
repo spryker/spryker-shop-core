@@ -1,2 +1,4 @@
 parameters:
     checkMissingIterableValueType: false
+    ignoreErrors:
+        - "#Strict comparison using === between '' and 'development' will always evaluate to false.#"
