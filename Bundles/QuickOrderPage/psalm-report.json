@@ -2,8 +2,8 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 228,
-            "line_to": 228,
+            "line_from": 236,
+            "line_to": 236,
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, Generated\\Shared\\Transfer\\ProductConcreteTransfer>' for SprykerShop\\Yves\\QuickOrderPage\\Controller\\QuickOrderController::getProductsFromQuickOrderItems is incorrect, got 'list<Generated\\Shared\\Transfer\\ProductConcreteTransfer|mixed|null>'",
             "file_name": "vendor/spryker/spryker-shop/Bundles/QuickOrderPage/src/SprykerShop/Yves/QuickOrderPage/Controller/QuickOrderController.php",
@@ -14,8 +14,8 @@
         },
         {
             "severity": "error",
-            "line_from": 239,
-            "line_to": 239,
+            "line_from": 247,
+            "line_to": 247,
             "type": "InvalidReturnStatement",
             "message": "The inferred type 'list<Generated\\Shared\\Transfer\\ProductConcreteTransfer|mixed|null>' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\ProductConcreteTransfer>' for SprykerShop\\Yves\\QuickOrderPage\\Controller\\QuickOrderController::getProductsFromQuickOrderItems",
             "file_name": "vendor/spryker/spryker-shop/Bundles/QuickOrderPage/src/SprykerShop/Yves/QuickOrderPage/Controller/QuickOrderController.php",
@@ -26,8 +26,8 @@
         },
         {
             "severity": "error",
-            "line_from": 644,
-            "line_to": 644,
+            "line_from": 663,
+            "line_to": 663,
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, int>' for SprykerShop\\Yves\\QuickOrderPage\\Controller\\QuickOrderController::getProductPricesFromQuickOrderTransfer is incorrect, got 'array<array-key|mixed, int|mixed|null>'",
             "file_name": "vendor/spryker/spryker-shop/Bundles/QuickOrderPage/src/SprykerShop/Yves/QuickOrderPage/Controller/QuickOrderController.php",
@@ -38,8 +38,8 @@
         },
         {
             "severity": "error",
-            "line_from": 661,
-            "line_to": 661,
+            "line_from": 680,
+            "line_to": 680,
             "type": "InvalidReturnStatement",
             "message": "The inferred type 'array<array-key|mixed, int|mixed|null>' does not match the declared return type 'array<array-key, int>' for SprykerShop\\Yves\\QuickOrderPage\\Controller\\QuickOrderController::getProductPricesFromQuickOrderTransfer",
             "file_name": "vendor/spryker/spryker-shop/Bundles/QuickOrderPage/src/SprykerShop/Yves/QuickOrderPage/Controller/QuickOrderController.php",
@@ -47,18 +47,6 @@
             "selected_text": "$prices",
             "error_level": 6,
             "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of SprykerShop\\Yves\\QuickOrderPage\\File\\Parser\\UploadedFile\\CsvType\\UploadedFileCsvTypeValidator::isValidRowCount has wrong name $file, expecting $uploadedFile as defined by SprykerShop\\Yves\\QuickOrderPage\\File\\Parser\\UploadedFile\\UploadedFileTypeValidatorInterface::isValidRowCount",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/QuickOrderPage/src/SprykerShop/Yves/QuickOrderPage/File/Parser/UploadedFile/CsvType/UploadedFileCsvTypeValidator.php",
-            "snippet": "    public function isValidRowCount(UploadedFile $file, int $rowCountLimit): bool",
-            "selected_text": "$file",
-            "error_level": 7,
-            "shortcode": 230
         },
         {
             "severity": "error",
@@ -112,8 +100,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
+            "line_from": 75,
+            "line_to": 75,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\QuickOrderPage\\Controller\\QuickOrderController::view expects array<array-key, mixed>, possibly different type Symfony\\Component\\HttpFoundation\\RedirectResponse|array<array-key, mixed> provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/QuickOrderPage/src/SprykerShop/Yves/QuickOrderPage/Controller/QuickOrderController.php",
@@ -124,8 +112,20 @@
         },
         {
             "severity": "info",
-            "line_from": 255,
-            "line_to": 255,
+            "line_from": 99,
+            "line_to": 99,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Symfony\\Component\\Form\\FormErrorIterator::getMessage does not exist",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/QuickOrderPage/src/SprykerShop/Yves/QuickOrderPage/Controller/QuickOrderController.php",
+            "snippet": "                $this->addErrorMessage($formError->getMessage());",
+            "selected_text": "getMessage",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 263,
+            "line_to": 263,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\QuickOrderPage\\ProductResolver\\ProductResolverInterface::getProductBySku cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/QuickOrderPage/src/SprykerShop/Yves/QuickOrderPage/Controller/QuickOrderController.php",
@@ -136,8 +136,8 @@
         },
         {
             "severity": "info",
-            "line_from": 426,
-            "line_to": 426,
+            "line_from": 445,
+            "line_to": 445,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\QuickOrderItemTransfer> variable ",
             "file_name": "vendor/spryker/spryker-shop/Bundles/QuickOrderPage/src/SprykerShop/Yves/QuickOrderPage/Controller/QuickOrderController.php",
@@ -148,8 +148,8 @@
         },
         {
             "severity": "info",
-            "line_from": 636,
-            "line_to": 636,
+            "line_from": 655,
+            "line_to": 655,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Symfony\\Cmf\\Component\\Routing\\ChainRouterInterface::generate cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/QuickOrderPage/src/SprykerShop/Yves/QuickOrderPage/Controller/QuickOrderController.php",
@@ -160,8 +160,8 @@
         },
         {
             "severity": "info",
-            "line_from": 636,
-            "line_to": 636,
+            "line_from": 655,
+            "line_to": 655,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getRoute on possibly null value",
             "file_name": "vendor/spryker/spryker-shop/Bundles/QuickOrderPage/src/SprykerShop/Yves/QuickOrderPage/Controller/QuickOrderController.php",
@@ -352,8 +352,8 @@
         },
         {
             "severity": "info",
-            "line_from": 202,
-            "line_to": 202,
+            "line_from": 203,
+            "line_to": 203,
             "type": "InvalidNullableReturnType",
             "message": "The declared return type 'Symfony\\Component\\HttpFoundation\\Request' for SprykerShop\\Yves\\QuickOrderPage\\QuickOrderPageFactory::getRequest is not nullable, but 'Symfony\\Component\\HttpFoundation\\Request|null' contains null",
             "file_name": "vendor/spryker/spryker-shop/Bundles/QuickOrderPage/src/SprykerShop/Yves/QuickOrderPage/QuickOrderPageFactory.php",
@@ -364,8 +364,8 @@
         },
         {
             "severity": "info",
-            "line_from": 206,
-            "line_to": 206,
+            "line_from": 207,
+            "line_to": 207,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'Symfony\\Component\\HttpFoundation\\Request' for SprykerShop\\Yves\\QuickOrderPage\\QuickOrderPageFactory::getRequest is not nullable, but the function returns 'Symfony\\Component\\HttpFoundation\\Request|null'",
             "file_name": "vendor/spryker/spryker-shop/Bundles/QuickOrderPage/src/SprykerShop/Yves/QuickOrderPage/QuickOrderPageFactory.php",
@@ -414,8 +414,8 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 135,
-            "line_to": 135,
+            "line_from": 143,
+            "line_to": 143,
             "type": "DeprecatedMethod",
             "message": "The method SprykerShop\\Yves\\QuickOrderPage\\Controller\\QuickOrderController::getProductPricesFromQuickOrderTransfer has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/QuickOrderPage/src/SprykerShop/Yves/QuickOrderPage/Controller/QuickOrderController.php",
@@ -426,8 +426,8 @@
         },
         {
             "severity": "info",
-            "line_from": 309,
-            "line_to": 309,
+            "line_from": 317,
+            "line_to": 317,
             "type": "DeprecatedMethod",
             "message": "The method SprykerShop\\Yves\\QuickOrderPage\\Controller\\QuickOrderController::getProductPricesFromQuickOrderTransfer has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/QuickOrderPage/src/SprykerShop/Yves/QuickOrderPage/Controller/QuickOrderController.php",
@@ -438,8 +438,8 @@
         },
         {
             "severity": "info",
-            "line_from": 374,
-            "line_to": 374,
+            "line_from": 393,
+            "line_to": 393,
             "type": "DeprecatedMethod",
             "message": "The method SprykerShop\\Yves\\QuickOrderPage\\Controller\\QuickOrderController::getProductPricesFromQuickOrderTransfer has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/QuickOrderPage/src/SprykerShop/Yves/QuickOrderPage/Controller/QuickOrderController.php",
@@ -474,8 +474,8 @@
         },
         {
             "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
+            "line_from": 68,
+            "line_to": 68,
             "type": "DeprecatedMethod",
             "message": "The method SprykerShop\\Yves\\QuickOrderPage\\QuickOrderPageDependencyProvider::addApplication has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/QuickOrderPage/src/SprykerShop/Yves/QuickOrderPage/QuickOrderPageDependencyProvider.php",
@@ -486,8 +486,8 @@
         },
         {
             "severity": "info",
-            "line_from": 92,
-            "line_to": 92,
+            "line_from": 99,
+            "line_to": 99,
             "type": "DeprecatedConstant",
             "message": "Constant SprykerShop\\Yves\\QuickOrderPage\\QuickOrderPageDependencyProvider::PLUGIN_APPLICATION is deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/QuickOrderPage/src/SprykerShop/Yves/QuickOrderPage/QuickOrderPageDependencyProvider.php",
@@ -498,8 +498,8 @@
         },
         {
             "severity": "info",
-            "line_from": 93,
-            "line_to": 93,
+            "line_from": 100,
+            "line_to": 100,
             "type": "DeprecatedClass",
             "message": "Spryker\\Yves\\Kernel\\Plugin\\Pimple is marked deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/QuickOrderPage/src/SprykerShop/Yves/QuickOrderPage/QuickOrderPageDependencyProvider.php",
@@ -510,8 +510,8 @@
         },
         {
             "severity": "info",
-            "line_from": 186,
-            "line_to": 186,
+            "line_from": 187,
+            "line_to": 187,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/QuickOrderPage/src/SprykerShop/Yves/QuickOrderPage/QuickOrderPageFactory.php",
@@ -522,8 +522,8 @@
         },
         {
             "severity": "info",
-            "line_from": 188,
-            "line_to": 188,
+            "line_from": 189,
+            "line_to": 189,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/QuickOrderPage/src/SprykerShop/Yves/QuickOrderPage/QuickOrderPageFactory.php",
@@ -534,8 +534,8 @@
         },
         {
             "severity": "info",
-            "line_from": 190,
-            "line_to": 190,
+            "line_from": 191,
+            "line_to": 191,
             "type": "DeprecatedConstant",
             "message": "Constant SprykerShop\\Yves\\QuickOrderPage\\QuickOrderPageDependencyProvider::PLUGIN_APPLICATION is deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/QuickOrderPage/src/SprykerShop/Yves/QuickOrderPage/QuickOrderPageFactory.php",

@@ -28,11 +28,11 @@ class EntryStep extends AbstractBaseStep
     /**
      * Require input, should we render view with form or just skip step after calling execute.
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function requireInput(AbstractTransfer $dataTransfer): bool
+    public function requireInput(AbstractTransfer $quoteTransfer): bool
     {
         return false;
     }
@@ -41,13 +41,13 @@ class EntryStep extends AbstractBaseStep
      * Execute step logic, happens after form submit if provided, gets AbstractTransfer filled by form data.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function execute(Request $request, AbstractTransfer $dataTransfer)
+    public function execute(Request $request, AbstractTransfer $quoteTransfer)
     {
-        return $dataTransfer;
+        return $quoteTransfer;
     }
 
     /**

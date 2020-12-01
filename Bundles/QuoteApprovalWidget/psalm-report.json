@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 64,
-            "line_to": 64,
-            "type": "ParamNameMismatch",
-            "message": "Argument 2 of SprykerShop\\Yves\\QuoteApprovalWidget\\Form\\QuoteApproveRequestFormDataProvider::getOptions has wrong name $localeName, expecting $localeString as defined by SprykerShop\\Yves\\QuoteApprovalWidget\\Form\\QuoteApproveRequestFormDataProviderInterface::getOptions",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteApprovalWidget/src/SprykerShop/Yves/QuoteApprovalWidget/Form/QuoteApproveRequestFormDataProvider.php",
-            "snippet": "    public function getOptions(QuoteTransfer $quoteTransfer, string $localeName): array",
-            "selected_text": "$localeName",
-            "error_level": 7,
-            "shortcode": 230
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",

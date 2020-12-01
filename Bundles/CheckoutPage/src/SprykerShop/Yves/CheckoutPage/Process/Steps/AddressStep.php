@@ -71,13 +71,13 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function requireInput(AbstractTransfer $dataTransfer)
+    public function requireInput(AbstractTransfer $quoteTransfer)
     {
-        return $this->executeCheckoutAddressStepEnterPreCheckPlugins($dataTransfer);
+        return $this->executeCheckoutAddressStepEnterPreCheckPlugins($quoteTransfer);
     }
 
     /**
@@ -125,34 +125,34 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isBreadcrumbItemEnabled(AbstractTransfer $dataTransfer)
+    public function isBreadcrumbItemEnabled(AbstractTransfer $quoteTransfer)
     {
-        return $this->postCondition($dataTransfer);
+        return $this->postCondition($quoteTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isBreadcrumbItemHidden(AbstractTransfer $dataTransfer)
+    public function isBreadcrumbItemHidden(AbstractTransfer $quoteTransfer)
     {
-        return !$this->requireInput($dataTransfer);
+        return !$this->requireInput($quoteTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    protected function executeCheckoutAddressStepEnterPreCheckPlugins(AbstractTransfer $dataTransfer): bool
+    protected function executeCheckoutAddressStepEnterPreCheckPlugins(AbstractTransfer $quoteTransfer): bool
     {
         foreach ($this->checkoutAddressStepEnterPreCheckPlugins as $checkoutAddressStepEnterPreCheckPlugin) {
-            if (!$checkoutAddressStepEnterPreCheckPlugin->check($dataTransfer)) {
+            if (!$checkoutAddressStepEnterPreCheckPlugin->check($quoteTransfer)) {
                 return false;
             }
         }
