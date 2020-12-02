@@ -1,0 +1,37 @@
+{
+    "compilerOptions": {
+        "sourceMap": true,
+        "noImplicitAny": false,
+        "declaration": false,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "noEmitHelpers": true,
+        "importHelpers": true,
+        "skipLibCheck": true,
+        "skipDefaultLibCheck": true,
+        "target": "es2015",
+        "module": "esnext",
+        "typeRoots": ["node_modules/@types"],
+        "lib": ["dom", "esnext"],
+        "baseUrl": ".",
+        "removeComments": true,
+        "rootDir": ".",
+        "paths": {
+            "*": ["*"],
+            "ShopUi/*": [
+                "./Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Theme/default/*"
+            ]
+        }
+    },
+    "include": [
+        "**/*.ts"
+    ],
+    "exclude": [
+        "**/node_modules/**",
+        "**/*.spec.ts",
+        "public",
+        "dist",
+        "**/dist/**"
+    ]
+}
