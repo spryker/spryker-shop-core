@@ -1,5 +1,6 @@
 import Component from 'ShopUi/models/component';
 import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
+import { error } from 'ShopUi/app/logger';
 
 export default class MerchantSelectorForm extends Component {
     protected ajaxProvider: AjaxProvider;
@@ -56,7 +57,7 @@ export default class MerchantSelectorForm extends Component {
             await this.ajaxProvider.fetch(data);
             document.location.reload();
         } catch (e) {
-            console.error(e);
+            error(e);
         }
     }
 

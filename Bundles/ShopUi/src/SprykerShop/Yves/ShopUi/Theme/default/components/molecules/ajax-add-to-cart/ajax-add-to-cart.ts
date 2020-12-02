@@ -1,6 +1,7 @@
-import Component from '../../../models/component';
+import Component from 'ShopUi/models/component';
 import { EVENT_UPDATE_DYNAMIC_MESSAGES } from 'ShopUi/components/organisms/dynamic-notification-area/dynamic-notification-area';
 import { EVENT_UPDATE_CART_QUANTITY } from 'ShopUi/components/molecules/cart-counter/cart-counter';
+import { error } from 'ShopUi/app/logger';
 
 export default class AjaxAddToCart extends Component {
     protected button: HTMLButtonElement;
@@ -48,8 +49,8 @@ export default class AjaxAddToCart extends Component {
                     detail: parsedResponse.quantity,
                 });
                 document.dispatchEvent(cartCounterCustomEvent);
-            }).catch(error => {
-                console.error(error);
+            }).catch(e => {
+                error(e);
             });
     }
 }

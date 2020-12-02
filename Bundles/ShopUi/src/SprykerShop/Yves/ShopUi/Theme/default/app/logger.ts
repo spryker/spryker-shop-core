@@ -33,7 +33,7 @@ const getPrefix = (type: string) => `[${prefix}@${type}]`;
  *
  * @param args List of arguments to log.
  */
-/* tslint:disable: no-any */
+/* tslint:disable: no-console no-any */
 export let debug: LogFunction = (...args: any[]): void => {
     console.debug(getPrefix('debug'), ...args);
 };
@@ -45,7 +45,7 @@ export let debug: LogFunction = (...args: any[]): void => {
  *
  * @param args List of arguments to log.
  */
-/* tslint:disable:no-console no-any */
+/* tslint:disable: no-console no-any */
 export let log: LogFunction = (...args: any[]): void => {
     console.log(getPrefix('log'), ...args);
 };
@@ -57,7 +57,7 @@ export let log: LogFunction = (...args: any[]): void => {
  *
  * @param args List of arguments to log.
  */
-/* tslint:disable: no-any */
+/* tslint:disable: no-console no-any */
 export let info: LogFunction = (...args: any[]): void => {
     console.info(getPrefix('info'), ...args);
 };
@@ -69,7 +69,7 @@ export let info: LogFunction = (...args: any[]): void => {
  *
  * @param args List of arguments to log.
  */
-/* tslint:disable: no-any */
+/* tslint:disable: no-console no-any */
 export let warn: LogFunction = (...args: any[]): void => {
     console.warn(getPrefix('warn'), ...args);
 };
@@ -81,7 +81,7 @@ export let warn: LogFunction = (...args: any[]): void => {
  *
  * @param args List of arguments to log.
  */
-/* tslint:disable: no-any */
+/* tslint:disable: no-console no-any */
 export const error: LogFunction = (...args: any[]): void => {
     console.error(getPrefix('error'), ...args);
 };
