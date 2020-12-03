@@ -95,18 +95,6 @@
             "selected_text": "$displayNames",
             "error_level": 6,
             "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "ParamNameMismatch",
-            "message": "Argument 2 of SprykerShop\\Yves\\CustomerPage\\Plugin\\CustomerStepHandler::addToDataClass has wrong name $quoteTransfer, expecting $dataTransfer as defined by Spryker\\Yves\\StepEngine\\Dependency\\Plugin\\Handler\\StepHandlerPluginInterface::addToDataClass",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CustomerPage/src/SprykerShop/Yves/CustomerPage/Plugin/CustomerStepHandler.php",
-            "snippet": "    public function addToDataClass(Request $request, AbstractTransfer $quoteTransfer)",
-            "selected_text": "$quoteTransfer",
-            "error_level": 7,
-            "shortcode": 230
         }
     ],
     "warning": [

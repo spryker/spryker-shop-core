@@ -180,34 +180,34 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isBreadcrumbItemEnabled(AbstractTransfer $dataTransfer)
+    public function isBreadcrumbItemEnabled(AbstractTransfer $quoteTransfer)
     {
-        return $this->postCondition($dataTransfer);
+        return $this->postCondition($quoteTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isBreadcrumbItemHidden(AbstractTransfer $dataTransfer)
+    public function isBreadcrumbItemHidden(AbstractTransfer $quoteTransfer)
     {
-        return !$this->requireInput($dataTransfer);
+        return !$this->requireInput($quoteTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    protected function executeCheckoutShipmentStepEnterPreCheckPlugins(AbstractTransfer $dataTransfer): bool
+    protected function executeCheckoutShipmentStepEnterPreCheckPlugins(AbstractTransfer $quoteTransfer): bool
     {
         foreach ($this->checkoutShipmentStepEnterPreCheckPlugins as $checkoutShipmentStepEnterPreCheckPlugin) {
-            if (!$checkoutShipmentStepEnterPreCheckPlugin->check($dataTransfer)) {
+            if (!$checkoutShipmentStepEnterPreCheckPlugin->check($quoteTransfer)) {
                 return false;
             }
         }
