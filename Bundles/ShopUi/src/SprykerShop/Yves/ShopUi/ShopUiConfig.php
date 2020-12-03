@@ -25,4 +25,14 @@ class ShopUiConfig extends AbstractBundleConfig
     {
         return $this->get(ShopUiConstants::YVES_ASSETS_URL_PATTERN, '/assets/');
     }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isDevelopmentMode(): bool
+    {
+        return APPLICATION_ENV === 'development';
+    }
 }

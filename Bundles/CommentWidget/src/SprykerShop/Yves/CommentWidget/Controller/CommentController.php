@@ -20,6 +20,7 @@ class CommentController extends CommentWidgetAbstractController
 {
     protected const GLOSSARY_KEY_COMMENT_INVALID_MESSAGE_LENGTH = 'comment.validation.error.invalid_message_length';
     protected const GLOSSARY_KEY_ERROR_MESSAGE_UNEXPECTED_ERROR = 'comment_widget.error_message.unexpected_error';
+    protected const GLOSSARY_KEY_ERROR_MESSAGE_FORM_CSRF_ERROR = 'form.csrf.error.text';
     protected const CSRF_TOKEN_ID_ADD_COMMENT_FORM = 'add-comment-form';
     protected const CSRF_TOKEN_ID_UPDATE_COMMENT_FORM = 'update-comment-form';
     protected const REQUEST_PARAMETER_TOKEN = '_token';
@@ -71,7 +72,7 @@ class CommentController extends CommentWidgetAbstractController
         $tokenValue = $request->get(static::REQUEST_PARAMETER_TOKEN);
 
         if (!$this->validateCsrfToken(static::CSRF_TOKEN_ID_ADD_COMMENT_FORM, $tokenValue)) {
-            $this->addErrorMessage(static::GLOSSARY_KEY_ERROR_MESSAGE_UNEXPECTED_ERROR);
+            $this->addErrorMessage(static::GLOSSARY_KEY_ERROR_MESSAGE_FORM_CSRF_ERROR);
 
             return $this->redirectResponseExternal($returnUrl);
         }
@@ -109,7 +110,7 @@ class CommentController extends CommentWidgetAbstractController
         $tokenValue = $request->get(static::REQUEST_PARAMETER_TOKEN);
 
         if (!$this->validateCsrfToken(static::CSRF_TOKEN_ID_UPDATE_COMMENT_FORM, $tokenValue)) {
-            $this->addErrorMessage(static::GLOSSARY_KEY_ERROR_MESSAGE_UNEXPECTED_ERROR);
+            $this->addErrorMessage(static::GLOSSARY_KEY_ERROR_MESSAGE_FORM_CSRF_ERROR);
 
             return $this->redirectResponseExternal($returnUrl);
         }
@@ -146,7 +147,7 @@ class CommentController extends CommentWidgetAbstractController
         $tokenValue = $request->get(static::REQUEST_PARAMETER_TOKEN);
 
         if (!$this->validateCsrfToken(static::CSRF_TOKEN_ID_UPDATE_COMMENT_FORM, $tokenValue)) {
-            $this->addErrorMessage(static::GLOSSARY_KEY_ERROR_MESSAGE_UNEXPECTED_ERROR);
+            $this->addErrorMessage(static::GLOSSARY_KEY_ERROR_MESSAGE_FORM_CSRF_ERROR);
 
             return $this->redirectResponseExternal($returnUrl);
         }
