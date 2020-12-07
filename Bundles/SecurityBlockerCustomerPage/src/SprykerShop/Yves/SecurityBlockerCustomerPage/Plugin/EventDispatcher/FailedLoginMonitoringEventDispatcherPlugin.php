@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\SecurityBlockerPage\Plugin\EventDispatcher;
+namespace SprykerShop\Yves\SecurityBlockerCustomerPage\Plugin\EventDispatcher;
 
-use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
+use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
- * @method \SprykerShop\Yves\SecurityBlockerPage\SecurityBlockerPageFactory getFactory()
+ * @method \SprykerShop\Yves\SecurityBlockerCustomerPage\SecurityBlockerCustomerPageFactory getFactory()
  */
 class FailedLoginMonitoringEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {

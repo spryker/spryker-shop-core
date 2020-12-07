@@ -1,6 +1,6 @@
 {
-  "name": "spryker-shop/security-blocker-page",
-  "description": "SecurityBlockerPage module",
+  "name": "spryker-shop/security-blocker-customer-page",
+  "description": "SecurityBlockerCustomerPage module",
   "license": "proprietary",
   "require": {
     "php": ">=7.2",

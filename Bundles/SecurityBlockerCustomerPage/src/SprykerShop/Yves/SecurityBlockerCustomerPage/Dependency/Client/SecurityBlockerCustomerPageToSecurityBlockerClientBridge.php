@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\SecurityBlockerPage\Dependency\Client;
+namespace SprykerShop\Yves\SecurityBlockerCustomerPage\Dependency\Client;
 
 use Generated\Shared\Transfer\AuthContextTransfer;
 use Generated\Shared\Transfer\AuthResponseTransfer;
 
-class SecurityBlockerPageToSecurityBlockerClientBridge implements SecurityBlockerPageToSecurityBlockerClientInterface
+class SecurityBlockerCustomerPageToSecurityBlockerClientBridge implements SecurityBlockerCustomerPageToSecurityBlockerClientInterface
 {
     /**
      * @var \Spryker\Client\SecurityBlocker\SecurityBlockerClientInterface

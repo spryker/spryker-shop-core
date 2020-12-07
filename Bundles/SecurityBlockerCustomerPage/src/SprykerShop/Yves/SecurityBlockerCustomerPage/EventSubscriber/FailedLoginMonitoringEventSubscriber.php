@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\SecurityBlockerPage\EventSubscriber;
+namespace SprykerShop\Yves\SecurityBlockerCustomerPage\EventSubscriber;
 
 use Generated\Shared\Transfer\AuthContextTransfer;
 use Spryker\Yves\Router\Router\RouterInterface;
-use SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToSecurityBlockerClientInterface;
-use SprykerShop\Yves\SecurityBlockerPage\SecurityBlockerPageConfig;
+use SprykerShop\Yves\SecurityBlockerCustomerPage\Dependency\Client\SecurityBlockerCustomerPageToSecurityBlockerClientInterface;
+use SprykerShop\Yves\SecurityBlockerCustomerPage\SecurityBlockerCustomerPageConfig;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -19,7 +19,6 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\AuthenticationEvents;
-use Symfony\Component\Security\Http\SecurityEvents;
 
 class FailedLoginMonitoringEventSubscriber implements EventSubscriberInterface
 {
@@ -33,7 +32,7 @@ class FailedLoginMonitoringEventSubscriber implements EventSubscriberInterface
     protected $requestStack;
 
     /**
-     * @var \SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToSecurityBlockerClientInterface
+     * @var \SprykerShop\Yves\SecurityBlockerCustomerPage\Dependency\Client\SecurityBlockerCustomerPageToSecurityBlockerClientInterface
      */
     protected $securityBlockerClient;
 
@@ -45,12 +44,12 @@ class FailedLoginMonitoringEventSubscriber implements EventSubscriberInterface
     /**
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \Spryker\Yves\Router\Router\RouterInterface $router
-     * @param \SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToSecurityBlockerClientInterface $securityBlockerClient
+     * @param \SprykerShop\Yves\SecurityBlockerCustomerPage\Dependency\Client\SecurityBlockerCustomerPageToSecurityBlockerClientInterface $securityBlockerClient
      */
     public function __construct(
         RequestStack $requestStack,
         RouterInterface $router,
-        SecurityBlockerPageToSecurityBlockerClientInterface $securityBlockerClient
+        SecurityBlockerCustomerPageToSecurityBlockerClientInterface $securityBlockerClient
     ) {
         $this->requestStack = $requestStack;
         $this->router = $router;
@@ -79,8 +78,7 @@ class FailedLoginMonitoringEventSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $authContextTransfer = (new AuthContextTransfer)
-            ->setTtl(60)
+        $authContextTransfer = (new AuthContextTransfer())
             ->setAccount($request->get(static::FORM_LOGIN_FORM)[static::FORM_FIELD_EMAIL] ?? '')
             ->setIp($request->getClientIp());
 
@@ -89,6 +87,8 @@ class FailedLoginMonitoringEventSubscriber implements EventSubscriberInterface
 
     /**
      * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      *
      * @return void
      */
@@ -102,8 +102,8 @@ class FailedLoginMonitoringEventSubscriber implements EventSubscriberInterface
 
         $account = $request->get(static::FORM_LOGIN_FORM)[static::FORM_FIELD_EMAIL] ?? '';
         $ip = $request->getClientIp();
-        $authContextTransfer = (new AuthContextTransfer)
-            ->setType(SecurityBlockerPageConfig::SECURITY_BLOCKER_ENTITY_TYPE)
+        $authContextTransfer = (new AuthContextTransfer())
+            ->setType(SecurityBlockerCustomerPageConfig::SECURITY_BLOCKER_ENTITY_TYPE)
             ->setAccount($account)
             ->setIp($ip);
 

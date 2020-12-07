@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\SecurityBlockerAgentPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use Spryker\Yves\Router\Router\Router;
 use Spryker\Yves\Router\Router\RouterInterface;
 use SprykerShop\Yves\SecurityBlockerAgentPage\Dependency\Client\SecurityBlockerAgentPageToSecurityBlockerClientInterface;
 use SprykerShop\Yves\SecurityBlockerAgentPage\EventSubscriber\FailedLoginMonitoringEventSubscriber;

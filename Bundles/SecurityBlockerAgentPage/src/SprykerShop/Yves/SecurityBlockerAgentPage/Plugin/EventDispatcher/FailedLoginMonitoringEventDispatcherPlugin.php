@@ -7,10 +7,10 @@
 
 namespace SprykerShop\Yves\SecurityBlockerAgentPage\Plugin\EventDispatcher;
 
-use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
+use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
  * @method \SprykerShop\Yves\SecurityBlockerAgentPage\SecurityBlockerAgentPageFactory getFactory()

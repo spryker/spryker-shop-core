@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\AuthContextTransfer;
 use Spryker\Yves\Router\Router\RouterInterface;
 use SprykerShop\Yves\SecurityBlockerAgentPage\Dependency\Client\SecurityBlockerAgentPageToSecurityBlockerClientInterface;
 use SprykerShop\Yves\SecurityBlockerAgentPage\SecurityBlockerAgentPageConfig;
-use SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToSecurityBlockerClientInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -20,7 +19,6 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\AuthenticationEvents;
-use Symfony\Component\Security\Http\SecurityEvents;
 
 class FailedLoginMonitoringEventSubscriber implements EventSubscriberInterface
 {
@@ -34,7 +32,7 @@ class FailedLoginMonitoringEventSubscriber implements EventSubscriberInterface
     protected $requestStack;
 
     /**
-     * @var \SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToSecurityBlockerClientInterface
+     * @var \SprykerShop\Yves\SecurityBlockerAgentPage\Dependency\Client\SecurityBlockerAgentPageToSecurityBlockerClientInterface
      */
     protected $securityBlockerClient;
 
@@ -80,7 +78,7 @@ class FailedLoginMonitoringEventSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $authContextTransfer = (new AuthContextTransfer)
+        $authContextTransfer = (new AuthContextTransfer())
             ->setTtl(60)
             ->setAccount($request->get(static::FORM_LOGIN_FORM)[static::FORM_FIELD_EMAIL] ?? '')
             ->setIp($request->getClientIp());
@@ -90,6 +88,8 @@ class FailedLoginMonitoringEventSubscriber implements EventSubscriberInterface
 
     /**
      * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      *
      * @return void
      */
@@ -103,7 +103,7 @@ class FailedLoginMonitoringEventSubscriber implements EventSubscriberInterface
 
         $account = $request->get(static::FORM_LOGIN_FORM)[static::FORM_FIELD_EMAIL] ?? '';
         $ip = $request->getClientIp();
-        $authContextTransfer = (new AuthContextTransfer)
+        $authContextTransfer = (new AuthContextTransfer())
             ->setType(SecurityBlockerAgentPageConfig::SECURITY_BLOCKER_ENTITY_TYPE)
             ->setAccount($account)
             ->setIp($ip);

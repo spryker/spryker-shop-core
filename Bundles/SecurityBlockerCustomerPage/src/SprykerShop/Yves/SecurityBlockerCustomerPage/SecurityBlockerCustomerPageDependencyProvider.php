@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\SecurityBlockerPage;
+namespace SprykerShop\Yves\SecurityBlockerCustomerPage;
 
 use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToSecurityBlockerClientBridge;
+use SprykerShop\Yves\SecurityBlockerCustomerPage\Dependency\Client\SecurityBlockerCustomerPageToSecurityBlockerClientBridge;
 
-class SecurityBlockerPageDependencyProvider extends AbstractBundleDependencyProvider
+class SecurityBlockerCustomerPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_SECURITY_BLOCKER = 'CLIENT_SECURITY_BLOCKER';
     public const REQUEST_STACK = 'REQUEST_STACK';
@@ -51,7 +51,7 @@ class SecurityBlockerPageDependencyProvider extends AbstractBundleDependencyProv
     protected function addSecurityBlockerClient(Container $container): Container
     {
         $container->set(static::CLIENT_SECURITY_BLOCKER, function (Container $container) {
-            return new SecurityBlockerPageToSecurityBlockerClientBridge(
+            return new SecurityBlockerCustomerPageToSecurityBlockerClientBridge(
                 $container->getLocator()->securityBlocker()->client()
             );
         });

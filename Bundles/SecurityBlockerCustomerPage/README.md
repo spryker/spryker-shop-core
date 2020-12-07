@@ -1,5 +1,5 @@
-# SecurityBlockerPage Module
-[![Build Status](https://travis-ci.org/spryker-shop/security-blocker-page.svg)](https://travis-ci.org/spryker-shop/security-blocker-page)
+# SecurityBlockerCustomerPage Module
+[![Build Status](https://travis-ci.org/spryker-shop/security-blocker-customer-page.svg)](https://travis-ci.org/spryker-shop/security-blocker-customer-page)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 {{ADD DESCRIPTION HERE}}
@@ -7,7 +7,7 @@
 ## Installation
 
 ```
-composer require spryker-shop/security-blocker-page
+composer require spryker-shop/security-blocker-customer-page
 ```
 
 ## Documentation

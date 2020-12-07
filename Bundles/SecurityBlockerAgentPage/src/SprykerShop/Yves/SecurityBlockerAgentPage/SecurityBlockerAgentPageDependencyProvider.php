@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\SecurityBlockerAgentPage\Dependency\Client\SecurityBlockerAgentPageToSecurityBlockerClientBridge;
-use SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToSecurityBlockerClientBridge;
 
 class SecurityBlockerAgentPageDependencyProvider extends AbstractBundleDependencyProvider
 {

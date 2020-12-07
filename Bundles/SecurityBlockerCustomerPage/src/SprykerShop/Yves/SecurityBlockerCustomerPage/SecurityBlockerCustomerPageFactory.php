@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\SecurityBlockerPage;
+namespace SprykerShop\Yves\SecurityBlockerCustomerPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Router\Router\RouterInterface;
-use SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToSecurityBlockerClientInterface;
-use SprykerShop\Yves\SecurityBlockerPage\EventSubscriber\FailedLoginMonitoringEventSubscriber;
+use SprykerShop\Yves\SecurityBlockerCustomerPage\Dependency\Client\SecurityBlockerCustomerPageToSecurityBlockerClientInterface;
+use SprykerShop\Yves\SecurityBlockerCustomerPage\EventSubscriber\FailedLoginMonitoringEventSubscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
- * @method \SprykerShop\Yves\SecurityBlockerPage\SecurityBlockerPageConfig getConfig()
+ * @method \SprykerShop\Yves\SecurityBlockerCustomerPage\SecurityBlockerCustomerPageConfig getConfig()
  */
-class SecurityBlockerPageFactory extends AbstractFactory
+class SecurityBlockerCustomerPageFactory extends AbstractFactory
 {
     /**
      * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
@@ -32,11 +32,11 @@ class SecurityBlockerPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToSecurityBlockerClientInterface
+     * @return \SprykerShop\Yves\SecurityBlockerCustomerPage\Dependency\Client\SecurityBlockerCustomerPageToSecurityBlockerClientInterface
      */
-    public function getSecurityBlockerClient(): SecurityBlockerPageToSecurityBlockerClientInterface
+    public function getSecurityBlockerClient(): SecurityBlockerCustomerPageToSecurityBlockerClientInterface
     {
-        return $this->getProvidedDependency(SecurityBlockerPageDependencyProvider::CLIENT_SECURITY_BLOCKER);
+        return $this->getProvidedDependency(SecurityBlockerCustomerPageDependencyProvider::CLIENT_SECURITY_BLOCKER);
     }
 
     /**
@@ -44,7 +44,7 @@ class SecurityBlockerPageFactory extends AbstractFactory
      */
     public function getRequestStack(): RequestStack
     {
-        return $this->getProvidedDependency(SecurityBlockerPageDependencyProvider::REQUEST_STACK);
+        return $this->getProvidedDependency(SecurityBlockerCustomerPageDependencyProvider::REQUEST_STACK);
     }
 
     /**
@@ -52,6 +52,6 @@ class SecurityBlockerPageFactory extends AbstractFactory
      */
     public function getRouter(): RouterInterface
     {
-        return $this->getProvidedDependency(SecurityBlockerPageDependencyProvider::ROUTER);
+        return $this->getProvidedDependency(SecurityBlockerCustomerPageDependencyProvider::ROUTER);
     }
 }

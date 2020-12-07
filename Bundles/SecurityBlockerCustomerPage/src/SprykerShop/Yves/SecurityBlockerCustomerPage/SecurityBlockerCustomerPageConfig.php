@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\SecurityBlockerPage;
+namespace SprykerShop\Yves\SecurityBlockerCustomerPage;
 
 use Spryker\Yves\Kernel\AbstractBundleConfig;
 
-class SecurityBlockerPageConfig extends AbstractBundleConfig
+class SecurityBlockerCustomerPageConfig extends AbstractBundleConfig
 {
     public const SECURITY_BLOCKER_ENTITY_TYPE = 'customer';
 }
