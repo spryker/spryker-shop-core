@@ -158,23 +158,23 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isBreadcrumbItemEnabled(AbstractTransfer $dataTransfer)
+    public function isBreadcrumbItemEnabled(AbstractTransfer $quoteTransfer)
     {
-        return $this->postCondition($dataTransfer);
+        return $this->postCondition($quoteTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isBreadcrumbItemHidden(AbstractTransfer $dataTransfer)
+    public function isBreadcrumbItemHidden(AbstractTransfer $quoteTransfer)
     {
-        return !$this->requireInput($dataTransfer);
+        return !$this->requireInput($quoteTransfer);
     }
 
     /**

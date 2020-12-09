@@ -173,7 +173,10 @@ class CompanyRegisterForm extends AbstractType
             'required' => true,
             'first_options' => [
                 'label' => 'forms.password',
-                'attr' => ['autocomplete' => 'off'],
+                'attr' => [
+                    'autocomplete' => 'off',
+                    'password_complexity_indicator' => true,
+                ],
             ],
             'second_options' => [
                 'label' => 'forms.confirm-password',

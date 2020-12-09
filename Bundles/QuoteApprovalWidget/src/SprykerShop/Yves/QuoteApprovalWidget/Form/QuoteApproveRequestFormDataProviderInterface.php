@@ -14,11 +14,11 @@ interface QuoteApproveRequestFormDataProviderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $localeString
+     * @param string $localeName
      *
      * @return array
      */
-    public function getOptions(QuoteTransfer $quoteTransfer, string $localeString): array;
+    public function getOptions(QuoteTransfer $quoteTransfer, string $localeName): array;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

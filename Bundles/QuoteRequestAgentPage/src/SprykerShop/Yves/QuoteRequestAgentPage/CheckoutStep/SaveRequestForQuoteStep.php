@@ -29,11 +29,11 @@ class SaveRequestForQuoteStep extends AbstractBaseStep implements StepWithBreadc
     /**
      * Require input, should we render view with form or just skip step after calling execute.
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function requireInput(AbstractTransfer $dataTransfer): bool
+    public function requireInput(AbstractTransfer $quoteTransfer): bool
     {
         return true;
     }
@@ -42,23 +42,23 @@ class SaveRequestForQuoteStep extends AbstractBaseStep implements StepWithBreadc
      * Execute step logic, happens after form submit if provided, gets AbstractTransfer filled by form data.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function execute(Request $request, AbstractTransfer $dataTransfer)
+    public function execute(Request $request, AbstractTransfer $quoteTransfer)
     {
-        return $dataTransfer;
+        return $quoteTransfer;
     }
 
     /**
      * Conditions that should be met for this step to be marked as completed. returns true when satisfied.
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function postCondition(AbstractTransfer $dataTransfer): bool
+    public function postCondition(AbstractTransfer $quoteTransfer): bool
     {
         return false;
     }
@@ -72,21 +72,21 @@ class SaveRequestForQuoteStep extends AbstractBaseStep implements StepWithBreadc
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isBreadcrumbItemEnabled(AbstractTransfer $dataTransfer): bool
+    public function isBreadcrumbItemEnabled(AbstractTransfer $quoteTransfer): bool
     {
         return false;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isBreadcrumbItemHidden(AbstractTransfer $dataTransfer): bool
+    public function isBreadcrumbItemHidden(AbstractTransfer $quoteTransfer): bool
     {
         return false;
     }

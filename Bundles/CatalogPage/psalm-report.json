@@ -2,18 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of SprykerShop\\Yves\\CatalogPage\\Dependency\\Client\\CatalogPageToCategoryStorageClientBridge::getCategoryNodeById has wrong name $idCategoryStorageNode, expecting $idCategoryNode as defined by SprykerShop\\Yves\\CatalogPage\\Dependency\\Client\\CatalogPageToCategoryStorageClientInterface::getCategoryNodeById",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CatalogPage/src/SprykerShop/Yves/CatalogPage/Dependency/Client/CatalogPageToCategoryStorageClientBridge.php",
-            "snippet": "    public function getCategoryNodeById($idCategoryStorageNode, $localeName)",
-            "selected_text": "$idCategoryStorageNode",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
             "line_from": 52,
             "line_to": 52,
             "type": "InvalidReturnType",
