@@ -80,7 +80,6 @@ class ContentProductAbstractListTwigFunctionProvider extends TwigFunctionProvide
     public function getFunction(): callable
     {
         return function (string $contentKey, string $templateIdentifier): string {
-
             if (!isset($this->getAvailableTemplates()[$templateIdentifier])) {
                 return $this->getMessageProductAbstractWrongTemplate($templateIdentifier);
             }
