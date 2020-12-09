@@ -8,12 +8,12 @@
         "url": "https://spryker.com/"
     },
     "scripts": {
-        "formatter:write": "npx prettier --config node_modules/@spryker/frontend-config.prettier/.prettierrc.json --write '**/*.(scss|css|less|js|ts|json|html)'",
-        "formatter:check": "npx prettier --config node_modules/@spryker/frontend-config.prettier/.prettierrc.json --check '**/*.(scss|css|less|js|ts|json|html)'",
-        "stylelint:write": "npx stylelint '**/*.scss' '!**/*PageExample/**/*.scss' --config node_modules/@spryker/frontend-config.stylelint/.stylelintrc --fix",
-        "stylelint:check": "npx stylelint '**/*.scss' '!**/*PageExample/**/*.scss' --config node_modules/@spryker/frontend-config.stylelint/.stylelintrc",
-        "tslint:write": "tslint -p tsconfig.json -c tslint.json --fix",
-        "tslint:check": "tslint -p tsconfig.json -c tslint.json"
+        "formatter": "npx prettier --config node_modules/@spryker/frontend-config.prettier/.prettierrc.json --check '**/*.(scss|css|less|js|ts|json|html)'",
+        "formatter:fix": "npx prettier --config node_modules/@spryker/frontend-config.prettier/.prettierrc.json --write '**/*.(scss|css|less|js|ts|json|html)'",
+        "stylelint": "npx stylelint '**/*.scss' '!**/*PageExample/**/*.scss' '!vendor/**' 'vendor/spryker/spryker-shop/**' --config node_modules/@spryker/frontend-config.stylelint/.stylelintrc",
+        "stylelint:fix": "npx stylelint '**/*.scss' '!**/*PageExample/**/*.scss' '!vendor/**' 'vendor/spryker/spryker-shop/**' --config node_modules/@spryker/frontend-config.stylelint/.stylelintrc --fix",
+        "tslint": "tslint -p tsconfig.json -c tslint.json",
+        "tslint:fix": "tslint -p tsconfig.json -c tslint.json --fix",
     },
     "engines": {
         "node": ">=12.0.0",
@@ -25,6 +25,7 @@
         "@spryker/frontend-config.tslint": "~0.0.3",
         "prettier": "~2.0.5",
         "stylelint": "~13.8.0",
-        "tslint": "~6.1.3"
+        "tslint": "~6.1.3",
+        "typescript": "~3.8.3"
     }
 }
