@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\SecurityBlockerCustomerPage\Plugin\EventDispatcher;
+namespace SprykerShop\Yves\SecurityBlockerPage\Plugin\EventDispatcher;
 
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
@@ -13,11 +13,16 @@ use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPlu
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
- * @method \SprykerShop\Yves\SecurityBlockerCustomerPage\SecurityBlockerCustomerPageFactory getFactory()
+ * @method \SprykerShop\Yves\SecurityBlockerPage\SecurityBlockerPageFactory getFactory()
  */
-class FailedLoginMonitoringEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
+class SecurityBlockerEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
     /**
+     * {@inheritDoc}
+     * - Adds a listeners to log the failed login attempts and deny customers access in case the limit is exceeded.
+     *
+     * @api
+     *
      * @param \Spryker\Shared\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
@@ -27,7 +32,9 @@ class FailedLoginMonitoringEventDispatcherPlugin extends AbstractPlugin implemen
         EventDispatcherInterface $eventDispatcher,
         ContainerInterface $container
     ): EventDispatcherInterface {
-        $eventDispatcher->addSubscriber($this->getFactory()->createFailedLoginMonitoringEventSubscriber());
+        $eventDispatcher->addSubscriber(
+            $this->getFactory()->createSecurityBlockerEventSubscriber()
+        );
 
         return $eventDispatcher;
     }
