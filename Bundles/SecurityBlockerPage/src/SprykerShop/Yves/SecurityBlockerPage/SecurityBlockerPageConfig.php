@@ -11,5 +11,8 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class SecurityBlockerPageConfig extends AbstractBundleConfig
 {
+    /**
+     * @uses \Spryker\Client\SecurityBlocker\SecurityBlockerConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE
+     */
     public const SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE = 'customer';
 }
