@@ -15,7 +15,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 /**
  * @method \SprykerShop\Yves\SecurityBlockerPage\SecurityBlockerPageFactory getFactory()
  */
-class SecurityBlockerEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
+class SecurityBlockerCustomerEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -33,7 +33,7 @@ class SecurityBlockerEventDispatcherPlugin extends AbstractPlugin implements Eve
         ContainerInterface $container
     ): EventDispatcherInterface {
         $eventDispatcher->addSubscriber(
-            $this->getFactory()->createSecurityBlockerEventSubscriber()
+            $this->getFactory()->createSecurityBlockerCustomerEventSubscriber()
         );
 
         return $eventDispatcher;

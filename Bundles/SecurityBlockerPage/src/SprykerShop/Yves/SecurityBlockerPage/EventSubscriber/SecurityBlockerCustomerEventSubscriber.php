@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\SecurityBlockerPage\EventSubscriber;
 
-use Generated\Shared\Transfer\AuthContextTransfer;
+use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
 use SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToSecurityBlockerClientInterface;
 use SprykerShop\Yves\SecurityBlockerPage\SecurityBlockerPageConfig;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -25,6 +25,7 @@ class SecurityBlockerCustomerEventSubscriber implements EventSubscriberInterface
     protected const FORM_FIELD_EMAIL = 'email';
     protected const LOGIN_ROUTE = 'check_login';
     protected const KERNEL_REQUEST_SUBSCRIBER_PRIORITY = 9;
+    protected const GLOSSARY_KEY_ERROR_ACCOUNT_BLOCKED = 'security_blocker_page.error.account_blocked';
 
     /**
      * @var \Symfony\Component\HttpFoundation\RequestStack
@@ -70,12 +71,12 @@ class SecurityBlockerCustomerEventSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $authContextTransfer = (new AuthContextTransfer())
+        $securityCheckAuthContextTransfer = (new SecurityCheckAuthContextTransfer())
             ->setType(SecurityBlockerPageConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE)
             ->setAccount($request->get(static::FORM_LOGIN_FORM)[static::FORM_FIELD_EMAIL] ?? '')
             ->setIp($request->getClientIp());
 
-        $this->securityBlockerClient->incrementLoginAttempt($authContextTransfer);
+        $this->securityBlockerClient->incrementLoginAttempt($securityCheckAuthContextTransfer);
     }
 
     /**
@@ -95,18 +96,18 @@ class SecurityBlockerCustomerEventSubscriber implements EventSubscriberInterface
 
         $account = $request->get(static::FORM_LOGIN_FORM)[static::FORM_FIELD_EMAIL] ?? '';
         $ip = $request->getClientIp();
-        $authContextTransfer = (new AuthContextTransfer())
+        $securityCheckAuthContextTransfer = (new SecurityCheckAuthContextTransfer())
             ->setType(SecurityBlockerPageConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE)
             ->setAccount($account)
             ->setIp($ip);
 
-        $authResponseTransfer = $this->securityBlockerClient->getLoginAttempt($authContextTransfer);
+        $authResponseTransfer = $this->securityBlockerClient->getLoginAttempt($securityCheckAuthContextTransfer);
 
         if ($authResponseTransfer->getIsSuccessful()) {
             return;
         }
 
-        throw new HttpException(Response::HTTP_TOO_MANY_REQUESTS, sprintf('Customer %s is blocked on IP %s.', $account, $ip));
+        throw new HttpException(Response::HTTP_TOO_MANY_REQUESTS, static::GLOSSARY_KEY_ERROR_ACCOUNT_BLOCKED);
     }
 
     /**

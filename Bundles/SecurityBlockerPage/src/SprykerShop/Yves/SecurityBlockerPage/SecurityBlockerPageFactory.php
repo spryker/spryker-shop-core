@@ -21,7 +21,7 @@ class SecurityBlockerPageFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
      */
-    public function createSecurityBlockerEventSubscriber(): EventSubscriberInterface
+    public function createSecurityBlockerCustomerEventSubscriber(): EventSubscriberInterface
     {
         return new SecurityBlockerCustomerEventSubscriber(
             $this->getRequestStack(),
