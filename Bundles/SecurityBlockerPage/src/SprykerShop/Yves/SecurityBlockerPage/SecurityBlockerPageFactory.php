@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\SecurityBlockerPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToSecurityBlockerClientInterface;
+use SprykerShop\Yves\SecurityBlockerPage\EventSubscriber\SecurityBlockerAgentEventSubscriber;
 use SprykerShop\Yves\SecurityBlockerPage\EventSubscriber\SecurityBlockerCustomerEventSubscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -24,6 +25,17 @@ class SecurityBlockerPageFactory extends AbstractFactory
     public function createSecurityBlockerCustomerEventSubscriber(): EventSubscriberInterface
     {
         return new SecurityBlockerCustomerEventSubscriber(
+            $this->getRequestStack(),
+            $this->getSecurityBlockerClient()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
+     */
+    public function createSecurityBlockerAgentEventSubscriber(): EventSubscriberInterface
+    {
+        return new SecurityBlockerAgentEventSubscriber(
             $this->getRequestStack(),
             $this->getSecurityBlockerClient()
         );
