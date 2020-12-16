@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\CustomerPage;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Twig\TwigFunctionProvider;
 use Spryker\Yves\Kernel\AbstractFactory;
@@ -564,12 +563,5 @@ class CustomerPageFactory extends AbstractFactory
     public function createCustomerConfirmationUserChecker(): UserCheckerInterface
     {
         return new CustomerConfirmationUserChecker();
-    }
-
-    public function createFailedLoginMonitorSubscriber(ContainerInterface $container)
-    {
-        return new FailedLoginMonitorSubscriber(
-            $this->getRequestStack()->getCurrentRequest(),
-        );
     }
 }
