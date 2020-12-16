@@ -23,7 +23,7 @@ class SecurityBlockerCustomerEventSubscriber implements EventSubscriberInterface
 {
     protected const FORM_LOGIN_FORM = 'loginForm';
     protected const FORM_FIELD_EMAIL = 'email';
-    protected const LOGIN_ROUTE = 'check_login';
+    protected const LOGIN_ROUTE = 'login_check';
     protected const KERNEL_REQUEST_SUBSCRIBER_PRIORITY = 9;
     protected const GLOSSARY_KEY_ERROR_ACCOUNT_BLOCKED = 'security_blocker_page.error.account_blocked';
 
