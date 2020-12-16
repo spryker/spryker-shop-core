@@ -256,7 +256,6 @@ class CompanyBusinessUnitForm extends AbstractType
                         return $result;
                     },
                     function ($data) {
-
                         $companyUnitAddressCollectionTransfer = new CompanyUnitAddressCollectionTransfer();
 
                         foreach ($data as $id) {

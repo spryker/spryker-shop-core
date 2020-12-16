@@ -1,0 +1,3 @@
+@include helper-import(molecule, password-field) {
+    @include shop-ui-password-field;
+}
