@@ -10,8 +10,8 @@
     "scripts": {
         "formatter": "npx prettier --config node_modules/@spryker/frontend-config.prettier/.prettierrc.json --check '**/*.(scss|css|less|js|ts|json|html)'",
         "formatter:fix": "npx prettier --config node_modules/@spryker/frontend-config.prettier/.prettierrc.json --write '**/*.(scss|css|less|js|ts|json|html)'",
-        "stylelint": "npx stylelint '**/*.scss' '!**/DateTimeConfiguratorPageExample/**/*.scss' '!vendor/**' 'vendor/spryker/spryker-shop/**' --config node_modules/@spryker/frontend-config.stylelint/.stylelintrc",
-        "stylelint:fix": "npx stylelint '**/*.scss' '!**/DateTimeConfiguratorPageExample/**/*.scss' '!vendor/**' 'vendor/spryker/spryker-shop/**' --config node_modules/@spryker/frontend-config.stylelint/.stylelintrc --fix",
+        "stylelint": "npx stylelint '**/*.scss' '!**/DateTimeConfiguratorPageExample/**/*.scss' '!vendor/**' 'vendor/spryker/spryker-shop/**' --config node_modules/@spryker/frontend-config.stylelint/.stylelintrc.json",
+        "stylelint:fix": "npx stylelint '**/*.scss' '!**/DateTimeConfiguratorPageExample/**/*.scss' '!vendor/**' 'vendor/spryker/spryker-shop/**' --config node_modules/@spryker/frontend-config.stylelint/.stylelintrc.json --fix",
         "tslint": "tslint -p tsconfig.json -c tslint.json",
         "tslint:fix": "tslint -p tsconfig.json -c tslint.json --fix"
     },
@@ -21,7 +21,7 @@
     },
     "devDependencies": {
         "@spryker/frontend-config.prettier": "~0.0.2",
-        "@spryker/frontend-config.stylelint": "~0.0.4",
+        "@spryker/frontend-config.stylelint": "~0.0.5",
         "@spryker/frontend-config.tslint": "~0.0.4",
         "prettier": "~2.0.5",
         "stylelint": "~13.8.0",
