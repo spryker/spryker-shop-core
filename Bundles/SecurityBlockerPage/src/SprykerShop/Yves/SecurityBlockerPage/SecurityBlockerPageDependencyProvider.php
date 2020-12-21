@@ -15,6 +15,7 @@ use SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageTo
 class SecurityBlockerPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_SECURITY_BLOCKER = 'CLIENT_SECURITY_BLOCKER';
+    public const REQUEST_STACK = 'REQUEST_STACK';
 
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
@@ -58,7 +59,7 @@ class SecurityBlockerPageDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addRequestStack(Container $container): Container
     {
-        $container->set(static::SERVICE_REQUEST_STACK, function (ContainerInterface $container) {
+        $container->set(static::REQUEST_STACK, function (ContainerInterface $container) {
             return $container->getApplicationService(static::SERVICE_REQUEST_STACK);
         });
 

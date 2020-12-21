@@ -15,4 +15,9 @@ class SecurityBlockerPageConfig extends AbstractBundleConfig
      * @uses \Spryker\Client\SecurityBlocker\SecurityBlockerConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE
      */
     public const SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE = 'customer';
+
+    /**
+     * @uses \Spryker\Client\SecurityBlocker\SecurityBlockerConfig::SECURITY_BLOCKER_AGENT_ENTITY_TYPE
+     */
+    public const SECURITY_BLOCKER_AGENT_ENTITY_TYPE = 'agent';
 }
