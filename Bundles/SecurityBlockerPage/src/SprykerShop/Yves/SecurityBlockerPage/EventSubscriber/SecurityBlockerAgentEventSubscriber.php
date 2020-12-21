@@ -76,7 +76,7 @@ class SecurityBlockerAgentEventSubscriber implements EventSubscriberInterface
             ->setAccount($request->get(static::FORM_LOGIN_FORM)[static::FORM_FIELD_EMAIL] ?? '')
             ->setIp($request->getClientIp());
 
-        $this->securityBlockerClient->incrementLoginAttempt($securityCheckAuthContextTransfer);
+        $this->securityBlockerClient->incrementLoginAttemptCount($securityCheckAuthContextTransfer);
     }
 
     /**
@@ -101,7 +101,7 @@ class SecurityBlockerAgentEventSubscriber implements EventSubscriberInterface
             ->setAccount($account)
             ->setIp($ip);
 
-        $authResponseTransfer = $this->securityBlockerClient->getLoginAttempt($securityCheckAuthContextTransfer);
+        $authResponseTransfer = $this->securityBlockerClient->getLoginAttemptCount($securityCheckAuthContextTransfer);
 
         if ($authResponseTransfer->getIsSuccessful()) {
             return;
