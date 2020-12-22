@@ -36,24 +36,37 @@ export default class FormClear extends Component {
 
     protected readyCallback(): void {
         /* tslint:disable: deprecation */
-        this.triggers = <HTMLElement[]>Array.from(this.triggerClassName ?
-            document.getElementsByClassName(this.triggerClassName) : document.querySelectorAll(this.triggerSelector));
-        this.form = <HTMLElement>(this.formClassName ?
-            document.getElementsByClassName(this.formClassName)[0] : document.querySelector(this.formSelector));
-        this.ignoreElements = <HTMLElement[]>Array.from(this.ignoreClassName ?
-            this.form.getElementsByClassName(this.ignoreClassName) : this.form.querySelectorAll(this.ignoreSelector));
+        this.triggers = <HTMLElement[]>(
+            Array.from(
+                this.triggerClassName
+                    ? document.getElementsByClassName(this.triggerClassName)
+                    : document.querySelectorAll(this.triggerSelector),
+            )
+        );
+        this.form = <HTMLElement>(
+            (this.formClassName
+                ? document.getElementsByClassName(this.formClassName)[0]
+                : document.querySelector(this.formSelector))
+        );
+        this.ignoreElements = <HTMLElement[]>(
+            Array.from(
+                this.ignoreClassName
+                    ? this.form.getElementsByClassName(this.ignoreClassName)
+                    : this.form.querySelectorAll(this.ignoreSelector),
+            )
+        );
         /* tslint:enable: deprecation */
         const formInputs = <HTMLElement[]>Array.from(this.form.getElementsByTagName('input'));
         const formSelects = <HTMLElement[]>Array.from(this.form.getElementsByTagName('select'));
         this.targets = [...formInputs, ...formSelects];
-        this.filterElements = this.targets.filter(element => !this.ignoreElements.includes(element));
+        this.filterElements = this.targets.filter((element) => !this.ignoreElements.includes(element));
 
         this.mapEvents();
     }
 
     protected mapEvents(): void {
         this.createCustomEvents();
-        this.triggers.forEach(input => {
+        this.triggers.forEach((input) => {
             input.addEventListener('change', () => this.onChange(input));
         });
     }

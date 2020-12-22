@@ -21,19 +21,11 @@ export class ProductDetailsComponent implements OnChanges {
         'deliveryOptions.morning',
         'deliveryOptions.lunch',
         'deliveryOptions.afternoon',
-        'deliveryOptions.evening'
+        'deliveryOptions.evening',
     ];
-    dayTimeOptionsJson = [
-        'Morning',
-        'Lunch hour',
-        'Afternoon',
-        'Evening'
-    ];
+    dayTimeOptionsJson = ['Morning', 'Lunch hour', 'Afternoon', 'Evening'];
 
-    constructor(
-        private productService: ProductService,
-        private configuratorService: ConfiguratorService,
-    ) {}
+    constructor(private productService: ProductService, private configuratorService: ConfiguratorService) {}
 
     ngOnChanges(changes: SimpleChanges): void {
         if (!this.productData.timestamp && !this.productData.checkSum) {
@@ -72,11 +64,7 @@ export class ProductDetailsComponent implements OnChanges {
 
         const optionIndex = Number(selectedOption);
 
-        this.configuratorService.updateDayTime(
-            optionIndex,
-            this.dayTimeOptionsJson[optionIndex],
-            this.productData
-        );
+        this.configuratorService.updateDayTime(optionIndex, this.dayTimeOptionsJson[optionIndex], this.productData);
     }
 
     onSubmit(event: Event): void | boolean {
@@ -104,7 +92,7 @@ export class ProductDetailsComponent implements OnChanges {
         this.isFormSubmitted = true;
 
         setTimeout(() => {
-           this.form.submit();
+            this.form.submit();
         }, 0);
     }
 }

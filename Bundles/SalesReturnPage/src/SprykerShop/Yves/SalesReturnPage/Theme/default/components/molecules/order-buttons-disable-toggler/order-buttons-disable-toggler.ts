@@ -36,7 +36,7 @@ export default class OrderButtonsDisableToggler extends Component {
     }
 
     protected toggleButtonState(): void {
-        const checkedTriggers = <HTMLInputElement[]>this.triggers.filter(checkbox => checkbox.checked);
+        const checkedTriggers = <HTMLInputElement[]>this.triggers.filter((checkbox) => checkbox.checked);
 
         this.toggleTargets(checkedTriggers);
     }

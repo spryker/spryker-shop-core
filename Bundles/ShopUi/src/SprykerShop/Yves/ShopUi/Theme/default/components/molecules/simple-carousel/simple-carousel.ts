@@ -156,7 +156,7 @@ export default class SimpleCarousel extends Component {
             slidesToSlide = slidesToSlide - (this.slidesCount - slidesToSlide);
         }
 
-        const offset = - (slidesToSlide * this.slideWidth);
+        const offset = -(slidesToSlide * this.slideWidth);
         this.slider.style.transform = `translateX(${offset}%)`;
     }
 
@@ -168,15 +168,9 @@ export default class SimpleCarousel extends Component {
             return;
         }
 
-        this
-            .querySelector(`.${this.dotSelector}.${this.dotCurrentModifier}`)
-            .classList
-            .remove(this.dotCurrentModifier);
+        this.querySelector(`.${this.dotSelector}.${this.dotCurrentModifier}`).classList.remove(this.dotCurrentModifier);
 
-        this
-            .dots[this.viewCurrentIndex]
-            .classList
-            .add(this.dotCurrentModifier);
+        this.dots[this.viewCurrentIndex].classList.add(this.dotCurrentModifier);
     }
 
     /**

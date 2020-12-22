@@ -32,7 +32,7 @@ export default class MerchantSelectorForm extends Component {
     /**
      * Updates a text of the confirmation question.
      */
-    updateMessageText(): void  {
+    updateMessageText(): void {
         const currentMerchantOptionText: string = this.select.options[this.initiallySelectedIndex].text;
         const newMerchantOptionText: string = this.select.options[this.select.selectedIndex].text;
 
@@ -49,7 +49,7 @@ export default class MerchantSelectorForm extends Component {
         }
 
         const data = new FormData(this.form);
-        const appendData = {'merchant_switcher_selector_form[_token]': this.csrfToken};
+        const appendData = { 'merchant_switcher_selector_form[_token]': this.csrfToken };
 
         Object.keys(appendData).forEach((key: string) => data.append(key, appendData[key]));
 

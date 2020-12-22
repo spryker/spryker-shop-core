@@ -33,7 +33,7 @@ export interface VolumePrices {
         quantity: number;
         net_price: number;
         gross_price: number;
-    }[]
+    }[];
 }
 
 export interface DayConfiguration {
@@ -41,6 +41,6 @@ export interface DayConfiguration {
 }
 
 export interface DateConfiguration {
-    "Preferred time of the day": string;
-    "Date": string;
+    'Preferred time of the day': string;
+    Date: string;
 }

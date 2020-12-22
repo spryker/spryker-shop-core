@@ -11,7 +11,7 @@ export default class PageLocationSearchParamsUpdater extends Component {
     }
 
     protected mapEvents(): void {
-        this.triggers.forEach(trigger => trigger.addEventListener(this.eventName, () => this.onEvent()));
+        this.triggers.forEach((trigger) => trigger.addEventListener(this.eventName, () => this.onEvent()));
     }
 
     protected onEvent(): void {

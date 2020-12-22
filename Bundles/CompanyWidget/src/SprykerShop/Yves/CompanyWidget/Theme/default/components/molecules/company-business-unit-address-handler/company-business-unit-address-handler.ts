@@ -41,8 +41,8 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         this.addressesSelects = <HTMLSelectElement[]>Array.from(this.form.querySelectorAll(this.dataSelector));
         this.hiddenDefaultAddressInput = <HTMLInputElement>this.form.querySelector(this.defaultAddressSelector);
         if (this.shippingAddressTogglerSelector) {
-            this.shippingAddressToggler = <HTMLSelectElement>document.querySelector(
-                this.shippingAddressTogglerSelector
+            this.shippingAddressToggler = <HTMLSelectElement>(
+                document.querySelector(this.shippingAddressTogglerSelector)
             );
         }
         this.initAddressesData();
@@ -74,11 +74,11 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     }
 
     protected toggleSplitDeliveryAddressFormValue(): void {
-        const hiddenInputIdCustomerShippingAddress = <HTMLInputElement>document.querySelector(
-            this.shippingAddressHiddenInputSelector
+        const hiddenInputIdCustomerShippingAddress = <HTMLInputElement>(
+            document.querySelector(this.shippingAddressHiddenInputSelector)
         );
-        const hiddenInputIdCompanyShippingAddress = <HTMLInputElement>document.querySelector(
-            this.shippingCompanyAddressHiddenInputSelector
+        const hiddenInputIdCompanyShippingAddress = <HTMLInputElement>(
+            document.querySelector(this.shippingCompanyAddressHiddenInputSelector)
         );
         if (this.shippingAddressToggler.value === this.optionValueDeliverToMultipleAddresses) {
             hiddenInputIdCustomerShippingAddress.value = this.optionValueDeliverToMultipleAddresses;
@@ -93,13 +93,15 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     protected fillHiddenInputsWithNewAddress(): void {
         const currentAddressList = this.addressesDataObject[this.currentAddress];
         const hiddenInputIdCustomerAddress = <HTMLInputElement>this.form.querySelector(this.addressHiddenInputSelector);
-        const hiddenInputIdCompanyAddress = <HTMLInputElement>this.form.querySelector(
-            this.companyAddressHiddenInputSelector
+        const hiddenInputIdCompanyAddress = <HTMLInputElement>(
+            this.form.querySelector(this.companyAddressHiddenInputSelector)
         );
         this.hiddenDefaultAddressInput.value = this.currentAddress;
         this.fillHiddenInputAddressesFields(currentAddressList, this.addressHiddenInputSelector, 'id_customer_address');
         this.fillHiddenInputAddressesFields(
-            currentAddressList, this.companyAddressHiddenInputSelector, 'id_company_unit_address'
+            currentAddressList,
+            this.companyAddressHiddenInputSelector,
+            'id_company_unit_address',
         );
         hiddenInputIdCustomerAddress.dispatchEvent(this.hiddenAddressInputChangeEvent);
         hiddenInputIdCompanyAddress.dispatchEvent(this.hiddenAddressInputChangeEvent);

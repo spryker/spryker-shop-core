@@ -14,13 +14,17 @@ export class ProductService {
     }
 
     getData(): Observable<ProductData> {
-        return this.http.get<{data: ProductData}>('/', {
-            params: { 'getConfigurationByToken': this.token }
-        }).pipe(map((response) => {
-            this.productData = response.data;
+        return this.http
+            .get<{ data: ProductData }>('/', {
+                params: { getConfigurationByToken: this.token },
+            })
+            .pipe(
+                map((response) => {
+                    this.productData = response.data;
 
-            return this.productData;
-        }));
+                    return this.productData;
+                }),
+            );
     }
 
     sendData(data: FormData): Observable<ProductData> {

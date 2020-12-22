@@ -21,10 +21,20 @@ export default class TogglerClick extends Component {
 
     protected init(): void {
         /* tslint:disable: deprecation */
-        this.triggersList = <HTMLElement[]>Array.from(this.triggerClassName ?
-            document.getElementsByClassName(this.triggerClassName) : document.querySelectorAll(this.triggerSelector));
-        this.targetsList = <HTMLElement[]>Array.from(this.targetClassName ?
-            document.getElementsByClassName(this.targetClassName) : document.querySelectorAll(this.targetSelector));
+        this.triggersList = <HTMLElement[]>(
+            Array.from(
+                this.triggerClassName
+                    ? document.getElementsByClassName(this.triggerClassName)
+                    : document.querySelectorAll(this.triggerSelector),
+            )
+        );
+        this.targetsList = <HTMLElement[]>(
+            Array.from(
+                this.targetClassName
+                    ? document.getElementsByClassName(this.targetClassName)
+                    : document.querySelectorAll(this.targetSelector),
+            )
+        );
         [this.triggers, this.targets] = [this.triggersList, this.targetsList];
         /* tslint:enable: deprecation */
 

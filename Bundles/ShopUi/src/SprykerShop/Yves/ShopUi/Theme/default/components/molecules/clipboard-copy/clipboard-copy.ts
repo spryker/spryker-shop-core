@@ -19,10 +19,16 @@ export default class ClipboardCopy extends Component {
 
     protected readyCallback(): void {
         /* tslint:disable: deprecation */
-        this.trigger = <HTMLButtonElement>(this.triggerClassName ?
-            document.getElementsByClassName(this.triggerClassName)[0] : document.querySelector(this.triggerSelector));
-        this.target = <HTMLInputElement | HTMLTextAreaElement>(this.targetClassName ?
-            document.getElementsByClassName(this.targetClassName)[0] : document.querySelector(this.targetSelector));
+        this.trigger = <HTMLButtonElement>(
+            (this.triggerClassName
+                ? document.getElementsByClassName(this.triggerClassName)[0]
+                : document.querySelector(this.triggerSelector))
+        );
+        this.target = <HTMLInputElement | HTMLTextAreaElement>(
+            (this.targetClassName
+                ? document.getElementsByClassName(this.targetClassName)[0]
+                : document.querySelector(this.targetSelector))
+        );
         /* tslint:enable: deprecation */
         this.successCopyMessage = <HTMLElement>this.getElementsByClassName(`${this.jsName}__success-message`)[0];
         this.errorCopyMessage = <HTMLElement>this.getElementsByClassName(`${this.jsName}__error-message`)[0];

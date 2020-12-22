@@ -34,10 +34,7 @@ export default class ViewportIntersectionObserver extends Component {
     }
 
     protected observerInit(): IntersectionObserver {
-        return new IntersectionObserver(
-            this.observerCallback(),
-            this.viewportOptions,
-        );
+        return new IntersectionObserver(this.observerCallback(), this.viewportOptions);
     }
 
     protected observerCallback(): IntersectionObserverCallback {

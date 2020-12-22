@@ -19,16 +19,8 @@
         "rootDir": ".",
         "paths": {
             "*": ["*"],
-            "ShopUi/*": [
-                "./Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Theme/default/*"
-            ]
+            "ShopUi/*": ["./Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Theme/default/*"]
         }
     },
-    "exclude": [
-        "**/node_modules/**",
-        "**/*.spec.ts",
-        "public",
-        "dist",
-        "**/dist/**"
-    ]
+    "exclude": ["**/node_modules/**", "**/*.spec.ts", "public", "dist", "**/dist/**"]
 }

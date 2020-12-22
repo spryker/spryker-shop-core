@@ -34,10 +34,9 @@ export default class AjaxAddToCart extends Component {
         formData.append('quantity', this.button.dataset.quantity);
         formData.append('separate_product', this.button.dataset.separateProduct);
         fetch(this.button.dataset.url, { method: 'POST', body: formData })
-            .then(response => response.json())
-            .then(parsedResponse => {
+            .then((response) => response.json())
+            .then((parsedResponse) => {
                 if (!parsedResponse.messages) {
-
                     return;
                 }
                 const dynamicNotificationCustomEvent = new CustomEvent(EVENT_UPDATE_DYNAMIC_MESSAGES, {
@@ -49,7 +48,8 @@ export default class AjaxAddToCart extends Component {
                     detail: parsedResponse.quantity,
                 });
                 document.dispatchEvent(cartCounterCustomEvent);
-            }).catch(e => {
+            })
+            .catch((e) => {
                 error(e);
             });
     }

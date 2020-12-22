@@ -1,7 +1,7 @@
 <div class="grid grid--with-gutter">
     <div class="col col--sm-12 col--lg-6 col--with-gutter">
         <div class="image-overlay">
-            <img src="./dist/assets/images/detail.png" alt="Product image">
+            <img src="./dist/assets/images/detail.png" alt="Product image" />
         </div>
     </div>
     <div class="details col col--sm-12 col--lg-6 col--with-gutter">
@@ -21,7 +21,12 @@
             </li>
         </ul>
 
-        <form class="grid grid--with-gutter" method="post" [action]="productData.submit_url" (submit)="onSubmit($event)">
+        <form
+            class="grid grid--with-gutter"
+            method="post"
+            [action]="productData.submit_url"
+            (submit)="onSubmit($event)"
+        >
             <div class="col col--sm-12 col--md-6 col--with-gutter product-form__field">
                 <label class="label" for="date">{{ 'fields.date' | translate }}</label>
 
@@ -56,30 +61,63 @@
                 </div>
             </div>
             <div class="col col--sm-12">
-                <input name="sourceType" type="hidden" [value]="productData.source_type">
-                <input name="sku" type="hidden" [value]="productData.sku">
-                <input name="productConfigurationInstance[configuratorKey]" type="hidden" [value]="productData.configurator_key">
-                <input name="itemGroupKey" type="hidden" [value]="productData.item_group_key">
-                <input type="hidden" name="productConfigurationInstance[configuration]" [value]="productData.configuration | json">
-                <input type="hidden" name="productConfigurationInstance[displayData]" [value]="productData.display_data | json">
-                <input *ngIf="productData.available_quantity" type="hidden" name="productConfigurationInstance[availableQuantity]" [value]="productData.available_quantity">
+                <input name="sourceType" type="hidden" [value]="productData.source_type" />
+                <input name="sku" type="hidden" [value]="productData.sku" />
+                <input
+                    name="productConfigurationInstance[configuratorKey]"
+                    type="hidden"
+                    [value]="productData.configurator_key"
+                />
+                <input name="itemGroupKey" type="hidden" [value]="productData.item_group_key" />
+                <input
+                    type="hidden"
+                    name="productConfigurationInstance[configuration]"
+                    [value]="productData.configuration | json"
+                />
+                <input
+                    type="hidden"
+                    name="productConfigurationInstance[displayData]"
+                    [value]="productData.display_data | json"
+                />
+                <input
+                    *ngIf="productData.available_quantity"
+                    type="hidden"
+                    name="productConfigurationInstance[availableQuantity]"
+                    [value]="productData.available_quantity"
+                />
 
                 <ng-container *ngIf="productData.price">
-                    <input type="hidden" name="productConfigurationInstance[prices][{{ productData.currency_code }}][priceData]" [value]="productData.volume_prices | json">
-                    <input type="hidden" name="productConfigurationInstance[prices][{{ productData.currency_code }}][GROSS_MODE][DEFAULT]" [value]="productData.price">
-                    <input type="hidden" name="productConfigurationInstance[prices][{{ productData.currency_code }}][NET_MODE][DEFAULT]" [value]="productData.price - 5000">
+                    <input
+                        type="hidden"
+                        name="productConfigurationInstance[prices][{{ productData.currency_code }}][priceData]"
+                        [value]="productData.volume_prices | json"
+                    />
+                    <input
+                        type="hidden"
+                        name="productConfigurationInstance[prices][{{
+                            productData.currency_code
+                        }}][GROSS_MODE][DEFAULT]"
+                        [value]="productData.price"
+                    />
+                    <input
+                        type="hidden"
+                        name="productConfigurationInstance[prices][{{ productData.currency_code }}][NET_MODE][DEFAULT]"
+                        [value]="productData.price - 5000"
+                    />
                 </ng-container>
 
                 <ng-container *ngIf="productData.timestamp && productData.checkSum">
-                    <input name="timestamp" type="hidden" [value]="productData.timestamp">
-                    <input name="checkSum" type="hidden" [value]="productData.checkSum">
+                    <input name="timestamp" type="hidden" [value]="productData.timestamp" />
+                    <input name="checkSum" type="hidden" [value]="productData.checkSum" />
                 </ng-container>
             </div>
             <div class="col col--sm-12 col--with-gutter product-form__field" style="display: none;">
-                <input type="checkbox" name="productConfigurationInstance[isComplete]" [checked]="isComplete()">
+                <input type="checkbox" name="productConfigurationInstance[isComplete]" [checked]="isComplete()" />
             </div>
             <div class="col col col--sm-12 col--with-gutter product-form__actions">
-                <a [href]="productData.back_url" class="product-form__button product-form__button--cancel">{{ 'buttons.cancel' | translate }}</a>
+                <a [href]="productData.back_url" class="product-form__button product-form__button--cancel">{{
+                    'buttons.cancel' | translate
+                }}</a>
                 <button type="submit" class="product-form__button">{{ 'buttons.submit' | translate }}</button>
             </div>
         </form>

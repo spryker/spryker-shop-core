@@ -16,7 +16,7 @@
 export enum LogLevel {
     ERRORS_ONLY = 0,
     DEFAULT,
-    VERBOSE
+    VERBOSE,
 }
 
 /* tslint:disable: no-any */

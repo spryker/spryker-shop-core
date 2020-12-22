@@ -53,7 +53,7 @@
     color: $setting-color-black;
 }
 
-input[type=date],
+input[type='date'],
 select {
     display: block;
     width: 100%;
@@ -73,11 +73,13 @@ select {
 }
 
 select {
-    background: $setting-color-gray-1 url("data:image/svg+xml;utf8,<svg fill='gray' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 7' width='12' height='7'><path fill-rule='none' d='M5.826 4.254L1.896.326a1.11 1.11 0 10-1.57 1.57L5.039 6.61a1.11 1.11 0 001.571.001l4.714-4.714a1.111 1.111 0 00-1.57-1.57L5.825 4.253z'/></svg>") no-repeat 96% 20px;
-    appearance:none;
+    background: $setting-color-gray-1
+        url("data:image/svg+xml;utf8,<svg fill='gray' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 7' width='12' height='7'><path fill-rule='none' d='M5.826 4.254L1.896.326a1.11 1.11 0 10-1.57 1.57L5.039 6.61a1.11 1.11 0 001.571.001l4.714-4.714a1.111 1.111 0 00-1.57-1.57L5.825 4.253z'/></svg>")
+        no-repeat 96% 20px;
+    appearance: none;
 }
 
-input[type=checkbox] {
+input[type='checkbox'] {
     display: inline-block;
     margin-right: 5px;
     vertical-align: middle;

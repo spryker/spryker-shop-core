@@ -18,9 +18,9 @@ export default class ValidateNextCheckoutStep extends Component {
     protected init(): void {
         this.containers = <HTMLElement[]>Array.from(document.querySelectorAll(this.containerSelector));
         this.target = <HTMLButtonElement>document.querySelector(this.targetSelector);
-        this.dropdownTriggers = <HTMLSelectElement[]>Array.from(document.querySelectorAll(
-            this.dropdownTriggerSelector
-        ));
+        this.dropdownTriggers = <HTMLSelectElement[]>(
+            Array.from(document.querySelectorAll(this.dropdownTriggerSelector))
+        );
 
         if (this.parentTargetClassName) {
             this.parentTarget = <HTMLElement>document.getElementsByClassName(this.parentTargetClassName)[0];
@@ -71,9 +71,9 @@ export default class ValidateNextCheckoutStep extends Component {
 
         this.triggers = <HTMLFormElement[]>this.containers.reduce((collection: HTMLElement[], element: HTMLElement) => {
             if (!element.classList.contains(this.classToToggle)) {
-                collection.push(...<HTMLFormElement[]>Array.from(element.querySelectorAll(
-                    this.requiredFormFieldSelectors
-                )));
+                collection.push(
+                    ...(<HTMLFormElement[]>Array.from(element.querySelectorAll(this.requiredFormFieldSelectors))),
+                );
             }
 
             return collection;

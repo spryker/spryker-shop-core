@@ -21,8 +21,9 @@ export default class DynamicNotificationArea extends Component {
     }
 
     protected mapTriggerCustomUpdateMessagesEvent(): void {
-        document.addEventListener(EVENT_UPDATE_DYNAMIC_MESSAGES,
-            (event: CustomEvent) => this.updateMessages(event.detail));
+        document.addEventListener(EVENT_UPDATE_DYNAMIC_MESSAGES, (event: CustomEvent) =>
+            this.updateMessages(event.detail),
+        );
     }
 
     protected updateMessages(responseHtml: string): void {

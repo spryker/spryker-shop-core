@@ -1,4 +1,4 @@
-import {debug, error} from '../../../app/logger';
+import { debug, error } from '../../../app/logger';
 import Component from '../../../models/component';
 
 const EVENT_FETCHING = 'fetching';

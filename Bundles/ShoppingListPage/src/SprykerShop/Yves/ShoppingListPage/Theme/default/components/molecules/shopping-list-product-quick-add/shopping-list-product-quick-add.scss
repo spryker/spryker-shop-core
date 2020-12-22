@@ -1,6 +1,5 @@
 @mixin shopping-list-page-shopping-list-product-quick-add($name: '.shopping-list-product-quick-add') {
     #{$name} {
-
         #product-quick-add-form-wrapper {
             padding: map-get($setting-spacing, 'default');
             background-color: $setting-color-lighter;
