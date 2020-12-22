@@ -1,0 +1,11 @@
+{% extends model('component') %}
+{% import model('component') as component %}
+
+{% define config = {
+    name: 'icon-loader',
+    tag: 'icon-loader',
+} %}
+
+{% block body %}
+    <svg class="{{ config.jsName }}__svg" xmlns="http://www.w3.org/2000/svg" style="display: none;"></svg>
+{% endblock %}
