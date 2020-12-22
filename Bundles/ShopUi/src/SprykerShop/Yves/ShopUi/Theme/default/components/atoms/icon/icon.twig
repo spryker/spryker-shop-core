@@ -2,13 +2,17 @@
 
 {% define config = {
     name: 'icon',
-    tag: 'svg'
+    tag: 'svg',
 } %}
 
 {% define data = {
-    name: required
+    name: required,
+} %}
+
+{% define attributes = {
+    title: data.name,
 } %}
 
 {% block body %}
-    <use xlink:href="#:{{data.name}}"></use>
+    <use xlink:href="#:{{ data.name }}"></use>
 {% endblock %}
