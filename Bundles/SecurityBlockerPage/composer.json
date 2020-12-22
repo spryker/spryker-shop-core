@@ -6,6 +6,7 @@
   "require": {
     "php": ">=7.3",
     "spryker/event-dispatcher-extension": "^1.0.0",
+    "spryker/glossary-storage": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/security-blocker": "^1.0.0",
     "spryker/symfony": "^3.0.0"
@@ -17,7 +18,7 @@
   },
   "suggest": {
     "spryker/container": "Add this module when you want to use the Container.",
-    "spryker/event-dispatcher": "Add this module when you want to use the EVentDispatcher."
+    "spryker/event-dispatcher": "Add this module when you want to use the EventDispatcher."
   },
   "autoload": {
     "psr-4": {

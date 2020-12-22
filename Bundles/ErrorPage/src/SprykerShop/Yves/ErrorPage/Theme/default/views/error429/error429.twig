@@ -7,6 +7,6 @@
 {% block content %}
     <div class="box">
         <h1>{{ 'error.429' | trans | upper }}</h1>
-        <p>{{ data.error }}</p>
+        <p>{{ data.error | trans }}</p>
     </div>
 {% endblock %}

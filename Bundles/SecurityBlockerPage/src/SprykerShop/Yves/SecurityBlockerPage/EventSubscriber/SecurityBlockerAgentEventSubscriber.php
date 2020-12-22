@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\SecurityBlockerPage\EventSubscriber;
 
 use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
+use SprykerShop\Yves\SecurityBlockerPage\Builder\MessageBuilderInterface;
 use SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToSecurityBlockerClientInterface;
 use SprykerShop\Yves\SecurityBlockerPage\SecurityBlockerPageConfig;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -38,15 +39,23 @@ class SecurityBlockerAgentEventSubscriber implements EventSubscriberInterface
     protected $securityBlockerClient;
 
     /**
+     * @var \SprykerShop\Yves\SecurityBlockerPage\Builder\MessageBuilderInterface
+     */
+    protected $messageBuilder;
+
+    /**
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToSecurityBlockerClientInterface $securityBlockerClient
+     * @param \SprykerShop\Yves\SecurityBlockerPage\Builder\MessageBuilderInterface $messageBuilder
      */
     public function __construct(
         RequestStack $requestStack,
-        SecurityBlockerPageToSecurityBlockerClientInterface $securityBlockerClient
+        SecurityBlockerPageToSecurityBlockerClientInterface $securityBlockerClient,
+        MessageBuilderInterface $messageBuilder
     ) {
         $this->requestStack = $requestStack;
         $this->securityBlockerClient = $securityBlockerClient;
+        $this->messageBuilder = $messageBuilder;
     }
 
     /**
@@ -67,14 +76,11 @@ class SecurityBlockerAgentEventSubscriber implements EventSubscriberInterface
     {
         $request = $this->requestStack->getCurrentRequest();
 
-        if (!$request || $request->attributes->get('_route') !== static::LOGIN_ROUTE) {
+        if (!$request || !$this->isLoginAttempt($request)) {
             return;
         }
 
-        $securityCheckAuthContextTransfer = (new SecurityCheckAuthContextTransfer())
-            ->setType(SecurityBlockerPageConfig::SECURITY_BLOCKER_AGENT_ENTITY_TYPE)
-            ->setAccount($request->get(static::FORM_LOGIN_FORM)[static::FORM_FIELD_EMAIL] ?? '')
-            ->setIp($request->getClientIp());
+        $securityCheckAuthContextTransfer = $this->createSecurityCheckAuthContextTransfer($request);
 
         $this->securityBlockerClient->incrementLoginAttemptCount($securityCheckAuthContextTransfer);
     }
@@ -94,20 +100,17 @@ class SecurityBlockerAgentEventSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $account = $request->get(static::FORM_LOGIN_FORM)[static::FORM_FIELD_EMAIL] ?? '';
-        $ip = $request->getClientIp();
-        $securityCheckAuthContextTransfer = (new SecurityCheckAuthContextTransfer())
-            ->setType(SecurityBlockerPageConfig::SECURITY_BLOCKER_AGENT_ENTITY_TYPE)
-            ->setAccount($account)
-            ->setIp($ip);
+        $securityCheckAuthContextTransfer = $this->createSecurityCheckAuthContextTransfer($request);
 
-        $authResponseTransfer = $this->securityBlockerClient->getLoginAttemptCount($securityCheckAuthContextTransfer);
+        $securityCheckAuthResponseTransfer = $this->securityBlockerClient->getLoginAttemptCount($securityCheckAuthContextTransfer);
 
-        if ($authResponseTransfer->getIsSuccessful()) {
+        if ($securityCheckAuthResponseTransfer->getIsSuccessful()) {
             return;
         }
 
-        throw new HttpException(Response::HTTP_TOO_MANY_REQUESTS, static::GLOSSARY_KEY_ERROR_ACCOUNT_BLOCKED);
+        $exceptionMessage = $this->messageBuilder->getExceptionMessage($securityCheckAuthResponseTransfer);
+
+        throw new HttpException(Response::HTTP_TOO_MANY_REQUESTS, $exceptionMessage);
     }
 
     /**
@@ -119,5 +122,18 @@ class SecurityBlockerAgentEventSubscriber implements EventSubscriberInterface
     {
         return $request->attributes->get('_route') === static::LOGIN_ROUTE
             && $request->getMethod() === Request::METHOD_POST;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\SecurityCheckAuthContextTransfer
+     */
+    protected function createSecurityCheckAuthContextTransfer(Request $request): SecurityCheckAuthContextTransfer
+    {
+        return (new SecurityCheckAuthContextTransfer())
+            ->setType(SecurityBlockerPageConfig::SECURITY_BLOCKER_AGENT_ENTITY_TYPE)
+            ->setAccount($request->get(static::FORM_LOGIN_FORM)[static::FORM_FIELD_EMAIL] ?? '')
+            ->setIp($request->getClientIp());
     }
 }

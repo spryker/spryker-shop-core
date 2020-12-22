@@ -8,6 +8,9 @@
 namespace SprykerShop\Yves\SecurityBlockerPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\SecurityBlockerPage\Builder\MessageBuilder;
+use SprykerShop\Yves\SecurityBlockerPage\Builder\MessageBuilderInterface;
+use SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToSecurityBlockerClientInterface;
 use SprykerShop\Yves\SecurityBlockerPage\EventSubscriber\SecurityBlockerAgentEventSubscriber;
 use SprykerShop\Yves\SecurityBlockerPage\EventSubscriber\SecurityBlockerCustomerEventSubscriber;
@@ -26,7 +29,8 @@ class SecurityBlockerPageFactory extends AbstractFactory
     {
         return new SecurityBlockerCustomerEventSubscriber(
             $this->getRequestStack(),
-            $this->getSecurityBlockerClient()
+            $this->getSecurityBlockerClient(),
+            $this->createMessageBuilder()
         );
     }
 
@@ -37,7 +41,19 @@ class SecurityBlockerPageFactory extends AbstractFactory
     {
         return new SecurityBlockerAgentEventSubscriber(
             $this->getRequestStack(),
-            $this->getSecurityBlockerClient()
+            $this->getSecurityBlockerClient(),
+            $this->createMessageBuilder()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\SecurityBlockerPage\Builder\MessageBuilderInterface
+     */
+    public function createMessageBuilder(): MessageBuilderInterface
+    {
+        return new MessageBuilder(
+            $this->getGlossaryStorageClient(),
+            $this->getLocale()
         );
     }
 
@@ -50,10 +66,26 @@ class SecurityBlockerPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToGlossaryStorageClientInterface
+     */
+    public function getGlossaryStorageClient(): SecurityBlockerPageToGlossaryStorageClientInterface
+    {
+        return $this->getProvidedDependency(SecurityBlockerPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
+    }
+
+    /**
      * @return \Symfony\Component\HttpFoundation\RequestStack
      */
     public function getRequestStack(): RequestStack
     {
-        return $this->getProvidedDependency(SecurityBlockerPageDependencyProvider::REQUEST_STACK);
+        return $this->getProvidedDependency(SecurityBlockerPageDependencyProvider::SERVICE_REQUEST_STACK);
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        return $this->getProvidedDependency(SecurityBlockerPageDependencyProvider::SERVICE_LOCALE);
     }
 }
