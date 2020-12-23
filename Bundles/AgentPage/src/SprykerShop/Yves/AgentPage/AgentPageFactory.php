@@ -172,6 +172,14 @@ class AgentPageFactory extends AbstractFactory
     }
 
     /**
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        return $this->getProvidedDependency(AgentPageDependencyProvider::SERVICE_LOCALE);
+    }
+
+    /**
      * @param string $targetUrl
      *
      * @return \Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface

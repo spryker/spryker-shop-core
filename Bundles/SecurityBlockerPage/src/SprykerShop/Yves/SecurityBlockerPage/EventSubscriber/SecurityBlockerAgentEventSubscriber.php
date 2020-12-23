@@ -44,18 +44,26 @@ class SecurityBlockerAgentEventSubscriber implements EventSubscriberInterface
     protected $messageBuilder;
 
     /**
+     * @var string
+     */
+    protected $localeName;
+
+    /**
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToSecurityBlockerClientInterface $securityBlockerClient
      * @param \SprykerShop\Yves\SecurityBlockerPage\Builder\MessageBuilderInterface $messageBuilder
+     * @param string $localeName
      */
     public function __construct(
         RequestStack $requestStack,
         SecurityBlockerPageToSecurityBlockerClientInterface $securityBlockerClient,
-        MessageBuilderInterface $messageBuilder
+        MessageBuilderInterface $messageBuilder,
+        string $localeName
     ) {
         $this->requestStack = $requestStack;
         $this->securityBlockerClient = $securityBlockerClient;
         $this->messageBuilder = $messageBuilder;
+        $this->localeName = $localeName;
     }
 
     /**
@@ -108,7 +116,7 @@ class SecurityBlockerAgentEventSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $exceptionMessage = $this->messageBuilder->getExceptionMessage($securityCheckAuthResponseTransfer);
+        $exceptionMessage = $this->messageBuilder->getExceptionMessage($securityCheckAuthResponseTransfer, $this->localeName);
 
         throw new HttpException(Response::HTTP_TOO_MANY_REQUESTS, $exceptionMessage);
     }
@@ -120,7 +128,7 @@ class SecurityBlockerAgentEventSubscriber implements EventSubscriberInterface
      */
     protected function isLoginAttempt(Request $request): bool
     {
-        return $request->attributes->get('_route') === static::LOGIN_ROUTE
+        return $request->attributes->get('_route') === $this->getDefaultLocalePrefix() . static::LOGIN_ROUTE
             && $request->getMethod() === Request::METHOD_POST;
     }
 
@@ -135,5 +143,13 @@ class SecurityBlockerAgentEventSubscriber implements EventSubscriberInterface
             ->setType(SecurityBlockerPageConfig::SECURITY_BLOCKER_AGENT_ENTITY_TYPE)
             ->setAccount($request->get(static::FORM_LOGIN_FORM)[static::FORM_FIELD_EMAIL] ?? '')
             ->setIp($request->getClientIp());
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDefaultLocalePrefix(): string
+    {
+        return mb_substr($this->localeName, 0, 2) . '_';
     }
 }

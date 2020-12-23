@@ -20,32 +20,26 @@ class MessageBuilder implements MessageBuilderInterface
     protected $glossaryStorageClient;
 
     /**
-     * @var string
-     */
-    protected $localeName;
-
-    /**
      * @param \SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToGlossaryStorageClientInterface $glossaryStorageClient
-     * @param string $localeName
      */
-    public function __construct(
-        SecurityBlockerPageToGlossaryStorageClientInterface $glossaryStorageClient,
-        string $localeName
-    ) {
+    public function __construct(SecurityBlockerPageToGlossaryStorageClientInterface $glossaryStorageClient)
+    {
         $this->glossaryStorageClient = $glossaryStorageClient;
-        $this->localeName = $localeName;
     }
 
     /**
      * @param \Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer $securityCheckAuthResponseTransfer
+     * @param string $localeName
      *
      * @return string
      */
-    public function getExceptionMessage(SecurityCheckAuthResponseTransfer $securityCheckAuthResponseTransfer): string
-    {
+    public function getExceptionMessage(
+        SecurityCheckAuthResponseTransfer $securityCheckAuthResponseTransfer,
+        string $localeName
+    ): string {
         return $this->glossaryStorageClient->translate(
             static::GLOSSARY_KEY_ERROR_ACCOUNT_BLOCKED,
-            $this->localeName,
+            $localeName,
             ['%minutes%' => $this->convertSecondsToReadableTime($securityCheckAuthResponseTransfer)]
         );
     }

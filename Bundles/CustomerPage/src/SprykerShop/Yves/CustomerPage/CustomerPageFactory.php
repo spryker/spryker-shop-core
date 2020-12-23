@@ -515,6 +515,14 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::SERVICE_LOCALE);
+    }
+
+    /**
      * @return \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface
      */
     public function getCustomerService(): CustomerPageToCustomerServiceInterface

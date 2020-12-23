@@ -43,7 +43,7 @@ class AgentLoginForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->setAction('/agent/login_check');
+        $builder->setAction($this->getDefaultLocalePrefix() . '/agent/login_check');
 
         $this
             ->addEmailField($builder)
@@ -100,5 +100,13 @@ class AgentLoginForm extends AbstractType
     protected function createEmailConstraint(): Email
     {
         return new Email(['message' => static::VALIDATION_EMAIL_MESSAGE]);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDefaultLocalePrefix(): string
+    {
+        return '/' . mb_substr($this->getFactory()->getLocale(), 0, 2);
     }
 }

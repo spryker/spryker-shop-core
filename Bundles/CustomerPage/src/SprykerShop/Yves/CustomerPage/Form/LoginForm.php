@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
  */
 class LoginForm extends AbstractType
@@ -45,7 +46,7 @@ class LoginForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->setAction('/login_check');
+        $builder->setAction($this->getDefaultLocalePrefix() . '/login_check');
 
         $this
             ->addEmailField($builder)
@@ -119,5 +120,13 @@ class LoginForm extends AbstractType
     protected function createEmailConstraint(): Email
     {
         return new Email(['message' => static::VALIDATION_EMAIL_MESSAGE]);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDefaultLocalePrefix(): string
+    {
+        return '/' . mb_substr($this->getFactory()->getLocale(), 0, 2);
     }
 }

@@ -30,7 +30,8 @@ class SecurityBlockerPageFactory extends AbstractFactory
         return new SecurityBlockerCustomerEventSubscriber(
             $this->getRequestStack(),
             $this->getSecurityBlockerClient(),
-            $this->createMessageBuilder()
+            $this->createMessageBuilder(),
+            $this->getLocale()
         );
     }
 
@@ -42,7 +43,8 @@ class SecurityBlockerPageFactory extends AbstractFactory
         return new SecurityBlockerAgentEventSubscriber(
             $this->getRequestStack(),
             $this->getSecurityBlockerClient(),
-            $this->createMessageBuilder()
+            $this->createMessageBuilder(),
+            $this->getLocale()
         );
     }
 
@@ -51,10 +53,7 @@ class SecurityBlockerPageFactory extends AbstractFactory
      */
     public function createMessageBuilder(): MessageBuilderInterface
     {
-        return new MessageBuilder(
-            $this->getGlossaryStorageClient(),
-            $this->getLocale()
-        );
+        return new MessageBuilder($this->getGlossaryStorageClient());
     }
 
     /**
