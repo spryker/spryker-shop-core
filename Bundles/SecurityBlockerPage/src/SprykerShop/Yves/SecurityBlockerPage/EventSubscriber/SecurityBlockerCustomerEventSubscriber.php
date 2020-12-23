@@ -104,7 +104,7 @@ class SecurityBlockerCustomerEventSubscriber implements EventSubscriberInterface
 
         $securityCheckAuthResponseTransfer = $this->securityBlockerClient->getLoginAttemptCount($securityCheckAuthContextTransfer);
 
-        if ($securityCheckAuthResponseTransfer->getIsSuccessful()) {
+        if (!$securityCheckAuthResponseTransfer->getIsBlocked()) {
             return;
         }
 
