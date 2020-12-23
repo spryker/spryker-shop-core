@@ -12,12 +12,13 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteApprovalTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
+use SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetNoCacheFlagPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\QuoteApprovalWidget\QuoteApprovalWidgetFactory getFactory()
  * @method \SprykerShop\Yves\QuoteApprovalWidget\QuoteApprovalWidgetConfig getConfig()
  */
-class QuoteApprovalWidget extends AbstractWidget
+class QuoteApprovalWidget extends AbstractWidget implements WidgetNoCacheFlagPluginInterface
 {
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
     protected const IS_QUOTE_APPLICABLE_FOR_APPROVAL_PROCESS = 'isQuoteApplicableForApprovalProcess';
