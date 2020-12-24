@@ -29,8 +29,6 @@ class WidgetFactory implements WidgetFactoryInterface
      */
     protected static $widgetCache = [];
 
-    protected static $widgetKeyGeneratorCache = [];
-
     /**
      * @param \Spryker\Yves\Kernel\Widget\WidgetFactoryInterface $legacyWidgetPluginFactory
      * @param \SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorPluginInterface[] $widgetKeyGeneratorPlugins
