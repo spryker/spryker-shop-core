@@ -144,12 +144,4 @@ class SecurityBlockerAgentEventSubscriber implements EventSubscriberInterface
             ->setAccount($request->get(static::FORM_LOGIN_FORM)[static::FORM_FIELD_EMAIL] ?? '')
             ->setIp($request->getClientIp());
     }
-
-    /**
-     * @return string
-     */
-    protected function getDefaultLocalePrefix(): string
-    {
-        return mb_substr($this->localeName, 0, 2) . '_';
-    }
 }

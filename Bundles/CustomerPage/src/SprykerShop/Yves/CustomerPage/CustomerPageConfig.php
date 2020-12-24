@@ -179,7 +179,7 @@ class CustomerPageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Controls if the locale stub in added to the /login_check path.
+     * - Controls if the locale stub is added to the /login_check path.
      * - False means the /login_check path does not have locale.
      *
      * @api
