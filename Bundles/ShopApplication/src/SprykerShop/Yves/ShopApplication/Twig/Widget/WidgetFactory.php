@@ -22,7 +22,7 @@ class WidgetFactory implements WidgetFactoryInterface
     /**
      * @var \SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorPluginInterface[]
      */
-    protected $widgetCacheKeyGeneratorPlugins;
+    protected static $widgetCacheKeyGeneratorPlugins = [];
 
     /**
      * @var array
@@ -36,7 +36,10 @@ class WidgetFactory implements WidgetFactoryInterface
     public function __construct(LegacyWidgetFactoryInterface $legacyWidgetPluginFactory, array $widgetCacheKeyGeneratorPlugins = [])
     {
         $this->legacyWidgetPluginFactory = $legacyWidgetPluginFactory;
-        $this->widgetCacheKeyGeneratorPlugins = $widgetCacheKeyGeneratorPlugins;
+
+        if (!static::$widgetCacheKeyGeneratorPlugins) {
+            static::$widgetCacheKeyGeneratorPlugins = $this->indexWidgetCacheKeyGeneratorPlugins($widgetCacheKeyGeneratorPlugins);
+        }
     }
 
     /**
@@ -67,6 +70,22 @@ class WidgetFactory implements WidgetFactoryInterface
         $this->cacheWidget($cacheKey, $widget);
 
         return $widget;
+    }
+
+    /**
+     * @param \SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorPluginInterface[] $widgetCacheKeyGeneratorPlugins
+     *
+     * @return \SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorPluginInterface[]
+     */
+    protected function indexWidgetCacheKeyGeneratorPlugins(array $widgetCacheKeyGeneratorPlugins): array
+    {
+        $indexedWidgetCacheKeyGeneratorPlugins = [];
+
+        foreach ($widgetCacheKeyGeneratorPlugins as $widgetCacheKeyGeneratorPlugin) {
+            $indexedWidgetCacheKeyGeneratorPlugins[$widgetCacheKeyGeneratorPlugin->getRelatedWidgetClassName()] = $widgetCacheKeyGeneratorPlugin;
+        }
+
+        return $indexedWidgetCacheKeyGeneratorPlugins;
     }
 
     /**
@@ -108,8 +127,8 @@ class WidgetFactory implements WidgetFactoryInterface
      */
     protected function generateCacheKey(string $widgetClassName, array $arguments): ?string
     {
-        if (isset($this->widgetCacheKeyGeneratorPlugins[$widgetClassName])) {
-            $key = $this->widgetCacheKeyGeneratorPlugins[$widgetClassName]->generateCacheKey($arguments);
+        if (isset(static::$widgetCacheKeyGeneratorPlugins[$widgetClassName])) {
+            $key = static::$widgetCacheKeyGeneratorPlugins[$widgetClassName]->generateCacheKey($arguments);
 
             if ($key === null) {
                 return null;

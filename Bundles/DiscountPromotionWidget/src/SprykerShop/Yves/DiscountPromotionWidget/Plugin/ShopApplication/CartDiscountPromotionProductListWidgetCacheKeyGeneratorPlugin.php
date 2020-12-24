@@ -8,9 +8,12 @@
 namespace SprykerShop\Yves\DiscountPromotionWidget\Plugin\ShopApplication;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
+use SprykerShop\Yves\DiscountPromotionWidget\Widget\CartDiscountPromotionProductListWidget;
 use SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorPluginInterface;
 
 /**
+ * {@inheritDoc}
+ *
  * @method \SprykerShop\Yves\DiscountPromotionWidget\DiscountPromotionWidgetFactory getFactory()
  */
 class CartDiscountPromotionProductListWidgetCacheKeyGeneratorPlugin extends AbstractPlugin implements WidgetCacheKeyGeneratorPluginInterface
@@ -28,5 +31,17 @@ class CartDiscountPromotionProductListWidgetCacheKeyGeneratorPlugin extends Abst
     public function generateCacheKey(array $arguments = []): ?string
     {
         return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getRelatedWidgetClassName(): string
+    {
+        return CartDiscountPromotionProductListWidget::class;
     }
 }
