@@ -11,6 +11,7 @@
 
     <transfer name="SecurityCheckAuthResponse">
         <property name="isBlocked" type="bool"/>
+        <property name="blockedFor" type="int"/>
     </transfer>
 
 </transfers>

@@ -17,6 +17,8 @@ use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToCustomerClientInterf
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToMessengerClientInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToQuoteClientInterface;
 use SprykerShop\Yves\AgentPage\Form\AgentLoginForm;
+use SprykerShop\Yves\AgentPage\Formatter\LoginCheckUrlFormatter;
+use SprykerShop\Yves\AgentPage\Formatter\LoginCheckUrlFormatterInterface;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationFailureHandler;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationSuccessHandler;
 use SprykerShop\Yves\AgentPage\Plugin\Provider\AccessDeniedHandler;
@@ -34,6 +36,9 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerI
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
 
+/**
+ * @method \SprykerShop\Yves\AgentPage\AgentPageConfig getConfig()
+ */
 class AgentPageFactory extends AbstractFactory
 {
     /**
@@ -196,5 +201,13 @@ class AgentPageFactory extends AbstractFactory
     {
         return $this->getFormFactory()
             ->create(AgentLoginForm::class);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\AgentPage\Formatter\LoginCheckUrlFormatterInterface
+     */
+    public function createLoginCheckUrlFormatter(): LoginCheckUrlFormatterInterface
+    {
+        return new LoginCheckUrlFormatter($this->getConfig(), $this->getLocale());
     }
 }

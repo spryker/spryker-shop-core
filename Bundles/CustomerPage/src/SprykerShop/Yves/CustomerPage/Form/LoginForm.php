@@ -46,7 +46,7 @@ class LoginForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->setAction($this->getDefaultLocalePrefix() . '/login_check');
+        $builder->setAction($this->getFactory()->createLoginCheckUrlFormatter()->getLoginCheckPath());
 
         $this
             ->addEmailField($builder)
@@ -120,13 +120,5 @@ class LoginForm extends AbstractType
     protected function createEmailConstraint(): Email
     {
         return new Email(['message' => static::VALIDATION_EMAIL_MESSAGE]);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getDefaultLocalePrefix(): string
-    {
-        return '/' . mb_substr($this->getFactory()->getLocale(), 0, 2);
     }
 }

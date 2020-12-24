@@ -128,7 +128,7 @@ class SecurityBlockerCustomerEventSubscriber implements EventSubscriberInterface
      */
     protected function isLoginAttempt(Request $request): bool
     {
-        return $request->attributes->get('_route') === $this->getDefaultLocalePrefix() . static::LOGIN_ROUTE
+        return mb_substr($request->attributes->get('_route'), -1 * mb_strlen(static::LOGIN_ROUTE)) === static::LOGIN_ROUTE
             && $request->getMethod() === Request::METHOD_POST;
     }
 

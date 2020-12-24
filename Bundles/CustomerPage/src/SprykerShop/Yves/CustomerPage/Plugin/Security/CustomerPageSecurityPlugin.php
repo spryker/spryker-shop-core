@@ -88,7 +88,7 @@ class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPlugi
             ],
             'form' => [
                 'login_path' => static::ROUTE_LOGIN,
-                'check_path' => $this->getDefaultLocalePrefix() . '/login_check',
+                'check_path' => $this->getFactory()->createLoginCheckUrlFormatter()->getLoginCheckPath(),
                 'username_parameter' => LoginForm::FORM_NAME . '[' . LoginForm::FIELD_EMAIL . ']',
                 'password_parameter' => LoginForm::FORM_NAME . '[' . LoginForm::FIELD_PASSWORD . ']',
                 'with_csrf' => true,
@@ -198,13 +198,5 @@ class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPlugi
         return $securityBuilder->addEventSubscriber(function () {
             return $this->getFactory()->createInteractiveLoginEventSubscriber();
         });
-    }
-
-    /**
-     * @return string
-     */
-    protected function getDefaultLocalePrefix(): string
-    {
-        return '/' . mb_substr($this->getLocale(), 0, 2);
     }
 }

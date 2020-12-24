@@ -34,6 +34,8 @@ use SprykerShop\Yves\CustomerPage\Form\Cloner\FormCloner;
 use SprykerShop\Yves\CustomerPage\Form\DataProvider\CheckoutAddressFormDataProvider;
 use SprykerShop\Yves\CustomerPage\Form\FormFactory;
 use SprykerShop\Yves\CustomerPage\Form\Transformer\AddressSelectTransformer;
+use SprykerShop\Yves\CustomerPage\Formatter\LoginCheckUrlFormatter;
+use SprykerShop\Yves\CustomerPage\Formatter\LoginCheckUrlFormatterInterface;
 use SprykerShop\Yves\CustomerPage\Handler\OrderSearchFormHandler;
 use SprykerShop\Yves\CustomerPage\Handler\OrderSearchFormHandlerInterface;
 use SprykerShop\Yves\CustomerPage\Mapper\CustomerMapper;
@@ -571,5 +573,13 @@ class CustomerPageFactory extends AbstractFactory
     public function createCustomerConfirmationUserChecker(): UserCheckerInterface
     {
         return new CustomerConfirmationUserChecker();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Formatter\LoginCheckUrlFormatterInterface
+     */
+    public function createLoginCheckUrlFormatter(): LoginCheckUrlFormatterInterface
+    {
+        return new LoginCheckUrlFormatter($this->getConfig(), $this->getLocale());
     }
 }

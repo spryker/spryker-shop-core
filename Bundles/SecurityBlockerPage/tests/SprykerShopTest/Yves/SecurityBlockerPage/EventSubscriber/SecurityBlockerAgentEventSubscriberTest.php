@@ -32,7 +32,7 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
     /**
      * @return void
      */
-    public function testSecurityBlockerCustomerEventSubscriberWillCallSecurityBlockerClientOnKernelRequestLoginAttempt(): void
+    public function testSecurityBlockerAgentEventSubscriberWillCallSecurityBlockerClientOnKernelRequestLoginAttempt(): void
     {
         // Arrange
         $securityCheckAuthContextTransfer = $this->tester->getSecurityCheckAuthContextTransfer(SecurityBlockerPageConfig::SECURITY_BLOCKER_AGENT_ENTITY_TYPE);
@@ -48,7 +48,8 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
         $securityBlockerCustomerEventSubscriber = new SecurityBlockerAgentEventSubscriber(
             $this->getMockBuilder(RequestStack::class)->getMock(),
             $securityBlockerMock,
-            $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock()
+            $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
+            'de'
         );
 
         $eventDispatcher = new EventDispatcher();
@@ -63,7 +64,7 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
     /**
      * @return void
      */
-    public function testSecurityBlockerCustomerEventSubscriberWillThrowExceptionOnKernelRequestLoginAttempt(): void
+    public function testSecurityBlockerAgentEventSubscriberWillThrowExceptionOnKernelRequestLoginAttempt(): void
     {
         // Arrange
         $securityCheckAuthContextTransfer = $this->tester->getSecurityCheckAuthContextTransfer(SecurityBlockerPageConfig::SECURITY_BLOCKER_AGENT_ENTITY_TYPE);
@@ -79,7 +80,8 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
         $securityBlockerCustomerEventSubscriber = new SecurityBlockerAgentEventSubscriber(
             $this->getMockBuilder(RequestStack::class)->getMock(),
             $securityBlockerMock,
-            $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock()
+            $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
+            'en'
         );
 
         $eventDispatcher = new EventDispatcher();
@@ -96,7 +98,7 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
     /**
      * @return void
      */
-    public function testSecurityBlockerCustomerEventSubscriberWillNotCallSecurityBlockerClientOnWrongRequest(): void
+    public function testSecurityBlockerAgentEventSubscriberWillNotCallSecurityBlockerClientOnWrongRequest(): void
     {
         // Arrange
         $securityCheckAuthContextTransfer = $this->tester->getSecurityCheckAuthContextTransfer(SecurityBlockerPageConfig::SECURITY_BLOCKER_AGENT_ENTITY_TYPE);
@@ -112,7 +114,8 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
         $securityBlockerCustomerEventSubscriber = new SecurityBlockerAgentEventSubscriber(
             $this->getMockBuilder(RequestStack::class)->getMock(),
             $securityBlockerMock,
-            $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock()
+            $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
+            'en'
         );
 
         $eventDispatcher = new EventDispatcher();
@@ -127,7 +130,7 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
     /**
      * @return void
      */
-    public function testSecurityBlockerCustomerEventSubscriberWillCallSecurityBlockerClientExceptionOnFailedLoginAttempt(): void
+    public function testSecurityBlockerAgentEventSubscriberWillCallSecurityBlockerClientExceptionOnFailedLoginAttempt(): void
     {
         // Arrange
         $securityCheckAuthContextTransfer = $this->tester->getSecurityCheckAuthContextTransfer(SecurityBlockerPageConfig::SECURITY_BLOCKER_AGENT_ENTITY_TYPE);
@@ -144,7 +147,8 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
         $securityBlockerCustomerEventSubscriber = new SecurityBlockerAgentEventSubscriber(
             $requestStackMock,
             $securityBlockerMock,
-            $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock()
+            $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
+            'en'
         );
 
         $eventDispatcher = new EventDispatcher();
@@ -159,7 +163,7 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
     /**
      * @return void
      */
-    public function testSecurityBlockerCustomerEventSubscriberWillCallSecurityBlockerClientExceptionWrongRequest(): void
+    public function testSecurityBlockerAgentEventSubscriberWillCallSecurityBlockerClientExceptionWrongRequest(): void
     {
         // Arrange
         $securityCheckAuthContextTransfer = $this->tester->getSecurityCheckAuthContextTransfer(SecurityBlockerPageConfig::SECURITY_BLOCKER_AGENT_ENTITY_TYPE);
@@ -176,7 +180,8 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
         $securityBlockerCustomerEventSubscriber = new SecurityBlockerAgentEventSubscriber(
             $requestStackMock,
             $securityBlockerMock,
-            $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock()
+            $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
+            'en'
         );
 
         $eventDispatcher = new EventDispatcher();

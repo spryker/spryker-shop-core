@@ -21,4 +21,18 @@ class AgentPageConfig extends AbstractBundleConfig
     {
         return $this->get(AgentPageConstants::AGENT_FIREWALL_REGEX, '\/agent(.+)?\/(?!login$).+');
     }
+
+    /**
+     * Specification:
+     * - Controls if the locale stub in added to the /login_check path.
+     * - False means the /login_check path does not have locale.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isLocaleInLoginCheckPath(): bool
+    {
+        return false;
+    }
 }
