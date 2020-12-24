@@ -22,7 +22,7 @@ class WidgetFactory implements WidgetFactoryInterface
     /**
      * @var \SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorPluginInterface[]
      */
-    protected $widgetKeyGeneratorPlugins;
+    protected $widgetCacheKeyGeneratorPlugins;
 
     /**
      * @var array
@@ -31,12 +31,12 @@ class WidgetFactory implements WidgetFactoryInterface
 
     /**
      * @param \Spryker\Yves\Kernel\Widget\WidgetFactoryInterface $legacyWidgetPluginFactory
-     * @param \SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorPluginInterface[] $widgetKeyGeneratorPlugins
+     * @param \SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorPluginInterface[] $widgetCacheKeyGeneratorPlugins
      */
-    public function __construct(LegacyWidgetFactoryInterface $legacyWidgetPluginFactory, array $widgetKeyGeneratorPlugins = [])
+    public function __construct(LegacyWidgetFactoryInterface $legacyWidgetPluginFactory, array $widgetCacheKeyGeneratorPlugins = [])
     {
         $this->legacyWidgetPluginFactory = $legacyWidgetPluginFactory;
-        $this->widgetKeyGeneratorPlugins = $widgetKeyGeneratorPlugins;
+        $this->widgetCacheKeyGeneratorPlugins = $widgetCacheKeyGeneratorPlugins;
     }
 
     /**
@@ -108,8 +108,8 @@ class WidgetFactory implements WidgetFactoryInterface
      */
     protected function generateCacheKey(string $widgetClassName, array $arguments): ?string
     {
-        if (isset($this->widgetKeyGeneratorPlugins[$widgetClassName])) {
-            $key = $this->widgetKeyGeneratorPlugins[$widgetClassName]->generateCacheKey($arguments);
+        if (isset($this->widgetCacheKeyGeneratorPlugins[$widgetClassName])) {
+            $key = $this->widgetCacheKeyGeneratorPlugins[$widgetClassName]->generateCacheKey($arguments);
 
             if ($key === null) {
                 return null;
