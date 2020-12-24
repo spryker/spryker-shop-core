@@ -13,14 +13,13 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteApprovalClientInterface;
-use SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetNoCacheFlagPluginInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \SprykerShop\Yves\QuoteApprovalWidget\QuoteApprovalWidgetFactory getFactory()
  * @method \SprykerShop\Yves\QuoteApprovalWidget\QuoteApprovalWidgetConfig getConfig()
  */
-class QuoteApproveRequestWidget extends AbstractWidget implements WidgetNoCacheFlagPluginInterface
+class QuoteApproveRequestWidget extends AbstractWidget
 {
     use PermissionAwareTrait;
 

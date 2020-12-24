@@ -10,13 +10,12 @@ namespace SprykerShop\Yves\DiscountPromotionWidget\Widget;
 use Generated\Shared\Transfer\PromotionItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
-use SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetNoCacheFlagPluginInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\DiscountPromotionWidget\DiscountPromotionWidgetFactory getFactory()
  */
-class CartDiscountPromotionProductListWidget extends AbstractWidget implements WidgetNoCacheFlagPluginInterface
+class CartDiscountPromotionProductListWidget extends AbstractWidget
 {
     protected const PARAM_VARIANT_ATTRIBUTES = 'attributes';
 

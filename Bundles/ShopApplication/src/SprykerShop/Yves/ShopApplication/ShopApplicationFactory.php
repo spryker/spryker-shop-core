@@ -67,7 +67,7 @@ class ShopApplicationFactory extends AbstractFactory
      */
     public function createWidgetFactory()
     {
-        return new WidgetFactory($this->createLegacyWidgetFactory());
+        return new WidgetFactory($this->createLegacyWidgetFactory(), $this->getWidgetCacheKeyGeneratorPlugins());
     }
 
     /**
@@ -252,5 +252,13 @@ class ShopApplicationFactory extends AbstractFactory
     public function getApplicationPlugins(): array
     {
         return $this->getProvidedDependency(ApplicationDependencyProvider::PLUGINS_APPLICATION);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorPluginInterface[]
+     */
+    public function getWidgetCacheKeyGeneratorPlugins(): array
+    {
+        return $this->getProvidedDependency(ShopApplicationDependencyProvider::PLUGINS_WIDGET_CACHE_KEY_GENERATOR);
     }
 }

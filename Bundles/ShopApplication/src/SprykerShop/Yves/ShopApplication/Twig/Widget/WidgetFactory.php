@@ -11,8 +11,6 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 use Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface;
 use Spryker\Yves\Kernel\Widget\WidgetFactoryInterface as LegacyWidgetFactoryInterface;
 use SprykerShop\Yves\ShopApplication\Exception\InvalidWidgetException;
-use SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorInterface;
-use SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetNoCacheFlagPluginInterface;
 
 class WidgetFactory implements WidgetFactoryInterface
 {
@@ -20,6 +18,11 @@ class WidgetFactory implements WidgetFactoryInterface
      * @var \Spryker\Yves\Kernel\Widget\WidgetFactoryInterface
      */
     protected $legacyWidgetPluginFactory;
+
+    /**
+     * @var \SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorPluginInterface[]
+     */
+    protected $widgetKeyGeneratorPlugins;
 
     /**
      * @var array
@@ -30,10 +33,12 @@ class WidgetFactory implements WidgetFactoryInterface
 
     /**
      * @param \Spryker\Yves\Kernel\Widget\WidgetFactoryInterface $legacyWidgetPluginFactory
+     * @param \SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorPluginInterface[] $widgetKeyGeneratorPlugins
      */
-    public function __construct(LegacyWidgetFactoryInterface $legacyWidgetPluginFactory)
+    public function __construct(LegacyWidgetFactoryInterface $legacyWidgetPluginFactory, array $widgetKeyGeneratorPlugins = [])
     {
         $this->legacyWidgetPluginFactory = $legacyWidgetPluginFactory;
+        $this->widgetKeyGeneratorPlugins = $widgetKeyGeneratorPlugins;
     }
 
     /**
@@ -48,11 +53,12 @@ class WidgetFactory implements WidgetFactoryInterface
             return $this->legacyWidgetPluginFactory->build($widgetClassName, $arguments);
         }
 
-        if (!$this->widgetCanBeCached($widgetClassName)) {
+        $cacheKey = $this->generateCacheKey($widgetClassName, $arguments);
+
+        if ($cacheKey === null) {
             return $this->createWidgetInstance($widgetClassName, $arguments);
         }
 
-        $cacheKey = $this->generateCacheKey($widgetClassName, $arguments);
         $widget = $this->getCachedWidget($cacheKey);
         if ($widget) {
             return $widget;
@@ -81,16 +87,6 @@ class WidgetFactory implements WidgetFactoryInterface
     /**
      * @param string $widgetClassName
      *
-     * @return bool
-     */
-    protected function widgetCanBeCached(string $widgetClassName): bool
-    {
-        return !is_subclass_of($widgetClassName, WidgetNoCacheFlagPluginInterface::class);
-    }
-
-    /**
-     * @param string $widgetClassName
-     *
      * @throws \SprykerShop\Yves\ShopApplication\Exception\InvalidWidgetException
      *
      * @return void
@@ -110,34 +106,21 @@ class WidgetFactory implements WidgetFactoryInterface
      * @param string $widgetClassName
      * @param array $arguments
      *
-     * @return string
+     * @return string|null
      */
-    protected function generateCacheKey(string $widgetClassName, array $arguments): string
+    protected function generateCacheKey(string $widgetClassName, array $arguments): ?string
     {
-        $cacheKey = $this->generateStandaloneCacheKey($widgetClassName, $arguments);
+        if (isset($this->widgetKeyGeneratorPlugins[$widgetClassName])) {
+            $key = $this->widgetKeyGeneratorPlugins[$widgetClassName]->generateCacheKey($arguments);
 
-        if ($cacheKey !== null) {
-            return $cacheKey;
+            if ($key === null) {
+                return null;
+            }
+
+            return md5($widgetClassName . $key);
         }
 
         return md5($widgetClassName . serialize($arguments));
-    }
-
-    protected function generateStandaloneCacheKey(string $widgetClassName, array $arguments): ?string
-    {
-        $widgetCacheKeyGeneratorClassName = $widgetClassName . 'CacheKeyGenerator';
-        if (!class_exists($widgetCacheKeyGeneratorClassName) || !is_subclass_of($widgetCacheKeyGeneratorClassName, WidgetCacheKeyGeneratorInterface::class)) {
-            return null;
-        }
-
-        if (!isset(static::$widgetKeyGeneratorCache[$widgetCacheKeyGeneratorClassName])) {
-            $keyGenerator = new $widgetCacheKeyGeneratorClassName();
-            static::$widgetKeyGeneratorCache[$widgetCacheKeyGeneratorClassName] = $keyGenerator;
-        }
-
-        $key = static::$widgetKeyGeneratorCache[$widgetCacheKeyGeneratorClassName]->generateCacheKey($arguments);
-
-        return md5($widgetClassName . $key);
     }
 
     /**
