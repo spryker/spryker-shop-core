@@ -31,6 +31,7 @@ class SecurityBlockerPageFactory extends AbstractFactory
             $this->getRequestStack(),
             $this->getSecurityBlockerClient(),
             $this->createMessageBuilder(),
+            $this->getConfig(),
             $this->getLocale()
         );
     }
@@ -44,6 +45,7 @@ class SecurityBlockerPageFactory extends AbstractFactory
             $this->getRequestStack(),
             $this->getSecurityBlockerClient(),
             $this->createMessageBuilder(),
+            $this->getConfig(),
             $this->getLocale()
         );
     }

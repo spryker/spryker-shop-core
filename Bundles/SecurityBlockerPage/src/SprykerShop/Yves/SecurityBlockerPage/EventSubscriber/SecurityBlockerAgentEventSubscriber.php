@@ -44,6 +44,11 @@ class SecurityBlockerAgentEventSubscriber implements EventSubscriberInterface
     protected $messageBuilder;
 
     /**
+     * @var \SprykerShop\Yves\SecurityBlockerPage\SecurityBlockerPageConfig
+     */
+    protected $securityBlockerPageConfig;
+
+    /**
      * @var string
      */
     protected $localeName;
@@ -52,17 +57,20 @@ class SecurityBlockerAgentEventSubscriber implements EventSubscriberInterface
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToSecurityBlockerClientInterface $securityBlockerClient
      * @param \SprykerShop\Yves\SecurityBlockerPage\Builder\MessageBuilderInterface $messageBuilder
+     * @param \SprykerShop\Yves\SecurityBlockerPage\SecurityBlockerPageConfig $securityBlockerPageConfig
      * @param string $localeName
      */
     public function __construct(
         RequestStack $requestStack,
         SecurityBlockerPageToSecurityBlockerClientInterface $securityBlockerClient,
         MessageBuilderInterface $messageBuilder,
+        SecurityBlockerPageConfig $securityBlockerPageConfig,
         string $localeName
     ) {
         $this->requestStack = $requestStack;
         $this->securityBlockerClient = $securityBlockerClient;
         $this->messageBuilder = $messageBuilder;
+        $this->securityBlockerPageConfig = $securityBlockerPageConfig;
         $this->localeName = $localeName;
     }
 
@@ -128,8 +136,12 @@ class SecurityBlockerAgentEventSubscriber implements EventSubscriberInterface
      */
     protected function isLoginAttempt(Request $request): bool
     {
-        return mb_substr($request->attributes->get('_route'), -1 * mb_strlen(static::LOGIN_ROUTE)) === static::LOGIN_ROUTE
-            && $request->getMethod() === Request::METHOD_POST;
+        $currentRoute = $request->attributes->get('_route');
+        if ($this->securityBlockerPageConfig->isLocaleInAgentLoginCheckPath()) {
+            $currentRoute = mb_substr($currentRoute, mb_strlen($this->localeName) - 2);
+        }
+
+        return $currentRoute === static::LOGIN_ROUTE && $request->getMethod() === Request::METHOD_POST;
     }
 
     /**

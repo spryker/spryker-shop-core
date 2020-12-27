@@ -20,4 +20,30 @@ class SecurityBlockerPageConfig extends AbstractBundleConfig
      * @uses \Spryker\Client\SecurityBlocker\SecurityBlockerConfig::SECURITY_BLOCKER_AGENT_ENTITY_TYPE
      */
     public const SECURITY_BLOCKER_AGENT_ENTITY_TYPE = 'agent';
+
+    /**
+     * Specification:
+     * - Controls if local prefix is used in the /login_check path used for customer.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isLocaleInCustomerLoginCheckPath(): bool
+    {
+        return false;
+    }
+
+    /**
+     * Specification:
+     * - Controls if local prefix is used in the /login_check path used for the agent.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isLocaleInAgentLoginCheckPath(): bool
+    {
+        return false;
+    }
 }
