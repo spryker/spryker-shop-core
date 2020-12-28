@@ -11,6 +11,7 @@
     </transfer>
 
     <transfer name="Quote">
+        <property name="idQuote" type="int"/>
     </transfer>
 
     <transfer name="Order">
