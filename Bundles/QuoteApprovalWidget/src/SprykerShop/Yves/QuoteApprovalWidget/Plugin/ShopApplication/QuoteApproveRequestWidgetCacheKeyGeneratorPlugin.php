@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\QuoteApprovalWidget\Plugin\ShopApplication;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\QuoteApprovalWidget\Widget\QuoteApproveRequestWidget;
 use SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorPluginInterface;

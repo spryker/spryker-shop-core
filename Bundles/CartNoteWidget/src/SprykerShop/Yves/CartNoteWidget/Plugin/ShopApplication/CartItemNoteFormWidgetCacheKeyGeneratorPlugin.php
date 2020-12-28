@@ -36,6 +36,7 @@ class CartItemNoteFormWidgetCacheKeyGeneratorPlugin implements WidgetCacheKeyGen
         foreach ($arguments as $argument) {
             if ($argument instanceof ItemTransfer) {
                 $keyElements[] = serialize($argument);
+
                 continue;
             }
 
