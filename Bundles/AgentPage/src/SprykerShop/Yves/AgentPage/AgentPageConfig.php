@@ -29,6 +29,10 @@ class AgentPageConfig extends AbstractBundleConfig
      *
      * @api
      *
+     * @deprecated Will be removed without replacement. If the future the locale-specific URL will be used.
+     *
+     * @see {@link \SprykerShop\Yves\SecurityBlockerPage\SecurityBlockerPageConfig::isLocaleInAgentLoginCheckPath()}
+     *
      * @return bool
      */
     public function isLocaleInLoginCheckPath(): bool

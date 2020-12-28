@@ -22,8 +22,19 @@ use Symfony\Component\Security\Core\AuthenticationEvents;
 
 class SecurityBlockerCustomerEventSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @uses \SprykerShop\Yves\CustomerPage\Form\LoginForm::FORM_NAME
+     */
     protected const FORM_LOGIN_FORM = 'loginForm';
+
+    /**
+     * @uses \SprykerShop\Yves\CustomerPage\Form\LoginForm::FIELD_EMAIL
+     */
     protected const FORM_FIELD_EMAIL = 'email';
+
+    /**
+     * @see \SprykerShop\Yves\CustomerPage\Formatter\LoginCheckUrlFormatter::ROUTE_CHECK_PATH
+     */
     protected const LOGIN_ROUTE = 'login_check';
     protected const KERNEL_REQUEST_SUBSCRIBER_PRIORITY = 9;
     protected const GLOSSARY_KEY_ERROR_ACCOUNT_BLOCKED = 'security_blocker_page.error.account_blocked';
@@ -118,7 +129,7 @@ class SecurityBlockerCustomerEventSubscriber implements EventSubscriberInterface
 
         $securityCheckAuthContextTransfer = $this->createSecurityCheckAuthContextTransfer($request);
 
-        $securityCheckAuthResponseTransfer = $this->securityBlockerClient->getLoginAttemptCount($securityCheckAuthContextTransfer);
+        $securityCheckAuthResponseTransfer = $this->securityBlockerClient->isAccountBlocked($securityCheckAuthContextTransfer);
 
         if (!$securityCheckAuthResponseTransfer->getIsBlocked()) {
             return;

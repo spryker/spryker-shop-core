@@ -19,7 +19,7 @@ class SecurityBlockerPageDependencyProvider extends AbstractBundleDependencyProv
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     /**
-     * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
      */
     public const SERVICE_REQUEST_STACK = 'request_stack';
 

@@ -41,7 +41,7 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
 
         $securityBlockerMock = $this->getMockBuilder(SecurityBlockerPageToSecurityBlockerClientInterface::class)->getMock();
         $securityBlockerMock->expects($this->once())
-            ->method('getLoginAttemptCount')
+            ->method('isAccountBlocked')
             ->with($securityCheckAuthContextTransfer)
             ->willReturn($securityCheckAuthResponseTransfer);
 
@@ -49,6 +49,7 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
             $this->getMockBuilder(RequestStack::class)->getMock(),
             $securityBlockerMock,
             $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
+            $this->getMockBuilder(SecurityBlockerPageConfig::class)->getMock(),
             'de'
         );
 
@@ -73,7 +74,7 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
 
         $securityBlockerMock = $this->getMockBuilder(SecurityBlockerPageToSecurityBlockerClientInterface::class)->getMock();
         $securityBlockerMock->expects($this->once())
-            ->method('getLoginAttemptCount')
+            ->method('isAccountBlocked')
             ->with($securityCheckAuthContextTransfer)
             ->willReturn($securityCheckAuthResponseTransfer);
 
@@ -81,6 +82,7 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
             $this->getMockBuilder(RequestStack::class)->getMock(),
             $securityBlockerMock,
             $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
+            $this->getMockBuilder(SecurityBlockerPageConfig::class)->getMock(),
             'en'
         );
 
@@ -107,7 +109,7 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
 
         $securityBlockerMock = $this->getMockBuilder(SecurityBlockerPageToSecurityBlockerClientInterface::class)->getMock();
         $securityBlockerMock->expects($this->never())
-            ->method('getLoginAttemptCount')
+            ->method('isAccountBlocked')
             ->with($securityCheckAuthContextTransfer)
             ->willReturn($securityCheckAuthResponseTransfer);
 
@@ -115,6 +117,7 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
             $this->getMockBuilder(RequestStack::class)->getMock(),
             $securityBlockerMock,
             $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
+            $this->getMockBuilder(SecurityBlockerPageConfig::class)->getMock(),
             'en'
         );
 
@@ -148,6 +151,7 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
             $requestStackMock,
             $securityBlockerMock,
             $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
+            $this->getMockBuilder(SecurityBlockerPageConfig::class)->getMock(),
             'en'
         );
 
@@ -181,6 +185,7 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
             $requestStackMock,
             $securityBlockerMock,
             $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
+            $this->getMockBuilder(SecurityBlockerPageConfig::class)->getMock(),
             'en'
         );
 

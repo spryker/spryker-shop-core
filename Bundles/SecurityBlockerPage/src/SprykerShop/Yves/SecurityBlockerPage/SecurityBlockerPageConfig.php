@@ -12,12 +12,12 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 class SecurityBlockerPageConfig extends AbstractBundleConfig
 {
     /**
-     * @uses \Spryker\Client\SecurityBlocker\SecurityBlockerConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE
+     * @uses \Spryker\Glue\SecurityBlockerRestApi\SecurityBlockerRestApiConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE
      */
     public const SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE = 'customer';
 
     /**
-     * @uses \Spryker\Client\SecurityBlocker\SecurityBlockerConfig::SECURITY_BLOCKER_AGENT_ENTITY_TYPE
+     * @uses \Spryker\Glue\SecurityBlockerRestApi\SecurityBlockerRestApiConfig::SECURITY_BLOCKER_AGENT_ENTITY_TYPE
      */
     public const SECURITY_BLOCKER_AGENT_ENTITY_TYPE = 'agent';
 
@@ -26,6 +26,10 @@ class SecurityBlockerPageConfig extends AbstractBundleConfig
      * - Controls if local prefix is used in the /login_check path used for customer.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement. If the future the locale-specific URL will be used.
+     *
+     * @see {@link \SprykerShop\Yves\CustomerPage\CustomerPageConfig::isLocaleInLoginCheckPath()}
      *
      * @return bool
      */
@@ -39,6 +43,10 @@ class SecurityBlockerPageConfig extends AbstractBundleConfig
      * - Controls if local prefix is used in the /login_check path used for the agent.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement. If the future the locale-specific URL will be used.
+     *
+     * @see {@link \SprykerShop\Yves\AgentPage\AgentPageConfig::isLocaleInLoginCheckPath()}
      *
      * @return bool
      */
