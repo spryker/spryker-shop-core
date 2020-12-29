@@ -24,14 +24,12 @@ class AgentPageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Controls if the locale stub is added to the /login_check path.
-     * - False means the /login_check path does not have locale.
+     * - Controls if the locale stub is added to the /agent/login_check path.
+     * - False means the /agent/login_check path does not have locale.
      *
      * @api
      *
-     * @deprecated Will be removed without replacement. If the future the locale-specific URL will be used.
-     *
-     * @see {@link \SprykerShop\Yves\SecurityBlockerPage\SecurityBlockerPageConfig::isLocaleInAgentLoginCheckPath()}
+     * @deprecated Will be removed without replacement. In the future, the locale-specific URL will be used.
      *
      * @return bool
      */

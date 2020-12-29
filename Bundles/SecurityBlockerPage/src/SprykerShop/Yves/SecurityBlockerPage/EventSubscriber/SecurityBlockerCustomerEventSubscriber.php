@@ -33,7 +33,7 @@ class SecurityBlockerCustomerEventSubscriber implements EventSubscriberInterface
     protected const FORM_FIELD_EMAIL = 'email';
 
     /**
-     * @see \SprykerShop\Yves\CustomerPage\Formatter\LoginCheckUrlFormatter::ROUTE_CHECK_PATH
+     * @uses \SprykerShop\Yves\CustomerPage\Formatter\LoginCheckUrlFormatter::ROUTE_CHECK_PATH
      */
     protected const LOGIN_ROUTE = 'login_check';
     protected const KERNEL_REQUEST_SUBSCRIBER_PRIORITY = 9;

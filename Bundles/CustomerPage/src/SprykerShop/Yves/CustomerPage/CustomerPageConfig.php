@@ -184,9 +184,7 @@ class CustomerPageConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @deprecated Will be removed without replacement. If the future the locale-specific URL will be used.
-     *
-     * @see {@link \SprykerShop\Yves\SecurityBlockerPage\SecurityBlockerPageConfig::isLocaleInCustomerLoginCheckPath()}
+     * @deprecated Will be removed without replacement. In the future, the locale-specific URL will be used.
      *
      * @return bool
      */

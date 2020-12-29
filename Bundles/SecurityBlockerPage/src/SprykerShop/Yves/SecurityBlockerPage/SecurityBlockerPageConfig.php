@@ -27,9 +27,9 @@ class SecurityBlockerPageConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @deprecated Will be removed without replacement. If the future the locale-specific URL will be used.
+     * @uses {@link \SprykerShop\Yves\CustomerPage\CustomerPageConfig::isLocaleInLoginCheckPath()}
      *
-     * @see {@link \SprykerShop\Yves\CustomerPage\CustomerPageConfig::isLocaleInLoginCheckPath()}
+     * @deprecated Will be removed without replacement. In the future, the locale-specific URL will be used.
      *
      * @return bool
      */
@@ -40,13 +40,13 @@ class SecurityBlockerPageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Controls if local prefix is used in the /login_check path used for the agent.
+     * - Controls if local prefix is used in the /agent/login_check path used for the agent.
      *
      * @api
      *
-     * @deprecated Will be removed without replacement. If the future the locale-specific URL will be used.
+     * @uses {@link \SprykerShop\Yves\AgentPage\AgentPageConfig::isLocaleInLoginCheckPath()}
      *
-     * @see {@link \SprykerShop\Yves\AgentPage\AgentPageConfig::isLocaleInLoginCheckPath()}
+     * @deprecated Will be removed without replacement. In the future, the locale-specific URL will be used.
      *
      * @return bool
      */
