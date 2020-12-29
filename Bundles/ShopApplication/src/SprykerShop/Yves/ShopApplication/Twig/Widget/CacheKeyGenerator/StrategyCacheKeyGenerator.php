@@ -32,17 +32,17 @@ class StrategyCacheKeyGenerator implements CacheKeyGeneratorInterface
      */
     public function generateCacheKey(string $widgetClassName, array $arguments): ?string
     {
-        if (isset(static::$widgetCacheKeyGeneratorPlugins[$widgetClassName])) {
-            $key = static::$widgetCacheKeyGeneratorPlugins[$widgetClassName]->generateCacheKey($arguments);
-
-            if ($key === null) {
-                return null;
-            }
-
-            return md5($widgetClassName . $key);
+        if (!isset(static::$widgetCacheKeyGeneratorPlugins[$widgetClassName])) {
+            return md5($widgetClassName . serialize($arguments));
         }
 
-        return md5($widgetClassName . serialize($arguments));
+        $key = static::$widgetCacheKeyGeneratorPlugins[$widgetClassName]->generateCacheKey($arguments);
+
+        if ($key === null) {
+            return null;
+        }
+
+        return md5($widgetClassName . $key);
     }
 
     /**
