@@ -25,6 +25,8 @@ use SprykerShop\Yves\ShopApplication\Plugin\ShopApplicationTwigExtensionPlugin;
 use SprykerShop\Yves\ShopApplication\Subscriber\ShopApplicationTwigEventSubscriber;
 use SprykerShop\Yves\ShopApplication\Twig\RoutingHelper;
 use SprykerShop\Yves\ShopApplication\Twig\TwigRenderer;
+use SprykerShop\Yves\ShopApplication\Twig\Widget\CacheKeyGenerator\CacheKeyGeneratorInterface;
+use SprykerShop\Yves\ShopApplication\Twig\Widget\CacheKeyGenerator\StrategyCacheKeyGenerator;
 use SprykerShop\Yves\ShopApplication\Twig\Widget\TokenParser\WidgetTagTokenParser;
 use SprykerShop\Yves\ShopApplication\Twig\Widget\TokenParser\WidgetTagTwigTokenParser;
 use SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetFactory;
@@ -67,7 +69,15 @@ class ShopApplicationFactory extends AbstractFactory
      */
     public function createWidgetFactory()
     {
-        return new WidgetFactory($this->createLegacyWidgetFactory(), $this->getWidgetCacheKeyGeneratorPlugins());
+        return new WidgetFactory($this->createLegacyWidgetFactory(), $this->createCacheKeyGenerator());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShopApplication\Twig\Widget\CacheKeyGenerator\CacheKeyGeneratorInterface
+     */
+    public function createCacheKeyGenerator(): CacheKeyGeneratorInterface
+    {
+        return new StrategyCacheKeyGenerator($this->getWidgetCacheKeyGeneratorStrategyPlugins());
     }
 
     /**
@@ -255,10 +265,10 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorPluginInterface[]
+     * @return \SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorStrategyPluginInterface[]
      */
-    public function getWidgetCacheKeyGeneratorPlugins(): array
+    public function getWidgetCacheKeyGeneratorStrategyPlugins(): array
     {
-        return $this->getProvidedDependency(ShopApplicationDependencyProvider::PLUGINS_WIDGET_CACHE_KEY_GENERATOR);
+        return $this->getProvidedDependency(ShopApplicationDependencyProvider::PLUGINS_WIDGET_CACHE_KEY_GENERATOR_STRATEGY);
     }
 }

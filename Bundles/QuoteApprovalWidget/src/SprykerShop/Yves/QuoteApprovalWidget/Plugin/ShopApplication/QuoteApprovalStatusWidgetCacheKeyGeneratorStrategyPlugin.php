@@ -7,20 +7,21 @@
 
 namespace SprykerShop\Yves\QuoteApprovalWidget\Plugin\ShopApplication;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\QuoteApprovalWidget\Widget\QuoteApproveRequestWidget;
-use SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorPluginInterface;
+use SprykerShop\Yves\QuoteApprovalWidget\Widget\QuoteApprovalStatusWidget;
+use SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorStrategyPluginInterface;
 
 /**
  * {@inheritDoc}
  *
  * @method \SprykerShop\Yves\QuoteApprovalWidget\QuoteApprovalWidgetFactory getFactory()
  */
-class QuoteApproveRequestWidgetCacheKeyGeneratorPlugin extends AbstractPlugin implements WidgetCacheKeyGeneratorPluginInterface
+class QuoteApprovalStatusWidgetCacheKeyGeneratorStrategyPlugin extends AbstractPlugin implements WidgetCacheKeyGeneratorStrategyPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Disables cache for `QuoteApproveRequestWidget`.
+     * - Generates key for the `QuoteApprovalStatusWidget`.
      *
      * @api
      *
@@ -30,6 +31,12 @@ class QuoteApproveRequestWidgetCacheKeyGeneratorPlugin extends AbstractPlugin im
      */
     public function generateCacheKey(array $arguments = []): ?string
     {
+        foreach ($arguments as $argument) {
+            if ($argument instanceof QuoteTransfer) {
+                return serialize($argument->getQuoteApprovals());
+            }
+        }
+
         return null;
     }
 
@@ -40,8 +47,8 @@ class QuoteApproveRequestWidgetCacheKeyGeneratorPlugin extends AbstractPlugin im
      *
      * @return string
      */
-    public function getRelatedWidgetClassName(): string
+    public function getWidgetClassName(): string
     {
-        return QuoteApproveRequestWidget::class;
+        return QuoteApprovalStatusWidget::class;
     }
 }

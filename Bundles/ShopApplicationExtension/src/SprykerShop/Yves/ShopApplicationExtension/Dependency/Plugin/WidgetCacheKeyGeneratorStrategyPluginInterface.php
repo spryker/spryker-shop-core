@@ -13,7 +13,7 @@ namespace SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin;
  * If widget has no related plugin, default key generation will be used.
  * In case if you want to disable widget instance caching NULL should be returned by `WidgetCacheKeyGeneratorPluginInterface::generateCacheKey()` method.
  */
-interface WidgetCacheKeyGeneratorPluginInterface
+interface WidgetCacheKeyGeneratorStrategyPluginInterface
 {
     /**
      * Specification:
@@ -36,5 +36,5 @@ interface WidgetCacheKeyGeneratorPluginInterface
      *
      * @return string
      */
-    public function getRelatedWidgetClassName(): string;
+    public function getWidgetClassName(): string;
 }

@@ -10,14 +10,14 @@ namespace SprykerShop\Yves\CartNoteWidget\Plugin\ShopApplication;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\CartNoteWidget\Widget\CartItemNoteFormWidget;
-use SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorPluginInterface;
+use SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorStrategyPluginInterface;
 
 /**
  * {@inheritDoc}
  *
  * @method \SprykerShop\Yves\CartNoteWidget\CartNoteWidgetFactory getFactory()
  */
-class CartItemNoteFormWidgetCacheKeyGeneratorPlugin implements WidgetCacheKeyGeneratorPluginInterface
+class CartItemNoteFormWidgetCacheKeyGeneratorStrategyPlugin implements WidgetCacheKeyGeneratorStrategyPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -59,7 +59,7 @@ class CartItemNoteFormWidgetCacheKeyGeneratorPlugin implements WidgetCacheKeyGen
      *
      * @return string
      */
-    public function getRelatedWidgetClassName(): string
+    public function getWidgetClassName(): string
     {
         return CartItemNoteFormWidget::class;
     }

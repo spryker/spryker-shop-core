@@ -9,14 +9,14 @@ namespace SprykerShop\Yves\QuoteApprovalWidget\Plugin\ShopApplication;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\QuoteApprovalWidget\Widget\QuoteApprovalWidget;
-use SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorPluginInterface;
+use SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorStrategyPluginInterface;
 
 /**
  * {@inheritDoc}
  *
  * @method \SprykerShop\Yves\QuoteApprovalWidget\QuoteApprovalWidgetFactory getFactory()
  */
-class QuoteApprovalWidgetCacheKeyGeneratorPlugin extends AbstractPlugin implements WidgetCacheKeyGeneratorPluginInterface
+class QuoteApprovalWidgetCacheKeyGeneratorStrategyPlugin extends AbstractPlugin implements WidgetCacheKeyGeneratorStrategyPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -40,7 +40,7 @@ class QuoteApprovalWidgetCacheKeyGeneratorPlugin extends AbstractPlugin implemen
      *
      * @return string
      */
-    public function getRelatedWidgetClassName(): string
+    public function getWidgetClassName(): string
     {
         return QuoteApprovalWidget::class;
     }
