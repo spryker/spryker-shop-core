@@ -23,6 +23,7 @@ class ErrorPageConfig extends AbstractBundleConfig
         return [
             Response::HTTP_NOT_FOUND,
             Response::HTTP_FORBIDDEN,
+            Response::HTTP_TOO_MANY_REQUESTS,
         ];
     }
 

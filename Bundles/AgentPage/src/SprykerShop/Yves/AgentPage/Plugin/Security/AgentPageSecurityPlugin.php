@@ -42,8 +42,6 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
      */
     protected const ROUTE_LOGIN = 'agent/login';
 
-    protected const ROUTE_CHECK_PATH = '/agent/login_check';
-
     /**
      * This is used as route name and is internally converted to `/agent/logout`.
      * `path('agent_logout')` can be used in templates to get the URL.
@@ -91,7 +89,7 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
             'pattern' => $this->getConfig()->getAgentFirewallRegex(),
             'form' => [
                 'login_path' => static::ROUTE_LOGIN,
-                'check_path' => static::ROUTE_CHECK_PATH,
+                'check_path' => $this->getFactory()->createLoginCheckUrlFormatter()->getLoginCheckPath(),
                 'username_parameter' => AgentLoginForm::FORM_NAME . '[' . AgentLoginForm::FIELD_EMAIL . ']',
                 'password_parameter' => AgentLoginForm::FORM_NAME . '[' . AgentLoginForm::FIELD_PASSWORD . ']',
                 'with_csrf' => true,

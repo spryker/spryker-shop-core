@@ -88,6 +88,11 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
+     * @uses \Spryker\Yves\Locale\Plugin\Application\LocaleApplicationPlugin::SERVICE_LOCALE
+     */
+    public const SERVICE_LOCALE = 'locale';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -107,6 +112,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addFlashMessenger($container);
         $container = $this->addSecurityTokenStorage($container);
         $container = $this->addRouter($container);
+        $container = $this->addLocale($container);
         $container = $this->addRequestStack($container);
         $container = $this->addStore($container);
         $container = $this->addCustomerOverviewWidgetPlugins($container);
@@ -251,6 +257,20 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_ROUTER, function (Container $container) {
             return $container->getApplicationService(static::SERVICE_ROUTER);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addLocale(Container $container): Container
+    {
+        $container->set(static::SERVICE_LOCALE, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_LOCALE);
         });
 
         return $container;
