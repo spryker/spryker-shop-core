@@ -11,6 +11,7 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 use Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface;
 use Spryker\Yves\Kernel\Widget\WidgetFactoryInterface as LegacyWidgetFactoryInterface;
 use SprykerShop\Yves\ShopApplication\Exception\InvalidWidgetException;
+use SprykerShop\Yves\ShopApplication\Twig\Widget\CacheKeyGenerator\CacheKeyGeneratorInterface;
 
 class WidgetFactory implements WidgetFactoryInterface
 {
@@ -20,16 +21,23 @@ class WidgetFactory implements WidgetFactoryInterface
     protected $legacyWidgetPluginFactory;
 
     /**
+     * @var \SprykerShop\Yves\ShopApplication\Twig\Widget\CacheKeyGenerator\CacheKeyGeneratorInterface
+     */
+    protected $cacheKeyGenerator;
+
+    /**
      * @var array
      */
     protected static $widgetCache = [];
 
     /**
      * @param \Spryker\Yves\Kernel\Widget\WidgetFactoryInterface $legacyWidgetPluginFactory
+     * @param \SprykerShop\Yves\ShopApplication\Twig\Widget\CacheKeyGenerator\CacheKeyGeneratorInterface $cacheKeyGenerator
      */
-    public function __construct(LegacyWidgetFactoryInterface $legacyWidgetPluginFactory)
+    public function __construct(LegacyWidgetFactoryInterface $legacyWidgetPluginFactory, CacheKeyGeneratorInterface $cacheKeyGenerator)
     {
         $this->legacyWidgetPluginFactory = $legacyWidgetPluginFactory;
+        $this->cacheKeyGenerator = $cacheKeyGenerator;
     }
 
     /**
@@ -44,19 +52,35 @@ class WidgetFactory implements WidgetFactoryInterface
             return $this->legacyWidgetPluginFactory->build($widgetClassName, $arguments);
         }
 
-        $cacheKey = $this->generateCacheKey($widgetClassName, $arguments);
+        $cacheKey = $this->cacheKeyGenerator->generateCacheKey($widgetClassName, $arguments);
+
+        if ($cacheKey === null) {
+            return $this->createWidgetInstance($widgetClassName, $arguments);
+        }
+
         $widget = $this->getCachedWidget($cacheKey);
         if ($widget) {
             return $widget;
         }
 
-        $this->assertClassIsWidget($widgetClassName);
-
-        $widget = new $widgetClassName(...$arguments);
+        $widget = $this->createWidgetInstance($widgetClassName, $arguments);
 
         $this->cacheWidget($cacheKey, $widget);
 
         return $widget;
+    }
+
+    /**
+     * @param string $widgetClassName
+     * @param array $arguments
+     *
+     * @return \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface
+     */
+    protected function createWidgetInstance(string $widgetClassName, array $arguments): WidgetInterface
+    {
+        $this->assertClassIsWidget($widgetClassName);
+
+        return new $widgetClassName(...$arguments);
     }
 
     /**
@@ -75,17 +99,6 @@ class WidgetFactory implements WidgetFactoryInterface
                 WidgetInterface::class
             ));
         }
-    }
-
-    /**
-     * @param string $widgetClassName
-     * @param array $arguments
-     *
-     * @return string
-     */
-    protected function generateCacheKey(string $widgetClassName, array $arguments): string
-    {
-        return md5($widgetClassName . serialize($arguments));
     }
 
     /**
