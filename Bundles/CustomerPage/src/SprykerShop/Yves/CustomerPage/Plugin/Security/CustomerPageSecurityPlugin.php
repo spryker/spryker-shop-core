@@ -88,7 +88,7 @@ class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPlugi
             ],
             'form' => [
                 'login_path' => static::ROUTE_LOGIN,
-                'check_path' => '/login_check',
+                'check_path' => $this->getFactory()->createLoginCheckUrlFormatter()->getLoginCheckPath(),
                 'username_parameter' => LoginForm::FORM_NAME . '[' . LoginForm::FIELD_EMAIL . ']',
                 'password_parameter' => LoginForm::FORM_NAME . '[' . LoginForm::FIELD_PASSWORD . ']',
                 'with_csrf' => true,
