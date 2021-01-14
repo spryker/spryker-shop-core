@@ -39,15 +39,17 @@ export default class QuickOrderForm extends Component {
         this.rows = <HTMLElement>this.getElementsByClassName(`${this.jsName}__rows`)[0];
         this.addRowTrigger = <HTMLElement>this.getElementsByClassName(`${this.jsName}__add-row-trigger`)[0];
         this.addRowAjaxProvider = <AjaxProvider>this.getElementsByClassName(`${this.jsName}__add-row-provider`)[0];
-        this.removeRowAjaxProvider = <AjaxProvider>this.getElementsByClassName(
-            `${this.jsName}__remove-row-provider`)[0];
+        this.removeRowAjaxProvider = <AjaxProvider>(
+            this.getElementsByClassName(`${this.jsName}__remove-row-provider`)[0]
+        );
         this.registerRemoveRowTriggers();
         this.mapEvents();
     }
 
     protected registerRemoveRowTriggers(): void {
-        this.removeRowTriggers = <HTMLElement[]>Array.from(this.getElementsByClassName(
-            `${this.jsName}__remove-row-trigger`));
+        this.removeRowTriggers = <HTMLElement[]>(
+            Array.from(this.getElementsByClassName(`${this.jsName}__remove-row-trigger`))
+        );
     }
 
     protected mapEvents(): void {
@@ -95,7 +97,7 @@ export default class QuickOrderForm extends Component {
      */
     async removeRow(rowIndex: string): Promise<void> {
         const data = this.getFormData({
-            'row-index': rowIndex
+            'row-index': rowIndex,
         });
         const response = await this.removeRowAjaxProvider.fetch(data);
         const parsedResponse = this.parseResponse(response);
@@ -109,7 +111,7 @@ export default class QuickOrderForm extends Component {
         this.updateTableHtml(response);
     }
 
-    protected parseResponse(response: string): string|object {
+    protected parseResponse(response: string): string | object {
         try {
             return JSON.parse(response);
         } catch {

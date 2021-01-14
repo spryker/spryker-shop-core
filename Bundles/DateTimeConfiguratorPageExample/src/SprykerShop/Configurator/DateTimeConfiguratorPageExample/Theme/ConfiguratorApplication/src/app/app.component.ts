@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ProductService } from '../services/product.service';
 import { ConfiguratorService } from '../services/configurator.service';
@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
     constructor(
         public translate: TranslateService,
         private productService: ProductService,
-        private configuratorService: ConfiguratorService
+        private configuratorService: ConfiguratorService,
     ) {
         translate.addLangs(['en_US', 'de_DE']);
         this.translate.setDefaultLang('en_US');

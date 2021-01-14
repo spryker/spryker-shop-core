@@ -19,8 +19,7 @@
         flex-grow: 0;
         flex-basis: auto;
 
-        @each $breakpoint,
-        $edges in $setting-breakpoints {
+        @each $breakpoint, $edges in $setting-breakpoints {
             @include helper-breakpoint-media-min(helper-breakpoint-edge-min($edges)) {
                 @for $column from 1 through $setting-grid-columns {
                     &--#{$breakpoint}-#{$column} {

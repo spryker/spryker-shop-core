@@ -55,21 +55,19 @@ export default class ProductItem extends Component {
         this.productRating = <HTMLInputElement>this.getElementsByClassName(`${this.jsName}__rating`)[0];
         this.productDefaultPrice = <HTMLElement>this.getElementsByClassName(`${this.jsName}__default-price`)[0];
         this.productOriginalPrice = <HTMLElement>this.getElementsByClassName(`${this.jsName}__original-price`)[0];
-        this.productLinkDetailPage = <HTMLAnchorElement[]>Array.from(this.getElementsByClassName(
-            `${this.jsName}__link-detail-page`
-        ));
-        this.productLinkAddToCart = <HTMLAnchorElement>this.getElementsByClassName(
-            `${this.jsName}__link-add-to-cart`
-        )[0];
-        this.productAjaxButtonAddToCart = <HTMLButtonElement>this.getElementsByClassName(
-            `${this.jsName}__ajax-button-add-to-cart`
-        )[0];
-        this.productFormAddToCart = <HTMLFormElement>this.getElementsByClassName(
-            `${this.jsName}__form-add-to-cart`
-        )[0];
-        this.productButtonAddToCart = <HTMLButtonElement>this.getElementsByClassName(
-            `${this.jsName}__button-add-to-cart`
-        )[0];
+        this.productLinkDetailPage = <HTMLAnchorElement[]>(
+            Array.from(this.getElementsByClassName(`${this.jsName}__link-detail-page`))
+        );
+        this.productLinkAddToCart = <HTMLAnchorElement>(
+            this.getElementsByClassName(`${this.jsName}__link-add-to-cart`)[0]
+        );
+        this.productAjaxButtonAddToCart = <HTMLButtonElement>(
+            this.getElementsByClassName(`${this.jsName}__ajax-button-add-to-cart`)[0]
+        );
+        this.productFormAddToCart = <HTMLFormElement>this.getElementsByClassName(`${this.jsName}__form-add-to-cart`)[0];
+        this.productButtonAddToCart = <HTMLButtonElement>(
+            this.getElementsByClassName(`${this.jsName}__button-add-to-cart`)[0]
+        );
     }
 
     /**
@@ -126,7 +124,7 @@ export default class ProductItem extends Component {
      * @param labels An array of product card labels.
      */
     set labels(labels: ProductItemLabelsData[]) {
-        this.dispatchCustomEvent(EVENT_UPDATE_LABELS, {labels});
+        this.dispatchCustomEvent(EVENT_UPDATE_LABELS, { labels });
     }
 
     /**
@@ -144,7 +142,7 @@ export default class ProductItem extends Component {
      * @param rating A product card rating.
      */
     set ratingValue(rating: number) {
-        this.dispatchCustomEvent(EVENT_UPDATE_RATING, {rating});
+        this.dispatchCustomEvent(EVENT_UPDATE_RATING, { rating });
     }
 
     /**
@@ -173,7 +171,7 @@ export default class ProductItem extends Component {
      */
     set detailPageUrl(detailPageUrl: string) {
         if (this.productLinkDetailPage) {
-            this.productLinkDetailPage.forEach((element: HTMLAnchorElement) => element.href = detailPageUrl);
+            this.productLinkDetailPage.forEach((element: HTMLAnchorElement) => (element.href = detailPageUrl));
         }
     }
 
@@ -186,7 +184,7 @@ export default class ProductItem extends Component {
             this.productLinkAddToCart.href = addToCartUrl;
         }
 
-        this.dispatchCustomEvent(EVENT_UPDATE_ADD_TO_CART_URL, {sku: this.getSkuFromUrl(addToCartUrl)});
+        this.dispatchCustomEvent(EVENT_UPDATE_ADD_TO_CART_URL, { sku: this.getSkuFromUrl(addToCartUrl) });
     }
 
     /**
@@ -199,7 +197,7 @@ export default class ProductItem extends Component {
             this.productAjaxButtonAddToCart.dataset.url = ajaxAddToCartUrl;
         }
 
-        this.dispatchCustomEvent(EVENT_UPDATE_AJAX_ADD_TO_CART_URL, {sku: this.getSkuFromUrl(ajaxAddToCartUrl)});
+        this.dispatchCustomEvent(EVENT_UPDATE_AJAX_ADD_TO_CART_URL, { sku: this.getSkuFromUrl(ajaxAddToCartUrl) });
     }
 
     /**
@@ -215,7 +213,9 @@ export default class ProductItem extends Component {
             this.productButtonAddToCart.dataset.formAction = addToCartFormAction;
         }
 
-        this.dispatchCustomEvent(EVENT_UPDATE_ADD_TO_CART_FORM_ACTION, {sku: this.getSkuFromUrl(addToCartFormAction)});
+        this.dispatchCustomEvent(EVENT_UPDATE_ADD_TO_CART_FORM_ACTION, {
+            sku: this.getSkuFromUrl(addToCartFormAction),
+        });
     }
 
     /**

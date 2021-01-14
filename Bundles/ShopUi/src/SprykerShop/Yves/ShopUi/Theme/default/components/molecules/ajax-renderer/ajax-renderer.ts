@@ -8,11 +8,16 @@ export default class AjaxRenderer extends Component {
 
     protected readyCallback(): void {
         /* tslint:disable: deprecation */
-        this.provider = <AjaxProvider> (this.providerClassName ?
-            document.getElementsByClassName(this.providerClassName)[0] : document.querySelector(this.providerSelector));
-        this.target = <HTMLElement> (this.targetClassName ?
-            document.getElementsByClassName(this.targetClassName)[0] :
-            document.querySelector(this.targetSelector ? this.targetSelector : undefined));
+        this.provider = <AjaxProvider>(
+            (this.providerClassName
+                ? document.getElementsByClassName(this.providerClassName)[0]
+                : document.querySelector(this.providerSelector))
+        );
+        this.target = <HTMLElement>(
+            (this.targetClassName
+                ? document.getElementsByClassName(this.targetClassName)[0]
+                : document.querySelector(this.targetSelector ? this.targetSelector : undefined))
+        );
         /* tslint:enable: deprecation */
         this.mapEvents();
     }

@@ -34,8 +34,8 @@ export default class AddressFormToggler extends Component {
         this.form = <HTMLFormElement>document.querySelector(this.targetSelector);
         this.containerBillingAddress = <HTMLElement>document.querySelector(this.containerBillingAddressSelector);
         this.billingSameAsShipping = <HTMLElement>document.querySelector(this.billingSameAsShippingSelector);
-        this.billingSameAsShippingToggler = <HTMLInputElement>document.querySelector(
-            this.billingSameAsShippingTogglerSelector
+        this.billingSameAsShippingToggler = <HTMLInputElement>(
+            document.querySelector(this.billingSameAsShippingTogglerSelector)
         );
 
         if (this.subTargetSelector) {

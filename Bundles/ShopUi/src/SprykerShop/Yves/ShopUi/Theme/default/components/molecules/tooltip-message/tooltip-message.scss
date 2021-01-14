@@ -7,7 +7,7 @@ $shop-ui-tooltip-message-arrow-size: 0.5rem;
         display: block;
         position: absolute;
         min-width: 20rem;
-        margin-top: - $shop-ui-tooltip-message-arrow-size;
+        margin-top: -$shop-ui-tooltip-message-arrow-size;
         transform: translateX(-50%);
 
         &__text {
@@ -27,7 +27,7 @@ $shop-ui-tooltip-message-arrow-size: 0.5rem;
         &__arrow {
             position: absolute;
             left: calc(50% - #{$shop-ui-tooltip-message-arrow-size});
-            bottom: - $shop-ui-tooltip-message-arrow-size;
+            bottom: -$shop-ui-tooltip-message-arrow-size;
             border: $shop-ui-tooltip-message-arrow-size solid $setting-color-light;
             border-top-color: transparent;
             border-left-color: transparent;

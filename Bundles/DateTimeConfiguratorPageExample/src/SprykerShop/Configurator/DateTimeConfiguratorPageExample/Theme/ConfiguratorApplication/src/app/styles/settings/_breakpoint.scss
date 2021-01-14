@@ -5,8 +5,24 @@ $xl: 1024px;
 $xxl: 1200px;
 $xxxl: 1400px;
 
-$setting-breakpoints: (sm: ($sm, $md - 1),
-    md: ($md, $lg - 1),
-    lg: ($lg, $xl - 1),
-    xl: ($xl, $xxl - 1),
-    xxl: ($xxl));
+$setting-breakpoints: (
+    sm: (
+        $sm,
+        $md - 1,
+    ),
+    md: (
+        $md,
+        $lg - 1,
+    ),
+    lg: (
+        $lg,
+        $xl - 1,
+    ),
+    xl: (
+        $xl,
+        $xxl - 1,
+    ),
+    xxl: (
+        $xxl,
+    ),
+);

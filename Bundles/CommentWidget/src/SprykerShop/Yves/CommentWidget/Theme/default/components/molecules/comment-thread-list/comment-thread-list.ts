@@ -24,7 +24,7 @@ export default class CommentThreadList extends Component {
     }
 
     protected onSelectChange(event: Event): void {
-        const commentThreadSelect: HTMLSelectElement = (event.target as HTMLSelectElement);
+        const commentThreadSelect: HTMLSelectElement = event.target as HTMLSelectElement;
         this.onShowCommentThread(commentThreadSelect.value);
         this.scrollDown();
     }

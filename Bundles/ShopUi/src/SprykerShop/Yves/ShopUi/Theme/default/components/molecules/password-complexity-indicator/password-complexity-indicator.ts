@@ -13,7 +13,12 @@ enum ComplexityWeight {
 export default class PasswordComplexityIndicator extends Component {
     protected availableProperties = ['min', 'lowercase', 'uppercase', 'digits', 'symbols'];
     /* tslint:disable: no-magic-numbers */
-    protected complexityGradation = new Map([['weak', 0], ['medium', 25], ['strong', 50], ['very-strong', 75]]);
+    protected complexityGradation = new Map([
+        ['weak', 0],
+        ['medium', 25],
+        ['strong', 50],
+        ['very-strong', 75],
+    ]);
     /* tslint:enable */
     protected currentComplexity = '';
     protected maxPasswordComplexity = 0;
@@ -40,7 +45,10 @@ export default class PasswordComplexityIndicator extends Component {
     }
 
     protected mapInputElementKeyUpEvent(): void {
-        this.inputElement.addEventListener('keyup', debounce(() => this.onInputKeyUp(), this.debounceDelay));
+        this.inputElement.addEventListener(
+            'keyup',
+            debounce(() => this.onInputKeyUp(), this.debounceDelay),
+        );
     }
 
     protected initValidator(): void {

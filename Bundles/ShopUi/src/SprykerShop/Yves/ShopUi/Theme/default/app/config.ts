@@ -21,18 +21,18 @@ export interface Config {
     readonly isProduction: boolean;
 
     events: {
-        mount: string
+        mount: string;
         /**
          * @deprecated Use events.mount instead.
          */
-        ready: string
-        bootstrap: string
-        error: string
+        ready: string;
+        bootstrap: string;
+        error: string;
     };
 
     log: {
-        prefix: string
-        level: LogLevel
+        prefix: string;
+        level: LogLevel;
     };
 
     extra?: any;
@@ -53,13 +53,13 @@ export const defaultConfig: Config = {
          */
         ready: 'components-ready',
         bootstrap: 'application-bootstrap',
-        error: 'application-error'
+        error: 'application-error',
     },
 
     log: {
         prefix: __NAME__,
-        level: __PRODUCTION__ ? LogLevel.ERRORS_ONLY : LogLevel.VERBOSE
-    }
+        level: __PRODUCTION__ ? LogLevel.ERRORS_ONLY : LogLevel.VERBOSE,
+    },
 };
 
 /**

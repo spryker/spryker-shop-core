@@ -1,5 +1,8 @@
 import Component from 'ShopUi/models/component';
-import ProductItem, { EVENT_UPDATE_LABELS, ProductItemLabelsData } from 'ShopUi/components/molecules/product-item/product-item';
+import ProductItem, {
+    EVENT_UPDATE_LABELS,
+    ProductItemLabelsData,
+} from 'ShopUi/components/molecules/product-item/product-item';
 
 export default class LabelGroup extends Component {
     protected productLabelFlags: HTMLElement[];
@@ -62,7 +65,9 @@ export default class LabelGroup extends Component {
     }
 
     protected updateProductLabelTag(element: ProductItemLabelsData): void {
-        const labelTagTextContent = <HTMLElement>this.productLabelTag.getElementsByClassName(`${this.jsName}__label-tag-text`)[0];
+        const labelTagTextContent = <HTMLElement>(
+            this.productLabelTag.getElementsByClassName(`${this.jsName}__label-tag-text`)[0]
+        );
 
         this.productLabelTag.classList.remove(this.classToToggle);
         labelTagTextContent.innerText = element.text;
@@ -78,8 +83,8 @@ export default class LabelGroup extends Component {
     protected deleteProductLabelFlagClones(labelFlags: ProductItemLabelsData[]): void {
         while (this.productLabelFlags.length > labelFlags.length) {
             this.productLabelFlags[this.productLabelFlags.length - 1].remove();
-            this.productLabelFlags = <HTMLElement[]>Array.from(
-                this.getElementsByClassName(`${this.jsName}__label-flag`)
+            this.productLabelFlags = <HTMLElement[]>(
+                Array.from(this.getElementsByClassName(`${this.jsName}__label-flag`))
             );
         }
     }
@@ -94,7 +99,9 @@ export default class LabelGroup extends Component {
 
     protected updateProductLabelFlags(element: ProductItemLabelsData, index: number): void {
         const labelFlagClassName: string = this.productLabelFlags[index].getAttribute('data-config-name');
-        const labelFlagTextContent = <HTMLElement>this.productLabelFlags[index].getElementsByClassName(`${this.jsName}__label-flag-text`)[0];
+        const labelFlagTextContent = <HTMLElement>(
+            this.productLabelFlags[index].getElementsByClassName(`${this.jsName}__label-flag-text`)[0]
+        );
 
         if (element.type) {
             this.productLabelFlags[index].classList.add(`${labelFlagClassName}--${element.type}`);

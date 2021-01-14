@@ -17,7 +17,9 @@ export default class SaveNewAddress extends Component {
 
     protected readyCallback(): void {
         if (this.shippingAddressTogglerSelector && this.billingAddressTogglerSelector) {
-            this.customerShippingAddresses = <HTMLFormElement>document.querySelector(this.shippingAddressTogglerSelector);
+            this.customerShippingAddresses = <HTMLFormElement>(
+                document.querySelector(this.shippingAddressTogglerSelector)
+            );
             this.customerBillingAddresses = <HTMLFormElement>document.querySelector(this.billingAddressTogglerSelector);
         }
 
@@ -27,7 +29,9 @@ export default class SaveNewAddress extends Component {
         }
 
         this.saveNewAddressToggler = <HTMLInputElement>document.querySelector(this.saveAddressTogglerSelector);
-        this.sameAsShippingToggler = <HTMLInputElement>document.querySelector(this.billingSameAsShippingAddressTogglerSelector);
+        this.sameAsShippingToggler = <HTMLInputElement>(
+            document.querySelector(this.billingSameAsShippingAddressTogglerSelector)
+        );
 
         this.customerAddressesExists();
     }

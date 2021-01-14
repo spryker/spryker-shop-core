@@ -25,7 +25,7 @@ $setting-font-size: (
     6: 18px,
     big: 16px,
     default: 14px,
-    small: 12px
+    small: 12px,
 ) !default;
 
 /**
@@ -34,7 +34,7 @@ $setting-font-size: (
 $setting-font-weight: (
     light: 300,
     regular: 400,
-    bold: 900
+    bold: 900,
 ) !default;
 
 /**
@@ -48,5 +48,5 @@ $setting-font-line-height: (
     5: 1.4,
     6: 1.4,
     default: 1.5,
-    tight: 1.1
+    tight: 1.1,
 ) !default;

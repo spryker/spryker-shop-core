@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'parseDate'
+    name: 'parseDate',
 })
 export class ParseDatePipe implements PipeTransform {
     transform(date: string): string {

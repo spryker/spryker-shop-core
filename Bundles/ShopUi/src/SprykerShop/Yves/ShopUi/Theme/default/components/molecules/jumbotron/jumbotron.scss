@@ -3,9 +3,12 @@
         &__container {
             height: 10rem;
             /* stylelint-disable function-comma-newline-after */
-            background: linear-gradient(to left top,
-                helper-color-dark($setting-color-main),
-                helper-color-light($setting-color-main)) center/cover no-repeat;
+            background: linear-gradient(
+                    to left top,
+                    helper-color-dark($setting-color-main),
+                    helper-color-light($setting-color-main)
+                )
+                center/cover no-repeat;
             /* stylelint-enable */
             text-align: center;
 

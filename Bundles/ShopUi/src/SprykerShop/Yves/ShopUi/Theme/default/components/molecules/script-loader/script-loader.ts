@@ -2,10 +2,7 @@ import Component from '../../../models/component';
 import { debug } from '../../../app/logger';
 
 const EVENT_SCRIPT_LOAD = 'scriptload';
-const defaultIgnoredAttributes = [
-    'class',
-    'data-qa'
-];
+const defaultIgnoredAttributes = ['class', 'data-qa'];
 
 /**
  * @event scriptload An event which is triggered when a script is loaded.
@@ -69,9 +66,7 @@ export default class ScriptLoader extends Component {
      * to the script tag when created.
      */
     get ignoredAttributes(): string[] {
-        return [
-            ...defaultIgnoredAttributes
-        ];
+        return [...defaultIgnoredAttributes];
     }
 
     /**

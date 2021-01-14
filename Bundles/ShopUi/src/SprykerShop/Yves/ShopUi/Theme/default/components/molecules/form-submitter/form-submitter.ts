@@ -13,8 +13,9 @@ export default class FormSubmitter extends Component {
     }
 
     protected mapEvents(): void {
-        this.triggers.forEach(trigger =>
-            trigger.addEventListener(this.eventName, (event: Event) => this.onEvent(event)));
+        this.triggers.forEach((trigger) =>
+            trigger.addEventListener(this.eventName, (event: Event) => this.onEvent(event)),
+        );
     }
 
     protected onEvent(event: Event): void {
@@ -25,8 +26,9 @@ export default class FormSubmitter extends Component {
             return;
         }
 
-        const submit = <HTMLButtonElement | HTMLInputElement>form.querySelector('[type="submit"]')
-            || <HTMLButtonElement>form.querySelector('button');
+        const submit =
+            <HTMLButtonElement | HTMLInputElement>form.querySelector('[type="submit"]') ||
+            <HTMLButtonElement>form.querySelector('button');
 
         if (submit) {
             submit.click();
