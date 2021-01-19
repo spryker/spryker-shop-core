@@ -72,6 +72,8 @@
                                         },
                                     } only %}
                                         {% block embeddedData %}
+                                            <input type="hidden" value="{{ productSku }}" name="groupKey">
+                                            <input type="hidden" value="{{ data.product.promotionItem.discount.discountPromotion.idDiscountPromotion }}" name="idDiscountPromotion">
                                             <button class="button button--expand" data-init-single-click {{ qa('add-to-cart-button') }}>
                                                 {{- embed.buttonContent -}}
                                             </button>
