@@ -8,19 +8,19 @@
 namespace SprykerShop\Yves\MerchantProductOfferWidget\Resolver;
 
 use Generated\Shared\Transfer\ShopContextTransfer;
-use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\Kernel\ContainerInterface;
 
 class ShopContextResolver implements ShopContextResolverInterface
 {
     protected const SERVICE_SHOP_CONTEXT = 'SERVICE_SHOP_CONTEXT';
 
     /**
-     * @var \Spryker\Service\Container\ContainerInterface
+     * @var \Spryker\Shared\Kernel\ContainerInterface
      */
     protected $container;
 
     /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
+     * @param \Spryker\Shared\Kernel\ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
     {
@@ -32,6 +32,8 @@ class ShopContextResolver implements ShopContextResolverInterface
      */
     public function resolve(): ShopContextTransfer
     {
-        return $this->container->has(static::SERVICE_SHOP_CONTEXT) ? $this->container->get(static::SERVICE_SHOP_CONTEXT) : new ShopContextTransfer();
+        return $this->container->hasApplicationService(static::SERVICE_SHOP_CONTEXT)
+            ? $this->container->getApplicationService(static::SERVICE_SHOP_CONTEXT)
+            : new ShopContextTransfer();
     }
 }
