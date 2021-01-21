@@ -25,6 +25,15 @@
 
                 <div class="col {{ radioColVisibilityClass }}">
                     {% block radio %}
+                        {% set selectedAttributes = app.request.query.get('attribute') | default([]) %}
+                        {% set itemAttributes = {
+                            'selected_merchant_reference_type' : 'product_offer_reference',
+                            'selected_merchant_reference' : data.productOfferReference
+                        } %}
+                        {% set searchParams = {
+                            'attribute': selectedAttributes|merge(itemAttributes)
+                        }|url_encode %}
+
                         {% include atom('radio') with {
                             class: config.jsName ~ '__trigger-' ~ data.productOfferReference,
                             attributes: {
@@ -37,7 +46,7 @@
                         {% include molecule('page-location-search-params-updater', 'MerchantProductOfferWidget') with {
                             attributes: {
                                 'trigger-class': config.jsName ~ '__trigger-' ~ data.productOfferReference,
-                                'search-params': 'attribute[product_offer_reference]=' ~ data.productOfferReference,
+                                'search-params': searchParams,
                             },
                         } only %}
                     {% endblock %}
