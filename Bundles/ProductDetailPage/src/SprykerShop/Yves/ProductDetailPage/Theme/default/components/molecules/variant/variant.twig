@@ -39,7 +39,11 @@
             {{ 'product.attribute.not_available' | trans }}
         {% endif %}
     {% else %}
-        {{data.selectedValue}} <a href="?{{data.optionResetUrl}}">{{ 'Reset' | trans }}</a>
-        <input type="hidden" name="{{data.formName}}" value="{{data.selectedValue}}">
+        {{data.selectedValue}}
+
+        {% if data.values | length > 1 %}
+            <a href="?{{data.optionResetUrl}}">{{ 'Reset' | trans }}</a>
+            <input type="hidden" name="{{data.formName}}" value="{{data.selectedValue}}">
+        {% endif %}
     {% endif %}
 {% endblock %}
