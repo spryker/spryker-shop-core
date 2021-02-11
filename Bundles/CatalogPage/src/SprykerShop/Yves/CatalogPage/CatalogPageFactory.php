@@ -17,6 +17,7 @@ use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToLocaleClientInte
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToProductCategoryFilterClientInterface;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToProductCategoryFilterStorageClientInterface;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientInterface;
+use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToStoreClientInterface;
 use SprykerShop\Yves\CatalogPage\FacetFilter\FacetFilter;
 use SprykerShop\Yves\CatalogPage\FacetFilter\FacetFilterInterface;
 use SprykerShop\Yves\CatalogPage\Resolver\ShopContextResolver;
@@ -118,6 +119,14 @@ class CatalogPageFactory extends AbstractFactory
     public function getProductCategoryFilterStorageClient(): CatalogPageToProductCategoryFilterStorageClientInterface
     {
         return $this->getProvidedDependency(CatalogPageDependencyProvider::CLIENT_PRODUCT_CATEGORY_FILTER_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToStoreClientInterface
+     */
+    public function getStoreClient(): CatalogPageToStoreClientInterface
+    {
+        return $this->getProvidedDependency(CatalogPageDependencyProvider::CLIENT_STORE);
     }
 
     /**

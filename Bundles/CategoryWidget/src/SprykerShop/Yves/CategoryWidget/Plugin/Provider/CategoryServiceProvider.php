@@ -49,7 +49,7 @@ class CategoryServiceProvider extends AbstractPlugin implements ServiceProviderI
     protected function getGlobalTemplateVariables(Application $app): array
     {
         return [
-            'categories' => $this->getFactory()->getCategoryStorageClient()->getCategories($app['locale']),
+            'categories' => $this->getFactory()->getCategoryStorageClient()->getCategories($app['locale'], APPLICATION_STORE),
         ];
     }
 }

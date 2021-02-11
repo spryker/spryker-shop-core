@@ -72,6 +72,6 @@ class CategoryTwigPlugin extends AbstractPlugin implements TwigPluginInterface
         return $this
             ->getFactory()
             ->getCategoryStorageClient()
-            ->getCategories($container->get(static::SERVICE_LOCALE));
+            ->getCategories($container->get(static::SERVICE_LOCALE), APPLICATION_STORE);
     }
 }

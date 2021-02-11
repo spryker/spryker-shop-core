@@ -25,11 +25,12 @@ class CatalogPageToCategoryStorageClientBridge implements CatalogPageToCategoryS
     /**
      * @param int $idCategoryNode
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
      */
-    public function getCategoryNodeById($idCategoryNode, $localeName)
+    public function getCategoryNodeById($idCategoryNode, $localeName, ?string $storeName = null)
     {
-        return $this->categoryClient->getCategoryNodeById($idCategoryNode, $localeName);
+        return $this->categoryClient->getCategoryNodeById($idCategoryNode, $localeName, $storeName);
     }
 }

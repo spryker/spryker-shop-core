@@ -24,11 +24,12 @@ class CategoryWidgetToCategoryStorageClientBridge implements CategoryWidgetToCat
 
     /**
      * @param string $locale
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
      */
-    public function getCategories($locale)
+    public function getCategories($locale, ?string $storeName = null)
     {
-        return $this->categoryStorageClient->getCategories($locale);
+        return $this->categoryStorageClient->getCategories($locale, $storeName);
     }
 }
