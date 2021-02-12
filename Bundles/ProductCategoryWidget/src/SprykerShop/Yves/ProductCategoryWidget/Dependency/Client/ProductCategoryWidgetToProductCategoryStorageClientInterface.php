@@ -7,14 +7,20 @@
 
 namespace SprykerShop\Yves\ProductCategoryWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
+
 interface ProductCategoryWidgetToProductCategoryStorageClientInterface
 {
     /**
      * @param int $idProductAbstract
-     * @param string $locale
-     * @param string|null $storeName
+     * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer|null
      */
-    public function findProductAbstractCategory($idProductAbstract, $locale, ?string $storeName = null);
+    public function findProductAbstractCategory(
+        int $idProductAbstract,
+        string $localeName,
+        string $storeName
+    ): ?ProductAbstractCategoryStorageTransfer;
 }
