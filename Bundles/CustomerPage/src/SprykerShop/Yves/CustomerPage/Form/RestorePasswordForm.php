@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -21,6 +22,9 @@ class RestorePasswordForm extends AbstractType
 {
     public const FIELD_RESTORE_PASSWORD_KEY = 'restore_password_key';
     public const FIELD_PASSWORD = 'password';
+
+    protected const VALIDATION_MIN_LENGTH_MESSAGE = 'validation.min_length';
+    protected const VALIDATION_MAX_LENGTH_MESSAGE = 'validation.max_length.singular';
 
     /**
      * @return string
@@ -78,6 +82,12 @@ class RestorePasswordForm extends AbstractType
                 'label' => 'forms.confirm-password',
             ],
             'constraints' => [
+                new Length([
+                    'min' => $this->getConfig()->getCustomerPasswordMinLength(),
+                    'max' => $this->getConfig()->getCustomerPasswordMaxLength(),
+                    'minMessage' => static::VALIDATION_MIN_LENGTH_MESSAGE,
+                    'maxMessage' => static::VALIDATION_MAX_LENGTH_MESSAGE,
+                ]),
                 $this->createNotBlankConstraint(),
             ],
         ]);
