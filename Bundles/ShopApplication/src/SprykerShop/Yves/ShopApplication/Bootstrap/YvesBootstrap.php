@@ -38,8 +38,10 @@ class YvesBootstrap
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function provideExternalDependencies(AbstractBundleDependencyProvider $dependencyProvider, Container $container)
-    {
+    protected function provideExternalDependencies(
+        AbstractBundleDependencyProvider $dependencyProvider,
+        Container $container
+    ): Container {
         $dependencyProvider->provideDependencies($container);
 
         return $container;
@@ -49,10 +51,12 @@ class YvesBootstrap
      * @param \Spryker\Yves\Kernel\Dependency\Injector\DependencyInjector $dependencyInjector
      * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return \Spryker\Shared\Kernel\ContainerInterface|\Spryker\Zed\Kernel\Container
+     * @return \Spryker\Yves\Kernel\Container
      */
-    protected function injectExternalDependencies(DependencyInjector $dependencyInjector, Container $container)
-    {
+    protected function injectExternalDependencies(
+        DependencyInjector $dependencyInjector,
+        Container $container
+    ): Container {
         $container = $dependencyInjector->inject($container);
 
         return $container;
