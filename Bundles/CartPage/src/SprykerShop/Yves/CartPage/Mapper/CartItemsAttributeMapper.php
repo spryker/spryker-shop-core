@@ -22,6 +22,13 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     public const PRODUCT_CONCRETE_IDS = 'product_concrete_ids';
 
     /**
+     * @deprecated Exists for Backward Compatibility reasons only. Use {@link KEY_ATTRIBUTE_VARIANT_MAP} instead.
+     */
+    protected const KEY_ATTRIBUTE_VARIANTS = 'attribute_variants';
+    protected const KEY_ATTRIBUTE_MAP = 'attribute_map';
+    protected const KEY_ATTRIBUTE_VARIANT_MAP = 'attribute_variant_map';
+
+    /**
      * @var \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface
      */
     protected $productStorageClient;
@@ -35,8 +42,10 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
      * @param \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface $productStorageClient
      * @param \SprykerShop\Yves\CartPage\Mapper\CartItemsMapperInterface $cartItemsAvailabilityMapper
      */
-    public function __construct(CartPageToProductStorageClientInterface $productStorageClient, CartItemsMapperInterface $cartItemsAvailabilityMapper)
-    {
+    public function __construct(
+        CartPageToProductStorageClientInterface $productStorageClient,
+        CartItemsMapperInterface $cartItemsAvailabilityMapper
+    ) {
         $this->productStorageClient = $productStorageClient;
         $this->cartItemsAvailabilityMapper = $cartItemsAvailabilityMapper;
     }
@@ -66,9 +75,21 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
             if (!isset($abstractProductData[$item->getIdProductAbstract()])) {
                 continue;
             }
+
+            $attributeMap = $abstractProductData[$item->getIdProductAbstract()][static::KEY_ATTRIBUTE_MAP];
+            if (isset($attributeMap[static::KEY_ATTRIBUTE_VARIANT_MAP])) {
+                $attributes[$item->getSku()] = $this->buildAttributeMapWithAvailability(
+                    $item,
+                    $attributeMap,
+                    $availableItemsSkus
+                );
+
+                continue;
+            }
+
             $attributes[$item->getSku()] = $this->getAttributesWithAvailability(
                 $item,
-                $abstractProductData[$item->getIdProductAbstract()]['attribute_map'],
+                $attributeMap,
                 $availableItemsSkus
             );
         }
@@ -77,6 +98,8 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     }
 
     /**
+     * @deprecated Exists for Backward Compatibility reasons only. Use {@link buildAttributeMapWithAvailability()} instead.
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $item
      * @param array $attributeMap
      * @param array $availableItemsSkus
@@ -169,7 +192,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     protected function createAttributeIterator(array $attributeMap)
     {
         $attributeMapIterator = new RecursiveIteratorIterator(
-            new RecursiveArrayIterator($attributeMap['attribute_variants']),
+            new RecursiveArrayIterator($attributeMap[static::KEY_ATTRIBUTE_VARIANTS]),
             RecursiveIteratorIterator::SELF_FIRST
         );
 
@@ -192,6 +215,16 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     }
 
     /**
+     * @param \RecursiveIteratorIterator $attributeMapIterator
+     *
+     * @return string
+     */
+    protected function getParentNode(RecursiveIteratorIterator $attributeMapIterator)
+    {
+        return $attributeMapIterator->getSubIterator($attributeMapIterator->getDepth() - 1)->key();
+    }
+
+    /**
      * @param array $availableItemsSkus
      * @param array $availableConcreteProductsSku
      * @param int $productConcreteId
@@ -204,12 +237,68 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     }
 
     /**
-     * @param \RecursiveIteratorIterator $attributeMapIterator
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param array $attributeMap
+     * @param string[] $availableItemsSkus
      *
-     * @return string
+     * @return array
      */
-    protected function getParentNode(RecursiveIteratorIterator $attributeMapIterator)
-    {
-        return $attributeMapIterator->getSubIterator($attributeMapIterator->getDepth() - 1)->key();
+    protected function buildAttributeMapWithAvailability(
+        ItemTransfer $itemTransfer,
+        array $attributeMap,
+        array $availableItemsSkus
+    ): array {
+        $attributeMapWithAvailability = [];
+        $availableConcreteProductsSku = $this->getAvailableConcreteProductsSku($attributeMap);
+        $attributeVariantMap = $attributeMap[static::KEY_ATTRIBUTE_VARIANT_MAP];
+
+        foreach ($attributeVariantMap as $idProductConcrete => $superAttributes) {
+            $attributeMapWithAvailability = $this->setProductAvailability(
+                $superAttributes,
+                $attributeMapWithAvailability,
+                $availableItemsSkus,
+                $availableConcreteProductsSku,
+                $idProductConcrete,
+                $itemTransfer
+            );
+        }
+
+        return $attributeMapWithAvailability;
+    }
+
+    /**
+     * @param array $superAttributes
+     * @param array $attributeMapWithAvailability
+     * @param string[] $availableItemsSkus
+     * @param array $availableConcreteProductsSku
+     * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return array
+     */
+    protected function setProductAvailability(
+        array $superAttributes,
+        array $attributeMapWithAvailability,
+        array $availableItemsSkus,
+        array $availableConcreteProductsSku,
+        int $idProductConcrete,
+        ItemTransfer $itemTransfer
+    ): array {
+        foreach ($superAttributes as $attributeName => $attributeValue) {
+            if ($this->isVariantNotSet($attributeName, $attributeMapWithAvailability, $attributeValue)) {
+                $attributeMapWithAvailability[$attributeName][$attributeValue][CartVariantConstants::AVAILABLE] = false;
+                $attributeMapWithAvailability[$attributeName][$attributeValue][CartVariantConstants::SELECTED] = false;
+            }
+
+            if ($this->isItemSkuAvailable($availableItemsSkus, $availableConcreteProductsSku, $idProductConcrete)) {
+                $attributeMapWithAvailability[$attributeName][$attributeValue][CartVariantConstants::AVAILABLE] = true;
+            }
+
+            if ($idProductConcrete === $itemTransfer->getId()) {
+                $attributeMapWithAvailability[$attributeName][$attributeValue][CartVariantConstants::SELECTED] = true;
+            }
+        }
+
+        return $attributeMapWithAvailability;
     }
 }
