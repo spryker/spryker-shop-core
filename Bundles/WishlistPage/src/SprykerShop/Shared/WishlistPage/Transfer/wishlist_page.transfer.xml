@@ -7,6 +7,7 @@
         <property name="images" singular="image" type="ProductImageStorage[]"/>
         <property name="sku" type="string"/>
         <property name="idProductConcrete" type="int"/>
+        <property name="attributeMap" type="AttributeMapStorage"/>
     </transfer>
 
     <transfer name="WishlistMoveToCartRequestCollection">
@@ -19,15 +20,23 @@
         <property name="wishlistName" type="string"/>
         <property name="idProduct" type="int"/>
         <property name="fkCustomer" type="int"/>
+        <property name="merchantReference" type="string"/>
+        <property name="productOfferReference" type="string"/>
     </transfer>
 
     <transfer name="WishlistItemMeta">
         <property name="sku" type="string"/>
+        <property name="idWishlistItem" type="int"/>
+        <property name="merchantReference" type="string"/>
+        <property name="productOfferReference" type="string"/>
     </transfer>
 
     <transfer name="WishlistMoveToCartRequest">
         <property name="sku" type="string"/>
+        <property name="idWishlistItem" type="int"/>
         <property name="wishlistItem" type="WishlistItem"/>
+        <property name="merchantReference" type="string"/>
+        <property name="productOfferReference" type="string"/>
     </transfer>
 
     <transfer name="Customer">
@@ -51,6 +60,7 @@
         <property name="pagination" type="WishlistPagination"/>
         <property name="items" type="WishlistItem[]" singular="item"/>
         <property name="meta" type="WishlistOverviewMeta"/>
+        <property name="errors" type="Message[]" singular="error"/>
     </transfer>
 
     <transfer name="WishlistResponse">
@@ -71,6 +81,20 @@
     </transfer>
 
     <transfer name="WishlistItemCollection">
+    </transfer>
+
+    <transfer name="ProductStorageCriteria">
+    </transfer>
+
+    <transfer name="ShopContext">
+    </transfer>
+
+    <transfer name="Message">
+        <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="AttributeMapStorage">
     </transfer>
 
 </transfers>

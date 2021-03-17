@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\WishlistPage;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToCustomerClientBridge;
+use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToGlossaryStorageClientBridge;
 use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToProductStorageClientBridge;
 use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToWishlistClientBridge;
 
@@ -17,9 +18,13 @@ class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_WISHLIST = 'CLIENT_WISHLIST';
+    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY';
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+
     public const PLUGIN_WISHLIST_ITEM_EXPANDERS = 'PLUGIN_WISHLIST_ITEM_EXPANDERS';
     public const PLUGIN_WISHLIST_VIEW_WIDGETS = 'PLUGIN_WISHLIST_VIEW_WIDGETS';
+    public const PLUGIN_WISHLIST_ITEM_REQUEST_EXPANDERS = 'PLUGIN_WISHLIST_ITEM_REQUEST_EXPANDERS';
+    public const PLUGIN_WISHLIST_ITEM_META_FORM_EXPANDERS = 'PLUGIN_WISHLIST_ITEM_META_FORM_EXPANDERS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -30,9 +35,12 @@ class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addCustomerClient($container);
         $container = $this->addWishlistClient($container);
+        $container = $this->addGlossaryStorageClient($container);
         $container = $this->addProductStorageClient($container);
         $container = $this->addWishlistItemExpanderPlugins($container);
         $container = $this->addWishlistViewWidgetPlugins($container);
+        $container = $this->addWishlistItemRequestExpanderPlugins($container);
+        $container = $this->addWishlistItemMetaFormExpanderPlugins($container);
 
         return $container;
     }
@@ -108,6 +116,48 @@ class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addWishlistItemRequestExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGIN_WISHLIST_ITEM_REQUEST_EXPANDERS, function () {
+            return $this->getWishlistItemRequestExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addWishlistItemMetaFormExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGIN_WISHLIST_ITEM_META_FORM_EXPANDERS, function () {
+            return $this->getWishlistItemMetaFormExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addGlossaryStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
+            return new WishlistPageToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
      */
     protected function getWishlistItemExpanderPlugins()
@@ -122,6 +172,22 @@ class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return string[]
      */
     protected function getWishlistViewWidgetPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \SprykerShop\Yves\WishlistPageExtension\Dependency\Plugin\WishlistItemRequestExpanderPluginInterface[]
+     */
+    protected function getWishlistItemRequestExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \SprykerShop\Yves\WishlistPageExtension\Dependency\Plugin\WishlistItemMetaFormExpanderPluginInterface[]
+     */
+    protected function getWishlistItemMetaFormExpanderPlugins(): array
     {
         return [];
     }

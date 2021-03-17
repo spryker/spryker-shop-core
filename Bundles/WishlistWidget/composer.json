@@ -11,11 +11,14 @@
   },
   "require-dev": {
     "spryker-shop/customer-page": "*",
+    "spryker-shop/merchant-product-offer-widget": "*",
     "spryker-shop/product-detail-page": "*",
     "spryker/code-sniffer": "*"
   },
   "suggest": {
     "spryker-shop/customer-page": "To have customer account pages",
+    "spryker-shop/merchant-product-offer-widget": "To use molecules",
+    "spryker-shop/merchant-product-widget": "To use molecules ",
     "spryker-shop/product-detail-page": "Widget plugins are available for this module."
   },
   "autoload": {

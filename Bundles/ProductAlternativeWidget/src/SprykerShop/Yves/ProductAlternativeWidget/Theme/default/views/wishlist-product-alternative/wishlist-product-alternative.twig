@@ -51,6 +51,9 @@
                                 {% endif %}
                             {% endfor %}
                             <span class="text-alert">{{ 'product_alternative_widget.alternative_for' | trans({name: data.item.name}) }}</span>
+                            {% if widgetGlobalExists('SoldByMerchantWidget') %}
+                                {% widget 'SoldByMerchantWidget' args [item] only %}{% endwidget %}
+                            {% endif %}
                         </td>
                         <td class="text-center">
                             {% if item.price is not null %}
@@ -66,9 +69,22 @@
                         </td>
                         <td>
                             <form method="POST" action="{{ path('wishlist/add-item', {sku: item.sku, 'product-id': item.idProductConcrete, 'wishlist-name': data.wishlistName}) }}">
-                                <button class="button button--success" {{ disableAddToWishlist ? 'disabled' }}>
+                                <button class="button button--success" {{ disableAddToWishlist is defined ? 'disabled' }}>
                                     {{ 'product_alternative_widget.add_to_wishlist' | trans}}
                                 </button>
+                                {% if widgetGlobalExists('MerchantProductOfferWidget') %}
+                                    {% include molecule('wishlist-item-product-offer', 'MerchantProductOfferWidget') with {
+                                        data: {
+                                            productView: item
+                                        },
+                                    } only %}
+                                {% elseif widgetGlobalExists('MerchantProductWidget') %}
+                                    {% include molecule('wishlist-item-merchant-product', 'MerchantProductWidget') with {
+                                        data: {
+                                            productView: item
+                                        },
+                                    } only %}
+                                {% endif %}
                                 <input id="wishlist_add_item_form__token" name="wishlist_add_item_form[_token]" type="hidden" value="{{ csrf_token('wishlist_add_item_form') }}">
                             </form>
                         </td>

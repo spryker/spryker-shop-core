@@ -225,10 +225,9 @@
             <hr>
             {{ widget('WishlistWidgetPlugin', data.product) }} {# @deprecated Use molecule('wishlist-selector', 'WishlistWidget') instead. #}
         {% else %}
-            {% include molecule('wishlist-selector-for-pdp', 'WishlistWidget') ignore missing with {
+            {% include molecule('wishlist-selector-product-detail-page', 'WishlistWidget') ignore missing with {
                 data: {
-                    sku: data.product.sku,
-                    idProductConcrete: data.product.idProductConcrete | default,
+                    product: data.product
                 },
             } only %}
         {% endif %}

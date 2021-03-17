@@ -10,6 +10,8 @@ namespace SprykerShop\Yves\WishlistPage\Dependency\Client;
 interface WishlistPageToProductStorageClientInterface
 {
     /**
+     * @phpstan-return array<mixed>
+     *
      * @deprecated Use {@link findProductConcreteStorageData()} instead.
      *
      * @param int $idProductConcrete
@@ -20,6 +22,8 @@ interface WishlistPageToProductStorageClientInterface
     public function getProductConcreteStorageData($idProductConcrete, $localeName);
 
     /**
+     * @phpstan-return array<mixed>|null
+     *
      * @param int $idProductConcrete
      * @param string $localeName
      *

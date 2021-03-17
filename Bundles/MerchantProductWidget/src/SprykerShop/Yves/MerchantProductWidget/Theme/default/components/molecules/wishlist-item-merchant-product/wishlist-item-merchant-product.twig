@@ -1,0 +1,13 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'wishlist-item-merchant-product',
+} %}
+
+{% define data = {
+    productView: required
+} %}
+
+{% block body %}
+    <input type="hidden" name="merchant_reference" value="{{ productView.merchantReference }}"/>
+{% endblock %}

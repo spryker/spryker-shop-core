@@ -1,0 +1,14 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'wishlist-item-product-offer',
+} %}
+
+{% define data = {
+    productView: required
+} %}
+
+{% block body %}
+    <input type="hidden" name="merchant_reference" value="{{ data.productView.merchantReference }}"/>
+    <input type="hidden" name="product_offer_reference" value="{{ data.productView.productOfferReference }}"/>
+{% endblock %}

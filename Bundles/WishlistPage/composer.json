@@ -8,20 +8,26 @@
     "spryker-shop/customer-page": "^1.0.0 || ^2.0.0",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.40.0",
+    "spryker-shop/wishlist-page-extension": "^1.0.0",
     "spryker/application": "^3.8.0",
     "spryker/customer": "^7.4.0",
+    "spryker/glossary-storage": "^1.9.1",
     "spryker/kernel": "^3.52.0",
     "spryker/product-storage": "^1.1.0",
     "spryker/symfony": "^3.1.0",
-    "spryker/wishlist": "^5.1.0 || ^6.0.0 || ^8.0.0"
+    "spryker/wishlist": "^8.3.0"
   },
   "require-dev": {
+    "spryker-shop/merchant-product-offer-widget": "*",
+    "spryker-shop/merchant-product-widget": "*",
     "spryker-shop/product-discontinued-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/router": "*",
     "spryker/silex": "*"
   },
   "suggest": {
+    "spryker-shop/merchant-product-offer-widget": "If you want to use MerchantProductOfferWidget or expander plugins.",
+    "spryker-shop/merchant-product-widget": "If you want to use MerchantProductWidget or expander plugins.",
     "spryker-shop/product-discontinued-widget": "If you want to use ProductDiscontinuedWidget or ProductDiscontinuedWidgetPlugin.",
     "spryker/router": "Use this module when you want to use the Router.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."

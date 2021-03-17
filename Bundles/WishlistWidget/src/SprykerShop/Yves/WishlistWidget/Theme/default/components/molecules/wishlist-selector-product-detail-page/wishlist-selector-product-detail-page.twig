@@ -1,0 +1,18 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'wishlist-selector-product-detail-page',
+} %}
+
+{% define data = {
+    product: required
+} %}
+
+{% block body %}
+    <hr>
+    {% include molecule('wishlist-selector-default', 'WishlistWidget') ignore missing with {
+        data: {
+            product: data.product
+        }
+    } only %}
+{% endblock %}

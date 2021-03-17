@@ -34,6 +34,7 @@ class WishlistController extends AbstractController
     public const PARAM_PRODUCT_ID = 'product-id';
     public const PARAM_SKU = 'sku';
     public const PARAM_WISHLIST_NAME = 'wishlist-name';
+    public const PARAM_WISHLIST_ID_ITEM = 'id-wishlist-item';
     protected const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
 
     /**
@@ -54,6 +55,8 @@ class WishlistController extends AbstractController
     }
 
     /**
+     * @phpstan-return array<mixed>
+     *
      * @param string $wishlistName
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -74,6 +77,11 @@ class WishlistController extends AbstractController
             ->setName($wishlistName)
             ->setFkCustomer($customerTransfer->getIdCustomer());
 
+        $shopContextParams = $this->getFactory()
+            ->getShopContext()
+            ->toArray();
+        $wishlistTransfer->fromArray($shopContextParams, true);
+
         $wishlistOverviewRequest = (new WishlistOverviewRequestTransfer())
             ->setWishlist($wishlistTransfer)
             ->setPage($pageNumber)
@@ -82,6 +90,17 @@ class WishlistController extends AbstractController
         $wishlistOverviewResponse = $this->getFactory()
             ->getWishlistClient()
             ->getWishlistOverviewWithoutProductDetails($wishlistOverviewRequest);
+
+        if ($wishlistOverviewResponse->getErrors()->count() > 0) {
+            foreach ($wishlistOverviewResponse->getErrors() as $errorMessageTransfer) {
+                $translatedMessage = $this->translate(
+                    $errorMessageTransfer->getMessage(),
+                    $errorMessageTransfer->getParameters()
+                );
+
+                $this->addErrorMessage($translatedMessage);
+            }
+        }
 
         if (!$wishlistOverviewResponse->getWishlist()->getIdWishlist()) {
             throw new NotFoundHttpException();
@@ -194,7 +213,7 @@ class WishlistController extends AbstractController
 
         $wishlistItemMetaTransferCollection = [
             (new WishlistItemMetaTransfer())
-                ->setSku($wishlistItemTransfer->getSku()),
+                ->fromArray($wishlistItemTransfer->toArray(), true),
         ];
 
         $result = $this->getFactory()
@@ -301,14 +320,26 @@ class WishlistController extends AbstractController
 
         $wishlistName = $request->get(self::PARAM_WISHLIST_NAME) ?: self::DEFAULT_NAME;
 
-        return (new WishlistItemTransfer())
+        $wishlistItemTransfer = (new WishlistItemTransfer())
             ->setIdProduct($request->query->getInt(self::PARAM_PRODUCT_ID))
             ->setSku($request->query->get(self::PARAM_SKU))
             ->setFkCustomer($customerTransfer->getIdCustomer())
             ->setWishlistName($wishlistName);
+
+        if ($request->request->has(static::PARAM_WISHLIST_ID_ITEM)) {
+            $wishlistItemTransfer->setIdWishlistItem($request->request->get(static::PARAM_WISHLIST_ID_ITEM));
+        }
+
+        $requestParams = $request->request->all();
+
+        return $this->getFactory()
+            ->createWishlistItemExpander()
+            ->expandWishlistItemTransferWithRequestedParams($wishlistItemTransfer, $requestParams);
     }
 
     /**
+     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
+     *
      * @param \Generated\Shared\Transfer\WishlistOverviewResponseTransfer|null $wishlistOverviewResponse
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -332,7 +363,7 @@ class WishlistController extends AbstractController
     {
         $wishlistItems = [];
         foreach ($wishlistOverviewResponse->getItems() as $wishlistItemTransfer) {
-            $wishlistItems[] = $this->createProductView($wishlistItemTransfer);
+            $wishlistItems[$wishlistItemTransfer->getIdWishlistItem()] = $this->createProductView($wishlistItemTransfer);
         }
 
         return $wishlistItems;
@@ -353,7 +384,33 @@ class WishlistController extends AbstractController
             return $this->prepareUnavailableProduct($wishlistItemTransfer);
         }
 
-        return $this->prepareConcreteProduct($productConcreteStorageData);
+        $productViewTransfer = new ProductViewTransfer();
+        $productViewTransfer->fromArray($wishlistItemTransfer->toArray(), true);
+
+        return $this->prepareConcreteProduct($productViewTransfer, $productConcreteStorageData);
+    }
+
+    /**
+     * @phpstan-param array<mixed> $productConcreteStorageData
+     *
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param array $productConcreteStorageData
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    protected function prepareConcreteProduct(
+        ProductViewTransfer $productViewTransfer,
+        array $productConcreteStorageData
+    ): ProductViewTransfer {
+        $productViewTransfer->fromArray($productConcreteStorageData, true);
+
+        return $this->getFactory()
+            ->createWishlistItemExpander()
+            ->expandProductViewTransferWithProductConcreteData(
+                $productViewTransfer,
+                $productConcreteStorageData,
+                $this->getLocale()
+            );
     }
 
     /**
@@ -372,23 +429,15 @@ class WishlistController extends AbstractController
     }
 
     /**
-     * @param array $productConcreteStorageData
+     * @param string $key
+     * @param string[] $parameters
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     * @return string
      */
-    protected function prepareConcreteProduct(array $productConcreteStorageData): ProductViewTransfer
+    protected function translate(string $key, array $parameters = []): string
     {
-        $productViewTransfer = new ProductViewTransfer();
-        $productViewTransfer->fromArray($productConcreteStorageData, true);
-
-        foreach ($this->getFactory()->getWishlistItemExpanderPlugins() as $productViewExpanderPlugin) {
-            $productViewTransfer = $productViewExpanderPlugin->expandProductViewTransfer(
-                $productViewTransfer,
-                $productConcreteStorageData,
-                $this->getLocale()
-            );
-        }
-
-        return $productViewTransfer;
+        return $this->getFactory()
+            ->getGlossaryStorageClient()
+            ->translate($key, $this->getLocale(), $parameters);
     }
 }

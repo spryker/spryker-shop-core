@@ -6,12 +6,17 @@
   "require": {
     "php": ">=7.3",
     "spryker-shop/cart-page-extension": "^1.0.0",
+    "spryker-shop/wishlist-page-extension": "^1.0.0",
     "spryker/kernel": "^3.52.0",
     "spryker/merchant-product-offer-storage": "^0.11.2",
     "spryker/merchant-storage": "^0.1.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/symfony": "*"
+  },
+  "suggest": {
+    "spryker/symfony": "If you want to use MerchantProductOfferWidget expander plugins."
   },
   "autoload": {
     "psr-4": {

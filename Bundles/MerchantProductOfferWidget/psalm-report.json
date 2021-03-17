@@ -3,20 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 48,
-            "line_to": 48,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of SprykerShop\\Yves\\MerchantProductOfferWidget\\Dependency\\Client\\MerchantProductOfferWidgetToMerchantStorageClientInterface::findOne cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantProductOfferWidget/src/SprykerShop/Yves/MerchantProductOfferWidget/Plugin/CartPage/MerchantProductOfferPreAddToCartPlugin.php",
-            "snippet": "            ->findOne($productOfferStorageTransfer->getIdMerchant());",
-            "selected_text": "$productOfferStorageTransfer->getIdMerchant()",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 54,
-            "line_to": 54,
+            "line_from": 63,
+            "line_to": 63,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Generated\\Shared\\Transfer\\ProductOfferStorageCriteriaTransfer::addProductConcreteSku cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantProductOfferWidget/src/SprykerShop/Yves/MerchantProductOfferWidget/Reader/MerchantProductOfferReader.php",
@@ -27,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 57,
-            "line_to": 57,
+            "line_from": 66,
+            "line_to": 66,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductOfferStorageTransfer> variable ",
             "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantProductOfferWidget/src/SprykerShop/Yves/MerchantProductOfferWidget/Reader/MerchantProductOfferReader.php",
@@ -39,8 +27,20 @@
         },
         {
             "severity": "info",
-            "line_from": 79,
-            "line_to": 79,
+            "line_from": 92,
+            "line_to": 92,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\MerchantProductOfferWidget\\Dependency\\Client\\MerchantProductOfferWidgetToMerchantStorageClientInterface::findOne cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantProductOfferWidget/src/SprykerShop/Yves/MerchantProductOfferWidget/Reader/MerchantProductOfferReader.php",
+            "snippet": "            ->findOne($productOfferStorageTransfer->getIdMerchant());",
+            "selected_text": "$productOfferStorageTransfer->getIdMerchant()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 112,
+            "line_to": 112,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of mb_substr cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantProductOfferWidget/src/SprykerShop/Yves/MerchantProductOfferWidget/Reader/MerchantProductOfferReader.php",
@@ -51,8 +51,8 @@
         },
         {
             "severity": "info",
-            "line_from": 81,
-            "line_to": 81,
+            "line_from": 114,
+            "line_to": 114,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'string' for SprykerShop\\Yves\\MerchantProductOfferWidget\\Reader\\MerchantProductOfferReader::getResolvedUrl is not nullable, but the function returns 'mixed|null|string'",
             "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantProductOfferWidget/src/SprykerShop/Yves/MerchantProductOfferWidget/Reader/MerchantProductOfferReader.php",
@@ -60,18 +60,6 @@
             "selected_text": "$urlTransfer->getUrl()",
             "error_level": 5,
             "shortcode": 139
-        },
-        {
-            "severity": "info",
-            "line_from": 56,
-            "line_to": 56,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of SprykerShop\\Yves\\MerchantProductOfferWidget\\Dependency\\Client\\MerchantProductOfferWidgetToMerchantStorageClientInterface::findOneByMerchantReference cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantProductOfferWidget/src/SprykerShop/Yves/MerchantProductOfferWidget/Widget/ProductOfferSoldByMerchantWidget.php",
-            "snippet": "                ->findOneByMerchantReference($itemTransfer->getMerchantReference());",
-            "selected_text": "$itemTransfer->getMerchantReference()",
-            "error_level": 3,
-            "shortcode": 78
         }
     ],
     "deprecation": [
@@ -113,8 +101,8 @@
         },
         {
             "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
+            "line_from": 76,
+            "line_to": 76,
             "type": "DeprecatedConstant",
             "message": "Constant SprykerShop\\Yves\\MerchantProductOfferWidget\\MerchantProductOfferWidgetDependencyProvider::PLUGIN_APPLICATION is deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantProductOfferWidget/src/SprykerShop/Yves/MerchantProductOfferWidget/MerchantProductOfferWidgetFactory.php",

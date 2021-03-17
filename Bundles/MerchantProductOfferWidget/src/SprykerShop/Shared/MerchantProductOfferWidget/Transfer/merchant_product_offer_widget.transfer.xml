@@ -64,4 +64,9 @@
     <transfer name="ShopContext">
     </transfer>
 
+    <transfer name="WishlistItem">
+        <property name="productOfferReference" type="string"/>
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
 </transfers>
