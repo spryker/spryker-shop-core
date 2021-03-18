@@ -52,7 +52,7 @@
                         },
                     } only %}
                     <span itemprop="price" content="{{ data.amount | moneyRaw }}" class="{{ defaultPriceJsName }}">
-                        <meta itemprop="priceCurrency" content="{{ currencyIsoCode() }}">
+                        <meta itemprop="priceCurrency" content="{% widget 'CurrencyIsoCodeWidget' only %}{% endwidget %}">
                         {{- data.amount | money(true, data.currencyIsoCode) -}}
                     </span>
                 </span>

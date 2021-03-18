@@ -17,7 +17,8 @@
     "spryker/code-sniffer": "*"
   },
   "suggest": {
-    "spryker-shop/product-detail-page": "Widget plugins are available for this module."
+    "spryker-shop/product-detail-page": "Widget plugins are available for this module.",
+    "spryker-shop/money-widget": "If you want to use widgets from module MoneyWidget"
   },
   "autoload": {
     "psr-4": {

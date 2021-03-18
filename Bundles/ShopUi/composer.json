@@ -19,6 +19,7 @@
   "suggest": {
     "spryker-shop/newsletter-widget": "If you want to use components from module NewsletterWidget.",
     "spryker-shop/product-group-widget": "If you want to use components from module ProductGroupColorWidget or ProductGroupWidget",
+    "spryker-shop/money-widget": "If you want to use widgets from module MoneyWidget",
     "spryker/container": "If you want to use Twig Plugins",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },

@@ -132,6 +132,8 @@ class MoneyTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     }
 
     /**
+     * @deprecated Use {@link \SprykerShop\Yves\MoneyWidget\Widget\CurrencyIsoCodeWidget} instead.
+     *
      * @return \Twig\TwigFunction
      */
     protected function getCurrencyIsoCodeFunction(): TwigFunction
