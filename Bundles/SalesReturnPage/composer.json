@@ -29,7 +29,9 @@
     "spryker-shop/sales-configurable-bundle-widget": "Use this module when you want to use OrderItemsConfiguredBundleWidget",
     "spryker-shop/sales-product-bundle-widget": "Use this module when you want to use ProductBundleSalesReturnPageFormExpanderPlugin",
     "spryker-shop/sales-product-configuration-widget": "Add the module if you want to use ProductConfigurationOrderItemDisplayWidget.",
-    "spryker/router": "Use this module if you want use the RouterProviderPlugin."
+    "spryker/router": "Use this module if you want use the RouterProviderPlugin.",
+    "spryker-shop/merchant-widget": "Use this module if you want to use the SoldbyMerchantWidget.",
+    "spryker-shop/merchant-sales-return-widget": "Use this module if you want to use the MerchantSalesReturnCreateFormWidget."
   },
   "autoload": {
     "psr-4": {

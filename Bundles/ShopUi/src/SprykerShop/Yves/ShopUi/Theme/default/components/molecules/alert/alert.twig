@@ -1,0 +1,32 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'alert',
+} %}
+
+{% define data = {
+    content: required,
+    icon: '',
+} %}
+
+{% block body %}
+    {% set iconName = data.icon %}
+    {% set iconClasses = config.name ~ '__icon' %}
+    {% set iconModifiers = ['big'] %}
+
+    {% block icon %}
+        {% if iconName %}
+            {% include atom('icon') with {
+                class: iconClasses,
+                modifiers: iconModifiers,
+                data: {
+                    name: iconName,
+                }
+            } only %}
+        {% endif %}
+    {% endblock %}
+
+    {% block content %}
+        {{ data.content }}
+    {% endblock %}
+{% endblock %}

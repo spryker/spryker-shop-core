@@ -1,0 +1,79 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'merchant-sales-return-create-form',
+} %}
+
+{% define data = {
+    order: required,
+    form: required,
+    merchantOrderReferences: required,
+} %}
+
+{% block body %}
+
+    {% for merchantOrderReference in data.merchantOrderReferences %}
+        {% embed molecule('return-create-form', 'SalesReturnPage') with {
+            data: {
+                form: data.createReturnForm,
+                order: data.order,
+                merchantOrderReference: merchantOrderReference,
+                firstIteration: loop.first,
+                lastIteration: loop.last
+            },
+        } only %}
+            {% block formStart %}
+                {% if data.firstIteration %}
+                    {{ form_start(data.form) }}
+                {% endif %}
+            {% endblock %}
+
+            {% block salesReturnOrderInfoSeparator %}
+                {{ parent() }}
+                {% set alreadyRendered = false %}
+                {% for returnItem in data.form.returnItems %}
+                    {% set orderItem = returnItem.vars.value.orderItem %}
+                    {% if not alreadyRendered and orderItem.getMerchantOrderReference() == data.merchantOrderReference %}
+                        <hr class="box__separator">
+                        {% widget 'SoldByMerchantWidget' args [orderItem] only %}{% endwidget %}
+                        {% set alreadyRendered = true %}
+                    {% endif %}
+                {% endfor %}
+            {% endblock %}
+
+            {% block salesReturnProductItem %}
+                {% if orderItem.getMerchantOrderReference() == data.merchantOrderReference %}
+                    {{ parent() }}
+                {% endif %}
+            {% endblock %}
+
+            {% block checkbox %}
+                <div class="{{ checkboxWrapperClass }}">
+                    {{ form_row(returnItem.isReturnable, {
+                        label: ' ',
+                        attr: {'class': 'js-return-create__trigger-state-toggler'},
+                        attributes: {
+                            'merchant-reference': orderItem.merchantReference,
+                            'is-returnable': isReturnable,
+                        },
+                        disabled: not isReturnable,
+                    }) }}
+                </div>
+            {% endblock %}
+
+            {% block salesReturnPageActions %}
+                {% if data.lastIteration %}
+                    {{ parent() }}
+                {% endif %}
+            {% endblock %}
+
+            {% block formEnd %}
+                {% if data.lastIteration %}
+                    {{ parent() }}
+                {% endif %}
+            {% endblock %}
+
+        {% endembed %}
+    {% endfor %}
+
+{% endblock %}

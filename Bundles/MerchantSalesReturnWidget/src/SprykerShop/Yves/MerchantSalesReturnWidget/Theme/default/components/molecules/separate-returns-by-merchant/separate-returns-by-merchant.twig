@@ -1,0 +1,14 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'separate-returns-by-merchant',
+    tag: 'separate-returns-by-merchant',
+} %}
+
+{% define attributes = {
+    'checkbox-classname': required,
+    'checkbox-component-classname': 'checkbox',
+    'checkbox-component-disabled-classname': 'checkbox--disabled',
+    'merchant-reference-attribute-name': required,
+    'is-returnable-attribute-name': required,
+} %}

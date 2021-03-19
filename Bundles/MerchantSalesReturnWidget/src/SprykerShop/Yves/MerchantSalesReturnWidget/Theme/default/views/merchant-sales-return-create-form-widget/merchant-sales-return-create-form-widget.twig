@@ -1,0 +1,39 @@
+{% extends template('widget') %}
+
+{% define data = {
+    createReturnForm: _widget.createReturnForm,
+    merchantOrderReferences: _widget.merchantOrderReferences,
+    order: _widget.order,
+} %}
+
+{% block body %}
+    {% block differentMerchantsInfoBox %}
+        {% if data.merchantOrderReferences | length > 1 %}
+            <div class="spacing">
+                {% include molecule('alert') with {
+                    data: {
+                        content: 'merchant_sales_return_widget.create_form.different_merchants_info' | trans,
+                        icon: 'action-warning-triangle',
+                    },
+                } only %}
+            </div>
+        {% endif %}
+    {% endblock %}
+
+    {% include molecule('separate-returns-by-merchant', 'MerchantSalesReturnWidget') with {
+        attributes: {
+            'checkbox-classname': 'js-return-create__trigger-state-toggler',
+            'merchant-reference-attribute-name': 'merchant-reference',
+            'is-returnable-attribute-name': 'is-returnable',
+        },
+    } only %}
+
+    {% include molecule('merchant-sales-return-create-form', 'MerchantSalesReturnWidget') with {
+        data: {
+            createReturnForm: data.createReturnForm,
+            order: data.order,
+            merchantOrderReferences: data.merchantOrderReferences,
+        },
+    } only %}
+
+{% endblock %}

@@ -22,6 +22,7 @@
     </transfer>
 
     <transfer name="Item">
+        <property name="merchantOrderReference" type="string"/>
     </transfer>
 
     <transfer name="MerchantSearchRequest">
@@ -33,6 +34,10 @@
 
     <transfer name="MerchantSearch">
         <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
 </transfers>
