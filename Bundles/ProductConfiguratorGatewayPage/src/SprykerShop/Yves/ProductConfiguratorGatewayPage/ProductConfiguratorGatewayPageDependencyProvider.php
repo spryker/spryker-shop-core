@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ProductConfiguratorGatewayPage;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToGlossaryStorageClientBridge;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductConfigurationClientBridge;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductConfigurationStorageClientBridge;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductStorageClientBridge;
@@ -20,6 +21,7 @@ class ProductConfiguratorGatewayPageDependencyProvider extends AbstractBundleDep
     public const CLIENT_PRODUCT_CONFIGURATION_STORAGE = 'CLIENT_PRODUCT_CONFIGURATION_STORAGE';
     public const CLIENT_PRODUCT_CONFIGURATION = 'CLIENT_PRODUCT_CONFIGURATION';
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
     public const PLUGINS_PRODUCT_CONFIGURATOR_GATEWAY_BACK_URL_RESOLVER_STRATEGY = 'PLUGINS_PRODUCT_CONFIGURATOR_GATEWAY_BACK_URL_RESOLVER_STRATEGY';
 
     /**
@@ -42,6 +44,7 @@ class ProductConfiguratorGatewayPageDependencyProvider extends AbstractBundleDep
         $container = $this->addProductConfiguratorGatewayBackUrlResolverStrategyPlugins($container);
         $container = $this->addProductStorageClient($container);
         $container = $this->addRouter($container);
+        $container = $this->addGlossaryStorageClient($container);
 
         return $container;
     }
@@ -142,5 +145,19 @@ class ProductConfiguratorGatewayPageDependencyProvider extends AbstractBundleDep
     protected function getProductConfiguratorGatewayBackUrlResolverStrategyPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addGlossaryStorageClient($container): Container
+    {
+        $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
+            return new ProductConfiguratorGatewayPageToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());
+        });
+
+        return $container;
     }
 }

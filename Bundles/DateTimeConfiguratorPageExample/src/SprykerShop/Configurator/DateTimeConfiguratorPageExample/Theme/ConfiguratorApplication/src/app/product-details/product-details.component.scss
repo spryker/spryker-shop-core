@@ -13,6 +13,37 @@
         min-height: 570px;
         margin-bottom: 0;
     }
+
+    &__container {
+        text-align: center;
+    }
+
+    &__message {
+        margin-top: 16px;
+    }
+}
+
+.icon {
+    fill: currentColor;
+
+    &--image-placeholder {
+        width: 56px;
+        height: 56px;
+    }
+
+    &--info {
+        margin-right: 15px;
+        color: $setting-color-blue-2;
+        width: 24px;
+        height: 24px;
+    }
+
+    &--alert {
+        margin-right: 15px;
+        color: $setting-color-orange-2;
+        width: 24px;
+        height: 24px;
+    }
 }
 
 .details {
@@ -26,16 +57,19 @@
         padding: 20px 0 5px;
         margin: 20px 0;
 
-        @include helper-breakpoint(lg) {
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-
         &-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
+
+            &--available-quantity {
+                border-radius: $setting-border-radius;
+                padding: 0 15px;
+                background-color: $setting-color-blue-1;
+                justify-content: flex-start;
+                height: 50px;
+            }
         }
     }
 }
@@ -60,7 +94,7 @@ select {
     height: 46px;
     padding: 0 15px;
     font-size: 15px;
-    line-height: 1em;
+    line-height: 1.2;
     border: 1px solid $setting-color-gray-5;
     background: $setting-color-gray-1;
     border-radius: 0;
@@ -126,6 +160,16 @@ input[type='checkbox'] {
         }
     }
 
+    &__alert-message {
+        border-radius: $setting-border-radius;
+        padding: 0 15px;
+        background-color: $setting-color-orange-1;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        height: 50px;
+    }
+
     &__button {
         display: block;
         width: 100%;
@@ -148,6 +192,13 @@ input[type='checkbox'] {
                 text-decoration: none;
                 background: $setting-color-green-2;
             }
+        }
+
+        &[disabled] {
+            background-color: $setting-color-gray-1;
+            color: $setting-color-gray-7;
+            border: 1px solid $setting-color-gray-7;
+            cursor: not-allowed;
         }
 
         &--cancel {

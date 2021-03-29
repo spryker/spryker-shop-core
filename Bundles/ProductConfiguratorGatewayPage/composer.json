@@ -8,6 +8,7 @@
     "spryker-shop/product-configurator-gateway-page-extension": "^0.1.0",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker/application": "^3.8.0",
+    "spryker/glossary-storage": "^1.5.0",
     "spryker/kernel": "^3.33.0",
     "spryker/product-configuration": "^0.1.0",
     "spryker/product-configuration-storage": "^0.1.0",

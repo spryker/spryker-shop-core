@@ -11,9 +11,12 @@
     },
     "product": {
         "title": "Configurator Name",
+        "image": "You can display the configurable product image here",
         "priceItem": "Item price",
         "quantity": "Quantity",
         "availableQuantity": "Only {{value}} items available",
+        "confirmChangeQuantity": "Saving configuration will change your quantity",
+        "unavailableProductMessage": "No item available for your configuration",
         "totalPrice": "Total price"
     },
     "fields": {
