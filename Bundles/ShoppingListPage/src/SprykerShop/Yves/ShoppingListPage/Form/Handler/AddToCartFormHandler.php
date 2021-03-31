@@ -7,10 +7,8 @@
 
 namespace SprykerShop\Yves\ShoppingListPage\Form\Handler;
 
-use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
-use Generated\Shared\Transfer\ShoppingListTransfer;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +17,7 @@ class AddToCartFormHandler implements AddToCartFormHandlerInterface
 {
     protected const PARAM_ID_SHOPPING_LIST_ITEM = 'idShoppingListItem';
     protected const PARAM_SHOPPING_LIST_ITEM = 'shoppingListItem';
+    protected const PARAM_SHOPPING_LIST_ITEMS = 'shoppingListItems';
     protected const PARAM_ID_SHOPPING_LIST = 'idShoppingList';
     protected const PARAM_ID_ADD_ITEM = 'add-item';
     protected const PARAM_ADD_ALL_AVAILABLE = 'add-all-available';
@@ -70,10 +69,18 @@ class AddToCartFormHandler implements AddToCartFormHandlerInterface
      */
     protected function getShoppingListItemTransferFromRequest(Request $request): ShoppingListItemCollectionTransfer
     {
+        $idShoppingListItem = $request->request->getInt(static::PARAM_ID_ADD_ITEM);
         $shoppingListCollectionTransfer = new ShoppingListItemCollectionTransfer();
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
-            ->setIdShoppingListItem($request->request->getInt(static::PARAM_ID_ADD_ITEM))
+            ->setIdShoppingListItem($idShoppingListItem)
             ->setFkShoppingList($request->request->getInt(static::PARAM_ID_SHOPPING_LIST));
+
+        $shoppingListItemInformation = $request->request->get(static::PARAM_SHOPPING_LIST_ITEMS);
+
+        if (isset($shoppingListItemInformation[$idShoppingListItem])) {
+            $shoppingListItem = json_decode($shoppingListItemInformation[$idShoppingListItem], true);
+            $shoppingListItemTransfer->fromArray($shoppingListItem, true);
+        }
 
         $shoppingListCollectionTransfer->addItem($shoppingListItemTransfer);
 
@@ -87,15 +94,16 @@ class AddToCartFormHandler implements AddToCartFormHandlerInterface
      */
     protected function getAllAvailableRequestItems(Request $request): ShoppingListItemCollectionTransfer
     {
-        $shoppingListTransfer = (new ShoppingListTransfer())
-            ->setIdShoppingList($request->request->getInt(static::PARAM_ID_SHOPPING_LIST))
-            ->setIdCompanyUser($this->customerClient->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
+        $shoppingListItemCollectionTransfer = new ShoppingListItemCollectionTransfer();
+        $shoppingListItemInformation = $request->request->get(static::PARAM_SHOPPING_LIST_ITEMS);
 
-        $shoppingListCollectionTransfer = (new ShoppingListCollectionTransfer())
-            ->addShoppingList($shoppingListTransfer);
+        foreach ($shoppingListItemInformation as $shoppingListItem) {
+            $shoppingListItemTransfer = new ShoppingListItemTransfer();
+            $shoppingListItemTransfer->fromArray(json_decode($shoppingListItem, true));
+            $shoppingListItemCollectionTransfer->addItem($shoppingListItemTransfer);
+        }
 
-        return $this->shoppingListClient
-            ->getShoppingListItemCollection($shoppingListCollectionTransfer);
+        return $shoppingListItemCollectionTransfer;
     }
 
     /**

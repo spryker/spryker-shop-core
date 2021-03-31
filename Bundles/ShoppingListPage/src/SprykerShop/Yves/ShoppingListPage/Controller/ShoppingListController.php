@@ -176,18 +176,15 @@ class ShoppingListController extends AbstractShoppingListController
             ]);
         }
 
-        $shoppingListItemTransferCollection = $this->getFactory()->createAddToCartFormHandler()->handleAddToCartRequest($request);
-        if (!$shoppingListItemTransferCollection->getItems()->count()) {
+        $shoppingListItemCollectionTransfer = $this->getFactory()->createAddToCartFormHandler()->handleAddToCartRequest($request);
+
+        if (!$shoppingListItemCollectionTransfer->getItems()->count()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_SELECT_ITEM);
 
             return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST_DETAILS, [
                 'idShoppingList' => $request->get(static::PARAM_ID_SHOPPING_LIST),
             ]);
         }
-
-        $shoppingListItemCollectionTransfer = $this->getFactory()
-            ->getShoppingListClient()
-            ->getShoppingListItemCollectionTransfer($shoppingListItemTransferCollection);
 
         $quantity = $request->get(static::PARAM_SHOPPING_LIST_ITEM)[static::PARAM_QUANTITY] ?? [];
         $result = $this->getFactory()
