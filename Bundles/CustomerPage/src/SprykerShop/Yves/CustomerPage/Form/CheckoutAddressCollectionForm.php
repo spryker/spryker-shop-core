@@ -431,8 +431,8 @@ class CheckoutAddressCollectionForm extends AbstractType
                 }
 
                 if (
-                    $this->isIdCustomerAddressExistAndNotEmpty($form)
-                    || $this->isIdCompanyUnitAddressFieldExistAndNotEmpty($form)
+                    $this->isIdCustomerAddressFieldNotEmpty($form)
+                    || $this->isIdCompanyUnitAddressFieldNotEmpty($form)
                 ) {
                     return false;
                 }
@@ -551,8 +551,8 @@ class CheckoutAddressCollectionForm extends AbstractType
      */
     protected function isIdCustomerAddressFieldNotEmpty(FormInterface $form): bool
     {
-        return !$form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
-            || $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData() !== CheckoutAddressForm::VALUE_ADD_NEW_ADDRESS;
+        return $form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
+            && $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData();
     }
 
     /**
@@ -561,28 +561,6 @@ class CheckoutAddressCollectionForm extends AbstractType
      * @return bool
      */
     protected function isIdCompanyUnitAddressFieldNotEmpty(FormInterface $form): bool
-    {
-        return !$form->has(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)
-            || $form->get(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)->getData();
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     *
-     * @return bool
-     */
-    protected function isIdCustomerAddressExistAndNotEmpty(FormInterface $form): bool
-    {
-        return $form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
-            && $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData() !== CheckoutAddressForm::VALUE_ADD_NEW_ADDRESS;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     *
-     * @return bool
-     */
-    protected function isIdCompanyUnitAddressFieldExistAndNotEmpty(FormInterface $form): bool
     {
         return $form->has(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)
             && $form->get(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)->getData();
