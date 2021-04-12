@@ -113,6 +113,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     {
         $shipmentGroups = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
         $isPlaceableOrderResponseTransfer = $this->checkoutClient->isPlaceableOrder($quoteTransfer);
+        $isPlaceableOrder = $quoteTransfer->getIsOrderPlacedSuccessfully() !== null || $isPlaceableOrderResponseTransfer->getIsSuccess();
 
         return [
             'quoteTransfer' => $quoteTransfer,
@@ -122,7 +123,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
             ),
             'shipmentGroups' => $this->expandShipmentGroupsWithCartItems($shipmentGroups, $quoteTransfer),
             'totalCosts' => $this->getShipmentTotalCosts($shipmentGroups, $quoteTransfer),
-            'isPlaceableOrder' => $isPlaceableOrderResponseTransfer->getIsSuccess(),
+            'isPlaceableOrder' => $isPlaceableOrder,
             'isPlaceableOrderErrors' => $isPlaceableOrderResponseTransfer->getErrors(),
             'shipmentExpenses' => $this->getShipmentExpenses($quoteTransfer),
             'acceptTermsFieldName' => QuoteTransfer::ACCEPT_TERMS_AND_CONDITIONS,

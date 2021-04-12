@@ -21,6 +21,7 @@
         <property name="checkoutConfirmed" type="bool"/>
         <property name="priceMode" type="string"/>
         <property name="acceptTermsAndConditions" type="bool"/>
+        <property name="isOrderPlacedSuccessfully" type="bool"/>
     </transfer>
 
     <transfer name="Message">
