@@ -13,6 +13,8 @@ use Spryker\Shared\Storage\StorageConstants;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Throwable;
 
 /**
  * @method \SprykerShop\Yves\CatalogPage\CatalogPageFactory getFactory()
@@ -33,7 +35,16 @@ class CatalogController extends AbstractController
     protected const URL_PARAM_SORTING = 'sort';
     protected const PRICE_SORTING_DIRECTIONS = ['price_desc', 'price_asc'];
 
+    protected const MESSAGE_PAGE_CANNOT_BE_OPENED = 'catalog.page.cannot_be_opened';
+
     /**
+     * @uses \SprykerShop\Yves\CatalogPage\Plugin\Router\CatalogPageRouteProviderPlugin::ROUTE_NAME_SEARCH
+     */
+    protected const ROUTE_SEARCH_PAGE = 'search';
+
+    /**
+     * @phpstan-param array<mixed> $categoryNode
+     *
      * @param array $categoryNode
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -53,6 +64,10 @@ class CatalogController extends AbstractController
     }
 
     /**
+     * @phpstan-param array<mixed> $categoryNode
+     *
+     * @phpstan-return array<mixed>
+     *
      * @param array $categoryNode
      * @param int $idCategoryNode
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -102,11 +117,22 @@ class CatalogController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Yves\Kernel\View\View
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function fulltextSearchAction(Request $request)
     {
-        $viewData = $this->executeFulltextSearchAction($request);
+        try {
+            $viewData = $this->executeFulltextSearchAction($request);
+        } catch (Throwable $e) {
+            if (preg_match('/Search failed with the following reason: Numeric value \(\d+\) out of range of int.*/', $e->getMessage())) {
+                throw new NotFoundHttpException();
+            }
+            $this->addErrorMessage(static::MESSAGE_PAGE_CANNOT_BE_OPENED);
+
+            return $this->redirectResponseInternal(static::ROUTE_SEARCH_PAGE);
+        }
 
         return $this->view(
             $viewData,
@@ -116,6 +142,8 @@ class CatalogController extends AbstractController
     }
 
     /**
+     * @phpstan-return array<mixed>
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
@@ -187,6 +215,10 @@ class CatalogController extends AbstractController
     }
 
     /**
+     * @phpstan-param array<mixed> $searchResults
+     *
+     * @phpstan-return array<mixed>
+     *
      * @param array $searchResults
      * @param int $idCategory
      *
@@ -219,6 +251,10 @@ class CatalogController extends AbstractController
     }
 
     /**
+     * @phpstan-param array<mixed> $searchResults
+     *
+     * @phpstan-return array<mixed>
+     *
      * @param array $searchResults
      *
      * @return array
@@ -237,6 +273,8 @@ class CatalogController extends AbstractController
     }
 
     /**
+     * @phpstan-return array<mixed>
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
@@ -250,17 +288,16 @@ class CatalogController extends AbstractController
     }
 
     /**
+     * @phpstan-param array<mixed> $parameters
+     *
+     * @phpstan-return array<mixed>
+     *
      * @param array $parameters
      *
      * @return array
      */
     protected function reduceRestrictedParameters(array $parameters): array
     {
-        if (!$this->getFactory()->createPageParametersValidator()->validatePageParameters($parameters)) {
-            unset($parameters[$this->getFactory()->getModuleConfig()->getParameterNamePage()]);
-            $this->addErrorMessage(static::MESSAGE_PAGE_NOT_FOUND);
-        }
-
         $shopContextParameters = $this->getFactory()
             ->getShopContext()
             ->modifiedToArray();
@@ -282,6 +319,10 @@ class CatalogController extends AbstractController
     }
 
     /**
+     * @phpstan-param array<mixed> $searchResults
+     *
+     * @phpstan-return array<mixed>
+     *
      * @param array $searchResults
      *
      * @return array
@@ -298,6 +339,8 @@ class CatalogController extends AbstractController
     }
 
     /**
+     * @phpstan-param array<mixed> $parameters
+     *
      * @param array $parameters
      *
      * @return bool
@@ -308,6 +351,8 @@ class CatalogController extends AbstractController
     }
 
     /**
+     * @phpstan-param array<mixed> $parameters
+     *
      * @param array $parameters
      *
      * @return bool

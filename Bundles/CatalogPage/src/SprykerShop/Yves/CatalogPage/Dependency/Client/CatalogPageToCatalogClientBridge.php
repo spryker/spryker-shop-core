@@ -26,17 +26,25 @@ class CatalogPageToCatalogClientBridge implements CatalogPageToCatalogClientInte
     }
 
     /**
+     * @phpstan-param array<mixed> $requestParameters
+     *
+     * @phpstan-return array<mixed>
+     *
      * @param string $searchString
      * @param array $requestParameters
      *
      * @return array
      */
-    public function catalogSearch($searchString, array $requestParameters = [])
+    public function catalogSearch($searchString, array $requestParameters)
     {
         return $this->catalogClient->catalogSearch($searchString, $requestParameters);
     }
 
     /**
+     * @phpstan-param array<mixed> $requestParameters
+     *
+     * @phpstan-return array<mixed>
+     *
      * @param string $searchString
      * @param array $requestParameters
      *
@@ -69,12 +77,14 @@ class CatalogPageToCatalogClientBridge implements CatalogPageToCatalogClientInte
     }
 
     /**
+     * @phpstan-param array<mixed> $requestParameters
+     *
      * @param string $searchString
      * @param array $requestParameters
      *
      * @return int
      */
-    public function catalogSearchCount(string $searchString, array $requestParameters = []): int
+    public function catalogSearchCount(string $searchString, array $requestParameters): int
     {
         return $this->catalogClient->catalogSearchCount($searchString, $requestParameters);
     }
