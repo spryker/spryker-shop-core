@@ -22,7 +22,7 @@
     </transfer>
 
     <transfer name="Item">
-        <property name="merchantOrderReference" type="string"/>
+        <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="MerchantSearchRequest">

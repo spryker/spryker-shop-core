@@ -7,17 +7,17 @@
 {% define data = {
     order: required,
     form: required,
-    merchantOrderReferences: required,
+    merchantReferences: required,
 } %}
 
 {% block body %}
 
-    {% for merchantOrderReference in data.merchantOrderReferences %}
+    {% for merchantReference in data.merchantReferences %}
         {% embed molecule('return-create-form', 'SalesReturnPage') with {
             data: {
                 form: data.createReturnForm,
                 order: data.order,
-                merchantOrderReference: merchantOrderReference,
+                merchantReference: merchantReference,
                 firstIteration: loop.first,
                 lastIteration: loop.last
             },
@@ -33,7 +33,7 @@
                 {% set alreadyRendered = false %}
                 {% for returnItem in data.form.returnItems %}
                     {% set orderItem = returnItem.vars.value.orderItem %}
-                    {% if not alreadyRendered and orderItem.getMerchantOrderReference() == data.merchantOrderReference %}
+                    {% if not alreadyRendered and orderItem.getMerchantReference() == data.merchantReference %}
                         <hr class="box__separator">
                         {% widget 'SoldByMerchantWidget' args [orderItem] only %}{% endwidget %}
                         {% set alreadyRendered = true %}
@@ -42,7 +42,7 @@
             {% endblock %}
 
             {% block salesReturnProductItem %}
-                {% if orderItem.getMerchantOrderReference() == data.merchantOrderReference %}
+                {% if orderItem.getMerchantReference() == data.merchantReference %}
                     {{ parent() }}
                 {% endif %}
             {% endblock %}

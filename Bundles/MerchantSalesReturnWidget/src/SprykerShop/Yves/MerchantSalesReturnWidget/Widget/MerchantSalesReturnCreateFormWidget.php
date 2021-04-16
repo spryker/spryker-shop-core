@@ -11,9 +11,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 use Symfony\Component\Form\FormView;
 
-/**
- * @method \SprykerShop\Yves\MerchantSalesOrderWidget\MerchantSalesOrderWidgetFactory getFactory()
- */
 class MerchantSalesReturnCreateFormWidget extends AbstractWidget
 {
     /**
@@ -24,7 +21,7 @@ class MerchantSalesReturnCreateFormWidget extends AbstractWidget
     {
         $this->addCreateReturnFormParameter($createReturnForm);
         $this->addOrderParameter($orderTransfer);
-        $this->addMerchantOrderReferencesParameter($orderTransfer);
+        $this->addMerchantReferencesParameter($orderTransfer);
     }
 
     /**
@@ -58,11 +55,11 @@ class MerchantSalesReturnCreateFormWidget extends AbstractWidget
      *
      * @return void
      */
-    protected function addMerchantOrderReferencesParameter(OrderTransfer $orderTransfer): void
+    protected function addMerchantReferencesParameter(OrderTransfer $orderTransfer): void
     {
-        $merchantOrderReferences = $this->extractMerchantOrderReferences($orderTransfer);
+        $merchantReferences = $this->extractMerchantReferences($orderTransfer);
 
-        $this->addParameter('merchantOrderReferences', $merchantOrderReferences);
+        $this->addParameter('merchantReferences', $merchantReferences);
     }
 
     /**
@@ -82,18 +79,18 @@ class MerchantSalesReturnCreateFormWidget extends AbstractWidget
      *
      * @return string[]
      */
-    protected function extractMerchantOrderReferences(OrderTransfer $orderTransfer): array
+    protected function extractMerchantReferences(OrderTransfer $orderTransfer): array
     {
-        $merchantOrderReferences = [];
+        $merchantReferences = [];
 
         foreach ($orderTransfer->getItems() as $itemTransfer) {
-            $merchantOrderReference = $itemTransfer->getMerchantOrderReference();
+            $merchantReference = $itemTransfer->getMerchantReference();
 
-            if (!in_array($merchantOrderReference, $merchantOrderReferences)) {
-                $merchantOrderReferences[] = $merchantOrderReference;
+            if (!in_array($merchantReference, $merchantReferences)) {
+                $merchantReferences[] = $merchantReference;
             }
         }
 
-        return $merchantOrderReferences;
+        return $merchantReferences;
     }
 }

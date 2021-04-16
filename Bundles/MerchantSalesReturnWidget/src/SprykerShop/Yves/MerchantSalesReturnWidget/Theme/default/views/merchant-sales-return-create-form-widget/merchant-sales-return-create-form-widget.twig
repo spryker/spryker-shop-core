@@ -2,13 +2,13 @@
 
 {% define data = {
     createReturnForm: _widget.createReturnForm,
-    merchantOrderReferences: _widget.merchantOrderReferences,
+    merchantReferences: _widget.merchantReferences,
     order: _widget.order,
 } %}
 
 {% block body %}
     {% block differentMerchantsInfoBox %}
-        {% if data.merchantOrderReferences | length > 1 %}
+        {% if data.merchantReferences | length > 1 %}
             <div class="spacing">
                 {% include molecule('alert') with {
                     data: {
@@ -32,7 +32,7 @@
         data: {
             createReturnForm: data.createReturnForm,
             order: data.order,
-            merchantOrderReferences: data.merchantOrderReferences,
+            merchantReferences: data.merchantReferences,
         },
     } only %}
 
