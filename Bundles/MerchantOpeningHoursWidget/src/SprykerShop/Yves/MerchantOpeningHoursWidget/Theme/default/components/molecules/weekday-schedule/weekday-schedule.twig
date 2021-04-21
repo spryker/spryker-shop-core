@@ -17,7 +17,7 @@
         {% set time = macros.scheduleTime(scheduleItem, scheduleList, scheduleItem.day) %}
         {% set scheduleList = scheduleList | merge({
             (scheduleItem.day): {
-                note: '',
+                noteGlossaryKey: '',
                 date: localizedDayTitleKey | trans,
                 time: time,
             },
