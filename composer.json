@@ -68,6 +68,7 @@
         "spryker-shop/discount-promotion-widget": "*",
         "spryker-shop/discount-widget": "*",
         "spryker-shop/error-page": "*",
+        "spryker-shop/error-page-extension": "*",
         "spryker-shop/file-manager-widget": "*",
         "spryker-shop/gift-card-widget": "*",
         "spryker-shop/home-page": "*",

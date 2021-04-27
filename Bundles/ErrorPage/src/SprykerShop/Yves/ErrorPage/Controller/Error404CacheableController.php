@@ -7,18 +7,17 @@
 
 namespace SprykerShop\Yves\ErrorPage\Controller;
 
-use Spryker\Yves\Kernel\Controller\AbstractController;
 use Spryker\Yves\Kernel\View\View;
-use Symfony\Component\ErrorHandler\Exception\FlattenException;
+use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\ErrorPage\ErrorPageConfig getConfig()
  * @method \SprykerShop\Yves\ErrorPage\ErrorPageFactory getFactory()
  */
-class Error404Controller extends AbstractController
+class Error404CacheableController extends AbstractController
 {
-    protected const REQUEST_PARAM_EXCEPTION = 'exception';
+    protected const QUERY_PARAMETER_ERROR_MESSAGE = 'errorMessage';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -38,19 +37,12 @@ class Error404Controller extends AbstractController
      *
      * @return string
      */
-    protected function getErrorMessage(Request $request)
+    protected function getErrorMessage(Request $request): string
     {
         if (!$this->getFactory()->getConfig()->isErrorStackTraceEnabled()) {
             return '';
         }
 
-        /** @var \Symfony\Component\ErrorHandler\Exception\FlattenException|null $exception */
-        $exception = $request->query->get(static::REQUEST_PARAM_EXCEPTION);
-
-        if ($exception instanceof FlattenException) {
-            return $exception->getMessage();
-        }
-
-        return '';
+        return $request->query->get(static::QUERY_PARAMETER_ERROR_MESSAGE) ?? '';
     }
 }

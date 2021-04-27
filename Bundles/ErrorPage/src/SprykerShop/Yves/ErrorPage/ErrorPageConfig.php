@@ -30,6 +30,19 @@ class ErrorPageConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @return int[]
+     */
+    public function getValidRedirectExceptionStatusCodes(): array
+    {
+        return [
+            Response::HTTP_NOT_FOUND,
+            Response::HTTP_FORBIDDEN,
+        ];
+    }
+
+    /**
+     * @api
+     *
      * @return bool
      */
     public function isErrorStackTraceEnabled(): bool

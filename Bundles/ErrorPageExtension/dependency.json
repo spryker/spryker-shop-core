@@ -1,0 +1,5 @@
+{
+    "include": {
+        "spryker/symfony": "spryker/symfony provides FlattenException."
+    }
+}

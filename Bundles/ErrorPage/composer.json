@@ -5,6 +5,8 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.3",
+    "spryker-shop/error-page-extension": "^1.0.0",
+    "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.0.0",
     "spryker/event-dispatcher-extension": "^1.0.0",
     "spryker/kernel": "^3.52.0",
@@ -12,14 +14,12 @@
     "spryker/symfony": "^3.5.0"
   },
   "require-dev": {
-    "spryker-shop/shop-application": "*",
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
     "spryker/event-dispatcher": "*",
     "spryker/silex": "*"
   },
   "suggest": {
-    "spryker-shop/shop-application": "Use this module when using plugins that need ShopApplication dependencies.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
     "spryker/container": "Use this module when you want to use the ErrorPageEventDispatcherPlugin.",
     "spryker/event-dispatcher": "Use this module when you want to use the ErrorPageEventDispatcherPlugin."
