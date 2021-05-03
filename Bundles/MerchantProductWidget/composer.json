@@ -1,43 +1,43 @@
 {
-  "name": "spryker-shop/merchant-product-widget",
-  "type": "library",
-  "description": "MerchantProductWidget module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker-shop/cart-page-extension": "^1.0.0",
-    "spryker-shop/wishlist-page-extension": "^1.0.0",
-    "spryker/kernel": "^3.33.0",
-    "spryker/merchant-product-storage": "^0.1.1",
-    "spryker/merchant-storage": "^0.1.2",
-    "spryker/price-product": "^4.16.0",
-    "spryker/price-product-storage": "^4.5.0",
-    "spryker/product-storage": "^1.26.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/symfony": "*"
-  },
-  "suggest": {
-    "spryker/symfony": "If you want to use MerchantProductWidget expander plugins."
-  },
-  "autoload": {
-    "psr-4": {
-      "SprykerShop\\": "src/SprykerShop/"
+    "name": "spryker-shop/merchant-product-widget",
+    "type": "library",
+    "description": "MerchantProductWidget module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker-shop/cart-page-extension": "^1.0.0",
+        "spryker-shop/wishlist-page-extension": "^1.0.0",
+        "spryker/kernel": "^3.33.0",
+        "spryker/merchant-product-storage": "^0.1.1",
+        "spryker/merchant-storage": "^0.1.2",
+        "spryker/price-product": "^4.16.0",
+        "spryker/price-product-storage": "^4.5.0",
+        "spryker/product-storage": "^1.26.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/symfony": "*"
+    },
+    "suggest": {
+        "spryker/symfony": "If you want to use MerchantProductWidget expander plugins."
+    },
+    "autoload": {
+        "psr-4": {
+            "SprykerShop\\": "src/SprykerShop/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

@@ -1,52 +1,52 @@
 {
-  "name": "spryker-shop/product-detail-page",
-  "type": "library",
-  "description": "ProductDetailPage module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker-shop/shop-application": "^1.0.0",
-    "spryker-shop/shop-router-extension": "^1.0.0",
-    "spryker-shop/shop-ui": "^1.44.0",
-    "spryker-shop/storage-router-extension": "^1.0.0",
-    "spryker/kernel": "^3.52.0",
-    "spryker/product-storage": "^1.19.0",
-    "spryker/storage": "^3.4.0",
-    "spryker/symfony": "^3.1.0"
-  },
-  "require-dev": {
-    "spryker-shop/availability-widget": "*",
-    "spryker-shop/cms-block-widget": "*",
-    "spryker-shop/product-group-widget": "*",
-    "spryker-shop/product-review-widget": "*",
-    "spryker-shop/wishlist-widget": "*",
-    "spryker/code-sniffer": "*"
-  },
-  "suggest": {
-    "spryker-shop/availability-widget": "If you want to use components from module AvailabilityWidget or AvailabilityWidgetPlugin.",
-    "spryker-shop/cms-block-widget": "If you want to use components from module CmsBlockWidget or ProductCmsBlockWidgetPlugin.",
-    "spryker-shop/product-group-widget": "If you want to use components from module ProductGroupColorWidget or ProductGroupWidget",
-    "spryker-shop/product-review-widget": "If you want to use ProductDetailPageReviewWidget or ProductReviewWidgetPlugin.",
-    "spryker-shop/product-configuration-widget": "Add the module if you want to use ProductConfigurationProductViewDisplayWidget or ProductConfigurationProductDetailPageButtonWidget.",
-    "spryker-shop/wishlist-widget": "If you want to use components from module WishlistWidget or WishlistWidgetPlugin."
-  },
-  "autoload": {
-    "psr-4": {
-      "SprykerShop\\": "src/SprykerShop/"
+    "name": "spryker-shop/product-detail-page",
+    "type": "library",
+    "description": "ProductDetailPage module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker-shop/shop-application": "^1.0.0",
+        "spryker-shop/shop-router-extension": "^1.0.0",
+        "spryker-shop/shop-ui": "^1.44.0",
+        "spryker-shop/storage-router-extension": "^1.0.0",
+        "spryker/kernel": "^3.52.0",
+        "spryker/product-storage": "^1.19.0",
+        "spryker/storage": "^3.4.0",
+        "spryker/symfony": "^3.1.0"
+    },
+    "require-dev": {
+        "spryker-shop/availability-widget": "*",
+        "spryker-shop/cms-block-widget": "*",
+        "spryker-shop/product-group-widget": "*",
+        "spryker-shop/product-review-widget": "*",
+        "spryker-shop/wishlist-widget": "*",
+        "spryker/code-sniffer": "*"
+    },
+    "suggest": {
+        "spryker-shop/availability-widget": "If you want to use components from module AvailabilityWidget or AvailabilityWidgetPlugin.",
+        "spryker-shop/cms-block-widget": "If you want to use components from module CmsBlockWidget or ProductCmsBlockWidgetPlugin.",
+        "spryker-shop/product-group-widget": "If you want to use components from module ProductGroupColorWidget or ProductGroupWidget",
+        "spryker-shop/product-review-widget": "If you want to use ProductDetailPageReviewWidget or ProductReviewWidgetPlugin.",
+        "spryker-shop/product-configuration-widget": "Add the module if you want to use ProductConfigurationProductViewDisplayWidget or ProductConfigurationProductDetailPageButtonWidget.",
+        "spryker-shop/wishlist-widget": "If you want to use components from module WishlistWidget or WishlistWidgetPlugin."
+    },
+    "autoload": {
+        "psr-4": {
+            "SprykerShop\\": "src/SprykerShop/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "3.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

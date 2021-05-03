@@ -1,48 +1,48 @@
 {
-  "name": "spryker-shop/quote-request-agent-widget",
-  "type": "library",
-  "description": "QuoteRequestAgentWidget module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker-shop/shop-application": "^1.2.0",
-    "spryker-shop/shop-ui": "^1.0.0",
-    "spryker/application": "^3.8.0",
-    "spryker/customer": "^7.0.0",
-    "spryker/kernel": "^3.52.0",
-    "spryker/messenger": "^3.0.0",
-    "spryker/persistent-cart": "^1.8.0 || ^3.0.0",
-    "spryker/quote": "^2.0.0",
-    "spryker/quote-request-agent": "^2.0.0",
-    "spryker/symfony": "^3.1.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/router": "*",
-    "spryker/silex": "*"
-  },
-  "suggest": {
-    "spryker-shop/quote-request-agent-page": "Use this module if you want see quote request agent pages.",
-    "spryker/router": "Use this module if you want use the RouterProviderPlugin.",
-    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
-  },
-  "autoload": {
-    "psr-4": {
-      "SprykerShop\\": "src/SprykerShop/"
+    "name": "spryker-shop/quote-request-agent-widget",
+    "type": "library",
+    "description": "QuoteRequestAgentWidget module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker-shop/shop-application": "^1.2.0",
+        "spryker-shop/shop-ui": "^1.0.0",
+        "spryker/application": "^3.8.0",
+        "spryker/customer": "^7.0.0",
+        "spryker/kernel": "^3.52.0",
+        "spryker/messenger": "^3.0.0",
+        "spryker/persistent-cart": "^1.8.0 || ^3.0.0",
+        "spryker/quote": "^2.0.0",
+        "spryker/quote-request-agent": "^2.0.0",
+        "spryker/symfony": "^3.1.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/router": "*",
+        "spryker/silex": "*"
+    },
+    "suggest": {
+        "spryker-shop/quote-request-agent-page": "Use this module if you want see quote request agent pages.",
+        "spryker/router": "Use this module if you want use the RouterProviderPlugin.",
+        "spryker/silex": "Use this module when using plugins that need Silex dependencies."
+    },
+    "autoload": {
+        "psr-4": {
+            "SprykerShop\\": "src/SprykerShop/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

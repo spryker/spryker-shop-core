@@ -1,41 +1,41 @@
 {
-  "name": "spryker-shop/home-page",
-  "type": "library",
-  "description": "HomePage module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker-shop/shop-application": "^1.0.0",
-    "spryker-shop/shop-ui": "^1.44.0",
-    "spryker/kernel": "^3.52.0",
-    "spryker/storage": "^3.4.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/router": "*",
-    "spryker/silex": "*"
-  },
-  "suggest": {
-    "spryker/router": "Use this module when you want to use the Router.",
-    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
-  },
-  "autoload": {
-    "psr-4": {
-      "SprykerShop\\": "src/SprykerShop/"
+    "name": "spryker-shop/home-page",
+    "type": "library",
+    "description": "HomePage module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker-shop/shop-application": "^1.0.0",
+        "spryker-shop/shop-ui": "^1.44.0",
+        "spryker/kernel": "^3.52.0",
+        "spryker/storage": "^3.4.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/router": "*",
+        "spryker/silex": "*"
+    },
+    "suggest": {
+        "spryker/router": "Use this module when you want to use the Router.",
+        "spryker/silex": "Use this module when using plugins that need Silex dependencies."
+    },
+    "autoload": {
+        "psr-4": {
+            "SprykerShop\\": "src/SprykerShop/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }
