@@ -1,17 +1,17 @@
 build:
-  environment:
-    php: '7.3'
+    environment:
+        php: '7.3'
 
-  nodes:
-    analysis:
-      requires:
-        - branch: /^master$|^(bugfix|hotfix|beta)\/.+|^feature\/[a-z]+-\d+\/(master|dev)-.+|^feature\/[a-z]+-\d+\/[a-z]+-\d+\/(master|dev)-.+/
-      tests:
-        override:
-          - php-scrutinizer-run
+    nodes:
+        analysis:
+            requires:
+                - branch: /^master$|^(bugfix|hotfix|beta)\/.+|^feature\/[a-z]+-\d+\/(master|dev)-.+|^feature\/[a-z]+-\d+\/[a-z]+-\d+\/(master|dev)-.+/
+            tests:
+                override:
+                    - php-scrutinizer-run
 
 filter:
-  excluded_paths:
+    excluded_paths:
 
 build_failure_conditions:
-  - 'project.metric("scrutinizer.quality", < 9.88)'
+    - 'project.metric("scrutinizer.quality", < 9.88)'

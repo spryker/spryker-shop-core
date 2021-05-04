@@ -1,8 +1,6 @@
 name: CI
 
-on: [
-    push
-]
+on: [push]
 
 jobs:
     prefer-lowest:
@@ -10,9 +8,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php-version: [
-                    '7.3'
-                ]
+                php-version: ['7.3']
 
         steps:
             - uses: actions/checkout@v1
