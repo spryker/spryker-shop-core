@@ -1,40 +1,40 @@
 {
-  "name": "spryker-shop/merchant-sales-return-widget",
-  "type": "library",
-  "description": "MerchantSalesReturnWidget module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker-shop/shop-application-extension": "^1.2.0",
-    "spryker-shop/shop-ui": "^1.52.0",
-    "spryker/kernel": "^3.30.0",
-    "spryker/merchant-sales-return": "^0.2.0",
-    "spryker/symfony": "^3.0.0"
-  },
-  "require-dev": {
-    "spryker-shop/sales-return-page": "*",
-    "spryker/code-sniffer": "*"
-  },
-  "suggest": {
-    "spryker-shop/sales-return-page": "Add the module if you want to use return-create-link molecule."
-  },
-  "autoload": {
-    "psr-4": {
-      "SprykerShop\\": "src/SprykerShop/"
+    "name": "spryker-shop/merchant-sales-return-widget",
+    "type": "library",
+    "description": "MerchantSalesReturnWidget module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker-shop/shop-application-extension": "^1.2.0",
+        "spryker-shop/shop-ui": "^1.52.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/merchant-sales-return": "^0.2.0",
+        "spryker/symfony": "^3.0.0"
+    },
+    "require-dev": {
+        "spryker-shop/sales-return-page": "*",
+        "spryker/code-sniffer": "*"
+    },
+    "suggest": {
+        "spryker-shop/sales-return-page": "Add the module if you want to use return-create-link molecule."
+    },
+    "autoload": {
+        "psr-4": {
+            "SprykerShop\\": "src/SprykerShop/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

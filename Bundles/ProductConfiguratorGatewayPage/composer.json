@@ -1,58 +1,58 @@
 {
-  "name": "spryker-shop/product-configurator-gateway-page",
-  "type": "library",
-  "description": "ProductConfiguratorGatewayPage module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker-shop/product-configurator-gateway-page-extension": "^0.1.0",
-    "spryker-shop/shop-application": "^1.0.0",
-    "spryker/application": "^3.8.0",
-    "spryker/glossary-storage": "^1.5.0",
-    "spryker/kernel": "^3.33.0",
-    "spryker/product-configuration": "^0.1.0",
-    "spryker/product-configuration-storage": "^0.1.0",
-    "spryker/product-storage": "^1.28.0",
-    "spryker/quote": "^2.0.0",
-    "spryker/symfony": "^3.1.0"
-  },
-  "require-dev": {
-    "spryker-shop/home-page": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/config": "*",
-    "spryker/container": "*",
-    "spryker/event-dispatcher": "*",
-    "spryker/product": "*",
-    "spryker/propel": "*",
-    "spryker/router": "*",
-    "spryker/storage": "*",
-    "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/router": "Use this module when you want to use the Router."
-  },
-  "autoload": {
-    "psr-4": {
-      "SprykerShop\\": "src/SprykerShop/"
+    "name": "spryker-shop/product-configurator-gateway-page",
+    "type": "library",
+    "description": "ProductConfiguratorGatewayPage module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker-shop/product-configurator-gateway-page-extension": "^0.1.0",
+        "spryker-shop/shop-application": "^1.0.0",
+        "spryker/application": "^3.8.0",
+        "spryker/glossary-storage": "^1.5.0",
+        "spryker/kernel": "^3.33.0",
+        "spryker/product-configuration": "^0.1.0",
+        "spryker/product-configuration-storage": "^0.1.0",
+        "spryker/product-storage": "^1.28.0",
+        "spryker/quote": "^2.0.0",
+        "spryker/symfony": "^3.1.0"
+    },
+    "require-dev": {
+        "spryker-shop/home-page": "*",
+        "spryker/code-sniffer": "*",
+        "spryker/config": "*",
+        "spryker/container": "*",
+        "spryker/event-dispatcher": "*",
+        "spryker/product": "*",
+        "spryker/propel": "*",
+        "spryker/router": "*",
+        "spryker/storage": "*",
+        "spryker/testify": "*"
+    },
+    "suggest": {
+        "spryker/router": "Use this module when you want to use the Router."
+    },
+    "autoload": {
+        "psr-4": {
+            "SprykerShop\\": "src/SprykerShop/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerShopTest\\": "tests/SprykerShopTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

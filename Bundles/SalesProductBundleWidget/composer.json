@@ -1,37 +1,37 @@
 {
-  "name": "spryker-shop/sales-product-bundle-widget",
-  "type": "library",
-  "description": "SalesProductBundleWidget module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker-shop/sales-return-page-extension": "^1.0.0",
-    "spryker-shop/shop-ui": "^1.40.0",
-    "spryker/kernel": "^3.30.0",
-    "spryker/product-bundle": "^7.4.0",
-    "spryker/sales": "^11.9.0",
-    "spryker/symfony": "^3.1.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*"
-  },
-  "autoload": {
-    "psr-4": {
-      "SprykerShop\\": "src/SprykerShop/"
+    "name": "spryker-shop/sales-product-bundle-widget",
+    "type": "library",
+    "description": "SalesProductBundleWidget module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker-shop/sales-return-page-extension": "^1.0.0",
+        "spryker-shop/shop-ui": "^1.40.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/product-bundle": "^7.4.0",
+        "spryker/sales": "^11.9.0",
+        "spryker/symfony": "^3.1.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "SprykerShop\\": "src/SprykerShop/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

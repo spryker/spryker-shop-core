@@ -1,44 +1,44 @@
 {
-  "name": "spryker-shop/order-cancel-widget",
-  "type": "library",
-  "description": "OrderCancelWidget module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker-shop/shop-application": "^1.2.0",
-    "spryker-shop/shop-ui": "^1.0.0",
-    "spryker/application": "^3.8.0",
-    "spryker/customer": "^7.0.0",
-    "spryker/kernel": "^3.52.0",
-    "spryker/oms": "^11.8.0",
-    "spryker/sales": "^11.10.0",
-    "spryker/symfony": "^3.1.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/router": "*"
-  },
-  "suggest": {
-    "spryker/router": "Use this module if you want use the RouterProviderPlugin.",
-    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
-  },
-  "autoload": {
-    "psr-4": {
-      "SprykerShop\\": "src/SprykerShop/"
+    "name": "spryker-shop/order-cancel-widget",
+    "type": "library",
+    "description": "OrderCancelWidget module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker-shop/shop-application": "^1.2.0",
+        "spryker-shop/shop-ui": "^1.0.0",
+        "spryker/application": "^3.8.0",
+        "spryker/customer": "^7.0.0",
+        "spryker/kernel": "^3.52.0",
+        "spryker/oms": "^11.8.0",
+        "spryker/sales": "^11.10.0",
+        "spryker/symfony": "^3.1.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/router": "*"
+    },
+    "suggest": {
+        "spryker/router": "Use this module if you want use the RouterProviderPlugin.",
+        "spryker/silex": "Use this module when using plugins that need Silex dependencies."
+    },
+    "autoload": {
+        "psr-4": {
+            "SprykerShop\\": "src/SprykerShop/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }
