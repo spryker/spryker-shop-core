@@ -1,5 +1,5 @@
 # ErrorPage Module
-[![Build Status](https://travis-ci.org/spryker-shop/error-page.svg)](https://travis-ci.org/spryker-shop/error-page)
+[![Latest Stable Version](https://poser.pugx.org/spryker-shop/error-page/v/stable.svg)](https://packagist.org/packages/spryker-shop/error-page)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 This module contains the error pages for different HTTP codes.

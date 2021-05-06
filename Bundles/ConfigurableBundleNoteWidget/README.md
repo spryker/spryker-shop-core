@@ -1,5 +1,5 @@
 # ConfigurableBundleNoteWidget Module
-[![Build Status](https://travis-ci.org/spryker-shop/configurable-bundle-note-widget.svg)](https://travis-ci.org/spryker-shop/configurable-bundle-note-widget)
+[![Latest Stable Version](https://poser.pugx.org/spryker-shop/configurable-bundle-note-widget/v/stable.svg)](https://packagist.org/packages/spryker-shop/configurable-bundle-note-widget)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Module provides widget with form for configurable bundle notes and widget for displaying configurable bundle notes.
