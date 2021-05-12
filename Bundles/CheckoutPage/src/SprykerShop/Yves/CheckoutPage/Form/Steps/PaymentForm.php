@@ -129,7 +129,7 @@ class PaymentForm extends AbstractType
         $paymentMethodSubForms = [];
 
         $availablePaymentMethodSubFormPlugins = $this->getFactory()->getPaymentMethodSubForms();
-
+        $availablePaymentMethodSubFormPlugins = $this->filterOutNotAvailableForms($availablePaymentMethodSubFormPlugins);
         $filteredPaymentMethodSubFormPlugins = $this->filterPaymentMethodSubFormPlugins($availablePaymentMethodSubFormPlugins);
 
         foreach ($filteredPaymentMethodSubFormPlugins as $paymentMethodSubFormPlugin) {
@@ -137,6 +137,45 @@ class PaymentForm extends AbstractType
         }
 
         return $paymentMethodSubForms;
+    }
+
+    /**
+     * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $paymentMethodSubFormPlugins
+     *
+     * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
+     */
+    protected function filterOutNotAvailableForms(SubFormPluginCollection $paymentMethodSubFormPlugins): SubFormPluginCollection
+    {
+        $paymentMethodNames = $this->getAvailablePaymentMethodNames();
+        $paymentMethodNames = array_combine($paymentMethodNames, $paymentMethodNames);
+
+        foreach ($paymentMethodSubFormPlugins as $key => $subFormPlugin) {
+            $subFormName = $subFormPlugin->createSubForm()->getName();
+
+            if (!isset($paymentMethodNames[$subFormName])) {
+                unset($paymentMethodSubFormPlugins[$key]);
+            }
+        }
+
+        $paymentMethodSubFormPlugins->reset();
+
+        return $paymentMethodSubFormPlugins;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getAvailablePaymentMethodNames(): array
+    {
+        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
+        $paymentMethodsTransfer = $this->getFactory()->getPaymentClient()->getAvailableMethods($quoteTransfer);
+
+        $paymentMethodNames = [];
+        foreach ($paymentMethodsTransfer->getMethods() as $paymentMethodTransfer) {
+            $paymentMethodNames[] = $paymentMethodTransfer->getMethodName();
+        }
+
+        return $paymentMethodNames;
     }
 
     /**
