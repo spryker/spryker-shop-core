@@ -46,7 +46,7 @@
             {% set time = macros.scheduleTime(scheduleItem, scheduleList, scheduleItem.date) %}
             {% set scheduleList = scheduleList | merge({
                 (scheduleItem.date): {
-                    note: scheduleItem.note | trans,
+                    noteGlossaryKey: scheduleItem.noteGlossaryKey | trans,
                     date: scheduleItem.date | date('d.m.Y, ', false) ~ localizedDay | trans,
                     time: data.isHoliday ? '' : time,
                 },
@@ -65,7 +65,7 @@
         } only %}
             {% block text %}
                 {% for scheduleItem in embed.scheduleList %}
-                    {% set title = scheduleItem.note ? scheduleItem.date ~ ' (' ~ scheduleItem.note ~ ')' : scheduleItem.date %}
+                    {% set title = scheduleItem.noteGlossaryKey ? scheduleItem.date ~ ' (' ~ scheduleItem.noteGlossaryKey ~ ')' : scheduleItem.date %}
                     {% set time = scheduleItem.time ? ': ' ~ scheduleItem.time : '' %}
 
                     <div>{{ title ~ time }}</div>

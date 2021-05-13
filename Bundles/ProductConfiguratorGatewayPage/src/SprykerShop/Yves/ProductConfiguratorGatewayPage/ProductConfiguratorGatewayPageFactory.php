@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ProductConfiguratorGatewayPage;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToGlossaryStorageClientBridge;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductConfigurationClientInterface;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductConfigurationStorageClientInterface;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductStorageClientInterface;
@@ -149,5 +150,13 @@ class ProductConfiguratorGatewayPageFactory extends AbstractFactory
     public function getRouter(): ChainRouterInterface
     {
         return $this->getProvidedDependency(ProductConfiguratorGatewayPageDependencyProvider::SERVICE_ROUTER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToGlossaryStorageClientBridge
+     */
+    public function getGlossaryStorageClient(): ProductConfiguratorGatewayPageToGlossaryStorageClientBridge
+    {
+        return $this->getProvidedDependency(ProductConfiguratorGatewayPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 }

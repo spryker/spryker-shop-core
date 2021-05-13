@@ -48,7 +48,7 @@ class GatewayResponseController extends AbstractController
             ->getProductConfigurationClient()
             ->processProductConfiguratorResponse($productConfigurationResponseTransfer, $request->request->all());
 
-        if (!$productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful()) {
+        if ($productConfiguratorResponseProcessorResponseTransfer->getMessages()->count() > 0) {
             $this->handleResponseErrors($productConfiguratorResponseProcessorResponseTransfer);
         }
 
@@ -64,8 +64,21 @@ class GatewayResponseController extends AbstractController
      */
     protected function handleResponseErrors(ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer): void
     {
+        $errorsMessages = [];
         foreach ($productConfiguratorResponseProcessorResponseTransfer->getMessages() as $messageTransfer) {
-            $this->addErrorMessage($messageTransfer->getValueOrFail());
+            $errorsMessages[$messageTransfer->getValueOrFail()] = $messageTransfer->getParameters();
+        }
+
+        $translatedErrorMessages = $this->getFactory()
+            ->getGlossaryStorageClient()
+            ->translateBulk(
+                array_keys($errorsMessages),
+                $this->getLocale(),
+                $errorsMessages
+            );
+
+        foreach ($translatedErrorMessages as $translatedErrorMessage) {
+            $this->addErrorMessage($translatedErrorMessage);
         }
     }
 

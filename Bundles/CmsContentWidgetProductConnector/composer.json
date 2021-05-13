@@ -1,38 +1,38 @@
 {
-  "name": "spryker-shop/cms-content-widget-product-connector",
-  "type": "library",
-  "description": "CmsContentWidgetProductConnector module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/cms-content-widget": "^1.2.0",
-    "spryker/kernel": "^3.30.0",
-    "spryker/product-storage": "^1.8.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/twig": "*"
-  },
-  "suggest": {
-    "spryker/twig": "If you want to use CmsProductContentWidgetPlugin."
-  },
-  "autoload": {
-    "psr-4": {
-      "SprykerShop\\": "src/SprykerShop/"
+    "name": "spryker-shop/cms-content-widget-product-connector",
+    "type": "library",
+    "description": "CmsContentWidgetProductConnector module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/cms-content-widget": "^1.2.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/product-storage": "^1.8.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/twig": "*"
+    },
+    "suggest": {
+        "spryker/twig": "If you want to use CmsProductContentWidgetPlugin."
+    },
+    "autoload": {
+        "psr-4": {
+            "SprykerShop\\": "src/SprykerShop/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

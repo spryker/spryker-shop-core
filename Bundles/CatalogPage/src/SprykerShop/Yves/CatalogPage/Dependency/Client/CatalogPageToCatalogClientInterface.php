@@ -13,14 +13,22 @@ use Symfony\Component\HttpFoundation\Response;
 interface CatalogPageToCatalogClientInterface
 {
     /**
+     * @phpstan-param array<mixed> $requestParameters
+     *
+     * @phpstan-return array<mixed>
+     *
      * @param string $searchString
      * @param array $requestParameters
      *
      * @return array
      */
-    public function catalogSearch($searchString, array $requestParameters = []);
+    public function catalogSearch($searchString, array $requestParameters);
 
     /**
+     * @phpstan-param array<mixed> $requestParameters
+     *
+     * @phpstan-return array<mixed>
+     *
      * @param string $searchString
      * @param array $requestParameters
      *
@@ -44,10 +52,12 @@ interface CatalogPageToCatalogClientInterface
     public function setCatalogViewMode($mode, Response $response);
 
     /**
+     * @phpstan-param array<mixed> $requestParameters
+     *
      * @param string $searchString
      * @param array $requestParameters
      *
      * @return int
      */
-    public function catalogSearchCount(string $searchString, array $requestParameters = []): int;
+    public function catalogSearchCount(string $searchString, array $requestParameters): int;
 }

@@ -79,8 +79,8 @@ class ProductConcreteAvailabilityReader implements ProductConcreteAvailabilityRe
             return $this->createProductConcreteAvailabilityTransfer($sku, $productConfigurationAvailabilityQuantity);
         }
 
-        if ($productConcreteAvailabilityTransfer->getAvailabilityOrFail()->lessThan($productConfigurationAvailabilityQuantity)) {
-            return $productConcreteAvailabilityTransfer;
+        if ($productConcreteAvailabilityTransfer !== null && $productConcreteAvailabilityTransfer->getIsNeverOutOfStock()) {
+            return $this->createProductConcreteAvailabilityTransfer($sku, $productConfigurationAvailabilityQuantity);
         }
 
         return $this->createProductConcreteAvailabilityTransfer($sku, $productConfigurationAvailabilityQuantity);

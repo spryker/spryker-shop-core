@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CartPage\Form;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \SprykerShop\Yves\CartPage\CartPageConfig getConfig()
+ */
 class AddToCartForm extends AbstractType
 {
     /**

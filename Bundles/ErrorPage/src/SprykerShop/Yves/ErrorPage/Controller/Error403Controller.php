@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ErrorPage\Controller;
 
 use Spryker\Yves\Kernel\Controller\AbstractController;
+use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,7 +21,7 @@ class Error403Controller extends AbstractController
      *
      * @return \Spryker\Yves\Kernel\View\View
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): View
     {
         return $this->view([
             'error' => $this->getErrorMessage($request),

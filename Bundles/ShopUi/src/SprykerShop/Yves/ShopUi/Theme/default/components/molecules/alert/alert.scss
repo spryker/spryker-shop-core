@@ -1,0 +1,18 @@
+@mixin shop-ui-alert($name: '.alert') {
+    #{$name} {
+        display: flex;
+        align-items: flex-start;
+        padding: 1.25rem map-get($setting-spacing, big);
+        margin: map-get($setting-spacing, default) 0;
+        background: $setting-color-light-blue;
+        color: $setting-color-darkest;
+
+        &__icon {
+            color: $setting-color-blue;
+            flex-shrink: 0;
+            margin: 0 map-get($setting-spacing, big) 0 0;
+        }
+
+        @content;
+    }
+}

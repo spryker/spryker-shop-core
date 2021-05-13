@@ -19,11 +19,9 @@
 } %}
 
 {% block body %}
-    {% set currencyIsoCode = currencyIsoCode() %}
-    
     {% if data.originalAmount is not empty -%}
         <span itemprop="price" content="{{ data.originalAmoun }}" class="{{ config.name }}__amount {{ config.name }}__amount--original">
-            <meta itemprop="priceCurrency" content="{{ currencyIsoCode }}">
+            <meta itemprop="priceCurrency" content="{% widget 'CurrencyIsoCodeWidget' only %}{% endwidget %}">
             {{ data.originalAmount }}
         </span>
     {%- endif -%}
@@ -39,7 +37,7 @@
                 }
             } only %}
             <span itemprop="price" content="{{ data.amount }}">
-                <meta itemprop="priceCurrency" content="{{ currencyIsoCode }}">
+                <meta itemprop="priceCurrency" content="{% widget 'CurrencyIsoCodeWidget' only %}{% endwidget %}">
                 {{ data.amount }}
             </span>
         </span>

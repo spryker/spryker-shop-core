@@ -91,6 +91,9 @@
                                                     </li>
                                                     <li class="list__item">
                                                         <small itemprop="sku" class="text-secondary">{{ item.sku }}</small>
+                                                        <input class="input" type="hidden"
+                                                               name="shoppingListItems[{{ item.idShoppingListItem }}]"
+                                                               value="{{ item.shoppingListItem.toArray | json_encode() }}">
                                                     </li>
 
                                                     <li class="list__item">

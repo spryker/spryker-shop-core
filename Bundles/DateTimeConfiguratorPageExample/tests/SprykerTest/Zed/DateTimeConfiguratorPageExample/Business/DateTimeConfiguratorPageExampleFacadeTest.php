@@ -170,7 +170,7 @@ class DateTimeConfiguratorPageExampleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductConcreteAvailabilityWillReturnLessValueWhenBothAvailabilitySet(): void
+    public function testFindProductConcreteAvailabilityWillIgnoreConcreteAvailabilityWhenBothAvailabilitySet(): void
     {
         //Arrange
         $productAvailabilityCriteriaTransfer = (new ProductAvailabilityCriteriaTransfer())
@@ -198,7 +198,7 @@ class DateTimeConfiguratorPageExampleFacadeTest extends Unit
 
         //Assert
         $this->assertSame(
-            static::TEST_PRODUCT_CONCRETE_AVAILABILITY,
+            static::TEST_PRODUCT_CONFIGURATION_INSTANCE_AVAILABILITY,
             $productConcreteAvailabilityTransfer->getAvailability()->toInt()
         );
     }

@@ -89,6 +89,12 @@
                                     </td>
                                     <td class="{{ noBottomBorderClass }}">
                                         {{ orderItem.name }}
+                                        <div>
+                                            {% block productConfiguration %}
+                                                {% widget 'ProductConfigurationOrderItemDisplayWidget' args [orderItem] only %}
+                                                {% endwidget %}
+                                            {% endblock %}
+                                        </div>
                                     </td>
                                     <td class="{{ noBottomBorderClass }}">
                                         {% if isItemDiscount %}

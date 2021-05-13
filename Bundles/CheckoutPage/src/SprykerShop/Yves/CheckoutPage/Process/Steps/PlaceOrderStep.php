@@ -164,6 +164,7 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
 
         if ($checkoutResponseTransfer->getSaveOrder() !== null) {
             $quoteTransfer->setOrderReference($checkoutResponseTransfer->getSaveOrder()->getOrderReference());
+            $quoteTransfer->setIsOrderPlacedSuccessfully($checkoutResponseTransfer->getIsSuccess());
         }
 
         $this->setCheckoutErrorMessages($checkoutResponseTransfer);

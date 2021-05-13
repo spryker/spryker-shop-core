@@ -47,24 +47,32 @@ class ItemFetcher implements ItemFetcherInterface
     protected $localeClient;
 
     /**
+     * @var \SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\ReorderItemExpanderPluginInterface[]
+     */
+    protected $reorderItemExpanderPlugins;
+
+    /**
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface $productBundleClient
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductStorageClientInterface $productStorageClient
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToMessengerClientInterface $messengerClient
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToGlossaryStorageClientInterface $glossaryStorageClient
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToLocaleClientInterface $localeClient
+     * @param \SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\ReorderItemExpanderPluginInterface[] $reorderItemExpanderPlugins
      */
     public function __construct(
         CustomerReorderWidgetToProductBundleClientInterface $productBundleClient,
         CustomerReorderWidgetToProductStorageClientInterface $productStorageClient,
         CustomerReorderWidgetToMessengerClientInterface $messengerClient,
         CustomerReorderWidgetToGlossaryStorageClientInterface $glossaryStorageClient,
-        CustomerReorderWidgetToLocaleClientInterface $localeClient
+        CustomerReorderWidgetToLocaleClientInterface $localeClient,
+        array $reorderItemExpanderPlugins
     ) {
         $this->productBundleClient = $productBundleClient;
         $this->productStorageClient = $productStorageClient;
         $this->messengerClient = $messengerClient;
         $this->glossaryStorageClient = $glossaryStorageClient;
         $this->localeClient = $localeClient;
+        $this->reorderItemExpanderPlugins = $reorderItemExpanderPlugins;
     }
 
     /**
@@ -106,8 +114,8 @@ class ItemFetcher implements ItemFetcherInterface
                     ->setItems($orderTransfer->getItems())
                     ->setBundleItems($orderTransfer->getBundleItems())
             );
-
         $itemTransfers = $this->expandBundleItemsWithIdSalesOrderItem($orderTransfer, $itemTransfers);
+        $itemTransfers = $this->executeReorderItemExpanderPlugins($itemTransfers, $orderTransfer);
 
         return $this->cleanUpItems($itemTransfers);
     }
@@ -245,5 +253,20 @@ class ItemFetcher implements ItemFetcherInterface
         $shippingAddressTransfer->setIdSalesOrderAddress(null);
 
         return $itemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function executeReorderItemExpanderPlugins(array $itemTransfers, OrderTransfer $orderTransfer): array
+    {
+        foreach ($this->reorderItemExpanderPlugins as $reorderItemExpanderPlugin) {
+            $itemTransfers = $reorderItemExpanderPlugin->expand($itemTransfers, $orderTransfer);
+        }
+
+        return $itemTransfers;
     }
 }

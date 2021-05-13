@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\SalesProductConfigurationWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\SalesProductConfigurationWidget\Dependency\Client\SalesProductConfigurationWidgetToSalesProductConfigurationClientInterface;
 use SprykerShop\Yves\SalesProductConfigurationWidget\Resolver\ProductConfigurationTemplateResolver;
 use SprykerShop\Yves\SalesProductConfigurationWidget\Resolver\ProductConfigurationTemplateResolverInterface;
 
@@ -32,5 +33,13 @@ class SalesProductConfigurationWidgetFactory extends AbstractFactory
     public function getSalesProductConfigurationRenderStrategyPlugins(): array
     {
         return $this->getProvidedDependency(SalesProductConfigurationWidgetDependencyProvider::PLUGINS_SALES_PRODUCT_CONFIGURATION_RENDER_STRATEGY);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\SalesProductConfigurationWidget\Dependency\Client\SalesProductConfigurationWidgetToSalesProductConfigurationClientInterface
+     */
+    public function getSalesProductConfigurationClient(): SalesProductConfigurationWidgetToSalesProductConfigurationClientInterface
+    {
+        return $this->getProvidedDependency(SalesProductConfigurationWidgetDependencyProvider::CLIENT_SALES_PRODUCT_CONFIGURATION);
     }
 }

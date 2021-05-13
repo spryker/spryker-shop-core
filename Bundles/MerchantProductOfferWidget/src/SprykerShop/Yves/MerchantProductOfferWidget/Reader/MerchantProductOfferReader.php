@@ -66,15 +66,15 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
         $productOfferStorageCriteriaTransfer->addProductConcreteSku($sku);
 
         $productOfferStorageCollectionTransfer = $this->merchantProductOfferStorageClient->getProductOffersBySkus($productOfferStorageCriteriaTransfer);
-        $productOffersStorageTransfers = $productOfferStorageCollectionTransfer->getProductOffersStorage()->getArrayCopy();
+        $productOffers = $productOfferStorageCollectionTransfer->getProductOffers()->getArrayCopy();
 
-        foreach ($productOffersStorageTransfers as $productOfferStorageTransfer) {
-            $merchantStorageTransfer = $productOfferStorageTransfer->getMerchantStorage();
+        foreach ($productOffers as $productOffer) {
+            $merchantStorageTransfer = $productOffer->getMerchantStorage();
 
-            $productOfferStorageTransfer->getMerchantStorage()->setMerchantUrl($this->getResolvedUrl($merchantStorageTransfer, $localeName));
+            $productOffer->getMerchantStorage()->setMerchantUrl($this->getResolvedUrl($merchantStorageTransfer, $localeName));
         }
 
-        return $productOffersStorageTransfers;
+        return $productOffers;
     }
 
     /**

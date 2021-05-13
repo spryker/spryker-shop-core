@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CartPage\Controller;
 
+use Generated\Shared\Transfer\CartPageViewArgumentsTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
@@ -71,35 +72,16 @@ class CartController extends AbstractController
      */
     protected function executeIndexAction(array $selectedAttributes = []): array
     {
-        $validateQuoteResponseTransfer = $this->getFactory()
-            ->getCartClient()
-            ->validateQuote();
-
         $this->getFactory()
             ->getZedRequestClient()
             ->addResponseMessagesToMessenger();
 
-        $quoteTransfer = $validateQuoteResponseTransfer->getQuoteTransfer();
+        $cartPageViewArgumentsTransfer = new CartPageViewArgumentsTransfer();
+        $cartPageViewArgumentsTransfer
+            ->setLocale($this->getLocale())
+            ->setSelectedAttributes($selectedAttributes);
 
-        $cartItems = $this->getFactory()
-            ->createCartItemReader()
-            ->getCartItems($quoteTransfer);
-
-        $itemAttributesBySku = $this->getFactory()
-            ->createCartItemsAttributeProvider()
-            ->getItemsAttributes($quoteTransfer, $this->getLocale(), $selectedAttributes);
-
-        $quoteClient = $this->getFactory()->getQuoteClient();
-
-        return [
-            'removeCartItemForm' => $this->getFactory()->createCartPageFormFactory()->getRemoveForm()->createView(),
-            'cart' => $quoteTransfer,
-            'isQuoteEditable' => $quoteClient->isQuoteEditable($quoteTransfer),
-            'isQuoteLocked' => $quoteClient->isQuoteLocked($quoteTransfer),
-            'cartItems' => $cartItems,
-            'attributes' => $itemAttributesBySku,
-            'isQuoteValid' => $validateQuoteResponseTransfer->getIsSuccessful(),
-        ];
+        return $this->getFactory()->createCartPageView()->getViewData($cartPageViewArgumentsTransfer);
     }
 
     /**
