@@ -4,9 +4,9 @@
     <transfer name="ProductOfferStorage">
         <property name="idProductOffer" type="int"/>
         <property name="productOfferReference" type="string"/>
-        <property name="idMerchant" type="int"/>
         <property name="price" type="CurrentProductPrice"/>
         <property name="merchantStorage" type="MerchantStorage"/>
+        <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="MerchantStorage">
@@ -60,6 +60,10 @@
     </transfer>
 
     <transfer name="ShopContext">
+    </transfer>
+
+    <transfer name="MerchantStorageCriteria">
+        <property name="merchantReferences" type="string[]" singular="merchantReference"/>
     </transfer>
 
     <transfer name="WishlistItem">

@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\MerchantProductOfferWidget\Reader;
 
+use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
@@ -91,10 +92,11 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
             return null;
         }
 
-        /** @var int $idMerchant */
-        $idMerchant = $productOfferStorageTransfer->getIdMerchant();
-        $merchantStorageTransfer = $this->merchantStorageClient
-            ->findOne($idMerchant);
+        $merchantStorageTransfer = $this->merchantStorageClient->findOne(
+            (new MerchantStorageCriteriaTransfer())->addMerchantReference(
+                $productOfferStorageTransfer->getMerchantReferenceOrFail()
+            )
+        );
 
         if (!$merchantStorageTransfer) {
             return null;
