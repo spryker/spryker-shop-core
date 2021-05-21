@@ -1,5 +1,5 @@
 # ProductImageWidget Module
-[![Build Status](https://travis-ci.org/spryker-shop/product-image-widget.svg)](https://travis-ci.org/spryker-shop/product-image-widget)
+[![Latest Stable Version](https://poser.pugx.org/spryker-shop/product-image-widget/v/stable.svg)](https://packagist.org/packages/spryker-shop/product-image-widget)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 This module provides image slider (carousel) on the product detail page.

@@ -31,17 +31,15 @@
 
 {% block body %}
     {% set scheduleList = [] %}
-    {% set todayTimestamp = "now" | date('Y-m-d') | date('U') %}
     {% set scheduleItemCounter = 0 %}
 
     {% for scheduleItem in data.scheduleData %}
-        {% set dateTimestamp = (scheduleItem.date ~ ' ' ~ scheduleItem.timeTo) | date('U') %}
         {% set isWorkingHours = scheduleItem.timeTo and scheduleItem.timeFrom %}
         {% set isDayAllowed = data.isHoliday ? not isWorkingHours : isWorkingHours %}
-        {% set isNotPastDay = (dateTimestamp >= todayTimestamp and scheduleItemCounter < data.itemsLimit) or data.itemsLimit is null %}
+        {% set isItemCounterValid = scheduleItemCounter < data.itemsLimit or data.itemsLimit is null %}
         {% set localizedDay = 'merchant_opening_hours.day.title.' ~ scheduleItem.date | date('l') | capitalize %}
 
-        {% if isDayAllowed and isNotPastDay %}
+        {% if isDayAllowed and isItemCounterValid %}
             {% set scheduleItemCounter = scheduleItemCounter + 1 %}
             {% set time = macros.scheduleTime(scheduleItem, scheduleList, scheduleItem.date) %}
             {% set scheduleList = scheduleList | merge({

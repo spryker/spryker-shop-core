@@ -1,5 +1,5 @@
 # ShopCmsSlot Module
-[![Build Status](https://travis-ci.org/spryker-shop/shop-cms-slot.svg)](https://travis-ci.org/spryker-shop/shop-cms-slot)
+[![Latest Stable Version](https://poser.pugx.org/spryker-shop/shop-cms-slot/v/stable.svg)](https://packagist.org/packages/spryker-shop/shop-cms-slot)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 The module provides the functionality for ShopApplication to work with CMS slots.
