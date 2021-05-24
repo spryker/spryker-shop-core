@@ -101,7 +101,16 @@ class CartPageView implements CartPageViewInterface
             'isQuoteLocked' => $this->isQuoteLocked(),
             'isQuoteValid' => $this->isQuoteValid(),
             'removeCartItemForm' => $this->getRemoveCartItemForm(),
+            'isCartUpsellingAjaxLoadDisabled' =>  !$this->config->isCartUpsellingAjaxLoadEnabled()
         ];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getCartData(): QuoteTransfer
+    {
+         return $this->getQuote();
     }
 
     /**

@@ -8,9 +8,15 @@
 namespace SprykerShop\Yves\CartPage\ViewModel;
 
 use Generated\Shared\Transfer\CartPageViewArgumentsTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CartPageViewInterface
 {
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getCartData(): QuoteTransfer;
+
     /**
      * @param \Generated\Shared\Transfer\CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer
      *

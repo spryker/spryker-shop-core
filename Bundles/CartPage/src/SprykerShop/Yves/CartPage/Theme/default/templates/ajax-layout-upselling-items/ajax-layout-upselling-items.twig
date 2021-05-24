@@ -1,0 +1,9 @@
+{% define data = {
+    cart: cart
+} %}
+
+{% include molecule('upselling-items', 'CartPage') with {
+    data: {
+        cart: data.cart
+    },
+} only %}

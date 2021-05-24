@@ -13,6 +13,7 @@
     request: app.request,
     title: 'cart.cart' | trans,
     requestUri: app.request.requestUri,
+    isCartUpsellingAjaxLoadDisabled: _view.isCartUpsellingAjaxLoadDisabled
 } %}
 
 {% block breadcrumbs %}
@@ -236,10 +237,13 @@
             </div>
         </div>
     {% endif %}
-
-    {% widget 'UpSellingProductsWidget' args [data.cart] only %}
-    {% elsewidget 'UpSellingProductsWidgetPlugin' args [data.cart] only %} {# @deprecated Use UpSellingProductsWidget instead. #}
-    {% endwidget %}
+    {% if data.isCartUpsellingAjaxLoadDisabled %}
+        {% include molecule('upselling-items', 'CartPage') with {
+            data: {
+                cart: data.cart
+            },
+        } only %}
+    {% endif %}
 {% endblock %}
 
 {% block footer %}{% endblock %}
