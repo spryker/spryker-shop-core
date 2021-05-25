@@ -74,10 +74,8 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected const ROUTE_CART_RESET_LOCK = 'cart/reset-lock';
     public const ROUTE_NAME_CART_RESET_LOCK = 'cart/reset-lock';
 
-
     public const ROUTE_NAME_GET_CART_ITEMS_AJAX = 'cart/get-cart-items';
     public const ROUTE_NAME_GET_CART_TOTAL_AJAX = 'cart/get-cart-total';
-
 
     /**
      * Specification:

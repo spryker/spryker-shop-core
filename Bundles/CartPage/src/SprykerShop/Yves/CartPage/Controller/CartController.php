@@ -89,13 +89,16 @@ class CartController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function getCartItemsAjaxAction(Request $request): JsonResponse
     {
-        if (!$this->getFactory()->getConfig()->isCartUpsellingAjaxLoadEnabled()) {
+        if (!$this->getFactory()->getConfig()->isCartCartItemsAjaxLoadEnabled()) {
             throw new NotFoundHttpException();
         }
+
         $selectedAttributes = $request->get('selectedAttributes', []);
         $response = $this->executeGetCartItemsAjaxAction($selectedAttributes);
 
@@ -103,7 +106,6 @@ class CartController extends AbstractController
             $response
         );
     }
-
 
     /**
      * @param array $selectedAttributes
@@ -115,32 +117,33 @@ class CartController extends AbstractController
         $cartPageViewArgumentsTransfer = new CartPageViewArgumentsTransfer();
         $cartPageViewArgumentsTransfer
             ->setLocale($this->getLocale())
-            ->setSelectedAttributes($selectedAttributes);
+            ->setSelectedAttributes($selectedAttributes)
+            ->setDisableQuotaValidation($this->getFactory()->getConfig()->isAjaxLoadCartItemsDisableQuoteValidation());
 
-        $viewData = $this->getFactory()->createCartPageView()->getViewData($cartPageViewArgumentsTransfer);
+        $viewData = $this->getFactory()->createCartPageView()->getCartItemsViewData($cartPageViewArgumentsTransfer);
 
-        $upsellingWidgetHtml = $this->renderView('@CartPage/views/ajax-cart-items/ajax-cart-items.twig',
-             $viewData
-        )->getContent();
+        $cartItemsHtml = $this->renderView('@CartPage/views/ajax-cart-items/ajax-cart-items.twig', $viewData)->getContent();
 
         return [
             static::KEY_CODE => Response::HTTP_OK,
-            static::KEY_HTML => $upsellingWidgetHtml
+            static::KEY_HTML => $cartItemsHtml,
         ];
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function getCartTotalAjaxAction(Request $request): JsonResponse
     {
-        if (!$this->getFactory()->getConfig()->isCartUpsellingAjaxLoadEnabled()) {
+        if (!$this->getFactory()->getConfig()->isCartCartTotalAjaxLoadEnabled()) {
             throw new NotFoundHttpException();
         }
-        $selectedAttributes = $request->get('selectedAttributes', []);
-        $response = $this->executeGetCartTotalAjaxAction($selectedAttributes);
+
+        $response = $this->executeGetCartTotalAjaxAction();
 
         return $this->jsonResponse(
             $response
@@ -148,21 +151,25 @@ class CartController extends AbstractController
     }
 
     /**
-     * @param array $selectedAttributes
-     *
      * @return array
      */
-    protected function executeGetCartTotalAjaxAction( ): array
+    protected function executeGetCartTotalAjaxAction(): array
     {
-        $viewData = $this->getFactory()->createCartPageView()->getCartTotalViewData();
+        $cartPageViewArgumentsTransfer = new CartPageViewArgumentsTransfer();
+        $cartPageViewArgumentsTransfer->setDisableQuotaValidation(
+            $this->getFactory()->getConfig()->isAjaxLoadCartTotalDisableQuoteValidation()
+        );
 
-        $html = $this->renderView('@CartPage/views/ajax-cart-total/ajax-cart-total.twig',
+        $viewData = $this->getFactory()->createCartPageView()->getCartTotalViewData($cartPageViewArgumentsTransfer);
+
+        $html = $this->renderView(
+            '@CartPage/views/ajax-cart-total/ajax-cart-total.twig',
             $viewData
         )->getContent();
 
         return [
             static::KEY_CODE => Response::HTTP_OK,
-            static::KEY_HTML => $html
+            static::KEY_HTML => $html,
         ];
     }
 
@@ -227,24 +234,6 @@ class CartController extends AbstractController
         }
 
         return $this->executeQuickAddAction($sku, $quantity);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function getUpsellingWidgetAjaxAction(Request $request): JsonResponse
-    {
-        if (!$this->getFactory()->getConfig()->isCartUpsellingAjaxLoadEnabled()) {
-            throw new NotFoundHttpException();
-        }
-
-        $response = $this->executeGetUpsellingWidgetAjaxAction($request);
-
-        return $this->jsonResponse(
-            $response
-        );
     }
 
     /**

@@ -4,6 +4,7 @@
     <transfer name="CartPageViewArguments" strict="true">
         <property name="locale" type="string"/>
         <property name="selectedAttributes" type="array" singular="selectedAttribute"/>
+        <property name="disableQuotaValidation" type="bool"/>
     </transfer>
 
     <transfer name="Quote">

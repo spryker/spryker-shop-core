@@ -13,6 +13,7 @@
     request: app.request,
     title: 'cart.cart' | trans,
     requestUri: app.request.requestUri,
+    disableAjaxCartTotalLoad: _view.disableAjaxCartTotalLoad
 } %}
 
 {% block breadcrumbs %}
@@ -93,21 +94,6 @@
                     },
                 } only %}
                 {% endwidget %}
-
-                   {# {% for cartItem in data.cartItems %}
-                        {% if not cartItem.configuredBundleItem | default %}
-                            {% block cartItem %}
-                                {% include molecule('product-cart-item', 'CartPage') with {
-                                    data: {
-                                        product: cartItem,
-                                        cart: data.cart,
-                                        isQuoteEditable: data.isQuoteEditable,
-                                        attributes: data.attributes[cartItem.sku] | default([]),
-                                    },
-                                } only %}
-                            {% endblock %}
-                        {% endif %}
-                    {% endfor %}#}
 
                 {% include molecule('product-cart-items', 'CartPage') with {
                     data: {
@@ -233,13 +219,15 @@
                     {% endblock %}
 
                     {% block cartSummary %}
-                        {% include molecule('cart-summary', 'CartPage') with {
-                            data: {
-                                cart: data.cart,
-                                isQuoteValid: data.isQuoteValid,
-                                isQuoteEditable: data.isQuoteEditable,
-                            },
-                        } only %}
+                        {% if data.disableAjaxCartTotalLoad %}
+                            {% include molecule('cart-summary', 'CartPage') with {
+                                data: {
+                                    cart: data.cart,
+                                    isQuoteValid: data.isQuoteValid,
+                                    isQuoteEditable: data.isQuoteEditable,
+                                },
+                            } only %}
+                        {% endif %}
                     {% endblock %}
                 </div>
             </div>

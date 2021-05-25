@@ -17,4 +17,18 @@ interface CartPageViewInterface
      * @return array
      */
     public function getViewData(CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer
+     *
+     * @return array
+     */
+    public function getCartItemsViewData(CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer
+     *
+     * @return array
+     */
+    public function getCartTotalViewData(CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer): array;
 }

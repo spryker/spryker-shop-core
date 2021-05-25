@@ -17,9 +17,39 @@ class CartPageConfig extends AbstractBundleConfig
      *
      * @return bool
      */
-    public function isCartUpsellingAjaxLoadEnabled(): bool
+    public function isCartCartTotalAjaxLoadEnabled(): bool
     {
-        return $this->get(CartPageConstants::ENABLE_CART_UPSELING_LOAD_AJAX, true);
+        return $this->get(CartPageConstants::ENABLE_CART_TOTAL_LOAD_AJAX, true);
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isCartCartItemsAjaxLoadEnabled(): bool
+    {
+        return $this->get(CartPageConstants::ENABLE_CART_ITEMS_LOAD_AJAX, false);
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isAjaxLoadCartTotalDisableQuoteValidation(): bool
+    {
+        return $this->get(CartPageConstants::DISABLE_QUOTE_VALIDATION_CART_TOTAL_LOAD_AJAX, true);
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isAjaxLoadCartItemsDisableQuoteValidation(): bool
+    {
+        return $this->get(CartPageConstants::DISABLE_QUOTE_VALIDATION_CART_ITEMS_LOAD_AJAX, true);
     }
 
     /**
