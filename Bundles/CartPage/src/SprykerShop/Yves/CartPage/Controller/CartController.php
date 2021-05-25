@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
@@ -43,6 +44,7 @@ class CartController extends AbstractController
 
     protected const KEY_CODE = 'code';
     protected const KEY_MESSAGES = 'messages';
+    protected const KEY_HTML = 'html';
 
     protected const CSRF_TOKEN_ID = 'add-to-cart-ajax';
     protected const MESSAGE_TYPE_ERROR = 'error';
@@ -82,6 +84,86 @@ class CartController extends AbstractController
             ->setSelectedAttributes($selectedAttributes);
 
         return $this->getFactory()->createCartPageView()->getViewData($cartPageViewArgumentsTransfer);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getCartItemsAjaxAction(Request $request): JsonResponse
+    {
+        if (!$this->getFactory()->getConfig()->isCartUpsellingAjaxLoadEnabled()) {
+            throw new NotFoundHttpException();
+        }
+        $selectedAttributes = $request->get('selectedAttributes', []);
+        $response = $this->executeGetCartItemsAjaxAction($selectedAttributes);
+
+        return $this->jsonResponse(
+            $response
+        );
+    }
+
+
+    /**
+     * @param array $selectedAttributes
+     *
+     * @return array
+     */
+    protected function executeGetCartItemsAjaxAction(array $selectedAttributes = []): array
+    {
+        $cartPageViewArgumentsTransfer = new CartPageViewArgumentsTransfer();
+        $cartPageViewArgumentsTransfer
+            ->setLocale($this->getLocale())
+            ->setSelectedAttributes($selectedAttributes);
+
+        $viewData = $this->getFactory()->createCartPageView()->getViewData($cartPageViewArgumentsTransfer);
+
+        $upsellingWidgetHtml = $this->renderView('@CartPage/views/ajax-cart-items/ajax-cart-items.twig',
+             $viewData
+        )->getContent();
+
+        return [
+            static::KEY_CODE => Response::HTTP_OK,
+            static::KEY_HTML => $upsellingWidgetHtml
+        ];
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getCartTotalAjaxAction(Request $request): JsonResponse
+    {
+        if (!$this->getFactory()->getConfig()->isCartUpsellingAjaxLoadEnabled()) {
+            throw new NotFoundHttpException();
+        }
+        $selectedAttributes = $request->get('selectedAttributes', []);
+        $response = $this->executeGetCartTotalAjaxAction($selectedAttributes);
+
+        return $this->jsonResponse(
+            $response
+        );
+    }
+
+    /**
+     * @param array $selectedAttributes
+     *
+     * @return array
+     */
+    protected function executeGetCartTotalAjaxAction( ): array
+    {
+        $viewData = $this->getFactory()->createCartPageView()->getCartTotalViewData();
+
+        $html = $this->renderView('@CartPage/views/ajax-cart-total/ajax-cart-total.twig',
+            $viewData
+        )->getContent();
+
+        return [
+            static::KEY_CODE => Response::HTTP_OK,
+            static::KEY_HTML => $html
+        ];
     }
 
     /**
@@ -145,6 +227,24 @@ class CartController extends AbstractController
         }
 
         return $this->executeQuickAddAction($sku, $quantity);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getUpsellingWidgetAjaxAction(Request $request): JsonResponse
+    {
+        if (!$this->getFactory()->getConfig()->isCartUpsellingAjaxLoadEnabled()) {
+            throw new NotFoundHttpException();
+        }
+
+        $response = $this->executeGetUpsellingWidgetAjaxAction($request);
+
+        return $this->jsonResponse(
+            $response
+        );
     }
 
     /**

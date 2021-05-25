@@ -105,6 +105,37 @@ class CartPageView implements CartPageViewInterface
     }
 
     /**
+     * @return array
+     */
+    public function getCartTotalViewData(): array
+    {
+        return [
+            'cart' => $this->getQuote(),
+            'isQuoteEditable' => $this->isQuoteEditable(),
+            'isQuoteValid' => $this->isQuoteValid(),
+
+        ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer
+     *
+     * @return array
+     */
+    public function getViewData2(CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer): array
+    {
+        return [
+            'cart' => $this->getQuote(),
+            'cartItems' => $this->getItems(),
+            'attributes' => $this->getAttributes(
+                $cartPageViewArgumentsTransfer->getLocaleOrFail(),
+                $cartPageViewArgumentsTransfer->getSelectedAttributes()
+            ),
+            'isQuoteEditable' => $this->isQuoteEditable()
+        ];
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function getQuote(): QuoteTransfer

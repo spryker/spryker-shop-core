@@ -74,6 +74,11 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected const ROUTE_CART_RESET_LOCK = 'cart/reset-lock';
     public const ROUTE_NAME_CART_RESET_LOCK = 'cart/reset-lock';
 
+
+    public const ROUTE_NAME_GET_CART_ITEMS_AJAX = 'cart/get-cart-items';
+    public const ROUTE_NAME_GET_CART_TOTAL_AJAX = 'cart/get-cart-total';
+
+
     /**
      * Specification:
      * - Adds Routes to the RouteCollection.
@@ -95,6 +100,8 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $routeCollection = $this->addCartUpdateRoute($routeCollection);
         $routeCollection = $this->addCartQuickAddRoute($routeCollection);
         $routeCollection = $this->addCartResetLockRoute($routeCollection);
+        $routeCollection = $this->addCartItemsAjaxRoute($routeCollection);
+        $routeCollection = $this->addCartTotalAjaxRoute($routeCollection);
 
         return $routeCollection;
     }
@@ -108,6 +115,40 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/cart', 'CartPage', 'Cart', 'indexAction');
         $routeCollection->add(static::ROUTE_NAME_CART, $route);
+
+        return $routeCollection;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\CartPage\Controller\CartController::getCartItemsAjaxAction()
+     *
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Yves\Router\Route\RouteCollection
+     */
+    protected function addCartItemsAjaxRoute(RouteCollection $routeCollection): RouteCollection
+    {
+        $route = $this->buildRoute('/cart/get-cart-items', 'CartPage', 'Cart', 'getCartItemsAjaxAction');
+
+        $route = $route->setMethods(Request::METHOD_GET);
+        $routeCollection->add(static::ROUTE_NAME_GET_CART_ITEMS_AJAX, $route);
+
+        return $routeCollection;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\CartPage\Controller\CartController::getCartTotalAjaxAction()
+     *
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Yves\Router\Route\RouteCollection
+     */
+    protected function addCartTotalAjaxRoute(RouteCollection $routeCollection): RouteCollection
+    {
+        $route = $this->buildRoute('/cart/get-cart-total', 'CartPage', 'Cart', 'getCartTotalAjaxAction');
+
+        $route = $route->setMethods(Request::METHOD_GET);
+        $routeCollection->add(static::ROUTE_NAME_GET_CART_TOTAL_AJAX, $route);
 
         return $routeCollection;
     }

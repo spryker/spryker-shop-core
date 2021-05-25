@@ -94,20 +94,29 @@
                 } only %}
                 {% endwidget %}
 
-                {% for cartItem in data.cartItems %}
-                    {% if not cartItem.configuredBundleItem | default %}
-                        {% block cartItem %}
-                            {% include molecule('product-cart-item', 'CartPage') with {
-                                data: {
-                                    product: cartItem,
-                                    cart: data.cart,
-                                    isQuoteEditable: data.isQuoteEditable,
-                                    attributes: data.attributes[cartItem.sku] | default([]),
-                                },
-                            } only %}
-                        {% endblock %}
-                    {% endif %}
-                {% endfor %}
+                   {# {% for cartItem in data.cartItems %}
+                        {% if not cartItem.configuredBundleItem | default %}
+                            {% block cartItem %}
+                                {% include molecule('product-cart-item', 'CartPage') with {
+                                    data: {
+                                        product: cartItem,
+                                        cart: data.cart,
+                                        isQuoteEditable: data.isQuoteEditable,
+                                        attributes: data.attributes[cartItem.sku] | default([]),
+                                    },
+                                } only %}
+                            {% endblock %}
+                        {% endif %}
+                    {% endfor %}#}
+
+                {% include molecule('product-cart-items', 'CartPage') with {
+                    data: {
+                        cart: data.cart,
+                        cartItems: data.cartItems,
+                        isQuoteEditable:data.isQuoteEditable,
+                        attributes: data.attributes,
+                    },
+                } only %}
 
                 {% block promotionalItems %}
                     {% if data.isQuoteEditable %}

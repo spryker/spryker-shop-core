@@ -1,0 +1,17 @@
+{% define data = {
+    cart: cart,
+    isQuoteValid: isQuoteEditable,
+    isQuoteEditable: isQuoteEditable
+} %}
+
+{% block data %}
+    {% if data.cart.items is not empty %}
+        {% include molecule('cart-summary', 'CartPage') with {
+            data: {
+                cart: data.cart,
+                isQuoteValid: data.isQuoteValid,
+                isQuoteEditable: data.isQuoteEditable
+            },
+        } only %}
+    {% endif %}
+{% endblock %}
