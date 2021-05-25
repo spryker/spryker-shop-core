@@ -19,7 +19,7 @@ class CartPageConfig extends AbstractBundleConfig
      */
     public function isCartCartTotalAjaxLoadEnabled(): bool
     {
-        return $this->get(CartPageConstants::ENABLE_CART_TOTAL_LOAD_AJAX, true);
+        return $this->get(CartPageConstants::ENABLE_CART_TOTAL_LOAD_AJAX, false);
     }
 
     /**
