@@ -13,45 +13,40 @@ namespace SprykerShop\Shared\CartPage;
 interface CartPageConstants
 {
     /**
-     * #GEEGA - Upd description
      * Specification:
-     * - Enables the endpoint to show debugging info for the cart.
+     * - Enables the endpoint to get upselling cart items.
      *
      * @api
      */
     public const ENABLE_CART_UPSELING_LOAD_AJAX = 'CART_PAGE:ENABLE_CART_UPSELING_LOAD_AJAX';
 
     /**
-     * #GEEGA - Upd description
      * Specification:
-     * - Enables the endpoint to show debugging info for the cart.
+     * - Enables the endpoint to get cart items.
      *
      * @api
      */
     public const ENABLE_CART_ITEMS_LOAD_AJAX = 'CART_PAGE:ENABLE_CART_ITEMS_LOAD_AJAX';
 
     /**
-     * #GEEGA - Upd description
      * Specification:
-     * - Enables the endpoint to show debugging info for the cart.
+     * - Disable Quote validation for get cart items via ajax.
      *
      * @api
      */
     public const DISABLE_QUOTE_VALIDATION_CART_ITEMS_LOAD_AJAX = 'CART_PAGE:DISABLE_QUOTE_VALIDATION_CART_ITEMS_LOAD_AJAX';
 
     /**
-     * #GEEGA - Upd description
      * Specification:
-     * - Enables the endpoint to show debugging info for the cart.
+     * - Enables the endpoint to get cart total section.
      *
      * @api
      */
     public const ENABLE_CART_TOTAL_LOAD_AJAX = 'CART_PAGE:ENABLE_CART_TOTAL_LOAD_AJAX';
 
     /**
-     * #GEEGA - Upd description
      * Specification:
-     * - Enables the endpoint to show debugging info for the cart.
+     * - Disable Quote validation for get cart total section via ajax.
      *
      * @api
      */
