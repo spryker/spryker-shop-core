@@ -97,7 +97,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $routeCollection = $this->addCartUpdateRoute($routeCollection);
         $routeCollection = $this->addCartQuickAddRoute($routeCollection);
         $routeCollection = $this->addCartResetLockRoute($routeCollection);
-        $routeCollection = $this->AddGetUpsellingWidgetAjaxRoute($routeCollection);
+        $routeCollection = $this->addGetUpsellingWidgetAjaxRoute($routeCollection);
 
         return $routeCollection;
     }
@@ -175,7 +175,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
         return $routeCollection;
     }
-    
+
     /**
      * @uses \SprykerShop\Yves\CartPage\Controller\CartController::getUpsellingWidgetAjaxAction()
      *
@@ -183,7 +183,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Yves\Router\Route\RouteCollection
      */
-    protected function AddGetUpsellingWidgetAjaxRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addGetUpsellingWidgetAjaxRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cart/get-upselling-widget', 'CartPage', 'Cart', 'getUpsellingWidgetAjaxAction');
         $route = $route->setMethods(Request::METHOD_GET);

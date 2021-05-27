@@ -19,7 +19,7 @@ class CartPageConfig extends AbstractBundleConfig
      */
     public function isCartUpsellingAjaxLoadEnabled(): bool
     {
-        return $this->get(CartPageConstants::ENABLE_CART_UPSELING_LOAD_AJAX, false);
+        return $this->get(CartPageConstants::ENABLE_CART_UPSELING_LOAD_AJAX, true);
     }
 
     /**

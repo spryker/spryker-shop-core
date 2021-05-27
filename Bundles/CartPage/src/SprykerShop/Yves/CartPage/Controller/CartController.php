@@ -59,9 +59,10 @@ class CartController extends AbstractController
     public function indexAction(Request $request)
     {
         $viewData = $this->executeIndexAction($request->get('selectedAttributes', []));
+        $viewConfigData = ['isUpsellingAjaxEnabled' => $this->getFactory()->getConfig()->isCartUpsellingAjaxLoadEnabled()];
 
         return $this->view(
-            $viewData,
+            array_merge($viewData, $viewConfigData),
             $this->getFactory()->getCartPageWidgetPlugins(),
             '@CartPage/views/cart/cart.twig'
         );
@@ -81,7 +82,8 @@ class CartController extends AbstractController
         $cartPageViewArgumentsTransfer = new CartPageViewArgumentsTransfer();
         $cartPageViewArgumentsTransfer
             ->setLocale($this->getLocale())
-            ->setSelectedAttributes($selectedAttributes);
+            ->setSelectedAttributes($selectedAttributes)
+            ->setIsQuoteValidationEnabled($this->getFactory()->getConfig()->isQuoteValidationEnabled());
 
         return $this->getFactory()->createCartPageView()->getViewData($cartPageViewArgumentsTransfer);
     }
@@ -325,8 +327,6 @@ class CartController extends AbstractController
         );
     }
 
-
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -410,6 +410,8 @@ class CartController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function getUpsellingWidgetAjaxAction(Request $request): JsonResponse
@@ -418,7 +420,7 @@ class CartController extends AbstractController
             throw new NotFoundHttpException();
         }
 
-        $response = $this->executeGetUpsellingWidgetAjaxAction($request);
+        $response = $this->executeGetUpsellingItemsAjaxAction($request);
 
         return $this->jsonResponse(
             $response
@@ -430,16 +432,22 @@ class CartController extends AbstractController
      *
      * @return array
      */
-    protected function executeGetUpsellingWidgetAjaxAction(Request $request): array
+    protected function executeGetUpsellingItemsAjaxAction(Request $request): array
     {
-        $cart =  $this->getFactory()->createCartPageView()->getCartData();
-        $upsellingWidgetHtml = $this->renderView('@CartPage/views/ajax-upselling-widget/ajax-upselling-widget.twig',
-            ['cart' =>$cart]
+        $cartPageViewArgumentsTransfer = new CartPageViewArgumentsTransfer();
+        $cartPageViewArgumentsTransfer
+            ->setLocale($this->getLocale())
+            ->setIsQuoteValidationEnabled(false);
+
+        $viewData = $this->getFactory()->createCartPageView()->getViewData($cartPageViewArgumentsTransfer);
+        $upsellingWidgetHtml = $this->renderView(
+            '@CartPage/views/ajax-upselling-widget/ajax-upselling-widget.twig',
+            $viewData
         )->getContent();
 
         return [
             static::KEY_CODE => Response::HTTP_OK,
-            static::KEY_HTML => $upsellingWidgetHtml
+            static::KEY_HTML => $upsellingWidgetHtml,
         ];
     }
 

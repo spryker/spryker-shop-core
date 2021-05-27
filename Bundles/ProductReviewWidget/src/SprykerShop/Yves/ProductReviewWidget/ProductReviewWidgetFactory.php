@@ -10,6 +10,8 @@ namespace SprykerShop\Yves\ProductReviewWidget;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\Application;
 use Spryker\Yves\ProductReview\ProductReviewFactory as SprykerProductReviewFactory;
+use SprykerShop\Yves\ProductReviewWidget\BulkProductReviewSearchRequestBuilder\BulkProductReviewSearchRequestBuilder;
+use SprykerShop\Yves\ProductReviewWidget\BulkProductReviewSearchRequestBuilder\BulkProductReviewSearchRequestBuilderInterface;
 use SprykerShop\Yves\ProductReviewWidget\Controller\Calculator\ProductReviewSummaryCalculator;
 use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToCustomerClientInterface;
 use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductReviewClientInterface;
@@ -18,6 +20,7 @@ use SprykerShop\Yves\ProductReviewWidget\Form\DataProvider\ProductReviewFormData
 use SprykerShop\Yves\ProductReviewWidget\Form\ProductReviewForm;
 use SprykerShop\Yves\ProductReviewWidget\ProductReviewSearchRequestBuilder\ProductReviewSearchRequestBuilder;
 use SprykerShop\Yves\ProductReviewWidget\ProductReviewSearchRequestBuilder\ProductReviewSearchRequestBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -62,7 +65,7 @@ class ProductReviewWidgetFactory extends SprykerProductReviewFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createProductReviewForm($idProductAbstract)
+    public function createProductReviewForm($idProductAbstract): FormInterface
     {
         $dataProvider = $this->createProductReviewFormDataProvider();
         $form = $this->getFormFactory()->create(
@@ -116,5 +119,13 @@ class ProductReviewWidgetFactory extends SprykerProductReviewFactory
     public function createProductReviewSearchRequestBuilder(): ProductReviewSearchRequestBuilderInterface
     {
         return new ProductReviewSearchRequestBuilder();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductReviewWidget\BulkProductReviewSearchRequestBuilder\BulkProductReviewSearchRequestBuilderInterface
+     */
+    public function createBulkProductReviewSearchRequestBuilder(): BulkProductReviewSearchRequestBuilderInterface
+    {
+        return new BulkProductReviewSearchRequestBuilder();
     }
 }

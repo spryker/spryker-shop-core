@@ -28,6 +28,7 @@ class ProductReviewSummaryProductViewExpanderPlugin extends AbstractPlugin imple
      */
     public function expand(ProductViewTransfer $productViewTransfer): ProductViewTransfer
     {
+        $params = $this->getFactory()->getApplicationRequest()->query->all();
         $productReviewSearchRequestTransfer = $this->getFactory()
             ->createProductReviewSearchRequestBuilder()
             ->createProductReviewSearchRequestTransfer(

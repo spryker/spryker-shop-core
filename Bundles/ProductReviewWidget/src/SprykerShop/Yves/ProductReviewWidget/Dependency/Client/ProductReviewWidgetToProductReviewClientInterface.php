@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ProductReviewWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewSummaryTransfer;
@@ -44,6 +45,17 @@ interface ProductReviewWidgetToProductReviewClientInterface
         ProductViewTransfer $productViewTransfer,
         ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer
     ): ProductViewTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
+     * @param \Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer $bukkProductReviewSearchRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    public function expandProductViewBatchWithProductReviewData(
+        array $productViewTransfers,
+        BulkProductReviewSearchRequestTransfer $bukkProductReviewSearchRequestTransfer
+    ): array;
 
     /**
      * @param \Generated\Shared\Transfer\RatingAggregationTransfer $ratingAggregationTransfer

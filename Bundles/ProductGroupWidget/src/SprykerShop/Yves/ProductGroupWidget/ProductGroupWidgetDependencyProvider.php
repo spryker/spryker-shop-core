@@ -18,6 +18,7 @@ class ProductGroupWidgetDependencyProvider extends AbstractBundleDependencyProvi
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
 
     public const PLUGIN_PRODUCT_VIEW_EXPANDERS = 'PLUGIN_PRODUCT_VIEW_EXPANDERS';
+    public const PLUGIN_PRODUCT_VIEW_BATCH_EXPANDERS = 'PLUGIN_PRODUCT_VIEW_BATCH_EXPANDERS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -29,6 +30,7 @@ class ProductGroupWidgetDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addProductGroupStorageClient($container);
         $container = $this->addProductStorageClient($container);
         $container = $this->addProductViewExpanderPlugins($container);
+        $container = $this->addProductViewBatchExpanderPlugins($container);
 
         return $container;
     }
@@ -76,9 +78,31 @@ class ProductGroupWidgetDependencyProvider extends AbstractBundleDependencyProvi
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductViewBatchExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGIN_PRODUCT_VIEW_BATCH_EXPANDERS, function () {
+            return $this->getProductViewBatchExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface[]
      */
     protected function getProductViewExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewBatchExpanderPluginInterface[]
+     */
+    protected function getProductViewBatchExpanderPlugins(): array
     {
         return [];
     }

@@ -14,6 +14,11 @@ use SprykerShop\Yves\ProductGroupWidget\Dependency\Client\ProductGroupWidgetToPr
 class ProductGroupReader implements ProductGroupReaderInterface
 {
     /**
+     * @var array|\SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewBatchExpanderPluginInterface[]
+     */
+    protected $productViewBatchExpanderPlugins;
+
+    /**
      * @var array|\SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface[]
      */
     protected $productViewExpanderPlugins;
@@ -36,11 +41,13 @@ class ProductGroupReader implements ProductGroupReaderInterface
     public function __construct(
         ProductGroupWidgetToProductGroupStorageClientInterface $productGroupStorageClient,
         ProductGroupWidgetToProductStorageClientInterface $productStorageClient,
-        array $productViewExpanderPlugins
+        array $productViewExpanderPlugins,
+        array $productViewBatchExpanderPlugins
     ) {
         $this->productGroupStorageClient = $productGroupStorageClient;
         $this->productStorageClient = $productStorageClient;
         $this->productViewExpanderPlugins = $productViewExpanderPlugins;
+        $this->productViewBatchExpanderPlugins = $productViewBatchExpanderPlugins;
     }
 
     /**
@@ -53,6 +60,7 @@ class ProductGroupReader implements ProductGroupReaderInterface
     public function getProductGroups(int $idProductAbstract, string $localeName, array $selectedAttributes = []): array
     {
         $productViewTransfers = $this->getProductViewTransfers($idProductAbstract, $localeName, $selectedAttributes);
+        $productViewTransfers = $this->expandProductViewBatchTransfers($productViewTransfers);
 
         return $this->getExpandedProductViewTransfers($productViewTransfers);
     }
@@ -97,10 +105,25 @@ class ProductGroupReader implements ProductGroupReaderInterface
      */
     protected function expandProductViewTransfer(ProductViewTransfer $productViewTransfer): ProductViewTransfer
     {
+        $p = $this->productViewExpanderPlugins;
         foreach ($this->productViewExpanderPlugins as $productViewExpanderPlugin) {
             $productViewTransfer = $productViewExpanderPlugin->expand($productViewTransfer);
         }
 
         return $productViewTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    protected function expandProductViewBatchTransfers(array $productViewTransfers): array
+    {
+        foreach ($this->productViewBatchExpanderPlugins as $productViewBatchExpanderPlugin) {
+            $productViewTransfers = $productViewBatchExpanderPlugin->expandBatch($productViewTransfers);
+        }
+
+        return $productViewTransfers;
     }
 }
