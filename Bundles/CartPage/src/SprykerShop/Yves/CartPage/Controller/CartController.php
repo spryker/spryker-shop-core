@@ -110,7 +110,7 @@ class CartController extends AbstractController
     /**
      * @param array $selectedAttributes
      *
-     * @return array
+     * @return string[]
      */
     protected function executeGetCartItemsAjaxAction(array $selectedAttributes = []): array
     {
