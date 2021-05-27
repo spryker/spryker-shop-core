@@ -108,7 +108,7 @@ class CartController extends AbstractController
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function executeGetCartItemsAjaxAction(): array
     {
