@@ -13,7 +13,7 @@
     request: app.request,
     title: 'cart.cart' | trans,
     requestUri: app.request.requestUri,
-    disableAjaxCartTotalLoad: _view.disableAjaxCartTotalLoad
+    isAjaxEnabled: _view.isAjaxEnabled
 } %}
 
 {% block breadcrumbs %}
@@ -95,14 +95,16 @@
                 } only %}
                 {% endwidget %}
 
-                {% include molecule('product-cart-items', 'CartPage') with {
-                    data: {
-                        cart: data.cart,
-                        cartItems: data.cartItems,
-                        isQuoteEditable:data.isQuoteEditable,
-                        attributes: data.attributes,
-                    },
-                } only %}
+                {% if data.isAjaxEnabled is empty %}
+                    {% include molecule('product-cart-items', 'CartPage') with {
+                        data: {
+                            cart: data.cart,
+                            cartItems: data.cartItems,
+                            isQuoteEditable:data.isQuoteEditable,
+                            attributes: data.attributes,
+                        },
+                    } only %}
+                {% endif %}
 
                 {% block promotionalItems %}
                     {% if data.isQuoteEditable %}
@@ -219,15 +221,13 @@
                     {% endblock %}
 
                     {% block cartSummary %}
-                        {% if data.disableAjaxCartTotalLoad %}
-                            {% include molecule('cart-summary', 'CartPage') with {
-                                data: {
-                                    cart: data.cart,
-                                    isQuoteValid: data.isQuoteValid,
-                                    isQuoteEditable: data.isQuoteEditable,
-                                },
-                            } only %}
-                        {% endif %}
+                        {% include molecule('cart-summary', 'CartPage') with {
+                            data: {
+                                cart: data.cart,
+                                isQuoteValid: data.isQuoteValid,
+                                isQuoteEditable: data.isQuoteEditable,
+                            },
+                        } only %}
                     {% endblock %}
                 </div>
             </div>

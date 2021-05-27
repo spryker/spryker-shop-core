@@ -8,48 +8,20 @@
 namespace SprykerShop\Yves\CartPage;
 
 use Spryker\Yves\Kernel\AbstractBundleConfig;
-use SprykerShop\Shared\CartPage\CartPageConstants;
 
 class CartPageConfig extends AbstractBundleConfig
 {
     /**
-     * @api
+     * Specification:
+     * - Enables load cart items via ajax.
      *
-     * @return bool
-     */
-    public function isCartCartTotalAjaxLoadEnabled(): bool
-    {
-        return $this->get(CartPageConstants::ENABLE_CART_TOTAL_LOAD_AJAX, false);
-    }
-
-    /**
      * @api
      *
      * @return bool
      */
     public function isCartCartItemsAjaxLoadEnabled(): bool
     {
-        return $this->get(CartPageConstants::ENABLE_CART_ITEMS_LOAD_AJAX, false);
-    }
-
-    /**
-     * @api
-     *
-     * @return bool
-     */
-    public function isAjaxLoadCartTotalDisableQuoteValidation(): bool
-    {
-        return $this->get(CartPageConstants::DISABLE_QUOTE_VALIDATION_CART_TOTAL_LOAD_AJAX, true);
-    }
-
-    /**
-     * @api
-     *
-     * @return bool
-     */
-    public function isAjaxLoadCartItemsDisableQuoteValidation(): bool
-    {
-        return $this->get(CartPageConstants::DISABLE_QUOTE_VALIDATION_CART_ITEMS_LOAD_AJAX, true);
+        return true;
     }
 
     /**

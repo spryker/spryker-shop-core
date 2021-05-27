@@ -90,53 +90,15 @@ class CartPageView implements CartPageViewInterface
      */
     public function getViewData(CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer): array
     {
-        $cartItems = [];
-        $attributes = [];
-
-        if (!$this->config->isCartCartItemsAjaxLoadEnabled()) {
-            $cartItems = $this->getItems();
-            $attributes = $this->getAttributes($cartPageViewArgumentsTransfer);
-        }
-
-        return [
-            'cart' => $this->getQuote(),
-            'cartItems' => $cartItems,
-            'attributes' => $attributes,
-            'isQuoteEditable' => $this->isQuoteEditable(),
-            'isQuoteLocked' => $this->isQuoteLocked(),
-            'isQuoteValid' => $this->isQuoteValid(),
-            'removeCartItemForm' => $this->getRemoveCartItemForm(),
-            'disableAjaxCartTotalLoad' => !$this->config->isCartCartTotalAjaxLoadEnabled(),
-        ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer
-     *
-     * @return array
-     */
-    public function getCartItemsViewData(CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer): array
-    {
-        return [
+         return [
             'cart' => $this->getQuote($cartPageViewArgumentsTransfer),
             'cartItems' => $this->getItems($cartPageViewArgumentsTransfer),
             'attributes' => $this->getAttributes($cartPageViewArgumentsTransfer),
             'isQuoteEditable' => $this->isQuoteEditable($cartPageViewArgumentsTransfer),
-        ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer
-     *
-     * @return array
-     */
-    public function getCartTotalViewData(CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer): array
-    {
-        return [
-            'cart' => $this->getQuote($cartPageViewArgumentsTransfer),
-            'isQuoteEditable' => $this->isQuoteEditable($cartPageViewArgumentsTransfer),
-            'isQuoteValid' => $this->isQuoteValid(),
-        ];
+            'isQuoteLocked' => $this->isQuoteLocked($cartPageViewArgumentsTransfer),
+            'isQuoteValid' => $this->isQuoteValid($cartPageViewArgumentsTransfer),
+            'removeCartItemForm' => $this->getRemoveCartItemForm(),
+         ];
     }
 
     /**
@@ -150,13 +112,7 @@ class CartPageView implements CartPageViewInterface
             return $this->quoteTransfer;
         }
 
-        $enableValidateQuote = $this->config->isQuoteValidationEnabled();
-
-        if ($cartPageViewArgumentsTransfer && $cartPageViewArgumentsTransfer->getDisableQuotaValidation()) {
-            $enableValidateQuote = false;
-        }
-
-        if ($enableValidateQuote) {
+        if ($cartPageViewArgumentsTransfer->getIsQuoteValidationEnabled()) {
             $this->quoteResponseTransfer = $this->cartClient->validateQuote();
             $this->quoteTransfer = $this->quoteResponseTransfer->getQuoteTransferOrFail();
 
@@ -193,29 +149,33 @@ class CartPageView implements CartPageViewInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartPageViewArgumentsTransfer|null $cartPageViewArgumentsTransfer
+     * @param \Generated\Shared\Transfer\CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer
      *
      * @return bool
      */
-    protected function isQuoteEditable(?CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer = null): bool
+    protected function isQuoteEditable(CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer): bool
     {
         return $this->quoteClient->isQuoteEditable($this->getQuote($cartPageViewArgumentsTransfer));
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer
+     *
      * @return bool
      */
-    protected function isQuoteLocked(): bool
+    protected function isQuoteLocked(CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer): bool
     {
-        return $this->quoteClient->isQuoteLocked($this->getQuote());
+        return $this->quoteClient->isQuoteLocked($this->getQuote($cartPageViewArgumentsTransfer));
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer
+     *
      * @return bool
      */
-    protected function isQuoteValid(): bool
+    protected function isQuoteValid(CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer): bool
     {
-        if (!$this->config->isQuoteValidationEnabled()) {
+        if (!$cartPageViewArgumentsTransfer->getIsQuoteValidationEnabled()) {
             return true;
         }
 
