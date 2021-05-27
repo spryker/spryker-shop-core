@@ -80,8 +80,7 @@ class CartController extends AbstractController
             ->addResponseMessagesToMessenger();
 
         $cartPageViewArgumentsTransfer = new CartPageViewArgumentsTransfer();
-        $cartPageViewArgumentsTransfer
-            ->setLocale($this->getLocale())
+        $cartPageViewArgumentsTransfer->setLocale($this->getLocale())
             ->setSelectedAttributes($selectedAttributes)
             ->setIsQuoteValidationEnabled($this->getFactory()->getConfig()->isQuoteValidationEnabled());
 
