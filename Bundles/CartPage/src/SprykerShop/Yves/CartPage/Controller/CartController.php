@@ -112,8 +112,7 @@ class CartController extends AbstractController
     protected function executeGetCartItemsAjaxAction(): array
     {
         $cartPageViewArgumentsTransfer = new CartPageViewArgumentsTransfer();
-        $cartPageViewArgumentsTransfer
-            ->setLocale($this->getLocale())
+        $cartPageViewArgumentsTransfer->setLocale($this->getLocale())
             ->setSelectedAttributes([])
             ->setIsQuoteValidationEnabled(false);
 
