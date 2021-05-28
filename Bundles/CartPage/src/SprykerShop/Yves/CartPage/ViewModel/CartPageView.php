@@ -90,7 +90,7 @@ class CartPageView implements CartPageViewInterface
      */
     public function getViewData(CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer): array
     {
-         return [
+        return [
             'cart' => $this->getQuote($cartPageViewArgumentsTransfer),
             'cartItems' => $this->getItems($cartPageViewArgumentsTransfer),
             'attributes' => $this->getAttributes($cartPageViewArgumentsTransfer),
@@ -98,7 +98,7 @@ class CartPageView implements CartPageViewInterface
             'isQuoteLocked' => $this->isQuoteLocked($cartPageViewArgumentsTransfer),
             'isQuoteValid' => $this->isQuoteValid($cartPageViewArgumentsTransfer),
             'removeCartItemForm' => $this->getRemoveCartItemForm(),
-         ];
+        ];
     }
 
     /**

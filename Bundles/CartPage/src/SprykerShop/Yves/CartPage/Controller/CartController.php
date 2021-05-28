@@ -59,7 +59,7 @@ class CartController extends AbstractController
     public function indexAction(Request $request)
     {
         $viewData = $this->executeIndexAction($request->get('selectedAttributes', []));
-        $viewConfigData = ['isAjaxEnabled' => $this->getFactory()->getConfig()->isCartCartItemsAjaxLoadEnabled()];
+        $viewData['isAjaxEnabled'] = $this->getFactory()->getConfig()->isCartCartItemsViaAjaxLoadEnabled();
 
         return $this->view(
             array_merge($viewData, $viewConfigData),
@@ -96,7 +96,7 @@ class CartController extends AbstractController
      */
     public function getCartItemsAjaxAction(Request $request): JsonResponse
     {
-        if (!$this->getFactory()->getConfig()->isCartCartItemsAjaxLoadEnabled()) {
+        if (!$this->getFactory()->getConfig()->isCartCartItemsViaAjaxLoadEnabled()) {
             throw new NotFoundHttpException();
         }
         $response = $this->executeGetCartItemsAjaxAction();

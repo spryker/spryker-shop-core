@@ -13,13 +13,13 @@ class CartPageConfig extends AbstractBundleConfig
 {
     /**
      * Specification:
-     * - Enables load cart items via ajax.
+     * - Enables loading the cart items via AJAX.
      *
      * @api
      *
      * @return bool
      */
-    public function isCartCartItemsAjaxLoadEnabled(): bool
+    public function isCartCartItemsViaAjaxLoadEnabled(): bool
     {
         return true;
     }
