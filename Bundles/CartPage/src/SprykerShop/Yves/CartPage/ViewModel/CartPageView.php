@@ -125,11 +125,11 @@ class CartPageView implements CartPageViewInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartPageViewArgumentsTransfer|null $cartPageViewArgumentsTransfer
+     * @param \Generated\Shared\Transfer\CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function getItems(?CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer = null): array
+    protected function getItems(CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer): array
     {
         return $this->cartItemReader->getCartItems($this->getQuote());
     }
