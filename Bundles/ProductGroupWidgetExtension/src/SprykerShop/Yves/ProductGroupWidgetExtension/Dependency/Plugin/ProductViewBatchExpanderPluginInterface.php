@@ -15,7 +15,7 @@ interface ProductViewBatchExpanderPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductViewTransfer|array $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
