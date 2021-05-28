@@ -18,7 +18,7 @@ class ProductGroupColorWidget extends AbstractWidget
      * @param int $idProductAbstract
      * @param array $selectedAttributes
      */
-    public function __construct(int $idProductAbstract, array $selectedAttributes = [], array $productReviews = [])
+    public function __construct(int $idProductAbstract, array $selectedAttributes = [])
     {
         $productViewTransfers = $this->getFactory()
             ->getProductGroupReader()
