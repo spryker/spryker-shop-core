@@ -8,6 +8,8 @@
 namespace SprykerShop\Yves\CartPage\ViewModel;
 
 use Generated\Shared\Transfer\CartPageViewArgumentsTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductImageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\CartPage\CartPageConfig;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface;
@@ -131,6 +133,26 @@ class CartPageView implements CartPageViewInterface
      */
     protected function getItems(CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer): array
     {
+        // For test
+        /*$newProuctImage = new ProductImageTransfer();
+        $newProuctImage->setExternalUrlLarge('http://via.placeholder.com/640x400');
+        $newProuctImage->setExternalUrlLarge('http://via.placeholder.com/320x240');
+
+        $itemTransfer =   new ItemTransfer();
+        $itemTransfer->setName('placeholdername');
+        $itemTransfer->setSku('placeholdersku');
+        $itemTransfer->setQuantity(1);
+        $itemTransfer->setUnitPrice(999999);
+        $itemTransfer->setSumGrossPrice(999999);
+
+        $array = new \ArrayObject([   $newProuctImage]);
+
+
+        $itemTransfer->setImages($array);
+
+        return [
+            $itemTransfer
+        ];*/
         return $this->cartItemReader->getCartItems($this->getQuote());
     }
 
