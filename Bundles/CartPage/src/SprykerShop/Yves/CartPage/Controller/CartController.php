@@ -62,7 +62,7 @@ class CartController extends AbstractController
         $viewData['isAjaxEnabled'] = $this->getFactory()->getConfig()->isCartCartItemsViaAjaxLoadEnabled();
 
         return $this->view(
-            array_merge($viewData, $viewConfigData),
+            $viewData,
             $this->getFactory()->getCartPageWidgetPlugins(),
             '@CartPage/views/cart/cart.twig'
         );
