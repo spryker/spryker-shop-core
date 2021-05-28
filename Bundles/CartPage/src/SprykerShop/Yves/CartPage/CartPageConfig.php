@@ -8,18 +8,20 @@
 namespace SprykerShop\Yves\CartPage;
 
 use Spryker\Yves\Kernel\AbstractBundleConfig;
-use SprykerShop\Shared\CartPage\CartPageConstants;
 
 class CartPageConfig extends AbstractBundleConfig
 {
     /**
+     * Specification:
+     * - Enables loading the upselling products via AJAX.
+     *
      * @api
      *
      * @return bool
      */
-    public function isCartUpsellingAjaxLoadEnabled(): bool
+    public function isLoadingUpsellingProductsViaAjaxEnabled(): bool
     {
-        return $this->get(CartPageConstants::ENABLE_CART_UPSELING_LOAD_AJAX, true);
+        return ture;
     }
 
     /**

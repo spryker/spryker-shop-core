@@ -59,10 +59,10 @@ class CartController extends AbstractController
     public function indexAction(Request $request)
     {
         $viewData = $this->executeIndexAction($request->get('selectedAttributes', []));
-        $viewConfigData = ['isUpsellingAjaxEnabled' => $this->getFactory()->getConfig()->isCartUpsellingAjaxLoadEnabled()];
+        $viewData['isUpsellingAjaxEnabled'] = $this->getFactory()->getConfig()->isCartUpsellingAjaxLoadEnabled();
 
         return $this->view(
-            array_merge($viewData, $viewConfigData),
+            $viewData,
             $this->getFactory()->getCartPageWidgetPlugins(),
             '@CartPage/views/cart/cart.twig'
         );
