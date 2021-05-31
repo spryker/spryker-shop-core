@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ProductRelationWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\ProductRelationWidget\Dependency\Client\ProductRelationWidgetToCartClientInterface;
 use SprykerShop\Yves\ProductRelationWidget\Dependency\Client\ProductRelationWidgetToProductRelationStorageClientInterface;
 use SprykerShop\Yves\ProductRelationWidget\Dependency\Client\ProductRelationWidgetToStoreClientInterface;
 
@@ -43,5 +44,13 @@ class ProductRelationWidgetFactory extends AbstractFactory
     public function getStoreClient(): ProductRelationWidgetToStoreClientInterface
     {
         return $this->getProvidedDependency(ProductRelationWidgetDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductRelationWidget\Dependency\Client\ProductRelationWidgetToCartClientInterface
+     */
+    public function getCartClient(): ProductRelationWidgetToCartClientInterface
+    {
+        return $this->getProvidedDependency(ProductRelationWidgetDependencyProvider::CLIENT_CART);
     }
 }

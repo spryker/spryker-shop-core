@@ -21,7 +21,7 @@ class CartPageConfig extends AbstractBundleConfig
      */
     public function isLoadingUpsellingProductsViaAjaxEnabled(): bool
     {
-        return ture;
+        return true;
     }
 
     /**

@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
@@ -44,7 +43,6 @@ class CartController extends AbstractController
 
     protected const KEY_CODE = 'code';
     protected const KEY_MESSAGES = 'messages';
-    protected const KEY_HTML = 'html';
 
     protected const CSRF_TOKEN_ID = 'add-to-cart-ajax';
     protected const MESSAGE_TYPE_ERROR = 'error';
@@ -59,7 +57,7 @@ class CartController extends AbstractController
     public function indexAction(Request $request)
     {
         $viewData = $this->executeIndexAction($request->get('selectedAttributes', []));
-        $viewData['isUpsellingAjaxEnabled'] = $this->getFactory()->getConfig()->isCartUpsellingAjaxLoadEnabled();
+        $viewData['isUpsellingAjaxEnabled'] = $this->getFactory()->getConfig()->isLoadingUpsellingProductsViaAjaxEnabled();
 
         return $this->view(
             $viewData,
@@ -404,50 +402,6 @@ class CartController extends AbstractController
             static::KEY_CODE => Response::HTTP_OK,
             static::KEY_MESSAGES => $this->renderView(static::FLASH_MESSAGE_LIST_TEMPLATE_PATH)->getContent(),
             static::REQUEST_PARAMETER_QUANTITY => $cartQuantity,
-        ];
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function getUpsellingWidgetAjaxAction(Request $request): JsonResponse
-    {
-        if (!$this->getFactory()->getConfig()->isCartUpsellingAjaxLoadEnabled()) {
-            throw new NotFoundHttpException();
-        }
-
-        $response = $this->executeGetUpsellingItemsAjaxAction($request);
-
-        return $this->jsonResponse(
-            $response
-        );
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    protected function executeGetUpsellingItemsAjaxAction(Request $request): array
-    {
-        $cartPageViewArgumentsTransfer = new CartPageViewArgumentsTransfer();
-        $cartPageViewArgumentsTransfer
-            ->setLocale($this->getLocale())
-            ->setIsQuoteValidationEnabled(false);
-
-        $viewData = $this->getFactory()->createCartPageView()->getViewData($cartPageViewArgumentsTransfer);
-        $upsellingWidgetHtml = $this->renderView(
-            '@CartPage/views/ajax-upselling-widget/ajax-upselling-widget.twig',
-            $viewData
-        )->getContent();
-
-        return [
-            static::KEY_CODE => Response::HTTP_OK,
-            static::KEY_HTML => $upsellingWidgetHtml,
         ];
     }
 
