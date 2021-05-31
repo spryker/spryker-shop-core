@@ -32,6 +32,9 @@ class MerchantSwitcherController extends AbstractController
         }
 
         $merchantReference = $request->request->get('merchant-reference');
+        if ($merchantReference) {
+            $merchantReference = (string)$merchantReference;
+        }
 
         $this->getFactory()->createMerchantSwitcher()->switchMerchantInQuote($merchantReference);
         $this->getFactory()->createSelectedMerchantCookie()->setMerchantReference($merchantReference);
