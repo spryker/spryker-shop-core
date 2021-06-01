@@ -95,7 +95,7 @@
                 } only %}
                 {% endwidget %}
 
-                {% if data.isAjaxEnabled is empty %}
+                {% if data.isCartItemsViaAjaxLoadEnabled is empty %}
                     {% include molecule('product-cart-items', 'CartPage') with {
                         data: {
                             cart: data.cart,
