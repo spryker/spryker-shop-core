@@ -13,7 +13,7 @@
     request: app.request,
     title: 'cart.cart' | trans,
     requestUri: app.request.requestUri,
-    isUpsellingAjaxEnabled: _view.isUpsellingAjaxEnabled
+    isUpsellingProductsViaAjaxEnabled: _view.isUpsellingProductsViaAjaxEnabled
 } %}
 
 {% block breadcrumbs %}
@@ -237,7 +237,7 @@
             </div>
         </div>
     {% endif %}
-    {% if data.isUpsellingAjaxEnabled is empty %}
+    {% if data.isUpsellingProductsViaAjaxEnabled is empty %}
         {% include molecule('upselling-items', 'CartPage') with {
             data: {
                 cart: data.cart

@@ -57,7 +57,7 @@ class CartController extends AbstractController
     public function indexAction(Request $request)
     {
         $viewData = $this->executeIndexAction($request->get('selectedAttributes', []));
-        $viewData['isUpsellingAjaxEnabled'] = $this->getFactory()->getConfig()->isLoadingUpsellingProductsViaAjaxEnabled();
+        $viewData['isUpsellingProductsViaAjaxEnabled'] = $this->getFactory()->getConfig()->isLoadingUpsellingProductsViaAjaxEnabled();
 
         return $this->view(
             $viewData,

@@ -14,6 +14,7 @@ class CartPageConfig extends AbstractBundleConfig
     /**
      * Specification:
      * - Enables loading the upselling products via AJAX.
+     * The default value will be true in the next major.
      *
      * @api
      *
@@ -21,7 +22,7 @@ class CartPageConfig extends AbstractBundleConfig
      */
     public function isLoadingUpsellingProductsViaAjaxEnabled(): bool
     {
-        return true;
+        return false;
     }
 
     /**
