@@ -43,6 +43,6 @@ class Error403CacheableController extends AbstractController
             return '';
         }
 
-        return $request->query->get(static::QUERY_PARAMETER_ERROR_MESSAGE) ?? '';
+        return (string)$request->query->get(static::QUERY_PARAMETER_ERROR_MESSAGE);
     }
 }
