@@ -95,7 +95,7 @@ class AddToCartFormHandler implements AddToCartFormHandlerInterface
     protected function getAllAvailableRequestItems(Request $request): ShoppingListItemCollectionTransfer
     {
         $shoppingListItemCollectionTransfer = new ShoppingListItemCollectionTransfer();
-        $shoppingListItemInformation = $request->request->get(static::PARAM_SHOPPING_LIST_ITEMS);
+        $shoppingListItemInformation = (array)$request->request->get(static::PARAM_SHOPPING_LIST_ITEMS);
 
         foreach ($shoppingListItemInformation as $shoppingListItem) {
             $shoppingListItemTransfer = new ShoppingListItemTransfer();
