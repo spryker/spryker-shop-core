@@ -32,7 +32,7 @@ class MerchantSwitcherController extends AbstractController
         }
 
         $merchantReference = $request->request->get('merchant-reference');
-        if ($merchantReference) {
+        if ($merchantReference !== null) {
             $merchantReference = (string)$merchantReference;
         }
 
