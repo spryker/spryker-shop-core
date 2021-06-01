@@ -14,7 +14,7 @@ class ProductReviewSummaryProductViewBatchExpanderPlugin extends AbstractPlugin 
 {
     /**
      * Specification:
-     *  - Batch expands product view data transfer objects with additional data.
+     *  - Batch expands `ProductViewTransfer` objects with additional data.
      *
      * @api
      *
