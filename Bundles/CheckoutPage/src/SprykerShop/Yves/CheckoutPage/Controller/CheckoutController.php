@@ -32,7 +32,7 @@ class CheckoutController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return mixed
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
@@ -52,7 +52,7 @@ class CheckoutController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return mixed
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Spryker\Yves\Kernel\View\View
      */
     public function customerAction(Request $request)
     {
@@ -85,7 +85,7 @@ class CheckoutController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return mixed
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Spryker\Yves\Kernel\View\View
      */
     public function addressAction(Request $request)
     {
@@ -118,7 +118,7 @@ class CheckoutController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return mixed
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Spryker\Yves\Kernel\View\View
      */
     public function shipmentAction(Request $request)
     {
@@ -151,7 +151,7 @@ class CheckoutController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return mixed
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Spryker\Yves\Kernel\View\View
      */
     public function paymentAction(Request $request)
     {
@@ -184,7 +184,7 @@ class CheckoutController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return mixed
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Spryker\Yves\Kernel\View\View
      */
     public function summaryAction(Request $request)
     {
@@ -249,7 +249,7 @@ class CheckoutController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return mixed
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Spryker\Yves\Kernel\View\View
      */
     public function successAction(Request $request)
     {
@@ -269,7 +269,7 @@ class CheckoutController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request|null $request
      *
-     * @return mixed
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Spryker\Yves\Kernel\View\View
      */
     public function errorAction(?Request $request = null)
     {
