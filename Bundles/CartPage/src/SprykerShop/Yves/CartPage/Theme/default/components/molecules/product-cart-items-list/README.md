@@ -1,1 +1,1 @@
-Displays product list with detailed information for each
+Displays product list with detailed information for each item.
