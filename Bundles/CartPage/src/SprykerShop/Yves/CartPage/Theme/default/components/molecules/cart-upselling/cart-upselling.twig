@@ -1,0 +1,51 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'cart-upselling',
+    tag: 'cart-upselling',
+} %}
+
+{% define data = {
+    cart: required,
+    suggestionUrl: required,
+    isUpsellingProductsViaAjaxEnabled: false
+} %}
+ {% define attributes = {
+     'provider-class-name': 'ajax-provider',
+ } %}
+
+{% block body %}
+    {% if data.isUpsellingProductsViaAjaxEnabled is not empty %}
+        {% include molecule('ajax-provider') with {
+            class: config.jsName ~ '__ajax-provider',
+            attributes: {
+                'fetch-on-load': true,
+                url:  path('cart/get-upselling-widget'),
+            },
+        } only %}
+
+        {% include molecule('ajax-loader') with {
+            modifiers: ['big'],
+            attributes: {
+                'provider-class-name': config.jsName ~ '__ajax-provider',
+            },
+        } only %}
+
+        {% include molecule('ajax-renderer') with {
+            attributes: {
+                'provider-class-name': config.jsName ~ '__ajax-provider',
+                'target-class-name': config.jsName ~ '__container'  ,
+            },
+        } only %}
+    {% endif %}
+
+    <div class="box  {{ config.name }}__container {{ config.jsName }}__container">
+        {% if data.isUpsellingProductsViaAjaxEnabled is empty %}
+            {% include molecule('upselling-items', 'ProductRelationWidget') with {
+                data: {
+                    cart: data.cart
+                },
+            } only %}
+        {% endif %}
+    </div>
+{% endblock body %}

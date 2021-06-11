@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ProductRelationWidget\Controller;
 
+use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,15 +24,34 @@ class ProductRelationController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function getUpsellingProductsWidgetAjaxAction(Request $request): View
+    {
+        return $this->test();
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function getUpsellingProductsWidgetAjaxAction(Request $request): JsonResponse
+    public function getUpsellingProductsWidgetAjaxAction2(Request $request): JsonResponse
     {
         $response = $this->executeGetUpsellingProductsWidgetAjaxAction();
 
         return $this->jsonResponse(
             $response
         );
+    }
+
+    protected function test(): View
+    {
+            $viewData = [
+                'cart' => $this->getFactory()->getCartClient()->getQuote(),
+            ];
+
+            return $this->view($viewData, [], '@ProductRelationWidget/views/ajax-upselling-widget/ajax-upselling-widget.twig');
     }
 
     /**
