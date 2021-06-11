@@ -44,13 +44,14 @@ function isComponent(element: Element): boolean {
 }
 
 async function mountComponents(): Promise<void> {
+    console.log('mountComponents >??>>>')
     const promises: Array<Promise<Element[]>> = getCandidates().map((candidate: Candidate) => candidate.define());
     const elements: Element[][] = await Promise.all(promises);
 
     elements.forEach((elementSet: Element[]) =>
         elementSet
             .filter((element: Element) => isComponent(element))
-            .filter((component: Component) => !component.isMounted)
+            // .filter((component: Component) => !component.isMounted)
             .forEach((component: Component) => mountComponent(component)),
     );
 }
@@ -73,6 +74,7 @@ async function mountComponents(): Promise<void> {
  * @returns Void promise as the mounting process is asyncronous.
  */
 export async function mount(): Promise<void> {
+    console.log('MOUNT2  >>>');
     try {
         await mountComponents();
         dispatchCustomEvent(config().events.mount);
@@ -88,6 +90,7 @@ export async function mount(): Promise<void> {
             isBootstrap = false;
         }
     } catch (err) {
+        console.log(config().events.error)
         dispatchCustomEvent(config().events.error, err);
     }
 }

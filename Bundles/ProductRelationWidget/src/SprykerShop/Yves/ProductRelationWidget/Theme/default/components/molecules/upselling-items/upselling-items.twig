@@ -1,0 +1,14 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'upselling-items',
+} %}
+{% define data = {
+    cart: required
+} %}
+
+{% block body %}
+    {% widget 'UpSellingProductsWidget' args [data.cart] only %}
+    {% elsewidget 'UpSellingProductsWidgetPlugin' args [data.cart] only %} {# @deprecated Use UpSellingProductsWidget instead. #}
+    {% endwidget %}
+{% endblock %}
