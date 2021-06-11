@@ -19,7 +19,6 @@ export default class CartUpselling extends Component {
     }
 
     protected mapEvents(): void {
-        // alert('mapEvents');
         this.providers.forEach((provider: AjaxProvider) => {
             provider.addEventListener('fetched', (event: Event) => this.onFetched(event));
         });
@@ -28,7 +27,6 @@ export default class CartUpselling extends Component {
 
     protected async onFetched(event: Event): Promise<void> {
         await mount();
-        // alert('Mounted')
     }
 
     protected get providerClassName(): string {
