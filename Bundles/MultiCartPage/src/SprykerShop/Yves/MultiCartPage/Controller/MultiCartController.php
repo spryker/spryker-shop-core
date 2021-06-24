@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\MultiCartPage\Controller;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
-use SprykerShop\Yves\MultiCartPage\Plugin\Provider\MultiCartPageControllerProvider;
 use SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,6 +32,11 @@ class MultiCartController extends AbstractController
     protected const GLOSSARY_KEY_CART_UPDATED_ERROR = 'multi_cart_widget.cart.updated.error';
     protected const GLOSSARY_KEY_CART_DELETE_ERROR = 'multi_cart_widget.cart.delete.error';
     protected const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
+
+    /**
+     * @uses \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::PARAM_ID_QUOTE
+     */
+    protected const PARAM_ID_QUOTE = 'idQuote';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -188,7 +192,7 @@ class MultiCartController extends AbstractController
 
         return $this->redirectResponseInternal(
             MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_UPDATE,
-            [MultiCartPageControllerProvider::PARAM_ID_QUOTE => $idNewQuote]
+            [static::PARAM_ID_QUOTE => $idNewQuote]
         );
     }
 

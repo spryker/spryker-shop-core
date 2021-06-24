@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\DiscountWidget\Controller;
 
-use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\DiscountWidget\Form\CheckoutVoucherForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +16,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CheckoutController extends AbstractController
 {
+    /**
+     * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_SUMMARY
+     */
+    protected const ROUTE_CHECKOUT_SUMMARY = 'checkout-summary';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -36,6 +40,6 @@ class CheckoutController extends AbstractController
                 ->add($voucherCode);
         }
 
-        return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_SUMMARY);
+        return $this->redirectResponseInternal(static::ROUTE_CHECKOUT_SUMMARY);
     }
 }
