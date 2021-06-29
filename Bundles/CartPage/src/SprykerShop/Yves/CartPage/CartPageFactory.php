@@ -20,12 +20,32 @@ use SprykerShop\Yves\CartPage\Model\CartItemReader;
 use SprykerShop\Yves\CartPage\Plugin\Provider\AttributeVariantsProvider;
 use SprykerShop\Yves\CartPage\ProductViewExpander\ProductViewExpander;
 use SprykerShop\Yves\CartPage\ProductViewExpander\ProductViewExpanderInterface;
+use SprykerShop\Yves\CartPage\ViewModel\CartPageView;
+use SprykerShop\Yves\CartPage\ViewModel\CartPageViewInterface;
 use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
+/**
+ * @method \SprykerShop\Yves\CartPage\CartPageConfig getConfig()
+ */
 class CartPageFactory extends AbstractFactory
 {
+    /**
+     * @return \SprykerShop\Yves\CartPage\ViewModel\CartPageViewInterface
+     */
+    public function createCartPageView(): CartPageViewInterface
+    {
+        return new CartPageView(
+            $this->getConfig(),
+            $this->getCartClient(),
+            $this->getQuoteClient(),
+            $this->createCartItemReader(),
+            $this->createCartItemsAttributeProvider(),
+            $this->createCartPageFormFactory()
+        );
+    }
+
     /**
      * @return \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface
      */

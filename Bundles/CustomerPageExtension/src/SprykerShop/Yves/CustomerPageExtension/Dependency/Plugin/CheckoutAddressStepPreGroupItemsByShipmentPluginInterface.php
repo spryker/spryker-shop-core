@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface CheckoutAddressStepPreGroupItemsByShipmentPluginInterface
 {
     /**
-     * Specifications:
+     * Specification:
      * - Prepares quote transfer before grouping.
      *
      * @api

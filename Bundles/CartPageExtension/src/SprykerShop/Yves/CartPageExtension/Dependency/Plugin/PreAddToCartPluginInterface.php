@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 interface PreAddToCartPluginInterface
 {
     /**
-     * Specifications:
+     * Specification:
      * - Executed before adding item to cart.
      *
      * @api

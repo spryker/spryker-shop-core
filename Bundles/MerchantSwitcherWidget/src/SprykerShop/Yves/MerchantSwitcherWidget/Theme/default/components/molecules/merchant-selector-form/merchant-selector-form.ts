@@ -1,5 +1,6 @@
 import Component from 'ShopUi/models/component';
 import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
+import { error } from 'ShopUi/app/logger';
 
 export default class MerchantSelectorForm extends Component {
     protected ajaxProvider: AjaxProvider;
@@ -31,7 +32,7 @@ export default class MerchantSelectorForm extends Component {
     /**
      * Updates a text of the confirmation question.
      */
-    updateMessageText(): void  {
+    updateMessageText(): void {
         const currentMerchantOptionText: string = this.select.options[this.initiallySelectedIndex].text;
         const newMerchantOptionText: string = this.select.options[this.select.selectedIndex].text;
 
@@ -48,7 +49,7 @@ export default class MerchantSelectorForm extends Component {
         }
 
         const data = new FormData(this.form);
-        const appendData = {'merchant_switcher_selector_form[_token]': this.csrfToken};
+        const appendData = { 'merchant_switcher_selector_form[_token]': this.csrfToken };
 
         Object.keys(appendData).forEach((key: string) => data.append(key, appendData[key]));
 
@@ -56,7 +57,7 @@ export default class MerchantSelectorForm extends Component {
             await this.ajaxProvider.fetch(data);
             document.location.reload();
         } catch (e) {
-            console.error(e);
+            error(e);
         }
     }
 

@@ -118,10 +118,6 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
                     return false;
                 }
 
-                if ($this->isNewAddressFormShouldNotBeValidated($customerAddressForm)) {
-                    return false;
-                }
-
                 if ($this->isNewAddressFormShouldNotBeValidated($form)) {
                     return false;
                 }
@@ -153,58 +149,34 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $customerAddressForm
-     *
-     * @return bool
-     */
-    protected function isIdCustomerOrCompanyUnitAddressesExist(FormInterface $customerAddressForm): bool
-    {
-        return $customerAddressForm->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
-            || $customerAddressForm->has(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     *
-     * @return bool
-     */
-    protected function isNewCustomerAddress(FormInterface $form): bool
-    {
-        return $form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
-            && $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData() === null;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     *
-     * @return bool
-     */
-    protected function isIdCustomerAddressEmpty(FormInterface $form): bool
-    {
-        return $form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
-            && $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData() === CheckoutAddressForm::VALUE_ADD_NEW_ADDRESS;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     *
-     * @return bool
-     */
-    protected function isIdCompanyUnitAddressEmpty(FormInterface $form): bool
-    {
-        return $form->has(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)
-            && $form->get(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)->getData() === null;
-    }
-
-    /**
      * @param \Symfony\Component\Form\FormInterface $form
      *
      * @return bool
      */
     protected function isNewAddressFormShouldNotBeValidated(FormInterface $form): bool
     {
-        return $this->isNewCustomerAddress($form)
-            || !$this->isIdCustomerAddressEmpty($form)
-            || !$this->isIdCompanyUnitAddressEmpty($form);
+        return $this->isIdCustomerAddressExistAndNotEmpty($form) || $this->isIdCompanyUnitAddressFieldExistAndNotEmpty($form);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return bool
+     */
+    protected function isIdCustomerAddressExistAndNotEmpty(FormInterface $form): bool
+    {
+        return $form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
+            && $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData();
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return bool
+     */
+    protected function isIdCompanyUnitAddressFieldExistAndNotEmpty(FormInterface $form): bool
+    {
+        return $form->has(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)
+            && $form->get(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)->getData();
     }
 }

@@ -35,8 +35,15 @@ class ProductConfiguratorGatewayPageTester extends Actor
 
     /**
      * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PROTOCOL
+     *
+     * @deprecated Use {@link \SprykerShopTest\Yves\ProductConfiguratorGatewayPage\ProductConfiguratorGatewayPageTester::REDIS_SCHEME} instead.
      */
     protected const REDIS_PROTOCOL = 'STORAGE_REDIS:STORAGE_REDIS_PROTOCOL';
+
+    /**
+     * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_SCHEME
+     */
+    protected const REDIS_SCHEME = 'STORAGE_REDIS:STORAGE_REDIS_SCHEME';
 
     /**
      * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_HOST
@@ -63,7 +70,7 @@ class ProductConfiguratorGatewayPageTester extends Actor
      */
     public function setupStorageRedisConfig(): void
     {
-        $this->setConfig(StorageConstants::STORAGE_REDIS_PROTOCOL, Config::get(static::REDIS_PROTOCOL));
+        $this->setConfig(StorageConstants::STORAGE_REDIS_PROTOCOL, Config::get(static::REDIS_SCHEME, false) ?: Config::get(static::REDIS_PROTOCOL));
         $this->setConfig(StorageConstants::STORAGE_REDIS_PORT, Config::get(static::REDIS_PORT));
         $this->setConfig(StorageConstants::STORAGE_REDIS_HOST, Config::get(static::REDIS_HOST));
         $this->setConfig(StorageConstants::STORAGE_REDIS_DATABASE, Config::get(static::REDIS_DATABASE));

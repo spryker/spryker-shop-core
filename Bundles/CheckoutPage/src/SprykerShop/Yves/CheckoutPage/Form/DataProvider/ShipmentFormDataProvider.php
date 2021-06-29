@@ -71,6 +71,11 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     protected $productBundleClient;
 
     /**
+     * @var \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer|null
+     */
+    protected $availableShipmentMethods;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface $glossaryStorageClient
      * @param \Spryker\Shared\Kernel\Store $store
@@ -245,8 +250,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     protected function getAvailableShipmentMethods(QuoteTransfer $quoteTransfer)
     {
         /** @var \Generated\Shared\Transfer\ShipmentMethodsTransfer|null $shipmentMethodsTransfer */
-        $shipmentMethodsTransfer = $this->shipmentClient
-            ->getAvailableMethodsByShipment($quoteTransfer)
+        $shipmentMethodsTransfer = $this->getAvailableShipmentMethodsByShipment($quoteTransfer)
             ->getShipmentMethods()
             ->getIterator()
             ->current();
@@ -323,7 +327,11 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     protected function getAvailableShipmentMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentMethodsCollectionTransfer
     {
-        return $this->shipmentClient->getAvailableMethodsByShipment($quoteTransfer);
+        if ($this->availableShipmentMethods === null) {
+            $this->availableShipmentMethods = $this->shipmentClient->getAvailableMethodsByShipment($quoteTransfer);
+        }
+
+        return $this->availableShipmentMethods;
     }
 
     /**

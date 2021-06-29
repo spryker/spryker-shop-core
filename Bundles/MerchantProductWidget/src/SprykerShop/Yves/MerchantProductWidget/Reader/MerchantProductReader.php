@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\MerchantProductWidget\Reader;
 
 use Generated\Shared\Transfer\MerchantProductViewTransfer;
+use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
@@ -19,6 +20,10 @@ use SprykerShop\Yves\MerchantProductWidget\Mapper\MerchantProductMapper;
 
 class MerchantProductReader implements MerchantProductReaderInterface
 {
+    protected const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
+    protected const PARAM_MERCHANT_REFERENCE = 'merchant_reference';
+
     /**
      * @var \SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToProductStorageClientInterface
      */
@@ -77,8 +82,10 @@ class MerchantProductReader implements MerchantProductReaderInterface
             return null;
         }
 
+        /** @var int $idProductAbstract */
+        $idProductAbstract = $productViewTransfer->getIdProductAbstract();
         $productAbstractStorageData = $this->productStorageClient->findProductAbstractStorageData(
-            $productViewTransfer->getIdProductAbstract(),
+            $idProductAbstract,
             $localeName
         );
 
@@ -100,11 +107,15 @@ class MerchantProductReader implements MerchantProductReaderInterface
             new MerchantProductViewTransfer()
         );
 
-        if (!$merchantProductViewTransfer->getMerchantReference()) {
+        /** @var string $merchantReference */
+        $merchantReference = $merchantProductViewTransfer->getMerchantReference();
+        if (!$merchantReference) {
             return null;
         }
 
-        $merchantStorageTransfer = $this->merchantStorageClient->findOneByMerchantReference($merchantProductViewTransfer->getMerchantReference());
+        $merchantStorageTransfer = $this->merchantStorageClient->findOne(
+            (new MerchantStorageCriteriaTransfer())->addMerchantReference($merchantReference)
+        );
 
         if (!$merchantStorageTransfer) {
             return null;
@@ -114,6 +125,39 @@ class MerchantProductReader implements MerchantProductReaderInterface
         $merchantProductViewTransfer->setPrice($currentProductPriceTransfer);
 
         return $merchantProductViewTransfer;
+    }
+
+    /**
+     * @param string $sku
+     * @param string $locale
+     *
+     * @return string|null
+     */
+    public function findMerchantReferenceByConcreteSku(string $sku, string $locale): ?string
+    {
+        $productConcreteStorageData = $this->productStorageClient
+            ->findProductConcreteStorageDataByMapping(
+                static::PRODUCT_CONCRETE_MAPPING_TYPE,
+                $sku,
+                $locale
+            );
+
+        if (!isset($productConcreteStorageData[static::ID_PRODUCT_ABSTRACT])) {
+            return null;
+        }
+
+        /** @var mixed[] $productAbstractStorageData */
+        $productAbstractStorageData = $this->productStorageClient
+            ->findProductAbstractStorageData(
+                $productConcreteStorageData[static::ID_PRODUCT_ABSTRACT],
+                $locale
+            );
+
+        if (!array_key_exists(static::PARAM_MERCHANT_REFERENCE, $productAbstractStorageData)) {
+            return null;
+        }
+
+        return $productAbstractStorageData[static::PARAM_MERCHANT_REFERENCE];
     }
 
     /**
@@ -127,9 +171,12 @@ class MerchantProductReader implements MerchantProductReaderInterface
         $locale = strstr($localeName, '_', true);
 
         foreach ($merchantStorageTransfer->getUrlCollection() as $urlTransfer) {
-            $urlLocale = mb_substr($urlTransfer->getUrl(), 1, 2);
+            /** @var string $url */
+            $url = $urlTransfer->getUrl();
+
+            $urlLocale = mb_substr($url, 1, 2);
             if ($locale === $urlLocale) {
-                return $urlTransfer->getUrl();
+                return $url;
             }
         }
 
@@ -143,9 +190,14 @@ class MerchantProductReader implements MerchantProductReaderInterface
      */
     protected function getPriceProductTransfers(ProductViewTransfer $productViewTransfer): array
     {
+        /** @var int $idProductConcrete */
+        $idProductConcrete = $productViewTransfer->getIdProductConcrete();
+        /** @var int $idProductAbstract */
+        $idProductAbstract = $productViewTransfer->getIdProductAbstract();
+
         return $this->priceProductStorageClient->getResolvedPriceProductConcreteTransfers(
-            $productViewTransfer->getIdProductConcrete(),
-            $productViewTransfer->getIdProductAbstract()
+            $idProductConcrete,
+            $idProductAbstract
         );
     }
 }

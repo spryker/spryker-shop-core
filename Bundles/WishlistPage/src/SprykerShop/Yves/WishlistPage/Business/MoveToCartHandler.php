@@ -89,12 +89,14 @@ class MoveToCartHandler implements MoveToCartHandlerInterface
     protected function createWishlistMoveToCartRequestTransfer($wishlistName, WishlistItemMetaTransfer $wishlistItemMetaTransfer)
     {
         $wishlistItemTransfer = new WishlistItemTransfer();
+        $wishlistItemTransfer->fromArray($wishlistItemMetaTransfer->toArray(), true);
         $wishlistItemTransfer
             ->setSku($wishlistItemMetaTransfer->getSku())
             ->setWishlistName($wishlistName)
             ->setFkCustomer($this->getIdCustomer());
 
         $wishlistMoveToCartRequestTransfer = (new WishlistMoveToCartRequestTransfer())
+            ->fromArray($wishlistItemMetaTransfer->toArray(), true)
             ->setSku($wishlistItemMetaTransfer->getSku())
             ->setWishlistItem($wishlistItemTransfer);
 

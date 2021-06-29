@@ -7,12 +7,16 @@
 
 namespace SprykerShop\Yves\WishlistPage;
 
+use Generated\Shared\Transfer\ShopContextTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\WishlistPage\Business\MoveToCartHandler;
 use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToCustomerClientInterface;
+use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToWishlistClientInterface;
+use SprykerShop\Yves\WishlistPage\Expander\WishlistItem\WishlistItemExpander;
+use SprykerShop\Yves\WishlistPage\Expander\WishlistItem\WishlistItemExpanderIterface;
 use SprykerShop\Yves\WishlistPage\Form\AddAllAvailableProductsToCartFormType;
 use SprykerShop\Yves\WishlistPage\Form\Cloner\FormCloner;
 use SprykerShop\Yves\WishlistPage\Form\DataProvider\AddAllAvailableProductsToCartFormDataProvider;
@@ -22,6 +26,8 @@ use SprykerShop\Yves\WishlistPage\Form\WishlistDeleteFormType;
 use SprykerShop\Yves\WishlistPage\Form\WishlistFormType;
 use SprykerShop\Yves\WishlistPage\Form\WishlistMoveToCartFormType;
 use SprykerShop\Yves\WishlistPage\Form\WishlistRemoveItemFormType;
+use SprykerShop\Yves\WishlistPage\Resolver\ShopContextResolver;
+use SprykerShop\Yves\WishlistPage\Resolver\ShopContextResolverInterface;
 use Symfony\Component\Form\FormInterface;
 
 class WishlistPageFactory extends AbstractFactory
@@ -35,6 +41,14 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\WishlistPage\Dependency\Client\WishlistPageToGlossaryStorageClientInterface
+     */
+    public function getGlossaryStorageClient(): WishlistPageToGlossaryStorageClientInterface
+    {
+        return $this->getProvidedDependency(WishlistPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
+    }
+
+    /**
      * @return \SprykerShop\Yves\WishlistPage\Form\Cloner\FormCloner
      */
     public function getFormCloner(): FormCloner
@@ -43,8 +57,10 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
+     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
+     *
      * @param \Generated\Shared\Transfer\WishlistTransfer|null $data
-     * @param array $options
+     * @param mixed[] $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -54,6 +70,8 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
+     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function getWishlistDeleteForm(): FormInterface
@@ -62,6 +80,8 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
+     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function getWishlistRemoveItemForm(): FormInterface
@@ -70,6 +90,8 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
+     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function getWishlistAddItemForm(): FormInterface
@@ -78,6 +100,8 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
+     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function getWishlistMoveToCartForm(): FormInterface
@@ -97,8 +121,10 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
-     * @param array $data
-     * @param array $options
+     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
+     *
+     * @param mixed[] $data
+     * @param mixed[] $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -133,6 +159,33 @@ class WishlistPageFactory extends AbstractFactory
     public function createAddAllAvailableProductsToCartFormType()
     {
         return new AddAllAvailableProductsToCartFormType();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShopContextTransfer
+     */
+    public function getShopContext(): ShopContextTransfer
+    {
+        return $this->createShopContextResolver()->resolve();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\WishlistPage\Resolver\ShopContextResolverInterface
+     */
+    public function createShopContextResolver(): ShopContextResolverInterface
+    {
+        return new ShopContextResolver($this->getContainer());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\WishlistPage\Expander\WishlistItem\WishlistItemExpanderIterface
+     */
+    public function createWishlistItemExpander(): WishlistItemExpanderIterface
+    {
+        return new WishlistItemExpander(
+            $this->getWishlistItemRequestExpanderPlugins(),
+            $this->getWishlistItemExpanderPlugins()
+        );
     }
 
     /**
@@ -181,5 +234,21 @@ class WishlistPageFactory extends AbstractFactory
     public function getWishlistViewWidgetPlugins(): array
     {
         return $this->getProvidedDependency(WishlistPageDependencyProvider::PLUGIN_WISHLIST_VIEW_WIDGETS);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\WishlistPageExtension\Dependency\Plugin\WishlistItemRequestExpanderPluginInterface[]
+     */
+    public function getWishlistItemRequestExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(WishlistPageDependencyProvider::PLUGIN_WISHLIST_ITEM_REQUEST_EXPANDERS);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\WishlistPageExtension\Dependency\Plugin\WishlistItemMetaFormExpanderPluginInterface[]
+     */
+    public function getWishlistItemMetaFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(WishlistPageDependencyProvider::PLUGIN_WISHLIST_ITEM_META_FORM_EXPANDERS);
     }
 }

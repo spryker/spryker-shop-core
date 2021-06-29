@@ -49,6 +49,20 @@ class CatalogPageConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Will be removed without replacement. Use Search service settings to change this behavior.
+     *
+     * In case of SearchElasticSearch usage it can be changed by using dynamic index setting API.
+     * By default `index.max_result_window` is 10000.
+     *
+     * PUT /{my-index}/_settings
+     * {
+     *   "index" : {
+     *     "max_result_window": 50000
+     *   }
+     * }
+     *
+     * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-update-settings.html
+     *
      * @return int
      */
     public function getCatalogPageLimit(): int

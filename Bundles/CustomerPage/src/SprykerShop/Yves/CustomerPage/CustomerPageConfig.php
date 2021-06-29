@@ -176,4 +176,20 @@ class CustomerPageConfig extends AbstractBundleConfig
     {
         return false;
     }
+
+    /**
+     * Specification:
+     * - Controls if the locale stub is added to the /login_check path.
+     * - False means the /login_check path does not have locale.
+     *
+     * @api
+     *
+     * @deprecated Will be removed without replacement. In the future, the locale-specific URL will be used.
+     *
+     * @return bool
+     */
+    public function isLocaleInLoginCheckPath(): bool
+    {
+        return false;
+    }
 }

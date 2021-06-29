@@ -46,12 +46,18 @@
             {% block salesReturnProducts %}
                 <div class="{{ salesReturnProductsClass }}">
                     {% for returnItem in data.returnItems %}
+
                         {% set orderItem = returnItem.orderItem %}
                         {% set isConfiguredBundle = orderItem.salesOrderConfiguredBundleItem is defined and orderItem.salesOrderConfiguredBundleItem is not null %}
                         {% set isBundleItem = orderItem.relatedBundleItemIdentifier is defined and orderItem.relatedBundleItemIdentifier is not null %}
-
                         {% if not isConfiguredBundle and not isBundleItem %}
                             {% block salesReturnProductItem %}
+
+                                {% if loop.first and widgetGlobalExists('SoldByMerchantWidget') %}
+                                    <hr class="box__separator">
+                                    {% widget 'SoldByMerchantWidget' args [orderItem] only %}{% endwidget %}
+                                {% endif %}
+
                                 <div class="{{ salesReturnProductItemClass }}">
                                     {% set productItemReturnClass = 'col col--expand grid' %}
 

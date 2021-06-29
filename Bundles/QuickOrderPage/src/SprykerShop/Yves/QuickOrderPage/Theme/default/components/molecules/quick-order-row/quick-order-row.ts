@@ -1,5 +1,7 @@
 import Component from 'ShopUi/models/component';
-import AutocompleteForm, {Events as AutocompleteEvents} from 'ShopUi/components/molecules/autocomplete-form/autocomplete-form';
+import AutocompleteForm, {
+    Events as AutocompleteEvents,
+} from 'ShopUi/components/molecules/autocomplete-form/autocomplete-form';
 import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
 import debounce from 'lodash-es/debounce';
 
@@ -27,8 +29,10 @@ export default class QuickOrderRow extends Component {
     }
 
     protected registerQuantityInput(): void {
-        this.quantityInput = <HTMLInputElement>(this.getElementsByClassName(`${this.jsName}__quantity`)[0] ||
-            this.getElementsByClassName(`${this.jsName}-partial__quantity`)[0]);
+        this.quantityInput = <HTMLInputElement>(
+            (this.getElementsByClassName(`${this.jsName}__quantity`)[0] ||
+                this.getElementsByClassName(`${this.jsName}-partial__quantity`)[0])
+        );
     }
 
     protected mapEvents(): void {
@@ -38,9 +42,12 @@ export default class QuickOrderRow extends Component {
     }
 
     protected mapQuantityInputChange(): void {
-        this.quantityInput.addEventListener('input', debounce(() => {
-            this.onQuantityChange();
-        }, this.autocompleteInput.debounceDelay));
+        this.quantityInput.addEventListener(
+            'input',
+            debounce(() => {
+                this.onQuantityChange();
+            }, this.autocompleteInput.debounceDelay),
+        );
     }
 
     protected onAutocompleteSet(): void {
@@ -63,8 +70,7 @@ export default class QuickOrderRow extends Component {
         const quantityInputValue = this.quantityValue;
 
         this.ajaxProvider.queryParams.set('sku', sku);
-        this.ajaxProvider.queryParams.set('index', this.ajaxProvider.getAttribute('class')
-            .split('-').pop().trim());
+        this.ajaxProvider.queryParams.set('index', this.ajaxProvider.getAttribute('class').split('-').pop().trim());
 
         if (!!quantityInputValue) {
             this.ajaxProvider.queryParams.set('quantity', `${quantityInputValue}`);

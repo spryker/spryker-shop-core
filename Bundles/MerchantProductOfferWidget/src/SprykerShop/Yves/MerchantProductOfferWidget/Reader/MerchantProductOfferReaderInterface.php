@@ -18,4 +18,11 @@ interface MerchantProductOfferReaderInterface
      * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
      */
     public function getProductOffers(ProductViewTransfer $productViewTransfer, string $localeName): array;
+
+    /**
+     * @param string $productOfferReference
+     *
+     * @return string|null
+     */
+    public function findMerchantReferenceByProductOfferReference(string $productOfferReference): ?string;
 }

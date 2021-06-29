@@ -1,10 +1,17 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="ShopContext">
+    <transfer name="MerchantSearch">
         <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantSearchCollection">
+        <property name="merchants" type="MerchantSearch[]" singular="merchant"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="merchantReference" type="string"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="MerchantSwitchRequest">
@@ -16,23 +23,14 @@
         <property name="quote" type="Quote"/>
     </transfer>
 
-    <transfer name="Quote">
+    <transfer name="ShopContext">
         <property name="merchantReference" type="string"/>
-        <property name="items" type="Item[]" singular="item"/>
-    </transfer>
-
-    <transfer name="Item">
     </transfer>
 
     <transfer name="MerchantSearchRequest">
     </transfer>
 
-    <transfer name="MerchantSearchCollection">
-        <property name="merchants" type="MerchantSearch[]" singular="merchant"/>
-    </transfer>
-
-    <transfer name="MerchantSearch">
-        <property name="merchantReference" type="string"/>
+    <transfer name="Item">
     </transfer>
 
 </transfers>

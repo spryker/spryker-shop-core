@@ -1,8 +1,5 @@
 <?xml version="1.0"?>
-<transfers
-    xmlns="spryker:transfer-01"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="MerchantStorageProfile">
         <property name="contactPersonRole" type="string"/>
@@ -20,8 +17,6 @@
         <property name="cancellationPolicyGlossaryKey" type="string"/>
         <property name="imprintGlossaryKey" type="string"/>
         <property name="dataPrivacyGlossaryKey" type="string"/>
-        <property name="latitude" type="string"/>
-        <property name="longitude" type="string"/>
         <property name="faxNumber" type="string"/>
         <property name="addressCollection" type="MerchantStorageProfileAddress[]" singular="address"/>
     </transfer>
@@ -34,5 +29,7 @@
         <property name="city" type="string"/>
         <property name="zipCode" type="string"/>
         <property name="email" type="string"/>
+        <property name="latitude" type="string"/>
+        <property name="longitude" type="string"/>
     </transfer>
 </transfers>

@@ -114,6 +114,9 @@ class CheckoutAddressForm extends AddressForm
     {
         $builder->add(static::FIELD_ID_COMPANY_UNIT_ADDRESS, HiddenType::class);
 
+        $builder->get(static::FIELD_ID_COMPANY_UNIT_ADDRESS)
+            ->addModelTransformer($this->getFactory()->createAddressSelectTransformer());
+
         return $this;
     }
 

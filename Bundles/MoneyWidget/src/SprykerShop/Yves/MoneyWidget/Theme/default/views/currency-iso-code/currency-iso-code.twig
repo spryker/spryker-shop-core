@@ -1,0 +1,9 @@
+{% extends template('widget') %}
+
+{% define data = {
+    currencyIsoCode: _widget.currencyIsoCode,
+} %}
+
+{% block body %}
+    {{ data.currencyIsoCode ?: ''}}
+{% endblock %}

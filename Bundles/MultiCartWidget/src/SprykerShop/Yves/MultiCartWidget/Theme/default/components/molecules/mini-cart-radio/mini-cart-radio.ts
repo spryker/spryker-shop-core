@@ -5,30 +5,15 @@ export default class MiniCartRadio extends Component {
      * The radio button element.
      */
     radio: HTMLElement;
-    /**
-     * The form element.
-     */
-    form: HTMLFormElement;
 
-    protected readyCallback(): void {}
-
-    protected init(): void {
+    protected readyCallback(): void {
         this.radio = <HTMLElement>this.getElementsByClassName(`${this.jsName}__input`)[0];
-        this.form = <HTMLFormElement>this.getElementsByClassName(`${this.jsName}__form`)[0];
 
         this.mapEvents();
     }
 
-    protected formSubmit(): void {
-        this.form.submit();
-    }
-
-    protected mapSubmitEvent(): void {
-        this.onclick = () => this.formSubmit();
-    }
-
     private mapEvents(): void {
-        this.mapSubmitEvent();
+        this.onclick = () => (window.location.href = this.locationUrl);
     }
 
     /**

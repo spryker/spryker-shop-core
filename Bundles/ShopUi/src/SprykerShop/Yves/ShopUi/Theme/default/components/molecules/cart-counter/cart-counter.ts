@@ -21,8 +21,9 @@ export default class CartCounter extends Component {
     }
 
     protected mapTriggerCustomUpdateQuantityEvent(): void {
-        document.addEventListener(EVENT_UPDATE_CART_QUANTITY,
-            (event: CustomEvent) => this.updateQuantity(Number(event.detail)));
+        document.addEventListener(EVENT_UPDATE_CART_QUANTITY, (event: CustomEvent) =>
+            this.updateQuantity(Number(event.detail)),
+        );
     }
 
     protected updateQuantity(quantity: number): void {

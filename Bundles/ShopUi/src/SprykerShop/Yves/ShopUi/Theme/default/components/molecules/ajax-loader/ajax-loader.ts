@@ -6,8 +6,13 @@ export default class AjaxLoader extends Component {
 
     protected readyCallback(): void {
         /* tslint:disable: deprecation */
-        this.providers = <AjaxProvider[]>Array.from(this.providerClassName ?
-            document.getElementsByClassName(this.providerClassName) : document.querySelectorAll(this.providerSelector));
+        this.providers = <AjaxProvider[]>(
+            Array.from(
+                this.providerClassName
+                    ? document.getElementsByClassName(this.providerClassName)
+                    : document.querySelectorAll(this.providerSelector),
+            )
+        );
         /* tslint:enable: deprecation */
         this.mapEvents();
     }

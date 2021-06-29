@@ -11,9 +11,12 @@
     },
     "product": {
         "title": "Konfiguratorname",
+        "image": "Sie können das Bild des konfigurierbaren Produktes hier anzeigen",
         "priceItem": "Artikelpreis",
         "quantity": "Anzahl",
         "availableQuantity": "Nur {{value}} Artikel verfügbar",
+        "confirmChangeQuantity": "Die Anzahl wird nach dem Speichern geändert",
+        "unavailableProductMessage": "Für Ihre Konfiguration ist kein Element verfügbar",
         "totalPrice": "Gesamtpreis"
     },
     "fields": {

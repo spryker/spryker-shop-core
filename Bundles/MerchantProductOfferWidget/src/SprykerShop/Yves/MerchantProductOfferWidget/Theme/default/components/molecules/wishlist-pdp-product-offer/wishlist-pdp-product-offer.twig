@@ -1,0 +1,15 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'wishlist-pdp-product-offer',
+} %}
+
+{% define data = {
+    product: required
+} %}
+
+{% block body %}
+    {% if data.product.productOfferReference is defined %}
+        <input type="hidden" name="product_offer_reference" value="{{ data.product.productOfferReference }}"/>
+    {% endif %}
+{% endblock %}

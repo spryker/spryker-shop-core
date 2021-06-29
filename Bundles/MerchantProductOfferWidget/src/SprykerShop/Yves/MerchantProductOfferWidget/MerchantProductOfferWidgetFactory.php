@@ -11,6 +11,8 @@ use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantStorageClientInterface;
+use SprykerShop\Yves\MerchantProductOfferWidget\Expander\MerchantProductOfferExpander;
+use SprykerShop\Yves\MerchantProductOfferWidget\Expander\MerchantProductOfferExpanderInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Reader\MerchantProductOfferReader;
 use SprykerShop\Yves\MerchantProductOfferWidget\Reader\MerchantProductOfferReaderInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Resolver\ShopContextResolver;
@@ -25,7 +27,18 @@ class MerchantProductOfferWidgetFactory extends AbstractFactory
     {
         return new MerchantProductOfferReader(
             $this->getMerchantProductOfferStorageClient(),
-            $this->createShopContextResolver()
+            $this->createShopContextResolver(),
+            $this->getMerchantStorageClient()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MerchantProductOfferWidget\Expander\MerchantProductOfferExpanderInterface
+     */
+    public function createMerchantProductOfferExpander(): MerchantProductOfferExpanderInterface
+    {
+        return new MerchantProductOfferExpander(
+            $this->createProductOfferReader()
         );
     }
 

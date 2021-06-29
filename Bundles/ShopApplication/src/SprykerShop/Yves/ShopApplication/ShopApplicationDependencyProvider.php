@@ -33,6 +33,7 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const STORE = 'STORE';
     public const PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER = 'PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER';
     public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
+    public const PLUGINS_WIDGET_CACHE_KEY_GENERATOR_STRATEGY = 'PLUGINS_WIDGET_CACHE_KEY_GENERATOR_STRATEGY';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -48,6 +49,7 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUtilTextService($container);
         $container = $this->addFilterControllerEventSubscriberPlugins($container);
         $container = $this->addApplicationPlugins($container);
+        $container = $this->addWidgetCacheKeyGeneratorStrategyPlugins($container);
 
         return $container;
     }
@@ -144,6 +146,20 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addWidgetCacheKeyGeneratorStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_WIDGET_CACHE_KEY_GENERATOR_STRATEGY, function () {
+            return $this->getWidgetCacheKeyGeneratorStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @deprecated Use $this->getGlobalWidgets() instead.
      *
      * @return string[]
@@ -157,6 +173,14 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      * @return string[]
      */
     protected function getGlobalWidgets(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorStrategyPluginInterface[]
+     */
+    protected function getWidgetCacheKeyGeneratorStrategyPlugins(): array
     {
         return [];
     }

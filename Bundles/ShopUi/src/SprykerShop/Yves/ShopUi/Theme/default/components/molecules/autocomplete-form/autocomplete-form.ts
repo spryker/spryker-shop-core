@@ -3,7 +3,13 @@ import Component from '../../../models/component';
 import AjaxProvider from '../../../components/molecules/ajax-provider/ajax-provider';
 import debounce from 'lodash-es/debounce';
 
-export enum Events {FETCHING = 'fetching', FETCHED = 'fetched', CHANGE = 'change', SET = 'set', UNSET = 'unset'}
+export enum Events {
+    FETCHING = 'fetching',
+    FETCHED = 'fetched',
+    CHANGE = 'change',
+    SET = 'set',
+    UNSET = 'unset',
+}
 
 /**
  * @event fetching An event which is triggered when an ajax request is sent to the server.
@@ -63,10 +69,16 @@ export default class AutocompleteForm extends Component {
     }
 
     protected mapEvents(): void {
-        this.textInput.addEventListener('input', debounce(() => this.onInput(), this.debounceDelay));
-        this.textInput.addEventListener('blur', debounce(() => this.onBlur(), this.debounceDelay));
+        this.textInput.addEventListener(
+            'input',
+            debounce(() => this.onInput(), this.debounceDelay),
+        );
+        this.textInput.addEventListener(
+            'blur',
+            debounce(() => this.onBlur(), this.debounceDelay),
+        );
         this.textInput.addEventListener('focus', () => this.onFocus());
-        this.textInput.addEventListener('keydown', event => this.onKeyDown(event));
+        this.textInput.addEventListener('keydown', (event) => this.onKeyDown(event));
         if (this.cleanButton) {
             this.cleanButton.addEventListener('click', () => this.onCleanButtonClick());
         }
@@ -124,9 +136,11 @@ export default class AutocompleteForm extends Component {
         this.ajaxProvider.queryParams.set(this.queryString, this.inputText);
         await this.ajaxProvider.fetch();
         /* tslint:disable: deprecation */
-        this.suggestionItems = <HTMLElement[]>Array.from(
-            this.suggestionsContainer.getElementsByClassName(this.suggestedItemClassName)
-            || this.suggestionsContainer.querySelectorAll(this.suggestedItemSelector)
+        this.suggestionItems = <HTMLElement[]>(
+            Array.from(
+                this.suggestionsContainer.getElementsByClassName(this.suggestedItemClassName) ||
+                    this.suggestionsContainer.querySelectorAll(this.suggestedItemSelector),
+            )
         );
         /* tslint:enable: deprecation */
         this.lastSelectedItem = this.suggestionItems[0];
@@ -144,7 +158,7 @@ export default class AutocompleteForm extends Component {
     protected onItemClick(item: HTMLElement): void {
         this.inputText = item.textContent.trim();
         this.inputValue = item.getAttribute(this.valueAttributeName);
-        this.dispatchCustomEvent(Events.SET, {text: this.inputText, value: this.inputValue});
+        this.dispatchCustomEvent(Events.SET, { text: this.inputText, value: this.inputValue });
     }
 
     protected onItemSelected(item: HTMLElement): void {
@@ -162,9 +176,15 @@ export default class AutocompleteForm extends Component {
             return;
         }
         switch (event.key) {
-            case 'ArrowUp': this.onKeyDownArrowUp(); break;
-            case 'ArrowDown': this.onKeyDownArrowDown(); break;
-            case 'Enter': this.onKeyDownEnter(event); break;
+            case 'ArrowUp':
+                this.onKeyDownArrowUp();
+                break;
+            case 'ArrowDown':
+                this.onKeyDownArrowDown();
+                break;
+            case 'Enter':
+                this.onKeyDownEnter(event);
+                break;
         }
     }
 

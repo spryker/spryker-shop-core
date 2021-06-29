@@ -1,43 +1,43 @@
 {
-  "name": "spryker-shop/shop-permission",
-  "type": "library",
-  "description": "ShopPermission module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/kernel": "^3.30.0",
-    "spryker/permission": "^1.0.0"
-  },
-  "require-dev": {
-    "spryker-shop/shop-application": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/container": "*",
-    "spryker/silex": "^2.0.0",
-    "spryker/twig": "^3.0.0"
-  },
-  "suggest": {
-    "spryker-shop/shop-application": ">1.0.0 If you want to use the permission plugin for Twig",
-    "spryker/container": "If you want to use ShopPermissionTwigPlugin.",
-    "spryker/silex": ">2.0.0 If you want to use the permission plugin for Twig",
-    "spryker/twig": ">3.0.0 If you want to use the permission plugin for Twig"
-  },
-  "autoload": {
-    "psr-4": {
-      "SprykerShop\\": "src/SprykerShop/"
+    "name": "spryker-shop/shop-permission",
+    "type": "library",
+    "description": "ShopPermission module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/kernel": "^3.30.0",
+        "spryker/permission": "^1.0.0"
+    },
+    "require-dev": {
+        "spryker-shop/shop-application": "*",
+        "spryker/code-sniffer": "*",
+        "spryker/container": "*",
+        "spryker/silex": "^2.0.0",
+        "spryker/twig": "^3.0.0"
+    },
+    "suggest": {
+        "spryker-shop/shop-application": ">1.0.0 If you want to use the permission plugin for Twig",
+        "spryker/container": "If you want to use ShopPermissionTwigPlugin.",
+        "spryker/silex": ">2.0.0 If you want to use the permission plugin for Twig",
+        "spryker/twig": ">3.0.0 If you want to use the permission plugin for Twig"
+    },
+    "autoload": {
+        "psr-4": {
+            "SprykerShop\\": "src/SprykerShop/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

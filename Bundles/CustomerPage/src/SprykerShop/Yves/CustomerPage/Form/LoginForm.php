@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
  */
 class LoginForm extends AbstractType
@@ -45,7 +46,7 @@ class LoginForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->setAction('/login_check');
+        $builder->setAction($this->getFactory()->createLoginCheckUrlFormatter()->getLoginCheckPath());
 
         $this
             ->addEmailField($builder)

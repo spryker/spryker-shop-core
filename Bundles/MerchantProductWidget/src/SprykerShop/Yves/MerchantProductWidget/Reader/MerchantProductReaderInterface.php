@@ -19,4 +19,12 @@ interface MerchantProductReaderInterface
      * @return \Generated\Shared\Transfer\MerchantProductViewTransfer|null
      */
     public function findMerchantProductView(ProductViewTransfer $productViewTransfer, string $localeName): ?MerchantProductViewTransfer;
+
+    /**
+     * @param string $sku
+     * @param string $locale
+     *
+     * @return string|null
+     */
+    public function findMerchantReferenceByConcreteSku(string $sku, string $locale): ?string;
 }

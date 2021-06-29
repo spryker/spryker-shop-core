@@ -1,0 +1,11 @@
+{
+    "extends": "./node_modules/@spryker/frontend-config.tslint/tslint.json",
+    "linterOptions": {
+        "exclude": [
+            "**/DateTimeConfiguratorPageExample/**",
+            "**/node_modules/**",
+            "vendor/**",
+            "!vendor/spryker/spryker-shop/**"
+        ]
+    }
+}

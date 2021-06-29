@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\MerchantProductWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 
 class MerchantProductWidgetToMerchantStorageClientBridge implements MerchantProductWidgetToMerchantStorageClientInterface
@@ -25,22 +26,12 @@ class MerchantProductWidgetToMerchantStorageClientBridge implements MerchantProd
     }
 
     /**
-     * @param string $merchantReference
+     * @param \Generated\Shared\Transfer\MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
      */
-    public function findOneByMerchantReference(string $merchantReference): ?MerchantStorageTransfer
+    public function findOne(MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer): ?MerchantStorageTransfer
     {
-        return $this->merchantStorageClient->findOneByMerchantReference($merchantReference);
-    }
-
-    /**
-     * @param int $idMerchant
-     *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
-     */
-    public function findOne(int $idMerchant): ?MerchantStorageTransfer
-    {
-        return $this->merchantStorageClient->findOne($idMerchant);
+        return $this->merchantStorageClient->findOne($merchantStorageCriteriaTransfer);
     }
 }

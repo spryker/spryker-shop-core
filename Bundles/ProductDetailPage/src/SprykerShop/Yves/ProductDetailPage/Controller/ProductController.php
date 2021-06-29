@@ -29,7 +29,7 @@ class ProductController extends AbstractController
     protected const GLOSSARY_KEY_PRODUCT_ACCESS_DENIED = 'product.access.denied';
 
     /**
-     * @param array $productData
+     * @param mixed[] $productData
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Spryker\Yves\Kernel\View\View
@@ -46,10 +46,10 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @param array $productData
+     * @param mixed[] $productData
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return mixed[]
      */
     protected function executeDetailAction(array $productData, Request $request): array
     {
@@ -152,13 +152,15 @@ class ProductController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return mixed[]
      */
-    protected function getSelectedAttributes(Request $request)
+    protected function getSelectedAttributes(Request $request): array
     {
-        /** @var array $data */
+        /** @var mixed[] $data */
         $data = $request->query->get(static::PARAM_ATTRIBUTE) ?: [];
 
-        return array_filter($data);
+        return array_filter($data, function ($value) {
+            return (bool)mb_strlen($value);
+        });
     }
 }

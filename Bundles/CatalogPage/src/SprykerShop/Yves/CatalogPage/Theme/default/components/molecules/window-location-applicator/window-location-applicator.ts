@@ -23,7 +23,8 @@ export default class WindowLocationApplicator extends Component {
         const categoryUrl = (<HTMLButtonElement>event.currentTarget).getAttribute('data-url');
         /* tslint:disable: no-unbound-method */
         const isFormData = typeof FormData !== 'undefined' && typeof FormData.prototype.get !== 'undefined';
-        const isURLSearchParams = typeof URLSearchParams !== 'undefined' && typeof URLSearchParams.prototype.get !== 'undefined';
+        const isURLSearchParams =
+            typeof URLSearchParams !== 'undefined' && typeof URLSearchParams.prototype.get !== 'undefined';
         /* tslint:enable: no-unbound-method */
 
         if (isFormData && isURLSearchParams) {
@@ -58,13 +59,15 @@ export default class WindowLocationApplicator extends Component {
             return (input.checked || input.type === 'number' || input.type === 'hidden') && !input.disabled;
         });
         const formFields = [...filteredInputFields, ...selectFields];
-        const data: string = formFields.reduce((accumulator: string, field: HTMLInputElement | HTMLSelectElement) => {
-            if (field.name && field.value) {
-                accumulator += `&${field.name}=${field.value}`;
-            }
+        const data: string = formFields
+            .reduce((accumulator: string, field: HTMLInputElement | HTMLSelectElement) => {
+                if (field.name && field.value) {
+                    accumulator += `&${field.name}=${field.value}`;
+                }
 
-            return accumulator;
-        }, '').slice(1);
+                return accumulator;
+            }, '')
+            .slice(1);
 
         this.setWindowLocation(categoryUrl, encodeURI(data));
     }

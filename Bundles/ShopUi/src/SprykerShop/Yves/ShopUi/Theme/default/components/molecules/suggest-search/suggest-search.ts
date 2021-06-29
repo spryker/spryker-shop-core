@@ -51,12 +51,14 @@ export default class SuggestSearch extends Component {
     navigationActiveClass: string;
 
     protected readyCallback(): void {
-        this.ajaxProvider = <AjaxProvider> this.getElementsByClassName(`${this.jsName}__ajax-provider`)[0];
-        this.suggestionsContainer = <HTMLElement> this.getElementsByClassName(`${this.jsName}__container`)[0];
+        this.ajaxProvider = <AjaxProvider>this.getElementsByClassName(`${this.jsName}__ajax-provider`)[0];
+        this.suggestionsContainer = <HTMLElement>this.getElementsByClassName(`${this.jsName}__container`)[0];
         /* tslint:disable: deprecation */
-        this.searchInput = <HTMLInputElement> (this.searchInputClassName ?
-            document.getElementsByClassName(this.searchInputClassName)[0] :
-            document.querySelector(this.searchInputSelector));
+        this.searchInput = <HTMLInputElement>(
+            (this.searchInputClassName
+                ? document.getElementsByClassName(this.searchInputClassName)[0]
+                : document.querySelector(this.searchInputSelector))
+        );
         /* tslint:enable: deprecation */
         this.navigationActiveClass = `${this.name}__item--active`;
         this.createHintInput();
@@ -64,11 +66,20 @@ export default class SuggestSearch extends Component {
     }
 
     protected mapEvents(): void {
-        this.searchInput.addEventListener('keyup', debounce(() => this.onInputKeyUp(), this.debounceDelay));
-        this.searchInput.addEventListener('keydown', throttle((event: Event) => {
-            this.onInputKeyDown(<KeyboardEvent> event);
-        }, this.throttleDelay));
-        this.searchInput.addEventListener('blur', debounce(() => this.onInputFocusOut(), this.debounceDelay));
+        this.searchInput.addEventListener(
+            'keyup',
+            debounce(() => this.onInputKeyUp(), this.debounceDelay),
+        );
+        this.searchInput.addEventListener(
+            'keydown',
+            throttle((event: Event) => {
+                this.onInputKeyDown(<KeyboardEvent>event);
+            }, this.throttleDelay),
+        );
+        this.searchInput.addEventListener(
+            'blur',
+            debounce(() => this.onInputFocusOut(), this.debounceDelay),
+        );
         this.searchInput.addEventListener('focus', () => this.onInputFocusIn());
         this.searchInput.addEventListener('click', () => this.onInputClick());
     }
@@ -89,13 +100,27 @@ export default class SuggestSearch extends Component {
 
     protected onInputKeyDown(event: KeyboardEvent): void {
         switch (event.key) {
-            case 'Enter': this.onEnter(event); break;
-            case 'Tab': this.onTab(event); break;
-            case 'ArrowUp': this.onArrowUp(); break;
-            case 'ArrowDown': this.onArrowDown(); break;
-            case 'ArrowLeft': this.onArrowLeft(); break;
-            case 'ArrowRight': this.onArrowRight(); break;
-            case 'Backspace': this.onBackspace(); break;
+            case 'Enter':
+                this.onEnter(event);
+                break;
+            case 'Tab':
+                this.onTab(event);
+                break;
+            case 'ArrowUp':
+                this.onArrowUp();
+                break;
+            case 'ArrowDown':
+                this.onArrowDown();
+                break;
+            case 'ArrowLeft':
+                this.onArrowLeft();
+                break;
+            case 'ArrowRight':
+                this.onArrowRight();
+                break;
+            case 'Backspace':
+                this.onBackspace();
+                break;
         }
     }
 
@@ -173,12 +198,12 @@ export default class SuggestSearch extends Component {
     }
 
     protected getNavigation(): HTMLElement[] {
-        return <HTMLElement[]> Array.from(this.getElementsByClassName(`${this.jsName}__item--navigable`));
+        return <HTMLElement[]>Array.from(this.getElementsByClassName(`${this.jsName}__item--navigable`));
     }
 
     protected updateNavigation(): void {
         if (this.isNavigationExist()) {
-            this.navigation.forEach(element => element.classList.remove(this.navigationActiveClass));
+            this.navigation.forEach((element) => element.classList.remove(this.navigationActiveClass));
             if (this.activeItemIndex > this.navigation.length) {
                 this.activeItemIndex = 0;
                 this.searchInput.focus();
@@ -192,7 +217,7 @@ export default class SuggestSearch extends Component {
     }
 
     protected isNavigationExist(): boolean {
-        return (this.navigation && !!this.navigation.length);
+        return this.navigation && !!this.navigation.length;
     }
 
     protected getSearchValue(): string {
@@ -215,7 +240,7 @@ export default class SuggestSearch extends Component {
         if (this.hint) {
             this.updateHintInput();
         }
-        if (this.hint === undefined || !this.getSearchValue()) {
+        if (this.hint === null || !this.getSearchValue()) {
             this.setHintValue('');
         }
         this.navigation = this.getNavigation();
@@ -258,7 +283,7 @@ export default class SuggestSearch extends Component {
     }
 
     protected setHintValue(value: string): void {
-        this.hintInput.value =  value;
+        this.hintInput.value = value;
     }
 
     protected saveCurrentSearchValue(suggestQuery: string): void {
@@ -292,7 +317,7 @@ export default class SuggestSearch extends Component {
      * @deprecated Use searchInputClassName() instead.
      */
     get searchInputSelector(): string {
-        return <string> this.getAttribute('input-selector');
+        return <string>this.getAttribute('input-selector');
     }
     protected get searchInputClassName(): string {
         return this.getAttribute('input-class-name');

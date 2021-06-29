@@ -7,18 +7,22 @@ export class ConfiguratorService {
     configurator = new ReplaySubject();
     defaultPrice = 30000;
     volumePricesGross = {
-        volume_prices: [{
-            quantity: 5,
-            net_price: 28500,
-            gross_price: 29000
-        }]
+        volume_prices: [
+            {
+                quantity: 5,
+                net_price: 28500,
+                gross_price: 29000,
+            },
+        ],
     };
     volumePricesNet = {
-        volume_prices: [{
-            quantity: 5,
-            net_price: 23500,
-            gross_price: 24000
-        }]
+        volume_prices: [
+            {
+                quantity: 5,
+                net_price: 23500,
+                gross_price: 24000,
+            },
+        ],
     };
 
     constructor() {}
@@ -28,13 +32,13 @@ export class ConfiguratorService {
         const displayData = this.generateDate(JSON.parse(response.display_data));
         const productData = Object.assign({}, response, {
             configuration: configuration,
-            display_data: displayData
+            display_data: displayData,
         } as ConfiguredProduct);
 
         this.configurator.next({
             ...productData,
-            ...this.updateConfiguredValues(productData)
-        })
+            ...this.updateConfiguredValues(productData),
+        });
     }
 
     generateDate(displayData: DateConfiguration): DateConfiguration {
@@ -82,14 +86,14 @@ export class ConfiguratorService {
             productData.currency_code,
             productData.display_data,
             productData.price_mode,
-            isAtStore
+            isAtStore,
         );
         productData.volume_prices = this.setVolumePrices(
             productData.currency_code,
             date,
             dayTime,
             productData.price_mode,
-            isAtStore
+            isAtStore,
         );
         productData.available_quantity = this.setQuantity(isAtStore, date, dayTime);
 
@@ -97,7 +101,7 @@ export class ConfiguratorService {
     }
 
     setPrice(currency: string, displayData: DateConfiguration, priceMode: string, isAtStore: boolean): number | null {
-        const isDayTimeEvening = displayData["Preferred time of the day"].toLowerCase().trim() === 'evening';
+        const isDayTimeEvening = displayData['Preferred time of the day'].toLowerCase().trim() === 'evening';
 
         if (!isAtStore || !displayData.Date || !isDayTimeEvening) {
             return null;
@@ -108,7 +112,13 @@ export class ConfiguratorService {
         return this.defaultPrice - (isNetMode ? 5000 : 0);
     }
 
-    setVolumePrices(currency: string, date: string, dayTime: string, priceMode: string, isAtStore: boolean): VolumePrices | {} {
+    setVolumePrices(
+        currency: string,
+        date: string,
+        dayTime: string,
+        priceMode: string,
+        isAtStore: boolean,
+    ): VolumePrices | {} {
         const isEvening = dayTime.toLowerCase().trim() === 'evening';
 
         if (!isAtStore || !date || !isEvening) {

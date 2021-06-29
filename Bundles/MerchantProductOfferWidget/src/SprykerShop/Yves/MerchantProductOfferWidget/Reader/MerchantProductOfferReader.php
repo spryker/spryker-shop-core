@@ -7,10 +7,12 @@
 
 namespace SprykerShop\Yves\MerchantProductOfferWidget\Reader;
 
+use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface;
+use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantStorageClientInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Resolver\ShopContextResolverInterface;
 
 class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
@@ -26,15 +28,23 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
     protected $shopContextResolver;
 
     /**
+     * @var \SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantStorageClientInterface
+     */
+    protected $merchantStorageClient;
+
+    /**
      * @param \SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface $merchantProductOfferStorageClient
      * @param \SprykerShop\Yves\MerchantProductOfferWidget\Resolver\ShopContextResolverInterface $shopContextResolver
+     * @param \SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantStorageClientInterface $merchantStorageClient
      */
     public function __construct(
         MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface $merchantProductOfferStorageClient,
-        ShopContextResolverInterface $shopContextResolver
+        ShopContextResolverInterface $shopContextResolver,
+        MerchantProductOfferWidgetToMerchantStorageClientInterface $merchantStorageClient
     ) {
         $this->merchantProductOfferStorageClient = $merchantProductOfferStorageClient;
         $this->shopContextResolver = $shopContextResolver;
+        $this->merchantStorageClient = $merchantStorageClient;
     }
 
     /**
@@ -51,18 +61,48 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
 
         $productOfferStorageCriteriaTransfer = (new ProductOfferStorageCriteriaTransfer())
             ->fromArray($this->shopContextResolver->resolve()->modifiedToArray(), true);
-        $productOfferStorageCriteriaTransfer->addProductConcreteSku($productViewTransfer->getSku());
+
+        /** @var string $sku */
+        $sku = $productViewTransfer->getSku();
+        $productOfferStorageCriteriaTransfer->addProductConcreteSku($sku);
 
         $productOfferStorageCollectionTransfer = $this->merchantProductOfferStorageClient->getProductOffersBySkus($productOfferStorageCriteriaTransfer);
-        $productOffersStorageTransfers = $productOfferStorageCollectionTransfer->getProductOffersStorage()->getArrayCopy();
+        $productOffers = $productOfferStorageCollectionTransfer->getProductOffers()->getArrayCopy();
 
-        foreach ($productOffersStorageTransfers as $productOfferStorageTransfer) {
-            $merchantStorageTransfer = $productOfferStorageTransfer->getMerchantStorage();
+        foreach ($productOffers as $productOffer) {
+            $merchantStorageTransfer = $productOffer->getMerchantStorage();
 
-            $productOfferStorageTransfer->getMerchantStorage()->setMerchantUrl($this->getResolvedUrl($merchantStorageTransfer, $localeName));
+            $productOffer->getMerchantStorage()->setMerchantUrl($this->getResolvedUrl($merchantStorageTransfer, $localeName));
         }
 
-        return $productOffersStorageTransfers;
+        return $productOffers;
+    }
+
+    /**
+     * @param string $productOfferReference
+     *
+     * @return string|null
+     */
+    public function findMerchantReferenceByProductOfferReference(string $productOfferReference): ?string
+    {
+        $productOfferStorageTransfer = $this->merchantProductOfferStorageClient
+            ->findProductOfferStorageByReference($productOfferReference);
+
+        if (!$productOfferStorageTransfer) {
+            return null;
+        }
+
+        $merchantStorageTransfer = $this->merchantStorageClient->findOne(
+            (new MerchantStorageCriteriaTransfer())->addMerchantReference(
+                $productOfferStorageTransfer->getMerchantReferenceOrFail()
+            )
+        );
+
+        if (!$merchantStorageTransfer) {
+            return null;
+        }
+
+        return $merchantStorageTransfer->getMerchantReference();
     }
 
     /**
@@ -76,9 +116,12 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
         $locale = strstr($localeName, '_', true);
 
         foreach ($merchantStorageTransfer->getUrlCollection() as $urlTransfer) {
-            $urlLocale = mb_substr($urlTransfer->getUrl(), 1, 2);
+            /** @var string $url */
+            $url = $urlTransfer->getUrl();
+
+            $urlLocale = mb_substr($url, 1, 2);
             if ($locale === $urlLocale) {
-                return $urlTransfer->getUrl();
+                return $url;
             }
         }
 

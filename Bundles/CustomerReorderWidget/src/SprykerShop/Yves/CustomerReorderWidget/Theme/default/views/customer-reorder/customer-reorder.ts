@@ -23,7 +23,7 @@ export default class CustomerReorder extends Component {
 
     protected mapEvents(): void {
         this.selections.forEach((selection: HTMLInputElement) =>
-            selection.addEventListener('change', (event: Event) => this.onSelectionChange(event))
+            selection.addEventListener('change', (event: Event) => this.onSelectionChange(event)),
         );
     }
 

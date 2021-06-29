@@ -1,6 +1,6 @@
 namespace: CheckoutPage
 include:
-  - tests/SprykerShopTest/Yves/CheckoutPage/
+    - tests/SprykerShopTest/Yves/CheckoutPage/
 actor: Tester
 paths:
     tests: tests

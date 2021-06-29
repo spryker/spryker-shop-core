@@ -9,10 +9,12 @@ namespace SprykerShop\Yves\SalesProductConfigurationWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\SalesProductConfigurationWidget\Dependency\Client\SalesProductConfigurationWidgetToSalesProductConfigurationClientBridge;
 
 class SalesProductConfigurationWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGINS_SALES_PRODUCT_CONFIGURATION_RENDER_STRATEGY = 'PLUGINS_SALES_PRODUCT_CONFIGURATION_RENDER_STRATEGY';
+    public const CLIENT_SALES_PRODUCT_CONFIGURATION = 'CLIENT_SALES_PRODUCT_CONFIGURATION';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -23,6 +25,7 @@ class SalesProductConfigurationWidgetDependencyProvider extends AbstractBundleDe
     {
         $container = parent::provideDependencies($container);
         $container = $this->addSalesProductConfigurationRenderStrategyPlugins($container);
+        $container = $this->addSalesProductConfigurationClient($container);
 
         return $container;
     }
@@ -36,6 +39,22 @@ class SalesProductConfigurationWidgetDependencyProvider extends AbstractBundleDe
     {
         $container->set(static::PLUGINS_SALES_PRODUCT_CONFIGURATION_RENDER_STRATEGY, function () {
             return $this->getSalesProductConfigurationRenderStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSalesProductConfigurationClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_SALES_PRODUCT_CONFIGURATION, function (Container $container) {
+            return new SalesProductConfigurationWidgetToSalesProductConfigurationClientBridge(
+                $container->getLocator()->salesProductConfiguration()->client()
+            );
         });
 
         return $container;

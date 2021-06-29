@@ -99,18 +99,17 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
             return $quoteTransfer;
         }
         $paymentSelection = $this->getPaymentSelectionWithFallback($quoteTransfer);
-        if ($paymentSelection === null) {
+
+        if ($paymentSelection === null || !$this->paymentPlugins->has($paymentSelection)) {
             return $quoteTransfer;
         }
 
-        if ($this->paymentPlugins->has($paymentSelection)) {
-            $paymentHandler = $this->paymentPlugins->get($paymentSelection);
-            if ($paymentHandler instanceof StepHandlerPluginWithMessengerInterface) {
-                $paymentHandler->setFlashMessenger($this->flashMessenger);
-            }
-            $paymentHandler->addToDataClass($request, $quoteTransfer);
-            $quoteTransfer = $this->calculationClient->recalculate($quoteTransfer);
+        $paymentHandler = $this->paymentPlugins->get($paymentSelection);
+        if ($paymentHandler instanceof StepHandlerPluginWithMessengerInterface) {
+            $paymentHandler->setFlashMessenger($this->flashMessenger);
         }
+        $paymentHandler->addToDataClass($request, $quoteTransfer);
+        $quoteTransfer = $this->calculationClient->recalculate($quoteTransfer);
 
         return $quoteTransfer;
     }
@@ -151,7 +150,7 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
             return false;
         }
 
-        return $this->isValidPaymentSelection($paymentCollection, $quoteTransfer);
+        return true;
     }
 
     /**
@@ -178,6 +177,8 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     }
 
     /**
+     * @deprecated Will be removed with next major. Form is populated with available payments and validated against when submitting the form.
+     *
      * @param \Generated\Shared\Transfer\PaymentTransfer[]|\ArrayObject $paymentCollection
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

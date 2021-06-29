@@ -17,21 +17,27 @@ class ErrorPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected const ROUTE_ERROR_404 = 'error/404';
     public const ROUTE_NAME_ERROR_404 = 'error/404';
+    public const ROUTE_NAME_ERROR_CACHEABLE_404 = 'error-page/404';
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ErrorPage\Plugin\Router\ErrorPageRouteProviderPlugin::ROUTE_NAME_ERROR_404_PATH} instead.
      */
     protected const ROUTE_ERROR_404_PATH = '/error/404';
     public const ROUTE_NAME_ERROR_404_PATH = '/error/404';
+    public const ROUTE_NAME_ERROR_CACHEABLE_404_PATH = '/error-page/404';
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ErrorPage\Plugin\Router\ErrorPageRouteProviderPlugin::ROUTE_NAME_ERROR_403} instead.
      */
     protected const ROUTE_ERROR_403 = 'error/403';
     public const ROUTE_NAME_ERROR_403 = 'error/403';
+    public const ROUTE_NAME_ERROR_CACHEABLE_403 = 'error-page/403';
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ErrorPage\Plugin\Router\ErrorPageRouteProviderPlugin::ROUTE_NAME_ERROR_403_PATH} instead.
      */
     protected const ROUTE_ERROR_403_PATH = '/error/403';
     public const ROUTE_NAME_ERROR_403_PATH = '/error/403';
+    public const ROUTE_NAME_ERROR_CACHEABLE_403_PATH = '/error-page/403';
+
+    public const ROUTE_NAME_ERROR_429 = 'error/429';
 
     /**
      * Specification:
@@ -47,6 +53,11 @@ class ErrorPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $routeCollection = $this->addError404Route($routeCollection);
         $routeCollection = $this->addError403Route($routeCollection);
+
+        $routeCollection = $this->addError404CacheableRoute($routeCollection);
+        $routeCollection = $this->addError403CacheableRoute($routeCollection);
+
+        $routeCollection = $this->addError429Route($routeCollection);
 
         return $routeCollection;
     }
@@ -67,6 +78,21 @@ class ErrorPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
+     * @uses \SprykerShop\Yves\ErrorPage\Controller\Error404Controller::indexAction()
+     *
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Yves\Router\Route\RouteCollection
+     */
+    protected function addError404CacheableRoute(RouteCollection $routeCollection): RouteCollection
+    {
+        $route = $this->buildRoute(static::ROUTE_NAME_ERROR_CACHEABLE_404_PATH, 'ErrorPage', 'Error404Cacheable', 'indexAction');
+        $routeCollection->add(static::ROUTE_NAME_ERROR_CACHEABLE_404, $route);
+
+        return $routeCollection;
+    }
+
+    /**
      * @uses \SprykerShop\Yves\ErrorPage\Controller\Error403Controller::indexAction()
      *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
@@ -77,6 +103,36 @@ class ErrorPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/error/403', 'ErrorPage', 'Error403', 'indexAction');
         $routeCollection->add(static::ROUTE_NAME_ERROR_403, $route);
+
+        return $routeCollection;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\ErrorPage\Controller\Error403Controller::indexAction()
+     *
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Yves\Router\Route\RouteCollection
+     */
+    protected function addError403CacheableRoute(RouteCollection $routeCollection): RouteCollection
+    {
+        $route = $this->buildRoute(static::ROUTE_NAME_ERROR_CACHEABLE_403_PATH, 'ErrorPage', 'Error403Cacheable', 'indexAction');
+        $routeCollection->add(static::ROUTE_NAME_ERROR_CACHEABLE_403, $route);
+
+        return $routeCollection;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\ErrorPage\Controller\Error429Controller::indexAction()
+     *
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Yves\Router\Route\RouteCollection
+     */
+    protected function addError429Route(RouteCollection $routeCollection): RouteCollection
+    {
+        $route = $this->buildRoute('/error/429', 'ErrorPage', 'Error429', 'indexAction');
+        $routeCollection->add(static::ROUTE_NAME_ERROR_429, $route);
 
         return $routeCollection;
     }

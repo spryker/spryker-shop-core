@@ -1,6 +1,6 @@
 {
-  "include": {
-    "spryker-shop/shop-ui": "ShopUi provides basic frontend infrastructure.",
-    "spryker-shop/barcode-widget": "Widget that generates barcode by text."
-  }
+    "include": {
+        "spryker-shop/shop-ui": "ShopUi provides basic frontend infrastructure.",
+        "spryker-shop/barcode-widget": "Widget that generates barcode by text."
+    }
 }

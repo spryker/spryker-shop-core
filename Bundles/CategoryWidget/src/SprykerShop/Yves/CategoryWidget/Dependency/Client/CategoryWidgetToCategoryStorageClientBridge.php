@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\CategoryWidget\Dependency\Client;
 
+use ArrayObject;
+
 class CategoryWidgetToCategoryStorageClientBridge implements CategoryWidgetToCategoryStorageClientInterface
 {
     /**
@@ -23,12 +25,13 @@ class CategoryWidgetToCategoryStorageClientBridge implements CategoryWidgetToCat
     }
 
     /**
-     * @param string $locale
+     * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
      */
-    public function getCategories($locale)
+    public function getCategories(string $localeName, string $storeName): ArrayObject
     {
-        return $this->categoryStorageClient->getCategories($locale);
+        return $this->categoryStorageClient->getCategories($localeName, $storeName);
     }
 }

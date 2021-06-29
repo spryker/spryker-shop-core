@@ -9,8 +9,13 @@ export default class TogglerHash extends Component {
     constructor() {
         super();
         /* tslint:disable: deprecation */
-        this.targets = <HTMLElement[]>Array.from(this.targetClassName ?
-            document.getElementsByClassName(this.targetClassName) : document.querySelectorAll(this.targetSelector));
+        this.targets = <HTMLElement[]>(
+            Array.from(
+                this.targetClassName
+                    ? document.getElementsByClassName(this.targetClassName)
+                    : document.querySelectorAll(this.targetSelector),
+            )
+        );
         /* tslint:enable: deprecation */
     }
 

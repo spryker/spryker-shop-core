@@ -17,13 +17,12 @@ use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToLocaleClientInte
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToProductCategoryFilterClientInterface;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToProductCategoryFilterStorageClientInterface;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientInterface;
+use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToStoreClientInterface;
 use SprykerShop\Yves\CatalogPage\FacetFilter\FacetFilter;
 use SprykerShop\Yves\CatalogPage\FacetFilter\FacetFilterInterface;
 use SprykerShop\Yves\CatalogPage\Resolver\ShopContextResolver;
 use SprykerShop\Yves\CatalogPage\Resolver\ShopContextResolverInterface;
 use SprykerShop\Yves\CatalogPage\Twig\CatalogPageTwigExtension;
-use SprykerShop\Yves\CatalogPage\Validator\PageParametersValidator;
-use SprykerShop\Yves\CatalogPage\Validator\PageParametersValidatorInterface;
 
 /**
  * @method \SprykerShop\Yves\CatalogPage\CatalogPageConfig getConfig()
@@ -46,14 +45,6 @@ class CatalogPageFactory extends AbstractFactory
     public function createFacetFilter(): FacetFilterInterface
     {
         return new FacetFilter();
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CatalogPage\Validator\PageParametersValidatorInterface
-     */
-    public function createPageParametersValidator(): PageParametersValidatorInterface
-    {
-        return new PageParametersValidator($this->getConfig());
     }
 
     /**
@@ -118,6 +109,14 @@ class CatalogPageFactory extends AbstractFactory
     public function getProductCategoryFilterStorageClient(): CatalogPageToProductCategoryFilterStorageClientInterface
     {
         return $this->getProvidedDependency(CatalogPageDependencyProvider::CLIENT_PRODUCT_CATEGORY_FILTER_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToStoreClientInterface
+     */
+    public function getStoreClient(): CatalogPageToStoreClientInterface
+    {
+        return $this->getProvidedDependency(CatalogPageDependencyProvider::CLIENT_STORE);
     }
 
     /**

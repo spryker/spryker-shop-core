@@ -9,6 +9,8 @@ namespace SprykerShop\Yves\ErrorPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Router\Router\ChainRouter;
+use SprykerShop\Yves\ErrorPage\Handler\RedirectExceptionHandler;
+use SprykerShop\Yves\ErrorPage\Handler\RedirectExceptionHandlerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
@@ -52,10 +54,18 @@ class ErrorPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ErrorPage\Dependency\Plugin\ExceptionHandlerPluginInterface[]
+     * @return \SprykerShop\Yves\ErrorPageExtension\Dependency\Plugin\ExceptionHandlerPluginInterface[]
      */
     public function getExceptionHandlerPlugins()
     {
         return $this->getProvidedDependency(ErrorPageDependencyProvider::PLUGIN_EXCEPTION_HANDLERS);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ErrorPage\Handler\RedirectExceptionHandlerInterface
+     */
+    public function createRedirectExceptionHandler(): RedirectExceptionHandlerInterface
+    {
+        return new RedirectExceptionHandler($this->getRouter());
     }
 }

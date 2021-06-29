@@ -1,39 +1,39 @@
 {
-  "name": "spryker-shop/sales-order-threshold-widget",
-  "type": "library",
-  "description": "SalesOrderThresholdWidget module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker-shop/shop-ui": "^1.0.0",
-    "spryker/kernel": "^3.30.0"
-  },
-  "require-dev": {
-    "spryker-shop/cart-page": "*",
-    "spryker-shop/checkout-page": "*",
-    "spryker/code-sniffer": "*"
-  },
-  "suggest": {
-    "spryker-shop/cart-page": "Widget plugins are available for this module.",
-    "spryker-shop/checkout-page": "Widget plugins are available for this module."
-  },
-  "autoload": {
-    "psr-4": {
-      "SprykerShop\\": "src/SprykerShop/"
+    "name": "spryker-shop/sales-order-threshold-widget",
+    "type": "library",
+    "description": "SalesOrderThresholdWidget module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker-shop/shop-ui": "^1.0.0",
+        "spryker/kernel": "^3.30.0"
+    },
+    "require-dev": {
+        "spryker-shop/cart-page": "*",
+        "spryker-shop/checkout-page": "*",
+        "spryker/code-sniffer": "*"
+    },
+    "suggest": {
+        "spryker-shop/cart-page": "Widget plugins are available for this module.",
+        "spryker-shop/checkout-page": "Widget plugins are available for this module."
+    },
+    "autoload": {
+        "psr-4": {
+            "SprykerShop\\": "src/SprykerShop/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

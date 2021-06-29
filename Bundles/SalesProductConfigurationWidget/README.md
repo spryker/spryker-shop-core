@@ -1,5 +1,5 @@
 # SalesProductConfigurationWidget Module
-[![Build Status](https://travis-ci.org/spryker-shop/sales-product-configuration-widget.svg)](https://travis-ci.org/spryker-shop/sales-product-configuration-widget)
+[![Latest Stable Version](https://poser.pugx.org/spryker-shop/sales-product-configuration-widget/v/stable.svg)](https://packagist.org/packages/spryker-shop/sales-product-configuration-widget)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Widget module is responsible for displaying order item configuration.

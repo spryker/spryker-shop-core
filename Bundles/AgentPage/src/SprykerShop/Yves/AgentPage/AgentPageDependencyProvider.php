@@ -48,6 +48,11 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_ROUTER = 'routers';
 
     /**
+     * @uses \Spryker\Yves\Locale\Plugin\Application\LocaleApplicationPlugin::SERVICE_LOCALE
+     */
+    public const SERVICE_LOCALE = 'locale';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -62,6 +67,7 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSecurityTokenStorage($container);
         $container = $this->addSecurityAuthorizationChecker($container);
         $container = $this->addRouter($container);
+        $container = $this->addLocale($container);
 
         return $container;
     }
@@ -183,6 +189,20 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::APPLICATION, function () {
             return (new Pimple())->getApplication();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addLocale(Container $container): Container
+    {
+        $container->set(static::SERVICE_LOCALE, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_LOCALE);
         });
 
         return $container;

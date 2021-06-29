@@ -25,7 +25,7 @@
                 </tr>
             </thead>
             <tbody>
-            {% for item in data.wishlistItems %}
+            {% for idWishlistItem, item in data.wishlistItems %}
                 {% set isItemAvailable = item.available is defined and item.available and item.price is defined and item.price is not null %}
                 {% set productDiscontinuedWidget = findWidget('ProductDiscontinuedWidget', [item.sku]) %}
                 {% set isDiscontinued = productDiscontinuedWidget.isDiscontinued ?? widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', item.sku) %} {# @deprecated Use ProductDiscontinuedWidget instead of ProductDiscontinuedWidgetPlugin. #}
@@ -62,6 +62,11 @@
                                         list: listOfAttributes,
                                     },
                                 } only %}
+                            </li>
+                            <li>
+                                {% if widgetGlobalExists('SoldByMerchantWidget') %}
+                                    {% widget 'SoldByMerchantWidget' args [item] only %}{% endwidget %}
+                                {% endif %}
                             </li>
                         </ul>
                     </td>
@@ -103,6 +108,20 @@
                                                     },
                                                 } only %}
                                             </button>
+                                            <input type="hidden" name="id-wishlist-item" value="{{ idWishlistItem }}" />
+                                            {% if widgetGlobalExists('MerchantProductOfferWidget') %}
+                                                {% include molecule('wishlist-item-product-offer', 'MerchantProductOfferWidget') with {
+                                                    data: {
+                                                        productView: item
+                                                    },
+                                                } only %}
+                                            {% elseif widgetGlobalExists('MerchantProductWidget') %}
+                                                {% include molecule('wishlist-item-merchant-product', 'MerchantProductWidget') with {
+                                                    data: {
+                                                        productView: item
+                                                    },
+                                                } only %}
+                                            {% endif %}
                                         {{ form_end(wishlistMoveToCartForm) }}
                                     {% else %}
                                         {% set formName = 'addToCart_' ~ loop.index %}
@@ -116,6 +135,20 @@
                                                     },
                                                 } only %}
                                             </button>
+                                            <input type="hidden" name="id-wishlist-item" value="{{ idWishlistItem }}" />
+                                            {% if widgetGlobalExists('MerchantProductOfferWidget') %}
+                                                {% include molecule('wishlist-item-product-offer', 'MerchantProductOfferWidget') with {
+                                                    data: {
+                                                        productView: item
+                                                    },
+                                                } only %}
+                                            {% elseif widgetGlobalExists('MerchantProductWidget') %}
+                                                {% include molecule('wishlist-item-merchant-product', 'MerchantProductWidget') with {
+                                                    data: {
+                                                        productView: item
+                                                    },
+                                                } only %}
+                                            {% endif %}
                                         </form>
                                     {% endif %}
                                 </li>
@@ -132,6 +165,20 @@
                                                 },
                                             } only %}
                                         </button>
+                                        <input type="hidden" name="id-wishlist-item" value="{{ idWishlistItem }}" />
+                                        {% if widgetGlobalExists('MerchantProductOfferWidget') %}
+                                            {% include molecule('wishlist-item-product-offer', 'MerchantProductOfferWidget') with {
+                                                data: {
+                                                    productView: item
+                                                },
+                                            } only %}
+                                        {% elseif widgetGlobalExists('MerchantProductWidget') %}
+                                            {% include molecule('wishlist-item-merchant-product', 'MerchantProductWidget') with {
+                                                data: {
+                                                    productView: item
+                                                },
+                                            } only %}
+                                        {% endif %}
                                     {{ form_end(wishlistRemoveItemForm) }}
                                 {% else %}
                                     {% set formName = 'deleteWishlistItem_' ~ loop.index %}
@@ -145,6 +192,20 @@
                                                 },
                                             } only %}
                                         </button>
+                                        <input type="hidden" name="id-wishlist-item" value="{{ idWishlistItem }}" />
+                                        {% if widgetGlobalExists('MerchantProductOfferWidget') %}
+                                            {% include molecule('wishlist-item-product-offer', 'MerchantProductOfferWidget') with {
+                                                data: {
+                                                    productView: item
+                                                },
+                                            } only %}
+                                        {% elseif widgetGlobalExists('MerchantProductWidget') %}
+                                            {% include molecule('wishlist-item-merchant-product', 'MerchantProductWidget') with {
+                                                data: {
+                                                    productView: item
+                                                },
+                                            } only %}
+                                        {% endif %}
                                     </form>
                                 {% endif %}
                             </li>

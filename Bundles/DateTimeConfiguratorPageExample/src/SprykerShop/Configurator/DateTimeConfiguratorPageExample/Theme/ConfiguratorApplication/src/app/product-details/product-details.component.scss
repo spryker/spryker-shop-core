@@ -13,6 +13,37 @@
         min-height: 570px;
         margin-bottom: 0;
     }
+
+    &__container {
+        text-align: center;
+    }
+
+    &__message {
+        margin-top: 16px;
+    }
+}
+
+.icon {
+    fill: currentColor;
+
+    &--image-placeholder {
+        width: 56px;
+        height: 56px;
+    }
+
+    &--info {
+        margin-right: 15px;
+        color: $setting-color-blue-2;
+        width: 24px;
+        height: 24px;
+    }
+
+    &--alert {
+        margin-right: 15px;
+        color: $setting-color-orange-2;
+        width: 24px;
+        height: 24px;
+    }
 }
 
 .details {
@@ -26,16 +57,19 @@
         padding: 20px 0 5px;
         margin: 20px 0;
 
-        @include helper-breakpoint(lg) {
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-
         &-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
+
+            &--available-quantity {
+                border-radius: $setting-border-radius;
+                padding: 0 15px;
+                background-color: $setting-color-blue-1;
+                justify-content: flex-start;
+                height: 50px;
+            }
         }
     }
 }
@@ -53,14 +87,14 @@
     color: $setting-color-black;
 }
 
-input[type=date],
+input[type='date'],
 select {
     display: block;
     width: 100%;
     height: 46px;
     padding: 0 15px;
     font-size: 15px;
-    line-height: 1em;
+    line-height: 1.2;
     border: 1px solid $setting-color-gray-5;
     background: $setting-color-gray-1;
     border-radius: 0;
@@ -73,11 +107,13 @@ select {
 }
 
 select {
-    background: $setting-color-gray-1 url("data:image/svg+xml;utf8,<svg fill='gray' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 7' width='12' height='7'><path fill-rule='none' d='M5.826 4.254L1.896.326a1.11 1.11 0 10-1.57 1.57L5.039 6.61a1.11 1.11 0 001.571.001l4.714-4.714a1.111 1.111 0 00-1.57-1.57L5.825 4.253z'/></svg>") no-repeat 96% 20px;
-    appearance:none;
+    background: $setting-color-gray-1
+        url("data:image/svg+xml;utf8,<svg fill='gray' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 7' width='12' height='7'><path fill-rule='none' d='M5.826 4.254L1.896.326a1.11 1.11 0 10-1.57 1.57L5.039 6.61a1.11 1.11 0 001.571.001l4.714-4.714a1.111 1.111 0 00-1.57-1.57L5.825 4.253z'/></svg>")
+        no-repeat 96% 20px;
+    appearance: none;
 }
 
-input[type=checkbox] {
+input[type='checkbox'] {
     display: inline-block;
     margin-right: 5px;
     vertical-align: middle;
@@ -124,6 +160,16 @@ input[type=checkbox] {
         }
     }
 
+    &__alert-message {
+        border-radius: $setting-border-radius;
+        padding: 0 15px;
+        background-color: $setting-color-orange-1;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        height: 50px;
+    }
+
     &__button {
         display: block;
         width: 100%;
@@ -146,6 +192,13 @@ input[type=checkbox] {
                 text-decoration: none;
                 background: $setting-color-green-2;
             }
+        }
+
+        &[disabled] {
+            background-color: $setting-color-gray-1;
+            color: $setting-color-gray-7;
+            border: 1px solid $setting-color-gray-7;
+            cursor: not-allowed;
         }
 
         &--cancel {

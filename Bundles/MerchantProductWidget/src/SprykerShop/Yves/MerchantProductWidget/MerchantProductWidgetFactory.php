@@ -12,6 +12,8 @@ use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidg
 use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToPriceProductClientInterface;
 use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToPriceProductStorageClientInterface;
 use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToProductStorageClientInterface;
+use SprykerShop\Yves\MerchantProductWidget\Expander\MerchantProductExpander;
+use SprykerShop\Yves\MerchantProductWidget\Expander\MerchantProductExpanderInterface;
 use SprykerShop\Yves\MerchantProductWidget\Mapper\MerchantProductMapper;
 use SprykerShop\Yves\MerchantProductWidget\Reader\MerchantProductReader;
 use SprykerShop\Yves\MerchantProductWidget\Reader\MerchantProductReaderInterface;
@@ -29,6 +31,16 @@ class MerchantProductWidgetFactory extends AbstractFactory
             $this->getPriceProductStorageClient(),
             $this->getMerchantStorageClient(),
             $this->createMerchantProductMapper()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MerchantProductWidget\Expander\MerchantProductExpanderInterface
+     */
+    public function createMerchantProductExpander(): MerchantProductExpanderInterface
+    {
+        return new MerchantProductExpander(
+            $this->createMerchantProductReader()
         );
     }
 

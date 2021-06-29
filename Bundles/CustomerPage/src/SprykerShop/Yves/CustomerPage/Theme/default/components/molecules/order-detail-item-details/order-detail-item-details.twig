@@ -17,7 +17,9 @@
 {% block body %}
     <div class="grid grid--justify">
         <span class="spacing-right col col--sm-9">
-            {% if widgetGlobalExists('ProductOfferSoldByMerchantWidget') %}
+            {% if widgetGlobalExists('SoldByMerchantWidget') %}
+                {% widget 'SoldByMerchantWidget' args [data.orderItem] only %}{% endwidget %}
+            {% elseif widgetGlobalExists('ProductOfferSoldByMerchantWidget') %}
                 {% widget 'ProductOfferSoldByMerchantWidget' args [data.orderItem] only %}{% endwidget %}
             {% elseif widgetGlobalExists('ProductSoldByMerchantWidget') %}
                 {% widget 'ProductSoldByMerchantWidget' args [data.orderItem] only %}{% endwidget %}

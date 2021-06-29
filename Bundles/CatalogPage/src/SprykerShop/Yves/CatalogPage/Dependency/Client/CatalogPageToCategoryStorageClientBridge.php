@@ -7,29 +7,32 @@
 
 namespace SprykerShop\Yves\CatalogPage\Dependency\Client;
 
+use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
+
 class CatalogPageToCategoryStorageClientBridge implements CatalogPageToCategoryStorageClientInterface
 {
     /**
      * @var \Spryker\Client\CategoryStorage\CategoryStorageClientInterface
      */
-    protected $categoryClient;
+    protected $categoryStorageClient;
 
     /**
-     * @param \Spryker\Client\CategoryStorage\CategoryStorageClientInterface $categoryClient
+     * @param \Spryker\Client\CategoryStorage\CategoryStorageClientInterface $categoryStorageClient
      */
-    public function __construct($categoryClient)
+    public function __construct($categoryStorageClient)
     {
-        $this->categoryClient = $categoryClient;
+        $this->categoryStorageClient = $categoryStorageClient;
     }
 
     /**
      * @param int $idCategoryNode
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
      */
-    public function getCategoryNodeById($idCategoryNode, $localeName)
+    public function getCategoryNodeById(int $idCategoryNode, string $localeName, string $storeName): CategoryNodeStorageTransfer
     {
-        return $this->categoryClient->getCategoryNodeById($idCategoryNode, $localeName);
+        return $this->categoryStorageClient->getCategoryNodeById($idCategoryNode, $localeName, $storeName);
     }
 }
