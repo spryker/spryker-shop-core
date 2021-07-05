@@ -9,6 +9,10 @@
 
 {% set cartAmount = data.carts | length + 1 %}
 
+{% block separatorCartItem %}
+    <li class="menu__separator menu__separator--horizontal-line"></li>
+{% endblock %}
+
 {% block body %}
     {% if data.isMultiCartAllowed is not empty %}
         {% include molecule('cart-counter') with {
@@ -21,26 +25,30 @@
         {% block cartList %}
             <ul class="menu menu--wide">
                 {% if data.activeCart is not empty %}
-                    <li class="menu__item">
-                        {% include molecule('mini-cart-detail', 'MultiCartWidget') with {
-                            data: {
-                                cart: data.activeCart,
-                            },
-                        } only %}
-                    </li>
-                    <li class="menu__separator menu__separator--horizontal-line"></li>
+                    {% block activeCartItem %}
+                        <li class="menu__item">
+                            {% include molecule('mini-cart-detail', 'MultiCartWidget') with {
+                                data: {
+                                    cart: data.activeCart,
+                                },
+                            } only %}
+                        </li>
+                    {% endblock %}
+                    {{ block('separatorCartItem') }}
                 {% endif %}
 
                 {% if data.carts is not empty %}
                     {% for cart in data.carts %}
-                        <li class="menu__item">
-                            {% include molecule('mini-cart-detail', 'MultiCartWidget') with {
-                                data: {
-                                    cart: cart,
-                                },
-                            } only %}
-                        </li>
-                        <li class="menu__separator menu__separator--horizontal-line"></li>
+                        {% block cartItem %}
+                            <li class="menu__item">
+                                {% include molecule('mini-cart-detail', 'MultiCartWidget') with {
+                                    data: {
+                                        cart: cart,
+                                    },
+                                } only %}
+                            </li>
+                        {% endblock %}
+                        {{ block('separatorCartItem') }}
                     {% endfor %}
                 {% endif %}
                 <li class="menu__item">

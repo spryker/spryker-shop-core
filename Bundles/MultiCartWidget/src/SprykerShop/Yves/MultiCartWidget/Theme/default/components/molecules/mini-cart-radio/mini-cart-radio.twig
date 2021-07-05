@@ -8,18 +8,21 @@
 {% define data = {
     idCart: required,
     isDefault: required,
+    formAction: path('multi-cart/set-default', {idQuote: data.idCart}),
+    inputName: 'multi_cart_set_default_form[_token]',
+    inputValue: csrf_token('multi_cart_set_default_form'),
 } %}
 
 {% block body %}
-    <form method="POST" action="{{ path('multi-cart/set-default', {idQuote: data.idCart}) }}" class="js-mini-cart-radio__form">
-        <input name="multi_cart_set_default_form[_token]" type="hidden" value="{{ csrf_token('multi_cart_set_default_form') }}">
+    <form method="POST" action="{{ data.formAction }}" class="{{ config.jsName }}__form">
+        <input name="{{ data.inputName }}" type="hidden" value="{{ data.inputValue }}">
     </form>
 
     {% embed atom('radio') with {
         attributes: {
             name: 'cart-isDefault',
             checked: data.isDefault,
-            'data-href': path('multi-cart/set-default', {idQuote: data.idCart}),
+            'data-href': data.formAction,
         },
         embed: {
             inputClass: config.jsName ~ '__input',
