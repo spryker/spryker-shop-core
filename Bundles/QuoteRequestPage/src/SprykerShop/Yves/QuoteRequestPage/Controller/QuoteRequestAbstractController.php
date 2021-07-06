@@ -108,15 +108,19 @@ class QuoteRequestAbstractController extends AbstractController
 
     /**
      * @param string $quoteRequestReference
+     * @param bool $withVersions
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer
      */
-    protected function getCompanyUserQuoteRequestByReference(string $quoteRequestReference): QuoteRequestTransfer
-    {
+    protected function getCompanyUserQuoteRequestByReference(
+        string $quoteRequestReference,
+        bool $withVersions = false
+    ): QuoteRequestTransfer {
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
             ->setQuoteRequestReference($quoteRequestReference)
+            ->setWithVersions($withVersions)
             ->setIdCompanyUser($this->getFactory()->getCompanyUserClient()->findCompanyUser()->getIdCompanyUser());
 
         $quoteRequestResponseTransfer = $this->getFactory()

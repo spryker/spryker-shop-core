@@ -80,7 +80,7 @@ class QuoteRequestAgentViewController extends QuoteRequestAgentAbstractControlle
      */
     protected function executeDetailsAction(Request $request, string $quoteRequestReference): array
     {
-        $quoteRequestTransfer = $this->getQuoteRequestByReference($quoteRequestReference);
+        $quoteRequestTransfer = $this->getQuoteRequestByReference($quoteRequestReference, true);
         $quoteRequestAgentClient = $this->getFactory()->getQuoteRequestAgentClient();
 
         $quoteRequestVersionTransfers = $this->getQuoteRequestVersions($quoteRequestTransfer);

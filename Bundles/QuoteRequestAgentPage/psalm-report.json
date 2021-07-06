@@ -172,18 +172,6 @@
         },
         {
             "severity": "info",
-            "line_from": 36,
-            "line_to": 36,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of SprykerShop\\Yves\\QuoteRequestAgentPage\\Dependency\\Client\\QuoteRequestAgentPageToQuoteRequestAgentClientInterface::findQuoteRequestByReference cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestAgentPage/src/SprykerShop/Yves/QuoteRequestAgentPage/Controller/QuoteRequestAgentSaveController.php",
-            "snippet": "            ->findQuoteRequestByReference($quoteTransfer->getQuoteRequestReference());",
-            "selected_text": "$quoteTransfer->getQuoteRequestReference()",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
             "line_from": 44,
             "line_to": 44,
             "type": "PossiblyNullReference",
