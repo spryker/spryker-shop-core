@@ -9,10 +9,6 @@
 
 {% set cartAmount = data.carts | length + 1 %}
 
-{% block separatorCartItem %}
-    <li class="menu__separator menu__separator--horizontal-line"></li>
-{% endblock %}
-
 {% block body %}
     {% if data.isMultiCartAllowed is not empty %}
         {% include molecule('cart-counter') with {
@@ -25,7 +21,7 @@
         {% block cartList %}
             <ul class="menu menu--wide">
                 {% if data.activeCart is not empty %}
-                    {% block activeCartItem %}
+                    {% block menuItemActiveCart %}
                         <li class="menu__item">
                             {% include molecule('mini-cart-detail', 'MultiCartWidget') with {
                                 data: {
@@ -34,12 +30,15 @@
                             } only %}
                         </li>
                     {% endblock %}
-                    {{ block('separatorCartItem') }}
+
+                    {% block separatorCartItem %}
+                        <li class="menu__separator menu__separator--horizontal-line"></li>
+                    {% endblock %}
                 {% endif %}
 
                 {% if data.carts is not empty %}
                     {% for cart in data.carts %}
-                        {% block cartItem %}
+                        {% block menuItemCart %}
                             <li class="menu__item">
                                 {% include molecule('mini-cart-detail', 'MultiCartWidget') with {
                                     data: {
@@ -48,28 +47,34 @@
                                 } only %}
                             </li>
                         {% endblock %}
+
                         {{ block('separatorCartItem') }}
                     {% endfor %}
                 {% endif %}
-                <li class="menu__item">
-                    <div class="grid grid--justify">
-                        <div class="col">
-                            <a class="button" href="{{ path('multi-cart') }}" title="{{ 'multi_cart_widget.cart.view_all' | trans }}">
-                                {{ 'multi_cart_widget.cart.view_all' | trans }}
-                            </a>
+
+                {% block menuItem %}
+                    <li class="menu__item">
+                        <div class="grid grid--justify">
+                            <div class="col">
+                                <a class="button" href="{{ path('multi-cart') }}" title="{{ 'multi_cart_widget.cart.view_all' | trans }}">
+                                    {{ 'multi_cart_widget.cart.view_all' | trans }}
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a class="button" href="{{ url('multi-cart/create') }}" title="{{ 'multi_cart_widget.cart.add' | trans }}">{{ 'multi_cart_widget.cart.add' | trans }}</a>
+                            </div>
                         </div>
-                        <div class="col">
-                            <a class="button" href="{{ url('multi-cart/create') }}" title="{{ 'multi_cart_widget.cart.add' | trans }}">{{ 'multi_cart_widget.cart.add' | trans }}</a>
-                        </div>
-                    </div>
-                </li>
+                    </li>
+                {% endblock %}
             </ul>
         {% endblock %}
     {% else %}
-        {% include molecule('cart-counter') with {
-            data: {
-                quantity: data.cartQuantity,
-            },
-        } only %}
+        {% block cartCounter %}
+            {% include molecule('cart-counter') with {
+                data: {
+                    quantity: data.cartQuantity,
+                },
+            } only %}
+        {% endblock %}
     {% endif %}
 {% endblock %}
