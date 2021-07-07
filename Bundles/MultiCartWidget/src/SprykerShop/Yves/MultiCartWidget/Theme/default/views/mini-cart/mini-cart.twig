@@ -11,18 +11,23 @@
 
 {% block body %}
     {% if data.isMultiCartAllowed is not empty %}
-        {% include molecule('cart-counter') with {
-            data: {
-                label: (cartAmount == 1 ? 'multi_cart_widget.cart.cart' : 'multi_cart_widget.cart.carts') | trans,
-                quantity: data.cartQuantity,
-            },
-        } only %}
+        {% block multiCartCounter %}
+            {% include molecule('cart-counter') with {
+                data: {
+                    label: (cartAmount == 1 ? 'multi_cart_widget.cart.cart' : 'multi_cart_widget.cart.carts') | trans,
+                    quantity: data.cartQuantity,
+                },
+            } only %}
+        {% endblock %}
+
+        {% set menuClassName = 'menu menu--wide' %}
+        {% set menuItemClassName = 'menu__item' %}
 
         {% block cartList %}
-            <ul class="menu menu--wide">
+            <ul class="{{ menuClassName }}">
                 {% if data.activeCart is not empty %}
                     {% block menuItemActiveCart %}
-                        <li class="menu__item">
+                        <li class="{{ menuItemClassName }}">
                             {% include molecule('mini-cart-detail', 'MultiCartWidget') with {
                                 data: {
                                     cart: data.activeCart,
@@ -39,7 +44,7 @@
                 {% if data.carts is not empty %}
                     {% for cart in data.carts %}
                         {% block menuItemCart %}
-                            <li class="menu__item">
+                            <li class="{{ menuItemClassName }}">
                                 {% include molecule('mini-cart-detail', 'MultiCartWidget') with {
                                     data: {
                                         cart: cart,
@@ -53,7 +58,7 @@
                 {% endif %}
 
                 {% block menuItem %}
-                    <li class="menu__item">
+                    <li class="{{ menuItemClassName }}">
                         <div class="grid grid--justify">
                             <div class="col">
                                 <a class="button" href="{{ path('multi-cart') }}" title="{{ 'multi_cart_widget.cart.view_all' | trans }}">
