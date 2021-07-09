@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
@@ -56,6 +57,16 @@ class QuoteRequestAgentWidgetToQuoteRequestAgentClientBridge implements QuoteReq
     public function findQuoteRequestByReference(string $quoteRequestReference): ?QuoteRequestTransfer
     {
         return $this->quoteRequestAgentClient->findQuoteRequestByReference($quoteRequestReference);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findQuoteRequest(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): ?QuoteRequestTransfer
+    {
+        return $this->quoteRequestAgentClient->findQuoteRequest($quoteRequestFilterTransfer);
     }
 
     /**

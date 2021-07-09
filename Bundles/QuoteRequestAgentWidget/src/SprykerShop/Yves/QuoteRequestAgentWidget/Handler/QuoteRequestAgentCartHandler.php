@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuoteRequestAgentWidget\Handler;
 
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteRequestAgentClientInterface;
@@ -50,7 +51,10 @@ class QuoteRequestAgentCartHandler implements QuoteRequestAgentCartHandlerInterf
         }
 
         $quoteRequestTransfer = $this->quoteRequestAgentClient
-            ->findQuoteRequestByReference($quoteTransfer->getQuoteRequestReference());
+            ->findQuoteRequest(
+                (new QuoteRequestFilterTransfer())
+                    ->setQuoteRequestReference($quoteTransfer->getQuoteRequestReference())
+            );
 
         if (!$quoteRequestTransfer) {
             return $this->getErrorResponse();

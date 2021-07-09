@@ -4,8 +4,8 @@
     <transfer name="NavigationNodeStorage">
         <property name="children" type="NavigationNodeStorage[]" singular="children"/>
         <property name="cssClass" type="string"/>
-        <property name="url" type="string"/>
         <property name="title" type="string"/>
+        <property name="url" type="string"/>
     </transfer>
 
 </transfers>

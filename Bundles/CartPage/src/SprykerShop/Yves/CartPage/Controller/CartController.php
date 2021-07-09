@@ -72,16 +72,18 @@ class CartController extends AbstractController
      */
     protected function executeIndexAction(array $selectedAttributes = []): array
     {
-        $this->getFactory()
-            ->getZedRequestClient()
-            ->addResponseMessagesToMessenger();
-
         $cartPageViewArgumentsTransfer = new CartPageViewArgumentsTransfer();
         $cartPageViewArgumentsTransfer
             ->setLocale($this->getLocale())
             ->setSelectedAttributes($selectedAttributes);
 
-        return $this->getFactory()->createCartPageView()->getViewData($cartPageViewArgumentsTransfer);
+        $viewData = $this->getFactory()->createCartPageView()->getViewData($cartPageViewArgumentsTransfer);
+
+        $this->getFactory()
+            ->getZedRequestClient()
+            ->addResponseMessagesToMessenger();
+
+        return $viewData;
     }
 
     /**

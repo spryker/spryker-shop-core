@@ -15,6 +15,19 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class CustomerConfirmationUserChecker extends UserChecker
 {
     /**
+     * @var \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreAuthUserCheckPluginInterface[]
+     */
+    protected $preAuthUserCheckPlugins;
+
+    /**
+     * @param \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreAuthUserCheckPluginInterface[] $preAuthUserCheckPlugins
+     */
+    public function __construct(array $preAuthUserCheckPlugins)
+    {
+        $this->preAuthUserCheckPlugins = $preAuthUserCheckPlugins;
+    }
+
+    /**
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
      *
      * @throws \SprykerShop\Yves\CustomerPage\Exception\NotConfirmedAccountException
@@ -35,6 +48,20 @@ class CustomerConfirmationUserChecker extends UserChecker
             $ex->setUser($user);
 
             throw $ex;
+        }
+
+        $this->executePreAuthUserCheckPlugins($user);
+    }
+
+    /**
+     * @param \SprykerShop\Yves\CustomerPage\Security\CustomerUserInterface $user
+     *
+     * @return void
+     */
+    protected function executePreAuthUserCheckPlugins(CustomerUserInterface $user): void
+    {
+        foreach ($this->preAuthUserCheckPlugins as $preAuthCheckerPlugin) {
+            $preAuthCheckerPlugin->checkPreAuth($user->getCustomerTransfer(), $user);
         }
     }
 }

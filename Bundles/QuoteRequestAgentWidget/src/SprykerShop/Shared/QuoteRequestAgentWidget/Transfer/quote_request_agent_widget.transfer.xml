@@ -70,4 +70,8 @@
         <property name="value" type="string"/>
     </transfer>
 
+    <transfer name="QuoteRequestFilter">
+        <property name="quoteRequestReference" type="string"/>
+    </transfer>
+
 </transfers>
