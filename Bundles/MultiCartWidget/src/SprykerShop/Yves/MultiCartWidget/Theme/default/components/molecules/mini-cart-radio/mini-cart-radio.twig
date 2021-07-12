@@ -19,17 +19,13 @@
     </form>
 
     {% block radioButton %}
-        {% embed atom('radio') with {
+        {% include atom('radio') with {
             attributes: {
                 name: 'cart-isDefault',
                 checked: data.isDefault,
+                inputClass: config.jsName ~ '__input',
                 'data-href': data.formAction,
             },
-            embed: {
-                inputClass: config.jsName ~ '__input',
-            },
         } only %}
-            {% block inputClass %}{{ embed.inputClass }}{% endblock %}
-        {% endembed %}
     {% endblock %}
 {% endblock %}
