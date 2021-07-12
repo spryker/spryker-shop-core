@@ -20,10 +20,12 @@
 
     {% block radioButton %}
         {% include atom('radio') with {
+            data: {
+                inputClass: config.jsName ~ '__input',
+            },
             attributes: {
                 name: 'cart-isDefault',
                 checked: data.isDefault,
-                inputClass: config.jsName ~ '__input',
                 'data-href': data.formAction,
             },
         } only %}
