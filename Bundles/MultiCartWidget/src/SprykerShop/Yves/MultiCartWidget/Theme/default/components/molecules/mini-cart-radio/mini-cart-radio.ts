@@ -20,7 +20,7 @@ export default class MiniCartRadio extends Component {
         this.mapEvents();
     }
 
-    private mapEvents(): void {
+    protected mapEvents(): void {
         this.addEventListener('click', () => this.onMiniCartRadioClick());
     }
 
