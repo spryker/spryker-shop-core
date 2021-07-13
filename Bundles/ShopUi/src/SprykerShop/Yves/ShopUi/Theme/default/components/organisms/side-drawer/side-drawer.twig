@@ -36,13 +36,27 @@
                 {% endwidget %}
             {% endblock %}
             <hr>
-            {% include organism('navigation-top') with {
+            {% embed organism('navigation-top') with {
                 class: 'text-left',
                 data: {
                     isInline: false,
                     withSeparators: false
                 }
             } only %}
+                {% block multiCart %}
+                    <li class="menu__item">
+                        {% widget 'MiniCartWidget' args [cartQuantity] only %}
+                            {% block cartList %}{% endblock %}
+                        {% nowidget %}
+                            {% include molecule('cart-counter') with {
+                                data: {
+                                    quantity: data.cartQuantity,
+                                },
+                            } only %}
+                        {% endwidget %}
+                    </li>
+                {% endblock %}
+            {% endembed %}
         </div>
 
         {{block('close')}}
