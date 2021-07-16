@@ -83,7 +83,10 @@ class ShoppingListDismissController extends AbstractShoppingListController
             ->getShoppingListClient()
             ->getShoppingList($shoppingListTransfer);
 
-        if ($shoppingListTransfer->getCustomerReference() === $customerTransfer->getCustomerReference()) {
+        if (
+            !$shoppingListTransfer->getIdShoppingList()
+            || $shoppingListTransfer->getCustomerReference() === $customerTransfer->getCustomerReference()
+        ) {
             return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST);
         }
 
