@@ -10,8 +10,9 @@
 } %}
 
 {% block selection %}
+    {% set firstImage = item.images | first | default(null) %}
     {% set dataAttributesList = {
-        'data-product-image-src': item.images ? item.images[0].externalUrlSmall,
+        'data-product-image-src': firstImage ? firstImage.externalUrlSmall,
         href: item.url ? item.url,
     } %}
 
