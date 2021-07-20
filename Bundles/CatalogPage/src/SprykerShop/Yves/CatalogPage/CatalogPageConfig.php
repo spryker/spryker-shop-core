@@ -99,4 +99,19 @@ class CatalogPageConfig extends AbstractBundleConfig
     {
         return static::PARAMETER_NAME_PAGE;
     }
+
+    /**
+     * Specification:
+     * - Enables/disables displaying of range filters without applicable products.
+     * - If return value is true - empty range filters will be shown.
+     * - If return value is false - empty range filters will be be hidden from customer.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isVisibleEmptyRangeFilters(): bool
+    {
+        return true;
+    }
 }
