@@ -130,7 +130,7 @@ class RegisterController extends AbstractCustomerController
      */
     protected function executeConfirmAction(Request $request): RedirectResponse
     {
-        $token = $request->query->get('token');
+        $token = (string)$request->query->get('token');
         if (!$token) {
             $this->addErrorMessage(static::GLOSSARY_KEY_MISSING_CONFIRMATION_TOKEN);
 

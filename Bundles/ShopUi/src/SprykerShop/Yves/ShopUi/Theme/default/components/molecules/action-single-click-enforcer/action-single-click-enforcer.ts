@@ -18,9 +18,15 @@ export default class ActionSingleClickEnforcer extends Component {
     }
 
     protected onTargetClick(event: Event): void {
-        event.preventDefault();
         const targetElement = <HTMLElement>event.currentTarget;
         const isLink: boolean = targetElement.matches('a');
+        const isDisabled: boolean = targetElement.hasAttribute('disabled') || Boolean(targetElement.dataset.disabled);
+
+        if (isDisabled) {
+            event.preventDefault();
+
+            return;
+        }
 
         if (isLink) {
             const link = <HTMLLinkElement>targetElement;
@@ -29,28 +35,19 @@ export default class ActionSingleClickEnforcer extends Component {
             return;
         }
 
-        this.disableButton(targetElement);
         const form: HTMLFormElement = targetElement.closest('form');
+        const buttonType = targetElement.getAttribute('type');
+        const isSubmit = buttonType === 'submit';
+        const isButtonSubmit = targetElement.matches('button') && !buttonType;
 
-        if (form) {
-            const buttonType = targetElement.getAttribute('type');
-            const isSubmit = buttonType === 'submit' || buttonType === 'image';
-            const isButton: boolean = targetElement.matches('button');
-            const isButtonSubmit = isButton && !buttonType;
-
-            if (isSubmit || isButtonSubmit) {
-                const submitEvent: Event = new Event('submit');
-                form.submit();
-                form.dispatchEvent(submitEvent);
-            }
+        if (form && (isSubmit || isButtonSubmit)) {
+            form.addEventListener('submit', () => {
+                this.disableButton(targetElement);
+            });
         }
     }
 
     protected disableLink(event: Event, targetElement: HTMLLinkElement): void {
-        if (targetElement.dataset && targetElement.dataset.disabled) {
-            return;
-        }
-
         targetElement.dataset.disabled = 'true';
         window.location.href = targetElement.href;
     }

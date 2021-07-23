@@ -60,6 +60,8 @@ class ProductBreadcrumbsWithCategoriesWidget extends AbstractWidget
             return new ArrayObject();
         }
 
-        return $productAbstractCategoryStorageTransfer->getCategories();
+        $productCategories = $productAbstractCategoryStorageTransfer->getCategories()->getArrayCopy();
+
+        return new ArrayObject(array_reverse($productCategories));
     }
 }

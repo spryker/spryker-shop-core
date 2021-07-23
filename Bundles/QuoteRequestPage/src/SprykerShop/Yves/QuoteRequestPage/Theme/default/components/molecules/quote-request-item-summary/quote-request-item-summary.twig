@@ -16,6 +16,9 @@
 {% set originUnitPrice = (data.priceMode == priceModeGross) ? data.cartItem.originUnitGrossPrice : data.cartItem.originUnitNetPrice %}
 
 {% block body %}
+    {% widget 'ProductConfigurationCartItemDisplayWidget' args [data.cartItem] only %}
+    {% endwidget %}
+
     {% block priceWrapper %}
         <div class="grid grid--justify">
             {% if can('SeePricePermissionPlugin') %}

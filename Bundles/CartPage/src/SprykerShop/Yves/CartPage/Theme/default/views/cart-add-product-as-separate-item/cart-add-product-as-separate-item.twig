@@ -1,0 +1,30 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isQuoteStorageStrategySessionEnabled: _widget.isQuoteStorageStrategySessionEnabled,
+} %}
+
+{% set label = 'cart_widget.add_product.separate' | trans %}
+
+{% set checkboxAttributes = {
+    name: 'separate_product',
+    value: 1,
+    checked: true,
+} %}
+
+{% block body %}
+    {% if data.isQuoteStorageStrategySessionEnabled %}
+        <div class="grid grid--right">
+            <div class="col col--sm-6">
+                {% block checkbox %}
+                    {% include atom('checkbox') with {
+                        data: {
+                            label: label,
+                        },
+                        attributes: checkboxAttributes,
+                    } only %}
+                {% endblock %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

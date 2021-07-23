@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Controller;
 
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -60,16 +61,23 @@ class QuoteRequestAgentAbstractController extends AbstractController
 
     /**
      * @param string $quoteRequestReference
+     * @param bool $withVersions
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer
      */
-    protected function getQuoteRequestByReference(string $quoteRequestReference): QuoteRequestTransfer
-    {
+    protected function getQuoteRequestByReference(
+        string $quoteRequestReference,
+        bool $withVersions = false
+    ): QuoteRequestTransfer {
         $quoteRequestTransfer = $this->getFactory()
             ->getQuoteRequestAgentClient()
-            ->findQuoteRequestByReference($quoteRequestReference);
+            ->findQuoteRequest(
+                (new QuoteRequestFilterTransfer())
+                    ->setQuoteRequestReference($quoteRequestReference)
+                    ->setWithVersions($withVersions)
+            );
 
         if (!$quoteRequestTransfer) {
             throw new NotFoundHttpException();

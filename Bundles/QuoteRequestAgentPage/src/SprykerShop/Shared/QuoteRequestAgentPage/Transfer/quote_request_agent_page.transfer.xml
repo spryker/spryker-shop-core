@@ -6,6 +6,7 @@
         <property name="quoteRequestReference" type="string"/>
         <property name="status" type="string"/>
         <property name="isLatestVersionVisible" type="bool"/>
+        <property name="quoteRequestVersions" type="QuoteRequestVersion[]" singular="quoteRequestVersion"/>
         <property name="validUntil" type="string"/>
         <property name="createdAt" type="string"/>
         <property name="latestVersion" type="QuoteRequestVersion"/>
@@ -78,6 +79,7 @@
         <property name="quoteRequestReference" type="string"/>
         <property name="pagination" type="Pagination"/>
         <property name="withHidden" type="bool"/>
+        <property name="withVersions" type="bool"/>
     </transfer>
 
     <transfer name="QuoteResponse">
