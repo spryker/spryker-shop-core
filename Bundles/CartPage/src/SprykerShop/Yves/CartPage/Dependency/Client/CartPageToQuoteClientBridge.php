@@ -53,4 +53,12 @@ class CartPageToQuoteClientBridge implements CartPageToQuoteClientInterface
     {
         $this->quoteClient->setQuote($quoteTransfer);
     }
+
+    /**
+     * @return string
+     */
+    public function getStorageStrategy()
+    {
+        return $this->quoteClient->getStorageStrategy();
+    }
 }

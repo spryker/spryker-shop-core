@@ -1,0 +1,9 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker-shop/Bundles/ContentProductWidget/src/SprykerShop/Yves/ContentProductWidget/Dependency/Client/ContentProductWidgetToProductStorageClientBridgeInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'mapProductAbstractStorageData' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

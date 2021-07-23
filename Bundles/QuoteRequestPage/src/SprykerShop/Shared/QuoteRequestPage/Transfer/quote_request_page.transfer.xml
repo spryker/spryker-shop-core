@@ -10,6 +10,7 @@
         <property name="latestVersion" type="QuoteRequestVersion"/>
         <property name="isLatestVersionVisible" type="bool"/>
         <property name="latestVisibleVersion" type="QuoteRequestVersion"/>
+        <property name="quoteRequestVersions" type="QuoteRequestVersion[]" singular="quoteRequestVersion"/>
     </transfer>
 
     <transfer name="CompanyUser">
@@ -84,6 +85,7 @@
         <property name="quoteRequestReference" type="string"/>
         <property name="companyUser" type="CompanyUser"/>
         <property name="pagination" type="Pagination"/>
+        <property name="withVersions" type="bool"/>
     </transfer>
 
     <transfer name="QuoteError">

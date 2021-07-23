@@ -4,14 +4,11 @@
     "description": "CustomerPageExtension module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.3"
+        "php": ">=7.3",
+        "spryker/symfony": "^3.5.0"
     },
     "require-dev": {
-        "spryker/code-sniffer": "*",
-        "spryker/symfony": "*"
-    },
-    "suggest": {
-        "spryker/symfony": "If you want to use form expander plugins."
+        "spryker/code-sniffer": "*"
     },
     "autoload": {
         "psr-4": {

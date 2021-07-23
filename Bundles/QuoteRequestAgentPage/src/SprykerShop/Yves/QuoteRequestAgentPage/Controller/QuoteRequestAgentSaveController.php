@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Controller;
 
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -33,7 +34,10 @@ class QuoteRequestAgentSaveController extends QuoteRequestAgentAbstractControlle
 
         $quoteRequestTransfer = $this->getFactory()
             ->getQuoteRequestAgentClient()
-            ->findQuoteRequestByReference($quoteTransfer->getQuoteRequestReference());
+            ->findQuoteRequest(
+                (new QuoteRequestFilterTransfer())
+                    ->setQuoteRequestReference($quoteTransfer->getQuoteRequestReference())
+            );
 
         if (!$quoteRequestTransfer && !$quoteTransfer->getQuoteRequestReference()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS);

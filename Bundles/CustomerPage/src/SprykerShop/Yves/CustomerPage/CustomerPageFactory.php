@@ -572,7 +572,9 @@ class CustomerPageFactory extends AbstractFactory
      */
     public function createCustomerConfirmationUserChecker(): UserCheckerInterface
     {
-        return new CustomerConfirmationUserChecker();
+        return new CustomerConfirmationUserChecker(
+            $this->getPreAuthUserCheckPlugins()
+        );
     }
 
     /**
@@ -581,5 +583,13 @@ class CustomerPageFactory extends AbstractFactory
     public function createLoginCheckUrlFormatter(): LoginCheckUrlFormatterInterface
     {
         return new LoginCheckUrlFormatter($this->getConfig(), $this->getLocale());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreAuthUserCheckPluginInterface[]
+     */
+    public function getPreAuthUserCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGINS_PRE_AUTH_USER_CHECK);
     }
 }
