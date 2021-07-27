@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
-use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\Request;
@@ -84,10 +83,15 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
      */
     protected function executeDetailsAction(Request $request, string $quoteRequestReference): array
     {
-        $quoteRequestTransfer = $this->getCompanyUserQuoteRequestByReference($quoteRequestReference);
+        $quoteRequestTransfer = $this->getCompanyUserQuoteRequestByReference($quoteRequestReference, true);
         $quoteRequestClient = $this->getFactory()->getQuoteRequestClient();
 
-        $quoteRequestVersionTransfers = $this->getQuoteRequestVersions($quoteRequestTransfer);
+        $quoteRequestVersionTransfers = $quoteRequestTransfer->getQuoteRequestVersions()
+            ->getArrayCopy();
+
+        if (!$quoteRequestTransfer->getIsLatestVersionVisible()) {
+            array_shift($quoteRequestVersionTransfers);
+        }
 
         $version = $this->getQuoteRequestVersion(
             $quoteRequestTransfer,
@@ -113,29 +117,6 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
             'itemsWithoutShipment' => $itemExtractor->extractItemsWithoutShipment($version->getQuote()),
             'shipmentExpenses' => $this->getFactory()->createExpenseExtractor()->extractShipmentExpenses($version->getQuote()),
         ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer[]
-     */
-    protected function getQuoteRequestVersions(QuoteRequestTransfer $quoteRequestTransfer): array
-    {
-        $quoteRequestVersionFilterTransfer = (new QuoteRequestVersionFilterTransfer())
-            ->setQuoteRequest($quoteRequestTransfer);
-
-        $quoteRequestVersionTransfers = $this->getFactory()
-            ->getQuoteRequestClient()
-            ->getQuoteRequestVersionCollectionByFilter($quoteRequestVersionFilterTransfer)
-            ->getQuoteRequestVersions()
-            ->getArrayCopy();
-
-        if (!$quoteRequestTransfer->getIsLatestVersionVisible()) {
-            array_shift($quoteRequestVersionTransfers);
-        }
-
-        return $quoteRequestVersionTransfers;
     }
 
     /**

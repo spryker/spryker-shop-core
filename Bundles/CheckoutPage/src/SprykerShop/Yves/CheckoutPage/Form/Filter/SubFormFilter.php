@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CheckoutPage\Form\Filter;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface;
+use Spryker\Yves\Payment\Plugin\PaymentFormFilterPlugin;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 
@@ -49,6 +50,13 @@ class SubFormFilter implements SubFormFilterInterface
         $filteredSubFormPlugins = clone $subFormPlugins;
 
         foreach ($this->subFormFilterPlugins as $subFormFilterPlugin) {
+            /**
+             * Skipping deprecated plugin execution.
+             */
+            if ($subFormFilterPlugin instanceof PaymentFormFilterPlugin) {
+                continue;
+            }
+
             $filteredSubFormPlugins = $this->applyFilter($filteredSubFormPlugins, $subFormFilterPlugin, $quoteTransfer);
         }
 

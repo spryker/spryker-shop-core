@@ -21,12 +21,6 @@
     withChevron: false
 }]) %}
 
-{% block template %}
-    {% if data.categories is not empty %}
-        {{parent()}}
-    {% endif %}
-{% endblock %}
-
 {% block body %}
     {% include molecule('breadcrumb') with {
         data: {

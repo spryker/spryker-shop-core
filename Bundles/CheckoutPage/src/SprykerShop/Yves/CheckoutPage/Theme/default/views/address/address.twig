@@ -7,6 +7,7 @@
         billing: _view.addressesForm.billingAddress,
         items: _view.addressesForm.multiShippingAddresses | default([]),
         bundleItems: _view.addressesForm.multiShippingAddressesForBundleItems | default([]),
+        billingSameAsShipping: _view.addressesForm.billingSameAsShipping,
     },
     backUrl: _view.previousStepUrl,
     isMultipleShipmentEnabled: _view.addressesForm.isMultipleShipmentEnabled.vars.value,
@@ -17,7 +18,7 @@
     {% set companyBusinessUnitShippingAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress', data.forms.shipping.vars.data]) %}
     {% set isCompanyBusinessUnitShippingAddressApplicable = companyBusinessUnitShippingAddressWidget and companyBusinessUnitShippingAddressWidget.isApplicable %}
     {% set jsAddressClass = 'js-address' %}
-
+    {% set billingSameAsShippingData = data.forms.billingSameAsShipping.vars.data %}
     {% embed molecule('form') with {
         class: 'box',
         data: {
@@ -41,7 +42,7 @@
             companyBusinessUnitShippingAddressWidget: companyBusinessUnitShippingAddressWidget,
             isCompanyBusinessUnitShippingAddressApplicable: isCompanyBusinessUnitShippingAddressApplicable,
             jsAddressClass: jsAddressClass,
-            isBillingSameAsShippingChecked: data.forms.billing.id_customer_address.vars.choices is empty,
+            isBillingSameAsShippingChecked: billingSameAsShippingData is not defined or billingSameAsShippingData,
         },
     } only %}
         {% block fields %}

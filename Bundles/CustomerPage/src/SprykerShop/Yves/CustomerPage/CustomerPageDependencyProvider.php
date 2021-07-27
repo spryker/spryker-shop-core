@@ -34,6 +34,8 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
 
+    public const PLUGINS_PRE_AUTH_USER_CHECK = 'PLUGINS_PRE_AUTH_USER_CHECK';
+
     public const PLUGIN_AFTER_CUSTOMER_AUTHENTICATION_SUCCESS = 'PLUGIN_AFTER_CUSTOMER_AUTHENTICATION_SUCCESS';
     public const PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT = 'PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT';
 
@@ -128,6 +130,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCheckoutAddressStepPreGroupItemsByShipmentPlugins($container);
         $container = $this->addOrderSearchFormExpanderPlugins($container);
         $container = $this->addOrderSearchFormHandlerPlugins($container);
+        $container = $this->addPreAuthUserCheckPlugins($container);
 
         return $container;
     }
@@ -510,6 +513,28 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\AfterCustomerAuthenticationSuccessPluginInterface[]
      */
     protected function getAfterCustomerAuthenticationSuccessPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addPreAuthUserCheckPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRE_AUTH_USER_CHECK, function () {
+            return $this->getPreAuthUserCheckPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreAuthUserCheckPluginInterface[]
+     */
+    protected function getPreAuthUserCheckPlugins(): array
     {
         return [];
     }

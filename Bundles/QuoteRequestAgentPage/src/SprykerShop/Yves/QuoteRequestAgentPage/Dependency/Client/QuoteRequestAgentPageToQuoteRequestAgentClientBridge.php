@@ -89,13 +89,13 @@ class QuoteRequestAgentPageToQuoteRequestAgentClientBridge implements QuoteReque
     }
 
     /**
-     * @param string $quoteRequestReference
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
      */
-    public function findQuoteRequestByReference(string $quoteRequestReference): ?QuoteRequestTransfer
+    public function findQuoteRequest(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): ?QuoteRequestTransfer
     {
-        return $this->quoteRequestAgentClient->findQuoteRequestByReference($quoteRequestReference);
+        return $this->quoteRequestAgentClient->findQuoteRequest($quoteRequestFilterTransfer);
     }
 
     /**

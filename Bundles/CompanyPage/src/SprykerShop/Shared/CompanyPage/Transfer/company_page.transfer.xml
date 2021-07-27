@@ -29,6 +29,7 @@
         <property name="salutation" type="string"/>
         <property name="idCustomer" type="int"/>
         <property name="isOnBehalf" type="bool"/>
+        <property name="isActiveCompanyUserExists" type="bool"/>
     </transfer>
 
     <transfer name="Pagination">

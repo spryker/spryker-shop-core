@@ -27,6 +27,7 @@ class CustomerConfirmationUserCheckerApplicationPlugin extends AbstractPlugin im
     /**
      * {@inheritDoc}
      * - Sets a new user checker that checks if customer confirmed registration.
+     * - Executes `PreAuthUserCheckPluginInterface` plugin stack.
      *
      * @api
      *

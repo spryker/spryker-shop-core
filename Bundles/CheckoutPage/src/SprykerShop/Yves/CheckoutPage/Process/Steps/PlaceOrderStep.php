@@ -16,7 +16,7 @@ use Spryker\Yves\StepEngine\Dependency\Step\StepWithExternalRedirectInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithPostConditionErrorRouteInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface;
-use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
+use SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirectInterface, StepWithPostConditionErrorRouteInterface
@@ -100,7 +100,7 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
         }
 
         if (!$quoteTransfer->getCheckoutConfirmed()) {
-            $this->escapeRoute = CheckoutPageControllerProvider::CHECKOUT_SUMMARY;
+            $this->escapeRoute = CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_SUMMARY;
 
             return false;
         }

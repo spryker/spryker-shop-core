@@ -81,16 +81,24 @@
             {% endfor %}
         </li>
 
-        {% widget 'SalesOrderThresholdWidget' args [data.expenses] only %}
+        {% widget 'SalesOrderThresholdWidget' args [data.expenses] with {
+            embed: {
+                separator: block('separator'),
+            },
+        } only %}
             {% block body %}
-                {{ block('separator') }}
+                {{ embed.separator | raw }}
                 <li>
                     {{ parent() }}
                 </li>
             {% endblock %}
-        {% elsewidget 'SalesOrderThresholdWidgetPlugin' args [data.expenses] only %} {# @deprecated Use SalesOrderThresholdWidget instead. #}
+        {% elsewidget 'SalesOrderThresholdWidgetPlugin' args [data.expenses] with {
+            embed: {
+                separator: block('separator'),
+            },
+        } only %} {# @deprecated Use SalesOrderThresholdWidget instead. #}
             {% block body %}
-                {{ block('separator') }}
+                {{ embed.separator | raw }}
                 <li>
                     {{ parent() }}
                 </li>
