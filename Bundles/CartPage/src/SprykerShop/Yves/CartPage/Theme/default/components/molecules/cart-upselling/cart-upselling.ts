@@ -19,7 +19,6 @@ export default class CartUpselling extends Component {
         });
     }
 
-
     protected async onFetched(event: Event): Promise<void> {
         await mount();
     }

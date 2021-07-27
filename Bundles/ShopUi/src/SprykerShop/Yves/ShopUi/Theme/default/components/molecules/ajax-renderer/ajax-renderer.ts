@@ -42,11 +42,14 @@ export default class AjaxRenderer extends Component {
 
         if (this.target) {
             this.target.innerHTML = response;
-
-            return;
+        } else {
+            this.innerHTML = response;
         }
 
-        this.innerHTML = response;
+        if (this.mountAfterRender) {
+            mount();
+        }
+
     }
 
     /**
