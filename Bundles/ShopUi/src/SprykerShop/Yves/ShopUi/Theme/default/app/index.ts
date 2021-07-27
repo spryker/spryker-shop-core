@@ -50,7 +50,7 @@ async function mountComponents(): Promise<void> {
     elements.forEach((elementSet: Element[]) =>
         elementSet
             .filter((element: Element) => isComponent(element))
-            .filter((component: Component) => !component.isMounted)  // if disable filter starting work
+            .filter((component: Component) => !component.isMounted)
             .forEach((component: Component) => mountComponent(component)),
     );
 }
