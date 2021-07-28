@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CheckoutPage;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPaymentClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
@@ -153,6 +154,14 @@ class CheckoutPageFactory extends AbstractFactory
     public function getPaymentMethodSubForms()
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PAYMENT_SUB_FORMS);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPaymentClientInterface
+     */
+    public function getPaymentClient(): CheckoutPageToPaymentClientInterface
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_PAYMENT);
     }
 
     /**

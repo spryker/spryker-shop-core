@@ -10,6 +10,8 @@ namespace SprykerShop\Yves\CompanyPage;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Router\Router\ChainRouter;
+use SprykerShop\Yves\CompanyPage\CustomerChecker\PreAuthUserChecker;
+use SprykerShop\Yves\CompanyPage\CustomerChecker\PreAuthUserCheckerInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyClientInterface;
@@ -269,5 +271,13 @@ class CompanyPageFactory extends AbstractFactory
     public function createFormCloner(): FormCloner
     {
         return new FormCloner();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\CustomerChecker\PreAuthUserCheckerInterface
+     */
+    public function createPreAuthUserChecker(): PreAuthUserCheckerInterface
+    {
+        return new PreAuthUserChecker();
     }
 }

@@ -1,0 +1,30 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker-shop/Bundles/CompanyPage/src/SprykerShop/Yves/CompanyPage/Dependency/Client/CompanyPageToCompanyBusinessUnitClientInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'getCompanyBusinessUnitCollection' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker-shop/Bundles/CompanyPage/src/SprykerShop/Yves/CompanyPage/Dependency/Client/CompanyPageToCompanyRoleClientBridge.php",
+        "description": "\n      Bridges: The bridge has incorrect method 'deleteCompanyRole' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker-shop/Bundles/CompanyPage/src/SprykerShop/Yves/CompanyPage/Dependency/Client/CompanyPageToCompanyRoleClientInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'updateCompanyRole' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker-shop/Bundles/CompanyPage/src/SprykerShop/Yves/CompanyPage/Dependency/Client/CompanyPageToCompanyUserClientBridge.php",
+        "description": "\n      Bridges: The bridge has incorrect method 'createCompanyUser' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

@@ -149,6 +149,8 @@
             {% elsewidget 'MultiCartWidgetPlugin' args [data.product, data.isDisabled] only %} {# @deprecated Use AddToMultiCartWidget instead. #}
             {% endwidget %}
 
+            {% widget 'CartAddProductAsSeparateItemWidget' only %}{% endwidget %}
+
             {% set merchantProductOfferWidget = findWidget('MerchantProductOfferWidget', [data.product]) %}
 
             {% set productOffersCount = merchantProductOfferWidget ? merchantProductOfferWidget.productOffers | length : 0 %}
