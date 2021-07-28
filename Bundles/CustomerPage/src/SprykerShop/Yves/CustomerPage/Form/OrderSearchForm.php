@@ -185,12 +185,15 @@ class OrderSearchForm extends AbstractType
      */
     protected function addFiltersForm(FormBuilderInterface $builder, array $options)
     {
+        /** @phpstan-var array<string, mixed> $options */
+        $options = [
+            static::OPTION_CURRENT_TIMEZONE => $options[static::OPTION_CURRENT_TIMEZONE],
+        ];
+
         $builder->add(
             static::FIELD_FILTERS,
             OrderSearchFiltersForm::class,
-            [
-                static::OPTION_CURRENT_TIMEZONE => $options[static::OPTION_CURRENT_TIMEZONE],
-            ]
+            $options
         );
 
         return $this;
