@@ -16,9 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProductRelationController extends AbstractController
 {
-    protected const KEY_CODE = 'code';
-    protected const KEY_HTML = 'html';
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -26,26 +23,7 @@ class ProductRelationController extends AbstractController
      */
     public function getUpsellingProductsWidgetAjaxAction(Request $request): View
     {
-        return $this->test();
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Spryker\Yves\Kernel\View\View
-     */
-    public function getUpsellingProductsWidgetAjaxAction2(Request $request): View
-    {
         return $this->executeGetUpsellingProductsWidgetAjaxAction();
-    }
-
-    protected function test(): View
-    {
-            $viewData = [
-                'cart' => $this->getFactory()->getCartClient()->getQuote(),
-            ];
-
-            return $this->view($viewData, [], '@ProductRelationWidget/views/ajax-upselling-widget/ajax-upselling-widget.twig');
     }
 
     /**
