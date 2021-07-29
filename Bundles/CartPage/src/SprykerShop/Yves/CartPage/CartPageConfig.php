@@ -21,7 +21,7 @@ class CartPageConfig extends AbstractBundleConfig
      */
     public function isCartCartItemsViaAjaxLoadEnabled(): bool
     {
-        return true;
+        return false;
     }
 
     /**
