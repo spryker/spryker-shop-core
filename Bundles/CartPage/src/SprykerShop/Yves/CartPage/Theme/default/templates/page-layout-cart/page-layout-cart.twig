@@ -237,16 +237,13 @@
             </div>
         </div>
     {% endif %}
-    {% if data.isUpsellingProductsViaAjaxEnabled is empty %}
-
-        {% include molecule('cart-upselling', 'CartPage') with {
-            data: {
-                cart: data.cart,
-                suggestionUrl: 'cart/get-upselling-widget',
-                isUpsellingProductsViaAjaxEnabled: true
-            },
-        } only %}
-    {% endif %}
+    {% include molecule('cart-upselling', 'CartPage') with {
+        data: {
+            cart: data.cart,
+            suggestionUrl: 'cart/get-upselling-widget',
+            isUpsellingProductsViaAjaxEnabled: data.isUpsellingProductsViaAjaxEnabled
+        },
+    } only %}
 {% endblock %}
 
 {% block footer %}{% endblock %}
