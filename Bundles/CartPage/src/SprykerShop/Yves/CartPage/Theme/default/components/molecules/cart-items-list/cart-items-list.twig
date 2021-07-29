@@ -1,0 +1,59 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'cart-items-list',
+    tag: 'cart-items-list',
+} %}
+
+
+{% define data = {
+    cart: required,
+    cartItems: required,
+    isQuoteEditable: required,
+    attributes: [],
+    isUpsellingProductsViaAjaxEnabled: false
+} %}
+
+ {% define attributes = {
+     'provider-class-name': 'ajax-provider',
+ } %}
+
+{% block body %}
+    {% if data.isUpsellingProductsViaAjaxEnabled is not empty %}
+        {% include molecule('ajax-provider') with {
+            class: config.jsName ~ '__ajax-provider',
+            attributes: {
+                'fetch-on-load': true,
+                url:  path('cart/get-cart-items'),
+            },
+        } only %}
+
+        {% include molecule('ajax-loader') with {
+            modifiers: ['big'],
+            attributes: {
+                'provider-class-name': config.jsName ~ '__ajax-provider',
+            },
+        } only %}
+
+        {% include molecule('ajax-renderer') with {
+            attributes: {
+                'provider-class-name': config.jsName ~ '__ajax-provider',
+                'target-class-name': config.jsName ~ '__container'  ,
+                'mount-after-render': true,
+            },
+        } only %}
+        <div class="boxtest  {{ config.name }}__container {{ config.jsName }}__container"></div>
+    {% endif %}
+
+    {% if data.isUpsellingProductsViaAjaxEnabled is empty %}
+        {% include molecule('product-cart-items-list', 'CartPage') with {
+            data: {
+                cart: data.cart,
+                cartItems: data.cartItems,
+                isQuoteEditable: data.isQuoteEditable,
+                attributes: data.attributes
+            },
+        } only %}
+    {% endif %}
+
+{% endblock %}

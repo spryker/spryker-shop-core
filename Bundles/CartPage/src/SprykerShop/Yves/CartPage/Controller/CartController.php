@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CartPageViewArgumentsTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
+use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Shared\CartPage\Plugin\AddCartItemPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\ChangeCartItemPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
@@ -44,7 +45,6 @@ class CartController extends AbstractController
 
     protected const KEY_CODE = 'code';
     protected const KEY_MESSAGES = 'messages';
-    protected const KEY_HTML = 'html';
 
     protected const CSRF_TOKEN_ID = 'add-to-cart-ajax';
     protected const MESSAGE_TYPE_ERROR = 'error';
@@ -94,24 +94,21 @@ class CartController extends AbstractController
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Spryker\Yves\Kernel\View\View
      */
-    public function getCartItemsAjaxAction(Request $request): JsonResponse
+    public function getCartItemsAjaxAction(Request $request): View
     {
         if (!$this->getFactory()->getConfig()->isCartCartItemsViaAjaxLoadEnabled()) {
             throw new NotFoundHttpException();
         }
-        $response = $this->executeGetCartItemsAjaxAction();
 
-        return $this->jsonResponse(
-            $response
-        );
+        return $this->executeGetCartItemsAjaxAction();
     }
 
     /**
-     * @return string[]
+     * @return \Spryker\Yves\Kernel\View\View
      */
-    protected function executeGetCartItemsAjaxAction(): array
+    protected function executeGetCartItemsAjaxAction(): View
     {
         $cartPageViewArgumentsTransfer = new CartPageViewArgumentsTransfer();
         $cartPageViewArgumentsTransfer->setLocale($this->getLocale())
@@ -120,12 +117,7 @@ class CartController extends AbstractController
 
         $viewData = $this->getFactory()->createCartPageView()->getViewData($cartPageViewArgumentsTransfer);
 
-        $cartItemsHtml = $this->renderView('@CartPage/views/ajax-cart-items/ajax-cart-items.twig', $viewData)->getContent();
-
-        return [
-            static::KEY_CODE => Response::HTTP_OK,
-            static::KEY_HTML => $cartItemsHtml,
-        ];
+        return $this->view($viewData, [], '@CartPage/views/ajax-cart-items/ajax-cart-items.twig');
     }
 
     /**

@@ -95,16 +95,15 @@
                 } only %}
                 {% endwidget %}
 
-                {% if data.isCartItemsViaAjaxLoadEnabled is empty %}
-                    {% include molecule('product-cart-items-list', 'CartPage') with {
-                        data: {
-                            cart: data.cart,
-                            cartItems: data.cartItems,
-                            isQuoteEditable: data.isQuoteEditable,
-                            attributes: data.attributes,
-                        },
-                    } only %}
-                {% endif %}
+                {% include molecule('cart-items-list', 'CartPage') with {
+                    data: {
+                        cart: data.cart,
+                        cartItems: data.cartItems,
+                        isQuoteEditable: data.isQuoteEditable,
+                        attributes: data.attributes,
+                        isUpsellingProductsViaAjaxEnabled: data.isCartItemsViaAjaxLoadEnabled
+                    },
+                } only %}
 
                 {% block promotionalItems %}
                     {% if data.isQuoteEditable %}
