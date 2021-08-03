@@ -11,7 +11,7 @@
     cartItems: required,
     isQuoteEditable: required,
     attributes: [],
-    isUpsellingProductsViaAjaxEnabled: false
+    isUpsellingProductsViaAjaxEnabled: false,
 } %}
 
  {% define attributes = {
@@ -51,9 +51,8 @@
                 cart: data.cart,
                 cartItems: data.cartItems,
                 isQuoteEditable: data.isQuoteEditable,
-                attributes: data.attributes
+                attributes: data.attributes,
             },
         } only %}
     {% endif %}
-
 {% endblock %}
