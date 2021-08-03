@@ -8,20 +8,19 @@
 
 {% define data = {
     cart: required,
-    cartItems: required,
-    isQuoteEditable: required,
+    cartItems: [],
+    isQuoteEditable: false,
     attributes: [],
     isUpsellingProductsViaAjaxEnabled: false,
 } %}
-
  {% define attributes = {
-     'provider-class-name': 'ajax-provider',
+     'provider-class-name': config.name ~ '__ajax-provider',
  } %}
 
 {% block body %}
     {% if data.isUpsellingProductsViaAjaxEnabled is not empty %}
         {% include molecule('ajax-provider') with {
-            class: config.jsName ~ '__ajax-provider',
+            class: attributes['provider-class-name'],
             attributes: {
                 'fetch-on-load': true,
                 url:  path('cart/get-cart-items'),
@@ -31,18 +30,18 @@
         {% include molecule('ajax-loader') with {
             modifiers: ['big'],
             attributes: {
-                'provider-class-name': config.jsName ~ '__ajax-provider',
+                'provider-class-name': attributes['provider-class-name'],
             },
         } only %}
 
         {% include molecule('ajax-renderer') with {
             attributes: {
-                'provider-class-name': config.jsName ~ '__ajax-provider',
+                'provider-class-name': attributes['provider-class-name'],
                 'target-class-name': config.jsName ~ '__container'  ,
                 'mount-after-render': true,
             },
         } only %}
-        <div class="boxtest  {{ config.name }}__container {{ config.jsName }}__container"></div>
+        <div class="box  {{ config.name }}__container {{ config.jsName }}__container"></div>
     {% endif %}
 
     {% if data.isUpsellingProductsViaAjaxEnabled is empty %}
