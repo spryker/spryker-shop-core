@@ -237,10 +237,9 @@
             </div>
         </div>
     {% endif %}
-    {% include molecule('cart-upselling', 'CartPage') with {
+    {% include molecule('cart-upselling', 'ProductRelationWidget') with {
         data: {
             cart: data.cart,
-            suggestionUrl: 'cart/get-upselling-widget',
             isUpsellingProductsViaAjaxEnabled: data.isUpsellingProductsViaAjaxEnabled
         },
     } only %}

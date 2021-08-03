@@ -44,7 +44,7 @@ class ProductGroupWidgetFactory extends AbstractFactory
      */
     public function getProductViewBatchExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(ProductGroupWidgetDependencyProvider::PLUGIN_PRODUCT_VIEW_BATCH_EXPANDERS);
+        return $this->getProvidedDependency(ProductGroupWidgetDependencyProvider::PLUGINS_PRODUCT_VIEW_BATCH_EXPANDERS);
     }
 
     /**

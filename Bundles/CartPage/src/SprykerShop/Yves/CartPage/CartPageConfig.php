@@ -11,6 +11,8 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class CartPageConfig extends AbstractBundleConfig
 {
+    protected const IS_LOADING_UPSELLING_PRODUCTS_VIA_AJAX_ENABLED = false;
+
     /**
      * Specification:
      * - Enables loading the upselling products via AJAX.
@@ -22,7 +24,7 @@ class CartPageConfig extends AbstractBundleConfig
      */
     public function isLoadingUpsellingProductsViaAjaxEnabled(): bool
     {
-        return false;
+        return static::IS_LOADING_UPSELLING_PRODUCTS_VIA_AJAX_ENABLED;
     }
 
     /**

@@ -65,7 +65,7 @@ class ProductReviewWidgetFactory extends SprykerProductReviewFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createProductReviewForm($idProductAbstract): FormInterface
+    public function createProductReviewForm($idProductAbstract)
     {
         $dataProvider = $this->createProductReviewFormDataProvider();
         $form = $this->getFormFactory()->create(
