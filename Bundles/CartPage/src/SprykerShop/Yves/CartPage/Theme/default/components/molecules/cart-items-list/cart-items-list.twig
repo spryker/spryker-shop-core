@@ -15,7 +15,7 @@
 } %}
 
  {% define attributes = {
-     'provider-class-name': config.jsName ~ '__ajax-provider',
+     'provider-class-name': 'js-' ~ config.name ~ '__ajax-provider',
  } %}
 
 {% block body %}
@@ -42,7 +42,7 @@
                 'mount-after-render': true,
             },
         } only %}
-        
+
         <div class="box {{ config.name }}__container {{ config.jsName }}__container"></div>
     {% endif %}
 
