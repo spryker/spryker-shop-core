@@ -42,11 +42,9 @@
 
     <div class="box  {{ config.name }}__container {{ config.jsName }}__container">
         {% if data.isUpsellingProductsViaAjaxEnabled is empty %}
-            {% include molecule('upselling-items', 'ProductRelationWidget') with {
-                data: {
-                    cart: data.cart,
-                },
-            } only %}
+            {% widget 'UpSellingProductsWidget' args [data.cart] only %}
+            {% elsewidget 'UpSellingProductsWidgetPlugin' args [data.cart] only %} {# @deprecated Use UpSellingProductsWidget instead. #}
+            {% endwidget %}
         {% endif %}
     </div>
 {% endblock body %}
