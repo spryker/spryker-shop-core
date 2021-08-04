@@ -13,7 +13,7 @@
     request: app.request,
     title: 'cart.cart' | trans,
     requestUri: app.request.requestUri,
-    isUpsellingProductsViaAjaxEnabled: _view.isUpsellingProductsViaAjaxEnabled
+    isUpsellingProductsViaAjaxEnabled: _view.isUpsellingProductsViaAjaxEnabled,
 } %}
 
 {% block breadcrumbs %}
@@ -240,7 +240,7 @@
     {% include molecule('cart-upselling', 'ProductRelationWidget') with {
         data: {
             cart: data.cart,
-            isUpsellingProductsViaAjaxEnabled: data.isUpsellingProductsViaAjaxEnabled
+            isUpsellingProductsViaAjaxEnabled: data.isUpsellingProductsViaAjaxEnabled,
         },
     } only %}
 {% endblock %}

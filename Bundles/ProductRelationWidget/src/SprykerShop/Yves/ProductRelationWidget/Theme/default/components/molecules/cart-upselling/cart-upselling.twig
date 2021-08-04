@@ -7,11 +7,12 @@
 
 {% define data = {
     cart: required,
-    isUpsellingProductsViaAjaxEnabled: false
+    isUpsellingProductsViaAjaxEnabled: false,
 } %}
- {% define attributes = {
-     'provider-class-name': 'ajax-provider',
- } %}
+
+{% define attributes = {
+    'provider-class-name': 'ajax-provider',
+} %}
 
 {% block body %}
     {% if data.isUpsellingProductsViaAjaxEnabled is not empty %}
@@ -33,7 +34,7 @@
         {% include molecule('ajax-renderer') with {
             attributes: {
                 'provider-class-name': config.jsName ~ '__ajax-provider',
-                'target-class-name': config.jsName ~ '__container'  ,
+                'target-class-name': config.jsName ~ '__container',
                 'mount-after-render': true,
             },
         } only %}
@@ -43,7 +44,7 @@
         {% if data.isUpsellingProductsViaAjaxEnabled is empty %}
             {% include molecule('upselling-items', 'ProductRelationWidget') with {
                 data: {
-                    cart: data.cart
+                    cart: data.cart,
                 },
             } only %}
         {% endif %}

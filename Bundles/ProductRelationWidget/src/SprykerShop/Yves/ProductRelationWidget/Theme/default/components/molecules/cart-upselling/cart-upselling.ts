@@ -2,7 +2,6 @@ import Component from 'ShopUi/models/component';
 import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
 import { mount } from 'ShopUi/app';
 
-
 export default class CartUpselling extends Component {
     protected providers: AjaxProvider[];
 

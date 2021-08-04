@@ -1,5 +1,7 @@
+{% extends template('widget') %}
+
 {% define data = {
-    cart: _view.cart
+    cart: _view.cart,
 } %}
 
 {% widget 'UpSellingProductsWidget' args [data.cart] only %}
