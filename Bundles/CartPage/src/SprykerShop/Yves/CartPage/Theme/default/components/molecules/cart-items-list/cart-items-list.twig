@@ -13,8 +13,9 @@
     attributes: [],
     isUpsellingProductsViaAjaxEnabled: false,
 } %}
+
  {% define attributes = {
-     'provider-class-name': config.name ~ '__ajax-provider',
+     'provider-class-name': config.jsName ~ '__ajax-provider',
  } %}
 
 {% block body %}
@@ -37,11 +38,12 @@
         {% include molecule('ajax-renderer') with {
             attributes: {
                 'provider-class-name': attributes['provider-class-name'],
-                'target-class-name': config.jsName ~ '__container'  ,
+                'target-class-name': config.jsName ~ '__container',
                 'mount-after-render': true,
             },
         } only %}
-        <div class="box  {{ config.name }}__container {{ config.jsName }}__container"></div>
+        
+        <div class="box {{ config.name }}__container {{ config.jsName }}__container"></div>
     {% endif %}
 
     {% if data.isUpsellingProductsViaAjaxEnabled is empty %}
