@@ -49,7 +49,6 @@ export default class AjaxRenderer extends Component {
         if (this.mountAfterRender) {
             mount();
         }
-
     }
 
     /**

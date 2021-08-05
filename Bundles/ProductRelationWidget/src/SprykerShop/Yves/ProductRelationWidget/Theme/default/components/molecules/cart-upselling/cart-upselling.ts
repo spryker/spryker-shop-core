@@ -7,7 +7,7 @@ export default class CartUpselling extends Component {
 
     protected readyCallback(): void {
         /* tslint:disable: deprecation */
-        this.providers = <AjaxProvider[]>(Array.from(document.getElementsByClassName(this.providerClassName)));
+        this.providers = <AjaxProvider[]>Array.from(document.getElementsByClassName(this.providerClassName));
         /* tslint:enable: deprecation */
         this.mapEvents();
     }
