@@ -1,9 +1,0 @@
-{% extends template('widget') %}
-
-{% define data = {
-    cart: _view.cart,
-} %}
-
-{% widget 'UpSellingProductsWidget' args [data.cart] only %}
-{% elsewidget 'UpSellingProductsWidgetPlugin' args [data.cart] only %} {# @deprecated Use UpSellingProductsWidget instead. #}
-{% endwidget %}
