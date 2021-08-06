@@ -240,7 +240,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @uses \SprykerShop\Yves\ProductRelationWidget\Controller\ProductRelationController::getUpsellingProductsWidgetAjaxAction()
+     * @uses \SprykerShop\Yves\CartPage\Controller\CartController::getUpsellingProductsWidgetAjaxAction()
      *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
