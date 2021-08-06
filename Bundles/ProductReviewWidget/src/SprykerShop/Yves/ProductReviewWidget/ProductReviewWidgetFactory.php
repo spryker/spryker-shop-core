@@ -20,7 +20,6 @@ use SprykerShop\Yves\ProductReviewWidget\Form\DataProvider\ProductReviewFormData
 use SprykerShop\Yves\ProductReviewWidget\Form\ProductReviewForm;
 use SprykerShop\Yves\ProductReviewWidget\ProductReviewSearchRequestBuilder\ProductReviewSearchRequestBuilder;
 use SprykerShop\Yves\ProductReviewWidget\ProductReviewSearchRequestBuilder\ProductReviewSearchRequestBuilderInterface;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
