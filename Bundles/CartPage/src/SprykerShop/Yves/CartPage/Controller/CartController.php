@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CartPageViewArgumentsTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
+use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Shared\CartPage\Plugin\AddCartItemPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\ChangeCartItemPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
@@ -85,6 +86,28 @@ class CartController extends AbstractController
             ->addResponseMessagesToMessenger();
 
         return $viewData;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function getUpsellingProductsWidgetAjaxAction(Request $request): View
+    {
+        return $this->executeGetUpsellingProductsWidgetAjaxAction();
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    protected function executeGetUpsellingProductsWidgetAjaxAction(): View
+    {
+        $viewData = [
+            'cart' => $this->getFactory()->getCartClient()->getQuote(),
+        ];
+
+        return $this->view($viewData, [], '@CartPage/views/ajax-upselling-widget/ajax-upselling-widget.twig');
     }
 
     /**
