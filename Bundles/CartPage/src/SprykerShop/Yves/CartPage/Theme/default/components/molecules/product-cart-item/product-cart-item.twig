@@ -39,7 +39,7 @@
         {%- endblock %}
 
         {% block sku -%}
-            <small class="text-secondary">
+            <small class="text-secondary" data-qa="cart-item-sku">
                 {{- 'cart.item.sku' | trans }} {{ data.sku -}}
             </small>
         {%- endblock %}
