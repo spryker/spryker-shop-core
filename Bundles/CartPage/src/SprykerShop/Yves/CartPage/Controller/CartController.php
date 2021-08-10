@@ -25,6 +25,7 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
  * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
+ * @method \SprykerShop\Yves\CartPage\CartPageConfig getConfig()
  */
 class CartController extends AbstractController
 {

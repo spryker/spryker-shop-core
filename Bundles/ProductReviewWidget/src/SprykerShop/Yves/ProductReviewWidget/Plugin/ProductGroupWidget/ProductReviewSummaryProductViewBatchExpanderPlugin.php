@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\ProductReviewWidget\Plugin\ProductGroupWidget;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewBatchExpanderPluginInterface;
 
+/**
+ * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
+ */
 class ProductReviewSummaryProductViewBatchExpanderPlugin extends AbstractPlugin implements ProductViewBatchExpanderPluginInterface
 {
     /**
