@@ -11,7 +11,10 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class CartPageConfig extends AbstractBundleConfig
 {
-    protected const IS_LOADING_UPSELLING_PRODUCTS_VIA_AJAX_ENABLED = true;
+    /**
+     * The default value will be true in the next major.
+     */
+    protected const IS_LOADING_UPSELLING_PRODUCTS_VIA_AJAX_ENABLED = false;
 
     /**
      * Specification:
