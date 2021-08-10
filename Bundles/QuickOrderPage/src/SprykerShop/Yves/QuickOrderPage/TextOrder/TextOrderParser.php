@@ -101,6 +101,8 @@ class TextOrderParser implements TextOrderParserInterface
     }
 
     /**
+     * @phpstan-return non-empty-string
+     *
      * @param string[] $rows
      *
      * @throws \SprykerShop\Yves\QuickOrderPage\Exception\TextOrderParserException
@@ -111,7 +113,7 @@ class TextOrderParser implements TextOrderParserInterface
     {
         foreach ($this->config->getTextOrderSeparators() as $separator) {
             foreach ($rows as $row) {
-                if (strpos($row, $separator) !== false) {
+                if ($separator && strpos($row, $separator) !== false) {
                     return $separator;
                 }
             }
