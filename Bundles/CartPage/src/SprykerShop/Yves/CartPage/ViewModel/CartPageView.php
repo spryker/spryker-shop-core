@@ -8,8 +8,6 @@
 namespace SprykerShop\Yves\CartPage\ViewModel;
 
 use Generated\Shared\Transfer\CartPageViewArgumentsTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductImageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\CartPage\CartPageConfig;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface;
