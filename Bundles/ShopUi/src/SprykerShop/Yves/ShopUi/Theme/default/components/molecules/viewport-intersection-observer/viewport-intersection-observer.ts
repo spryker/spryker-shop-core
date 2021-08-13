@@ -19,6 +19,10 @@ export default class ViewportIntersectionObserver extends Component {
     protected readyCallback(): void {}
 
     protected init(): void {
+        this.updateTargets();
+    }
+
+    updateTargets(): void {
         this.observer = this.observerInit();
         this.viewportOptions = {
             rootMargin: this.viewportMargin,
