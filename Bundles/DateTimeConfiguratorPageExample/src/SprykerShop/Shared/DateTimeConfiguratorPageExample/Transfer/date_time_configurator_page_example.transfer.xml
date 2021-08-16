@@ -22,6 +22,12 @@
         <property name="templateName" type="string"/>
     </transfer>
 
+    <transfer name="ProductConfiguratorPageResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="message" type="string"/>
+        <property name="configuratorRedirectUrl" type="string"/>
+    </transfer>
+
     <transfer name="SalesOrderItemConfiguration">
         <property name="displayData" type="string"/>
         <property name="configuratorKey" type="string"/>

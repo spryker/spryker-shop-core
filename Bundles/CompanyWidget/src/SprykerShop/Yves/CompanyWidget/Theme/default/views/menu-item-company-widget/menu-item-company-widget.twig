@@ -6,7 +6,5 @@
 } %}
 
 {% block body %}
-    {% if data.isVisible %}
-        <a href="{{ path('company/overview') }}" title="{{ data.companyName }}">{{ 'company.account.page-title' | trans }}</a>
-    {% endif %}
+    <a href="{{ path('company/overview') }}" title="{{ data.companyName }}">{{ 'company.account.page-title' | trans }}</a>
 {% endblock %}

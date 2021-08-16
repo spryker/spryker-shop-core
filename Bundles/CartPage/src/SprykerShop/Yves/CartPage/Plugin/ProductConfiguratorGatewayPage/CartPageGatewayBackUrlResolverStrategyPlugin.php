@@ -13,13 +13,12 @@ use SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin;
 use SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorGatewayBackUrlResolverStrategyPluginInterface;
 
 /**
+ * @deprecated Use {@link \SprykerShop\Yves\ProductConfigurationCartWidget\Plugin\ProductConfiguratorGatewayPage\CartPageProductConfiguratorResponseStrategyPlugin} instead.
+ *
  * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
  */
 class CartPageGatewayBackUrlResolverStrategyPlugin extends AbstractPlugin implements ProductConfiguratorGatewayBackUrlResolverStrategyPluginInterface
 {
-    /**
-     * @uses \Spryker\Shared\ProductConfiguration\ProductConfigurationConfig::SOURCE_TYPE_CART
-     */
     protected const SOURCE_TYPE_CART = 'SOURCE_TYPE_CART';
 
     /**

@@ -15,10 +15,6 @@
     isLabelHidden: true,
 } %}
 
-{% block template %}
-    {% if data.isVisible %}{{ parent() }}{% endif %}
-{% endblock %}
-
 {% block body %}
     {{ form_start(data.form, data.formOptions) }}
         {% block formInner %}

@@ -10,18 +10,12 @@
 {% set buttonClasses = 'link' %}
 
 {% block body %}
-    {% if data.isVisible %}
+    {{ form_start(data.form, {'action': path('order/cancel', {
+        'id-sales-order': data.order.idSalesOrder,
+        'return-url': data.returnUrl
+    })}) }}
 
-        {% block formContent %}
-            {{ form_start(data.form, {'action': path('order/cancel', {
-                'id-sales-order': data.order.idSalesOrder,
-                'return-url': data.returnUrl
-            })}) }}
+    <button class="{{ buttonClasses }}">{{ 'order_cancel_widget.cancel_order' | trans }}</button>
 
-            <button class="{{ buttonClasses }}">{{ 'order_cancel_widget.cancel_order' | trans }}</button>
-
-            {{ form_end(data.form) }}
-        {% endblock %}
-
-    {% endif %}
+    {{ form_end(data.form) }}
 {% endblock %}

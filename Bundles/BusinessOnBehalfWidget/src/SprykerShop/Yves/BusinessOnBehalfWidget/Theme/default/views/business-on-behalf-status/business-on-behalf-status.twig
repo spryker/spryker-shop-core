@@ -8,12 +8,6 @@
     isVisible: _widget.isVisible,
 } %}
 
-{% block template %}
-    {% if data.isVisible %}
-        {{ parent() }}
-    {% endif %}
-{% endblock %}
-
 {% block body %}
     {% set isFullCompanyInformation = data.isOnBehalf and data.companyName is not empty
         and data.companyBusinessUnitName is not empty %}

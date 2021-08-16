@@ -5,12 +5,6 @@
     canProceedCheckout: true,
 } %}
 
-{% block template %}
-    {% if data.isVisible %}
-        {{ parent() }}
-    {% endif %}
-{% endblock %}
-
 {% block body %}
     {% set disableButton = not data.canProceedCheckout ? 'button--disabled' %}
 

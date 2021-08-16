@@ -10,6 +10,8 @@ namespace SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Pl
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 
 /**
+ * @deprecated Use {@link \SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorResponseStrategyPluginInterface} instead.
+ *
  * Use this plugin to resolve back page url from the given configurator response.
  */
 interface ProductConfiguratorGatewayBackUrlResolverStrategyPluginInterface

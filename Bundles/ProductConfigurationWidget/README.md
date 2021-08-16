@@ -2,7 +2,7 @@
 [![Latest Stable Version](https://poser.pugx.org/spryker-shop/product-configuration-widget/v/stable.svg)](https://packagist.org/packages/spryker-shop/product-configuration-widget)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
-This module provides product configuration details and configuration button to the cart and product detail pages.
+This module provides generic product configuration widgets.
 
 ## Installation
 

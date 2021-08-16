@@ -59,6 +59,7 @@
 
     <transfer name="ProductConfiguratorResponseProcessorResponse">
         <property name="isSuccessful" type="bool"/>
+        <property name="backUrl" type="string"/>
         <property name="productConfiguratorResponse" type="ProductConfiguratorResponse"/>
         <property name="messages" type="Message[]" singular="message"/>
     </transfer>

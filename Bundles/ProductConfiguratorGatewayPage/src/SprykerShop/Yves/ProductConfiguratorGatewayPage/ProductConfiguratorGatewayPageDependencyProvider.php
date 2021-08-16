@@ -13,16 +13,16 @@ use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductCon
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductConfigurationClientBridge;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductConfigurationStorageClientBridge;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductStorageClientBridge;
-use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToQuoteClientBridge;
 
 class ProductConfiguratorGatewayPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const CLIENT_PRODUCT_CONFIGURATION_STORAGE = 'CLIENT_PRODUCT_CONFIGURATION_STORAGE';
     public const CLIENT_PRODUCT_CONFIGURATION = 'CLIENT_PRODUCT_CONFIGURATION';
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
-    public const PLUGINS_PRODUCT_CONFIGURATOR_GATEWAY_BACK_URL_RESOLVER_STRATEGY = 'PLUGINS_PRODUCT_CONFIGURATOR_GATEWAY_BACK_URL_RESOLVER_STRATEGY';
+    public const PLUGINS_PRODUCT_CONFIGURATOR_REQUEST = 'PLUGINS_PRODUCT_CONFIGURATOR_REQUEST';
+    public const PLUGINS_PRODUCT_CONFIGURATOR_REQUEST_DATA_FORM_EXPANDER_STRATEGY = 'PLUGINS_PRODUCT_CONFIGURATOR_REQUEST_DATA_FORM_EXPANDER_STRATEGY';
+    public const PLUGINS_PRODUCT_CONFIGURATOR_RESPONSE = 'PLUGINS_PRODUCT_CONFIGURATOR_RESPONSE';
 
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
@@ -38,13 +38,14 @@ class ProductConfiguratorGatewayPageDependencyProvider extends AbstractBundleDep
     {
         $container = parent::provideDependencies($container);
 
-        $container = $this->addQuoteClient($container);
         $container = $this->addProductConfigurationStorageClient($container);
         $container = $this->addProductConfigurationClient($container);
-        $container = $this->addProductConfiguratorGatewayBackUrlResolverStrategyPlugins($container);
         $container = $this->addProductStorageClient($container);
-        $container = $this->addRouter($container);
         $container = $this->addGlossaryStorageClient($container);
+        $container = $this->addRouter($container);
+        $container = $this->addProductConfiguratorRequestPlugins($container);
+        $container = $this->addProductConfiguratorRequestDataFormExpanderStrategyPlugins($container);
+        $container = $this->addProductConfiguratorResponsePlugins($container);
 
         return $container;
     }
@@ -54,26 +55,10 @@ class ProductConfiguratorGatewayPageDependencyProvider extends AbstractBundleDep
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addProductStorageClient(Container $container)
+    protected function addProductStorageClient(Container $container): Container
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductConfiguratorGatewayPageToProductStorageClientBridge($container->getLocator()->productStorage()->client());
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addQuoteClient(Container $container): Container
-    {
-        $container->set(static::CLIENT_QUOTE, function (Container $container) {
-            return new ProductConfiguratorGatewayPageToQuoteClientBridge(
-                $container->getLocator()->quote()->client()
-            );
         });
 
         return $container;
@@ -130,19 +115,33 @@ class ProductConfiguratorGatewayPageDependencyProvider extends AbstractBundleDep
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addProductConfiguratorGatewayBackUrlResolverStrategyPlugins(Container $container): Container
+    protected function addGlossaryStorageClient(Container $container): Container
     {
-        $container->set(static::PLUGINS_PRODUCT_CONFIGURATOR_GATEWAY_BACK_URL_RESOLVER_STRATEGY, function () {
-            return $this->getProductConfiguratorGatewayBackUrlResolverStrategyPlugins();
+        $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
+            return new ProductConfiguratorGatewayPageToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());
         });
 
         return $container;
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorGatewayBackUrlResolverStrategyPluginInterface[]
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
      */
-    protected function getProductConfiguratorGatewayBackUrlResolverStrategyPlugins(): array
+    protected function addProductConfiguratorRequestPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_CONFIGURATOR_REQUEST, function () {
+            return $this->getProductConfiguratorRequestPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorRequestStrategyPluginInterface[]
+     */
+    protected function getProductConfiguratorRequestPlugins(): array
     {
         return [];
     }
@@ -152,12 +151,42 @@ class ProductConfiguratorGatewayPageDependencyProvider extends AbstractBundleDep
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addGlossaryStorageClient($container): Container
+    protected function addProductConfiguratorRequestDataFormExpanderStrategyPlugins(Container $container): Container
     {
-        $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
-            return new ProductConfiguratorGatewayPageToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());
+        $container->set(static::PLUGINS_PRODUCT_CONFIGURATOR_REQUEST_DATA_FORM_EXPANDER_STRATEGY, function () {
+            return $this->getProductConfiguratorRequestDataFormExpanderStrategyPlugins();
         });
 
         return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorRequestDataFormExpanderStrategyPluginInterface[]
+     */
+    protected function getProductConfiguratorRequestDataFormExpanderStrategyPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductConfiguratorResponsePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_CONFIGURATOR_RESPONSE, function () {
+            return $this->getProductConfiguratorResponsePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorResponseStrategyPluginInterface[]
+     */
+    protected function getProductConfiguratorResponsePlugins(): array
+    {
+        return [];
     }
 }

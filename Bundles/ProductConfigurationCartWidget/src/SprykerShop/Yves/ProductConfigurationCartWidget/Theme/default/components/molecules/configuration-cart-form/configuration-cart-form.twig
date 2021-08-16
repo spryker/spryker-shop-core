@@ -1,0 +1,34 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'configuration-cart-form',
+} %}
+
+{% define data = {
+    form: required,
+    productConfiguratorRouteName: required,
+    actionParams: {},
+    submitButtonClass: 'button button--expand',
+    submitButtonIcon: 'wrench',
+    submitButtonIconModifiers: [],
+} %}
+
+{% block body %}
+    {{ form_start(data.form, {'action': path(data.productConfiguratorRouteName, data.actionParams)}) }}
+        {% block submitButton %}
+            <button class="{{ data.submitButtonClass }}">
+                {% set iconName = data.submitButtonIcon %}
+
+                {% if iconName %}
+                    {% include atom('icon') with {
+                        modifiers: data.submitButtonIconModifiers,
+                        data: {
+                            name: iconName,
+                        },
+                    } only %}
+                {% endif %}
+                {{ 'product_configuration_widget.configure' | trans }}
+            </button>
+        {% endblock %}
+    {{ form_end(data.form) }}
+{% endblock %}

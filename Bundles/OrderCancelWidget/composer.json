@@ -6,7 +6,7 @@
     "require": {
         "php": ">=7.3",
         "spryker-shop/shop-application": "^1.2.0",
-        "spryker-shop/shop-ui": "^1.0.0",
+        "spryker-shop/shop-ui": "^1.54.0",
         "spryker/application": "^3.8.0",
         "spryker/customer": "^7.0.0",
         "spryker/kernel": "^3.52.0",
@@ -30,8 +30,8 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
-        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
     },
     "extra": {
         "branch-alias": {

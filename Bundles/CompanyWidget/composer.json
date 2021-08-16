@@ -5,15 +5,12 @@
     "license": "proprietary",
     "require": {
         "php": ">=7.3",
+        "spryker-shop/shop-ui": "^1.54.0",
         "spryker/customer": "^7.0.0",
         "spryker/kernel": "^3.30.0"
     },
     "require-dev": {
-        "spryker-shop/shop-ui": "*",
         "spryker/code-sniffer": "*"
-    },
-    "suggest": {
-        "spryker-shop/shop-ui": "To add widget customer navigation menu: ^1.28.1."
     },
     "autoload": {
         "psr-4": {

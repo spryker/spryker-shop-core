@@ -9,9 +9,9 @@ namespace SprykerShop\Client\DateTimeConfiguratorPageExample\Plugin\ProductConfi
 
 use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestExpanderInterface;
+use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestExpanderPluginInterface;
 
-class ExampleDateTimeProductConfiguratorRequestExpanderPlugin extends AbstractPlugin implements ProductConfiguratorRequestExpanderInterface
+class ExampleDateTimeProductConfiguratorRequestExpanderPlugin extends AbstractPlugin implements ProductConfiguratorRequestExpanderPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer

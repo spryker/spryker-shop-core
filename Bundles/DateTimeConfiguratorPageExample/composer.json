@@ -5,6 +5,7 @@
     "license": "MIT",
     "require": {
         "php": ">=7.3",
+        "spryker-shop/product-configuration-cart-widget-extension": "^0.1.0",
         "spryker-shop/product-configuration-widget-extension": "^0.1.0",
         "spryker-shop/sales-product-configuration-widget-extension": "^0.1.0",
         "spryker-shop/shop-ui": "^1.45.0",
@@ -13,7 +14,7 @@
         "spryker/checksum-generator": "^1.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/log": "^3.0.0",
-        "spryker/product-configuration-extension": "^0.1.1",
+        "spryker/product-configuration-extension": "^0.2.0",
         "spryker/sales-product-configuration-gui-extension": "^0.1.0",
         "spryker/symfony": "^3.0.0",
         "spryker/transfer": "^3.18.0"

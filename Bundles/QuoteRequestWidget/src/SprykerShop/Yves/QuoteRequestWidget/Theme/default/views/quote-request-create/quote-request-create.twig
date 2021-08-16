@@ -8,9 +8,7 @@
 {% block body %}
     {% set disableButton = not data.canProceedCheckout ? 'button--disabled' %}
 
-    {% if data.isVisible %}
-        <a class="button button--expand {{ disableButton }}" href="{{ url('quote-request/create') }}">
-            {{ 'quote_request_widget.request_for_quote' | trans }}
-        </a>
-    {% endif %}
+    <a class="button button--expand {{ disableButton }}" href="{{ url('quote-request/create') }}">
+        {{ 'quote_request_widget.request_for_quote' | trans }}
+    </a>
 {% endblock %}
