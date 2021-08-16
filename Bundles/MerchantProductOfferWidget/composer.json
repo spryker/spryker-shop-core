@@ -8,8 +8,8 @@
         "spryker-shop/cart-page-extension": "^1.0.0",
         "spryker-shop/wishlist-page-extension": "^1.0.0",
         "spryker/kernel": "^3.52.0",
-        "spryker/merchant-product-offer-storage": "^0.13.0",
-        "spryker/merchant-storage": "^0.2.0",
+        "spryker/merchant-product-offer-storage": "^1.0.0",
+        "spryker/merchant-storage": "^1.0.0",
         "spryker/transfer": "^3.25.0"
     },
     "require-dev": {
