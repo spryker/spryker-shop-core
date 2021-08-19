@@ -75,6 +75,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     public const ROUTE_NAME_CART_RESET_LOCK = 'cart/reset-lock';
 
     public const ROUTE_NAME_GET_UPSELLING_WIDGET_AJAX = 'cart/get-upselling-widget';
+    public const ROUTE_NAME_GET_CART_ITEMS_AJAX = 'cart/get-cart-items';
 
     /**
      * Specification:
@@ -98,6 +99,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $routeCollection = $this->addCartQuickAddRoute($routeCollection);
         $routeCollection = $this->addCartResetLockRoute($routeCollection);
         $routeCollection = $this->addGetUpsellingWidgetAjaxRoute($routeCollection);
+        $routeCollection = $this->addCartItemsAjaxRoute($routeCollection);
 
         return $routeCollection;
     }
@@ -111,6 +113,23 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/cart', 'CartPage', 'Cart', 'indexAction');
         $routeCollection->add(static::ROUTE_NAME_CART, $route);
+
+        return $routeCollection;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\CartPage\Controller\CartController::getCartItemsAjaxAction()
+     *
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Yves\Router\Route\RouteCollection
+     */
+    protected function addCartItemsAjaxRoute(RouteCollection $routeCollection): RouteCollection
+    {
+        $route = $this->buildRoute('/cart/get-cart-items', 'CartPage', 'Cart', 'getCartItemsAjaxAction');
+
+        $route = $route->setMethods(Request::METHOD_GET);
+        $routeCollection->add(static::ROUTE_NAME_GET_CART_ITEMS_AJAX, $route);
 
         return $routeCollection;
     }
