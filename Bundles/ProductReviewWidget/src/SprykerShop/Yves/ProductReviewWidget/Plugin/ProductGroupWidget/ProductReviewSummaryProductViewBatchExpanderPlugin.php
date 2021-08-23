@@ -16,8 +16,8 @@ use SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewBa
 class ProductReviewSummaryProductViewBatchExpanderPlugin extends AbstractPlugin implements ProductViewBatchExpanderPluginInterface
 {
     /**
-     * Specification:
-     *  - Batch expands `ProductViewTransfer` objects with additional data.
+     * {@inheritDoc}
+     *  - Batch expands `ProductViewTransfer` objects with product review rating data.
      *
      * @api
      *

@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
@@ -59,6 +60,7 @@ class CartController extends AbstractController
     public function indexAction(Request $request)
     {
         $viewData = $this->executeIndexAction($request->get('selectedAttributes', []));
+        $viewData['isCartItemsViaAjaxLoadEnabled'] = $this->getFactory()->getConfig()->isCartCartItemsViaAjaxLoadEnabled();
         $viewData['isUpsellingProductsViaAjaxEnabled'] = $this->getFactory()->getConfig()->isLoadingUpsellingProductsViaAjaxEnabled();
 
         return $this->view(
@@ -76,9 +78,9 @@ class CartController extends AbstractController
     protected function executeIndexAction(array $selectedAttributes = []): array
     {
         $cartPageViewArgumentsTransfer = new CartPageViewArgumentsTransfer();
-        $cartPageViewArgumentsTransfer
-            ->setLocale($this->getLocale())
-            ->setSelectedAttributes($selectedAttributes);
+        $cartPageViewArgumentsTransfer->setLocale($this->getLocale())
+            ->setSelectedAttributes($selectedAttributes)
+            ->setIsQuoteValidationEnabled($this->getFactory()->getConfig()->isQuoteValidationEnabled());
 
         $viewData = $this->getFactory()->createCartPageView()->getViewData($cartPageViewArgumentsTransfer);
 
@@ -109,6 +111,37 @@ class CartController extends AbstractController
         ];
 
         return $this->view($viewData, [], '@CartPage/views/ajax-upselling-widget/ajax-upselling-widget.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function getCartItemsAjaxAction(Request $request): View
+    {
+        if (!$this->getFactory()->getConfig()->isCartCartItemsViaAjaxLoadEnabled()) {
+            throw new NotFoundHttpException();
+        }
+
+        return $this->executeGetCartItemsAjaxAction();
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    protected function executeGetCartItemsAjaxAction(): View
+    {
+        $cartPageViewArgumentsTransfer = new CartPageViewArgumentsTransfer();
+        $cartPageViewArgumentsTransfer->setLocale($this->getLocale())
+            ->setSelectedAttributes([])
+            ->setIsQuoteValidationEnabled(false);
+
+        $viewData = $this->getFactory()->createCartPageView()->getViewData($cartPageViewArgumentsTransfer);
+
+        return $this->view($viewData, [], '@CartPage/views/ajax-cart-items/ajax-cart-items.twig');
     }
 
     /**
