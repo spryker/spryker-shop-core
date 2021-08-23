@@ -22,6 +22,10 @@ export default class ViewportIntersectionObserver extends Component {
         this.updateTargets();
     }
 
+    /**
+     * Updates targets to follow for the observer.
+     * @publicAPI
+     */
     updateTargets(): void {
         this.observer = this.observerInit();
         this.viewportOptions = {
