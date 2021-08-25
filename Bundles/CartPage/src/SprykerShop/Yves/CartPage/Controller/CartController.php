@@ -79,8 +79,7 @@ class CartController extends AbstractController
     {
         $cartPageViewArgumentsTransfer = new CartPageViewArgumentsTransfer();
         $cartPageViewArgumentsTransfer->setLocale($this->getLocale())
-            ->setSelectedAttributes($selectedAttributes)
-            ->setIsQuoteValidationEnabled($this->getFactory()->getConfig()->isQuoteValidationEnabled());
+            ->setSelectedAttributes($selectedAttributes);
 
         $viewData = $this->getFactory()->createCartPageView()->getViewData($cartPageViewArgumentsTransfer);
 
