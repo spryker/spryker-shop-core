@@ -3,5 +3,5 @@ export default register('product-cart-items-list', () =>
     import(
         /* webpackMode: "eager" */
         './cart-items-list'
-        ),
+    ),
 );
