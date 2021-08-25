@@ -29,7 +29,9 @@ class ProductReviewSummaryProductViewBatchExpanderPlugin extends AbstractPlugin 
      */
     public function expandBatch(array $productViewTransfers): array
     {
-        $bulkProductReviewSearchRequestTransfer = $this->createBulkProductReviewSearchRequestTransfer($productViewTransfers);
+        $bulkProductReviewSearchRequestTransfer = $this->createBulkProductReviewSearchRequestTransfer(
+            $this->getProductAbstractIds($productViewTransfers)
+        );
 
         $productViewTransfers = $this->getFactory()
             ->getProductReviewClient()
@@ -54,19 +56,14 @@ class ProductReviewSummaryProductViewBatchExpanderPlugin extends AbstractPlugin 
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer
      */
-    protected function createBulkProductReviewSearchRequestTransfer(array $productViewTransfers)
+    protected function createBulkProductReviewSearchRequestTransfer(array $productAbstractIds): BulkProductReviewSearchRequestTransfer
     {
-        $productAbstractIds = $this->getProductAbstractIds($productViewTransfers);
-        $filterTransfer = new FilterTransfer();
-
-        $productReviewSearchRequestTransfer = new BulkProductReviewSearchRequestTransfer();
-        $productReviewSearchRequestTransfer->setProductAbstractIds($productAbstractIds);
-        $productReviewSearchRequestTransfer->setFilter($filterTransfer);
-
-        return $productReviewSearchRequestTransfer;
+        return (new BulkProductReviewSearchRequestTransfer())
+            ->setProductAbstractIds($productAbstractIds)
+            ->setFilter(new FilterTransfer());
     }
 }
