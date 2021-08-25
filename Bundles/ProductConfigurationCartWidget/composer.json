@@ -1,0 +1,39 @@
+{
+    "name": "spryker-shop/product-configuration-cart-widget",
+    "type": "library",
+    "description": "ProductConfigurationCartWidget module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker-shop/product-configuration-cart-widget-extension": "^0.1.0",
+        "spryker-shop/product-configurator-gateway-page-extension": "^0.2.0",
+        "spryker-shop/shop-ui": "^1.54.0",
+        "spryker/application": "^3.0.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/product-configuration-cart": "^0.1.0",
+        "spryker/symfony": "^3.0.0",
+        "spryker/transfer": "^3.25.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "SprykerShop\\": "src/SprykerShop/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

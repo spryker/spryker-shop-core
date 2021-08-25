@@ -12,14 +12,14 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 class ProductConfiguratorGatewayPageConfig extends AbstractBundleConfig
 {
     /**
-     * @uses \Spryker\Shared\ProductConfiguration\ProductConfigurationConfig::SOURCE_TYPE_PDP
+     * @uses \SprykerShop\Yves\ProductConfigurationWidget\ProductConfigurationWidgetConfig::SOURCE_TYPE_PDP
      */
     protected const SOURCE_TYPE_PDP = 'SOURCE_TYPE_PDP';
 
     /**
-     * @uses \Spryker\Shared\ProductConfiguration\ProductConfigurationConfig::SOURCE_TYPE_CART
+     * @uses \SprykerShop\Shared\DateTimeConfiguratorPageExample\DateTimeConfiguratorPageExampleConfig::DATE_TIME_CONFIGURATOR_KEY
      */
-    protected const SOURCE_TYPE_CART = 'SOURCE_TYPE_CART';
+    protected const DATE_TIME_CONFIGURATOR_KEY = 'DATE_TIME_CONFIGURATOR';
 
     protected const PRODUCT_CONFIGURATOR_GATEWAY_REQUEST_FORM_NAME = 'product_configurator_request_data_form';
 
@@ -38,18 +38,20 @@ class ProductConfiguratorGatewayPageConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getCartSourceType(): string
+    public function getProductConfiguratorGatewayRequestFormName(): string
     {
-        return static::SOURCE_TYPE_CART;
+        return static::PRODUCT_CONFIGURATOR_GATEWAY_REQUEST_FORM_NAME;
     }
 
     /**
      * @api
      *
-     * @return string
+     * @return string[]
      */
-    public function getProductConfiguratorGatewayRequestFormName(): string
+    public function getSupportedConfiguratorKeys(): array
     {
-        return static::PRODUCT_CONFIGURATOR_GATEWAY_REQUEST_FORM_NAME;
+        return [
+            static::DATE_TIME_CONFIGURATOR_KEY,
+        ];
     }
 }

@@ -69,7 +69,7 @@ class ProductConfigurationProductDetailPageButtonWidget extends AbstractWidget
     protected function addFormParameter(ProductViewTransfer $productViewTransfer): void
     {
         $productConfiguratorButtonFormCartPageDataProvider = $this->getFactory()
-            ->createProductConfiguratorButtonFormProductDetailPageDataProvider();
+            ->createProductConfiguratorButtonFormDataProvider();
 
         $productConfigurationButtonForm = $this->getFactory()
             ->getProductConfigurationButtonForm()

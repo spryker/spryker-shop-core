@@ -30,27 +30,54 @@ class ProductConfiguratorGatewayPageToProductConfigurationClientBridge implement
     /**
      * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer
+     * @return \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer
      */
-    public function resolveProductConfiguratorRedirect(
+    public function expandProductConfiguratorRequestWithContextData(
         ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
-    ): ProductConfiguratorRedirectTransfer {
-        return $this->productConfigurationClient->prepareProductConfiguratorRedirect($productConfiguratorRequestTransfer);
+    ): ProductConfiguratorRequestTransfer {
+        return $this->productConfigurationClient->expandProductConfiguratorRequestWithContextData($productConfiguratorRequestTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+     * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer
+     */
+    public function sendProductConfiguratorAccessTokenRequest(
+        ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+    ): ProductConfiguratorRedirectTransfer {
+        return $this->productConfigurationClient->sendProductConfiguratorAccessTokenRequest($productConfiguratorRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
      * @param array $configuratorResponseData
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
      */
-    public function processProductConfiguratorResponse(
-        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
+    public function validateProductConfiguratorCheckSumResponse(
+        ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer,
         array $configuratorResponseData
     ): ProductConfiguratorResponseProcessorResponseTransfer {
-        return $this->productConfigurationClient->processProductConfiguratorResponse(
-            $productConfiguratorResponseTransfer,
+        return $this->productConfigurationClient->validateProductConfiguratorCheckSumResponse(
+            $productConfiguratorResponseProcessorResponseTransfer,
             $configuratorResponseData
+        );
+    }
+
+    /**
+     * @param array $configuratorResponseData
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer
+     */
+    public function mapProductConfiguratorCheckSumResponse(
+        array $configuratorResponseData,
+        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+    ): ProductConfiguratorResponseTransfer {
+        return $this->productConfigurationClient->mapProductConfiguratorCheckSumResponse(
+            $configuratorResponseData,
+            $productConfiguratorResponseTransfer
         );
     }
 }

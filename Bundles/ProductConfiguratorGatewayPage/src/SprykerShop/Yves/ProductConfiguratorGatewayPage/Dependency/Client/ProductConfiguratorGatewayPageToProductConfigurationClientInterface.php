@@ -17,20 +17,40 @@ interface ProductConfiguratorGatewayPageToProductConfigurationClientInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
      *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer
+     */
+    public function expandProductConfiguratorRequestWithContextData(
+        ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+    ): ProductConfiguratorRequestTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+     *
      * @return \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer
      */
-    public function resolveProductConfiguratorRedirect(
+    public function sendProductConfiguratorAccessTokenRequest(
         ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
     ): ProductConfiguratorRedirectTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
      * @param array $configuratorResponseData
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
      */
-    public function processProductConfiguratorResponse(
-        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
+    public function validateProductConfiguratorCheckSumResponse(
+        ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer,
         array $configuratorResponseData
     ): ProductConfiguratorResponseProcessorResponseTransfer;
+
+    /**
+     * @param array $configuratorResponseData
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer
+     */
+    public function mapProductConfiguratorCheckSumResponse(
+        array $configuratorResponseData,
+        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+    ): ProductConfiguratorResponseTransfer;
 }

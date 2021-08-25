@@ -4,4 +4,13 @@
     <transfer name="ProductConfiguratorResponse">
     </transfer>
 
+    <transfer name="ProductConfiguratorResponseProcessorResponse">
+    </transfer>
+
+    <transfer name="ProductConfiguratorRedirect">
+    </transfer>
+
+    <transfer name="ProductConfiguratorRequest">
+    </transfer>
+
 </transfers>

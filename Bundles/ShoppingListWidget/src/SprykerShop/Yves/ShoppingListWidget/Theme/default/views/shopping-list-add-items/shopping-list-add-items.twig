@@ -5,12 +5,6 @@
     isVisible: _widget.isVisible,
 } %}
 
-{% block template %}
-    {% if data.isVisible %}
-        {{ parent() }}
-    {% endif %}
-{% endblock %}
-
 {% block body %}
     <hr>
     {% block content %}

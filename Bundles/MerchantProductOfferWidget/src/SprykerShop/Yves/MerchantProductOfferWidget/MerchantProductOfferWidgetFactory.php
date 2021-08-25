@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\MerchantProductOfferWidget;
 
-use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantStorageClientInterface;
@@ -64,15 +63,5 @@ class MerchantProductOfferWidgetFactory extends AbstractFactory
     public function getMerchantStorageClient(): MerchantProductOfferWidgetToMerchantStorageClientInterface
     {
         return $this->getProvidedDependency(MerchantProductOfferWidgetDependencyProvider::CLIENT_MERCHANT_STORAGE);
-    }
-
-    /**
-     * @deprecated Use {@link \Spryker\Yves\Kernel\AbstractFactory::getContainer()} instead.
-     *
-     * @return \Spryker\Shared\Kernel\Communication\Application
-     */
-    public function getApplication(): Application
-    {
-        return $this->getProvidedDependency(MerchantProductOfferWidgetDependencyProvider::PLUGIN_APPLICATION);
     }
 }

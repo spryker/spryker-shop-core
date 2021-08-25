@@ -8,10 +8,8 @@
 {% set itemClass = data.isActivePage ? ' menu__item--active' : '' %}
 
 {% block body %}
-    {% if data.isVisible %}
-        <li class="menu__item {{ itemClass }}">
-            <a href="{{ url('quote-request') }}" data-id="sidebar-quote-request">{{ 'quote_request_widget.request_for_quote.list.title' | trans }}</a>
-        </li>
-    {% endif %}
+    <li class="menu__item {{ itemClass }}">
+        <a href="{{ url('quote-request') }}" data-id="sidebar-quote-request">{{ 'quote_request_widget.request_for_quote.list.title' | trans }}</a>
+    </li>
 {% endblock %}
 

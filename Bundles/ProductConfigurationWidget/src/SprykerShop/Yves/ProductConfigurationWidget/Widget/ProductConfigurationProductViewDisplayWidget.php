@@ -68,7 +68,7 @@ class ProductConfigurationProductViewDisplayWidget extends AbstractWidget
      */
     protected function addProductConfigurationInstanceParameter(ProductViewTransfer $productViewTransfer): void
     {
-        $this->addParameter(static::PARAMETER_PRODUCT_CONFIGURATION_INSTANCE, $productViewTransfer->getProductConfigurationInstance());
+        $this->addParameter(static::PARAMETER_PRODUCT_CONFIGURATION_INSTANCE, $productViewTransfer->getProductConfigurationInstanceOrFail());
     }
 
     /**
@@ -80,7 +80,7 @@ class ProductConfigurationProductViewDisplayWidget extends AbstractWidget
     {
         $productConfigurationTemplateTransfer = $this->getFactory()
             ->createProductConfigurationTemplateResolver()
-            ->resolveProductConfigurationTemplate($productViewTransfer->getProductConfigurationInstance());
+            ->resolveProductConfigurationTemplate($productViewTransfer->getProductConfigurationInstanceOrFail());
 
         $this->addParameter(static::PARAMETER_PRODUCT_CONFIGURATION_TEMPLATE, $productConfigurationTemplateTransfer);
     }

@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Configurator\DateTimeConfiguratorPageExample;
 
+use Generated\Shared\Transfer\ProductConfiguratorPageResponseTransfer;
 use Spryker\ChecksumGenerator\Checksum\CrcOpenSslChecksumGenerator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +21,8 @@ class ConfiguratorPage
     protected const REQUEST_PARAMETER_PREPARER_CONFIGURATION = 'prepareConfiguration';
 
     protected const CONFIGURATOR_SESSION_KEY = 'CONFIGURATOR_SESSION_KEY';
+
+    protected const MESSAGE_CANNOT_START_SESSION = 'Can\'t start session.';
 
     /**
      * @var \Symfony\Component\HttpFoundation\Session\Session
@@ -62,11 +65,14 @@ class ConfiguratorPage
      */
     protected function createTokenAction(): Response
     {
+        $productConfiguratorPageResponseTransfer = new ProductConfiguratorPageResponseTransfer();
+
         if (!$this->session->start()) {
-            return new JsonResponse([
-                'isSuccessful' => false,
-                'message' => 'Can\'t start session.',
-            ]);
+            $productConfiguratorPageResponseTransfer
+                ->setIsSuccessful(false)
+                ->setMessage(static::MESSAGE_CANNOT_START_SESSION);
+
+            return new JsonResponse($productConfiguratorPageResponseTransfer->toArray());
         }
 
         $this->session->set(
@@ -74,10 +80,11 @@ class ConfiguratorPage
             json_decode($this->request->getContent(), true) ?? []
         );
 
-        return new JsonResponse([
-            'isSuccessful' => true,
-            'configuratorRedirectUrl' => $this->createConfiguratorRedirectUrl(),
-        ], Response::HTTP_OK);
+        $productConfiguratorPageResponseTransfer
+            ->setIsSuccessful(true)
+            ->setConfiguratorRedirectUrl($this->createConfiguratorRedirectUrl());
+
+        return new JsonResponse($productConfiguratorPageResponseTransfer->toArray(), Response::HTTP_OK);
     }
 
     /**

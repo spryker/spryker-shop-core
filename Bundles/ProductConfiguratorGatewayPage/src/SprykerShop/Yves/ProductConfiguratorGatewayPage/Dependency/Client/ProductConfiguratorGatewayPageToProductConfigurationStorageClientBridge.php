@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client;
 
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 
 class ProductConfiguratorGatewayPageToProductConfigurationStorageClientBridge implements ProductConfiguratorGatewayPageToProductConfigurationStorageClientInterface
 {
@@ -37,17 +36,18 @@ class ProductConfiguratorGatewayPageToProductConfigurationStorageClientBridge im
     }
 
     /**
-     * @param string $groupKey
      * @param string $sku
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null
+     * @return void
      */
-    public function findProductConfigurationInstanceInQuote(
-        string $groupKey,
+    public function storeProductConfigurationInstanceBySku(
         string $sku,
-        QuoteTransfer $quoteTransfer
-    ): ?ProductConfigurationInstanceTransfer {
-        return $this->productConfigurationStorageClient->findProductConfigurationInstanceInQuote($groupKey, $sku, $quoteTransfer);
+        ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
+    ): void {
+        $this->productConfigurationStorageClient->storeProductConfigurationInstanceBySku(
+            $sku,
+            $productConfigurationInstanceTransfer
+        );
     }
 }

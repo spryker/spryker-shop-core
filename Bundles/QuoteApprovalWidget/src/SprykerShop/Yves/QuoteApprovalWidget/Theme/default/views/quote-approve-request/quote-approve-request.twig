@@ -14,12 +14,6 @@
     }
 } %}
 
-{% block template %}
-    {% if data.isVisible %}
-        {{ parent() }}
-    {% endif %}
-{% endblock %}
-
 {% block body %}
     {% set quoteApproval = data.quote.quoteApprovals | length > 0 ? data.quote.quoteApprovals | last : null %}
     {% set customer = quoteApproval ? quoteApproval.approver.customer : null %}

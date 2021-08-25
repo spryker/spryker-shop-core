@@ -1,0 +1,19 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isVisible: _widget.isVisible,
+    form: _widget.form | default,
+    productConfiguratorRouteName: _widget.productConfiguratorRouteName | default,
+    sourceType: _widget.sourceType | default,
+    itemGroupKey: _widget.itemGroupKey | default,
+    quantity: _widget.quantity | default,
+} %}
+
+{% block body %}
+    {% include molecule('configuration-cart-form', 'ProductConfigurationCartWidget') with {
+        data: {
+            form: data.form,
+            productConfiguratorRouteName: data.productConfiguratorRouteName,
+        },
+    } only %}
+{% endblock %}

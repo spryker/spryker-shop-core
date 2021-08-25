@@ -21,15 +21,7 @@ class ProductConfigurationWidgetConfig extends AbstractBundleConfig
      */
     protected const PRODUCT_CONFIGURATOR_GATEWAY_REQUEST_FORM_NAME = 'product_configurator_request_data_form';
 
-    /**
-     * @uses \Spryker\Shared\ProductConfiguration\ProductConfigurationConfig::SOURCE_TYPE_PDP
-     */
     protected const SOURCE_TYPE_PDP = 'SOURCE_TYPE_PDP';
-
-    /**
-     * @uses \Spryker\Shared\ProductConfiguration\ProductConfigurationConfig::SOURCE_TYPE_CART
-     */
-    protected const SOURCE_TYPE_CART = 'SOURCE_TYPE_CART';
 
     /**
      * @api
@@ -39,16 +31,6 @@ class ProductConfigurationWidgetConfig extends AbstractBundleConfig
     public function getPdpSourceType(): string
     {
         return static::SOURCE_TYPE_PDP;
-    }
-
-    /**
-     * @api
-     *
-     * @return string
-     */
-    public function getCartSourceType(): string
-    {
-        return static::SOURCE_TYPE_CART;
     }
 
     /**

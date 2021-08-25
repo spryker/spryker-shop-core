@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ProductConfiguratorGatewayPage\Controller;
 
 use Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer;
+use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Exception\MissedPropertyException;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Plugin\Router\ProductConfiguratorGatewayPageRouteProviderPlugin;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -58,8 +59,13 @@ class GatewayRequestController extends AbstractController
                 static::ABSOLUTE_URL
             ));
 
-        $productConfiguratorRedirectTransfer = $this->getFactory()->createProductConfiguratorRedirectResolver()
-            ->resolveProductConfiguratorRedirect($productConfiguratorRequestDataTransfer);
+        $productConfiguratorRequestTransfer = $this->getFactory()->getProductConfigurationClient()->expandProductConfiguratorRequestWithContextData(
+            (new ProductConfiguratorRequestTransfer())->setProductConfiguratorRequestData($productConfiguratorRequestDataTransfer)
+        );
+
+        $productConfiguratorRedirectTransfer = $this->getFactory()
+            ->createProductConfiguratorRedirectResolver()
+            ->resolveProductConfiguratorAccessTokenRedirect($productConfiguratorRequestTransfer);
 
         if ($productConfiguratorRedirectTransfer->getIsSuccessful()) {
             return $this->redirectResponseExternal($productConfiguratorRedirectTransfer->getConfiguratorRedirectUrlOrFail());
@@ -77,7 +83,7 @@ class GatewayRequestController extends AbstractController
      */
     protected function handleProductConfigurationRedirectErrors(
         ProductConfiguratorRedirectTransfer $productConfiguratorRedirectTransfer
-    ) {
+    ): void {
         foreach ($productConfiguratorRedirectTransfer->getMessages() as $messageTransfer) {
             $this->addErrorMessage($messageTransfer->getValueOrFail());
         }
@@ -92,19 +98,22 @@ class GatewayRequestController extends AbstractController
      */
     protected function validateProductConfiguratorRequestDataForm(Request $request): ProductConfiguratorRequestDataTransfer
     {
-        $form = $this->getFactory()
-            ->getProductConfiguratorRequestDataForm()->handleRequest($request);
+        $productConfiguratorRequestDataForm = $this->getFactory()->getProductConfiguratorRequestDataForm(
+            $this->getFactory()->createProductConfiguratorRequestDataFormDataProvider()->getOptions($request)
+        );
 
-        if (!$form->isSubmitted() || !$form->isValid()) {
+        $productConfiguratorRequestDataForm->handleRequest($request);
+
+        if (!$productConfiguratorRequestDataForm->isSubmitted() || !$productConfiguratorRequestDataForm->isValid()) {
             $errorList = [];
 
-            foreach ($form->getErrors(true) as $error) {
+            foreach ($productConfiguratorRequestDataForm->getErrors(true) as $error) {
                 $errorList[] = $error->getMessage();
             }
 
             throw new MissedPropertyException(implode(PHP_EOL, $errorList));
         }
 
-        return $form->getData();
+        return $productConfiguratorRequestDataForm->getData();
     }
 }

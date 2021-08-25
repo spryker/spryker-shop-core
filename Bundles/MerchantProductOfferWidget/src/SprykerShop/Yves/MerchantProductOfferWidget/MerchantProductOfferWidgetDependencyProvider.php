@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\MerchantProductOfferWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProductOfferStorageClientBridge;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantStorageClientBridge;
 
@@ -17,11 +16,6 @@ class MerchantProductOfferWidgetDependencyProvider extends AbstractBundleDepende
 {
     public const CLIENT_MERCHANT_STORAGE = 'CLIENT_MERCHANT_STORAGE';
     public const CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE = 'CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE';
-
-    /**
-     * @deprecated Will be removed without replacement.
-     */
-    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -34,7 +28,6 @@ class MerchantProductOfferWidgetDependencyProvider extends AbstractBundleDepende
 
         $container = $this->addMerchantProductOfferStorageClient($container);
         $container = $this->addMerchantStorageClient($container);
-        $container = $this->addApplication($container);
 
         return $container;
     }
@@ -62,24 +55,6 @@ class MerchantProductOfferWidgetDependencyProvider extends AbstractBundleDepende
     {
         $container->set(static::CLIENT_MERCHANT_STORAGE, function (Container $container) {
             return new MerchantProductOfferWidgetToMerchantStorageClientBridge($container->getLocator()->merchantStorage()->client());
-        });
-
-        return $container;
-    }
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addApplication(Container $container): Container
-    {
-        $container->set(static::PLUGIN_APPLICATION, function () {
-            $pimplePlugin = new Pimple();
-
-            return $pimplePlugin->getApplication();
         });
 
         return $container;

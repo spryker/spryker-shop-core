@@ -9,9 +9,7 @@ namespace SprykerShop\Yves\ProductConfigurationWidget;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\ProductConfigurationWidget\Dependency\Client\ProductConfigurationWidgetToProductConfigurationClientInterface;
-use SprykerShop\Yves\ProductConfigurationWidget\Form\DataProvider\ProductConfiguratorButtonFormCartPageDataProvider;
-use SprykerShop\Yves\ProductConfigurationWidget\Form\DataProvider\ProductConfiguratorButtonFormProductDetailPageDataProvider;
+use SprykerShop\Yves\ProductConfigurationWidget\Form\DataProvider\ProductConfiguratorButtonFormDataProvider;
 use SprykerShop\Yves\ProductConfigurationWidget\Form\ProductConfigurationButtonForm;
 use SprykerShop\Yves\ProductConfigurationWidget\Resolver\ProductConfigurationTemplateResolver;
 use SprykerShop\Yves\ProductConfigurationWidget\Resolver\ProductConfigurationTemplateResolverInterface;
@@ -45,19 +43,11 @@ class ProductConfigurationWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductConfigurationWidget\Form\DataProvider\ProductConfiguratorButtonFormCartPageDataProvider
+     * @return \SprykerShop\Yves\ProductConfigurationWidget\Form\DataProvider\ProductConfiguratorButtonFormDataProvider
      */
-    public function createProductConfiguratorButtonFormCartPageDataProvider(): ProductConfiguratorButtonFormCartPageDataProvider
+    public function createProductConfiguratorButtonFormDataProvider(): ProductConfiguratorButtonFormDataProvider
     {
-        return new ProductConfiguratorButtonFormCartPageDataProvider($this->getConfig());
-    }
-
-    /**
-     * @return \SprykerShop\Yves\ProductConfigurationWidget\Form\DataProvider\ProductConfiguratorButtonFormProductDetailPageDataProvider
-     */
-    public function createProductConfiguratorButtonFormProductDetailPageDataProvider(): ProductConfiguratorButtonFormProductDetailPageDataProvider
-    {
-        return new ProductConfiguratorButtonFormProductDetailPageDataProvider($this->getConfig());
+        return new ProductConfiguratorButtonFormDataProvider($this->getConfig());
     }
 
     /**
@@ -74,13 +64,5 @@ class ProductConfigurationWidgetFactory extends AbstractFactory
     public function getProductConfigurationRenderStrategyPlugins(): array
     {
         return $this->getProvidedDependency(ProductConfigurationWidgetDependencyProvider::PLUGINS_PRODUCT_CONFIGURATION_RENDER_STRATEGY);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\ProductConfigurationWidget\Dependency\Client\ProductConfigurationWidgetToProductConfigurationClientInterface
-     */
-    public function getProductConfigurationClient(): ProductConfigurationWidgetToProductConfigurationClientInterface
-    {
-        return $this->getProvidedDependency(ProductConfigurationWidgetDependencyProvider::CLIENT_PRODUCT_CONFIGURATION);
     }
 }

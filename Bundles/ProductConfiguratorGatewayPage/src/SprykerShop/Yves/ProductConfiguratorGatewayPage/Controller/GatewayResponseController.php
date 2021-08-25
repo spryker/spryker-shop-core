@@ -40,21 +40,28 @@ class GatewayResponseController extends AbstractController
      */
     protected function executeIndexAction(Request $request): RedirectResponse
     {
-        $productConfigurationResponseTransfer = $this->getFactory()
+        $productConfiguratorResponseTransfer = $this->getFactory()
             ->createProductConfiguratorResponseDataMapper()
             ->mapRequestToProductConfiguratorResponse($request, new ProductConfiguratorResponseTransfer());
 
         $productConfiguratorResponseProcessorResponseTransfer = $this->getFactory()
-            ->getProductConfigurationClient()
-            ->processProductConfiguratorResponse($productConfigurationResponseTransfer, $request->request->all());
+            ->createProductConfiguratorResponseProcessor()
+            ->processProductConfiguratorCheckSumResponse(
+                $productConfiguratorResponseTransfer,
+                $request->request->all()
+            );
 
-        if ($productConfiguratorResponseProcessorResponseTransfer->getMessages()->count() > 0) {
+        if ($productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful()) {
+            return $this->redirectResponseExternal(
+                $productConfiguratorResponseProcessorResponseTransfer->getBackUrlOrFail()
+            );
+        }
+
+        if ($productConfiguratorResponseProcessorResponseTransfer->getMessages()->count()) {
             $this->handleResponseErrors($productConfiguratorResponseProcessorResponseTransfer);
         }
 
-        return $this->executeProductConfiguratorGatewayBackUrlResolverStrategyPlugins(
-            $productConfiguratorResponseProcessorResponseTransfer->getProductConfiguratorResponseOrFail()
-        );
+        return $this->redirectResponseInternal(static::FALLBACK_ROUTE_NAME);
     }
 
     /**
@@ -80,22 +87,5 @@ class GatewayResponseController extends AbstractController
         foreach ($translatedErrorMessages as $translatedErrorMessage) {
             $this->addErrorMessage($translatedErrorMessage);
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    protected function executeProductConfiguratorGatewayBackUrlResolverStrategyPlugins(
-        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
-    ): RedirectResponse {
-        foreach ($this->getFactory()->getProductConfiguratorGatewayBackUrlResolverStrategyPlugins() as $productConfiguratorGatewayBackUrlResolverStrategyPlugin) {
-            if ($productConfiguratorGatewayBackUrlResolverStrategyPlugin->isApplicable($productConfiguratorResponseTransfer)) {
-                return $this->redirectResponseExternal($productConfiguratorGatewayBackUrlResolverStrategyPlugin->resolveBackUrl($productConfiguratorResponseTransfer));
-            }
-        }
-
-        return $this->redirectResponseInternal(static::FALLBACK_ROUTE_NAME);
     }
 }

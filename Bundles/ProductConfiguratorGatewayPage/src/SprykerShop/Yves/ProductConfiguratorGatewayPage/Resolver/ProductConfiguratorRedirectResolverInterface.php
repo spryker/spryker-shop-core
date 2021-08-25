@@ -8,16 +8,16 @@
 namespace SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver;
 
 use Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer;
-use Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer;
+use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
 
 interface ProductConfiguratorRedirectResolverInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer
+     * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer
      */
-    public function resolveProductConfiguratorRedirect(
-        ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer
+    public function resolveProductConfiguratorAccessTokenRedirect(
+        ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
     ): ProductConfiguratorRedirectTransfer;
 }
