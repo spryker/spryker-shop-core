@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\ProductReviewWidget\Plugin\ProductGroupWidget;
 
+use Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewBatchExpanderPluginInterface;
 
@@ -27,11 +29,7 @@ class ProductReviewSummaryProductViewBatchExpanderPlugin extends AbstractPlugin 
      */
     public function expandBatch(array $productViewTransfers): array
     {
-        $productAbstractIds = $this->getProductAbstractIds($productViewTransfers);
-
-        $bulkProductReviewSearchRequestTransfer = $this->getFactory()
-            ->createBulkProductReviewSearchRequestBuilder()
-            ->createBulkProductReviewSearchRequestTransfer($productAbstractIds);
+        $bulkProductReviewSearchRequestTransfer = $this->createBulkProductReviewSearchRequestTransfer($productViewTransfers);
 
         $productViewTransfers = $this->getFactory()
             ->getProductReviewClient()
@@ -53,5 +51,22 @@ class ProductReviewSummaryProductViewBatchExpanderPlugin extends AbstractPlugin 
         }
 
         return $ids;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
+     *
+     * @return \Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer
+     */
+    protected function createBulkProductReviewSearchRequestTransfer(array $productViewTransfers)
+    {
+        $productAbstractIds = $this->getProductAbstractIds($productViewTransfers);
+        $filterTransfer = new FilterTransfer();
+
+        $productReviewSearchRequestTransfer = new BulkProductReviewSearchRequestTransfer();
+        $productReviewSearchRequestTransfer->setProductAbstractIds($productAbstractIds);
+        $productReviewSearchRequestTransfer->setFilter($filterTransfer);
+
+        return $productReviewSearchRequestTransfer;
     }
 }

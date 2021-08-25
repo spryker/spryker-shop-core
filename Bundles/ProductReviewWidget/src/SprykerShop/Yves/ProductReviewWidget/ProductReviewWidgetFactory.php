@@ -10,8 +10,6 @@ namespace SprykerShop\Yves\ProductReviewWidget;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\Application;
 use Spryker\Yves\ProductReview\ProductReviewFactory as SprykerProductReviewFactory;
-use SprykerShop\Yves\ProductReviewWidget\BulkProductReviewSearchRequestBuilder\BulkProductReviewSearchRequestBuilder;
-use SprykerShop\Yves\ProductReviewWidget\BulkProductReviewSearchRequestBuilder\BulkProductReviewSearchRequestBuilderInterface;
 use SprykerShop\Yves\ProductReviewWidget\Controller\Calculator\ProductReviewSummaryCalculator;
 use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToCustomerClientInterface;
 use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductReviewClientInterface;
@@ -118,13 +116,5 @@ class ProductReviewWidgetFactory extends SprykerProductReviewFactory
     public function createProductReviewSearchRequestBuilder(): ProductReviewSearchRequestBuilderInterface
     {
         return new ProductReviewSearchRequestBuilder();
-    }
-
-    /**
-     * @return \SprykerShop\Yves\ProductReviewWidget\BulkProductReviewSearchRequestBuilder\BulkProductReviewSearchRequestBuilderInterface
-     */
-    public function createBulkProductReviewSearchRequestBuilder(): BulkProductReviewSearchRequestBuilderInterface
-    {
-        return new BulkProductReviewSearchRequestBuilder();
     }
 }
