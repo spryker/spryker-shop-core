@@ -94,10 +94,16 @@ class CartController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return \Spryker\Yves\Kernel\View\View
      */
     public function getUpsellingProductsWidgetAjaxAction(Request $request): View
     {
+        if (!$this->getFactory()->getConfig()->isLoadingUpsellingProductsViaAjaxEnabled()) {
+            throw new NotFoundHttpException();
+        }
+
         return $this->executeGetUpsellingProductsWidgetAjaxAction();
     }
 
@@ -136,8 +142,7 @@ class CartController extends AbstractController
     {
         $cartPageViewArgumentsTransfer = new CartPageViewArgumentsTransfer();
         $cartPageViewArgumentsTransfer->setLocale($this->getLocale())
-            ->setSelectedAttributes([])
-            ->setIsQuoteValidationEnabled(false);
+            ->setSelectedAttributes([]);
 
         $viewData = $this->getFactory()->createCartPageView()->getViewData($cartPageViewArgumentsTransfer);
 
