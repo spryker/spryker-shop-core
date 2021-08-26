@@ -40,11 +40,11 @@ class ProductGroupWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewBatchExpanderPluginInterface[]
+     * @return \SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewBulkExpanderPluginInterface[]
      */
-    public function getProductViewBatchExpanderPlugins(): array
+    public function getProductViewBulkExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(ProductGroupWidgetDependencyProvider::PLUGINS_PRODUCT_VIEW_BATCH_EXPANDERS);
+        return $this->getProvidedDependency(ProductGroupWidgetDependencyProvider::PLUGINS_PRODUCT_VIEW_BULK_EXPANDERS);
     }
 
     /**
@@ -56,7 +56,7 @@ class ProductGroupWidgetFactory extends AbstractFactory
             $this->getProductGroupStorageClient(),
             $this->getProductStorageClient(),
             $this->getProductViewExpanderPlugins(),
-            $this->getProductViewBatchExpanderPlugins()
+            $this->getProductViewBulkExpanderPlugins()
         );
     }
 }

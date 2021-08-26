@@ -52,7 +52,7 @@ interface ProductReviewWidgetToProductReviewClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function expandProductViewBatchWithProductReviewData(
+    public function expandProductViewBulkWithProductReviewData(
         array $productViewTransfers,
         BulkProductReviewSearchRequestTransfer $bukkProductReviewSearchRequestTransfer
     ): array;

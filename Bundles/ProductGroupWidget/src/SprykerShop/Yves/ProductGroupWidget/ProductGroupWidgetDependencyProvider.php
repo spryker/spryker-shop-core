@@ -18,7 +18,7 @@ class ProductGroupWidgetDependencyProvider extends AbstractBundleDependencyProvi
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
 
     public const PLUGIN_PRODUCT_VIEW_EXPANDERS = 'PLUGIN_PRODUCT_VIEW_EXPANDERS';
-    public const PLUGINS_PRODUCT_VIEW_BATCH_EXPANDERS = 'PLUGINS_PRODUCT_VIEW_BATCH_EXPANDERS';
+    public const PLUGINS_PRODUCT_VIEW_BULK_EXPANDERS = 'PLUGINS_PRODUCT_VIEW_BULK_EXPANDERS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -30,7 +30,7 @@ class ProductGroupWidgetDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addProductGroupStorageClient($container);
         $container = $this->addProductStorageClient($container);
         $container = $this->addProductViewExpanderPlugins($container);
-        $container = $this->addProductViewBatchExpanderPlugins($container);
+        $container = $this->addProductViewBulkExpanderPlugins($container);
 
         return $container;
     }
@@ -82,10 +82,10 @@ class ProductGroupWidgetDependencyProvider extends AbstractBundleDependencyProvi
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addProductViewBatchExpanderPlugins(Container $container): Container
+    protected function addProductViewBulkExpanderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_PRODUCT_VIEW_BATCH_EXPANDERS, function () {
-            return $this->getProductViewBatchExpanderPlugins();
+        $container->set(static::PLUGINS_PRODUCT_VIEW_BULK_EXPANDERS, function () {
+            return $this->getProductViewBulkExpanderPlugins();
         });
 
         return $container;
@@ -102,7 +102,7 @@ class ProductGroupWidgetDependencyProvider extends AbstractBundleDependencyProvi
     /**
      * @return \SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewBatchExpanderPluginInterface[]
      */
-    protected function getProductViewBatchExpanderPlugins(): array
+    protected function getProductViewBulkExpanderPlugins(): array
     {
         return [];
     }

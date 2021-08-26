@@ -10,11 +10,11 @@ namespace SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin;
 /**
  * Use this plugin for expand batch `ProductViewTransfer` by data (review rating) using search results for each products.
  */
-interface ProductViewBatchExpanderPluginInterface
+interface ProductViewBulkExpanderPluginInterface
 {
     /**
      * Specification:
-     *  - Batch expands product view data transfer objects with additional data.
+     *  - Expands product view data transfer objects with additional data.
      *
      * @api
      *
@@ -22,5 +22,5 @@ interface ProductViewBatchExpanderPluginInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function expandBatch(array $productViewTransfers): array;
+    public function execute(array $productViewTransfers): array;
 }

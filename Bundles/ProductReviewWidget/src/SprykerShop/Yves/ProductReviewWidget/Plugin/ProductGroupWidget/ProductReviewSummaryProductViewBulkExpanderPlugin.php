@@ -10,16 +10,16 @@ namespace SprykerShop\Yves\ProductReviewWidget\Plugin\ProductGroupWidget;
 use Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewBatchExpanderPluginInterface;
+use SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewBulkExpanderPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
  */
-class ProductReviewSummaryProductViewBatchExpanderPlugin extends AbstractPlugin implements ProductViewBatchExpanderPluginInterface
+class ProductReviewSummaryProductViewBulkExpanderPlugin extends AbstractPlugin implements ProductViewBulkExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
-     *  - Batch expands `ProductViewTransfer` objects with product review rating data.
+     * - Expands `ProductViewTransfer` objects with product review rating data.
      *
      * @api
      *
@@ -27,7 +27,7 @@ class ProductReviewSummaryProductViewBatchExpanderPlugin extends AbstractPlugin 
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function expandBatch(array $productViewTransfers): array
+    public function execute(array $productViewTransfers): array
     {
         $bulkProductReviewSearchRequestTransfer = $this->createBulkProductReviewSearchRequestTransfer(
             $this->getProductAbstractIds($productViewTransfers)
@@ -35,7 +35,7 @@ class ProductReviewSummaryProductViewBatchExpanderPlugin extends AbstractPlugin 
 
         $productViewTransfers = $this->getFactory()
             ->getProductReviewClient()
-            ->expandProductViewBatchWithProductReviewData($productViewTransfers, $bulkProductReviewSearchRequestTransfer);
+            ->expandProductViewBulkWithProductReviewData($productViewTransfers, $bulkProductReviewSearchRequestTransfer);
 
         return $productViewTransfers;
     }

@@ -77,12 +77,12 @@ class ProductReviewWidgetToProductReviewClientBridge implements ProductReviewWid
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function expandProductViewBatchWithProductReviewData(
+    public function expandProductViewBulkWithProductReviewData(
         array $productViewTransfers,
         BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer
     ): array {
         return $this->productReviewClient
-            ->expandProductViewBatchWithProductReviewData($productViewTransfers, $bulkProductReviewSearchRequestTransfer);
+            ->expandProductViewBulkWithProductReviewData($productViewTransfers, $bulkProductReviewSearchRequestTransfer);
     }
 
     /**
