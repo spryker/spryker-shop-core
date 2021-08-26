@@ -100,7 +100,7 @@ class ProductGroupWidgetDependencyProvider extends AbstractBundleDependencyProvi
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewBatchExpanderPluginInterface[]
+     * @return \SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewBulkExpanderPluginInterface[]
      */
     protected function getProductViewBulkExpanderPlugins(): array
     {

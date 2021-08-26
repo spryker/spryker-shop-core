@@ -37,7 +37,7 @@ class ProductGroupReader implements ProductGroupReaderInterface
      * @param \SprykerShop\Yves\ProductGroupWidget\Dependency\Client\ProductGroupWidgetToProductGroupStorageClientInterface $productGroupStorageClient
      * @param \SprykerShop\Yves\ProductGroupWidget\Dependency\Client\ProductGroupWidgetToProductStorageClientInterface $productStorageClient
      * @param \SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface[] $productViewExpanderPlugins
-     * @param \SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewBatchExpanderPluginInterface[] $productViewBulkExpanderPlugins
+     * @param \SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewBulkExpanderPluginInterface[] $productViewBulkExpanderPlugins
      */
     public function __construct(
         ProductGroupWidgetToProductGroupStorageClientInterface $productGroupStorageClient,
