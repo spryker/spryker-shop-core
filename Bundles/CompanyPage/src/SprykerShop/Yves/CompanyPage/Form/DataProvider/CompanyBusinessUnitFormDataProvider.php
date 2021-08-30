@@ -156,7 +156,7 @@ class CompanyBusinessUnitFormDataProvider
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      * @param int|null $idCompanyBusinessUnit
      *
-     * @return array
+     * @return string[]
      */
     protected function getCompanyBusinessUnits(CompanyUserTransfer $companyUserTransfer, ?int $idCompanyBusinessUnit = null): array
     {
@@ -168,7 +168,11 @@ class CompanyBusinessUnitFormDataProvider
             if ($idCompanyBusinessUnit === $companyBusinessUnit->getIdCompanyBusinessUnit()) {
                 continue;
             }
-            $businessUnits[$companyBusinessUnit->getIdCompanyBusinessUnit()] = $companyBusinessUnit->getName();
+            $businessUnits[$companyBusinessUnit->getIdCompanyBusinessUnit()] = sprintf(
+                '%s (ID: %d)',
+                $companyBusinessUnit->getName(),
+                $companyBusinessUnit->getIdCompanyBusinessUnit()
+            );
         }
 
         return $businessUnits;

@@ -169,7 +169,7 @@ class CompanyUserFormDataProvider
     /**
      * @param int $idCompany
      *
-     * @return array
+     * @return string[]
      */
     protected function getAvailableBusinessUnits(int $idCompany): array
     {
@@ -182,7 +182,11 @@ class CompanyUserFormDataProvider
 
         $businessUnits = [];
         foreach ($companyBusinessUnitCollection->getCompanyBusinessUnits() as $companyBusinessUnit) {
-            $businessUnits[$companyBusinessUnit->getIdCompanyBusinessUnit()] = $companyBusinessUnit->getName();
+            $businessUnits[$companyBusinessUnit->getIdCompanyBusinessUnit()] = sprintf(
+                '%s (ID: %d)',
+                $companyBusinessUnit->getName(),
+                $companyBusinessUnit->getIdCompanyBusinessUnit()
+            );
         }
 
         return $businessUnits;
