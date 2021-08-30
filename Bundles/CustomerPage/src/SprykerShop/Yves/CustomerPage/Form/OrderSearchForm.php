@@ -31,6 +31,9 @@ class OrderSearchForm extends AbstractType
     public const FIELD_FILTERS = 'filters';
 
     public const OPTION_ORDER_SEARCH_TYPES = 'OPTION_ORDER_SEARCH_TYPES';
+    /**
+     * @var string
+     */
     public const OPTION_CURRENT_TIMEZONE = 'OPTION_CURRENT_TIMEZONE';
     public const OPTION_EXPANDABLE_DATA = 'OPTION_EXPANDABLE_DATA';
 
@@ -185,7 +188,6 @@ class OrderSearchForm extends AbstractType
      */
     protected function addFiltersForm(FormBuilderInterface $builder, array $options)
     {
-        /** @phpstan-var array<string, mixed> $options */
         $options = [
             static::OPTION_CURRENT_TIMEZONE => $options[static::OPTION_CURRENT_TIMEZONE],
         ];
