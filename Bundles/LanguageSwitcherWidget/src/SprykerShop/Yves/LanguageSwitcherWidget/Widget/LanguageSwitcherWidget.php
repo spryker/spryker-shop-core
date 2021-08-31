@@ -12,6 +12,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
  * @method \SprykerShop\Yves\LanguageSwitcherWidget\LanguageSwitcherWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\LanguageSwitcherWidget\LanguageSwitcherWidgetConfig getConfig()
  */
 class LanguageSwitcherWidget extends AbstractWidget
 {
@@ -22,7 +23,9 @@ class LanguageSwitcherWidget extends AbstractWidget
      */
     public function __construct(string $pathInfo, $queryString, string $requestUri)
     {
-        $this->addParameter('languages', $this->getLanguages($pathInfo, $queryString, $requestUri))
+        $languages = $this->getLanguages($pathInfo, $queryString, $requestUri);
+
+        $this->addParameter('languages', $this->filterExcludedUrls($languages))
             ->addParameter('currentLanguage', $this->getCurrentLanguage());
     }
 
@@ -168,5 +171,38 @@ class LanguageSwitcherWidget extends AbstractWidget
         return $this->getFactory()
             ->getStore()
             ->getCurrentLanguage();
+    }
+
+    /**
+     * @param array $languages
+     *
+     * @return array
+     */
+    protected function filterExcludedUrls(array $languages): array
+    {
+        $filteredLanguages = [];
+
+        foreach ($languages as $locale => $url) {
+            $filteredLanguages[$locale] = $this->filterLanguageUrl($url, $locale);
+        }
+
+        return $filteredLanguages;
+    }
+
+    /**
+     * @param string $url
+     * @param string $locale
+     *
+     * @return string
+     */
+    protected function filterLanguageUrl(string $url, string $locale): string
+    {
+        foreach ($this->getConfig()->getExcludedLanguageSwitcherRouteUrls() as $excludedRouteUrl) {
+            if (mb_strpos($url, $excludedRouteUrl) !== false) {
+                return sprintf('/%s', $locale);
+            }
+        }
+
+        return $url;
     }
 }
