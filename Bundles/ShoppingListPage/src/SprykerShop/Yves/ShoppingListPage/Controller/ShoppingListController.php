@@ -50,7 +50,7 @@ class ShoppingListController extends AbstractShoppingListController
     protected const ROUTE_SHOPPING_LIST_DETAILS = 'shopping-list/details';
 
     /**
-     * @use \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_CART
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_CART
      */
     protected const ROUTE_CART_PAGE = 'cart';
 

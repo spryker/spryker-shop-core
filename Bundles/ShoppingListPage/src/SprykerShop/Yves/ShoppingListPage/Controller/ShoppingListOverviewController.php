@@ -34,7 +34,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     protected const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
 
     /**
-     * @use \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_CART
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_CART
      */
     protected const ROUTE_CART_PAGE = 'cart';
 
