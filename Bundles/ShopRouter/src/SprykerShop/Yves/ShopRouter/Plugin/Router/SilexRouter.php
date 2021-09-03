@@ -39,7 +39,7 @@ class SilexRouter extends AbstractPlugin implements RouterInterface
     }
 
     /**
-     * @return mixed|\Symfony\Component\Routing\RequestContext
+     * @return \Symfony\Component\Routing\RequestContext
      */
     public function getContext()
     {
@@ -47,7 +47,7 @@ class SilexRouter extends AbstractPlugin implements RouterInterface
     }
 
     /**
-     * @return mixed|\Symfony\Component\Routing\RouteCollection
+     * @return \Symfony\Component\Routing\RouteCollection
      */
     public function getRouteCollection()
     {
