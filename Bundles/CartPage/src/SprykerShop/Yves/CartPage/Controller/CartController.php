@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CartPageViewArgumentsTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
+use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Shared\CartPage\Plugin\AddCartItemPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\ChangeCartItemPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
@@ -20,10 +21,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
  * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
+ * @method \SprykerShop\Yves\CartPage\CartPageConfig getConfig()
  */
 class CartController extends AbstractController
 {
@@ -57,6 +60,8 @@ class CartController extends AbstractController
     public function indexAction(Request $request)
     {
         $viewData = $this->executeIndexAction($request->get('selectedAttributes', []));
+        $viewData['isCartItemsViaAjaxLoadEnabled'] = $this->getFactory()->getConfig()->isCartCartItemsViaAjaxLoadEnabled();
+        $viewData['isUpsellingProductsViaAjaxEnabled'] = $this->getFactory()->getConfig()->isLoadingUpsellingProductsViaAjaxEnabled();
 
         return $this->view(
             $viewData,
@@ -73,8 +78,7 @@ class CartController extends AbstractController
     protected function executeIndexAction(array $selectedAttributes = []): array
     {
         $cartPageViewArgumentsTransfer = new CartPageViewArgumentsTransfer();
-        $cartPageViewArgumentsTransfer
-            ->setLocale($this->getLocale())
+        $cartPageViewArgumentsTransfer->setLocale($this->getLocale())
             ->setSelectedAttributes($selectedAttributes);
 
         $viewData = $this->getFactory()->createCartPageView()->getViewData($cartPageViewArgumentsTransfer);
@@ -84,6 +88,64 @@ class CartController extends AbstractController
             ->addResponseMessagesToMessenger();
 
         return $viewData;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function getUpsellingProductsWidgetAjaxAction(Request $request): View
+    {
+        if (!$this->getFactory()->getConfig()->isLoadingUpsellingProductsViaAjaxEnabled()) {
+            throw new NotFoundHttpException();
+        }
+
+        return $this->executeGetUpsellingProductsWidgetAjaxAction();
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    protected function executeGetUpsellingProductsWidgetAjaxAction(): View
+    {
+        $viewData = [
+            'cart' => $this->getFactory()->getCartClient()->getQuote(),
+        ];
+
+        return $this->view($viewData, [], '@CartPage/views/ajax-upselling-widget/ajax-upselling-widget.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function getCartItemsAjaxAction(Request $request): View
+    {
+        if (!$this->getFactory()->getConfig()->isCartCartItemsViaAjaxLoadEnabled()) {
+            throw new NotFoundHttpException();
+        }
+
+        return $this->executeGetCartItemsAjaxAction();
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    protected function executeGetCartItemsAjaxAction(): View
+    {
+        $cartPageViewArgumentsTransfer = new CartPageViewArgumentsTransfer();
+        $cartPageViewArgumentsTransfer->setLocale($this->getLocale())
+            ->setSelectedAttributes([]);
+
+        $viewData = $this->getFactory()->createCartPageView()->getViewData($cartPageViewArgumentsTransfer);
+
+        return $this->view($viewData, [], '@CartPage/views/ajax-cart-items/ajax-cart-items.twig');
     }
 
     /**

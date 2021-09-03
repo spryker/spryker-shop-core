@@ -13,6 +13,8 @@
     request: app.request,
     title: 'cart.cart' | trans,
     requestUri: app.request.requestUri,
+    isCartItemsViaAjaxLoadEnabled: _view.isCartItemsViaAjaxLoadEnabled,
+    isUpsellingProductsViaAjaxEnabled: _view.isUpsellingProductsViaAjaxEnabled,
 } %}
 
 {% block breadcrumbs %}
@@ -94,20 +96,15 @@
                 } only %}
                 {% endwidget %}
 
-                {% for cartItem in data.cartItems %}
-                    {% if not cartItem.configuredBundleItem | default %}
-                        {% block cartItem %}
-                            {% include molecule('product-cart-item', 'CartPage') with {
-                                data: {
-                                    product: cartItem,
-                                    cart: data.cart,
-                                    isQuoteEditable: data.isQuoteEditable,
-                                    attributes: data.attributes[cartItem.sku] | default([]),
-                                },
-                            } only %}
-                        {% endblock %}
-                    {% endif %}
-                {% endfor %}
+                {% include molecule('cart-items-list', 'CartPage') with {
+                    data: {
+                        cart: data.cart,
+                        cartItems: data.cartItems,
+                        isQuoteEditable: data.isQuoteEditable,
+                        attributes: data.attributes,
+                        isUpsellingProductsViaAjaxEnabled: data.isCartItemsViaAjaxLoadEnabled,
+                    },
+                } only %}
 
                 {% block promotionalItems %}
                     {% if data.isQuoteEditable %}
@@ -236,10 +233,12 @@
             </div>
         </div>
     {% endif %}
-
-    {% widget 'UpSellingProductsWidget' args [data.cart] only %}
-    {% elsewidget 'UpSellingProductsWidgetPlugin' args [data.cart] only %} {# @deprecated Use UpSellingProductsWidget instead. #}
-    {% endwidget %}
+    {% include molecule('cart-upselling', 'CartPage') ignore missing with {
+        data: {
+            cart: data.cart,
+            isUpsellingProductsViaAjaxEnabled: data.isUpsellingProductsViaAjaxEnabled,
+        },
+    } only %}
 {% endblock %}
 
 {% block footer %}{% endblock %}

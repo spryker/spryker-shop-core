@@ -14,6 +14,11 @@ use SprykerShop\Yves\ProductGroupWidget\Dependency\Client\ProductGroupWidgetToPr
 class ProductGroupReader implements ProductGroupReaderInterface
 {
     /**
+     * @var array|\SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewBulkExpanderPluginInterface[]
+     */
+    protected $productViewBulkExpanderPlugins;
+
+    /**
      * @var array|\SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface[]
      */
     protected $productViewExpanderPlugins;
@@ -32,15 +37,18 @@ class ProductGroupReader implements ProductGroupReaderInterface
      * @param \SprykerShop\Yves\ProductGroupWidget\Dependency\Client\ProductGroupWidgetToProductGroupStorageClientInterface $productGroupStorageClient
      * @param \SprykerShop\Yves\ProductGroupWidget\Dependency\Client\ProductGroupWidgetToProductStorageClientInterface $productStorageClient
      * @param \SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface[] $productViewExpanderPlugins
+     * @param \SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewBulkExpanderPluginInterface[] $productViewBulkExpanderPlugins
      */
     public function __construct(
         ProductGroupWidgetToProductGroupStorageClientInterface $productGroupStorageClient,
         ProductGroupWidgetToProductStorageClientInterface $productStorageClient,
-        array $productViewExpanderPlugins
+        array $productViewExpanderPlugins,
+        array $productViewBulkExpanderPlugins
     ) {
         $this->productGroupStorageClient = $productGroupStorageClient;
         $this->productStorageClient = $productStorageClient;
         $this->productViewExpanderPlugins = $productViewExpanderPlugins;
+        $this->productViewBulkExpanderPlugins = $productViewBulkExpanderPlugins;
     }
 
     /**
@@ -53,6 +61,7 @@ class ProductGroupReader implements ProductGroupReaderInterface
     public function getProductGroups(int $idProductAbstract, string $localeName, array $selectedAttributes = []): array
     {
         $productViewTransfers = $this->getProductViewTransfers($idProductAbstract, $localeName, $selectedAttributes);
+        $productViewTransfers = $this->expandProductViewBulkTransfers($productViewTransfers);
 
         return $this->getExpandedProductViewTransfers($productViewTransfers);
     }
@@ -102,5 +111,19 @@ class ProductGroupReader implements ProductGroupReaderInterface
         }
 
         return $productViewTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    protected function expandProductViewBulkTransfers(array $productViewTransfers): array
+    {
+        foreach ($this->productViewBulkExpanderPlugins as $productViewBulkExpanderPlugin) {
+            $productViewTransfers = $productViewBulkExpanderPlugin->execute($productViewTransfers);
+        }
+
+        return $productViewTransfers;
     }
 }
