@@ -15,6 +15,9 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
  */
 class NewsletterPageControllerProvider extends AbstractYvesControllerProvider
 {
+    /**
+     * @var string
+     */
     public const ROUTE_CUSTOMER_NEWSLETTER = 'customer/newsletter';
 
     /**

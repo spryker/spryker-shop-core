@@ -15,12 +15,30 @@ use Twig\TokenStream;
 
 class ShopCmsSlotTokenParser extends AbstractTokenParser
 {
+    /**
+     * @var string
+     */
     public const NODE_AUTOFILLED = 'autoFilled';
+    /**
+     * @var string
+     */
     public const NODE_REQUIRED = 'required';
+    /**
+     * @var string
+     */
     public const NODE_WITH = 'with';
 
+    /**
+     * @var string
+     */
     protected const PARAMETER_NAME_AUTOFILLED = 'autofilled';
+    /**
+     * @var string
+     */
     protected const PARAMETER_NAME_REQUIRED = 'required';
+    /**
+     * @var string
+     */
     protected const PARAMETER_NAME_WITH = 'with';
 
     /**

@@ -11,6 +11,9 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class ProductReviewWidgetConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const GLOSSARY_KEY_INVALID_RATING_VALIDATION_MESSAGE = 'validation.choice';
 
     /**

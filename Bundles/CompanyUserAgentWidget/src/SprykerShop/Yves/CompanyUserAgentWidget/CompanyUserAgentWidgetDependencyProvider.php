@@ -13,6 +13,9 @@ use SprykerShop\Yves\CompanyUserAgentWidget\Dependency\Client\CompanyUserAgentWi
 
 class CompanyUserAgentWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_COMPANY_USER_AGENT = 'CLIENT_COMPANY_USER_AGENT';
 
     /**

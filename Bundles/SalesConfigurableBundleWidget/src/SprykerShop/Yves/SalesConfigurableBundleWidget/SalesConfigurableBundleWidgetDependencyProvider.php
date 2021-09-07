@@ -13,6 +13,9 @@ use SprykerShop\Yves\SalesConfigurableBundleWidget\Dependency\Client\SalesConfig
 
 class SalesConfigurableBundleWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
 
     /**

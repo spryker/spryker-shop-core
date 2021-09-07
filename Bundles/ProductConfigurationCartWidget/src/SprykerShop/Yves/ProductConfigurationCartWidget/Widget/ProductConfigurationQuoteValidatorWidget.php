@@ -16,6 +16,9 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class ProductConfigurationQuoteValidatorWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_IS_QUOTE_PRODUCT_CONFIGURATION_VALID = 'isQuoteProductConfigurationValid';
 
     /**

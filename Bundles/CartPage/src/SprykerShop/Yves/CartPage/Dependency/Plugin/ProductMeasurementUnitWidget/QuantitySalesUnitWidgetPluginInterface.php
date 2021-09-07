@@ -15,6 +15,9 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
  */
 interface QuantitySalesUnitWidgetPluginInterface extends WidgetPluginInterface
 {
+    /**
+     * @var string
+     */
     public const NAME = 'QuantitySalesUnitWidgetPlugin';
 
     /**

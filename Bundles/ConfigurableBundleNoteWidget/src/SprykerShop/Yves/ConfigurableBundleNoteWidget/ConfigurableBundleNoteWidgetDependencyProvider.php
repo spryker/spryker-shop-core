@@ -15,8 +15,17 @@ use SprykerShop\Yves\ConfigurableBundleNoteWidget\Dependency\Client\Configurable
 
 class ConfigurableBundleNoteWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CONFIGURABLE_BUNDLE_NOTE = 'CLIENT_CONFIGURABLE_BUNDLE_NOTE';
+    /**
+     * @var string
+     */
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
 
     /**

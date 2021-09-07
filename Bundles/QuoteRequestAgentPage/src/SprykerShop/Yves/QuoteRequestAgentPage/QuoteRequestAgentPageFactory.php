@@ -60,16 +60,19 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
 {
     /**
      * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_INDEX
+     * @var string
      */
     protected const ROUTE_CHECKOUT_INDEX = 'checkout-index';
 
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT = 'agent/quote-request';
 
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_SAVE
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SAVE = 'agent/quote-request/checkout-save';
 

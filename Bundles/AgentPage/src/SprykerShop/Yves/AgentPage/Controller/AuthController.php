@@ -17,9 +17,13 @@ class AuthController extends AbstractController
 {
     /**
      * @uses \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_CUSTOMER_OVERVIEW
+     * @var string
      */
     protected const ROUTE_CUSTOMER_OVERVIEW = 'customer/overview';
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_ALREADY_LOGGED_IN = 'agent_page.error.customer_already_logged_in';
 
     /**

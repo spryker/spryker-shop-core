@@ -14,7 +14,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class OrderCustomReferenceForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_BACK_URL = 'backUrl';
+    /**
+     * @var string
+     */
     public const FIELD_ORDER_CUSTOM_REFERENCE = 'orderCustomReference';
 
     /**

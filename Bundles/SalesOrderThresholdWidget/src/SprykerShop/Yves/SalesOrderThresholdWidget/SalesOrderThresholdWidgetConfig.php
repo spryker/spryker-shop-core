@@ -13,6 +13,7 @@ class SalesOrderThresholdWidgetConfig extends AbstractBundleConfig
 {
     /**
      * @see \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::THRESHOLD_EXPENSE_TYPE
+     * @var string
      */
     public const THRESHOLD_EXPENSE_TYPE = 'THRESHOLD_EXPENSE_TYPE';
 }

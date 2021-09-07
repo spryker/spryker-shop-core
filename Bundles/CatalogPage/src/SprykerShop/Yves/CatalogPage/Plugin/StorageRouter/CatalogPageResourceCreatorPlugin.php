@@ -16,6 +16,9 @@ use SprykerShop\Yves\StorageRouterExtension\Dependency\Plugin\ResourceCreatorPlu
  */
 class CatalogPageResourceCreatorPlugin extends AbstractPlugin implements ResourceCreatorPluginInterface
 {
+    /**
+     * @var string
+     */
     public const ATTRIBUTE_CATEGORY_NODE = 'categoryNode';
 
     /**

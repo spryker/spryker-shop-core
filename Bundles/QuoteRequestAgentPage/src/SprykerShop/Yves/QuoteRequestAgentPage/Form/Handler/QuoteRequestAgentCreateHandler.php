@@ -15,6 +15,9 @@ use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPa
 
 class QuoteRequestAgentCreateHandler implements QuoteRequestAgentCreateHandlerInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_COMPANY_USER_NOT_FOUND = 'quote_request.validation.error.company_user_not_found';
 
     /**

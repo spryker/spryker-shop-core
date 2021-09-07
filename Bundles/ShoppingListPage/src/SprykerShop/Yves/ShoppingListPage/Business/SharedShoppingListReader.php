@@ -17,7 +17,13 @@ use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompan
 
 class SharedShoppingListReader implements SharedShoppingListReaderInterface
 {
+    /**
+     * @var string
+     */
     public const SHARED_COMPANY_USERS = 'sharedCompanyUsers';
+    /**
+     * @var string
+     */
     public const SHARED_COMPANY_BUSINESS_UNITS = 'sharedCompanyBusinessUnits';
 
     /**

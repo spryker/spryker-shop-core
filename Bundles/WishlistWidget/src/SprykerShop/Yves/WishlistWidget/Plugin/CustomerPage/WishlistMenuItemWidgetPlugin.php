@@ -18,6 +18,9 @@ use SprykerShop\Yves\WishlistWidget\Widget\WishlistMenuItemWidget;
  */
 class WishlistMenuItemWidgetPlugin extends AbstractWidgetPlugin implements WishlistMenuItemWidgetPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const PAGE_KEY_WISHLIST = 'wishlist';
 
     /**

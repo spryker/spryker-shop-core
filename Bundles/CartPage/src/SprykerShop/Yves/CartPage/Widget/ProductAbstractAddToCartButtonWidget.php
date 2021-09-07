@@ -16,6 +16,9 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class ProductAbstractAddToCartButtonWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_PRODUCT_ABSTRACT = 'productAbstract';
 
     /**

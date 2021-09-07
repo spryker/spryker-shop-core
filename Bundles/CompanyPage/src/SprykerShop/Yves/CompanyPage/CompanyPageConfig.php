@@ -11,6 +11,9 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class CompanyPageConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const ZIP_CODE_CONSTRAINT_PATTERN = '/^\d{5}$/';
 
     /**

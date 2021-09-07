@@ -11,5 +11,8 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class DateTimeConfiguratorPageExampleConfig extends AbstractSharedConfig
 {
+    /**
+     * @var string
+     */
     public const DATE_TIME_CONFIGURATOR_KEY = 'DATE_TIME_CONFIGURATOR';
 }

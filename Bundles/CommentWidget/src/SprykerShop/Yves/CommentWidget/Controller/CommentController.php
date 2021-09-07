@@ -18,11 +18,29 @@ use Symfony\Component\Security\Csrf\CsrfToken;
  */
 class CommentController extends CommentWidgetAbstractController
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_COMMENT_INVALID_MESSAGE_LENGTH = 'comment.validation.error.invalid_message_length';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_ERROR_MESSAGE_UNEXPECTED_ERROR = 'comment_widget.error_message.unexpected_error';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_ERROR_MESSAGE_FORM_CSRF_ERROR = 'form.csrf.error.text';
+    /**
+     * @var string
+     */
     protected const CSRF_TOKEN_ID_ADD_COMMENT_FORM = 'add-comment-form';
+    /**
+     * @var string
+     */
     protected const CSRF_TOKEN_ID_UPDATE_COMMENT_FORM = 'update-comment-form';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAMETER_TOKEN = '_token';
 
     /**

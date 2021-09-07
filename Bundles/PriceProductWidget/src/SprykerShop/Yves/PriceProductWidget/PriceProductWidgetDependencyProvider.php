@@ -13,6 +13,9 @@ use SprykerShop\Yves\PriceProductWidget\Dependency\Client\PriceProductWidgetToPr
 
 class PriceProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRICE_PRODUCT_STORAGE = 'CLIENT_PRICE_PRODUCT_STORAGE';
 
     /**

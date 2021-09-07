@@ -20,10 +20,22 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class RestorePasswordForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_RESTORE_PASSWORD_KEY = 'restore_password_key';
+    /**
+     * @var string
+     */
     public const FIELD_PASSWORD = 'password';
 
+    /**
+     * @var string
+     */
     protected const VALIDATION_MIN_LENGTH_MESSAGE = 'validation.min_length';
+    /**
+     * @var string
+     */
     protected const VALIDATION_MAX_LENGTH_MESSAGE = 'validation.max_length.singular';
 
     /**

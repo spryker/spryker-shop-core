@@ -14,6 +14,9 @@ use Spryker\Yves\Kernel\Form\AbstractType;
  */
 class OrderCancelForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FORM_NAME = 'orderCancelForm';
 
     /**

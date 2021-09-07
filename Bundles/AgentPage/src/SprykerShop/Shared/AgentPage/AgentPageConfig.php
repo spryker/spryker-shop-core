@@ -11,5 +11,8 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class AgentPageConfig extends AbstractSharedConfig
 {
+    /**
+     * @var string
+     */
     public const SECURITY_FIREWALL_NAME = 'agent';
 }

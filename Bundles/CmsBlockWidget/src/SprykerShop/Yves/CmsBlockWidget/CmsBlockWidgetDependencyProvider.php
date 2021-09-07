@@ -17,11 +17,26 @@ use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToStoreClien
 
 class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CMS_BLOCK_STORAGE = 'CLIENT_CMS_BLOCK_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_STORE = 'CLIENT_STORE';
+    /**
+     * @var string
+     */
     public const SERVICE_TRANSLATOR = 'translator';
 
+    /**
+     * @var string
+     */
     public const TWIG_EXTENSION_PLUGINS = 'TWIG_EXTENSION_PLUGINS';
+    /**
+     * @var string
+     */
     public const CMS_TWIG_CONTENT_RENDERER_PLUGIN = 'CMS_TWIG_CONTENT_RENDERER_PLUGIN';
 
     /**

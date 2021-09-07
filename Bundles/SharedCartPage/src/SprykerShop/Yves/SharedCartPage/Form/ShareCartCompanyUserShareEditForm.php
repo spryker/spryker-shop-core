@@ -19,6 +19,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ShareCartCompanyUserShareEditForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_QUOTE_PERMISSION_GROUP = 'quotePermissionGroup';
 
     /**

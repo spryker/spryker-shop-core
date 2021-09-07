@@ -19,12 +19,27 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AvailabilityNotificationSubscriptionForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_EMAIL = 'email';
+    /**
+     * @var string
+     */
     public const FIELD_SKU = 'sku';
 
+    /**
+     * @var string
+     */
     public const FORM_ID = 'availability_notification_subscription';
 
+    /**
+     * @var string
+     */
     public const PLACEHOLDER_EMAIL_ADDRESS = 'availability_notification.email_address';
+    /**
+     * @var string
+     */
     public const LABEL_NOTIFY_ME = 'availability_notification.notify_me';
 
     /**

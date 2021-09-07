@@ -17,6 +17,9 @@ use Symfony\Component\Form\FormInterface;
  */
 class ProductConcreteAddWidget extends AbstractWidget implements WidgetInterface
 {
+    /**
+     * @var string
+     */
     protected const NAME = 'ProductConcreteAddWidget';
 
     /**

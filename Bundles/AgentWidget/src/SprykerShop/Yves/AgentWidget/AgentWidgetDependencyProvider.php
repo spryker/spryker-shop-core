@@ -16,7 +16,13 @@ use SprykerShop\Yves\AgentWidget\Dependency\Client\AgentWidgetToCustomerClientIn
 
 class AgentWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_AGENT = 'CLIENT_AGENT';
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
     /**

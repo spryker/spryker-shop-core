@@ -24,11 +24,18 @@ use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressCollectionForm;
 
 class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider implements StepEngineFormDataProviderInterface
 {
+    /**
+     * @var string
+     */
     protected const ADDRESS_LABEL_PATTERN = '%s %s %s, %s %s, %s %s';
+    /**
+     * @var string
+     */
     protected const SANITIZED_CUSTOMER_ADDRESS_LABEL_PATTERN = '%s - %s';
 
     /**
      * @uses \Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper::BUNDLE_PRODUCT
+     * @var string
      */
     protected const BUNDLE_PRODUCT = 'bundleProduct';
 

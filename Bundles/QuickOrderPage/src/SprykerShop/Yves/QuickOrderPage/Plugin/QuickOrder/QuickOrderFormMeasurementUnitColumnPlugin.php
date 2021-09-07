@@ -12,7 +12,13 @@ use SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormCol
 
 class QuickOrderFormMeasurementUnitColumnPlugin extends AbstractPlugin implements QuickOrderFormColumnPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const COLUMN_TITLE = 'quick-order.input-label.measurement_unit';
+    /**
+     * @var string
+     */
     protected const DATA_PATH = 'baseMeasurementUnit.name';
 
     /**

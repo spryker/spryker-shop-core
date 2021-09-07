@@ -26,19 +26,41 @@ class CatalogController extends AbstractController
 
     public const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL;
 
+    /**
+     * @var string
+     */
     public const MESSAGE_PAGE_NOT_FOUND = 'catalog.page.not_found';
 
+    /**
+     * @var string
+     */
     public const URL_PARAM_VIEW_MODE = 'mode';
+    /**
+     * @var string
+     */
     public const URL_PARAM_REFERER_URL = 'referer-url';
 
+    /**
+     * @var string
+     */
     protected const URL_PARAM_FILTER_BY_PRICE = 'price';
+    /**
+     * @var string
+     */
     protected const URL_PARAM_SORTING = 'sort';
+    /**
+     * @var array
+     */
     protected const PRICE_SORTING_DIRECTIONS = ['price_desc', 'price_asc'];
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_PAGE_CANNOT_BE_OPENED = 'catalog.page.cannot_be_opened';
 
     /**
      * @uses \SprykerShop\Yves\CatalogPage\Plugin\Router\CatalogPageRouteProviderPlugin::ROUTE_NAME_SEARCH
+     * @var string
      */
     protected const ROUTE_SEARCH_PAGE = 'search';
 

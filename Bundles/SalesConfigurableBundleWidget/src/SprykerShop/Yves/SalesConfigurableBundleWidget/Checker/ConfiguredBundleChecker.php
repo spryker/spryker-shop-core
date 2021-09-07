@@ -11,6 +11,9 @@ use SprykerShop\Yves\SalesConfigurableBundleWidget\Dependency\Client\SalesConfig
 
 class ConfiguredBundleChecker implements ConfiguredBundleCheckerInterface
 {
+    /**
+     * @var string
+     */
     public const GLOSSARY_KEY_CONFIGURED_BUNDLE_ITEMS_ADDED_TO_CART_SUCCESS = 'sales_configured_bundle_widget.success.items_added_to_cart_as_individual_products';
 
     /**

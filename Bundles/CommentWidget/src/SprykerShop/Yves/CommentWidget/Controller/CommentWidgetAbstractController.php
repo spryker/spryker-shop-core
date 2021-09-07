@@ -15,6 +15,9 @@ use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
  */
 class CommentWidgetAbstractController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_RETURN_URL = 'returnUrl';
 
     /**

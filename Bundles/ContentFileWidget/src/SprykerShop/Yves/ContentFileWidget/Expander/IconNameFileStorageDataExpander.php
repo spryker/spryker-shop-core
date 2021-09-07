@@ -12,6 +12,9 @@ use SprykerShop\Yves\ContentFileWidget\ContentFileWidgetConfig;
 
 class IconNameFileStorageDataExpander implements FileStorageDataExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_DEFAULT_ICON_NAME = 'file';
 
     /**

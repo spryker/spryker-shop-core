@@ -17,6 +17,7 @@ class QuoteRequestAgentCheckoutController extends QuoteRequestAgentAbstractContr
 {
     /**
      * @uses \Symfony\Component\Security\Http\Firewall\SwitchUserListener::EXIT_VALUE
+     * @var string
      */
     protected const EXIT_VALUE = '_exit';
 

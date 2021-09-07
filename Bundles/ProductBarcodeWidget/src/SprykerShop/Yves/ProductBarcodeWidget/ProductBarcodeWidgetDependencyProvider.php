@@ -13,6 +13,9 @@ use SprykerShop\Yves\ProductBarcodeWidget\Dependency\Client\ProductBarcodeWidget
 
 class ProductBarcodeWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_BARCODE = 'CLIENT_PRODUCT_BARCODE';
 
     /**

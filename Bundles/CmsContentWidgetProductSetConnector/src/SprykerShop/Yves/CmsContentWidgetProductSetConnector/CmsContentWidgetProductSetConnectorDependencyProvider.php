@@ -14,8 +14,17 @@ use SprykerShop\Yves\CmsContentWidgetProductSetConnector\Dependency\Client\CmsCo
 
 class CmsContentWidgetProductSetConnectorDependencyProvider extends SprykerCmsContentWidgetProductSetConnectorDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_SET_STORAGE = 'CLIENT_PRODUCT_SET_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    /**
+     * @var string
+     */
     public const PLUGIN_CMS_PRODUCT_SET_CONTENT_WIDGETS = 'PLUGIN_CMS_PRODUCT_SET_CONTENT_WIDGETS';
 
     /**

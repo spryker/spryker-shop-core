@@ -11,6 +11,9 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface CatalogCmsBlockWidgetPluginInterface extends WidgetPluginInterface
 {
+    /**
+     * @var string
+     */
     public const NAME = 'CatalogCmsBlockWidgetPlugin';
 
     /**

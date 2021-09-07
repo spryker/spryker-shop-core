@@ -12,5 +12,8 @@ namespace SprykerShop\Shared\AgentPage;
  */
 interface AgentPageConstants
 {
+    /**
+     * @var string
+     */
     public const AGENT_FIREWALL_REGEX = 'AGENT_PAGE:AGENT_FIREWALL_REGEX';
 }

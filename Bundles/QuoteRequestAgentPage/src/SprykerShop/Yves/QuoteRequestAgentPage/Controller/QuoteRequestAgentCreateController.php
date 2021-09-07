@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QuoteRequestAgentCreateController extends QuoteRequestAgentAbstractController
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_CREATED = 'quote_request_page.quote_request.created';
 
     /**

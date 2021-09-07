@@ -14,7 +14,13 @@ use SprykerShop\Yves\OrderCancelWidget\Dependency\Client\OrderCancelWidgetToSale
 
 class OrderCancelWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const CLIENT_SALES = 'CLIENT_SALES';
 
     /**

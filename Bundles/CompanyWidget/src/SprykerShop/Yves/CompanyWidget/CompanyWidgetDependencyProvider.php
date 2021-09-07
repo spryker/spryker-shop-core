@@ -13,6 +13,9 @@ use SprykerShop\Yves\CompanyWidget\Dependency\Client\CompanyWidgetToCustomerClie
 
 class CompanyWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
     /**

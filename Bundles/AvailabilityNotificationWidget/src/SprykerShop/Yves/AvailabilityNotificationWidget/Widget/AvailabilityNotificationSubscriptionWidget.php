@@ -15,6 +15,9 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class AvailabilityNotificationSubscriptionWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const SESSION_AVAILABILITY_NOTIFICATION_EMAIL = 'availabilityNotificationEmail';
 
     /**

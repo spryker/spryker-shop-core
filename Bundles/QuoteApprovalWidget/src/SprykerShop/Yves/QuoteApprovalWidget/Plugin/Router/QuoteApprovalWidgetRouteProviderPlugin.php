@@ -14,25 +14,44 @@ class QuoteApprovalWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteApprovalWidget\Plugin\Router\QuoteApprovalWidgetRouteProviderPlugin::ROUTE_NAME_QUOTE_APPROVAL_APPROVE} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_APPROVAL_APPROVE = 'quote-approval-approve';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_APPROVAL_APPROVE = 'quote-approval-approve';
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteApprovalWidget\Plugin\Router\QuoteApprovalWidgetRouteProviderPlugin::ROUTE_NAME_QUOTE_APPROVAL_DECLINE} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_APPROVAL_DECLINE = 'quote-approval-decline';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_APPROVAL_DECLINE = 'quote-approval-decline';
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteApprovalWidget\Plugin\Router\QuoteApprovalWidgetRouteProviderPlugin::ROUTE_NAME_QUOTE_APPROVAL_CREATE} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_APPROVAL_CREATE = 'quote-approval-create';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_APPROVAL_CREATE = 'quote-approval-create';
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteApprovalWidget\Plugin\Router\QuoteApprovalWidgetRouteProviderPlugin::ROUTE_NAME_QUOTE_APPROVAL_REMOVE} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_APPROVAL_REMOVE = 'quote-approval-remove';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_APPROVAL_REMOVE = 'quote-approval-remove';
 
+    /**
+     * @var string
+     */
     protected const PATTERN_ID = '\d+';
 
     /**

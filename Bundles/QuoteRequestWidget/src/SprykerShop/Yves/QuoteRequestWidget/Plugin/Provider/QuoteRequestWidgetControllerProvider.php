@@ -15,7 +15,13 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
  */
 class QuoteRequestWidgetControllerProvider extends AbstractYvesControllerProvider
 {
+    /**
+     * @var string
+     */
     protected const ROUTE_QUOTE_REQUEST_SAVE_CART = 'quote-request/cart/save';
+    /**
+     * @var string
+     */
     protected const ROUTE_QUOTE_REQUEST_CLEAR_CART = 'quote-request/cart/clear';
 
     /**

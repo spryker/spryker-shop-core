@@ -13,11 +13,15 @@ class CartPageConfig extends AbstractBundleConfig
 {
     /**
      * The default value will be true in the next major.
+     *
+     * @var bool
      */
     protected const IS_LOADING_UPSELLING_PRODUCTS_VIA_AJAX_ENABLED = false;
 
     /**
      * The default value will be true in the next major.
+     *
+     * @var bool
      */
     protected const IS_CART_CART_ITEMS_VIA_AJAX_LOAD_ENABLED = false;
 

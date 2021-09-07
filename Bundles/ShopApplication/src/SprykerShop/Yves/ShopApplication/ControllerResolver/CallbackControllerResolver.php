@@ -15,6 +15,9 @@ use Spryker\Service\Container\ContainerInterface;
  */
 class CallbackControllerResolver implements CallbackControllerResolverInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_PATTERN = "/[A-Za-z0-9\._\-]+:[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/";
 
     /**

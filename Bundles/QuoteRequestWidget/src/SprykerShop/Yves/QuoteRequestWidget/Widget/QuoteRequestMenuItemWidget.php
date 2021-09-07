@@ -14,9 +14,18 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class QuoteRequestMenuItemWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
+    /**
+     * @var string
+     */
     protected const PARAMETER_IS_ACTIVE_PAGE = 'isActivePage';
 
+    /**
+     * @var string
+     */
     protected const PAGE_KEY_QUOTE_REQUEST = 'quoteRequest';
 
     /**

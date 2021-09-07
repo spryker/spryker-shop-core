@@ -19,18 +19,32 @@ class CreateController extends AbstractController
 {
     /**
      * @deprecated Will be removed without replacement.
+     * @var string
      */
     public const ERROR_MESSAGE_NO_CUSTOMER = 'Only customers can use this feature. Please log in.';
 
     /**
      * @deprecated Will be removed without replacement.
+     * @var string
      */
     public const SUCCESS_MESSAGE = 'Review was submitted';
 
+    /**
+     * @var string
+     */
     public const REQUEST_HEADER_REFERER = 'referer';
+    /**
+     * @var string
+     */
     public const URL_MAIN = '/';
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_SUCCESS_PRODUCT_REVIEW_SUBMITTED = 'product_review.submit.success';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_ERROR_NO_CUSTOMER = 'product_review.error.no_customer';
 
     /**

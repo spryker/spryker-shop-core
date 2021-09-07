@@ -15,6 +15,9 @@ use SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageConfig;
 
 class QuoteRequestFormDataProvider
 {
+    /**
+     * @var string
+     */
     protected const FORMAT_CREATED_DATE = 'Y-m-d H:i:s';
 
     /**

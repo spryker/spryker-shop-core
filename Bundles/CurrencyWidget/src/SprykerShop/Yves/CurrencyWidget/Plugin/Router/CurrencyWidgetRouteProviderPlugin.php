@@ -14,8 +14,12 @@ class CurrencyWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CurrencyWidget\Plugin\Router\CurrencyWidgetRouteProviderPlugin::ROUTE_NAME_CART} instead.
+     * @var string
      */
     protected const ROUTE_CART = 'currency-switch';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CART = 'currency-switch';
 
     /**

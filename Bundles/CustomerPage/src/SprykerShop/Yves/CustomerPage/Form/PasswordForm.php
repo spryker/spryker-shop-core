@@ -20,10 +20,22 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class PasswordForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_NEW_PASSWORD = 'new_password';
+    /**
+     * @var string
+     */
     public const FIELD_PASSWORD = 'password';
 
+    /**
+     * @var string
+     */
     protected const VALIDATION_MIN_LENGTH_MESSAGE = 'validation.min_length';
+    /**
+     * @var string
+     */
     protected const VALIDATION_MAX_LENGTH_MESSAGE = 'validation.max_length.singular';
 
     /**

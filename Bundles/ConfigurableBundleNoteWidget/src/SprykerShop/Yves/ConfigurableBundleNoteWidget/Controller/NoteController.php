@@ -16,11 +16,18 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class NoteController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_NOTE_ADDED = 'configurable_bundle_note.note_added';
+    /**
+     * @var string
+     */
     protected const REQUEST_HEADER_REFERER = 'referer';
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
+     * @var string
      */
     protected const ROUTE_CART = 'cart';
 

@@ -21,6 +21,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProductSetDetailPageResourceCreatorPlugin extends AbstractPlugin implements ResourceCreatorPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_REQUEST = 'request';
 
     /**

@@ -15,14 +15,19 @@ class ShipmentGroupExpander implements ShipmentGroupExpanderInterface
 {
     /**
      * @uses \Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper::BUNDLE_ITEMS
+     * @var string
      */
     protected const BUNDLE_ITEMS = 'bundleItems';
 
     /**
      * @uses \Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper::BUNDLE_PRODUCT
+     * @var string
      */
     protected const BUNDLE_PRODUCT = 'bundleProduct';
 
+    /**
+     * @var string
+     */
     protected const BUNDLE_KEY_PREFIX = 'bundle_prefix_';
 
     /**

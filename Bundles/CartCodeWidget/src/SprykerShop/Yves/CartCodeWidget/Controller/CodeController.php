@@ -21,20 +21,31 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CodeController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_CODE = 'code';
 
     /**
      * @uses \Spryker\Shared\CartCode\CartCodesConfig::MESSAGE_TYPE_SUCCESS
+     * @var string
      */
     protected const MESSAGE_TYPE_SUCCESS = 'success';
 
     /**
      * @uses \Spryker\Shared\CartCode\CartCodesConfig::MESSAGE_TYPE_ERROR
+     * @var string
      */
     protected const MESSAGE_TYPE_ERROR = 'error';
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CODE_APPLY_FAILED = 'cart.code.apply.failed';
 
+    /**
+     * @var string
+     */
     public const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
 
     /**

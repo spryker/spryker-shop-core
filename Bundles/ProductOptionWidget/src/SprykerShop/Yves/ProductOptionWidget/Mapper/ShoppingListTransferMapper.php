@@ -14,7 +14,13 @@ use Generated\Shared\Transfer\ShoppingListTransfer;
 
 class ShoppingListTransferMapper implements ShoppingListTransferMapperInterface
 {
+    /**
+     * @var string
+     */
     protected const SHOPPING_LIST_UPDATE_FORM_NAME = 'shopping_list_update_form';
+    /**
+     * @var string
+     */
     protected const PRODUCT_OPTIONS_FIELD_NAME = 'productOptions';
 
     /**

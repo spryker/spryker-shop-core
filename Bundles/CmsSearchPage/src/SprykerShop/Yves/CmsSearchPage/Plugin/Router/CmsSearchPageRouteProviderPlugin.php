@@ -14,8 +14,12 @@ class CmsSearchPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CmsSearchPage\Plugin\Router\CmsSearchPageRouteProviderPlugin::ROUTE_NAME_SEARCH} instead.
+     * @var string
      */
     protected const ROUTE_SEARCH = 'search-cms';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_SEARCH = 'search-cms';
 
     /**

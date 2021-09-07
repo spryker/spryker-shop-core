@@ -19,16 +19,19 @@ class QuoteRequestAgentCheckoutAddressController extends QuoteRequestAgentAbstra
 {
     /**
      * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_ADDRESS
+     * @var string
      */
     protected const ROUTE_CHECKOUT_ADDRESS = 'checkout-address';
 
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS_CONFIRM
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS_CONFIRM = 'agent/quote-request/checkout-address-confirm';
 
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS = 'agent/quote-request/checkout-address';
 

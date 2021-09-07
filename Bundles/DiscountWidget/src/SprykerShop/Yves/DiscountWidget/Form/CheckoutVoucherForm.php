@@ -13,7 +13,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class CheckoutVoucherForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FORM_NAME = 'voucherForm';
+    /**
+     * @var string
+     */
     public const FIELD_VOUCHER_DISCOUNTS = 'voucherDiscounts';
 
     /**

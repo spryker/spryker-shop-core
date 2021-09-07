@@ -15,7 +15,13 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
  */
 class CartNoteWidgetControllerProvider extends AbstractYvesControllerProvider
 {
+    /**
+     * @var string
+     */
     public const ROUTE_CART_NOTE_QUOTE = 'cart-note/quote';
+    /**
+     * @var string
+     */
     public const ROUTE_CART_NOTE_ITEM = 'cart-note/item';
 
     /**

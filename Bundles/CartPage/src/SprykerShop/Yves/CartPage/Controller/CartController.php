@@ -32,24 +32,63 @@ class CartController extends AbstractController
 {
     use PermissionAwareTrait;
 
+    /**
+     * @var string
+     */
     public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
 
+    /**
+     * @var string
+     */
     public const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
 
+    /**
+     * @var string
+     */
     public const PARAM_ITEMS = 'items';
 
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAMETER_SKU = 'sku';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAMETER_QUANTITY = 'quantity';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAMETER_TOKEN = '_token';
 
+    /**
+     * @var string
+     */
     protected const FIELD_QUANTITY_TO_NORMALIZE = 'quantity';
 
+    /**
+     * @var string
+     */
     protected const KEY_CODE = 'code';
+    /**
+     * @var string
+     */
     protected const KEY_MESSAGES = 'messages';
 
+    /**
+     * @var string
+     */
     protected const CSRF_TOKEN_ID = 'add-to-cart-ajax';
+    /**
+     * @var string
+     */
     protected const MESSAGE_TYPE_ERROR = 'error';
+    /**
+     * @var string
+     */
     protected const FLASH_MESSAGE_LIST_TEMPLATE_PATH = '@ShopUi/components/organisms/flash-message-list/flash-message-list.twig';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_ERROR_MESSAGE_UNEXPECTED_ERROR = 'cart_page.error_message.unexpected_error';
 
     /**

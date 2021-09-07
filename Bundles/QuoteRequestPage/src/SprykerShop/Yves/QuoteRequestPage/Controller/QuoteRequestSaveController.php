@@ -15,11 +15,18 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class QuoteRequestSaveController extends QuoteRequestAbstractController
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_SAVED = 'quote_request_page.quote_request.saved';
 
     /**
      * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE
+     * @var string
      */
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 

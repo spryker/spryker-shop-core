@@ -14,8 +14,14 @@ use SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToTwigClientBridge;
 
 class ShopUiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_TWIG = 'CLIENT_TWIG';
 
+    /**
+     * @var string
+     */
     public const STORE = 'STORE';
 
     /**

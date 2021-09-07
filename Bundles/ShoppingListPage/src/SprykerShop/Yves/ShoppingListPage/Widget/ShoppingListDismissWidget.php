@@ -15,7 +15,13 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class ShoppingListDismissWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_SHOPPING_LIST = 'shoppingList';
+    /**
+     * @var string
+     */
     protected const PARAMETER_IS_OWNER = 'isOwner';
 
     /**

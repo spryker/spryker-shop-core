@@ -15,8 +15,17 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ListController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_LIMIT = 'limit';
+    /**
+     * @var string
+     */
     public const PARAM_OFFSET = 'offset';
+    /**
+     * @var int
+     */
     public const DEFAULT_LIMIT = 100;
 
     /**

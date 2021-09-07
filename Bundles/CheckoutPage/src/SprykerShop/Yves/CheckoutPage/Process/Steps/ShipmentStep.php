@@ -21,6 +21,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterface, StepWithCodeInterface
 {
+    /**
+     * @var string
+     */
     protected const STEP_CODE = 'shipment';
 
     /**

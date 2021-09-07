@@ -13,6 +13,9 @@ use SprykerShop\Yves\MerchantProductOfferWidget\Reader\MerchantProductOfferReade
 
 class MerchantProductOfferExpander implements MerchantProductOfferExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const PARAM_PRODUCT_OFFER_REFERENCE = 'product_offer_reference';
 
     /**

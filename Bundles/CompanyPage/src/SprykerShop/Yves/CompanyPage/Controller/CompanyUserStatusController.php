@@ -19,15 +19,36 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class CompanyUserStatusController extends AbstractCompanyController
 {
+    /**
+     * @var string
+     */
     protected const ID_COMPANY_USER_PARAMETER = 'id';
 
+    /**
+     * @var string
+     */
     protected const SUCCESS_MESSAGE_STATUS_ENABLE_COMPANY_USER = 'company.account.company_user.status.enable.success';
+    /**
+     * @var string
+     */
     protected const SUCCESS_MESSAGE_STATUS_DISABLE_COMPANY_USER = 'company.account.company_user.status.disable.success';
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_STATUS_ENABLE_COMPANY_USER = 'company.account.company_user.status.enable.error';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_STATUS_ENABLE_YOURSELF = 'company.account.company_user.status.enable.error.cannot_enable_yourself';
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_STATUS_DISABLE_COMPANY_USER = 'company.account.company_user.status.disable.error';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_STATUS_DISABLE_YOURSELF = 'company.account.company_user.status.disable.error.cannot_disable_yourself';
 
     /**

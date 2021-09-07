@@ -21,11 +21,21 @@ class ContentNavigationTwigFunctionProvider extends TwigFunctionProvider
 {
     /**
      * @uses \Spryker\Shared\ContentNavigation\ContentNavigationWidgetConfig::TWIG_FUNCTION_NAME
+     * @var string
      */
     protected const TWIG_FUNCTION_NAME_CONTENT_NAVIGATION = 'content_navigation';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_NAVIGATION_NOT_FOUND = '<b>Content Navigation with key %s not found.</b>';
+    /**
+     * @var string
+     */
     protected const MESSAGE_NAVIGATION_WRONG_TYPE = '<b>Content Navigation could not be rendered because the content item with key %s is not an navigation.</b>';
+    /**
+     * @var string
+     */
     protected const MESSAGE_NAVIGATION_WRONG_TEMPLATE = '<b>"%s" is not supported name of template.</b>';
 
     /**

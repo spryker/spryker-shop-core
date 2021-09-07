@@ -27,7 +27,13 @@ use Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationL
  */
 class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     public const ROLE_USER = 'ROLE_USER';
+    /**
+     * @var string
+     */
     public const IS_AUTHENTICATED_ANONYMOUSLY = 'IS_AUTHENTICATED_ANONYMOUSLY';
 
     /**

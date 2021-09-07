@@ -13,6 +13,9 @@ use SprykerShop\Yves\CmsSearchPage\Dependency\Client\CmsSearchPageToCmsSearchPag
 
 class CmsSearchPageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CMS_SEARCH_PAGE = 'CLIENT_CMS_SEARCH_PAGE';
 
     /**

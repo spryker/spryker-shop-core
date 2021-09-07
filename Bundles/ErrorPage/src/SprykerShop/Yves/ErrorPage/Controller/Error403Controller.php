@@ -14,6 +14,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class Error403Controller extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_EXCEPTION = 'exception';
 
     /**

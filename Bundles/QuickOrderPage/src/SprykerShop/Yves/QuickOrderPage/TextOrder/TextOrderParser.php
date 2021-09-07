@@ -13,6 +13,9 @@ use SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig;
 
 class TextOrderParser implements TextOrderParserInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_SEPARATOR_NOT_DETECTED = 'quick-order.paste-order.errors.parser.separator-not-detected';
 
     /**

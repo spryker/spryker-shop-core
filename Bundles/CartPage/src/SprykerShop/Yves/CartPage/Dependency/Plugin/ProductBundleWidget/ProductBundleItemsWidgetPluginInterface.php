@@ -16,6 +16,9 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
  */
 interface ProductBundleItemsWidgetPluginInterface extends WidgetPluginInterface
 {
+    /**
+     * @var string
+     */
     public const NAME = 'ProductBundleItemsWidgetPlugin';
 
     /**

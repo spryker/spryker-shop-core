@@ -18,8 +18,17 @@ use Symfony\Component\Validator\Constraints\Length;
  */
 class NoteMetadataFieldPlugin extends AbstractPlugin implements QuoteRequestFormMetadataFieldPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const FIELD_METADATA_NOTE = 'note';
+    /**
+     * @var string
+     */
     protected const LABEL_METADATA_NOTE = 'quote_request_page.quote_request.metadata.label.note';
+    /**
+     * @var int
+     */
     protected const MAX_LENGTH_NOTE = 1024;
 
     /**

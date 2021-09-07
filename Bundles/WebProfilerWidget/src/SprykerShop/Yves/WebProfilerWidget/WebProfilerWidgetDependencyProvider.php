@@ -14,9 +14,13 @@ class WebProfilerWidgetDependencyProvider extends AbstractBundleDependencyProvid
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\WebProfilerWidget\WebProfilerWidgetDependencyProvider::PLUGINS_DATA_COLLECTORS} instead.
+     * @var string
      */
     public const PLUGINS_WEB_PROFILER = 'PLUGINS_WEB_PROFILER';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_DATA_COLLECTORS = 'PLUGINS_DATA_COLLECTORS';
 
     /**

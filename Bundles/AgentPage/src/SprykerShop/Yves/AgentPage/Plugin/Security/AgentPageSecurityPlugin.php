@@ -22,34 +22,52 @@ use SprykerShop\Yves\AgentPage\Form\AgentLoginForm;
  */
 class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface
 {
+    /**
+     * @var string
+     */
     public const ROLE_AGENT = 'ROLE_AGENT';
+    /**
+     * @var string
+     */
     public const ROLE_ALLOWED_TO_SWITCH = 'ROLE_ALLOWED_TO_SWITCH';
+    /**
+     * @var string
+     */
     public const ROLE_USER = 'ROLE_USER';
+    /**
+     * @var string
+     */
     public const ROLE_PREVIOUS_ADMIN = 'ROLE_PREVIOUS_ADMIN';
 
     /**
      * @uses \Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin::SERVICE_DISPATCHER
+     * @var string
      */
     protected const SERVICE_DISPATCHER = 'dispatcher';
 
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     * @var string
      */
     protected const SERVICE_ROUTER = 'routers';
 
     /**
      * @uses \SprykerShop\Yves\AgentPage\Plugin\Router\AgentPageRouteProviderPlugin::ROUTE_LOGIN
+     * @var string
      */
     protected const ROUTE_LOGIN = 'agent/login';
 
     /**
      * This is used as route name and is internally converted to `/agent/logout`.
      * `path('agent_logout')` can be used in templates to get the URL.
+     *
+     * @var string
      */
     protected const ROUTE_LOGOUT = 'agent_logout';
 
     /**
      * @uses \SprykerShop\Yves\HomePage\Plugin\Router\HomePageRouteProviderPlugin::ROUTE_HOME
+     * @var string
      */
     protected const ROUTE_HOME = 'home';
 

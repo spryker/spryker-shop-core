@@ -31,29 +31,67 @@ class QuickOrderController extends AbstractController
 {
     use PermissionAwareTrait;
 
+    /**
+     * @var string
+     */
     public const PARAM_ROW_INDEX = 'row-index';
+    /**
+     * @var string
+     */
     public const PARAM_QUICK_ORDER_FORM = 'quick_order_form';
+    /**
+     * @var string
+     */
     protected const PARAM_QUICK_ORDER_FILE_TYPE = 'file-type';
+    /**
+     * @var string
+     */
     protected const PARAM_FORM_TOKEN = '_token';
+    /**
+     * @var string
+     */
     protected const MESSAGE_CLEAR_ALL_ROWS_SUCCESS = 'quick-order.message.success.the-form-items-have-been-successfully-cleared';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_QUANTITY_INVALID = 'quick-order.errors.quantity-invalid';
+    /**
+     * @var string
+     */
     protected const MESSAGE_TYPE_WARNING = 'warning';
+    /**
+     * @var string
+     */
     protected const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
+    /**
+     * @var string
+     */
     protected const MESSAGE_FORM_INVALID_CSRF = 'form.csrf.error.text';
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
+     * @var string
      */
     protected const ROUTE_NAME_CART = 'cart';
 
     /**
      * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_INDEX
+     * @var string
      */
     protected const ROUTE_NAME_CHECKOUT_INDEX = 'checkout-index';
 
+    /**
+     * @var string
+     */
     protected const FLASH_MESSAGE_LIST_TEMPLATE_PATH = '@ShopUi/components/organisms/flash-message-list/flash-message-list.twig';
 
+    /**
+     * @var string
+     */
     protected const KEY_CODE = 'code';
+    /**
+     * @var string
+     */
     protected const KEY_MESSAGES = 'messages';
 
     /**

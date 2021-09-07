@@ -19,25 +19,38 @@ class MerchantSwitcherWidgetDependencyProvider extends AbstractBundleDependencyP
 {
     /**
      * @see \Spryker\Shared\Application\ApplicationConstants::FORM_FACTORY
+     * @var string
      */
     public const FORM_FACTORY = 'FORM_FACTORY';
+    /**
+     * @var string
+     */
     public const CLIENT_MERCHANT_SEARCH = 'CLIENT_MERCHANT_SEARCH';
 
     /**
      * @deprecated Will be removed without replacement.
+     * @var string
      */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    /**
+     * @var string
+     */
     public const CLIENT_MERCHANT_SWITCHER = 'CLIENT_MERCHANT_SWITCHER';
 
     /**
      * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_COOKIES
+     * @var string
      */
     public const SERVICE_COOKIES = 'cookies';
 
     /**
      * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     * @var string
      */
     public const SERVICE_REQUEST_STACK = 'request_stack';
 

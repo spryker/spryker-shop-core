@@ -21,9 +21,21 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class BusinessUnitController extends AbstractCompanyController
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
+    /**
+     * @var string
+     */
     protected const BUSINESS_UNIT_LIST_SORT_FIELD = 'id_company_business_unit';
+    /**
+     * @var string
+     */
     protected const COMPANY_UNIT_ADDRESS_LIST_SORT_FIELD = 'id_company_unit_address';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_ID = 'id';
 
     /**

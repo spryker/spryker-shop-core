@@ -15,8 +15,17 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
  */
 class CatalogPageControllerProvider extends AbstractYvesControllerProvider
 {
+    /**
+     * @var string
+     */
     public const ROUTE_SEARCH = 'search';
+    /**
+     * @var string
+     */
     public const ROUTE_SUGGESTION = 'search/suggestion';
+    /**
+     * @var string
+     */
     public const ROUTER_CHANGE_VIEW_MODE = 'change-view-mode';
 
     /**

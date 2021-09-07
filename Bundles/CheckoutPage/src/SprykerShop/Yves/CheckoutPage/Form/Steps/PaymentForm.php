@@ -31,6 +31,9 @@ class PaymentForm extends AbstractType
     public const PAYMENT_SELECTION = PaymentTransfer::PAYMENT_SELECTION;
     public const PAYMENT_SELECTION_PROPERTY_PATH = self::PAYMENT_PROPERTY_PATH . '.' . self::PAYMENT_SELECTION;
 
+    /**
+     * @var string
+     */
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
 
     /**

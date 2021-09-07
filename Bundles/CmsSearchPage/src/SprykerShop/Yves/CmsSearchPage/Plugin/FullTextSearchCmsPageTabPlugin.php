@@ -17,8 +17,14 @@ use SprykerShop\Yves\TabsWidgetExtension\Plugin\FullTextSearchTabPluginInterface
  */
 class FullTextSearchCmsPageTabPlugin extends AbstractPlugin implements FullTextSearchTabPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const NAME = 'FullTextSearchCmsPage';
 
+    /**
+     * @var string
+     */
     protected const TAB_TRANSLATED_TITLE = 'global.search.pages';
 
     /**

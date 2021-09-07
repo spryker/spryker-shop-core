@@ -24,20 +24,59 @@ use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentP
 
 class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE_REQUEST = 'CLIENT_QUOTE_REQUEST';
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE_REQUEST_AGENT = 'CLIENT_QUOTE_REQUEST_AGENT';
+    /**
+     * @var string
+     */
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    /**
+     * @var string
+     */
     public const CLIENT_CART = 'CLIENT_CART';
+    /**
+     * @var string
+     */
     public const CLIENT_PRICE = 'CLIENT_PRICE';
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const CLIENT_STORE = 'CLIENT_STORE';
+    /**
+     * @var string
+     */
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
+    /**
+     * @var string
+     */
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
+    /**
+     * @var string
+     */
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_QUOTE_REQUEST_AGENT_FORM_METADATA_FIELD = 'PLUGINS_QUOTE_REQUEST_AGENT_FORM_METADATA_FIELD';
 
     /**

@@ -12,6 +12,9 @@ use SprykerShop\Yves\ShopUi\ShopUiConfig;
 
 class AssetsUrlProvider implements AssetsUrlProviderInterface
 {
+    /**
+     * @var string
+     */
     protected const PLACEHOLDER_THEME = '%theme%';
 
     /**

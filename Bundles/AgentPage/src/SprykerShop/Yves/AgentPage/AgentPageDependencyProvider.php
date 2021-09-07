@@ -22,33 +22,50 @@ use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToQuoteClientInterface
 
 class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_AGENT = 'CLIENT_AGENT';
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
 
     /**
      * @deprecated Use the required service directly.
+     * @var string
      */
     public const APPLICATION = 'APPLICATION';
 
     /**
      * @uses \Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_TOKEN_STORAGE
+     * @var string
      */
     public const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
 
     /**
      * @uses \Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_AUTHORIZATION_CHECKER
+     * @var string
      */
     public const SERVICE_SECURITY_AUTHORIZATION_CHECKER = 'security.authorization_checker';
 
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     * @var string
      */
     public const SERVICE_ROUTER = 'routers';
 
     /**
      * @uses \Spryker\Yves\Locale\Plugin\Application\LocaleApplicationPlugin::SERVICE_LOCALE
+     * @var string
      */
     public const SERVICE_LOCALE = 'locale';
 

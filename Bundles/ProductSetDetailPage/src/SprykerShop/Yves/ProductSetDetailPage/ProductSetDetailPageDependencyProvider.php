@@ -14,8 +14,17 @@ use SprykerShop\Yves\ProductSetDetailPage\Dependency\Client\ProductSetDetailPage
 
 class ProductSetDetailPageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_SET_STORAGE = 'CLIENT_PRODUCT_SET_STORAGE';
+    /**
+     * @var string
+     */
     public const PLUGIN_PRODUCT_SET_DETAIL_PAGE_WIDGETS = 'PLUGIN_PRODUCT_SET_DETAIL_PAGE_WIDGETS';
 
     /**

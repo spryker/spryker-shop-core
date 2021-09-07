@@ -16,17 +16,31 @@ class CustomerPageConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Zed\Customer\CustomerConfig::MIN_LENGTH_CUSTOMER_PASSWORD
+     * @var int
      */
     protected const MIN_LENGTH_CUSTOMER_PASSWORD = 1;
 
+    /**
+     * @var bool
+     */
     protected const IS_ORDER_HISTORY_SEARCH_ENABLED = false;
 
+    /**
+     * @var int
+     */
     protected const DEFAULT_ORDER_HISTORY_PER_PAGE = 10;
+    /**
+     * @var string
+     */
     protected const DEFAULT_ORDER_HISTORY_SORT_FIELD = 'created_at';
+    /**
+     * @var string
+     */
     protected const DEFAULT_ORDER_HISTORY_SORT_DIRECTION = 'DESC';
 
     /**
      * @uses \Spryker\Shared\Sales\SalesConfig::ORDER_SEARCH_TYPES
+     * @var array
      */
     protected const ORDER_SEARCH_TYPES = [
         'all',
@@ -37,6 +51,7 @@ class CustomerPageConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Zed\Customer\CustomerConfig::MAX_LENGTH_CUSTOMER_PASSWORD
+     * @var int
      */
     protected const MAX_LENGTH_CUSTOMER_PASSWORD = 72;
 

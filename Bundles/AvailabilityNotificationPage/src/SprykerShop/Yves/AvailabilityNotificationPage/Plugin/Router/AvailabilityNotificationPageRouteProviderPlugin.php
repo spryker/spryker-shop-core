@@ -14,9 +14,16 @@ class AvailabilityNotificationPageRouteProviderPlugin extends AbstractRouteProvi
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\AvailabilityNotificationPage\Plugin\Router\AvailabilityNotificationPageRouteProviderPlugin::ROUTE_NAME_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE} instead.
+     * @var string
      */
     protected const ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE = 'availability-notification/unsubscribe-by-key';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE = 'availability-notification/unsubscribe-by-key';
+    /**
+     * @var string
+     */
     protected const SUBSCRIPTION_KEY_PATTERN = '[0-9A-Za-z]{32}';
 
     /**

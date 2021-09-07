@@ -11,7 +11,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class DateTimeConfiguratorPageExampleConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const FRONTEND_TARGET_PATH = '/public/Configurator/dist';
+    /**
+     * @var string
+     */
     protected const FRONTEND_ORIGIN_PATH = '../../Configurator/DateTimeConfiguratorPageExample/Theme/ConfiguratorApplication/dist';
 
     /**

@@ -12,6 +12,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class CustomerReorderItemsWidgetForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FORM_NAME = 'customerReorderItemsWidgetForm';
 
     /**

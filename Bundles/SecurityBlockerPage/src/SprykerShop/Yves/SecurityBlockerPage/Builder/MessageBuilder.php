@@ -12,6 +12,9 @@ use SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageTo
 
 class MessageBuilder implements MessageBuilderInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_ERROR_ACCOUNT_BLOCKED = 'security_blocker_page.error.account_blocked';
 
     /**

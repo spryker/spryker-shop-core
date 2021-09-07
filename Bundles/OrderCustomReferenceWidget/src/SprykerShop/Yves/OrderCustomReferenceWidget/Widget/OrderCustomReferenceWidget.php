@@ -16,8 +16,14 @@ use SprykerShop\Yves\OrderCustomReferenceWidget\Form\OrderCustomReferenceForm;
  */
 class OrderCustomReferenceWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_QUOTE = 'quote';
 
+    /**
+     * @var string
+     */
     protected const FORM_ORDER_CUSTOM_REFERENCE = 'orderCustomReferenceForm';
 
     /**

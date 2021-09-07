@@ -14,8 +14,12 @@ class PersistentCartSharePageRouteProviderPlugin extends AbstractRouteProviderPl
 {
     /**
      * @uses \SprykerShop\Yves\PersistentCartSharePage\Controller\CartController::previewAction()
+     * @var string
      */
     protected const ROUTE_CART_PREVIEW = 'cart/preview';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CART_PREVIEW = 'cart/preview';
 
     /**

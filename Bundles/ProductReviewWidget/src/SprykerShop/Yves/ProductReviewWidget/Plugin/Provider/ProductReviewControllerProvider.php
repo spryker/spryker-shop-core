@@ -15,10 +15,22 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
  */
 class ProductReviewControllerProvider extends AbstractYvesControllerProvider
 {
+    /**
+     * @var string
+     */
     public const ROUTE_PRODUCT_REVIEW_INDEX = 'product-review/index';
+    /**
+     * @var string
+     */
     public const ROUTE_PRODUCT_REVIEW_SUBMIT = 'product-review/submit';
+    /**
+     * @var string
+     */
     public const ROUTE_PRODUCT_REVIEW_CREATE = 'product-review/create';
 
+    /**
+     * @var string
+     */
     public const ID_ABSTRACT_PRODUCT_REGEX = '[1-9][0-9]*';
 
     /**

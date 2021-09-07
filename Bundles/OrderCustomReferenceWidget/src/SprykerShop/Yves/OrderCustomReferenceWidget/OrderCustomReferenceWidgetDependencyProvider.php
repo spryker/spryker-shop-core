@@ -14,7 +14,13 @@ use SprykerShop\Yves\OrderCustomReferenceWidget\Dependency\Client\OrderCustomRef
 
 class OrderCustomReferenceWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_ORDER_CUSTOM_REFERENCE = 'CLIENT_ORDER_CUSTOM_REFERENCE';
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
 
     /**

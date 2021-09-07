@@ -14,7 +14,13 @@ use SprykerShop\Yves\CheckoutWidget\Dependency\Client\CheckoutWidgetToCheckoutCl
 
 class CheckoutWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGIN_CHECKOUT_BREADCRUMB = 'PLUGIN_CHECKOUT_BREADCRUMB';
+    /**
+     * @var string
+     */
     public const CLIENT_CHECKOUT = 'CLIENT_CHECKOUT';
 
     /**

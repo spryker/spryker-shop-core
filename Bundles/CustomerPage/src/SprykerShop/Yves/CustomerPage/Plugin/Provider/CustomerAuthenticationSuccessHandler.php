@@ -20,6 +20,7 @@ class CustomerAuthenticationSuccessHandler extends AbstractPlugin implements Aut
 {
     /**
      * @see HomePageRouteProviderPlugin::ROUTE_HOME
+     * @var string
      */
     protected const ROUTE_HOME = 'home';
 

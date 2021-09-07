@@ -18,6 +18,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ReturnCreateForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_RETURN_ITEMS = 'returnItems';
 
     /**

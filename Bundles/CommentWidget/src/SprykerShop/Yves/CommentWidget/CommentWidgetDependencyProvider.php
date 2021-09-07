@@ -14,13 +14,23 @@ use SprykerShop\Yves\CommentWidget\Dependency\Client\CommentWidgetToCustomerClie
 
 class CommentWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_COMMENT = 'CLIENT_COMMENT';
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_COMMENT_THREAD_AFTER_OPERATION_STRATEGY = 'PLUGINS_COMMENT_THREAD_AFTER_OPERATION_STRATEGY';
 
     /**
      * @uses \Spryker\Yves\Form\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
+     * @var string
      */
     public const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
 

@@ -16,9 +16,21 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UploadedFileCsvTypeParser implements UploadedFileTypeParserInterface
 {
+    /**
+     * @var string
+     */
     protected const CSV_SKU_COLUMN_NAME = 'concrete_sku';
+    /**
+     * @var string
+     */
     protected const CSV_QUANTITY_COLUMN_NAME = 'quantity';
+    /**
+     * @var string
+     */
     protected const MESSAGE_TYPE_ERROR = 'error';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_QUANTITY_INVALID = 'quick-order.errors.quantity-invalid';
 
     /**

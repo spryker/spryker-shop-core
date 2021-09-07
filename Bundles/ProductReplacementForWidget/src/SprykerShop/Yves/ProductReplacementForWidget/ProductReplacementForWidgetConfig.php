@@ -13,6 +13,7 @@ class ProductReplacementForWidgetConfig extends AbstractBundleConfig
 {
     /**
      * @see \Spryker\Shared\Product\ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP
+     * @var string
      */
     public const RESOURCE_TYPE_ATTRIBUTE_MAP = 'attribute_map';
 

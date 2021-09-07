@@ -20,8 +20,17 @@ use Symfony\Component\HttpFoundation\Request;
  */
 abstract class AbstractCompanyController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const COMPANY_APPROVED_STATUS = 'approved';
+    /**
+     * @var string
+     */
     public const PARAM_PAGE = 'page';
+    /**
+     * @var int
+     */
     public const DEFAULT_PAGE = 1;
 
     /**

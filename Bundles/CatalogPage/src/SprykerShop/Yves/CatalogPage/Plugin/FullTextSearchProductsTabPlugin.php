@@ -17,8 +17,14 @@ use SprykerShop\Yves\TabsWidgetExtension\Plugin\FullTextSearchTabPluginInterface
  */
 class FullTextSearchProductsTabPlugin extends AbstractPlugin implements FullTextSearchTabPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const NAME = 'FullTextSearchProductsTab';
 
+    /**
+     * @var string
+     */
     protected const TAB_TRANSLATED_TITLE = 'global.search.suggestion.in_products';
 
     /**

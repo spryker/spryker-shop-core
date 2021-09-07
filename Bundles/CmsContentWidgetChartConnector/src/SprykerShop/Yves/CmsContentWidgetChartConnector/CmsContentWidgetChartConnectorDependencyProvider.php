@@ -12,6 +12,9 @@ use Spryker\Yves\Kernel\Container;
 
 class CmsContentWidgetChartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGIN_CMS_CHART_CONTENT_WIDGETS = 'PLUGIN_CMS_CHART_CONTENT_WIDGETS';
 
     /**

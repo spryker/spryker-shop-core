@@ -16,16 +16,24 @@ use SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartS
 
 class PersistentCartShareWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const CLIENT_PERSISTENT_CART_SHARE = 'CLIENT_PERSISTENT_CART_SHARE';
 
     /**
      * @deprecated Will be removed without replacement.
+     * @var string
      */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     * @var string
      */
     public const SERVICE_ROUTER = 'routers';
 

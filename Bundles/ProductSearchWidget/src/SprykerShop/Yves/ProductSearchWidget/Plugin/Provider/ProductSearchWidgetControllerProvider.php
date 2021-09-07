@@ -15,7 +15,13 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
  */
 class ProductSearchWidgetControllerProvider extends AbstractYvesControllerProvider
 {
+    /**
+     * @var string
+     */
     protected const ROUTE_PRODUCT_CONCRETE_SEARCH = 'product-search/product-concrete-search';
+    /**
+     * @var string
+     */
     protected const ROUTE_PRODUCT_QUICK_ADD = 'product-quick-add';
 
     /**

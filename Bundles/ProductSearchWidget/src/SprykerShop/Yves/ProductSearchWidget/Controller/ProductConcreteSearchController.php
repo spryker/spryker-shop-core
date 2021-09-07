@@ -19,10 +19,17 @@ class ProductConcreteSearchController extends AbstractController
 {
     /**
      * @uses ProductConcreteCatalogSearchResultFormatterPlugin::NAME
+     * @var string
      */
     protected const PRODUCT_CONCRETE_CATALOG_SEARCH_RESULT_FORMATTER_PLUGIN_NAME = 'ProductConcreteCatalogSearchResultFormatterPlugin';
 
+    /**
+     * @var string
+     */
     protected const PARAM_SEARCH_STRING = 'searchString';
+    /**
+     * @var string
+     */
     protected const PARAM_LIMIT = 'limit';
 
     /**

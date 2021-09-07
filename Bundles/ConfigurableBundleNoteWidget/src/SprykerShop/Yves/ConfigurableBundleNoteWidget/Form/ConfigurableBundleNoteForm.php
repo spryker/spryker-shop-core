@@ -17,6 +17,9 @@ use Symfony\Component\Validator\Constraints\Length;
 
 class ConfigurableBundleNoteForm extends AbstractType
 {
+    /**
+     * @var int
+     */
     protected const FIELD_CONFIGURABLE_BUNDLE_NOTE_MAX_LENGTH = 255;
 
     /**

@@ -15,6 +15,9 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class QuoteRequestCreateWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
 
     /**

@@ -15,7 +15,13 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class QuoteRequestAgentCancelWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_QUOTE_REQUEST = 'quoteRequest';
+    /**
+     * @var string
+     */
     protected const PARAMETER_IS_QUOTE_REQUEST_CANCELABLE = 'isQuoteRequestCancelable';
 
     /**

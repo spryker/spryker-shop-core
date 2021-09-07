@@ -12,12 +12,30 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UploadOrderFormatConstraint extends SymfonyConstraint
 {
+    /**
+     * @var string
+     */
     public const OPTION_BUNDLE_CONFIG = 'config';
+    /**
+     * @var string
+     */
     public const OPTION_UPLOADED_FILE_VALIDATOR = 'uploadedFileValidator';
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_INVALID_MIME_TYPE = 'quick-order.upload-order.errors.upload-order-invalid-mime-type';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_INVALID_AMOUNT_OF_ROWS = 'quick-order.upload-order.errors.upload-order-invalid-amount-of-rows';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_INVALID_FORMAT = 'quick-order.upload-order.errors.upload-order-invalid-format';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_NO_FILE = 'quick-order.upload-order.errors.upload-order-no-file';
 
     /**

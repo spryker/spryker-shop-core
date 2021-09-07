@@ -17,6 +17,9 @@ use SprykerShop\Yves\CheckoutPage\Form\Steps\SummaryForm;
 
 class SummaryFormDataProvider implements StepEngineFormDataProviderInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_ACCEPT_TERM_AND_CONDITIONS = 'page.checkout.summary.accept_terms_and_conditions';
 
     /**

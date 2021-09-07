@@ -13,6 +13,9 @@ use SprykerShop\Yves\NewsletterWidget\Dependency\Client\NewsletterWidgetToNewsle
 
 class NewsletterWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_NEWSLETTER = 'CLIENT_NEWSLETTER';
 
     /**

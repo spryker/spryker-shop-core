@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DeleteController extends AbstractCustomerController
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_DELETE_ERROR = 'customer.account.delete.error';
 
     /**

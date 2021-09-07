@@ -14,6 +14,9 @@ use Generated\Shared\Transfer\ProductViewTransfer;
  */
 interface MultiCartWidgetPluginInterface
 {
+    /**
+     * @var string
+     */
     public const NAME = 'MultiCartWidgetPlugin';
 
     /**

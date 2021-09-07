@@ -18,7 +18,13 @@ use SprykerShop\Yves\CompanyPage\Form\CompanyUserForm;
 
 class CompanyUserFormDataProvider
 {
+    /**
+     * @var string
+     */
     protected const KEY_ID_COMPANY_ROLE = 'id_company_role';
+    /**
+     * @var string
+     */
     protected const KEY_ROLES = 'roles';
 
     /**

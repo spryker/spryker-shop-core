@@ -14,14 +14,25 @@ class CustomerReorderWidgetRouteProviderPlugin extends AbstractRouteProviderPlug
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerReorderWidget\Plugin\Router\CustomerReorderWidgetRouteProviderPlugin::ROUTE_NAME_CART_ORDER_REPEAT} instead.
+     * @var string
      */
     protected const ROUTE_CART_ORDER_REPEAT = 'customer/order/reorder';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CART_ORDER_REPEAT = 'customer/order/reorder';
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerReorderWidget\Plugin\Router\CustomerReorderWidgetRouteProviderPlugin::ROUTE_NAME_CART_ORDER_ITEMS_REPEAT} instead.
+     * @var string
      */
     protected const ROUTE_CART_ORDER_ITEMS_REPEAT = 'customer/order/reorder-items';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CART_ORDER_ITEMS_REPEAT = 'customer/order/reorder-items';
+    /**
+     * @var string
+     */
     protected const PATTERN_ID = '\d+';
 
     /**

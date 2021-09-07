@@ -20,7 +20,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class QuickOrderItemEmbeddedForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_SKU = 'sku';
+    /**
+     * @var string
+     */
     public const FIELD_QUANTITY = 'quantity';
 
     /**

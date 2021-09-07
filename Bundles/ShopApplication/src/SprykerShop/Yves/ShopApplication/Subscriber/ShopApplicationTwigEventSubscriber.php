@@ -23,9 +23,18 @@ use Twig\Environment;
 
 class ShopApplicationTwigEventSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_TWIG = 'twig';
+    /**
+     * @var string
+     */
     protected const SERVICE_REQUEST_STACK = 'request_stack';
 
+    /**
+     * @var string
+     */
     protected const TWIG_GLOBAL_VARIABLE_NAME_VIEW = '_view';
 
     /**

@@ -25,15 +25,39 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class GuestForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_SALUTATION = 'salutation';
+    /**
+     * @var string
+     */
     public const FIELD_FIRST_NAME = 'first_name';
+    /**
+     * @var string
+     */
     public const FIELD_LAST_NAME = 'last_name';
+    /**
+     * @var string
+     */
     public const FIELD_EMAIL = 'email';
+    /**
+     * @var string
+     */
     public const FIELD_IS_GUEST = 'is_guest';
+    /**
+     * @var string
+     */
     public const FIELD_ACCEPT_TERMS = 'accept_terms';
 
+    /**
+     * @var string
+     */
     public const BLOCK_PREFIX = 'guestForm';
 
+    /**
+     * @var string
+     */
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
 
     /**

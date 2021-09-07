@@ -12,6 +12,9 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClient
 
 class GetUsernameTwigFunctionProvider extends TwigFunctionProvider
 {
+    /**
+     * @var string
+     */
     protected const TWIG_FUNCTION_NAME_GET_USERNAME = 'getUsername';
 
     /**

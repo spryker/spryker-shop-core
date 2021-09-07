@@ -19,8 +19,17 @@ use Twig\TwigFunction;
  */
 class CmsTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const CMS_PREFIX_KEY = 'generated.cms';
+    /**
+     * @var string
+     */
     protected const TWIG_FUNCTION_SPY_CMS = 'spyCms';
+    /**
+     * @var string
+     */
     protected const SERVICE_TRANSLATOR = 'translator';
 
     /**

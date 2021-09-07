@@ -17,12 +17,30 @@ use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToStoreCli
 
 class SalesReturnPageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_SALES_RETURN = 'CLIENT_SALES_RETURN';
+    /**
+     * @var string
+     */
     public const CLIENT_SALES_RETURN_SEARCH = 'CLIENT_SALES_RETURN_SEARCH';
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const CLIENT_SALES = 'CLIENT_SALES';
+    /**
+     * @var string
+     */
     public const CLIENT_STORE = 'CLIENT_STORE';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_RETURN_CREATE_FORM_HANDLER = 'PLUGINS_RETURN_CREATE_FORM_HANDLER';
 
     /**

@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\ItemTransfer;
 
 interface CartProductPackagingUnitWidgetPluginInterface
 {
+    /**
+     * @var string
+     */
     public const NAME = 'CartProductPackagingUnitWidgetPlugin';
 
     /**

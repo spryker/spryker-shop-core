@@ -19,7 +19,13 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class BusinessOnBehalfController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const ERROR_COMPANY_NOT_ACTIVE = 'company_user.business_on_behalf.error.company_not_active';
+    /**
+     * @var string
+     */
     protected const ERROR_COMPANY_USER_INVALID = 'company_user.business_on_behalf.error.company_user_invalid';
 
     /**

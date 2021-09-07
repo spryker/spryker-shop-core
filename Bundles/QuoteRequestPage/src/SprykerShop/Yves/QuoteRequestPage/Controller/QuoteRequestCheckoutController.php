@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class QuoteRequestCheckoutController extends QuoteRequestAbstractController
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART_SUCCESS = 'quote_request.validation.converted_to_cart.success';
 
     /**

@@ -15,6 +15,9 @@ use Twig\TwigFunction;
  */
 class WidgetTagTwigPlugin extends AbstractTwigExtensionPlugin
 {
+    /**
+     * @var string
+     */
     protected const TWIG_FUNCTION_NAME_FIND_WIDGET = 'findWidget';
 
     /**

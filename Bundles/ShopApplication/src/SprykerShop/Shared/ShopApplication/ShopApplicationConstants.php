@@ -12,6 +12,9 @@ namespace SprykerShop\Shared\ShopApplication;
  */
 interface ShopApplicationConstants
 {
+    /**
+     * @var string
+     */
     public const ENABLE_APPLICATION_DEBUG = 'SHOP_APPLICATION:ENABLE_APPLICATION_DEBUG';
 
     /**
@@ -19,6 +22,7 @@ interface ShopApplicationConstants
      * - Defines environment name for twig.
      *
      * @api
+     * @var string
      */
     public const TWIG_ENVIRONMENT_NAME = 'SHOP_APPLICATION:TWIG_ENVIRONMENT_NAME';
 }

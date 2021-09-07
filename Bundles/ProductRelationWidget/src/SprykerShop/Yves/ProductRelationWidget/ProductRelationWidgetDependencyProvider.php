@@ -14,9 +14,21 @@ use SprykerShop\Yves\ProductRelationWidget\Dependency\Client\ProductRelationWidg
 
 class ProductRelationWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_RELATION_STORAGE = 'CLIENT_PRODUCT_RELATION_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_STORE = 'CLIENT_STORE';
+    /**
+     * @var string
+     */
     public const PLUGIN_PRODUCT_DETAIL_PAGE_SIMILAR_PRODUCTS_WIDGETS = 'PLUGIN_PRODUCT_DETAIL_PAGE_SIMILAR_PRODUCTS_WIDGETS';
+    /**
+     * @var string
+     */
     public const PLUGIN_CART_PAGE_UP_SELLING_PRODUCTS_WIDGETS = 'PLUGIN_CART_PAGE_UP_SELLING_PRODUCTS_WIDGETS';
 
     /**

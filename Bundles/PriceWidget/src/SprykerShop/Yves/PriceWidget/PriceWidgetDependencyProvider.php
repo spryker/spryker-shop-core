@@ -14,7 +14,13 @@ use SprykerShop\Yves\PriceWidget\Dependency\Client\PriceWidgetToQuoteClientBridg
 
 class PriceWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRICE = 'CLIENT_PRICE';
 
     /**

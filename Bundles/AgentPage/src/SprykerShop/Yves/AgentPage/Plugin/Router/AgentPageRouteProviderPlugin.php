@@ -14,13 +14,21 @@ class AgentPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\AgentPage\Plugin\Router\AgentPageRouteProviderPlugin::ROUTE_NAME_LOGIN} instead.
+     * @var string
      */
     protected const ROUTE_LOGIN = 'agent/login';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_LOGIN = 'agent/login';
     /**
      * @deprecated Use {@link \SprykerShop\Yves\AgentPage\Plugin\Router\AgentPageRouteProviderPlugin::ROUTE_NAME_AGENT_OVERVIEW} instead.
+     * @var string
      */
     protected const ROUTE_AGENT_OVERVIEW = 'agent/overview';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_AGENT_OVERVIEW = 'agent/overview';
 
     /**

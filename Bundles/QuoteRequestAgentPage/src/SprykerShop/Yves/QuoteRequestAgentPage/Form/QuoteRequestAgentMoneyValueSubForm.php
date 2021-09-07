@@ -22,10 +22,14 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class QuoteRequestAgentMoneyValueSubForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const PATTERN_MONEY = '/^\d*\.?\d{0,2}$/';
 
     /**
      * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     * @var string
      */
     protected const PRICE_MODE_GROSS = 'GROSS_MODE';
 

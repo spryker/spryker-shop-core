@@ -17,10 +17,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AcceptController extends AbstractController
 {
+    /**
+     * @var bool
+     */
     public const COMPANY_USER_WITH_PERMISSIONS_REQUIRED = false;
 
     /**
      * @see \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_REGISTER
+     * @var string
      */
     protected const REDIRECT_URL = 'register';
 

@@ -18,13 +18,20 @@ use SprykerShop\Yves\ShopRouter\Dependency\Client\ShopRouterToUrlStorageClientBr
  */
 class ShopRouterDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_URL_STORAGE = 'CLIENT_URL_STORAGE';
 
     /**
      * @deprecated Will be removed without replacement.
+     * @var string
      */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
+    /**
+     * @var string
+     */
     public const PLUGIN_RESOURCE_CREATORS = 'PLUGIN_RESOURCE_CREATORS';
 
     /**

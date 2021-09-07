@@ -19,7 +19,13 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerI
  */
 class CustomerAuthenticationFailureHandler extends BaseCustomerAuthenticationHandler implements AuthenticationFailureHandlerInterface
 {
+    /**
+     * @var string
+     */
     public const MESSAGE_CUSTOMER_AUTHENTICATION_FAILED = 'customer.authentication.failed';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_NOT_CONFIRMED_ACCOUNT = 'customer.authorization.invalid_account';
 
     /**

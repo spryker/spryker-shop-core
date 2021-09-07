@@ -11,6 +11,9 @@ use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProv
 
 class CmsChartContentWidgetConfigurationProvider implements CmsContentWidgetConfigurationProviderInterface
 {
+    /**
+     * @var string
+     */
     public const FUNCTION_NAME = 'chart';
 
     /**

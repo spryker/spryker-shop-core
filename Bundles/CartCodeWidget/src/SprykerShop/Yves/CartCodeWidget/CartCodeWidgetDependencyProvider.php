@@ -15,8 +15,17 @@ use SprykerShop\Yves\CartCodeWidget\Dependency\Client\CartCodeWidgetToZedRequest
 
 class CartCodeWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CART_CODE = 'CLIENT_CART_CODE';
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**

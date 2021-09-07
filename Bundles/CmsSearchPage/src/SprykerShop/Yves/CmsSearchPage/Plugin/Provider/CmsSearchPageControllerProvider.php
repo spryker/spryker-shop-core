@@ -15,6 +15,9 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
  */
 class CmsSearchPageControllerProvider extends AbstractYvesControllerProvider
 {
+    /**
+     * @var string
+     */
     public const ROUTE_SEARCH = 'search-cms';
 
     /**

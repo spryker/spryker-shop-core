@@ -13,6 +13,9 @@ use SprykerShop\Yves\MerchantProductWidget\Reader\MerchantProductReaderInterface
 
 class MerchantProductExpander implements MerchantProductExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const PARAM_MERCHANT_REFERENCE = 'merchant_reference';
 
     /**

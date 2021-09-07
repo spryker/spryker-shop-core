@@ -11,6 +11,9 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class CmsSlotBlockWidgetConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const CMS_BLOCK_TWIG_FUNCTION_NAME = 'spyCmsBlock';
 
     /**

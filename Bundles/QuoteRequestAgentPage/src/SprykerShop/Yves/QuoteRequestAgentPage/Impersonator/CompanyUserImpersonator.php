@@ -14,19 +14,25 @@ class CompanyUserImpersonator implements CompanyUserImpersonatorInterface
 {
     /**
      * @uses \Symfony\Component\Security\Http\Firewall\SwitchUserListener::EXIT_VALUE
+     * @var string
      */
     protected const EXIT_VALUE = '_exit';
 
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::PARAM_QUOTE_REQUEST_REFERENCE
+     * @var string
      */
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentAbstractController::PARAM_SWITCH_USER
+     * @var string
      */
     protected const PARAM_SWITCH_USER = '_switch_user';
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART = 'quote_request_page.quote_request.converted_to_cart';
 
     /**

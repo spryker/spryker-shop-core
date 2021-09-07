@@ -24,15 +24,20 @@ class SubRequestExceptionHandlerPlugin extends AbstractPlugin implements Excepti
 {
     /**
      * @deprecated Use `\SprykerShop\Yves\ErrorPage\Plugin\ExceptionHandler\SubRequestExceptionHandlerPlugin::SERVICE_REQUEST_STACK` instead.
+     * @var string
      */
     public const SERVICE_REQUEST = 'request';
 
+    /**
+     * @var string
+     */
     public const URL_NAME_PREFIX = 'error/';
 
     /**
      * @deprecated Will be removed without replacement.
      *
      * @see \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     * @var string
      */
     protected const SERVICE_ROUTERS = 'routers';
 
@@ -40,6 +45,7 @@ class SubRequestExceptionHandlerPlugin extends AbstractPlugin implements Excepti
      * @deprecated Will be removed without replacement.
      *
      * @see \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     * @var string
      */
     protected const SERVICE_REQUEST_STACK = 'request_stack';
 
@@ -47,6 +53,7 @@ class SubRequestExceptionHandlerPlugin extends AbstractPlugin implements Excepti
      * @deprecated Will be removed without replacement.
      *
      * @see \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_KERNEL
+     * @var string
      */
     protected const SERVICE_KERNEL = 'kernel';
 

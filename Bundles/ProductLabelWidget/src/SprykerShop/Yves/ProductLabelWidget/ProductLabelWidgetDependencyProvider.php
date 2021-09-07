@@ -14,7 +14,13 @@ use SprykerShop\Yves\ProductLabelWidget\Dependency\Client\ProductLabelWidgetToSt
 
 class ProductLabelWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_LABEL_STORAGE = 'CLIENT_PRODUCT_LABEL_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_STORE = 'CLIENT_STORE';
 
     /**

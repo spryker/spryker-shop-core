@@ -18,6 +18,9 @@ use SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleItemCounterWidget;
  */
 class ProductBundleItemCounterWidgetPlugin extends AbstractWidgetPlugin
 {
+    /**
+     * @var string
+     */
     public const NAME = 'ProductBundleItemCounterWidgetPlugin';
 
     /**

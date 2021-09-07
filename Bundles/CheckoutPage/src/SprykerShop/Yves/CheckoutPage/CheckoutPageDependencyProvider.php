@@ -41,67 +41,181 @@ use SprykerShop\Yves\MoneyWidget\Plugin\MoneyPlugin;
 
 class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    /**
+     * @var string
+     */
     public const CLIENT_CALCULATION = 'CLIENT_CALCULATION';
+    /**
+     * @var string
+     */
     public const CLIENT_CHECKOUT = 'CLIENT_CHECKOUT';
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const CLIENT_CART = 'CLIENT_CART';
+    /**
+     * @var string
+     */
     public const CLIENT_SHIPMENT = 'CLIENT_SHIPMENT';
+    /**
+     * @var string
+     */
     public const CLIENT_PAYMENT = 'CLIENT_PAYMENT';
+    /**
+     * @var string
+     */
     public const CLIENT_PRICE = 'CLIENT_PRICE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
+    /**
+     * @var string
+     */
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
 
+    /**
+     * @var string
+     */
     public const STORE = 'STORE';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
+    /**
+     * @var string
+     */
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
+    /**
+     * @var string
+     */
     public const SERVICE_CUSTOMER = 'SERVICE_CUSTOMER';
 
     /**
      * @uses \Spryker\Yves\Messenger\Plugin\Application\FlashMessengerApplicationPlugin::SERVICE_FLASH_MESSENGER
+     * @var string
      */
     public const SERVICE_FLASH_MESSENGER = 'flash_messenger';
 
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     * @var string
      */
     public const SERVICE_ROUTER = 'routers';
 
     /**
      * @deprecated Will be removed without replacement.
+     * @var string
      */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
+    /**
+     * @var string
+     */
     public const PLUGIN_CUSTOMER_STEP_HANDLER = 'PLUGIN_CUSTOMER_STEP_HANDLER';
+    /**
+     * @var string
+     */
     public const PLUGIN_SHIPMENT_STEP_HANDLER = 'PLUGIN_SHIPMENT_STEP_HANDLER';
+    /**
+     * @var string
+     */
     public const PLUGIN_SHIPMENT_HANDLER = 'PLUGIN_SHIPMENT_HANDLER';
+    /**
+     * @var string
+     */
     public const PLUGIN_SHIPMENT_FORM_DATA_PROVIDER = 'PLUGIN_SHIPMENT_FORM_DATA_PROVIDER';
+    /**
+     * @var string
+     */
     public const PLUGIN_CHECKOUT_ADDRESS_FORM_DATA_PROVIDER = 'PLUGIN_CHECKOUT_ADDRESS_FORM_DATA_PROVIDER';
+    /**
+     * @var string
+     */
     public const PLUGIN_CHECKOUT_BREADCRUMB = 'PLUGIN_CHECKOUT_BREADCRUMB';
+    /**
+     * @var string
+     */
     public const PLUGIN_MONEY = 'PLUGIN_MONEY';
+    /**
+     * @var string
+     */
     public const PLUGIN_CUSTOMER_PAGE_WIDGETS = 'PLUGIN_CUSTOMER_PAGE_WIDGETS';
+    /**
+     * @var string
+     */
     public const PLUGIN_ADDRESS_PAGE_WIDGETS = 'PLUGIN_ADDRESS_PAGE_WIDGETS';
+    /**
+     * @var string
+     */
     public const PLUGIN_SHIPMENT_PAGE_WIDGETS = 'PLUGIN_SHIPMENT_PAGE_WIDGETS';
+    /**
+     * @var string
+     */
     public const PLUGIN_PAYMENT_PAGE_WIDGETS = 'PLUGIN_PAYMENT_PAGE_WIDGETS';
+    /**
+     * @var string
+     */
     public const PLUGIN_SUMMARY_PAGE_WIDGETS = 'PLUGIN_SUMMARY_PAGE_WIDGETS';
+    /**
+     * @var string
+     */
     public const PLUGIN_SUCCESS_PAGE_WIDGETS = 'PLUGIN_SUCCESS_PAGE_WIDGETS';
 
     public const PAYMENT_METHOD_HANDLER = SprykerCheckoutDependencyProvider::PAYMENT_METHOD_HANDLER; // constant value must be BC because of dependency injector
     public const PAYMENT_SUB_FORMS = SprykerCheckoutDependencyProvider::PAYMENT_SUB_FORMS;  // constant value must be BC because of dependency injector
 
+    /**
+     * @var string
+     */
     public const CUSTOMER_STEP_SUB_FORMS = 'CUSTOMER_STEP_SUB_FORMS';
+    /**
+     * @var string
+     */
     public const ADDRESS_STEP_SUB_FORMS = 'ADDRESS_STEP_SUB_FORMS';
 
+    /**
+     * @var string
+     */
     public const PLUGIN_SUB_FORM_FILTERS = 'PLUGIN_SUB_FORM_FILTERS';
+    /**
+     * @var string
+     */
     public const PLUGIN_ADDRESS_STEP_EXECUTOR_ADDRESS_TRANSFER_EXPANDERS = 'PLUGIN_ADDRESS_STEP_EXECUTOR_ADDRESS_TRANSFER_EXPANDERS';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_CHECKOUT_ADDRESS_STEP_ENTER_PRE_CHECK = 'PLUGINS_CHECKOUT_ADDRESS_STEP_ENTER_PRE_CHECK';
+    /**
+     * @var string
+     */
     public const PLUGINS_CHECKOUT_SHIPMENT_STEP_ENTER_PRE_CHECK = 'PLUGINS_CHECKOUT_SHIPMENT_STEP_ENTER_PRE_CHECK';
+    /**
+     * @var string
+     */
     public const PLUGINS_CHECKOUT_PAYMENT_STEP_ENTER_PRE_CHECK = 'PLUGINS_CHECKOUT_PAYMENT_STEP_ENTER_PRE_CHECK';
+    /**
+     * @var string
+     */
     public const PLUGINS_CHECKOUT_STEP_RESOLVER_STRATEGY = 'PLUGINS_CHECKOUT_STEP_RESOLVER_STRATEGY';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_CHECKOUT_PAGE_STEP_ENGINE_PRE_RENDER = 'PLUGINS_CHECKOUT_PAGE_STEP_ENGINE_PRE_RENDER';
 
     /**

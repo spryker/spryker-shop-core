@@ -35,18 +35,45 @@ use Twig\Loader\FilesystemLoader;
  */
 class ContentBannerTwigPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const LOCALE = 'de_DE';
 
+    /**
+     * @var string
+     */
     protected const DEFAULT_TEMPLATE = 'top-title';
+    /**
+     * @var string
+     */
     protected const WRONG_TEMPLATE = 'wrong';
 
+    /**
+     * @var string
+     */
     protected const CONTENT_KEY = '0';
+    /**
+     * @var string
+     */
     protected const CONTENT_TERM = 'TERM';
 
+    /**
+     * @var string
+     */
     protected const RENDERED_STRING = 'output';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_BANNER_NOT_FOUND = '<b>Content Banner with key 0 not found.</b>';
+    /**
+     * @var string
+     */
     protected const MESSAGE_BANNER_WRONG_TYPE = '<b>Content Banner could not be rendered because the content item with key 0 is not an banner.</b>';
+    /**
+     * @var string
+     */
     protected const MESSAGE_BANNER_WRONG_TEMPLATE = '<b>"wrong" is not supported name of template.</b>';
 
     /**

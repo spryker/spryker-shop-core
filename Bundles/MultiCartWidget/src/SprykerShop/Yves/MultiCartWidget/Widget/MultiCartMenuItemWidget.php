@@ -14,6 +14,9 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class MultiCartMenuItemWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const PAGE_KEY_MULTI_CART = 'multiCart';
 
     /**

@@ -19,6 +19,9 @@ use Twig\TwigFunction;
  */
 class FunctionTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const TWIG_FUNCTION_NAME_WIDGET_EXISTS = 'functionExists';
 
     /**

@@ -27,11 +27,23 @@ use SprykerShop\Yves\ShoppingListPage\Form\ShareShoppingListForm;
 
 class ShareShoppingListDataProvider
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PERMISSIONS = 'customer.account.shopping_list.permissions';
 
+    /**
+     * @var string
+     */
     protected const ORDER_BUSINESS_UNIT_SORT_FIELD = 'name';
+    /**
+     * @var string
+     */
     protected const ORDER_BUSINESS_UNIT_SORT_DIRECTION = 'ASC';
 
+    /**
+     * @var string
+     */
     protected const PERMISSION_NO_ACCESS = 'NO_ACCESS';
 
     /**

@@ -20,8 +20,17 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ShoppingListForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     public const FIELD_ID = 'idShoppingList';
+    /**
+     * @var string
+     */
     public const VALIDATION_MAX_LENGTH_MESSAGE = 'validation.max_length.singular|validation.max_length.plural';
 
     /**

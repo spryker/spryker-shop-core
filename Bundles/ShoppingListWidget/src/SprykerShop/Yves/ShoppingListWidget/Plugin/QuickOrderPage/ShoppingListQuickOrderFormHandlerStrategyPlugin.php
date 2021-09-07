@@ -25,10 +25,17 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
 {
     /**
      * @see \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_SHOPPING_LIST_DETAILS
+     * @var string
      */
     protected const ROUTE_SHOPPING_LIST_DETAILS = 'shopping-list/details';
 
+    /**
+     * @var string
+     */
     protected const PARAM_ID_SHOPPING_LIST = 'idShoppingList';
+    /**
+     * @var string
+     */
     protected const PARAM_ADD_TO_SHOPPING_LIST = 'addToShoppingList';
 
     /**

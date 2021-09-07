@@ -11,20 +11,26 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class ProductConfigurationCartWidgetConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const SOURCE_TYPE_CART = 'SOURCE_TYPE_CART';
 
     /**
      * @uses \SprykerShop\Shared\DateTimeConfiguratorPageExample\DateTimeConfiguratorPageExampleConfig::DATE_TIME_CONFIGURATOR_KEY
+     * @var string
      */
     protected const DATE_TIME_CONFIGURATOR_KEY = 'DATE_TIME_CONFIGURATOR';
 
     /**
      * @uses \SprykerShop\Yves\ProductConfiguratorGatewayPage\ProductConfiguratorGatewayPageConfig::PRODUCT_CONFIGURATOR_GATEWAY_REQUEST_FORM_NAME
+     * @var string
      */
     protected const PRODUCT_CONFIGURATOR_GATEWAY_REQUEST_FORM_NAME = 'product_configurator_request_data_form';
 
     /**
      * @uses \SprykerShop\Yves\ProductConfiguratorGatewayPage\Plugin\Router\ProductConfiguratorGatewayPageRouteProviderPlugin::ROUTE_NAME_PRODUCT_CONFIGURATOR_GATEWAY_REQUEST
+     * @var string
      */
     protected const ROUTE_NAME_PRODUCT_CONFIGURATOR_GATEWAY_REQUEST = 'product-configurator-gateway/request';
 

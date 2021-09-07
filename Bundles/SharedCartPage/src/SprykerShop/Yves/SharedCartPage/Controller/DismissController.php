@@ -18,8 +18,12 @@ class DismissController extends AbstractController
 {
     /**
      * @uses \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_INDEX
+     * @var string
      */
     public const URL_REDIRECT_MULTI_CART_PAGE = 'multi-cart';
+    /**
+     * @var string
+     */
     public const KEY_GLOSSARY_SHARED_CART_PAGE_DISMISS_SUCCESS = 'shared_cart_page.dismiss.success';
 
     /**

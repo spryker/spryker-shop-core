@@ -27,18 +27,54 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CompanyBusinessUnitForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     public const FIELD_EMAIL = 'email';
+    /**
+     * @var string
+     */
     public const FIELD_PHONE = 'phone';
+    /**
+     * @var string
+     */
     public const FIELD_EXTERNAL_URL = 'external_url';
+    /**
+     * @var string
+     */
     public const FIELD_FK_COMPANY = 'fk_company';
+    /**
+     * @var string
+     */
     public const FIELD_ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
+    /**
+     * @var string
+     */
     public const FIELD_COMPANY_UNIT_ADDRESSES = 'address_collection';
+    /**
+     * @var string
+     */
     public const FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT = 'fk_parent_company_business_unit';
+    /**
+     * @var string
+     */
     public const COMPANY_UNIT_ADDRESSES_KEY = 'company_unit_addresses';
+    /**
+     * @var string
+     */
     public const ID_COMPANY_UNIT_ADDRESS_KEY = 'id_company_unit_address';
 
+    /**
+     * @var string
+     */
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+    /**
+     * @var string
+     */
     protected const VALIDATION_EMAIL_MESSAGE = 'validation.email';
 
     /**

@@ -15,7 +15,13 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RedirectExceptionHandler implements RedirectExceptionHandlerInterface
 {
+    /**
+     * @var string
+     */
     protected const URL_NAME_PREFIX = 'error-page/';
+    /**
+     * @var string
+     */
     protected const QUERY_PARAMETER_ERROR_MESSAGE = 'errorMessage';
 
     /**

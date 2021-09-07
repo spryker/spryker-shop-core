@@ -18,6 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QuoteRequestEditAddressController extends QuoteRequestAbstractController
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART = 'quote_request_page.quote_request.converted_to_cart';
 
     /**

@@ -15,8 +15,17 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class ShareCartByLinkWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const PARAM_CART = 'cart';
+    /**
+     * @var string
+     */
     protected const PARAM_IS_QUOTE_OWNER = 'isQuoteOwner';
+    /**
+     * @var string
+     */
     protected const PARAM_SHARE_OPTIONS_GROUPS = 'shareOptionGroups';
 
     /**

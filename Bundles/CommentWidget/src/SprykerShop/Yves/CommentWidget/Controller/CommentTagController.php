@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CommentTagController extends CommentWidgetAbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_NAME = 'name';
 
     /**

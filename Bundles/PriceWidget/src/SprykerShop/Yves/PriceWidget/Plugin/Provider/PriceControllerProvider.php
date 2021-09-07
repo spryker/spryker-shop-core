@@ -15,6 +15,9 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
  */
 class PriceControllerProvider extends AbstractYvesControllerProvider
 {
+    /**
+     * @var string
+     */
     public const ROUTE_PRICE_SWITCH = 'price-mode-switch';
 
     /**

@@ -16,8 +16,17 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class ProductConfigurationCartPageButtonWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
+    /**
+     * @var string
+     */
     protected const PARAMETER_FORM = 'form';
+    /**
+     * @var string
+     */
     protected const PARAMETER_PRODUCT_CONFIGURATOR_ROUTE_NAME = 'productConfiguratorRouteName';
 
     /**

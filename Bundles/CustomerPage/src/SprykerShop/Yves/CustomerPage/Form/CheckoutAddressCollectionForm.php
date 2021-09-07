@@ -31,28 +31,76 @@ use Symfony\Component\Validator\Constraints\IsFalse;
  */
 class CheckoutAddressCollectionForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_SHIPPING_ADDRESS = 'shippingAddress';
+    /**
+     * @var string
+     */
     public const FIELD_BILLING_ADDRESS = 'billingAddress';
+    /**
+     * @var string
+     */
     public const FIELD_BILLING_SAME_AS_SHIPPING = 'billingSameAsShipping';
+    /**
+     * @var string
+     */
     public const FIELD_MULTI_SHIPPING_ADDRESSES = 'multiShippingAddresses';
+    /**
+     * @var string
+     */
     public const FIELD_MULTI_SHIPPING_ADDRESSES_FOR_BUNDLE_ITEMS = 'multiShippingAddressesForBundleItems';
+    /**
+     * @var string
+     */
     public const FIELD_IS_MULTIPLE_SHIPMENT_ENABLED = 'isMultipleShipmentEnabled';
 
+    /**
+     * @var string
+     */
     public const OPTION_SINGLE_SHIPPING_ADDRESS_CHOICES = 'single_shipping_address_choices';
+    /**
+     * @var string
+     */
     public const OPTION_MULTIPLE_SHIPPING_ADDRESS_CHOICES = 'multiple_shipping_addresses_choices';
+    /**
+     * @var string
+     */
     public const OPTION_BILLING_ADDRESS_CHOICES = 'billing_addresses_choices';
+    /**
+     * @var string
+     */
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
+    /**
+     * @var string
+     */
     public const OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES = 'can_deliver_to_multiple_shipping_addresses';
+    /**
+     * @var string
+     */
     public const OPTION_IS_CUSTOMER_LOGGED_IN = 'is_customer_logged_in';
+    /**
+     * @var string
+     */
     public const OPTION_BUNDLE_ITEMS = 'bundleItems';
 
     public const GROUP_SHIPPING_ADDRESS = self::FIELD_SHIPPING_ADDRESS;
     public const GROUP_BILLING_ADDRESS = self::FIELD_BILLING_ADDRESS;
     public const GROUP_BILLING_SAME_AS_SHIPPING = self::FIELD_BILLING_SAME_AS_SHIPPING;
 
+    /**
+     * @var string
+     */
     public const VALIDATION_BILLING_SAME_AS_SHIPPING_MESSAGE = 'Billing address should not be specified when shipping to multiple addresses.';
 
+    /**
+     * @var string
+     */
     protected const PROPERTY_PATH_MULTI_SHIPPING_ADDRESSES = 'items';
+    /**
+     * @var string
+     */
     protected const PROPERTY_PATH_MULTI_SHIPPING_ADDRESSES_FOR_BUNDLE_ITEMS = 'bundleItems';
 
     /**

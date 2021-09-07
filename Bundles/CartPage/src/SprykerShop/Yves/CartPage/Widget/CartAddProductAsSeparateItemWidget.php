@@ -16,9 +16,13 @@ class CartAddProductAsSeparateItemWidget extends AbstractWidget
 {
     /**
      * @uses \Spryker\Shared\Quote\QuoteConfig::STORAGE_STRATEGY_SESSION
+     * @var string
      */
     protected const STORAGE_STRATEGY_SESSION = 'session';
 
+    /**
+     * @var string
+     */
     protected const PARAMETER_IS_QUOTE_STORAGE_STRATEGY_SESSION_ENABLED = 'isQuoteStorageStrategySessionEnabled';
 
     public function __construct()

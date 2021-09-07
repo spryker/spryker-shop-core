@@ -17,6 +17,9 @@ class ShoppingListFromCartFormDataProvider
 {
     use PermissionAwareTrait;
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CART_ADD_TO_SHOPPING_LIST_FORM_ADD_NEW = 'cart.add-to-shopping-list.form.add_new';
 
     /**

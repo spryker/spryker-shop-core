@@ -15,6 +15,9 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
  */
 class ConfigurableBundleWidgetControllerProvider extends AbstractYvesControllerProvider
 {
+    /**
+     * @var string
+     */
     protected const ROUTE_CART_CONFIGURED_BUNDLE_REMOVE = 'cart/configured-bundle/remove';
 
     /**

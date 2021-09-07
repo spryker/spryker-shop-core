@@ -14,117 +14,179 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST = 'quote-request';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST = 'quote-request';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_CREATE} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_CREATE = 'quote-request/create';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_CREATE = 'quote-request/create';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_REVISE} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_REVISE = 'quote-request/revise';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_REVISE = 'quote-request/revise';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_SEND_TO_USER} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_SEND_TO_USER = 'quote-request/send-to-user';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_SEND_TO_USER = 'quote-request/send-to-user';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_EDIT} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_EDIT = 'quote-request/edit';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_EDIT = 'quote-request/edit';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_EDIT_ITEMS} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_EDIT_ITEMS = 'quote-request/edit-items';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_EDIT_ITEMS = 'quote-request/edit-items';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM = 'quote-request/edit-items-confirm';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM = 'quote-request/edit-items-confirm';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_CANCEL} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_CANCEL = 'quote-request/cancel';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_CANCEL = 'quote-request/cancel';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_DETAILS} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_DETAILS = 'quote-request/details';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_DETAILS = 'quote-request/details';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_CONVERT_TO_CART} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_CONVERT_TO_CART = 'quote-request/convert-to-cart';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_CONVERT_TO_CART = 'quote-request/convert-to-cart';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST} instead.
+     * @var string
      */
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST} instead.
+     * @var string
      */
     protected const QUOTE_REQUEST_REFERENCE_REGEX = '[a-zA-Z0-9-]+';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_EDIT_ADDRESS} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_EDIT_ADDRESS = 'quote-request/edit-address';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_EDIT_ADDRESS = 'quote-request/edit-address';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_EDIT_ADDRESS_CONFIRM} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_EDIT_ADDRESS_CONFIRM = 'quote-request/edit-address-confirm';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_EDIT_ADDRESS_CONFIRM = 'quote-request/edit-address-confirm';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_EDIT_SHIPMENT} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_EDIT_SHIPMENT = 'quote-request/edit-shipment';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_EDIT_SHIPMENT = 'quote-request/edit-shipment';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_EDIT_SHIPMENT_CONFIRM} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_EDIT_SHIPMENT_CONFIRM = 'quote-request/edit-shipment-confirm';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_EDIT_SHIPMENT_CONFIRM = 'quote-request/edit-shipment-confirm';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_SAVE} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_SAVE = 'quote-request/save';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_SAVE = 'quote-request/save';
 
     /**

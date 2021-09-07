@@ -21,17 +21,28 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ReturnProductBundleItemsForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const KEY_PRODUCT_BUNDLE_DATA = 'productBundleData';
+    /**
+     * @var string
+     */
     public const KEY_PRODUCT_BUNDLE_ITEMS = 'productBundleItems';
 
     /**
      * @uses \SprykerShop\Yves\SalesReturnPage\Form\ReturnItemsForm::FIELD_CUSTOM_REASON
+     * @var string
      */
     public const FIELD_CUSTOM_REASON = 'customReason';
+    /**
+     * @var string
+     */
     public const FIELD_PRODUCT_BUNDLES = 'productBundles';
 
     /**
      * @uses \SprykerShop\Yves\SalesReturnPage\Form\ReturnItemsForm::OPTION_RETURN_REASONS
+     * @var string
      */
     public const OPTION_RETURN_REASONS = 'returnReasons';
 

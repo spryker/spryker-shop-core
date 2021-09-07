@@ -21,10 +21,22 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class ShoppingListFromCartForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_NEW_SHOPPING_LIST_NAME_INPUT = 'newShoppingListName';
+    /**
+     * @var string
+     */
     public const OPTION_SHOPPING_LISTS = 'OPTION_SHOPPING_LISTS';
 
+    /**
+     * @var string
+     */
     protected const FIELD_ID_QUOTE = 'idQuote';
+    /**
+     * @var string
+     */
     protected const FIELD_ID_SHOPPING_LIST = 'idShoppingList';
 
     /**

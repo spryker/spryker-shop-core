@@ -29,14 +29,41 @@ use SprykerShop\Zed\DateTimeConfiguratorPageExample\Dependency\Facade\DateTimeCo
  */
 class DateTimeConfiguratorPageExampleFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const DEMO_DATE_TIME_CONFIGURATOR_TEST_STORE = 'AT';
+    /**
+     * @var string
+     */
     protected const DATE_TIME_CONFIGURATOR_KEY = 'DATE_TIME_CONFIGURATOR';
+    /**
+     * @var string
+     */
     protected const TEST_SKU = 'demo_date_time_configurator_test_sku';
+    /**
+     * @var int
+     */
     protected const TEST_STORE_AVAILABILITY = 5;
+    /**
+     * @var int
+     */
     protected const TEST_PRODUCT_CONCRETE_AVAILABILITY = 10;
+    /**
+     * @var int
+     */
     protected const TEST_PRODUCT_CONFIGURATION_INSTANCE_AVAILABILITY = 15;
+    /**
+     * @var string
+     */
     protected const TEST_PRICE_NET_MODE = 'NET_MODE';
+    /**
+     * @var string
+     */
     protected const PRICE_GROSS_MODE = 'GROSS_MODE';
+    /**
+     * @var int
+     */
     protected const TEST_PRICE = 100000;
 
     /**

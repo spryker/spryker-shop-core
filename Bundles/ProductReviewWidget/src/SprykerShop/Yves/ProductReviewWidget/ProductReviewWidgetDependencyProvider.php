@@ -17,18 +17,32 @@ use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetTo
 
 class ProductReviewWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_REVIEW = 'CLIENT_PRODUCT_REVIEW';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_REVIEW_STORAGE = 'CLIENT_PRODUCT_REVIEW_STORAGE';
 
     /**
      * @deprecated Use {@link \Spryker\Yves\Kernel\AbstractFactory::getContainer()} instead.
+     * @var string
      */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
      * @uses `\Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK`
+     * @var string
      */
     public const SERVICE_REQUEST_STACK = 'request_stack';
 

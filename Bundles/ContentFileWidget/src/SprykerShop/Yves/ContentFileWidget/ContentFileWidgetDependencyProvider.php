@@ -14,7 +14,13 @@ use SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToFile
 
 class ContentFileWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CONTENT_FILE = 'CLIENT_CONTENT_FILE';
+    /**
+     * @var string
+     */
     public const CLIENT_FILE_MANAGER_STORAGE = 'CLIENT_FILE_MANAGER_STORAGE';
 
     /**

@@ -15,8 +15,14 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
  */
 class NewsletterWidgetControllerProvider extends AbstractYvesControllerProvider
 {
+    /**
+     * @var string
+     */
     public const ROUTE_NEWSLETTER_SUBSCRIBE = 'newsletter/subscribe';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NEWSLETTER_WIDGET_SUBSCRIBE = 'newsletter-widget/subscribe';
 
     /**

@@ -18,8 +18,17 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class OrderConfiguredBundleWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_ORDER = 'order';
+    /**
+     * @var string
+     */
     protected const PARAMETER_ITEMS = 'items';
+    /**
+     * @var string
+     */
     protected const PARAMETER_SALES_ORDER_CONFIGURED_BUNDLES = 'salesOrderConfiguredBundles';
 
     /**

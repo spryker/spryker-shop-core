@@ -17,12 +17,27 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class NewsletterSubscriptionForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_SUBSCRIBE = 'subscribe';
+    /**
+     * @var string
+     */
     public const FORM_ID = 'subscription';
 
+    /**
+     * @var int
+     */
     protected const MAX_EMAIL_LENGTH_VALUE = 254;
 
+    /**
+     * @var string
+     */
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+    /**
+     * @var string
+     */
     protected const VALIDATION_EMAIL_MESSAGE = 'validation.email';
 
     /**

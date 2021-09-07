@@ -15,6 +15,9 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
  */
 class FileManagerWidgetControllerProvider extends AbstractYvesControllerProvider
 {
+    /**
+     * @var string
+     */
     protected const ROUTE_FILES_DOWNLOAD = 'files/download';
 
     /**

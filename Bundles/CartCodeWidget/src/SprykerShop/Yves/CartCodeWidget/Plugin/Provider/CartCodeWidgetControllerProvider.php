@@ -15,8 +15,17 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
  */
 class CartCodeWidgetControllerProvider extends AbstractYvesControllerProvider
 {
+    /**
+     * @var string
+     */
     public const ROUTE_CART_CODE_ADD = 'cart-code/code/add';
+    /**
+     * @var string
+     */
     public const ROUTE_CART_CODE_REMOVE = 'cart-code/code/remove';
+    /**
+     * @var string
+     */
     public const ROUTE_CART_CODE_CLEAR = 'cart-code/code/clear';
 
     /**

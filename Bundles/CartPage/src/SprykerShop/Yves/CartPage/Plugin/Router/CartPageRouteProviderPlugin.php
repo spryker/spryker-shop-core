@@ -15,66 +15,115 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART} instead.
+     * @var string
      */
     protected const ROUTE_CART = 'cart';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CART = 'cart';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART_ADD} instead.
+     * @var string
      */
     protected const ROUTE_CART_ADD = 'cart/add';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CART_ADD = 'cart/add';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART_ADD_AJAX} instead.
+     * @var string
      */
     protected const ROUTE_CART_ADD_AJAX = 'cart/add-ajax';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CART_ADD_AJAX = 'cart/add-ajax';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART_QUICK_ADD} instead.
+     * @var string
      */
     protected const ROUTE_CART_QUICK_ADD = 'cart/quick-add';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CART_QUICK_ADD = 'cart/quick-add';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART_REMOVE} instead.
+     * @var string
      */
     protected const ROUTE_CART_REMOVE = 'cart/remove';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CART_REMOVE = 'cart/remove';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART_CHANGE} instead.
+     * @var string
      */
     protected const ROUTE_CART_CHANGE = 'cart/change';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CART_CHANGE = 'cart/change';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART_UPDATE} instead.
+     * @var string
      */
     protected const ROUTE_CART_UPDATE = 'cart/update';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CART_UPDATE = 'cart/update';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART_CHANGE_QUANTITY} instead.
+     * @var string
      */
     protected const ROUTE_CART_CHANGE_QUANTITY = 'cart/change/quantity';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CART_CHANGE_QUANTITY = 'cart/change/quantity';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART_ADD_ITEMS} instead.
+     * @var string
      */
     protected const ROUTE_CART_ADD_ITEMS = 'cart/add-items';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CART_ADD_ITEMS = 'cart/add-items';
+    /**
+     * @var string
+     */
     protected const SKU_PATTERN = '[a-zA-Z0-9-_\.]+';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART_RESET_LOCK} instead.
+     * @var string
      */
     protected const ROUTE_CART_RESET_LOCK = 'cart/reset-lock';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CART_RESET_LOCK = 'cart/reset-lock';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_GET_UPSELLING_WIDGET_AJAX = 'cart/get-upselling-widget';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_GET_CART_ITEMS_AJAX = 'cart/get-cart-items';
 
     /**

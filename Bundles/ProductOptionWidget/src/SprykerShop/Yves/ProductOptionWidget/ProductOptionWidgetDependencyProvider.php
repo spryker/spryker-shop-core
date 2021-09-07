@@ -13,6 +13,9 @@ use SprykerShop\Yves\ProductOptionWidget\Dependency\Client\ProductOptionWidgetTo
 
 class ProductOptionWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_OPTION_STORAGE = 'CLIENT_PRODUCT_OPTION_STORAGE';
 
     /**

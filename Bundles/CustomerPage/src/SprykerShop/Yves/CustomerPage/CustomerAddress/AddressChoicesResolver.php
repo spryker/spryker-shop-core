@@ -14,7 +14,13 @@ use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressForm;
 
 class AddressChoicesResolver implements AddressChoicesResolverInterface
 {
+    /**
+     * @var string
+     */
     protected const ADDRESS_LABEL_PATTERN = '%s %s %s, %s %s, %s %s';
+    /**
+     * @var string
+     */
     protected const SANITIZED_CUSTOMER_ADDRESS_LABEL_PATTERN = '%s - %s';
 
     /**

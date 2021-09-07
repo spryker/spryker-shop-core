@@ -16,19 +16,25 @@ class CatalogPageConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::DEFAULT_ITEMS_PER_PAGE;
+     * @var int
      */
     protected const DEFAULT_ITEMS_PER_PAGE = 12;
 
     /**
      * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::PARAMETER_NAME_PAGE;
+     * @var string
      */
     protected const PARAMETER_NAME_PAGE = 'page';
 
     /**
      * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::PARAMETER_NAME_ITEMS_PER_PAGE;
+     * @var string
      */
     protected const PARAMETER_NAME_ITEMS_PER_PAGE = 'ipp';
 
+    /**
+     * @var int
+     */
     protected const CATALOG_PAGE_LIMIT = 10000;
 
     /**

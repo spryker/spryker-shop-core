@@ -21,16 +21,40 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CheckoutMultiShippingAddressesForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_SHIPPING_ADDRESS = 'shippingAddress';
 
+    /**
+     * @var string
+     */
     public const OPTION_ADDRESS_CHOICES = 'address_choices';
+    /**
+     * @var string
+     */
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
+    /**
+     * @var string
+     */
     public const OPTION_IS_CUSTOMER_LOGGED_IN = 'is_customer_logged_in';
+    /**
+     * @var string
+     */
     public const OPTION_VALIDATION_GROUP = 'validation_group';
+    /**
+     * @var string
+     */
     public const OPTION_PLACEHOLDER = 'placeholder';
 
+    /**
+     * @var string
+     */
     protected const PROPERTY_PATH_SHIPPING_ADDRESS = 'shipment.shippingAddress';
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_SELECT_ADDRESS = 'checkout.step.address.select_address';
 
     /**

@@ -11,6 +11,9 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class CustomerPageConfig extends AbstractSharedConfig
 {
+    /**
+     * @var string
+     */
     public const SECURITY_FIREWALL_NAME = 'secured';
 
     /**
@@ -20,6 +23,7 @@ class CustomerPageConfig extends AbstractSharedConfig
      * @api
      *
      * @see \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE.
+     * @var string
      */
     public const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
 }

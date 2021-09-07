@@ -17,10 +17,17 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ShareController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const KEY_GLOSSARY_SHARED_CART_PAGE_SHARE_SUCCESS = 'shared_cart_page.share.success';
+    /**
+     * @var string
+     */
     public const URL_REDIRECT_MULTI_CART_PAGE = 'multi-cart';
     /**
      * @see \Spryker\Shared\SharedCart\SharedCartConfig::PERMISSION_GROUP_OWNER_ACCESS
+     * @var string
      */
     protected const PERMISSION_GROUP_OWNER_ACCESS = 'OWNER_ACCESS';
 

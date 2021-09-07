@@ -22,21 +22,51 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class OrderSearchForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_SEARCH_TYPE = 'searchType';
+    /**
+     * @var string
+     */
     public const FIELD_SEARCH_TEXT = 'searchText';
+    /**
+     * @var string
+     */
     public const FIELD_IS_ORDER_ITEMS_VISIBLE = 'isOrderItemsVisible';
+    /**
+     * @var string
+     */
     public const FIELD_ORDER_BY = 'orderBy';
+    /**
+     * @var string
+     */
     public const FIELD_ORDER_DIRECTION = 'orderDirection';
+    /**
+     * @var string
+     */
     public const FIELD_RESET = 'reset';
+    /**
+     * @var string
+     */
     public const FIELD_FILTERS = 'filters';
 
+    /**
+     * @var string
+     */
     public const OPTION_ORDER_SEARCH_TYPES = 'OPTION_ORDER_SEARCH_TYPES';
     /**
      * @var string
      */
     public const OPTION_CURRENT_TIMEZONE = 'OPTION_CURRENT_TIMEZONE';
+    /**
+     * @var string
+     */
     public const OPTION_EXPANDABLE_DATA = 'OPTION_EXPANDABLE_DATA';
 
+    /**
+     * @var string
+     */
     public const FORM_NAME = 'orderSearchForm';
 
     /**

@@ -14,8 +14,17 @@ use SprykerShop\Yves\ProductReplacementForWidget\Dependency\Client\ProductReplac
 
 class ProductReplacementForWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_ALTERNATIVE_STORAGE = 'CLIENT_PRODUCT_ALTERNATIVE_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    /**
+     * @var string
+     */
     public const PLUGIN_PRODUCT_DETAIL_PAGE_PRODUCT_REPLACEMENTS_FOR_WIDGETS = 'PLUGIN_PRODUCT_DETAIL_PAGE_PRODUCT_REPLACEMENTS_FOR_WIDGETS';
 
     /**

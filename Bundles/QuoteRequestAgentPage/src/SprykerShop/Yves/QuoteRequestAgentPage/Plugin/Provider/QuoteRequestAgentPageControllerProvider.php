@@ -15,19 +15,55 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
  */
 class QuoteRequestAgentPageControllerProvider extends AbstractYvesControllerProvider
 {
+    /**
+     * @var string
+     */
     protected const ROUTE_QUOTE_REQUEST_AGENT = 'agent/quote-request';
+    /**
+     * @var string
+     */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CANCEL = 'agent/quote-request/cancel';
+    /**
+     * @var string
+     */
     protected const ROUTE_QUOTE_REQUEST_AGENT_DETAILS = 'agent/quote-request/details';
+    /**
+     * @var string
+     */
     protected const ROUTE_QUOTE_REQUEST_AGENT_EDIT = 'agent/quote-request/edit';
+    /**
+     * @var string
+     */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CREATE = 'agent/quote-request/create';
+    /**
+     * @var string
+     */
     protected const ROUTE_QUOTE_REQUEST_AGENT_SEND_TO_CUSTOMER = 'agent/quote-request/send-to-customer';
+    /**
+     * @var string
+     */
     protected const ROUTE_QUOTE_REQUEST_AGENT_EDIT_ITEMS = 'agent/quote-request/edit-items';
+    /**
+     * @var string
+     */
     protected const ROUTE_QUOTE_REQUEST_AGENT_EDIT_ITEMS_CONFIRM = 'agent/quote-request/edit-items-confirm';
+    /**
+     * @var string
+     */
     protected const ROUTE_QUOTE_REQUEST_AGENT_REVISE = 'agent/quote-request/revise';
+    /**
+     * @var string
+     */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CONVERT_TO_CART = 'agent/quote-request/convert-to-cart';
 
+    /**
+     * @var string
+     */
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
+    /**
+     * @var string
+     */
     protected const QUOTE_REQUEST_REFERENCE_REGEX = '[a-zA-Z0-9-]+';
 
     /**

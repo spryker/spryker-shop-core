@@ -20,12 +20,21 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProductController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const ATTRIBUTE_PRODUCT_DATA = 'productData';
 
+    /**
+     * @var string
+     */
     public const PARAM_ATTRIBUTE = 'attribute';
 
     public const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL;
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PRODUCT_ACCESS_DENIED = 'product.access.denied';
 
     /**

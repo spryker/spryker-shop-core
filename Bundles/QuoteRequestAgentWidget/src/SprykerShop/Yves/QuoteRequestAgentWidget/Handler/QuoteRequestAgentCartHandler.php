@@ -15,6 +15,9 @@ use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgent
 
 class QuoteRequestAgentCartHandler implements QuoteRequestAgentCartHandlerInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
 
     /**

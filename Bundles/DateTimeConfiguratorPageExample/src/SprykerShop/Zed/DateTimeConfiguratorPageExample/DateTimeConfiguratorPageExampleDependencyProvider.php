@@ -17,7 +17,13 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class DateTimeConfiguratorPageExampleDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
+    /**
+     * @var string
+     */
     public const SYMFONY_FILE_SYSTEM = 'SYMFONY_FILE_SYSTEM';
 
     /**

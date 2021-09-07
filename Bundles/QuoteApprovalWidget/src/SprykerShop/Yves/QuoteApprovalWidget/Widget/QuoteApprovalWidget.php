@@ -19,7 +19,13 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class QuoteApprovalWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
+    /**
+     * @var string
+     */
     protected const IS_QUOTE_APPLICABLE_FOR_APPROVAL_PROCESS = 'isQuoteApplicableForApprovalProcess';
 
     /**

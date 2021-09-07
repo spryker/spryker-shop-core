@@ -15,16 +15,24 @@ use SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageTo
 
 class SecurityBlockerPageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_SECURITY_BLOCKER = 'CLIENT_SECURITY_BLOCKER';
+    /**
+     * @var string
+     */
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     /**
      * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     * @var string
      */
     public const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
      * @uses \Spryker\Yves\Locale\Plugin\Application\LocaleApplicationPlugin::SERVICE_LOCALE
+     * @var string
      */
     public const SERVICE_LOCALE = 'locale';
 

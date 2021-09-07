@@ -31,8 +31,17 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ShopApplicationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     public const LOCALE = 'locale';
+    /**
+     * @var string
+     */
     public const STORE = 'store';
+    /**
+     * @var string
+     */
     public const REQUEST_URI = 'REQUEST_URI';
 
     /**

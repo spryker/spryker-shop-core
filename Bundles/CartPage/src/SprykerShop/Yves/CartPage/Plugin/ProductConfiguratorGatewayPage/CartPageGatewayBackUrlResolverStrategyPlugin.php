@@ -19,6 +19,9 @@ use SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\P
  */
 class CartPageGatewayBackUrlResolverStrategyPlugin extends AbstractPlugin implements ProductConfiguratorGatewayBackUrlResolverStrategyPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SOURCE_TYPE_CART = 'SOURCE_TYPE_CART';
 
     /**

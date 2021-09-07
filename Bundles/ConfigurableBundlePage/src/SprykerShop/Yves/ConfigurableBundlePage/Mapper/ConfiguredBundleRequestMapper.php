@@ -21,6 +21,9 @@ use SprykerShop\Yves\ConfigurableBundlePage\Form\SlotStateForm;
 
 class ConfiguredBundleRequestMapper implements ConfiguredBundleRequestMapperInterface
 {
+    /**
+     * @var int
+     */
     protected const DEFAULT_QUANTITY = 1;
 
     /**

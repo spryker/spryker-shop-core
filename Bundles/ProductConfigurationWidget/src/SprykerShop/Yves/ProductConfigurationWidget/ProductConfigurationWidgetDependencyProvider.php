@@ -12,6 +12,9 @@ use Spryker\Yves\Kernel\Container;
 
 class ProductConfigurationWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_CONFIGURATION_RENDER_STRATEGY = 'PLUGINS_PRODUCT_CONFIGURATION_RENDER_STRATEGY';
 
     /**

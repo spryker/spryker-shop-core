@@ -11,6 +11,9 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class LanguageSwitcherWidgetConfig extends AbstractBundleConfig
 {
+    /**
+     * @var array
+     */
     protected const EXCLUDED_LANGUAGE_SWITCHER_ROUTE_URLS = [
         '/login_check',
         '/agent/login_check',

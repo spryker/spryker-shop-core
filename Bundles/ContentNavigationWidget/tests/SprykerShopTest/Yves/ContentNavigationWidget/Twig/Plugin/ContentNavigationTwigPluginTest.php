@@ -37,18 +37,45 @@ use Twig\Loader\FilesystemLoader;
  */
 class ContentNavigationTwigPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const LOCALE = 'de_DE';
 
+    /**
+     * @var string
+     */
     protected const DEFAULT_TEMPLATE = 'tree-inline';
+    /**
+     * @var string
+     */
     protected const WRONG_TEMPLATE = 'wrong';
 
+    /**
+     * @var string
+     */
     protected const CONTENT_KEY = '0';
+    /**
+     * @var string
+     */
     protected const CONTENT_TERM = 'TERM';
 
+    /**
+     * @var string
+     */
     protected const RENDERED_STRING = 'output';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_NAVIGATION_NOT_FOUND = '<b>Content Navigation with key 0 not found.</b>';
+    /**
+     * @var string
+     */
     protected const MESSAGE_NAVIGATION_WRONG_TYPE = '<b>Content Navigation could not be rendered because the content item with key 0 is not an navigation.</b>';
+    /**
+     * @var string
+     */
     protected const MESSAGE_NAVIGATION_WRONG_TEMPLATE = '<b>"wrong" is not supported name of template.</b>';
 
     /**

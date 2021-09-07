@@ -13,6 +13,9 @@ use SprykerShop\Yves\MerchantOpeningHoursWidget\Dependency\Client\MerchantOpenin
 
 class MerchantOpeningHoursWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_MERCHANT_OPENING_HOURS_STORAGE = 'CLIENT_MERCHANT_OPENING_HOURS_STORAGE';
 
     /**

@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductReplacemen
 
 interface ProductReplacementForWidgetPluginInterface
 {
+    /**
+     * @var string
+     */
     public const NAME = 'ProductReplacementForWidgetPlugin';
 
     /**

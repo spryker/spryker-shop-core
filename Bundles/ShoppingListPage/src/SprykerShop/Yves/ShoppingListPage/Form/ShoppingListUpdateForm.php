@@ -22,8 +22,17 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ShoppingListUpdateForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     public const FIELD_ID = 'idShoppingList';
+    /**
+     * @var string
+     */
     public const FIELD_ITEMS = 'items';
 
     /**

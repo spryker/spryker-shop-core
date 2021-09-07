@@ -18,7 +18,13 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 
 class ItemFetcher implements ItemFetcherInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_PARAM_SKU = '%sku%';
+    /**
+     * @var string
+     */
     protected const MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED = 'reorder.info.restricted-product.removed';
 
     /**

@@ -17,8 +17,17 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class TextOrderForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_TEXT_ORDER = 'textOrder';
+    /**
+     * @var string
+     */
     public const SUBMIT_BUTTON_TEXT_ORDER = 'textOrder';
+    /**
+     * @var string
+     */
     protected const FIELD_TEXT_ORDER_PLACEHOLDER = 'quick-order.paste-order.input-placeholder.copy-paste-order';
 
     /**

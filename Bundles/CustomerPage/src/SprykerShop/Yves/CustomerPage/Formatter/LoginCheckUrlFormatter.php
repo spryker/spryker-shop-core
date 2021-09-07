@@ -11,6 +11,9 @@ use SprykerShop\Yves\CustomerPage\CustomerPageConfig;
 
 class LoginCheckUrlFormatter implements LoginCheckUrlFormatterInterface
 {
+    /**
+     * @var string
+     */
     protected const ROUTE_CHECK_PATH = '/login_check';
 
     /**

@@ -12,6 +12,9 @@ use Spryker\Shared\Kernel\ContainerInterface;
 
 class ShopContextResolver implements ShopContextResolverInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_SHOP_CONTEXT = 'SERVICE_SHOP_CONTEXT';
 
     /**

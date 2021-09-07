@@ -14,8 +14,12 @@ class ConfigurableBundleNoteWidgetRouteProviderPlugin extends AbstractRouteProvi
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ConfigurableBundleNoteWidget\Plugin\Router\ConfigurableBundleNoteWidgetRouteProviderPlugin::ROUTE_NAME_CONFIGURABLE_BUNDLE_NOTE_ADD} instead.
+     * @var string
      */
     protected const ROUTE_CONFIGURABLE_BUNDLE_NOTE_ADD = 'configurable-bundle-note/add';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CONFIGURABLE_BUNDLE_NOTE_ADD = 'configurable-bundle-note/add';
 
     /**

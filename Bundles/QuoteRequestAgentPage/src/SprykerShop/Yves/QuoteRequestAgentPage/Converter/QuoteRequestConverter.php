@@ -15,6 +15,9 @@ use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPa
 
 class QuoteRequestConverter implements QuoteRequestConverterInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART = 'quote_request_page.quote_request.converted_to_cart';
 
     /**

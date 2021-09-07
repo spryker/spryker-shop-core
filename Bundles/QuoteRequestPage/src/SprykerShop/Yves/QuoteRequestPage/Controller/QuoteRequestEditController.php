@@ -19,9 +19,21 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QuoteRequestEditController extends QuoteRequestAbstractController
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_UPDATED = 'quote_request_page.quote_request.updated';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_SAVED = 'quote_request_page.revise.quote_request.saved';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_SENT_TO_USER = 'quote_request_page.quote_request.sent_to_user';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
 
     /**

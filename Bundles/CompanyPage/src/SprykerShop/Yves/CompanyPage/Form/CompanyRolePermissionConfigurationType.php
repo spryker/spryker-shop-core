@@ -21,9 +21,18 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class CompanyRolePermissionConfigurationType extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const FIELD_ID_COMPANY_ROLE = 'idCompanyRole';
+    /**
+     * @var string
+     */
     protected const FIELD_ID_PERMISSION = 'idPermission';
 
+    /**
+     * @var string
+     */
     public const OPTION_CONFIGURATION_SIGNATURE = 'OPTION_CONFIGURATION_SIGNATURE';
 
     /**

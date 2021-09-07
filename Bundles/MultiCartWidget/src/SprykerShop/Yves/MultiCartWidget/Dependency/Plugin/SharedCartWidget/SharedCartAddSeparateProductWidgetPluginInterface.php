@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\MultiCartWidget\Dependency\Plugin\SharedCartWidget;
 
 interface SharedCartAddSeparateProductWidgetPluginInterface
 {
+    /**
+     * @var string
+     */
     public const NAME = 'SharedCartAddSeparateProductWidgetPlugin';
 
     /**

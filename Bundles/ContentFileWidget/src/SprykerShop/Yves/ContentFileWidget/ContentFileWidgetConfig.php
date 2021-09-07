@@ -11,6 +11,9 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class ContentFileWidgetConfig extends AbstractBundleConfig
 {
+    /**
+     * @var array
+     */
     protected const ICON_NAME_MAP = [
         'application/csv' => 'file-csv',
         'application/gzip' => 'file-archive',

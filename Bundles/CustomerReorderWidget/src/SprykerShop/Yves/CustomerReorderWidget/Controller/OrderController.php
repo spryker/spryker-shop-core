@@ -17,15 +17,28 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class OrderController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_ERROR_MESSAGE_UNABLE_TO_REORDER_ITEMS = 'customer.order.reorder.error.unable_to_reorder_items';
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
+     * @var string
      */
     protected const ROUTE_SUCCESSFUL_REDIRECT = 'cart';
+    /**
+     * @var string
+     */
     protected const ROUTE_FAILURE_REDIRECT = 'customer/order';
 
+    /**
+     * @var string
+     */
     protected const PARAM_ITEMS = 'items';
+    /**
+     * @var string
+     */
     protected const PARAM_ID_ORDER = 'id';
 
     /**

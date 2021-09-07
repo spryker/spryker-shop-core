@@ -16,8 +16,17 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AddressController extends AbstractCustomerController
 {
+    /**
+     * @var string
+     */
     public const KEY_DEFAULT_BILLING_ADDRESS = 'default_billing_address';
+    /**
+     * @var string
+     */
     public const KEY_DEFAULT_SHIPPING_ADDRESS = 'default_shipping_address';
+    /**
+     * @var string
+     */
     public const KEY_ADDRESSES = 'addresses';
 
     /**

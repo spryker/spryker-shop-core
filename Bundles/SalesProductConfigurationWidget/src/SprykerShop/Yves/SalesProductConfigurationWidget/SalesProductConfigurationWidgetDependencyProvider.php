@@ -13,7 +13,13 @@ use SprykerShop\Yves\SalesProductConfigurationWidget\Dependency\Client\SalesProd
 
 class SalesProductConfigurationWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_SALES_PRODUCT_CONFIGURATION_RENDER_STRATEGY = 'PLUGINS_SALES_PRODUCT_CONFIGURATION_RENDER_STRATEGY';
+    /**
+     * @var string
+     */
     public const CLIENT_SALES_PRODUCT_CONFIGURATION = 'CLIENT_SALES_PRODUCT_CONFIGURATION';
 
     /**

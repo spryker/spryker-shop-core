@@ -19,9 +19,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ShareShoppingListForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_PERMISSION_GROUPS = 'permissionGroups';
 
+    /**
+     * @var string
+     */
     public const FIELD_COMPANY_BUSINESS_UNITS = 'sharedCompanyBusinessUnits';
+    /**
+     * @var string
+     */
     public const FIELD_COMPANY_USERS = 'sharedCompanyUsers';
 
     /**

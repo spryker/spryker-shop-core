@@ -19,21 +19,38 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BusinessUnitAddressController extends AbstractCompanyController
 {
+    /**
+     * @var string
+     */
     public const REQUEST_COMPANY_BUSINESS_UNIT_ID = 'id';
 
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT = 'idCompanyBusinessUnit';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_BUSINESS_UNIT_ADDRESS_CREATE_SUCCESS = 'message.business_unit_address.create';
+    /**
+     * @var string
+     */
     protected const MESSAGE_BUSINESS_UNIT_ADDRESS_UPDATE_SUCCESS = 'message.business_unit_address.update';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_MESSAGE_PARAM_ADDRESS = '%address%';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT} instead.
+     * @var string
      */
     protected const ROUTE_COMPANY_BUSINESS_UNIT = 'company/business-unit';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT_UPDATE} instead.
+     * @var string
      */
     protected const ROUTE_COMPANY_BUSINESS_UNIT_UPDATE = 'company/business-unit/update';
 

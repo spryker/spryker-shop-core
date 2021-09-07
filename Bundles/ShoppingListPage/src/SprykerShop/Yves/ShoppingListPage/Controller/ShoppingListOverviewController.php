@@ -20,31 +20,70 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ShoppingListOverviewController extends AbstractShoppingListController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_SHOPPING_LISTS = 'shoppingLists';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_UPDATED = 'customer.account.shopping_list.updated';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED = 'customer.account.shopping_list.delete.failed';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_SUCCESS = 'customer.account.shopping_list.delete.success';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART_NOT_FOUND = 'customer.account.shopping_list.items.added_to_cart.not_found';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART_FAILED = 'customer.account.shopping_list.items.added_to_cart.failed';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART = 'customer.account.shopping_list.items.added_to_cart';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_SHARE_SHARE_SHOPPING_LIST_SUCCESSFUL = 'customer.account.shopping_list.share.share_shopping_list_successful';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND = 'shopping_list.not_found';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CLEAR_SUCCESS = 'customer.account.shopping_list.clear.success';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_OVERVIEW_CREATE_SUCCESSFUL = 'customer.account.shopping_list.overview.create.success';
+    /**
+     * @var string
+     */
     protected const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_CART
+     * @var string
      */
     protected const ROUTE_CART_PAGE = 'cart';
 
     /**
      * @uses \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_SHOPPING_LIST
+     * @var string
      */
     protected const ROUTE_SHOPPING_LIST = 'shopping-list';
 
     /**
      * @uses \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_SHOPPING_LIST_UPDATE
+     * @var string
      */
     protected const ROUTE_SHOPPING_LIST_UPDATE = 'shopping-list/update';
 

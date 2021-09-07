@@ -16,9 +16,13 @@ class ProductDetailPageBackUrlResolver implements ProductDetailPageBackUrlResolv
 {
     /**
      * @uses \SprykerShop\Yves\HomePage\Plugin\Router\HomePageRouteProviderPlugin::ROUTE_NAME_HOME
+     * @var string
      */
     protected const ROUTE_NAME_HOME = 'home';
 
+    /**
+     * @var string
+     */
     protected const MAPPING_TYPE_SKU = 'sku';
 
     /**

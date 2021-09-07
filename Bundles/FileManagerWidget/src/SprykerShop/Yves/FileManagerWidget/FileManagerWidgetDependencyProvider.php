@@ -14,7 +14,13 @@ use SprykerShop\Yves\FileManagerWidget\Dependency\Service\FileManagerWidgetToFil
 
 class FileManagerWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_FILE_MANAGER_STORAGE = 'CLIENT_FILE_MANAGER_STORAGE';
+    /**
+     * @var string
+     */
     public const SERVICE_FILE_MANAGER = 'SERVICE_FILE_MANAGER';
 
     /**

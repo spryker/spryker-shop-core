@@ -14,7 +14,13 @@ use SprykerShop\Yves\CartNoteWidget\Dependency\Client\CartNoteWidgetToGlossarySt
 
 class CartNoteWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CART_NOTE = 'CLIENT_CART_NOTE';
+    /**
+     * @var string
+     */
     public const CLIENT_GLOSSARY = 'CLIENT_GLOSSARY';
 
     /**

@@ -14,6 +14,9 @@ use Twig\Node\Node;
 
 class ShopUiDefineTwigNode extends Node
 {
+    /**
+     * @var string
+     */
     public const REQUIRED_VALUE = '___REQUIRED___';
 
     /**

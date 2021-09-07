@@ -18,6 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ResendController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_COMPANY_USER_INVITATION = 'idCompanyUserInvitation';
 
     /**

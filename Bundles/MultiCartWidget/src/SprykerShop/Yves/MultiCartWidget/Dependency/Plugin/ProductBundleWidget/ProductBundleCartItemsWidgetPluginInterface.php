@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductBundleCartItemsWidgetPluginInterface
 {
+    /**
+     * @var string
+     */
     public const NAME = 'ProductBundleCartItemsWidgetPlugin';
 
     /**

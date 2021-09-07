@@ -13,6 +13,9 @@ use SprykerShop\Yves\WishlistWidget\Dependency\Client\WishlistWidgetToWishlistCl
 
 class WishlistWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_WISHLIST = 'CLIENT_WISHLIST';
 
     /**

@@ -13,6 +13,7 @@ class QuoteRequestAgentWidgetConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Shared\QuoteRequest\QuoteRequestConfig::STATUS_CLOSED
+     * @var string
      */
     public const STATUS_CLOSED = 'closed';
 

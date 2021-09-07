@@ -14,16 +14,27 @@ class CmsPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CmsPage\Plugin\Router\CmsPageRouteProviderPlugin::ROUTE_NAME_PREVIEW} instead.
+     * @var string
      */
     protected const ROUTE_PREVIEW = 'cms-preview';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_PREVIEW = 'cms-preview';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CmsPage\Plugin\Router\CmsPageRouteProviderPlugin::ID_CMS_PAGE} instead.
+     * @var string
      */
     protected const PARAM_PAGE = 'page';
+    /**
+     * @var string
+     */
     public const ID_CMS_PAGE = 'page';
 
+    /**
+     * @var string
+     */
     protected const PAGE_NUMBER_PATTERN = '[0-9]+';
 
     /**

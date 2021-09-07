@@ -16,6 +16,9 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class PriceProductWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_CURRENT_PRODUCT_PRICE = 'currentProductPrice';
 
     /**

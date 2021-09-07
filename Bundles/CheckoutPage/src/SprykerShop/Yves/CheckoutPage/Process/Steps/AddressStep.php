@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterface, StepWithCodeInterface
 {
+    /**
+     * @var string
+     */
     protected const STEP_CODE = 'address';
 
     /**

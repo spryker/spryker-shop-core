@@ -13,6 +13,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class NewsletterSubscriptionForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_SUBSCRIBE = 'subscribe';
 
     /**

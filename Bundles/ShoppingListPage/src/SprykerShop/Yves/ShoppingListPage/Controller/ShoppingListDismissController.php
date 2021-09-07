@@ -16,11 +16,18 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class ShoppingListDismissController extends AbstractShoppingListController
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_SHOPPING_LIST_PAGE_DISMISS_SUCCESS = 'shopping_list_page.dismiss.success';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_SHOPPING_LIST_PAGE_DISMISS_FAILED = 'shopping_list_page.dismiss.failed';
 
     /**
      * @uses \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_SHOPPING_LIST
+     * @var string
      */
     protected const ROUTE_SHOPPING_LIST = 'shopping-list';
 

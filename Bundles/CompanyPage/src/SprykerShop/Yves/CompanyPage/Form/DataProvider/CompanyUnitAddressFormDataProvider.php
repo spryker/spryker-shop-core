@@ -17,6 +17,9 @@ use SprykerShop\Yves\CompanyPage\Form\CompanyUnitAddressForm;
 
 class CompanyUnitAddressFormDataProvider
 {
+    /**
+     * @var string
+     */
     public const COUNTRY_GLOSSARY_PREFIX = 'countries.iso.';
 
     /**

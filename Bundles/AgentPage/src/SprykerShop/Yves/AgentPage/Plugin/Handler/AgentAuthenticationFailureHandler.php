@@ -18,10 +18,14 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerI
  */
 class AgentAuthenticationFailureHandler extends AbstractPlugin implements AuthenticationFailureHandlerInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_AGENT_AUTHENTICATION_FAILED = 'agent.authentication.failed';
 
     /**
      * @uses \SprykerShop\Yves\AgentPage\Plugin\Router\AgentPageRouteProviderPlugin::ROUTE_LOGIN
+     * @var string
      */
     protected const ROUTE_LOGIN = 'agent/login';
 

@@ -16,21 +16,36 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ShareCartForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FORM_NAME = 'shareCartForm';
+    /**
+     * @var string
+     */
     public const FIELD_ID_QUOTE = 'idQuote';
     /**
      * @deprecated
+     * @var string
      */
     public const FIELD_COMPANY_USER_ID = 'idCompanyUser';
     /**
      * @deprecated
+     * @var string
      */
     public const FIELD_QUOTE_PERMISSION_GROUP_ID = 'idQuotePermissionGroup';
     /**
      * @deprecated
+     * @var string
      */
     public const OPTION_CUSTOMERS = 'OPTION_CUSTOMERS';
+    /**
+     * @var string
+     */
     public const FIELD_SHARE_DETAILS = 'shareDetails';
+    /**
+     * @var string
+     */
     public const OPTION_PERMISSION_GROUPS = 'OPTION_PERMISSION_GROUPS';
 
     /**

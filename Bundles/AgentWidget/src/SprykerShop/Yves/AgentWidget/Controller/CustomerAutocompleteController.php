@@ -18,6 +18,9 @@ use Symfony\Component\Validator\ConstraintViolationList;
  */
 class CustomerAutocompleteController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const VIEW_PATH = '@AgentWidget/views/customer-autocomplete/customer-autocomplete.twig';
 
     /**

@@ -12,6 +12,9 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClient
 
 class IsLoggedTwigFunctionProvider extends TwigFunctionProvider
 {
+    /**
+     * @var string
+     */
     protected const TWIG_FUNCTION_NAME_IS_LOGGED_IN = 'isLoggedIn';
 
     /**

@@ -24,9 +24,18 @@ class ProductConfiguratorRequestDataForm extends AbstractType
     public const OPTION_SOURCE_TYPE = self::FIELD_SOURCE_TYPE;
 
     protected const FIELD_CONFIGURATOR_KEY = ProductConfiguratorRequestDataTransfer::CONFIGURATOR_KEY;
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONFIGURATION_CSRF_TOKEN_ID = 'product_configuration';
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_VALIDATION_SOURCE_TYPE_NOT_BLANK_MESSAGE = 'product_configurator_gateway_page.source_type_not_blank';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_VALIDATION_CONFIGURATOR_KEY_NOT_BLANK_MESSAGE = 'product_configurator_gateway_page.configurator_key_not_blank';
 
     /**

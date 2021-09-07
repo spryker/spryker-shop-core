@@ -19,10 +19,17 @@ class AccessTokenController extends AbstractCustomerController
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_OVERVIEW} instead.
+     * @var string
      */
     protected const ROUTE_CUSTOMER_OVERVIEW = 'customer/overview';
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_ALREADY_LOGGED_IN = 'customer_page.error.customer_already_logged_in';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_INVALID_ACCESS_TOKEN = 'customer_page.error.invalid_access_token';
 
     /**

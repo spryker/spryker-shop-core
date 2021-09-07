@@ -15,8 +15,17 @@ use SprykerShop\Yves\CompanyUserInvitationPage\Dependency\Client\CompanyUserInvi
 
 class CompanyUserInvitationPageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_COMPANY_USER_INVITATION = 'CLIENT_COMPANY_USER_INVITATION';
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const CLIENT_SESSION = 'CLIENT_SESSION';
 
     /**

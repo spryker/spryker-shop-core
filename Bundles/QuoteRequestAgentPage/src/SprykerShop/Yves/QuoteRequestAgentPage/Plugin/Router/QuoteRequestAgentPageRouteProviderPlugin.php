@@ -14,108 +14,170 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT = 'agent/quote-request';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_AGENT = 'agent/quote-request';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_CANCEL} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CANCEL = 'agent/quote-request/cancel';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_AGENT_CANCEL = 'agent/quote-request/cancel';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_DETAILS} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_DETAILS = 'agent/quote-request/details';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_AGENT_DETAILS = 'agent/quote-request/details';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_EDIT} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_EDIT = 'agent/quote-request/edit';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_AGENT_EDIT = 'agent/quote-request/edit';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_CREATE} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CREATE = 'agent/quote-request/create';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_AGENT_CREATE = 'agent/quote-request/create';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_SEND_TO_CUSTOMER} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_SEND_TO_CUSTOMER = 'agent/quote-request/send-to-customer';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_AGENT_SEND_TO_CUSTOMER = 'agent/quote-request/send-to-customer';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_EDIT_ITEMS} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_EDIT_ITEMS = 'agent/quote-request/edit-items';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_AGENT_EDIT_ITEMS = 'agent/quote-request/edit-items';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_EDIT_ITEMS_CONFIRM} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_EDIT_ITEMS_CONFIRM = 'agent/quote-request/edit-items-confirm';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_AGENT_EDIT_ITEMS_CONFIRM = 'agent/quote-request/edit-items-confirm';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_REVISE} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_REVISE = 'agent/quote-request/revise';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_AGENT_REVISE = 'agent/quote-request/revise';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_CONVERT_TO_CART} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CONVERT_TO_CART = 'agent/quote-request/convert-to-cart';
 
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_AGENT_CONVERT_TO_CART = 'agent/quote-request/convert-to-cart';
 
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Provider\QuoteRequestAgentPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE
+     * @var string
      */
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Provider\QuoteRequestAgentPageControllerProvider::QUOTE_REQUEST_REFERENCE_REGEX
+     * @var string
      */
     protected const QUOTE_REQUEST_REFERENCE_REGEX = '[a-zA-Z0-9-]+';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS = 'agent/quote-request/checkout-address';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS = 'agent/quote-request/checkout-address';
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS_CONFIRM} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS_CONFIRM = 'agent/quote-request/checkout-address-confirm';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS_CONFIRM = 'agent/quote-request/checkout-address-confirm';
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT = 'agent/quote-request/checkout-shipment';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT = 'agent/quote-request/checkout-shipment';
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT_CONFIRM} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT_CONFIRM = 'agent/quote-request/checkout-shipment-confirm';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT_CONFIRM = 'agent/quote-request/checkout-shipment-confirm';
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_SAVE} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SAVE = 'agent/quote-request/checkout-save';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_SAVE = 'agent/quote-request/checkout-save';
 
     /**

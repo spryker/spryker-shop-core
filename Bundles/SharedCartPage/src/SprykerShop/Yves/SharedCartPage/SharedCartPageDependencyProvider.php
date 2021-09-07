@@ -17,10 +17,25 @@ use SprykerShop\Yves\SharedCartPage\Dependency\Client\SharedCartPageToSharedCart
 
 class SharedCartPageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    /**
+     * @var string
+     */
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
+    /**
+     * @var string
+     */
     public const CLIENT_SHARED_CART = 'CLIENT_SHARED_CART';
+    /**
+     * @var string
+     */
     public const CLIENT_MULTI_CART = 'CLIENT_MULTI_CART';
 
     /**

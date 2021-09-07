@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class QuoteRequestReviseController extends QuoteRequestAbstractController
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_VERSION_CREATED = 'quote_request_page.quote_request_version.created';
 
     /**

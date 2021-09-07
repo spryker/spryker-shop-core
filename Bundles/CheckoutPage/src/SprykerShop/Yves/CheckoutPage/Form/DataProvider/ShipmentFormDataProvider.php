@@ -32,7 +32,13 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
 {
     use PermissionAwareTrait;
 
+    /**
+     * @var int
+     */
     protected const ONE_DAY = 1;
+    /**
+     * @var int
+     */
     protected const SECONDS_IN_ONE_DAY = 86400;
 
     /**

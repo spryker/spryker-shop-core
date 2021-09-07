@@ -14,8 +14,12 @@ class OrderCustomReferenceWidgetRouteProviderPlugin extends AbstractRouteProvide
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\OrderCustomReferenceWidget\Plugin\Router\OrderCustomReferenceWidgetRouteProviderPlugin::ROUTE_NAME_ORDER_CUSTOM_REFERENCE_SAVE} instead.
+     * @var string
      */
     protected const ROUTE_ORDER_CUSTOM_REFERENCE_SAVE = 'order-custom-reference/save';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_ORDER_CUSTOM_REFERENCE_SAVE = 'order-custom-reference/save';
 
     /**

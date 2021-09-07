@@ -14,56 +14,92 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_CUSTOMER} instead.
+     * @var string
      */
     protected const CHECKOUT_CUSTOMER = 'checkout-customer';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CHECKOUT_CUSTOMER = 'checkout-customer';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_ADDRESS} instead.
+     * @var string
      */
     protected const CHECKOUT_ADDRESS = 'checkout-address';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CHECKOUT_ADDRESS = 'checkout-address';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_SHIPMENT} instead.
+     * @var string
      */
     protected const CHECKOUT_SHIPMENT = 'checkout-shipment';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CHECKOUT_SHIPMENT = 'checkout-shipment';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_PAYMENT} instead.
+     * @var string
      */
     protected const CHECKOUT_PAYMENT = 'checkout-payment';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CHECKOUT_PAYMENT = 'checkout-payment';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_SUMMARY} instead.
+     * @var string
      */
     protected const CHECKOUT_SUMMARY = 'checkout-summary';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CHECKOUT_SUMMARY = 'checkout-summary';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_PLACE_ORDER} instead.
+     * @var string
      */
     protected const CHECKOUT_PLACE_ORDER = 'checkout-place-order';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CHECKOUT_PLACE_ORDER = 'checkout-place-order';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_ERROR} instead.
+     * @var string
      */
     protected const CHECKOUT_ERROR = 'checkout-error';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CHECKOUT_ERROR = 'checkout-error';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_INDEX} instead.
+     * @var string
      */
     protected const CHECKOUT_SUCCESS = 'checkout-success';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CHECKOUT_SUCCESS = 'checkout-success';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_INDEX} instead.
+     * @var string
      */
     protected const CHECKOUT_INDEX = 'checkout-index';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CHECKOUT_INDEX = 'checkout-index';
 
     /**

@@ -18,21 +18,44 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**
      * @deprecated Use static::WIDGET_GLOBAL instead.
+     * @var string
      */
     public const PLUGIN_GLOBAL_WIDGETS = 'PLUGIN_GLOBAL_WIDGETS';
+    /**
+     * @var string
+     */
     public const WIDGET_GLOBAL = 'WIDGET_GLOBAL';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ShopApplication\ShopApplicationDependencyProvider::GLOBAL_CONTAINER} instead.
+     * @var string
      */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
+    /**
+     * @var string
+     */
     public const GLOBAL_CONTAINER = 'GLOBAL_CONTAINER';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
+    /**
+     * @var string
+     */
     public const STORE = 'STORE';
+    /**
+     * @var string
+     */
     public const PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER = 'PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER';
+    /**
+     * @var string
+     */
     public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
+    /**
+     * @var string
+     */
     public const PLUGINS_WIDGET_CACHE_KEY_GENERATOR_STRATEGY = 'PLUGINS_WIDGET_CACHE_KEY_GENERATOR_STRATEGY';
 
     /**

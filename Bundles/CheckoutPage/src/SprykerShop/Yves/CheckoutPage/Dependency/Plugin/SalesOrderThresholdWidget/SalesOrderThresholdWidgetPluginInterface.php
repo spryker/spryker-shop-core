@@ -12,6 +12,9 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface SalesOrderThresholdWidgetPluginInterface extends WidgetPluginInterface
 {
+    /**
+     * @var string
+     */
     public const NAME = 'SalesOrderThresholdWidgetPlugin';
 
     /**

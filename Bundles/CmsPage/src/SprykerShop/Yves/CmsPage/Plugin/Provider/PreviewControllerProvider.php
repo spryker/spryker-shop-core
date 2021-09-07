@@ -15,8 +15,17 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
  */
 class PreviewControllerProvider extends AbstractYvesControllerProvider
 {
+    /**
+     * @var string
+     */
     public const ROUTE_PREVIEW = 'cms-preview';
+    /**
+     * @var string
+     */
     public const PARAM_PAGE = 'page';
+    /**
+     * @var string
+     */
     public const PAGE_NUMBER_PATTERN = '[0-9]+';
 
     /**

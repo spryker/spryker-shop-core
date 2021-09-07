@@ -13,6 +13,9 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface CustomerReorderWidgetPluginInterface extends WidgetPluginInterface
 {
+    /**
+     * @var string
+     */
     public const NAME = 'CustomerReorderWidgetPlugin';
 
     /**

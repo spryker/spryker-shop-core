@@ -29,6 +29,9 @@ use SprykerShop\Yves\CatalogPage\Twig\CatalogPageTwigExtension;
  */
 class CatalogPageFactory extends AbstractFactory
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_SHOP_CONTEXT = 'shop_context';
 
     /**

@@ -16,6 +16,9 @@ use SprykerShop\Yves\ShopTranslator\Dependency\Client\ShopTranslatorToGlossarySt
  */
 class ShopTranslatorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     /**

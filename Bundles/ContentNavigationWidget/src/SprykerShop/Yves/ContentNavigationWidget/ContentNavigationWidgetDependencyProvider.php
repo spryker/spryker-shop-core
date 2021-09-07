@@ -14,7 +14,13 @@ use SprykerShop\Yves\ContentNavigationWidget\Dependency\Client\ContentNavigation
 
 class ContentNavigationWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CONTENT_NAVIGATION = 'CLIENT_CONTENT_NAVIGATION';
+    /**
+     * @var string
+     */
     public const CLIENT_NAVIGATION_STORAGE = 'CLIENT_NAVIGATION_STORAGE';
 
     /**

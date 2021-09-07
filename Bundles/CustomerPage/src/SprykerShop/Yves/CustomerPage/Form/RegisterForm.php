@@ -25,20 +25,56 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class RegisterForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_SALUTATION = 'salutation';
+    /**
+     * @var string
+     */
     public const FIELD_FIRST_NAME = 'first_name';
+    /**
+     * @var string
+     */
     public const FIELD_LAST_NAME = 'last_name';
+    /**
+     * @var string
+     */
     public const FIELD_EMAIL = 'email';
+    /**
+     * @var string
+     */
     public const FIELD_PASSWORD = 'password';
+    /**
+     * @var string
+     */
     public const FIELD_ACCEPT_TERMS = 'accept_terms';
+    /**
+     * @var string
+     */
     public const FIELD_IS_GUEST = 'is_guest';
 
+    /**
+     * @var string
+     */
     public const BLOCK_PREFIX = 'registerForm';
 
+    /**
+     * @var string
+     */
     public const OPTION_MIN_LENGTH_CUSTOMER_PASSWORD = 'OPTION_MIN_LENGTH_CUSTOMER_PASSWORD';
 
+    /**
+     * @var string
+     */
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+    /**
+     * @var string
+     */
     protected const VALIDATION_MIN_LENGTH_MESSAGE = 'validation.min_length';
+    /**
+     * @var string
+     */
     protected const VALIDATION_MAX_LENGTH_MESSAGE = 'validation.max_length.singular';
 
     /**

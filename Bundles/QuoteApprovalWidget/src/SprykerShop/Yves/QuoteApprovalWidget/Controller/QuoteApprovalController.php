@@ -18,6 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QuoteApprovalController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_REFERER = 'referer';
 
     /**

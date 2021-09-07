@@ -14,10 +14,22 @@ use SprykerShop\Yves\ProductGroupWidget\Dependency\Client\ProductGroupWidgetToPr
 
 class ProductGroupWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_GROUP_STORAGE = 'CLIENT_PRODUCT_GROUP_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
 
+    /**
+     * @var string
+     */
     public const PLUGIN_PRODUCT_VIEW_EXPANDERS = 'PLUGIN_PRODUCT_VIEW_EXPANDERS';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_VIEW_BULK_EXPANDERS = 'PLUGINS_PRODUCT_VIEW_BULK_EXPANDERS';
 
     /**

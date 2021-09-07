@@ -20,9 +20,21 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractController
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_SOURCE_PRICE_CHANGES_FORBIDDEN = 'quote_request_page.quote_request.source_price_changes_forbidden';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_UPDATED = 'quote_request_page.quote_request.updated';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_SENT_TO_CUSTOMER = 'quote_request_page.quote_request.sent_to_customer';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
 
     /**

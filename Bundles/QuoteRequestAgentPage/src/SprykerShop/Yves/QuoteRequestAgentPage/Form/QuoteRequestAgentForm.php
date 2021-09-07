@@ -22,17 +22,44 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class QuoteRequestAgentForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const SUBMIT_BUTTON_SAVE = 'save';
+    /**
+     * @var string
+     */
     public const SUBMIT_BUTTON_SEND_TO_CUSTOMER = 'sendToCustomer';
 
+    /**
+     * @var string
+     */
     public const OPTION_PRICE_MODE = 'option_price_mode';
+    /**
+     * @var string
+     */
     public const OPTION_IS_QUOTE_VALID = 'option_is_quote_valid';
+    /**
+     * @var string
+     */
     public const OPTION_SHIPMENT_GROUPS = 'option_shipment_groups';
 
+    /**
+     * @var string
+     */
     public const FIELD_SHIPMENT_GROUPS = 'shipmentGroups';
 
+    /**
+     * @var string
+     */
     protected const FORMAT_VALID_UNTIL_DATE = 'Y-m-d H:i:s';
+    /**
+     * @var string
+     */
     protected const LABEL_QUOTE_REQUEST_IS_LATEST_VERSION_VISIBLE = 'quote_request_page.quote_request.labels.show_latest_version';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_DATE_VIOLATION = 'quote_request_page.quote_request.violations.invalid_date';
 
     /**

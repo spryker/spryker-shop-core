@@ -14,6 +14,9 @@ use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterfa
  */
 class ChangeCartItemPermissionPlugin implements PermissionPluginInterface
 {
+    /**
+     * @var string
+     */
     public const KEY = 'ChangeCartItemPermissionPlugin';
 
     /**

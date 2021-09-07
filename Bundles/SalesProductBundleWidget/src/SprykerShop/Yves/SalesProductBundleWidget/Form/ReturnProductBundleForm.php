@@ -16,6 +16,9 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ReturnProductBundleForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_PRODUCT_BUNDLES = 'productBundles';
 
     /**

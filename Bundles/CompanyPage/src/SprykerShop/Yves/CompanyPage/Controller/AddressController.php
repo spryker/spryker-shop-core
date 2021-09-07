@@ -21,16 +21,40 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class AddressController extends AbstractCompanyController
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
 
+    /**
+     * @var string
+     */
     protected const COMPANY_UNIT_ADDRESS_LIST_SORT_FIELD = 'id_company_unit_address';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT = 'idCompanyBusinessUnit';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_ID = 'id';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_BUSINESS_UNIT_ADDRESS_CREATE_SUCCESS = 'message.business_unit_address.create';
+    /**
+     * @var string
+     */
     protected const MESSAGE_BUSINESS_UNIT_ADDRESS_UPDATE_SUCCESS = 'message.business_unit_address.update';
+    /**
+     * @var string
+     */
     protected const MESSAGE_BUSINESS_UNIT_ADDRESS_DELETE_SUCCESS = 'message.business_unit_address.delete';
 
+    /**
+     * @var string
+     */
     protected const REFERER_PARAM = 'referer';
 
     /**

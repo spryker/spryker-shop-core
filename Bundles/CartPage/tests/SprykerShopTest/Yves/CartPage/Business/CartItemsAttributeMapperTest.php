@@ -25,27 +25,60 @@ use SprykerShop\Yves\CartPage\Mapper\CartItemsMapperInterface;
  */
 class CartItemsAttributeMapperTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const KEY_ATTRIBUTE_MAP = 'attribute_map';
+    /**
+     * @var string
+     */
     protected const KEY_ATTRIBUTE_VARIANT_MAP = 'attribute_variant_map';
+    /**
+     * @var string
+     */
     protected const KEY_ATTRIBUTE_VARIANTS = 'attribute_variants';
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONCRETE_IDS = 'product_concrete_ids';
 
+    /**
+     * @var string
+     */
     protected const FAKE_SKU_1 = 'fake-sku-1';
+    /**
+     * @var string
+     */
     protected const FAKE_SKU_2 = 'fake-sku-2';
 
+    /**
+     * @var int
+     */
     protected const FAKE_ID_PRODUCT_CONCRETE_1 = 1;
+    /**
+     * @var int
+     */
     protected const FAKE_ID_PRODUCT_CONCRETE_2 = 2;
 
+    /**
+     * @var array
+     */
     protected const FAKE_ATTRIBUTE_VARIANT_MAP_1 = [
         'color' => 'white',
         'flash_memory' => '4 GB',
     ];
 
+    /**
+     * @var array
+     */
     protected const FAKE_ATTRIBUTE_VARIANT_MAP_2 = [
         'color' => 'black',
         'flash_memory' => '8 GB',
     ];
 
+    /**
+     * @var array
+     */
     protected const FAKE_ATTRIBUTE_VARIANTS = [
         'color:white' => [
             'flash_memory:4 GB' => ['id_product_concrete' => self::FAKE_ID_PRODUCT_CONCRETE_1],

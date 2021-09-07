@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class Error403CacheableController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const QUERY_PARAMETER_ERROR_MESSAGE = 'errorMessage';
 
     /**

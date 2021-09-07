@@ -15,6 +15,9 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class MerchantOrderReferenceForItemsWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_MERCHANT_ORDER_REFERENCES = 'merchantOrderReferences';
 
     /**

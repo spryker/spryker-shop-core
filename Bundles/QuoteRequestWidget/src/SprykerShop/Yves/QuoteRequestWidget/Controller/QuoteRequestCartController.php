@@ -18,18 +18,26 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QuoteRequestCartController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_UPDATED = 'quote_request_page.quote_request.updated';
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
+     * @var string
      */
     protected const ROUTE_CART = 'cart';
 
     /**
      * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_EDIT
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_EDIT = 'quote-request/edit';
 
+    /**
+     * @var string
+     */
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
     /**

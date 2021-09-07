@@ -18,8 +18,12 @@ class RedirectUriCustomerRedirectStrategyPlugin extends AbstractPlugin implement
 {
     /**
      * @uses \Spryker\Shared\Application\Application::SERVICE_REQUEST
+     * @var string
      */
     protected const REQUEST = 'request';
+    /**
+     * @var string
+     */
     protected const PARAM_REDIRECT_URI = 'redirectUri';
 
     /**

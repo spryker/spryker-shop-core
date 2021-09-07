@@ -12,6 +12,9 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class PersistentCartShareWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @var string
+     */
     protected const CART_CREATE_LINK = 'cart/create-link';
 
     /**

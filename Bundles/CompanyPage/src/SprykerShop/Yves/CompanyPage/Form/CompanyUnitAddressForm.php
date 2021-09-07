@@ -24,23 +24,71 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class CompanyUnitAddressForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_ID_COMPANY_UNIT_ADDRESS = 'id_company_unit_address';
+    /**
+     * @var string
+     */
     public const FIELD_FK_COMPANY = 'fk_company';
+    /**
+     * @var string
+     */
     public const FIELD_FK_COMPANY_BUSINESS_UNIT = 'fk_company_business_unit';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_1 = 'address1';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_2 = 'address2';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_3 = 'address3';
+    /**
+     * @var string
+     */
     public const FIELD_ZIP_CODE = 'zip_code';
+    /**
+     * @var string
+     */
     public const FIELD_CITY = 'city';
+    /**
+     * @var string
+     */
     public const FIELD_ISO_2_CODE = 'iso2_code';
+    /**
+     * @var string
+     */
     public const FIELD_PHONE = 'phone';
 
+    /**
+     * @var string
+     */
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
 
+    /**
+     * @var string
+     */
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+    /**
+     * @var string
+     */
     protected const VALIDATION_MIN_LENGTH_MESSAGE = 'validation.min_length';
+    /**
+     * @var string
+     */
     protected const VALIDATION_ADDRESS_NUMBER_MESSAGE = 'validation.address_number';
+    /**
+     * @var string
+     */
     protected const VALIDATION_ZIP_CODE_LENGTH_MESSAGE = 'validation.max_length.plural';
+    /**
+     * @var string
+     */
     protected const VALIDATION_ZIP_CODE_MESSAGE = 'validation.zip_code';
 
     /**

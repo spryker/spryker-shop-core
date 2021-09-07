@@ -19,20 +19,32 @@ class ContentProductAbstractListTwigFunctionProvider extends TwigFunctionProvide
 {
     /**
      * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::TWIG_FUNCTION_NAME
+     * @var string
      */
     protected const FUNCTION_CONTENT_PRODUCT_ABSTRACT_LIST = 'content_product_abstract_list';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND = '<strong>Content product abstract list with content key "%s" not found.</strong>';
+    /**
+     * @var string
+     */
     protected const MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE = '<strong>Content product abstract list widget could not be rendered because the content item with key "%s" is not an abstract product list.</strong>';
+    /**
+     * @var string
+     */
     protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<strong>"%s" is not supported name of template.</strong>';
 
     /**
      * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE
+     * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE = 'bottom-title';
 
     /**
      * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE
+     * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
 

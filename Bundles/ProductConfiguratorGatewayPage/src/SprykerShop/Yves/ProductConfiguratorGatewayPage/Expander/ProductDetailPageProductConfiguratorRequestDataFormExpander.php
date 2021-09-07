@@ -24,7 +24,13 @@ class ProductDetailPageProductConfiguratorRequestDataFormExpander implements Pro
     protected const FIELD_SKU = ProductConfiguratorRequestDataTransfer::SKU;
     protected const FIELD_SOURCE_TYPE = ProductConfiguratorRequestDataTransfer::SOURCE_TYPE;
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_VALIDATION_SKU_NOT_BLANK_MESSAGE = 'product_configurator_gateway_page.sku_not_blank';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_VALIDATION_SOURCE_TYPE_NOT_BLANK_MESSAGE = 'product_configurator_gateway_page.source_type_not_blank';
 
     /**

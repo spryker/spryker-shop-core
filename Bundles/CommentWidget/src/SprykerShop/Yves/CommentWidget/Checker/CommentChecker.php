@@ -13,11 +13,13 @@ class CommentChecker implements CommentCheckerInterface
 {
     /**
      * @uses \Spryker\Zed\Comment\Business\Writer\CommentWriter::COMMENT_MESSAGE_MIN_LENGTH
+     * @var int
      */
     protected const COMMENT_MESSAGE_MIN_LENGTH = 1;
 
     /**
      * @uses \Spryker\Zed\Comment\Business\Writer\CommentWriter::COMMENT_MESSAGE_MAX_LENGTH
+     * @var int
      */
     protected const COMMENT_MESSAGE_MAX_LENGTH = 5000;
 

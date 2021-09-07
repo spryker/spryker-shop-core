@@ -13,7 +13,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class QuoteCartNoteForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FORM_NAME = 'quoteCartNote';
+    /**
+     * @var string
+     */
     public const FIELD_CART_NOTE = 'cartNote';
 
     /**

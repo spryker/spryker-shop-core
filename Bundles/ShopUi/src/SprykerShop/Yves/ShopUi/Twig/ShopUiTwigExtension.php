@@ -18,18 +18,51 @@ use Twig\TwigFunction;
 
 class ShopUiTwigExtension extends TwigExtension
 {
+    /**
+     * @var string
+     */
     public const FUNCTION_GET_PUBLIC_FOLDER_PATH = 'publicPath';
+    /**
+     * @var string
+     */
     public const FUNCTION_GET_QA_ATTRIBUTE = 'qa';
+    /**
+     * @var string
+     */
     public const FUNCTION_GET_QA_ATTRIBUTE_SUB = 'qa_*';
 
+    /**
+     * @var string
+     */
     public const FUNCTION_GET_UI_MODEL_COMPONENT_TEMPLATE = 'model';
+    /**
+     * @var string
+     */
     public const FUNCTION_GET_UI_ATOM_COMPONENT_TEMPLATE = 'atom';
+    /**
+     * @var string
+     */
     public const FUNCTION_GET_UI_MOLECULE_COMPONENT_TEMPLATE = 'molecule';
+    /**
+     * @var string
+     */
     public const FUNCTION_GET_UI_ORGANISM_COMPONENT_TEMPLATE = 'organism';
+    /**
+     * @var string
+     */
     public const FUNCTION_GET_UI_TEMPLATE_COMPONENT_TEMPLATE = 'template';
+    /**
+     * @var string
+     */
     public const FUNCTION_GET_UI_VIEW_COMPONENT_TEMPLATE = 'view';
+    /**
+     * @var string
+     */
     public const DEFAULT_MODULE = 'ShopUi';
 
+    /**
+     * @var string
+     */
     protected const FILTER_TRIM_LOCALE = 'trimLocale';
 
     /**

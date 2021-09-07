@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class QuoteRequestAgentDeleteController extends QuoteRequestAgentAbstractController
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_SUCCESS_CANCELED = 'quote_request.validation.success.canceled';
 
     /**

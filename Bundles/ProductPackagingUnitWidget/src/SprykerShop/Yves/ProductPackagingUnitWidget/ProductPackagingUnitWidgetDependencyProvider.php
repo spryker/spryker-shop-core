@@ -16,9 +16,21 @@ use SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Service\ProductPackag
 
 class ProductPackagingUnitWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_PACKAGING_UNIT_STORAGE = 'CLIENT_PRODUCT_PACKAGING_UNIT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE = 'CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_QUANTITY_STORAGE = 'CLIENT_PRODUCT_QUANTITY_STORAGE';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**

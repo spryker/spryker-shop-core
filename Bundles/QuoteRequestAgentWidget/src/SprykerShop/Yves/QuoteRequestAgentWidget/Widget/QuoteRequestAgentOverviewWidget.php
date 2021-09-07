@@ -18,10 +18,22 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class QuoteRequestAgentOverviewWidget extends AbstractWidget
 {
+    /**
+     * @var int
+     */
     protected const PAGINATION_PAGE = 1;
+    /**
+     * @var int
+     */
     protected const PAGINATION_DEFAULT_QUOTE_REQUESTS_PER_PAGE = 5;
 
+    /**
+     * @var string
+     */
     protected const PARAMETER_CART_FORM = 'cartForm';
+    /**
+     * @var string
+     */
     protected const PARAMETER_QUOTE_REQUEST_OVERVIEW_COLLECTION = 'quoteRequestOverviewCollection';
 
     public function __construct()

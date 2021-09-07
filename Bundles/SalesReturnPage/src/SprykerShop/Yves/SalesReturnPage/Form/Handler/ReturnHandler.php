@@ -21,10 +21,14 @@ use SprykerShop\Yves\SalesReturnPage\Form\ReturnCreateForm;
 
 class ReturnHandler implements ReturnHandlerInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CREATE_RETURN_SELECTED_ITEMS_ERROR = 'return_page.create_return.validation.selected_items';
 
     /**
      * @uses \SprykerShop\Yves\SalesReturnPage\Form\ReturnItemsForm::FIELD_CUSTOM_REASON
+     * @var string
      */
     protected const FIELD_CUSTOM_REASON = 'customReason';
 

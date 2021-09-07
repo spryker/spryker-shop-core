@@ -21,23 +21,38 @@ class CartController extends AbstractController
 {
     use PermissionAwareTrait;
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_REMOVED = 'configured_bundle_widget.configured_bundle.removed';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_UPDATED = 'configured_bundle_widget.configured_bundle.updated';
+    /**
+     * @var string
+     */
     protected const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
 
     /**
      * @uses \SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin::KEY
+     * @var string
      */
     protected const REMOVE_CART_ITEM_PERMISSION_PLUGIN_KEY = 'RemoveCartItemPermissionPlugin';
 
     /**
      * @uses \SprykerShop\Shared\CartPage\Plugin\ChangeCartItemPermissionPlugin::KEY
+     * @var string
      */
     protected const CHANGE_CART_ITEM_PERMISSION_PLUGIN_KEY = 'ChangeCartItemPermissionPlugin';
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
+     * @var string
      */
     protected const ROUTE_CART = 'cart';
 

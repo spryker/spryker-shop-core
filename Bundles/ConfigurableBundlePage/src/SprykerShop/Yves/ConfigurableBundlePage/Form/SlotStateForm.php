@@ -13,6 +13,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class SlotStateForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_SKU = 'sku';
 
     /**

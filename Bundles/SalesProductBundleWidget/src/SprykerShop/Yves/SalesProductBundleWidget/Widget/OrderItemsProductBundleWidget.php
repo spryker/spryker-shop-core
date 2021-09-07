@@ -14,6 +14,9 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class OrderItemsProductBundleWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_PRODUCT_BUNDLES = 'productBundles';
 
     /**

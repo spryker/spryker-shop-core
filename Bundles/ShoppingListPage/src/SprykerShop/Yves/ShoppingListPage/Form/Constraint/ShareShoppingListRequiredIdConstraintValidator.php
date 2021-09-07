@@ -13,6 +13,9 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class ShareShoppingListRequiredIdConstraintValidator extends ConstraintValidator
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_SHARE_ERROR_ONE_ID_REQUIRED = 'customer.account.shopping_list.share.error.one_id_required';
 
     /**

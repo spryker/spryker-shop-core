@@ -17,6 +17,7 @@ interface CalculationPageConstants
      * - Enables the endpoint to show debugging info for the cart.
      *
      * @api
+     * @var string
      */
     public const ENABLE_CART_DEBUG = 'CALCULATION_PAGE:ENABLE_CART_DEBUG';
 }

@@ -18,12 +18,30 @@ use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgent
 
 class QuoteRequestAgentWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE_REQUEST_AGENT = 'CLIENT_QUOTE_REQUEST_AGENT';
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    /**
+     * @var string
+     */
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
 
+    /**
+     * @var string
+     */
     public const SERVICE_ROUTER = 'routers';
 
     /**

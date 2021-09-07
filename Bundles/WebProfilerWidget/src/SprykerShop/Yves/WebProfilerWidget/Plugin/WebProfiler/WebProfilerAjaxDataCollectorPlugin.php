@@ -14,7 +14,13 @@ use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
 
 class WebProfilerAjaxDataCollectorPlugin implements WebProfilerDataCollectorPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const NAME = 'ajax';
+    /**
+     * @var string
+     */
     protected const TEMPLATE = '@WebProfiler/Collector/ajax.html.twig';
 
     /**

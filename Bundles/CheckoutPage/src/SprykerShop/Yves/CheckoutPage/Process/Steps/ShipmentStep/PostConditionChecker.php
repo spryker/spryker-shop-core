@@ -17,6 +17,9 @@ use SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface;
 
 class PostConditionChecker implements PostConditionCheckerInterface
 {
+    /**
+     * @var string
+     */
     protected const SHIPMENT_TRANSFER_KEY_PATTERN = '%s-%s-%s';
 
     /**

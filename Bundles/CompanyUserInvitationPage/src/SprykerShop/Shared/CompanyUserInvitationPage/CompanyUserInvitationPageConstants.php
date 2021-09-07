@@ -14,6 +14,8 @@ interface CompanyUserInvitationPageConstants
 {
     /**
      * Deprecated: Move to Config instead.
+     *
+     * @var string
      */
     public const IMPORT_ERRORS_FILE_PATH = '/tmp';
 }

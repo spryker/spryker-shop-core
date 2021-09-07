@@ -17,6 +17,9 @@ use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
  */
 class YvesSecurityServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+    /**
+     * @var int
+     */
     public const BCRYPT_FACTOR = 12;
 
     /**

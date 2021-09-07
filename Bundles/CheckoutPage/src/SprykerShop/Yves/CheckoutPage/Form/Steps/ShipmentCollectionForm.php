@@ -19,11 +19,26 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ShipmentCollectionForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_SHIPMENT_ADDRESS_LABEL_LIST = 'shippingAddressLabelList';
+    /**
+     * @var string
+     */
     public const OPTION_SHIPMENT_GROUPS = 'shipmentGroups';
+    /**
+     * @var string
+     */
     public const OPTION_SHIPMENT_METHODS_BY_GROUP = 'shipmentMethodsByGroup';
 
+    /**
+     * @var string
+     */
     protected const BLOCK_PREFIX = 'shipmentCollectionForm';
+    /**
+     * @var string
+     */
     protected const FIELD_SHIPMENT_GROUP_COLLECTION = 'shipmentGroups';
 
     /**

@@ -21,9 +21,18 @@ use Symfony\Component\Validator\Constraints\Range;
  */
 class ShoppingListItemForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const FIELD_QUANTITY = 'quantity';
 
+    /**
+     * @var int
+     */
     protected const MAX_QUANTITY_RANGE = 2147483647; // 32 bit integer
+    /**
+     * @var int
+     */
     protected const MIN_QUANTITY_RANGE = 1;
 
     /**

@@ -15,6 +15,9 @@ class RedirectController extends AbstractController
 {
     public const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INACTIVE;
 
+    /**
+     * @var string
+     */
     protected const HEADER_PARAMETER_CACHE_CONTROL_VALUE = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0';
 
     /**

@@ -14,8 +14,14 @@ use SprykerShop\Yves\ProductSearchWidget\Dependency\Service\ProductSearchWidgetT
 
 class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CATALOG = 'CLIENT_CATALOG';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**

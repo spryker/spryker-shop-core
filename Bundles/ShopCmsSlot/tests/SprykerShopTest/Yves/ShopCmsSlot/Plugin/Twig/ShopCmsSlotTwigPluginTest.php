@@ -19,13 +19,31 @@ use SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPlugin
 
 class ShopCmsSlotTwigPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const CONTENT = 'test content';
+    /**
+     * @var string
+     */
     protected const SLOT_KEY = 'test-slot-key';
+    /**
+     * @var string
+     */
     protected const CONTENT_PROVIDER_TYPE = 'content-provider-type';
+    /**
+     * @var array
+     */
     protected const PROVIDED_DATA = [
         'provided-key' => 'data-value',
     ];
+    /**
+     * @var array
+     */
     protected const AUTO_FILLED_DATA = [];
+    /**
+     * @var array
+     */
     protected const REQUIRED_DATA = [
         'provided-key',
     ];

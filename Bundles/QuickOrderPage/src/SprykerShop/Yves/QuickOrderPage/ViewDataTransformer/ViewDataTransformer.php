@@ -12,7 +12,15 @@ use Throwable;
 
 class ViewDataTransformer implements ViewDataTransformerInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_COLUMNS = 'columns';
+
+    /**
+     * @phpstan-var non-empty-string
+     * @var string
+     */
     protected const PATH_DELIMITER = '.';
 
     /**

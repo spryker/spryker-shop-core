@@ -15,7 +15,13 @@ use Twig\TwigFunction;
  */
 class CmsBlockPlaceholderTwigPlugin extends AbstractTwigExtensionPlugin
 {
+    /**
+     * @var string
+     */
     protected const FUNCTION_NAME_SPY_CMS_BLOCK_PLACEHOLDER = 'spyCmsBlockPlaceholder';
+    /**
+     * @var string
+     */
     protected const CMS_BLOCK_PREFIX_KEY = 'generated.cms.cms-block';
 
     /**

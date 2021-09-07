@@ -19,9 +19,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class QuickOrderForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const FIELD_ITEMS = 'items';
 
+    /**
+     * @var string
+     */
     public const SUBMIT_BUTTON_ADD_TO_CART = 'addToCart';
+    /**
+     * @var string
+     */
     public const SUBMIT_BUTTON_CREATE_ORDER = 'createOrder';
 
     /**

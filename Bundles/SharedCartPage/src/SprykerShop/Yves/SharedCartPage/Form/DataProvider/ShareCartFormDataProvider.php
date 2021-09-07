@@ -21,7 +21,13 @@ use SprykerShop\Yves\SharedCartPage\Form\ShareCartForm;
 
 class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PERMISSIONS = 'shared_cart.share_list.permissions.';
+    /**
+     * @var string
+     */
     protected const PERMISSION_NO_ACCESS = 'NO_ACCESS';
 
     /**

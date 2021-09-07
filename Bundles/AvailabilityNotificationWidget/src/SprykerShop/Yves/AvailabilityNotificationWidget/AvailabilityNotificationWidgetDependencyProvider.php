@@ -14,8 +14,17 @@ use SprykerShop\Yves\AvailabilityNotificationWidget\Dependency\Client\Availabili
 
 class AvailabilityNotificationWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_AVAILABILITY_NOTIFICATION = 'CLIENT_AVAILABILITY_NOTIFICATION';
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const CLIENT_SESSION = 'CLIENT_SESSION';
 
     /**

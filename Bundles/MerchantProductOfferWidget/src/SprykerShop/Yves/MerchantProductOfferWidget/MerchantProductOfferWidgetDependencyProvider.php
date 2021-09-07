@@ -14,7 +14,13 @@ use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProduc
 
 class MerchantProductOfferWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_MERCHANT_STORAGE = 'CLIENT_MERCHANT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE = 'CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE';
 
     /**

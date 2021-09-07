@@ -13,6 +13,9 @@ use SprykerShop\Yves\BarcodeWidget\Dependency\Service\BarcodeWidgetToBarcodeServ
 
 class BarcodeWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_BARCODE = 'SERVICE_BARCODE';
 
     /**

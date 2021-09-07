@@ -18,6 +18,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class AbstractShoppingListController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const ROUTE_PARAM_ID_SHOPPING_LIST = 'idShoppingList';
 
     /**

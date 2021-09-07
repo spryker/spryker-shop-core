@@ -21,6 +21,7 @@ class CompanyBusinessUnitControllerRestrictionPlugin extends AbstractPlugin impl
 {
     /**
      * @uses \SprykerShop\Yves\CompanyPage\Controller\BusinessUnitController::REQUEST_PARAM_ID
+     * @var string
      */
     protected const REQUEST_PARAM_COMPANY_BUSINESS_UNIT_ID = 'id';
 
@@ -28,6 +29,7 @@ class CompanyBusinessUnitControllerRestrictionPlugin extends AbstractPlugin impl
      * @uses \SprykerShop\Yves\CompanyPage\Controller\BusinessUnitController::updateAction()
      * @uses \SprykerShop\Yves\CompanyPage\Controller\BusinessUnitController::deleteAction()
      * @uses \SprykerShop\Yves\CompanyPage\Controller\BusinessUnitController::confirmDeleteAction()
+     * @var array
      */
     protected const DENIED_ACTIONS = [
         'updateAction',
@@ -35,6 +37,9 @@ class CompanyBusinessUnitControllerRestrictionPlugin extends AbstractPlugin impl
         'confirmDeleteAction',
     ];
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_COMPANY_PAGE_RESTRICTED = 'company_page.company_business_unit_restricted_message';
 
     /**

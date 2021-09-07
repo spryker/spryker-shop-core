@@ -16,10 +16,22 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SubscriptionWidgetController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUBSCRIPTION_SUCCESS = 'newsletter.subscription.success';
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUBSCRIPTION_ERROR = 'newsletter.subscription.error';
 
+    /**
+     * @var string
+     */
     protected const REQUEST_HEADER_REFERER = 'referer';
+    /**
+     * @var string
+     */
     protected const URL_CUSTOMER_OVERVIEW = 'customer/overview';
 
     /**

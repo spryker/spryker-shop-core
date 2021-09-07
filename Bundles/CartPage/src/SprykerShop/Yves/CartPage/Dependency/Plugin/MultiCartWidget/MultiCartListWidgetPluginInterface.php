@@ -14,6 +14,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
  */
 interface MultiCartListWidgetPluginInterface
 {
+    /**
+     * @var string
+     */
     public const NAME = 'MultiCartListWidgetPlugin';
 
     /**

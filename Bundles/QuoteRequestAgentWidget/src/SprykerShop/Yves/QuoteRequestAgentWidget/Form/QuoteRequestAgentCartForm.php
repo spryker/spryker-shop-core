@@ -14,11 +14,18 @@ use Spryker\Yves\Kernel\Form\AbstractType;
  */
 class QuoteRequestAgentCartForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const SUBMIT_BUTTON_SAVE = 'save';
+    /**
+     * @var string
+     */
     public const SUBMIT_BUTTON_SAVE_AND_BACK = 'saveAndBack';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentWidget\Plugin\Router\QuoteRequestAgentWidgetRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_SAVE_CART} instead.
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_SAVE_CART = '/agent/quote-request/cart/save';
 }

@@ -21,31 +21,45 @@ class ContentProductSetTwigFunctionProvider extends TwigFunctionProvider
 {
     /**
      * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::TWIG_FUNCTION_NAME
+     * @var string
      */
     protected const FUNCTION_CONTENT_PRODUCT_SET = 'content_product_set';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ContentProductSetWidget\Twig\ContentProductSetTwigFunctionProvider::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_TOP} instead.
+     * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
 
     /**
      * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_TOP
+     * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_TOP = 'cart-button-top';
 
     /**
      * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_BOTTOM
+     * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_BOTTOM = 'cart-button-btm';
 
     /**
      * @uses \SprykerShop\Yves\ProductSetDetailPage\Controller\DetailController::PARAM_ATTRIBUTE
+     * @var string
      */
     protected const PARAM_ATTRIBUTE = 'attributes';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_CONTENT_PRODUCT_SET_NOT_FOUND = '<strong>Content product set with content key "%s" not found.</strong>';
+    /**
+     * @var string
+     */
     protected const MESSAGE_WRONG_CONTENT_PRODUCT_SET_TYPE = '<strong>Content product set widget could not be rendered because the content item with key "%s" is not a product set.</strong>';
+    /**
+     * @var string
+     */
     protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<strong>"%s" is not supported name of template.</strong>';
 
     /**

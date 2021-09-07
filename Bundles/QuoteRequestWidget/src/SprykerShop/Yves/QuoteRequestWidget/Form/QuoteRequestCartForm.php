@@ -16,11 +16,18 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class QuoteRequestCartForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const SUBMIT_BUTTON_SAVE = 'save';
+    /**
+     * @var string
+     */
     public const SUBMIT_BUTTON_SAVE_AND_BACK = 'saveAndBack';
 
     /**
      * @uses \SprykerShop\Yves\QuoteRequestWidget\Plugin\Router\QuoteRequestWidgetRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_SAVE_CART
+     * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_SAVE_CART = '/quote-request/cart/save';
 

@@ -21,8 +21,17 @@ use Symfony\Component\Routing\RouteCollection;
  */
 class UrlGenerator extends SymfonyUrlGenerator
 {
+    /**
+     * @var string
+     */
     public const HOME = 'home';
+    /**
+     * @var string
+     */
     public const ERROR_PATH = '/error/404';
+    /**
+     * @var string
+     */
     protected const ROUTE_NOT_FOUND_URL = '';
 
     /**

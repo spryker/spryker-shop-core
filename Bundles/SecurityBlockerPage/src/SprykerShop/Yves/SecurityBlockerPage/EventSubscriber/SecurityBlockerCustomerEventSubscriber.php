@@ -24,19 +24,28 @@ class SecurityBlockerCustomerEventSubscriber implements EventSubscriberInterface
 {
     /**
      * @uses \SprykerShop\Yves\CustomerPage\Form\LoginForm::FORM_NAME
+     * @var string
      */
     protected const FORM_LOGIN_FORM = 'loginForm';
 
     /**
      * @uses \SprykerShop\Yves\CustomerPage\Form\LoginForm::FIELD_EMAIL
+     * @var string
      */
     protected const FORM_FIELD_EMAIL = 'email';
 
     /**
      * @uses \SprykerShop\Yves\CustomerPage\Formatter\LoginCheckUrlFormatter::ROUTE_CHECK_PATH
+     * @var string
      */
     protected const LOGIN_ROUTE = 'login_check';
+    /**
+     * @var int
+     */
     protected const KERNEL_REQUEST_SUBSCRIBER_PRIORITY = 9;
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_ERROR_ACCOUNT_BLOCKED = 'security_blocker_page.error.account_blocked';
 
     /**

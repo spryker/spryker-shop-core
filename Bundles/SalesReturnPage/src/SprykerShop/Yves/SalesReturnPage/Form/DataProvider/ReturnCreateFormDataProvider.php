@@ -17,12 +17,19 @@ use SprykerShop\Yves\SalesReturnPage\Form\ReturnItemsForm;
 
 class ReturnCreateFormDataProvider
 {
+    /**
+     * @var string
+     */
     public const CUSTOM_REASON_VALUE = 'custom_reason';
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOM_REASON = 'return_page.return_reasons.custom_reason.placeholder';
 
     /**
      * @uses \Spryker\Client\SalesReturnSearch\Plugin\Elasticsearch\ResultFormatter\ReturnReasonSearchResultFormatterPlugin::NAME
+     * @var string
      */
     protected const RETURN_REASON_COLLECTION = 'ReturnReasonCollection';
 

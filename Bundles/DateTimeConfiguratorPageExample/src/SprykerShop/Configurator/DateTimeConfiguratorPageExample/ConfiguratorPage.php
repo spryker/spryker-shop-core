@@ -16,12 +16,27 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class ConfiguratorPage
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAMETER_TOKEN = 'token';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAMETER_GET_CONFIGURATION_BY_TOKEN = 'getConfigurationByToken';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAMETER_PREPARER_CONFIGURATION = 'prepareConfiguration';
 
+    /**
+     * @var string
+     */
     protected const CONFIGURATOR_SESSION_KEY = 'CONFIGURATOR_SESSION_KEY';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_CANNOT_START_SESSION = 'Can\'t start session.';
 
     /**

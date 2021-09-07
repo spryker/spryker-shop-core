@@ -14,8 +14,17 @@ use SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotStorageCl
 
 class ShopCmsSlotDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CMS_SLOT = 'CLIENT_CMS_SLOT';
+    /**
+     * @var string
+     */
     public const CLIENT_CMS_SLOT_STORAGE = 'CLIENT_CMS_SLOT_STORAGE';
+    /**
+     * @var string
+     */
     public const PLUGINS_CMS_SLOT_CONTENT = 'PLUGINS_CMS_SLOT_CONTENT';
 
     /**

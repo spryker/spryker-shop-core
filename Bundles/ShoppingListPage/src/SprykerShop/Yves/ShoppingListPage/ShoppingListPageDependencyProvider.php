@@ -21,17 +21,53 @@ use SprykerShop\Yves\ShoppingListPage\Dependency\Service\ShoppingListPageToUtilE
 
 class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const CLIENT_SHOPPING_LIST = 'CLIENT_SHOPPING_LIST';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_COMPANY_BUSINESS_UNIT = 'CLIENT_COMPANY_BUSINESS_UNIT';
+    /**
+     * @var string
+     */
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
+    /**
+     * @var string
+     */
     public const CLIENT_PRICE = 'CLIENT_PRICE';
+    /**
+     * @var string
+     */
     public const PLUGIN_SHOPPING_LIST_ITEM_EXPANDERS = 'PLUGIN_SHOPPING_LIST_ITEM_EXPANDERS';
+    /**
+     * @var string
+     */
     public const PLUGIN_SHOPPING_LIST_ITEM_FORM_EXPANDERS = 'PLUGIN_SHOPPING_LIST_ITEM_FORM_EXPANDERS';
+    /**
+     * @var string
+     */
     public const PLUGIN_SHOPPING_LIST_FORM_DATA_PROVIDER_MAPPERS = 'PLUGIN_SHOPPING_LIST_FORM_DATA_PROVIDER_MAPPERS';
+    /**
+     * @var string
+     */
     public const CLIENT_MULTI_CART = 'CLIENT_MULTI_CART';
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**

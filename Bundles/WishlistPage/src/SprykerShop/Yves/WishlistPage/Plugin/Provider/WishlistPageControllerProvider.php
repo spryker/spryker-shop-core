@@ -15,16 +15,49 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
  */
 class WishlistPageControllerProvider extends AbstractYvesControllerProvider
 {
+    /**
+     * @var string
+     */
     public const ROUTE_ADD_TO_WISHLIST = 'wishlist/add-to-wishlist';
+    /**
+     * @var string
+     */
     public const ROUTE_WISHLIST_OVERVIEW = 'wishlist/overview';
+    /**
+     * @var string
+     */
     public const ROUTE_WISHLIST_UPDATE = 'wishlist/update';
+    /**
+     * @var string
+     */
     public const ROUTE_WISHLIST_DELETE = 'wishlist/delete';
+    /**
+     * @var string
+     */
     public const ROUTE_WISHLIST_DETAILS = 'wishlist/details';
+    /**
+     * @var string
+     */
     public const ROUTE_ADD_ITEM = 'wishlist/add-item';
+    /**
+     * @var string
+     */
     public const ROUTE_REMOVE_ITEM = 'wishlist/remove-item';
+    /**
+     * @var string
+     */
     public const ROUTE_MOVE_TO_CART = 'wishlist/move-to-cart';
+    /**
+     * @var string
+     */
     public const ROUTE_MOVE_ALL_AVAILABLE_TO_CART = 'wishlist/move-all-available-to-cart';
+    /**
+     * @var string
+     */
     protected const WISHLIST_NAME_PATTERN = '.+';
+    /**
+     * @var string
+     */
     protected const SKU_PATTERN = '[a-zA-Z0-9-_.]+';
 
     /**

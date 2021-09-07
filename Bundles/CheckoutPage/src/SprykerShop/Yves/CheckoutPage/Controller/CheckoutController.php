@@ -22,10 +22,14 @@ class CheckoutController extends AbstractController
 {
     use PermissionAwareTrait;
 
+    /**
+     * @var string
+     */
     public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
+     * @var string
      */
     protected const ROUTE_CART = 'cart';
 

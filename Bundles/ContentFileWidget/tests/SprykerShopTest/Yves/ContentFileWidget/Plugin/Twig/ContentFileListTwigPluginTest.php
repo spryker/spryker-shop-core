@@ -33,15 +33,39 @@ use Twig\Loader\FilesystemLoader;
  */
 class ContentFileListTwigPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEMPLATE_TEXT_LINK = 'text-link';
+    /**
+     * @var string
+     */
     protected const TEMPLATE_WRONG = 'wrong';
 
+    /**
+     * @var string
+     */
     protected const CONTENT_WRONG_KEY = 'fl-0';
+    /**
+     * @var string
+     */
     protected const CONTENT_TERM = 'TERM';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_CONTENT_FILE_LIST_NOT_FOUND = '<strong>Content file list with key "fl-0" not found.</strong>';
+    /**
+     * @var string
+     */
     protected const MESSAGE_WRONG_CONTENT_FILE_LIST_TYPE = '<strong>Content file list widget could not be rendered because the content item with key "fl-0" is not an file list.</strong>';
+    /**
+     * @var string
+     */
     protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<strong>"wrong" is not supported name of template.</strong>';
+    /**
+     * @var string
+     */
     protected const RENDERED_STRING = 'output';
 
     /**

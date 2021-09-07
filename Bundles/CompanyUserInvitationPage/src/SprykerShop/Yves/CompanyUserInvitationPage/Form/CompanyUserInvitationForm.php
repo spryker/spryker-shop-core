@@ -20,8 +20,14 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class CompanyUserInvitationForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_INVITATIONS_LIST = 'invitations_list';
 
+    /**
+     * @var string
+     */
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
 
     /**

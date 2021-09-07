@@ -14,7 +14,13 @@ use SprykerShop\Yves\CalculationPage\Dependency\Client\CalculationPageToQuoteCli
 
 class CalculationPageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    /**
+     * @var string
+     */
     public const CLIENT_CALCULATION = 'CLIENT_CALCULATION';
 
     /**

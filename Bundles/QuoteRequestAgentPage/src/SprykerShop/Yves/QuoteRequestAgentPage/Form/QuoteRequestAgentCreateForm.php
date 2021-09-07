@@ -15,5 +15,8 @@ use Spryker\Yves\Kernel\Form\AbstractType;
  */
 class QuoteRequestAgentCreateForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FILED_ID_COMPANY_USER = 'idCompanyUser';
 }

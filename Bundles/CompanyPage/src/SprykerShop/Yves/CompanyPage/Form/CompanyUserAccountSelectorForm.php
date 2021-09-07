@@ -18,12 +18,27 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CompanyUserAccountSelectorForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_COMPANY_USER_ACCOUNT_CHOICE = 'companyUserAccount';
+    /**
+     * @var string
+     */
     public const FIELD_IS_DEFAULT = 'is_default';
 
+    /**
+     * @var string
+     */
     public const OPTION_COMPANY_USER_ACCOUNT_CHOICES = 'companyUserAccountChoices';
+    /**
+     * @var string
+     */
     public const OPTION_COMPANY_USER_ACCOUNT_DEFAULT_SELECTED = 'companyUserAccountDefaultSelected';
 
+    /**
+     * @var string
+     */
     public const FORM_NAME = 'company_user_account_selector_form';
 
     /**

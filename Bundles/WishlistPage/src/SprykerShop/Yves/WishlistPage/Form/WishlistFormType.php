@@ -17,11 +17,23 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 class WishlistFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_NAME = 'name';
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_NAME_VALIDATION_ERROR = 'wishlist.validation.error.name.wrong_format';
+    /**
+     * @var string
+     */
     protected const WISH_LIST_NAME_VALIDATION_REGEX = '/^[ A-Za-z0-9_-]+$/';
 
+    /**
+     * @var string
+     */
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
 
     /**

@@ -19,6 +19,9 @@ class CompanyBusinessUnitOrderSearchFormDataProvider
 {
     use PermissionAwareTrait;
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CHOICE_COMPANY_ORDERS = 'company_page.choice.company_orders';
 
     /**

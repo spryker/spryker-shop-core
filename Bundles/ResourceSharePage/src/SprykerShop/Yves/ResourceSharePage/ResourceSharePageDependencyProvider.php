@@ -16,15 +16,28 @@ use SprykerShop\Yves\ResourceSharePage\Dependency\Client\ResourceSharePageToReso
 
 class ResourceSharePageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_RESOURCE_SHARE = 'CLIENT_RESOURCE_SHARE';
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
 
     /**
      * @deprecated Will be removed without replacement.
+     * @var string
      */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_RESOURCE_SHARE_ROUTER_STRATEGY = 'PLUGINS_RESOURCE_SHARE_ROUTER_STRATEGY';
 
     /**

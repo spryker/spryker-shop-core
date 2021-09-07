@@ -12,7 +12,13 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class ProductConfiguratorGatewayPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_PRODUCT_CONFIGURATOR_GATEWAY_REQUEST = 'product-configurator-gateway/request';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_PRODUCT_CONFIGURATOR_GATEWAY_RESPONSE = 'product-configurator-gateway/response';
 
     /**

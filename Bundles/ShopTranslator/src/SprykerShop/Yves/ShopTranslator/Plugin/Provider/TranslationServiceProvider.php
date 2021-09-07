@@ -19,6 +19,9 @@ use Spryker\Yves\Kernel\AbstractPlugin;
  */
 class TranslationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_TRANSLATOR = 'translator';
 
     /**

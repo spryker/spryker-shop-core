@@ -19,38 +19,70 @@ use SprykerShop\Yves\CartPage\Plugin\CartVariantAttributeMapperPlugin;
 
 class CartPageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CART = 'CLIENT_CART';
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_AVAILABILITY_STORAGE = 'CLIENT_AVAILABILITY_STORAGE';
+    /**
+     * @var string
+     */
     public const PLUGIN_CART_VARIANT = 'PLUGIN_CART_VARIANT';
+    /**
+     * @var string
+     */
     public const PLUGIN_CART_ITEM_TRANSFORMERS = 'PLUGIN_CART_ITEM_TRANSFORMERS';
+    /**
+     * @var string
+     */
     public const PLUGIN_CART_PAGE_WIDGETS = 'PLUGIN_CART_PAGE_WIDGETS';
+    /**
+     * @var string
+     */
     public const PLUGIN_PRE_ADD_TO_CART = 'PLUGIN_PRE_ADD_TO_CART';
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**
      * @uses \Spryker\Yves\Form\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
+     * @var string
      */
     public const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
 
     /**
      * @deprecated Will be removed without replacement.
+     * @var string
      */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     * @var string
      */
     public const SERVICE_ROUTER = 'routers';
 
     /**
      * @uses \Spryker\Yves\Locale\Plugin\Application\LocaleApplicationPlugin::SERVICE_LOCALE
+     * @var string
      */
     public const SERVICE_LOCALE = 'locale';
 
     /**
      * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     * @var string
      */
     public const SERVICE_REQUEST_STACK = 'request_stack';
 

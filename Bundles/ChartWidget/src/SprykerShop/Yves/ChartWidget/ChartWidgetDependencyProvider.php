@@ -16,7 +16,13 @@ use SprykerShop\Yves\ChartWidget\Plugin\Twig\TwigPieChartPlugin;
 
 class ChartWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGIN_TWIG_CHART_FUNCTIONS = 'PLUGIN_TWIG_CHART_FUNCTIONS';
+    /**
+     * @var string
+     */
     public const PLUGIN_CHARTS = 'PLUGIN_CHARTS';
 
     /**

@@ -18,11 +18,18 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ShoppingListDeleteController extends AbstractShoppingListController
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED = 'customer.account.shopping_list.delete.failed';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_SUCCESS = 'customer.account.shopping_list.delete.success';
 
     /**
      * @uses \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_SHOPPING_LIST
+     * @var string
      */
     protected const ROUTE_SHOPPING_LIST = 'shopping-list';
 

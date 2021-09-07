@@ -15,9 +15,18 @@ use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Service\ProductMeas
 
 class ProductMeasurementUnitWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE = 'CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_QUANTITY_STORAGE = 'CLIENT_PRODUCT_QUANTITY_STORAGE';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**

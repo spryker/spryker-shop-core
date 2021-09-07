@@ -14,8 +14,14 @@ use Symfony\Component\Form\FormEvents;
 
 class CompanyBusinessUnitAddressForm extends CompanyUnitAddressForm
 {
+    /**
+     * @var string
+     */
     public const FIELD_IS_DEFAULT_BILLING = 'is_default_billing';
 
+    /**
+     * @var string
+     */
     protected const FIELD_LABEL_IS_DEFAULT_BILLING = 'company.account.address.is_default_billing';
 
     /**

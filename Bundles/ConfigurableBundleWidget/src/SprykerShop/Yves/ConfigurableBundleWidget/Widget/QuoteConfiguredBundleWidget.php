@@ -16,9 +16,21 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class QuoteConfiguredBundleWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_QUOTE = 'quote';
+    /**
+     * @var string
+     */
     protected const PARAMETER_ITEMS = 'items';
+    /**
+     * @var string
+     */
     protected const PARAMETER_CONFIGURED_BUNDLES = 'configuredBundles';
+    /**
+     * @var string
+     */
     protected const PARAMETER_IS_QUANTITY_CHANGEABLE = 'isQuantityChangeable';
 
     /**

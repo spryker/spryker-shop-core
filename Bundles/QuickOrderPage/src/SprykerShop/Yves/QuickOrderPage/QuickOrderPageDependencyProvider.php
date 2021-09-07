@@ -23,37 +23,88 @@ use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvSe
 
 class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CART = 'CLIENT_CART';
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    /**
+     * @var string
+     */
     public const CLIENT_QUICK_ORDER = 'CLIENT_QUICK_ORDER';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_QUANTITY_STORAGE = 'CLIENT_PRODUCT_QUANTITY_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRICE_PRODUCT_STORAGE = 'CLIENT_PRICE_PRODUCT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
 
     /**
      * @deprecated Will be removed without replacement.
+     * @var string
      */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_QUICK_ORDER_PAGE_WIDGETS = 'PLUGINS_QUICK_ORDER_PAGE_WIDGETS';
+    /**
+     * @var string
+     */
     public const PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER = 'PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_QUICK_ORDER_FORM_HANDLER_STRATEGY = 'PLUGINS_QUICK_ORDER_FORM_HANDLER_STRATEGY';
+    /**
+     * @var string
+     */
     public const PLUGINS_QUICK_ORDER_FORM_COLUMN = 'PLUGINS_QUICK_ORDER_FORM_ADDITIONAL_DATA_COLUMN_PROVIDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_QUICK_ORDER_ITEM_FILTER = 'PLUGINS_QUICK_ORDER_ITEM_FILTER';
+    /**
+     * @var string
+     */
     public const PLUGINS_QUICK_ORDER_UPLOADED_FILE_PARSER = 'PLUGINS_QUICK_ORDER_UPLOADED_FILE_PARSER';
+    /**
+     * @var string
+     */
     public const PLUGINS_QUICK_ORDER_UPLOADED_FILE_VALIDATOR = 'PLUGINS_QUICK_ORDER_UPLOADED_FILE_VALIDATOR';
+    /**
+     * @var string
+     */
     public const PLUGINS_QUICK_ORDER_FILE_TEMPLATE = 'PLUGINS_QUICK_ORDER_FILE_TEMPLATE';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_CSV = 'SERVICE_UTIL_CSV';
 
     /**
      * @uses \Spryker\Yves\Form\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
+     * @var string
      */
     public const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
 
     /**
      * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     * @var string
      */
     public const SERVICE_REQUEST_STACK = 'request_stack';
 

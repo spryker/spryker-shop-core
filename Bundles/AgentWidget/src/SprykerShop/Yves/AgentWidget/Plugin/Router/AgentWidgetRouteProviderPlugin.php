@@ -14,8 +14,12 @@ class AgentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\AgentWidget\Plugin\Router\AgentWidgetRouteProviderPlugin::ROUTE_NAME_CUSTOMER_AUTOCOMPLETE} instead.
+     * @var string
      */
     protected const ROUTE_CUSTOMER_AUTOCOMPLETE = 'agent-widget/customer-autocomplete';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CUSTOMER_AUTOCOMPLETE = 'agent-widget/customer-autocomplete';
 
     /**

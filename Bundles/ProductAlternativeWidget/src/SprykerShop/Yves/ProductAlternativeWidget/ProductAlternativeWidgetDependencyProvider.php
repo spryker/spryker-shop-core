@@ -13,7 +13,13 @@ use SprykerShop\Yves\ProductAlternativeWidget\Dependency\Client\ProductAlternati
 
 class ProductAlternativeWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_ALTERNATIVE_STORAGE = 'CLIENT_PRODUCT_ALTERNATIVE_STORAGE';
+    /**
+     * @var string
+     */
     public const PLUGIN_PRODUCT_DETAIL_PAGE_PRODUCT_ALTERNATIVE_WIDGETS = 'PLUGIN_PRODUCT_DETAIL_PAGE_PRODUCT_ALTERNATIVE_WIDGETS';
 
     /**

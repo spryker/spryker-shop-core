@@ -15,15 +15,42 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
  */
 class MultiCartPageControllerProvider extends AbstractYvesControllerProvider
 {
+    /**
+     * @var string
+     */
     public const ROUTE_MULTI_CART_INDEX = 'multi-cart';
+    /**
+     * @var string
+     */
     public const ROUTE_MULTI_CART_CREATE = 'multi-cart/create';
+    /**
+     * @var string
+     */
     public const ROUTE_MULTI_CART_UPDATE = 'multi-cart/update';
+    /**
+     * @var string
+     */
     public const ROUTE_MULTI_CART_DELETE = 'multi-cart/delete';
+    /**
+     * @var string
+     */
     public const ROUTE_MULTI_CART_CONFIRM_DELETE = 'multi-cart/confirm-delete';
+    /**
+     * @var string
+     */
     public const ROUTE_MULTI_CART_SET_DEFAULT = 'multi-cart/set-default';
+    /**
+     * @var string
+     */
     public const ROUTE_MULTI_CART_CLEAR = 'multi-cart/clear';
+    /**
+     * @var string
+     */
     public const ROUTE_MULTI_CART_DUPLICATE = 'multi-cart/duplicate';
 
+    /**
+     * @var string
+     */
     public const PARAM_ID_QUOTE = 'idQuote';
 
     /**

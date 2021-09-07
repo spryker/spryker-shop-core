@@ -16,10 +16,22 @@ use SprykerShop\Yves\PriceProductVolumeWidget\Dependency\Service\PriceProductVol
 
 class PriceProductVolumeWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRICE = 'CLIENT_PRICE';
+    /**
+     * @var string
+     */
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**

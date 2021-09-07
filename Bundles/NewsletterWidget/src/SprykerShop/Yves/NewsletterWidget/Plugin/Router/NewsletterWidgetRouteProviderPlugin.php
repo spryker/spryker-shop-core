@@ -14,14 +14,22 @@ class NewsletterWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\NewsletterWidget\Plugin\Router\NewsletterWidgetRouteProviderPlugin::ROUTE_NAME_NEWSLETTER_SUBSCRIBE} instead.
+     * @var string
      */
     protected const ROUTE_NEWSLETTER_SUBSCRIBE = 'newsletter/subscribe';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_NEWSLETTER_SUBSCRIBE = 'newsletter/subscribe';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\NewsletterWidget\Plugin\Router\NewsletterWidgetRouteProviderPlugin::ROUTE_NAME_NEWSLETTER_WIDGET_SUBSCRIBE} instead.
+     * @var string
      */
     protected const ROUTE_NEWSLETTER_WIDGET_SUBSCRIBE = 'newsletter-widget/subscribe';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_NEWSLETTER_WIDGET_SUBSCRIBE = 'newsletter-widget/subscribe';
 
     /**

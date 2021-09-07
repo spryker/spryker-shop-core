@@ -16,20 +16,32 @@ class ContentBannerTwigFunctionProvider extends TwigFunctionProvider
 {
     /**
      * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::TWIG_FUNCTION_NAME
+     * @var string
      */
     protected const TWIG_FUNCTION_NAME_CONTENT_BANNER = 'content_banner';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_BANNER_NOT_FOUND = '<b>Content Banner with key %s not found.</b>';
+    /**
+     * @var string
+     */
     protected const MESSAGE_BANNER_WRONG_TYPE = '<b>Content Banner could not be rendered because the content item with key %s is not an banner.</b>';
+    /**
+     * @var string
+     */
     protected const MESSAGE_BANNER_WRONG_TEMPLATE = '<b>"%s" is not supported name of template.</b>';
 
     /**
      * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE
+     * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE = 'bottom-title';
 
     /**
      * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE
+     * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
 

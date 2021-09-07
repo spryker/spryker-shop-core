@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class FileDownloadRenderer implements FileRendererInterface
 {
+    /**
+     * @var string
+     */
     protected const FILE_TEMPLATE_NAME = 'quick-order-template';
 
     /**

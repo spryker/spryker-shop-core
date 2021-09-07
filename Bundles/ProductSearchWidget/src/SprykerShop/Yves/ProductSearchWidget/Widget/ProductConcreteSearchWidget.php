@@ -14,6 +14,9 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class ProductConcreteSearchWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const NAME = 'ProductConcreteSearchWidget';
 
     /**

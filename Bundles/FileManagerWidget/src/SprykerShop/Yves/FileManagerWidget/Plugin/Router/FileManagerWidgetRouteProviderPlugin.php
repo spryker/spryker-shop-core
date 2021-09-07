@@ -14,8 +14,12 @@ class FileManagerWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\FileManagerWidget\Plugin\Router\FileManagerWidgetRouteProviderPlugin::ROUTE_NAME_FILES_DOWNLOAD} instead.
+     * @var string
      */
     protected const ROUTE_FILES_DOWNLOAD = 'files/download';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_FILES_DOWNLOAD = 'files/download';
 
     /**

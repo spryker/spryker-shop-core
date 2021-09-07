@@ -17,10 +17,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QuoteController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const REQUEST_HEADER_REFERER = 'referer';
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
+     * @var string
      */
     protected const ROUTE_NAME_CART = 'cart';
 

@@ -14,7 +14,13 @@ use SprykerShop\Yves\LanguageSwitcherWidget\Dependency\Client\LanguageSwitcherWi
 
 class LanguageSwitcherWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const STORE = 'STORE';
+    /**
+     * @var string
+     */
     public const CLIENT_URL_STORAGE = 'CLIENT_URL_STORAGE';
 
     /**

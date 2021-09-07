@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ShoppingListWidge
 
 interface ShoppingListWidgetPluginInterface
 {
+    /**
+     * @var string
+     */
     public const NAME = 'ShoppingListWidgetPlugin';
 
     /**

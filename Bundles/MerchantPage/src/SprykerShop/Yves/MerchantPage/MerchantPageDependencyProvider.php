@@ -13,6 +13,9 @@ use SprykerShop\Yves\MerchantPage\Dependency\Client\MerchantPageToMerchantStorag
 
 class MerchantPageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_MERCHANT_STORAGE = 'CLIENT_MERCHANT_STORAGE';
 
     /**

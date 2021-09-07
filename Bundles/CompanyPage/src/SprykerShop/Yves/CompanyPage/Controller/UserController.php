@@ -27,14 +27,35 @@ class UserController extends AbstractCompanyController
 {
     use PermissionAwareTrait;
 
+    /**
+     * @var string
+     */
     public const COMPANY_USER_LIST_SORT_FIELD = 'id_company_user';
 
+    /**
+     * @var string
+     */
     protected const SUCCESS_MESSAGE_COMPANY_USER_DELETE = 'company.account.company_user.delete.successful';
+    /**
+     * @var string
+     */
     protected const SUCCESS_MESSAGE_COMPANY_USER_CREATE = 'company.account.company_user.create.successful';
+    /**
+     * @var string
+     */
     protected const SUCCESS_MESSAGE_COMPANY_USER_UPDATE = 'company.account.company_user.update.successful';
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_DELETE_COMPANY_USER = 'company.account.company_user.delete.error';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_DELETE_YOURSELF = 'company.account.company_user.delete.error.delete_yourself';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_COMPANY_USER_ASSIGN_EMPTY_ROLES = 'company.account.company_user.assign_roles.empty_roles.error';
 
     /**

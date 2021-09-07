@@ -18,6 +18,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class SummaryForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_ACCEPT_TERM_AND_CONDITIONS_LABEL = 'OPTION_ACCEPT_TERM_AND_CONDITIONS_LABEL';
 
     protected const FIELD_ACCEPT_TERMS_AND_CONDITIONS = QuoteTransfer::ACCEPT_TERMS_AND_CONDITIONS;

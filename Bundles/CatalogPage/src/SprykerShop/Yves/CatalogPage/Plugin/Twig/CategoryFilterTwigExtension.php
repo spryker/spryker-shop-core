@@ -15,6 +15,9 @@ use Twig\TwigFunction;
 
 class CategoryFilterTwigExtension extends TwigExtension
 {
+    /**
+     * @var string
+     */
     public const FUNCTION_PREPARE_FILTER_CATEGORIES = 'prepareFilterCategories';
 
     /**

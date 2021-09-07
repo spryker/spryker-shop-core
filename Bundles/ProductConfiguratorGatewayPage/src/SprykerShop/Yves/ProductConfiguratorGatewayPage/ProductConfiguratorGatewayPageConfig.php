@@ -13,14 +13,19 @@ class ProductConfiguratorGatewayPageConfig extends AbstractBundleConfig
 {
     /**
      * @uses \SprykerShop\Yves\ProductConfigurationWidget\ProductConfigurationWidgetConfig::SOURCE_TYPE_PDP
+     * @var string
      */
     protected const SOURCE_TYPE_PDP = 'SOURCE_TYPE_PDP';
 
     /**
      * @uses \SprykerShop\Shared\DateTimeConfiguratorPageExample\DateTimeConfiguratorPageExampleConfig::DATE_TIME_CONFIGURATOR_KEY
+     * @var string
      */
     protected const DATE_TIME_CONFIGURATOR_KEY = 'DATE_TIME_CONFIGURATOR';
 
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONFIGURATOR_GATEWAY_REQUEST_FORM_NAME = 'product_configurator_request_data_form';
 
     /**

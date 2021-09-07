@@ -13,6 +13,9 @@ use SprykerShop\Yves\DiscountPromotionWidget\Dependency\Client\DiscountPromotion
 
 class DiscountPromotionWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
 
     /**

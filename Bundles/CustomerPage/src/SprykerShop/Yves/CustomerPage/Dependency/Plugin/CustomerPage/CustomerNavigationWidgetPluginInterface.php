@@ -12,6 +12,9 @@ namespace SprykerShop\Yves\CustomerPage\Dependency\Plugin\CustomerPage;
  */
 interface CustomerNavigationWidgetPluginInterface
 {
+    /**
+     * @var string
+     */
     public const NAME = 'CustomerNavigationWidgetPlugin';
 
     /**

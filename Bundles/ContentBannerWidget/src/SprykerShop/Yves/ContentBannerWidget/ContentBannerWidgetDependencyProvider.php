@@ -13,6 +13,9 @@ use SprykerShop\Yves\ContentBannerWidget\Dependency\Client\ContentBannerWidgetTo
 
 class ContentBannerWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CONTENT_BANNER = 'CLIENT_CONTENT_BANNER';
 
     /**

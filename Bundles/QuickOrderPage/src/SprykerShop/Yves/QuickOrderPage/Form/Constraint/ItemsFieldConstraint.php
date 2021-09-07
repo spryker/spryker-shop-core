@@ -11,6 +11,9 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class ItemsFieldConstraint extends SymfonyConstraint
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE = 'quick-order.errors.items-required';
 
     /**

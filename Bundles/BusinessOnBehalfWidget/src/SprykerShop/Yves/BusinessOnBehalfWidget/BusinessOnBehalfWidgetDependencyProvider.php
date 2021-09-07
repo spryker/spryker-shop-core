@@ -14,7 +14,13 @@ use SprykerShop\Yves\BusinessOnBehalfWidget\Dependency\Client\BusinessOnBehalfWi
 
 class BusinessOnBehalfWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const CLIENT_BUSINESS_ON_BEHALF = 'CLIENT_BUSINESS_ON_BEHALF';
 
     /**

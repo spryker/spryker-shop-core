@@ -23,8 +23,14 @@ use SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin;
  */
 class CartPageGatewayBackUrlResolverStrategyPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const SOURCE_TYPE_CART = 'SOURCE_TYPE_CART';
 
+    /**
+     * @var string
+     */
     protected const FAKE_SOURCE_TYPE = 'FAKE_SOURCE_TYPE';
 
     /**

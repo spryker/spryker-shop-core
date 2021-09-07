@@ -13,6 +13,9 @@ use SprykerShop\Yves\ProductDiscontinuedWidget\Dependency\Client\ProductDisconti
 
 class ProductDiscontinuedWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_DISCONTINUED_STORAGE = 'CLIENT_PRODUCT_DISCONTINUED_STORAGE';
 
     /**

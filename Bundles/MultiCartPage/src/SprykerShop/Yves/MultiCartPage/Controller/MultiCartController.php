@@ -23,18 +23,35 @@ class MultiCartController extends AbstractController
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
+     * @var string
      */
     protected const ROUTE_CART = 'cart';
 
+    /**
+     * @var string
+     */
     public const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CART_UPDATED_ERROR = 'multi_cart_widget.cart.updated.error';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CART_DELETE_ERROR = 'multi_cart_widget.cart.delete.error';
+    /**
+     * @var string
+     */
     protected const MESSAGE_FORM_CSRF_VALIDATION_ERROR = 'form.csrf.error.text';
 
     /**
      * @uses \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::PARAM_ID_QUOTE
+     * @var string
      */
     protected const PARAM_ID_QUOTE = 'idQuote';
 

@@ -17,9 +17,21 @@ class AddItemsToShoppingListWidget extends AbstractWidget
 {
     use PermissionAwareTrait;
 
+    /**
+     * @var string
+     */
     protected const PARAM_IS_VISIBLE = 'isVisible';
+    /**
+     * @var string
+     */
     protected const PARAM_SHOPPING_LIST_OPTIONS = 'shoppingListOptions';
+    /**
+     * @var string
+     */
     protected const PARAM_SHOPPING_LIST_OPTION_VALUE = 'value';
+    /**
+     * @var string
+     */
     protected const PARAM_SHOPPING_LIST_OPTION_LABEL = 'label';
 
     /**

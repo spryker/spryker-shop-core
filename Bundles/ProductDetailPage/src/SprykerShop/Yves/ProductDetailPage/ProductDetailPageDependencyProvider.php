@@ -14,11 +14,18 @@ use SprykerShop\Yves\ProductDetailPage\Dependency\Client\ProductDetailPageToProd
 
 class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    /**
+     * @var string
+     */
     public const PLUGIN_PRODUCT_DETAIL_PAGE_WIDGETS = 'PLUGIN_PRODUCT_DETAIL_PAGE_WIDGETS';
 
     /**
      * @deprecated Will be removed without replacement.
+     * @var string
      */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 

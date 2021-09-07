@@ -27,29 +27,70 @@ use SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreBridge
 
 class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const CLIENT_STORE = 'CLIENT_STORE';
+    /**
+     * @var string
+     */
     public const CLIENT_COMPANY = 'CLIENT_COMPANY';
+    /**
+     * @var string
+     */
     public const CLIENT_COMPANY_BUSINESS_UNIT = 'CLIENT_COMPANY_BUSINESS_UNIT';
+    /**
+     * @var string
+     */
     public const CLIENT_COMPANY_UNIT_ADDRESS = 'CLIENT_COMPANY_UNIT_ADDRESS';
+    /**
+     * @var string
+     */
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
+    /**
+     * @var string
+     */
     public const CLIENT_COMPANY_ROLE = 'CLIENT_COMPANY_ROLE';
+    /**
+     * @var string
+     */
     public const CLIENT_PERMISSION = 'CLIENT_PERMISSION';
+    /**
+     * @var string
+     */
     public const CLIENT_BUSINESS_ON_BEHALF = 'CLIENT_BUSINESS_ON_BEHALF';
+    /**
+     * @var string
+     */
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
+    /**
+     * @var string
+     */
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
+    /**
+     * @var string
+     */
     public const STORE = 'STORE';
 
+    /**
+     * @var string
+     */
     public const PLUGIN_COMPANY_OVERVIEW_WIDGETS = 'PLUGIN_COMPANY_OVERVIEW_WIDGETS';
 
     /**
      * @deprecated Will be removed without replacement.
+     * @var string
      */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     * @var string
      */
     public const SERVICE_ROUTER = 'routers';
 

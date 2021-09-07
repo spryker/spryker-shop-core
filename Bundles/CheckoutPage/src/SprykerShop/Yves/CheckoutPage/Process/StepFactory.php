@@ -50,16 +50,24 @@ use SprykerShop\Yves\CheckoutPage\Process\Steps\SummaryStep;
  */
 class StepFactory extends AbstractFactory
 {
+    /**
+     * @var int
+     */
     protected const ERROR_CODE_GENERAL_FAILURE = 399;
+    /**
+     * @var string
+     */
     protected const ROUTE_CART = 'cart';
 
     /**
      * @uses \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_LOGOUT
+     * @var string
      */
     protected const ROUTE_LOGOUT = 'logout';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_CUSTOMER} instead.
+     * @var string
      */
     protected const CHECKOUT_CUSTOMER = 'checkout-customer';
 

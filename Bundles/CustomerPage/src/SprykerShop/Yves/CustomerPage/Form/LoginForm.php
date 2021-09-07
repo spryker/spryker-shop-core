@@ -21,13 +21,31 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class LoginForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FORM_NAME = 'loginForm';
 
+    /**
+     * @var string
+     */
     public const FIELD_EMAIL = 'email';
+    /**
+     * @var string
+     */
     public const FIELD_PASSWORD = 'password';
+    /**
+     * @var string
+     */
     public const FIELD_REMEMBER_ME = 'remember_me';
 
+    /**
+     * @var string
+     */
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+    /**
+     * @var string
+     */
     protected const VALIDATION_EMAIL_MESSAGE = 'validation.email';
 
     /**

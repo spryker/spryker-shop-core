@@ -18,6 +18,9 @@ use Twig\Environment;
  */
 class FileManagerWidgetPlugin extends AbstractPlugin implements CmsContentWidgetPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_FILE_IS_MISSING = 'File with id %s does not exist';
 
     /**

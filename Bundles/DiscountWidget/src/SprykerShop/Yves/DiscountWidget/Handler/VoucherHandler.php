@@ -19,6 +19,9 @@ use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToQuoteClien
  */
 class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED = 'cart.locked.change_denied';
 
     /**

@@ -24,6 +24,9 @@ use Twig\RuntimeLoader\FactoryRuntimeLoader;
  */
 class TwigFormRuntimeLoaderPlugin extends AbstractPlugin implements TwigPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
 
     /**

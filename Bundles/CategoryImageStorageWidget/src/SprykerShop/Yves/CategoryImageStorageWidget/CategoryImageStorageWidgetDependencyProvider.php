@@ -13,6 +13,9 @@ use SprykerShop\Yves\CategoryImageStorageWidget\Dependency\CategoryImageStorageW
 
 class CategoryImageStorageWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CATEGORY_IMAGE_STORAGE = 'CLIENT_CATEGORY_IMAGE_STORAGE';
 
     /**

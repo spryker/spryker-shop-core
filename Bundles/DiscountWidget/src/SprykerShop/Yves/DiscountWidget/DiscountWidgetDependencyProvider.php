@@ -16,16 +16,24 @@ use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToQuoteClien
 
 class DiscountWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CALCULATION = 'CLIENT_CALCULATION';
 
     /**
      * @deprecated Will be removed without replacement.
+     * @var string
      */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
 
     /**
      * @uses \Spryker\Yves\Messenger\Plugin\Application\FlashMessengerApplicationPlugin::SERVICE_FLASH_MESSENGER
+     * @var string
      */
     public const SERVICE_FLASH_MESSENGER = 'flash_messenger';
 

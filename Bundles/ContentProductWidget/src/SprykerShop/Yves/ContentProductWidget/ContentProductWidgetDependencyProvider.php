@@ -14,7 +14,13 @@ use SprykerShop\Yves\ContentProductWidget\Dependency\Client\ContentProductWidget
 
 class ContentProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_CONTENT_PRODUCT = 'CLIENT_CONTENT_PRODUCT';
 
     /**

@@ -21,9 +21,13 @@ class CheckBusinessOnBehalfCompanyUserHandlerPlugin extends AbstractPlugin imple
 {
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin
+     * @var string
      */
     protected const SERVICE_ROUTER = 'routers';
 
+    /**
+     * @var string
+     */
     protected const COMPANY_REDIRECT_ROUTE = 'company/user/select';
 
     /**

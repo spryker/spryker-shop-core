@@ -18,6 +18,9 @@ use SprykerShop\Yves\SharedCartWidget\Widget\CartDeleteCompanyUsersListWidget;
  */
 class CartDeleteCompanyUsersListWidgetPlugin extends AbstractWidgetPlugin
 {
+    /**
+     * @var string
+     */
     public const NAME = 'CartDeleteCompanyUsersListWidgetPlugin';
 
     /**

@@ -13,10 +13,19 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class CartCodeForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FORM_NAME = 'cartCodeForm';
 
+    /**
+     * @var string
+     */
     public const FIELD_CODE = 'code';
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_ENTER_CART_CODE = 'cart.code.enter-code';
 
     /**

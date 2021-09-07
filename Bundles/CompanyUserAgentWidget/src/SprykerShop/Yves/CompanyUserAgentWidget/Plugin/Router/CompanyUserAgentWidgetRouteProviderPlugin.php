@@ -14,8 +14,12 @@ class CompanyUserAgentWidgetRouteProviderPlugin extends AbstractRouteProviderPlu
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyUserAgentWidget\Plugin\Router\CompanyUserAgentWidgetRouteProviderPlugin::ROUTE_NAME_COMPANY_USER_AUTOCOMPLETE} instead.
+     * @var string
      */
     protected const ROUTE_COMPANY_USER_AUTOCOMPLETE = 'agent/company-user/autocomplete';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_COMPANY_USER_AUTOCOMPLETE = 'agent/company-user/autocomplete';
 
     /**

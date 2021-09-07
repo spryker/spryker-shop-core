@@ -15,8 +15,17 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
  */
 class CustomerReorderControllerProvider extends AbstractYvesControllerProvider
 {
+    /**
+     * @var string
+     */
     protected const ROUTE_CART_ORDER_REPEAT = 'customer/order/reorder';
+    /**
+     * @var string
+     */
     protected const ROUTE_CART_ORDER_ITEMS_REPEAT = 'customer/order/reorder-items';
+    /**
+     * @var string
+     */
     protected const PATTERN_ID = '\d+';
 
     /**

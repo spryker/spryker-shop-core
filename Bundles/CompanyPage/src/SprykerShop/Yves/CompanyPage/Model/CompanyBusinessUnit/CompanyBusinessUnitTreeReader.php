@@ -13,7 +13,13 @@ use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientIn
 
 class CompanyBusinessUnitTreeReader implements CompanyBusinessUnitTreeReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const LEVEL_KEY = 'level';
+    /**
+     * @var string
+     */
     protected const CHILDREN_KEY = 'children';
 
     /**

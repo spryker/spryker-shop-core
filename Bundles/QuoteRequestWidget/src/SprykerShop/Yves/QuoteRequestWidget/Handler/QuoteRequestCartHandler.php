@@ -17,6 +17,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class QuoteRequestCartHandler implements QuoteRequestCartHandlerInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
 
     /**

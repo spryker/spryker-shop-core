@@ -22,14 +22,35 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class MultiShipmentForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const BLOCK_PREFIX = 'shipmentGroupForm';
+    /**
+     * @var string
+     */
     public const OPTION_SHIPMENT_METHODS = 'shipmentMethods';
 
+    /**
+     * @var string
+     */
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+    /**
+     * @var string
+     */
     protected const VALIDATION_INVALID_DATE_TIME_MESSAGE = 'validation.invalid_date';
+    /**
+     * @var string
+     */
     protected const VALIDATION_VALID_DATE_TIME_FORMAT = 'Y-m-d'; // Format accepted by date().
+    /**
+     * @var string
+     */
     protected const VALIDATION_DATE_TODAY = 'today';
 
+    /**
+     * @var string
+     */
     protected const FIELD_REQUESTED_DELIVERY_DATE_FORMAT = 'yyyy-MM-dd'; // Format accepted by IntlDateFormatter.
 
     /**

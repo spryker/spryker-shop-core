@@ -16,6 +16,9 @@ use SprykerShop\Yves\MultiCartWidget\Widget\MultiCartMenuItemWidget;
  */
 class MultiCartMenuItemWidgetPlugin extends AbstractWidgetPlugin implements MultiCartMenuItemWidgetPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const PAGE_KEY_MULTI_CART = 'multiCart';
 
     /**

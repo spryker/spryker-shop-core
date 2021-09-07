@@ -22,8 +22,17 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements QuoteRequestFormMetadataFieldPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const FIELD_METADATA_DELIVERY_DATE = 'delivery_date';
+    /**
+     * @var string
+     */
     protected const LABEL_METADATA_DELIVERY_DATE = 'quote_request_page.quote_request.metadata.label.delivery_date';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_DATE_VIOLATION = 'quote_request_page.quote_request.violations.invalid_date';
 
     /**

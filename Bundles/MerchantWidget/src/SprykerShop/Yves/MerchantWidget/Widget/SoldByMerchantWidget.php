@@ -16,6 +16,9 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class SoldByMerchantWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_MERCHANT = 'merchant';
 
     /**

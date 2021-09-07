@@ -14,8 +14,12 @@ class NewsletterPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\NewsletterPage\Plugin\Router\NewsletterPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_NEWSLETTER} instead.
+     * @var string
      */
     protected const ROUTE_CUSTOMER_NEWSLETTER = 'customer/newsletter';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_CUSTOMER_NEWSLETTER = 'customer/newsletter';
 
     /**

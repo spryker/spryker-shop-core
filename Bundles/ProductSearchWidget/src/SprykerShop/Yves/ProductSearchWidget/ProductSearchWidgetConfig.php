@@ -11,6 +11,9 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class ProductSearchWidgetConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     protected const SEARCH_RESULT_LIMIT = 10;
 
     /**

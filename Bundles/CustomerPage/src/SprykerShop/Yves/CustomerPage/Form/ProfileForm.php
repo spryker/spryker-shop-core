@@ -20,12 +20,30 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ProfileForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_EMAIL = 'email';
+    /**
+     * @var string
+     */
     public const FIELD_LAST_NAME = 'last_name';
+    /**
+     * @var string
+     */
     public const FIELD_FIRST_NAME = 'first_name';
+    /**
+     * @var string
+     */
     public const FIELD_SALUTATION = 'salutation';
 
+    /**
+     * @var string
+     */
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+    /**
+     * @var string
+     */
     protected const VALIDATION_EMAIL_MESSAGE = 'validation.email';
 
     /**

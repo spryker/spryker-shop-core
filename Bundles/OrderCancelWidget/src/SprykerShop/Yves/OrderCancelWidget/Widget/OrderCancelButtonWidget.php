@@ -15,9 +15,21 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class OrderCancelButtonWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
+    /**
+     * @var string
+     */
     protected const PARAMETER_FORM = 'form';
+    /**
+     * @var string
+     */
     protected const PARAMETER_ORDER = 'order';
+    /**
+     * @var string
+     */
     protected const PARAMETER_RETURN_URL = 'returnUrl';
 
     /**

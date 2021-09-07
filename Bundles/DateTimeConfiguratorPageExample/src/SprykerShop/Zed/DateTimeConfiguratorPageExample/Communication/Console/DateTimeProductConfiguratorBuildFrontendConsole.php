@@ -16,7 +16,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DateTimeProductConfiguratorBuildFrontendConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'frontend:date-time-product-configurator:build';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will build Product Configurator frontend.';
 
     /**

@@ -14,7 +14,13 @@ use SprykerShop\Yves\CompanyPage\Form\CompanyUserAccountSelectorForm;
 
 class CompanyUserAccountSelectorFormDataProvider
 {
+    /**
+     * @var string
+     */
     protected const FORMAT_COMPANY_USER_DISPLAY = '%s / %s';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_NO_COMPANY = 'company_user.no_company';
 
     /**

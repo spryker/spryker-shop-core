@@ -17,8 +17,14 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AvailabilityNotificationUnsubscriptionForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_SKU = 'sku';
 
+    /**
+     * @var string
+     */
     public const FORM_ID = 'availability_unsubscribe';
 
     /**

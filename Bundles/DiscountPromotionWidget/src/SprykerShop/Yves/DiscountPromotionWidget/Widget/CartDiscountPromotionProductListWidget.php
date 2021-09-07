@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CartDiscountPromotionProductListWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const PARAM_VARIANT_ATTRIBUTES = 'attributes';
 
     /**

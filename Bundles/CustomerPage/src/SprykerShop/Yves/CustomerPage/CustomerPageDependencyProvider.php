@@ -28,69 +28,148 @@ use SprykerShop\Yves\CustomerPage\Plugin\RegistrationCheckoutAuthenticationHandl
 
 class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const CLIENT_SALES = 'CLIENT_SALES';
+    /**
+     * @var string
+     */
     public const CLIENT_SHIPMENT = 'CLIENT_SHIPMENT';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_PRE_AUTH_USER_CHECK = 'PLUGINS_PRE_AUTH_USER_CHECK';
 
+    /**
+     * @var string
+     */
     public const PLUGIN_AFTER_CUSTOMER_AUTHENTICATION_SUCCESS = 'PLUGIN_AFTER_CUSTOMER_AUTHENTICATION_SUCCESS';
+    /**
+     * @var string
+     */
     public const PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT = 'PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT';
 
     /**
      * @deprecated Will be removed without replacement.
+     * @var string
      */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
+    /**
+     * @var string
+     */
     public const PLUGIN_AUTHENTICATION_HANDLER = 'PLUGIN_AUTHENTICATION_HANDLER';
+    /**
+     * @var string
+     */
     public const PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS = 'PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS';
+    /**
+     * @var string
+     */
     public const PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS = 'PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS';
+    /**
+     * @var string
+     */
     public const PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS = 'PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS';
+    /**
+     * @var string
+     */
     public const PLUGIN_CUSTOMER_OVERVIEW_WIDGETS = 'PLUGIN_CUSTOMER_OVERVIEW_WIDGETS';
+    /**
+     * @var string
+     */
     public const PLUGIN_GUEST_AUTHENTICATION_HANDLER = 'PLUGIN_GUEST_AUTHENTICATION_HANDLER';
+    /**
+     * @var string
+     */
     public const PLUGIN_LOGIN_AUTHENTICATION_HANDLER = 'PLUGIN_LOGIN_AUTHENTICATION_HANDLER';
+    /**
+     * @var string
+     */
     public const PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER = 'PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER = 'PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER';
+    /**
+     * @var string
+     */
     public const PLUGINS_CHECKOUT_ADDRESS_STEP_PRE_GROUP_ITEMS_BY_SHIPMENT = 'PLUGINS_CHECKOUT_ADDRESS_STEP_PRE_GROUP_ITEMS_BY_SHIPMENT';
 
+    /**
+     * @var string
+     */
     public const SERVICE_CUSTOMER = 'SERVICE_CUSTOMER';
+    /**
+     * @var string
+     */
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\CustomerPageDependencyProvider::SERVICE_FLASH_MESSENGER} instead
+     * @var string
      */
     public const FLASH_MESSENGER = 'FLASH_MESSENGER';
 
+    /**
+     * @var string
+     */
     public const STORE = 'STORE';
+    /**
+     * @var string
+     */
     public const PLUGINS_ORDER_SEARCH_FORM_EXPANDER = 'PLUGINS_ORDER_SEARCH_FORM_EXPANDER';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_ORDER_SEARCH_FORM_HANDLER = 'PLUGINS_ORDER_SEARCH_FORM_HANDLER';
 
     /**
      * @uses \Spryker\Yves\Messenger\Plugin\Application\FlashMessengerApplicationPlugin::SERVICE_FLASH_MESSENGER
+     * @var string
      */
     public const SERVICE_FLASH_MESSENGER = 'flash_messenger';
 
     /**
      * @uses \Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_TOKEN_STORAGE
+     * @var string
      */
     public const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
 
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     * @var string
      */
     public const SERVICE_ROUTER = 'routers';
 
     /**
      * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     * @var string
      */
     public const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
      * @uses \Spryker\Yves\Locale\Plugin\Application\LocaleApplicationPlugin::SERVICE_LOCALE
+     * @var string
      */
     public const SERVICE_LOCALE = 'locale';
 

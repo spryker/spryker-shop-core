@@ -17,10 +17,25 @@ use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetTo
 
 class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE_APPROVAL = 'CLIENT_QUOTE_APPROVAL';
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const CLIENT_MONEY = 'CLIENT_MONEY';
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    /**
+     * @var string
+     */
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     /**

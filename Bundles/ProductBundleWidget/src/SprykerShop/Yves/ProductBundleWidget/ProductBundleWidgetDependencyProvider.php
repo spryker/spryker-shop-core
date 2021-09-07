@@ -13,6 +13,9 @@ use SprykerShop\Yves\ProductBundleWidget\Dependency\Client\ProductBundleWidgetTo
 
 class ProductBundleWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
 
     /**

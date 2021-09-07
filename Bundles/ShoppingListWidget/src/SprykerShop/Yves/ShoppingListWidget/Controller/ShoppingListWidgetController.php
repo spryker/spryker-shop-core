@@ -19,25 +19,54 @@ use Symfony\Component\Security\Csrf\CsrfToken;
  */
 class ShoppingListWidgetController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_SKU = 'sku';
+    /**
+     * @var string
+     */
     public const PARAM_QUANTITY = 'quantity';
+    /**
+     * @var string
+     */
     public const PARAM_ID_SHOPPING_LIST = 'idShoppingList';
+    /**
+     * @var string
+     */
     protected const PARAM_FORM_CSRF_TOKEN = '_token';
+    /**
+     * @var string
+     */
     protected const PARAM_FORM_CSRF_TOKEN_ID = 'shopping_list_add_item_form';
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_NOT_ADDED = 'customer.account.shopping_list.item.not_added';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ADD_ITEM_SUCCESS = 'customer.account.shopping_list.add_item.success';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_FORM_CSRF_ERROR = 'form.csrf.error.text';
 
+    /**
+     * @var string
+     */
     protected const REQUEST_HEADER_REFERER = 'referer';
 
     /**
      * @uses \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_SHOPPING_LIST
+     * @var string
      */
     protected const ROUTE_SHOPPING_LIST = 'shopping-list';
 
     /**
      * @see \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_SHOPPING_LIST_DETAILS
+     * @var string
      */
     protected const ROUTE_SHOPPING_LIST_DETAILS = 'shopping-list/details';
 

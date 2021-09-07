@@ -17,6 +17,7 @@ interface ErrorPageConstants
      * - Defines the mode when 404 error output is extended with stacktrace.
      *
      * @api
+     * @var string
      */
     public const ENABLE_ERROR_404_STACK_TRACE = 'ERROR_PAGE:ENABLE_ERROR_404_STACK_TRACE';
 }

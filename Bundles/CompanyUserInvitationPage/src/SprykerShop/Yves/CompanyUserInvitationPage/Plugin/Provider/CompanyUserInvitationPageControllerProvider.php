@@ -15,21 +15,46 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
  */
 class CompanyUserInvitationPageControllerProvider extends AbstractYvesControllerProvider
 {
+    /**
+     * @var string
+     */
     public const ROUTE_OVERVIEW = 'company/user-invitation';
+    /**
+     * @var string
+     */
     public const ROUTE_GET_IMPORT_ERRORS = 'company/user-invitation/get-import-errors';
 
+    /**
+     * @var string
+     */
     public const ROUTE_INVITATION_SEND = 'company/user-invitation/send';
+    /**
+     * @var string
+     */
     public const ROUTE_INVITATION_SEND_ALL = 'company/user-invitation/send-all';
 
+    /**
+     * @var string
+     */
     public const ROUTE_INVITATION_RESEND = 'company/user-invitation/resend';
+    /**
+     * @var string
+     */
     public const ROUTE_INVITATION_RESEND_CONFIRM = 'company/user-invitation/resend/confirm';
 
     /**
      * @see \Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants::ROUTE_INVITATION_ACCEPT
+     * @var string
      */
     public const ROUTE_INVITATION_ACCEPT = 'invitation/accept';
 
+    /**
+     * @var string
+     */
     public const ROUTE_INVITATION_DELETE = 'company/user-invitation/delete';
+    /**
+     * @var string
+     */
     public const ROUTE_INVITATION_DELETE_CONFIRM = 'company/user-invitation/delete/confirm';
 
     /**

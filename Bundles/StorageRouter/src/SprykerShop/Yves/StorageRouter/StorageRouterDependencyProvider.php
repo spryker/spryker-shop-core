@@ -16,7 +16,13 @@ use SprykerShop\Yves\StorageRouter\Dependency\Client\StorageRouterToUrlStorageCl
  */
 class StorageRouterDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_URL_STORAGE = 'CLIENT_URL_STORAGE';
+    /**
+     * @var string
+     */
     public const PLUGIN_RESOURCE_CREATORS = 'PLUGIN_RESOURCE_CREATORS';
 
     /**

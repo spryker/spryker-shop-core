@@ -15,9 +15,18 @@ use SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client\CmsSlotBlockWidgetToCm
 
 class CmsSlotBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CMS_SLOT_BLOCK_STORAGE = 'CLIENT_CMS_SLOT_BLOCK_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_CMS_SLOT_BLOCK = 'CLIENT_CMS_SLOT_BLOCK';
 
+    /**
+     * @var string
+     */
     public const SERVICE_TWIG = 'twig';
 
     /**

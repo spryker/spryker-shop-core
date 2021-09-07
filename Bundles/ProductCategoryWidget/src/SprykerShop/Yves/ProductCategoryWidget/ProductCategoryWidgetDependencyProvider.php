@@ -13,6 +13,9 @@ use SprykerShop\Yves\ProductCategoryWidget\Dependency\Client\ProductCategoryWidg
 
 class ProductCategoryWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_CATEGORY_STORAGE = 'CLIENT_PRODUCT_CATEGORY_STORAGE';
 
     /**

@@ -20,6 +20,9 @@ class AbstractController extends SprykerAbstractController
 {
     use PermissionAwareTrait;
 
+    /**
+     * @var bool
+     */
     public const COMPANY_USER_WITH_PERMISSIONS_REQUIRED = true;
 
     /**

@@ -22,17 +22,53 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 
 class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_AVAILABILITY_STORAGE = 'CLIENT_AVAILABILITY_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_CART = 'CLIENT_CART';
+    /**
+     * @var string
+     */
     public const CLIENT_SALES = 'CLIENT_SALES';
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
+    /**
+     * @var string
+     */
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+    /**
+     * @var string
+     */
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    /**
+     * @var string
+     */
     public const PLUGINS_POST_REORDER = 'PLUGINS_POST_REORDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_REORDER_ITEM_EXPANDER = 'PLUGINS_REORDER_ITEM_EXPANDER';
 
     /**

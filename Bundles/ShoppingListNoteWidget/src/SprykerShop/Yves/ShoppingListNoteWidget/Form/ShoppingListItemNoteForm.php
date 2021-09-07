@@ -12,7 +12,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class ShoppingListItemNoteForm extends ShoppingListItemNoteFormType
 {
+    /**
+     * @var string
+     */
     protected const FIELD_SHOPPING_LIST_ITEM_NOTE = 'note';
+    /**
+     * @var string
+     */
     protected const TEMPLATE_PATH = '@ShoppingListNoteWidget/views/shopping-list-item-note-update/shopping-list-item-note-update.twig';
 
     /**

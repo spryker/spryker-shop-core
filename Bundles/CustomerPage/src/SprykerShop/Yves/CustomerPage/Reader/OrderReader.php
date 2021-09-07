@@ -18,9 +18,18 @@ use Symfony\Component\HttpFoundation\Request;
 
 class OrderReader implements OrderReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const PARAM_PAGE = 'page';
+    /**
+     * @var string
+     */
     protected const PARAM_PER_PAGE = 'perPage';
 
+    /**
+     * @var int
+     */
     protected const DEFAULT_PAGE = 1;
 
     /**

@@ -15,11 +15,18 @@ class ProductConfigurationCartWidgetDependencyProvider extends AbstractBundleDep
 {
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     * @var string
      */
     public const SERVICE_ROUTER = 'routers';
 
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_CONFIGURATION_CART = 'CLIENT_PRODUCT_CONFIGURATION_CART';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_CART_PRODUCT_CONFIGURATION_RENDER_STRATEGY = 'PLUGINS_CART_PRODUCT_CONFIGURATION_RENDER_STRATEGY';
 
     /**

@@ -18,10 +18,19 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ForgottenPasswordForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_EMAIL = 'email';
 
+    /**
+     * @var string
+     */
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
 
+    /**
+     * @var string
+     */
     protected const VALIDATION_EMAIL_MESSAGE = 'validation.email';
 
     /**

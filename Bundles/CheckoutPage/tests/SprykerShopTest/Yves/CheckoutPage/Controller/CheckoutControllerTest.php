@@ -26,8 +26,17 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CheckoutControllerTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const PLACE_ORDER_URL = '/checkout/place-order';
+    /**
+     * @var string
+     */
     protected const PLACE_ORDER_ROUTE = 'checkout-place-order';
+    /**
+     * @var string
+     */
     protected const SUCCESS_URL = '/checkout/success';
 
     /**

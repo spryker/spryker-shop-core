@@ -27,26 +27,77 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class CompanyUserForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_ID_CUSTOMER = 'id_customer';
+    /**
+     * @var string
+     */
     public const FIELD_ID_COMPANY_USER = 'id_company_user';
+    /**
+     * @var string
+     */
     public const FIELD_SALUTATION = 'salutation';
+    /**
+     * @var string
+     */
     public const FIELD_FIRST_NAME = 'first_name';
+    /**
+     * @var string
+     */
     public const FIELD_LAST_NAME = 'last_name';
+    /**
+     * @var string
+     */
     public const FIELD_EMAIL = 'email';
+    /**
+     * @var string
+     */
     public const FIELD_IS_GUEST = 'is_guest';
+    /**
+     * @var string
+     */
     public const FIELD_FK_COMPANY = 'fk_company';
+    /**
+     * @var string
+     */
     public const FIELD_FK_CUSTOMER = 'fk_customer';
+    /**
+     * @var string
+     */
     public const FIELD_FK_COMPANY_BUSINESS_UNIT = 'fk_company_business_unit';
+    /**
+     * @var string
+     */
     public const FIELD_COMPANY_ROLE_COLLECTION = 'company_role_collection';
 
+    /**
+     * @var string
+     */
     public const OPTION_BUSINESS_UNIT_CHOICES = 'business_unit_choices';
+    /**
+     * @var string
+     */
     public const OPTION_COMPANY_ROLE_CHOICES = 'company_role_choices';
 
+    /**
+     * @var string
+     */
     public const OPTION_DEFAULT_COMPANY_ROLE_ID = 'default_company_role_id';
 
+    /**
+     * @var string
+     */
     protected const KEY_ROLES = 'roles';
+    /**
+     * @var string
+     */
     protected const KEY_ID_COMPANY_ROLE = 'id_company_role';
 
+    /**
+     * @var string
+     */
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
 
     /**

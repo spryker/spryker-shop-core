@@ -11,6 +11,9 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class MerchantSwitcherWidgetConfig extends AbstractBundleConfig
 {
+    /**
+     * @var bool
+     */
     protected const ENABLE_MERCHANT_SWITCHER = true;
 
     /**

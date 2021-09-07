@@ -11,8 +11,14 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class TextOrderFormatConstraint extends SymfonyConstraint
 {
+    /**
+     * @var string
+     */
     public const OPTION_BUNDLE_CONFIG = 'config';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE = 'quick-order.paste-order.errors.text-order-format-incorrect';
 
     /**

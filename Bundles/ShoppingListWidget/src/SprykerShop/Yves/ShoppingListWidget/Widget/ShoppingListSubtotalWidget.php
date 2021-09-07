@@ -14,6 +14,9 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class ShoppingListSubtotalWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_SHOPPING_LIST_SUBTOTAL = 'shoppingListSubtotal';
 
     /**

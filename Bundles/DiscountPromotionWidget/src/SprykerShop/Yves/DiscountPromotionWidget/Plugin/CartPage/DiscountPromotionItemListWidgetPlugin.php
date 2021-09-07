@@ -18,6 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DiscountPromotionItemListWidgetPlugin extends AbstractWidgetPlugin implements DiscountPromotionItemListWidgetPluginInterface
 {
+    /**
+     * @var string
+     */
     public const PARAM_VARIANT_ATTRIBUTES = 'attributes';
 
     /**

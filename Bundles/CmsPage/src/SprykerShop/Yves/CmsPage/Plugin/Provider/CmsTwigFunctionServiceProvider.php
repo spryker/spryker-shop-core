@@ -20,6 +20,9 @@ use Twig\TwigFunction;
  */
 class CmsTwigFunctionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     public const CMS_PREFIX_KEY = 'generated.cms';
 
     /**

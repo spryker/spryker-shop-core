@@ -14,21 +14,39 @@ class DiscountWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\DiscountWidget\Plugin\Router\DiscountWidgetRouteProviderPlugin::ROUTE_NAME_DISCOUNT_VOUCHER_ADD} instead.
+     * @var string
      */
     protected const ROUTE_DISCOUNT_VOUCHER_ADD = 'discount/voucher/add';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_DISCOUNT_VOUCHER_ADD = 'discount/voucher/add';
     /**
      * @deprecated Use {@link \SprykerShop\Yves\DiscountWidget\Plugin\Router\DiscountWidgetRouteProviderPlugin::ROUTE_NAME_DISCOUNT_VOUCHER_REMOVE} instead.
+     * @var string
      */
     protected const ROUTE_DISCOUNT_VOUCHER_REMOVE = 'discount/voucher/remove';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_DISCOUNT_VOUCHER_REMOVE = 'discount/voucher/remove';
     /**
      * @deprecated Use {@link \SprykerShop\Yves\DiscountWidget\Plugin\Router\DiscountWidgetRouteProviderPlugin::ROUTE_NAME_DISCOUNT_VOUCHER_CLEAR} instead.
+     * @var string
      */
     protected const ROUTE_DISCOUNT_VOUCHER_CLEAR = 'discount/voucher/clear';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_DISCOUNT_VOUCHER_CLEAR = 'discount/voucher/clear';
+    /**
+     * @var string
+     */
     protected const CHECKOUT_VOUCHER_ADD = 'checkout-voucher-add';
 
+    /**
+     * @var string
+     */
     protected const SKU_PATTERN = '[a-zA-Z0-9-_\.]+';
 
     /**

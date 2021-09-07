@@ -27,9 +27,18 @@ use Twig\TwigFunction;
  */
 class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     public const WIDGET_TAG_SERVICE = 'widget_tag_service';
 
+    /**
+     * @var string
+     */
     protected const TWIG_FUNCTION_FIND_WIDGET = 'findWidget';
+    /**
+     * @var string
+     */
     protected const TWIG_GLOBAL_VARIABLE_NAME_VIEW = '_view';
 
     /**

@@ -19,7 +19,13 @@ use SprykerShop\Yves\ShopApplication\ControllerResolver\ServiceControllerResolve
  */
 class ShopApplicationApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_RESOLVER = 'resolver';
+    /**
+     * @var string
+     */
     protected const DEBUG = 'debug';
 
     /**

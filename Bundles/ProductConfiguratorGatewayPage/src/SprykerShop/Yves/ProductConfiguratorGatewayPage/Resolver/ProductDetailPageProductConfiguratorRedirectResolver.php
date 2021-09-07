@@ -16,7 +16,13 @@ use SprykerShop\Yves\ProductConfiguratorGatewayPage\Mapper\ProductConfiguratorRe
 
 class ProductDetailPageProductConfiguratorRedirectResolver implements ProductDetailPageProductConfiguratorRedirectResolverInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_NOT_FOUND = 'product_configuration.error.configuration_not_found';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PARAM_SKU = '%sku%';
 
     /**

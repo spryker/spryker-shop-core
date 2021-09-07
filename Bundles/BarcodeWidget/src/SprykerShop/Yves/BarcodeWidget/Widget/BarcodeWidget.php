@@ -15,7 +15,13 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class BarcodeWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_CODE = 'code';
+    /**
+     * @var string
+     */
     protected const PARAMETER_ENCODING = 'encoding';
 
      /**

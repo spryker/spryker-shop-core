@@ -21,14 +21,19 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
 {
     /**
      * @uses \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::FILTER_TYPE_CUSTOMER_REFERENCE
+     * @var string
      */
     protected const FILTER_FIELD_TYPE_CUSTOMER_REFERENCE = 'customerReference';
 
     /**
      * @see \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::ORDER_BY_COLUMN_MAPPING
+     * @var string
      */
     protected const FILTER_FIELD_TYPE_DATE = 'date';
 
+    /**
+     * @var string
+     */
     protected const DATE_FORMAT = 'Y-m-d H:i';
 
     /**

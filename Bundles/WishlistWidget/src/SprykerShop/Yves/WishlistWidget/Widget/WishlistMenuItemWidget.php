@@ -14,6 +14,9 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class WishlistMenuItemWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const PAGE_KEY_WISHLIST = 'wishlist';
 
     /**

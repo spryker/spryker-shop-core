@@ -19,7 +19,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProductConcreteAddController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const REFERER_PARAM = 'referer';
+    /**
+     * @var string
+     */
     protected const PRODUCT_QUICK_ADD_FORM_ANCHOR = '#product-quick-add-form-wrapper';
 
     /**

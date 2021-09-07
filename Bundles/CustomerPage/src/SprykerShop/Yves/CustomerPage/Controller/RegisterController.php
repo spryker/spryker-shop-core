@@ -19,16 +19,24 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RegisterController extends AbstractCustomerController
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CUSTOMER_CONFIRMED = 'customer.authorization.account_confirmed';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_MISSING_CONFIRMATION_TOKEN = 'customer.token.invalid';
 
     /**
      * @uses \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_CUSTOMER_OVERVIEW
+     * @var string
      */
     protected const ROUTE_CUSTOMER_OVERVIEW = 'customer/overview';
 
     /**
      * @uses \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_LOGIN
+     * @var string
      */
     protected const ROUTE_LOGIN = 'login';
 

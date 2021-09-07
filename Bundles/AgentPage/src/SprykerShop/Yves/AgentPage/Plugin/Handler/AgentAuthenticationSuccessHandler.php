@@ -22,6 +22,7 @@ class AgentAuthenticationSuccessHandler extends AbstractPlugin implements Authen
 {
     /**
      * @uses \SprykerShop\Yves\AgentPage\Plugin\Router\AgentPageRouteProviderPlugin::ROUTE_AGENT_OVERVIEW
+     * @var string
      */
     protected const ROUTE_AGENT_OVERVIEW = 'agent/overview';
 

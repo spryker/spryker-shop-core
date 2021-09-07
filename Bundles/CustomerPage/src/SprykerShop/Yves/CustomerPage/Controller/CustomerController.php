@@ -17,11 +17,26 @@ use SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin;
  */
 class CustomerController extends AbstractCustomerController
 {
+    /**
+     * @var int
+     */
     public const ORDER_LIST_LIMIT = 5;
+    /**
+     * @var string
+     */
     public const ORDER_LIST_SORT_FIELD = 'created_at';
+    /**
+     * @var string
+     */
     public const ORDER_LIST_SORT_DIRECTION = 'DESC';
 
+    /**
+     * @var string
+     */
     public const KEY_BILLING = 'billing';
+    /**
+     * @var string
+     */
     public const KEY_SHIPPING = 'shipping';
 
     /**

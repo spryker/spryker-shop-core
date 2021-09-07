@@ -18,8 +18,17 @@ class AddToShoppingListWidget extends AbstractWidget
 {
     use PermissionAwareTrait;
 
+    /**
+     * @var string
+     */
     protected const PARAMETER_SKU = 'sku';
+    /**
+     * @var string
+     */
     protected const PARAMETER_IS_DISABLED = 'isDisabled';
+    /**
+     * @var string
+     */
     protected const PARAMETER_SHOPPING_LIST_COLLECTION = 'shoppingListCollection';
 
     /**

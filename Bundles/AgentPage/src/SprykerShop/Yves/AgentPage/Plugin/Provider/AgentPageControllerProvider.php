@@ -15,8 +15,17 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
  */
 class AgentPageControllerProvider extends AbstractYvesControllerProvider
 {
+    /**
+     * @var string
+     */
     public const ROUTE_LOGIN = 'agent/login';
+    /**
+     * @var string
+     */
     public const ROUTE_LOGOUT = 'agent/logout';
+    /**
+     * @var string
+     */
     public const ROUTE_AGENT_OVERVIEW = 'agent/overview';
 
     /**

@@ -13,8 +13,14 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class ConfiguratorStateForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_SLOTS = 'slots';
 
+    /**
+     * @var string
+     */
     protected const METHOD_GET = 'GET';
 
     /**

@@ -17,6 +17,9 @@ use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteR
 
 class QuoteRequestHandler implements QuoteRequestHandlerInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WITH_EMPTY_CART = 'quote_request.validation.error.empty_cart';
 
     /**

@@ -16,6 +16,9 @@ use SprykerShop\Yves\CompanyWidget\Address\AddressProviderInterface;
  */
 class CompanyBusinessUnitAddressWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_CURRENT_COMPANY_BUSINESS_UNIT_ADDRESS = 'currentCompanyBusinessUnitAddress';
 
     /**

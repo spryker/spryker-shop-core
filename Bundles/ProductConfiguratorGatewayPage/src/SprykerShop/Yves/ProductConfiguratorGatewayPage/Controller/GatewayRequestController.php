@@ -23,12 +23,17 @@ class GatewayRequestController extends AbstractController
 {
     /**
      * @uses \SprykerShop\Yves\HomePage\Plugin\Router\HomePageRouteProviderPlugin::ROUTE_NAME_HOME
+     * @var string
      */
     protected const FALLBACK_ROUTE_NAME = 'home';
+    /**
+     * @var string
+     */
     protected const REQUEST_HEADER_REFERER = 'referer';
 
     /**
      * @uses \Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL
+     * @var int
      */
     protected const ABSOLUTE_URL = 0;
 

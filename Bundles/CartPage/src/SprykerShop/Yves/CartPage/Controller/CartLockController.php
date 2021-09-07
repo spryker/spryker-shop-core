@@ -16,10 +16,14 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class CartLockController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CART_PAGE_RESET_LOCK_SUCCESS = 'cart_page.quote.reset_lock.success';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART} instead.
+     * @var string
      */
     protected const ROUTE_CART = 'cart';
 

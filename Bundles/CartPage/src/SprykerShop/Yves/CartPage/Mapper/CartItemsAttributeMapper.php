@@ -17,15 +17,31 @@ use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientIn
 
 class CartItemsAttributeMapper implements CartItemsMapperInterface
 {
+    /**
+     * @var string
+     */
     public const CONCRETE_PRODUCTS_AVAILABILITY = 'concrete_products_availability';
+    /**
+     * @var string
+     */
     public const CONCRETE_PRODUCT_AVAILABLE_ITEMS = 'concrete_product_available_items';
+    /**
+     * @var string
+     */
     public const PRODUCT_CONCRETE_IDS = 'product_concrete_ids';
 
     /**
      * @deprecated Exists for Backward Compatibility reasons only. Use {@link KEY_ATTRIBUTE_VARIANT_MAP} instead.
+     * @var string
      */
     protected const KEY_ATTRIBUTE_VARIANTS = 'attribute_variants';
+    /**
+     * @var string
+     */
     protected const KEY_ATTRIBUTE_MAP = 'attribute_map';
+    /**
+     * @var string
+     */
     protected const KEY_ATTRIBUTE_VARIANT_MAP = 'attribute_variant_map';
 
     /**

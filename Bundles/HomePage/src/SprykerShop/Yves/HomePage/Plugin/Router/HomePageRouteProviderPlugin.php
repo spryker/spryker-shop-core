@@ -14,8 +14,12 @@ class HomePageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\HomePage\Plugin\Router\HomePageRouteProviderPlugin::ROUTE_NAME_HOME} instead.
+     * @var string
      */
     protected const ROUTE_HOME = 'home';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_HOME = 'home';
 
     /**

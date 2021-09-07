@@ -19,9 +19,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ShoppingListCompanyUserShareEditForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const FIELD_ID_SHOPPING_LIST_COMPANY_USER = 'idShoppingListCompanyUser';
+    /**
+     * @var string
+     */
     protected const FIELD_ID_COMPANY_USER = 'idCompanyUser';
+    /**
+     * @var string
+     */
     protected const FIELD_ID_SHOPPING_LIST = 'idShoppingList';
+    /**
+     * @var string
+     */
     protected const FIELD_ID_SHOPPING_LIST_PERMISSION_GROUP = 'idShoppingListPermissionGroup';
 
     /**

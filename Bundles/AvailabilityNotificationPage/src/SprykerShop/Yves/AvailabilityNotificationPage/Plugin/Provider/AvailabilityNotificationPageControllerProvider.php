@@ -15,7 +15,13 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
  */
 class AvailabilityNotificationPageControllerProvider extends AbstractYvesControllerProvider
 {
+    /**
+     * @var string
+     */
     public const ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE = 'availability-notification/unsubscribe-by-key';
+    /**
+     * @var string
+     */
     public const SUBSCRIPTION_KEY_PATTERN = '[0-9A-Za-z]{32}';
 
     /**

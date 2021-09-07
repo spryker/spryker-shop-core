@@ -15,9 +15,21 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
  */
 class ErrorPageControllerProvider extends AbstractYvesControllerProvider
 {
+    /**
+     * @var string
+     */
     public const ROUTE_ERROR_404 = 'error/404';
+    /**
+     * @var string
+     */
     public const ROUTE_ERROR_404_PATH = '/error/404';
+    /**
+     * @var string
+     */
     protected const ROUTE_ERROR_403 = 'error/403';
+    /**
+     * @var string
+     */
     protected const ROUTE_ERROR_403_PATH = '/error/403';
 
     /**

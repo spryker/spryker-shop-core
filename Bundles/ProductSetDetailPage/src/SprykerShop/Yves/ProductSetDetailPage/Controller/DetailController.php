@@ -17,7 +17,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DetailController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ATTRIBUTE = 'attributes';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PRODUCT_ACCESS_DENIED = 'product.access.denied';
 
     /**

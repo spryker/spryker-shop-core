@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 interface ProductRatingFilterWidgetPluginInterface extends WidgetPluginInterface
 {
+    /**
+     * @var string
+     */
     public const NAME = 'ProductRatingFilterWidgetPlugin';
 
     /**

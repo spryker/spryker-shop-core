@@ -12,6 +12,9 @@ use Spryker\Yves\Kernel\Container;
 
 class TabsWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_FULL_TEXT_SEARCH_TAB = 'full_text_search_tab_plugins';
 
     /**

@@ -40,20 +40,53 @@ use Twig\Loader\FilesystemLoader;
  */
 class ContentProductSetTwigPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const LOCALE = 'de_DE';
 
+    /**
+     * @var string
+     */
     protected const DEFAULT_TEMPLATE = 'default';
+    /**
+     * @var string
+     */
     protected const WRONG_TEMPLATE = 'wrong';
 
+    /**
+     * @var int
+     */
     protected const CONTENT_ID = 0;
+    /**
+     * @var string
+     */
     protected const CONTENT_KEY = 'test-key';
+    /**
+     * @var string
+     */
     protected const CONTENT_TERM = 'TERM';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND = '<strong>Content product set with content key "test-key" not found.</strong>';
+    /**
+     * @var string
+     */
     protected const MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE = '<strong>Content product set widget could not be rendered because the content item with key "test-key" is not a product set.</strong>';
+    /**
+     * @var string
+     */
     protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<strong>"wrong" is not supported name of template.</strong>';
+    /**
+     * @var string
+     */
     protected const RENDERED_STRING = 'output';
 
+    /**
+     * @var array
+     */
     protected const PARAM_ATTRIBUTE_VALUE = [];
 
     /**

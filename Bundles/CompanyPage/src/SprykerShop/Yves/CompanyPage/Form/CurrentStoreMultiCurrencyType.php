@@ -19,6 +19,9 @@ use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
  */
 class CurrentStoreMultiCurrencyType extends AbstractType
 {
+    /**
+     * @var int
+     */
     protected const MIN_MONEY_INT = 0;
 
     /**

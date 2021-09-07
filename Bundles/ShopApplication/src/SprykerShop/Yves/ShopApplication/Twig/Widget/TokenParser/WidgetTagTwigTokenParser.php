@@ -18,42 +18,99 @@ use Twig\TokenStream;
 
 class WidgetTagTwigTokenParser extends AbstractTokenParser
 {
+    /**
+     * @var string
+     */
     public const NODE_ARGS = 'args';
 
+    /**
+     * @var string
+     */
     public const NODE_USE = 'use';
 
+    /**
+     * @var string
+     */
     public const NODE_WITH = 'with';
 
+    /**
+     * @var string
+     */
     public const NODE_ELSEWIDGETS = 'elsewidgets';
 
+    /**
+     * @var string
+     */
     public const NODE_NOWIDGET = 'nowidget';
 
+    /**
+     * @var string
+     */
     public const NODE_WIDGET_EXPRESSION = 'widgetExpression';
 
+    /**
+     * @var string
+     */
     public const ATTRIBUTE_ONLY = 'only';
 
+    /**
+     * @var string
+     */
     public const ATTRIBUTE_PARENT_TEMPLATE_NAME = 'parentTemplateName';
 
+    /**
+     * @var string
+     */
     public const ATTRIBUTE_INDEX = 'index';
 
+    /**
+     * @var string
+     */
     public const ATTRIBUTE_ELSEWIDGET_CASE = 'elseWidgetCase';
 
+    /**
+     * @var string
+     */
     public const VARIABLE_WIDGET_TEMPLATE_PATH = '_widgetTemplatePath';
 
+    /**
+     * @var string
+     */
     public const VARIABLE_WIDGET = '_widget';
 
+    /**
+     * @var string
+     */
     protected const TOKEN_ELSEWIDGET = 'elsewidget';
 
+    /**
+     * @var string
+     */
     protected const TOKEN_NOWIDGET = 'nowidget';
 
+    /**
+     * @var string
+     */
     protected const TOKEN_ENDWIDGET = 'endwidget';
 
+    /**
+     * @var string
+     */
     protected const TOKEN_ONLY = 'only';
 
+    /**
+     * @var string
+     */
     protected const TOKEN_WITH = 'with';
 
+    /**
+     * @var string
+     */
     protected const TOKEN_USE = 'use';
 
+    /**
+     * @var string
+     */
     protected const TOKEN_ARGS = 'args';
 
     /**

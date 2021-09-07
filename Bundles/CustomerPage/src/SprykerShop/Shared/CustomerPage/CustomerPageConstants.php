@@ -12,6 +12,12 @@ namespace SprykerShop\Shared\CustomerPage;
  */
 interface CustomerPageConstants
 {
+    /**
+     * @var string
+     */
     public const CUSTOMER_REMEMBER_ME_SECRET = 'CUSTOMER_PAGE:CUSTOMER_REMEMBER_ME_SECRET';
+    /**
+     * @var string
+     */
     public const CUSTOMER_REMEMBER_ME_LIFETIME = 'CUSTOMER_PAGE:CUSTOMER_REMEMBER_ME_LIFETIME';
 }

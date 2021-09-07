@@ -12,6 +12,9 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClient
 
 abstract class AbstractAddressFormDataProvider
 {
+    /**
+     * @var string
+     */
     public const COUNTRY_GLOSSARY_PREFIX = 'countries.iso.';
 
     /**

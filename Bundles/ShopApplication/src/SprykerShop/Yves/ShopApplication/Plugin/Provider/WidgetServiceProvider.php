@@ -22,14 +22,29 @@ use Twig\TwigFunction;
  */
 class WidgetServiceProvider extends WidgetTagServiceProvider
 {
+    /**
+     * @var string
+     */
     protected const TWIG_FUNCTION_WIDGET = 'widget';
 
+    /**
+     * @var string
+     */
     protected const TWIG_FUNCTION_WIDGET_BLOCK = 'widgetBlock';
 
+    /**
+     * @var string
+     */
     protected const TWIG_FUNCTION_WIDGET_GLOBAL = 'widgetGlobal';
 
+    /**
+     * @var string
+     */
     protected const TWIG_FUNCTION_WIDGET_EXISTS = 'widgetExists';
 
+    /**
+     * @var string
+     */
     protected const TWIG_FUNCTION_WIDGET_GLOBAL_EXISTS = 'widgetGlobalExists';
 
     /**

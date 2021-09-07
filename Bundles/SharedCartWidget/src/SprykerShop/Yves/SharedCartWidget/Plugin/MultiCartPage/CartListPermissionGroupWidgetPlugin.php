@@ -18,6 +18,9 @@ use SprykerShop\Yves\SharedCartWidget\Widget\CartListPermissionGroupWidget;
  */
 class CartListPermissionGroupWidgetPlugin extends AbstractWidgetPlugin
 {
+    /**
+     * @var string
+     */
     public const NAME = 'CartListPermissionGroupWidgetPlugin';
 
     /**

@@ -17,7 +17,13 @@ use Twig\Environment;
  */
 class CategoryTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const TWIG_GLOBAL_VARIABLE_CATEGORIES = 'categories';
+    /**
+     * @var string
+     */
     protected const SERVICE_LOCALE = 'locale';
 
     /**

@@ -13,15 +13,20 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class CompanyBusinessUnitOrderSearchFormExpander implements CompanyBusinessUnitOrderSearchFormExpanderInterface
 {
+    /**
+     * @var string
+     */
     public const OPTION_COMPANY_BUSINESS_UNIT_CHOICES = 'OPTION_COMPANY_BUSINESS_UNIT_CHOICES';
 
     /**
      * @uses \Spryker\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT
+     * @var string
      */
     protected const FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT = 'companyBusinessUnit';
 
     /**
      * @uses \SprykerShop\Yves\CustomerPage\Form\OrderSearchForm::FIELD_FILTERS
+     * @var string
      */
     protected const FIELD_FILTERS = 'filters';
 

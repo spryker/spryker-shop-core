@@ -20,6 +20,7 @@ class GatewayResponseController extends AbstractController
 {
     /**
      * @uses \SprykerShop\Yves\HomePage\Plugin\Router\HomePageRouteProviderPlugin::ROUTE_NAME_HOME
+     * @var string
      */
     protected const FALLBACK_ROUTE_NAME = 'home';
 

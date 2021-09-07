@@ -17,6 +17,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CustomerCheckoutForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const SUB_FORM_CUSTOMER = 'customer';
 
     /**

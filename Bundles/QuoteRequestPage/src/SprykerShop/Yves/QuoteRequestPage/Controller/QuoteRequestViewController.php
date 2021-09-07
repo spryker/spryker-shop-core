@@ -20,9 +20,21 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class QuoteRequestViewController extends QuoteRequestAbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_PAGE = 'page';
+    /**
+     * @var int
+     */
     protected const DEFAULT_PAGE = 1;
+    /**
+     * @var int
+     */
     protected const DEFAULT_MAX_PER_PAGE = 10;
+    /**
+     * @var string
+     */
     protected const PARAM_QUOTE_REQUEST_VERSION_REFERENCE = 'quote-request-version-reference';
 
     /**

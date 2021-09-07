@@ -14,6 +14,9 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class MerchantOpeningHoursWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_MERCHANT_OPENING_HOURS = 'merchantOpeningHours';
 
     /**

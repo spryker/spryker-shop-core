@@ -24,29 +24,40 @@ class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPlugi
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Security\CustomerPageSecurityPlugin::ROLE_NAME_USER} instead.
+     * @var string
      */
     protected const ROLE_USER = 'ROLE_USER';
+    /**
+     * @var string
+     */
     public const ROLE_NAME_USER = 'ROLE_USER';
 
+    /**
+     * @var string
+     */
     protected const IS_AUTHENTICATED_ANONYMOUSLY = 'IS_AUTHENTICATED_ANONYMOUSLY';
 
     /**
      * @uses \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_LOGIN
+     * @var string
      */
     protected const ROUTE_LOGIN = 'login';
 
     /**
      * @uses \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_LOGOUT
+     * @var string
      */
     protected const ROUTE_LOGOUT = 'logout';
 
     /**
      * @uses \SprykerShop\Yves\HomePage\Plugin\Router\HomePageRouteProviderPlugin::ROUTE_HOME
+     * @var string
      */
     protected const ROUTE_HOME = 'home';
 
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     * @var string
      */
     protected const SERVICE_ROUTER = 'routers';
 

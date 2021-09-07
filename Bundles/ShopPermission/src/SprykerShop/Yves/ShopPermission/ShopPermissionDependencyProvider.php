@@ -15,10 +15,17 @@ class ShopPermissionDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**
      * @deprecated Use {@link PERMISSION_TWIG_EXTENSION_PLUGINS} instead.
+     * @var string
      */
     public const PERMISSION_TWIG_FUNCTION_PLUGINS = 'PERMISSION_TWIG_FUNCTION_PLUGINS';
 
+    /**
+     * @var string
+     */
     public const PERMISSION_TWIG_EXTENSION_PLUGINS = 'PERMISSION_TWIG_EXTENSION_PLUGINS';
+    /**
+     * @var string
+     */
     public const CLIENT_PERMISSION = 'CLIENT_PERMISSION';
 
     /**

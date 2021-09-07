@@ -18,6 +18,9 @@ class ShoppingListNavigationMenuWidget extends AbstractWidget
 {
     use PermissionAwareTrait;
 
+    /**
+     * @var string
+     */
     protected const PARAMETER_SHOPPING_LIST_COLLECTION = 'shoppingListCollection';
 
     public function __construct()

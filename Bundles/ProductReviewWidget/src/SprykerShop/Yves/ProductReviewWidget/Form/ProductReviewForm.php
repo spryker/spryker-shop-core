@@ -31,10 +31,14 @@ class ProductReviewForm extends AbstractType
     public const FIELD_PRODUCT = ProductReviewRequestTransfer::ID_PRODUCT_ABSTRACT;
 
     public const UNSELECTED_RATING = -1;
+    /**
+     * @var int
+     */
     public const MINIMUM_RATING = 1;
 
     /**
      * @deprecated Use {@link ProductReviewWidgetConfig::GLOSSARY_KEY_INVALID_RATING_VALIDATION_MESSAGE} instead.
+     * @var string
      */
     protected const VALIDATION_RATING_MESSAGE = 'validation.choice';
 

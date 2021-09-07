@@ -16,6 +16,9 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class ProductConcreteSearchGridWidget extends AbstractWidget
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_PRODUCTS = 'products';
 
     /**

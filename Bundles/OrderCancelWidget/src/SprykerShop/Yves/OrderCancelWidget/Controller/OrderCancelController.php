@@ -19,9 +19,18 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class OrderCancelController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_RETURN_URL = 'return-url';
+    /**
+     * @var string
+     */
     protected const PARAMETER_ID_SALES_ORDER = 'id-sales-order';
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_ORDER_CANCELLED = 'order_cancel_widget.order.cancelled';
 
     /**
