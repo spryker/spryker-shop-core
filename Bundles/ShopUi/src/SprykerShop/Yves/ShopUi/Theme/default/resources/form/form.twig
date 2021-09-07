@@ -81,7 +81,7 @@
 
                 {{- block('renderOptions') -}}
 
-                {%- if attributes.choices|length > 0 and embed.separator is not none -%}
+                {%- if embed.choices|length > 0 and embed.separator is not none -%}
                     <option disabled="disabled">{{ embed.separator }}</option>
                 {%- endif -%}
             {%- endif -%}
