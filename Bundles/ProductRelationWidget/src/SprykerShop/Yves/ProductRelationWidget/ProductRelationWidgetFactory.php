@@ -14,7 +14,7 @@ use SprykerShop\Yves\ProductRelationWidget\Dependency\Client\ProductRelationWidg
 class ProductRelationWidgetFactory extends AbstractFactory
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getProductDetailPageSimilarProductsWidgetPlugins(): array
     {
@@ -22,7 +22,7 @@ class ProductRelationWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCartPageUpSellingProductsWidgetPlugins(): array
     {

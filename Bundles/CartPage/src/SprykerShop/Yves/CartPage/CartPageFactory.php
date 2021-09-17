@@ -127,7 +127,7 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCartPageWidgetPlugins()
     {
@@ -178,7 +178,7 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemTransformerPluginInterface[]
+     * @return array<\SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemTransformerPluginInterface>
      */
     public function getCartItemTransformerPlugins()
     {
@@ -186,7 +186,7 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CartPageExtension\Dependency\Plugin\PreAddToCartPluginInterface[]
+     * @return array<\SprykerShop\Yves\CartPageExtension\Dependency\Plugin\PreAddToCartPluginInterface>
      */
     public function getPreAddToCartPlugins(): array
     {

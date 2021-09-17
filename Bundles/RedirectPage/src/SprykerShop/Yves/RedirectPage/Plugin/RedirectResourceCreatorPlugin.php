@@ -51,9 +51,9 @@ class RedirectResourceCreatorPlugin extends AbstractPlugin implements ResourceCr
     }
 
     /**
-     * @param mixed[] $data
+     * @param array<mixed> $data
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function mergeResourceData(array $data)
     {

@@ -13,7 +13,7 @@ interface ShipmentExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $bundleItems
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $bundleItems
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */

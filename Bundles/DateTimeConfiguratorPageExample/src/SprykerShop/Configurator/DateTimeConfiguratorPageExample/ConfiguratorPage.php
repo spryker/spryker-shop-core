@@ -56,7 +56,7 @@ class ConfiguratorPage
     }
 
     /**
-     * @return string|\Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|string
      */
     public function render()
     {

@@ -159,7 +159,7 @@ class CompanyBusinessUnitFormDataProvider
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      * @param int|null $idCompanyBusinessUnit
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getCompanyBusinessUnits(CompanyUserTransfer $companyUserTransfer, ?int $idCompanyBusinessUnit = null): array
     {
@@ -210,7 +210,7 @@ class CompanyBusinessUnitFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getCompanyUnitAddresses(CompanyUserTransfer $companyUserTransfer): array
     {

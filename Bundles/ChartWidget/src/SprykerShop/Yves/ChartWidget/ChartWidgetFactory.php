@@ -14,7 +14,7 @@ use Spryker\Yves\Kernel\AbstractFactory;
 class ChartWidgetFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Shared\Chart\Dependency\Plugin\TwigChartFunctionPluginInterface[]
+     * @return array<\Spryker\Shared\Chart\Dependency\Plugin\TwigChartFunctionPluginInterface>
      */
     public function getTwigChartFunctionPlugins(): array
     {
@@ -32,7 +32,7 @@ class ChartWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface[]
+     * @return array<\Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface>
      */
     protected function getChartPlugins(): array
     {

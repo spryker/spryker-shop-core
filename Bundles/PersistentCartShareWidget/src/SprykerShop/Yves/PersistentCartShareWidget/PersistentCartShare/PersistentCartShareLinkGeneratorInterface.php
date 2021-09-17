@@ -16,7 +16,7 @@ interface PersistentCartShareLinkGeneratorInterface
      *
      * @throws \SprykerShop\Yves\PersistentCartShareWidget\Exceptions\InvalidShareOptionGroupException
      *
-     * @return string[]
+     * @return array<string>
      */
     public function generateCartShareLinks(array $shareOptions, int $idQuote, string $shareOptionGroup): array;
 
@@ -27,7 +27,7 @@ interface PersistentCartShareLinkGeneratorInterface
      *
      * @throws \SprykerShop\Yves\PersistentCartShareWidget\Exceptions\InvalidShareOptionGroupException
      *
-     * @return string[]
+     * @return array<string>
      */
     public function generateCartShareLinkLabels(array $shareOptions, int $idQuote, string $shareOptionGroup): array;
 

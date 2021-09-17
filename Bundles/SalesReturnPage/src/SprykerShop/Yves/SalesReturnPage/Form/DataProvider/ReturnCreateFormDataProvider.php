@@ -39,7 +39,7 @@ class ReturnCreateFormDataProvider
     protected $salesReturnClient;
 
     /**
-     * @var \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface[]
+     * @var array<\SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface>
      */
     protected $returnCreateFormHandlerPlugins;
 
@@ -51,7 +51,7 @@ class ReturnCreateFormDataProvider
     /**
      * @param \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnClientInterface $salesReturnClient
      * @param \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnSearchClientInterface $returnSearchClient
-     * @param \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface[] $returnCreateFormHandlerPlugins
+     * @param array<\SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface> $returnCreateFormHandlerPlugins
      */
     public function __construct(
         SalesReturnPageToSalesReturnClientInterface $salesReturnClient,

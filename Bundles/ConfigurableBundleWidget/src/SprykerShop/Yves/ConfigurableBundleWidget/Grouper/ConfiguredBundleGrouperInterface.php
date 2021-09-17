@@ -13,9 +13,9 @@ interface ConfiguredBundleGrouperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ConfiguredBundleTransfer[]
+     * @return array<\Generated\Shared\Transfer\ConfiguredBundleTransfer>
      */
     public function getConfiguredBundles(QuoteTransfer $quoteTransfer, iterable $itemTransfers): array;
 }

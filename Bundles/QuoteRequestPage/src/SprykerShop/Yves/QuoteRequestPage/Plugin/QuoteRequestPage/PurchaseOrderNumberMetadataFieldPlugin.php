@@ -38,7 +38,7 @@ class PurchaseOrderNumberMetadataFieldPlugin extends AbstractPlugin implements Q
      * @api
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param mixed[] $options
+     * @param array<mixed> $options
      *
      * @return \Symfony\Component\Form\FormBuilderInterface
      */

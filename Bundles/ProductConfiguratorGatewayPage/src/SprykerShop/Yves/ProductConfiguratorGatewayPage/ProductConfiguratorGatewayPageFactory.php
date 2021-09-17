@@ -210,7 +210,7 @@ class ProductConfiguratorGatewayPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorRequestStrategyPluginInterface[]
+     * @return array<\SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorRequestStrategyPluginInterface>
      */
     public function getProductConfiguratorRequestPlugins(): array
     {
@@ -218,7 +218,7 @@ class ProductConfiguratorGatewayPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorResponseStrategyPluginInterface[]
+     * @return array<\SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorResponseStrategyPluginInterface>
      */
     public function getProductConfiguratorResponsePlugins(): array
     {
@@ -226,7 +226,7 @@ class ProductConfiguratorGatewayPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorRequestDataFormExpanderStrategyPluginInterface[]
+     * @return array<\SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorRequestDataFormExpanderStrategyPluginInterface>
      */
     public function getProductConfiguratorRequestDataFormExpanderStrategyPlugins(): array
     {

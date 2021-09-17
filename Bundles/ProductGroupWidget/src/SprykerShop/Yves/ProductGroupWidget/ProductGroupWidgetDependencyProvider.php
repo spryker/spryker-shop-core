@@ -104,7 +104,7 @@ class ProductGroupWidgetDependencyProvider extends AbstractBundleDependencyProvi
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface[]
+     * @return array<\SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface>
      */
     protected function getProductViewExpanderPlugins(): array
     {
@@ -112,7 +112,7 @@ class ProductGroupWidgetDependencyProvider extends AbstractBundleDependencyProvi
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewBulkExpanderPluginInterface[]
+     * @return array<\SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewBulkExpanderPluginInterface>
      */
     protected function getProductViewBulkExpanderPlugins(): array
     {

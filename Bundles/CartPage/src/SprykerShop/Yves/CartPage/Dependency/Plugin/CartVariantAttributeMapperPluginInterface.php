@@ -14,7 +14,7 @@ interface CartVariantAttributeMapperPluginInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject $items
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
      * @param string $localeName
      *
      * @return array

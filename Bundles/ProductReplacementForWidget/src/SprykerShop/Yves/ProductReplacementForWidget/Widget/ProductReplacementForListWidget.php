@@ -46,7 +46,7 @@ class ProductReplacementForListWidget extends AbstractWidget
     /**
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     protected function findReplacementForProducts(string $sku): array
     {

@@ -12,7 +12,7 @@ interface TextOrderParserInterface
     /**
      * @param string $textOrder
      *
-     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuickOrderItemTransfer>
      */
     public function parse(string $textOrder): array;
 }

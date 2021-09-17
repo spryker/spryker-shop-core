@@ -20,10 +20,10 @@ interface ConfigurableBundlePageToConfigurableBundleStorageClientInterface
     public function findConfigurableBundleTemplateStorage(int $idConfigurableBundleTemplate, string $localeName): ?ConfigurableBundleTemplateStorageTransfer;
 
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function getProductConcretesBySkusAndLocale(array $skus, string $localeName): array;
 }

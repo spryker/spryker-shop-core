@@ -14,10 +14,10 @@ interface CartItemTransformerPluginInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $cartItems
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $cartItems
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function transformCartItems(array $cartItems, QuoteTransfer $quoteTransfer): array;
 }

@@ -20,7 +20,7 @@ class OrderItemsProductBundleWidget extends AbstractWidget
     protected const PARAMETER_PRODUCT_BUNDLES = 'productBundles';
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      */
     public function __construct(iterable $itemTransfers)
     {
@@ -44,7 +44,7 @@ class OrderItemsProductBundleWidget extends AbstractWidget
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return void
      */

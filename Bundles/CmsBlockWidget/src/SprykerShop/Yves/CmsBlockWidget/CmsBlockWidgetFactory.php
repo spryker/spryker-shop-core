@@ -34,7 +34,7 @@ class CmsBlockWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Twig\TwigExtensionInterface[]
+     * @return array<\Spryker\Shared\Twig\TwigExtensionInterface>
      */
     public function getTwigExtensionPlugins(): array
     {

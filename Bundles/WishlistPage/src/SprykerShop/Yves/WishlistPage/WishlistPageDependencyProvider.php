@@ -182,7 +182,7 @@ class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
+     * @return array<\Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface>
      */
     protected function getWishlistItemExpanderPlugins()
     {
@@ -193,7 +193,7 @@ class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
      * Returns a list of widget plugin class names that implement
      * Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getWishlistViewWidgetPlugins(): array
     {
@@ -201,7 +201,7 @@ class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\WishlistPageExtension\Dependency\Plugin\WishlistItemRequestExpanderPluginInterface[]
+     * @return array<\SprykerShop\Yves\WishlistPageExtension\Dependency\Plugin\WishlistItemRequestExpanderPluginInterface>
      */
     protected function getWishlistItemRequestExpanderPlugins(): array
     {
@@ -209,7 +209,7 @@ class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\WishlistPageExtension\Dependency\Plugin\WishlistItemMetaFormExpanderPluginInterface[]
+     * @return array<\SprykerShop\Yves\WishlistPageExtension\Dependency\Plugin\WishlistItemMetaFormExpanderPluginInterface>
      */
     protected function getWishlistItemMetaFormExpanderPlugins(): array
     {

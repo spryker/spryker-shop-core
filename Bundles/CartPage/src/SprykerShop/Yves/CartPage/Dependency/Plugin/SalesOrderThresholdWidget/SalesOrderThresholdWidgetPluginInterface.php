@@ -23,7 +23,7 @@ interface SalesOrderThresholdWidgetPluginInterface extends WidgetPluginInterface
     /**
      * @api
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ExpenseTransfer> $expenseTransfers
      *
      * @return void
      */

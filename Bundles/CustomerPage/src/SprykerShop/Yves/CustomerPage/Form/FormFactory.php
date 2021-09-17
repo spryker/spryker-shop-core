@@ -160,7 +160,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\OrderSearchFormExpanderPluginInterface[]
+     * @return array<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\OrderSearchFormExpanderPluginInterface>
      */
     public function getOrderSearchFormExpanderPlugins(): array
     {

@@ -60,7 +60,7 @@ class ProductSetListPageDependencyProvider extends AbstractBundleDependencyProvi
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductSetListPageWidgetPlugins(): array
     {

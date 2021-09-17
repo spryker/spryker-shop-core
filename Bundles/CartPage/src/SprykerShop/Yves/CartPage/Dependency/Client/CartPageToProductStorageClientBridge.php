@@ -48,7 +48,7 @@ class CartPageToProductStorageClientBridge implements CartPageToProductStorageCl
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $localeName
      *
      * @return array

@@ -18,7 +18,7 @@ class ShopApplicationConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getFormThemes()
     {
@@ -62,7 +62,7 @@ class ShopApplicationConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getShopApplicationResources(): array
     {

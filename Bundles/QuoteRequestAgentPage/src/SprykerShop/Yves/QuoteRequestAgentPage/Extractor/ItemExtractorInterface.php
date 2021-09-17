@@ -14,21 +14,21 @@ interface ItemExtractorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function extractItemsWithShipmentAddress(QuoteTransfer $quoteTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function extractItemsWithShipmentMethod(QuoteTransfer $quoteTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function extractItemsWithoutShipmentAddress(QuoteTransfer $quoteTransfer): array;
 }

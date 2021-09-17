@@ -32,14 +32,14 @@ class CartFiller implements CartFillerInterface
     protected $itemsFetcher;
 
     /**
-     * @var \SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\PostReorderPluginInterface[]
+     * @var array<\SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\PostReorderPluginInterface>
      */
     protected $postReorderPlugins;
 
     /**
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface $cartClient
      * @param \SprykerShop\Yves\CustomerReorderWidget\Model\ItemFetcherInterface $itemsFetcher
-     * @param \SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\PostReorderPluginInterface[] $postReorderPlugins
+     * @param array<\SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\PostReorderPluginInterface> $postReorderPlugins
      */
     public function __construct(
         CustomerReorderWidgetToCartClientInterface $cartClient,
@@ -65,7 +65,7 @@ class CartFiller implements CartFillerInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param int[] $idOrderItems
+     * @param array<int> $idOrderItems
      *
      * @return void
      */
@@ -77,7 +77,7 @@ class CartFiller implements CartFillerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $orderItems
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
@@ -98,9 +98,9 @@ class CartFiller implements CartFillerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function copyItemTransfers(array $itemTransfers): array
     {
@@ -116,7 +116,7 @@ class CartFiller implements CartFillerInterface
     /**
      * @param array $orderItems
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
     protected function sanitizeOrderItems(array $orderItems): ArrayObject
     {
@@ -149,7 +149,7 @@ class CartFiller implements CartFillerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $orderItems
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
@@ -210,7 +210,7 @@ class CartFiller implements CartFillerInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return void
      */

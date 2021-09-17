@@ -28,7 +28,7 @@ class ItemExtractor implements ItemExtractorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function extractItemsWithShipmentAddress(QuoteTransfer $quoteTransfer): array
     {
@@ -50,7 +50,7 @@ class ItemExtractor implements ItemExtractorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function extractItemsWithShipmentMethod(QuoteTransfer $quoteTransfer): array
     {
@@ -72,7 +72,7 @@ class ItemExtractor implements ItemExtractorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function extractItemsWithoutShipmentAddress(QuoteTransfer $quoteTransfer): array
     {

@@ -19,13 +19,13 @@ class ContentFileReader implements ContentFileReaderInterface
     protected $fileManagerStorageClient;
 
     /**
-     * @var \SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface[]
+     * @var array<\SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface>
      */
     protected $fileStorageDataExpanders;
 
     /**
      * @param \SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToFileManagerStorageClientInterface $fileManagerStorageClient
-     * @param \SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface[] $fileStorageDataExpanders
+     * @param array<\SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface> $fileStorageDataExpanders
      */
     public function __construct(
         ContentFileWidgetToFileManagerStorageClientInterface $fileManagerStorageClient,
@@ -39,7 +39,7 @@ class ContentFileReader implements ContentFileReaderInterface
      * @param \Generated\Shared\Transfer\ContentFileListTypeTransfer $contentFileListTypeTransfer
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\FileStorageDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\FileStorageDataTransfer>
      */
     public function getFileCollection(ContentFileListTypeTransfer $contentFileListTypeTransfer, string $localeName): array
     {

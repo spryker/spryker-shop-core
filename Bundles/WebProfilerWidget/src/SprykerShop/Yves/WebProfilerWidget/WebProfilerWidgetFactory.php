@@ -33,7 +33,7 @@ class WebProfilerWidgetFactory extends AbstractFactory
     /**
      * @deprecated Use {@link \SprykerShop\Yves\WebProfilerWidget\Plugin\Application\WebProfilerApplicationPlugin} instead.
      *
-     * @return \Silex\ServiceProviderInterface[]
+     * @return array<\Silex\ServiceProviderInterface>
      */
     public function getWebProfiler()
     {
@@ -49,7 +49,7 @@ class WebProfilerWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\WebProfilerExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface[]
+     * @return array<\Spryker\Shared\WebProfilerExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface>
      */
     public function getDataCollectorPlugins(): array
     {

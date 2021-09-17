@@ -37,7 +37,7 @@ class CatalogPageTwigExtension extends TwigExtension
     }
 
     /**
-     * @return \Twig\TwigFunction[]
+     * @return array<\Twig\TwigFunction>
      */
     public function getFunctions()
     {
@@ -69,7 +69,7 @@ class CatalogPageTwigExtension extends TwigExtension
 
     /**
      * @param array $context
-     * @param \Generated\Shared\Transfer\FacetSearchResultTransfer[]|\Generated\Shared\Transfer\RangeSearchResultTransfer[] $facetFilters
+     * @param array<\Generated\Shared\Transfer\FacetSearchResultTransfer|\Generated\Shared\Transfer\RangeSearchResultTransfer> $facetFilters
      *
      * @return string
      */

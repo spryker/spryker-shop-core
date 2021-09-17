@@ -200,9 +200,9 @@ class OrderController extends AbstractCustomerController
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param iterable<\Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupCollection
      *
-     * @return iterable|\Generated\Shared\Transfer\ExpenseTransfer[]
+     * @return iterable<\Generated\Shared\Transfer\ExpenseTransfer>
      */
     protected function prepareOrderShipmentExpenses(
         OrderTransfer $orderTransfer,
@@ -232,7 +232,7 @@ class OrderController extends AbstractCustomerController
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param iterable<\Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupCollection
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      *
      * @return string|null

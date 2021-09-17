@@ -16,7 +16,7 @@ use SprykerShop\Yves\ProductDetailPage\Resolver\ShopContextResolverInterface;
 class ProductDetailPageFactory extends AbstractFactory
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getProductDetailPageWidgetPlugins()
     {

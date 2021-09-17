@@ -61,7 +61,7 @@ class ReturnViewController extends AbstractReturnController
     /**
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractUniqueOrderReferencesFromReturn(ReturnTransfer $returnTransfer): array
     {

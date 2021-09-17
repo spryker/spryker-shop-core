@@ -139,7 +139,7 @@ class QuoteRequestAgentViewController extends QuoteRequestAgentAbstractControlle
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuoteRequestVersionTransfer>
      */
     protected function getQuoteRequestVersions(QuoteRequestTransfer $quoteRequestTransfer): array
     {
@@ -183,9 +183,9 @@ class QuoteRequestAgentViewController extends QuoteRequestAgentAbstractControlle
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer[] $quoteRequestVersionTransfers
+     * @param array<\Generated\Shared\Transfer\QuoteRequestVersionTransfer> $quoteRequestVersionTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getQuoteRequestVersionReferences(array $quoteRequestVersionTransfers): array
     {

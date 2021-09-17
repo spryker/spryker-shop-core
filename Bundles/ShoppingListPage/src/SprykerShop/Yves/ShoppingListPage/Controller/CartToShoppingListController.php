@@ -50,7 +50,7 @@ class CartToShoppingListController extends AbstractShoppingListController
      * @param int $idQuote
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeCreateFromCartAction(int $idQuote, Request $request)
     {

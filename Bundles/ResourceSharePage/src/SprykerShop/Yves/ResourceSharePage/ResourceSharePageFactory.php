@@ -20,7 +20,7 @@ use SprykerShop\Yves\ResourceSharePage\RouteResolver\RouteResolverInterface;
 class ResourceSharePageFactory extends AbstractFactory
 {
     /**
-     * @return \SprykerShop\Yves\ResourceSharePageExtension\Dependency\Plugin\ResourceShareRouterStrategyPluginInterface[]
+     * @return array<\SprykerShop\Yves\ResourceSharePageExtension\Dependency\Plugin\ResourceShareRouterStrategyPluginInterface>
      */
     public function getResourceShareRouterStrategyPlugins(): array
     {

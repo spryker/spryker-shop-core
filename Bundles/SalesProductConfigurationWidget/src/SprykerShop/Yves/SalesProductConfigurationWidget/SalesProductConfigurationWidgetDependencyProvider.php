@@ -67,7 +67,7 @@ class SalesProductConfigurationWidgetDependencyProvider extends AbstractBundleDe
     }
 
     /**
-     * @return \SprykerShop\Yves\SalesProductConfigurationWidgetExtension\Dependency\Plugin\SalesProductConfigurationRenderStrategyPluginInterface[]
+     * @return array<\SprykerShop\Yves\SalesProductConfigurationWidgetExtension\Dependency\Plugin\SalesProductConfigurationRenderStrategyPluginInterface>
      */
     protected function getSalesProductConfigurationRenderStrategyPlugins(): array
     {

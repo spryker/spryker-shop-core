@@ -520,7 +520,7 @@ class CartController extends AbstractController
     /**
      * @param array $items
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function mapItems(array $items)
     {
@@ -628,7 +628,7 @@ class CartController extends AbstractController
 
     /**
      * @param int $code
-     * @param string[] $messages
+     * @param array<string> $messages
      *
      * @return array
      */
@@ -647,7 +647,7 @@ class CartController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     * @param array<\Generated\Shared\Transfer\MessageTransfer> $messageTransfers
      *
      * @return void
      */
@@ -659,7 +659,7 @@ class CartController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     * @param array<\Generated\Shared\Transfer\MessageTransfer> $messageTransfers
      *
      * @return void
      */

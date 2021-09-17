@@ -25,7 +25,7 @@ class ShopApplicationTwigExtensionPlugin extends AbstractTwigExtensionPlugin
     }
 
     /**
-     * @return \Twig\TwigFunction[]
+     * @return array<\Twig\TwigFunction>
      */
     public function getFunctions(): array
     {
@@ -42,7 +42,7 @@ class ShopApplicationTwigExtensionPlugin extends AbstractTwigExtensionPlugin
 
     /**
      * @param string $permissionKey
-     * @param string|int|mixed|null $context
+     * @param mixed|string|int|null $context
      *
      * @return bool
      */
@@ -52,7 +52,7 @@ class ShopApplicationTwigExtensionPlugin extends AbstractTwigExtensionPlugin
     }
 
     /**
-     * @return \Twig\TwigFilter[]
+     * @return array<\Twig\TwigFilter>
      */
     public function getFilters(): array
     {
@@ -70,7 +70,7 @@ class ShopApplicationTwigExtensionPlugin extends AbstractTwigExtensionPlugin
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getGlobals(): array
     {

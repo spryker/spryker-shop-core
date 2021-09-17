@@ -42,13 +42,13 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
     protected $customerClient;
 
     /**
-     * @var \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\OrderSearchFormHandlerPluginInterface[]
+     * @var array<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\OrderSearchFormHandlerPluginInterface>
      */
     protected $orderSearchFormHandlerPlugins;
 
     /**
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface $customerClient
-     * @param \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\OrderSearchFormHandlerPluginInterface[] $orderSearchFormHandlerPlugins
+     * @param array<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\OrderSearchFormHandlerPluginInterface> $orderSearchFormHandlerPlugins
      */
     public function __construct(
         CustomerPageToCustomerClientInterface $customerClient,

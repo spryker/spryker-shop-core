@@ -55,7 +55,7 @@ class CompanyRoleController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -85,7 +85,7 @@ class CompanyRoleController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Spryker\Yves\Kernel\View\View
+     * @return \Spryker\Yves\Kernel\View\View|array
      */
     public function detailsAction(Request $request)
     {
@@ -256,7 +256,7 @@ class CompanyRoleController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeCreateAction(Request $request)
     {
@@ -294,7 +294,7 @@ class CompanyRoleController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function updateAction(Request $request)
     {
@@ -312,7 +312,7 @@ class CompanyRoleController extends AbstractCompanyController
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeUpdateAction(Request $request)
     {

@@ -14,12 +14,12 @@ use Generated\Shared\Transfer\QuickOrderTransfer;
 class QuickOrderItemPluginExecutor implements QuickOrderItemPluginExecutorInterface
 {
     /**
-     * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemFilterPluginInterface[]
+     * @var array<\SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemFilterPluginInterface>
      */
     protected $quickOrderItemFilterPlugins;
 
     /**
-     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemFilterPluginInterface[] $quickOrderItemFilterPlugins
+     * @param array<\SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemFilterPluginInterface> $quickOrderItemFilterPlugins
      */
     public function __construct(array $quickOrderItemFilterPlugins)
     {

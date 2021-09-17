@@ -57,7 +57,7 @@ class CompanyBusinessUnitOrderSearchFormDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getCompanyBusinessUnitChoices(): array
     {
@@ -94,7 +94,7 @@ class CompanyBusinessUnitOrderSearchFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer $companyBusinessUnitCollectionTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getChoicesFromCompanyBusinessUnitCollection(
         CompanyBusinessUnitCollectionTransfer $companyBusinessUnitCollectionTransfer

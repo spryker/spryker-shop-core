@@ -22,7 +22,7 @@ interface CartPageToCartClientInterface
     public function addItem(ItemTransfer $itemTransfer, array $params = []);
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer

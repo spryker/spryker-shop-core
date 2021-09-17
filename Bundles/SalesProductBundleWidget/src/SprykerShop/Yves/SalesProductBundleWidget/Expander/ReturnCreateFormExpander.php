@@ -42,7 +42,7 @@ class ReturnCreateFormExpander implements ReturnCreateFormExpanderInterface
     /**
      * @param array $formData
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function extractItemsFromFormData(array $formData): array
     {
@@ -56,9 +56,9 @@ class ReturnCreateFormExpander implements ReturnCreateFormExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer[]>
      */
     protected function getFormFieldsWithoutBundles(array $itemTransfers): array
     {
@@ -74,9 +74,9 @@ class ReturnCreateFormExpander implements ReturnCreateFormExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer[]>
      */
     protected function getProductBundleFormFields(array $itemTransfers): array
     {
@@ -96,9 +96,9 @@ class ReturnCreateFormExpander implements ReturnCreateFormExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function getProductBundleItems(array $itemTransfers): array
     {

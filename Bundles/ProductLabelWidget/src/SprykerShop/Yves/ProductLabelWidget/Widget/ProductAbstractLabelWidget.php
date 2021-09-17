@@ -44,7 +44,7 @@ class ProductAbstractLabelWidget extends AbstractWidget
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer>
      */
     protected function getProductLabelDictionaryItems(int $idProductAbstract): array
     {

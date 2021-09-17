@@ -60,7 +60,7 @@ class WishlistPageFactory extends AbstractFactory
      * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer|null $data
-     * @param mixed[] $options
+     * @param array<mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -123,8 +123,8 @@ class WishlistPageFactory extends AbstractFactory
     /**
      * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
      *
-     * @param mixed[] $data
-     * @param mixed[] $options
+     * @param array<mixed> $data
+     * @param array<mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -221,7 +221,7 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
+     * @return array<\Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface>
      */
     public function getWishlistItemExpanderPlugins()
     {
@@ -229,7 +229,7 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getWishlistViewWidgetPlugins(): array
     {
@@ -237,7 +237,7 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\WishlistPageExtension\Dependency\Plugin\WishlistItemRequestExpanderPluginInterface[]
+     * @return array<\SprykerShop\Yves\WishlistPageExtension\Dependency\Plugin\WishlistItemRequestExpanderPluginInterface>
      */
     public function getWishlistItemRequestExpanderPlugins(): array
     {
@@ -245,7 +245,7 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\WishlistPageExtension\Dependency\Plugin\WishlistItemMetaFormExpanderPluginInterface[]
+     * @return array<\SprykerShop\Yves\WishlistPageExtension\Dependency\Plugin\WishlistItemMetaFormExpanderPluginInterface>
      */
     public function getWishlistItemMetaFormExpanderPlugins(): array
     {

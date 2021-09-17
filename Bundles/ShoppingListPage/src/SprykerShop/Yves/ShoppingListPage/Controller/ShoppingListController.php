@@ -134,7 +134,7 @@ class ShoppingListController extends AbstractShoppingListController
     /**
      * @param int $idShoppingList
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeIndexAction(int $idShoppingList)
     {
@@ -284,7 +284,7 @@ class ShoppingListController extends AbstractShoppingListController
     /**
      * @param int $idShoppingList
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executePrintShoppingListAction(int $idShoppingList)
     {
@@ -307,7 +307,7 @@ class ShoppingListController extends AbstractShoppingListController
     /**
      * @param \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer $shoppingListOverviewResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     protected function getShoppingListItems(ShoppingListOverviewResponseTransfer $shoppingListOverviewResponseTransfer): array
     {

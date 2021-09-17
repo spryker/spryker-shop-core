@@ -29,7 +29,7 @@ interface CartPageToProductStorageClientInterface
     public function findProductAbstractViewTransfer(int $idProductAbstract, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer;
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $localeName
      *
      * @return array

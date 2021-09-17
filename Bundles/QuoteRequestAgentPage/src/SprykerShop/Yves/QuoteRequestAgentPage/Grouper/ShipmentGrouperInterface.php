@@ -14,14 +14,14 @@ interface ShipmentGrouperInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentGroupTransfer>
      */
     public function groupItemsByShippingAddress(QuoteTransfer $quoteTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentGroupTransfer>
      */
     public function groupItemsByShippingMethod(QuoteTransfer $quoteTransfer): array;
 }

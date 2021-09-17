@@ -255,7 +255,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param array $attributeMap
-     * @param string[] $availableItemsSkus
+     * @param array<string> $availableItemsSkus
      *
      * @return array
      */
@@ -285,7 +285,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     /**
      * @param array $superAttributes
      * @param array $attributeMapWithAvailability
-     * @param string[] $availableItemsSkus
+     * @param array<string> $availableItemsSkus
      * @param array $availableConcreteProductsSku
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer

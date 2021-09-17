@@ -142,7 +142,7 @@ class SalesReturnPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface[]
+     * @return array<\SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface>
      */
     protected function getReturnCreateFormHandlerPlugins(): array
     {

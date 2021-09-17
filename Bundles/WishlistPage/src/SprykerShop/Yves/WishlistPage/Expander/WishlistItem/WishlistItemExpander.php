@@ -13,18 +13,18 @@ use Generated\Shared\Transfer\WishlistItemTransfer;
 class WishlistItemExpander implements WishlistItemExpanderIterface
 {
     /**
-     * @var \SprykerShop\Yves\WishlistPageExtension\Dependency\Plugin\WishlistItemRequestExpanderPluginInterface[]
+     * @var array<\SprykerShop\Yves\WishlistPageExtension\Dependency\Plugin\WishlistItemRequestExpanderPluginInterface>
      */
     protected $wishlistItemRequestExpanderPlugins;
 
     /**
-     * @var \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
+     * @var array<\Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface>
      */
     protected $wishlistItemExpanderPlugins;
 
     /**
-     * @param \SprykerShop\Yves\WishlistPageExtension\Dependency\Plugin\WishlistItemRequestExpanderPluginInterface[] $wishlistItemRequestExpanderPlugins
-     * @param \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[] $wishlistItemExpanderPlugins
+     * @param array<\SprykerShop\Yves\WishlistPageExtension\Dependency\Plugin\WishlistItemRequestExpanderPluginInterface> $wishlistItemRequestExpanderPlugins
+     * @param array<\Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface> $wishlistItemExpanderPlugins
      */
     public function __construct(
         array $wishlistItemRequestExpanderPlugins,

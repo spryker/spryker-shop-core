@@ -41,7 +41,7 @@ interface ProductPackagingUnitWidgetToProductMeasurementUnitStorageClientInterfa
     /**
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>|null
      */
     public function findProductMeasurementSalesUnitByIdProduct(int $idProduct): ?array;
 

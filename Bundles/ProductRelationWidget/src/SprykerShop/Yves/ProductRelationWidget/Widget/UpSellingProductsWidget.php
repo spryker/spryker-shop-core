@@ -46,7 +46,7 @@ class UpSellingProductsWidget extends AbstractWidget
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     protected function findUpSellingProducts(QuoteTransfer $quoteTransfer): array
     {

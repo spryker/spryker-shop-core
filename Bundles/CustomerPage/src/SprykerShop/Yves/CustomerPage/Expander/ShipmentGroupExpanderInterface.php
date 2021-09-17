@@ -13,10 +13,10 @@ use Generated\Shared\Transfer\OrderTransfer;
 interface ShipmentGroupExpanderInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupTransfers
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer>
      */
     public function expandShipmentGroupsWithCartItems(ArrayObject $shipmentGroupTransfers, OrderTransfer $orderTransfer): ArrayObject;
 }

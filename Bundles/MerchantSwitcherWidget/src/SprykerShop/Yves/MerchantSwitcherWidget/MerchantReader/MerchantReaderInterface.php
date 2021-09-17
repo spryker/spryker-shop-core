@@ -17,7 +17,7 @@ interface MerchantReaderInterface
     public function extractSelectedMerchantReference(): ?string;
 
     /**
-     * @return \ArrayObject|\Generated\Shared\Transfer\MerchantSearchTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\MerchantSearchTransfer>
      */
     public function getMerchantSearchTransfers(): ArrayObject;
 }

@@ -131,7 +131,7 @@ class ShopApplicationFactory extends AbstractFactory
     /**
      * @deprecated Use $this->getGlobalWidgets() instead.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getGlobalWidgetPlugins(): array
     {
@@ -139,7 +139,7 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getGlobalWidgets(): array
     {
@@ -147,7 +147,7 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\FilterControllerEventHandlerPluginInterface[]
+     * @return array<\SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\FilterControllerEventHandlerPluginInterface>
      */
     public function getFilterControllerEventSubscriberPlugins(): array
     {
@@ -257,7 +257,7 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     public function getApplicationPlugins(): array
     {
@@ -265,7 +265,7 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorStrategyPluginInterface[]
+     * @return array<\SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorStrategyPluginInterface>
      */
     public function getWidgetCacheKeyGeneratorStrategyPlugins(): array
     {

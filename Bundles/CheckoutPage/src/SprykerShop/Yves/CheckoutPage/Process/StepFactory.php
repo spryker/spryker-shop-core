@@ -122,7 +122,7 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
+     * @return array<\Spryker\Yves\StepEngine\Dependency\Step\StepInterface>
      */
     public function getSteps(): array
     {
@@ -418,7 +418,7 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepEnterPreCheckPluginInterface[]
+     * @return array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepEnterPreCheckPluginInterface>
      */
     public function getCheckoutAddressStepEnterPreCheckPlugins(): array
     {
@@ -426,7 +426,7 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepEnterPreCheckPluginInterface[]
+     * @return array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepEnterPreCheckPluginInterface>
      */
     public function getCheckoutShipmentStepEnterPreCheckPlugins(): array
     {
@@ -434,7 +434,7 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutPaymentStepEnterPreCheckPluginInterface[]
+     * @return array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutPaymentStepEnterPreCheckPluginInterface>
      */
     public function getCheckoutPaymentStepEnterPreCheckPlugins(): array
     {
@@ -442,7 +442,7 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepResolverStrategyPluginInterface[]
+     * @return array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepResolverStrategyPluginInterface>
      */
     public function getCheckoutStepResolverStrategyPlugins(): array
     {
@@ -494,7 +494,7 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\AddressTransferExpanderPluginInterface[]
+     * @return array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\AddressTransferExpanderPluginInterface>
      */
     public function getShoppingListItemExpanderPlugins(): array
     {
@@ -502,7 +502,7 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\StepEngine\CheckoutPageStepEnginePreRenderPluginInterface[]
+     * @return array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\StepEngine\CheckoutPageStepEnginePreRenderPluginInterface>
      */
     public function getCheckoutPageStepEnginePreRenderPlugins(): array
     {

@@ -50,7 +50,7 @@ class LanguageSwitcherWidget extends AbstractWidget
      * @param string $queryString
      * @param string $requestUri
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getLanguages(string $pathInfo, $queryString, string $requestUri): array
     {

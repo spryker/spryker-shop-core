@@ -72,7 +72,7 @@ class ConfiguredBundleRequestMapper implements ConfiguredBundleRequestMapperInte
 
     /**
      * @param \Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\ConfigurableBundleTemplateSlotStorageTransfer[] $configurableBundleTemplateSlotStorageTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotStorageTransfer> $configurableBundleTemplateSlotStorageTransfers
      * @param array $formData
      *
      * @return \Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer

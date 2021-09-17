@@ -55,8 +55,8 @@ class ShopCmsSlotYvesTester extends Actor
     /**
      * @param string $cmsSlotKey
      * @param array $providedData
-     * @param string[] $requiredKeys
-     * @param string[] $autoFilledKeys
+     * @param array<string> $requiredKeys
+     * @param array<string> $autoFilledKeys
      *
      * @return \Generated\Shared\Transfer\CmsSlotContextTransfer
      */

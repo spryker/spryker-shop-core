@@ -13,7 +13,7 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInt
 class StepResolver implements StepResolverInterface
 {
     /**
-     * @var \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepResolverStrategyPluginInterface[]
+     * @var array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepResolverStrategyPluginInterface>
      */
     protected $checkoutStepResolverStrategyPlugins;
 
@@ -23,7 +23,7 @@ class StepResolver implements StepResolverInterface
     protected $quoteClient;
 
     /**
-     * @var \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
+     * @var array<\Spryker\Yves\StepEngine\Dependency\Step\StepInterface>
      */
     protected $steps;
 
@@ -34,8 +34,8 @@ class StepResolver implements StepResolverInterface
 
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface $quoteClient
-     * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepResolverStrategyPluginInterface[] $checkoutStepResolverStrategyPlugins
-     * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[] $steps
+     * @param array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepResolverStrategyPluginInterface> $checkoutStepResolverStrategyPlugins
+     * @param array<\Spryker\Yves\StepEngine\Dependency\Step\StepInterface> $steps
      * @param \Spryker\Yves\StepEngine\Process\StepCollectionInterface $stepCollection
      */
     public function __construct(
@@ -65,9 +65,9 @@ class StepResolver implements StepResolverInterface
     }
 
     /**
-     * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[] $steps
+     * @param array<\Spryker\Yves\StepEngine\Dependency\Step\StepInterface> $steps
      *
-     * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
+     * @return array<\Spryker\Yves\StepEngine\Dependency\Step\StepInterface>
      */
     protected function executeCheckoutStepResolverStrategyPlugins(array $steps): array
     {

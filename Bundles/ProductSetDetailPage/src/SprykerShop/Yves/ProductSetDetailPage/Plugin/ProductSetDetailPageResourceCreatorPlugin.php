@@ -77,7 +77,7 @@ class ProductSetDetailPageResourceCreatorPlugin extends AbstractPlugin implement
     /**
      * @param \Generated\Shared\Transfer\ProductSetDataStorageTransfer $productSetDataStorageTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     protected function mapProductViewTransfer(ProductSetDataStorageTransfer $productSetDataStorageTransfer): array
     {

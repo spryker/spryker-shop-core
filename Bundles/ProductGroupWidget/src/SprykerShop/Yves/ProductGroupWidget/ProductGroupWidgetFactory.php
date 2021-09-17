@@ -32,7 +32,7 @@ class ProductGroupWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface[]
+     * @return array<\SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface>
      */
     public function getProductViewExpanderPlugins(): array
     {
@@ -40,7 +40,7 @@ class ProductGroupWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewBulkExpanderPluginInterface[]
+     * @return array<\SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewBulkExpanderPluginInterface>
      */
     public function getProductViewBulkExpanderPlugins(): array
     {

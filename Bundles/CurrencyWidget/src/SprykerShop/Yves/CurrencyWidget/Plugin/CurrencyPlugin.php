@@ -20,7 +20,7 @@ class CurrencyPlugin extends AbstractPlugin implements CurrencyPluginInterface
     protected static $currentCurrencyTransfer;
 
     /**
-     * @var \Generated\Shared\Transfer\CurrencyTransfer[]
+     * @var array<\Generated\Shared\Transfer\CurrencyTransfer>
      */
     protected static $currencyTransfersByIsoCode = [];
 

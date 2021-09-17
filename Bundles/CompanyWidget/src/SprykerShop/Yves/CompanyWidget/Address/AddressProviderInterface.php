@@ -17,18 +17,18 @@ interface AddressProviderInterface
     public function companyBusinessUnitAddressesExists(): bool;
 
     /**
-     * @return \Generated\Shared\Transfer\AddressTransfer[]
+     * @return array<\Generated\Shared\Transfer\AddressTransfer>
      */
     public function getIndexedCustomerAddressList(): array;
 
     /**
-     * @return \Generated\Shared\Transfer\AddressTransfer[]
+     * @return array<\Generated\Shared\Transfer\AddressTransfer>
      */
     public function getIndexedCompanyBusinessUnitAddressList(): array;
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $formAddressTransfer
-     * @param \Generated\Shared\Transfer\AddressTransfer[] $companyBusinessUnitAddresses
+     * @param array<\Generated\Shared\Transfer\AddressTransfer> $companyBusinessUnitAddresses
      *
      * @return \Generated\Shared\Transfer\AddressTransfer|null
      */

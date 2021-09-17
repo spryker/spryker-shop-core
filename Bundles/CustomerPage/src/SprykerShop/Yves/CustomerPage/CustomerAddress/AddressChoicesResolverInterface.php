@@ -14,15 +14,15 @@ interface AddressChoicesResolverInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
      *
-     * @return string[]
+     * @return array<string, string>
      */
     public function getAddressChoices(?CustomerTransfer $customerTransfer): array;
 
     /**
-     * @param array $customerAddressChoices
+     * @param array<string, string> $customerAddressChoices
      * @param bool $canDeliverToMultipleShippingAddresses
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSingleShippingAddressChoices(array $customerAddressChoices, bool $canDeliverToMultipleShippingAddresses): array;
 }

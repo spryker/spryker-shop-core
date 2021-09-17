@@ -17,7 +17,7 @@ class CompanyController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

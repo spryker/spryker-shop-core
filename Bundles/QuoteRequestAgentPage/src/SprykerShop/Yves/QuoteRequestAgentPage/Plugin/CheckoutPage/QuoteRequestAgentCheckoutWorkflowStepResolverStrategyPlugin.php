@@ -37,10 +37,10 @@ class QuoteRequestAgentCheckoutWorkflowStepResolverStrategyPlugin extends Abstra
      *
      * @api
      *
-     * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[] $steps
+     * @param array<\Spryker\Yves\StepEngine\Dependency\Step\StepInterface> $steps
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
+     * @return array<\Spryker\Yves\StepEngine\Dependency\Step\StepInterface>
      */
     public function execute(array $steps, QuoteTransfer $quoteTransfer): array
     {

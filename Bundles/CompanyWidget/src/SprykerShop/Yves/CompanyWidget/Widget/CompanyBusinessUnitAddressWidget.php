@@ -91,8 +91,8 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer[] $customerAddresses
-     * @param \Generated\Shared\Transfer\AddressTransfer[] $companyBusinessUnitAddresses
+     * @param array<\Generated\Shared\Transfer\AddressTransfer> $customerAddresses
+     * @param array<\Generated\Shared\Transfer\AddressTransfer> $companyBusinessUnitAddresses
      *
      * @return void
      */
@@ -109,7 +109,7 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer[] $customerAddresses
+     * @param array<\Generated\Shared\Transfer\AddressTransfer> $customerAddresses
      *
      * @return void
      */
@@ -119,7 +119,7 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer[] $companyBusinessUnitAddresses
+     * @param array<\Generated\Shared\Transfer\AddressTransfer> $companyBusinessUnitAddresses
      *
      * @return void
      */
@@ -155,7 +155,7 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer[] $addressTransferList
+     * @param array<\Generated\Shared\Transfer\AddressTransfer> $addressTransferList
      *
      * @return string
      */

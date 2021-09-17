@@ -17,9 +17,9 @@ class SalesOrderConfiguredBundleGrouper implements SalesOrderConfiguredBundleGro
      * @deprecated Use {@link \SprykerShop\Yves\SalesConfigurableBundleWidget\Grouper\SalesOrderConfiguredBundleGrouper::getSalesOrderConfiguredBundlesByItems()} instead.
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer>
      */
     public function getSalesOrderConfiguredBundles(OrderTransfer $orderTransfer, iterable $itemTransfers): array
     {
@@ -35,9 +35,9 @@ class SalesOrderConfiguredBundleGrouper implements SalesOrderConfiguredBundleGro
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer>
      */
     public function getSalesOrderConfiguredBundlesByItems(array $itemTransfers): array
     {
@@ -68,7 +68,7 @@ class SalesOrderConfiguredBundleGrouper implements SalesOrderConfiguredBundleGro
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return array
      */
@@ -88,7 +88,7 @@ class SalesOrderConfiguredBundleGrouper implements SalesOrderConfiguredBundleGro
 
     /**
      * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer $salesOrderConfiguredBundleTransfer
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return bool
      */
@@ -110,7 +110,7 @@ class SalesOrderConfiguredBundleGrouper implements SalesOrderConfiguredBundleGro
     /**
      * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer $salesOrderConfiguredBundleTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getSalesOrderItemIdsFromConfiguredBundle(
         SalesOrderConfiguredBundleTransfer $salesOrderConfiguredBundleTransfer

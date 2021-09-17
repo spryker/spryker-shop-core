@@ -115,7 +115,7 @@ class CustomerController extends AbstractCustomerController
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeIndexAction()
     {

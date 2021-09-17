@@ -17,7 +17,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\AbstractTwigExtensionPlugin;
 class ShopCmsSlotTwigPlugin extends AbstractTwigExtensionPlugin
 {
     /**
-     * @return \Twig\TokenParser\TokenParserInterface[]
+     * @return array<\Twig\TokenParser\TokenParserInterface>
      */
     public function getTokenParsers(): array
     {

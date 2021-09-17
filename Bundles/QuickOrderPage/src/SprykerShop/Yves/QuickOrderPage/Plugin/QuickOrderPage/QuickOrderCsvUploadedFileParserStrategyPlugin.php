@@ -41,7 +41,7 @@ class QuickOrderCsvUploadedFileParserStrategyPlugin extends AbstractPlugin imple
      *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
-     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuickOrderItemTransfer>
      */
     public function parseFile(UploadedFile $file): array
     {

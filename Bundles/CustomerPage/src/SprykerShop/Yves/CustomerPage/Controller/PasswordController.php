@@ -81,7 +81,7 @@ class PasswordController extends AbstractCustomerController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeRestorePasswordAction(Request $request)
     {

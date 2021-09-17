@@ -10,9 +10,9 @@ namespace SprykerShop\Yves\QuoteRequestAgentPage\Resolver;
 interface CheckoutStepResolverInterface
 {
     /**
-     * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[] $steps
+     * @param array<\Spryker\Yves\StepEngine\Dependency\Step\StepInterface> $steps
      *
-     * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
+     * @return array<\Spryker\Yves\StepEngine\Dependency\Step\StepInterface>
      */
     public function applyQuoteRequestCheckoutWorkflow(array $steps): array;
 }

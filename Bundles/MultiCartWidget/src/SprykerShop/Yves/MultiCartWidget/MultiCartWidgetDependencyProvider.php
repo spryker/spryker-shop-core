@@ -35,7 +35,7 @@ class MultiCartWidgetDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return array|\Spryker\Yves\Kernel\Container
+     * @return \Spryker\Yves\Kernel\Container|array
      */
     public function provideDependencies(Container $container)
     {

@@ -93,7 +93,7 @@ class CatalogPageFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCatalogPageWidgetPlugins(): array
     {

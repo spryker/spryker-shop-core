@@ -22,7 +22,7 @@ use SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPlugin
 class CmsSlotDataProvider implements CmsSlotDataProviderInterface
 {
     /**
-     * @var \SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface[]
+     * @var array<\SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface>
      */
     protected $cmsSlotContentPlugins;
 
@@ -42,7 +42,7 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
     protected $shopCmsSlotConfig;
 
     /**
-     * @param \SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface[] $cmsSlotContentPlugins
+     * @param array<\SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface> $cmsSlotContentPlugins
      * @param \SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotClientInterface $cmsSlotClient
      * @param \SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotStorageClientInterface $cmsSlotStorageClient
      * @param \SprykerShop\Yves\ShopCmsSlot\ShopCmsSlotConfig $shopCmsSlotConfig
@@ -137,7 +137,7 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
 
     /**
      * @param array $provided
-     * @param string[] $requiredKeys
+     * @param array<string> $requiredKeys
      *
      * @throws \SprykerShop\Yves\ShopCmsSlot\Exception\MissingRequiredParameterException
      *
@@ -160,7 +160,7 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
 
     /**
      * @param \Generated\Shared\Transfer\CmsSlotContextTransfer $cmsSlotContextTransfer
-     * @param \Generated\Shared\Transfer\CmsSlotExternalDataTransfer[] $providedData
+     * @param array<\Generated\Shared\Transfer\CmsSlotExternalDataTransfer> $providedData
      *
      * @return \Generated\Shared\Transfer\CmsSlotContentRequestTransfer
      */
@@ -179,10 +179,10 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
     }
 
     /**
-     * @param string[] $autoFilledData
-     * @param \Generated\Shared\Transfer\CmsSlotExternalDataTransfer[] $providedData
+     * @param array<string> $autoFilledData
+     * @param array<\Generated\Shared\Transfer\CmsSlotExternalDataTransfer> $providedData
      *
-     * @return \Generated\Shared\Transfer\CmsSlotExternalDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsSlotExternalDataTransfer>
      */
     protected function mergeProvidedData(array $autoFilledData, array $providedData): array
     {

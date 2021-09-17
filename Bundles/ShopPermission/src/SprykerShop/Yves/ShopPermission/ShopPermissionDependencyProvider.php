@@ -76,7 +76,7 @@ class ShopPermissionDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @deprecated Use {@link getPermissionTwigExtensionPlugins()} instead.
      *
-     * @return \Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface[]
+     * @return array<\Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface>
      */
     protected function getPermissionTwigFunctionPlugins()
     {
@@ -98,7 +98,7 @@ class ShopPermissionDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\ShopApplication\Plugin\AbstractTwigExtensionPlugin[]
+     * @return array<\SprykerShop\Yves\ShopApplication\Plugin\AbstractTwigExtensionPlugin>
      */
     protected function getPermissionTwigExtensionPlugins()
     {

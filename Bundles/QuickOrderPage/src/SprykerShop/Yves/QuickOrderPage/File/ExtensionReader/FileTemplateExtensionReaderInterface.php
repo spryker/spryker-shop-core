@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\QuickOrderPage\File\ExtensionReader;
 interface FileTemplateExtensionReaderInterface
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getFileTemplateExtensions(): array;
 }

@@ -84,7 +84,7 @@ class ShoppingListPageFactory extends AbstractFactory
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $data
-     * @param mixed[] $options
+     * @param array<mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -154,7 +154,7 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
+     * @return array<\Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface>
      */
     public function getShoppingListItemExpanderPlugins(): array
     {
@@ -162,7 +162,7 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListItemFormExpanderPluginInterface[]
+     * @return array<\SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListItemFormExpanderPluginInterface>
      */
     public function getShoppingListItemFormExpanderPlugins(): array
     {
@@ -223,7 +223,7 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListFormDataProviderMapperPluginInterface[]
+     * @return array<\SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListFormDataProviderMapperPluginInterface>
      */
     public function getShoppingListFormDataProviderMapperPlugins(): array
     {

@@ -106,7 +106,7 @@ class ShoppingListMenuItemWidget extends AbstractWidget
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ShoppingListTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShoppingListTransfer>
      */
     protected function getCustomerShoppingListCollection(): array
     {

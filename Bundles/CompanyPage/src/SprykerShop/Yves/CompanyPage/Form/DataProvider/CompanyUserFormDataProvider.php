@@ -175,7 +175,7 @@ class CompanyUserFormDataProvider
     /**
      * @param int $idCompany
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getAvailableBusinessUnits(int $idCompany): array
     {
@@ -201,7 +201,7 @@ class CompanyUserFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollection
      *
-     * @return int[] Keys are role names
+     * @return array<int> Keys are role names
      */
     protected function getAvailableCompanyRoleIds(CompanyRoleCollectionTransfer $companyRoleCollection): array
     {

@@ -101,7 +101,7 @@ class ShopUiTwigExtension extends TwigExtension
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getGlobals(): array
     {
@@ -111,7 +111,7 @@ class ShopUiTwigExtension extends TwigExtension
     }
 
     /**
-     * @return \Twig\TwigFilter[]
+     * @return array<\Twig\TwigFilter>
      */
     public function getFilters(): array
     {
@@ -123,7 +123,7 @@ class ShopUiTwigExtension extends TwigExtension
     }
 
     /**
-     * @return \Twig\TwigFunction[]
+     * @return array<\Twig\TwigFunction>
      */
     public function getFunctions(): array
     {
@@ -200,7 +200,7 @@ class ShopUiTwigExtension extends TwigExtension
     }
 
     /**
-     * @return \Twig\TokenParser\AbstractTokenParser[]
+     * @return array<\Twig\TokenParser\AbstractTokenParser>
      */
     public function getTokenParsers(): array
     {

@@ -53,7 +53,7 @@ class ItemFetcher implements ItemFetcherInterface
     protected $localeClient;
 
     /**
-     * @var \SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\ReorderItemExpanderPluginInterface[]
+     * @var array<\SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\ReorderItemExpanderPluginInterface>
      */
     protected $reorderItemExpanderPlugins;
 
@@ -63,7 +63,7 @@ class ItemFetcher implements ItemFetcherInterface
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToMessengerClientInterface $messengerClient
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToGlossaryStorageClientInterface $glossaryStorageClient
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToLocaleClientInterface $localeClient
-     * @param \SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\ReorderItemExpanderPluginInterface[] $reorderItemExpanderPlugins
+     * @param array<\SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\ReorderItemExpanderPluginInterface> $reorderItemExpanderPlugins
      */
     public function __construct(
         CustomerReorderWidgetToProductBundleClientInterface $productBundleClient,
@@ -84,7 +84,7 @@ class ItemFetcher implements ItemFetcherInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function getAll(OrderTransfer $orderTransfer): array
     {
@@ -95,9 +95,9 @@ class ItemFetcher implements ItemFetcherInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param int[] $idOrderItems
+     * @param array<int> $idOrderItems
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function getByIds(OrderTransfer $orderTransfer, array $idOrderItems): array
     {
@@ -110,7 +110,7 @@ class ItemFetcher implements ItemFetcherInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function getOrderItemsTransfer(OrderTransfer $orderTransfer): array
     {
@@ -128,9 +128,9 @@ class ItemFetcher implements ItemFetcherInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function expandBundleItemsWithIdSalesOrderItem(OrderTransfer $orderTransfer, array $itemTransfers): array
     {
@@ -150,7 +150,7 @@ class ItemFetcher implements ItemFetcherInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getSalesOrderItemIdsForBundleItems(OrderTransfer $orderTransfer): array
     {
@@ -168,9 +168,9 @@ class ItemFetcher implements ItemFetcherInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function cleanUpItems(array $itemTransfers): array
     {
@@ -226,10 +226,10 @@ class ItemFetcher implements ItemFetcherInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     * @param int[] $idOrderItems
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param array<int> $idOrderItems
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function filterById(array $itemTransfers, array $idOrderItems): array
     {
@@ -262,10 +262,10 @@ class ItemFetcher implements ItemFetcherInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function executeReorderItemExpanderPlugins(array $itemTransfers, OrderTransfer $orderTransfer): array
     {

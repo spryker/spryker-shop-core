@@ -33,7 +33,7 @@ class OrderConfiguredBundleWidget extends AbstractWidget
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[]|null $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer>|null $itemTransfers
      */
     public function __construct(OrderTransfer $orderTransfer, ?iterable $itemTransfers = [])
     {
@@ -79,7 +79,7 @@ class OrderConfiguredBundleWidget extends AbstractWidget
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return void
      */
@@ -89,7 +89,7 @@ class OrderConfiguredBundleWidget extends AbstractWidget
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[] $salesOrderConfiguredBundles
+     * @param iterable<\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer> $salesOrderConfiguredBundles
      *
      * @return void
      */
@@ -99,9 +99,9 @@ class OrderConfiguredBundleWidget extends AbstractWidget
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function mapOrderItems(iterable $itemTransfers): array
     {

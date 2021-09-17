@@ -47,7 +47,7 @@ class FileManagerWidgetPlugin extends AbstractPlugin implements CmsContentWidget
     /**
      * @param \Twig\Environment $twig
      * @param array $context
-     * @param string|int|array $idFiles
+     * @param array|string|int $idFiles
      * @param string|null $templateIdentifier
      *
      * @return string
@@ -76,7 +76,7 @@ class FileManagerWidgetPlugin extends AbstractPlugin implements CmsContentWidget
 
     /**
      * @param array $context
-     * @param string|int|array $idFiles
+     * @param array|string|int $idFiles
      *
      * @return array
      */
@@ -104,7 +104,7 @@ class FileManagerWidgetPlugin extends AbstractPlugin implements CmsContentWidget
     }
 
     /**
-     * @param int|string $idFile
+     * @param string|int $idFile
      *
      * @return string
      */

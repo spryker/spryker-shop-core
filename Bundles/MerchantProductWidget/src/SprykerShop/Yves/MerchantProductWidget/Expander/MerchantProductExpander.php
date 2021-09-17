@@ -32,10 +32,8 @@ class MerchantProductExpander implements MerchantProductExpanderInterface
     }
 
     /**
-     * @phpstan-param array<mixed> $params
-     *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     * @param array $params
+     * @param array<mixed> $params
      * @param string $locale
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
@@ -63,10 +61,8 @@ class MerchantProductExpander implements MerchantProductExpanderInterface
     }
 
     /**
-     * @phpstan-param array<mixed> $params
-     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param array $params
+     * @param array<mixed> $params
      * @param string $locale
      *
      * @return \Generated\Shared\Transfer\ItemTransfer

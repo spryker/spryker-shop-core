@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\CmsSlotExternalDataTransfer;
 interface ShopCmsSlotToCmsSlotClientInterface
 {
     /**
-     * @param string[] $dataKeys
+     * @param array<string> $dataKeys
      *
      * @return \Generated\Shared\Transfer\CmsSlotExternalDataTransfer
      */

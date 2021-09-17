@@ -66,7 +66,7 @@ class AddressProvider implements AddressProviderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\AddressTransfer[]
+     * @return array<\Generated\Shared\Transfer\AddressTransfer>
      */
     public function getIndexedCustomerAddressList(): array
     {
@@ -79,7 +79,7 @@ class AddressProvider implements AddressProviderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\AddressTransfer[]
+     * @return array<\Generated\Shared\Transfer\AddressTransfer>
      */
     public function getIndexedCompanyBusinessUnitAddressList(): array
     {
@@ -95,7 +95,7 @@ class AddressProvider implements AddressProviderInterface
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $formAddressTransfer
-     * @param \Generated\Shared\Transfer\AddressTransfer[] $companyBusinessUnitAddresses
+     * @param array<\Generated\Shared\Transfer\AddressTransfer> $companyBusinessUnitAddresses
      *
      * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
@@ -186,7 +186,7 @@ class AddressProvider implements AddressProviderInterface
     }
 
     /**
-     * @return \ArrayObject|\Generated\Shared\Transfer\AddressTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\AddressTransfer>
      */
     protected function getCustomerAddressList(): ArrayObject
     {
@@ -219,7 +219,7 @@ class AddressProvider implements AddressProviderInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CompanyUnitAddressTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CompanyUnitAddressTransfer>
      */
     protected function getCompanyBusinessUnitAddressCollection(CustomerTransfer $customerTransfer): ArrayObject
     {
@@ -245,9 +245,9 @@ class AddressProvider implements AddressProviderInterface
 
     /**
      * @param int $idCompanyUnitAddress
-     * @param \ArrayObject|\Generated\Shared\Transfer\CompanyUnitAddressTransfer[] $companyUnitAddressTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CompanyUnitAddressTransfer> $companyUnitAddressTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CompanyUnitAddressTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CompanyUnitAddressTransfer>
      */
     protected function markDefaultBillingCompanyBusinessUnitAddress(
         int $idCompanyUnitAddress,

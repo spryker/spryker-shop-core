@@ -42,7 +42,7 @@ class ProductConcreteLabelWidget extends AbstractWidget
     /**
      * @param array $idProductLabels
      *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer>
      */
     protected function getProductLabelDictionaryItems(array $idProductLabels)
     {

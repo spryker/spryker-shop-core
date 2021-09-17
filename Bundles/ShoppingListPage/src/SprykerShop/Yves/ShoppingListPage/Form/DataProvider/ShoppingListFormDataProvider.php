@@ -24,14 +24,14 @@ class ShoppingListFormDataProvider
     protected $customerClient;
 
     /**
-     * @var \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListFormDataProviderMapperPluginInterface[]
+     * @var array<\SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListFormDataProviderMapperPluginInterface>
      */
     protected $shoppingListFormDataProviderMapperPlugins;
 
     /**
      * @param \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface $shoppingListClient
      * @param \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface $customerClient
-     * @param \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListFormDataProviderMapperPluginInterface[] $shoppingListFormDataProviderMapperPlugins
+     * @param array<\SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListFormDataProviderMapperPluginInterface> $shoppingListFormDataProviderMapperPlugins
      */
     public function __construct(
         ShoppingListPageToShoppingListClientInterface $shoppingListClient,

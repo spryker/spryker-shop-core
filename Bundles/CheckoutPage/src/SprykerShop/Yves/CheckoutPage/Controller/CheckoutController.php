@@ -36,7 +36,7 @@ class CheckoutController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -221,7 +221,7 @@ class CheckoutController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function placeOrderAction(Request $request)
     {
@@ -305,7 +305,7 @@ class CheckoutController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MessageTransfer[]|\ArrayObject $messageTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $messageTransfers
      *
      * @return void
      */

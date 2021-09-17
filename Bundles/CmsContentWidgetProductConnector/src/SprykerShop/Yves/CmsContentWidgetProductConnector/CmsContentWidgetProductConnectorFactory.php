@@ -31,7 +31,7 @@ class CmsContentWidgetProductConnectorFactory extends SprykerCmsContentWidgetPro
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCmsProductContentWidgetPlugins(): array
     {

@@ -17,7 +17,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 class AuthenticationHandler extends AbstractPlugin
 {
     /**
-     * @var \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreRegistrationCustomerTransferExpanderPluginInterface[]
+     * @var array<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreRegistrationCustomerTransferExpanderPluginInterface>
      */
     protected $preRegistrationCustomerTransferExpanderPlugins;
 

@@ -157,9 +157,9 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\QuickOrderItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\QuickOrderItemTransfer> $itemTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShoppingListItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShoppingListItemTransfer>
      */
     protected function mapShoppingListItems(ArrayObject $itemTransfers): ArrayObject
     {

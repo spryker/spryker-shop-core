@@ -30,7 +30,7 @@ class ProductReplacementForWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getProductDetailPageProductReplacementsForWidgetPlugins(): array
     {

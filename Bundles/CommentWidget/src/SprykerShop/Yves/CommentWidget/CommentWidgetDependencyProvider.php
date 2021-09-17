@@ -107,7 +107,7 @@ class CommentWidgetDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\CommentWidgetExtension\Dependency\Plugin\CommentThreadAfterOperationStrategyPluginInterface[]
+     * @return array<\SprykerShop\Yves\CommentWidgetExtension\Dependency\Plugin\CommentThreadAfterOperationStrategyPluginInterface>
      */
     protected function getCommentThreadAfterOperationStrategyPlugins(): array
     {

@@ -134,7 +134,7 @@ class ErrorPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\ErrorPageExtension\Dependency\Plugin\ExceptionHandlerPluginInterface[]
+     * @return array<\SprykerShop\Yves\ErrorPageExtension\Dependency\Plugin\ExceptionHandlerPluginInterface>
      */
     protected function getExceptionHandlerPlugins()
     {

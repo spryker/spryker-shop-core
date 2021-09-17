@@ -74,7 +74,7 @@ class ProductDetailPageDependencyProvider extends AbstractBundleDependencyProvid
     /**
      * Returns a list of widget plugin class names that implement \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductDetailPageWidgetPlugins(): array
     {

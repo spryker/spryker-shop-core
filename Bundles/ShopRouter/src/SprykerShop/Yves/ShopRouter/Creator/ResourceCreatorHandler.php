@@ -21,7 +21,7 @@ use SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPlugin
 class ResourceCreatorHandler implements ResourceCreatorHandlerInterface
 {
     /**
-     * @var \SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface[]
+     * @var array<\SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface>
      */
     protected $resourceCreatorPlugins;
 
@@ -31,7 +31,7 @@ class ResourceCreatorHandler implements ResourceCreatorHandlerInterface
     protected $application;
 
     /**
-     * @param \SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface[] $resourceCreatorPlugins
+     * @param array<\SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface> $resourceCreatorPlugins
      * @param \Silex\Application $application
      */
     public function __construct(array $resourceCreatorPlugins, Application $application)

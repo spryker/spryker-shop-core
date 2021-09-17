@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\CommentThreadTransfer;
 class CommentOperation implements CommentOperationInterface
 {
     /**
-     * @var \SprykerShop\Yves\CommentWidgetExtension\Dependency\Plugin\CommentThreadAfterOperationStrategyPluginInterface[]
+     * @var array<\SprykerShop\Yves\CommentWidgetExtension\Dependency\Plugin\CommentThreadAfterOperationStrategyPluginInterface>
      */
     protected $commentThreadAfterOperationStrategyPlugins;
 
     /**
-     * @param \SprykerShop\Yves\CommentWidgetExtension\Dependency\Plugin\CommentThreadAfterOperationStrategyPluginInterface[] $commentThreadAfterOperationStrategyPlugins
+     * @param array<\SprykerShop\Yves\CommentWidgetExtension\Dependency\Plugin\CommentThreadAfterOperationStrategyPluginInterface> $commentThreadAfterOperationStrategyPlugins
      */
     public function __construct(array $commentThreadAfterOperationStrategyPlugins)
     {

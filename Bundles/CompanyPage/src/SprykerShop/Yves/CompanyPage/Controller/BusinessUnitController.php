@@ -39,7 +39,7 @@ class BusinessUnitController extends AbstractCompanyController
     protected const REQUEST_PARAM_ID = 'id';
 
     /**
-     * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction()
     {
@@ -61,7 +61,7 @@ class BusinessUnitController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function detailsAction(Request $request)
     {
@@ -73,7 +73,7 @@ class BusinessUnitController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function createAction(Request $request)
     {
@@ -89,7 +89,7 @@ class BusinessUnitController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeCreateAction(Request $request)
     {
@@ -134,7 +134,7 @@ class BusinessUnitController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function updateAction(Request $request)
     {
@@ -152,7 +152,7 @@ class BusinessUnitController extends AbstractCompanyController
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeUpdateAction(Request $request)
     {
@@ -252,7 +252,7 @@ class BusinessUnitController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function confirmDeleteAction(Request $request)
     {

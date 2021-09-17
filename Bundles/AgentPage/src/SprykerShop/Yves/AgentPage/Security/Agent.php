@@ -45,7 +45,7 @@ class Agent implements UserInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getRoles()
     {

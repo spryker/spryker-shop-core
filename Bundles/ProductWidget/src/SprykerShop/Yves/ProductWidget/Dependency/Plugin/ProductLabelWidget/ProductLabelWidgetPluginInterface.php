@@ -22,7 +22,7 @@ interface ProductLabelWidgetPluginInterface extends WidgetPluginInterface
     /**
      * @api
      *
-     * @param int[] $idProductLabels
+     * @param array<int> $idProductLabels
      *
      * @return void
      */

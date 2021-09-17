@@ -140,7 +140,7 @@ class CommentThreadWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CommentTransfer[][] $taggedComments
+     * @param array<\Generated\Shared\Transfer\CommentTransfer[]> $taggedComments
      *
      * @return void
      */
@@ -182,7 +182,7 @@ class CommentThreadWidget extends AbstractWidget
     /**
      * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentTransfer[][]
+     * @return array<\Generated\Shared\Transfer\CommentTransfer[]>
      */
     protected function prepareTaggedComments(CommentThreadTransfer $commentThreadTransfer): array
     {

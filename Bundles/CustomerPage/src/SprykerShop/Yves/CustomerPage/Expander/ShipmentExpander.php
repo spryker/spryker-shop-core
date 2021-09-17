@@ -13,7 +13,7 @@ class ShipmentExpander implements ShipmentExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $bundleItems
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $bundleItems
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -27,7 +27,7 @@ class ShipmentExpander implements ShipmentExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $bundleItems
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $bundleItems
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -69,9 +69,9 @@ class ShipmentExpander implements ShipmentExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $bundleItems
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $bundleItems
      *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentTransfer>
      */
     protected function indexBundleItemShipmentsByGroupKey(array $bundleItems): array
     {
@@ -85,9 +85,9 @@ class ShipmentExpander implements ShipmentExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $bundleItems
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $bundleItems
      *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentTransfer>
      */
     protected function indexBundleItemShipmentsByBundleItemIdentifier(array $bundleItems): array
     {

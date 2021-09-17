@@ -34,7 +34,7 @@ abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigCha
     }
 
     /**
-     * @return \Twig\TwigFunction[]
+     * @return array<\Twig\TwigFunction>
      */
     public function getChartFunctions(): array
     {
@@ -71,7 +71,7 @@ abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigCha
      * @param string $chartPluginName
      * @param string|null $dataIdentifier
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function getChartContext($chartPluginName, $dataIdentifier): array
     {
@@ -89,7 +89,7 @@ abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigCha
     }
 
     /**
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function getDefaultTwigOptions(): array
     {

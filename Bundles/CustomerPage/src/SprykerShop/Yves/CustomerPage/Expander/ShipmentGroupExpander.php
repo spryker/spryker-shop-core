@@ -31,10 +31,10 @@ class ShipmentGroupExpander implements ShipmentGroupExpanderInterface
     protected const BUNDLE_KEY_PREFIX = 'bundle_prefix_';
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupTransfers
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer>
      */
     public function expandShipmentGroupsWithCartItems(ArrayObject $shipmentGroupTransfers, OrderTransfer $orderTransfer): ArrayObject
     {
@@ -51,7 +51,7 @@ class ShipmentGroupExpander implements ShipmentGroupExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $mappedBundleItems
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $mappedBundleItems
      *
      * @return array
      */
@@ -91,7 +91,7 @@ class ShipmentGroupExpander implements ShipmentGroupExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function getMappedBundleItems(OrderTransfer $orderTransfer): array
     {

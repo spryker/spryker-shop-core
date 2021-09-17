@@ -36,9 +36,9 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\ConfiguredBundleTransfer[] $configuredBundleTransfers
+     * @param array<\Generated\Shared\Transfer\ConfiguredBundleTransfer> $configuredBundleTransfers
      *
-     * @return \Generated\Shared\Transfer\ConfiguredBundleTransfer[]
+     * @return array<\Generated\Shared\Transfer\ConfiguredBundleTransfer>
      */
     protected function mapConfiguredBundle(ItemTransfer $itemTransfer, array $configuredBundleTransfers): array
     {

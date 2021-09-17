@@ -16,7 +16,7 @@ class ErrorPageConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getValidSubRequestExceptionStatusCodes()
     {
@@ -30,7 +30,7 @@ class ErrorPageConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getValidRedirectExceptionStatusCodes(): array
     {

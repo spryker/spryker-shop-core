@@ -29,7 +29,7 @@ class ProductRelationWidgetToProductRelationStorageClientBridge implements Produ
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function findRelatedProducts($idProductAbstract, $localeName, string $storeName)
     {
@@ -40,7 +40,7 @@ class ProductRelationWidgetToProductRelationStorageClientBridge implements Produ
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function findUpSellingProducts(QuoteTransfer $quoteTransfer, $localeName)
     {

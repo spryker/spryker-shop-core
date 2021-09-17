@@ -244,7 +244,7 @@ class CartControllerProvider extends AbstractYvesControllerProvider
      * @param mixed $unusedParameter
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductOptionsFromRequest($unusedParameter, Request $request)
     {

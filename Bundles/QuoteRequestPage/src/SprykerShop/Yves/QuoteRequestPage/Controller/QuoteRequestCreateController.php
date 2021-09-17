@@ -40,7 +40,7 @@ class QuoteRequestCreateController extends QuoteRequestAbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeCreateAction(Request $request)
     {
@@ -58,7 +58,7 @@ class QuoteRequestCreateController extends QuoteRequestAbstractController
     /**
      * @param \Symfony\Component\Form\FormInterface $quoteRequestForm
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function processQuoteRequestForm(FormInterface $quoteRequestForm)
     {

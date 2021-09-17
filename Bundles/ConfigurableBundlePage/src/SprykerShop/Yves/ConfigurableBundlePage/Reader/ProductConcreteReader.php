@@ -44,10 +44,10 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
     }
 
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function getProductConcretesBySkusAndLocale(array $skus, string $localeName): array
     {
@@ -57,10 +57,10 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
+     * @param array<\Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     protected function expandProductViewTransfers(array $productViewTransfers, string $localeName): array
     {

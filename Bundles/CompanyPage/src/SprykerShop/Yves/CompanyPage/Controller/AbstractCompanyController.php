@@ -116,7 +116,7 @@ abstract class AbstractCompanyController extends AbstractController
     protected function processResponseMessages(AbstractTransfer $responseTransfer): void
     {
         if ($responseTransfer->offsetExists('messages')) {
-            /** @var \Generated\Shared\Transfer\ResponseMessageTransfer[] $responseMessages */
+            /** @var array<\Generated\Shared\Transfer\ResponseMessageTransfer> $responseMessages */
             $responseMessages = $responseTransfer->offsetGet('messages');
 
             foreach ($responseMessages as $responseMessage) {

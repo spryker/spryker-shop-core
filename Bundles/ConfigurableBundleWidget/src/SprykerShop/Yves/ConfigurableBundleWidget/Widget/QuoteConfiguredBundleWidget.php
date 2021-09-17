@@ -35,7 +35,7 @@ class QuoteConfiguredBundleWidget extends AbstractWidget
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[]|null $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer>|null $itemTransfers
      */
     public function __construct(QuoteTransfer $quoteTransfer, ?iterable $itemTransfers = [])
     {
@@ -82,7 +82,7 @@ class QuoteConfiguredBundleWidget extends AbstractWidget
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return void
      */
@@ -92,7 +92,7 @@ class QuoteConfiguredBundleWidget extends AbstractWidget
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ConfiguredBundleTransfer[] $configuredBundleTransfers
+     * @param iterable<\Generated\Shared\Transfer\ConfiguredBundleTransfer> $configuredBundleTransfers
      *
      * @return void
      */
@@ -102,9 +102,9 @@ class QuoteConfiguredBundleWidget extends AbstractWidget
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function mapItems(iterable $itemTransfers): array
     {

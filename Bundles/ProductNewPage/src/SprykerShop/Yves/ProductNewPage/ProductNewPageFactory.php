@@ -15,7 +15,7 @@ use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToUrlStorage
 class ProductNewPageFactory extends AbstractFactory
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getProductNewPageWidgetPlugins(): array
     {

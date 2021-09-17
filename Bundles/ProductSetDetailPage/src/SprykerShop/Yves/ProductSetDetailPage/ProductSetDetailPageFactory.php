@@ -32,7 +32,7 @@ class ProductSetDetailPageFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getProductSetDetailPageWidgetPlugins(): array
     {

@@ -182,7 +182,7 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
 
     /**
      * @param string $voucherCode
-     * @param \ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $voucherDiscounts
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\DiscountTransfer> $voucherDiscounts
      *
      * @return void
      */

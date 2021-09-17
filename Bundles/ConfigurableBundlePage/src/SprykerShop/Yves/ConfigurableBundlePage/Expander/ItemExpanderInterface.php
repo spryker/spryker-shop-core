@@ -12,7 +12,7 @@ use ArrayObject;
 interface ItemExpanderInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param string $localeName
      *
      * @return \ArrayObject

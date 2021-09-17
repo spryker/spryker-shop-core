@@ -57,7 +57,7 @@ class CmsContentWidgetProductSetConnectorDependencyProvider extends SprykerCmsCo
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getCmsProductSetContentWidgetPlugins(): array
     {

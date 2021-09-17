@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\SalesProductBundleWidget\Extractor;
 interface ItemExtractorInterface
 {
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return array
      */

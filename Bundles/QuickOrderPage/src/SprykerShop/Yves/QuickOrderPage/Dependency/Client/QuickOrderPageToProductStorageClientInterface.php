@@ -18,9 +18,9 @@ interface QuickOrderPageToProductStorageClientInterface
     public function findProductConcreteStorageDataByMappingForCurrentLocale(string $mappingType, string $identifier): ?array;
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteStorageTransfer>
      */
     public function getProductConcreteStorageTransfers(array $productIds): array;
 }

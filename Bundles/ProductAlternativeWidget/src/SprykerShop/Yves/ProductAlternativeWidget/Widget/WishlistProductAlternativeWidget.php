@@ -46,7 +46,7 @@ class WishlistProductAlternativeWidget extends AbstractWidget
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     protected function findAlternativesProducts(ProductViewTransfer $productViewTransfer): array
     {

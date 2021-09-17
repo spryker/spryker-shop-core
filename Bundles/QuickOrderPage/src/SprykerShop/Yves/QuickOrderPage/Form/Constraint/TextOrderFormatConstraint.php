@@ -27,7 +27,7 @@ class TextOrderFormatConstraint extends SymfonyConstraint
     protected $config;
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAllowedSeparators(): array
     {

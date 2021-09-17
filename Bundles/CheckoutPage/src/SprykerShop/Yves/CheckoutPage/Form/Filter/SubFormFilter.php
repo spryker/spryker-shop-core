@@ -16,7 +16,7 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInt
 class SubFormFilter implements SubFormFilterInterface
 {
     /**
-     * @var \Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface[]
+     * @var array<\Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface>
      */
     protected $subFormFilterPlugins;
 
@@ -26,7 +26,7 @@ class SubFormFilter implements SubFormFilterInterface
     protected $quoteClient;
 
     /**
-     * @param \Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface[] $subFormFilterPlugins
+     * @param array<\Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface> $subFormFilterPlugins
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface $quoteClient
      */
     public function __construct(

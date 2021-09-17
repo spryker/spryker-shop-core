@@ -40,7 +40,7 @@ class MoveToCartHandler implements MoveToCartHandlerInterface
 
     /**
      * @param string $wishlistName
-     * @param \Generated\Shared\Transfer\WishlistItemMetaTransfer[] $wishlistItemMetaTransferCollection
+     * @param array<\Generated\Shared\Transfer\WishlistItemMetaTransfer> $wishlistItemMetaTransferCollection
      *
      * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer
      */
@@ -60,7 +60,7 @@ class MoveToCartHandler implements MoveToCartHandlerInterface
 
     /**
      * @param string $wishlistName
-     * @param \Generated\Shared\Transfer\WishlistItemMetaTransfer[] $wishlistItemMetaTransferCollection
+     * @param array<\Generated\Shared\Transfer\WishlistItemMetaTransfer> $wishlistItemMetaTransferCollection
      *
      * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer
      */

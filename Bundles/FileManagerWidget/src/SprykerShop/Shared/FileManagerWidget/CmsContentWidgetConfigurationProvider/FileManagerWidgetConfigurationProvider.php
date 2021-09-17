@@ -25,7 +25,7 @@ class FileManagerWidgetConfigurationProvider implements CmsContentWidgetConfigur
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableTemplates(): array
     {

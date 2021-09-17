@@ -56,7 +56,7 @@ class CommentWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CommentWidgetExtension\Dependency\Plugin\CommentThreadAfterOperationStrategyPluginInterface[]
+     * @return array<\SprykerShop\Yves\CommentWidgetExtension\Dependency\Plugin\CommentThreadAfterOperationStrategyPluginInterface>
      */
     public function getCommentThreadAfterOperationStrategyPlugins(): array
     {

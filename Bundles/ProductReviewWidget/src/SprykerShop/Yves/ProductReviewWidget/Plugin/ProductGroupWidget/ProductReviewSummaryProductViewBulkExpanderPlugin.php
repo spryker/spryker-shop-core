@@ -23,9 +23,9 @@ class ProductReviewSummaryProductViewBulkExpanderPlugin extends AbstractPlugin i
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
+     * @param array<\Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function execute(array $productViewTransfers): array
     {
@@ -41,9 +41,9 @@ class ProductReviewSummaryProductViewBulkExpanderPlugin extends AbstractPlugin i
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
+     * @param array<\Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductAbstractIds(array $productViewTransfers): array
     {
@@ -56,7 +56,7 @@ class ProductReviewSummaryProductViewBulkExpanderPlugin extends AbstractPlugin i
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer
      */

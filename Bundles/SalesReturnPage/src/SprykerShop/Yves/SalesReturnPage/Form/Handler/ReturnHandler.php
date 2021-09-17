@@ -48,7 +48,7 @@ class ReturnHandler implements ReturnHandlerInterface
     protected $storeClient;
 
     /**
-     * @var \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface[]
+     * @var array<\SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface>
      */
     protected $returnCreateFormHandlerPlugins;
 
@@ -56,7 +56,7 @@ class ReturnHandler implements ReturnHandlerInterface
      * @param \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnClientInterface $salesReturnClient
      * @param \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToCustomerClientInterface $customerClient
      * @param \SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToStoreClientInterface $storeClient
-     * @param \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface[] $returnCreateFormHandlerPlugins
+     * @param array<\SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface> $returnCreateFormHandlerPlugins
      */
     public function __construct(
         SalesReturnPageToSalesReturnClientInterface $salesReturnClient,

@@ -44,7 +44,7 @@ class WishlistOverviewController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeIndexAction(Request $request)
     {
@@ -106,7 +106,7 @@ class WishlistOverviewController extends AbstractController
      * @param string $wishlistName
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeUpdateAction($wishlistName, Request $request)
     {

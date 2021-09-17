@@ -126,7 +126,7 @@ class CartPageView implements CartPageViewInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function getItems(): array
     {

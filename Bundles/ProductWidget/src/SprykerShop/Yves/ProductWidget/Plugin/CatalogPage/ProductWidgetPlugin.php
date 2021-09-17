@@ -19,7 +19,7 @@ use SprykerShop\Yves\ProductWidget\Widget\CatalogPageProductWidget;
 class ProductWidgetPlugin extends AbstractWidgetPlugin implements ProductWidgetPluginInterface
 {
     /**
-     * @param mixed[] $product
+     * @param array<mixed> $product
      * @param string|null $viewMode
      *
      * @return void

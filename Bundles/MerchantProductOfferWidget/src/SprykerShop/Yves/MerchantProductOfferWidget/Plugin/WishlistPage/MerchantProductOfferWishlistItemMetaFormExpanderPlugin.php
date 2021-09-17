@@ -23,7 +23,7 @@ class MerchantProductOfferWishlistItemMetaFormExpanderPlugin extends AbstractPlu
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param mixed[] $options
+     * @param array<mixed> $options
      *
      * @return void
      */

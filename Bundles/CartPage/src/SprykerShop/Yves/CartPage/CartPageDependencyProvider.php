@@ -287,7 +287,7 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
      * Returns a list of widget plugin class names that implement
      * {@link \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface}.
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getCartPageWidgetPlugins(): array
     {
@@ -309,7 +309,7 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemTransformerPluginInterface[]
+     * @return array<\SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemTransformerPluginInterface>
      */
     protected function getCartItemTransformerPlugins(): array
     {
@@ -331,7 +331,7 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\CartPageExtension\Dependency\Plugin\PreAddToCartPluginInterface[]
+     * @return array<\SprykerShop\Yves\CartPageExtension\Dependency\Plugin\PreAddToCartPluginInterface>
      */
     protected function getPreAddToCartPlugins(): array
     {

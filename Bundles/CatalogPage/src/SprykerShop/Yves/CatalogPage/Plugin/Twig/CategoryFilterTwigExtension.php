@@ -21,7 +21,7 @@ class CategoryFilterTwigExtension extends TwigExtension
     public const FUNCTION_PREPARE_FILTER_CATEGORIES = 'prepareFilterCategories';
 
     /**
-     * @return \Twig\TwigFunction[]
+     * @return array<\Twig\TwigFunction>
      */
     public function getFunctions()
     {
@@ -35,9 +35,9 @@ class CategoryFilterTwigExtension extends TwigExtension
     /**
      * @param array $context
      * @param \Generated\Shared\Transfer\FacetSearchResultTransfer $searchResultFacet
-     * @param int|string $idCategoryNode
+     * @param string|int $idCategoryNode
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeStorageTransfer>
      */
     public function prepareFilterCategories(array $context, FacetSearchResultTransfer $searchResultFacet, $idCategoryNode): ArrayObject
     {
@@ -52,7 +52,7 @@ class CategoryFilterTwigExtension extends TwigExtension
     /**
      * @param \Generated\Shared\Transfer\FacetSearchResultTransfer $searchResultFacet
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getQuantitiesFromSearchResult(FacetSearchResultTransfer $searchResultFacet): array
     {
@@ -67,7 +67,7 @@ class CategoryFilterTwigExtension extends TwigExtension
     /**
      * @param array $context
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeStorageTransfer>
      */
     protected function getCategoriesFromContext(array $context): ArrayObject
     {

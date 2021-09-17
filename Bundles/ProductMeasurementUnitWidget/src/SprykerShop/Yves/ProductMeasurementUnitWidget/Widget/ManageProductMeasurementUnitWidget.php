@@ -90,7 +90,7 @@ class ManageProductMeasurementUnitWidget extends AbstractWidget
 
     /**
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null $baseUnit
-     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null $salesUnits
+     * @param array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>|null $salesUnits
      * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null $productQuantityStorageTransfer
      *
      * @return string
@@ -121,7 +121,7 @@ class ManageProductMeasurementUnitWidget extends AbstractWidget
 
     /**
      * @param int $minQuantityInBaseUnits
-     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null $salesUnits
+     * @param array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>|null $salesUnits
      *
      * @return float
      */

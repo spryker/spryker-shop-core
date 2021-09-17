@@ -15,7 +15,7 @@ interface QuickOrderPageToZedRequestClientInterface
     public function addFlashMessagesFromLastZedRequest();
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getLastResponseErrorMessages();
 
@@ -25,7 +25,7 @@ interface QuickOrderPageToZedRequestClientInterface
     public function addResponseMessagesToMessenger(): void;
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getResponsesErrorMessages(): array;
 }

@@ -72,7 +72,7 @@ class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGenerat
      *
      * @throws \SprykerShop\Yves\PersistentCartShareWidget\Exceptions\InvalidShareOptionGroupException
      *
-     * @return string[]
+     * @return array<string>
      */
     public function generateCartShareLinks(array $shareOptions, int $idQuote, string $shareOptionGroup): array
     {
@@ -98,7 +98,7 @@ class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGenerat
      *
      * @throws \SprykerShop\Yves\PersistentCartShareWidget\Exceptions\InvalidShareOptionGroupException
      *
-     * @return string[]
+     * @return array<string>
      */
     public function generateCartShareLinkLabels(array $shareOptions, int $idQuote, string $shareOptionGroup): array
     {

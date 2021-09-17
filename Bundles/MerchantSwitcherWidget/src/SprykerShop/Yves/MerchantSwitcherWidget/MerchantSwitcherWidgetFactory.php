@@ -81,7 +81,7 @@ class MerchantSwitcherWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \ArrayObject|\Symfony\Component\HttpFoundation\Cookie[]
+     * @return \ArrayObject<int, \Symfony\Component\HttpFoundation\Cookie>
      */
     public function getCookies(): ArrayObject
     {

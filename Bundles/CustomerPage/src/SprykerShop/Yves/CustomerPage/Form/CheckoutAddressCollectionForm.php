@@ -286,10 +286,10 @@ class CheckoutAddressCollectionForm extends AbstractType
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $bundleItemsShipmentGroupCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer> $bundleItemsShipmentGroupCollection
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return \ArrayObject<string, \Generated\Shared\Transfer\ShipmentGroupTransfer>
      */
     protected function mergeShipmentGroupsByShipmentHash(
         ArrayObject $shipmentGroupCollection,

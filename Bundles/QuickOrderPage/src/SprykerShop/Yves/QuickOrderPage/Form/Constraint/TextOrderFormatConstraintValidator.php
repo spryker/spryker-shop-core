@@ -47,7 +47,7 @@ class TextOrderFormatConstraintValidator extends ConstraintValidator
     /**
      * @param string $textOrder
      * @param string $rowSplitterPattern
-     * @param string[] $allowedSeparators
+     * @param array<string> $allowedSeparators
      *
      * @return bool
      */
@@ -72,7 +72,7 @@ class TextOrderFormatConstraintValidator extends ConstraintValidator
     }
 
     /**
-     * @param string[] $rows
+     * @param array<string> $rows
      * @param string $separator
      *
      * @return bool
@@ -92,7 +92,7 @@ class TextOrderFormatConstraintValidator extends ConstraintValidator
      * @param string $textOrder
      * @param string $rowSplitterPattern
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function splitRows(string $textOrder, string $rowSplitterPattern): array
     {

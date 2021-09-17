@@ -45,7 +45,7 @@ class MerchantOrderReferenceForItemsWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return $this
      */

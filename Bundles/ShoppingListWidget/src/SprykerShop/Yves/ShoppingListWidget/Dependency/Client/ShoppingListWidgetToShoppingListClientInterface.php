@@ -36,7 +36,7 @@ interface ShoppingListWidgetToShoppingListClientInterface
     public function addItems(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $shoppingListItemProductViews
+     * @param array<\Generated\Shared\Transfer\ProductViewTransfer> $shoppingListItemProductViews
      *
      * @return int
      */

@@ -10,12 +10,12 @@ namespace SprykerShop\Yves\ShopApplication\Twig\Widget\CacheKeyGenerator;
 class StrategyCacheKeyGenerator implements CacheKeyGeneratorInterface
 {
     /**
-     * @var \SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorStrategyPluginInterface[]
+     * @var array<\SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorStrategyPluginInterface>
      */
     protected static $widgetCacheKeyGeneratorPlugins = [];
 
     /**
-     * @param \SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorStrategyPluginInterface[] $widgetCacheKeyGeneratorPlugins
+     * @param array<\SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorStrategyPluginInterface> $widgetCacheKeyGeneratorPlugins
      */
     public function __construct(array $widgetCacheKeyGeneratorPlugins = [])
     {
@@ -46,9 +46,9 @@ class StrategyCacheKeyGenerator implements CacheKeyGeneratorInterface
     }
 
     /**
-     * @param \SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorStrategyPluginInterface[] $widgetCacheKeyGeneratorPlugins
+     * @param array<\SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorStrategyPluginInterface> $widgetCacheKeyGeneratorPlugins
      *
-     * @return \SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorStrategyPluginInterface[]
+     * @return array<\SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorStrategyPluginInterface>
      */
     protected function indexWidgetCacheKeyGeneratorPlugins(array $widgetCacheKeyGeneratorPlugins): array
     {

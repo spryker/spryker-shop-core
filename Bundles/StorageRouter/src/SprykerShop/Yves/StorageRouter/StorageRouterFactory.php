@@ -37,7 +37,7 @@ class StorageRouterFactory extends AbstractFactory
     }
 
     /**
-     * @return \Symfony\Cmf\Component\Routing\Enhancer\RouteEnhancerInterface[]
+     * @return array<\Symfony\Cmf\Component\Routing\Enhancer\RouteEnhancerInterface>
      */
     public function createRouteEnhancer(): array
     {
@@ -76,7 +76,7 @@ class StorageRouterFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\StorageRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface[]
+     * @return array<\SprykerShop\Yves\StorageRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface>
      */
     public function getResourceCreatorPlugins(): array
     {

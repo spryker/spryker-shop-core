@@ -28,7 +28,7 @@ class DetailController extends AbstractController
 
     /**
      * @param \Generated\Shared\Transfer\ProductSetDataStorageTransfer $productSetDataStorageTransfer
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
+     * @param array<\Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Spryker\Yves\Kernel\View\View
@@ -52,9 +52,9 @@ class DetailController extends AbstractController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
+     * @param array<\Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     protected function generateOptionResetUrls(Request $request, array $productViewTransfers): array
     {

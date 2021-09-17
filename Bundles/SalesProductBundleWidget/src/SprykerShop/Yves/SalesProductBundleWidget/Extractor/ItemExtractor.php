@@ -22,7 +22,7 @@ class ItemExtractor implements ItemExtractorInterface
     protected const BUNDLE_PRODUCT = 'bundleProduct';
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return array
      */
@@ -51,9 +51,9 @@ class ItemExtractor implements ItemExtractorInterface
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function getIndexedProductBundles(iterable $itemTransfers): array
     {

@@ -470,7 +470,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Symfony\Component\Form\FormTypeInterface[]|string[]
+     * @return array<\Symfony\Component\Form\FormTypeInterface|string>
      */
     protected function getCustomerStepSubForms(): array
     {
@@ -492,7 +492,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getAddressStepSubForms(): array
     {
@@ -633,7 +633,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getSummaryPageWidgetPlugins(): array
     {
@@ -655,7 +655,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getCustomerPageWidgetPlugins(): array
     {
@@ -677,7 +677,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getAddressPageWidgetPlugins(): array
     {
@@ -699,7 +699,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getShipmentPageWidgetPlugins(): array
     {
@@ -721,7 +721,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getPaymentPageWidgetPlugins(): array
     {
@@ -743,7 +743,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getSuccessPageWidgetPlugins(): array
     {
@@ -797,7 +797,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface[]
+     * @return array<\Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface>
      */
     protected function getSubFormFilterPlugins(): array
     {
@@ -819,7 +819,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepEnterPreCheckPluginInterface[]
+     * @return array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepEnterPreCheckPluginInterface>
      */
     protected function getCheckoutAddressStepEnterPreCheckPlugins(): array
     {
@@ -841,7 +841,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepEnterPreCheckPluginInterface[]
+     * @return array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepEnterPreCheckPluginInterface>
      */
     protected function getCheckoutShipmentStepEnterPreCheckPlugins(): array
     {
@@ -863,7 +863,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutPaymentStepEnterPreCheckPluginInterface[]
+     * @return array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutPaymentStepEnterPreCheckPluginInterface>
      */
     protected function getCheckoutPaymentStepEnterPreCheckPlugins(): array
     {
@@ -915,7 +915,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\AddressTransferExpanderPluginInterface[]
+     * @return array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\AddressTransferExpanderPluginInterface>
      */
     protected function getAddressStepExecutorAddressExpanderPlugins(): array
     {
@@ -977,7 +977,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepResolverStrategyPluginInterface[]
+     * @return array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepResolverStrategyPluginInterface>
      */
     protected function getCheckoutStepResolverStrategyPlugins(): array
     {
@@ -999,7 +999,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\StepEngine\CheckoutPageStepEnginePreRenderPluginInterface[]
+     * @return array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\StepEngine\CheckoutPageStepEnginePreRenderPluginInterface>
      */
     protected function getCheckoutPageStepEnginePreRenderPlugins(): array
     {

@@ -29,7 +29,7 @@ class PersistentCartShareWidgetToPersistentCartShareClientBridge implements Pers
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getCartShareOptions(?CustomerTransfer $customerTransfer): array
     {

@@ -20,7 +20,7 @@ class ShoppingListSubtotalWidget extends AbstractWidget
     protected const PARAMETER_SHOPPING_LIST_SUBTOTAL = 'shoppingListSubtotal';
 
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $shoppingListItemProductViews
+     * @param array<\Generated\Shared\Transfer\ProductViewTransfer> $shoppingListItemProductViews
      */
     public function __construct(array $shoppingListItemProductViews)
     {
@@ -44,7 +44,7 @@ class ShoppingListSubtotalWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $shoppingListItemProductViews
+     * @param array<\Generated\Shared\Transfer\ProductViewTransfer> $shoppingListItemProductViews
      *
      * @return void
      */

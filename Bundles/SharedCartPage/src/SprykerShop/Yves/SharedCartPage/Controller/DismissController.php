@@ -74,7 +74,7 @@ class DismissController extends AbstractController
     /**
      * @param int $idQuote
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeConfirmAction(int $idQuote)
     {

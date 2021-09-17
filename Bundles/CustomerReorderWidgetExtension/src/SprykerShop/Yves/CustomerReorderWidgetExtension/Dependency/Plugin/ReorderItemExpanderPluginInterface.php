@@ -20,10 +20,10 @@ interface ReorderItemExpanderPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expand(array $itemTransfers, OrderTransfer $orderTransfer): array;
 }

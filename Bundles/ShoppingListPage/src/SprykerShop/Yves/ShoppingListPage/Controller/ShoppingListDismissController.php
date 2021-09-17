@@ -76,7 +76,7 @@ class ShoppingListDismissController extends AbstractShoppingListController
     /**
      * @param int $idShoppingList
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeDismissConfirmAction(int $idShoppingList)
     {

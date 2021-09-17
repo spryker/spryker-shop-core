@@ -104,7 +104,7 @@ class StorageUrlGenerator implements UrlGeneratorInterface
 
     /**
      * @param string $pathInfo
-     * @param int|string $referenceType
+     * @param string|int $referenceType
      *
      * @return string
      */

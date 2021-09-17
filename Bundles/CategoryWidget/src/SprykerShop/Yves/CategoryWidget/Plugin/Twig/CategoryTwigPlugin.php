@@ -71,7 +71,7 @@ class CategoryTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeStorageTransfer>
      */
     protected function getCategories(ContainerInterface $container)
     {

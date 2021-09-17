@@ -51,7 +51,7 @@ class QuickOrderPageConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getTextOrderSeparators(): array
     {
@@ -91,7 +91,7 @@ class QuickOrderPageConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAllowedCsvFileMimeTypes(): array
     {

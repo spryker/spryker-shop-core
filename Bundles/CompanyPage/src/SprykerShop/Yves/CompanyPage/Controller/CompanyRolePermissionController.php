@@ -95,7 +95,7 @@ class CompanyRolePermissionController extends AbstractCompanyController
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
-     * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function configureAction(Request $request)
     {
@@ -148,7 +148,7 @@ class CompanyRolePermissionController extends AbstractCompanyController
 
     /**
      * @param int $idCompanyRole
-     * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $permissions
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PermissionTransfer> $permissions
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
@@ -179,7 +179,7 @@ class CompanyRolePermissionController extends AbstractCompanyController
     /**
      * @param int $idCompanyRole
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PermissionTransfer>
      */
     protected function getCompanyRolePermissions(int $idCompanyRole)
     {

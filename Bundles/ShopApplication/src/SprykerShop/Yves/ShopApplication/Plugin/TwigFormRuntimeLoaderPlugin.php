@@ -47,7 +47,7 @@ class TwigFormRuntimeLoaderPlugin extends AbstractPlugin implements TwigPluginIn
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getTwigTemplateFileNames(): array
     {

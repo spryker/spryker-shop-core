@@ -122,7 +122,7 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
     }
 
     /**
-     * @return \Twig\TwigFunction[]
+     * @return array<\Twig\TwigFunction>
      */
     protected function getFunctions(): array
     {

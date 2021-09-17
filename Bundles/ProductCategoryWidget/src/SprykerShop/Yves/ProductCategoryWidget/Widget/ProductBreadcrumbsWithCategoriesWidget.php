@@ -44,7 +44,7 @@ class ProductBreadcrumbsWithCategoriesWidget extends AbstractWidget
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductCategoryStorageTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductCategoryStorageTransfer>
      */
     protected function getCategories(ProductViewTransfer $productViewTransfer): ArrayObject
     {

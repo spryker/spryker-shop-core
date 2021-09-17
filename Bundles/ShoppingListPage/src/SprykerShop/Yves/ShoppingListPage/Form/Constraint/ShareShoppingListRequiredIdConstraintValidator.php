@@ -19,7 +19,7 @@ class ShareShoppingListRequiredIdConstraintValidator extends ConstraintValidator
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_SHARE_ERROR_ONE_ID_REQUIRED = 'customer.account.shopping_list.share.error.one_id_required';
 
     /**
-     * @param mixed|\Generated\Shared\Transfer\ShoppingListShareRequestTransfer $value
+     * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer|mixed $value
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException

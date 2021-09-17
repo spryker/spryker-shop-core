@@ -71,7 +71,7 @@ class ResourceSharePageDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @return \SprykerShop\Yves\ResourceSharePageExtension\Dependency\Plugin\ResourceShareRouterStrategyPluginInterface[]
+     * @return array<\SprykerShop\Yves\ResourceSharePageExtension\Dependency\Plugin\ResourceShareRouterStrategyPluginInterface>
      */
     protected function getResourceShareRouterStrategyPlugins(): array
     {

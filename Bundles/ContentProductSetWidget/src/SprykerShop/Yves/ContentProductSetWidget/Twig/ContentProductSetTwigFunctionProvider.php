@@ -161,7 +161,7 @@ class ContentProductSetTwigFunctionProvider extends TwigFunctionProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getAvailableTemplates(): array
     {

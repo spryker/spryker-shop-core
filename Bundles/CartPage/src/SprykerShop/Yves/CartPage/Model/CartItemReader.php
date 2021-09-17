@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\QuoteTransfer;
 class CartItemReader implements CartItemReaderInterface
 {
     /**
-     * @var \SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemTransformerPluginInterface[]
+     * @var array<\SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemTransformerPluginInterface>
      */
     protected $cartItemTransformerPlugins;
 
     /**
-     * @param \SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemTransformerPluginInterface[] $cartItemTransformerPlugins
+     * @param array<\SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemTransformerPluginInterface> $cartItemTransformerPlugins
      */
     public function __construct(array $cartItemTransformerPlugins)
     {
@@ -27,7 +27,7 @@ class CartItemReader implements CartItemReaderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function getCartItems(QuoteTransfer $quoteTransfer): array
     {

@@ -49,9 +49,9 @@ class ConfigurableBundleTemplateStorageReader implements ConfigurableBundleTempl
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ConfigurableBundleTemplateSlotStorageTransfer[] $configurableBundleTemplateSlotStorageTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotStorageTransfer> $configurableBundleTemplateSlotStorageTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ConfigurableBundleTemplateSlotStorageTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotStorageTransfer>
      */
     protected function getIndexedConfigurableBundleTemplateStorageTransfers(ArrayObject $configurableBundleTemplateSlotStorageTransfers): ArrayObject
     {

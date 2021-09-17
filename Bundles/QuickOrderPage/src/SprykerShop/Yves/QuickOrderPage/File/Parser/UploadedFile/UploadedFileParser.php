@@ -13,12 +13,12 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class UploadedFileParser implements FileParserInterface
 {
     /**
-     * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderUploadedFileParserStrategyPluginInterface[]
+     * @var array<\SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderUploadedFileParserStrategyPluginInterface>
      */
     protected $quickOrderFileParserPlugins;
 
     /**
-     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderUploadedFileParserStrategyPluginInterface[] $quickOrderFileParserPlugins
+     * @param array<\SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderUploadedFileParserStrategyPluginInterface> $quickOrderFileParserPlugins
      */
     public function __construct(array $quickOrderFileParserPlugins)
     {
@@ -28,7 +28,7 @@ class UploadedFileParser implements FileParserInterface
     /**
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
-     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuickOrderItemTransfer>
      */
     public function parse(UploadedFile $file): array
     {

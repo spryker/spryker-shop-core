@@ -238,7 +238,7 @@ class ContentProductSetTwigPluginTest extends Unit
     }
 
     /**
-     * @return bool|\Twig\TwigFunction
+     * @return \Twig\TwigFunction|bool
      */
     protected function getContentProductSetTwigPlugin()
     {

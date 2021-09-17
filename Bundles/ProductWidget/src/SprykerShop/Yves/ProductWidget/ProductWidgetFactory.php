@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\AbstractFactory;
 class ProductWidgetFactory extends AbstractFactory
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getProductRelationWidgetSubWidgets(): array
     {
@@ -20,7 +20,7 @@ class ProductWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCatalogPageSubWidgets(): array
     {
@@ -28,7 +28,7 @@ class ProductWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCmsContentWidgetProductWidgetPlugins(): array
     {
@@ -36,7 +36,7 @@ class ProductWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCmsContentWidgetProductGroupWidgetPlugins(): array
     {
@@ -44,7 +44,7 @@ class ProductWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getFeaturedProductSubWidgetPlugins(): array
     {
@@ -52,7 +52,7 @@ class ProductWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getProductReplacementForWidgetPlugins(): array
     {
@@ -60,7 +60,7 @@ class ProductWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getProductAlternativeWidgetPlugins(): array
     {

@@ -185,7 +185,7 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @deprecated Use $this->getGlobalWidgets() instead.
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getGlobalWidgetPlugins(): array
     {
@@ -193,7 +193,7 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getGlobalWidgets(): array
     {
@@ -201,7 +201,7 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorStrategyPluginInterface[]
+     * @return array<\SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\WidgetCacheKeyGeneratorStrategyPluginInterface>
      */
     protected function getWidgetCacheKeyGeneratorStrategyPlugins(): array
     {
@@ -237,7 +237,7 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     protected function getApplicationPlugins(): array
     {
@@ -245,7 +245,7 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\FilterControllerEventHandlerPluginInterface[]
+     * @return array<\SprykerShop\Yves\ShopApplicationExtension\Dependency\Plugin\FilterControllerEventHandlerPluginInterface>
      */
     protected function getFilterControllerEventSubscriberPlugins()
     {

@@ -159,7 +159,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\PostReorderPluginInterface[]
+     * @return array<\SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\PostReorderPluginInterface>
      */
     public function getPostReorderPlugins(): array
     {
@@ -167,7 +167,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\ReorderItemExpanderPluginInterface[]
+     * @return array<\SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\ReorderItemExpanderPluginInterface>
      */
     public function getReorderItemExpanderPlugins(): array
     {

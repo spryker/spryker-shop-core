@@ -46,7 +46,7 @@ class Customer implements CustomerUserInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getRoles()
     {

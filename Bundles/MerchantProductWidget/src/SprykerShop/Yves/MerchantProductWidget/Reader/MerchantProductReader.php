@@ -155,7 +155,7 @@ class MerchantProductReader implements MerchantProductReaderInterface
             return null;
         }
 
-        /** @var mixed[] $productAbstractStorageData */
+        /** @var array<mixed> $productAbstractStorageData */
         $productAbstractStorageData = $this->productStorageClient
             ->findProductAbstractStorageData(
                 $productConcreteStorageData[static::ID_PRODUCT_ABSTRACT],
@@ -195,7 +195,7 @@ class MerchantProductReader implements MerchantProductReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function getPriceProductTransfers(ProductViewTransfer $productViewTransfer): array
     {

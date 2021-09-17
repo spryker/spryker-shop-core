@@ -133,7 +133,7 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer[] $quoteRequestVersionTransfers
+     * @param array<\Generated\Shared\Transfer\QuoteRequestVersionTransfer> $quoteRequestVersionTransfers
      * @param string|null $versionReference
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
@@ -163,9 +163,9 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer[] $quoteRequestVersionTransfers
+     * @param array<\Generated\Shared\Transfer\QuoteRequestVersionTransfer> $quoteRequestVersionTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getQuoteRequestVersionReferences(array $quoteRequestVersionTransfers): array
     {

@@ -32,7 +32,7 @@ class RouteResolver implements RouteResolverInterface
     protected const GLOSSARY_KEY_RESOURCE_SHARE_LINK_ERROR_NO_ROUTE = 'resource-share.link.error.no-route';
 
     /**
-     * @var \SprykerShop\Yves\ResourceSharePageExtension\Dependency\Plugin\ResourceShareRouterStrategyPluginInterface[]
+     * @var array<\SprykerShop\Yves\ResourceSharePageExtension\Dependency\Plugin\ResourceShareRouterStrategyPluginInterface>
      */
     protected $resourceShareRouterStrategyPlugins;
 
@@ -43,7 +43,7 @@ class RouteResolver implements RouteResolverInterface
 
     /**
      * @param \SprykerShop\Yves\ResourceSharePage\Dependency\Client\ResourceSharePageToMessengerClientInterface $messengerClient
-     * @param \SprykerShop\Yves\ResourceSharePageExtension\Dependency\Plugin\ResourceShareRouterStrategyPluginInterface[] $resourceShareRouterStrategyPlugins
+     * @param array<\SprykerShop\Yves\ResourceSharePageExtension\Dependency\Plugin\ResourceShareRouterStrategyPluginInterface> $resourceShareRouterStrategyPlugins
      */
     public function __construct(ResourceSharePageToMessengerClientInterface $messengerClient, array $resourceShareRouterStrategyPlugins)
     {

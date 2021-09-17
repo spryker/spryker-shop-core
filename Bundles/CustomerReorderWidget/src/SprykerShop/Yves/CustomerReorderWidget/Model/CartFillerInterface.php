@@ -20,7 +20,7 @@ interface CartFillerInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param int[] $idOrderItems
+     * @param array<int> $idOrderItems
      *
      * @return void
      */

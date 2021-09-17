@@ -40,7 +40,7 @@ class QuoteRequestAgentCreateController extends QuoteRequestAgentAbstractControl
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeCreateAction(Request $request)
     {

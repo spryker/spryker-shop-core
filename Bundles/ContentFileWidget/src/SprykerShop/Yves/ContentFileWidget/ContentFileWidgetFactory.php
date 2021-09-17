@@ -69,7 +69,7 @@ class ContentFileWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface[]
+     * @return array<\SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface>
      */
     public function getFileStorageDataExpanders(): array
     {

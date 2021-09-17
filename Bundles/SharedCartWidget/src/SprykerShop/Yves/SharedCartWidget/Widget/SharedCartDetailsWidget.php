@@ -24,7 +24,7 @@ class SharedCartDetailsWidget extends AbstractWidget
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param array $actions
-     * @param string[]|null $widgetList
+     * @param array<string>|null $widgetList
      */
     public function __construct(QuoteTransfer $quoteTransfer, array $actions, ?array $widgetList = null)
     {

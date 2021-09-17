@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\AbstractFactory;
 class TabsWidgetFactory extends AbstractFactory
 {
     /**
-     * @return \SprykerShop\Yves\TabsWidgetExtension\Plugin\FullTextSearchTabPluginInterface[]
+     * @return array<\SprykerShop\Yves\TabsWidgetExtension\Plugin\FullTextSearchTabPluginInterface>
      */
     public function getFullTextSearchTabPlugins(): array
     {

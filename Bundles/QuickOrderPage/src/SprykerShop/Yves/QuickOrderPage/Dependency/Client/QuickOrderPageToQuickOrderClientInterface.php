@@ -14,7 +14,7 @@ interface QuickOrderPageToQuickOrderClientInterface
     /**
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): array;
 
@@ -26,9 +26,9 @@ interface QuickOrderPageToQuickOrderClientInterface
     public function buildQuickOrderTransfer(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function expandProductConcreteTransfers(array $productConcreteTransfers): array;
 }

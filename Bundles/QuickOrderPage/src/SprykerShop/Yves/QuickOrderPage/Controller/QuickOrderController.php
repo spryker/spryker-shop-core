@@ -119,7 +119,7 @@ class QuickOrderController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeQuickOrderFormSubmitAction(Request $request)
     {
@@ -146,7 +146,7 @@ class QuickOrderController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeIndexAction(Request $request)
     {
@@ -202,7 +202,7 @@ class QuickOrderController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer[] $quickOrderItems
+     * @param array<\Generated\Shared\Transfer\QuickOrderItemTransfer> $quickOrderItems
      *
      * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
@@ -228,7 +228,7 @@ class QuickOrderController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer[] $quickOrderItems
+     * @param array<\Generated\Shared\Transfer\QuickOrderItemTransfer> $quickOrderItems
      *
      * @return array
      */
@@ -271,7 +271,7 @@ class QuickOrderController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     protected function getProductsFromQuickOrderItems(QuickOrderTransfer $quickOrderTransfer): array
     {
@@ -526,7 +526,7 @@ class QuickOrderController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Form\FormInterface $textOrderForm
      *
-     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuickOrderItemTransfer>
      */
     protected function handleTextOrderForm(Request $request, FormInterface $textOrderForm): array
     {
@@ -553,7 +553,7 @@ class QuickOrderController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Form\FormInterface $uploadOrderForm
      *
-     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuickOrderItemTransfer>
      */
     protected function handleUploadOrderForm(Request $request, FormInterface $uploadOrderForm): array
     {
@@ -576,7 +576,7 @@ class QuickOrderController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuickOrderItemTransfer>
      */
     protected function handleQuickOrderForm($request): array
     {
@@ -698,7 +698,7 @@ class QuickOrderController extends AbstractController
      *
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductPricesFromQuickOrderTransfer(QuickOrderTransfer $quickOrderTransfer): array
     {
@@ -719,7 +719,7 @@ class QuickOrderController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
      * @return array
      */
@@ -759,7 +759,7 @@ class QuickOrderController extends AbstractController
 
     /**
      * @param int $code
-     * @param string[] $messages
+     * @param array<string> $messages
      *
      * @return array
      */

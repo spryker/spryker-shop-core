@@ -173,7 +173,7 @@ class CustomerPageConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getOrderSearchTypes(): array
     {

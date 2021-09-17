@@ -15,12 +15,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class CustomerConfirmationUserChecker extends UserChecker
 {
     /**
-     * @var \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreAuthUserCheckPluginInterface[]
+     * @var array<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreAuthUserCheckPluginInterface>
      */
     protected $preAuthUserCheckPlugins;
 
     /**
-     * @param \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreAuthUserCheckPluginInterface[] $preAuthUserCheckPlugins
+     * @param array<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreAuthUserCheckPluginInterface> $preAuthUserCheckPlugins
      */
     public function __construct(array $preAuthUserCheckPlugins)
     {

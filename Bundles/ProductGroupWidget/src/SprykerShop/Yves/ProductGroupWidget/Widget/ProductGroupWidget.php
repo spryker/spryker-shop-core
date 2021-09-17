@@ -46,7 +46,7 @@ class ProductGroupWidget extends AbstractWidget
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     protected function getProductGroups(int $idProductAbstract): array
     {

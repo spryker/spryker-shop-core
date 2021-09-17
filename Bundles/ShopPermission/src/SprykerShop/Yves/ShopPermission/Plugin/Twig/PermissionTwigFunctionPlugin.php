@@ -44,7 +44,7 @@ class PermissionTwigFunctionPlugin extends AbstractPlugin implements TwigFunctio
 
     /**
      * @param string $permissionKey
-     * @param string|int|mixed|null $context
+     * @param mixed|string|int|null $context
      *
      * @return bool
      */

@@ -90,7 +90,7 @@ class QuoteRequestAgentCheckoutShipmentController extends QuoteRequestAgentAbstr
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $quoteRequestReference
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeConfirmAction(Request $request, string $quoteRequestReference)
     {

@@ -43,7 +43,7 @@ class CmsBlockWidgetTwigPlugin extends AbstractTwigExtensionPlugin
     protected const CMS_BLOCK_GLOSSARY_KEY_MAPPING_KEY = 'key';
 
     /**
-     * @return \Twig\TwigFunction[]
+     * @return array<\Twig\TwigFunction>
      */
     public function getFunctions(): array
     {
@@ -112,7 +112,7 @@ class CmsBlockWidgetTwigPlugin extends AbstractTwigExtensionPlugin
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getPlaceholders(CmsBlockTransfer $cmsBlockTransfer): array
     {

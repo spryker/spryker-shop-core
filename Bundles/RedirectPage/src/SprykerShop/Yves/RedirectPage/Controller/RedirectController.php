@@ -21,7 +21,7 @@ class RedirectController extends AbstractController
     protected const HEADER_PARAMETER_CACHE_CONTROL_VALUE = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0';
 
     /**
-     * @param mixed[] $meta
+     * @param array<mixed> $meta
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */

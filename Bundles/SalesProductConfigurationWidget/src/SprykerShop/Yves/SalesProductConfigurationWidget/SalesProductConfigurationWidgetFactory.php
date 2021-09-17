@@ -28,7 +28,7 @@ class SalesProductConfigurationWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\SalesProductConfigurationWidgetExtension\Dependency\Plugin\SalesProductConfigurationRenderStrategyPluginInterface[]
+     * @return array<\SprykerShop\Yves\SalesProductConfigurationWidgetExtension\Dependency\Plugin\SalesProductConfigurationRenderStrategyPluginInterface>
      */
     public function getSalesProductConfigurationRenderStrategyPlugins(): array
     {

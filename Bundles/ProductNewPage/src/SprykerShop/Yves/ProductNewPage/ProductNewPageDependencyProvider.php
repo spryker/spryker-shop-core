@@ -124,7 +124,7 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductNewPageWidgetPlugins(): array
     {

@@ -104,7 +104,7 @@ class ProductConfigurationCartWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductConfigurationCartWidgetExtension\Dependency\Plugin\CartProductConfigurationRenderStrategyPluginInterface[]
+     * @return array<\SprykerShop\Yves\ProductConfigurationCartWidgetExtension\Dependency\Plugin\CartProductConfigurationRenderStrategyPluginInterface>
      */
     public function getCartProductConfigurationRenderStrategyPlugins(): array
     {

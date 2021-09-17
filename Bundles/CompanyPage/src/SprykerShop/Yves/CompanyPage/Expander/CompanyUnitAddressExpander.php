@@ -93,7 +93,7 @@ class CompanyUnitAddressExpander implements CompanyUnitAddressExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CompanyUnitAddressTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CompanyUnitAddressTransfer>
      */
     protected function getCompanyUnitAddresses(CustomerTransfer $customerTransfer): ArrayObject
     {

@@ -37,7 +37,7 @@ class CurrencyWidget extends AbstractWidget
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
+     * @return array<\Generated\Shared\Transfer\CurrencyTransfer>
      */
     protected function getCurrencies(): array
     {

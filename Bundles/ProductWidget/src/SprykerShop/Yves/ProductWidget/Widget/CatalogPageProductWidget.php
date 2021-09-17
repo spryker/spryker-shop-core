@@ -15,7 +15,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class CatalogPageProductWidget extends AbstractWidget
 {
     /**
-     * @param mixed[] $product
+     * @param array<mixed> $product
      * @param string|null $viewMode
      */
     public function __construct(array $product, $viewMode = null)

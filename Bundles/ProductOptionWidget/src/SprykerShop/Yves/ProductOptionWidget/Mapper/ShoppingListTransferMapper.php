@@ -71,7 +71,7 @@ class ShoppingListTransferMapper implements ShoppingListTransferMapperInterface
      * @param array $requestFormData
      * @param string $itemKey
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function filterProductOptionValueIds(array $requestFormData, string $itemKey): array
     {
@@ -91,7 +91,7 @@ class ShoppingListTransferMapper implements ShoppingListTransferMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     * @param int[] $productOptionValueIds
+     * @param array<int> $productOptionValueIds
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
@@ -106,9 +106,9 @@ class ShoppingListTransferMapper implements ShoppingListTransferMapperInterface
     }
 
     /**
-     * @param int[] $productOptionValueIds
+     * @param array<int> $productOptionValueIds
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductOptionTransfer>
      */
     protected function createProductOptionTransfers(array $productOptionValueIds): ArrayObject
     {

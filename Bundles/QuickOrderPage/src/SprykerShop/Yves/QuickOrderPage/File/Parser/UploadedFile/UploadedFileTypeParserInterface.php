@@ -14,7 +14,7 @@ interface UploadedFileTypeParserInterface
     /**
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
-     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuickOrderItemTransfer>
      */
     public function parse(UploadedFile $file): array;
 }

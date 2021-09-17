@@ -48,7 +48,7 @@ class WidgetServiceProvider extends WidgetTagServiceProvider
     protected const TWIG_FUNCTION_WIDGET_GLOBAL_EXISTS = 'widgetGlobalExists';
 
     /**
-     * @return \Twig\TwigFunction[]
+     * @return array<\Twig\TwigFunction>
      */
     protected function getFunctions(): array
     {

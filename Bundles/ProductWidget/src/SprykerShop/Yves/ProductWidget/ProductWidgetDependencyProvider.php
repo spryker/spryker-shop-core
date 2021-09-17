@@ -160,7 +160,7 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Returns a list of widget plugin class names that implement \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductRelationWidgetSubWidgetPlugins(): array
     {
@@ -170,7 +170,7 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Returns a list of widget plugin class names that implement \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getCatalogPageSubWidgetPlugins(): array
     {
@@ -180,7 +180,7 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Returns a list of widget plugin class names that implement \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getCmsContentWidgetProductSubWidgetPlugins(): array
     {
@@ -190,7 +190,7 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Returns a list of widget plugin class names that implement \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getCmsContentWidgetProductGroupSubWidgetPlugins(): array
     {
@@ -200,7 +200,7 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Returns a list of widget plugin class names that implement \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getHomePageSubWidgetPlugins(): array
     {
@@ -210,7 +210,7 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Returns a list of widget plugin class names that implement \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductReplacementForWidgetPlugins(): array
     {
@@ -220,7 +220,7 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Returns a list of widget plugin class names that implement \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductAlternativeWidgetPlugins(): array
     {

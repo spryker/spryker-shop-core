@@ -29,12 +29,12 @@ class AddressStepExecutor implements StepExecutorInterface
     protected $customerClient;
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\AddressTransferExpanderPluginInterface[]
+     * @var array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\AddressTransferExpanderPluginInterface>
      */
     protected $addressTransferExpanderPlugins;
 
     /**
-     * @var \Generated\Shared\Transfer\ShipmentTransfer[]
+     * @var array<\Generated\Shared\Transfer\ShipmentTransfer>
      */
     protected $createdShipmentsWithShippingAddressesList = [];
 
@@ -46,7 +46,7 @@ class AddressStepExecutor implements StepExecutorInterface
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface $customerService
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface $customerClient
-     * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\AddressTransferExpanderPluginInterface[] $addressTransferExpanderPlugins
+     * @param array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\AddressTransferExpanderPluginInterface> $addressTransferExpanderPlugins
      */
     public function __construct(
         CheckoutPageToCustomerServiceInterface $customerService,

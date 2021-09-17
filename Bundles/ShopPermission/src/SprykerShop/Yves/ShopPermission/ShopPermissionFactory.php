@@ -20,7 +20,7 @@ class ShopPermissionFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface[]
+     * @return array<\Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface>
      */
     public function getPermissionTwigFunctionPlugins()
     {
@@ -28,7 +28,7 @@ class ShopPermissionFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ShopApplication\Plugin\AbstractTwigExtensionPlugin[]|\Twig\Extension\ExtensionInterface[]
+     * @return array<\SprykerShop\Yves\ShopApplication\Plugin\AbstractTwigExtensionPlugin|\Twig\Extension\ExtensionInterface>
      */
     public function getPermissionTwigExtensionPlugins(): array
     {

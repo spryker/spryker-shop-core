@@ -26,7 +26,7 @@ class ResendController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Spryker\Yves\Kernel\View\View
+     * @return \Spryker\Yves\Kernel\View\View|array
      */
     public function indexAction(Request $request)
     {

@@ -87,7 +87,7 @@ class CommentWidgetToCommentClientBridge implements CommentWidgetToCommentClient
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableCommentTags(): array
     {

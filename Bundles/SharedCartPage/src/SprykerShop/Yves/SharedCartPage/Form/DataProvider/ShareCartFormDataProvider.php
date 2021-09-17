@@ -95,7 +95,7 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
     /**
      * @param int $idQuote
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShareDetailTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShareDetailTransfer>
      */
     protected function getShareDetails(int $idQuote): ArrayObject
     {
@@ -118,9 +118,9 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShareDetailTransfer[] $shareDetailTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShareDetailTransfer> $shareDetailTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function indexExistingCompanyUsers(ArrayObject $shareDetailTransfers): array
     {
@@ -158,7 +158,7 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     * @return array<\Generated\Shared\Transfer\CompanyUserTransfer>
      */
     protected function getBusinessUnitCustomers(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): array
     {

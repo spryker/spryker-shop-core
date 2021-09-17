@@ -23,7 +23,7 @@ class ShoppingListPageToZedRequestClientBridge implements ShoppingListPageToZedR
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getLastResponseErrorMessages()
     {

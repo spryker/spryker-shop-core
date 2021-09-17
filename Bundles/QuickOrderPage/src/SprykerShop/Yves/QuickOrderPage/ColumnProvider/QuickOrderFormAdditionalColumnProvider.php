@@ -10,12 +10,12 @@ namespace SprykerShop\Yves\QuickOrderPage\ColumnProvider;
 class QuickOrderFormAdditionalColumnProvider implements QuickOrderFormAdditionalColumnProviderInterface
 {
     /**
-     * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormColumnPluginInterface[]
+     * @var array<\SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormColumnPluginInterface>
      */
     protected $quickOrderFormColumnPlugins;
 
     /**
-     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormColumnPluginInterface[] $quickOrderFormColumnPlugins
+     * @param array<\SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormColumnPluginInterface> $quickOrderFormColumnPlugins
      */
     public function __construct(array $quickOrderFormColumnPlugins)
     {

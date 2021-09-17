@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer;
 interface AddToCartHandlerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItems
+     * @param array<\Generated\Shared\Transfer\ShoppingListItemTransfer> $shoppingListItems
      * @param array $itemQuantity
      *
      * @return \Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer

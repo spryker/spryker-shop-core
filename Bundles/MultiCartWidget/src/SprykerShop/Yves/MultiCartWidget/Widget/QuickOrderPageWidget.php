@@ -41,7 +41,7 @@ class QuickOrderPageWidget extends AbstractWidget
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuoteTransfer>
      */
     protected function getQuoteList(): array
     {

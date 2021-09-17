@@ -15,7 +15,7 @@ interface CartPageToZedRequestClientInterface
     public function addFlashMessagesFromLastZedRequest();
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getLastResponseErrorMessages();
 
@@ -25,12 +25,12 @@ interface CartPageToZedRequestClientInterface
     public function addResponseMessagesToMessenger(): void;
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getResponsesErrorMessages(): array;
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getLastResponseSuccessMessages();
 }

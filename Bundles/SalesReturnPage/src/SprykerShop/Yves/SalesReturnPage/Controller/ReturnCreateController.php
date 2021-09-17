@@ -60,7 +60,7 @@ class ReturnCreateController extends AbstractReturnController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $orderReference
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeCreateAction(Request $request, string $orderReference)
     {
@@ -109,7 +109,7 @@ class ReturnCreateController extends AbstractReturnController
      * @param \Symfony\Component\Form\FormInterface $returnCreateForm
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function processReturnCreateForm(FormInterface $returnCreateForm, OrderTransfer $orderTransfer)
     {

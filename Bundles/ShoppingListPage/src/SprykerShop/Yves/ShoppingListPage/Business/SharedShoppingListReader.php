@@ -66,7 +66,7 @@ class SharedShoppingListReader implements SharedShoppingListReaderInterface
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CompanyUserTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CompanyUserTransfer>
      */
     protected function getSharedCompanyUsers(ShoppingListTransfer $shoppingListTransfer, CustomerTransfer $customerTransfer): ArrayObject
     {
@@ -95,7 +95,7 @@ class SharedShoppingListReader implements SharedShoppingListReaderInterface
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CompanyBusinessUnitTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CompanyBusinessUnitTransfer>
      */
     protected function getSharedCompanyBusinessUnits(ShoppingListTransfer $shoppingListTransfer, CustomerTransfer $customerTransfer): ArrayObject
     {

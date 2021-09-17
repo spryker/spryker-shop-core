@@ -25,7 +25,7 @@ class CmsBlockPlaceholderTwigPlugin extends AbstractTwigExtensionPlugin
     protected const CMS_BLOCK_PREFIX_KEY = 'generated.cms.cms-block';
 
     /**
-     * @return \Twig\TwigFunction[]
+     * @return array<\Twig\TwigFunction>
      */
     public function getFunctions(): array
     {

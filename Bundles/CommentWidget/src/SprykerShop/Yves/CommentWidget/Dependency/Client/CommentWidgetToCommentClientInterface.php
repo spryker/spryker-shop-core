@@ -56,7 +56,7 @@ interface CommentWidgetToCommentClientInterface
     public function removeCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentThreadResponseTransfer;
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableCommentTags(): array;
 }

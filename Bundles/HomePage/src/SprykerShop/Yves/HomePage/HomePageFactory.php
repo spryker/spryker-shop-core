@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\AbstractFactory;
 class HomePageFactory extends AbstractFactory
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getHomePageWidgetPlugins(): array
     {

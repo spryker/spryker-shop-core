@@ -13,9 +13,9 @@ use Generated\Shared\Transfer\OrderTransfer;
 class ItemStateMapper implements ItemStateMapperInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return string[][][]
+     * @return array<string[][]>
      */
     public function aggregateItemStatesDisplayNamesByOrderReference(ArrayObject $orderTransfers): array
     {
@@ -30,7 +30,7 @@ class ItemStateMapper implements ItemStateMapperInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     protected function aggregateItemStatesDisplayNamesByOrder(OrderTransfer $orderTransfer): array
     {

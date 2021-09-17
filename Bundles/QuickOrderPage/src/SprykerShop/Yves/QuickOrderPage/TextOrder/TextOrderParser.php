@@ -34,7 +34,7 @@ class TextOrderParser implements TextOrderParserInterface
     /**
      * @param string $textOrder
      *
-     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuickOrderItemTransfer>
      */
     public function parse(string $textOrder): array
     {
@@ -61,11 +61,11 @@ class TextOrderParser implements TextOrderParserInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer[] $quickOrderItemTransfers
+     * @param array<\Generated\Shared\Transfer\QuickOrderItemTransfer> $quickOrderItemTransfers
      * @param string $sku
      * @param int $quantity
      *
-     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuickOrderItemTransfer>
      */
     protected function addQuickOrderItemTransfer(array $quickOrderItemTransfers, string $sku, int $quantity): array
     {
@@ -96,7 +96,7 @@ class TextOrderParser implements TextOrderParserInterface
     /**
      * @param string $textOrder
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getTextOrderRows(string $textOrder): array
     {
@@ -106,7 +106,7 @@ class TextOrderParser implements TextOrderParserInterface
     /**
      * @phpstan-return non-empty-string
      *
-     * @param string[] $rows
+     * @param array<string> $rows
      *
      * @throws \SprykerShop\Yves\QuickOrderPage\Exception\TextOrderParserException
      *

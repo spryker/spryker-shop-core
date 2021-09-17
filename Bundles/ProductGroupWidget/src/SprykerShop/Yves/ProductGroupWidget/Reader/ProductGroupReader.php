@@ -14,12 +14,12 @@ use SprykerShop\Yves\ProductGroupWidget\Dependency\Client\ProductGroupWidgetToPr
 class ProductGroupReader implements ProductGroupReaderInterface
 {
     /**
-     * @var array|\SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewBulkExpanderPluginInterface[]
+     * @var array<\SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewBulkExpanderPluginInterface>
      */
     protected $productViewBulkExpanderPlugins;
 
     /**
-     * @var array|\SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface[]
+     * @var array<\SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface>
      */
     protected $productViewExpanderPlugins;
 
@@ -36,8 +36,8 @@ class ProductGroupReader implements ProductGroupReaderInterface
     /**
      * @param \SprykerShop\Yves\ProductGroupWidget\Dependency\Client\ProductGroupWidgetToProductGroupStorageClientInterface $productGroupStorageClient
      * @param \SprykerShop\Yves\ProductGroupWidget\Dependency\Client\ProductGroupWidgetToProductStorageClientInterface $productStorageClient
-     * @param \SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface[] $productViewExpanderPlugins
-     * @param \SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewBulkExpanderPluginInterface[] $productViewBulkExpanderPlugins
+     * @param array<\SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface> $productViewExpanderPlugins
+     * @param array<\SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewBulkExpanderPluginInterface> $productViewBulkExpanderPlugins
      */
     public function __construct(
         ProductGroupWidgetToProductGroupStorageClientInterface $productGroupStorageClient,
@@ -56,7 +56,7 @@ class ProductGroupReader implements ProductGroupReaderInterface
      * @param string $localeName
      * @param array $selectedAttributes
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function getProductGroups(int $idProductAbstract, string $localeName, array $selectedAttributes = []): array
     {
@@ -71,7 +71,7 @@ class ProductGroupReader implements ProductGroupReaderInterface
      * @param string $localeName
      * @param array $selectedAttributes
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     protected function getProductViewTransfers(int $idProductAbstract, string $localeName, array $selectedAttributes = []): array
     {
@@ -86,9 +86,9 @@ class ProductGroupReader implements ProductGroupReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
+     * @param array<\Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     protected function getExpandedProductViewTransfers(array $productViewTransfers): array
     {
@@ -114,9 +114,9 @@ class ProductGroupReader implements ProductGroupReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
+     * @param array<\Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     protected function expandProductViewBulkTransfers(array $productViewTransfers): array
     {

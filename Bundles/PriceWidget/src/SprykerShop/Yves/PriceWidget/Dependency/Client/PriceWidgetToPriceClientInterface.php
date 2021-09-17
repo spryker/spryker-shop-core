@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\PriceWidget\Dependency\Client;
 interface PriceWidgetToPriceClientInterface
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getPriceModes();
 

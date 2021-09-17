@@ -145,7 +145,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function getBundleItemsFromQuote(QuoteTransfer $quoteTransfer): array
     {
@@ -424,9 +424,9 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function filterQuoteItemsWithShipment(array $itemTransfers): array
     {

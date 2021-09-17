@@ -384,7 +384,7 @@ class WishlistController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\WishlistOverviewResponseTransfer $wishlistOverviewResponse
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     protected function getWishlistItems(WishlistOverviewResponseTransfer $wishlistOverviewResponse): array
     {
@@ -457,7 +457,7 @@ class WishlistController extends AbstractController
 
     /**
      * @param string $key
-     * @param string[] $parameters
+     * @param array<string> $parameters
      *
      * @return string
      */

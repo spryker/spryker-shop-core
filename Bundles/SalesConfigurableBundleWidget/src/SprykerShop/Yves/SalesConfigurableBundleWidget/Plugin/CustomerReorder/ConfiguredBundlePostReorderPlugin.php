@@ -23,7 +23,7 @@ class ConfiguredBundlePostReorderPlugin extends AbstractPlugin implements PostRe
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return void
      */

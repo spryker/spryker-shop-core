@@ -194,7 +194,7 @@ class ContentProductAbstractListTwigPluginTest extends Unit
     }
 
     /**
-     * @return bool|\Twig\TwigFunction
+     * @return \Twig\TwigFunction|bool
      */
     protected function getContentProductAbstractListTwigPlugin()
     {

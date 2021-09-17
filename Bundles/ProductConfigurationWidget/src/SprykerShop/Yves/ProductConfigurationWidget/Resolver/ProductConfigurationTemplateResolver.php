@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\ProductConfigurationTemplateTransfer;
 class ProductConfigurationTemplateResolver implements ProductConfigurationTemplateResolverInterface
 {
     /**
-     * @var \SprykerShop\Yves\ProductConfigurationWidgetExtension\Dependency\Plugin\ProductConfigurationRenderStrategyPluginInterface[]
+     * @var array<\SprykerShop\Yves\ProductConfigurationWidgetExtension\Dependency\Plugin\ProductConfigurationRenderStrategyPluginInterface>
      */
     protected $productConfigurationRenderStrategyPlugins;
 
     /**
-     * @param \SprykerShop\Yves\ProductConfigurationWidgetExtension\Dependency\Plugin\ProductConfigurationRenderStrategyPluginInterface[] $productConfigurationRenderStrategyPlugins
+     * @param array<\SprykerShop\Yves\ProductConfigurationWidgetExtension\Dependency\Plugin\ProductConfigurationRenderStrategyPluginInterface> $productConfigurationRenderStrategyPlugins
      */
     public function __construct(array $productConfigurationRenderStrategyPlugins)
     {

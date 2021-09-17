@@ -39,10 +39,10 @@ class QuoteWithCustomShipmentPriceCheckoutWorkflowStepResolverStrategyPlugin ext
      *
      * @api
      *
-     * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]|\Spryker\Yves\StepEngine\Dependency\Step\StepWithCodeInterface[] $steps
+     * @param array<\Spryker\Yves\StepEngine\Dependency\Step\StepInterface|\Spryker\Yves\StepEngine\Dependency\Step\StepWithCodeInterface> $steps
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]|\Spryker\Yves\StepEngine\Dependency\Step\StepWithCodeInterface[]
+     * @return array<\Spryker\Yves\StepEngine\Dependency\Step\StepInterface|\Spryker\Yves\StepEngine\Dependency\Step\StepWithCodeInterface>
      */
     public function execute(array $steps, QuoteTransfer $quoteTransfer): array
     {

@@ -10,8 +10,8 @@ namespace SprykerShop\Yves\QuickOrderPage\ViewDataTransformer;
 interface ViewDataTransformerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
-     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormColumnPluginInterface[] $quickOrderFormColumnPlugins
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     * @param array<\SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormColumnPluginInterface> $quickOrderFormColumnPlugins
      *
      * @return array
      */

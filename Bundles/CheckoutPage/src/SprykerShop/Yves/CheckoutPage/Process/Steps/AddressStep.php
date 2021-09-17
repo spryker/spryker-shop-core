@@ -27,7 +27,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected $calculationClient;
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepEnterPreCheckPluginInterface[]
+     * @var array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepEnterPreCheckPluginInterface>
      */
     protected $checkoutAddressStepEnterPreCheckPlugins;
 
@@ -53,7 +53,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      * @param \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig $checkoutPageConfig
      * @param string $stepRoute
      * @param string|null $escapeRoute
-     * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepEnterPreCheckPluginInterface[] $checkoutAddressStepEnterPreCheckPlugins
+     * @param array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepEnterPreCheckPluginInterface> $checkoutAddressStepEnterPreCheckPlugins
      */
     public function __construct(
         CheckoutPageToCalculationClientInterface $calculationClient,

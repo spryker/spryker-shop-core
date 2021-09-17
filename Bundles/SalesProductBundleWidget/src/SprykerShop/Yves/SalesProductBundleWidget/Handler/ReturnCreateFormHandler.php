@@ -52,7 +52,7 @@ class ReturnCreateFormHandler implements ReturnCreateFormHandlerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $productBundleItemTransferCollection
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $productBundleItemTransferCollection
      * @param array $productBundleData
      * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
      *

@@ -54,7 +54,7 @@ class ErrorPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ErrorPageExtension\Dependency\Plugin\ExceptionHandlerPluginInterface[]
+     * @return array<\SprykerShop\Yves\ErrorPageExtension\Dependency\Plugin\ExceptionHandlerPluginInterface>
      */
     public function getExceptionHandlerPlugins()
     {

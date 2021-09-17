@@ -235,7 +235,7 @@ class ShareShoppingListDataProvider
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShoppingListCompanyUserTransfer>
      */
     protected function indexShoppingListCompanyUsers(ShoppingListTransfer $shoppingListTransfer): array
     {
@@ -251,7 +251,7 @@ class ShareShoppingListDataProvider
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer>
      */
     protected function indexShoppingListCompanyBusinessUnits(ShoppingListTransfer $shoppingListTransfer): array
     {
@@ -330,7 +330,7 @@ class ShareShoppingListDataProvider
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function getShoppingListPermissionGroups(): array
     {
@@ -342,9 +342,9 @@ class ShareShoppingListDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer[]|\ArrayObject $permissionGroups
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer> $permissionGroups
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function mapPermissionGroupsToOptions(ArrayObject $permissionGroups): array
     {

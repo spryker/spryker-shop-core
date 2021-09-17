@@ -84,7 +84,7 @@ class ShopCmsSlotDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface[]
+     * @return array<\SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface>
      */
     protected function getCmsSlotContentPlugins(): array
     {

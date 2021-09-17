@@ -61,7 +61,7 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MoneyTransfer|int|string|float|null $money
+     * @param \Generated\Shared\Transfer\MoneyTransfer|string|float|int|null $money
      * @param bool $withSymbol
      * @param string|null $isoCode
      *
@@ -97,7 +97,7 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MoneyTransfer|int|string|float|null $money
+     * @param \Generated\Shared\Transfer\MoneyTransfer|string|float|int|null $money
      * @param string|null $isoCode
      *
      * @return float|null
@@ -142,7 +142,7 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     }
 
     /**
-     * @param int|string|float $money
+     * @param string|float|int $money
      * @param string|null $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer

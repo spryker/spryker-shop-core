@@ -14,7 +14,7 @@ interface CartItemReaderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function getCartItems(QuoteTransfer $quoteTransfer): array;
 }

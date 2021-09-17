@@ -13,9 +13,9 @@ interface OptionResetUrlGeneratorInterface
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
+     * @param array<\Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function generateOptionResetUrls(Request $request, array $productViewTransfers): array;
 }

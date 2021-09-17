@@ -90,7 +90,7 @@ class ProductConfigurationCartWidgetDependencyProvider extends AbstractBundleDep
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductConfigurationCartWidgetExtension\Dependency\Plugin\CartProductConfigurationRenderStrategyPluginInterface[]
+     * @return array<\SprykerShop\Yves\ProductConfigurationCartWidgetExtension\Dependency\Plugin\CartProductConfigurationRenderStrategyPluginInterface>
      */
     protected function getCartProductConfigurationRenderStrategyPlugins(): array
     {

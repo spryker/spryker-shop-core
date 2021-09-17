@@ -15,12 +15,12 @@ use SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\P
 class ProductConfiguratorResponseProcessor implements ProductConfiguratorResponseProcessorInterface
 {
     /**
-     * @var \SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorResponseStrategyPluginInterface[]
+     * @var array<\SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorResponseStrategyPluginInterface>
      */
     protected $productConfiguratorResponsePlugins;
 
     /**
-     * @param \SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorResponseStrategyPluginInterface[] $productConfiguratorResponsePlugins
+     * @param array<\SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorResponseStrategyPluginInterface> $productConfiguratorResponsePlugins
      */
     public function __construct(array $productConfiguratorResponsePlugins)
     {

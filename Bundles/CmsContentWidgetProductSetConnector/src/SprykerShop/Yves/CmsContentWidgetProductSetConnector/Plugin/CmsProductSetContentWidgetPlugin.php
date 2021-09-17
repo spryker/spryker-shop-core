@@ -84,7 +84,7 @@ class CmsProductSetContentWidgetPlugin extends SprykerCmsProductSetContentWidget
      * @param array $context
      * @param \Generated\Shared\Transfer\ProductSetDataStorageTransfer $productSetDataStorageTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     protected function mapProductSetDataStorageTransfers(array $context, ProductSetDataStorageTransfer $productSetDataStorageTransfer)
     {

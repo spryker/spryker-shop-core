@@ -44,7 +44,7 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
     protected $productResolver;
 
     /**
-     * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemExpanderPluginInterface[]
+     * @var array<\SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemExpanderPluginInterface>
      */
     protected $itemExpanderPlugins;
 
@@ -54,7 +54,7 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
      * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface $zedRequestClient
      * @param \SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolverInterface $productResolver
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemExpanderPluginInterface[] $itemExpanderPlugins
+     * @param array<\SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemExpanderPluginInterface> $itemExpanderPlugins
      */
     public function __construct(
         QuickOrderPageToCartClientInterface $cartClient,
@@ -160,11 +160,11 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
     /**
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrder
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function mapToItemTransfers(QuickOrderTransfer $quickOrder): array
     {
-        /** @var \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers */
+        /** @var array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers */
         $itemTransfers = [];
         $quickOrderItemTransfers = $quickOrder->getItems();
         foreach ($quickOrderItemTransfers as $quickOrderItemTransfer) {

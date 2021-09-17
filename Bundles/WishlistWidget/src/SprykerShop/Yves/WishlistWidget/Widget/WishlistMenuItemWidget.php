@@ -92,7 +92,7 @@ class WishlistMenuItemWidget extends AbstractWidget
     }
 
     /**
-     * @return \Generated\Shared\Transfer\WishlistTransfer[]
+     * @return array<\Generated\Shared\Transfer\WishlistTransfer>
      */
     protected function getCustomerWishlistCollection(): array
     {

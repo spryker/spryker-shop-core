@@ -88,7 +88,7 @@ class MerchantReader implements MerchantReaderInterface
     }
 
     /**
-     * @return \ArrayObject|\Generated\Shared\Transfer\MerchantSearchTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\MerchantSearchTransfer>
      */
     public function getMerchantSearchTransfers(): ArrayObject
     {

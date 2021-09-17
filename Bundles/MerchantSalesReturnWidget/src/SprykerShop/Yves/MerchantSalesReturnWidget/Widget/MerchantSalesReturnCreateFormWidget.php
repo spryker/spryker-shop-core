@@ -77,7 +77,7 @@ class MerchantSalesReturnCreateFormWidget extends AbstractWidget
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractMerchantReferences(OrderTransfer $orderTransfer): array
     {

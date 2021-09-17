@@ -53,7 +53,7 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCustomerPageWidgetPlugins(): array
     {
@@ -69,7 +69,7 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getSummaryPageWidgetPlugins(): array
     {
@@ -176,7 +176,7 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface[]
+     * @return array<\Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface>
      */
     protected function getSubFormFilterPlugins(): array
     {

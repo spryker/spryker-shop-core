@@ -18,7 +18,7 @@ use SprykerShop\Yves\SalesOrderThresholdWidget\SalesOrderThresholdWidgetConfig;
 class SalesOrderThresholdWidget extends AbstractWidget
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ExpenseTransfer> $expenseTransfers
      */
     public function __construct(ArrayObject $expenseTransfers)
     {
@@ -42,7 +42,7 @@ class SalesOrderThresholdWidget extends AbstractWidget
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ExpenseTransfer> $expenseTransfers
      *
      * @return \ArrayObject
      */

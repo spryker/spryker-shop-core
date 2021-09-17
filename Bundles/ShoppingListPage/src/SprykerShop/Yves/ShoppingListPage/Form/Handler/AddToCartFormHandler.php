@@ -145,7 +145,7 @@ class AddToCartFormHandler implements AddToCartFormHandlerInterface
     /**
      * @param int $idShoppingListItem
      * @param int $idShoppingList
-     * @param mixed[] $shoppingListItemInformation
+     * @param array<mixed> $shoppingListItemInformation
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */

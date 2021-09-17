@@ -39,7 +39,7 @@ class ProductAbstractOptionStorageMapper implements ProductAbstractOptionStorage
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getSelectedProductOptionIds(ShoppingListItemTransfer $shoppingListItemTransfer): array
     {
@@ -53,7 +53,7 @@ class ProductAbstractOptionStorageMapper implements ProductAbstractOptionStorage
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionGroupStorageTransfer $productOptionGroup
-     * @param int[] $selectedProductOptionIds
+     * @param array<int> $selectedProductOptionIds
      *
      * @return \Generated\Shared\Transfer\ProductOptionGroupStorageTransfer
      */
@@ -72,7 +72,7 @@ class ProductAbstractOptionStorageMapper implements ProductAbstractOptionStorage
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionValueStorageTransfer $productOptionValue
-     * @param int[] $selectedProductOptionIds
+     * @param array<int> $selectedProductOptionIds
      *
      * @return \Generated\Shared\Transfer\ProductOptionValueStorageTransfer
      */

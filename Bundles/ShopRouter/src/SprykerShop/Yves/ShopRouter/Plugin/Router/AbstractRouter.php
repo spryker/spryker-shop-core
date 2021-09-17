@@ -103,7 +103,7 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
 
     /**
      * @param string $pathInfo
-     * @param int|string $referenceType
+     * @param string|int $referenceType
      *
      * @return string
      */
@@ -140,7 +140,7 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
 
     /**
      * @param string $pathInfo
-     * @param int|string $referenceType
+     * @param string|int $referenceType
      *
      * @return string
      */

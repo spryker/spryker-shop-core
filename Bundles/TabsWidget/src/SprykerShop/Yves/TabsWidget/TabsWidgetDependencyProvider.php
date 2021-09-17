@@ -44,7 +44,7 @@ class TabsWidgetDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\TabsWidgetExtension\Plugin\FullTextSearchTabPluginInterface[]
+     * @return array<\SprykerShop\Yves\TabsWidgetExtension\Plugin\FullTextSearchTabPluginInterface>
      */
     protected function createFullTextSearchPlugins(): array
     {

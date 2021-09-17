@@ -26,7 +26,7 @@ class AddressChoicesResolver implements AddressChoicesResolverInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
      *
-     * @return string[]
+     * @return array<string, string>
      */
     public function getAddressChoices(?CustomerTransfer $customerTransfer): array
     {
@@ -47,7 +47,7 @@ class AddressChoicesResolver implements AddressChoicesResolverInterface
     }
 
     /**
-     * @return array
+     * @return array<string, string>
      */
     protected function getDefaultAddressChoices(): array
     {
@@ -57,10 +57,10 @@ class AddressChoicesResolver implements AddressChoicesResolverInterface
     }
 
     /**
-     * @param iterable|\ArrayObject|\Generated\Shared\Transfer\AddressTransfer[] $customerAddressesCollection
-     * @param array $choices
+     * @param \ArrayObject|iterable<\Generated\Shared\Transfer\AddressTransfer> $customerAddressesCollection
+     * @param array<string, string> $choices
      *
-     * @return string[]
+     * @return array<string, string>
      */
     protected function addCustomerAddressChoices(iterable $customerAddressesCollection, array $choices = []): array
     {
@@ -96,9 +96,9 @@ class AddressChoicesResolver implements AddressChoicesResolverInterface
     }
 
     /**
-     * @param iterable|string[] $choices
+     * @param iterable<string, string> $choices
      *
-     * @return string[]
+     * @return array<string, string>
      */
     protected function sanitizeDuplicatedCustomerAddressChoices(iterable $choices): array
     {
@@ -136,10 +136,10 @@ class AddressChoicesResolver implements AddressChoicesResolverInterface
     }
 
     /**
-     * @param array $customerAddressChoices
+     * @param array<string, string> $customerAddressChoices
      * @param bool $canDeliverToMultipleShippingAddresses
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSingleShippingAddressChoices(array $customerAddressChoices, bool $canDeliverToMultipleShippingAddresses): array
     {

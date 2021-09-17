@@ -40,9 +40,9 @@ interface ResourceCreatorPluginInterface
     /**
      * @api
      *
-     * @param mixed[] $data
+     * @param array<mixed> $data
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function mergeResourceData(array $data);
 }

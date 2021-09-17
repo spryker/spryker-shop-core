@@ -12,9 +12,9 @@ use ArrayObject;
 interface ItemStateMapperInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return string[][][]
+     * @return array<string[][]>
      */
     public function aggregateItemStatesDisplayNamesByOrderReference(ArrayObject $orderTransfers): array;
 }

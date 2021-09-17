@@ -59,7 +59,7 @@ class ShoppingListFromCartFormDataProvider
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function getShoppingListCollection(): array
     {

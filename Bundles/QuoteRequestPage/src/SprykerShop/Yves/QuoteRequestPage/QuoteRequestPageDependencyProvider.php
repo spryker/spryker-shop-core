@@ -209,7 +209,7 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @return \SprykerShop\Yves\QuoteRequestPageExtension\Dependency\Plugin\QuoteRequestFormMetadataFieldPluginInterface[]
+     * @return array<\SprykerShop\Yves\QuoteRequestPageExtension\Dependency\Plugin\QuoteRequestFormMetadataFieldPluginInterface>
      */
     protected function getQuoteRequestFormMetadataFieldPlugins(): array
     {

@@ -100,8 +100,8 @@ class ProductPackagingUnitWidget extends AbstractWidget
     /**
      * @param bool $isAddToCartDisabled
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null $baseUnit
-     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null $salesUnits
-     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null $leadSalesUnits
+     * @param array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>|null $salesUnits
+     * @param array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>|null $leadSalesUnits
      * @param \Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer|null $productPackagingUnitStorageTransfer
      * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null $productQuantityStorageTransfer
      *
@@ -146,7 +146,7 @@ class ProductPackagingUnitWidget extends AbstractWidget
 
     /**
      * @param int $minQuantityInBaseUnits
-     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null $salesUnits
+     * @param array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>|null $salesUnits
      *
      * @return float
      */

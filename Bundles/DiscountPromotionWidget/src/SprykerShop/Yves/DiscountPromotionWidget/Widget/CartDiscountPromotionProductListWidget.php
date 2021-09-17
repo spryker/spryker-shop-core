@@ -53,7 +53,7 @@ class CartDiscountPromotionProductListWidget extends AbstractWidget
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     protected function getPromotionProducts(QuoteTransfer $quoteTransfer, Request $request): array
     {
@@ -74,10 +74,10 @@ class CartDiscountPromotionProductListWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
-     * @param \Generated\Shared\Transfer\PromotionItemTransfer[] $promotionItemTransfersIndexedByProductId
+     * @param array<\Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
+     * @param array<\Generated\Shared\Transfer\PromotionItemTransfer> $promotionItemTransfersIndexedByProductId
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     protected function mapPromotionProducts(array $productViewTransfers, array $promotionItemTransfersIndexedByProductId): array
     {

@@ -70,7 +70,7 @@ class ShareController extends AbstractController
      * @param int $idQuote
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeIndexAction(int $idQuote, Request $request)
     {

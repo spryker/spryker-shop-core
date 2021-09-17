@@ -27,10 +27,10 @@ class ProductBundleItemCounterWidget extends AbstractWidget
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $cartItems
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $cartItems
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function transformCartItems(ArrayObject $cartItems, QuoteTransfer $quoteTransfer): array
     {
@@ -51,7 +51,7 @@ class ProductBundleItemCounterWidget extends AbstractWidget
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $cartItems
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $cartItems
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array

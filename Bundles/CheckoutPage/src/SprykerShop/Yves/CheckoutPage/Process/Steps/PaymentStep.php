@@ -44,7 +44,7 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected $calculationClient;
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutPaymentStepEnterPreCheckPluginInterface[]
+     * @var array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutPaymentStepEnterPreCheckPluginInterface>
      */
     protected $checkoutPaymentStepEnterPreCheckPlugins;
 
@@ -55,7 +55,7 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      * @param string|null $escapeRoute
      * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
-     * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutPaymentStepEnterPreCheckPluginInterface[] $checkoutPaymentStepEnterPreCheckPlugins
+     * @param array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutPaymentStepEnterPreCheckPluginInterface> $checkoutPaymentStepEnterPreCheckPlugins
      */
     public function __construct(
         CheckoutPageToPaymentClientInterface $paymentClient,
@@ -158,7 +158,7 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\PaymentTransfer[]|\ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PaymentTransfer>
      */
     protected function getPaymentCollection(QuoteTransfer $quoteTransfer): ArrayObject
     {
@@ -179,7 +179,7 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     /**
      * @deprecated Will be removed with next major. Form is populated with available payments and validated against when submitting the form.
      *
-     * @param \Generated\Shared\Transfer\PaymentTransfer[]|\ArrayObject $paymentCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PaymentTransfer> $paymentCollection
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool

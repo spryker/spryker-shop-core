@@ -22,7 +22,7 @@ interface ProductSetWidgetPluginInterface extends WidgetPluginInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductSetDataStorageTransfer $productSetDataStorageTransfer
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
+     * @param array<\Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
      *
      * @return void
      */

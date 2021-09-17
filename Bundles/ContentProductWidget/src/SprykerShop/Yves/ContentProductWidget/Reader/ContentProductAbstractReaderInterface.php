@@ -13,7 +13,7 @@ interface ContentProductAbstractReaderInterface
      * @param string $contentKey
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]|null
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>|null
      */
     public function findProductAbstractCollection(string $contentKey, string $localeName): ?array;
 }

@@ -17,12 +17,12 @@ use Symfony\Component\HttpFoundation\Request;
 class ControllerRouteEnhancer implements RouteEnhancerInterface
 {
     /**
-     * @var \SprykerShop\Yves\StorageRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface[]
+     * @var array<\SprykerShop\Yves\StorageRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface>
      */
     protected $resourceCreatorPlugins;
 
     /**
-     * @param \SprykerShop\Yves\StorageRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface[] $resourceCreatorPlugins
+     * @param array<\SprykerShop\Yves\StorageRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface> $resourceCreatorPlugins
      */
     public function __construct(array $resourceCreatorPlugins)
     {

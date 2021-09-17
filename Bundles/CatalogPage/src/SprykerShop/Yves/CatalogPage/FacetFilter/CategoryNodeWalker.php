@@ -17,16 +17,16 @@ class CategoryNodeWalker
     protected $idCategoryNode;
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $quantities;
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $categories
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeStorageTransfer> $categories
      * @param int $idCategory
-     * @param int[] $quantities
+     * @param array<int> $quantities
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeStorageTransfer>
      */
     public function start(ArrayObject $categories, int $idCategory, array $quantities): ArrayObject
     {
@@ -40,11 +40,11 @@ class CategoryNodeWalker
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $categoryTransferCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeStorageTransfer> $categoryTransferCollection
      * @param bool $active
      * @param int $childQuantity
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeStorageTransfer>
      */
     protected function walk(ArrayObject $categoryTransferCollection, &$active, &$childQuantity): ArrayObject
     {

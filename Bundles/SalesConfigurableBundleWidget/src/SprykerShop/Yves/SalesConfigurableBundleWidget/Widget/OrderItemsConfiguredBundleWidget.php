@@ -25,7 +25,7 @@ class OrderItemsConfiguredBundleWidget extends AbstractWidget
     protected const PARAMETER_SALES_ORDER_CONFIGURED_BUNDLES = 'salesOrderConfiguredBundles';
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      */
     public function __construct(iterable $itemTransfers)
     {
@@ -52,7 +52,7 @@ class OrderItemsConfiguredBundleWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $indexedItemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $indexedItemTransfers
      *
      * @return void
      */
@@ -62,7 +62,7 @@ class OrderItemsConfiguredBundleWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $indexedItemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $indexedItemTransfers
      *
      * @return void
      */
@@ -76,9 +76,9 @@ class OrderItemsConfiguredBundleWidget extends AbstractWidget
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function getItemsIndexedByIdSalesOrderItem(iterable $itemTransfers): array
     {

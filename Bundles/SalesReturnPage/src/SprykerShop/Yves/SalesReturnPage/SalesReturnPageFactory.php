@@ -87,7 +87,7 @@ class SalesReturnPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface[]
+     * @return array<\SprykerShop\Yves\SalesReturnPageExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface>
      */
     public function getReturnCreateFormHandlerPlugins(): array
     {

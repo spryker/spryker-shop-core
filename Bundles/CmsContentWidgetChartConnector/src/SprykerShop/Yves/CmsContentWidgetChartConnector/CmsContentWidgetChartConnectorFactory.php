@@ -32,7 +32,7 @@ class CmsContentWidgetChartConnectorFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCmsChartContentWidgetPlugins(): array
     {

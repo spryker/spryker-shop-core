@@ -10,10 +10,10 @@ namespace SprykerShop\Yves\ConfigurableBundlePage\Reader;
 interface ProductConcreteReaderInterface
 {
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function getProductConcretesBySkusAndLocale(array $skus, string $localeName): array;
 }

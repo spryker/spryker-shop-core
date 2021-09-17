@@ -15,12 +15,12 @@ use SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\P
 class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirectResolverInterface
 {
     /**
-     * @var \SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorRequestStrategyPluginInterface[]
+     * @var array<\SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorRequestStrategyPluginInterface>
      */
     protected $productConfiguratorRequestStartegyPlugins;
 
     /**
-     * @param \SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorRequestStrategyPluginInterface[] $productConfiguratorRequestStartegyPlugins
+     * @param array<\SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorRequestStrategyPluginInterface> $productConfiguratorRequestStartegyPlugins
      */
     public function __construct(array $productConfiguratorRequestStartegyPlugins)
     {

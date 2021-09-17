@@ -219,7 +219,7 @@ class QuickOrderPageFactory extends AbstractFactory
      * Returns a list of widget plugin class names that implement
      * Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getQuickOrderPageWidgetPlugins(): array
     {
@@ -227,7 +227,7 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemExpanderPluginInterface[]
+     * @return array<\SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemExpanderPluginInterface>
      */
     public function getQuickOrderItemTransferExpanderPlugins(): array
     {
@@ -251,7 +251,7 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormHandlerStrategyPluginInterface[]
+     * @return array<\SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormHandlerStrategyPluginInterface>
      */
     public function getQuickOrderFormHandlerStrategyPlugins(): array
     {
@@ -259,7 +259,7 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormColumnPluginInterface[]
+     * @return array<\SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormColumnPluginInterface>
      */
     public function getQuickOrderFormColumnPlugins(): array
     {
@@ -267,7 +267,7 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemFilterPluginInterface[]
+     * @return array<\SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemFilterPluginInterface>
      */
     public function getQuickOrderItemFilterPlugins(): array
     {
@@ -275,7 +275,7 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderUploadedFileParserStrategyPluginInterface[]
+     * @return array<\SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderUploadedFileParserStrategyPluginInterface>
      */
     public function getQuickOrderUploadedFileParserPlugins(): array
     {
@@ -283,7 +283,7 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderUploadedFileValidatorStrategyPluginInterface[]
+     * @return array<\SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderUploadedFileValidatorStrategyPluginInterface>
      */
     public function getQuickOrderUploadedFileValidatorPlugins(): array
     {
@@ -291,7 +291,7 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTemplateStrategyPluginInterface[]
+     * @return array<\SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTemplateStrategyPluginInterface>
      */
     public function getQuickOrderFileTemplatePlugins(): array
     {

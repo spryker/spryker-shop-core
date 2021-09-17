@@ -38,8 +38,8 @@ class AddToCartHandler implements AddToCartHandlerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItems
-     * @param int[] $itemQuantity
+     * @param array<\Generated\Shared\Transfer\ShoppingListItemTransfer> $shoppingListItems
+     * @param array<int> $itemQuantity
      *
      * @return \Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer
      */
@@ -61,7 +61,7 @@ class AddToCartHandler implements AddToCartHandlerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItems
+     * @param array<\Generated\Shared\Transfer\ShoppingListItemTransfer> $shoppingListItems
      *
      * @return \Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer
      */
@@ -95,7 +95,7 @@ class AddToCartHandler implements AddToCartHandlerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer $shoppingListMoveToCartRequestCollectionTransfer
-     * @param int[] $itemQuantity
+     * @param array<int> $itemQuantity
      *
      * @return \Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer
      */

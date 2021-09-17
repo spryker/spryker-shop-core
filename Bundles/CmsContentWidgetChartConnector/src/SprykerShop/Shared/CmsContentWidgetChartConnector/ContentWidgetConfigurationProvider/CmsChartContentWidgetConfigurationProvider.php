@@ -25,7 +25,7 @@ class CmsChartContentWidgetConfigurationProvider implements CmsContentWidgetConf
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableTemplates(): array
     {

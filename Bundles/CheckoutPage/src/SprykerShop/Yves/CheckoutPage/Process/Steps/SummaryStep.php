@@ -132,10 +132,10 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupTransfers
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer>
      */
     protected function expandShipmentGroupsWithCartItems(ArrayObject $shipmentGroupTransfers, QuoteTransfer $quoteTransfer): ArrayObject
     {
@@ -193,7 +193,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroups
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroups
      *
      * @return int
      */
@@ -209,7 +209,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroups
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroups
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return int
@@ -244,7 +244,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ExpenseTransfer[]
+     * @return array<\Generated\Shared\Transfer\ExpenseTransfer>
      */
     protected function getShipmentExpenses(QuoteTransfer $quoteTransfer): array
     {

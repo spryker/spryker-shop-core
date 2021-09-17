@@ -25,7 +25,7 @@ class WishlistPageToGlossaryStorageClientBridge implements WishlistPageToGlossar
     /**
      * @param string $id
      * @param string $localeName
-     * @param string[] $parameters
+     * @param array<string> $parameters
      *
      * @return string
      */

@@ -24,7 +24,7 @@ use Symfony\Component\Routing\RouteCollection;
 class ShopRouterFactory extends AbstractFactory
 {
     /**
-     * @return \SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface[]
+     * @return array<\SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface>
      */
     public function getResourceCreatorPlugins()
     {

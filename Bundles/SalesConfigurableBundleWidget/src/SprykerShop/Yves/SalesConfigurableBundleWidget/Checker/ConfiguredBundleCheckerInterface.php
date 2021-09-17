@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\SalesConfigurableBundleWidget\Checker;
 interface ConfiguredBundleCheckerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return void
      */

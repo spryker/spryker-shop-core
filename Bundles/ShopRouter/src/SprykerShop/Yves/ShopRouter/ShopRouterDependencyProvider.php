@@ -95,7 +95,7 @@ class ShopRouterDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface[]
+     * @return array<\SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface>
      */
     protected function getResourceCreatorPlugins()
     {

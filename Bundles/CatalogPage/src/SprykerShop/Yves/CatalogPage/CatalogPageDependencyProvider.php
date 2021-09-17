@@ -191,7 +191,7 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getCatalogPageWidgetPlugins(): array
     {

@@ -23,7 +23,7 @@ class PriceWidgetToPriceClientBridge implements PriceWidgetToPriceClientInterfac
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getPriceModes()
     {

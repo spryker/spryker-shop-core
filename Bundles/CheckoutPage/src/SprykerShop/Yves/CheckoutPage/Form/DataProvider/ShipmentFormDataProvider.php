@@ -155,10 +155,10 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupTransfers
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer>
      */
     protected function expandShipmentGroupsWithCartItems(ArrayObject $shipmentGroupTransfers, QuoteTransfer $quoteTransfer): ArrayObject
     {
@@ -175,9 +175,9 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param iterable<\Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupCollection
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getShippingAddressLabelList(iterable $shipmentGroupCollection): array
     {
@@ -223,7 +223,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return int[][]
+     * @return array<int[]>
      */
     protected function createAvailableShipmentChoiceList(QuoteTransfer $quoteTransfer)
     {
@@ -270,7 +270,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param iterable<\Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupCollection
      *
      * @return array
      */
@@ -461,9 +461,9 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupCollection
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer>
      */
     protected function filterGiftCardForShipmentGroupCollection(ArrayObject $shipmentGroupCollection): ArrayObject
     {
@@ -483,9 +483,9 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
     protected function removeGiftCardItem(ArrayObject $itemTransfers): ArrayObject
     {

@@ -275,7 +275,7 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerPage\Plugin\CheckoutAuthenticationHandlerPluginInterface[]
+     * @return array<\SprykerShop\Yves\CustomerPage\Plugin\CheckoutAuthenticationHandlerPluginInterface>
      */
     public function getCustomerAuthenticationHandlerPlugins()
     {
@@ -337,7 +337,7 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCustomerOverviewWidgetPlugins(): array
     {
@@ -345,7 +345,7 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCustomerOrderListWidgetPlugins(): array
     {
@@ -353,7 +353,7 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCustomerOrderViewWidgetPlugins(): array
     {
@@ -369,7 +369,7 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCustomerMenuItemWidgetPlugins(): array
     {
@@ -377,7 +377,7 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreRegistrationCustomerTransferExpanderPluginInterface[]
+     * @return array<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreRegistrationCustomerTransferExpanderPluginInterface>
      */
     public function getPreRegistrationCustomerTransferExpanderPlugins(): array
     {
@@ -385,7 +385,7 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CustomerRedirectStrategyPluginInterface[]
+     * @return array<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CustomerRedirectStrategyPluginInterface>
      */
     public function getAfterLoginCustomerRedirectPlugins(): array
     {
@@ -393,7 +393,7 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\AgentPage\Plugin\FixAgentTokenAfterCustomerAuthenticationSuccessPlugin[]
+     * @return array<\SprykerShop\Yves\AgentPage\Plugin\FixAgentTokenAfterCustomerAuthenticationSuccessPlugin>
      */
     public function getAfterCustomerAuthenticationSuccessPlugins(): array
     {
@@ -533,7 +533,7 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CheckoutAddressStepPreGroupItemsByShipmentPluginInterface[]
+     * @return array<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CheckoutAddressStepPreGroupItemsByShipmentPluginInterface>
      */
     public function getCheckoutAddressStepPreGroupItemsByShipmentPlugins(): array
     {
@@ -552,7 +552,7 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\OrderSearchFormHandlerPluginInterface[]
+     * @return array<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\OrderSearchFormHandlerPluginInterface>
      */
     public function getOrderSearchFormHandlerPlugins(): array
     {
@@ -586,7 +586,7 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreAuthUserCheckPluginInterface[]
+     * @return array<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreAuthUserCheckPluginInterface>
      */
     public function getPreAuthUserCheckPlugins(): array
     {

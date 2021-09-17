@@ -116,11 +116,11 @@ class ShipmentGroupForm extends AbstractType
      */
     protected function findShipmentGroupTransfer(FormBuilderInterface $builder, array $options): ?ShipmentGroupTransfer
     {
-        /** @var \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection */
+        /** @var \ArrayObject<string, \Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupCollection */
         $shipmentGroupCollection = $options[ShipmentCollectionForm::OPTION_SHIPMENT_GROUPS];
         $shipmentGroupIndex = $this->findShipmentGroupIndex($builder);
 
-        if (!isset($shipmentGroupCollection[$shipmentGroupIndex])) {
+        if ($shipmentGroupIndex === null || !isset($shipmentGroupCollection[$shipmentGroupIndex])) {
             return null;
         }
 

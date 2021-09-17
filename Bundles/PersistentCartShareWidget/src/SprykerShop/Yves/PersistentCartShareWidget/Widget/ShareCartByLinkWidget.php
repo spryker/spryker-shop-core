@@ -101,7 +101,7 @@ class ShareCartByLinkWidget extends AbstractWidget
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getShareOptionsGroups(): array
     {

@@ -62,7 +62,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getShipmentFormTypes()
     {
@@ -139,7 +139,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return (\Symfony\Component\Form\FormTypeInterface|string)[]
+     * @return array<\Symfony\Component\Form\FormTypeInterface|string>
      */
     public function getCustomerFormTypes()
     {
@@ -147,7 +147,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\FormTypeInterface[]
+     * @return array<\Symfony\Component\Form\FormTypeInterface>
      */
     public function getAddressFormTypes()
     {
@@ -155,7 +155,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getSummaryFormTypes()
     {
@@ -173,7 +173,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @param (\Symfony\Component\Form\FormTypeInterface|string)[] $formTypes
+     * @param array<\Symfony\Component\Form\FormTypeInterface|string> $formTypes
      * @param \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface|null $dataProvider
      *
      * @return \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface

@@ -14,15 +14,15 @@ interface ItemFetcherInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function getAll(OrderTransfer $orderTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param int[] $idOrderItems
+     * @param array<int> $idOrderItems
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function getByIds(OrderTransfer $orderTransfer, array $idOrderItems): array;
 }

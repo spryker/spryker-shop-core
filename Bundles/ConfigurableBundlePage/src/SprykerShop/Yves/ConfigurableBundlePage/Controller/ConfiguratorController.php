@@ -186,7 +186,7 @@ class ConfiguratorController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeSlotsAction(Request $request)
     {
@@ -240,7 +240,7 @@ class ConfiguratorController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeSummaryAction(Request $request)
     {
@@ -399,7 +399,7 @@ class ConfiguratorController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
      * @param int $idConfigurableBundleTemplateSlot
-     * @param int[] $excludedProductIds
+     * @param array<int> $excludedProductIds
      *
      * @return \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer
      */
@@ -443,7 +443,7 @@ class ConfiguratorController extends AbstractController
     /**
      * @param \Symfony\Component\Form\FormInterface $form
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractProductConcreteSkus(FormInterface $form): array
     {

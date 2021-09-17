@@ -18,12 +18,12 @@ class FileDownloadRenderer implements FileRendererInterface
     protected const FILE_TEMPLATE_NAME = 'quick-order-template';
 
     /**
-     * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTemplateStrategyPluginInterface[]
+     * @var array<\SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTemplateStrategyPluginInterface>
      */
     protected $quickOrderFileTemplatePlugins;
 
     /**
-     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTemplateStrategyPluginInterface[] $quickOrderFileTemplatePlugins
+     * @param array<\SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTemplateStrategyPluginInterface> $quickOrderFileTemplatePlugins
      */
     public function __construct(array $quickOrderFileTemplatePlugins)
     {

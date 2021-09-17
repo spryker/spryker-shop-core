@@ -20,7 +20,7 @@ class SelectedMerchantCookie implements SelectedMerchantCookieInterface
     protected $requestStack;
 
     /**
-     * @var \ArrayObject|\Symfony\Component\HttpFoundation\Cookie[]
+     * @var \ArrayObject<int, \Symfony\Component\HttpFoundation\Cookie>
      */
     protected $cookies;
 
@@ -30,7 +30,7 @@ class SelectedMerchantCookie implements SelectedMerchantCookieInterface
     protected $merchantSwitcherWidgetConfig;
 
     /**
-     * @param \ArrayObject|\Symfony\Component\HttpFoundation\Cookie[] $cookies
+     * @param \ArrayObject<int, \Symfony\Component\HttpFoundation\Cookie> $cookies
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcherWidgetConfig $merchantSwitcherWidgetConfig
      */

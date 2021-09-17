@@ -23,7 +23,7 @@ class QuickOrderPageToZedRequestClientBridge implements QuickOrderPageToZedReque
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getLastResponseErrorMessages(): array
     {
@@ -39,7 +39,7 @@ class QuickOrderPageToZedRequestClientBridge implements QuickOrderPageToZedReque
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getResponsesErrorMessages(): array
     {

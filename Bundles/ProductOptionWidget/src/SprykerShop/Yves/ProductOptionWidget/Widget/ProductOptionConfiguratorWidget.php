@@ -44,7 +44,7 @@ class ProductOptionConfiguratorWidget extends AbstractWidget
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOptionGroupStorageTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductOptionGroupStorageTransfer>
      */
     protected function getProductOptionGroups(ProductViewTransfer $productViewTransfer): ArrayObject
     {

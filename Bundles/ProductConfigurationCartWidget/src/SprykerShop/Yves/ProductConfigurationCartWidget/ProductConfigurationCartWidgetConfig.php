@@ -67,7 +67,7 @@ class ProductConfigurationCartWidgetConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSupportedConfiguratorKeys(): array
     {

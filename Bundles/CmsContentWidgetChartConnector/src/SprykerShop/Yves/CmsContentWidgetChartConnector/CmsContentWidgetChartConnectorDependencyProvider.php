@@ -45,7 +45,7 @@ class CmsContentWidgetChartConnectorDependencyProvider extends AbstractBundleDep
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getCmsChartContentWidgetPlugins(): array
     {

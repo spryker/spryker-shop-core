@@ -15,7 +15,7 @@ interface MerchantProductOfferReaderInterface
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOfferStorageTransfer>
      */
     public function getProductOffers(ProductViewTransfer $productViewTransfer, string $localeName): array;
 

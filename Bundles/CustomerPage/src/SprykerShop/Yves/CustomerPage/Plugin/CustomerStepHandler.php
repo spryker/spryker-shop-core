@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class CustomerStepHandler extends AbstractPlugin implements StepHandlerPluginInterface
 {
     /**
-     * @var \SprykerShop\Yves\CustomerPage\Plugin\CheckoutAuthenticationHandlerPluginInterface[]
+     * @var array<\SprykerShop\Yves\CustomerPage\Plugin\CheckoutAuthenticationHandlerPluginInterface>
      */
     protected $authenticationHandlerPlugins;
 

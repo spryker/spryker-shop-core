@@ -285,7 +285,7 @@ class QuoteRequestPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuoteRequestPageExtension\Dependency\Plugin\QuoteRequestFormMetadataFieldPluginInterface[]
+     * @return array<\SprykerShop\Yves\QuoteRequestPageExtension\Dependency\Plugin\QuoteRequestFormMetadataFieldPluginInterface>
      */
     public function getQuoteRequestFormMetadataFieldPlugins(): array
     {

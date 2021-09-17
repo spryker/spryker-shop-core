@@ -29,7 +29,7 @@ class AddAllAvailableProductsToCartFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\WishlistOverviewResponseTransfer|null $wishlistOverviewResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemMetaTransfer[]
+     * @return array<\Generated\Shared\Transfer\WishlistItemMetaTransfer>
      */
     protected function getWishlistItemMetaCollection(?WishlistOverviewResponseTransfer $wishlistOverviewResponseTransfer = null)
     {

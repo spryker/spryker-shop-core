@@ -37,7 +37,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     protected $shipmentPlugins;
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepEnterPreCheckPluginInterface[]
+     * @var array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepEnterPreCheckPluginInterface>
      */
     protected $checkoutShipmentStepEnterPreCheckPlugins;
 
@@ -58,7 +58,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      * @param \SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface $giftCardItemsChecker
      * @param string $stepRoute
      * @param string|null $escapeRoute
-     * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepEnterPreCheckPluginInterface[] $checkoutShipmentStepEnterPreCheckPlugins
+     * @param array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepEnterPreCheckPluginInterface> $checkoutShipmentStepEnterPreCheckPlugins
      */
     public function __construct(
         CheckoutPageToCalculationClientInterface $calculationClient,

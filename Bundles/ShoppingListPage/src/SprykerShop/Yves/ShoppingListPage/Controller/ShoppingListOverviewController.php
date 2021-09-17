@@ -155,7 +155,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
      * @param int $idShoppingList
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeUpdateAction(int $idShoppingList, Request $request)
     {
@@ -303,7 +303,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
      * @param int $idShoppingList
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeShareShoppingListAction(int $idShoppingList, Request $request)
     {
@@ -344,7 +344,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     protected function getProductViewTransfers(ShoppingListTransfer $shoppingListTransfer): array
     {

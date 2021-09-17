@@ -40,7 +40,7 @@ class CmsChartContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
 
     /**
      * @param \Twig\Environment $twig
-     * @param mixed[] $context
+     * @param array<mixed> $context
      * @param string $chartPluginName
      * @param string|null $dataIdentifier
      * @param string|null $templateIdentifier
@@ -79,11 +79,11 @@ class CmsChartContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     }
 
     /**
-     * @param mixed[] $context
+     * @param array<mixed> $context
      * @param string $chartPluginName
      * @param string|null $dataIdentifier
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function getContent(array $context, $chartPluginName, $dataIdentifier = null): array
     {

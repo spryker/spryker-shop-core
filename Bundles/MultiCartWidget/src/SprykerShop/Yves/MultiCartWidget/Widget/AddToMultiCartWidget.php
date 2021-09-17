@@ -48,7 +48,7 @@ class AddToMultiCartWidget extends AbstractWidget
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuoteTransfer>
      */
     protected function getQuoteCollection(): array
     {

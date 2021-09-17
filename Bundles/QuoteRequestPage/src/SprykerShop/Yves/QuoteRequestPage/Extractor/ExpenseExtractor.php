@@ -34,7 +34,7 @@ class ExpenseExtractor implements ExpenseExtractorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ExpenseTransfer[]
+     * @return array<\Generated\Shared\Transfer\ExpenseTransfer>
      */
     public function extractShipmentExpenses(QuoteTransfer $quoteTransfer): array
     {

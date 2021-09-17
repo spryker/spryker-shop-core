@@ -48,7 +48,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
     /***
      * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function searchProductConcretesByFullText(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer): array
     {
@@ -71,10 +71,10 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[] $productConcretePageSearchTransfers
-     * @param int[] $excludedProductIds
+     * @param array<\Generated\Shared\Transfer\ProductConcretePageSearchTransfer> $productConcretePageSearchTransfers
+     * @param array<int> $excludedProductIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcretePageSearchTransfer>
      */
     protected function filterProductConcretePageSearchTransfersByProductIds($productConcretePageSearchTransfers, array $excludedProductIds): array
     {
@@ -90,9 +90,9 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[] $productConcretePageSearchTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcretePageSearchTransfer> $productConcretePageSearchTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     protected function getMappedProductViewTransfers(array $productConcretePageSearchTransfers): array
     {

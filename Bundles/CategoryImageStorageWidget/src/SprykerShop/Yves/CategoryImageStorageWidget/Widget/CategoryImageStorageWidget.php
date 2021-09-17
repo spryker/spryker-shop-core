@@ -109,10 +109,10 @@ class CategoryImageStorageWidget extends AbstractWidget
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\CategoryImageSetStorageTransfer[] $imageSetStorageCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CategoryImageSetStorageTransfer> $imageSetStorageCollection
      * @param string $imageSetName
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CategoryImageStorageTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryImageStorageTransfer>
      */
     protected function getImageSetImages($imageSetStorageCollection, string $imageSetName): ArrayObject
     {
@@ -136,7 +136,7 @@ class CategoryImageStorageWidget extends AbstractWidget
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\CategoryImageStorageTransfer[] $imageSetImages
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CategoryImageStorageTransfer> $imageSetImages
      * @param string $imageSize
      *
      * @return string
