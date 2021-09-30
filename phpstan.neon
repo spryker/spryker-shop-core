@@ -10,3 +10,5 @@ parameters:
     parallel:
         processTimeout: 300.0
     checkMissingIterableValueType: false
+    featureToggles:
+        bleedingEdge: true
