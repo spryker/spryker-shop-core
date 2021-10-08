@@ -14,7 +14,7 @@ interface FileManagerWidgetToFileManagerServiceInterface
     /**
      * @param string $fileName
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
@@ -23,7 +23,7 @@ interface FileManagerWidgetToFileManagerServiceInterface
     /**
      * @param string $fileName
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemStreamException
      *
      * @return mixed
      */

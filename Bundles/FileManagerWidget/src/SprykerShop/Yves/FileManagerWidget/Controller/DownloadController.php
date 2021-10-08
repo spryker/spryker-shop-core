@@ -62,7 +62,7 @@ class DownloadController extends AbstractController
      */
     protected function createDownloadResponse(FileStorageDataTransfer $fileStorageDataTransfer): StreamedResponse
     {
-        $storageFileName = $fileStorageDataTransfer->getStorageFileName();
+        $storageFileName = $fileStorageDataTransfer->getStorageFileNameOrFail();
 
         $fileStream = $this->getFactory()
             ->getFileManagerService()
@@ -76,7 +76,7 @@ class DownloadController extends AbstractController
         $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $storageFileName);
         $response->headers->set(static::CONTENT_DISPOSITION, $disposition);
 
-        $contentType = $fileStorageDataTransfer->getType();
+        $contentType = $fileStorageDataTransfer->getTypeOrFail();
         $response->headers->set(static::CONTENT_TYPE, $contentType);
 
         return $response;

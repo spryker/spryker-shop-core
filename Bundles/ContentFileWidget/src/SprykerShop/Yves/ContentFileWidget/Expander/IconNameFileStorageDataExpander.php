@@ -44,14 +44,14 @@ class IconNameFileStorageDataExpander implements FileStorageDataExpanderInterfac
             return $fileStorageDataTransfer->setIconName($iconNames[$fileStorageDataTransfer->getType()]);
         }
 
-        $fileType = explode('/', $fileStorageDataTransfer->getType())[0];
+        $fileType = explode('/', $fileStorageDataTransfer->getTypeOrFail())[0];
 
         if (isset($iconNames[$fileType]) && $iconNames[$fileType] !== static::KEY_DEFAULT_ICON_NAME) {
             return $fileStorageDataTransfer->setIconName($iconNames[$fileType]);
         }
 
         $fileIconName = $this->getFileIconNameByExtension(
-            $fileStorageDataTransfer->requireFileName()->getFileName()
+            $fileStorageDataTransfer->getFileNameOrFail()
         );
 
         return $fileStorageDataTransfer->setIconName($fileIconName);
