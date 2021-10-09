@@ -4,7 +4,7 @@
     "description": "CompanyWidget module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.3",
+        "php": ">=7.4",
         "spryker-shop/shop-ui": "^1.54.0",
         "spryker/customer": "^7.0.0",
         "spryker/kernel": "^3.30.0"

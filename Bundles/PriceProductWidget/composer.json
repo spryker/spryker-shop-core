@@ -4,7 +4,7 @@
     "description": "PriceProductWidget module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.3",
+        "php": ">=7.4",
         "spryker/kernel": "^3.33.0",
         "spryker/price-product-storage": "^2.9.0 || ^4.0.0"
     },
