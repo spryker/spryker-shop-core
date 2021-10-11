@@ -35,7 +35,9 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
     protected $sslEnabled;
 
     /**
-     * @inheritDoc
+     * @param \Symfony\Component\Routing\RequestContext $context
+     *
+     * @return void
      */
     public function setContext(RequestContext $context)
     {

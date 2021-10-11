@@ -17,7 +17,10 @@ use Symfony\Component\Validator\Constraints\GreaterThanOrEqualValidator;
 class GreaterThanOrEqualDateValidator extends GreaterThanOrEqualValidator
 {
     /**
-     * @inheritDoc
+     * @param mixed $value The value that should be validated
+     * @param \Symfony\Component\Validator\Constraint $constraint
+     *
+     * @return void
      */
     public function validate($value, Constraint $constraint)
     {

@@ -45,7 +45,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
         $this->productConcreteMapper = $productConcreteMapper;
     }
 
-    /***
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
      *
      * @return array<\Generated\Shared\Transfer\ProductViewTransfer>

@@ -18,9 +18,13 @@ use Symfony\Component\Routing\Exception\RouteNotFoundException;
 class StorageRouter extends AbstractRouter
 {
     /**
-     * @inheritDoc
+     * @param string $name
+     * @param array $parameters
+     * @param int $referenceType
      *
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     *
+     * @return string
      */
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {
