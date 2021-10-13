@@ -24,10 +24,10 @@ class BarcodeWidget extends AbstractWidget
      */
     protected const PARAMETER_ENCODING = 'encoding';
 
-     /**
-      * @param string $generationText
-      * @param string|null $barcodeGeneratorPlugin
-      */
+    /**
+     * @param string $generationText
+     * @param string|null $barcodeGeneratorPlugin
+     */
     public function __construct(string $generationText, ?string $barcodeGeneratorPlugin = null)
     {
         $barcodeResponseTransfer = $this->getFactory()
