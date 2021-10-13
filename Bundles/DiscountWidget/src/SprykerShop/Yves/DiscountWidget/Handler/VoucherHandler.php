@@ -59,9 +59,9 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
         $quoteTransfer = $this->quoteClient->getQuote();
 
         if ($this->quoteClient->isQuoteLocked($quoteTransfer)) {
-             $this->flashMessenger->addErrorMessage(static::GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED);
+            $this->flashMessenger->addErrorMessage(static::GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED);
 
-             return;
+            return;
         }
 
         $voucherDiscount = new DiscountTransfer();

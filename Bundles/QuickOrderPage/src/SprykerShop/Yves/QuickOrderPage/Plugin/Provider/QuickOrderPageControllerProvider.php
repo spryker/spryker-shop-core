@@ -134,8 +134,8 @@ class QuickOrderPageControllerProvider extends AbstractYvesControllerProvider
     protected function addQuickOrderDownloadTemplateRoute()
     {
         $this->createController('/{quickOrder}/download-template', static::ROUTE_QUICK_ORDER_DOWNLOAD_TEMPLATE, 'QuickOrderPage', 'QuickOrder', 'downloadTemplate')
-             ->assert('quickOrder', $this->getAllowedLocalesPattern() . 'quick-order|quick-order')
-             ->value('quickOrder', 'quick-order');
+            ->assert('quickOrder', $this->getAllowedLocalesPattern() . 'quick-order|quick-order')
+            ->value('quickOrder', 'quick-order');
 
         return $this;
     }

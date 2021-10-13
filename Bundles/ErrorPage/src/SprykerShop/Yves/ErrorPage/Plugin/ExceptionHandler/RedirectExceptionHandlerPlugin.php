@@ -29,7 +29,7 @@ class RedirectExceptionHandlerPlugin extends AbstractPlugin implements Exception
      */
     public function canHandle($statusCode)
     {
-         return in_array($statusCode, $this->getConfig()->getValidRedirectExceptionStatusCodes());
+        return in_array($statusCode, $this->getConfig()->getValidRedirectExceptionStatusCodes());
     }
 
     /**
