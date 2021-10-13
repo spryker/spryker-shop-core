@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\FileManagerDataTransfer;
 class FileManagerWidgetToFileManagerServiceBridge implements FileManagerWidgetToFileManagerServiceInterface
 {
     /**
-     * @var \Spryker\Service\FileManager\FileManagerServiceInterface $fileManagerService
+     * @var \Spryker\Service\FileManager\FileManagerServiceInterface
      */
     protected $fileManagerService;
 
