@@ -347,14 +347,16 @@ class WishlistController extends AbstractController
 
         $wishlistName = $request->get(self::PARAM_WISHLIST_NAME) ?: self::DEFAULT_NAME;
 
+        $sku = (string)$request->query->get(self::PARAM_SKU) ?: null;
         $wishlistItemTransfer = (new WishlistItemTransfer())
             ->setIdProduct($request->query->getInt(self::PARAM_PRODUCT_ID))
-            ->setSku($request->query->get(self::PARAM_SKU))
+            ->setSku($sku)
             ->setFkCustomer($customerTransfer->getIdCustomer())
             ->setWishlistName($wishlistName);
 
+        $idWishlistItem = $request->request->getInt(static::PARAM_WISHLIST_ID_ITEM);
         if ($request->request->has(static::PARAM_WISHLIST_ID_ITEM)) {
-            $wishlistItemTransfer->setIdWishlistItem($request->request->get(static::PARAM_WISHLIST_ID_ITEM));
+            $wishlistItemTransfer->setIdWishlistItem($idWishlistItem);
         }
 
         $requestParams = $request->request->all();

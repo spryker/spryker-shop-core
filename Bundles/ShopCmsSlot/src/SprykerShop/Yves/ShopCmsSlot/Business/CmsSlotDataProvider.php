@@ -160,7 +160,7 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
 
     /**
      * @param \Generated\Shared\Transfer\CmsSlotContextTransfer $cmsSlotContextTransfer
-     * @param array<\Generated\Shared\Transfer\CmsSlotExternalDataTransfer> $providedData
+     * @param array<string|\Generated\Shared\Transfer\CmsSlotExternalDataTransfer> $providedData
      *
      * @return \Generated\Shared\Transfer\CmsSlotContentRequestTransfer
      */
@@ -182,7 +182,7 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
      * @param array<string> $autoFilledData
      * @param array<\Generated\Shared\Transfer\CmsSlotExternalDataTransfer> $providedData
      *
-     * @return array<\Generated\Shared\Transfer\CmsSlotExternalDataTransfer>
+     * @return array<string|\Generated\Shared\Transfer\CmsSlotExternalDataTransfer>
      */
     protected function mergeProvidedData(array $autoFilledData, array $providedData): array
     {

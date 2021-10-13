@@ -5,4 +5,3 @@ parameters:
         - '#Method .+CustomerPageToSalesClientInterface::getPaginatedCustomerOrdersOverview\(\) invoked with 2 parameters, 1 required.#'
         - '#Parameter \#1 \$idCustomerAddress of method .+AddressTransfer::setIdCustomerAddress\(\) expects int\|null, string\|null given#'
         - '#Parameter \#1 \$quoteTransfer of method .+CheckoutAddressFormDataProvider::getOptions\(\) expects .+QuoteTransfer, .+AbstractTransfer given.#'
-        - '#Call to an undefined method Generated\\Yves\\Ide\\AutoCompletion\|Spryker\\Shared\\Kernel\\LocatorLocatorInterface::[a-zA-Z]*\(\)#'

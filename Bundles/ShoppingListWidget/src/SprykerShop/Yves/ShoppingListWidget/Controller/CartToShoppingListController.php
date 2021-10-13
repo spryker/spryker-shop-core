@@ -77,7 +77,7 @@ class CartToShoppingListController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function executeCreateFromCartAction(Request $request)
     {

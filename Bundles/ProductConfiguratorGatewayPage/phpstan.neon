@@ -1,5 +1,4 @@
 parameters:
     checkMissingIterableValueType: false
     ignoreErrors:
-            - '#Call to an undefined method Generated\\Yves\\Ide\\AutoCompletion\|Spryker\\Shared\\Kernel\\LocatorLocatorInterface::[a-zA-Z]*\(\)#'
             - '#Call to an undefined method .+FormErrorIterator::getMessage\(\).#'
