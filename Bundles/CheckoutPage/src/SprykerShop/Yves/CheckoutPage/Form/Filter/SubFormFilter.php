@@ -50,9 +50,7 @@ class SubFormFilter implements SubFormFilterInterface
         $filteredSubFormPlugins = clone $subFormPlugins;
 
         foreach ($this->subFormFilterPlugins as $subFormFilterPlugin) {
-            /**
-             * Skipping deprecated plugin execution.
-             */
+            // Skipping deprecated plugin execution.
             if ($subFormFilterPlugin instanceof PaymentFormFilterPlugin) {
                 continue;
             }
