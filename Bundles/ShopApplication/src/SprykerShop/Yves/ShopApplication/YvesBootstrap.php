@@ -125,9 +125,7 @@ abstract class YvesBootstrap
      */
     protected function injectExternalDependencies(DependencyInjectorInterface $dependencyInjector, Container $container): Container
     {
-        /**
-         * @var \Spryker\Yves\Kernel\Container
-         */
+        /** @var \Spryker\Yves\Kernel\Container $container */
         $container = $dependencyInjector->inject($container);
 
         return $container;
