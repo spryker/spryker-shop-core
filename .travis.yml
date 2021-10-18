@@ -1,8 +1,8 @@
 language: php
-dist: trusty
+dist: bionic
 
 git:
-    depth: 3
+    depth: 1
 
 php:
     - 7.4
