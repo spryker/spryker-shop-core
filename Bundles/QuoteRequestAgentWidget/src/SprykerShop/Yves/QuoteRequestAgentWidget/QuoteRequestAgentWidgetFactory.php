@@ -42,7 +42,7 @@ class QuoteRequestAgentWidgetFactory extends AbstractFactory
     {
         return new QuoteRequestAgentCartHandler(
             $this->getQuoteClient(),
-            $this->getQuoteRequestAgentClient()
+            $this->getQuoteRequestAgentClient(),
         );
     }
 

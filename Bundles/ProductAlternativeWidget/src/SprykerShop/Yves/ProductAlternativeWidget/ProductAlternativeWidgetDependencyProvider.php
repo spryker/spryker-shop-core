@@ -46,7 +46,7 @@ class ProductAlternativeWidgetDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::CLIENT_PRODUCT_ALTERNATIVE_STORAGE, function (Container $container) {
             return new ProductAlternativeWidgetToProductAlternativeStorageClientBridge(
-                $container->getLocator()->productAlternativeStorage()->client()
+                $container->getLocator()->productAlternativeStorage()->client(),
             );
         });
 

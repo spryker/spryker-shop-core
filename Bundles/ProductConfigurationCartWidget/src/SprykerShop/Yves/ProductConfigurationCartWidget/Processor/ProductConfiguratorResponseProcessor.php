@@ -54,7 +54,7 @@ class ProductConfiguratorResponseProcessor implements ProductConfiguratorRespons
     ): ProductConfiguratorResponseProcessorResponseTransfer {
         $productConfiguratorResponseProcessorResponseTransfer = $this->productConfigurationCartClient->processProductConfiguratorCheckSumResponse(
             $productConfiguratorResponseTransfer,
-            $configuratorResponseData
+            $configuratorResponseData,
         );
 
         if (!$productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful()) {
@@ -62,7 +62,7 @@ class ProductConfiguratorResponseProcessor implements ProductConfiguratorRespons
         }
 
         return $productConfiguratorResponseProcessorResponseTransfer->setBackUrl(
-            $this->router->generate(static::ROUTE_NAME_CART)
+            $this->router->generate(static::ROUTE_NAME_CART),
         );
     }
 }

@@ -35,7 +35,7 @@ class MultiCartPageFactory extends AbstractFactory
     {
         return $this->getFormFactory()->create(
             QuoteForm::class,
-            $this->createQuoteFormDataProvider()->getData($idQuote)
+            $this->createQuoteFormDataProvider()->getData($idQuote),
         );
     }
 
@@ -45,7 +45,7 @@ class MultiCartPageFactory extends AbstractFactory
     public function createQuoteFormDataProvider(): QuoteFormDataProviderInterface
     {
         return new QuoteFormDataProvider(
-            $this->getMultiCartClient()
+            $this->getMultiCartClient(),
         );
     }
 

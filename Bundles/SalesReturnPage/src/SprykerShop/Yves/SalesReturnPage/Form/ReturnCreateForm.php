@@ -64,7 +64,7 @@ class ReturnCreateForm extends AbstractType
                     ReturnItemsForm::OPTION_RETURN_REASONS => $options[ReturnItemsForm::OPTION_RETURN_REASONS],
                 ],
                 'label' => false,
-            ]
+            ],
         );
 
         return $this;

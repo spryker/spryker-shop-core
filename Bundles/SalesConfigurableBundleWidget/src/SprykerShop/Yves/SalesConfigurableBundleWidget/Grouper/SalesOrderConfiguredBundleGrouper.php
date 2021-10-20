@@ -60,7 +60,7 @@ class SalesOrderConfiguredBundleGrouper implements SalesOrderConfiguredBundleGro
             $salesOrderConfiguredBundleTransfers[$idSalesOrderConfiguredBundle] = (new SalesOrderConfiguredBundleTransfer())
                 ->fromArray($itemTransfer->getSalesOrderConfiguredBundle()->toArray())
                 ->setSalesOrderConfiguredBundleItems(
-                    new ArrayObject($salesOrderConfiguredBundleItemTransfers[$idSalesOrderConfiguredBundle])
+                    new ArrayObject($salesOrderConfiguredBundleItemTransfers[$idSalesOrderConfiguredBundle]),
                 );
         }
 

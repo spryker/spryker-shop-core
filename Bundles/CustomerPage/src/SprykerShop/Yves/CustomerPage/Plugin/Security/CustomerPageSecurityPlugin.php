@@ -167,7 +167,7 @@ class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPlugi
     {
         $securityBuilder->addAuthenticationFailureHandler(CustomerPageConfig::SECURITY_FIREWALL_NAME, function (ContainerInterface $container) {
             return $this->getFactory()->createCustomerAuthenticationFailureHandler(
-                $this->getRouter($container)->generate(static::ROUTE_HOME)
+                $this->getRouter($container)->generate(static::ROUTE_HOME),
             );
         });
 
@@ -183,7 +183,7 @@ class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPlugi
     {
         $securityBuilder->addAccessDeniedHandler(CustomerPageConfig::SECURITY_FIREWALL_NAME, function (ContainerInterface $container) {
             return $this->getFactory()->createAccessDeniedHandler(
-                $this->getRouter($container)->generate(static::ROUTE_LOGIN)
+                $this->getRouter($container)->generate(static::ROUTE_LOGIN),
             );
         });
 

@@ -77,7 +77,7 @@ class ShareCartCompanyUserShareEditForm extends AbstractType
     {
         return new CallbackTransformer(
             $this->createTransformCallback(),
-            $this->createReverseTransformCallback()
+            $this->createReverseTransformCallback(),
         );
     }
 

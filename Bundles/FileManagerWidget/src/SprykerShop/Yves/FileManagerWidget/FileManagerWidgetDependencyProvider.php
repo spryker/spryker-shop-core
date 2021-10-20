@@ -47,7 +47,7 @@ class FileManagerWidgetDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::SERVICE_FILE_MANAGER, function (Container $container) {
             return new FileManagerWidgetToFileManagerServiceBridge(
-                $container->getLocator()->fileManager()->service()
+                $container->getLocator()->fileManager()->service(),
             );
         });
 
@@ -63,7 +63,7 @@ class FileManagerWidgetDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::CLIENT_FILE_MANAGER_STORAGE, function (Container $container) {
             return new FileManagerWidgetToFileManagerStorageClientBridge(
-                $container->getLocator()->fileManagerStorage()->client()
+                $container->getLocator()->fileManagerStorage()->client(),
             );
         });
 

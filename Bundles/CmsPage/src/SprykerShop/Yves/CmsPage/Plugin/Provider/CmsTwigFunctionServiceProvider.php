@@ -35,7 +35,7 @@ class CmsTwigFunctionServiceProvider extends AbstractPlugin implements ServicePr
         $app['twig'] = $app->share(
             $app->extend('twig', function (Environment $twig) use ($app) {
                 return $this->registerCmsTwigFunction($twig, $app);
-            })
+            }),
         );
     }
 
@@ -66,7 +66,7 @@ class CmsTwigFunctionServiceProvider extends AbstractPlugin implements ServicePr
                 }
 
                 return $translation;
-            }, ['needs_context' => true])
+            }, ['needs_context' => true]),
         );
 
         return $twig;

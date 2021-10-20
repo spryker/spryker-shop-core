@@ -115,7 +115,7 @@ class ContentNavigationTwigFunctionProvider extends TwigFunctionProvider
 
             $navigationStorageTransfer = $this->navigationStorageClient->findNavigationTreeByKey(
                 $contentNavigationTypeTransfer->getNavigationKey(),
-                $this->localeName
+                $this->localeName,
             );
 
             if (!$navigationStorageTransfer) {
@@ -130,7 +130,7 @@ class ContentNavigationTwigFunctionProvider extends TwigFunctionProvider
 
             return $this->twig->render(
                 $availableTemplate,
-                ['navigation' => $navigationStorageTransfer]
+                ['navigation' => $navigationStorageTransfer],
             );
         };
     }

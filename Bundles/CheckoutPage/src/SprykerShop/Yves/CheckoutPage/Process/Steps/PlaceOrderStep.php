@@ -212,7 +212,7 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
     {
         foreach ($checkoutResponseTransfer->getErrors() as $checkoutErrorTransfer) {
             $this->flashMessenger->addErrorMessage(
-                $this->translateCheckoutErrorMessage($checkoutErrorTransfer)
+                $this->translateCheckoutErrorMessage($checkoutErrorTransfer),
             );
         }
     }
@@ -229,7 +229,7 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
         return $this->glossaryStorageClient->translate(
             $checkoutErrorMessage,
             $this->currentLocale,
-            $checkoutErrorTransfer->getParameters()
+            $checkoutErrorTransfer->getParameters(),
         ) ?: $checkoutErrorMessage;
     }
 }

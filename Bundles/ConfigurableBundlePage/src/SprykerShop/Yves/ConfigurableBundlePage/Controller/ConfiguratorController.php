@@ -180,7 +180,7 @@ class ConfiguratorController extends AbstractController
         $formattedSearchResults = $this->getFactory()
             ->getConfigurableBundlePageSearchClient()
             ->searchConfigurableBundleTemplates(
-                new ConfigurableBundleTemplatePageSearchRequestTransfer()
+                new ConfigurableBundleTemplatePageSearchRequestTransfer(),
             );
 
         return [
@@ -229,7 +229,7 @@ class ConfiguratorController extends AbstractController
         $productConcreteCriteriaFilterTransfer = $this->createProductConcreteCriteriaFilterTransfer(
             $configurableBundleTemplateStorageTransfer,
             $idConfigurableBundleTemplateSlot,
-            $selectedProductViewTransfer ? [$selectedProductViewTransfer->getIdProductConcrete()] : []
+            $selectedProductViewTransfer ? [$selectedProductViewTransfer->getIdProductConcrete()] : [],
         );
 
         $response = array_merge($response, [
@@ -289,7 +289,7 @@ class ConfiguratorController extends AbstractController
                 $this->addErrorMessage(
                     $this->getFactory()
                         ->getGlossaryStorageClient()
-                        ->translate($messageTransfer->getValue(), $this->getLocale(), $messageTransfer->getParameters())
+                        ->translate($messageTransfer->getValue(), $this->getLocale(), $messageTransfer->getParameters()),
                 );
             }
 
@@ -360,7 +360,7 @@ class ConfiguratorController extends AbstractController
             ->mapDataToCreateConfiguredBundleRequestTransfer(
                 $formData,
                 $configurableBundleTemplateStorageTransfer,
-                $createConfiguredBundleRequestTransfer
+                $createConfiguredBundleRequestTransfer,
             );
 
         $quoteResponseTransfer = $this->getFactory()

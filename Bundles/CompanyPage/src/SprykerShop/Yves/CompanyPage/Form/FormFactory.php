@@ -143,7 +143,7 @@ class FormFactory extends AbstractFactory
         return new CompanyUserFormDataProvider(
             $this->getCompanyUserClient(),
             $this->getCompanyBusinessUnitClient(),
-            $this->getCompanyRoleClient()
+            $this->getCompanyRoleClient(),
         );
     }
 
@@ -160,7 +160,7 @@ class FormFactory extends AbstractFactory
         return $this->getFormFactory()->create(
             CompanyRolePermissionConfigurationType::class,
             $dataProvider->getData($idCompanyRole, $idPermission),
-            $dataProvider->getOptions()
+            $dataProvider->getOptions(),
         );
     }
 
@@ -170,7 +170,7 @@ class FormFactory extends AbstractFactory
     public function createCompanyRolePermissionDataProvider()
     {
         return new CompanyRolePermissionDataProvider(
-            $this->getCompanyRoleClient()
+            $this->getCompanyRoleClient(),
         );
     }
 
@@ -185,7 +185,7 @@ class FormFactory extends AbstractFactory
             $this->getCompanyBusinessUnitClient(),
             $this->getCompanyUnitAddressClient(),
             $this->getGlossaryStorageClient(),
-            $this->getStore()
+            $this->getStore(),
         );
     }
 
@@ -207,7 +207,7 @@ class FormFactory extends AbstractFactory
         return new CompanyUnitAddressFormDataProvider(
             $this->getCompanyUnitAddressClient(),
             $this->getCompanyBusinessUnitClient(),
-            $this->getStore()
+            $this->getStore(),
         );
     }
 
@@ -238,7 +238,7 @@ class FormFactory extends AbstractFactory
     public function createCompanyUserAccountDataProvider(): CompanyUserAccountSelectorFormDataProvider
     {
         return new CompanyUserAccountSelectorFormDataProvider(
-            $this->getBusinessOnBehalfClient()
+            $this->getBusinessOnBehalfClient(),
         );
     }
 

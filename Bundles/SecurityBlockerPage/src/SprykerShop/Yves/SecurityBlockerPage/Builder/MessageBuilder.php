@@ -43,7 +43,7 @@ class MessageBuilder implements MessageBuilderInterface
         return $this->glossaryStorageClient->translate(
             static::GLOSSARY_KEY_ERROR_ACCOUNT_BLOCKED,
             $localeName,
-            ['%minutes%' => $this->convertSecondsToReadableTime($securityCheckAuthResponseTransfer)]
+            ['%minutes%' => $this->convertSecondsToReadableTime($securityCheckAuthResponseTransfer)],
         );
     }
 

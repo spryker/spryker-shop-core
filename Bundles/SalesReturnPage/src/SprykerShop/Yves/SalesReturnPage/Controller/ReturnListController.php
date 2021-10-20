@@ -39,7 +39,7 @@ class ReturnListController extends AbstractReturnController
         return $this->view(
             $response,
             [],
-            '@SalesReturnPage/views/return-list/return-list.twig'
+            '@SalesReturnPage/views/return-list/return-list.twig',
         );
     }
 

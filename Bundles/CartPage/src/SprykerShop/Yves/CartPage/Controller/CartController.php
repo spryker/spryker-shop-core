@@ -111,7 +111,7 @@ class CartController extends AbstractController
         return $this->view(
             $viewData,
             $this->getFactory()->getCartPageWidgetPlugins(),
-            '@CartPage/views/cart/cart.twig'
+            '@CartPage/views/cart/cart.twig',
         );
     }
 
@@ -415,7 +415,7 @@ class CartController extends AbstractController
                 $quoteTransfer->getItems(),
                 $request->get('groupKey'),
                 $request->get('product-option', []),
-                $this->getLocale()
+                $this->getLocale(),
             );
 
         if ($isItemReplacedInCart) {
@@ -428,7 +428,7 @@ class CartController extends AbstractController
             CartPageRouteProviderPlugin::ROUTE_NAME_CART,
             $this->getFactory()
                 ->createCartItemsAttributeProvider()
-                ->formatUpdateActionResponse($sku, $request->get('selectedAttributes', []))
+                ->formatUpdateActionResponse($sku, $request->get('selectedAttributes', [])),
         );
     }
 
@@ -453,20 +453,20 @@ class CartController extends AbstractController
     {
         $csrfToken = $this->createCsrfToken(
             static::CSRF_TOKEN_ID,
-            $request->get(static::REQUEST_PARAMETER_TOKEN)
+            $request->get(static::REQUEST_PARAMETER_TOKEN),
         );
 
         if (!$this->getFactory()->getCsrfTokenManager()->isTokenValid($csrfToken)) {
             return $this->createAjaxErrorResponse(
                 Response::HTTP_BAD_REQUEST,
-                [static::GLOSSARY_KEY_ERROR_MESSAGE_UNEXPECTED_ERROR]
+                [static::GLOSSARY_KEY_ERROR_MESSAGE_UNEXPECTED_ERROR],
             );
         }
 
         if (!$this->canAddCartItem()) {
             return $this->createAjaxErrorResponse(
                 Response::HTTP_FORBIDDEN,
-                [static::MESSAGE_PERMISSION_FAILED]
+                [static::MESSAGE_PERMISSION_FAILED],
             );
         }
 
@@ -502,7 +502,7 @@ class CartController extends AbstractController
         }
 
         $this->addSuccessMessages(
-            $this->getFactory()->getZedRequestClient()->getLastResponseSuccessMessages()
+            $this->getFactory()->getZedRequestClient()->getLastResponseSuccessMessages(),
         );
 
         return [

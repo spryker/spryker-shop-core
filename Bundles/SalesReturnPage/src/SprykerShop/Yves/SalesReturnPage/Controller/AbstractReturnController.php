@@ -26,7 +26,7 @@ abstract class AbstractReturnController extends AbstractController
 
         if (!$this->getFactory()->getCustomerClient()->getCustomer()) {
             throw new NotFoundHttpException(
-                'Only logged in customers are allowed to access this page'
+                'Only logged in customers are allowed to access this page',
             );
         }
     }

@@ -53,7 +53,7 @@ class CmsSlotBlockWidgetDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::CLIENT_CMS_SLOT_BLOCK_STORAGE, function (Container $container) {
             return new CmsSlotBlockWidgetToCmsSlotBlockStorageClientBridge(
-                $container->getLocator()->cmsSlotBlockStorage()->client()
+                $container->getLocator()->cmsSlotBlockStorage()->client(),
             );
         });
 
@@ -69,7 +69,7 @@ class CmsSlotBlockWidgetDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::CLIENT_CMS_SLOT_BLOCK, function (Container $container) {
             return new CmsSlotBlockWidgetToCmsSlotBlockClientBridge(
-                $container->getLocator()->cmsSlotBlock()->client()
+                $container->getLocator()->cmsSlotBlock()->client(),
             );
         });
 

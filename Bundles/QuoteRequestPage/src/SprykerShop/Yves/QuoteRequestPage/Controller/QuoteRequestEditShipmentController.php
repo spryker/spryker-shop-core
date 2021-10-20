@@ -67,7 +67,7 @@ class QuoteRequestEditShipmentController extends QuoteRequestAbstractController
         ) {
             return $this->redirectResponseInternal(
                 QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_EDIT_SHIPMENT_CONFIRM,
-                [static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference]
+                [static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference],
             );
         }
 
@@ -89,7 +89,7 @@ class QuoteRequestEditShipmentController extends QuoteRequestAbstractController
         if ($quoteTransfer->getQuoteRequestReference() === $quoteRequestReference) {
             return $this->redirectResponseInternal(
                 QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_EDIT_SHIPMENT,
-                [static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference]
+                [static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference],
             );
         }
 

@@ -63,7 +63,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
         if ($productConcreteCriteriaFilterTransfer->getExcludedProductIds()) {
             $productConcretePageSearchTransfers = $this->filterProductConcretePageSearchTransfersByProductIds(
                 $productConcretePageSearchTransfers,
-                $productConcreteCriteriaFilterTransfer->getExcludedProductIds()
+                $productConcreteCriteriaFilterTransfer->getExcludedProductIds(),
             );
         }
 
@@ -101,7 +101,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
         foreach ($productConcretePageSearchTransfers as $productConcretePageSearchTransfer) {
             $productViewTransfers[] = $this->productConcreteMapper->mapProductConcretePageSearchTransferToProductViewTransfer(
                 $productConcretePageSearchTransfer,
-                new ProductViewTransfer()
+                new ProductViewTransfer(),
             );
         }
 

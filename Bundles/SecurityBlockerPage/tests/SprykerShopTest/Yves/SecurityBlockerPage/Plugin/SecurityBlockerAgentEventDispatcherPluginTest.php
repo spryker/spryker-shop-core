@@ -58,7 +58,7 @@ class SecurityBlockerAgentEventDispatcherPluginTest extends Unit
         // Act
         $this->securityBlockerAgentEventDispatcherPlugin->extend(
             $eventDispatcherMock,
-            $this->createMock(ContainerInterface::class)
+            $this->createMock(ContainerInterface::class),
         );
     }
 }

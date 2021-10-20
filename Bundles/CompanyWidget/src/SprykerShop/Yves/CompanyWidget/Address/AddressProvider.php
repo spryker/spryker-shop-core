@@ -152,7 +152,7 @@ class AddressProvider implements AddressProviderInterface
         unset(
             $formAddressData[static::KEY_IS_DEFAULT_SHIPPING],
             $formAddressData[static::KEY_IS_DEFAULT_BILLING],
-            $formAddressData[static::KEY_ID_CUSTOMER_ADDRESS]
+            $formAddressData[static::KEY_ID_CUSTOMER_ADDRESS],
         );
 
         return $formAddressData;

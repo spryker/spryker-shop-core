@@ -146,7 +146,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
         $this->addParameter(
             static::PARAMETER_CAN_SEND_APPROVAL_REQUEST,
             !$this->getQuoteApprovalClient()->isQuoteApproved($quoteTransfer)
-            && !$this->getQuoteApprovalClient()->isQuoteWaitingForApproval($quoteTransfer)
+            && !$this->getQuoteApprovalClient()->isQuoteWaitingForApproval($quoteTransfer),
         );
     }
 
@@ -217,7 +217,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
 
         return $this->getQuoteApprovalClient()->calculatePlaceOrderPermissionLimit(
             $quoteTransfer,
-            $this->findCurrentCompanyUser()
+            $this->findCurrentCompanyUser(),
         );
     }
 
@@ -254,7 +254,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
     {
         return $this->getFactory()->createQuoteApproveRequestForm(
             $quoteTransfer,
-            $this->getLocale()
+            $this->getLocale(),
         );
     }
 
@@ -277,7 +277,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
             static::IS_QUOTE_APPLICABLE_FOR_APPROVAL_PROCESS,
             $this->getFactory()
                 ->getQuoteApprovalClient()
-                ->isQuoteApplicableForApprovalProcess($quoteTransfer)
+                ->isQuoteApplicableForApprovalProcess($quoteTransfer),
         );
     }
 }

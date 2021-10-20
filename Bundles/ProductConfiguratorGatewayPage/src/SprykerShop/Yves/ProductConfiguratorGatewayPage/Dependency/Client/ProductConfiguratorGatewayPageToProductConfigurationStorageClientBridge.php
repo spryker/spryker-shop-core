@@ -47,7 +47,7 @@ class ProductConfiguratorGatewayPageToProductConfigurationStorageClientBridge im
     ): void {
         $this->productConfigurationStorageClient->storeProductConfigurationInstanceBySku(
             $sku,
-            $productConfigurationInstanceTransfer
+            $productConfigurationInstanceTransfer,
         );
     }
 }

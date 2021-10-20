@@ -90,7 +90,7 @@ class ProductReviewForm extends AbstractType
                     new LessThanOrEqual(['value' => $this->getFactory()->getProductReviewClient()->getMaximumRating()]),
                 ],
                 'invalid_message' => $this->getConfig()->getInvalidRatingValidationMessageGlossaryKey(),
-            ]
+            ],
         );
 
         return $this;
@@ -135,7 +135,7 @@ class ProductReviewForm extends AbstractType
                 'constraints' => [
                     new Length(['min' => 1]),
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -160,7 +160,7 @@ class ProductReviewForm extends AbstractType
                 'constraints' => [
                     new Length(['min' => 1]),
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -182,7 +182,7 @@ class ProductReviewForm extends AbstractType
                 'constraints' => [
                     new Length(['min' => 1, 'max' => 255]),
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -200,7 +200,7 @@ class ProductReviewForm extends AbstractType
             HiddenType::class,
             [
                 'required' => true,
-            ]
+            ],
         );
 
         return $this;

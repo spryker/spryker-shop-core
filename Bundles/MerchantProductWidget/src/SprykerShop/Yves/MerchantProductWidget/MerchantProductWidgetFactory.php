@@ -30,7 +30,7 @@ class MerchantProductWidgetFactory extends AbstractFactory
             $this->getPriceProductClient(),
             $this->getPriceProductStorageClient(),
             $this->getMerchantStorageClient(),
-            $this->createMerchantProductMapper()
+            $this->createMerchantProductMapper(),
         );
     }
 
@@ -40,7 +40,7 @@ class MerchantProductWidgetFactory extends AbstractFactory
     public function createMerchantProductExpander(): MerchantProductExpanderInterface
     {
         return new MerchantProductExpander(
-            $this->createMerchantProductReader()
+            $this->createMerchantProductReader(),
         );
     }
 

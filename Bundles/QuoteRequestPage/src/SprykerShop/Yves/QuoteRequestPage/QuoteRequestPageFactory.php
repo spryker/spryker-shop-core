@@ -75,7 +75,7 @@ class QuoteRequestPageFactory extends AbstractFactory
 
         return $this->getFormFactory()->create(
             QuoteRequestForm::class,
-            $quoteRequestFormDataProvider->getData($quoteRequestTransfer)
+            $quoteRequestFormDataProvider->getData($quoteRequestTransfer),
         );
     }
 
@@ -87,7 +87,7 @@ class QuoteRequestPageFactory extends AbstractFactory
         return new QuoteRequestFormDataProvider(
             $this->getCompanyUserClient(),
             $this->getCartClient(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -100,7 +100,7 @@ class QuoteRequestPageFactory extends AbstractFactory
             $this->getQuoteRequestClient(),
             $this->getPersistentCartClient(),
             $this->getQuoteClient(),
-            $this->getCustomerClient()
+            $this->getCustomerClient(),
         );
     }
 
@@ -112,7 +112,7 @@ class QuoteRequestPageFactory extends AbstractFactory
         return new ShipmentGrouper(
             $this->getShipmentService(),
             $this->createItemExtractor(),
-            $this->createQuoteChecker()
+            $this->createQuoteChecker(),
         );
     }
 
@@ -141,7 +141,7 @@ class QuoteRequestPageFactory extends AbstractFactory
     {
         return $this->getFormFactory()->create(
             QuoteRequestEditItemsConfirmForm::class,
-            $quoteRequestTransfer
+            $quoteRequestTransfer,
         );
     }
 
@@ -154,7 +154,7 @@ class QuoteRequestPageFactory extends AbstractFactory
     {
         return $this->getFormFactory()->create(
             QuoteRequestEditAddressConfirmForm::class,
-            $quoteRequestTransfer
+            $quoteRequestTransfer,
         );
     }
 
@@ -167,7 +167,7 @@ class QuoteRequestPageFactory extends AbstractFactory
     {
         return $this->getFormFactory()->create(
             QuoteRequestEditShipmentConfirmForm::class,
-            $quoteRequestTransfer
+            $quoteRequestTransfer,
         );
     }
 
@@ -178,7 +178,7 @@ class QuoteRequestPageFactory extends AbstractFactory
     {
         return new EntryStep(
             static::ROUTE_CHECKOUT_INDEX,
-            static::ROUTE_QUOTE_REQUEST
+            static::ROUTE_QUOTE_REQUEST,
         );
     }
 
@@ -189,7 +189,7 @@ class QuoteRequestPageFactory extends AbstractFactory
     {
         return new SaveRequestForQuoteStep(
             static::ROUTE_QUOTE_REQUEST_SAVE,
-            static::ROUTE_QUOTE_REQUEST
+            static::ROUTE_QUOTE_REQUEST,
         );
     }
 
@@ -200,7 +200,7 @@ class QuoteRequestPageFactory extends AbstractFactory
     {
         return new CheckoutStepResolver(
             $this->createEntryStep(),
-            $this->createSaveRequestForQuoteStep()
+            $this->createSaveRequestForQuoteStep(),
         );
     }
 

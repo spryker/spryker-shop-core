@@ -93,7 +93,7 @@ class ShoppingListUpdateForm extends AbstractType
                 },
                 function ($idString) {
                     return (int)$idString;
-                }
+                },
             ));
     }
 

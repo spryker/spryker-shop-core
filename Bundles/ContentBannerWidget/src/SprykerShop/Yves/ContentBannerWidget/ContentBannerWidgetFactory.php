@@ -27,7 +27,7 @@ class ContentBannerWidgetFactory extends AbstractFactory
         return new ContentBannerTwigFunctionProvider(
             $twig,
             $localeName,
-            $this->getContentBannerClient()
+            $this->getContentBannerClient(),
         );
     }
 
@@ -44,7 +44,7 @@ class ContentBannerWidgetFactory extends AbstractFactory
         return new TwigFunction(
             $functionProvider->getFunctionName(),
             $functionProvider->getFunction(),
-            $functionProvider->getOptions()
+            $functionProvider->getOptions(),
         );
     }
 

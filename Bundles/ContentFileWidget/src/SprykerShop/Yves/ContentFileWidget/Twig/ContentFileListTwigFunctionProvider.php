@@ -121,7 +121,7 @@ class ContentFileListTwigFunctionProvider extends TwigFunctionProvider
                 $this->getAvailableTemplates()[$templateIdentifier],
                 [
                     'fileViewCollection' => $fileViewCollection,
-                ]
+                ],
             );
         };
     }

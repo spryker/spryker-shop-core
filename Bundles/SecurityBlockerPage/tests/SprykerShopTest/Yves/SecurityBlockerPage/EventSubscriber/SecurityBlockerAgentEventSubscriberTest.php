@@ -50,7 +50,7 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
             $securityBlockerMock,
             $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
             $this->getMockBuilder(SecurityBlockerPageConfig::class)->getMock(),
-            'de'
+            'de',
         );
 
         $eventDispatcher = new EventDispatcher();
@@ -83,7 +83,7 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
             $securityBlockerMock,
             $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
             $this->getMockBuilder(SecurityBlockerPageConfig::class)->getMock(),
-            'en'
+            'en',
         );
 
         $eventDispatcher = new EventDispatcher();
@@ -118,7 +118,7 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
             $securityBlockerMock,
             $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
             $this->getMockBuilder(SecurityBlockerPageConfig::class)->getMock(),
-            'en'
+            'en',
         );
 
         $eventDispatcher = new EventDispatcher();
@@ -152,7 +152,7 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
             $securityBlockerMock,
             $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
             $this->getMockBuilder(SecurityBlockerPageConfig::class)->getMock(),
-            'en'
+            'en',
         );
 
         $eventDispatcher = new EventDispatcher();
@@ -186,7 +186,7 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
             $securityBlockerMock,
             $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
             $this->getMockBuilder(SecurityBlockerPageConfig::class)->getMock(),
-            'en'
+            'en',
         );
 
         $eventDispatcher = new EventDispatcher();

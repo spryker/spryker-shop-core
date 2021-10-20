@@ -29,7 +29,7 @@ class ReturnSlipPrintController extends AbstractReturnController
         return $this->view(
             $response,
             [],
-            '@SalesReturnPage/views/return-print/return-print.twig'
+            '@SalesReturnPage/views/return-print/return-print.twig',
         );
     }
 
@@ -49,7 +49,7 @@ class ReturnSlipPrintController extends AbstractReturnController
         if (!$returnTransfer) {
             throw new NotFoundHttpException(sprintf(
                 "Return with provided reference %s doesn't exist",
-                $returnReference
+                $returnReference,
             ));
         }
 
@@ -68,7 +68,7 @@ class ReturnSlipPrintController extends AbstractReturnController
         $returnTransfer->getReturnItems()->uasort(
             function (ReturnItemTransfer $firstReturnItemTransfer, ReturnItemTransfer $secondReturnItemTransfer) {
                 return strcmp($firstReturnItemTransfer->getOrderItem()->getOrderReference(), $secondReturnItemTransfer->getOrderItem()->getOrderReference());
-            }
+            },
         );
 
         return $returnTransfer;

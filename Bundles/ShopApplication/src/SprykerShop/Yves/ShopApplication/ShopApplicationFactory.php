@@ -210,7 +210,7 @@ class ShopApplicationFactory extends AbstractFactory
         return new WidgetTagService(
             $this->createWidgetContainerRegistry(),
             $this->getGlobalWidgetCollection(),
-            $this->createWidgetFactory()
+            $this->createWidgetFactory(),
         );
     }
 

@@ -81,7 +81,7 @@ class ProductGroupReader implements ProductGroupReaderInterface
         return $this->productStorageClient->getProductAbstractViewTransfers(
             $productAbstractGroupStorageTransfer->getGroupProductAbstractIds(),
             $localeName,
-            $selectedAttributes
+            $selectedAttributes,
         );
     }
 

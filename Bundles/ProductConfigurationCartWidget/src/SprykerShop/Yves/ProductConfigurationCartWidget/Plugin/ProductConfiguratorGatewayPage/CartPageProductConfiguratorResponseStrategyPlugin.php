@@ -67,7 +67,7 @@ class CartPageProductConfiguratorResponseStrategyPlugin extends AbstractPlugin i
             ->createProductConfiguratorResponseProcessor()
             ->processProductConfiguratorResponse(
                 $productConfiguratorResponseTransfer,
-                $configuratorResponseData
+                $configuratorResponseData,
             );
     }
 }

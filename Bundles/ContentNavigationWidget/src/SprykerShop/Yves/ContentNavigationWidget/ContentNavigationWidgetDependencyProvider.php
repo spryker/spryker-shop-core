@@ -47,7 +47,7 @@ class ContentNavigationWidgetDependencyProvider extends AbstractBundleDependency
     {
         $container->set(static::CLIENT_CONTENT_NAVIGATION, function (Container $container) {
             return new ContentNavigationWidgetToContentNavigationClientBridge(
-                $container->getLocator()->contentNavigation()->client()
+                $container->getLocator()->contentNavigation()->client(),
             );
         });
 
@@ -63,7 +63,7 @@ class ContentNavigationWidgetDependencyProvider extends AbstractBundleDependency
     {
         $container->set(static::CLIENT_NAVIGATION_STORAGE, function (Container $container) {
             return new ContentNavigationWidgetToNavigationStorageClientBridge(
-                $container->getLocator()->navigationStorage()->client()
+                $container->getLocator()->navigationStorage()->client(),
             );
         });
 

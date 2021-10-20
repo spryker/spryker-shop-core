@@ -132,7 +132,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         return [
             CheckoutAddressCollectionForm::OPTION_SINGLE_SHIPPING_ADDRESS_CHOICES => $this->addressChoicesResolver->getSingleShippingAddressChoices(
                 $defaultAddressChoices,
-                $canDeliverToMultipleShippingAddresses
+                $canDeliverToMultipleShippingAddresses,
             ),
             CheckoutAddressCollectionForm::OPTION_MULTIPLE_SHIPPING_ADDRESS_CHOICES => $defaultAddressChoices,
             CheckoutAddressCollectionForm::OPTION_BILLING_ADDRESS_CHOICES => $defaultAddressChoices,
@@ -152,7 +152,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     {
         $groupedBundleItems = $this->productBundleClient->getGroupedBundleItems(
             $quoteTransfer->getItems(),
-            $quoteTransfer->getBundleItems()
+            $quoteTransfer->getBundleItems(),
         );
 
         $bundleItems = [];
@@ -374,7 +374,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     {
         $items = $this->productBundleClient->getGroupedBundleItems(
             $quoteTransfer->getItems(),
-            $quoteTransfer->getBundleItems()
+            $quoteTransfer->getBundleItems(),
         );
 
         return count($items) > 1
@@ -415,7 +415,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         }
 
         $shipmentGroups = $this->shipmentService->groupItemsByShipment(
-            $this->filterQuoteItemsWithShipment($quoteTransfer->getItems()->getArrayCopy())
+            $this->filterQuoteItemsWithShipment($quoteTransfer->getItems()->getArrayCopy()),
         );
         if ($shipmentGroups->count() !== 1) {
             return null;

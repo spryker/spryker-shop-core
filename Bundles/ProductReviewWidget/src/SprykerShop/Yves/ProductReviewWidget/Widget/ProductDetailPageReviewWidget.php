@@ -44,7 +44,7 @@ class ProductDetailPageReviewWidget extends AbstractWidget
                 'summary',
                 $this->getFactory()
                     ->getProductReviewClient()
-                    ->calculateProductReviewSummary($ratingAggregationTransfer)
+                    ->calculateProductReviewSummary($ratingAggregationTransfer),
             )
             ->addParameter('maximumRating', $this->getFactory()->getProductReviewClient()->getMaximumRating());
     }

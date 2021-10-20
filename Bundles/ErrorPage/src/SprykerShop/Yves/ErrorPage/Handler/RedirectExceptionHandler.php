@@ -50,7 +50,7 @@ class RedirectExceptionHandler implements RedirectExceptionHandlerInterface
             [
                 static::QUERY_PARAMETER_ERROR_MESSAGE => $exception->getMessage(),
             ],
-            UrlGeneratorInterface::ABSOLUTE_URL
+            UrlGeneratorInterface::ABSOLUTE_URL,
         );
 
         return RedirectResponse::create($errorPageUrl, Response::HTTP_MOVED_PERMANENTLY);

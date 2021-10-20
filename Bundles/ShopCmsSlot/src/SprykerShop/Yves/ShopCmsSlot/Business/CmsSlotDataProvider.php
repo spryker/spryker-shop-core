@@ -70,7 +70,7 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
     {
         try {
             $cmsSlotStorageTransfer = $this->cmsSlotStorageClient->getCmsSlotByKey(
-                $cmsSlotContextTransfer->getCmsSlotKey()
+                $cmsSlotContextTransfer->getCmsSlotKey(),
             );
         } catch (Exception $exception) {
             if ($this->shopCmsSlotConfig->isDebugModeEnabled()) {
@@ -127,8 +127,8 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
                 sprintf(
                     'There is no CMS slot content plugin registered for this content provider type: %s, ' .
                     'you can fix this error by adding it in ShopCmsSlotDependencyProvider',
-                    $contentProviderType
-                )
+                    $contentProviderType,
+                ),
             );
         }
 
@@ -152,7 +152,7 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
         foreach ($requiredKeys as $requiredKey) {
             if (!isset($provided[$requiredKey])) {
                 throw new MissingRequiredParameterException(
-                    sprintf('Unable to find provided data for the key "%s"', $requiredKey)
+                    sprintf('Unable to find provided data for the key "%s"', $requiredKey),
                 );
             }
         }
@@ -172,7 +172,7 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
             ->setCmsSlotKey($cmsSlotContextTransfer->getCmsSlotKey())
             ->setCmsSlotTemplatePath($cmsSlotContextTransfer->getCmsSlotTemplatePath())
             ->setCmsSlotParams(
-                (new CmsSlotParamsTransfer())->fromArray($providedData, true)
+                (new CmsSlotParamsTransfer())->fromArray($providedData, true),
             );
 
         return $cmsSlotContentRequestTransfer;

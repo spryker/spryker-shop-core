@@ -70,7 +70,7 @@ class SecurityBlockerPageTester extends Actor
             [],
             [
                 'REMOTE_ADDR' => $securityCheckAuthContextTransfer->getIp(),
-            ]
+            ],
         );
         $request->attributes->add(['_route' => $route]);
 
@@ -102,7 +102,7 @@ class SecurityBlockerPageTester extends Actor
             [],
             [
                 'REMOTE_ADDR' => $securityCheckAuthContextTransfer->getIp(),
-            ]
+            ],
         );
         $request->attributes->add(['_route' => $route]);
 

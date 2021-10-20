@@ -58,8 +58,8 @@ class CmsSlotBlockWidgetCmsSlotContentPluginTest extends Unit
                 ->addCmsSlotBlock(
                     (new CmsSlotBlockTransfer())
                         ->setCmsBlockKey(static::BLOCK_KEY)
-                        ->setConditions(new ArrayObject())
-                )
+                        ->setConditions(new ArrayObject()),
+                ),
         );
         $this->setCmsSlotBlockWidgetDataProviderMock(function ($twig, $context, $blockOptions) {
             $content = '';
@@ -78,7 +78,7 @@ class CmsSlotBlockWidgetCmsSlotContentPluginTest extends Unit
 
         // Act
         $cmsSlotContentResponseTransfer = $cmsSlotBlockWidgetCmsSlotContentPluginMock->getSlotContent(
-            $cmsSlotContentRequestTransfer
+            $cmsSlotContentRequestTransfer,
         );
 
         // Assert
@@ -123,7 +123,7 @@ class CmsSlotBlockWidgetCmsSlotContentPluginTest extends Unit
         $cmsSlotBlockWidgetDataProviderMock->method('getCmsBlockTwigFunction')->willReturn($twigFunctionCallable);
         $this->tester->mockFactoryMethod(
             'createCmsSlotBlockWidgetDataProvider',
-            $cmsSlotBlockWidgetDataProviderMock
+            $cmsSlotBlockWidgetDataProviderMock,
         );
     }
 
@@ -165,7 +165,7 @@ class CmsSlotBlockWidgetCmsSlotContentPluginTest extends Unit
     {
         $this->tester->setDependency(
             CmsSlotBlockWidgetDependencyProvider::CLIENT_CMS_SLOT_BLOCK,
-            $this->getCmsSlotBlockClientMock()
+            $this->getCmsSlotBlockClientMock(),
         );
     }
 
@@ -178,7 +178,7 @@ class CmsSlotBlockWidgetCmsSlotContentPluginTest extends Unit
     {
         $this->tester->setDependency(
             CmsSlotBlockWidgetDependencyProvider::CLIENT_CMS_SLOT_BLOCK_STORAGE,
-            $this->getCmsSlotBlockStorageClientMock($cmsSlotBlockCollectionTransfer)
+            $this->getCmsSlotBlockStorageClientMock($cmsSlotBlockCollectionTransfer),
         );
     }
 }

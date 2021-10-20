@@ -135,8 +135,8 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
             $this->getApproverLimitString(
                 $companyUserTransfer,
                 $quoteTransfer,
-                $localeName
-            )
+                $localeName,
+            ),
         );
     }
 
@@ -154,18 +154,18 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
     ) {
         $approverLimit = $this->quoteApprovalClient->calculateApproveQuotePermissionLimit(
             $quoteTransfer,
-            $companyUserTransfer
+            $companyUserTransfer,
         );
 
         if ($approverLimit === null) {
             return $this->glossaryStorageClient->translate(
                 'quote_approval_widget.limit.unlimited',
-                $localeName
+                $localeName,
             );
         }
 
         return $this->moneyClient->formatWithSymbol(
-            $this->moneyClient->fromInteger($approverLimit, $quoteTransfer->getCurrency()->getCode())
+            $this->moneyClient->fromInteger($approverLimit, $quoteTransfer->getCurrency()->getCode()),
         );
     }
 }

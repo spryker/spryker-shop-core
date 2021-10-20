@@ -310,7 +310,7 @@ class ShopUiTwigExtension extends TwigExtension
         return preg_replace(
             $this->getLocalePattern(),
             '/',
-            $filterValue
+            $filterValue,
         );
     }
 

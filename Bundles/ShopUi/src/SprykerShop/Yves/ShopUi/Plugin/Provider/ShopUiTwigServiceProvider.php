@@ -33,7 +33,7 @@ class ShopUiTwigServiceProvider extends AbstractPlugin implements ServiceProvide
                 $twig->addExtension($twigExtension);
 
                 return $twig;
-            })
+            }),
         );
     }
 

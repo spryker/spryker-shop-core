@@ -81,7 +81,7 @@ class SummaryFormDataProvider implements StepEngineFormDataProviderInterface
         return [
             SummaryForm::OPTION_ACCEPT_TERM_AND_CONDITIONS_LABEL => $this->generateOptionAcceptTermAndConditionsLabel(
                 $localizedTermsAndConditionsPageLinks,
-                $currentLocale
+                $currentLocale,
             ),
         ];
     }
@@ -97,7 +97,7 @@ class SummaryFormDataProvider implements StepEngineFormDataProviderInterface
         return sprintf(
             '<a href="%s" target="_blank">%s</a>',
             $localizedTermsAndConditionsPageLinks[$currentLocale],
-            $this->glossaryStorageClient->translate(static::GLOSSARY_KEY_ACCEPT_TERM_AND_CONDITIONS, $this->localeClient->getCurrentLocale())
+            $this->glossaryStorageClient->translate(static::GLOSSARY_KEY_ACCEPT_TERM_AND_CONDITIONS, $this->localeClient->getCurrentLocale()),
         );
     }
 }

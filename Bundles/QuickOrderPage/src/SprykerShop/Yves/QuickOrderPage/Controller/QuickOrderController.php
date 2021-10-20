@@ -121,7 +121,7 @@ class QuickOrderController extends AbstractController
         return $this->view(
             $response,
             $this->getFactory()->getQuickOrderPageWidgetPlugins(),
-            '@QuickOrderPage/views/quick-order/quick-order.twig'
+            '@QuickOrderPage/views/quick-order/quick-order.twig',
         );
     }
 
@@ -174,7 +174,7 @@ class QuickOrderController extends AbstractController
         $quickOrderItems = array_merge(
             $handledQuickOrderItems,
             $handledUploadOrderItems,
-            $handledTextOrderItems
+            $handledTextOrderItems,
         );
 
         if (count($handledUploadOrderItems) || count($handledTextOrderItems)) {
@@ -332,7 +332,7 @@ class QuickOrderController extends AbstractController
         return $this->view(
             $viewData,
             $this->getFactory()->getQuickOrderPageWidgetPlugins(),
-            '@QuickOrderPage/views/quick-order-rows-async/quick-order-rows-async.twig'
+            '@QuickOrderPage/views/quick-order-rows-async/quick-order-rows-async.twig',
         );
     }
 
@@ -395,7 +395,7 @@ class QuickOrderController extends AbstractController
         return $this->view(
             $viewData,
             $this->getFactory()->getQuickOrderPageWidgetPlugins(),
-            '@QuickOrderPage/views/quick-order-rows-async/quick-order-rows-async.twig'
+            '@QuickOrderPage/views/quick-order-rows-async/quick-order-rows-async.twig',
         );
     }
 
@@ -414,7 +414,7 @@ class QuickOrderController extends AbstractController
         if (!$this->isQuickOrderFormCsrfTokenValid($formData)) {
             return $this->createAjaxErrorResponse(
                 Response::HTTP_BAD_REQUEST,
-                [static::MESSAGE_FORM_INVALID_CSRF]
+                [static::MESSAGE_FORM_INVALID_CSRF],
             );
         }
 
@@ -513,7 +513,7 @@ class QuickOrderController extends AbstractController
         return $this->view(
             $viewData,
             $this->getFactory()->getQuickOrderPageWidgetPlugins(),
-            '@QuickOrderPage/views/quick-order-row-async/quick-order-row-async.twig'
+            '@QuickOrderPage/views/quick-order-row-async/quick-order-row-async.twig',
         );
     }
 
@@ -527,7 +527,7 @@ class QuickOrderController extends AbstractController
         return $quickOrderItemTransfer->addMessage(
             (new MessageTransfer())
                 ->setType(static::MESSAGE_TYPE_WARNING)
-                ->setValue(static::ERROR_MESSAGE_QUANTITY_INVALID)
+                ->setValue(static::ERROR_MESSAGE_QUANTITY_INVALID),
         );
     }
 

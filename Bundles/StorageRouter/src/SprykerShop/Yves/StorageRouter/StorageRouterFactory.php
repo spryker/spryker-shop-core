@@ -32,7 +32,7 @@ class StorageRouterFactory extends AbstractFactory
         return new DynamicRouter(
             $this->createRequestMatcher(),
             $this->createUrlGenerator(),
-            $this->createRouteEnhancer()
+            $this->createRouteEnhancer(),
         );
     }
 
@@ -52,7 +52,7 @@ class StorageRouterFactory extends AbstractFactory
     public function createRequestMatcher(): RequestMatcherInterface
     {
         return new StorageRequestMatcher(
-            $this->getUrlStorageClient()
+            $this->getUrlStorageClient(),
         );
     }
 
@@ -63,7 +63,7 @@ class StorageRouterFactory extends AbstractFactory
     {
         return new StorageUrlGenerator(
             $this->getUrlStorageClient(),
-            $this->createParameterMerger()
+            $this->createParameterMerger(),
         );
     }
 

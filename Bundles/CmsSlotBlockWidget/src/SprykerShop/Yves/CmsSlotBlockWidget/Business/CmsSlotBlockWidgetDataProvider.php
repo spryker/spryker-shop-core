@@ -90,7 +90,7 @@ class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderIn
         if (!$twigFunction) {
             throw new CmsBlockTwigFunctionMissingException(sprintf(
                 'Twig function with name %s is not registered in TwigDependencyProvider::getTwigPlugins().',
-                $this->cmsSlotBlockWidgetConfig->getCmsBlockTwigFunctionName()
+                $this->cmsSlotBlockWidgetConfig->getCmsBlockTwigFunctionName(),
             ));
         }
 
@@ -110,7 +110,7 @@ class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderIn
         $cmsSlotBlockCollectionTransfer = $this->cmsSlotBlockStorageClient
             ->getCmsSlotBlockCollection(
                 $cmsSlotContentRequestTransfer->getCmsSlotTemplatePath(),
-                $cmsSlotContentRequestTransfer->getCmsSlotKey()
+                $cmsSlotContentRequestTransfer->getCmsSlotKey(),
             );
 
         if ($cmsSlotBlockCollectionTransfer->getCmsSlotBlocks()->count() === 0) {
@@ -119,7 +119,7 @@ class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderIn
 
         $keys = $this->getVisibleBlockKeys(
             $cmsSlotBlockCollectionTransfer,
-            $cmsSlotContentRequestTransfer
+            $cmsSlotContentRequestTransfer,
         );
         $blockOptions = [
             static::KEY_BLOCK_OPTIONS_KEYS => $keys,
@@ -143,7 +143,7 @@ class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderIn
         foreach ($cmsSlotBlockCollectionTransfer->getCmsSlotBlocks() as $cmsSlotBlockTransfer) {
             $isCmsBlockVisibleInSlot = $this->cmsSlotBlockClient->isCmsBlockVisibleInSlot(
                 $cmsSlotBlockTransfer,
-                $cmsSlotContentRequestTransfer->getCmsSlotParams()
+                $cmsSlotContentRequestTransfer->getCmsSlotParams(),
             );
 
             if ($isCmsBlockVisibleInSlot) {

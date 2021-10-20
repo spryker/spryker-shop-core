@@ -84,7 +84,7 @@ class CatalogController extends AbstractController
         return $this->view(
             $viewData,
             $this->getFactory()->getCatalogPageWidgetPlugins(),
-            $this->getCategoryNodeTemplate($idCategoryNode)
+            $this->getCategoryNodeTemplate($idCategoryNode),
         );
     }
 
@@ -162,7 +162,7 @@ class CatalogController extends AbstractController
         return $this->view(
             $viewData,
             $this->getFactory()->getCatalogPageWidgetPlugins(),
-            '@CatalogPage/views/search/search.twig'
+            '@CatalogPage/views/search/search.twig',
         );
     }
 
@@ -269,7 +269,7 @@ class CatalogController extends AbstractController
         $searchResults[FacetResultFormatterPlugin::NAME] = $this->getFactory()->getProductCategoryFilterClient()
             ->updateFacetsByCategory(
                 $searchResults[FacetResultFormatterPlugin::NAME],
-                $categoryFilters
+                $categoryFilters,
             );
 
         return $searchResults;

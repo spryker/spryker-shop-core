@@ -48,7 +48,7 @@ class PersistentCartSharePageDependencyProvider extends AbstractBundleDependency
     {
         $container->set(static::CLIENT_PERSISTENT_CART_SHARE, function (Container $container) {
             return new PersistentCartSharePageToPersistentCartShareClientBridge(
-                $container->getLocator()->persistentCartShare()->client()
+                $container->getLocator()->persistentCartShare()->client(),
             );
         });
 

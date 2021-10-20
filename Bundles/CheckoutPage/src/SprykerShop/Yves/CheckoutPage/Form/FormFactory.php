@@ -134,7 +134,7 @@ class FormFactory extends AbstractFactory
         return new SummaryFormDataProvider(
             $this->getConfig(),
             $this->getLocaleClient(),
-            $this->getGlossaryStorageClient()
+            $this->getGlossaryStorageClient(),
         );
     }
 

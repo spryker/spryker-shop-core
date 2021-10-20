@@ -105,7 +105,7 @@ class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements QuoteReq
                 }
 
                 return $value;
-            }
+            },
         );
     }
 }

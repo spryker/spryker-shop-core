@@ -119,7 +119,7 @@ class ItemFetcher implements ItemFetcherInterface
             ->getItemsWithBundlesItems(
                 (new QuoteTransfer())
                     ->setItems($orderTransfer->getItems())
-                    ->setBundleItems($orderTransfer->getBundleItems())
+                    ->setBundleItems($orderTransfer->getBundleItems()),
             );
         $itemTransfers = $this->expandBundleItemsWithIdSalesOrderItem($orderTransfer, $itemTransfers);
         $itemTransfers = $this->executeReorderItemExpanderPlugins($itemTransfers, $orderTransfer);
@@ -206,7 +206,7 @@ class ItemFetcher implements ItemFetcherInterface
         $translatedMessage = $this->glossaryStorageClient->translate(
             static::MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED,
             $this->localeClient->getCurrentLocale(),
-            [static::MESSAGE_PARAM_SKU => $itemTransfer->getSku()]
+            [static::MESSAGE_PARAM_SKU => $itemTransfer->getSku()],
         );
 
         $this->messengerClient->addInfoMessage($translatedMessage);

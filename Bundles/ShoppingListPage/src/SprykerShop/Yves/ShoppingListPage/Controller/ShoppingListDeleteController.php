@@ -54,7 +54,7 @@ class ShoppingListDeleteController extends AbstractShoppingListController
 
         $shoppingListTransfer = $shoppingListDeleteForm->getData();
         $shoppingListTransfer->setIdCompanyUser(
-            $this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser()
+            $this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser(),
         );
 
         $shoppingListResponseTransfer = $this->getFactory()

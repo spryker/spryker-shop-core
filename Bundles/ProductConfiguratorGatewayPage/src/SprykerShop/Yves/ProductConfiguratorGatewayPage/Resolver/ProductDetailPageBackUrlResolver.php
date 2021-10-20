@@ -58,7 +58,7 @@ class ProductDetailPageBackUrlResolver implements ProductDetailPageBackUrlResolv
 
         $productConcreteStorageData = $this->productStorageClient->findProductConcreteStorageDataByMappingForCurrentLocale(
             static::MAPPING_TYPE_SKU,
-            $productConfiguratorResponseTransfer->getSkuOrFail()
+            $productConfiguratorResponseTransfer->getSkuOrFail(),
         );
 
         if (!$productConcreteStorageData) {
@@ -67,7 +67,7 @@ class ProductDetailPageBackUrlResolver implements ProductDetailPageBackUrlResolv
 
         $productConcreteStorageTransfer = $this->mapProductConcreteStorageDataToProductConcreteStorageTransfer(
             $productConcreteStorageData,
-            new ProductConcreteStorageTransfer()
+            new ProductConcreteStorageTransfer(),
         );
 
         return $this->productStorageClient->buildProductConcreteUrl($productConcreteStorageTransfer);

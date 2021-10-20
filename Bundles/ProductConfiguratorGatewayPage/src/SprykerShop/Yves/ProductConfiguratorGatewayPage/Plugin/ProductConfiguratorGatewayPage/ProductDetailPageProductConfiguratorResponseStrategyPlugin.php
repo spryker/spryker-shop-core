@@ -63,7 +63,7 @@ class ProductDetailPageProductConfiguratorResponseStrategyPlugin extends Abstrac
             ->createProductDetailPageProductConfiguratorResponseProcessor()
             ->processProductDetailPageProductConfiguratorResponse(
                 $productConfiguratorResponseTransfer,
-                $configuratorResponseData
+                $configuratorResponseData,
             );
     }
 }

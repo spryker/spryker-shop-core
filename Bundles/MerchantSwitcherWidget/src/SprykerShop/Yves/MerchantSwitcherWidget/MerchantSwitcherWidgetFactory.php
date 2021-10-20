@@ -37,7 +37,7 @@ class MerchantSwitcherWidgetFactory extends AbstractFactory
         return new MerchantReader(
             $this->getMerchantSearchClient(),
             $this->createSelectedMerchantCookie(),
-            $this->createMerchantSwitcher()
+            $this->createMerchantSwitcher(),
         );
     }
 
@@ -48,7 +48,7 @@ class MerchantSwitcherWidgetFactory extends AbstractFactory
     {
         return new MerchantSwitcher(
             $this->getQuoteClient(),
-            $this->getMerchantSwitcherClient()
+            $this->getMerchantSwitcherClient(),
         );
     }
 
@@ -60,7 +60,7 @@ class MerchantSwitcherWidgetFactory extends AbstractFactory
         return new SelectedMerchantCookie(
             $this->getCookies(),
             $this->getRequestStack(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

@@ -95,7 +95,7 @@ class WebProfilerWidgetFactory extends AbstractFactory
     {
         return new ResolvedTypeFactoryDataCollectorProxy(
             $this->createResolvedFormTypeFactory(),
-            $this->createFormDataCollector()
+            $this->createFormDataCollector(),
         );
     }
 

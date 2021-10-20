@@ -48,7 +48,7 @@ class MoveToCartHandler implements MoveToCartHandlerInterface
     {
         $wishlistMoveToCartRequestCollectionTransfer = $this->createMoveAvailableItemsToCartRequestCollection(
             $wishlistName,
-            $wishlistItemMetaTransferCollection
+            $wishlistItemMetaTransferCollection,
         );
 
         if ($wishlistMoveToCartRequestCollectionTransfer->getRequests()->count() <= 0) {
@@ -71,7 +71,7 @@ class MoveToCartHandler implements MoveToCartHandlerInterface
         foreach ($wishlistItemMetaTransferCollection as $wishlistItemMetaTransfer) {
             $wishlistMoveToCartRequestTransfer = $this->createWishlistMoveToCartRequestTransfer(
                 $wishlistName,
-                $wishlistItemMetaTransfer
+                $wishlistItemMetaTransfer,
             );
 
             $wishlistMoveToCartRequestCollectionTransfer->addRequest($wishlistMoveToCartRequestTransfer);

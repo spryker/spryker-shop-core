@@ -76,8 +76,8 @@ class OrderCustomReferenceWidget extends AbstractWidget
                 [
                     OrderCustomReferenceForm::FIELD_ORDER_CUSTOM_REFERENCE => $quoteTransfer->getOrderCustomReference(),
                     OrderCustomReferenceForm::FIELD_BACK_URL => $backUrl,
-                ]
-            )->createView()
+                ],
+            )->createView(),
         );
     }
 }

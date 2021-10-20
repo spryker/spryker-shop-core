@@ -110,7 +110,7 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
                 $shareDetailTransfers->append(
                     (new ShareDetailTransfer())
                         ->setIdCompanyUser($idCompanyUser)
-                        ->setCustomerName($companyUserName)
+                        ->setCustomerName($companyUserName),
                 );
             }
         }

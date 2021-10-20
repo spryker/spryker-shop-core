@@ -58,7 +58,7 @@ class ProductConfiguratorGatewayPageFactory extends AbstractFactory
     public function createProductConfiguratorRedirectResolver(): ProductConfiguratorRedirectResolverInterface
     {
         return new ProductConfiguratorRedirectResolver(
-            $this->getProductConfiguratorRequestPlugins()
+            $this->getProductConfiguratorRequestPlugins(),
         );
     }
 
@@ -73,7 +73,7 @@ class ProductConfiguratorGatewayPageFactory extends AbstractFactory
             $this->getConfig()->getProductConfiguratorGatewayRequestFormName(),
             ProductConfiguratorRequestDataForm::class,
             null,
-            $options
+            $options,
         );
     }
 
@@ -83,7 +83,7 @@ class ProductConfiguratorGatewayPageFactory extends AbstractFactory
     public function createProductConfiguratorRequestDataFormDataProvider(): ProductConfiguratorRequestDataFormDataProvider
     {
         return new ProductConfiguratorRequestDataFormDataProvider(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -103,7 +103,7 @@ class ProductConfiguratorGatewayPageFactory extends AbstractFactory
         return new ProductDetailPageProductConfiguratorRedirectResolver(
             $this->getProductConfigurationClient(),
             $this->getProductConfigurationStorageClient(),
-            $this->createProductConfiguratorRequestMapper()
+            $this->createProductConfiguratorRequestMapper(),
         );
     }
 
@@ -113,7 +113,7 @@ class ProductConfiguratorGatewayPageFactory extends AbstractFactory
     public function createProductDetailPageApplicabilityChecker(): ProductDetailPageApplicabilityCheckerInterface
     {
         return new ProductDetailPageApplicabilityChecker(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -131,7 +131,7 @@ class ProductConfiguratorGatewayPageFactory extends AbstractFactory
     public function createProductConfiguratorResponseProcessor(): ProductConfiguratorResponseProcessorInterface
     {
         return new ProductConfiguratorResponseProcessor(
-            $this->getProductConfiguratorResponsePlugins()
+            $this->getProductConfiguratorResponsePlugins(),
         );
     }
 
@@ -144,7 +144,7 @@ class ProductConfiguratorGatewayPageFactory extends AbstractFactory
             $this->getProductConfigurationClient(),
             $this->getProductConfigurationStorageClient(),
             $this->createProductConfiguratorResponseValidator(),
-            $this->createProductDetailPageBackUrlResolver()
+            $this->createProductDetailPageBackUrlResolver(),
         );
     }
 
@@ -154,7 +154,7 @@ class ProductConfiguratorGatewayPageFactory extends AbstractFactory
     public function createProductConfiguratorResponseValidator(): ProductConfiguratorResponseValidatorInterface
     {
         return new ProductConfiguratorResponseValidator(
-            $this->getProductConfigurationClient()
+            $this->getProductConfigurationClient(),
         );
     }
 
@@ -165,7 +165,7 @@ class ProductConfiguratorGatewayPageFactory extends AbstractFactory
     {
         return new ProductDetailPageBackUrlResolver(
             $this->getProductStorageClient(),
-            $this->getRouter()
+            $this->getRouter(),
         );
     }
 

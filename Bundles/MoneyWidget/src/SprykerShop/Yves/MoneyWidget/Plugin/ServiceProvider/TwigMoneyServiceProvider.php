@@ -37,7 +37,7 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
                 $twig->addFunction($this->getMoneySymbol());
 
                 return $twig;
-            })
+            }),
         );
     }
 

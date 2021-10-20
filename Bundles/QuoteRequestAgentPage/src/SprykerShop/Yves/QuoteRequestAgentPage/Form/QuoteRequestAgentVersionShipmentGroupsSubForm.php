@@ -62,7 +62,7 @@ class QuoteRequestAgentVersionShipmentGroupsSubForm extends AbstractType
             [
                 QuoteRequestAgentForm::OPTION_PRICE_MODE => $options[QuoteRequestAgentForm::OPTION_PRICE_MODE],
                 'property_path' => 'shipment.method.sourcePrice',
-            ]
+            ],
         );
 
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {

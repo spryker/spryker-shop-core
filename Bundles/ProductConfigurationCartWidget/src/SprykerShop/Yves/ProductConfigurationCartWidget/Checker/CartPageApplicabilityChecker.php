@@ -36,7 +36,7 @@ class CartPageApplicabilityChecker implements CartPageApplicabilityCheckerInterf
         $isConfiguratorKeySupported = in_array(
             $productConfiguratorRequestTransfer->getProductConfiguratorRequestDataOrFail()->getConfiguratorKeyOrFail(),
             $this->productConfiguratorGatewayPageConfig->getSupportedConfiguratorKeys(),
-            true
+            true,
         );
 
         return $isConfiguratorKeySupported && $productConfiguratorRequestTransfer->getProductConfiguratorRequestDataOrFail()->getSourceType()
@@ -53,7 +53,7 @@ class CartPageApplicabilityChecker implements CartPageApplicabilityCheckerInterf
         $isConfiguratorKeySupported = in_array(
             $productConfiguratorResponseTransfer->getProductConfigurationInstanceOrFail()->getConfiguratorKeyOrFail(),
             $this->productConfiguratorGatewayPageConfig->getSupportedConfiguratorKeys(),
-            true
+            true,
         );
 
         return $isConfiguratorKeySupported && $productConfiguratorResponseTransfer->getSourceType()

@@ -58,7 +58,7 @@ class SoldByMerchantWidget extends AbstractWidget
                 ->getMerchantStorageClient()
                 ->findOne(
                     (new MerchantStorageCriteriaTransfer())
-                        ->addMerchantReference($abstractTransfer->getMerchantReference())
+                        ->addMerchantReference($abstractTransfer->getMerchantReference()),
                 );
         }
 

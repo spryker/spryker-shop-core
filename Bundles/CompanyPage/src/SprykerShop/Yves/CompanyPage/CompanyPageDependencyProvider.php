@@ -141,7 +141,7 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_BUSINESS_ON_BEHALF, function (Container $container) {
             return new CompanyPageToBusinessOnBehalfClientBridge(
-                $container->getLocator()->businessOnBehalf()->client()
+                $container->getLocator()->businessOnBehalf()->client(),
             );
         });
 

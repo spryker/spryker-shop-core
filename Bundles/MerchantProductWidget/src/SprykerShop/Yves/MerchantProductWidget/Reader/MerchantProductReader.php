@@ -97,7 +97,7 @@ class MerchantProductReader implements MerchantProductReaderInterface
         $idProductAbstract = $productViewTransfer->getIdProductAbstract();
         $productAbstractStorageData = $this->productStorageClient->findProductAbstractStorageData(
             $idProductAbstract,
-            $localeName
+            $localeName,
         );
 
         if (!$productAbstractStorageData) {
@@ -110,12 +110,12 @@ class MerchantProductReader implements MerchantProductReaderInterface
 
         $currentProductPriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
             $priceProductTransfers,
-            $priceProductFilterTransfer
+            $priceProductFilterTransfer,
         );
 
         $merchantProductViewTransfer = $this->merchantProductWidgetMapper->mapProductAbstractStorageDataToMerchantProductViewTransfer(
             $productAbstractStorageData,
-            new MerchantProductViewTransfer()
+            new MerchantProductViewTransfer(),
         );
 
         /** @var string $merchantReference */
@@ -125,7 +125,7 @@ class MerchantProductReader implements MerchantProductReaderInterface
         }
 
         $merchantStorageTransfer = $this->merchantStorageClient->findOne(
-            (new MerchantStorageCriteriaTransfer())->addMerchantReference($merchantReference)
+            (new MerchantStorageCriteriaTransfer())->addMerchantReference($merchantReference),
         );
 
         if (!$merchantStorageTransfer) {
@@ -150,7 +150,7 @@ class MerchantProductReader implements MerchantProductReaderInterface
             ->findProductConcreteStorageDataByMapping(
                 static::PRODUCT_CONCRETE_MAPPING_TYPE,
                 $sku,
-                $locale
+                $locale,
             );
 
         if (!isset($productConcreteStorageData[static::ID_PRODUCT_ABSTRACT])) {
@@ -161,7 +161,7 @@ class MerchantProductReader implements MerchantProductReaderInterface
         $productAbstractStorageData = $this->productStorageClient
             ->findProductAbstractStorageData(
                 $productConcreteStorageData[static::ID_PRODUCT_ABSTRACT],
-                $locale
+                $locale,
             );
 
         if (!array_key_exists(static::PARAM_MERCHANT_REFERENCE, $productAbstractStorageData)) {
@@ -208,7 +208,7 @@ class MerchantProductReader implements MerchantProductReaderInterface
 
         return $this->priceProductStorageClient->getResolvedPriceProductConcreteTransfers(
             $idProductConcrete,
-            $idProductAbstract
+            $idProductAbstract,
         );
     }
 }

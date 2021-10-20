@@ -113,7 +113,7 @@ class ContentProductAbstractListTwigFunctionProvider extends TwigFunctionProvide
                 $this->getAvailableTemplates()[$templateIdentifier],
                 [
                     'productAbstractViewCollection' => $productAbstractViewCollection,
-                ]
+                ],
             );
         };
     }

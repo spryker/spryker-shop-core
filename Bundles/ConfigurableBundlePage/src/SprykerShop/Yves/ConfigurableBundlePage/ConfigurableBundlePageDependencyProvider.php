@@ -75,7 +75,7 @@ class ConfigurableBundlePageDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::CLIENT_CONFIGURABLE_BUNDLE_PAGE_SEARCH, function (Container $container) {
             return new ConfigurableBundlePageToConfigurableBundlePageSearchClientBridge(
-                $container->getLocator()->configurableBundlePageSearch()->client()
+                $container->getLocator()->configurableBundlePageSearch()->client(),
             );
         });
 
@@ -91,7 +91,7 @@ class ConfigurableBundlePageDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::CLIENT_CONFIGURABLE_BUNDLE_STORAGE, function (Container $container) {
             return new ConfigurableBundlePageToConfigurableBundleStorageClientBridge(
-                $container->getLocator()->configurableBundleStorage()->client()
+                $container->getLocator()->configurableBundleStorage()->client(),
             );
         });
 
@@ -107,7 +107,7 @@ class ConfigurableBundlePageDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::CLIENT_CONFIGURABLE_BUNDLE_CART, function (Container $container) {
             return new ConfigurableBundlePageToConfigurableBundleCartClientBridge(
-                $container->getLocator()->configurableBundleCart()->client()
+                $container->getLocator()->configurableBundleCart()->client(),
             );
         });
 
@@ -123,7 +123,7 @@ class ConfigurableBundlePageDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::CLIENT_PRODUCT_IMAGE_STORAGE, function (Container $container) {
             return new ConfigurableBundlePageToProductImageStorageClientBridge(
-                $container->getLocator()->productImageStorage()->client()
+                $container->getLocator()->productImageStorage()->client(),
             );
         });
 
@@ -139,7 +139,7 @@ class ConfigurableBundlePageDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::CLIENT_PRICE_PRODUCT_STORAGE, function (Container $container) {
             return new ConfigurableBundlePageToPriceProductStorageClientBridge(
-                $container->getLocator()->priceProductStorage()->client()
+                $container->getLocator()->priceProductStorage()->client(),
             );
         });
 
@@ -155,7 +155,7 @@ class ConfigurableBundlePageDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
             return new ConfigurableBundlePageToGlossaryStorageClientBridge(
-                $container->getLocator()->glossaryStorage()->client()
+                $container->getLocator()->glossaryStorage()->client(),
             );
         });
 

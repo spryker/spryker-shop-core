@@ -74,7 +74,7 @@ class CurrentStoreMultiCurrencyType extends AbstractType
             'property_path' => sprintf(
                 '[%s][%s]',
                 $currentStoreName,
-                $currencyIsoCode
+                $currencyIsoCode,
             ),
         ];
 

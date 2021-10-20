@@ -42,7 +42,7 @@ class ShoppingListItemNoteForm extends ShoppingListItemNoteFormType
     {
         $builder->add(
             static::FIELD_SHOPPING_LIST_ITEM_NOTE,
-            TextareaType::class
+            TextareaType::class,
         );
     }
 

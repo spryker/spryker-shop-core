@@ -49,7 +49,7 @@ class CmsBlockPlaceholderTwigPlugin extends AbstractTwigExtensionPlugin
             },
             [
                 'needs_context' => true,
-            ]
+            ],
         );
     }
 

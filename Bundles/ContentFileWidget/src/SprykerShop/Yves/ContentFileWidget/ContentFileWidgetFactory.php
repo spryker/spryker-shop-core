@@ -36,7 +36,7 @@ class ContentFileWidgetFactory extends AbstractFactory
             $twig,
             $localeName,
             $this->createContentFileReader(),
-            $this->getContentFileClient()
+            $this->getContentFileClient(),
         );
     }
 
@@ -53,7 +53,7 @@ class ContentFileWidgetFactory extends AbstractFactory
         return new TwigFunction(
             $functionProvider->getFunctionName(),
             $functionProvider->getFunction(),
-            $functionProvider->getOptions()
+            $functionProvider->getOptions(),
         );
     }
 
@@ -64,7 +64,7 @@ class ContentFileWidgetFactory extends AbstractFactory
     {
         return new ContentFileReader(
             $this->getFileManagerStorageClient(),
-            $this->getFileStorageDataExpanders()
+            $this->getFileStorageDataExpanders(),
         );
     }
 

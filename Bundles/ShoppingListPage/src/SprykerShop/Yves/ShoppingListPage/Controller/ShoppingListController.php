@@ -144,7 +144,7 @@ class ShoppingListController extends AbstractShoppingListController
         return $this->view(
             $response,
             [],
-            '@ShoppingListPage/views/shopping-list/shopping-list.twig'
+            '@ShoppingListPage/views/shopping-list/shopping-list.twig',
         );
     }
 
@@ -294,7 +294,7 @@ class ShoppingListController extends AbstractShoppingListController
         return $this->view(
             $response,
             [],
-            '@ShoppingListPage/views/print-shopping-list/print-shopping-list.twig'
+            '@ShoppingListPage/views/print-shopping-list/print-shopping-list.twig',
         );
     }
 
@@ -412,9 +412,9 @@ class ShoppingListController extends AbstractShoppingListController
     {
         $additionalRequestParams = $this->getFactory()->getUtilEncodingService()->decodeJson(
             urldecode(
-                $request->get(static::PARAM_REDIRECT_ROUTE_PARAMETERS)
+                $request->get(static::PARAM_REDIRECT_ROUTE_PARAMETERS),
             ),
-            true
+            true,
         );
 
         if (is_array($additionalRequestParams) && array_key_exists(static::PARAM_ID_SHOPPING_LIST, $additionalRequestParams)) {

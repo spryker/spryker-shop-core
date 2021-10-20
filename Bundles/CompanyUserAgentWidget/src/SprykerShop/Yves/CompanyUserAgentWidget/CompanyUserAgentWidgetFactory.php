@@ -25,7 +25,7 @@ class CompanyUserAgentWidgetFactory extends AbstractFactory
     public function createCompanyUserAutocompleteValidator(): CompanyUserAutocompleteValidatorInterface
     {
         return new CompanyUserAutocompleteValidator(
-            $this->getValidator()
+            $this->getValidator(),
         );
     }
 

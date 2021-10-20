@@ -112,7 +112,7 @@ class QuoteRequestAgentForm extends AbstractType
                 self::OPTION_PRICE_MODE => $options[self::OPTION_PRICE_MODE],
                 self::OPTION_IS_QUOTE_VALID => $options[self::OPTION_IS_QUOTE_VALID],
                 self::OPTION_SHIPMENT_GROUPS => $options[self::OPTION_SHIPMENT_GROUPS],
-            ]
+            ],
         );
 
         return $this;
@@ -180,7 +180,7 @@ class QuoteRequestAgentForm extends AbstractType
                 }
 
                 return $value;
-            }
+            },
         );
     }
 }

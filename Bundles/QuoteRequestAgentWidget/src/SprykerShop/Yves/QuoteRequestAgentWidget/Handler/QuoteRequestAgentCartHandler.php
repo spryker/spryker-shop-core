@@ -56,7 +56,7 @@ class QuoteRequestAgentCartHandler implements QuoteRequestAgentCartHandlerInterf
         $quoteRequestTransfer = $this->quoteRequestAgentClient
             ->findQuoteRequest(
                 (new QuoteRequestFilterTransfer())
-                    ->setQuoteRequestReference($quoteTransfer->getQuoteRequestReference())
+                    ->setQuoteRequestReference($quoteTransfer->getQuoteRequestReference()),
             );
 
         if (!$quoteRequestTransfer) {

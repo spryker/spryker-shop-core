@@ -272,7 +272,7 @@ class CompanyRegisterForm extends AbstractType
             },
             function ($isGuestSubmittedValue) {
                 return (bool)$isGuestSubmittedValue;
-            }
+            },
         ));
     }
 

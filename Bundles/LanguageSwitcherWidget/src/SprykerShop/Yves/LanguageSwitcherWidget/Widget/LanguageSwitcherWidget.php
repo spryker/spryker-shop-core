@@ -93,7 +93,7 @@ class LanguageSwitcherWidget extends AbstractWidget
                 if ($localeUrl[UrlStorageTransfer::LOCALE_NAME] === $locale) {
                     $languages[$language] = $this->getLocaleUrlWithQueryString(
                         $localeUrl[UrlStorageTransfer::URL],
-                        $queryString
+                        $queryString,
                     );
 
                     break;

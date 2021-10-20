@@ -51,12 +51,12 @@ class CmsChartContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     {
         $widgetContainerRegistry = $this->getFactory()->createWidgetContainerRegistry();
         $widgetContainerRegistry->add(
-            $this->getFactory()->createCmsChartContentWidgetCollection()
+            $this->getFactory()->createCmsChartContentWidgetCollection(),
         );
 
         $result = $twig->render(
             $this->resolveTemplatePath($templateIdentifier),
-            $this->getContent($context, $chartPluginName, $dataIdentifier)
+            $this->getContent($context, $chartPluginName, $dataIdentifier),
         );
 
         $widgetContainerRegistry->removeLastAdded();

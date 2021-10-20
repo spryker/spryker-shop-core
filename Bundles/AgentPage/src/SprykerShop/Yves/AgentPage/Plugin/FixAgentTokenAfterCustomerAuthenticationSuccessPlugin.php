@@ -87,7 +87,7 @@ class FixAgentTokenAfterCustomerAuthenticationSuccessPlugin extends AbstractPlug
             $customer->getCustomerTransfer(),
             $customer->getUsername(),
             $customer->getPassword(),
-            $this->getCustomerRoles($customer->getRoles())
+            $this->getCustomerRoles($customer->getRoles()),
         );
     }
 
@@ -104,7 +104,7 @@ class FixAgentTokenAfterCustomerAuthenticationSuccessPlugin extends AbstractPlug
             $user,
             $user->getPassword(),
             CustomerPageConfig::SECURITY_FIREWALL_NAME,
-            $this->getCustomerRoles($customer->getRoles())
+            $this->getCustomerRoles($customer->getRoles()),
         );
     }
 

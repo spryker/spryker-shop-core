@@ -66,7 +66,7 @@ class NewsletterController extends AbstractController
         $newsletterSubscriptionForm = $this->getFactory()
             ->getNewsletterSubscriptionFor(
                 $dataProvider->getData($newsletterSubscriptionRequestTransfer),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 

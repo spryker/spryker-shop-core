@@ -104,7 +104,7 @@ class FormFactory extends AbstractFactory
         return $this->getFormFactory()->create(
             OrderSearchForm::class,
             null,
-            $orderSearchFormDataProvider->getOptions()
+            $orderSearchFormDataProvider->getOptions(),
         );
     }
 
@@ -131,7 +131,7 @@ class FormFactory extends AbstractFactory
     {
         return new OrderSearchFormDataProvider(
             $this->getConfig(),
-            $this->getStore()
+            $this->getStore(),
         );
     }
 

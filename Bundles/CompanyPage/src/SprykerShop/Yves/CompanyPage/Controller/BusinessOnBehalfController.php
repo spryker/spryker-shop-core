@@ -59,7 +59,7 @@ class BusinessOnBehalfController extends AbstractController
             ->createCompanyPageFormFactory()
             ->getCompanyUserAccountForm(
                 $companyUserAccountFormDataProvider->getData($customerTransfer),
-                $companyUserAccountFormDataProvider->getOptions($activeCompanyUsers, $customerTransfer)
+                $companyUserAccountFormDataProvider->getOptions($activeCompanyUsers, $customerTransfer),
             )
             ->handleRequest($request);
 

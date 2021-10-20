@@ -51,7 +51,7 @@ class MerchantSwitcherWidgetRouteProviderPlugin extends AbstractRouteProviderPlu
     {
         $routeCollection->add(
             static::ROUTE_NAME_SWITCH_MERCHANT,
-            $this->buildPostRoute('/merchant/switch', 'MerchantSwitcherWidget', 'MerchantSwitcher', 'switchMerchant')
+            $this->buildPostRoute('/merchant/switch', 'MerchantSwitcherWidget', 'MerchantSwitcher', 'switchMerchant'),
         );
 
         return $routeCollection;

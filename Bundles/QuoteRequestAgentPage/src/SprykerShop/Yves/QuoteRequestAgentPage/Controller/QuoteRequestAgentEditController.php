@@ -173,7 +173,7 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
             ->setData(
                 $quoteRequestResponseTransfer
                     ->getQuoteRequest()
-                    ->getLatestVersion()
+                    ->getLatestVersion(),
             );
 
         return $quoteRequestForm;

@@ -67,7 +67,7 @@ class FunctionTwigPlugin extends AbstractPlugin implements TwigPluginInterface
             },
             [
                 'needs_context' => false,
-            ]
+            ],
         );
     }
 }

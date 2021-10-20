@@ -36,7 +36,7 @@ class ConfigurableBundleTemplateStorageReader implements ConfigurableBundleTempl
     {
         $configurableBundleTemplateStorageTransfer = $this->configurableBundleStorageClient->findConfigurableBundleTemplateStorage(
             $idConfigurableBundleTemplate,
-            $localeName
+            $localeName,
         );
 
         if (!$configurableBundleTemplateStorageTransfer) {
@@ -44,7 +44,7 @@ class ConfigurableBundleTemplateStorageReader implements ConfigurableBundleTempl
         }
 
         return $configurableBundleTemplateStorageTransfer->setSlots(
-            $this->getIndexedConfigurableBundleTemplateStorageTransfers($configurableBundleTemplateStorageTransfer->getSlots())
+            $this->getIndexedConfigurableBundleTemplateStorageTransfers($configurableBundleTemplateStorageTransfer->getSlots()),
         );
     }
 
@@ -60,7 +60,7 @@ class ConfigurableBundleTemplateStorageReader implements ConfigurableBundleTempl
         foreach ($configurableBundleTemplateSlotStorageTransfers as $configurableBundleTemplateSlotStorageTransfer) {
             $indexedConfigurableBundleTemplateSlotStorageTransfers->offsetSet(
                 $configurableBundleTemplateSlotStorageTransfer->getIdConfigurableBundleTemplateSlot(),
-                $configurableBundleTemplateSlotStorageTransfer
+                $configurableBundleTemplateSlotStorageTransfer,
             );
         }
 

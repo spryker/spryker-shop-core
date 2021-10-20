@@ -72,7 +72,7 @@ class PriceProductVolumeResolver implements PriceProductVolumeResolverInterface
             $priceProductVolumeCollectionTransfer = $this->mapVolumeProductPriceCollection(
                 $priceData[static::VOLUME_PRICE_TYPE],
                 $priceProductVolumeCollectionTransfer,
-                $currentProductPriceTransfer->getPriceMode()
+                $currentProductPriceTransfer->getPriceMode(),
             );
         }
 
@@ -94,7 +94,7 @@ class PriceProductVolumeResolver implements PriceProductVolumeResolverInterface
         foreach ($volumePriceData as $volumeProductStorageData) {
             if ($this->isVolumePriceDataValid($volumeProductStorageData, $priceMode)) {
                 $priceProductVolumeCollection->addVolumePrice(
-                    $this->formatPriceProductVolumeTransfer($volumeProductStorageData, $priceMode)
+                    $this->formatPriceProductVolumeTransfer($volumeProductStorageData, $priceMode),
                 );
             }
         }
@@ -112,10 +112,10 @@ class PriceProductVolumeResolver implements PriceProductVolumeResolverInterface
     {
         $volumePrice = new PriceProductVolumeTransfer();
         $volumePrice->setQuantity(
-            $priceData[static::VOLUME_PRICE_QUANTITY]
+            $priceData[static::VOLUME_PRICE_QUANTITY],
         );
         $volumePrice->setPrice(
-            $priceData[static::VOLUME_PRICE_MODE_MAPPING[$priceMode]]
+            $priceData[static::VOLUME_PRICE_MODE_MAPPING[$priceMode]],
         );
 
         return $volumePrice;

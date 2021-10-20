@@ -64,7 +64,7 @@ class ProductConcreteAvailabilityReader implements ProductConcreteAvailabilityRe
         $productConcreteAvailabilityTransfer = $this->availabilityFacade->findOrCreateProductConcreteAvailabilityBySkuForStore(
             $sku,
             $storeTransfer,
-            $this->createProductAvailabilityCriteriaCopyWithoutProductConfigurationInstance($productAvailabilityCriteriaTransfer)
+            $this->createProductAvailabilityCriteriaCopyWithoutProductConfigurationInstance($productAvailabilityCriteriaTransfer),
         );
 
         if (!$productConfigurationAvailabilityQuantity && !$productConcreteAvailabilityTransfer) {

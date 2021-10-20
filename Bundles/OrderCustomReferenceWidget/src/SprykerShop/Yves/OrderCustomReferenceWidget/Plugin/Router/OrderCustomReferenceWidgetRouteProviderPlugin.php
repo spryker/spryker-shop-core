@@ -53,7 +53,7 @@ class OrderCustomReferenceWidgetRouteProviderPlugin extends AbstractRouteProvide
             '/order-custom-reference/save',
             'OrderCustomReferenceWidget',
             'OrderCustomReference',
-            'saveAction'
+            'saveAction',
         );
         $routeCollection->add(static::ROUTE_NAME_ORDER_CUSTOM_REFERENCE_SAVE, $route);
 

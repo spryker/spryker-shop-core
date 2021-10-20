@@ -126,7 +126,7 @@ class QuoteRequestAgentVersionItemsSubForm extends AbstractType
             },
             function ($value) {
                 return $value !== null ? $value * 100 : null;
-            }
+            },
         );
     }
 

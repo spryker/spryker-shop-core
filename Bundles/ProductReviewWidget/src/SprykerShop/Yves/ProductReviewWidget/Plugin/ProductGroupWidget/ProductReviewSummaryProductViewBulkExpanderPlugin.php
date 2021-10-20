@@ -30,7 +30,7 @@ class ProductReviewSummaryProductViewBulkExpanderPlugin extends AbstractPlugin i
     public function execute(array $productViewTransfers): array
     {
         $bulkProductReviewSearchRequestTransfer = $this->createBulkProductReviewSearchRequestTransfer(
-            $this->getProductAbstractIds($productViewTransfers)
+            $this->getProductAbstractIds($productViewTransfers),
         );
 
         $productViewTransfers = $this->getFactory()

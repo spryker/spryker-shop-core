@@ -47,7 +47,7 @@ class OrderCustomReferenceWidgetDependencyProvider extends AbstractBundleDepende
     {
         $container->set(static::CLIENT_ORDER_CUSTOM_REFERENCE, function (Container $container) {
             return new OrderCustomReferenceWidgetToOrderCustomReferenceClientBridge(
-                $container->getLocator()->orderCustomReference()->client()
+                $container->getLocator()->orderCustomReference()->client(),
             );
         });
 
@@ -63,7 +63,7 @@ class OrderCustomReferenceWidgetDependencyProvider extends AbstractBundleDepende
     {
         $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new OrderCustomReferenceWidgetToQuoteClientBridge(
-                $container->getLocator()->quote()->client()
+                $container->getLocator()->quote()->client(),
             );
         });
 

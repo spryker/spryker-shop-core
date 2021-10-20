@@ -49,7 +49,7 @@ class ItemController extends AbstractController
                 ->setNoteToQuoteItem($note, $sku, $groupKey);
             if ($quoteResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(
-                    $this->getSuccessMessage($sku)
+                    $this->getSuccessMessage($sku),
                 );
             }
         }

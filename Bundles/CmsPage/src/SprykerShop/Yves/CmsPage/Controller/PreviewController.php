@@ -75,7 +75,7 @@ class PreviewController extends AbstractController
             ->getFlattenedLocaleCmsPageData(
                 (new FlattenedLocaleCmsPageDataRequestTransfer())
                     ->setIdCmsPage($idCmsPage)
-                    ->setLocale((new LocaleTransfer())->setLocaleName($this->getLocale()))
+                    ->setLocale((new LocaleTransfer())->setLocaleName($this->getLocale())),
             );
 
         if (!$localeCmsPageDataRequestTransfer->getFlattenedLocaleCmsPageData()) {
@@ -116,7 +116,7 @@ class PreviewController extends AbstractController
             'availablePreviewLanguages' => $this->getAvailablePreviewLanguages(
                 $this->getCurrentPreviewPageUri($idCmsPage),
                 $this->getFactory()->getStore()->getLocales(),
-                $this->getLocale()
+                $this->getLocale(),
             ),
         ];
     }
@@ -130,7 +130,7 @@ class PreviewController extends AbstractController
     {
         return $this->getRouter()->generate(
             CmsPageRouteProviderPlugin::ROUTE_NAME_PREVIEW,
-            [CmsPageRouteProviderPlugin::ID_CMS_PAGE => $idCmsPage]
+            [CmsPageRouteProviderPlugin::ID_CMS_PAGE => $idCmsPage],
         );
     }
 

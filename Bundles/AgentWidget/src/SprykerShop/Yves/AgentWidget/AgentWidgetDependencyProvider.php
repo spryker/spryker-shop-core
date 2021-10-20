@@ -48,7 +48,7 @@ class AgentWidgetDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_AGENT, function (Container $container): AgentWidgetToAgentClientInterface {
             return new AgentWidgetToAgentClientBridge(
-                $container->getLocator()->agent()->client()
+                $container->getLocator()->agent()->client(),
             );
         });
 
@@ -64,7 +64,7 @@ class AgentWidgetDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_CUSTOMER, function (Container $container): AgentWidgetToCustomerClientInterface {
             return new AgentWidgetToCustomerClientBridge(
-                $container->getLocator()->customer()->client()
+                $container->getLocator()->customer()->client(),
             );
         });
 

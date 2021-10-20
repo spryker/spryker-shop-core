@@ -60,7 +60,7 @@ class CompanyUserAutocompleteController extends AbstractController
             '@CompanyUserAgentWidget/views/company-user-autocomplete/company-user-autocomplete.twig',
             [
                 'companyUsers' => $companyUserTransfers,
-            ]
+            ],
         );
     }
 
@@ -81,7 +81,7 @@ class CompanyUserAutocompleteController extends AbstractController
             '@CompanyUserAgentWidget/views/company-user-autocomplete/company-user-autocomplete.twig',
             [
                 'errors' => $errors,
-            ]
+            ],
         );
     }
 }

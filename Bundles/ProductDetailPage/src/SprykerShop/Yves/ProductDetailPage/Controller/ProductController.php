@@ -50,7 +50,7 @@ class ProductController extends AbstractController
         return $this->view(
             $viewData,
             $this->getFactory()->getProductDetailPageWidgetPlugins(),
-            '@ProductDetailPage/views/pdp/pdp.twig'
+            '@ProductDetailPage/views/pdp/pdp.twig',
         );
     }
 
@@ -154,7 +154,7 @@ class ProductController extends AbstractController
         return sprintf(
             '%s?%s',
             $productViewTransfer->getUrl(),
-            http_build_query($variantUriParams)
+            http_build_query($variantUriParams),
         );
     }
 

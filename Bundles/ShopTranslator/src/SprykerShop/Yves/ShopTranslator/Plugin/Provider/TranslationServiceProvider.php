@@ -33,7 +33,7 @@ class TranslationServiceProvider extends AbstractPlugin implements ServiceProvid
     {
         $app[static::SERVICE_TRANSLATOR] = $app->share(function ($app) {
             $twigTranslator = $this->getFactory()->createTwigTranslator(
-                $app['locale']
+                $app['locale'],
             );
 
             return $twigTranslator;

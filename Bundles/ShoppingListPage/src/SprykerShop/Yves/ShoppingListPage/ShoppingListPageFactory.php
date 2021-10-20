@@ -101,7 +101,7 @@ class ShoppingListPageFactory extends AbstractFactory
         return new ShoppingListFormDataProvider(
             $this->getShoppingListClient(),
             $this->getCustomerClient(),
-            $this->getShoppingListFormDataProviderMapperPlugins()
+            $this->getShoppingListFormDataProviderMapperPlugins(),
         );
     }
 
@@ -181,7 +181,7 @@ class ShoppingListPageFactory extends AbstractFactory
         return $this->getFormFactory()->create(
             ShareShoppingListForm::class,
             $shareShoppingListFormDataProvider->getData($shoppingListTransfer),
-            $shareShoppingListFormDataProvider->getOptions()
+            $shareShoppingListFormDataProvider->getOptions(),
         );
     }
 
@@ -194,7 +194,7 @@ class ShoppingListPageFactory extends AbstractFactory
             $this->getCompanyBusinessUnitClient(),
             $this->getCompanyUserClient(),
             $this->getCustomerClient(),
-            $this->getShoppingListClient()
+            $this->getShoppingListClient(),
         );
     }
 

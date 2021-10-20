@@ -27,7 +27,7 @@ class ShoppingListItemProductOptionWidgetPlugin extends AbstractWidgetPlugin imp
     {
         $this->addParameter(
             'item',
-            $shoppingListItemTransfer
+            $shoppingListItemTransfer,
         );
     }
 

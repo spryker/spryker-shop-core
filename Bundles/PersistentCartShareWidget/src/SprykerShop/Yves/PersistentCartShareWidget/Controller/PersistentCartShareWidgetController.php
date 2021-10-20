@@ -39,7 +39,7 @@ class PersistentCartShareWidgetController extends AbstractController
         $shareOptions = $this->getFactory()
             ->getPersistentCartShareClient()
             ->getCartShareOptions(
-                $this->getFactory()->getCustomerClient()->getCustomer()
+                $this->getFactory()->getCustomerClient()->getCustomer(),
             );
 
         $cartShareLinks = $this->getFactory()

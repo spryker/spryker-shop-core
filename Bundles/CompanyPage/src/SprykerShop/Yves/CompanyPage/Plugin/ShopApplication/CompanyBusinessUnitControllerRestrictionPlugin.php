@@ -109,7 +109,7 @@ class CompanyBusinessUnitControllerRestrictionPlugin extends AbstractPlugin impl
     {
         return $this->getFactory()->getCompanyBusinessUnitClient()
             ->getCompanyBusinessUnitById(
-                (new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit($idCompanyBusinessUnit)
+                (new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit($idCompanyBusinessUnit),
             );
     }
 }

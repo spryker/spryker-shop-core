@@ -52,7 +52,7 @@ class MerchantOpeningHoursWidget extends AbstractWidget
     {
         $this->addParameter(
             static::PARAMETER_MERCHANT_OPENING_HOURS,
-            $this->getFactory()->getMerchantOpeningHoursStoregeClient()->findMerchantOpeningHoursByIdMerchant($idMerchant)
+            $this->getFactory()->getMerchantOpeningHoursStoregeClient()->findMerchantOpeningHoursByIdMerchant($idMerchant),
         );
     }
 }

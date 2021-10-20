@@ -46,7 +46,7 @@ class AddToCartHandler implements AddToCartHandlerInterface
     public function addAllAvailableToCart(array $shoppingListItems, array $itemQuantity = []): ShoppingListAddToCartRequestCollectionTransfer
     {
         $shoppingListMoveToCartRequestCollectionTransfer = $this->createMoveAvailableItemsToCartRequestCollection(
-            $shoppingListItems
+            $shoppingListItems,
         );
 
         if ($shoppingListMoveToCartRequestCollectionTransfer->getRequests()->count() === 0) {
@@ -71,7 +71,7 @@ class AddToCartHandler implements AddToCartHandlerInterface
 
         foreach ($shoppingListItems as $shoppingListItemTransfer) {
             $shoppingListMoveToCartRequestTransfer = $this->createShoppingListMoveToCartRequestTransfer(
-                $shoppingListItemTransfer
+                $shoppingListItemTransfer,
             );
 
             $shoppingListMoveToCartRequestCollectionTransfer->addRequest($shoppingListMoveToCartRequestTransfer);

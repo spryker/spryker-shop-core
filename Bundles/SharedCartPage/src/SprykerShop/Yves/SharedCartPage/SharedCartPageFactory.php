@@ -34,7 +34,7 @@ class SharedCartPageFactory extends AbstractFactory
         return $this->getFormFactory()->create(
             ShareCartForm::class,
             $dataProvider->getData($idQuote),
-            $dataProvider->getOptions()
+            $dataProvider->getOptions(),
         );
     }
 
@@ -47,7 +47,7 @@ class SharedCartPageFactory extends AbstractFactory
             $this->getCustomerClient(),
             $this->getCompanyUserClient(),
             $this->getSharedCartClient(),
-            $this->getMultiCartClient()
+            $this->getMultiCartClient(),
         );
     }
 

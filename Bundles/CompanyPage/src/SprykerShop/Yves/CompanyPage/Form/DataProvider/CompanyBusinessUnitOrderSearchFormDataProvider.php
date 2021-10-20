@@ -76,7 +76,7 @@ class CompanyBusinessUnitOrderSearchFormDataProvider
                 ->setWithoutExpanders(true);
 
             return $this->getChoicesFromCompanyBusinessUnitCollection(
-                $this->companyBusinessUnitClient->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer)
+                $this->companyBusinessUnitClient->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer),
             );
         }
 
@@ -84,7 +84,7 @@ class CompanyBusinessUnitOrderSearchFormDataProvider
 
         if ($companyUserTransfer->getCompanyBusinessUnit() && $this->can('SeeBusinessUnitOrdersPermissionPlugin', $idCompanyUser)) {
             $companyBusinessUnitCollectionTransfer->addCompanyBusinessUnit(
-                $companyUserTransfer->getCompanyBusinessUnit()
+                $companyUserTransfer->getCompanyBusinessUnit(),
             );
         }
 

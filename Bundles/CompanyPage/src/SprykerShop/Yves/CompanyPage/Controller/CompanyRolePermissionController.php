@@ -62,7 +62,7 @@ class CompanyRolePermissionController extends AbstractCompanyController
 
         return $this->redirectResponseInternal(
             CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_UPDATE,
-            ['id' => $idCompanyRole]
+            ['id' => $idCompanyRole],
         );
     }
 
@@ -89,7 +89,7 @@ class CompanyRolePermissionController extends AbstractCompanyController
 
         return $this->redirectResponseInternal(
             CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_UPDATE,
-            ['id' => $idCompanyRole]
+            ['id' => $idCompanyRole],
         );
     }
 

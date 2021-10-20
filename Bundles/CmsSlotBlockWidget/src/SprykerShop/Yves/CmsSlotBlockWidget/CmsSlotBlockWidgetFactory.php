@@ -28,7 +28,7 @@ class CmsSlotBlockWidgetFactory extends AbstractFactory
             $this->getTwigEnvironment(),
             $this->getCmsSlotBlockStorageClient(),
             $this->getCmsSlotBlockClient(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

@@ -41,7 +41,7 @@ class DateTimeConfiguratorPageExampleToAvailabilityFacadeBridge implements DateT
         return $this->availabilityFacade->findOrCreateProductConcreteAvailabilityBySkuForStore(
             $sku,
             $storeTransfer,
-            $productAvailabilityCriteriaTransfer
+            $productAvailabilityCriteriaTransfer,
         );
     }
 }

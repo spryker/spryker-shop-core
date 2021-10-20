@@ -52,8 +52,8 @@ class ShopCmsSlotNode extends TwigNode
                 ShopCmsSlotTwigPlugin::class,
                 CmsSlotContextTransfer::class,
                 $this->cmsSlotKey,
-                $this->getTemplateName()
-            )
+                $this->getTemplateName(),
+            ),
         );
         $compiler->raw('->setProvidedData(');
         $this->compileArrayNode($compiler, ShopCmsSlotTokenParser::NODE_WITH);

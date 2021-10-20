@@ -87,7 +87,7 @@ class SubRequestExceptionHandlerPlugin extends AbstractPlugin implements Excepti
             [
                 'exception' => $exception,
             ],
-            $cookies
+            $cookies,
         );
 
         if ($request->hasSession()) {

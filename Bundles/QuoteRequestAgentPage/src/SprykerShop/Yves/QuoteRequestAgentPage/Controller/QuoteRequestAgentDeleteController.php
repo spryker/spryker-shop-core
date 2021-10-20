@@ -34,7 +34,7 @@ class QuoteRequestAgentDeleteController extends QuoteRequestAgentAbstractControl
             ->cancelQuoteRequest(
                 (new QuoteRequestFilterTransfer())
                     ->setQuoteRequestReference($quoteRequestReference)
-                    ->setWithHidden(true)
+                    ->setWithHidden(true),
             );
 
         $this->processResponseMessages($quoteRequestResponseTransfer);

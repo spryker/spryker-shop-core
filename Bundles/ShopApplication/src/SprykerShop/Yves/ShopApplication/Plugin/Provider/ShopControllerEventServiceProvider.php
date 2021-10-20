@@ -44,7 +44,7 @@ class ShopControllerEventServiceProvider extends AbstractPlugin implements Servi
         if (!$app instanceof SprykerApplication) {
             throw new InvalidApplicationException(sprintf(
                 'The used application object need to be an instance of %s.',
-                SprykerApplication::class
+                SprykerApplication::class,
             ));
         }
 

@@ -32,7 +32,7 @@ class ProductReviewSummaryProductViewExpanderPlugin extends AbstractPlugin imple
             ->createProductReviewSearchRequestBuilder()
             ->createProductReviewSearchRequestTransfer(
                 $productViewTransfer->getIdProductAbstract(),
-                $this->getFactory()->getApplicationRequest()->query->all()
+                $this->getFactory()->getApplicationRequest()->query->all(),
             );
 
         return $this->getFactory()

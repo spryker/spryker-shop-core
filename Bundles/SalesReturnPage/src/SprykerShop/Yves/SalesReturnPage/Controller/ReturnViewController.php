@@ -28,7 +28,7 @@ class ReturnViewController extends AbstractReturnController
         return $this->view(
             $response,
             [],
-            '@SalesReturnPage/views/return-view/return-view.twig'
+            '@SalesReturnPage/views/return-view/return-view.twig',
         );
     }
 
@@ -48,7 +48,7 @@ class ReturnViewController extends AbstractReturnController
         if (!$returnTransfer) {
             throw new NotFoundHttpException(sprintf(
                 "Return with provided reference %s doesn't exist",
-                $returnReference
+                $returnReference,
             ));
         }
 

@@ -46,7 +46,7 @@ class ItemExpander implements ItemExpanderInterface
     {
         $productViewTransfers = $this->productConcreteReader->getProductConcretesBySkusAndLocale(
             $this->extractSkusFromItemTransfers($itemTransfers),
-            $localeName
+            $localeName,
         );
 
         foreach ($itemTransfers as $itemTransfer) {

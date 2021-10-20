@@ -79,7 +79,7 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
 
         return $this->mapShoppingListResponseToQuickOrderFormProcessResponse(
             $shoppingListResponseTransfer,
-            new QuickOrderFormProcessResponseTransfer()
+            new QuickOrderFormProcessResponseTransfer(),
         );
     }
 
@@ -117,7 +117,7 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
             ->setParameters(
                 [
                     static::PARAM_ID_SHOPPING_LIST => $shoppingListResponseTransfer->getShoppingList()->getIdShoppingList(),
-                ]
+                ],
             );
     }
 

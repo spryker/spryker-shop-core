@@ -62,7 +62,7 @@ class SecurityBlockerPageDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::CLIENT_SECURITY_BLOCKER, function (Container $container) {
             return new SecurityBlockerPageToSecurityBlockerClientBridge(
-                $container->getLocator()->securityBlocker()->client()
+                $container->getLocator()->securityBlocker()->client(),
             );
         });
 
@@ -78,7 +78,7 @@ class SecurityBlockerPageDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
             return new SecurityBlockerPageToGlossaryStorageClientBridge(
-                $container->getLocator()->glossaryStorage()->client()
+                $container->getLocator()->glossaryStorage()->client(),
             );
         });
 

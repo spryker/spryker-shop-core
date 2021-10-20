@@ -106,7 +106,7 @@ class ContentNavigationTwigPluginTest extends Unit
         $navigationContent = call_user_func(
             $this->getContentNavigationTwigFunction()->getCallable(),
             static::CONTENT_KEY,
-            static::DEFAULT_TEMPLATE
+            static::DEFAULT_TEMPLATE,
         );
 
         // Assert
@@ -128,7 +128,7 @@ class ContentNavigationTwigPluginTest extends Unit
         $navigationContent = call_user_func(
             $this->getContentNavigationTwigFunction()->getCallable(),
             static::CONTENT_KEY,
-            static::DEFAULT_TEMPLATE
+            static::DEFAULT_TEMPLATE,
         );
 
         // Assert
@@ -149,7 +149,7 @@ class ContentNavigationTwigPluginTest extends Unit
         $navigationContent = call_user_func(
             $this->getContentNavigationTwigFunction()->getCallable(),
             static::CONTENT_KEY,
-            static::WRONG_TEMPLATE
+            static::WRONG_TEMPLATE,
         );
 
         // Assert
@@ -166,14 +166,14 @@ class ContentNavigationTwigPluginTest extends Unit
         $this->setContentNavigationWidgetToNavigationStorageClientReturn(
             (new NavigationStorageTransfer())
                 ->setIsActive(false)
-                ->setKey(static::CONTENT_KEY)
+                ->setKey(static::CONTENT_KEY),
         );
 
         // Act
         $navigationContent = call_user_func(
             $this->getContentNavigationTwigFunction()->getCallable(),
             static::CONTENT_KEY,
-            static::DEFAULT_TEMPLATE
+            static::DEFAULT_TEMPLATE,
         );
 
         // Assert
@@ -190,14 +190,14 @@ class ContentNavigationTwigPluginTest extends Unit
         $this->setContentNavigationWidgetToNavigationStorageClientReturn(
             (new NavigationStorageTransfer())
                 ->setIsActive(true)
-                ->setKey(static::CONTENT_KEY)
+                ->setKey(static::CONTENT_KEY),
         );
 
         // Act
         $navigationContent = call_user_func(
             $this->getContentNavigationTwigFunction()->getCallable(),
             static::CONTENT_KEY,
-            static::DEFAULT_TEMPLATE
+            static::DEFAULT_TEMPLATE,
         );
 
         // Assert
@@ -218,7 +218,7 @@ class ContentNavigationTwigPluginTest extends Unit
             ->willReturn($contentNavigationTypeTransfer);
         $this->tester->setDependency(
             ContentNavigationWidgetDependencyProvider::CLIENT_CONTENT_NAVIGATION,
-            $contentNavigationWidgetToContentNavigationClientBridge
+            $contentNavigationWidgetToContentNavigationClientBridge,
         );
     }
 
@@ -236,7 +236,7 @@ class ContentNavigationTwigPluginTest extends Unit
             ->willReturn($navigationStorageTransfer);
         $this->tester->setDependency(
             ContentNavigationWidgetDependencyProvider::CLIENT_NAVIGATION_STORAGE,
-            $contentNavigationWidgetToNavigationStorageClientBridge
+            $contentNavigationWidgetToNavigationStorageClientBridge,
         );
     }
 
@@ -254,7 +254,7 @@ class ContentNavigationTwigPluginTest extends Unit
             ->willReturn($contentTypeContextTransfer);
         $this->tester->setDependency(
             ContentNavigationDependencyProvider::CLIENT_CONTENT_STORAGE,
-            $contentNavigationWidgetToContentStorageClientBridge
+            $contentNavigationWidgetToContentStorageClientBridge,
         );
     }
 
@@ -265,7 +265,7 @@ class ContentNavigationTwigPluginTest extends Unit
     {
         $functionName = new ReflectionClassConstant(
             ContentNavigationTwigFunctionProvider::class,
-            'TWIG_FUNCTION_NAME_CONTENT_NAVIGATION'
+            'TWIG_FUNCTION_NAME_CONTENT_NAVIGATION',
         );
 
         return $this->getTwig()->getFunction($functionName->getValue());

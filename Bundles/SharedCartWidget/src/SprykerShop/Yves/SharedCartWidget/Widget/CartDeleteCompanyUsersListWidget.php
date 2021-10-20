@@ -50,7 +50,7 @@ class CartDeleteCompanyUsersListWidget extends AbstractWidget
     {
         $this->addParameter(
             'quoteShareDetails',
-            $this->getFactory()->getSharedCartClient()->getShareDetailsByIdQuoteAction($quoteTransfer)->getShareDetails()
+            $this->getFactory()->getSharedCartClient()->getShareDetailsByIdQuoteAction($quoteTransfer)->getShareDetails(),
         );
     }
 }

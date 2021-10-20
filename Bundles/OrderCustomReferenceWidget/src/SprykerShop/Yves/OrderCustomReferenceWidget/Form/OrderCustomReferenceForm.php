@@ -65,7 +65,7 @@ class OrderCustomReferenceForm extends AbstractType
                 'attr' => [
                     'placeholder' => 'order_custom_reference.form.placeholder',
                 ],
-            ]
+            ],
         );
 
         return $this;

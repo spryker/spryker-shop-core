@@ -43,7 +43,7 @@ class LinkController extends AbstractController
     protected function executeIndexAction(string $resourceShareUuid, Request $request): RedirectResponse
     {
         $resourceShareResponseTransfer = $this->activateResourceShare(
-            $this->getResourceShareByUuid($resourceShareUuid)->getResourceShare()
+            $this->getResourceShareByUuid($resourceShareUuid)->getResourceShare(),
         );
         $routeTransfer = $this->resolveRoute($request, (bool)$resourceShareResponseTransfer->getIsLoginRequired(), $resourceShareResponseTransfer->getResourceShare());
 
@@ -81,7 +81,7 @@ class LinkController extends AbstractController
     {
         $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
             ->setResourceShare(
-                (new ResourceShareTransfer())->setUuid($resourceShareUuid)
+                (new ResourceShareTransfer())->setUuid($resourceShareUuid),
             );
 
         $resourceShareResponseTransfer = $this->getFactory()
@@ -111,7 +111,7 @@ class LinkController extends AbstractController
             ->setCustomer(
                 $this->getFactory()
                     ->getCustomerClient()
-                    ->getCustomer()
+                    ->getCustomer(),
             );
 
         $resourceShareResponseTransfer = $this->getFactory()
@@ -141,7 +141,7 @@ class LinkController extends AbstractController
             ->setCustomer(
                 $this->getFactory()
                     ->getCustomerClient()
-                    ->getCustomer()
+                    ->getCustomer(),
             );
 
         $routeTransfer = $this->getFactory()
@@ -149,7 +149,7 @@ class LinkController extends AbstractController
             ->resolveRoute(
                 $request,
                 $isLoginRequired,
-                $resourceShareRequestTransfer
+                $resourceShareRequestTransfer,
             );
 
         return $routeTransfer;

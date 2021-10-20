@@ -76,7 +76,7 @@ class AbstractShoppingListController extends AbstractController
             $productViewExpanderPlugin->expandProductViewTransfer(
                 $productViewTransfer,
                 $productConcreteStorageData,
-                $this->getLocale()
+                $this->getLocale(),
             );
         }
 

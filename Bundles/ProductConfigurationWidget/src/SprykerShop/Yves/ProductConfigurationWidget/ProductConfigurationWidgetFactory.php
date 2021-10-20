@@ -27,7 +27,7 @@ class ProductConfigurationWidgetFactory extends AbstractFactory
     public function createProductConfigurationTemplateResolver(): ProductConfigurationTemplateResolverInterface
     {
         return new ProductConfigurationTemplateResolver(
-            $this->getProductConfigurationRenderStrategyPlugins()
+            $this->getProductConfigurationRenderStrategyPlugins(),
         );
     }
 
@@ -38,7 +38,7 @@ class ProductConfigurationWidgetFactory extends AbstractFactory
     {
         return $this->getFormFactory()->createNamed(
             $this->getConfig()->getProductConfiguratorGatewayRequestFormName(),
-            ProductConfigurationButtonForm::class
+            ProductConfigurationButtonForm::class,
         );
     }
 

@@ -72,7 +72,7 @@ class QuickOrderItemEmbeddedForm extends AbstractType
                 [
                     'required' => false,
                     'label' => false,
-                ]
+                ],
             );
 
         return $this;
@@ -92,7 +92,7 @@ class QuickOrderItemEmbeddedForm extends AbstractType
                 'required' => false,
                 'label' => false,
                 'attr' => ['min' => 1],
-            ]
+            ],
         );
 
         return $this;

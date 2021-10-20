@@ -54,7 +54,7 @@ class ShipmentExpander implements ShipmentExpanderInterface
     protected function setShipmentForItemsInBundle(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $indexedShipmentTransfers = $this->indexBundleItemShipmentsByBundleItemIdentifier(
-            $quoteTransfer->getBundleItems()->getArrayCopy()
+            $quoteTransfer->getBundleItems()->getArrayCopy(),
         );
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {

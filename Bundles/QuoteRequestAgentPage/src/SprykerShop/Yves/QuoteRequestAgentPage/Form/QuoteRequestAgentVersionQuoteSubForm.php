@@ -85,7 +85,7 @@ class QuoteRequestAgentVersionQuoteSubForm extends AbstractType
             },
             function ($value) {
                 return new ArrayObject($value);
-            }
+            },
         );
     }
 }

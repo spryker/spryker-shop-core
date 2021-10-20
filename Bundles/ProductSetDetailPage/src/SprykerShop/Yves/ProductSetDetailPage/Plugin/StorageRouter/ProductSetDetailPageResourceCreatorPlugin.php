@@ -84,7 +84,7 @@ class ProductSetDetailPageResourceCreatorPlugin extends AbstractPlugin implement
             $productViewTransfer = $this->getFactory()->getProductStorageClient()->findProductAbstractViewTransfer(
                 $idProductAbstract,
                 $this->getLocale(),
-                $this->getSelectedAttributes($idProductAbstract)
+                $this->getSelectedAttributes($idProductAbstract),
             );
 
             if ($productViewTransfer === null) {

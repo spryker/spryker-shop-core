@@ -114,7 +114,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_LOCALE, function (Container $container) {
             return new CustomerReorderWidgetToLocaleClientBridge(
-                $container->getLocator()->locale()->client()
+                $container->getLocator()->locale()->client(),
             );
         });
 
@@ -130,7 +130,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_AVAILABILITY_STORAGE, function (Container $container) {
             return new CustomerReorderWidgetToAvailabilityStorageClientBridge(
-                $container->getLocator()->availabilityStorage()->client()
+                $container->getLocator()->availabilityStorage()->client(),
             );
         });
 
@@ -146,7 +146,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_CART, function (Container $container) {
             return new CustomerReorderWidgetToCartClientBridge(
-                $container->getLocator()->cart()->client()
+                $container->getLocator()->cart()->client(),
             );
         });
 
@@ -162,7 +162,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_SALES, function (Container $container) {
             return new CustomerReorderWidgetToSalesClientBridge(
-                $container->getLocator()->sales()->client()
+                $container->getLocator()->sales()->client(),
             );
         });
 
@@ -178,7 +178,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new CustomerReorderWidgetToCustomerClientBridge(
-                $container->getLocator()->customer()->client()
+                $container->getLocator()->customer()->client(),
             );
         });
 
@@ -194,7 +194,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_MESSENGER, function (Container $container) {
             return new CustomerReorderWidgetToMessengerClientBridge(
-                $container->getLocator()->messenger()->client()
+                $container->getLocator()->messenger()->client(),
             );
         });
 
@@ -210,7 +210,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
             return new CustomerReorderWidgetToGlossaryStorageClientBridge(
-                $container->getLocator()->glossaryStorage()->client()
+                $container->getLocator()->glossaryStorage()->client(),
             );
         });
 
@@ -226,7 +226,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_PRODUCT_BUNDLE, function (Container $container) {
             return new CustomerReorderWidgetToProductBundleClientBridge(
-                $container->getLocator()->productBundle()->client()
+                $container->getLocator()->productBundle()->client(),
             );
         });
 
@@ -242,7 +242,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new CustomerReorderWidgetToProductStorageClientBridge(
-                $container->getLocator()->productStorage()->client()
+                $container->getLocator()->productStorage()->client(),
             );
         });
 
@@ -258,7 +258,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new CustomerReorderWidgetToZedRequestClientBridge(
-                $container->getLocator()->zedRequest()->client()
+                $container->getLocator()->zedRequest()->client(),
             );
         });
 

@@ -84,7 +84,7 @@ class WishlistController extends AbstractController
         return $this->view(
             $viewData,
             $this->getFactory()->getWishlistViewWidgetPlugins(),
-            '@WishlistPage/views/wishlist-detail/wishlist-detail.twig'
+            '@WishlistPage/views/wishlist-detail/wishlist-detail.twig',
         );
     }
 
@@ -129,7 +129,7 @@ class WishlistController extends AbstractController
             foreach ($wishlistOverviewResponse->getErrors() as $errorMessageTransfer) {
                 $translatedMessage = $this->translate(
                     $errorMessageTransfer->getMessage(),
-                    $errorMessageTransfer->getParameters()
+                    $errorMessageTransfer->getParameters(),
                 );
 
                 $this->addErrorMessage($translatedMessage);
@@ -254,7 +254,7 @@ class WishlistController extends AbstractController
             ->createMoveToCartHandler()
             ->moveAllAvailableToCart(
                 $wishlistItemTransfer->getWishlistName(),
-                $wishlistItemMetaTransferCollection
+                $wishlistItemMetaTransferCollection,
             );
 
         if ($result->getRequests()->count()) {
@@ -384,7 +384,7 @@ class WishlistController extends AbstractController
     {
         $addAllAvailableProductsToCartFormDataProvider = $this->getFactory()->createAddAllAvailableProductsToCartFormDataProvider();
         $addAllAvailableProductsToCartForm = $this->getFactory()->getAddAllAvailableProductsToCartForm(
-            $addAllAvailableProductsToCartFormDataProvider->getData($wishlistOverviewResponse)
+            $addAllAvailableProductsToCartFormDataProvider->getData($wishlistOverviewResponse),
         );
 
         return $addAllAvailableProductsToCartForm;
@@ -445,7 +445,7 @@ class WishlistController extends AbstractController
             ->expandProductViewTransferWithProductConcreteData(
                 $productViewTransfer,
                 $productConcreteStorageData,
-                $this->getLocale()
+                $this->getLocale(),
             );
     }
 

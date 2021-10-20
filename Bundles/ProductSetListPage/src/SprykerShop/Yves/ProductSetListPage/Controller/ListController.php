@@ -42,7 +42,7 @@ class ListController extends AbstractController
         return $this->view(
             $viewData,
             $this->getFactory()->getProductSetListPageWidgets(),
-            '@ProductSetListPage/views/set-list/set-list.twig'
+            '@ProductSetListPage/views/set-list/set-list.twig',
         );
     }
 

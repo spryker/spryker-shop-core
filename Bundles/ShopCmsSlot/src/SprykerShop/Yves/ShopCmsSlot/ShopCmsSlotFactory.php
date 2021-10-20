@@ -46,7 +46,7 @@ class ShopCmsSlotFactory extends AbstractFactory
             $this->getCmsSlotContentPlugins(),
             $this->getCmsSlotClient(),
             $this->getCmsSlotStorageClient(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

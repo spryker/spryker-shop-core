@@ -55,7 +55,7 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
         $application['twig'] = $application->share(
             $application->extend('twig', function (Environment $twig) {
                 return $this->registerWidgetTwigFunction($twig);
-            })
+            }),
         );
     }
 
@@ -71,7 +71,7 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
         if (!$app instanceof SprykerApplication) {
             throw new InvalidApplicationException(sprintf(
                 'The used application object need to be an instance of %s.',
-                SprykerApplication::class
+                SprykerApplication::class,
             ));
         }
 
@@ -104,7 +104,7 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
                 $twig->addTokenParser($this->getFactory()->createWidgetTagTokenParser());
 
                 return $twig;
-            })
+            }),
         );
     }
 

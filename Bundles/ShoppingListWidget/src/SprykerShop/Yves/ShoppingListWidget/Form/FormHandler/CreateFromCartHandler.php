@@ -49,7 +49,7 @@ class CreateFromCartHandler implements CreateFromCartHandlerInterface
 
         if (!$shoppingListFromCartRequest->getIdShoppingList()) {
             $shoppingListFromCartRequest->setShoppingListName(
-                $cartToShoppingListForm->get(ShoppingListFromCartForm::FIELD_NEW_SHOPPING_LIST_NAME_INPUT)->getData()
+                $cartToShoppingListForm->get(ShoppingListFromCartForm::FIELD_NEW_SHOPPING_LIST_NAME_INPUT)->getData(),
             );
         }
         $shoppingListFromCartRequest->setCustomer($this->customerClient->getCustomer());

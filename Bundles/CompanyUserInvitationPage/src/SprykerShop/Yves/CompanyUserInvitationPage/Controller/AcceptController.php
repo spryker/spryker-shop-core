@@ -46,7 +46,7 @@ class AcceptController extends AbstractController
         if (!$companyUserInvitationTransfer->getIdCompanyUserInvitation()) {
             return $this->redirectToRouteWithErrorMessage(
                 static::REDIRECT_URL,
-                'company.user.invitation.invalid'
+                'company.user.invitation.invalid',
             );
         }
 
@@ -56,7 +56,7 @@ class AcceptController extends AbstractController
         ) {
             return $this->redirectToRouteWithErrorMessage(
                 static::REDIRECT_URL,
-                'company.user.invitation.expired'
+                'company.user.invitation.expired',
             );
         }
 
@@ -66,7 +66,7 @@ class AcceptController extends AbstractController
         ) {
             return $this->redirectToRouteWithErrorMessage(
                 static::REDIRECT_URL,
-                'company.user.invitation.accepted'
+                'company.user.invitation.accepted',
             );
         }
 

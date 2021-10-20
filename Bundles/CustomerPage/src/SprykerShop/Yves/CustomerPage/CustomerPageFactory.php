@@ -132,7 +132,7 @@ class CustomerPageFactory extends AbstractFactory
             $customerTransfer,
             $customerTransfer->getEmail(),
             $customerTransfer->getPassword(),
-            [CustomerPageSecurityPlugin::ROLE_NAME_USER]
+            [CustomerPageSecurityPlugin::ROLE_NAME_USER],
         );
     }
 
@@ -149,7 +149,7 @@ class CustomerPageFactory extends AbstractFactory
             $user,
             $user->getPassword(),
             CustomerPageConfig::SECURITY_FIREWALL_NAME,
-            [CustomerPageSecurityPlugin::ROLE_NAME_USER]
+            [CustomerPageSecurityPlugin::ROLE_NAME_USER],
         );
     }
 
@@ -170,7 +170,7 @@ class CustomerPageFactory extends AbstractFactory
     {
         return new CustomerAuthenticator(
             $this->getCustomerClient(),
-            $this->getTokenStorage()
+            $this->getTokenStorage(),
         );
     }
 
@@ -186,7 +186,7 @@ class CustomerPageFactory extends AbstractFactory
             $this->getShipmentClient(),
             $this->getProductBundleClient(),
             $this->getShipmentService(),
-            $this->createAddressChoicesResolver()
+            $this->createAddressChoicesResolver(),
         );
     }
 
@@ -230,7 +230,7 @@ class CustomerPageFactory extends AbstractFactory
         return new OrderReader(
             $this->getSalesClient(),
             $this->getCustomerClient(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -418,7 +418,7 @@ class CustomerPageFactory extends AbstractFactory
         return new TwigFunction(
             $functionProvider->getFunctionName(),
             $functionProvider->getFunction(),
-            $functionProvider->getOptions()
+            $functionProvider->getOptions(),
         );
     }
 
@@ -440,7 +440,7 @@ class CustomerPageFactory extends AbstractFactory
         return new TwigFunction(
             $functionProvider->getFunctionName(),
             $functionProvider->getFunction(),
-            $functionProvider->getOptions()
+            $functionProvider->getOptions(),
         );
     }
 
@@ -547,7 +547,7 @@ class CustomerPageFactory extends AbstractFactory
     {
         return new OrderSearchFormHandler(
             $this->getCustomerClient(),
-            $this->getOrderSearchFormHandlerPlugins()
+            $this->getOrderSearchFormHandlerPlugins(),
         );
     }
 
@@ -573,7 +573,7 @@ class CustomerPageFactory extends AbstractFactory
     public function createCustomerConfirmationUserChecker(): UserCheckerInterface
     {
         return new CustomerConfirmationUserChecker(
-            $this->getPreAuthUserCheckPlugins()
+            $this->getPreAuthUserCheckPlugins(),
         );
     }
 

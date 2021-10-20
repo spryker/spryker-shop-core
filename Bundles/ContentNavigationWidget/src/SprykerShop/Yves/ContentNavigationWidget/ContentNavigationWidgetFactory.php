@@ -33,7 +33,7 @@ class ContentNavigationWidgetFactory extends AbstractFactory
             $localeName,
             $this->getContentNavigationClient(),
             $this->getNavigationStorageClient(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -50,7 +50,7 @@ class ContentNavigationWidgetFactory extends AbstractFactory
         return new TwigFunction(
             $functionProvider->getFunctionName(),
             $functionProvider->getFunction(),
-            $functionProvider->getOptions()
+            $functionProvider->getOptions(),
         );
     }
 

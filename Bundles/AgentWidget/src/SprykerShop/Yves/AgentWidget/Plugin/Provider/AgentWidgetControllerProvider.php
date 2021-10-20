@@ -40,7 +40,7 @@ class AgentWidgetControllerProvider extends AbstractYvesControllerProvider
             self::ROUTE_CUSTOMER_AUTOCOMPLETE,
             'AgentWidget',
             'CustomerAutocomplete',
-            'index'
+            'index',
         )
             ->assert('agentWidget', $this->getAllowedLocalesPattern() . 'agent-widget|agent-widget')
             ->value('agentWidget', 'agent-widget');

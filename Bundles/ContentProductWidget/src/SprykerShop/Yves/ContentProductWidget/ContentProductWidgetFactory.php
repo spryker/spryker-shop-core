@@ -30,7 +30,7 @@ class ContentProductWidgetFactory extends AbstractFactory
         return new ContentProductAbstractListTwigFunctionProvider(
             $twig,
             $localeName,
-            $this->createContentProductAbstractReader()
+            $this->createContentProductAbstractReader(),
         );
     }
 
@@ -47,7 +47,7 @@ class ContentProductWidgetFactory extends AbstractFactory
         return new TwigFunction(
             $functionProvider->getFunctionName(),
             $functionProvider->getFunction(),
-            $functionProvider->getOptions()
+            $functionProvider->getOptions(),
         );
     }
 
@@ -58,7 +58,7 @@ class ContentProductWidgetFactory extends AbstractFactory
     {
         return new ContentProductAbstractReader(
             $this->getContentProductClient(),
-            $this->getProductStorageClient()
+            $this->getProductStorageClient(),
         );
     }
 

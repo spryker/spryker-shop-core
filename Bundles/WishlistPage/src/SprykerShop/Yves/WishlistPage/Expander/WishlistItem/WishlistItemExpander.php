@@ -71,7 +71,7 @@ class WishlistItemExpander implements WishlistItemExpanderIterface
             $productViewTransfer = $productViewExpanderPlugin->expandProductViewTransfer(
                 $productViewTransfer,
                 $productConcreteStorageData,
-                $locale
+                $locale,
             );
         }
 

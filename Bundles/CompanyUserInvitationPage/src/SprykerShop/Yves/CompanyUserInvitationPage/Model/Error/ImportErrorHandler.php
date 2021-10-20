@@ -48,7 +48,7 @@ class ImportErrorHandler implements ImportErrorHandlerInterface
 
         return $this->sessionClient->set(
             CompanyUserInvitationPageConfig::INVITATION_IMPORT_ERRORS_FILE,
-            $importErrorsFile
+            $importErrorsFile,
         );
     }
 
@@ -72,7 +72,7 @@ class ImportErrorHandler implements ImportErrorHandlerInterface
     {
         return tempnam(
             CompanyUserInvitationPageConstants::IMPORT_ERRORS_FILE_PATH,
-            CompanyUserInvitationPageConfig::IMPORT_ERRORS_FILE_PREFIX
+            CompanyUserInvitationPageConfig::IMPORT_ERRORS_FILE_PREFIX,
         );
     }
 }

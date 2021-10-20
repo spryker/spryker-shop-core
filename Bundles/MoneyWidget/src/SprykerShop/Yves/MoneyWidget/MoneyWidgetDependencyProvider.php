@@ -104,7 +104,7 @@ class MoneyWidgetDependencyProvider extends AbstractBundleDependencyProvider
     {
         $numberFormatter = new NumberFormatter(
             $this->getStore()->getCurrentLocale(),
-            NumberFormatter::CURRENCY
+            NumberFormatter::CURRENCY,
         );
 
         return $numberFormatter;

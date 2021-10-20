@@ -35,7 +35,7 @@ class ProductLabelProductViewExpanderPlugin extends AbstractPlugin implements Pr
             ->expandProductView(
                 $productViewTransfer,
                 $this->getLocale(),
-                $storeTransfer->getName()
+                $storeTransfer->getName(),
             );
     }
 }

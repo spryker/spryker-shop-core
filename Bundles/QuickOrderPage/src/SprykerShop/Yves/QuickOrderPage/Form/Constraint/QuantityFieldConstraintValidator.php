@@ -28,7 +28,7 @@ class QuantityFieldConstraintValidator extends ConstraintValidator
             throw new InvalidArgumentException(sprintf(
                 'Expected constraint instance of %s, got %s instead.',
                 QuantityFieldConstraint::class,
-                get_class($constraint)
+                get_class($constraint),
             ));
         }
 

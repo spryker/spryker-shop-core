@@ -91,7 +91,7 @@ class ProductConcreteAddWidget extends AbstractWidget implements WidgetInterface
         $utilEncodingService = $this->getFactory()->getUtilEncodingService();
 
         return urlencode(
-            $utilEncodingService->encodeJson($data)
+            $utilEncodingService->encodeJson($data),
         );
     }
 }

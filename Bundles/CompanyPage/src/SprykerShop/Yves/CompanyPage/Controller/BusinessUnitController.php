@@ -264,7 +264,7 @@ class BusinessUnitController extends AbstractCompanyController
         return $this->view(
             $viewData,
             [],
-            '@CompanyPage/views/business-unit-delete-confirmation-page/business-unit-delete-confirmation-page.twig'
+            '@CompanyPage/views/business-unit-delete-confirmation-page/business-unit-delete-confirmation-page.twig',
         );
     }
 

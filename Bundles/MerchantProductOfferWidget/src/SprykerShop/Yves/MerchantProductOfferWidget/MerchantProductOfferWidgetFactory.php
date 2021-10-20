@@ -27,7 +27,7 @@ class MerchantProductOfferWidgetFactory extends AbstractFactory
         return new MerchantProductOfferReader(
             $this->getMerchantProductOfferStorageClient(),
             $this->createShopContextResolver(),
-            $this->getMerchantStorageClient()
+            $this->getMerchantStorageClient(),
         );
     }
 
@@ -37,7 +37,7 @@ class MerchantProductOfferWidgetFactory extends AbstractFactory
     public function createMerchantProductOfferExpander(): MerchantProductOfferExpanderInterface
     {
         return new MerchantProductOfferExpander(
-            $this->createProductOfferReader()
+            $this->createProductOfferReader(),
         );
     }
 

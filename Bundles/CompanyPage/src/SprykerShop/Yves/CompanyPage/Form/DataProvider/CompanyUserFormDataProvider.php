@@ -76,7 +76,7 @@ class CompanyUserFormDataProvider
 
         return array_merge(
             $companyUserTransfer->toArray(),
-            $customerTransfer->toArray()
+            $customerTransfer->toArray(),
         );
     }
 
@@ -184,7 +184,7 @@ class CompanyUserFormDataProvider
         $criteriaFilterTransfer->setIdCompany($idCompany);
 
         $companyBusinessUnitCollection = $this->companyBusinessUnitClient->getCompanyBusinessUnitCollection(
-            $criteriaFilterTransfer
+            $criteriaFilterTransfer,
         );
 
         $businessUnits = [];
@@ -192,7 +192,7 @@ class CompanyUserFormDataProvider
             $businessUnits[$companyBusinessUnit->getIdCompanyBusinessUnit()] = sprintf(
                 '%s (ID: %d)',
                 $companyBusinessUnit->getName(),
-                $companyBusinessUnit->getIdCompanyBusinessUnit()
+                $companyBusinessUnit->getIdCompanyBusinessUnit(),
             );
         }
 

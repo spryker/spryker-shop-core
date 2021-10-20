@@ -54,7 +54,7 @@ class ConfigurableBundleNoteWidgetDependencyProvider extends AbstractBundleDepen
     {
         $container->set(static::CLIENT_CONFIGURABLE_BUNDLE_NOTE, function (Container $container) {
             return new ConfigurableBundleNoteWidgetToConfigurableBundleNoteClientBridge(
-                $container->getLocator()->configurableBundleNote()->client()
+                $container->getLocator()->configurableBundleNote()->client(),
             );
         });
 
@@ -70,7 +70,7 @@ class ConfigurableBundleNoteWidgetDependencyProvider extends AbstractBundleDepen
     {
         $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
             return new ConfigurableBundleNoteWidgetToGlossaryStorageClientBridge(
-                $container->getLocator()->glossaryStorage()->client()
+                $container->getLocator()->glossaryStorage()->client(),
             );
         });
 
@@ -86,7 +86,7 @@ class ConfigurableBundleNoteWidgetDependencyProvider extends AbstractBundleDepen
     {
         $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new ConfigurableBundleNoteWidgetToQuoteClientBridge(
-                $container->getLocator()->quote()->client()
+                $container->getLocator()->quote()->client(),
             );
         });
 

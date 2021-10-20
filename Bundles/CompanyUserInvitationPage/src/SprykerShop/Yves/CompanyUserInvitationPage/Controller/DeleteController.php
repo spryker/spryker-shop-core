@@ -69,13 +69,13 @@ class DeleteController extends AbstractController
         if ($companyUserInvitationUpdateStatusResponseTransfer->getIsSuccess()) {
             return $this->redirectToRouteWithSuccessMessage(
                 CompanyUserInvitationPageRouteProviderPlugin::ROUTE_NAME_OVERVIEW,
-                'company.user.invitation.deleted.success.message'
+                'company.user.invitation.deleted.success.message',
             );
         }
 
         return $this->redirectToRouteWithErrorMessage(
             CompanyUserInvitationPageRouteProviderPlugin::ROUTE_NAME_OVERVIEW,
-            'company.user.invitation.deleted.error.message'
+            'company.user.invitation.deleted.error.message',
         );
     }
 }

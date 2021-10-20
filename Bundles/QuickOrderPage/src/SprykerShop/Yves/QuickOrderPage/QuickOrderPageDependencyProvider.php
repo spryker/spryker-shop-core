@@ -192,7 +192,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_CSV, function (Container $container): QuickOrderPageToUtilCsvServiceInterface {
             return new QuickOrderPageToUtilCsvServiceBridge(
-                $container->getLocator()->utilCsv()->service()
+                $container->getLocator()->utilCsv()->service(),
             );
         });
 
@@ -292,7 +292,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_QUICK_ORDER, function (Container $container) {
             return new QuickOrderPageToQuickOrderClientBridge(
-                $container->getLocator()->quickOrder()->client()
+                $container->getLocator()->quickOrder()->client(),
             );
         });
 

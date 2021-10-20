@@ -80,7 +80,7 @@ class ShoppingListMenuItemWidget extends AbstractWidget
     {
         $this->addParameter(
             static::PARAMETER_SHOPPING_LIST_COLLECTION,
-            $this->isShoppingListPageActive($activePage) ? $this->getCustomerShoppingListCollection() : []
+            $this->isShoppingListPageActive($activePage) ? $this->getCustomerShoppingListCollection() : [],
         );
     }
 
@@ -94,7 +94,7 @@ class ShoppingListMenuItemWidget extends AbstractWidget
     {
         $this->addParameter(
             static::PARAMETER_ACTIVE_SHOPPING_LIST_ID,
-            $this->isShoppingListPageActive($activePage) ? $activeShoppingListId : []
+            $this->isShoppingListPageActive($activePage) ? $activeShoppingListId : [],
         );
     }
 

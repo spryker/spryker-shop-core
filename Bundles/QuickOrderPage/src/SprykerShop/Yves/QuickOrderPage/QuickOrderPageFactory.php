@@ -80,7 +80,7 @@ class QuickOrderPageFactory extends AbstractFactory
             $this->getZedRequestClient(),
             $this->createProductResolver(),
             $this->getRequest(),
-            $this->getQuickOrderItemTransferExpanderPlugins()
+            $this->getQuickOrderItemTransferExpanderPlugins(),
         );
     }
 
@@ -90,7 +90,7 @@ class QuickOrderPageFactory extends AbstractFactory
     public function createFileDownloadRenderer(): FileRendererInterface
     {
         return new FileDownloadRenderer(
-            $this->getQuickOrderFileTemplatePlugins()
+            $this->getQuickOrderFileTemplatePlugins(),
         );
     }
 
@@ -116,7 +116,7 @@ class QuickOrderPageFactory extends AbstractFactory
     public function createUploadedFileParser(): FileParserInterface
     {
         return new UploadedFileParser(
-            $this->getQuickOrderUploadedFileParserPlugins()
+            $this->getQuickOrderUploadedFileParserPlugins(),
         );
     }
 
@@ -126,7 +126,7 @@ class QuickOrderPageFactory extends AbstractFactory
     public function createUploadedFileValidator(): FileValidatorInterface
     {
         return new UploadedFileValidator(
-            $this->getQuickOrderUploadedFileValidatorPlugins()
+            $this->getQuickOrderUploadedFileValidatorPlugins(),
         );
     }
 
@@ -145,7 +145,7 @@ class QuickOrderPageFactory extends AbstractFactory
     {
         return new UploadedFileCsvTypeParser(
             $this->getUtilCsvService(),
-            $this->createUploadedFileCsvTypeSanitizer()
+            $this->createUploadedFileCsvTypeSanitizer(),
         );
     }
 
@@ -338,7 +338,7 @@ class QuickOrderPageFactory extends AbstractFactory
         return new TextOrderFormatConstraint(
             [
                 TextOrderFormatConstraint::OPTION_BUNDLE_CONFIG => $this->getConfig(),
-            ]
+            ],
         );
     }
 
@@ -351,7 +351,7 @@ class QuickOrderPageFactory extends AbstractFactory
             [
                 UploadOrderFormatConstraint::OPTION_BUNDLE_CONFIG => $this->getConfig(),
                 UploadOrderFormatConstraint::OPTION_UPLOADED_FILE_VALIDATOR => $this->createUploadedFileValidator(),
-            ]
+            ],
         );
     }
 
@@ -369,7 +369,7 @@ class QuickOrderPageFactory extends AbstractFactory
     public function createQuickOrderItemPluginExecutor(): QuickOrderItemPluginExecutor
     {
         return new QuickOrderItemPluginExecutor(
-            $this->getQuickOrderItemFilterPlugins()
+            $this->getQuickOrderItemFilterPlugins(),
         );
     }
 
@@ -379,7 +379,7 @@ class QuickOrderPageFactory extends AbstractFactory
     public function createProductResolver(): ProductResolverInterface
     {
         return new ProductResolver(
-            $this->getProductStorageClient()
+            $this->getProductStorageClient(),
         );
     }
 
@@ -390,7 +390,7 @@ class QuickOrderPageFactory extends AbstractFactory
     {
         return new PriceResolver(
             $this->createProductResolver(),
-            $this->getPriceProductStorageClient()
+            $this->getPriceProductStorageClient(),
         );
     }
 

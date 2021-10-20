@@ -95,7 +95,7 @@ class AddressStepExecutor implements StepExecutorInterface
 
             $shipmentTransfer = $this->getShipmentWithUniqueShippingAddress(
                 $itemTransfer->getShipment(),
-                $customerTransfer
+                $customerTransfer,
             );
             $itemTransfer->setShipment($shipmentTransfer);
         }

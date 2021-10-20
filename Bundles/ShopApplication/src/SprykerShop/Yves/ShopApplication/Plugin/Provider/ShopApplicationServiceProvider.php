@@ -170,7 +170,7 @@ class ShopApplicationServiceProvider extends AbstractPlugin implements ServicePr
         $app['twig.global.variables'] = $app->share(
             $app->extend('twig.global.variables', function (array $variables) use ($globalTemplateVariables) {
                 return array_merge($variables, $globalTemplateVariables);
-            })
+            }),
         );
     }
 }

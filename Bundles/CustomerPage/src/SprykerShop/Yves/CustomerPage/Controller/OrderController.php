@@ -63,7 +63,7 @@ class OrderController extends AbstractCustomerController
         return $this->view(
             $viewData,
             $this->getFactory()->getCustomerOrderListWidgetPlugins(),
-            '@CustomerPage/views/order/order.twig'
+            '@CustomerPage/views/order/order.twig',
         );
     }
 
@@ -121,7 +121,7 @@ class OrderController extends AbstractCustomerController
         return $this->view(
             $responseData,
             $this->getFactory()->getCustomerOrderViewWidgetPlugins(),
-            '@CustomerPage/views/order-detail/order-detail.twig'
+            '@CustomerPage/views/order-detail/order-detail.twig',
         );
     }
 
@@ -177,7 +177,7 @@ class OrderController extends AbstractCustomerController
         if ($orderTransfer->getIdSalesOrder() === null) {
             throw new NotFoundHttpException(sprintf(
                 "Order with provided ID %s doesn't exist",
-                $idSalesOrder
+                $idSalesOrder,
             ));
         }
 

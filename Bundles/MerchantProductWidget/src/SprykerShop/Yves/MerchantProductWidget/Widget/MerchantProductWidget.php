@@ -56,7 +56,7 @@ class MerchantProductWidget extends AbstractWidget
     {
         $this->addParameter(
             'merchantProductView',
-            $this->getFactory()->createMerchantProductReader()->findMerchantProductView($productViewTransfer, $this->getLocale())
+            $this->getFactory()->createMerchantProductReader()->findMerchantProductView($productViewTransfer, $this->getLocale()),
         );
     }
 

@@ -60,7 +60,7 @@ class CmsTwigPlugin extends AbstractPlugin implements TwigPluginInterface
         $twig->addFunction(
             new TwigFunction(static::TWIG_FUNCTION_SPY_CMS, function (array $context, $identifier) use ($container) {
                 return $this->getTranslation($identifier, $context, $container);
-            }, ['needs_context' => true])
+            }, ['needs_context' => true]),
         );
 
         return $twig;

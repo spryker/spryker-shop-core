@@ -32,7 +32,7 @@ class SecurityBlockerPageFactory extends AbstractFactory
             $this->getSecurityBlockerClient(),
             $this->createMessageBuilder(),
             $this->getConfig(),
-            $this->getLocale()
+            $this->getLocale(),
         );
     }
 
@@ -46,7 +46,7 @@ class SecurityBlockerPageFactory extends AbstractFactory
             $this->getSecurityBlockerClient(),
             $this->createMessageBuilder(),
             $this->getConfig(),
-            $this->getLocale()
+            $this->getLocale(),
         );
     }
 
