@@ -17,6 +17,7 @@ class PersistentCartSharePageRouteProviderPlugin extends AbstractRouteProviderPl
      * @var string
      */
     protected const ROUTE_CART_PREVIEW = 'cart/preview';
+
     /**
      * @var string
      */

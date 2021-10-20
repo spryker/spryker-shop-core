@@ -19,6 +19,7 @@ class CartNoteWidgetControllerProvider extends AbstractYvesControllerProvider
      * @var string
      */
     public const ROUTE_CART_NOTE_QUOTE = 'cart-note/quote';
+
     /**
      * @var string
      */

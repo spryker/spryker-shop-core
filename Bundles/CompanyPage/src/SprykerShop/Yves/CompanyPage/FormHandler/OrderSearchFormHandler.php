@@ -20,6 +20,7 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
      * @var string
      */
     public const CHOICE_COMPANY = 'company';
+
     /**
      * @var string
      */

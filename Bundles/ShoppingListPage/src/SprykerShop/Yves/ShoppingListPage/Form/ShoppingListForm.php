@@ -24,10 +24,12 @@ class ShoppingListForm extends AbstractType
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_ID = 'idShoppingList';
+
     /**
      * @var string
      */

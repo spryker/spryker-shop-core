@@ -27,26 +27,32 @@ class QuoteApproveRequestWidget extends AbstractWidget
      * @var string
      */
     protected const PARAMETER_QUOTE = 'quote';
+
     /**
      * @var string
      */
     protected const PARAMETER_QUOTE_STATUS = 'quoteStatus';
+
     /**
      * @var string
      */
     protected const PARAMETER_QUOTE_APPROVAL_REQUEST_FROM = 'quoteApprovalRequestForm';
+
     /**
      * @var string
      */
     protected const PARAMETER_CAN_SEND_APPROVAL_REQUEST = 'canSendApprovalRequest';
+
     /**
      * @var string
      */
     protected const PARAMETER_LIMIT = 'limit';
+
     /**
      * @var string
      */
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
+
     /**
      * @var string
      */

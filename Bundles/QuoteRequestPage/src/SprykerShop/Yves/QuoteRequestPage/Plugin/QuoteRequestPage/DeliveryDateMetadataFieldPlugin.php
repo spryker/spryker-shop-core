@@ -26,10 +26,12 @@ class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements QuoteReq
      * @var string
      */
     protected const FIELD_METADATA_DELIVERY_DATE = 'delivery_date';
+
     /**
      * @var string
      */
     protected const LABEL_METADATA_DELIVERY_DATE = 'quote_request_page.quote_request.metadata.label.delivery_date';
+
     /**
      * @var string
      */

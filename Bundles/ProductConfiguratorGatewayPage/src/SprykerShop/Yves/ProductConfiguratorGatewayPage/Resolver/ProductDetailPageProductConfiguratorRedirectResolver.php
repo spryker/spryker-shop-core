@@ -20,6 +20,7 @@ class ProductDetailPageProductConfiguratorRedirectResolver implements ProductDet
      * @var string
      */
     protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_NOT_FOUND = 'product_configuration.error.configuration_not_found';
+
     /**
      * @var string
      */

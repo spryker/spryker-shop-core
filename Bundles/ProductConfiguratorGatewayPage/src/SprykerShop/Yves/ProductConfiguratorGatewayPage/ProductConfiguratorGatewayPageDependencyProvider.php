@@ -20,26 +20,32 @@ class ProductConfiguratorGatewayPageDependencyProvider extends AbstractBundleDep
      * @var string
      */
     public const CLIENT_PRODUCT_CONFIGURATION_STORAGE = 'CLIENT_PRODUCT_CONFIGURATION_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_PRODUCT_CONFIGURATION = 'CLIENT_PRODUCT_CONFIGURATION';
+
     /**
      * @var string
      */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
+
     /**
      * @var string
      */
     public const PLUGINS_PRODUCT_CONFIGURATOR_REQUEST = 'PLUGINS_PRODUCT_CONFIGURATOR_REQUEST';
+
     /**
      * @var string
      */
     public const PLUGINS_PRODUCT_CONFIGURATOR_REQUEST_DATA_FORM_EXPANDER_STRATEGY = 'PLUGINS_PRODUCT_CONFIGURATOR_REQUEST_DATA_FORM_EXPANDER_STRATEGY';
+
     /**
      * @var string
      */

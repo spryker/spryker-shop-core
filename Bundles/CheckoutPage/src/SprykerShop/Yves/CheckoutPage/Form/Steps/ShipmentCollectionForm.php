@@ -23,10 +23,12 @@ class ShipmentCollectionForm extends AbstractType
      * @var string
      */
     public const OPTION_SHIPMENT_ADDRESS_LABEL_LIST = 'shippingAddressLabelList';
+
     /**
      * @var string
      */
     public const OPTION_SHIPMENT_GROUPS = 'shipmentGroups';
+
     /**
      * @var string
      */
@@ -36,6 +38,7 @@ class ShipmentCollectionForm extends AbstractType
      * @var string
      */
     protected const BLOCK_PREFIX = 'shipmentCollectionForm';
+
     /**
      * @var string
      */

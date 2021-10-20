@@ -26,6 +26,7 @@ class RouteResolver implements RouteResolverInterface
      * @var string
      */
     protected const PARAM_REDIRECT_URI = 'redirectUri';
+
     /**
      * @var string
      */

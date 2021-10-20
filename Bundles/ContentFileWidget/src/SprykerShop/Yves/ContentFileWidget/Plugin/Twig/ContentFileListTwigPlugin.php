@@ -22,10 +22,12 @@ class ContentFileListTwigPlugin extends AbstractPlugin implements TwigPluginInte
      * @var string
      */
     protected const FILTER_NAME = 'readable_bytesize';
+
     /**
      * @var array
      */
     protected const LABEL_SIZES = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+
     /**
      * @var int
      */

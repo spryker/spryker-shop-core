@@ -17,19 +17,23 @@ class CatalogPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_SEARCH = 'search';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_SEARCH = 'search';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CatalogPage\Plugin\Router\CatalogPageRouteProviderPlugin::ROUTE_NAME_SUGGESTION} instead.
      * @var string
      */
     protected const ROUTE_SUGGESTION = 'search/suggestion';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_SUGGESTION = 'search/suggestion';
+
     /**
      * @var string
      */

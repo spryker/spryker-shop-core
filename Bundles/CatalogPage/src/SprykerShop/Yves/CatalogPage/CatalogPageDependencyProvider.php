@@ -24,26 +24,32 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
     /**
      * @var string
      */
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
+
     /**
      * @var string
      */
     public const CLIENT_CATEGORY_STORAGE = 'CLIENT_CATEGORY_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_CATALOG = 'CLIENT_CATALOG';
+
     /**
      * @var string
      */
     public const CLIENT_PRODUCT_CATEGORY_FILTER = 'CLIENT_PRODUCT_CATEGORY_FILTER';
+
     /**
      * @var string
      */
     public const CLIENT_PRODUCT_CATEGORY_FILTER_STORAGE = 'CLIENT_PRODUCT_CATEGORY_FILTER_STORAGE';
+
     /**
      * @var string
      */
@@ -53,6 +59,7 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGIN_CATALOG_PAGE_WIDGETS = 'PLUGIN_CATALOG_PAGE_WIDGETS';
+
     /**
      * @var string
      */

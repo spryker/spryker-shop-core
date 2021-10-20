@@ -21,18 +21,22 @@ class SalesReturnPageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_SALES_RETURN = 'CLIENT_SALES_RETURN';
+
     /**
      * @var string
      */
     public const CLIENT_SALES_RETURN_SEARCH = 'CLIENT_SALES_RETURN_SEARCH';
+
     /**
      * @var string
      */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
     /**
      * @var string
      */
     public const CLIENT_SALES = 'CLIENT_SALES';
+
     /**
      * @var string
      */

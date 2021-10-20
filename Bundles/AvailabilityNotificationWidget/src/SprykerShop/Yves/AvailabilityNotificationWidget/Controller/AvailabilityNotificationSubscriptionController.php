@@ -19,6 +19,7 @@ class AvailabilityNotificationSubscriptionController extends AbstractController
      * @var string
      */
     public const GLOSSARY_KEY_SUCCESSFULLY_SUBSCRIBED = 'availability_notification.subscribed';
+
     /**
      * @var string
      */

@@ -18,6 +18,7 @@ class CheckoutWidgetDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGIN_CHECKOUT_BREADCRUMB = 'PLUGIN_CHECKOUT_BREADCRUMB';
+
     /**
      * @var string
      */

@@ -25,10 +25,12 @@ class ContentFileListTwigFunctionProvider extends TwigFunctionProvider
      * @var string
      */
     protected const MESSAGE_CONTENT_FILE_LIST_NOT_FOUND = '<strong>Content file list with key "%s" not found.</strong>';
+
     /**
      * @var string
      */
     protected const MESSAGE_WRONG_CONTENT_FILE_LIST_TYPE = '<strong>Content file list widget could not be rendered because the content item with key "%s" is not an file list.</strong>';
+
     /**
      * @var string
      */

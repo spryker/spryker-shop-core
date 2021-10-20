@@ -17,33 +17,40 @@ class ConfigurableBundlePageRouteProviderPlugin extends AbstractRouteProviderPlu
      * @var string
      */
     protected const ROUTE_CONFIGURATOR_TEMPLATE_SELECTION = 'configurable-bundle/configurator/template-selection';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_CONFIGURATOR_TEMPLATE_SELECTION = 'configurable-bundle/configurator/template-selection';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ConfigurableBundlePage\Plugin\Router\ConfigurableBundlePageRouteProviderPlugin::ROUTE_NAME_CONFIGURATOR_SLOTS} instead.
      * @var string
      */
     protected const ROUTE_CONFIGURATOR_SLOTS = 'configurable-bundle/configurator/slots';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_CONFIGURATOR_SLOTS = 'configurable-bundle/configurator/slots';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ConfigurableBundlePage\Plugin\Router\ConfigurableBundlePageRouteProviderPlugin::ROUTE_NAME_CONFIGURATOR_SUMMARY} instead.
      * @var string
      */
     protected const ROUTE_CONFIGURATOR_SUMMARY = 'configurable-bundle/configurator/summary';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_CONFIGURATOR_SUMMARY = 'configurable-bundle/configurator/summary';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ConfigurableBundlePage\Plugin\Router\ConfigurableBundlePageRouteProviderPlugin::ROUTE_NAME_CONFIGURATOR_ADD_TO_CART} instead.
      * @var string
      */
     protected const ROUTE_CONFIGURATOR_ADD_TO_CART = 'configurable-bundle/configurator/add-to-cart';
+
     /**
      * @var string
      */
@@ -53,6 +60,7 @@ class ConfigurableBundlePageRouteProviderPlugin extends AbstractRouteProviderPlu
      * @var string
      */
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'idConfigurableBundleTemplate';
+
     /**
      * @var string
      */

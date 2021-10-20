@@ -23,6 +23,7 @@ class CustomerAuthenticationFailureHandler extends BaseCustomerAuthenticationHan
      * @var string
      */
     public const MESSAGE_CUSTOMER_AUTHENTICATION_FAILED = 'customer.authentication.failed';
+
     /**
      * @var string
      */

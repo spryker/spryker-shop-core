@@ -20,10 +20,12 @@ class MultiCartPageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_MULTI_CART = 'CLIENT_MULTI_CART';
+
     /**
      * @var string
      */
     public const CLIENT_CART = 'CLIENT_CART';
+
     /**
      * @var string
      */

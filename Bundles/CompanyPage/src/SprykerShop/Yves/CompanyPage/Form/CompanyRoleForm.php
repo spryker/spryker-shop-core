@@ -23,14 +23,17 @@ class CompanyRoleForm extends AbstractType
      * @var string
      */
     public const FIELD_ID_COMPANY_ROLE = 'id_company_role';
+
     /**
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_IS_DEFAULT = 'is_default';
+
     /**
      * @var string
      */

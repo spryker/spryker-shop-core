@@ -18,6 +18,7 @@ class OrderCustomReferenceForm extends AbstractType
      * @var string
      */
     public const FIELD_BACK_URL = 'backUrl';
+
     /**
      * @var string
      */

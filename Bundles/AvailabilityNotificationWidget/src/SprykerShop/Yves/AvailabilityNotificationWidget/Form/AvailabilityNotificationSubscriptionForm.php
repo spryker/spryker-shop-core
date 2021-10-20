@@ -23,6 +23,7 @@ class AvailabilityNotificationSubscriptionForm extends AbstractType
      * @var string
      */
     public const FIELD_EMAIL = 'email';
+
     /**
      * @var string
      */
@@ -37,6 +38,7 @@ class AvailabilityNotificationSubscriptionForm extends AbstractType
      * @var string
      */
     public const PLACEHOLDER_EMAIL_ADDRESS = 'availability_notification.email_address';
+
     /**
      * @var string
      */

@@ -22,10 +22,12 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class LastVisitCookieEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
     protected const EVENT_PRIORITY = -255;
+
     /**
      * @var string
      */
     protected const COOKIE_NAME = 'last-visit';
+
     /**
      * @var int
      */

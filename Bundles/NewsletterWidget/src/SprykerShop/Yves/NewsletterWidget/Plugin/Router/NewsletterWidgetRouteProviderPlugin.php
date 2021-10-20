@@ -17,6 +17,7 @@ class NewsletterWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_NEWSLETTER_SUBSCRIBE = 'newsletter/subscribe';
+
     /**
      * @var string
      */
@@ -27,6 +28,7 @@ class NewsletterWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_NEWSLETTER_WIDGET_SUBSCRIBE = 'newsletter-widget/subscribe';
+
     /**
      * @var string
      */

@@ -28,6 +28,7 @@ class QuickOrderForm extends AbstractType
      * @var string
      */
     public const SUBMIT_BUTTON_ADD_TO_CART = 'addToCart';
+
     /**
      * @var string
      */

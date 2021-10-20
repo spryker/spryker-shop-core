@@ -17,6 +17,7 @@ class QuoteCartNoteForm extends AbstractType
      * @var string
      */
     public const FORM_NAME = 'quoteCartNote';
+
     /**
      * @var string
      */

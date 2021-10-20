@@ -19,10 +19,12 @@ class ProductConfigurationCartItemDisplayWidget extends AbstractWidget
      * @var string
      */
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
+
     /**
      * @var string
      */
     protected const PARAMETER_PRODUCT_CONFIGURATION_INSTANCE = 'productConfigurationInstance';
+
     /**
      * @var string
      */

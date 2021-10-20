@@ -19,6 +19,7 @@ class OrderItemsConfiguredBundleWidget extends AbstractWidget
      * @var string
      */
     protected const PARAMETER_ITEMS = 'items';
+
     /**
      * @var string
      */

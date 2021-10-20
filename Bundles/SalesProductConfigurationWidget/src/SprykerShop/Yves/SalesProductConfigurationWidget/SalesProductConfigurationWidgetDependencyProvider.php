@@ -17,6 +17,7 @@ class SalesProductConfigurationWidgetDependencyProvider extends AbstractBundleDe
      * @var string
      */
     public const PLUGINS_SALES_PRODUCT_CONFIGURATION_RENDER_STRATEGY = 'PLUGINS_SALES_PRODUCT_CONFIGURATION_RENDER_STRATEGY';
+
     /**
      * @var string
      */

@@ -25,6 +25,7 @@ class ShoppingListFromCartForm extends AbstractType
      * @var string
      */
     public const FIELD_NEW_SHOPPING_LIST_NAME_INPUT = 'newShoppingListName';
+
     /**
      * @var string
      */
@@ -34,6 +35,7 @@ class ShoppingListFromCartForm extends AbstractType
      * @var string
      */
     protected const FIELD_ID_QUOTE = 'idQuote';
+
     /**
      * @var string
      */

@@ -21,6 +21,7 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGIN_GLOBAL_WIDGETS = 'PLUGIN_GLOBAL_WIDGETS';
+
     /**
      * @var string
      */
@@ -41,18 +42,22 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
+
     /**
      * @var string
      */
     public const STORE = 'STORE';
+
     /**
      * @var string
      */
     public const PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER = 'PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER';
+
     /**
      * @var string
      */
     public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
+
     /**
      * @var string
      */

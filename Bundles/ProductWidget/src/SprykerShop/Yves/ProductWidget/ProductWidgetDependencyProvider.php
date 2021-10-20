@@ -16,26 +16,32 @@ class ProductWidgetDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGIN_PRODUCT_RELATION_WIDGET_SUB_WIDGETS = 'PLUGIN_PRODUCT_DETAIL_PAGE_SIMILAR_PRODUCTS_WIDGETS';
+
     /**
      * @var string
      */
     public const PLUGIN_CATALOG_PAGE_SUB_WIDGETS = 'PLUGIN_CATALOG_PAGE_SUB_WIDGETS';
+
     /**
      * @var string
      */
     public const PLUGIN_CMS_CONTENT_WIDGET_PRODUCT_SUB_WIDGETS = 'PLUGIN_CMS_CONTENT_WIDGET_PRODUCT_SUB_WIDGETS';
+
     /**
      * @var string
      */
     public const PLUGIN_CMS_CONTENT_WIDGET_PRODUCT_GROUP_SUB_WIDGETS = 'PLUGIN_CMS_CONTENT_WIDGET_PRODUCT_GROUP_SUB_WIDGETS';
+
     /**
      * @var string
      */
     public const PLUGIN_HOME_PAGE_SUB_WIDGETS = 'PLUGIN_HOME_PAGE_SUB_WIDGETS';
+
     /**
      * @var string
      */
     public const PLUGINS_PRODUCT_REPLACEMENT_FOR_WIDGET_SUB_WIDGET = 'PLUGINS_PRODUCT_REPLACEMENT_FOR_WIDGET_SUB_WIDGET';
+
     /**
      * @var string
      */

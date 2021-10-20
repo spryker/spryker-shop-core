@@ -17,6 +17,7 @@ class UploadedFileCsvTypeValidator implements UploadedFileTypeValidatorInterface
      * @var string
      */
     protected const CSV_SKU_COLUMN_NAME = 'concrete_sku';
+
     /**
      * @var string
      */

@@ -22,22 +22,27 @@ class CommentThreadWidget extends AbstractWidget
      * @var string
      */
     protected const PARAMETER_OWNER_ID = 'ownerId';
+
     /**
      * @var string
      */
     protected const PARAMETER_OWNER_TYPE = 'ownerType';
+
     /**
      * @var string
      */
     protected const PARAMETER_RETURN_URL = 'returnUrl';
+
     /**
      * @var string
      */
     protected const PARAMETER_CUSTOMER = 'customer';
+
     /**
      * @var string
      */
     protected const PARAMETER_TAGGED_COMMENTS = 'taggedComments';
+
     /**
      * @var string
      */

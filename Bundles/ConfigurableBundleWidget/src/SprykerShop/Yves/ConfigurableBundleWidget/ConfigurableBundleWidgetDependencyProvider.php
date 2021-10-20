@@ -19,10 +19,12 @@ class ConfigurableBundleWidgetDependencyProvider extends AbstractBundleDependenc
      * @var string
      */
     public const FORM_FACTORY = 'FORM_FACTORY';
+
     /**
      * @var string
      */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+
     /**
      * @var string
      */

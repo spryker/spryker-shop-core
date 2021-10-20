@@ -32,18 +32,22 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
     /**
      * @var string
      */
     public const CLIENT_SALES = 'CLIENT_SALES';
+
     /**
      * @var string
      */
     public const CLIENT_SHIPMENT = 'CLIENT_SHIPMENT';
+
     /**
      * @var string
      */
     public const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
+
     /**
      * @var string
      */
@@ -58,6 +62,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGIN_AFTER_CUSTOMER_AUTHENTICATION_SUCCESS = 'PLUGIN_AFTER_CUSTOMER_AUTHENTICATION_SUCCESS';
+
     /**
      * @var string
      */
@@ -73,38 +78,47 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGIN_AUTHENTICATION_HANDLER = 'PLUGIN_AUTHENTICATION_HANDLER';
+
     /**
      * @var string
      */
     public const PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS = 'PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS';
+
     /**
      * @var string
      */
     public const PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS = 'PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS';
+
     /**
      * @var string
      */
     public const PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS = 'PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS';
+
     /**
      * @var string
      */
     public const PLUGIN_CUSTOMER_OVERVIEW_WIDGETS = 'PLUGIN_CUSTOMER_OVERVIEW_WIDGETS';
+
     /**
      * @var string
      */
     public const PLUGIN_GUEST_AUTHENTICATION_HANDLER = 'PLUGIN_GUEST_AUTHENTICATION_HANDLER';
+
     /**
      * @var string
      */
     public const PLUGIN_LOGIN_AUTHENTICATION_HANDLER = 'PLUGIN_LOGIN_AUTHENTICATION_HANDLER';
+
     /**
      * @var string
      */
     public const PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER = 'PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER = 'PLUGIN_REGISTRATION_AUTHENTICATION_HANDLER';
+
     /**
      * @var string
      */
@@ -114,10 +128,12 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SERVICE_CUSTOMER = 'SERVICE_CUSTOMER';
+
     /**
      * @var string
      */
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
+
     /**
      * @var string
      */
@@ -133,6 +149,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const STORE = 'STORE';
+
     /**
      * @var string
      */

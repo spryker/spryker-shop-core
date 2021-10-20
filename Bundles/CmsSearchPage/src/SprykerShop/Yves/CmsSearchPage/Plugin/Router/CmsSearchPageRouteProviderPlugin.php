@@ -17,6 +17,7 @@ class CmsSearchPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_SEARCH = 'search-cms';
+
     /**
      * @var string
      */

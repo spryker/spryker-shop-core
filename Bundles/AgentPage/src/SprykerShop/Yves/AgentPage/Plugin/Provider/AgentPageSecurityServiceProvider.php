@@ -29,14 +29,17 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
      * @var string
      */
     public const ROLE_AGENT = 'ROLE_AGENT';
+
     /**
      * @var string
      */
     public const ROLE_ALLOWED_TO_SWITCH = 'ROLE_ALLOWED_TO_SWITCH';
+
     /**
      * @var string
      */
     public const ROLE_USER = 'ROLE_USER';
+
     /**
      * @var string
      */

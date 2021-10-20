@@ -22,6 +22,7 @@ class CompanyUserFormDataProvider
      * @var string
      */
     protected const KEY_ID_COMPANY_ROLE = 'id_company_role';
+
     /**
      * @var string
      */

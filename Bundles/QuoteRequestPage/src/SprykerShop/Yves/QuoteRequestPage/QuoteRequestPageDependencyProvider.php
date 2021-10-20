@@ -24,22 +24,27 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
+
     /**
      * @var string
      */
     public const CLIENT_QUOTE_REQUEST = 'CLIENT_QUOTE_REQUEST';
+
     /**
      * @var string
      */
     public const CLIENT_CART = 'CLIENT_CART';
+
     /**
      * @var string
      */
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
+
     /**
      * @var string
      */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+
     /**
      * @var string
      */
@@ -49,6 +54,7 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
+
     /**
      * @var string
      */

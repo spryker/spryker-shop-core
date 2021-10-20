@@ -19,6 +19,7 @@ class QuoteRequestSaveController extends QuoteRequestAbstractController
      * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
+
     /**
      * @var string
      */

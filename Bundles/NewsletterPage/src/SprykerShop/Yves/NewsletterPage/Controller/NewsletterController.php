@@ -27,6 +27,7 @@ class NewsletterController extends AbstractController
      * @var string
      */
     public const MESSAGE_UNSUBSCRIPTION_SUCCESS = 'newsletter.unsubscription.success';
+
     /**
      * @var string
      */

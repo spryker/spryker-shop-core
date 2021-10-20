@@ -18,42 +18,51 @@ class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_COMMENT_ADD = 'comment/add';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMMENT_ADD = 'comment/add';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CommentWidget\Plugin\Router\CommentWidgetRouteProviderPlugin::ROUTE_NAME_COMMENT_UPDATE} instead.
      * @var string
      */
     protected const ROUTE_COMMENT_UPDATE = 'comment/update';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMMENT_UPDATE = 'comment/update';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CommentWidget\Plugin\Router\CommentWidgetRouteProviderPlugin::ROUTE_NAME_COMMENT_REMOVE} instead.
      * @var string
      */
     protected const ROUTE_COMMENT_REMOVE = 'comment/remove';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMMENT_REMOVE = 'comment/remove';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CommentWidget\Plugin\Router\CommentWidgetRouteProviderPlugin::ROUTE_NAME_COMMENT_TAG_ADD} instead.
      * @var string
      */
     protected const ROUTE_COMMENT_TAG_ADD = 'comment/tag/add';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMMENT_TAG_ADD = 'comment/tag/add';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CommentWidget\Plugin\Router\CommentWidgetRouteProviderPlugin::ROUTE_NAME_COMMENT_TAG_REMOVE} instead.
      * @var string
      */
     protected const ROUTE_COMMENT_TAG_REMOVE = 'comment/tag/remove';
+
     /**
      * @var string
      */

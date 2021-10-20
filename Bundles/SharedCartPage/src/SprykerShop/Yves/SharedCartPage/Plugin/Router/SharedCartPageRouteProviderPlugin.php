@@ -17,24 +17,29 @@ class SharedCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_SHARED_CART_SHARE = 'shared-cart/share';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_SHARED_CART_SHARE = 'shared-cart/share';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\SharedCartPage\Plugin\Router\SharedCartPageRouteProviderPlugin::ROUTE_NAME_SHARED_CART_DISMISS} instead.
      * @var string
      */
     protected const ROUTE_SHARED_CART_DISMISS = 'shared-cart/dismiss';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_SHARED_CART_DISMISS = 'shared-cart/dismiss';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\SharedCartPage\Plugin\Router\SharedCartPageRouteProviderPlugin::ROUTE_NAME_SHARED_CART_DISMISS_CONFIRM} instead.
      * @var string
      */
     protected const ROUTE_SHARED_CART_DISMISS_CONFIRM = 'shared-cart/dismiss-confirm';
+
     /**
      * @var string
      */

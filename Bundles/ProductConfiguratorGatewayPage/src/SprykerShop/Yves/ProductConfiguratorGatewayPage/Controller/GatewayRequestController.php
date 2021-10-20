@@ -26,6 +26,7 @@ class GatewayRequestController extends AbstractController
      * @var string
      */
     protected const FALLBACK_ROUTE_NAME = 'home';
+
     /**
      * @var string
      */

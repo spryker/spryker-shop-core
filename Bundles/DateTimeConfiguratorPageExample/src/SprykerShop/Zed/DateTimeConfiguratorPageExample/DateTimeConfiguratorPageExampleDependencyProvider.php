@@ -21,6 +21,7 @@ class DateTimeConfiguratorPageExampleDependencyProvider extends AbstractBundleDe
      * @var string
      */
     public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
+
     /**
      * @var string
      */

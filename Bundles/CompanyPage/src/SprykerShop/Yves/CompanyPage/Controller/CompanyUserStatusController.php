@@ -28,6 +28,7 @@ class CompanyUserStatusController extends AbstractCompanyController
      * @var string
      */
     protected const SUCCESS_MESSAGE_STATUS_ENABLE_COMPANY_USER = 'company.account.company_user.status.enable.success';
+
     /**
      * @var string
      */
@@ -37,6 +38,7 @@ class CompanyUserStatusController extends AbstractCompanyController
      * @var string
      */
     protected const ERROR_MESSAGE_STATUS_ENABLE_COMPANY_USER = 'company.account.company_user.status.enable.error';
+
     /**
      * @var string
      */
@@ -46,6 +48,7 @@ class CompanyUserStatusController extends AbstractCompanyController
      * @var string
      */
     protected const ERROR_MESSAGE_STATUS_DISABLE_COMPANY_USER = 'company.account.company_user.status.disable.error';
+
     /**
      * @var string
      */

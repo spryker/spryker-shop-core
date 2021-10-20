@@ -29,6 +29,7 @@ class AgentLoginForm extends AbstractType
      * @var string
      */
     public const FIELD_EMAIL = 'email';
+
     /**
      * @var string
      */
@@ -38,6 +39,7 @@ class AgentLoginForm extends AbstractType
      * @var string
      */
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+
     /**
      * @var string
      */

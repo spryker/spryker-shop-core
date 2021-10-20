@@ -27,18 +27,22 @@ class WidgetTwigPlugin extends AbstractPlugin implements TwigPluginInterface
      * @var string
      */
     protected const TWIG_FUNCTION_NAME_WIDGET = 'widget';
+
     /**
      * @var string
      */
     protected const TWIG_FUNCTION_NAME_WIDGET_BLOCK = 'widgetBlock';
+
     /**
      * @var string
      */
     protected const TWIG_FUNCTION_NAME_WIDGET_GLOBAL = 'widgetGlobal';
+
     /**
      * @var string
      */
     protected const TWIG_FUNCTION_NAME_WIDGET_EXISTS = 'widgetExists';
+
     /**
      * @var string
      */

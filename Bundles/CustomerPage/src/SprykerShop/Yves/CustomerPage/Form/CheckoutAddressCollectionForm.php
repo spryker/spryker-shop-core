@@ -35,22 +35,27 @@ class CheckoutAddressCollectionForm extends AbstractType
      * @var string
      */
     public const FIELD_SHIPPING_ADDRESS = 'shippingAddress';
+
     /**
      * @var string
      */
     public const FIELD_BILLING_ADDRESS = 'billingAddress';
+
     /**
      * @var string
      */
     public const FIELD_BILLING_SAME_AS_SHIPPING = 'billingSameAsShipping';
+
     /**
      * @var string
      */
     public const FIELD_MULTI_SHIPPING_ADDRESSES = 'multiShippingAddresses';
+
     /**
      * @var string
      */
     public const FIELD_MULTI_SHIPPING_ADDRESSES_FOR_BUNDLE_ITEMS = 'multiShippingAddressesForBundleItems';
+
     /**
      * @var string
      */
@@ -60,26 +65,32 @@ class CheckoutAddressCollectionForm extends AbstractType
      * @var string
      */
     public const OPTION_SINGLE_SHIPPING_ADDRESS_CHOICES = 'single_shipping_address_choices';
+
     /**
      * @var string
      */
     public const OPTION_MULTIPLE_SHIPPING_ADDRESS_CHOICES = 'multiple_shipping_addresses_choices';
+
     /**
      * @var string
      */
     public const OPTION_BILLING_ADDRESS_CHOICES = 'billing_addresses_choices';
+
     /**
      * @var string
      */
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
+
     /**
      * @var string
      */
     public const OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES = 'can_deliver_to_multiple_shipping_addresses';
+
     /**
      * @var string
      */
     public const OPTION_IS_CUSTOMER_LOGGED_IN = 'is_customer_logged_in';
+
     /**
      * @var string
      */
@@ -98,6 +109,7 @@ class CheckoutAddressCollectionForm extends AbstractType
      * @var string
      */
     protected const PROPERTY_PATH_MULTI_SHIPPING_ADDRESSES = 'items';
+
     /**
      * @var string
      */

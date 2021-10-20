@@ -17,51 +17,62 @@ class QuickOrderPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_QUICK_ORDER = 'quick-order';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_QUICK_ORDER = 'quick-order';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuickOrderPage\Plugin\Router\QuickOrderPageRouteProviderPlugin::ROUTE_NAME_QUICK_ORDER_ADD_ROWS} instead.
      * @var string
      */
     protected const ROUTE_QUICK_ORDER_ADD_ROWS = 'quick-order/add-rows';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_QUICK_ORDER_ADD_ROWS = 'quick-order/add-rows';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuickOrderPage\Plugin\Router\QuickOrderPageRouteProviderPlugin::ROUTE_NAME_QUICK_ORDER_DELETE_ROW} instead.
      * @var string
      */
     protected const ROUTE_QUICK_ORDER_DELETE_ROW = 'quick-order/delete-row';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_QUICK_ORDER_DELETE_ROW = 'quick-order/delete-row';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuickOrderPage\Plugin\Router\QuickOrderPageRouteProviderPlugin::ROUTE_NAME_QUICK_ORDER_CLEAR_ALL_ROWS} instead.
      * @var string
      */
     protected const ROUTE_QUICK_ORDER_CLEAR_ALL_ROWS = 'quick-order/clear-all-rows';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_QUICK_ORDER_CLEAR_ALL_ROWS = 'quick-order/clear-all-rows';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuickOrderPage\Plugin\Router\QuickOrderPageRouteProviderPlugin::ROUTE_NAME_QUICK_ORDER_PRODUCT_ADDITIONAL_DATA} instead.
      * @var string
      */
     protected const ROUTE_QUICK_ORDER_PRODUCT_ADDITIONAL_DATA = 'quick-order/product-additional-data';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_QUICK_ORDER_PRODUCT_ADDITIONAL_DATA = 'quick-order/product-additional-data';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuickOrderPage\Plugin\Router\QuickOrderPageRouteProviderPlugin::ROUTE_NAME_QUICK_ORDER_DOWNLOAD_TEMPLATE} instead.
      * @var string
      */
     protected const ROUTE_QUICK_ORDER_DOWNLOAD_TEMPLATE = 'quick-order/download-template';
+
     /**
      * @var string
      */

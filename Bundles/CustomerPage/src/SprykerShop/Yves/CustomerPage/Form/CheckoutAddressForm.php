@@ -25,6 +25,7 @@ class CheckoutAddressForm extends AddressForm
      * @var string
      */
     public const FIELD_ID_COMPANY_UNIT_ADDRESS = 'id_company_unit_address';
+
     /**
      * @var string
      */
@@ -34,14 +35,17 @@ class CheckoutAddressForm extends AddressForm
      * @var string
      */
     public const OPTION_VALIDATION_GROUP = 'validation_group';
+
     /**
      * @var string
      */
     public const OPTION_ADDRESS_CHOICES = 'addresses_choices';
+
     /**
      * @var string
      */
     public const OPTION_IS_CUSTOMER_LOGGED_IN = 'is_customer_logged_in';
+
     /**
      * @var string
      */
@@ -51,10 +55,12 @@ class CheckoutAddressForm extends AddressForm
      * @var string
      */
     public const VALUE_DELIVER_TO_MULTIPLE_ADDRESSES = '-1';
+
     /**
      * @var string
      */
     public const VALUE_ADD_NEW_ADDRESS = '0';
+
     /**
      * @var int|null
      */
@@ -64,14 +70,17 @@ class CheckoutAddressForm extends AddressForm
      * @var string
      */
     public const GLOSSARY_KEY_ACCOUNT_ADD_NEW_ADDRESS = 'customer.account.add_new_address';
+
     /**
      * @var string
      */
     public const GLOSSARY_KEY_SAVE_NEW_ADDRESS = 'customer.address.save_new_address';
+
     /**
      * @var string
      */
     public const GLOSSARY_KEY_DELIVER_TO_MULTIPLE_ADDRESSES = 'customer.account.deliver_to_multiple_addresses';
+
     /**
      * @var string
      */

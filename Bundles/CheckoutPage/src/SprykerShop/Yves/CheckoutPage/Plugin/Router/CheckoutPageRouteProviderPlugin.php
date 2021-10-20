@@ -17,6 +17,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const CHECKOUT_CUSTOMER = 'checkout-customer';
+
     /**
      * @var string
      */
@@ -27,6 +28,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const CHECKOUT_ADDRESS = 'checkout-address';
+
     /**
      * @var string
      */
@@ -37,6 +39,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const CHECKOUT_SHIPMENT = 'checkout-shipment';
+
     /**
      * @var string
      */
@@ -47,6 +50,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const CHECKOUT_PAYMENT = 'checkout-payment';
+
     /**
      * @var string
      */
@@ -57,6 +61,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const CHECKOUT_SUMMARY = 'checkout-summary';
+
     /**
      * @var string
      */
@@ -67,6 +72,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const CHECKOUT_PLACE_ORDER = 'checkout-place-order';
+
     /**
      * @var string
      */
@@ -77,6 +83,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const CHECKOUT_ERROR = 'checkout-error';
+
     /**
      * @var string
      */
@@ -87,6 +94,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const CHECKOUT_SUCCESS = 'checkout-success';
+
     /**
      * @var string
      */
@@ -97,6 +105,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const CHECKOUT_INDEX = 'checkout-index';
+
     /**
      * @var string
      */

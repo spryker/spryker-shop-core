@@ -36,10 +36,12 @@ class UserController extends AbstractCompanyController
      * @var string
      */
     protected const SUCCESS_MESSAGE_COMPANY_USER_DELETE = 'company.account.company_user.delete.successful';
+
     /**
      * @var string
      */
     protected const SUCCESS_MESSAGE_COMPANY_USER_CREATE = 'company.account.company_user.create.successful';
+
     /**
      * @var string
      */
@@ -49,10 +51,12 @@ class UserController extends AbstractCompanyController
      * @var string
      */
     protected const ERROR_MESSAGE_DELETE_COMPANY_USER = 'company.account.company_user.delete.error';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_DELETE_YOURSELF = 'company.account.company_user.delete.error.delete_yourself';
+
     /**
      * @var string
      */

@@ -22,10 +22,12 @@ class OrderConfiguredBundleWidget extends AbstractWidget
      * @var string
      */
     protected const PARAMETER_ORDER = 'order';
+
     /**
      * @var string
      */
     protected const PARAMETER_ITEMS = 'items';
+
     /**
      * @var string
      */

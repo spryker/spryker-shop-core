@@ -117,10 +117,13 @@ class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderIn
             return '';
         }
 
-        $blockOptions[static::KEY_BLOCK_OPTIONS_KEYS] = $this->getVisibleBlockKeys(
+        $keys = $this->getVisibleBlockKeys(
             $cmsSlotBlockCollectionTransfer,
             $cmsSlotContentRequestTransfer
         );
+        $blockOptions = [
+            static::KEY_BLOCK_OPTIONS_KEYS => $keys,
+        ];
 
         return $cmsBlockFunction($this->twigEnvironment, [], $blockOptions);
     }

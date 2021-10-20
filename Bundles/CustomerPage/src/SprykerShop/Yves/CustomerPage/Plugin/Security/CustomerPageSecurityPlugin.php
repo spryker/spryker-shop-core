@@ -27,6 +27,7 @@ class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPlugi
      * @var string
      */
     protected const ROLE_USER = 'ROLE_USER';
+
     /**
      * @var string
      */

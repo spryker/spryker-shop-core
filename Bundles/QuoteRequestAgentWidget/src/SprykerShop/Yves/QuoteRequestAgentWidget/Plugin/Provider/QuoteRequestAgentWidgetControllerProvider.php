@@ -19,6 +19,7 @@ class QuoteRequestAgentWidgetControllerProvider extends AbstractYvesControllerPr
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_SAVE_CART = 'agent/quote-request/cart/save';
+
     /**
      * @var string
      */

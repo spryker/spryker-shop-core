@@ -36,6 +36,7 @@ class ShareShoppingListDataProvider
      * @var string
      */
     protected const ORDER_BUSINESS_UNIT_SORT_FIELD = 'name';
+
     /**
      * @var string
      */

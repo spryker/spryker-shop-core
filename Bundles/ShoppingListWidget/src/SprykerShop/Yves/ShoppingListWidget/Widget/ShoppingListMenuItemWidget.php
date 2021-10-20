@@ -18,14 +18,17 @@ class ShoppingListMenuItemWidget extends AbstractWidget
      * @var string
      */
     protected const PAGE_KEY_SHOPPING_LIST = 'shoppingList';
+
     /**
      * @var string
      */
     protected const PARAMETER_IS_ACTIVE_PAGE = 'isActivePage';
+
     /**
      * @var string
      */
     protected const PARAMETER_SHOPPING_LIST_COLLECTION = 'shoppingListCollection';
+
     /**
      * @var string
      */

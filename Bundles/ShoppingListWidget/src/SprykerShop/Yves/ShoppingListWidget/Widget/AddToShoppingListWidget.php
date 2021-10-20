@@ -22,10 +22,12 @@ class AddToShoppingListWidget extends AbstractWidget
      * @var string
      */
     protected const PARAMETER_SKU = 'sku';
+
     /**
      * @var string
      */
     protected const PARAMETER_IS_DISABLED = 'isDisabled';
+
     /**
      * @var string
      */

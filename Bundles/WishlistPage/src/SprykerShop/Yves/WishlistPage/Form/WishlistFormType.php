@@ -26,6 +26,7 @@ class WishlistFormType extends AbstractType
      * @var string
      */
     protected const GLOSSARY_KEY_NAME_VALIDATION_ERROR = 'wishlist.validation.error.name.wrong_format';
+
     /**
      * @var string
      */

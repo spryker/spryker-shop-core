@@ -31,6 +31,7 @@ class ProductReviewForm extends AbstractType
     public const FIELD_PRODUCT = ProductReviewRequestTransfer::ID_PRODUCT_ABSTRACT;
 
     public const UNSELECTED_RATING = -1;
+
     /**
      * @var int
      */

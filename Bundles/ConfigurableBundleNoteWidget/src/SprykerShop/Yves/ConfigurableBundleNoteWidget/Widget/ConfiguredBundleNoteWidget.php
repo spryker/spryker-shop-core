@@ -20,10 +20,12 @@ class ConfiguredBundleNoteWidget extends AbstractWidget
      * @var string
      */
     protected const PARAMETER_CONFIGURED_BUNDLE = 'configuredBundle';
+
     /**
      * @var string
      */
     protected const PARAMETER_CONFIGURABLE_BUNDLE_NOTE_FORM = 'configurableBundleNoteForm';
+
     /**
      * @var string
      */

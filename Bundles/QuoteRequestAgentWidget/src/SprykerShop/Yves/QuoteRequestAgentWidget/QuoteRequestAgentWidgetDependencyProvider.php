@@ -22,18 +22,22 @@ class QuoteRequestAgentWidgetDependencyProvider extends AbstractBundleDependency
      * @var string
      */
     public const CLIENT_QUOTE_REQUEST_AGENT = 'CLIENT_QUOTE_REQUEST_AGENT';
+
     /**
      * @var string
      */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+
     /**
      * @var string
      */
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
+
     /**
      * @var string
      */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
     /**
      * @var string
      */

@@ -19,10 +19,12 @@ class ShareCartByLinkWidget extends AbstractWidget
      * @var string
      */
     protected const PARAM_CART = 'cart';
+
     /**
      * @var string
      */
     protected const PARAM_IS_QUOTE_OWNER = 'isQuoteOwner';
+
     /**
      * @var string
      */

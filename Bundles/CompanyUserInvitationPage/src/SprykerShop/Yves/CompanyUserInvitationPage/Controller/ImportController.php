@@ -31,18 +31,22 @@ class ImportController extends AbstractController
      * @var int
      */
     protected const DEFAULT_COMPANY_USER_INVITATION_LIST_PAGE = 1;
+
     /**
      * @var int
      */
     protected const DEFAULT_COMPANY_USER_INVITATION_LIST_LIMIT = 10;
+
     /**
      * @var string
      */
     protected const DEFAULT_COMPANY_USER_INVITATION_LIST_PARAM_PAGE = 'page';
+
     /**
      * @var string
      */
     protected const DEFAULT_COMPANY_USER_INVITATION_LIST_SORT_FIELD = 'email';
+
     /**
      * @var string
      */

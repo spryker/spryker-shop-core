@@ -18,24 +18,29 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_COMPANY_LOGIN = 'company/login';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_LOGIN = 'company/login';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_REGISTER} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_REGISTER = 'company/register';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_REGISTER = 'company/register';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_OVERVIEW} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_OVERVIEW = 'company/overview';
+
     /**
      * @var string
      */
@@ -46,42 +51,51 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_COMPANY_ADDRESS = 'company/address';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_ADDRESS = 'company/address';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ADDRESS_CREATE} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_ADDRESS_CREATE = 'company/address/create';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_ADDRESS_CREATE = 'company/address/create';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ADDRESS_UPDATE} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_ADDRESS_UPDATE = 'company/address/update';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_ADDRESS_UPDATE = 'company/address/update';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ADDRESS_DELETE} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_ADDRESS_DELETE = 'company/address/delete';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_ADDRESS_DELETE = 'company/address/delete';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ADDRESS_DELETE_CONFIRMATION} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_ADDRESS_DELETE_CONFIRMATION = 'company/address/delete-confirmation';
+
     /**
      * @var string
      */
@@ -92,60 +106,73 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_COMPANY_BUSINESS_UNIT = 'company/business-unit';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_BUSINESS_UNIT = 'company/business-unit';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT_DETAILS} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_BUSINESS_UNIT_DETAILS = 'company/business-unit/details';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_BUSINESS_UNIT_DETAILS = 'company/business-unit/details';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT_CREATE} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_BUSINESS_UNIT_CREATE = 'company/business-unit/create';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_BUSINESS_UNIT_CREATE = 'company/business-unit/create';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT_UPDATE} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_BUSINESS_UNIT_UPDATE = 'company/business-unit/update';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_BUSINESS_UNIT_UPDATE = 'company/business-unit/update';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT_DELETE} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_BUSINESS_UNIT_DELETE = 'company/business-unit/delete';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_BUSINESS_UNIT_DELETE = 'company/business-unit/delete';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT_ADDRESS_CREATE} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_CREATE = 'company/business-unit/address/create';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_BUSINESS_UNIT_ADDRESS_CREATE = 'company/business-unit/address/create';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT_DELETE_CONFIRMATION} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_BUSINESS_UNIT_DELETE_CONFIRMATION = 'company/business-unit/delete-confirmation';
+
     /**
      * @var string
      */
@@ -156,51 +183,62 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_COMPANY_ROLE = 'company/company-role';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_ROLE = 'company/company-role';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_CREATE} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_ROLE_CREATE = 'company/company-role/create';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_ROLE_CREATE = 'company/company-role/create';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_UPDATE} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_ROLE_UPDATE = 'company/company-role/update';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_ROLE_UPDATE = 'company/company-role/update';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_DELETE} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_ROLE_DELETE = 'company/company-role/delete';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_ROLE_DELETE = 'company/company-role/delete';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_CONFIRM_DELETE} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_ROLE_CONFIRM_DELETE = 'company/company-role/confirm-delete';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_ROLE_CONFIRM_DELETE = 'company/company-role/confirm-delete';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_DETAILS} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_ROLE_DETAILS = 'company/company-role/details';
+
     /**
      * @var string
      */
@@ -211,24 +249,29 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_COMPANY_ROLE_USER_MANAGE = 'company/company-role/user/manage';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_ROLE_USER_MANAGE = 'company/company-role/user/manage';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_USER_ASSIGN} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_ROLE_USER_ASSIGN = 'company/company-role/user/assign';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_ROLE_USER_ASSIGN = 'company/company-role/user/assign';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_USER_UNASSIGN} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_ROLE_USER_UNASSIGN = 'company/company-role/user/unassign';
+
     /**
      * @var string
      */
@@ -239,24 +282,29 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_COMPANY_ROLE_PERMISSION_CONFIGURE = 'company/company-role-permission/configure';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_ROLE_PERMISSION_CONFIGURE = 'company/company-role-permission/configure';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_PERMISSION_ASSIGN} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_ROLE_PERMISSION_ASSIGN = 'company/company-role-permission/assign';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_ROLE_PERMISSION_ASSIGN = 'company/company-role-permission/assign';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_PERMISSION_UNASSIGN} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_ROLE_PERMISSION_UNASSIGN = 'company/company-role-permission/unassign';
+
     /**
      * @var string
      */
@@ -267,51 +315,62 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_COMPANY_USER = 'company/user';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_USER = 'company/user';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER_CREATE} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_USER_CREATE = 'company/user/create';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_USER_CREATE = 'company/user/create';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER_UPDATE} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_USER_UPDATE = 'company/user/update';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_USER_UPDATE = 'company/user/update';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER_DELETE} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_USER_DELETE = 'company/user/delete';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_USER_DELETE = 'company/user/delete';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER_CONFIRM_DELETE} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_USER_CONFIRM_DELETE = 'company/user/confirm-delete';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_USER_CONFIRM_DELETE = 'company/user/confirm-delete';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER_SELECT} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_USER_SELECT = 'company/user/select';
+
     /**
      * @var string
      */
@@ -322,15 +381,18 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_COMPANY_USER_STATUS_ENABLE = 'company/company-user-status/enable';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_COMPANY_USER_STATUS_ENABLE = 'company/company-user-status/enable';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER_STATUS_DISABLE} instead.
      * @var string
      */
     protected const ROUTE_COMPANY_USER_STATUS_DISABLE = 'company/company-user-status/disable';
+
     /**
      * @var string
      */
@@ -341,6 +403,7 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_UPDATE = 'company/business-unit/address/update';
+
     /**
      * @var string
      */

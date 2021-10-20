@@ -17,6 +17,7 @@ class ProfileController extends AbstractCustomerController
      * @var string
      */
     public const MESSAGE_PROFILE_CHANGE_SUCCESS = 'customer.profile.change.success';
+
     /**
      * @var string
      */

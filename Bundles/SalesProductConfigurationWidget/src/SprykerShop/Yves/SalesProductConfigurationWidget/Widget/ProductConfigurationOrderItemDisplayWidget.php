@@ -20,10 +20,12 @@ class ProductConfigurationOrderItemDisplayWidget extends AbstractWidget
      * @var string
      */
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
+
     /**
      * @var string
      */
     protected const PARAMETER_SALES_ORDER_ITEM_CONFIGURATION = 'salesOrderItemConfiguration';
+
     /**
      * @var string
      */

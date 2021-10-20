@@ -36,6 +36,7 @@ class PriceProductVolumeResolver implements PriceProductVolumeResolverInterface
      * @var string
      */
     protected const VOLUME_PRICE_QUANTITY = 'quantity';
+
     /**
      * @var array
      */

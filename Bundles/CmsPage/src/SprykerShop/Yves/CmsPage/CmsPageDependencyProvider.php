@@ -21,18 +21,22 @@ class CmsPageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CMS_TWIG_CONTENT_RENDERER_PLUGIN = 'CMS_TWIG_CONTENT_RENDERER_PLUGIN';
+
     /**
      * @var string
      */
     public const CLIENT_CMS = 'CLIENT_CMS';
+
     /**
      * @var string
      */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
     /**
      * @var string
      */
     public const STORE = 'STORE';
+
     /**
      * @var string
      */

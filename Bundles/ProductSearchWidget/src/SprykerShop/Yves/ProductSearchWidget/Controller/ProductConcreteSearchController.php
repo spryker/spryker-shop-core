@@ -27,6 +27,7 @@ class ProductConcreteSearchController extends AbstractController
      * @var string
      */
     protected const PARAM_SEARCH_STRING = 'searchString';
+
     /**
      * @var string
      */

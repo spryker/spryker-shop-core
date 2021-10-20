@@ -19,38 +19,47 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST = 'quote-request';
+
     /**
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_CREATE = 'quote-request/create';
+
     /**
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_REVISE = 'quote-request/revise';
+
     /**
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_SEND_TO_USER = 'quote-request/send-to-user';
+
     /**
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_EDIT = 'quote-request/edit';
+
     /**
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_EDIT_ITEMS = 'quote-request/edit-items';
+
     /**
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM = 'quote-request/edit-items-confirm';
+
     /**
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_CANCEL = 'quote-request/cancel';
+
     /**
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_DETAILS = 'quote-request/details';
+
     /**
      * @var string
      */

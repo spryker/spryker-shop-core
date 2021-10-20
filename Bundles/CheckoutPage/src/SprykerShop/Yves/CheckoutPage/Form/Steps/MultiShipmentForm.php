@@ -26,6 +26,7 @@ class MultiShipmentForm extends AbstractType
      * @var string
      */
     public const BLOCK_PREFIX = 'shipmentGroupForm';
+
     /**
      * @var string
      */
@@ -35,14 +36,17 @@ class MultiShipmentForm extends AbstractType
      * @var string
      */
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+
     /**
      * @var string
      */
     protected const VALIDATION_INVALID_DATE_TIME_MESSAGE = 'validation.invalid_date';
+
     /**
      * @var string
      */
     protected const VALIDATION_VALID_DATE_TIME_FORMAT = 'Y-m-d'; // Format accepted by date().
+
     /**
      * @var string
      */

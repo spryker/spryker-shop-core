@@ -27,6 +27,7 @@ class ShopApplicationTwigEventSubscriber implements EventSubscriberInterface
      * @var string
      */
     protected const SERVICE_TWIG = 'twig';
+
     /**
      * @var string
      */

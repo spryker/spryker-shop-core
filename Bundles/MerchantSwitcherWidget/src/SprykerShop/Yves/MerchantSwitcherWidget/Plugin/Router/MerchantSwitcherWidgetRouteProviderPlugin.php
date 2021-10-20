@@ -17,6 +17,7 @@ class MerchantSwitcherWidgetRouteProviderPlugin extends AbstractRouteProviderPlu
      * @var string
      */
     protected const ROUTE_SWITCH_MERCHANT = 'switch-merchant';
+
     /**
      * @var string
      */

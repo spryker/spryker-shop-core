@@ -18,6 +18,7 @@ class CalculationPageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+
     /**
      * @var string
      */

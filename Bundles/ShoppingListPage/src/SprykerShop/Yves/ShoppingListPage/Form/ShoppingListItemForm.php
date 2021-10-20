@@ -30,6 +30,7 @@ class ShoppingListItemForm extends AbstractType
      * @var int
      */
     protected const MAX_QUANTITY_RANGE = 2147483647; // 32 bit integer
+
     /**
      * @var int
      */

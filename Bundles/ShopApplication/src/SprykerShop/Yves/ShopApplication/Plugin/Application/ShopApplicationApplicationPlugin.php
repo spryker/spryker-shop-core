@@ -23,6 +23,7 @@ class ShopApplicationApplicationPlugin extends AbstractPlugin implements Applica
      * @var string
      */
     protected const SERVICE_RESOLVER = 'resolver';
+
     /**
      * @var string
      */

@@ -39,10 +39,12 @@ class SecurityBlockerAgentEventSubscriber implements EventSubscriberInterface
      * @var string
      */
     protected const LOGIN_ROUTE = 'agent_login_check';
+
     /**
      * @var int
      */
     protected const KERNEL_REQUEST_SUBSCRIBER_PRIORITY = 9;
+
     /**
      * @var string
      */

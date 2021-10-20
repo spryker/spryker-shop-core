@@ -22,6 +22,7 @@ class CompanyUserAccountSelectorForm extends AbstractType
      * @var string
      */
     public const FIELD_COMPANY_USER_ACCOUNT_CHOICE = 'companyUserAccount';
+
     /**
      * @var string
      */
@@ -31,6 +32,7 @@ class CompanyUserAccountSelectorForm extends AbstractType
      * @var string
      */
     public const OPTION_COMPANY_USER_ACCOUNT_CHOICES = 'companyUserAccountChoices';
+
     /**
      * @var string
      */

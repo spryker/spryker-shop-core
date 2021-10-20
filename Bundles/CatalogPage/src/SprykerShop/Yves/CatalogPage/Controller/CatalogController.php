@@ -35,6 +35,7 @@ class CatalogController extends AbstractController
      * @var string
      */
     public const URL_PARAM_VIEW_MODE = 'mode';
+
     /**
      * @var string
      */
@@ -44,10 +45,12 @@ class CatalogController extends AbstractController
      * @var string
      */
     protected const URL_PARAM_FILTER_BY_PRICE = 'price';
+
     /**
      * @var string
      */
     protected const URL_PARAM_SORTING = 'sort';
+
     /**
      * @var array
      */

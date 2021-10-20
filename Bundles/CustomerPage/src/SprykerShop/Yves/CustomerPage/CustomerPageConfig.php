@@ -29,10 +29,12 @@ class CustomerPageConfig extends AbstractBundleConfig
      * @var int
      */
     protected const DEFAULT_ORDER_HISTORY_PER_PAGE = 10;
+
     /**
      * @var string
      */
     protected const DEFAULT_ORDER_HISTORY_SORT_FIELD = 'created_at';
+
     /**
      * @var string
      */

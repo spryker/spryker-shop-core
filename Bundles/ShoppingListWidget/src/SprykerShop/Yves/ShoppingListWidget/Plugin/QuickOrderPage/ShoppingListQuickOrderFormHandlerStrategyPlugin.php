@@ -33,6 +33,7 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
      * @var string
      */
     protected const PARAM_ID_SHOPPING_LIST = 'idShoppingList';
+
     /**
      * @var string
      */

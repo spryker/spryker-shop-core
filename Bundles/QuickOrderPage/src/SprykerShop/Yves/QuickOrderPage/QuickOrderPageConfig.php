@@ -15,22 +15,27 @@ class QuickOrderPageConfig extends AbstractBundleConfig
      * @var string
      */
     protected const TEXT_ORDER_ROW_SPLITTER_PATTERN = '/\r\n|\r|\n/';
+
     /**
      * @var array
      */
     protected const TEXT_ORDER_SEPARATORS = [',', ';', ' '];
+
     /**
      * @var int
      */
     protected const UPLOAD_ROW_COUNT_LIMIT = 1000;
+
     /**
      * @var int
      */
     protected const DEFAULT_DISPLAYED_ROW_COUNT = 8;
+
     /**
      * @var int
      */
     protected const MAX_ALLOWED_QUANTITY = 100000;
+
     /**
      * @var array
      */

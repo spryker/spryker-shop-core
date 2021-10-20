@@ -20,10 +20,12 @@ class CompanyUserInvitationPageConfig extends AbstractBundleConfig
      * @var string
      */
     public const INVITATION_SESSION_ID = 'COMPANY_USER_INVITATION';
+
     /**
      * @var string
      */
     public const INVITATION_IMPORT_ERRORS_FILE = 'INVITATION_IMPORT_ERRORS_FILE';
+
     /**
      * @var string
      */

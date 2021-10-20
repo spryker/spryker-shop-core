@@ -17,6 +17,7 @@ class FileManagerWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_FILES_DOWNLOAD = 'files/download';
+
     /**
      * @var string
      */

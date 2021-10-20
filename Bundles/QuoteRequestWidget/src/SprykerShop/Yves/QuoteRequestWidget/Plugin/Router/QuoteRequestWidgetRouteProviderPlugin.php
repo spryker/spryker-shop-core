@@ -17,15 +17,18 @@ class QuoteRequestWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_SAVE_CART = 'quote-request/cart/save';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_QUOTE_REQUEST_SAVE_CART = 'quote-request/cart/save';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestWidget\Plugin\Router\QuoteRequestWidgetRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_CLEAR_CART} instead.
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_CLEAR_CART = 'quote-request/cart/clear';
+
     /**
      * @var string
      */

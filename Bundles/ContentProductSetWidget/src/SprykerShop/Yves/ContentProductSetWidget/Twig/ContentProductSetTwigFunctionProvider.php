@@ -53,10 +53,12 @@ class ContentProductSetTwigFunctionProvider extends TwigFunctionProvider
      * @var string
      */
     protected const MESSAGE_CONTENT_PRODUCT_SET_NOT_FOUND = '<strong>Content product set with content key "%s" not found.</strong>';
+
     /**
      * @var string
      */
     protected const MESSAGE_WRONG_CONTENT_PRODUCT_SET_TYPE = '<strong>Content product set widget could not be rendered because the content item with key "%s" is not a product set.</strong>';
+
     /**
      * @var string
      */

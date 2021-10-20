@@ -17,6 +17,7 @@ class CalculationPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_CALCULATION_DEBUG = 'calculation-debug';
+
     /**
      * @var string
      */

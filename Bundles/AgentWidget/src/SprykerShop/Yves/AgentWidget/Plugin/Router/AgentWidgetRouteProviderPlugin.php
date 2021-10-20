@@ -17,6 +17,7 @@ class AgentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_CUSTOMER_AUTOCOMPLETE = 'agent-widget/customer-autocomplete';
+
     /**
      * @var string
      */

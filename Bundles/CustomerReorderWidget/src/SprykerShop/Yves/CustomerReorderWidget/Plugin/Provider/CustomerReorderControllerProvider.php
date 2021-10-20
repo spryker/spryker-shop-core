@@ -19,10 +19,12 @@ class CustomerReorderControllerProvider extends AbstractYvesControllerProvider
      * @var string
      */
     protected const ROUTE_CART_ORDER_REPEAT = 'customer/order/reorder';
+
     /**
      * @var string
      */
     protected const ROUTE_CART_ORDER_ITEMS_REPEAT = 'customer/order/reorder-items';
+
     /**
      * @var string
      */

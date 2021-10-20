@@ -19,6 +19,7 @@ class QuoteRequestAgentCancelWidget extends AbstractWidget
      * @var string
      */
     protected const PARAMETER_QUOTE_REQUEST = 'quoteRequest';
+
     /**
      * @var string
      */

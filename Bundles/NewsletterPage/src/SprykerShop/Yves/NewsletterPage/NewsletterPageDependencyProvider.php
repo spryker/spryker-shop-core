@@ -18,6 +18,7 @@ class NewsletterPageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_NEWSLETTER = 'CLIENT_NEWSLETTER';
+
     /**
      * @var string
      */

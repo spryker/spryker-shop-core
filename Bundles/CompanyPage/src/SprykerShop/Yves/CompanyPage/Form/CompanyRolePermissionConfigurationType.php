@@ -25,6 +25,7 @@ class CompanyRolePermissionConfigurationType extends AbstractType
      * @var string
      */
     protected const FIELD_ID_COMPANY_ROLE = 'idCompanyRole';
+
     /**
      * @var string
      */

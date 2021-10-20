@@ -21,6 +21,7 @@ class RedirectUriCustomerRedirectStrategyPlugin extends AbstractPlugin implement
      * @var string
      */
     protected const REQUEST = 'request';
+
     /**
      * @var string
      */

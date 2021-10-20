@@ -22,14 +22,17 @@ class WishlistItemMetaFormType extends AbstractType
      * @var string
      */
     public const FIELD_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
+
     /**
      * @var string
      */
     public const FIELD_ID_WISHLIST_ITEM = 'idWishlistItem';
+
     /**
      * @var string
      */
     public const FIELD_ID_PRODUCT = 'idProduct';
+
     /**
      * @var string
      */

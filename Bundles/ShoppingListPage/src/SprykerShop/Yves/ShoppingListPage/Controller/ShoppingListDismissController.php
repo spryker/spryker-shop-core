@@ -20,6 +20,7 @@ class ShoppingListDismissController extends AbstractShoppingListController
      * @var string
      */
     protected const GLOSSARY_KEY_SHOPPING_LIST_PAGE_DISMISS_SUCCESS = 'shopping_list_page.dismiss.success';
+
     /**
      * @var string
      */

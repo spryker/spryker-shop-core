@@ -22,10 +22,12 @@ class MoneyWidgetDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const STORE = 'MONEY_PARSER';
+
     /**
      * @var string
      */
     public const MONEY_PARSER = 'MONEY_PARSER';
+
     /**
      * @var string
      */

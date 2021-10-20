@@ -18,6 +18,7 @@ class OrderCancelWidgetDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
     /**
      * @var string
      */

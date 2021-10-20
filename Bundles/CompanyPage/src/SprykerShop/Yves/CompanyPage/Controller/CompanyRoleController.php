@@ -30,18 +30,22 @@ class CompanyRoleController extends AbstractCompanyController
      * @var string
      */
     protected const SUCCESS_MESSAGE_COMPANY_ROLE_DELETE = 'company.account.company_role.delete.successful';
+
     /**
      * @var string
      */
     protected const SUCCESS_MESSAGE_COMPANY_ROLE_CREATE = 'company.account.company_role.create.successful';
+
     /**
      * @var string
      */
     protected const SUCCESS_MESSAGE_COMPANY_ROLE_UPDATE = 'company.account.company_role.update.successful';
+
     /**
      * @var string
      */
     protected const PARAMETER_ID_COMPANY_ROLE = 'id';
+
     /**
      * @var string
      */

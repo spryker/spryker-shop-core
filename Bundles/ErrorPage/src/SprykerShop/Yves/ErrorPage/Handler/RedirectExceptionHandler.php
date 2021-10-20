@@ -19,6 +19,7 @@ class RedirectExceptionHandler implements RedirectExceptionHandlerInterface
      * @var string
      */
     protected const URL_NAME_PREFIX = 'error-page/';
+
     /**
      * @var string
      */

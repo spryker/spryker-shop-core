@@ -17,6 +17,7 @@ class CmsContentWidgetProductConnectorDependencyProvider extends SprykerCmsConte
      * @var string
      */
     public const PLUGIN_CMS_PRODUCT_CONTENT_WIDGETS = 'PLUGIN_CMS_PRODUCT_CONTENT_WIDGETS';
+
     /**
      * @var string
      */

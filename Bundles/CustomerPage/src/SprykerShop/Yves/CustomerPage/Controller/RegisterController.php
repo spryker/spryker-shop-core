@@ -23,6 +23,7 @@ class RegisterController extends AbstractCustomerController
      * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_CONFIRMED = 'customer.authorization.account_confirmed';
+
     /**
      * @var string
      */

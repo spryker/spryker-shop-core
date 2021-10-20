@@ -20,10 +20,12 @@ class ConfiguratorPage
      * @var string
      */
     protected const REQUEST_PARAMETER_TOKEN = 'token';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAMETER_GET_CONFIGURATION_BY_TOKEN = 'getConfigurationByToken';
+
     /**
      * @var string
      */

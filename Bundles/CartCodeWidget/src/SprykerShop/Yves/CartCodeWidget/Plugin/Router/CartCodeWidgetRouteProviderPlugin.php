@@ -17,24 +17,29 @@ class CartCodeWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_CART_CODE_ADD = 'cart-code/code/add';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_CART_CODE_ADD = 'cart-code/code/add';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartCodeWidget\Plugin\Router\CartCodeWidgetRouteProviderPlugin::ROUTE_NAME_CART_CODE_REMOVE} instead.
      * @var string
      */
     protected const ROUTE_CART_CODE_REMOVE = 'cart-code/code/remove';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_CART_CODE_REMOVE = 'cart-code/code/remove';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartCodeWidget\Plugin\Router\CartCodeWidgetRouteProviderPlugin::ROUTE_NAME_CART_CODE_CLEAR} instead.
      * @var string
      */
     protected const ROUTE_CART_CODE_CLEAR = 'cart-code/code/clear';
+
     /**
      * @var string
      */

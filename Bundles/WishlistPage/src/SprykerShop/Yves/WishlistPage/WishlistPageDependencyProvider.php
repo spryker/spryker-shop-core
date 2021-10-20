@@ -20,14 +20,17 @@ class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
     /**
      * @var string
      */
     public const CLIENT_WISHLIST = 'CLIENT_WISHLIST';
+
     /**
      * @var string
      */
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY';
+
     /**
      * @var string
      */
@@ -37,14 +40,17 @@ class WishlistPageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGIN_WISHLIST_ITEM_EXPANDERS = 'PLUGIN_WISHLIST_ITEM_EXPANDERS';
+
     /**
      * @var string
      */
     public const PLUGIN_WISHLIST_VIEW_WIDGETS = 'PLUGIN_WISHLIST_VIEW_WIDGETS';
+
     /**
      * @var string
      */
     public const PLUGIN_WISHLIST_ITEM_REQUEST_EXPANDERS = 'PLUGIN_WISHLIST_ITEM_REQUEST_EXPANDERS';
+
     /**
      * @var string
      */

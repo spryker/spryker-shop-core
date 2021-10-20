@@ -15,6 +15,7 @@ class DateTimeConfiguratorPageExampleConfig extends AbstractBundleConfig
      * @var string
      */
     protected const FRONTEND_TARGET_PATH = '/public/Configurator/dist';
+
     /**
      * @var string
      */

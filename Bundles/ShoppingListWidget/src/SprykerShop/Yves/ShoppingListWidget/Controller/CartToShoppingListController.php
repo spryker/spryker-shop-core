@@ -21,18 +21,22 @@ class CartToShoppingListController extends AbstractController
      * @var string
      */
     protected const PARAM_REFERER = 'referer';
+
     /**
      * @var string
      */
     protected const PARAM_ID_QUOTE = 'idQuote';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_CART_NOT_AVAILABLE = 'shopping_list.cart.not_available';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_SHOPPING_LIST_CART_ITEMS_ADD_SUCCESS = 'shopping_list.cart.items_add.success';
+
     /**
      * @var string
      */

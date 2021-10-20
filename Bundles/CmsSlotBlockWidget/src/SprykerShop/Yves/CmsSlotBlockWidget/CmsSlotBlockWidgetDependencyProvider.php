@@ -19,6 +19,7 @@ class CmsSlotBlockWidgetDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const CLIENT_CMS_SLOT_BLOCK_STORAGE = 'CLIENT_CMS_SLOT_BLOCK_STORAGE';
+
     /**
      * @var string
      */

@@ -21,10 +21,12 @@ class TextOrderForm extends AbstractType
      * @var string
      */
     public const FIELD_TEXT_ORDER = 'textOrder';
+
     /**
      * @var string
      */
     public const SUBMIT_BUTTON_TEXT_ORDER = 'textOrder';
+
     /**
      * @var string
      */

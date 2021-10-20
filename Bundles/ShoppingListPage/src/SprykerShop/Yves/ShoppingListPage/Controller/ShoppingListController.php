@@ -24,70 +24,87 @@ class ShoppingListController extends AbstractShoppingListController
      * @var string
      */
     protected const PARAM_SKU = 'sku';
+
     /**
      * @var string
      */
     protected const PARAM_QUANTITY = 'quantity';
+
     /**
      * @var string
      */
     protected const PARAM_ID_SHOPPING_LIST_ITEM = 'idShoppingListItem';
+
     /**
      * @var string
      */
     protected const PARAM_SHOPPING_LIST_ITEM = 'shoppingListItem';
+
     /**
      * @var string
      */
     protected const PARAM_ID_SHOPPING_LIST = 'idShoppingList';
+
     /**
      * @var string
      */
     protected const PARAM_REDIRECT_ROUTE_PARAMETERS = 'redirect-route-parameters';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_REMOVE_FAILED = 'customer.account.shopping_list.item.remove.failed';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_REMOVE_SUCCESS = 'customer.account.shopping_list.item.remove.success';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_TO_CART_FAILED = 'customer.account.shopping_list.item.added_to_cart.failed';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_TO_CART = 'customer.account.shopping_list.item.added_to_cart';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_ALL_AVAILABLE_TO_CART_FAILED = 'customer.account.shopping_list.item.added_all_available_to_cart.failed';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_ALL_AVAILABLE_TO_CART = 'customer.account.shopping_list.item.added_all_available_to_cart';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_SELECT_ITEM = 'customer.account.shopping_list.item.select_item';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND = 'shopping_list.not_found';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_NOT_ADDED = 'customer.account.shopping_list.item.not_added';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ADD_ITEM_SUCCESS = 'customer.account.shopping_list.add_item.success';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART_SELECT_LIST = 'customer.account.shopping_list.items.added_to_cart.select_list';
+
     /**
      * @var string
      */

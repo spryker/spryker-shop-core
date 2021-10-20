@@ -29,10 +29,12 @@ class ShipmentForm extends AbstractType
      * @var string
      */
     protected const FIELD_ID_SHIPMENT_METHOD = 'idShipmentMethod';
+
     /**
      * @var string
      */
     protected const SHIPMENT_PROPERTY_PATH = 'shipment';
+
     /**
      * @var string
      */

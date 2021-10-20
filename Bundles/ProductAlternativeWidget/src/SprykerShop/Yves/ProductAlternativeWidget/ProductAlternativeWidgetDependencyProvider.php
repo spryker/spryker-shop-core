@@ -17,6 +17,7 @@ class ProductAlternativeWidgetDependencyProvider extends AbstractBundleDependenc
      * @var string
      */
     public const CLIENT_PRODUCT_ALTERNATIVE_STORAGE = 'CLIENT_PRODUCT_ALTERNATIVE_STORAGE';
+
     /**
      * @var string
      */

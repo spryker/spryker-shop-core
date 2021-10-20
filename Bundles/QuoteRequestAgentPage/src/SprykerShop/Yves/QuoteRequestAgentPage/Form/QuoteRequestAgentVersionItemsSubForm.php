@@ -26,6 +26,7 @@ class QuoteRequestAgentVersionItemsSubForm extends AbstractType
      * @var string
      */
     protected const ERROR_MESSAGE_PRICE = 'quote_request_agent_page.form.invalid_price';
+
     /**
      * @var string
      */

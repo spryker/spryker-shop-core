@@ -24,6 +24,7 @@ class ProductConfiguratorRequestDataForm extends AbstractType
     public const OPTION_SOURCE_TYPE = self::FIELD_SOURCE_TYPE;
 
     protected const FIELD_CONFIGURATOR_KEY = ProductConfiguratorRequestDataTransfer::CONFIGURATOR_KEY;
+
     /**
      * @var string
      */
@@ -33,6 +34,7 @@ class ProductConfiguratorRequestDataForm extends AbstractType
      * @var string
      */
     protected const GLOSSARY_KEY_VALIDATION_SOURCE_TYPE_NOT_BLANK_MESSAGE = 'product_configurator_gateway_page.source_type_not_blank';
+
     /**
      * @var string
      */

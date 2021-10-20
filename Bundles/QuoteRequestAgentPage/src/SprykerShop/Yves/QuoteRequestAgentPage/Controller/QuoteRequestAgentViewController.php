@@ -25,14 +25,17 @@ class QuoteRequestAgentViewController extends QuoteRequestAgentAbstractControlle
      * @var string
      */
     protected const PARAM_PAGE = 'page';
+
     /**
      * @var int
      */
     protected const DEFAULT_PAGE = 1;
+
     /**
      * @var int
      */
     protected const DEFAULT_MAX_PER_PAGE = 10;
+
     /**
      * @var string
      */

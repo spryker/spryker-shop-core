@@ -44,26 +44,32 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
      * @var string
      */
     public const SERVICE_STOPWATCH = 'stopwatch';
+
     /**
      * @var string
      */
     public const SERVICE_LOGGER = 'logger';
+
     /**
      * @var string
      */
     public const SERVICE_PROFILER = 'profiler';
+
     /**
      * @var string
      */
     public const SERVICE_TWIG_PROFILE = 'profile';
+
     /**
      * @var string
      */
     public const SERVICE_REQUEST = 'request';
+
     /**
      * @var string
      */
     public const SERVICE_REQUEST_STACK = 'request_stack';
+
     /**
      * @var string
      */

@@ -18,6 +18,7 @@ class ProductLabelWidgetDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const CLIENT_PRODUCT_LABEL_STORAGE = 'CLIENT_PRODUCT_LABEL_STORAGE';
+
     /**
      * @var string
      */

@@ -18,6 +18,7 @@ class AvailabilityNotificationPageDependencyProvider extends AbstractBundleDepen
      * @var string
      */
     public const CLIENT_AVAILABILITY_NOTIFICATION = 'CLIENT_AVAILABILITY_NOTIFICATION';
+
     /**
      * @var string
      */

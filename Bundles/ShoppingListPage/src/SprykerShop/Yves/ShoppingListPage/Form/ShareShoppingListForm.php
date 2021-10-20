@@ -28,6 +28,7 @@ class ShareShoppingListForm extends AbstractType
      * @var string
      */
     public const FIELD_COMPANY_BUSINESS_UNITS = 'sharedCompanyBusinessUnits';
+
     /**
      * @var string
      */

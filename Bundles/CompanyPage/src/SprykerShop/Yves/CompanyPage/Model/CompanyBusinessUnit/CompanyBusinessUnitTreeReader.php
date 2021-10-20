@@ -17,6 +17,7 @@ class CompanyBusinessUnitTreeReader implements CompanyBusinessUnitTreeReaderInte
      * @var string
      */
     protected const LEVEL_KEY = 'level';
+
     /**
      * @var string
      */

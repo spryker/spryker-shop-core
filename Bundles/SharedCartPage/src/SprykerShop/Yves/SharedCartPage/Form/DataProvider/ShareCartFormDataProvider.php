@@ -25,6 +25,7 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
      * @var string
      */
     protected const GLOSSARY_KEY_PERMISSIONS = 'shared_cart.share_list.permissions.';
+
     /**
      * @var string
      */

@@ -26,14 +26,17 @@ class CompanyRolePermissionController extends AbstractCompanyController
      * @var string
      */
     protected const MESSAGE_ERROR_PERMISSION_NOT_FOUND = 'company_page.company_role_permission.permission_not_found_error';
+
     /**
      * @var string
      */
     protected const MESSAGE_ERROR_PERMISSION_SAVE_FAILED = 'company_page.company_role_permission.permission_save_error';
+
     /**
      * @var string
      */
     protected const MESSAGE_SUCCESSFUL_PERMISSION_SAVED = 'company_page.company_role_permission.permission_save_success';
+
     /**
      * @var string
      */

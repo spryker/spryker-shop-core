@@ -22,6 +22,7 @@ class QuoteRequestAgentCartController extends AbstractController
      * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_UPDATED = 'quote_request_page.quote_request.updated';
+
     /**
      * @var string
      */

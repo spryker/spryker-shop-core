@@ -18,6 +18,7 @@ class CompanyUserAccountSelectorFormDataProvider
      * @var string
      */
     protected const FORMAT_COMPANY_USER_DISPLAY = '%s / %s';
+
     /**
      * @var string
      */

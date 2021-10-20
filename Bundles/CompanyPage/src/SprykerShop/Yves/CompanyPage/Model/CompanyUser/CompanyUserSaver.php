@@ -21,6 +21,7 @@ class CompanyUserSaver implements CompanyUserSaverInterface
      * @var string
      */
     protected const ERROR_COMPANY_NOT_ACTIVE = 'company_user.business_on_behalf.error.company_not_active';
+
     /**
      * @var string
      */

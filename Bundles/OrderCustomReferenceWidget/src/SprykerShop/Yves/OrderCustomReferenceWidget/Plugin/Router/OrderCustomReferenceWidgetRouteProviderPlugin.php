@@ -17,6 +17,7 @@ class OrderCustomReferenceWidgetRouteProviderPlugin extends AbstractRouteProvide
      * @var string
      */
     protected const ROUTE_ORDER_CUSTOM_REFERENCE_SAVE = 'order-custom-reference/save';
+
     /**
      * @var string
      */

@@ -26,14 +26,17 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_AGENT = 'CLIENT_AGENT';
+
     /**
      * @var string
      */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
     /**
      * @var string
      */
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
+
     /**
      * @var string
      */

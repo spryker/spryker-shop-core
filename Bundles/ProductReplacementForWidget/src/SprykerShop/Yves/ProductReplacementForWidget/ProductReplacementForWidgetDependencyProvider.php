@@ -18,10 +18,12 @@ class ProductReplacementForWidgetDependencyProvider extends AbstractBundleDepend
      * @var string
      */
     public const CLIENT_PRODUCT_ALTERNATIVE_STORAGE = 'CLIENT_PRODUCT_ALTERNATIVE_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+
     /**
      * @var string
      */

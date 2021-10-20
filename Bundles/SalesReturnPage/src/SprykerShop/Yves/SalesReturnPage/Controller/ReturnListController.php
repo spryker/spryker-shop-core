@@ -21,6 +21,7 @@ class ReturnListController extends AbstractReturnController
      * @var string
      */
     protected const PARAM_PAGE = 'page';
+
     /**
      * @var int
      */

@@ -20,6 +20,7 @@ class ChartWidgetDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGIN_TWIG_CHART_FUNCTIONS = 'PLUGIN_TWIG_CHART_FUNCTIONS';
+
     /**
      * @var string
      */

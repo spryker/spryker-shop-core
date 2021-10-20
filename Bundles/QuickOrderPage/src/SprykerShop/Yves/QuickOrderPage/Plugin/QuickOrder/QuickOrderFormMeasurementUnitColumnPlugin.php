@@ -16,6 +16,7 @@ class QuickOrderFormMeasurementUnitColumnPlugin extends AbstractPlugin implement
      * @var string
      */
     protected const COLUMN_TITLE = 'quick-order.input-label.measurement_unit';
+
     /**
      * @var string
      */

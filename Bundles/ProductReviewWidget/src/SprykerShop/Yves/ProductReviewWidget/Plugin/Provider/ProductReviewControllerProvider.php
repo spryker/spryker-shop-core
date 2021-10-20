@@ -19,10 +19,12 @@ class ProductReviewControllerProvider extends AbstractYvesControllerProvider
      * @var string
      */
     public const ROUTE_PRODUCT_REVIEW_INDEX = 'product-review/index';
+
     /**
      * @var string
      */
     public const ROUTE_PRODUCT_REVIEW_SUBMIT = 'product-review/submit';
+
     /**
      * @var string
      */

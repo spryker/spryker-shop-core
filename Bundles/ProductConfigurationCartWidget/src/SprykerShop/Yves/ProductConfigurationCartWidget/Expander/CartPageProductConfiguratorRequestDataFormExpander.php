@@ -45,14 +45,17 @@ class CartPageProductConfiguratorRequestDataFormExpander implements CartPageProd
      * @var string
      */
     protected const GLOSSARY_KEY_VALIDATION_SKU_NOT_BLANK_MESSAGE = 'product_configurator_gateway_page.sku_not_blank';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_VALIDATION_GROUP_KEY_NOT_BLANK_MESSAGE = 'product_configurator_gateway_page.item_group_key_required';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_VALIDATION_QUANTITY_NOT_BLANK_MESSAGE = 'product_configurator_gateway_page.quantity_required';
+
     /**
      * @var string
      */

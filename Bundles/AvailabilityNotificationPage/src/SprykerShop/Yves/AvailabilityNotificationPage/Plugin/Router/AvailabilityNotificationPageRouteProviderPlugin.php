@@ -17,10 +17,12 @@ class AvailabilityNotificationPageRouteProviderPlugin extends AbstractRouteProvi
      * @var string
      */
     protected const ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE = 'availability-notification/unsubscribe-by-key';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE = 'availability-notification/unsubscribe-by-key';
+
     /**
      * @var string
      */

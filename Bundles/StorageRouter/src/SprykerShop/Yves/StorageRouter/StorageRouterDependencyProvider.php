@@ -20,6 +20,7 @@ class StorageRouterDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_URL_STORAGE = 'CLIENT_URL_STORAGE';
+
     /**
      * @var string
      */

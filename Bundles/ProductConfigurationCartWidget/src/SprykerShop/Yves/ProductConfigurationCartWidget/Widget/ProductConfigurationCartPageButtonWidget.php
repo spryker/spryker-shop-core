@@ -20,10 +20,12 @@ class ProductConfigurationCartPageButtonWidget extends AbstractWidget
      * @var string
      */
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
+
     /**
      * @var string
      */
     protected const PARAMETER_FORM = 'form';
+
     /**
      * @var string
      */

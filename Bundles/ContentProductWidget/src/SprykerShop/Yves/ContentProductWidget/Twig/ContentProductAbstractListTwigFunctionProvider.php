@@ -27,10 +27,12 @@ class ContentProductAbstractListTwigFunctionProvider extends TwigFunctionProvide
      * @var string
      */
     protected const MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND = '<strong>Content product abstract list with content key "%s" not found.</strong>';
+
     /**
      * @var string
      */
     protected const MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE = '<strong>Content product abstract list widget could not be rendered because the content item with key "%s" is not an abstract product list.</strong>';
+
     /**
      * @var string
      */

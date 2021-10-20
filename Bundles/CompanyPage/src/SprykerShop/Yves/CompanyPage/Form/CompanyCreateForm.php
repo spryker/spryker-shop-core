@@ -27,30 +27,37 @@ class CompanyCreateForm extends AbstractType
      * @var string
      */
     public const FIELD_SALUTATION = 'salutation';
+
     /**
      * @var string
      */
     public const FIELD_FIRST_NAME = 'first_name';
+
     /**
      * @var string
      */
     public const FIELD_LAST_NAME = 'last_name';
+
     /**
      * @var string
      */
     public const FIELD_EMAIL = 'email';
+
     /**
      * @var string
      */
     public const FIELD_PASSWORD = 'password';
+
     /**
      * @var string
      */
     public const FIELD_ACCEPT_TERMS = 'accept_terms';
+
     /**
      * @var string
      */
     public const FIELD_IS_GUEST = 'is_guest';
+
     /**
      * @var string
      */

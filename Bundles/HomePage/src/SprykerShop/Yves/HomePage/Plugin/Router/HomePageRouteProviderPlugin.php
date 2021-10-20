@@ -17,6 +17,7 @@ class HomePageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_HOME = 'home';
+
     /**
      * @var string
      */

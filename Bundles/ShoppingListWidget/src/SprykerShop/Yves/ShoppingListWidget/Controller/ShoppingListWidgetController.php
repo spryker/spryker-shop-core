@@ -23,18 +23,22 @@ class ShoppingListWidgetController extends AbstractController
      * @var string
      */
     public const PARAM_SKU = 'sku';
+
     /**
      * @var string
      */
     public const PARAM_QUANTITY = 'quantity';
+
     /**
      * @var string
      */
     public const PARAM_ID_SHOPPING_LIST = 'idShoppingList';
+
     /**
      * @var string
      */
     protected const PARAM_FORM_CSRF_TOKEN = '_token';
+
     /**
      * @var string
      */
@@ -44,10 +48,12 @@ class ShoppingListWidgetController extends AbstractController
      * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_NOT_ADDED = 'customer.account.shopping_list.item.not_added';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ADD_ITEM_SUCCESS = 'customer.account.shopping_list.add_item.success';
+
     /**
      * @var string
      */

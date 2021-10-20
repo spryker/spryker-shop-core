@@ -22,6 +22,7 @@ class QuoteRequestForm extends AbstractType
      * @var string
      */
     public const SUBMIT_BUTTON_SAVE = 'save';
+
     /**
      * @var string
      */

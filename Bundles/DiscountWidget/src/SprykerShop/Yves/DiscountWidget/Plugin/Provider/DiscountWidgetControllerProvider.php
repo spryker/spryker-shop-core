@@ -19,14 +19,17 @@ class DiscountWidgetControllerProvider extends AbstractYvesControllerProvider
      * @var string
      */
     public const ROUTE_DISCOUNT_VOUCHER_ADD = 'discount/voucher/add';
+
     /**
      * @var string
      */
     public const ROUTE_DISCOUNT_VOUCHER_REMOVE = 'discount/voucher/remove';
+
     /**
      * @var string
      */
     public const ROUTE_DISCOUNT_VOUCHER_CLEAR = 'discount/voucher/clear';
+
     /**
      * @var string
      */

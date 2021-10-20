@@ -18,6 +18,7 @@ class ContentFileWidgetDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const CLIENT_CONTENT_FILE = 'CLIENT_CONTENT_FILE';
+
     /**
      * @var string
      */

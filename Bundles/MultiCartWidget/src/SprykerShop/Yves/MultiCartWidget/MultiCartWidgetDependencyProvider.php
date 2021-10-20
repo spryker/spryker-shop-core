@@ -19,14 +19,17 @@ class MultiCartWidgetDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FORM_FACTORY = 'FORM_FACTORY';
+
     /**
      * @var string
      */
     public const CLIENT_MULTI_CART = 'CLIENT_MULTI_CART';
+
     /**
      * @var string
      */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+
     /**
      * @var string
      */

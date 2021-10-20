@@ -24,6 +24,7 @@ class QuickOrderItemEmbeddedForm extends AbstractType
      * @var string
      */
     public const FIELD_SKU = 'sku';
+
     /**
      * @var string
      */

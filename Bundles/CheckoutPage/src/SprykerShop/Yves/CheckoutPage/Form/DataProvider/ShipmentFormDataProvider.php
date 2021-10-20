@@ -36,6 +36,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      * @var int
      */
     protected const ONE_DAY = 1;
+
     /**
      * @var int
      */

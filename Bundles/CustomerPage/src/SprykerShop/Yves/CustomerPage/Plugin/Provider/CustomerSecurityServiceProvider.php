@@ -31,6 +31,7 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
      * @var string
      */
     public const ROLE_USER = 'ROLE_USER';
+
     /**
      * @var string
      */

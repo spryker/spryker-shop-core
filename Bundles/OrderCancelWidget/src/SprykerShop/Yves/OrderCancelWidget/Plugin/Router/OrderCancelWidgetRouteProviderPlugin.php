@@ -17,6 +17,7 @@ class OrderCancelWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_ORDER_CANCEL = 'order/cancel';
+
     /**
      * @var string
      */

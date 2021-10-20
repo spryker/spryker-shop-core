@@ -19,18 +19,22 @@ class QuickOrderCsvFileTemplateStrategyPlugin extends AbstractPlugin implements 
      * @var string
      */
     protected const CSV_SKU_COLUMN_NAME = 'concrete_sku';
+
     /**
      * @var string
      */
     protected const CSV_QUANTITY_COLUMN_NAME = 'quantity';
+
     /**
      * @var string
      */
     protected const CSV_COLUMN_SEPARATOR = ',';
+
     /**
      * @var string
      */
     protected const CSV_FILE_MIME_TYPE = 'text/csv';
+
     /**
      * @var string
      */

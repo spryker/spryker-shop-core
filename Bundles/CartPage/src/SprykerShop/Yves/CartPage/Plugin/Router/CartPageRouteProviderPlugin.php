@@ -18,6 +18,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_CART = 'cart';
+
     /**
      * @var string
      */
@@ -28,6 +29,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_CART_ADD = 'cart/add';
+
     /**
      * @var string
      */
@@ -38,6 +40,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_CART_ADD_AJAX = 'cart/add-ajax';
+
     /**
      * @var string
      */
@@ -48,6 +51,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_CART_QUICK_ADD = 'cart/quick-add';
+
     /**
      * @var string
      */
@@ -58,6 +62,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_CART_REMOVE = 'cart/remove';
+
     /**
      * @var string
      */
@@ -68,6 +73,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_CART_CHANGE = 'cart/change';
+
     /**
      * @var string
      */
@@ -78,6 +84,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_CART_UPDATE = 'cart/update';
+
     /**
      * @var string
      */
@@ -88,6 +95,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_CART_CHANGE_QUANTITY = 'cart/change/quantity';
+
     /**
      * @var string
      */
@@ -98,10 +106,12 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_CART_ADD_ITEMS = 'cart/add-items';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_CART_ADD_ITEMS = 'cart/add-items';
+
     /**
      * @var string
      */
@@ -112,6 +122,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_CART_RESET_LOCK = 'cart/reset-lock';
+
     /**
      * @var string
      */
@@ -121,6 +132,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     public const ROUTE_NAME_GET_UPSELLING_WIDGET_AJAX = 'cart/get-upselling-widget';
+
     /**
      * @var string
      */

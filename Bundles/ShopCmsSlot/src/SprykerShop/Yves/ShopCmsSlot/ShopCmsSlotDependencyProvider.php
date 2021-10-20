@@ -18,10 +18,12 @@ class ShopCmsSlotDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_CMS_SLOT = 'CLIENT_CMS_SLOT';
+
     /**
      * @var string
      */
     public const CLIENT_CMS_SLOT_STORAGE = 'CLIENT_CMS_SLOT_STORAGE';
+
     /**
      * @var string
      */

@@ -18,6 +18,7 @@ class OrderCustomReferenceWidgetDependencyProvider extends AbstractBundleDepende
      * @var string
      */
     public const CLIENT_ORDER_CUSTOM_REFERENCE = 'CLIENT_ORDER_CUSTOM_REFERENCE';
+
     /**
      * @var string
      */

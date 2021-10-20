@@ -19,6 +19,7 @@ class BarcodeWidget extends AbstractWidget
      * @var string
      */
     protected const PARAMETER_CODE = 'code';
+
     /**
      * @var string
      */

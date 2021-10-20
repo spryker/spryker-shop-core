@@ -35,10 +35,12 @@ class ShopApplicationServiceProvider extends AbstractPlugin implements ServicePr
      * @var string
      */
     public const LOCALE = 'locale';
+
     /**
      * @var string
      */
     public const STORE = 'store';
+
     /**
      * @var string
      */

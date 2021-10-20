@@ -18,6 +18,7 @@ class ProductGroupWidgetDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const CLIENT_PRODUCT_GROUP_STORAGE = 'CLIENT_PRODUCT_GROUP_STORAGE';
+
     /**
      * @var string
      */
@@ -27,6 +28,7 @@ class ProductGroupWidgetDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const PLUGIN_PRODUCT_VIEW_EXPANDERS = 'PLUGIN_PRODUCT_VIEW_EXPANDERS';
+
     /**
      * @var string
      */

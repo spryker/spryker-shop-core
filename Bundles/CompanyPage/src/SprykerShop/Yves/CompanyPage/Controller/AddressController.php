@@ -30,10 +30,12 @@ class AddressController extends AbstractCompanyController
      * @var string
      */
     protected const COMPANY_UNIT_ADDRESS_LIST_SORT_FIELD = 'id_company_unit_address';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT = 'idCompanyBusinessUnit';
+
     /**
      * @var string
      */
@@ -43,10 +45,12 @@ class AddressController extends AbstractCompanyController
      * @var string
      */
     protected const MESSAGE_BUSINESS_UNIT_ADDRESS_CREATE_SUCCESS = 'message.business_unit_address.create';
+
     /**
      * @var string
      */
     protected const MESSAGE_BUSINESS_UNIT_ADDRESS_UPDATE_SUCCESS = 'message.business_unit_address.update';
+
     /**
      * @var string
      */

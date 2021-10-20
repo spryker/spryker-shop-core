@@ -19,10 +19,12 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
      * @var string
      */
     public const ROUTE_COMPANY_LOGIN = 'company/login';
+
     /**
      * @var string
      */
     public const ROUTE_COMPANY_REGISTER = 'company/register';
+
     /**
      * @var string
      */
@@ -32,18 +34,22 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
      * @var string
      */
     public const ROUTE_COMPANY_ADDRESS = 'company/address';
+
     /**
      * @var string
      */
     public const ROUTE_COMPANY_ADDRESS_CREATE = 'company/address/create';
+
     /**
      * @var string
      */
     public const ROUTE_COMPANY_ADDRESS_UPDATE = 'company/address/update';
+
     /**
      * @var string
      */
     public const ROUTE_COMPANY_ADDRESS_DELETE = 'company/address/delete';
+
     /**
      * @var string
      */
@@ -53,26 +59,32 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
      * @var string
      */
     public const ROUTE_COMPANY_BUSINESS_UNIT = 'company/business-unit';
+
     /**
      * @var string
      */
     public const ROUTE_COMPANY_BUSINESS_UNIT_DETAILS = 'company/business-unit/details';
+
     /**
      * @var string
      */
     public const ROUTE_COMPANY_BUSINESS_UNIT_CREATE = 'company/business-unit/create';
+
     /**
      * @var string
      */
     public const ROUTE_COMPANY_BUSINESS_UNIT_UPDATE = 'company/business-unit/update';
+
     /**
      * @var string
      */
     public const ROUTE_COMPANY_BUSINESS_UNIT_DELETE = 'company/business-unit/delete';
+
     /**
      * @var string
      */
     public const ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_CREATE = 'company/business-unit/address/create';
+
     /**
      * @var string
      */
@@ -82,22 +94,27 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
      * @var string
      */
     public const ROUTE_COMPANY_ROLE = 'company/company-role';
+
     /**
      * @var string
      */
     public const ROUTE_COMPANY_ROLE_CREATE = 'company/company-role/create';
+
     /**
      * @var string
      */
     public const ROUTE_COMPANY_ROLE_UPDATE = 'company/company-role/update';
+
     /**
      * @var string
      */
     public const ROUTE_COMPANY_ROLE_DELETE = 'company/company-role/delete';
+
     /**
      * @var string
      */
     public const ROUTE_COMPANY_ROLE_CONFIRM_DELETE = 'company/company-role/confirm-delete';
+
     /**
      * @var string
      */
@@ -107,10 +124,12 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
      * @var string
      */
     public const ROUTE_COMPANY_ROLE_USER_MANAGE = 'company/company-role/user/manage';
+
     /**
      * @var string
      */
     public const ROUTE_COMPANY_ROLE_USER_ASSIGN = 'company/company-role/user/assign';
+
     /**
      * @var string
      */
@@ -120,10 +139,12 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
      * @var string
      */
     public const ROUTE_COMPANY_ROLE_PERMISSION_CONFIGURE = 'company/company-role-permission/configure';
+
     /**
      * @var string
      */
     public const ROUTE_COMPANY_ROLE_PERMISSION_ASSIGN = 'company/company-role-permission/assign';
+
     /**
      * @var string
      */
@@ -133,22 +154,27 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
      * @var string
      */
     public const ROUTE_COMPANY_USER = 'company/user';
+
     /**
      * @var string
      */
     public const ROUTE_COMPANY_USER_CREATE = 'company/user/create';
+
     /**
      * @var string
      */
     public const ROUTE_COMPANY_USER_UPDATE = 'company/user/update';
+
     /**
      * @var string
      */
     public const ROUTE_COMPANY_USER_DELETE = 'company/user/delete';
+
     /**
      * @var string
      */
     public const ROUTE_COMPANY_USER_CONFIRM_DELETE = 'company/user/confirm-delete';
+
     /**
      * @var string
      */
@@ -158,6 +184,7 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
      * @var string
      */
     public const ROUTE_COMPANY_USER_STATUS_ENABLE = 'company/company-user-status/enable';
+
     /**
      * @var string
      */

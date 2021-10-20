@@ -17,6 +17,7 @@ class ProductSetListPageDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const CLIENT_PRODUCT_SET_PAGE_SEARCH = 'CLIENT_PRODUCT_SET_PAGE_SEARCH';
+
     /**
      * @var string
      */

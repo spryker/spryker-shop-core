@@ -19,10 +19,12 @@ class AgentPageControllerProvider extends AbstractYvesControllerProvider
      * @var string
      */
     public const ROUTE_LOGIN = 'agent/login';
+
     /**
      * @var string
      */
     public const ROUTE_LOGOUT = 'agent/logout';
+
     /**
      * @var string
      */

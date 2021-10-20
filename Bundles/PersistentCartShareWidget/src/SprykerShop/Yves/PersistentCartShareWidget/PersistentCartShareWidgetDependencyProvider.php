@@ -20,6 +20,7 @@ class PersistentCartShareWidgetDependencyProvider extends AbstractBundleDependen
      * @var string
      */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
     /**
      * @var string
      */

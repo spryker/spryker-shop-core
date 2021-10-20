@@ -16,6 +16,7 @@ class ShoppingListItemNoteForm extends ShoppingListItemNoteFormType
      * @var string
      */
     protected const FIELD_SHOPPING_LIST_ITEM_NOTE = 'note';
+
     /**
      * @var string
      */

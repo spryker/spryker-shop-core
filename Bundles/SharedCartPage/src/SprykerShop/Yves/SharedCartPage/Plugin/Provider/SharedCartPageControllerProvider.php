@@ -19,10 +19,12 @@ class SharedCartPageControllerProvider extends AbstractYvesControllerProvider
      * @var string
      */
     public const ROUTE_SHARED_CART_SHARE = 'shared-cart/share';
+
     /**
      * @var string
      */
     public const ROUTE_SHARED_CART_DISMISS = 'shared-cart/dismiss';
+
     /**
      * @var string
      */

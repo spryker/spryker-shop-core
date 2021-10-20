@@ -28,6 +28,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      * @var string
      */
     protected const ADDRESS_LABEL_PATTERN = '%s %s %s, %s %s, %s %s';
+
     /**
      * @var string
      */

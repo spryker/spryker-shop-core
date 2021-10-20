@@ -23,14 +23,17 @@ class ShipmentGroupForm extends AbstractType
      * @var string
      */
     public const BLOCK_PREFIX = 'shipmentGroupForm';
+
     /**
      * @var string
      */
     public const FIELD_SHIPMENT = 'shipment';
+
     /**
      * @var string
      */
     public const OPTION_SHIPMENT_GROUP_TRANSFER = 'shipmentGroupTransfer';
+
     /**
      * @var string
      */

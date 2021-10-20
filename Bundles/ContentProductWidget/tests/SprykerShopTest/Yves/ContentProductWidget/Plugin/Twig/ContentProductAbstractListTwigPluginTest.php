@@ -44,6 +44,7 @@ class ContentProductAbstractListTwigPluginTest extends Unit
      * @var string
      */
     protected const DEFAULT_TEMPLATE = 'top-title';
+
     /**
      * @var string
      */
@@ -53,10 +54,12 @@ class ContentProductAbstractListTwigPluginTest extends Unit
      * @var int
      */
     protected const CONTENT_ID = 0;
+
     /**
      * @var string
      */
     protected const CONTENT_KEY = 'test-key';
+
     /**
      * @var string
      */
@@ -66,14 +69,17 @@ class ContentProductAbstractListTwigPluginTest extends Unit
      * @var string
      */
     protected const MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND = '<strong>Content product abstract list with content key "test-key" not found.</strong>';
+
     /**
      * @var string
      */
     protected const MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE = '<strong>Content product abstract list widget could not be rendered because the content item with key "test-key" is not an abstract product list.</strong>';
+
     /**
      * @var string
      */
     protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<strong>"wrong" is not supported name of template.</strong>';
+
     /**
      * @var string
      */

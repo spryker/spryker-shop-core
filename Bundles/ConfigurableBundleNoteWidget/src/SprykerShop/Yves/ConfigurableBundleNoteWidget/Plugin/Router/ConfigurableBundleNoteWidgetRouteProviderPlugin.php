@@ -17,6 +17,7 @@ class ConfigurableBundleNoteWidgetRouteProviderPlugin extends AbstractRouteProvi
      * @var string
      */
     protected const ROUTE_CONFIGURABLE_BUNDLE_NOTE_ADD = 'configurable-bundle-note/add';
+
     /**
      * @var string
      */

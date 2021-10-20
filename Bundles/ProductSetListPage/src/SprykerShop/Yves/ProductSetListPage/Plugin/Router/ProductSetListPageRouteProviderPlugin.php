@@ -17,6 +17,7 @@ class ProductSetListPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_PRODUCT_SETS = 'product-sets';
+
     /**
      * @var string
      */

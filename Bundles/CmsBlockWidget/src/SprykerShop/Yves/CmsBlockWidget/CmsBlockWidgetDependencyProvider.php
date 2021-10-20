@@ -21,10 +21,12 @@ class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_CMS_BLOCK_STORAGE = 'CLIENT_CMS_BLOCK_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_STORE = 'CLIENT_STORE';
+
     /**
      * @var string
      */
@@ -34,6 +36,7 @@ class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const TWIG_EXTENSION_PLUGINS = 'TWIG_EXTENSION_PLUGINS';
+
     /**
      * @var string
      */

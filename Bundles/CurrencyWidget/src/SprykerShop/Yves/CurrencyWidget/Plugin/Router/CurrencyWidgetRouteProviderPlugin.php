@@ -17,6 +17,7 @@ class CurrencyWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_CART = 'currency-switch';
+
     /**
      * @var string
      */

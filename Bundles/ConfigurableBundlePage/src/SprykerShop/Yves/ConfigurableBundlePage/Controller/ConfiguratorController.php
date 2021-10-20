@@ -94,22 +94,27 @@ class ConfiguratorController extends AbstractController
      * @var string
      */
     protected const GLOSSARY_KEY_CONFIGURATOR_SUMMARY_PAGE_LOCKED = 'configurable_bundle_page.configurator.summary_page_locked';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND = 'configurable_bundle_page.template_not_found';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_INVALID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_COMBINATION = 'configurable_bundle_page.invalid_template_slot_combination';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_ADDED_TO_CART = 'configurable_bundle_page.configurator.added_to_cart';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
+
     /**
      * @var string
      */

@@ -18,6 +18,7 @@ class CartVoucherForm extends AbstractType
      * @var string
      */
     public const FORM_NAME = 'voucherForm';
+
     /**
      * @var string
      */

@@ -19,18 +19,22 @@ class BusinessOnBehalfStatusWidget extends AbstractWidget
      * @var string
      */
     protected const PARAMETER_IS_COMPANY_USER_CHANGE_ALLOWED = 'isCompanyUserChangeAllowed';
+
     /**
      * @var string
      */
     protected const PARAMETER_IS_ON_BEHALF = 'isOnBehalf';
+
     /**
      * @var string
      */
     protected const PARAMETER_COMPANY_NAME = 'companyName';
+
     /**
      * @var string
      */
     protected const PARAMETER_COMPANY_BUSINESS_UNIT_NAME = 'companyBusinessUnitName';
+
     /**
      * @var string
      */

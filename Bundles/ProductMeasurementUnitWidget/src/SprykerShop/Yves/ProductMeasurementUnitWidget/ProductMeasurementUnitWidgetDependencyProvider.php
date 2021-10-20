@@ -19,6 +19,7 @@ class ProductMeasurementUnitWidgetDependencyProvider extends AbstractBundleDepen
      * @var string
      */
     public const CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE = 'CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE';
+
     /**
      * @var string
      */

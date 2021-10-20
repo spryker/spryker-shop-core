@@ -21,6 +21,7 @@ class OrderSearchFiltersForm extends AbstractType
      * @var string
      */
     public const FIELD_DATE_FROM = 'dateFrom';
+
     /**
      * @var string
      */

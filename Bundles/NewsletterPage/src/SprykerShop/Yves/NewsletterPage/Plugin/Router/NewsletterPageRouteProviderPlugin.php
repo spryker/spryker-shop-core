@@ -17,6 +17,7 @@ class NewsletterPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_CUSTOMER_NEWSLETTER = 'customer/newsletter';
+
     /**
      * @var string
      */

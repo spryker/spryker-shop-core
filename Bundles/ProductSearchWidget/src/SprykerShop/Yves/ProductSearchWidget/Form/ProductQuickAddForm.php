@@ -24,14 +24,17 @@ class ProductQuickAddForm extends AbstractType
      * @var string
      */
     protected const FIELD_SKU = 'sku';
+
     /**
      * @var string
      */
     protected const FIELD_QUANTITY = 'quantity';
+
     /**
      * @var string
      */
     public const FIELD_REDIRECT_ROUTE_NAME = 'redirect-route-name';
+
     /**
      * @var string
      */
@@ -41,6 +44,7 @@ class ProductQuickAddForm extends AbstractType
      * @var string
      */
     protected const FORM_NAME = 'productQuickAddForm';
+
     /**
      * @var int
      */
@@ -50,14 +54,17 @@ class ProductQuickAddForm extends AbstractType
      * @var string
      */
     protected const ERROR_MESSAGE_QUANTITY_REQUIRED = 'product_quick_add_widget.form.error.quantity.required';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_QUANTITY_MAX_VALUE_CONSTRAINT = 'product_quick_add_widget.form.error.quantity.max_value_constraint';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_REDIRECT_ROUTE_EMPTY = 'product_quick_add_widget.form.error.redirect_route_empty';
+
     /**
      * @var string
      */

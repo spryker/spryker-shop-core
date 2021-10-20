@@ -19,6 +19,7 @@ class SecurityBlockerPageDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const CLIENT_SECURITY_BLOCKER = 'CLIENT_SECURITY_BLOCKER';
+
     /**
      * @var string
      */

@@ -25,14 +25,17 @@ class ShoppingListItemProductOptionForm extends AbstractType
      * @var string
      */
     public const PRODUCT_OPTION_GROUP_KEY = 'product_option_group';
+
     /**
      * @var string
      */
     protected const TEMPLATE_PATH = '@ProductOptionWidget/views/shopping-list-option-form/shopping-list-option-form.twig';
+
     /**
      * @var array
      */
     protected const PROHIBITED_SYMBOLS = ['.'];
+
     /**
      * @var string
      */

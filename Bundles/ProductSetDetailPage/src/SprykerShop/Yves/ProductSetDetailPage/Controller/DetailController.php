@@ -21,6 +21,7 @@ class DetailController extends AbstractController
      * @var string
      */
     public const PARAM_ATTRIBUTE = 'attributes';
+
     /**
      * @var string
      */

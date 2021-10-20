@@ -23,6 +23,7 @@ class ShopPermissionDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PERMISSION_TWIG_EXTENSION_PLUGINS = 'PERMISSION_TWIG_EXTENSION_PLUGINS';
+
     /**
      * @var string
      */

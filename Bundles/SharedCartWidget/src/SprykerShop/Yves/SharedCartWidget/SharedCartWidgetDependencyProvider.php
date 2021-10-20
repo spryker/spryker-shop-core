@@ -20,14 +20,17 @@ class SharedCartWidgetDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
     /**
      * @var string
      */
     public const CLIENT_MULTI_CART = 'CLIENT_MULTI_CART';
+
     /**
      * @var string
      */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+
     /**
      * @var string
      */

@@ -17,15 +17,18 @@ class ProductReviewWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_PRODUCT_REVIEW_INDEX = 'product-review/index';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_PRODUCT_REVIEW_INDEX = 'product-review/index';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ProductReviewWidget\Plugin\Router\ProductReviewWidgetRouteProviderPlugin::ROUTE_NAME_PRODUCT_REVIEW_CREATE} instead.
      * @var string
      */
     protected const ROUTE_PRODUCT_REVIEW_CREATE = 'product-review/create';
+
     /**
      * @var string
      */

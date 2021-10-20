@@ -18,6 +18,7 @@ class CartNoteWidgetDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_CART_NOTE = 'CLIENT_CART_NOTE';
+
     /**
      * @var string
      */

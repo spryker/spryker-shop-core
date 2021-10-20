@@ -25,6 +25,7 @@ class ReturnProductBundleItemsForm extends AbstractType
      * @var string
      */
     public const KEY_PRODUCT_BUNDLE_DATA = 'productBundleData';
+
     /**
      * @var string
      */
@@ -35,6 +36,7 @@ class ReturnProductBundleItemsForm extends AbstractType
      * @var string
      */
     public const FIELD_CUSTOM_REASON = 'customReason';
+
     /**
      * @var string
      */

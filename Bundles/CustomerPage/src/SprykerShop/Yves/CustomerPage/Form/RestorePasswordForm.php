@@ -24,6 +24,7 @@ class RestorePasswordForm extends AbstractType
      * @var string
      */
     public const FIELD_RESTORE_PASSWORD_KEY = 'restore_password_key';
+
     /**
      * @var string
      */
@@ -33,6 +34,7 @@ class RestorePasswordForm extends AbstractType
      * @var string
      */
     protected const VALIDATION_MIN_LENGTH_MESSAGE = 'validation.min_length';
+
     /**
      * @var string
      */

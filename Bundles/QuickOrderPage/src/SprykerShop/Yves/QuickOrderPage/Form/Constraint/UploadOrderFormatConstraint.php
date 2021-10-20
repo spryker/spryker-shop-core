@@ -16,6 +16,7 @@ class UploadOrderFormatConstraint extends SymfonyConstraint
      * @var string
      */
     public const OPTION_BUNDLE_CONFIG = 'config';
+
     /**
      * @var string
      */
@@ -25,14 +26,17 @@ class UploadOrderFormatConstraint extends SymfonyConstraint
      * @var string
      */
     protected const ERROR_MESSAGE_INVALID_MIME_TYPE = 'quick-order.upload-order.errors.upload-order-invalid-mime-type';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_INVALID_AMOUNT_OF_ROWS = 'quick-order.upload-order.errors.upload-order-invalid-amount-of-rows';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_INVALID_FORMAT = 'quick-order.upload-order.errors.upload-order-invalid-format';
+
     /**
      * @var string
      */

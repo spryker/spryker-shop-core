@@ -36,6 +36,7 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
      * @var string
      */
     protected const TWIG_FUNCTION_FIND_WIDGET = 'findWidget';
+
     /**
      * @var string
      */

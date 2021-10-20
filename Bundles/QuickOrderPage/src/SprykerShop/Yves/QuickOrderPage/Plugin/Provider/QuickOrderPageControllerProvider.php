@@ -19,22 +19,27 @@ class QuickOrderPageControllerProvider extends AbstractYvesControllerProvider
      * @var string
      */
     public const ROUTE_QUICK_ORDER = 'quick-order';
+
     /**
      * @var string
      */
     public const ROUTE_QUICK_ORDER_ADD_ROWS = 'quick-order/add-rows';
+
     /**
      * @var string
      */
     public const ROUTE_QUICK_ORDER_DELETE_ROW = 'quick-order/delete-row';
+
     /**
      * @var string
      */
     public const ROUTE_QUICK_ORDER_CLEAR_ALL_ROWS = 'quick-order/clear-all-rows';
+
     /**
      * @var string
      */
     public const ROUTE_QUICK_ORDER_PRODUCT_ADDITIONAL_DATA = 'quick-order/product-additional-data';
+
     /**
      * @var string
      */

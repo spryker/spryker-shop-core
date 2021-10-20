@@ -27,6 +27,7 @@ class OrderController extends AbstractController
      * @var string
      */
     protected const ROUTE_SUCCESSFUL_REDIRECT = 'cart';
+
     /**
      * @var string
      */
@@ -36,6 +37,7 @@ class OrderController extends AbstractController
      * @var string
      */
     protected const PARAM_ITEMS = 'items';
+
     /**
      * @var string
      */

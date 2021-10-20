@@ -19,10 +19,12 @@ class ShoppingListWidgetDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const CLIENT_SHOPPING_LIST = 'CLIENT_SHOPPING_LIST';
+
     /**
      * @var string
      */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
     /**
      * @var string
      */

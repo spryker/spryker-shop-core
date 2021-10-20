@@ -22,10 +22,12 @@ class NoteMetadataFieldPlugin extends AbstractPlugin implements QuoteRequestForm
      * @var string
      */
     protected const FIELD_METADATA_NOTE = 'note';
+
     /**
      * @var string
      */
     protected const LABEL_METADATA_NOTE = 'quote_request_page.quote_request.metadata.label.note';
+
     /**
      * @var int
      */

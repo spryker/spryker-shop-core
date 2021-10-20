@@ -23,6 +23,7 @@ class OrderCancelController extends AbstractController
      * @var string
      */
     protected const PARAMETER_RETURN_URL = 'return-url';
+
     /**
      * @var string
      */

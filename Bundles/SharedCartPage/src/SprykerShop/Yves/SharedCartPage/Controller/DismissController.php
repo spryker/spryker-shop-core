@@ -21,6 +21,7 @@ class DismissController extends AbstractController
      * @var string
      */
     public const URL_REDIRECT_MULTI_CART_PAGE = 'multi-cart';
+
     /**
      * @var string
      */

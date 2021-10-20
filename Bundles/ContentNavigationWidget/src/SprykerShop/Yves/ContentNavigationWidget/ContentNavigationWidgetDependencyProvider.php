@@ -18,6 +18,7 @@ class ContentNavigationWidgetDependencyProvider extends AbstractBundleDependency
      * @var string
      */
     public const CLIENT_CONTENT_NAVIGATION = 'CLIENT_CONTENT_NAVIGATION';
+
     /**
      * @var string
      */

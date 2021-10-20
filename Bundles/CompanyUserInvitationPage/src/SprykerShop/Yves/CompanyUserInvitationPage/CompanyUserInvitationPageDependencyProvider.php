@@ -19,10 +19,12 @@ class CompanyUserInvitationPageDependencyProvider extends AbstractBundleDependen
      * @var string
      */
     public const CLIENT_COMPANY_USER_INVITATION = 'CLIENT_COMPANY_USER_INVITATION';
+
     /**
      * @var string
      */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
     /**
      * @var string
      */

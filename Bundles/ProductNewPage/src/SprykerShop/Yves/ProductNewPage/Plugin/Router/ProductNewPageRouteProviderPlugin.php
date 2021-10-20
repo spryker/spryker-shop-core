@@ -17,6 +17,7 @@ class ProductNewPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_NEW_PRODUCTS = 'new-products';
+
     /**
      * @var string
      */

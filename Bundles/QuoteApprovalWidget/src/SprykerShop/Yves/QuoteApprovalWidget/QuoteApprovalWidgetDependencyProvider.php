@@ -21,18 +21,22 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const CLIENT_QUOTE_APPROVAL = 'CLIENT_QUOTE_APPROVAL';
+
     /**
      * @var string
      */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
     /**
      * @var string
      */
     public const CLIENT_MONEY = 'CLIENT_MONEY';
+
     /**
      * @var string
      */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+
     /**
      * @var string
      */

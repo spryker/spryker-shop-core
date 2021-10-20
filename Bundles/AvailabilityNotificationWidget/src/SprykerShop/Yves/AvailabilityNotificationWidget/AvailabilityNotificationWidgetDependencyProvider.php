@@ -18,10 +18,12 @@ class AvailabilityNotificationWidgetDependencyProvider extends AbstractBundleDep
      * @var string
      */
     public const CLIENT_AVAILABILITY_NOTIFICATION = 'CLIENT_AVAILABILITY_NOTIFICATION';
+
     /**
      * @var string
      */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
     /**
      * @var string
      */

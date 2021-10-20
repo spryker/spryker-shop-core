@@ -20,34 +20,42 @@ class CartControllerProvider extends AbstractYvesControllerProvider
      * @var string
      */
     public const ROUTE_CART = 'cart';
+
     /**
      * @var string
      */
     public const ROUTE_CART_ADD = 'cart/add';
+
     /**
      * @var string
      */
     public const ROUTE_CART_QUICK_ADD = 'cart/quick-add';
+
     /**
      * @var string
      */
     public const ROUTE_CART_REMOVE = 'cart/remove';
+
     /**
      * @var string
      */
     public const ROUTE_CART_CHANGE = 'cart/change';
+
     /**
      * @var string
      */
     public const ROUTE_CART_UPDATE = 'cart/update';
+
     /**
      * @var string
      */
     public const ROUTE_CART_CHANGE_QUANTITY = 'cart/change/quantity';
+
     /**
      * @var string
      */
     public const ROUTE_CART_ADD_ITEMS = 'cart/add-items';
+
     /**
      * @var string
      */
@@ -237,7 +245,7 @@ class CartControllerProvider extends AbstractYvesControllerProvider
             return $request->request->get('preselectedAttributes') ?: [];
         }
 
-        return $request->query->get('preselectedAttributes')  ?: [];
+        return $request->query->get('preselectedAttributes') ?: [];
     }
 
     /**

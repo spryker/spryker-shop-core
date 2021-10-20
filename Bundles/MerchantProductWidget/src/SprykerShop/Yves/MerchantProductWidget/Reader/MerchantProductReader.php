@@ -24,10 +24,12 @@ class MerchantProductReader implements MerchantProductReaderInterface
      * @var string
      */
     protected const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
+
     /**
      * @var string
      */

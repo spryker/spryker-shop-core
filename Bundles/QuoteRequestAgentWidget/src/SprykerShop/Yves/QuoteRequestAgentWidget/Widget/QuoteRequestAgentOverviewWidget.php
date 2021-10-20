@@ -22,6 +22,7 @@ class QuoteRequestAgentOverviewWidget extends AbstractWidget
      * @var int
      */
     protected const PAGINATION_PAGE = 1;
+
     /**
      * @var int
      */
@@ -31,6 +32,7 @@ class QuoteRequestAgentOverviewWidget extends AbstractWidget
      * @var string
      */
     protected const PARAMETER_CART_FORM = 'cartForm';
+
     /**
      * @var string
      */

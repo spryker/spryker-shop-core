@@ -27,6 +27,7 @@ class AccessTokenController extends AbstractCustomerController
      * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_ALREADY_LOGGED_IN = 'customer_page.error.customer_already_logged_in';
+
     /**
      * @var string
      */

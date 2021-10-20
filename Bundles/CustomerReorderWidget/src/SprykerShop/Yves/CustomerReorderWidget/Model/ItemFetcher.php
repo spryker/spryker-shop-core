@@ -22,6 +22,7 @@ class ItemFetcher implements ItemFetcherInterface
      * @var string
      */
     protected const MESSAGE_PARAM_SKU = '%sku%';
+
     /**
      * @var string
      */

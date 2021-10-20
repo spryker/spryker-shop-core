@@ -20,6 +20,7 @@ class AddressProvider implements AddressProviderInterface
      * @var string
      */
     protected const COMPANY_BUSINESS_UNIT_ADDRESS_KEY_PATTERN = 'company_business_unit_address_%s';
+
     /**
      * @var string
      */
@@ -29,10 +30,12 @@ class AddressProvider implements AddressProviderInterface
      * @var string
      */
     protected const KEY_IS_DEFAULT_SHIPPING = 'is_default_shipping';
+
     /**
      * @var string
      */
     protected const KEY_IS_DEFAULT_BILLING = 'is_default_billing';
+
     /**
      * @var string
      */

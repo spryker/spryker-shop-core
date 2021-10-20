@@ -19,14 +19,17 @@ class ErrorPageControllerProvider extends AbstractYvesControllerProvider
      * @var string
      */
     public const ROUTE_ERROR_404 = 'error/404';
+
     /**
      * @var string
      */
     public const ROUTE_ERROR_404_PATH = '/error/404';
+
     /**
      * @var string
      */
     protected const ROUTE_ERROR_403 = 'error/403';
+
     /**
      * @var string
      */

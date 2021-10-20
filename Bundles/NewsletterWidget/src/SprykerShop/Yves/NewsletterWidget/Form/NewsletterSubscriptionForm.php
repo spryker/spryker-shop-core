@@ -21,6 +21,7 @@ class NewsletterSubscriptionForm extends AbstractType
      * @var string
      */
     public const FIELD_SUBSCRIBE = 'subscribe';
+
     /**
      * @var string
      */
@@ -35,6 +36,7 @@ class NewsletterSubscriptionForm extends AbstractType
      * @var string
      */
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+
     /**
      * @var string
      */

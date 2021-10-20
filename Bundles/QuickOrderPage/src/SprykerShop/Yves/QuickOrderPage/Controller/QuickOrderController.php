@@ -35,34 +35,42 @@ class QuickOrderController extends AbstractController
      * @var string
      */
     public const PARAM_ROW_INDEX = 'row-index';
+
     /**
      * @var string
      */
     public const PARAM_QUICK_ORDER_FORM = 'quick_order_form';
+
     /**
      * @var string
      */
     protected const PARAM_QUICK_ORDER_FILE_TYPE = 'file-type';
+
     /**
      * @var string
      */
     protected const PARAM_FORM_TOKEN = '_token';
+
     /**
      * @var string
      */
     protected const MESSAGE_CLEAR_ALL_ROWS_SUCCESS = 'quick-order.message.success.the-form-items-have-been-successfully-cleared';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_QUANTITY_INVALID = 'quick-order.errors.quantity-invalid';
+
     /**
      * @var string
      */
     protected const MESSAGE_TYPE_WARNING = 'warning';
+
     /**
      * @var string
      */
     protected const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
+
     /**
      * @var string
      */
@@ -89,6 +97,7 @@ class QuickOrderController extends AbstractController
      * @var string
      */
     protected const KEY_CODE = 'code';
+
     /**
      * @var string
      */

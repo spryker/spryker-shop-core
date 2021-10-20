@@ -21,14 +21,17 @@ class ProductReviewWidgetDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
     /**
      * @var string
      */
     public const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
+
     /**
      * @var string
      */
     public const CLIENT_PRODUCT_REVIEW = 'CLIENT_PRODUCT_REVIEW';
+
     /**
      * @var string
      */

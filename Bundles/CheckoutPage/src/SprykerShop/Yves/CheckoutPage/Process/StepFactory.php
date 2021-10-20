@@ -54,6 +54,7 @@ class StepFactory extends AbstractFactory
      * @var int
      */
     protected const ERROR_CODE_GENERAL_FAILURE = 399;
+
     /**
      * @var string
      */

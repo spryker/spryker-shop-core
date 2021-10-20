@@ -17,33 +17,40 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_RETURN_SLIP_PRINT = 'return/slip-print';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_RETURN_SLIP_PRINT = 'return/slip-print';
+
     /**
      * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnViewController::viewAction()
      * @var string
      */
     protected const ROUTE_RETURN_VIEW = 'return/view';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_RETURN_VIEW = 'return/view';
+
     /**
      * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnListController::listAction()
      * @var string
      */
     protected const ROUTE_RETURN_LIST = 'return/list';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_RETURN_LIST = 'return/list';
+
     /**
      * @uses \SprykerShop\Yves\SalesReturnPage\Controller\ReturnCreateController::createAction()
      * @var string
      */
     protected const ROUTE_RETURN_CREATE = 'return/create';
+
     /**
      * @var string
      */
@@ -53,6 +60,7 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const PARAM_ORDER_REFERENCE = 'orderReference';
+
     /**
      * @var string
      */

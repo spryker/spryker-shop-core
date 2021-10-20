@@ -19,14 +19,17 @@ class QuoteApprovalControllerProvider extends AbstractYvesControllerProvider
      * @var string
      */
     protected const ROUTE_QUOTE_APPROVAL_APPROVE = 'quote-approval-approve';
+
     /**
      * @var string
      */
     protected const ROUTE_QUOTE_APPROVAL_DECLINE = 'quote-approval-decline';
+
     /**
      * @var string
      */
     protected const ROUTE_QUOTE_APPROVAL_CREATE = 'quote-approval-create';
+
     /**
      * @var string
      */

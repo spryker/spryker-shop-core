@@ -20,6 +20,7 @@ class DateTimeProductConfiguratorBuildFrontendConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'frontend:date-time-product-configurator:build';
+
     /**
      * @var string
      */

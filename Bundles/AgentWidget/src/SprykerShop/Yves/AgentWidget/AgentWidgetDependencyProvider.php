@@ -20,6 +20,7 @@ class AgentWidgetDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_AGENT = 'CLIENT_AGENT';
+
     /**
      * @var string
      */

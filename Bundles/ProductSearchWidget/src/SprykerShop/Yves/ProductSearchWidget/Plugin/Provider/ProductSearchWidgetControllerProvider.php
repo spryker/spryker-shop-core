@@ -19,6 +19,7 @@ class ProductSearchWidgetControllerProvider extends AbstractYvesControllerProvid
      * @var string
      */
     protected const ROUTE_PRODUCT_CONCRETE_SEARCH = 'product-search/product-concrete-search';
+
     /**
      * @var string
      */

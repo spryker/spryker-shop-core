@@ -20,10 +20,12 @@ class ResourceSharePageDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const CLIENT_RESOURCE_SHARE = 'CLIENT_RESOURCE_SHARE';
+
     /**
      * @var string
      */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
     /**
      * @var string
      */

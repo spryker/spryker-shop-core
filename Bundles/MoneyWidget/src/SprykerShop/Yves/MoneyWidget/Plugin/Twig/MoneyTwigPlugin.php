@@ -26,14 +26,17 @@ class MoneyTwigPlugin extends AbstractPlugin implements TwigPluginInterface
      * @var string
      */
     protected const FUNCTION_NAME_MONEY_SYMBOL = 'moneySymbol';
+
     /**
      * @var string
      */
     protected const FUNCTION_NAME_CURRENCY_ISO_CODE = 'currencyIsoCode';
+
     /**
      * @var string
      */
     protected const FILTER_NAME_MONEY = 'money';
+
     /**
      * @var string
      */

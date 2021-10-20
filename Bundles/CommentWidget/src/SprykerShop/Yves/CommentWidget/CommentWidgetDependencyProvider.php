@@ -18,6 +18,7 @@ class CommentWidgetDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_COMMENT = 'CLIENT_COMMENT';
+
     /**
      * @var string
      */

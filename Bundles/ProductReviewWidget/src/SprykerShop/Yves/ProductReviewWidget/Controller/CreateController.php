@@ -33,6 +33,7 @@ class CreateController extends AbstractController
      * @var string
      */
     public const REQUEST_HEADER_REFERER = 'referer';
+
     /**
      * @var string
      */
@@ -42,6 +43,7 @@ class CreateController extends AbstractController
      * @var string
      */
     protected const GLOSSARY_KEY_SUCCESS_PRODUCT_REVIEW_SUBMITTED = 'product_review.submit.success';
+
     /**
      * @var string
      */

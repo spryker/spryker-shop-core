@@ -22,6 +22,7 @@ class ShoppingListDeleteController extends AbstractShoppingListController
      * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED = 'customer.account.shopping_list.delete.failed';
+
     /**
      * @var string
      */

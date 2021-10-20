@@ -51,10 +51,12 @@ class CartController extends AbstractController
      * @var string
      */
     protected const REQUEST_PARAMETER_SKU = 'sku';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAMETER_QUANTITY = 'quantity';
+
     /**
      * @var string
      */
@@ -69,6 +71,7 @@ class CartController extends AbstractController
      * @var string
      */
     protected const KEY_CODE = 'code';
+
     /**
      * @var string
      */
@@ -78,14 +81,17 @@ class CartController extends AbstractController
      * @var string
      */
     protected const CSRF_TOKEN_ID = 'add-to-cart-ajax';
+
     /**
      * @var string
      */
     protected const MESSAGE_TYPE_ERROR = 'error';
+
     /**
      * @var string
      */
     protected const FLASH_MESSAGE_LIST_TEMPLATE_PATH = '@ShopUi/components/organisms/flash-message-list/flash-message-list.twig';
+
     /**
      * @var string
      */

@@ -17,6 +17,7 @@ class ProductViewExpander implements ProductViewExpanderInterface
      * @var string
      */
     protected const URL_PATH_ADD_TO_CART = 'cart/add';
+
     /**
      * @var string
      */

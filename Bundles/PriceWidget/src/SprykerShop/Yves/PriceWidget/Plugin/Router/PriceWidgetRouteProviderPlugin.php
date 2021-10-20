@@ -17,6 +17,7 @@ class PriceWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_PRICE_SWITCH = 'price-mode-switch';
+
     /**
      * @var string
      */

@@ -19,10 +19,12 @@ class ListController extends AbstractController
      * @var string
      */
     public const PARAM_LIMIT = 'limit';
+
     /**
      * @var string
      */
     public const PARAM_OFFSET = 'offset';
+
     /**
      * @var int
      */

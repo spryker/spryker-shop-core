@@ -17,6 +17,7 @@ class CompanyUserAgentWidgetRouteProviderPlugin extends AbstractRouteProviderPlu
      * @var string
      */
     protected const ROUTE_COMPANY_USER_AUTOCOMPLETE = 'agent/company-user/autocomplete';
+
     /**
      * @var string
      */

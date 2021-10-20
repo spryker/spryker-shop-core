@@ -18,6 +18,7 @@ class FileManagerWidgetDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const CLIENT_FILE_MANAGER_STORAGE = 'CLIENT_FILE_MANAGER_STORAGE';
+
     /**
      * @var string
      */

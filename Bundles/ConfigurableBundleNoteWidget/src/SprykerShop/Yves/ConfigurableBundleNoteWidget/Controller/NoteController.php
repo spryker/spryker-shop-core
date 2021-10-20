@@ -20,6 +20,7 @@ class NoteController extends AbstractController
      * @var string
      */
     protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_NOTE_ADDED = 'configurable_bundle_note.note_added';
+
     /**
      * @var string
      */

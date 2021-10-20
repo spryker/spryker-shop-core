@@ -20,6 +20,7 @@ class ResourceShareRequestBuilder implements ResourceShareRequestBuilderInterfac
      * @var string
      */
     protected const RESOURCE_TYPE_QUOTE = 'quote';
+
     /**
      * @uses \Spryker\Shared\PersistentCartShare\PersistentCartShareConfig::SHARE_OPTION_KEY_PREVIEW
      * @var string

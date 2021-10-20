@@ -17,15 +17,18 @@ class CartNoteWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_CART_NOTE_QUOTE = 'cart-note/quote';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_CART_NOTE_QUOTE = 'cart-note/quote';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartNoteWidget\Plugin\Router\CartNoteWidgetRouteProviderPlugin::ROUTE_NAME_CART_NOTE_ITEM} instead.
      * @var string
      */
     protected const ROUTE_CART_NOTE_ITEM = 'cart-note/item';
+
     /**
      * @var string
      */

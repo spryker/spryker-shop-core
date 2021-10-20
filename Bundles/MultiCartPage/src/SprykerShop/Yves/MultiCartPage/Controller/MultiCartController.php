@@ -36,14 +36,17 @@ class MultiCartController extends AbstractController
      * @var string
      */
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_CART_UPDATED_ERROR = 'multi_cart_widget.cart.updated.error';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_CART_DELETE_ERROR = 'multi_cart_widget.cart.delete.error';
+
     /**
      * @var string
      */

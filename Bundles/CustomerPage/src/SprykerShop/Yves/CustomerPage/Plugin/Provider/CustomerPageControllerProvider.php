@@ -19,66 +19,82 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
      * @var string
      */
     public const ROUTE_LOGIN = 'login';
+
     /**
      * @var string
      */
     public const ROUTE_LOGOUT = 'logout';
+
     /**
      * @var string
      */
     public const ROUTE_REGISTER = 'register';
+
     /**
      * @var string
      */
     public const ROUTE_PASSWORD_FORGOTTEN = 'password/forgotten';
+
     /**
      * @var string
      */
     public const ROUTE_PASSWORD_RESTORE = 'password/restore';
+
     /**
      * @var string
      */
     public const ROUTE_CUSTOMER_OVERVIEW = 'customer/overview';
+
     /**
      * @var string
      */
     public const ROUTE_CUSTOMER_PROFILE = 'customer/profile';
+
     /**
      * @var string
      */
     public const ROUTE_CUSTOMER_ADDRESS = 'customer/address';
+
     /**
      * @var string
      */
     public const ROUTE_CUSTOMER_NEW_ADDRESS = 'customer/address/new';
+
     /**
      * @var string
      */
     public const ROUTE_CUSTOMER_UPDATE_ADDRESS = 'customer/address/update';
+
     /**
      * @var string
      */
     public const ROUTE_CUSTOMER_DELETE_ADDRESS = 'customer/address/delete';
+
     /**
      * @var string
      */
     public const ROUTE_CUSTOMER_REFRESH_ADDRESS = 'customer/address/refresh';
+
     /**
      * @var string
      */
     public const ROUTE_CUSTOMER_ORDER = 'customer/order';
+
     /**
      * @var string
      */
     public const ROUTE_CUSTOMER_ORDER_DETAILS = 'customer/order/details';
+
     /**
      * @var string
      */
     public const ROUTE_CUSTOMER_DELETE = 'customer/delete';
+
     /**
      * @var string
      */
     public const ROUTE_CUSTOMER_DELETE_CONFIRM = 'customer/delete/confirm';
+
     /**
      * @var string
      */

@@ -24,6 +24,7 @@ class PasswordForm extends AbstractType
      * @var string
      */
     public const FIELD_NEW_PASSWORD = 'new_password';
+
     /**
      * @var string
      */
@@ -33,6 +34,7 @@ class PasswordForm extends AbstractType
      * @var string
      */
     protected const VALIDATION_MIN_LENGTH_MESSAGE = 'validation.min_length';
+
     /**
      * @var string
      */

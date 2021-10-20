@@ -16,6 +16,7 @@ class ProductConfiguratorGatewayPageRouteProviderPlugin extends AbstractRoutePro
      * @var string
      */
     public const ROUTE_NAME_PRODUCT_CONFIGURATOR_GATEWAY_REQUEST = 'product-configurator-gateway/request';
+
     /**
      * @var string
      */

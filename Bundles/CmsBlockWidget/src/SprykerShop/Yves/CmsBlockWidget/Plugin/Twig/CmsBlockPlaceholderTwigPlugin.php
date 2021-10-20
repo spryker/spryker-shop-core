@@ -19,6 +19,7 @@ class CmsBlockPlaceholderTwigPlugin extends AbstractTwigExtensionPlugin
      * @var string
      */
     protected const FUNCTION_NAME_SPY_CMS_BLOCK_PLACEHOLDER = 'spyCmsBlockPlaceholder';
+
     /**
      * @var string
      */

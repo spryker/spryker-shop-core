@@ -22,10 +22,12 @@ class PurchaseOrderNumberMetadataFieldPlugin extends AbstractPlugin implements Q
      * @var string
      */
     protected const FIELD_METADATA_PURCHASE_ORDER_NUMBER = 'purchase_order_number';
+
     /**
      * @var string
      */
     protected const LABEL_METADATA_PURCHASE_ORDER_NUMBER = 'quote_request_page.quote_request.metadata.label.purchase_order_number';
+
     /**
      * @var int
      */

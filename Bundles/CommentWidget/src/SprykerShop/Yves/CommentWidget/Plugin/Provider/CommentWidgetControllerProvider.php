@@ -19,18 +19,22 @@ class CommentWidgetControllerProvider extends AbstractYvesControllerProvider
      * @var string
      */
     protected const ROUTE_COMMENT_ADD = 'comment/add';
+
     /**
      * @var string
      */
     protected const ROUTE_COMMENT_UPDATE = 'comment/update';
+
     /**
      * @var string
      */
     protected const ROUTE_COMMENT_REMOVE = 'comment/remove';
+
     /**
      * @var string
      */
     protected const ROUTE_COMMENT_TAG_ADD = 'comment/tag/add';
+
     /**
      * @var string
      */

@@ -21,6 +21,7 @@ class UploadOrderForm extends AbstractType
      * @var string
      */
     public const FIELD_FILE_UPLOAD_ORDER = 'fileUploadOrder';
+
     /**
      * @var string
      */

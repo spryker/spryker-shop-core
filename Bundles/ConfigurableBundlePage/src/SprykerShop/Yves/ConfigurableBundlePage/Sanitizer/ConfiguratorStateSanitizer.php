@@ -18,14 +18,17 @@ class ConfiguratorStateSanitizer implements ConfiguratorStateSanitizerInterface
      * @var string
      */
     protected const GLOSSARY_KEY_SLOT_BECAME_UNAVAILABLE = 'configurable_bundle_page.configurator.slot_became_unavailable';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_PRODUCT_BECAME_UNAVAILABLE = 'configurable_bundle_page.configurator.product_became_unavailable';
+
     /**
      * @var string
      */
     protected const GLOSSARY_PARAMETER_ID = '%id%';
+
     /**
      * @var string
      */

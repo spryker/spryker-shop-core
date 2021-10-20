@@ -23,6 +23,7 @@ class QuoteRequestAgentAbstractController extends AbstractController
      * @var string
      */
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
+
     /**
      * @var string
      */

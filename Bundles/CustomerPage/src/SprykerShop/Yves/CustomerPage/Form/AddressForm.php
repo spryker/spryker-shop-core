@@ -29,54 +29,67 @@ class AddressForm extends AbstractType
      * @var string
      */
     public const FIELD_SALUTATION = 'salutation';
+
     /**
      * @var string
      */
     public const FIELD_FIRST_NAME = 'first_name';
+
     /**
      * @var string
      */
     public const FIELD_LAST_NAME = 'last_name';
+
     /**
      * @var string
      */
     public const FIELD_COMPANY = 'company';
+
     /**
      * @var string
      */
     public const FIELD_ADDRESS_1 = 'address1';
+
     /**
      * @var string
      */
     public const FIELD_ADDRESS_2 = 'address2';
+
     /**
      * @var string
      */
     public const FIELD_ADDRESS_3 = 'address3';
+
     /**
      * @var string
      */
     public const FIELD_ZIP_CODE = 'zip_code';
+
     /**
      * @var string
      */
     public const FIELD_CITY = 'city';
+
     /**
      * @var string
      */
     public const FIELD_ISO_2_CODE = 'iso2_code';
+
     /**
      * @var string
      */
     public const FIELD_PHONE = 'phone';
+
     /**
      * @var string
      */
     public const FIELD_IS_DEFAULT_SHIPPING = 'is_default_shipping';
+
     /**
      * @var string
      */
     public const FIELD_IS_DEFAULT_BILLING = 'is_default_billing';
+
     /**
      * @var string
      */
@@ -91,14 +104,17 @@ class AddressForm extends AbstractType
      * @var string
      */
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+
     /**
      * @var string
      */
     protected const VALIDATION_ADDRESS_NUMBER_MESSAGE = 'validation.address_number';
+
     /**
      * @var string
      */
     protected const VALIDATION_ZIP_CODE_MESSAGE = 'validation.zip_code';
+
     /**
      * @var string
      */

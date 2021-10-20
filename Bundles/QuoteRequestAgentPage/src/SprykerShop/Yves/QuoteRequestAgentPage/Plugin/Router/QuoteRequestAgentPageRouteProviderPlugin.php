@@ -139,42 +139,51 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS = 'agent/quote-request/checkout-address';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS = 'agent/quote-request/checkout-address';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS_CONFIRM} instead.
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS_CONFIRM = 'agent/quote-request/checkout-address-confirm';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS_CONFIRM = 'agent/quote-request/checkout-address-confirm';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT} instead.
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT = 'agent/quote-request/checkout-shipment';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT = 'agent/quote-request/checkout-shipment';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT_CONFIRM} instead.
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT_CONFIRM = 'agent/quote-request/checkout-shipment-confirm';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT_CONFIRM = 'agent/quote-request/checkout-shipment-confirm';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_SAVE} instead.
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SAVE = 'agent/quote-request/checkout-save';
+
     /**
      * @var string
      */

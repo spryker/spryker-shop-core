@@ -23,34 +23,42 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_CART = 'CLIENT_CART';
+
     /**
      * @var string
      */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+
     /**
      * @var string
      */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_AVAILABILITY_STORAGE = 'CLIENT_AVAILABILITY_STORAGE';
+
     /**
      * @var string
      */
     public const PLUGIN_CART_VARIANT = 'PLUGIN_CART_VARIANT';
+
     /**
      * @var string
      */
     public const PLUGIN_CART_ITEM_TRANSFORMERS = 'PLUGIN_CART_ITEM_TRANSFORMERS';
+
     /**
      * @var string
      */
     public const PLUGIN_CART_PAGE_WIDGETS = 'PLUGIN_CART_PAGE_WIDGETS';
+
     /**
      * @var string
      */
     public const PLUGIN_PRE_ADD_TO_CART = 'PLUGIN_PRE_ADD_TO_CART';
+
     /**
      * @var string
      */

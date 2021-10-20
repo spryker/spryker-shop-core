@@ -19,6 +19,7 @@ class CompanyUserInvitationPageControllerProvider extends AbstractYvesController
      * @var string
      */
     public const ROUTE_OVERVIEW = 'company/user-invitation';
+
     /**
      * @var string
      */
@@ -28,6 +29,7 @@ class CompanyUserInvitationPageControllerProvider extends AbstractYvesController
      * @var string
      */
     public const ROUTE_INVITATION_SEND = 'company/user-invitation/send';
+
     /**
      * @var string
      */
@@ -37,6 +39,7 @@ class CompanyUserInvitationPageControllerProvider extends AbstractYvesController
      * @var string
      */
     public const ROUTE_INVITATION_RESEND = 'company/user-invitation/resend';
+
     /**
      * @var string
      */
@@ -52,6 +55,7 @@ class CompanyUserInvitationPageControllerProvider extends AbstractYvesController
      * @var string
      */
     public const ROUTE_INVITATION_DELETE = 'company/user-invitation/delete';
+
     /**
      * @var string
      */

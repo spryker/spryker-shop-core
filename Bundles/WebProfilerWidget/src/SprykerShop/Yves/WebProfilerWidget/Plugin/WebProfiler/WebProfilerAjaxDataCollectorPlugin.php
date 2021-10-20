@@ -18,6 +18,7 @@ class WebProfilerAjaxDataCollectorPlugin implements WebProfilerDataCollectorPlug
      * @var string
      */
     protected const NAME = 'ajax';
+
     /**
      * @var string
      */

@@ -21,14 +21,17 @@ class AddItemsToShoppingListWidget extends AbstractWidget
      * @var string
      */
     protected const PARAM_IS_VISIBLE = 'isVisible';
+
     /**
      * @var string
      */
     protected const PARAM_SHOPPING_LIST_OPTIONS = 'shoppingListOptions';
+
     /**
      * @var string
      */
     protected const PARAM_SHOPPING_LIST_OPTION_VALUE = 'value';
+
     /**
      * @var string
      */

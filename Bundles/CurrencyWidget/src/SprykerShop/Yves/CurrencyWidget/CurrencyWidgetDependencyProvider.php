@@ -18,6 +18,7 @@ class CurrencyWidgetDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const STORE = 'STORE';
+
     /**
      * @var string
      */

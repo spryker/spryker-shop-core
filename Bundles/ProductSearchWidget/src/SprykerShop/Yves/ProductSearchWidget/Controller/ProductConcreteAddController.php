@@ -23,6 +23,7 @@ class ProductConcreteAddController extends AbstractController
      * @var string
      */
     protected const REFERER_PARAM = 'referer';
+
     /**
      * @var string
      */

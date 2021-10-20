@@ -19,22 +19,27 @@ class AddToCartFormHandler implements AddToCartFormHandlerInterface
      * @var string
      */
     protected const PARAM_ID_SHOPPING_LIST_ITEM = 'idShoppingListItem';
+
     /**
      * @var string
      */
     protected const PARAM_SHOPPING_LIST_ITEM = 'shoppingListItem';
+
     /**
      * @var string
      */
     protected const PARAM_SHOPPING_LIST_ITEMS = 'shoppingListItems';
+
     /**
      * @var string
      */
     protected const PARAM_ID_SHOPPING_LIST = 'idShoppingList';
+
     /**
      * @var string
      */
     protected const PARAM_ID_ADD_ITEM = 'add-item';
+
     /**
      * @var string
      */

@@ -22,6 +22,7 @@ class OrderReader implements OrderReaderInterface
      * @var string
      */
     protected const PARAM_PAGE = 'page';
+
     /**
      * @var string
      */

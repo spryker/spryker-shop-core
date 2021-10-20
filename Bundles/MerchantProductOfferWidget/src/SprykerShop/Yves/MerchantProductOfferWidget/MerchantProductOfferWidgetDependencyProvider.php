@@ -18,6 +18,7 @@ class MerchantProductOfferWidgetDependencyProvider extends AbstractBundleDepende
      * @var string
      */
     public const CLIENT_MERCHANT_STORAGE = 'CLIENT_MERCHANT_STORAGE';
+
     /**
      * @var string
      */

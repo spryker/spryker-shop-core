@@ -22,14 +22,17 @@ class CategoryImageStorageWidget extends AbstractWidget
      * @var string
      */
     public const DEFAULT_CATEGORY_IMAGE = '';
+
     /**
      * @var string
      */
     public const DEFAULT_IMAGE_SET_NAME = 'default';
+
     /**
      * @var string
      */
     public const IMAGE_SIZE_SMALL = 'small';
+
     /**
      * @var string
      */

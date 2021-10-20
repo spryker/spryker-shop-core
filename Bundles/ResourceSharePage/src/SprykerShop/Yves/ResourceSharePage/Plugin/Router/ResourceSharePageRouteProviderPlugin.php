@@ -17,6 +17,7 @@ class ResourceSharePageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_RESOURCE_SHARE_LINK = 'resource-share/link';
+
     /**
      * @var string
      */

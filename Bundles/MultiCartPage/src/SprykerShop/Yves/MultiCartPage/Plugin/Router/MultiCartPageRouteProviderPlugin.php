@@ -18,69 +18,84 @@ class MultiCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_MULTI_CART_INDEX = 'multi-cart';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_MULTI_CART_INDEX = 'multi-cart';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_CREATE} instead.
      * @var string
      */
     protected const ROUTE_MULTI_CART_CREATE = 'multi-cart/create';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_MULTI_CART_CREATE = 'multi-cart/create';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_UPDATE} instead.
      * @var string
      */
     protected const ROUTE_MULTI_CART_UPDATE = 'multi-cart/update';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_MULTI_CART_UPDATE = 'multi-cart/update';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_DELETE} instead.
      * @var string
      */
     protected const ROUTE_MULTI_CART_DELETE = 'multi-cart/delete';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_MULTI_CART_DELETE = 'multi-cart/delete';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_CONFIRM_DELETE} instead.
      * @var string
      */
     protected const ROUTE_MULTI_CART_CONFIRM_DELETE = 'multi-cart/confirm-delete';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_MULTI_CART_CONFIRM_DELETE = 'multi-cart/confirm-delete';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_SET_DEFAULT} instead.
      * @var string
      */
     protected const ROUTE_MULTI_CART_SET_DEFAULT = 'multi-cart/set-default';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_MULTI_CART_SET_DEFAULT = 'multi-cart/set-default';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_CLEAR} instead.
      * @var string
      */
     protected const ROUTE_MULTI_CART_CLEAR = 'multi-cart/clear';
+
     /**
      * @var string
      */
     public const ROUTE_NAME_MULTI_CART_CLEAR = 'multi-cart/clear';
+
     /**
      * @deprecated Use {@link \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_DUPLICATE} instead.
      * @var string
      */
     protected const ROUTE_MULTI_CART_DUPLICATE = 'multi-cart/duplicate';
+
     /**
      * @var string
      */

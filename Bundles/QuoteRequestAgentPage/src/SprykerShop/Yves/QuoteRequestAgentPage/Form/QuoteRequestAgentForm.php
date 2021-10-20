@@ -26,6 +26,7 @@ class QuoteRequestAgentForm extends AbstractType
      * @var string
      */
     public const SUBMIT_BUTTON_SAVE = 'save';
+
     /**
      * @var string
      */
@@ -35,10 +36,12 @@ class QuoteRequestAgentForm extends AbstractType
      * @var string
      */
     public const OPTION_PRICE_MODE = 'option_price_mode';
+
     /**
      * @var string
      */
     public const OPTION_IS_QUOTE_VALID = 'option_is_quote_valid';
+
     /**
      * @var string
      */
@@ -53,10 +56,12 @@ class QuoteRequestAgentForm extends AbstractType
      * @var string
      */
     protected const FORMAT_VALID_UNTIL_DATE = 'Y-m-d H:i:s';
+
     /**
      * @var string
      */
     protected const LABEL_QUOTE_REQUEST_IS_LATEST_VERSION_VISIBLE = 'quote_request_page.quote_request.labels.show_latest_version';
+
     /**
      * @var string
      */

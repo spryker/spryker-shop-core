@@ -19,10 +19,12 @@ class PreviewControllerProvider extends AbstractYvesControllerProvider
      * @var string
      */
     public const ROUTE_PREVIEW = 'cms-preview';
+
     /**
      * @var string
      */
     public const PARAM_PAGE = 'page';
+
     /**
      * @var string
      */

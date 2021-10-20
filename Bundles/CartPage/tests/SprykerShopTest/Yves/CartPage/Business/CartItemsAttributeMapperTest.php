@@ -29,14 +29,17 @@ class CartItemsAttributeMapperTest extends Unit
      * @var string
      */
     protected const KEY_ATTRIBUTE_MAP = 'attribute_map';
+
     /**
      * @var string
      */
     protected const KEY_ATTRIBUTE_VARIANT_MAP = 'attribute_variant_map';
+
     /**
      * @var string
      */
     protected const KEY_ATTRIBUTE_VARIANTS = 'attribute_variants';
+
     /**
      * @var string
      */
@@ -46,6 +49,7 @@ class CartItemsAttributeMapperTest extends Unit
      * @var string
      */
     protected const FAKE_SKU_1 = 'fake-sku-1';
+
     /**
      * @var string
      */
@@ -55,6 +59,7 @@ class CartItemsAttributeMapperTest extends Unit
      * @var int
      */
     protected const FAKE_ID_PRODUCT_CONCRETE_1 = 1;
+
     /**
      * @var int
      */

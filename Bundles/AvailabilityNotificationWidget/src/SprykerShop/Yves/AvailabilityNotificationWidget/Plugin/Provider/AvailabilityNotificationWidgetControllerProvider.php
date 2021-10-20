@@ -19,6 +19,7 @@ class AvailabilityNotificationWidgetControllerProvider extends AbstractYvesContr
      * @var string
      */
     public const ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE = 'availability-notification/unsubscribe';
+
     /**
      * @var string
      */

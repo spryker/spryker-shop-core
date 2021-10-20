@@ -17,6 +17,7 @@ class CmsPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const ROUTE_PREVIEW = 'cms-preview';
+
     /**
      * @var string
      */
@@ -27,6 +28,7 @@ class CmsPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @var string
      */
     protected const PARAM_PAGE = 'page';
+
     /**
      * @var string
      */

@@ -19,10 +19,12 @@ class CartCodeWidgetDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_CART_CODE = 'CLIENT_CART_CODE';
+
     /**
      * @var string
      */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+
     /**
      * @var string
      */

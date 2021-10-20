@@ -24,10 +24,12 @@ class ContentBannerTwigFunctionProvider extends TwigFunctionProvider
      * @var string
      */
     protected const MESSAGE_BANNER_NOT_FOUND = '<b>Content Banner with key %s not found.</b>';
+
     /**
      * @var string
      */
     protected const MESSAGE_BANNER_WRONG_TYPE = '<b>Content Banner could not be rendered because the content item with key %s is not an banner.</b>';
+
     /**
      * @var string
      */

@@ -19,10 +19,12 @@ class CatalogPageControllerProvider extends AbstractYvesControllerProvider
      * @var string
      */
     public const ROUTE_SEARCH = 'search';
+
     /**
      * @var string
      */
     public const ROUTE_SUGGESTION = 'search/suggestion';
+
     /**
      * @var string
      */

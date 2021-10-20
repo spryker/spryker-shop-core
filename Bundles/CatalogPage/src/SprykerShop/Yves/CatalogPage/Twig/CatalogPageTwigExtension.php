@@ -18,6 +18,7 @@ class CatalogPageTwigExtension extends TwigExtension
      * @var string
      */
     public const FUNCTION_GET_URL_WITHOUT_ACTIVE_SEARCH_FILTER = 'generateUrlWithoutActiveSearchFilter';
+
     /**
      * @var string
      */

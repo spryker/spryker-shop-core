@@ -21,6 +21,7 @@ class CategoryTwigPlugin extends AbstractPlugin implements TwigPluginInterface
      * @var string
      */
     protected const TWIG_GLOBAL_VARIABLE_CATEGORIES = 'categories';
+
     /**
      * @var string
      */

@@ -25,14 +25,17 @@ class CartController extends AbstractController
      * @var string
      */
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_REMOVED = 'configured_bundle_widget.configured_bundle.removed';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_UPDATED = 'configured_bundle_widget.configured_bundle.updated';
+
     /**
      * @var string
      */
