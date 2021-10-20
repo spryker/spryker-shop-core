@@ -67,7 +67,7 @@ class QuoteApprovalWidget extends AbstractWidget
     {
         $this->addParameter(
             static::PARAMETER_IS_VISIBLE,
-            $this->hasQuoteApprovalsForCurrentCompanyUser($quoteTransfer)
+            $this->hasQuoteApprovalsForCurrentCompanyUser($quoteTransfer),
         );
     }
 
@@ -110,7 +110,7 @@ class QuoteApprovalWidget extends AbstractWidget
             ->findWaitingQuoteApprovalByIdCompanyUser(
                 $quoteTransfer,
                 $this->findCurrentCompanyUser()
-                    ->getIdCompanyUser()
+                    ->getIdCompanyUser(),
             );
     }
 
@@ -130,7 +130,7 @@ class QuoteApprovalWidget extends AbstractWidget
             ->isCompanyUserInQuoteApproverList(
                 $quoteTransfer,
                 $this->findCurrentCompanyUser()
-                    ->getIdCompanyUser()
+                    ->getIdCompanyUser(),
             );
     }
 
@@ -172,7 +172,7 @@ class QuoteApprovalWidget extends AbstractWidget
             static::IS_QUOTE_APPLICABLE_FOR_APPROVAL_PROCESS,
             $this->getFactory()
                 ->getQuoteApprovalClient()
-                ->isQuoteApplicableForApprovalProcess($quoteTransfer)
+                ->isQuoteApplicableForApprovalProcess($quoteTransfer),
         );
     }
 }

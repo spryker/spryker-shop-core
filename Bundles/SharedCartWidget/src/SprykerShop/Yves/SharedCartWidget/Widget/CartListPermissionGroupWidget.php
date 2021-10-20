@@ -41,7 +41,7 @@ class CartListPermissionGroupWidget extends AbstractWidget
             'accessType',
             $this->getFactory()
                 ->getSharedCartClient()
-                ->getQuoteAccessLevel($quoteTransfer)
+                ->getQuoteAccessLevel($quoteTransfer),
         );
     }
 
@@ -65,7 +65,7 @@ class CartListPermissionGroupWidget extends AbstractWidget
     {
         $this->addParameter(
             'isQuoteDeletable',
-            $isQuoteDeletable && $this->getFactory()->getSharedCartClient()->isQuoteDeletable($quoteTransfer)
+            $isQuoteDeletable && $this->getFactory()->getSharedCartClient()->isQuoteDeletable($quoteTransfer),
         );
     }
 

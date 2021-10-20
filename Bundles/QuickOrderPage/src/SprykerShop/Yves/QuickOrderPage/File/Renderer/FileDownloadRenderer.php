@@ -46,7 +46,7 @@ class FileDownloadRenderer implements FileRendererInterface
             $response = new Response($fileTemplatePlugin->generateTemplate());
             $disposition = $response->headers->makeDisposition(
                 ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-                $fileName
+                $fileName,
             );
             $response->headers->set('Content-Disposition', $disposition);
             $response->headers->set('Content-Type', $fileTemplatePlugin->getTemplateMimeType());

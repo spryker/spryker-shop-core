@@ -45,7 +45,7 @@ class ProductViewExpander implements ProductViewExpanderInterface
     {
         return $productViewTransfer->setAddToCartUrl($this->router->generate(
             static::URL_PATH_ADD_TO_CART,
-            [static::URL_PARAMETER_SKU => $productViewTransfer->getSku()]
+            [static::URL_PARAMETER_SKU => $productViewTransfer->getSku()],
         ));
     }
 }

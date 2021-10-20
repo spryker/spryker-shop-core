@@ -127,7 +127,7 @@ class WidgetTwigPlugin extends AbstractPlugin implements TwigPluginInterface
                 'needs_environment' => true,
                 'needs_context' => false,
                 'is_safe' => ['html'],
-            ]
+            ],
         );
     }
 
@@ -171,7 +171,7 @@ class WidgetTwigPlugin extends AbstractPlugin implements TwigPluginInterface
                 'needs_environment' => true,
                 'needs_context' => false,
                 'is_safe' => ['html'],
-            ]
+            ],
         );
     }
 
@@ -215,7 +215,7 @@ class WidgetTwigPlugin extends AbstractPlugin implements TwigPluginInterface
                 'needs_environment' => true,
                 'needs_context' => false,
                 'is_safe' => ['html'],
-            ]
+            ],
         );
     }
 
@@ -231,7 +231,7 @@ class WidgetTwigPlugin extends AbstractPlugin implements TwigPluginInterface
             },
             [
                 'needs_context' => false,
-            ]
+            ],
         );
     }
 
@@ -247,7 +247,7 @@ class WidgetTwigPlugin extends AbstractPlugin implements TwigPluginInterface
             },
             [
                 'needs_context' => false,
-            ]
+            ],
         );
     }
 
@@ -264,7 +264,7 @@ class WidgetTwigPlugin extends AbstractPlugin implements TwigPluginInterface
         if (!$widgetContainer) {
             throw new EmptyWidgetRegistryException(sprintf(
                 'You have tried to access a widget but %s is empty. To fix this you need to register your widget or view in the registry.',
-                get_class($widgetRegistry)
+                get_class($widgetRegistry),
             ));
         }
 
@@ -285,7 +285,7 @@ class WidgetTwigPlugin extends AbstractPlugin implements TwigPluginInterface
             $widgetName,
             $e->getMessage(),
             $e->getFile(),
-            $e->getLine()
+            $e->getLine(),
         ), $e->getCode(), $e);
     }
 }

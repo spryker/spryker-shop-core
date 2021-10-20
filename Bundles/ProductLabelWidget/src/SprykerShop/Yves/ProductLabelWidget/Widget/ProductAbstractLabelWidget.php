@@ -21,7 +21,7 @@ class ProductAbstractLabelWidget extends AbstractWidget
     {
         $this->addParameter(
             'productLabelDictionaryItemTransfers',
-            $this->getProductLabelDictionaryItems($idProductAbstract)
+            $this->getProductLabelDictionaryItems($idProductAbstract),
         );
     }
 

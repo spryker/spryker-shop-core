@@ -121,7 +121,7 @@ class ResourceSharePageDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new ResourceSharePageToCustomerClientBridge(
-                $container->getLocator()->customer()->client()
+                $container->getLocator()->customer()->client(),
             );
         });
 
@@ -137,7 +137,7 @@ class ResourceSharePageDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::CLIENT_MESSENGER, function (Container $container) {
             return new ResourceSharePageToMessengerClientBridge(
-                $container->getLocator()->messenger()->client()
+                $container->getLocator()->messenger()->client(),
             );
         });
 

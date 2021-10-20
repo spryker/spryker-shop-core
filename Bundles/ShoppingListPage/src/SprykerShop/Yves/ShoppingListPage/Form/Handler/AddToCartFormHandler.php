@@ -95,7 +95,7 @@ class AddToCartFormHandler implements AddToCartFormHandlerInterface
         $shoppingListItemTransfer = $this->createShoppingListItemTransfer(
             $request->request->getInt(static::PARAM_ID_ADD_ITEM),
             $request->request->getInt(static::PARAM_ID_SHOPPING_LIST),
-            (array)$request->request->get(static::PARAM_SHOPPING_LIST_ITEMS)
+            (array)$request->request->get(static::PARAM_SHOPPING_LIST_ITEMS),
         );
 
         return (new ShoppingListItemCollectionTransfer())->addItem($shoppingListItemTransfer);
@@ -141,7 +141,7 @@ class AddToCartFormHandler implements AddToCartFormHandlerInterface
                 $shoppingListItemTransfer = $this->createShoppingListItemTransfer(
                     $idShoppingListItem,
                     $idShoppingList,
-                    $shoppingListItemInformation
+                    $shoppingListItemInformation,
                 );
                 $shoppingListCollectionTransfer->addItem($shoppingListItemTransfer);
             }

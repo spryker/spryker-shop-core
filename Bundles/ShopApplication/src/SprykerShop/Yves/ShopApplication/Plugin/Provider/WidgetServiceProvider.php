@@ -227,7 +227,7 @@ class WidgetServiceProvider extends WidgetTagServiceProvider
         if (!$widgetContainer) {
             throw new EmptyWidgetRegistryException(sprintf(
                 'You have tried to access a widget but %s is empty. To fix this you need to register your widget or view in the registry.',
-                get_class($widgetRegistry)
+                get_class($widgetRegistry),
             ));
         }
 
@@ -248,7 +248,7 @@ class WidgetServiceProvider extends WidgetTagServiceProvider
             $widgetName,
             $e->getMessage(),
             $e->getFile(),
-            $e->getLine()
+            $e->getLine(),
         ), $e->getCode(), $e);
     }
 }

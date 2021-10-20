@@ -95,7 +95,7 @@ class CartPageView implements CartPageViewInterface
             'cartItems' => $this->getItems(),
             'attributes' => $this->getAttributes(
                 $cartPageViewArgumentsTransfer->getLocaleOrFail(),
-                $cartPageViewArgumentsTransfer->getSelectedAttributes()
+                $cartPageViewArgumentsTransfer->getSelectedAttributes(),
             ),
             'isQuoteEditable' => $this->isQuoteEditable(),
             'isQuoteLocked' => $this->isQuoteLocked(),
@@ -144,7 +144,7 @@ class CartPageView implements CartPageViewInterface
         return $this->attributesVariantsProvider->getItemsAttributes(
             $this->getQuote(),
             $locale,
-            $selectedAttributes
+            $selectedAttributes,
         );
     }
 

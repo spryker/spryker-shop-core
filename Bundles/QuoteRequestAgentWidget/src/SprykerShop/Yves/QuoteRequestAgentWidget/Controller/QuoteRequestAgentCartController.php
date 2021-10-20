@@ -116,7 +116,7 @@ class QuoteRequestAgentCartController extends AbstractController
     {
         $redirectUrl = $request->headers->get(
             static::PARAM_REFERER,
-            $this->getRouter()->generate(static::ROUTE_CART)
+            $this->getRouter()->generate(static::ROUTE_CART),
         );
 
         return $this->redirectResponseExternal($redirectUrl);

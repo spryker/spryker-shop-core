@@ -145,7 +145,7 @@ class QuoteRequestAgentWidgetDependencyProvider extends AbstractBundleDependency
     {
         $container->set(static::CLIENT_MESSENGER, function (Container $container) {
             return new QuoteRequestAgentWidgetToMessengerClientBridge(
-                $container->getLocator()->messenger()->client()
+                $container->getLocator()->messenger()->client(),
             );
         });
 

@@ -62,7 +62,7 @@ class SubscriptionWidgetController extends AbstractController
                     'newsletterSubscriptionForm' => $subscriptionForm->createView(),
                 ],
                 [],
-                '@NewsletterWidget/views/subscription-form/subscription-form.twig'
+                '@NewsletterWidget/views/subscription-form/subscription-form.twig',
             );
         }
 

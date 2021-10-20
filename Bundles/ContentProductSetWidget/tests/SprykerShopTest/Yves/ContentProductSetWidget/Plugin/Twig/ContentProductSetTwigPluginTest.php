@@ -122,7 +122,7 @@ class ContentProductSetTwigPluginTest extends Unit
             $this->getContentProductSetTwigPlugin()->getCallable(),
             $this->getContext(),
             static::CONTENT_KEY,
-            static::DEFAULT_TEMPLATE
+            static::DEFAULT_TEMPLATE,
         );
 
         // Assert
@@ -145,7 +145,7 @@ class ContentProductSetTwigPluginTest extends Unit
             $this->getContentProductSetTwigPlugin()->getCallable(),
             $this->getContext(),
             static::CONTENT_KEY,
-            static::DEFAULT_TEMPLATE
+            static::DEFAULT_TEMPLATE,
         );
 
         // Assert
@@ -168,7 +168,7 @@ class ContentProductSetTwigPluginTest extends Unit
             $this->getContentProductSetTwigPlugin()->getCallable(),
             $this->getContext(),
             static::CONTENT_KEY,
-            static::WRONG_TEMPLATE
+            static::WRONG_TEMPLATE,
         );
 
         // Assert
@@ -193,7 +193,7 @@ class ContentProductSetTwigPluginTest extends Unit
             $this->getContentProductSetTwigPlugin()->getCallable(),
             $this->getContext(),
             static::CONTENT_KEY,
-            static::DEFAULT_TEMPLATE
+            static::DEFAULT_TEMPLATE,
         );
 
         // Assert

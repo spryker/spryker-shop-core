@@ -38,16 +38,16 @@ class ProductPackagingUnitWidget extends AbstractWidget
             $baseUnit = $productMeasurementUnitStorageClient->findProductMeasurementBaseUnitByIdProduct($productViewTransfer->getIdProductConcrete());
 
             $productPackagingUnitStorageTransfer = $productPackagingUnitStorageClient->findProductPackagingUnitById(
-                $productViewTransfer->getIdProductConcrete()
+                $productViewTransfer->getIdProductConcrete(),
             );
 
             $salesUnits = $productMeasurementUnitStorageClient->findProductMeasurementSalesUnitByIdProduct(
-                $productViewTransfer->getIdProductConcrete()
+                $productViewTransfer->getIdProductConcrete(),
             );
 
             if ($productPackagingUnitStorageTransfer) {
                 $leadProductSalesUnits = $productMeasurementUnitStorageClient->findProductMeasurementSalesUnitByIdProduct(
-                    $productPackagingUnitStorageTransfer->getIdLeadProduct()
+                    $productPackagingUnitStorageTransfer->getIdLeadProduct(),
                 );
             }
 
@@ -77,7 +77,7 @@ class ProductPackagingUnitWidget extends AbstractWidget
                 $salesUnits,
                 $leadProductSalesUnits,
                 $productPackagingUnitStorageTransfer,
-                $productQuantityStorageTransfer
+                $productQuantityStorageTransfer,
             ));
     }
 

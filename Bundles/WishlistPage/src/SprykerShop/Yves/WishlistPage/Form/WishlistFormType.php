@@ -77,7 +77,7 @@ class WishlistFormType extends AbstractType
                         'pattern' => static::WISH_LIST_NAME_VALIDATION_REGEX,
                         'message' => static::GLOSSARY_KEY_NAME_VALIDATION_ERROR,
                         'match' => true,
-                    ]
+                    ],
                 ),
             ],
         ]);

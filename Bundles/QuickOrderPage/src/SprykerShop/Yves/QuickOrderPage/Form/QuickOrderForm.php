@@ -79,7 +79,7 @@ class QuickOrderForm extends AbstractType
                 'constraints' => [
                         $this->getFactory()->createItemsFieldConstraint(),
                 ],
-            ]
+            ],
         );
 
         return $this;

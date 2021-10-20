@@ -39,7 +39,7 @@ class AgentWidgetFactory extends AbstractFactory
     public function createCustomerAutocompleteValidator(): CustomerAutocompleteValidatorInterface
     {
         return new CustomerAutocompleteValidator(
-            $this->getValidator()
+            $this->getValidator(),
         );
     }
 

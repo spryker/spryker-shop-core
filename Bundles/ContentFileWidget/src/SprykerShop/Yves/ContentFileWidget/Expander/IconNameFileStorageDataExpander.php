@@ -51,7 +51,7 @@ class IconNameFileStorageDataExpander implements FileStorageDataExpanderInterfac
         }
 
         $fileIconName = $this->getFileIconNameByExtension(
-            $fileStorageDataTransfer->getFileNameOrFail()
+            $fileStorageDataTransfer->getFileNameOrFail(),
         );
 
         return $fileStorageDataTransfer->setIconName($fileIconName);

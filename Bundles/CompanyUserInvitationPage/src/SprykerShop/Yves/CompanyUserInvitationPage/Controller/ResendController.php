@@ -58,7 +58,7 @@ class ResendController extends AbstractController
         $companyUserInvitationSendRequestTransfer = (new CompanyUserInvitationSendRequestTransfer())
             ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
             ->setCompanyUserInvitation(
-                (new CompanyUserInvitationTransfer())->setIdCompanyUserInvitation($invitationId)
+                (new CompanyUserInvitationTransfer())->setIdCompanyUserInvitation($invitationId),
             );
 
         $companyUserInvitationSendResponseTransfer = $this->getFactory()
@@ -68,13 +68,13 @@ class ResendController extends AbstractController
         if ($companyUserInvitationSendResponseTransfer->getIsSuccess()) {
             return $this->redirectToRouteWithSuccessMessage(
                 CompanyUserInvitationPageRouteProviderPlugin::ROUTE_NAME_OVERVIEW,
-                'company.user.invitation.resent.success.message'
+                'company.user.invitation.resent.success.message',
             );
         }
 
         return $this->redirectToRouteWithErrorMessage(
             CompanyUserInvitationPageRouteProviderPlugin::ROUTE_NAME_OVERVIEW,
-            'company.user.invitation.resent.error.message'
+            'company.user.invitation.resent.error.message',
         );
     }
 }

@@ -41,7 +41,7 @@ class SalesReturnPageFactory extends AbstractFactory
         return $this->getFormFactory()->create(
             ReturnCreateForm::class,
             $returnCreateFormDataProvider->getData($orderTransfer),
-            $returnCreateFormDataProvider->getOptions()
+            $returnCreateFormDataProvider->getOptions(),
         );
     }
 
@@ -54,7 +54,7 @@ class SalesReturnPageFactory extends AbstractFactory
             $this->getSalesReturnClient(),
             $this->getCustomerClient(),
             $this->getStoreClient(),
-            $this->getReturnCreateFormHandlerPlugins()
+            $this->getReturnCreateFormHandlerPlugins(),
         );
     }
 
@@ -66,7 +66,7 @@ class SalesReturnPageFactory extends AbstractFactory
         return new ReturnCreateFormDataProvider(
             $this->getSalesReturnClient(),
             $this->getSalesReturnSearchClient(),
-            $this->getReturnCreateFormHandlerPlugins()
+            $this->getReturnCreateFormHandlerPlugins(),
         );
     }
 

@@ -94,7 +94,7 @@ class PaymentForm extends AbstractType
                 'constraints' => [
                     $this->createNotBlankConstraint(),
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -117,7 +117,7 @@ class PaymentForm extends AbstractType
                     'property_path' => self::PAYMENT_PROPERTY_PATH . '.' . $paymentMethodSubForm->getPropertyPath(),
                     'error_bubbling' => true,
                     'select_options' => $options['select_options'],
-                ]
+                ],
             );
         }
 

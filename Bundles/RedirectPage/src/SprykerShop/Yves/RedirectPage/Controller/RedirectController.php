@@ -29,7 +29,7 @@ class RedirectController extends AbstractController
     {
         $response = $this->redirectResponseExternal(
             $meta['to_url'],
-            $meta['status']
+            $meta['status'],
         );
 
         // Fix for browser cache for 301 redirects

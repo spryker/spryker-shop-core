@@ -53,7 +53,7 @@ class ConfigurableBundleNoteWidgetRouteProviderPlugin extends AbstractRouteProvi
             '/configurable-bundle-note/add',
             'ConfigurableBundleNoteWidget',
             'Note',
-            'addAction'
+            'addAction',
         );
         $routeCollection->add(static::ROUTE_NAME_CONFIGURABLE_BUNDLE_NOTE_ADD, $route);
 

@@ -39,7 +39,7 @@ class CompanyUserInvitationPageFactory extends AbstractFactory
     public function createCsvInvitationReader(): InvitationReaderInterface
     {
         return new CsvInvitationReader(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -49,7 +49,7 @@ class CompanyUserInvitationPageFactory extends AbstractFactory
     public function createInvitationMapper(): InvitationMapperInterface
     {
         return new InvitationMapper(
-            $this->getCustomerClient()
+            $this->getCustomerClient(),
         );
     }
 
@@ -59,7 +59,7 @@ class CompanyUserInvitationPageFactory extends AbstractFactory
     public function createImportErrorsHandler(): ImportErrorHandlerInterface
     {
         return new ImportErrorHandler(
-            $this->getSessionClient()
+            $this->getSessionClient(),
         );
     }
 
@@ -69,7 +69,7 @@ class CompanyUserInvitationPageFactory extends AbstractFactory
     public function createImportFileValidator()
     {
         return new ImportFileValidator(
-            $this->createCsvInvitationReader()
+            $this->createCsvInvitationReader(),
         );
     }
 

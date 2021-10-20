@@ -52,7 +52,7 @@ class ReturnCreateController extends AbstractReturnController
         return $this->view(
             $response,
             [],
-            '@SalesReturnPage/views/return-create/return-create.twig'
+            '@SalesReturnPage/views/return-create/return-create.twig',
         );
     }
 

@@ -50,7 +50,7 @@ class PersistentCartShareWidgetFactory extends AbstractFactory
     public function createResourceShareRequestBuilder(): ResourceShareRequestBuilder
     {
         return new ResourceShareRequestBuilder(
-            $this->getCustomerClient()
+            $this->getCustomerClient(),
         );
     }
 
@@ -63,7 +63,7 @@ class PersistentCartShareWidgetFactory extends AbstractFactory
             $this->getPersistentCartShareClient(),
             $this->getRouter(),
             $this->createResourceShareRequestBuilder(),
-            $this->getCustomerClient()
+            $this->getCustomerClient(),
         );
     }
 

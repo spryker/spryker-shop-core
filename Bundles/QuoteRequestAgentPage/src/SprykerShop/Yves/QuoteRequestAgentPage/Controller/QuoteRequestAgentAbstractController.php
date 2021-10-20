@@ -88,7 +88,7 @@ class QuoteRequestAgentAbstractController extends AbstractController
             ->findQuoteRequest(
                 (new QuoteRequestFilterTransfer())
                     ->setQuoteRequestReference($quoteRequestReference)
-                    ->setWithVersions($withVersions)
+                    ->setWithVersions($withVersions),
             );
 
         if (!$quoteRequestTransfer) {

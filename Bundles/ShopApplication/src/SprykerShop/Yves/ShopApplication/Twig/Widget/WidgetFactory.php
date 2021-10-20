@@ -96,7 +96,7 @@ class WidgetFactory implements WidgetFactoryInterface
             throw new InvalidWidgetException(sprintf(
                 'Invalid widget %s. This class needs to implement %s.',
                 $widgetClassName,
-                WidgetInterface::class
+                WidgetInterface::class,
             ));
         }
     }

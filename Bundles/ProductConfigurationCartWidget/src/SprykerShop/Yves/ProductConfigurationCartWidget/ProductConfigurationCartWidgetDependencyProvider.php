@@ -54,7 +54,7 @@ class ProductConfigurationCartWidgetDependencyProvider extends AbstractBundleDep
     {
         $container->set(static::CLIENT_PRODUCT_CONFIGURATION_CART, function (Container $container) {
             return new ProductConfigurationCartWidgetToProductConfigurationCartClientBridge(
-                $container->getLocator()->productConfigurationCart()->client()
+                $container->getLocator()->productConfigurationCart()->client(),
             );
         });
 

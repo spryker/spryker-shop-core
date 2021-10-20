@@ -113,8 +113,8 @@ class BusinessUnitAddressController extends AbstractCompanyController
                 $dataProvider->getData(
                     $this->findCurrentCompanyUserTransfer(),
                     null,
-                    $idCompanyBusinessUnit
-                )
+                    $idCompanyBusinessUnit,
+                ),
             );
         }
 
@@ -196,7 +196,7 @@ class BusinessUnitAddressController extends AbstractCompanyController
             ->getCompanyUnitAddressClient()
             ->updateCompanyUnitAddress(
                 (new CompanyUnitAddressTransfer())
-                    ->fromArray($companyBusinessUnitAddressForm->getData())
+                    ->fromArray($companyBusinessUnitAddressForm->getData()),
             );
     }
 
@@ -241,14 +241,14 @@ class BusinessUnitAddressController extends AbstractCompanyController
         $companyUnitAddressFormData = $companyUnitAddressFormDataProvider->getData(
             $this->findCurrentCompanyUserTransfer(),
             $idCompanyUnitAddress,
-            $idCompanyBusinessUnit
+            $idCompanyBusinessUnit,
         );
 
         return $this->getFactory()
             ->createCompanyPageFormFactory()
             ->getCompanyBusinessUnitAddressForm(
                 $companyUnitAddressFormDataProvider->getOptions(),
-                $companyUnitAddressFormData
+                $companyUnitAddressFormData,
             );
     }
 }

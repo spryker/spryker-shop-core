@@ -97,7 +97,7 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
 
         $filterFieldTransfer = $this->createFilterFieldTransfer(
             static::FILTER_FIELD_TYPE_CUSTOMER_REFERENCE,
-            $this->customerClient->getCustomer()->getCustomerReference()
+            $this->customerClient->getCustomer()->getCustomerReference(),
         );
 
         return $orderListTransfer->addFilterField($filterFieldTransfer);
@@ -118,7 +118,7 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
 
         if ($searchType && $searchText) {
             $orderListTransfer->addFilterField(
-                $this->createFilterFieldTransfer($searchType, trim($searchText))
+                $this->createFilterFieldTransfer($searchType, trim($searchText)),
             );
         }
 
@@ -142,8 +142,8 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
             $orderListTransfer->addFilterField(
                 $this->createFilterFieldTransfer(
                     OrderSearchFiltersForm::FIELD_DATE_FROM,
-                    $dateFrom->format(static::DATE_FORMAT)
-                )
+                    $dateFrom->format(static::DATE_FORMAT),
+                ),
             );
         }
 
@@ -153,8 +153,8 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
             $orderListTransfer->addFilterField(
                 $this->createFilterFieldTransfer(
                     OrderSearchFiltersForm::FIELD_DATE_TO,
-                    $modifiedDateTo->modify('+1 minute')->format(static::DATE_FORMAT)
-                )
+                    $modifiedDateTo->modify('+1 minute')->format(static::DATE_FORMAT),
+                ),
             );
         }
 
@@ -194,7 +194,7 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
         $orderListFormatTransfer = new OrderListFormatTransfer();
 
         $orderListFormatTransfer->setExpandWithItems(
-            $orderSearchFormData[OrderSearchForm::FIELD_IS_ORDER_ITEMS_VISIBLE]
+            $orderSearchFormData[OrderSearchForm::FIELD_IS_ORDER_ITEMS_VISIBLE],
         );
 
         return $orderListTransfer->setFormat($orderListFormatTransfer);
@@ -239,7 +239,7 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
         $orderByFilterValue = sprintf('%s::%s', $orderBy, $orderDirection);
 
         return $orderListTransfer->addFilterField(
-            $this->createFilterFieldTransfer(OrderSearchForm::FIELD_ORDER_BY, $orderByFilterValue)
+            $this->createFilterFieldTransfer(OrderSearchForm::FIELD_ORDER_BY, $orderByFilterValue),
         );
     }
 

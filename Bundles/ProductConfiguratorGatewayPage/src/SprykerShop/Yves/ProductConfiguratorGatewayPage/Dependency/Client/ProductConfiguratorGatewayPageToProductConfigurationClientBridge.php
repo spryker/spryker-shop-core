@@ -61,7 +61,7 @@ class ProductConfiguratorGatewayPageToProductConfigurationClientBridge implement
     ): ProductConfiguratorResponseProcessorResponseTransfer {
         return $this->productConfigurationClient->validateProductConfiguratorCheckSumResponse(
             $productConfiguratorResponseProcessorResponseTransfer,
-            $configuratorResponseData
+            $configuratorResponseData,
         );
     }
 
@@ -77,7 +77,7 @@ class ProductConfiguratorGatewayPageToProductConfigurationClientBridge implement
     ): ProductConfiguratorResponseTransfer {
         return $this->productConfigurationClient->mapProductConfiguratorCheckSumResponse(
             $configuratorResponseData,
-            $productConfiguratorResponseTransfer
+            $productConfiguratorResponseTransfer,
         );
     }
 }

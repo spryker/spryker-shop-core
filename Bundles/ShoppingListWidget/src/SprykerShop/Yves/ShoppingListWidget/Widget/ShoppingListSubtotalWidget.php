@@ -54,7 +54,7 @@ class ShoppingListSubtotalWidget extends AbstractWidget
             static::PARAMETER_SHOPPING_LIST_SUBTOTAL,
             $this->getFactory()
                 ->getShoppingListClient()
-                ->calculateShoppingListSubtotal($shoppingListItemProductViews)
+                ->calculateShoppingListSubtotal($shoppingListItemProductViews),
         );
     }
 }

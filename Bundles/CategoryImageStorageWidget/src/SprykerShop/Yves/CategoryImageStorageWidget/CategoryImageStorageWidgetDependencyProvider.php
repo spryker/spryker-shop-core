@@ -39,7 +39,7 @@ class CategoryImageStorageWidgetDependencyProvider extends AbstractBundleDepende
     {
         $container->set(static::CLIENT_CATEGORY_IMAGE_STORAGE, function (Container $container) {
             return new CategoryImageStorageWidgetToCategoryImageStorageClientBridge(
-                $container->getLocator()->categoryImageStorage()->client()
+                $container->getLocator()->categoryImageStorage()->client(),
             );
         });
 

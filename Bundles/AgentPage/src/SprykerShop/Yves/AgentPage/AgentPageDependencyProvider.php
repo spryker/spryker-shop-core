@@ -101,7 +101,7 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_AGENT, function (Container $container): AgentPageToAgentClientInterface {
             return new AgentPageToAgentClientBridge(
-                $container->getLocator()->agent()->client()
+                $container->getLocator()->agent()->client(),
             );
         });
 
@@ -117,7 +117,7 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_CUSTOMER, function (Container $container): AgentPageToCustomerClientInterface {
             return new AgentPageToCustomerClientBridge(
-                $container->getLocator()->customer()->client()
+                $container->getLocator()->customer()->client(),
             );
         });
 
@@ -133,7 +133,7 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_MESSENGER, function (Container $container): AgentPageToMessengerClientInterface {
             return new AgentPageToMessengerClientBridge(
-                $container->getLocator()->messenger()->client()
+                $container->getLocator()->messenger()->client(),
             );
         });
 
@@ -149,7 +149,7 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_QUOTE, function (Container $container): AgentPageToQuoteClientInterface {
             return new AgentPageToQuoteClientBridge(
-                $container->getLocator()->quote()->client()
+                $container->getLocator()->quote()->client(),
             );
         });
 

@@ -27,7 +27,7 @@ class ShopUiFactory extends AbstractFactory
         return new ShopUiTwigExtension(
             $this->getStore(),
             $this->getConfig(),
-            $this->createAssetsUrlProvider()
+            $this->createAssetsUrlProvider(),
         );
     }
 
@@ -38,7 +38,7 @@ class ShopUiFactory extends AbstractFactory
     {
         return new AssetsUrlProvider(
             $this->getConfig(),
-            $this->getTwigClient()
+            $this->getTwigClient(),
         );
     }
 

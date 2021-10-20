@@ -45,7 +45,7 @@ class ConfiguratorStateSanitizer implements ConfiguratorStateSanitizerInterface
         $configuratorStateTransfer = $this->sanitizeProducts($configuratorStateTransfer);
 
         $configuratorStateTransfer->setIsStateModified(
-            (bool)$configuratorStateTransfer->getMessages()->count()
+            (bool)$configuratorStateTransfer->getMessages()->count(),
         );
 
         return $configuratorStateTransfer;
@@ -68,7 +68,7 @@ class ConfiguratorStateSanitizer implements ConfiguratorStateSanitizerInterface
                         ->setValue(static::GLOSSARY_KEY_SLOT_BECAME_UNAVAILABLE)
                         ->setParameters([
                             static::GLOSSARY_PARAMETER_ID => $idConfigurableBundleTemplateSlot,
-                        ])
+                        ]),
                 );
 
                 continue;
@@ -83,7 +83,7 @@ class ConfiguratorStateSanitizer implements ConfiguratorStateSanitizerInterface
                         ->setParameters([
                             static::GLOSSARY_PARAMETER_ID => $idConfigurableBundleTemplateSlot,
                             static::GLOSSARY_PARAMETER_SKU => $sku,
-                        ])
+                        ]),
                 );
 
                 continue;
@@ -118,7 +118,7 @@ class ConfiguratorStateSanitizer implements ConfiguratorStateSanitizerInterface
             if (isset($slotStateFormsData[$idConfigurableBundleTemplateSlot]) && $productViewTransfers->offsetExists($sku)) {
                 $sanitizedProductViewTransfers->offsetSet(
                     $idConfigurableBundleTemplateSlot,
-                    $productViewTransfers->offsetGet($sku)
+                    $productViewTransfers->offsetGet($sku),
                 );
             }
         }

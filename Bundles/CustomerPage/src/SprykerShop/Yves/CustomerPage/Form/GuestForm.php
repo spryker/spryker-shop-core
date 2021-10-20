@@ -222,7 +222,7 @@ class GuestForm extends AbstractType
             },
             function ($isGuestSubmittedValue) {
                 return (bool)$isGuestSubmittedValue;
-            }
+            },
         ));
     }
 

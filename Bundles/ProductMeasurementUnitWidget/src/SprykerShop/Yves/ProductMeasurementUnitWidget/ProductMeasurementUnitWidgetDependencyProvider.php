@@ -53,7 +53,7 @@ class ProductMeasurementUnitWidgetDependencyProvider extends AbstractBundleDepen
     {
         $container->set(static::CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE, function (Container $container) {
             return new ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientBridge(
-                $container->getLocator()->productMeasurementUnitStorage()->client()
+                $container->getLocator()->productMeasurementUnitStorage()->client(),
             );
         });
 
@@ -69,7 +69,7 @@ class ProductMeasurementUnitWidgetDependencyProvider extends AbstractBundleDepen
     {
         $container->set(static::CLIENT_PRODUCT_QUANTITY_STORAGE, function (Container $container) {
             return new ProductMeasurementUnitWidgetToProductQuantityStorageClientBridge(
-                $container->getLocator()->productQuantityStorage()->client()
+                $container->getLocator()->productQuantityStorage()->client(),
             );
         });
 
@@ -85,7 +85,7 @@ class ProductMeasurementUnitWidgetDependencyProvider extends AbstractBundleDepen
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductMeasurementUnitWidgetToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

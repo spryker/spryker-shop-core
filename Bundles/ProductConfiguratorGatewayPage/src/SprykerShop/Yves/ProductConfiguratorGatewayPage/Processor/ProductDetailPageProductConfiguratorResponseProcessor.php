@@ -66,7 +66,7 @@ class ProductDetailPageProductConfiguratorResponseProcessor implements ProductDe
     ): ProductConfiguratorResponseProcessorResponseTransfer {
         $productConfiguratorResponseTransfer = $this->productConfigurationClient->mapProductConfiguratorCheckSumResponse(
             $configuratorResponseData,
-            $productConfiguratorResponseTransfer
+            $productConfiguratorResponseTransfer,
         );
 
         $productConfiguratorResponseProcessorResponseTransfer = (new ProductConfiguratorResponseProcessorResponseTransfer())
@@ -75,7 +75,7 @@ class ProductDetailPageProductConfiguratorResponseProcessor implements ProductDe
 
         $productConfiguratorResponseProcessorResponseTransfer = $this->productConfiguratorResponseValidator->validateProductConfiguratorCheckSumResponse(
             $productConfiguratorResponseProcessorResponseTransfer,
-            $configuratorResponseData
+            $configuratorResponseData,
         );
 
         if (!$productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful()) {
@@ -86,11 +86,11 @@ class ProductDetailPageProductConfiguratorResponseProcessor implements ProductDe
 
         $this->productConfigurationStorageClient->storeProductConfigurationInstanceBySku(
             $productConfiguratorResponseTransfer->getSkuOrFail(),
-            $productConfiguratorResponseTransfer->getProductConfigurationInstanceOrFail()
+            $productConfiguratorResponseTransfer->getProductConfigurationInstanceOrFail(),
         );
 
         return $productConfiguratorResponseProcessorResponseTransfer->setBackUrl(
-            $this->productDetailPageBackUrlResolver->resolveBackUrl($productConfiguratorResponseProcessorResponseTransfer->getProductConfiguratorResponseOrFail())
+            $this->productDetailPageBackUrlResolver->resolveBackUrl($productConfiguratorResponseProcessorResponseTransfer->getProductConfiguratorResponseOrFail()),
         );
     }
 }

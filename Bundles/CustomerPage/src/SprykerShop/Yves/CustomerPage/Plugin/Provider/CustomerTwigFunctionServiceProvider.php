@@ -30,7 +30,7 @@ class CustomerTwigFunctionServiceProvider extends AbstractPlugin implements Serv
         $app['twig'] = $app->share(
             $app->extend('twig', function (Environment $twig) {
                 return $this->registerCustomerTwigFunction($twig);
-            })
+            }),
         );
     }
 
@@ -48,13 +48,13 @@ class CustomerTwigFunctionServiceProvider extends AbstractPlugin implements Serv
                 }
 
                 return $this->getFactory()->getCustomerClient()->getCustomer()->getEmail();
-            })
+            }),
         );
 
         $twig->addFunction(
             new TwigFunction('isLoggedIn', function () {
                 return $this->getFactory()->getCustomerClient()->isLoggedIn();
-            })
+            }),
         );
 
         return $twig;

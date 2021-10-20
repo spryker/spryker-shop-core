@@ -58,7 +58,7 @@ class ProductRelationWidgetDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_STORE, function (Container $container) {
             return new ProductRelationWidgetToStoreClientBridge(
-                $container->getLocator()->store()->client()
+                $container->getLocator()->store()->client(),
             );
         });
 

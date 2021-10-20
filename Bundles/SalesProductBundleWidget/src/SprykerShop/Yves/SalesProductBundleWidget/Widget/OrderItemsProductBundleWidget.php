@@ -52,7 +52,7 @@ class OrderItemsProductBundleWidget extends AbstractWidget
     {
         $this->addParameter(
             static::PARAMETER_PRODUCT_BUNDLES,
-            $this->getFactory()->createItemExtractor()->extractBundleItems($itemTransfers)
+            $this->getFactory()->createItemExtractor()->extractBundleItems($itemTransfers),
         );
     }
 }

@@ -44,7 +44,7 @@ class ReturnCreateFormHandler implements ReturnCreateFormHandlerInterface
             $returnCreateRequestTransfer = $this->appendReturnItemTransfers(
                 $productBundleItemTransferCollection,
                 $productBundleData,
-                $returnCreateRequestTransfer
+                $returnCreateRequestTransfer,
             );
         }
 

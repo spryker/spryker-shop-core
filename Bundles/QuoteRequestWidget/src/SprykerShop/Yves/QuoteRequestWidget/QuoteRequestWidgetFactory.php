@@ -35,7 +35,7 @@ class QuoteRequestWidgetFactory extends AbstractFactory
         return new QuoteRequestCartHandler(
             $this->getQuoteClient(),
             $this->getQuoteRequestClient(),
-            $this->getCompanyUserClient()
+            $this->getCompanyUserClient(),
         );
     }
 

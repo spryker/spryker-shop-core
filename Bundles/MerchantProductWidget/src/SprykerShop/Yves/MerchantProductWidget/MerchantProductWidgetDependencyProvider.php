@@ -62,7 +62,7 @@ class MerchantProductWidgetDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_MERCHANT_STORAGE, function (Container $container) {
             return new MerchantProductWidgetToMerchantStorageClientBridge(
-                $container->getLocator()->merchantStorage()->client()
+                $container->getLocator()->merchantStorage()->client(),
             );
         });
 
@@ -92,7 +92,7 @@ class MerchantProductWidgetDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_PRICE_PRODUCT, function (Container $container) {
             return new MerchantProductWidgetToPriceProductClientBridge(
-                $container->getLocator()->priceProduct()->client()
+                $container->getLocator()->priceProduct()->client(),
             );
         });
 
@@ -108,7 +108,7 @@ class MerchantProductWidgetDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_PRICE_PRODUCT_STORAGE, function (Container $container) {
             return new MerchantProductWidgetToPriceProductStorageClientBridge(
-                $container->getLocator()->priceProductStorage()->client()
+                $container->getLocator()->priceProductStorage()->client(),
             );
         });
 

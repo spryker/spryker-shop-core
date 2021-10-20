@@ -276,7 +276,7 @@ class RegisterForm extends AbstractType
             },
             function ($isGuestSubmittedValue) {
                 return (bool)$isGuestSubmittedValue;
-            }
+            },
         ));
     }
 

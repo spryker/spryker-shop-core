@@ -92,7 +92,7 @@ class AddressChoicesResolver implements AddressChoicesResolverInterface
             $addressTransfer->getAddress1(),
             $addressTransfer->getAddress2(),
             $addressTransfer->getZipCode(),
-            $addressTransfer->getCity()
+            $addressTransfer->getCity(),
         );
     }
 

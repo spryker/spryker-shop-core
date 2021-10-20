@@ -34,7 +34,7 @@ class SendController extends AbstractController
         $companyUserInvitationSendRequestTransfer = (new CompanyUserInvitationSendRequestTransfer())
             ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
             ->setCompanyUserInvitation(
-                (new CompanyUserInvitationTransfer())->setIdCompanyUserInvitation($invitationId)
+                (new CompanyUserInvitationTransfer())->setIdCompanyUserInvitation($invitationId),
             );
 
         $companyUserInvitationSendResponseTransfer = $this->getFactory()
@@ -44,13 +44,13 @@ class SendController extends AbstractController
         if ($companyUserInvitationSendResponseTransfer->getIsSuccess()) {
             return $this->redirectToRouteWithSuccessMessage(
                 CompanyUserInvitationPageRouteProviderPlugin::ROUTE_NAME_OVERVIEW,
-                'company.user.invitation.sent.success.message'
+                'company.user.invitation.sent.success.message',
             );
         }
 
         return $this->redirectToRouteWithErrorMessage(
             CompanyUserInvitationPageRouteProviderPlugin::ROUTE_NAME_OVERVIEW,
-            'company.user.invitation.sent.error.message'
+            'company.user.invitation.sent.error.message',
         );
     }
 
@@ -66,27 +66,27 @@ class SendController extends AbstractController
         if (!$companyUserInvitationSendBatchResponseTransfer->getIsSuccess()) {
             return $this->redirectToRouteWithErrorMessage(
                 CompanyUserInvitationPageRouteProviderPlugin::ROUTE_NAME_OVERVIEW,
-                'company.user.invitation.sent.all.error.message'
+                'company.user.invitation.sent.all.error.message',
             );
         }
 
         if (!$companyUserInvitationSendBatchResponseTransfer->getInvitationsTotal()) {
             return $this->redirectToRouteWithInfoMessage(
                 CompanyUserInvitationPageRouteProviderPlugin::ROUTE_NAME_OVERVIEW,
-                'company.user.invitation.sent.all.none.found.message'
+                'company.user.invitation.sent.all.none.found.message',
             );
         }
 
         if (!$companyUserInvitationSendBatchResponseTransfer->getInvitationsFailed()) {
             return $this->redirectToRouteWithSuccessMessage(
                 CompanyUserInvitationPageRouteProviderPlugin::ROUTE_NAME_OVERVIEW,
-                'company.user.invitation.sent.all.success.message'
+                'company.user.invitation.sent.all.success.message',
             );
         }
 
         return $this->redirectToRouteWithErrorMessage(
             CompanyUserInvitationPageRouteProviderPlugin::ROUTE_NAME_OVERVIEW,
-            'company.user.invitation.sent.all.error.message'
+            'company.user.invitation.sent.all.error.message',
         );
     }
 }

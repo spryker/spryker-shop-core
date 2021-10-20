@@ -56,7 +56,7 @@ class ShopTwigServiceProvider extends AbstractPlugin implements ServiceProviderI
         if (!$app instanceof SprykerApplication) {
             throw new InvalidApplicationException(sprintf(
                 'The used application object need to be an instance of %s.',
-                SprykerApplication::class
+                SprykerApplication::class,
             ));
         }
 
@@ -102,7 +102,7 @@ class ShopTwigServiceProvider extends AbstractPlugin implements ServiceProviderI
                 [
                     $app['twig.loader.yves'],
                     $app['twig.loader.filesystem'],
-                ]
+                ],
             );
         });
     }
@@ -133,7 +133,7 @@ class ShopTwigServiceProvider extends AbstractPlugin implements ServiceProviderI
                 if (class_exists('Symfony\Bridge\Twig\Extension\RoutingExtension')) {
                     if (isset($app['form.factory'])) {
                         $app['twig.loader']->addLoader(
-                            new FilesystemLoader(__DIR__ . '/../../Resources/views/Form')
+                            new FilesystemLoader(__DIR__ . '/../../Resources/views/Form'),
                         );
                     }
                 }
@@ -145,7 +145,7 @@ class ShopTwigServiceProvider extends AbstractPlugin implements ServiceProviderI
                 $twig->addExtension($this->getFactory()->createShopApplicationTwigExtensionPlugin());
 
                 return $twig;
-            })
+            }),
         );
     }
 }

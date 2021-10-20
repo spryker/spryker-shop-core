@@ -43,7 +43,7 @@ class QuoteRequestAgentSaveController extends QuoteRequestAgentAbstractControlle
             ->getQuoteRequestAgentClient()
             ->findQuoteRequest(
                 (new QuoteRequestFilterTransfer())
-                    ->setQuoteRequestReference($quoteTransfer->getQuoteRequestReference())
+                    ->setQuoteRequestReference($quoteTransfer->getQuoteRequestReference()),
             );
 
         if (!$quoteRequestTransfer && !$quoteTransfer->getQuoteRequestReference()) {

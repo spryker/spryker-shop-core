@@ -94,7 +94,7 @@ class ConfiguratorPage
 
         $this->session->set(
             static::CONFIGURATOR_SESSION_KEY,
-            json_decode($this->request->getContent(), true) ?? []
+            json_decode($this->request->getContent(), true) ?? [],
         );
 
         $productConfiguratorPageResponseTransfer
@@ -110,7 +110,7 @@ class ConfiguratorPage
     protected function renderHtmlPageAction(): string
     {
         return file_get_contents(
-            __DIR__ . DIRECTORY_SEPARATOR . 'Theme' . DIRECTORY_SEPARATOR . 'index.html'
+            __DIR__ . DIRECTORY_SEPARATOR . 'Theme' . DIRECTORY_SEPARATOR . 'index.html',
         );
     }
 
@@ -121,7 +121,7 @@ class ConfiguratorPage
     {
         return new JsonResponse(
             ['data' => $this->getDataFromSession()],
-            Response::HTTP_OK
+            Response::HTTP_OK,
         );
     }
 
@@ -132,15 +132,15 @@ class ConfiguratorPage
     {
         $productConfiguration = $this->request->request->all() ?? [];
         $checkSum = (new CrcOpenSslChecksumGenerator(
-            getenv('SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR') ?: ''
+            getenv('SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR') ?: '',
         ))->generateChecksum(
             $productConfiguration,
-            getenv('SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY') ?: ''
+            getenv('SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY') ?: '',
         );
 
         return new JsonResponse(
             array_merge($productConfiguration, ['checkSum' => $checkSum, 'timestamp' => time()]),
-            Response::HTTP_OK
+            Response::HTTP_OK,
         );
     }
 
@@ -164,7 +164,7 @@ class ConfiguratorPage
             '%s://%s?token=%s',
             getenv('SPRYKER_PRODUCT_CONFIGURATOR_PORT') === '443' ? 'https' : 'http',
             getenv('SPRYKER_PRODUCT_CONFIGURATOR_HOST') ?: '',
-            htmlspecialchars($this->session->getId())
+            htmlspecialchars($this->session->getId()),
         );
     }
 }

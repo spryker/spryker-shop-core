@@ -78,7 +78,7 @@ class ShopCmsSlotTwigPluginTest extends Unit
             static::SLOT_KEY,
             static::PROVIDED_DATA,
             static::REQUIRED_DATA,
-            static::AUTO_FILLED_DATA
+            static::AUTO_FILLED_DATA,
         );
 
         // Act
@@ -109,7 +109,7 @@ class ShopCmsSlotTwigPluginTest extends Unit
             static::SLOT_KEY,
             static::PROVIDED_DATA,
             ['missing-provided-key'] + static::REQUIRED_DATA,
-            static::AUTO_FILLED_DATA
+            static::AUTO_FILLED_DATA,
         );
 
         // Assert
@@ -140,7 +140,7 @@ class ShopCmsSlotTwigPluginTest extends Unit
             static::SLOT_KEY,
             static::PROVIDED_DATA,
             static::REQUIRED_DATA,
-            static::AUTO_FILLED_DATA
+            static::AUTO_FILLED_DATA,
         );
 
         // Act
@@ -168,7 +168,7 @@ class ShopCmsSlotTwigPluginTest extends Unit
             static::SLOT_KEY,
             static::PROVIDED_DATA,
             static::REQUIRED_DATA,
-            static::AUTO_FILLED_DATA
+            static::AUTO_FILLED_DATA,
         );
 
         // Act
@@ -225,7 +225,7 @@ class ShopCmsSlotTwigPluginTest extends Unit
             ShopCmsSlotDependencyProvider::PLUGINS_CMS_SLOT_CONTENT,
             [
                 static::CONTENT_PROVIDER_TYPE => $this->getCmsSlotContentPluginMock($cmsSlotContentResponseTransfer),
-            ]
+            ],
         );
     }
 
@@ -238,7 +238,7 @@ class ShopCmsSlotTwigPluginTest extends Unit
     {
         $this->tester->setDependency(
             ShopCmsSlotDependencyProvider::CLIENT_CMS_SLOT_STORAGE,
-            $this->getCmsSlotStorageClientMock($cmsSlotStorageTransfer)
+            $this->getCmsSlotStorageClientMock($cmsSlotStorageTransfer),
         );
     }
 }

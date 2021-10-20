@@ -94,8 +94,8 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
 
         $merchantStorageTransfer = $this->merchantStorageClient->findOne(
             (new MerchantStorageCriteriaTransfer())->addMerchantReference(
-                $productOfferStorageTransfer->getMerchantReferenceOrFail()
-            )
+                $productOfferStorageTransfer->getMerchantReferenceOrFail(),
+            ),
         );
 
         if (!$merchantStorageTransfer) {

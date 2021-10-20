@@ -52,7 +52,7 @@ class OrderCustomReferenceController extends AbstractController
                 ->getOrderCustomReferenceClient()
                 ->setOrderCustomReference(
                     $orderCustomReferenceForm->getData()[OrderCustomReferenceForm::FIELD_ORDER_CUSTOM_REFERENCE] ?? '',
-                    $quoteClient->getQuote()
+                    $quoteClient->getQuote(),
                 );
 
             if ($quoteResponseTransfer->getIsSuccessful()) {
@@ -63,7 +63,7 @@ class OrderCustomReferenceController extends AbstractController
         }
 
         return $this->redirectResponseExternal(
-            $orderCustomReferenceForm->getData()[OrderCustomReferenceForm::FIELD_BACK_URL]
+            $orderCustomReferenceForm->getData()[OrderCustomReferenceForm::FIELD_BACK_URL],
         );
     }
 

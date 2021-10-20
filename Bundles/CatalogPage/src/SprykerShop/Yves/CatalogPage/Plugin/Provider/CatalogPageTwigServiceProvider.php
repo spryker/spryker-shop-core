@@ -33,7 +33,7 @@ class CatalogPageTwigServiceProvider extends AbstractPlugin implements ServicePr
                 $twig->addExtension($twigExtension);
 
                 return $twig;
-            })
+            }),
         );
     }
 

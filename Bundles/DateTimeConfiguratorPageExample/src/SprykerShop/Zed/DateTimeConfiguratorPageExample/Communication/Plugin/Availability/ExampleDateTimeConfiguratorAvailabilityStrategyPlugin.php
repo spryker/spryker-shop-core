@@ -67,7 +67,7 @@ class ExampleDateTimeConfiguratorAvailabilityStrategyPlugin extends AbstractPlug
         return $this->getFacade()->findProductConcreteAvailability(
             $sku,
             $storeTransfer,
-            $productAvailabilityCriteriaTransfer
+            $productAvailabilityCriteriaTransfer,
         );
     }
 }

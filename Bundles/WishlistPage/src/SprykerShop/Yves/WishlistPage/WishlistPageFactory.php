@@ -116,7 +116,7 @@ class WishlistPageFactory extends AbstractFactory
     {
         return new WishlistFormDataProvider(
             $this->getWishlistClient(),
-            $this->getCustomerClient()
+            $this->getCustomerClient(),
         );
     }
 
@@ -184,7 +184,7 @@ class WishlistPageFactory extends AbstractFactory
     {
         return new WishlistItemExpander(
             $this->getWishlistItemRequestExpanderPlugins(),
-            $this->getWishlistItemExpanderPlugins()
+            $this->getWishlistItemExpanderPlugins(),
         );
     }
 

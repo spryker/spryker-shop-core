@@ -53,7 +53,7 @@ class UploadOrderForm extends AbstractType
                 'constraints' => [
                     $this->getFactory()->createUploadOrderCorrectConstraint(),
                 ],
-            ]
+            ],
         );
 
         return $this;

@@ -60,7 +60,7 @@ class TextOrderForm extends AbstractType
                 'constraints' => [
                     $this->getFactory()->createTextOrderCorrectConstraint(),
                 ],
-            ]
+            ],
         );
 
         return $this;

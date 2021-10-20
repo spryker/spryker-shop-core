@@ -27,7 +27,7 @@ class TextOrderFormatConstraintValidator extends ConstraintValidator
             throw new InvalidArgumentException(sprintf(
                 'Expected constraint instance of %s, got %s instead.',
                 TextOrderFormatConstraint::class,
-                get_class($constraint)
+                get_class($constraint),
             ));
         }
 

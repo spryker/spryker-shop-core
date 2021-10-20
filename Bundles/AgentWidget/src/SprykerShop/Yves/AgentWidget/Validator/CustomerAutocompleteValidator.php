@@ -36,7 +36,7 @@ class CustomerAutocompleteValidator implements CustomerAutocompleteValidatorInte
     public function validate(array $query): ConstraintViolationListInterface
     {
         $constraint = new Collection(
-            $this->getQueryValidations()
+            $this->getQueryValidations(),
         );
 
         return $this->validator->validate($query, $constraint);

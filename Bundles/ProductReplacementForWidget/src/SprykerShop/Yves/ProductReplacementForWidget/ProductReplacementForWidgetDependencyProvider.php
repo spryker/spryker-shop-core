@@ -53,7 +53,7 @@ class ProductReplacementForWidgetDependencyProvider extends AbstractBundleDepend
     {
         $container->set(static::CLIENT_PRODUCT_ALTERNATIVE_STORAGE, function (Container $container) {
             return new ProductReplacementForWidgetToProductAlternativeStorageClientBridge(
-                $container->getLocator()->productAlternativeStorage()->client()
+                $container->getLocator()->productAlternativeStorage()->client(),
             );
         });
 
@@ -69,7 +69,7 @@ class ProductReplacementForWidgetDependencyProvider extends AbstractBundleDepend
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductReplacementForWidgetToProductStorageClientBridge(
-                $container->getLocator()->productStorage()->client()
+                $container->getLocator()->productStorage()->client(),
             );
         });
 

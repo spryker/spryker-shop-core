@@ -195,7 +195,7 @@ class WidgetTagTwigNode extends Node
         $compiler->raw(sprintf(
             '"%s" => $context[\'app\'][\'%s\']->getTemplatePath($widget',
             WidgetTagTokenParser::VARIABLE_WIDGET_TEMPLATE_PATH,
-            WidgetTagServiceProvider::WIDGET_TAG_SERVICE
+            WidgetTagServiceProvider::WIDGET_TAG_SERVICE,
         ));
 
         if ($this->hasNode(WidgetTagTokenParser::NODE_USE)) {

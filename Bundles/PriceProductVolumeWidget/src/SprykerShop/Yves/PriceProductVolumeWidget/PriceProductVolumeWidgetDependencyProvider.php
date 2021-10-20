@@ -65,7 +65,7 @@ class PriceProductVolumeWidgetDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new PriceProductVolumeWidgetToPriceProductStorageClientBridge(
-                $container->getLocator()->priceProductStorage()->client()
+                $container->getLocator()->priceProductStorage()->client(),
             );
         });
 
@@ -81,7 +81,7 @@ class PriceProductVolumeWidgetDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::CLIENT_PRICE, function (Container $container) {
             return new PriceProductVolumeWidgetToPriceClientBridge(
-                $container->getLocator()->price()->client()
+                $container->getLocator()->price()->client(),
             );
         });
 
@@ -97,7 +97,7 @@ class PriceProductVolumeWidgetDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::CLIENT_CURRENCY, function (Container $container) {
             return new PriceProductVolumeWidgetToCurrencyClientBridge(
-                $container->getLocator()->currency()->client()
+                $container->getLocator()->currency()->client(),
             );
         });
 
@@ -113,7 +113,7 @@ class PriceProductVolumeWidgetDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new PriceProductVolumeWidgetToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

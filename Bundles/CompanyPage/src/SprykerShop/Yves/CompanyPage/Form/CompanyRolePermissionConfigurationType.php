@@ -110,7 +110,7 @@ class CompanyRolePermissionConfigurationType extends AbstractType
             [
                 'property_path' => PermissionTransfer::CONFIGURATION . '[' . $fieldName . ']',
                 'required' => false,
-            ]
+            ],
         );
 
         $builder->add($fieldName, $this->getSymfonyTypeByFieldType($fieldType), $options);

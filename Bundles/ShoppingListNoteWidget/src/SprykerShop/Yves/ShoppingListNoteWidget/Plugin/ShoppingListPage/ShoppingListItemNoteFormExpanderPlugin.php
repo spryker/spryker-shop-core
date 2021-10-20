@@ -36,7 +36,7 @@ class ShoppingListItemNoteFormExpanderPlugin extends AbstractPlugin implements S
             [
                 'data_class' => ShoppingListItemNoteTransfer::class,
                 'label' => false,
-            ]
+            ],
         );
     }
 }

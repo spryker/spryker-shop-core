@@ -198,7 +198,7 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container->set(static::CLIENT_PRICE, function (Container $container) {
             return new ShoppingListPageToPriceClientBridge(
-                $container->getLocator()->price()->client()
+                $container->getLocator()->price()->client(),
             );
         });
 
@@ -264,7 +264,7 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ShoppingListPageToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

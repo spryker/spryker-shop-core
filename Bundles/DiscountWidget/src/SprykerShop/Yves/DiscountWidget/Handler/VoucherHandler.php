@@ -174,7 +174,7 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
             $quoteTransfer->getUsedNotAppliedVoucherCodes(),
             function ($usedNotAppliedVoucherCode) use ($voucherCode) {
                 return $usedNotAppliedVoucherCode != $voucherCode;
-            }
+            },
         );
 
         $quoteTransfer->setUsedNotAppliedVoucherCodes($usedNotAppliedVoucherCodeResultList);

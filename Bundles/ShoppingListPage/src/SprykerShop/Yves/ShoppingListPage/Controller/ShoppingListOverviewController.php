@@ -181,7 +181,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
 
         $shoppingListForm = $this->getFactory()
             ->getShoppingListUpdateForm(
-                $shoppingListTransfer
+                $shoppingListTransfer,
             )
             ->handleRequest($request);
 

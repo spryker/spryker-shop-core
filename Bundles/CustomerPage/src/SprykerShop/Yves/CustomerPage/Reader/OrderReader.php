@@ -95,7 +95,7 @@ class OrderReader implements OrderReaderInterface
             ->setCustomerReference($customerTransfer->getCustomerReference());
 
         $orderListTransfer->setPagination(
-            $this->createPaginationTransfer($request)
+            $this->createPaginationTransfer($request),
         );
 
         if (!$orderListTransfer->getFilter()) {
@@ -131,10 +131,10 @@ class OrderReader implements OrderReaderInterface
         $paginationTransfer = new PaginationTransfer();
 
         $paginationTransfer->setPage(
-            $request->query->getInt(static::PARAM_PAGE, static::DEFAULT_PAGE)
+            $request->query->getInt(static::PARAM_PAGE, static::DEFAULT_PAGE),
         );
         $paginationTransfer->setMaxPerPage(
-            $request->query->getInt(static::PARAM_PER_PAGE, $this->customerPageConfig->getDefaultOrderHistoryPerPage())
+            $request->query->getInt(static::PARAM_PER_PAGE, $this->customerPageConfig->getDefaultOrderHistoryPerPage()),
         );
 
         return $paginationTransfer;

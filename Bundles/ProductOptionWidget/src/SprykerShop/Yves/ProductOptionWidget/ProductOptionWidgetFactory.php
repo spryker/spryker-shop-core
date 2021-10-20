@@ -25,7 +25,7 @@ class ProductOptionWidgetFactory extends AbstractFactory
     {
         return new ShoppingListItemProductOptionFormDataProvider(
             $this->getProductOptionStorageClient(),
-            $this->createProductAbstractOptionStorageMapper()
+            $this->createProductAbstractOptionStorageMapper(),
         );
     }
 

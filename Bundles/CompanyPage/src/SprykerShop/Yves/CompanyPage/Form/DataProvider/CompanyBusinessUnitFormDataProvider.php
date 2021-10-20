@@ -80,8 +80,8 @@ class CompanyBusinessUnitFormDataProvider
         $addressCollection = $this->companyUnitAddressClient->getCompanyUnitAddressCollection(
             $this->prepareCompanyUnitAddressCriteriaFilterTransfer(
                 $companyBusinessUnitTransfer->getFkCompany(),
-                $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
-            )
+                $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
+            ),
         );
 
         $companyBusinessUnitTransfer->setAddressCollection($addressCollection);
@@ -174,7 +174,7 @@ class CompanyBusinessUnitFormDataProvider
             $businessUnits[$companyBusinessUnit->getIdCompanyBusinessUnit()] = sprintf(
                 '%s (ID: %d)',
                 $companyBusinessUnit->getName(),
-                $companyBusinessUnit->getIdCompanyBusinessUnit()
+                $companyBusinessUnit->getIdCompanyBusinessUnit(),
             );
         }
 
@@ -191,7 +191,7 @@ class CompanyBusinessUnitFormDataProvider
         $criteriaFilterTransfer = $this->createCompanyBusinessUnitCriteriaFilterTransfer($idCompany);
 
         $companyBusinessUnitCollection = $this->businessUnitClient->getCompanyBusinessUnitCollection(
-            $criteriaFilterTransfer
+            $criteriaFilterTransfer,
         );
 
         return $companyBusinessUnitCollection;
@@ -228,7 +228,7 @@ class CompanyBusinessUnitFormDataProvider
                 $companyUnitAddress->getAddress2(),
                 $companyUnitAddress->getZipCode(),
                 $companyUnitAddress->getCity(),
-                $countryName
+                $countryName,
             );
             $companyUnitAddresses[$companyUnitAddress->getIdCompanyUnitAddress()] = $companyAddressValue;
         }

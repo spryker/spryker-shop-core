@@ -47,7 +47,7 @@ class QuoteController extends AbstractController
                 ->setNoteToQuote($note);
             if ($quoteResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(
-                    $this->getSuccessMessage()
+                    $this->getSuccessMessage(),
                 );
             }
         }

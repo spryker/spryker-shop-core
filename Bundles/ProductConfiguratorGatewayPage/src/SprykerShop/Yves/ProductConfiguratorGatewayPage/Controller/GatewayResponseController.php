@@ -49,12 +49,12 @@ class GatewayResponseController extends AbstractController
             ->createProductConfiguratorResponseProcessor()
             ->processProductConfiguratorCheckSumResponse(
                 $productConfiguratorResponseTransfer,
-                $request->request->all()
+                $request->request->all(),
             );
 
         if ($productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful()) {
             return $this->redirectResponseExternal(
-                $productConfiguratorResponseProcessorResponseTransfer->getBackUrlOrFail()
+                $productConfiguratorResponseProcessorResponseTransfer->getBackUrlOrFail(),
             );
         }
 
@@ -82,7 +82,7 @@ class GatewayResponseController extends AbstractController
             ->translateBulk(
                 array_keys($errorsMessages),
                 $this->getLocale(),
-                $errorsMessages
+                $errorsMessages,
             );
 
         foreach ($translatedErrorMessages as $translatedErrorMessage) {

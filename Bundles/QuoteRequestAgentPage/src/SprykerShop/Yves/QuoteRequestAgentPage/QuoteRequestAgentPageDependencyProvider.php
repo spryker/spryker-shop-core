@@ -287,7 +287,7 @@ class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_MESSENGER, function (Container $container) {
             return new QuoteRequestAgentPageToMessengerClientBridge(
-                $container->getLocator()->messenger()->client()
+                $container->getLocator()->messenger()->client(),
             );
         });
 
@@ -303,7 +303,7 @@ class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_PERSISTENT_CART, function (Container $container) {
             return new QuoteRequestAgentPageToPersistentCartClientBridge(
-                $container->getLocator()->persistentCart()->client()
+                $container->getLocator()->persistentCart()->client(),
             );
         });
 

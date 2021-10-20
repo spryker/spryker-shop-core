@@ -85,7 +85,7 @@ class ImportController extends AbstractController
             if (!$companyUserInvitationImportResponseTransfer->getIsSuccess() && !$companyUserInvitationImportResponseTransfer->getErrors()) {
                 return $this->redirectToRouteWithErrorMessage(
                     CompanyUserInvitationPageRouteProviderPlugin::ROUTE_NAME_OVERVIEW,
-                    'company.user.invitation.import.error.message'
+                    'company.user.invitation.import.error.message',
                 );
             }
             if ($companyUserInvitationImportResponseTransfer->getErrors()) {
@@ -199,7 +199,7 @@ class ImportController extends AbstractController
 
         $page = $request->query->getInt(
             static::DEFAULT_COMPANY_USER_INVITATION_LIST_PARAM_PAGE,
-            static::DEFAULT_COMPANY_USER_INVITATION_LIST_PAGE
+            static::DEFAULT_COMPANY_USER_INVITATION_LIST_PAGE,
         );
 
         $paginationTransfer = (new PaginationTransfer())

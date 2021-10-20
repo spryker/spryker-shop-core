@@ -53,7 +53,7 @@ class ShoppingListItemProductOptionFormDataProvider implements ShoppingListItemP
         $storageProductOptionGroupCollectionTransfer = $this->productAbstractOptionStorageMapper
             ->mapShoppingListItemProductOptionsToProductAbstractOptionStorage(
                 $productAbstractOptionStorageTransfer,
-                $shoppingListItemTransfer
+                $shoppingListItemTransfer,
             );
 
         return $storageProductOptionGroupCollectionTransfer->getProductOptionGroups();

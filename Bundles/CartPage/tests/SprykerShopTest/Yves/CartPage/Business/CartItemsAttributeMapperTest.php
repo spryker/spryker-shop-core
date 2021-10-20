@@ -242,7 +242,7 @@ class CartItemsAttributeMapperTest extends Unit
     {
         return new CartItemsAttributeMapper(
             $this->getProductStorageClientMock($withNewAttributeMap),
-            $this->getCartItemsMapperMock($expectedAvailabilityMap)
+            $this->getCartItemsMapperMock($expectedAvailabilityMap),
         );
     }
 

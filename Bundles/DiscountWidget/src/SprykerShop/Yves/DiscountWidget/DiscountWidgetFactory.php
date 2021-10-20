@@ -33,7 +33,7 @@ class DiscountWidgetFactory extends AbstractFactory
         return new VoucherHandler(
             $this->getCalculationClient(),
             $this->getQuoteClient(),
-            $this->getFlashMessenger()
+            $this->getFlashMessenger(),
         );
     }
 

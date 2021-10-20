@@ -175,7 +175,7 @@ class WidgetTagTwigTokenParser extends AbstractTokenParser
             if (isset($nodes[static::NODE_WIDGET_EXPRESSION])) {
                 throw new SyntaxError(
                     sprintf('Ambiguous use of "args", can be used only when widget\'s name defined as a string literal.'),
-                    $stream->getCurrent()->getLine()
+                    $stream->getCurrent()->getLine(),
                 );
             }
             $nodes[static::NODE_ARGS] = $args;
@@ -317,10 +317,10 @@ class WidgetTagTwigTokenParser extends AbstractTokenParser
                     throw new SyntaxError(
                         sprintf(
                             'Unexpected end of template. Twig was looking for the following tags "nowidget", or "endwidget" to close the "widget" block started at line %d).',
-                            $token->getLine()
+                            $token->getLine(),
                         ),
                         $stream->getCurrent()->getLine(),
-                        $stream->getSourceContext()
+                        $stream->getSourceContext(),
                     );
             }
         }

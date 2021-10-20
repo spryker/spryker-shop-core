@@ -267,7 +267,7 @@ class CompanyCreateForm extends AbstractType
             },
             function ($isGuestSubmittedValue) {
                 return (bool)$isGuestSubmittedValue;
-            }
+            },
         ));
     }
 

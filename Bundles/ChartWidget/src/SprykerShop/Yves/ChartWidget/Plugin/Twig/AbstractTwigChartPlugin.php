@@ -42,7 +42,7 @@ abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigCha
             new TwigFunction(
                 static::TWIG_FUNCTION_NAME,
                 [$this, 'renderChart'],
-                $this->getDefaultTwigOptions()
+                $this->getDefaultTwigOptions(),
             ),
         ];
     }

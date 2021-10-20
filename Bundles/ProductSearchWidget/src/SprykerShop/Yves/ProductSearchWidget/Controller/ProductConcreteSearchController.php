@@ -46,7 +46,7 @@ class ProductConcreteSearchController extends AbstractController
         return $this->view(
             $products,
             [],
-            '@ProductSearchWidget/views/product-search-results/product-search-results.twig'
+            '@ProductSearchWidget/views/product-search-results/product-search-results.twig',
         );
     }
 

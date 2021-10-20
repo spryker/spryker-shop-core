@@ -86,7 +86,7 @@ class CmsBlockWidgetTwigPlugin extends AbstractTwigExtensionPlugin
                 'needs_context' => true,
                 'needs_environment' => true,
                 'is_safe' => ['html'],
-            ]
+            ],
         );
     }
 
@@ -148,7 +148,7 @@ class CmsBlockWidgetTwigPlugin extends AbstractTwigExtensionPlugin
 
         $cmsBlockTransfer->setGlossary(
             (new CmsBlockGlossaryTransfer())
-                ->setGlossaryPlaceholders($cmsBlockGlossaryPlaceholderTransfers)
+                ->setGlossaryPlaceholders($cmsBlockGlossaryPlaceholderTransfers),
         );
 
         return $cmsBlockTransfer;

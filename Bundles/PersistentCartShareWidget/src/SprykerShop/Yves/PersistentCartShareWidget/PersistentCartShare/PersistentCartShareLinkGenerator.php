@@ -83,7 +83,7 @@ class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGenerat
         $resourceShareLinks = [];
         foreach ($shareOptions[$shareOptionGroup] as $shareOption) {
             $cartResourceShare = $this->persistentCartShareClient->generateCartResourceShare(
-                $this->resourceShareRequestBuilder->buildResourceShareRequest($idQuote, $shareOption)
+                $this->resourceShareRequestBuilder->buildResourceShareRequest($idQuote, $shareOption),
             );
             $resourceShareLinks[$shareOption] = $this->buildResourceShareLink($cartResourceShare->getResourceShare());
         }
@@ -130,7 +130,7 @@ class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGenerat
     public function generateShareOptionGroups(): array
     {
         $shareOptions = $this->persistentCartShareClient->getCartShareOptions(
-            $this->customerClient->getCustomer()
+            $this->customerClient->getCustomer(),
         );
         $shareOptionGroupNames = array_keys($shareOptions);
 

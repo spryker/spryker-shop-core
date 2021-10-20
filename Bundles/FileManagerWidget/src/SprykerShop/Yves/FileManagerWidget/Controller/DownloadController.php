@@ -47,7 +47,7 @@ class DownloadController extends AbstractController
             ->getFileManagerStorageClient()
             ->findFileById(
                 $request->query->getInt(self::PARAM_ID_FILE),
-                $this->getLocale()
+                $this->getLocale(),
             );
 
         if ($fileStorageDataTransfer === null) {

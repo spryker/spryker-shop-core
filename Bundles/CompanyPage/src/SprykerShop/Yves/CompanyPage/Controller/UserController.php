@@ -128,7 +128,7 @@ class UserController extends AbstractCompanyController
             ->createCompanyUserFormDataProvider();
 
         $companyUserFormOptions = $dataProvider->getOptions(
-            $this->findCurrentCompanyUserTransfer()->getFkCompany()
+            $this->findCurrentCompanyUserTransfer()->getFkCompany(),
         );
         $companyUserForm = $this->getFactory()
             ->createCompanyPageFormFactory()
@@ -139,7 +139,7 @@ class UserController extends AbstractCompanyController
             $companyUserForm->setData($dataProvider->getData(
                 $this->findCurrentCompanyUserTransfer()->getFkCompany(),
                 null,
-                $companyUserFormOptions
+                $companyUserFormOptions,
             ));
         }
 
@@ -193,8 +193,8 @@ class UserController extends AbstractCompanyController
             ->createCompanyPageFormFactory()
             ->getCompanyUserForm(
                 $dataProvider->getOptions(
-                    $this->findCurrentCompanyUserTransfer()->getFkCompany()
-                )
+                    $this->findCurrentCompanyUserTransfer()->getFkCompany(),
+                ),
             )
             ->handleRequest($request);
 

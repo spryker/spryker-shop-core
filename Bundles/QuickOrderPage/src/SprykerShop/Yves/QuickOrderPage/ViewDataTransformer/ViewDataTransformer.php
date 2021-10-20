@@ -86,7 +86,7 @@ class ViewDataTransformer implements ViewDataTransformerInterface
                 function ($object, $property) {
                     return is_object($property) ? $object->{$property} : $object[$property];
                 },
-                $productConcreteTransfer
+                $productConcreteTransfer,
             );
         } catch (Throwable $exception) {
             $data = null;

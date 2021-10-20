@@ -25,7 +25,7 @@ class CompanyUserInvitationPreRegistrationCustomerTransferExpanderPlugin extends
     public function expand(CustomerTransfer $customerTransfer): CustomerTransfer
     {
         $customerTransfer->setCompanyUserInvitationHash(
-            $this->getFactory()->getSessionClient()->get(CompanyUserInvitationPageConfig::INVITATION_SESSION_ID)
+            $this->getFactory()->getSessionClient()->get(CompanyUserInvitationPageConfig::INVITATION_SESSION_ID),
         );
 
         return $customerTransfer;

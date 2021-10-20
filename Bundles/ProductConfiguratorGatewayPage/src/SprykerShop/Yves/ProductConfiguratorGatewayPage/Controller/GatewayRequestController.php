@@ -62,11 +62,11 @@ class GatewayRequestController extends AbstractController
             ->setSubmitUrl($this->getRouter()->generate(
                 ProductConfiguratorGatewayPageRouteProviderPlugin::ROUTE_NAME_PRODUCT_CONFIGURATOR_GATEWAY_RESPONSE,
                 [],
-                static::ABSOLUTE_URL
+                static::ABSOLUTE_URL,
             ));
 
         $productConfiguratorRequestTransfer = $this->getFactory()->getProductConfigurationClient()->expandProductConfiguratorRequestWithContextData(
-            (new ProductConfiguratorRequestTransfer())->setProductConfiguratorRequestData($productConfiguratorRequestDataTransfer)
+            (new ProductConfiguratorRequestTransfer())->setProductConfiguratorRequestData($productConfiguratorRequestDataTransfer),
         );
 
         $productConfiguratorRedirectTransfer = $this->getFactory()
@@ -105,7 +105,7 @@ class GatewayRequestController extends AbstractController
     protected function validateProductConfiguratorRequestDataForm(Request $request): ProductConfiguratorRequestDataTransfer
     {
         $productConfiguratorRequestDataForm = $this->getFactory()->getProductConfiguratorRequestDataForm(
-            $this->getFactory()->createProductConfiguratorRequestDataFormDataProvider()->getOptions($request)
+            $this->getFactory()->createProductConfiguratorRequestDataFormDataProvider()->getOptions($request),
         );
 
         $productConfiguratorRequestDataForm->handleRequest($request);

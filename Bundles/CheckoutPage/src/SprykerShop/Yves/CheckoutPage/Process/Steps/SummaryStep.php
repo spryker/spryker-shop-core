@@ -120,7 +120,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
             'quoteTransfer' => $quoteTransfer,
             'cartItems' => $this->productBundleClient->getGroupedBundleItems(
                 $quoteTransfer->getItems(),
-                $quoteTransfer->getBundleItems()
+                $quoteTransfer->getBundleItems(),
             ),
             'shipmentGroups' => $this->expandShipmentGroupsWithCartItems($shipmentGroups, $quoteTransfer),
             'totalCosts' => $this->getShipmentTotalCosts($shipmentGroups, $quoteTransfer),
@@ -142,7 +142,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
         foreach ($shipmentGroupTransfers as $shipmentGroupTransfer) {
             $cartItems = $this->productBundleClient->getGroupedBundleItems(
                 $shipmentGroupTransfer->getItems(),
-                $quoteTransfer->getBundleItems()
+                $quoteTransfer->getBundleItems(),
             );
 
             $shipmentGroupTransfer->setCartItems($cartItems);

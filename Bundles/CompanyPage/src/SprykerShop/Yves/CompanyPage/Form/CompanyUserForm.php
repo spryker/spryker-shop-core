@@ -340,7 +340,7 @@ class CompanyUserForm extends AbstractType
             },
             function ($isGuestSubmittedValue) {
                 return (bool)$isGuestSubmittedValue;
-            }
+            },
         ));
     }
 
@@ -363,7 +363,7 @@ class CompanyUserForm extends AbstractType
 
         $callbackTransformer = new CallbackTransformer(
             $this->getInputDataCallbackRoleCollectionTransformer(),
-            $this->getOutputDataCallbackRoleCollectionTransformer()
+            $this->getOutputDataCallbackRoleCollectionTransformer(),
         );
 
         $builder->get(static::FIELD_COMPANY_ROLE_COLLECTION)

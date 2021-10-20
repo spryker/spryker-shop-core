@@ -45,7 +45,7 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
         $this->addCustomerAddressesParameter($customerAddresses);
         $this->addCompanyBusinessUnitAddressesParameter($companyBusinessUnitAddresses);
         $this->addCurrentCompanyBusinessUnitAddressParameter(
-            $addressProvider->findCurrentCompanyBusinessUnitAddress($formAddressTransfer, $companyBusinessUnitAddresses)
+            $addressProvider->findCurrentCompanyBusinessUnitAddress($formAddressTransfer, $companyBusinessUnitAddresses),
         );
         $this->addIsCurrentAddressEmptyParameter($formAddressTransfer);
     }
@@ -101,8 +101,8 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
         $addressJson = $this->encodeAddressesToJson(
             array_merge(
                 $customerAddresses,
-                $companyBusinessUnitAddresses
-            )
+                $companyBusinessUnitAddresses,
+            ),
         );
 
         $this->addParameter('addresses', $addressJson);

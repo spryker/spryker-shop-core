@@ -76,7 +76,7 @@ class SalesReturnPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_SALES_RETURN, function (Container $container) {
             return new SalesReturnPageToSalesReturnClientBridge(
-                $container->getLocator()->salesReturn()->client()
+                $container->getLocator()->salesReturn()->client(),
             );
         });
 
@@ -92,7 +92,7 @@ class SalesReturnPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_SALES, function (Container $container) {
             return new SalesReturnPageToSalesClientBridge(
-                $container->getLocator()->sales()->client()
+                $container->getLocator()->sales()->client(),
             );
         });
 
@@ -108,7 +108,7 @@ class SalesReturnPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new SalesReturnPageToCustomerClientBridge(
-                $container->getLocator()->customer()->client()
+                $container->getLocator()->customer()->client(),
             );
         });
 
@@ -124,7 +124,7 @@ class SalesReturnPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_STORE, function (Container $container) {
             return new SalesReturnPageToStoreClientBridge(
-                $container->getLocator()->store()->client()
+                $container->getLocator()->store()->client(),
             );
         });
 
@@ -162,7 +162,7 @@ class SalesReturnPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_SALES_RETURN_SEARCH, function (Container $container) {
             return new SalesReturnPageToSalesReturnSearchClientBridge(
-                $container->getLocator()->salesReturnSearch()->client()
+                $container->getLocator()->salesReturnSearch()->client(),
             );
         });
 

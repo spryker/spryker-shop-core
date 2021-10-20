@@ -61,7 +61,7 @@ class CompanyRoleUserController extends AbstractCompanyController
         $companyRoles = $this->getFactory()
             ->getCompanyRoleClient()
             ->getCompanyRoleCollection(
-                (new CompanyRoleCriteriaFilterTransfer())->setIdCompanyUser($idCompanyUser)
+                (new CompanyRoleCriteriaFilterTransfer())->setIdCompanyUser($idCompanyUser),
             )
             ->getRoles();
 
@@ -72,7 +72,7 @@ class CompanyRoleUserController extends AbstractCompanyController
 
         return $this->redirectResponseInternal(
             CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_USER_MANAGE,
-            ['id' => $idCompanyRole]
+            ['id' => $idCompanyRole],
         );
     }
 
@@ -90,7 +90,7 @@ class CompanyRoleUserController extends AbstractCompanyController
         $companyRoleList = $this->getFactory()
             ->getCompanyRoleClient()
             ->getCompanyRoleCollection(
-                (new CompanyRoleCriteriaFilterTransfer())->setIdCompanyUser($idCompanyUser)
+                (new CompanyRoleCriteriaFilterTransfer())->setIdCompanyUser($idCompanyUser),
             )
             ->getRoles();
 
@@ -104,7 +104,7 @@ class CompanyRoleUserController extends AbstractCompanyController
 
         return $this->redirectResponseInternal(
             CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE_USER_MANAGE,
-            ['id' => $idCompanyRole]
+            ['id' => $idCompanyRole],
         );
     }
 
@@ -121,7 +121,7 @@ class CompanyRoleUserController extends AbstractCompanyController
             ->getCompanyUserClient()
             ->getCompanyUserCollection(
                 (new CompanyUserCriteriaFilterTransfer())
-                    ->setIdCompany($this->findCurrentCompanyUserTransfer()->getFkCompany())
+                    ->setIdCompany($this->findCurrentCompanyUserTransfer()->getFkCompany()),
             )
             ->getCompanyUsers();
 

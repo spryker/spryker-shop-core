@@ -33,7 +33,7 @@ class QuoteApprovalController extends AbstractController
         $quoteApproveRequestForm = $this->getFactory()
             ->createQuoteApproveRequestForm(
                 $this->getFactory()->getQuoteClient()->getQuote(),
-                $this->getLocale()
+                $this->getLocale(),
             );
 
         $quoteApproveRequestForm->handleRequest($request);
@@ -187,10 +187,10 @@ class QuoteApprovalController extends AbstractController
             ->getQuote();
 
         $sessionQuoteTransfer->setIsLocked(
-            $quoteApprovalResponseTransfer->getQuote()->getIsLocked()
+            $quoteApprovalResponseTransfer->getQuote()->getIsLocked(),
         )
             ->setQuoteApprovals(
-                $quoteApprovalResponseTransfer->getQuote()->getQuoteApprovals()
+                $quoteApprovalResponseTransfer->getQuote()->getQuoteApprovals(),
             );
 
         $this->getFactory()

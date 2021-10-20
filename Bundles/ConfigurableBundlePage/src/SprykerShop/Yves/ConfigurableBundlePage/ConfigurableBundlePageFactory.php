@@ -59,7 +59,7 @@ class ConfigurableBundlePageFactory extends AbstractFactory
         return new ProductConcreteReader(
             $this->getConfigurableBundleStorageClient(),
             $this->createProductConcreteImageExpander(),
-            $this->createProductConcretePriceExpander()
+            $this->createProductConcretePriceExpander(),
         );
     }
 

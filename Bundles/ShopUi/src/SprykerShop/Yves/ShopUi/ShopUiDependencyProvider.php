@@ -47,7 +47,7 @@ class ShopUiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_TWIG, function (Container $container) {
             return new ShopUiToTwigClientBridge(
-                $container->getLocator()->twig()->client()
+                $container->getLocator()->twig()->client(),
             );
         });
 

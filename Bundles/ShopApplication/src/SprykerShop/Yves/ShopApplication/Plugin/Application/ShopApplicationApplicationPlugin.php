@@ -72,7 +72,7 @@ class ShopApplicationApplicationPlugin extends AbstractPlugin implements Applica
         $container->set(static::SERVICE_RESOLVER, function (ContainerInterface $container) {
             return new ServiceControllerResolver(
                 new YvesFragmentControllerResolver($container),
-                new CallbackControllerResolver($container)
+                new CallbackControllerResolver($container),
             );
         });
 

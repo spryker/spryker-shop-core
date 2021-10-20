@@ -23,7 +23,7 @@ class SalesProductConfigurationWidgetFactory extends AbstractFactory
     public function createProductConfigurationTemplateResolver(): ProductConfigurationTemplateResolverInterface
     {
         return new ProductConfigurationTemplateResolver(
-            $this->getSalesProductConfigurationRenderStrategyPlugins()
+            $this->getSalesProductConfigurationRenderStrategyPlugins(),
         );
     }
 

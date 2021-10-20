@@ -310,8 +310,8 @@ class CompanyBusinessUnitForm extends AbstractType
                         }
 
                         return $companyUnitAddressCollectionTransfer;
-                    }
-                )
+                    },
+                ),
             );
     }
 }

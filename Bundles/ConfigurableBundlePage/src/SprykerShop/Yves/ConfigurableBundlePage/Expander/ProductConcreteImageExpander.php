@@ -36,7 +36,7 @@ class ProductConcreteImageExpander implements ProductConcreteImageExpanderInterf
     {
         $productConcreteImageStorageTransfer = $this->productImageStorageClient->findProductImageConcreteStorageTransfer(
             $productViewTransfer->getIdProductConcrete(),
-            $localeName
+            $localeName,
         );
 
         if (!$productConcreteImageStorageTransfer) {
@@ -46,7 +46,7 @@ class ProductConcreteImageExpander implements ProductConcreteImageExpanderInterf
         foreach ($productConcreteImageStorageTransfer->getImageSets() as $productImageSetStorageTransfer) {
             $productViewTransfer = $this->addImagesFromProductImageSetStorageTransferToProductViewTransfer(
                 $productViewTransfer,
-                $productImageSetStorageTransfer
+                $productImageSetStorageTransfer,
             );
         }
 

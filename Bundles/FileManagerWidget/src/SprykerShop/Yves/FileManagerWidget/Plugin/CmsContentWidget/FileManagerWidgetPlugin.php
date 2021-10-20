@@ -56,7 +56,7 @@ class FileManagerWidgetPlugin extends AbstractPlugin implements CmsContentWidget
     {
         return $twig->render(
             $this->resolveTemplatePath($templateIdentifier),
-            $this->getContent($context, $idFiles)
+            $this->getContent($context, $idFiles),
         );
     }
 

@@ -32,7 +32,7 @@ class ShopPermissionServiceProvider extends AbstractPlugin implements ServicePro
                 $twig = $this->registerPermissionTwigExtensions($twig);
 
                 return $twig;
-            })
+            }),
         );
     }
 

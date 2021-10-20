@@ -94,7 +94,7 @@ class ResourceCreatorHandler implements ResourceCreatorHandlerInterface
             $application,
             $bundleControllerAction,
             $controllerResolver,
-            $routeNameResolver
+            $routeNameResolver,
         );
 
         return $service;

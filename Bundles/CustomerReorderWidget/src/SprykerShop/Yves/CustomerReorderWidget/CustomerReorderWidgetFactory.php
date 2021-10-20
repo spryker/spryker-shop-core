@@ -38,7 +38,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
         return new CartFiller(
             $this->getCartClient(),
             $this->createItemsFetcher(),
-            $this->getPostReorderPlugins()
+            $this->getPostReorderPlugins(),
         );
     }
 
@@ -49,7 +49,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     {
         return new OrderReader(
             $this->getSalesClient(),
-            $this->getCustomerClient()
+            $this->getCustomerClient(),
         );
     }
 
@@ -59,7 +59,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     public function createAvailabilityChecker(): AvailabilityCheckerInterface
     {
         return new AvailabilityChecker(
-            $this->getAvailabilityStorageClient()
+            $this->getAvailabilityStorageClient(),
         );
     }
 
@@ -82,7 +82,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
             $this->getMessengerClient(),
             $this->getGlossaryStorageClient(),
             $this->getLocaleClient(),
-            $this->getReorderItemExpanderPlugins()
+            $this->getReorderItemExpanderPlugins(),
         );
     }
 

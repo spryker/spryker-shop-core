@@ -72,7 +72,7 @@ class OrderCancelButtonWidget extends AbstractWidget
     {
         $this->addParameter(
             static::PARAMETER_IS_VISIBLE,
-            $orderTransfer->getIsCancellable() && $this->isCustomerApplicableForCancel($orderTransfer)
+            $orderTransfer->getIsCancellable() && $this->isCustomerApplicableForCancel($orderTransfer),
         );
     }
 

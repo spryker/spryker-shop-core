@@ -29,7 +29,7 @@ class DeleteController extends AbstractCustomerController
         return $this->view(
             ['customerDeleteForm' => $customerDeleteForm->createView()],
             [],
-            '@CustomerPage/views/profile-delete/profile-delete.twig'
+            '@CustomerPage/views/profile-delete/profile-delete.twig',
         );
     }
 

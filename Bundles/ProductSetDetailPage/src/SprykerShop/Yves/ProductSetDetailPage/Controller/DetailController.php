@@ -47,7 +47,7 @@ class DetailController extends AbstractController
         return $this->view(
             $data,
             $this->getFactory()->getProductSetDetailPageWidgetPlugins(),
-            '@ProductSetDetailPage/views/set-detail/set-detail.twig'
+            '@ProductSetDetailPage/views/set-detail/set-detail.twig',
         );
     }
 

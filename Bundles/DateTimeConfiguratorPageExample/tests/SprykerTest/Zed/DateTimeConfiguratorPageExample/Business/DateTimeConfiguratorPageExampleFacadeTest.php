@@ -97,11 +97,11 @@ class DateTimeConfiguratorPageExampleFacadeTest extends Unit
         parent::setUp();
 
         $this->availabilityFacadeMock = $this->getMockBuilder(
-            DateTimeConfiguratorPageExampleToAvailabilityFacadeInterface::class
+            DateTimeConfiguratorPageExampleToAvailabilityFacadeInterface::class,
         )->onlyMethods(['findOrCreateProductConcreteAvailabilityBySkuForStore'])->getMockForAbstractClass();
 
         $dateTimeConfiguratorPageExampleFactoryMock = $this->getMockBuilder(
-            DateTimeConfiguratorPageExampleBusinessFactory::class
+            DateTimeConfiguratorPageExampleBusinessFactory::class,
         )->disableOriginalConstructor()->setMethodsExcept([
             'createProductConcreteAvailabilityReader',
         ])->getMock();
@@ -131,7 +131,7 @@ class DateTimeConfiguratorPageExampleFacadeTest extends Unit
             ->findProductConcreteAvailability(
                 static::TEST_SKU,
                 new StoreTransfer(),
-                $productAvailabilityCriteriaTransfer
+                $productAvailabilityCriteriaTransfer,
             );
 
         //Assert
@@ -149,7 +149,7 @@ class DateTimeConfiguratorPageExampleFacadeTest extends Unit
 
         $productConcreteAvailabilityTransfer = (new ProductConcreteAvailabilityTransfer())
             ->setAvailability(
-                (new Decimal(static::TEST_PRODUCT_CONCRETE_AVAILABILITY))
+                (new Decimal(static::TEST_PRODUCT_CONCRETE_AVAILABILITY)),
             );
 
         $this->availabilityFacadeMock->expects($this->once())
@@ -161,13 +161,13 @@ class DateTimeConfiguratorPageExampleFacadeTest extends Unit
             ->findProductConcreteAvailability(
                 static::TEST_SKU,
                 new StoreTransfer(),
-                $productAvailabilityCriteriaTransfer
+                $productAvailabilityCriteriaTransfer,
             );
 
         //Assert
         $this->assertSame(
             static::TEST_PRODUCT_CONCRETE_AVAILABILITY,
-            $productConcreteAvailabilityTransfer->getAvailability()->toInt()
+            $productConcreteAvailabilityTransfer->getAvailability()->toInt(),
         );
     }
 
@@ -180,7 +180,7 @@ class DateTimeConfiguratorPageExampleFacadeTest extends Unit
         $productAvailabilityCriteriaTransfer = (new ProductAvailabilityCriteriaTransfer())
             ->setProductConfigurationInstance(
                 (new ProductConfigurationInstanceTransfer())
-                    ->setAvailableQuantity(static::TEST_PRODUCT_CONFIGURATION_INSTANCE_AVAILABILITY)
+                    ->setAvailableQuantity(static::TEST_PRODUCT_CONFIGURATION_INSTANCE_AVAILABILITY),
             );
 
         $this->availabilityFacadeMock->expects($this->once())
@@ -192,13 +192,13 @@ class DateTimeConfiguratorPageExampleFacadeTest extends Unit
             ->findProductConcreteAvailability(
                 static::TEST_SKU,
                 new StoreTransfer(),
-                $productAvailabilityCriteriaTransfer
+                $productAvailabilityCriteriaTransfer,
             );
 
         //Assert
         $this->assertSame(
             static::TEST_PRODUCT_CONFIGURATION_INSTANCE_AVAILABILITY,
-            $productConcreteAvailabilityTransfer->getAvailability()->toInt()
+            $productConcreteAvailabilityTransfer->getAvailability()->toInt(),
         );
     }
 
@@ -211,12 +211,12 @@ class DateTimeConfiguratorPageExampleFacadeTest extends Unit
         $productAvailabilityCriteriaTransfer = (new ProductAvailabilityCriteriaTransfer())
             ->setProductConfigurationInstance(
                 (new ProductConfigurationInstanceTransfer())
-                    ->setAvailableQuantity(static::TEST_PRODUCT_CONFIGURATION_INSTANCE_AVAILABILITY)
+                    ->setAvailableQuantity(static::TEST_PRODUCT_CONFIGURATION_INSTANCE_AVAILABILITY),
             );
 
         $productConcreteAvailabilityTransfer = (new ProductConcreteAvailabilityTransfer())
             ->setAvailability(
-                (new Decimal(static::TEST_PRODUCT_CONCRETE_AVAILABILITY))
+                (new Decimal(static::TEST_PRODUCT_CONCRETE_AVAILABILITY)),
             );
 
         $this->availabilityFacadeMock->expects($this->once())
@@ -228,13 +228,13 @@ class DateTimeConfiguratorPageExampleFacadeTest extends Unit
             ->findProductConcreteAvailability(
                 static::TEST_SKU,
                 new StoreTransfer(),
-                $productAvailabilityCriteriaTransfer
+                $productAvailabilityCriteriaTransfer,
             );
 
         //Assert
         $this->assertSame(
             static::TEST_PRODUCT_CONFIGURATION_INSTANCE_AVAILABILITY,
-            $productConcreteAvailabilityTransfer->getAvailability()->toInt()
+            $productConcreteAvailabilityTransfer->getAvailability()->toInt(),
         );
     }
 

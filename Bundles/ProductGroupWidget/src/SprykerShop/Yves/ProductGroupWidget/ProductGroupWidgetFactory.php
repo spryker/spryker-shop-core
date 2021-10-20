@@ -56,7 +56,7 @@ class ProductGroupWidgetFactory extends AbstractFactory
             $this->getProductGroupStorageClient(),
             $this->getProductStorageClient(),
             $this->getProductViewExpanderPlugins(),
-            $this->getProductViewBulkExpanderPlugins()
+            $this->getProductViewBulkExpanderPlugins(),
         );
     }
 }

@@ -60,7 +60,7 @@ class SalesProductConfigurationWidgetDependencyProvider extends AbstractBundleDe
     {
         $container->set(static::CLIENT_SALES_PRODUCT_CONFIGURATION, function (Container $container) {
             return new SalesProductConfigurationWidgetToSalesProductConfigurationClientBridge(
-                $container->getLocator()->salesProductConfiguration()->client()
+                $container->getLocator()->salesProductConfiguration()->client(),
             );
         });
 

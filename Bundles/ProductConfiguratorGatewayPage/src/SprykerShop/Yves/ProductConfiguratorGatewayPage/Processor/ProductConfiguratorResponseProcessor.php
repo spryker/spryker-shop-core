@@ -43,7 +43,7 @@ class ProductConfiguratorResponseProcessor implements ProductConfiguratorRespons
             if ($productConfiguratorResponsePlugin->isApplicable($productConfiguratorResponseTransfer)) {
                 return $productConfiguratorResponsePlugin->processProductConfiguratorResponse(
                     $productConfiguratorResponseTransfer,
-                    $configuratorResponseData
+                    $configuratorResponseData,
                 );
             }
         }
@@ -52,8 +52,8 @@ class ProductConfiguratorResponseProcessor implements ProductConfiguratorRespons
             sprintf(
                 "Missing instance of %s! You need to provide product configurator response strategy plugin
 in your own ProductConfiguratorGatewayPageDependencyProvider::getProductConfiguratorResponsePlugins().",
-                ProductConfiguratorResponseStrategyPluginInterface::class
-            )
+                ProductConfiguratorResponseStrategyPluginInterface::class,
+            ),
         );
     }
 }

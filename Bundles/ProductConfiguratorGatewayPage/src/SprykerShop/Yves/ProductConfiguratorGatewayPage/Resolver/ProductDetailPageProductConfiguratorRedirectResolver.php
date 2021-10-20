@@ -67,20 +67,20 @@ class ProductDetailPageProductConfiguratorRedirectResolver implements ProductDet
         $productConfiguratorRedirectTransfer = new ProductConfiguratorRedirectTransfer();
 
         $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient->findProductConfigurationInstanceBySku(
-            $productConfiguratorRequestTransfer->getProductConfiguratorRequestDataOrFail()->getSkuOrFail()
+            $productConfiguratorRequestTransfer->getProductConfiguratorRequestDataOrFail()->getSkuOrFail(),
         );
 
         if (!$productConfigurationInstanceTransfer) {
             return $this->addErrorToProductConfiguratorRedirect(
                 $productConfiguratorRedirectTransfer,
                 static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_NOT_FOUND,
-                [static::GLOSSARY_KEY_PARAM_SKU => $productConfiguratorRequestTransfer->getProductConfiguratorRequestDataOrFail()->getSkuOrFail()]
+                [static::GLOSSARY_KEY_PARAM_SKU => $productConfiguratorRequestTransfer->getProductConfiguratorRequestDataOrFail()->getSkuOrFail()],
             );
         }
 
         $productConfiguratorRequestTransfer = $this->productConfiguratorRequestMapper->mapProductConfigurationInstanceTransferToProductConfiguratorRequestTransfer(
             $productConfigurationInstanceTransfer,
-            $productConfiguratorRequestTransfer
+            $productConfiguratorRequestTransfer,
         );
 
         return $this->productConfigurationClient->sendProductConfiguratorAccessTokenRequest($productConfiguratorRequestTransfer);

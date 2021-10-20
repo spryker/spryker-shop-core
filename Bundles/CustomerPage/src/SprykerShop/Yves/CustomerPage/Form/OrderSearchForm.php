@@ -233,7 +233,7 @@ class OrderSearchForm extends AbstractType
         $builder->add(
             static::FIELD_FILTERS,
             OrderSearchFiltersForm::class,
-            $options
+            $options,
         );
 
         return $this;

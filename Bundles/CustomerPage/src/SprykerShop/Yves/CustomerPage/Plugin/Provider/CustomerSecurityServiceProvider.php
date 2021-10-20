@@ -157,7 +157,7 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
                     $app[$entryPoint],
                     null,
                     $this->getFactory()->createAccessDeniedHandler($this->buildLoginPath($selectedLanguage)),
-                    $app['logger']
+                    $app['logger'],
                 );
             });
         });

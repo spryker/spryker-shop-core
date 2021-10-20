@@ -123,7 +123,7 @@ class SharedCartPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_MULTI_CART, function (Container $container) {
             return new SharedCartPageToMultiCartClientBridge(
-                $container->getLocator()->multiCart()->client()
+                $container->getLocator()->multiCart()->client(),
             );
         });
 

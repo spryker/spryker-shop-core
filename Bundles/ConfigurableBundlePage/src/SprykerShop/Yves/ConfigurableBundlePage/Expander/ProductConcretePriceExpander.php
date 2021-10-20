@@ -44,7 +44,7 @@ class ProductConcretePriceExpander implements ProductConcretePriceExpanderInterf
         }
 
         return $productViewTransfer->setPrice(
-            $this->getCurrentProductPriceTransfer($productViewTransfer)->getSumPrice()
+            $this->getCurrentProductPriceTransfer($productViewTransfer)->getSumPrice(),
         );
     }
 

@@ -59,12 +59,12 @@ class ConfiguredBundleRequestMapper implements ConfiguredBundleRequestMapperInte
         $createConfiguredBundleRequestTransfer = $this->setItemsToCreateConfiguredBundleRequestTransfer(
             $createConfiguredBundleRequestTransfer,
             $configurableBundleTemplateStorageTransfer->getSlots(),
-            $formData
+            $formData,
         );
 
         $itemTransfers = $this->itemExpander->expandItemTransfers(
             $createConfiguredBundleRequestTransfer->getItems(),
-            $createConfiguredBundleRequestTransfer->getLocaleName()
+            $createConfiguredBundleRequestTransfer->getLocaleName(),
         );
 
         return $createConfiguredBundleRequestTransfer->setItems($itemTransfers);
@@ -90,7 +90,7 @@ class ConfiguredBundleRequestMapper implements ConfiguredBundleRequestMapperInte
             }
 
             $createConfiguredBundleRequestTransfer->addItem(
-                $this->getMappedItemTransfer($slotStateFormData, $configurableBundleTemplateSlotStorageTransfer)
+                $this->getMappedItemTransfer($slotStateFormData, $configurableBundleTemplateSlotStorageTransfer),
             );
         }
 
@@ -107,7 +107,7 @@ class ConfiguredBundleRequestMapper implements ConfiguredBundleRequestMapperInte
     ): ConfiguredBundleTransfer {
         $configurableBundleTransfer = (new ConfigurableBundleTemplateTransfer())->fromArray(
             $configurableBundleTemplateStorageTransfer->toArray(),
-            true
+            true,
         );
 
         return (new ConfiguredBundleTransfer())
@@ -127,7 +127,7 @@ class ConfiguredBundleRequestMapper implements ConfiguredBundleRequestMapperInte
     ): ItemTransfer {
         $configurableBundleTemplateSlotTransfer = (new ConfigurableBundleTemplateSlotTransfer())->fromArray(
             $configurableBundleTemplateSlotStorageTransfer->toArray(),
-            true
+            true,
         );
 
         return (new ItemTransfer())

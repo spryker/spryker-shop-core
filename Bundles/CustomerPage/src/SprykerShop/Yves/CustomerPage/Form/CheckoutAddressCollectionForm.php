@@ -258,7 +258,7 @@ class CheckoutAddressCollectionForm extends AbstractType
 
         $shipmentGroupCollection = $this->mergeShipmentGroupsByShipmentHash(
             $shipmentService->groupItemsByShipment($quoteTransfer->getItems()),
-            $shipmentService->groupItemsByShipment($quoteTransfer->getBundleItems())
+            $shipmentService->groupItemsByShipment($quoteTransfer->getBundleItems()),
         );
 
         $shippingAddressForm = $event->getForm()->get(static::FIELD_SHIPPING_ADDRESS);
@@ -469,7 +469,7 @@ class CheckoutAddressCollectionForm extends AbstractType
 
                     return [static::GROUP_BILLING_SAME_AS_SHIPPING];
                 },
-            ]
+            ],
         );
 
         return $this;

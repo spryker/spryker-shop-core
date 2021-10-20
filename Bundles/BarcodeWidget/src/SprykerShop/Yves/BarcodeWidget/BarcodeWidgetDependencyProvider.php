@@ -41,7 +41,7 @@ class BarcodeWidgetDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_BARCODE, function (Container $container) {
             return new BarcodeWidgetToBarcodeServiceBridge(
-                $container->getLocator()->barcode()->service()
+                $container->getLocator()->barcode()->service(),
             );
         });
 

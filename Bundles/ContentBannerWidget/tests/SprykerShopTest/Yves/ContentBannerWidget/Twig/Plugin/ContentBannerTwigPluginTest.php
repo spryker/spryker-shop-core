@@ -125,7 +125,7 @@ class ContentBannerTwigPluginTest extends Unit
         $bannerContent = call_user_func(
             $this->getContentBannerTwigFunction()->getCallable(),
             static::CONTENT_KEY,
-            static::DEFAULT_TEMPLATE
+            static::DEFAULT_TEMPLATE,
         );
 
         // Assert
@@ -146,7 +146,7 @@ class ContentBannerTwigPluginTest extends Unit
         $bannerContent = call_user_func(
             $this->getContentBannerTwigFunction()->getCallable(),
             static::CONTENT_KEY,
-            static::WRONG_TEMPLATE
+            static::WRONG_TEMPLATE,
         );
 
         // Assert

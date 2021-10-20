@@ -135,7 +135,7 @@ class WidgetTagService implements WidgetTagServiceInterface
             is_object($widgetExpression) ? get_class($widgetExpression) : $widgetExpression,
             $e->getMessage(),
             $e->getFile(),
-            $e->getLine()
+            $e->getLine(),
         ), $e->getCode(), $e);
     }
 }

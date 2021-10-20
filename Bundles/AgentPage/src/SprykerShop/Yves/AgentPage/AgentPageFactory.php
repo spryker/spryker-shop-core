@@ -94,7 +94,7 @@ class AgentPageFactory extends AbstractFactory
     {
         return new Agent(
             $userTransfer,
-            [AgentPageSecurityPlugin::ROLE_AGENT, AgentPageSecurityPlugin::ROLE_ALLOWED_TO_SWITCH]
+            [AgentPageSecurityPlugin::ROLE_AGENT, AgentPageSecurityPlugin::ROLE_ALLOWED_TO_SWITCH],
         );
     }
 

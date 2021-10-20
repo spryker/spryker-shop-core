@@ -39,7 +39,7 @@ class SalesConfigurableBundleWidgetDependencyProvider extends AbstractBundleDepe
     {
         $container->set(static::CLIENT_MESSENGER, function (Container $container): SalesConfigurableBundleWidgetToMessengerClientBridge {
             return new SalesConfigurableBundleWidgetToMessengerClientBridge(
-                $container->getLocator()->messenger()->client()
+                $container->getLocator()->messenger()->client(),
             );
         });
 

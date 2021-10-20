@@ -146,7 +146,7 @@ class ContentProductSetTwigFunctionProvider extends TwigFunctionProvider
                 [
                     'productSet' => $productSetDataStorageTransfer,
                     'productViews' => $productAbstractViewCollection,
-                ]
+                ],
             );
         };
     }

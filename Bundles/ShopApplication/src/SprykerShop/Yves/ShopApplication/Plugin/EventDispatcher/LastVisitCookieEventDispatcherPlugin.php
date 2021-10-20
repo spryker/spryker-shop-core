@@ -48,7 +48,7 @@ class LastVisitCookieEventDispatcherPlugin extends AbstractPlugin implements Eve
     {
         $eventDispatcher->addListener(KernelEvents::RESPONSE, function (ResponseEvent $event): void {
             $event->getResponse()->headers->setCookie(
-                (Cookie::create(static::COOKIE_NAME, (string)time(), time() + static::COOKIE_LIFETIME))
+                (Cookie::create(static::COOKIE_NAME, (string)time(), time() + static::COOKIE_LIFETIME)),
             );
         }, static::EVENT_PRIORITY);
 

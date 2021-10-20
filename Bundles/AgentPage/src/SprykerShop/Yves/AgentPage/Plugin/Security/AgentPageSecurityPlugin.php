@@ -170,7 +170,7 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
     {
         $securityBuilder->addAuthenticationSuccessHandler(AgentPageConfig::SECURITY_FIREWALL_NAME, function (ContainerInterface $container) {
             return $this->getFactory()->createAgentAuthenticationSuccessHandler(
-                $this->getRouter($container)->generate(static::ROUTE_HOME)
+                $this->getRouter($container)->generate(static::ROUTE_HOME),
             );
         });
 
@@ -186,7 +186,7 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
     {
         $securityBuilder->addAuthenticationFailureHandler(AgentPageConfig::SECURITY_FIREWALL_NAME, function (ContainerInterface $container) {
             return $this->getFactory()->createAgentAuthenticationFailureHandler(
-                $this->getRouter($container)->generate(static::ROUTE_HOME)
+                $this->getRouter($container)->generate(static::ROUTE_HOME),
             );
         });
 
@@ -214,7 +214,7 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
     {
         $securityBuilder->addAccessDeniedHandler(AgentPageConfig::SECURITY_FIREWALL_NAME, function (ContainerInterface $container) {
             return $this->getFactory()->createAccessDeniedHandler(
-                $this->getRouter($container)->generate(static::ROUTE_LOGIN)
+                $this->getRouter($container)->generate(static::ROUTE_LOGIN),
             );
         });
 

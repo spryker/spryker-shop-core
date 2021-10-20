@@ -44,7 +44,7 @@ class CompanyBusinessUnitAddressForm extends CompanyUnitAddressForm
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            $this->getCompanyBusinessUnitAddressIsDefaultBillingFormPreSetDataCallback()
+            $this->getCompanyBusinessUnitAddressIsDefaultBillingFormPreSetDataCallback(),
         );
     }
 

@@ -40,7 +40,7 @@ class PriceProductWidgetDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::CLIENT_PRICE_PRODUCT_STORAGE, function (Container $container) {
             return new PriceProductWidgetToPriceProductStorageClientBridge(
-                $container->getLocator()->priceProductStorage()->client()
+                $container->getLocator()->priceProductStorage()->client(),
             );
         });
 

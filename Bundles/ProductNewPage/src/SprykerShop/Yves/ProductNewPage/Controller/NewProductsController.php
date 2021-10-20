@@ -30,7 +30,7 @@ class NewProductsController extends AbstractController
         return $this->view(
             $viewData,
             $this->getFactory()->getProductNewPageWidgetPlugins(),
-            '@ProductNewPage/views/new-product/new-product.twig'
+            '@ProductNewPage/views/new-product/new-product.twig',
         );
     }
 
@@ -53,7 +53,7 @@ class NewProductsController extends AbstractController
             if (!$categoryNode) {
                 throw new NotFoundHttpException(sprintf(
                     'Category not found by path %s',
-                    $categoryPath
+                    $categoryPath,
                 ));
             }
 

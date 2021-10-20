@@ -68,7 +68,7 @@ class CartPageGatewayBackUrlResolverStrategyPluginTest extends Unit
         // Assert
         $this->assertTrue(
             $isApplicable,
-            'Expected that CartPageGatewayBackUrlResolverStrategyPlugin must be applicable when source type is SOURCE_TYPE_CART.'
+            'Expected that CartPageGatewayBackUrlResolverStrategyPlugin must be applicable when source type is SOURCE_TYPE_CART.',
         );
     }
 
@@ -87,7 +87,7 @@ class CartPageGatewayBackUrlResolverStrategyPluginTest extends Unit
         // Assert
         $this->assertFalse(
             $isApplicable,
-            'Expected that CartPageGatewayBackUrlResolverStrategyPlugin must be not applicable when source type is FAKE_SOURCE_TYPE.'
+            'Expected that CartPageGatewayBackUrlResolverStrategyPlugin must be not applicable when source type is FAKE_SOURCE_TYPE.',
         );
     }
 
@@ -106,7 +106,7 @@ class CartPageGatewayBackUrlResolverStrategyPluginTest extends Unit
         // Assert
         $this->assertFalse(
             $isApplicable,
-            'Expected that CartPageGatewayBackUrlResolverStrategyPlugin must be not applicable when source type is null.'
+            'Expected that CartPageGatewayBackUrlResolverStrategyPlugin must be not applicable when source type is null.',
         );
     }
 
@@ -126,7 +126,7 @@ class CartPageGatewayBackUrlResolverStrategyPluginTest extends Unit
         $this->assertSame(
             '/cart',
             $backUrl,
-            'Expected that CartPageGatewayBackUrlResolverStrategyPlugin must resolve back URL as cart URL.'
+            'Expected that CartPageGatewayBackUrlResolverStrategyPlugin must resolve back URL as cart URL.',
         );
     }
 }

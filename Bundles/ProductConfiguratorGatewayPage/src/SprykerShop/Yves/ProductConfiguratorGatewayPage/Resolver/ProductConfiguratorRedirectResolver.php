@@ -47,8 +47,8 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
             sprintf(
                 "Missing instance of %s! You need to provide product configurator request strategy plugin
 in your own ProductConfiguratorGatewayPageDependencyProvider::getProductConfiguratorRequestStrategyPlugins().",
-                ProductConfiguratorRequestStrategyPluginInterface::class
-            )
+                ProductConfiguratorRequestStrategyPluginInterface::class,
+            ),
         );
     }
 }

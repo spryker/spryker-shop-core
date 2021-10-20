@@ -51,7 +51,7 @@ class ReturnProductBundleForm extends AbstractType
                     ReturnProductBundleItemsForm::OPTION_RETURN_REASONS => $options[ReturnProductBundleItemsForm::OPTION_RETURN_REASONS],
                 ],
                 'label' => false,
-            ]
+            ],
         );
     }
 }

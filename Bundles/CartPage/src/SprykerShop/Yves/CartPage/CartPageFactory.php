@@ -42,7 +42,7 @@ class CartPageFactory extends AbstractFactory
             $this->getQuoteClient(),
             $this->createCartItemReader(),
             $this->createCartItemsAttributeProvider(),
-            $this->createCartPageFormFactory()
+            $this->createCartPageFormFactory(),
         );
     }
 
@@ -70,7 +70,7 @@ class CartPageFactory extends AbstractFactory
         return new CartItemHandler(
             $this->getCartClient(),
             $this->getProductStorageClient(),
-            $this->getZedRequestClient()
+            $this->getZedRequestClient(),
         );
     }
 
@@ -141,7 +141,7 @@ class CartPageFactory extends AbstractFactory
     {
         return new AttributeVariantsProvider(
             $this->getCartVariantAttributeMapperPlugin(),
-            $this->createCartItemHandler()
+            $this->createCartItemHandler(),
         );
     }
 
@@ -200,7 +200,7 @@ class CartPageFactory extends AbstractFactory
     {
         return new CartItemsAttributeMapper(
             $this->getProductStorageClient(),
-            $this->createCartItemsAvailabilityMapper()
+            $this->createCartItemsAvailabilityMapper(),
         );
     }
 

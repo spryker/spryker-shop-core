@@ -48,8 +48,8 @@ class CartController extends AbstractController
                 (new ResourceShareRequestTransfer())
                     ->setResourceShare(
                         (new ResourceShareTransfer())
-                            ->setUuid($resourceShareUuid)
-                    )
+                            ->setUuid($resourceShareUuid),
+                    ),
             );
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {

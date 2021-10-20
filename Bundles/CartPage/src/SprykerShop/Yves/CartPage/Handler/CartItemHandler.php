@@ -122,7 +122,7 @@ class CartItemHandler implements CartItemHandlerInterface
         $productViewTransfer = $this->productClient->findProductAbstractViewTransfer(
             $item->getIdProductAbstract(),
             $localeName,
-            $selectedAttributes
+            $selectedAttributes,
         );
 
         if ($productViewTransfer === null) {

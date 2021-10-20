@@ -33,7 +33,7 @@ class SecurityBlockerCustomerEventDispatcherPlugin extends AbstractPlugin implem
         ContainerInterface $container
     ): EventDispatcherInterface {
         $eventDispatcher->addSubscriber(
-            $this->getFactory()->createSecurityBlockerCustomerEventSubscriber()
+            $this->getFactory()->createSecurityBlockerCustomerEventSubscriber(),
         );
 
         return $eventDispatcher;

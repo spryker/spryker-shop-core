@@ -111,7 +111,7 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
         $version = $this->getQuoteRequestVersion(
             $quoteRequestTransfer,
             $quoteRequestVersionTransfers,
-            $request->query->get(static::PARAM_QUOTE_REQUEST_VERSION_REFERENCE)
+            $request->query->get(static::PARAM_QUOTE_REQUEST_VERSION_REFERENCE),
         );
 
         $shipmentGroupTransfers = $this->getFactory()

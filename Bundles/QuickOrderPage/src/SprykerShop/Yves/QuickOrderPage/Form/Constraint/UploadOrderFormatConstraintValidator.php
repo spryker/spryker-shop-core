@@ -27,7 +27,7 @@ class UploadOrderFormatConstraintValidator extends ConstraintValidator
             throw new InvalidArgumentException(sprintf(
                 'Expected constraint instance of %s, got %s instead.',
                 UploadOrderFormatConstraint::class,
-                get_class($constraint)
+                get_class($constraint),
             ));
         }
 

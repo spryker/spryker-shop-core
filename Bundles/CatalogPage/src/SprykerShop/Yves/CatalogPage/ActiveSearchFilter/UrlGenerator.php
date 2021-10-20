@@ -99,7 +99,7 @@ class UrlGenerator implements UrlGeneratorInterface
             default:
                 throw new InvalidArgumentException(sprintf(
                     'Invalid search result transfer "%s',
-                    get_class($searchResultTransfer)
+                    get_class($searchResultTransfer),
                 ));
         }
 

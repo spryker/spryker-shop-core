@@ -27,7 +27,7 @@ class ChartWidgetFactory extends AbstractFactory
     public function createChartPluginCollection(): ChartPluginCollectionInterface
     {
         return new ChartPluginCollection(
-            $this->getChartPlugins()
+            $this->getChartPlugins(),
         );
     }
 

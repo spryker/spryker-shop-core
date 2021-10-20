@@ -67,7 +67,7 @@ class SelectedMerchantCookie implements SelectedMerchantCookieInterface
         $this->cookies->append(Cookie::create(
             $this->merchantSwitcherWidgetConfig->getMerchantSelectorCookieIdentifier(),
             $selectedMerchantReference,
-            time() + $this->merchantSwitcherWidgetConfig->getMerchantSelectorCookieTimeExpiration()
+            time() + $this->merchantSwitcherWidgetConfig->getMerchantSelectorCookieTimeExpiration(),
         ));
     }
 
@@ -79,7 +79,7 @@ class SelectedMerchantCookie implements SelectedMerchantCookieInterface
         $this->cookies->append(Cookie::create(
             $this->merchantSwitcherWidgetConfig->getMerchantSelectorCookieIdentifier(),
             '',
-            time() - $this->merchantSwitcherWidgetConfig->getMerchantSelectorCookieTimeExpiration()
+            time() - $this->merchantSwitcherWidgetConfig->getMerchantSelectorCookieTimeExpiration(),
         ));
     }
 }

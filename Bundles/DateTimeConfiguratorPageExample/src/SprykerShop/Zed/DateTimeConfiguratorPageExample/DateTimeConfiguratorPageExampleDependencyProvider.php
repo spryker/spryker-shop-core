@@ -73,7 +73,7 @@ class DateTimeConfiguratorPageExampleDependencyProvider extends AbstractBundleDe
     {
         $container->set(static::FACADE_AVAILABILITY, function (Container $container) {
             return new DateTimeConfiguratorPageExampleToAvailabilityFacadeBridge(
-                $container->getLocator()->availability()->facade()
+                $container->getLocator()->availability()->facade(),
             );
         });
 

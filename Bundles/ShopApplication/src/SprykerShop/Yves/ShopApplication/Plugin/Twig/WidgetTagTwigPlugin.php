@@ -51,7 +51,7 @@ class WidgetTagTwigPlugin extends AbstractTwigExtensionPlugin
                 },
                 [
                     'needs_context' => false,
-                ]
+                ],
             ),
         ];
     }

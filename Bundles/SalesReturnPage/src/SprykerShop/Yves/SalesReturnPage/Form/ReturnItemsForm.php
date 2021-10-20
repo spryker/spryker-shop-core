@@ -70,7 +70,7 @@ class ReturnItemsForm extends AbstractType
             [
                 'label' => false,
                 'required' => false,
-            ]
+            ],
         );
 
         return $this;

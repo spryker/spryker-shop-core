@@ -27,7 +27,7 @@ class CommentWidgetFactory extends AbstractFactory
     public function createCommentOperation(): CommentOperationInterface
     {
         return new CommentOperation(
-            $this->getCommentThreadAfterOperationStrategyPlugins()
+            $this->getCommentThreadAfterOperationStrategyPlugins(),
         );
     }
 

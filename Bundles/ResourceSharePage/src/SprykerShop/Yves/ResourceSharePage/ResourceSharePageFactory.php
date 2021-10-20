@@ -68,7 +68,7 @@ class ResourceSharePageFactory extends AbstractFactory
     {
         return new RouteResolver(
             $this->getMessengerClient(),
-            $this->getResourceShareRouterStrategyPlugins()
+            $this->getResourceShareRouterStrategyPlugins(),
         );
     }
 
@@ -78,7 +78,7 @@ class ResourceSharePageFactory extends AbstractFactory
     public function createResourceShareActivator(): ResourceShareActivatorInterface
     {
         return new ResourceShareActivator(
-            $this->getResourceShareClient()
+            $this->getResourceShareClient(),
         );
     }
 }

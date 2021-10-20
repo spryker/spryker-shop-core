@@ -422,8 +422,8 @@ class CompanyRoleController extends AbstractCompanyController
                     ->getCompanyBusinessUnitClient()
                     ->getCompanyBusinessUnitById(
                         (new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit(
-                            $companyUser->getFkCompanyBusinessUnit()
-                        )
+                            $companyUser->getFkCompanyBusinessUnit(),
+                        ),
                     );
                 $companyUser->setCompanyBusinessUnit($companyBusinessUnitTransfer);
             }

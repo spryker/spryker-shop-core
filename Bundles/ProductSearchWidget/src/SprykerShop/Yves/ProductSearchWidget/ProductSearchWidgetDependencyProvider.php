@@ -47,7 +47,7 @@ class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::CLIENT_CATALOG, function (Container $container) {
             return new ProductSearchWidgetToCatalogClientBridge(
-                $container->getLocator()->catalog()->client()
+                $container->getLocator()->catalog()->client(),
             );
         });
 
@@ -63,7 +63,7 @@ class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductSearchWidgetToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

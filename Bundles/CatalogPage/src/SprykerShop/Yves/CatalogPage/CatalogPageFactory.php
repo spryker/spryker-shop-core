@@ -48,7 +48,7 @@ class CatalogPageFactory extends AbstractFactory
     public function createFacetFilter(): FacetFilterInterface
     {
         return new FacetFilter(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

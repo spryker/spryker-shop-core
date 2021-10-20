@@ -46,7 +46,7 @@ class ShoppingListWidgetFactory extends AbstractFactory
             ->create(
                 ShoppingListFromCartForm::class,
                 $formDataProvider->getData($idQuote),
-                $formDataProvider->getOptions()
+                $formDataProvider->getOptions(),
             );
     }
 

@@ -36,7 +36,7 @@ class QuoteApprovalWidgetFactory extends AbstractFactory
         return $this->getFormFactory()->create(
             QuoteApproveRequestForm::class,
             $formDataProvider->getData($quoteTransfer),
-            $formDataProvider->getOptions($quoteTransfer, $localeName)
+            $formDataProvider->getOptions($quoteTransfer, $localeName),
         );
     }
 
@@ -57,7 +57,7 @@ class QuoteApprovalWidgetFactory extends AbstractFactory
             $this->getQuoteApprovalClient(),
             $this->getCustomerClient(),
             $this->getGlossaryStorageClient(),
-            $this->getMoneyClient()
+            $this->getMoneyClient(),
         );
     }
 

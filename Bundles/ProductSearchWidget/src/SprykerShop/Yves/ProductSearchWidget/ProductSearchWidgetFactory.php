@@ -28,7 +28,7 @@ class ProductSearchWidgetFactory extends AbstractFactory
     {
         return new ProductConcreteReader(
             $this->getCatalogClient(),
-            $this->createProductConcreteMapper()
+            $this->createProductConcreteMapper(),
         );
     }
 

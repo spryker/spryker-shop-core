@@ -203,7 +203,7 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
             $application,
             $bundleControllerAction,
             $controllerResolver,
-            $routeResolver
+            $routeResolver,
         );
 
         return $service;

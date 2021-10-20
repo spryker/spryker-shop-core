@@ -41,7 +41,7 @@ class ContentBannerWidgetDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::CLIENT_CONTENT_BANNER, function (Container $container) {
             return new ContentBannerWidgetToContentBannerClientBridge(
-                $container->getLocator()->contentBanner()->client()
+                $container->getLocator()->contentBanner()->client(),
             );
         });
 

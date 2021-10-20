@@ -165,7 +165,7 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
                 $eventDispatcher->addSubscriber($this->getFactory()->createSwitchUserEventSubscriber());
 
                 return $eventDispatcher;
-            })
+            }),
         );
     }
 

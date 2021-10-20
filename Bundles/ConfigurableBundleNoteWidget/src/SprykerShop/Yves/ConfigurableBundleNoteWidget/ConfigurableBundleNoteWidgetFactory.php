@@ -38,7 +38,7 @@ class ConfigurableBundleNoteWidgetFactory extends AbstractFactory
     {
         return new ConfigurableBundleNoteHandler(
             $this->getConfigurableBundleNoteClient(),
-            $this->getQuoteClient()
+            $this->getQuoteClient(),
         );
     }
 

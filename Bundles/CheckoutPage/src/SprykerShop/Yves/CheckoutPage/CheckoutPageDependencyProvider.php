@@ -788,7 +788,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
             return new CheckoutPageToGlossaryStorageClientBridge(
-                $container->getLocator()->glossaryStorage()->client()
+                $container->getLocator()->glossaryStorage()->client(),
             );
         });
 
@@ -804,7 +804,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_LOCALE, function (Container $container) {
             return new CheckoutPageToLocaleClientBridge(
-                $container->getLocator()->locale()->client()
+                $container->getLocator()->locale()->client(),
             );
         });
 
@@ -908,7 +908,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_SHIPMENT, function (Container $container) {
             return new CheckoutPageToShipmentServiceBridge(
-                $container->getLocator()->shipment()->service()
+                $container->getLocator()->shipment()->service(),
             );
         });
 

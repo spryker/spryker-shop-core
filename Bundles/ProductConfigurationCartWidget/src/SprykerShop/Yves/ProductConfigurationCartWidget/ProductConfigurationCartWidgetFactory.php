@@ -35,7 +35,7 @@ class ProductConfigurationCartWidgetFactory extends AbstractFactory
     public function createProductConfigurationTemplateResolver(): ProductConfigurationTemplateResolverInterface
     {
         return new ProductConfigurationTemplateResolver(
-            $this->getCartProductConfigurationRenderStrategyPlugins()
+            $this->getCartProductConfigurationRenderStrategyPlugins(),
         );
     }
 
@@ -46,7 +46,7 @@ class ProductConfigurationCartWidgetFactory extends AbstractFactory
     {
         return $this->getFormFactory()->createNamed(
             $this->getConfig()->getProductConfiguratorGatewayRequestFormName(),
-            ProductConfigurationButtonForm::class
+            ProductConfigurationButtonForm::class,
         );
     }
 
@@ -73,7 +73,7 @@ class ProductConfigurationCartWidgetFactory extends AbstractFactory
     {
         return new ProductConfiguratorResponseProcessor(
             $this->getProductConfigurationCartClient(),
-            $this->getRouter()
+            $this->getRouter(),
         );
     }
 
@@ -83,7 +83,7 @@ class ProductConfigurationCartWidgetFactory extends AbstractFactory
     public function createCartPageApplicabilityChecker(): CartPageApplicabilityCheckerInterface
     {
         return new CartPageApplicabilityChecker(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

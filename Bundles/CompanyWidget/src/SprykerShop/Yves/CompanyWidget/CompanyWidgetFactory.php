@@ -20,7 +20,7 @@ class CompanyWidgetFactory extends AbstractFactory
     public function createAddressProvider(): AddressProviderInterface
     {
         return new AddressProvider(
-            $this->getCustomerClient()
+            $this->getCustomerClient(),
         );
     }
 

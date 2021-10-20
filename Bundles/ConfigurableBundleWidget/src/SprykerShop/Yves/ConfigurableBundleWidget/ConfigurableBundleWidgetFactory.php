@@ -30,7 +30,7 @@ class ConfigurableBundleWidgetFactory extends AbstractFactory
     public function createConfiguredBundleGrouper(): ConfiguredBundleGrouperInterface
     {
         return new ConfiguredBundleGrouper(
-            $this->createConfiguredBundleMapper()
+            $this->createConfiguredBundleMapper(),
         );
     }
 

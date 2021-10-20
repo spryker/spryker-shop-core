@@ -77,7 +77,7 @@ class CompanyUserAccountSelectorFormDataProvider
             $key = sprintf(
                 static::FORMAT_COMPANY_USER_DISPLAY,
                 $companyUser->getCompany()->getName(),
-                $companyUser->getCompanyBusinessUnit()->getName()
+                $companyUser->getCompanyBusinessUnit()->getName(),
             );
 
             $companies[$key] = $companyUser->getIdCompanyUser();

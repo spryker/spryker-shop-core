@@ -88,7 +88,7 @@ class SubmitController extends AbstractController
         $productReviewResponseTransfer = $this->getFactory()->getProductReviewClient()->submitCustomerReview(
             $this->getProductReviewFormData($form)
                 ->setCustomerReference($customerReference)
-                ->setLocaleName($this->getLocale())
+                ->setLocaleName($this->getLocale()),
         );
 
         if ($productReviewResponseTransfer->getIsSuccess()) {

@@ -54,16 +54,16 @@ class CheckoutPageTester extends Actor
                     ->withShipment(
                         (new ShipmentBuilder([ShipmentTransfer::SHIPMENT_SELECTION => 'custom']))
                             ->withShippingAddress()
-                            ->withMethod()
-                    )
+                            ->withMethod(),
+                    ),
             )
             ->withAnotherItem(
                 (new ItemBuilder())
                     ->withShipment(
                         (new ShipmentBuilder([ShipmentTransfer::SHIPMENT_SELECTION => 'custom']))
                             ->withShippingAddress()
-                            ->withMethod()
-                    )
+                            ->withMethod(),
+                    ),
             )
             ->withBillingAddress()
             ->withCustomer()
@@ -75,7 +75,7 @@ class CheckoutPageTester extends Actor
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $quoteTransfer->addExpense(
                 (new ExpenseTransfer())->setType(static::SHIPMENT_EXPENSE_TYPE)
-                    ->setShipment($itemTransfer->getShipment())
+                    ->setShipment($itemTransfer->getShipment()),
             );
         }
 

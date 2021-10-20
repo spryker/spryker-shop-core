@@ -61,7 +61,7 @@ class CompanyPageFactory extends AbstractFactory
     public function createCompanyBusinessUnitOrderSearchFormExpander(): CompanyBusinessUnitOrderSearchFormExpanderInterface
     {
         return new CompanyBusinessUnitOrderSearchFormExpander(
-            $this->createCompanyBusinessUnitOrderSearchFormDataProvider()
+            $this->createCompanyBusinessUnitOrderSearchFormDataProvider(),
         );
     }
 
@@ -80,7 +80,7 @@ class CompanyPageFactory extends AbstractFactory
     {
         return new CompanyBusinessUnitOrderSearchFormDataProvider(
             $this->getCustomerClient(),
-            $this->getCompanyBusinessUnitClient()
+            $this->getCompanyBusinessUnitClient(),
         );
     }
 
@@ -180,7 +180,7 @@ class CompanyPageFactory extends AbstractFactory
         return new CompanyUserSaver(
             $this->getMessengerClient(),
             $this->getCustomerClient(),
-            $this->getBusinessOnBehalfClient()
+            $this->getBusinessOnBehalfClient(),
         );
     }
 
@@ -191,7 +191,7 @@ class CompanyPageFactory extends AbstractFactory
     {
         return new CompanyBusinessUnitTreeReader(
             $this->getCustomerClient(),
-            $this->getCompanyBusinessUnitClient()
+            $this->getCompanyBusinessUnitClient(),
         );
     }
 
@@ -227,7 +227,7 @@ class CompanyPageFactory extends AbstractFactory
     public function createCompanyBusinessAddressSaver(): CompanyBusinessUnitAddressSaverInterface
     {
         return new CompanyBusinessUnitAddressSaver(
-            $this->getCompanyUnitAddressClient()
+            $this->getCompanyUnitAddressClient(),
         );
     }
 
@@ -237,7 +237,7 @@ class CompanyPageFactory extends AbstractFactory
     public function createCompanyBusinessUnitAddressReader(): CompanyBusinessUnitAddressReaderInterface
     {
         return new CompanyBusinessUnitAddressReader(
-            $this->getCompanyUnitAddressClient()
+            $this->getCompanyUnitAddressClient(),
         );
     }
 

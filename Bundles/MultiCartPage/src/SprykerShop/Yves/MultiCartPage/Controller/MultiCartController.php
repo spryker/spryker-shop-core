@@ -212,7 +212,7 @@ class MultiCartController extends AbstractController
 
         return $this->redirectResponseInternal(
             MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_UPDATE,
-            [static::PARAM_ID_QUOTE => $idNewQuote]
+            [static::PARAM_ID_QUOTE => $idNewQuote],
         );
     }
 
@@ -270,7 +270,7 @@ class MultiCartController extends AbstractController
         }
 
         $quoteTransfer = $this->findQuoteOrFail(
-            $multiCartDeleteForm->getData()->getIdQuote()
+            $multiCartDeleteForm->getData()->getIdQuote(),
         );
 
         if (!$this->canWriteQuote($quoteTransfer)) {
@@ -294,7 +294,7 @@ class MultiCartController extends AbstractController
         return $this->view(
             $response,
             [],
-            '@MultiCartPage/views/cart/cart.twig'
+            '@MultiCartPage/views/cart/cart.twig',
         );
     }
 

@@ -72,7 +72,7 @@ class CheckoutController extends AbstractController
             $request,
             $this->getFactory()
                 ->createCheckoutFormFactory()
-                ->createCustomerFormCollection()
+                ->createCustomerFormCollection(),
         );
 
         if (!is_array($response)) {
@@ -82,7 +82,7 @@ class CheckoutController extends AbstractController
         return $this->view(
             $response,
             $this->getFactory()->getCustomerPageWidgetPlugins(),
-            '@CheckoutPage/views/login/login.twig'
+            '@CheckoutPage/views/login/login.twig',
         );
     }
 
@@ -105,7 +105,7 @@ class CheckoutController extends AbstractController
             $request,
             $this->getFactory()
                 ->createCheckoutFormFactory()
-                ->createAddressFormCollection()
+                ->createAddressFormCollection(),
         );
 
         if (!is_array($response)) {
@@ -115,7 +115,7 @@ class CheckoutController extends AbstractController
         return $this->view(
             $response,
             $this->getFactory()->getCustomerPageWidgetPlugins(),
-            '@CheckoutPage/views/address/address.twig'
+            '@CheckoutPage/views/address/address.twig',
         );
     }
 
@@ -138,7 +138,7 @@ class CheckoutController extends AbstractController
             $request,
             $this->getFactory()
                 ->createCheckoutFormFactory()
-                ->createShipmentFormCollection()
+                ->createShipmentFormCollection(),
         );
 
         if (!is_array($response)) {
@@ -148,7 +148,7 @@ class CheckoutController extends AbstractController
         return $this->view(
             $response,
             $this->getFactory()->getCustomerPageWidgetPlugins(),
-            '@CheckoutPage/views/shipment/shipment.twig'
+            '@CheckoutPage/views/shipment/shipment.twig',
         );
     }
 
@@ -171,7 +171,7 @@ class CheckoutController extends AbstractController
             $request,
             $this->getFactory()
                 ->createCheckoutFormFactory()
-                ->getPaymentFormCollection()
+                ->getPaymentFormCollection(),
         );
 
         if (!is_array($response)) {
@@ -181,7 +181,7 @@ class CheckoutController extends AbstractController
         return $this->view(
             $response,
             $this->getFactory()->getCustomerPageWidgetPlugins(),
-            '@CheckoutPage/views/payment/payment.twig'
+            '@CheckoutPage/views/payment/payment.twig',
         );
     }
 
@@ -204,7 +204,7 @@ class CheckoutController extends AbstractController
             $request,
             $this->getFactory()
                 ->createCheckoutFormFactory()
-                ->createSummaryFormCollection()
+                ->createSummaryFormCollection(),
         );
 
         if (!is_array($viewData)) {
@@ -214,7 +214,7 @@ class CheckoutController extends AbstractController
         return $this->view(
             $viewData,
             $this->getFactory()->getSummaryPageWidgetPlugins(),
-            '@CheckoutPage/views/summary/summary.twig'
+            '@CheckoutPage/views/summary/summary.twig',
         );
     }
 
@@ -266,7 +266,7 @@ class CheckoutController extends AbstractController
         return $this->view(
             $response,
             $this->getFactory()->getCustomerPageWidgetPlugins(),
-            '@CheckoutPage/views/order-success/order-success.twig'
+            '@CheckoutPage/views/order-success/order-success.twig',
         );
     }
 

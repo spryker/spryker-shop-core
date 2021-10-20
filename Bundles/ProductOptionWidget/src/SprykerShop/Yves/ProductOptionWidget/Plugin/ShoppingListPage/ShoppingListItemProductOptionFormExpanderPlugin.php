@@ -46,7 +46,7 @@ class ShoppingListItemProductOptionFormExpanderPlugin extends AbstractPlugin imp
                 $event->getForm()->add(
                     ShoppingListItemTransfer::PRODUCT_OPTIONS,
                     ShoppingListItemProductOptionForm::class,
-                    $fieldOptions
+                    $fieldOptions,
                 );
             }
         });

@@ -187,7 +187,7 @@ class CheckoutAddressForm extends AddressForm
 
         $callbackTransformer = new CallbackTransformer(
             $this->getInvertedBooleanValueCallbackTransformer(),
-            $this->getInvertedBooleanValueCallbackTransformer()
+            $this->getInvertedBooleanValueCallbackTransformer(),
         );
 
         $builder->get(static::FIELD_IS_ADDRESS_SAVING_SKIPPED)

@@ -140,7 +140,7 @@ class CommentThreadWidget extends AbstractWidget
     {
         $this->addParameter(
             static::PARAMETER_AVAILABLE_COMMENT_TAGS,
-            $this->getFactory()->getCommentClient()->getAvailableCommentTags()
+            $this->getFactory()->getCommentClient()->getAvailableCommentTags(),
         );
     }
 

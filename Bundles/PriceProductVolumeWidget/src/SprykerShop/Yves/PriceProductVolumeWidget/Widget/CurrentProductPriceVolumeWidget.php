@@ -24,7 +24,7 @@ class CurrentProductPriceVolumeWidget extends AbstractWidget
         $this->addParameter('product', $currentProductPriceTransfer)
             ->addParameter(
                 'volumeProductPrices',
-                $this->getPriceProductVolume($currentProductPriceTransfer)
+                $this->getPriceProductVolume($currentProductPriceTransfer),
             );
     }
 

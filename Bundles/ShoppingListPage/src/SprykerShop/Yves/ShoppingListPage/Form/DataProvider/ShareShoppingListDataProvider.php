@@ -156,7 +156,7 @@ class ShareShoppingListDataProvider
 
             $shoppingListCompanyUserTransfers[$idCompanyUser] = $this->createShoppingListCompanyUser(
                 $shoppingListTransfer,
-                $companyUserTransfer
+                $companyUserTransfer,
             );
         }
 
@@ -191,7 +191,7 @@ class ShareShoppingListDataProvider
         $shoppingListTransfer->getSharedCompanyUsers()->uasort(
             function (ShoppingListCompanyUserTransfer $firstUserTransfer, ShoppingListCompanyUserTransfer $secondUserTransfer) {
                 return strcmp($firstUserTransfer->getCompanyUser()->getCustomer()->getFirstName(), $secondUserTransfer->getCompanyUser()->getCustomer()->getFirstName());
-            }
+            },
         );
 
         return $shoppingListTransfer;
@@ -224,7 +224,7 @@ class ShareShoppingListDataProvider
 
             $shoppingListCompanyBusinessUnits[$idCompanyBusinessUnit] = $this->createShoppingListCompanyBusinessUnit(
                 $shoppingListTransfer,
-                $companyBusinessUnitTransfer
+                $companyBusinessUnitTransfer,
             );
         }
 
@@ -291,7 +291,7 @@ class ShareShoppingListDataProvider
         $shoppingListTransfer->getSharedCompanyBusinessUnits()->uasort(
             function (ShoppingListCompanyBusinessUnitTransfer $firstBusinessUnitTransfer, ShoppingListCompanyBusinessUnitTransfer $secondBusinessUnitTransfer) {
                 return strcmp($firstBusinessUnitTransfer->getCompanyBusinessUnit()->getName(), $secondBusinessUnitTransfer->getCompanyBusinessUnit()->getName());
-            }
+            },
         );
 
         return $shoppingListTransfer;

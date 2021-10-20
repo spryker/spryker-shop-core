@@ -29,7 +29,7 @@ class BaseCustomerAuthenticationHandler extends AbstractPlugin
         $targetUrl = $this->filterUrl(
             $this->getConfig()->loginFailureRedirectUrl() ?? $request->headers->get('Referer'),
             $this->getConfig()->getYvesHost(),
-            $defaultRedirectUrl ?? $this->getHomeUrl()
+            $defaultRedirectUrl ?? $this->getHomeUrl(),
         );
 
         return $this->getFactory()->createRedirectResponse($targetUrl);

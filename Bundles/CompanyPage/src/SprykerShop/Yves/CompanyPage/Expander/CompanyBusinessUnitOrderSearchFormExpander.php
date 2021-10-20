@@ -64,7 +64,7 @@ class CompanyBusinessUnitOrderSearchFormExpander implements CompanyBusinessUnitO
                     'attr' => [
                         'class' => 'form__field col col--sm-12 col--lg-6',
                     ],
-                ]
+                ],
             );
 
         return $builder;

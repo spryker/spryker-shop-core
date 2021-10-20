@@ -33,7 +33,7 @@ class SecurityBlockerAgentEventDispatcherPlugin extends AbstractPlugin implement
         ContainerInterface $container
     ): EventDispatcherInterface {
         $eventDispatcher->addSubscriber(
-            $this->getFactory()->createSecurityBlockerAgentEventSubscriber()
+            $this->getFactory()->createSecurityBlockerAgentEventSubscriber(),
         );
 
         return $eventDispatcher;
