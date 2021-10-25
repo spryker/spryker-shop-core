@@ -142,7 +142,7 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated
+     * @deprecated Will be removed without replacement.
      *
      * @return \SprykerShop\Yves\WishlistPage\Form\WishlistFormType
      */
@@ -152,7 +152,7 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated
+     * @deprecated Will be removed without replacement.
      *
      * @return \SprykerShop\Yves\WishlistPage\Form\AddAllAvailableProductsToCartFormType
      */
