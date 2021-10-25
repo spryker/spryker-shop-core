@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\ShoppingListNoteWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 
+/**
+ * @method \SprykerShop\Yves\ShoppingListNoteWidget\ShoppingListNoteWidgetConfig getConfig()
+ */
 class ShoppingListNoteWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
 }

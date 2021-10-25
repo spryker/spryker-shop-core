@@ -11,6 +11,9 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\CompanyUserAgentWidget\Dependency\Client\CompanyUserAgentWidgetToCompanyUserAgentClientBridge;
 
+/**
+ * @method \SprykerShop\Yves\CompanyUserAgentWidget\CompanyUserAgentWidgetConfig getConfig()
+ */
 class CompanyUserAgentWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

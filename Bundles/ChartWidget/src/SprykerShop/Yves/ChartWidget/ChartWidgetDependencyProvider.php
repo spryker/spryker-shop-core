@@ -14,6 +14,9 @@ use SprykerShop\Yves\ChartWidget\Plugin\Twig\TwigChartPlugin;
 use SprykerShop\Yves\ChartWidget\Plugin\Twig\TwigLineChartPlugin;
 use SprykerShop\Yves\ChartWidget\Plugin\Twig\TwigPieChartPlugin;
 
+/**
+ * @method \SprykerShop\Yves\ChartWidget\ChartWidgetConfig getConfig()
+ */
 class ChartWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

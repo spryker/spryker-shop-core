@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\WebProfilerWidget;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
+/**
+ * @method \SprykerShop\Yves\WebProfilerWidget\WebProfilerWidgetConfig getConfig()
+ */
 class WebProfilerWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

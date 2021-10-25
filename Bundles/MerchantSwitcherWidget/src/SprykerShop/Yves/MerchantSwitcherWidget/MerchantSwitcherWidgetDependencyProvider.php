@@ -15,6 +15,9 @@ use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWi
 use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToMerchantSwitcherClientBridge;
 use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToQuoteClientBridge;
 
+/**
+ * @method \SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcherWidgetConfig getConfig()
+ */
 class MerchantSwitcherWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

@@ -39,6 +39,9 @@ use SprykerShop\Yves\CustomerPage\Plugin\CheckoutPage\CheckoutAddressFormDataPro
 use SprykerShop\Yves\CustomerPage\Plugin\CustomerStepHandler;
 use SprykerShop\Yves\MoneyWidget\Plugin\MoneyPlugin;
 
+/**
+ * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
+ */
 class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

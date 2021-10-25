@@ -16,6 +16,9 @@ use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgent
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteRequestAgentClientBridge;
 
+/**
+ * @method \SprykerShop\Yves\QuoteRequestAgentWidget\QuoteRequestAgentWidgetConfig getConfig()
+ */
 class QuoteRequestAgentWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

@@ -15,6 +15,9 @@ use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetTo
 use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductReviewClientBridge;
 use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductReviewStorageClientBridge;
 
+/**
+ * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetConfig getConfig()
+ */
 class ProductReviewWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

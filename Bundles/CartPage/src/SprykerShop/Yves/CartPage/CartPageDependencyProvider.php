@@ -17,6 +17,9 @@ use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToQuoteClientBridge;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToZedRequestClientBridge;
 use SprykerShop\Yves\CartPage\Plugin\CartVariantAttributeMapperPlugin;
 
+/**
+ * @method \SprykerShop\Yves\CartPage\CartPageConfig getConfig()
+ */
 class CartPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

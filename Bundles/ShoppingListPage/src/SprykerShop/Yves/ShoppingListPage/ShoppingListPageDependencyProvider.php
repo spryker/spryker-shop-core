@@ -19,6 +19,9 @@ use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppi
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToZedRequestClientBridge;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Service\ShoppingListPageToUtilEncodingServiceBridge;
 
+/**
+ * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig getConfig()
+ */
 class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

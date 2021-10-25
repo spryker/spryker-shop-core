@@ -18,6 +18,9 @@ use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteR
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Service\QuoteRequestPageToShipmentServiceBridge;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Service\QuoteRequestPageToUtilDateTimeServiceBridge;
 
+/**
+ * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageConfig getConfig()
+ */
 class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

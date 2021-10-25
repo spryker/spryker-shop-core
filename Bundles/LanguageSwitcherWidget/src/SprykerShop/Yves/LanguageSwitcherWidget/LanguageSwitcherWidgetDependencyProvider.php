@@ -12,6 +12,9 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\LanguageSwitcherWidget\Dependency\Client\LanguageSwitcherWidgetToUrlStorageClientBridge;
 
+/**
+ * @method \SprykerShop\Yves\LanguageSwitcherWidget\LanguageSwitcherWidgetConfig getConfig()
+ */
 class LanguageSwitcherWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

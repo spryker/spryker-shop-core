@@ -17,6 +17,9 @@ use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToQu
 use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToQuoteRequestClientBridge;
 use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 
+/**
+ * @method \SprykerShop\Yves\QuoteRequestWidget\QuoteRequestWidgetConfig getConfig()
+ */
 class QuoteRequestWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

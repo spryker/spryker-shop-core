@@ -21,6 +21,9 @@ use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequest
 use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceInterface;
 
+/**
+ * @method \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig getConfig()
+ */
 class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

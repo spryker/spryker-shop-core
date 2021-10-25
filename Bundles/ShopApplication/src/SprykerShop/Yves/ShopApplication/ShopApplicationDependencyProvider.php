@@ -14,6 +14,9 @@ use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceBridge;
 
+/**
+ * @method \SprykerShop\Yves\ShopApplication\ShopApplicationConfig getConfig()
+ */
 class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

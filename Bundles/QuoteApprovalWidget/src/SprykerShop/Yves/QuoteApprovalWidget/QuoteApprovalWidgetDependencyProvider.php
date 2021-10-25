@@ -15,6 +15,9 @@ use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetTo
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteApprovalClientBridge;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteClientBridge;
 
+/**
+ * @method \SprykerShop\Yves\QuoteApprovalWidget\QuoteApprovalWidgetConfig getConfig()
+ */
 class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

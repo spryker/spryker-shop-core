@@ -20,6 +20,9 @@ use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToMessengerClientInter
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToQuoteClientBridge;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToQuoteClientInterface;
 
+/**
+ * @method \SprykerShop\Yves\AgentPage\AgentPageConfig getConfig()
+ */
 class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

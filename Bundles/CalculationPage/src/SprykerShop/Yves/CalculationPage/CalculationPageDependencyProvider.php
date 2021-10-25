@@ -12,6 +12,9 @@ use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\CalculationPage\Dependency\Client\CalculationPageToCalculationClientBridge;
 use SprykerShop\Yves\CalculationPage\Dependency\Client\CalculationPageToQuoteClientBridge;
 
+/**
+ * @method \SprykerShop\Yves\CalculationPage\CalculationPageConfig getConfig()
+ */
 class CalculationPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

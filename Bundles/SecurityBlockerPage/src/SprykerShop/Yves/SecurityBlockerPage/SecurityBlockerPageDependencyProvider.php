@@ -13,6 +13,9 @@ use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToGlossaryStorageClientBridge;
 use SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToSecurityBlockerClientBridge;
 
+/**
+ * @method \SprykerShop\Yves\SecurityBlockerPage\SecurityBlockerPageConfig getConfig()
+ */
 class SecurityBlockerPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

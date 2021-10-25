@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\SalesProductBundleWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 
+/**
+ * @method \SprykerShop\Yves\SalesProductBundleWidget\SalesProductBundleWidgetConfig getConfig()
+ */
 class SalesProductBundleWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
 }

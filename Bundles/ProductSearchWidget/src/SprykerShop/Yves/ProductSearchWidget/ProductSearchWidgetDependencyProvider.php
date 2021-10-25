@@ -12,6 +12,9 @@ use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToCatalogClientBridge;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Service\ProductSearchWidgetToUtilEncodingServiceBridge;
 
+/**
+ * @method \SprykerShop\Yves\ProductSearchWidget\ProductSearchWidgetConfig getConfig()
+ */
 class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

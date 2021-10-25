@@ -11,6 +11,9 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\SalesProductConfigurationWidget\Dependency\Client\SalesProductConfigurationWidgetToSalesProductConfigurationClientBridge;
 
+/**
+ * @method \SprykerShop\Yves\SalesProductConfigurationWidget\SalesProductConfigurationWidgetConfig getConfig()
+ */
 class SalesProductConfigurationWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

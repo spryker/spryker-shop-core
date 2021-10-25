@@ -25,6 +25,9 @@ use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToPermissionClient
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToStoreClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreBridge;
 
+/**
+ * @method \SprykerShop\Yves\CompanyPage\CompanyPageConfig getConfig()
+ */
 class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**
