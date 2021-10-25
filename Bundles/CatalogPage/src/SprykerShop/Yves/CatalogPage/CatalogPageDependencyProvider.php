@@ -18,6 +18,9 @@ use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToProductCategoryF
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientBridge;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToStoreClientBridge;
 
+/**
+ * @method \SprykerShop\Yves\CatalogPage\CatalogPageConfig getConfig()
+ */
 class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

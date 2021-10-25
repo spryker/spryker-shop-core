@@ -12,6 +12,9 @@ use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToConfigurableBundleCartClientBridge;
 use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToQuoteClientBridge;
 
+/**
+ * @method \SprykerShop\Yves\ConfigurableBundleWidget\ConfigurableBundleWidgetConfig getConfig()
+ */
 class ConfigurableBundleWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

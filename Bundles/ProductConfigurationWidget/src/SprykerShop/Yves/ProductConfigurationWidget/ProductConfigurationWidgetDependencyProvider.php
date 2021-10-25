@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\ProductConfigurationWidget;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
+/**
+ * @method \SprykerShop\Yves\ProductConfigurationWidget\ProductConfigurationWidgetConfig getConfig()
+ */
 class ProductConfigurationWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

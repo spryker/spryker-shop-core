@@ -13,6 +13,9 @@ use SprykerShop\Yves\CompanyUserInvitationPage\Dependency\Client\CompanyUserInvi
 use SprykerShop\Yves\CompanyUserInvitationPage\Dependency\Client\CompanyUserInvitationPageToCustomerClientBridge;
 use SprykerShop\Yves\CompanyUserInvitationPage\Dependency\Client\CompanyUserInvitationPageToSessionClientBridge;
 
+/**
+ * @method \SprykerShop\Yves\CompanyUserInvitationPage\CompanyUserInvitationPageConfig getConfig()
+ */
 class CompanyUserInvitationPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

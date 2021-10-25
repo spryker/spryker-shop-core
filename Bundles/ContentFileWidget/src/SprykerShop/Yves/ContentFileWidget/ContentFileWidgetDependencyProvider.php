@@ -12,6 +12,9 @@ use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToContentFileClientBridge;
 use SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToFileManagerStorageClientBridge;
 
+/**
+ * @method \SprykerShop\Yves\ContentFileWidget\ContentFileWidgetConfig getConfig()
+ */
 class ContentFileWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

@@ -14,6 +14,9 @@ use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductCon
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductConfigurationStorageClientBridge;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductStorageClientBridge;
 
+/**
+ * @method \SprykerShop\Yves\ProductConfiguratorGatewayPage\ProductConfiguratorGatewayPageConfig getConfig()
+ */
 class ProductConfiguratorGatewayPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

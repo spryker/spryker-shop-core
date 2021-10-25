@@ -26,6 +26,9 @@ use SprykerShop\Yves\CustomerPage\Plugin\GuestCheckoutAuthenticationHandlerPlugi
 use SprykerShop\Yves\CustomerPage\Plugin\LoginCheckoutAuthenticationHandlerPlugin;
 use SprykerShop\Yves\CustomerPage\Plugin\RegistrationCheckoutAuthenticationHandlerPlugin;
 
+/**
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
+ */
 class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

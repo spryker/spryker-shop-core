@@ -15,6 +15,9 @@ use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesRet
 use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToSalesReturnSearchClientBridge;
 use SprykerShop\Yves\SalesReturnPage\Dependency\Client\SalesReturnPageToStoreClientBridge;
 
+/**
+ * @method \SprykerShop\Yves\SalesReturnPage\SalesReturnPageConfig getConfig()
+ */
 class SalesReturnPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

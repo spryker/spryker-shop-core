@@ -13,6 +13,9 @@ use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client\CmsSlotBlockWidgetToCmsSlotBlockClientBridge;
 use SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client\CmsSlotBlockWidgetToCmsSlotBlockStorageClientBridge;
 
+/**
+ * @method \SprykerShop\Yves\CmsSlotBlockWidget\CmsSlotBlockWidgetConfig getConfig()
+ */
 class CmsSlotBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

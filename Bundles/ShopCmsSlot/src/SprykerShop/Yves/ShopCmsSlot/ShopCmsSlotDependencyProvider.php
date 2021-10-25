@@ -12,6 +12,9 @@ use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotClientBridge;
 use SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotStorageClientBridge;
 
+/**
+ * @method \SprykerShop\Yves\ShopCmsSlot\ShopCmsSlotConfig getConfig()
+ */
 class ShopCmsSlotDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

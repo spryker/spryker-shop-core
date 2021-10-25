@@ -12,6 +12,9 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToTwigClientBridge;
 
+/**
+ * @method \SprykerShop\Yves\ShopUi\ShopUiConfig getConfig()
+ */
 class ShopUiDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

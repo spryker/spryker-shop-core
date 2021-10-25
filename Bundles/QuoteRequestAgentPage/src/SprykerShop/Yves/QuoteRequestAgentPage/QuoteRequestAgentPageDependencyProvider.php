@@ -22,6 +22,9 @@ use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPa
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentPageToShipmentServiceBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentPageToUtilDateTimeServiceBridge;
 
+/**
+ * @method \SprykerShop\Yves\QuoteRequestAgentPage\QuoteRequestAgentPageConfig getConfig()
+ */
 class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

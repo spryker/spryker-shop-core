@@ -12,6 +12,9 @@ use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\CommentWidget\Dependency\Client\CommentWidgetToCommentClientBridge;
 use SprykerShop\Yves\CommentWidget\Dependency\Client\CommentWidgetToCustomerClientBridge;
 
+/**
+ * @method \SprykerShop\Yves\CommentWidget\CommentWidgetConfig getConfig()
+ */
 class CommentWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

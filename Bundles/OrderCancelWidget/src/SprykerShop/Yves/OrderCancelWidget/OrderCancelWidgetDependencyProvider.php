@@ -12,6 +12,9 @@ use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\OrderCancelWidget\Dependency\Client\OrderCancelWidgetToCustomerClientBridge;
 use SprykerShop\Yves\OrderCancelWidget\Dependency\Client\OrderCancelWidgetToSalesClientBridge;
 
+/**
+ * @method \SprykerShop\Yves\OrderCancelWidget\OrderCancelWidgetConfig getConfig()
+ */
 class OrderCancelWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

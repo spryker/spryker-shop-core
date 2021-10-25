@@ -12,6 +12,9 @@ use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ProductReplacementForWidget\Dependency\Client\ProductReplacementForWidgetToProductAlternativeStorageClientBridge;
 use SprykerShop\Yves\ProductReplacementForWidget\Dependency\Client\ProductReplacementForWidgetToProductStorageClientBridge;
 
+/**
+ * @method \SprykerShop\Yves\ProductReplacementForWidget\ProductReplacementForWidgetConfig getConfig()
+ */
 class ProductReplacementForWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

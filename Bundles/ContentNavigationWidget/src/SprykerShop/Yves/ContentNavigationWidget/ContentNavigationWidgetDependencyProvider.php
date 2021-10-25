@@ -12,6 +12,9 @@ use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ContentNavigationWidget\Dependency\Client\ContentNavigationWidgetToContentNavigationClientBridge;
 use SprykerShop\Yves\ContentNavigationWidget\Dependency\Client\ContentNavigationWidgetToNavigationStorageClientBridge;
 
+/**
+ * @method \SprykerShop\Yves\ContentNavigationWidget\ContentNavigationWidgetConfig getConfig()
+ */
 class ContentNavigationWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

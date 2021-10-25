@@ -13,6 +13,9 @@ use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToCu
 use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToShoppingListClientBridge;
 use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToShoppingListSessionClientBridge;
 
+/**
+ * @method \SprykerShop\Yves\ShoppingListWidget\ShoppingListWidgetConfig getConfig()
+ */
 class ShoppingListWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

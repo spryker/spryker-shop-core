@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\SalesOrderThresholdWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 
+/**
+ * @method \SprykerShop\Yves\SalesOrderThresholdWidget\SalesOrderThresholdWidgetConfig getConfig()
+ */
 class SalesOrderThresholdWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
 }
