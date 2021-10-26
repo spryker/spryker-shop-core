@@ -14,6 +14,7 @@ class ProductNewPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ProductNewPage\Plugin\Router\ProductNewPageRouteProviderPlugin::ROUTE_NAME_NEW_PRODUCTS} instead.
+     *
      * @var string
      */
     protected const ROUTE_NEW_PRODUCTS = 'new-products';

@@ -33,42 +33,49 @@ class ConfiguratorController extends AbstractController
 
     /**
      * @uses \SprykerShop\Yves\ConfigurableBundlePage\Plugin\Router\ConfigurableBundlePageRouteProviderPlugin::ROUTE_CONFIGURATOR_TEMPLATE_SELECTION
+     *
      * @var string
      */
     protected const ROUTE_CONFIGURATOR_TEMPLATE_SELECTION = 'configurable-bundle/configurator/template-selection';
 
     /**
      * @uses \SprykerShop\Yves\ConfigurableBundlePage\Plugin\Router\ConfigurableBundlePageRouteProviderPlugin::ROUTE_CONFIGURATOR_SLOTS
+     *
      * @var string
      */
     protected const ROUTE_CONFIGURATOR_SLOTS = 'configurable-bundle/configurator/slots';
 
     /**
      * @uses \SprykerShop\Yves\ConfigurableBundlePage\Plugin\Router\ConfigurableBundlePageRouteProviderPlugin::ROUTE_CONFIGURATOR_SUMMARY
+     *
      * @var string
      */
     protected const ROUTE_CONFIGURATOR_SUMMARY = 'configurable-bundle/configurator/summary';
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
+     *
      * @var string
      */
     protected const ROUTE_CART = 'cart';
 
     /**
      * @uses \SprykerShop\Yves\ConfigurableBundlePage\Plugin\Router\ConfigurableBundlePageRouteProviderPlugin::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE
+     *
      * @var string
      */
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'idConfigurableBundleTemplate';
 
     /**
      * @uses \SprykerShop\Yves\ConfigurableBundlePage\Plugin\Router\ConfigurableBundlePageRouteProviderPlugin::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT
+     *
      * @var string
      */
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = 'idConfigurableBundleTemplateSlot';
 
     /**
      * @uses \Spryker\Client\ConfigurableBundlePageSearch\Plugin\Elasticsearch\ResultFormatter\ConfigurableBundleTemplatePageSearchResultFormatterPlugin::NAME
+     *
      * @var string
      */
     protected const FORMATTED_RESULT_KEY = 'ConfigurableBundleTemplateCollection';
@@ -80,12 +87,14 @@ class ConfiguratorController extends AbstractController
 
     /**
      * @uses \Spryker\Client\Catalog\CatalogConfig::PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME
+     *
      * @var string
      */
     protected const REQUEST_PARAM_ITEMS_PER_PAGE = 'ipp';
 
     /**
      * @see \SprykerShop\Yves\CatalogPage\CatalogPageConfig::CATALOG_PAGE_LIMIT
+     *
      * @var int
      */
     protected const REQUEST_PARAM_ITEMS_PER_PAGE_VALUE = 1000;

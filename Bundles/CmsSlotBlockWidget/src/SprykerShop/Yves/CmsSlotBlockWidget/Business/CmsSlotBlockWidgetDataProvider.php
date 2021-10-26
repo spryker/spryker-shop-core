@@ -20,6 +20,7 @@ class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderIn
 {
     /**
      * @uses \Spryker\Client\CmsBlockStorage\Storage\CmsBlockStorage::OPTION_KEYS
+     *
      * @var string
      */
     protected const KEY_BLOCK_OPTIONS_KEYS = 'keys';

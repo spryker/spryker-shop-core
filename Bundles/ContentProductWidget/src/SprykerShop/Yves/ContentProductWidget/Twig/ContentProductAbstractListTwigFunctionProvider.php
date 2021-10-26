@@ -19,6 +19,7 @@ class ContentProductAbstractListTwigFunctionProvider extends TwigFunctionProvide
 {
     /**
      * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::TWIG_FUNCTION_NAME
+     *
      * @var string
      */
     protected const FUNCTION_CONTENT_PRODUCT_ABSTRACT_LIST = 'content_product_abstract_list';
@@ -40,12 +41,14 @@ class ContentProductAbstractListTwigFunctionProvider extends TwigFunctionProvide
 
     /**
      * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE
+     *
      * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE = 'bottom-title';
 
     /**
      * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE
+     *
      * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';

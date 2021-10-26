@@ -28,6 +28,7 @@ class QuoteRequestCartForm extends AbstractType
 
     /**
      * @uses \SprykerShop\Yves\QuoteRequestWidget\Plugin\Router\QuoteRequestWidgetRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_SAVE_CART
+     *
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_SAVE_CART = '/quote-request/cart/save';

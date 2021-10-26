@@ -13,24 +13,28 @@ class ContentNavigationWidgetConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Shared\ContentNavigation\ContentNavigationConfig::WIDGET_TEMPLATE_IDENTIFIER_TREE_INLINE
+     *
      * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_TREE_INLINE = 'tree-inline';
 
     /**
      * @uses \Spryker\Shared\ContentNavigation\ContentNavigationConfig::WIDGET_TEMPLATE_IDENTIFIER_TREE
+     *
      * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_TREE = 'tree';
 
     /**
      * @uses \Spryker\Shared\ContentNavigation\ContentNavigationConfig::WIDGET_TEMPLATE_IDENTIFIER_LIST_INLINE
+     *
      * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_LIST_INLINE = 'list-inline';
 
     /**
      * @uses \Spryker\Shared\ContentNavigation\ContentNavigationConfig::WIDGET_TEMPLATE_IDENTIFIER_LIST
+     *
      * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_LIST = 'list';

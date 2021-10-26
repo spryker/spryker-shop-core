@@ -21,6 +21,7 @@ class CustomerConfirmationUserCheckerApplicationPlugin extends AbstractPlugin im
 {
     /**
      * @uses \Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_USER_CHECKER
+     *
      * @var string
      */
     protected const SERVICE_SECURITY_USER_CHECKER = 'security.user_checker';

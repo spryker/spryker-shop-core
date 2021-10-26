@@ -19,6 +19,7 @@ class ViewDataTransformer implements ViewDataTransformerInterface
 
     /**
      * @phpstan-var non-empty-string
+     *
      * @var string
      */
     protected const PATH_DELIMITER = '.';

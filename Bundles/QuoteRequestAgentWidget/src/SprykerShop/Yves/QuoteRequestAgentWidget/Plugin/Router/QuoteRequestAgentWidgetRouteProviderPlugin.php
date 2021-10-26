@@ -14,6 +14,7 @@ class QuoteRequestAgentWidgetRouteProviderPlugin extends AbstractRouteProviderPl
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentWidget\Plugin\Router\QuoteRequestAgentWidgetRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_SAVE_CART} instead.
+     *
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_SAVE_CART = 'agent/quote-request/cart/save';
@@ -25,6 +26,7 @@ class QuoteRequestAgentWidgetRouteProviderPlugin extends AbstractRouteProviderPl
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentWidget\Plugin\Router\QuoteRequestAgentWidgetRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_CLEAR_CART} instead.
+     *
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CLEAR_CART = 'agent/quote-request/cart/clear';

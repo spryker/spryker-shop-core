@@ -21,6 +21,7 @@ class ContentNavigationTwigFunctionProvider extends TwigFunctionProvider
 {
     /**
      * @uses \Spryker\Shared\ContentNavigation\ContentNavigationWidgetConfig::TWIG_FUNCTION_NAME
+     *
      * @var string
      */
     protected const TWIG_FUNCTION_NAME_CONTENT_NAVIGATION = 'content_navigation';

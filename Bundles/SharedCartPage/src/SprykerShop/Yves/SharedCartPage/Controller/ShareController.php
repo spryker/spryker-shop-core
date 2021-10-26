@@ -29,6 +29,7 @@ class ShareController extends AbstractController
 
     /**
      * @see \Spryker\Shared\SharedCart\SharedCartConfig::PERMISSION_GROUP_OWNER_ACCESS
+     *
      * @var string
      */
     protected const PERMISSION_GROUP_OWNER_ACCESS = 'OWNER_ACCESS';

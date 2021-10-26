@@ -14,6 +14,7 @@ class CartNoteWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartNoteWidget\Plugin\Router\CartNoteWidgetRouteProviderPlugin::ROUTE_NAME_CART_NOTE_QUOTE} instead.
+     *
      * @var string
      */
     protected const ROUTE_CART_NOTE_QUOTE = 'cart-note/quote';
@@ -25,6 +26,7 @@ class CartNoteWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartNoteWidget\Plugin\Router\CartNoteWidgetRouteProviderPlugin::ROUTE_NAME_CART_NOTE_ITEM} instead.
+     *
      * @var string
      */
     protected const ROUTE_CART_NOTE_ITEM = 'cart-note/item';

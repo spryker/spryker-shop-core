@@ -15,6 +15,7 @@ class ShoppingListPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_NAME_SHOPPING_LIST} instead.
+     *
      * @var string
      */
     protected const ROUTE_SHOPPING_LIST = 'shopping-list';
@@ -26,6 +27,7 @@ class ShoppingListPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_NAME_SHOPPING_LIST_UPDATE} instead.
+     *
      * @var string
      */
     protected const ROUTE_SHOPPING_LIST_UPDATE = 'shopping-list/update';
@@ -37,6 +39,7 @@ class ShoppingListPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_NAME_SHOPPING_LIST_DELETE_CONFIRM} instead.
+     *
      * @var string
      */
     protected const ROUTE_SHOPPING_LIST_DELETE_CONFIRM = 'shopping-list/delete/confirm';
@@ -48,6 +51,7 @@ class ShoppingListPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_NAME_SHOPPING_LIST_DELETE} instead.
+     *
      * @var string
      */
     protected const ROUTE_SHOPPING_LIST_DELETE = 'shopping-list/delete';
@@ -59,6 +63,7 @@ class ShoppingListPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_NAME_SHOPPING_LIST_DETAILS} instead.
+     *
      * @var string
      */
     protected const ROUTE_SHOPPING_LIST_DETAILS = 'shopping-list/details';
@@ -70,6 +75,7 @@ class ShoppingListPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_NAME_SHOPPING_LIST_CLEAR} instead.
+     *
      * @var string
      */
     protected const ROUTE_SHOPPING_LIST_CLEAR = 'shopping-list/clear';
@@ -81,6 +87,7 @@ class ShoppingListPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_NAME_REMOVE_ITEM} instead.
+     *
      * @var string
      */
     protected const ROUTE_REMOVE_ITEM = 'shopping-list/remove-item';
@@ -92,6 +99,7 @@ class ShoppingListPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_NAME_ADD_TO_CART} instead.
+     *
      * @var string
      */
     protected const ROUTE_ADD_TO_CART = 'shopping-list/add-to-cart';
@@ -103,6 +111,7 @@ class ShoppingListPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_NAME_ADD_SHOPPING_LIST_TO_CART} instead.
+     *
      * @var string
      */
     protected const ROUTE_ADD_SHOPPING_LIST_TO_CART = 'shopping-list/add-shopping-list-to-cart';
@@ -114,6 +123,7 @@ class ShoppingListPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_NAME_SHOPPING_LIST_SHARE} instead.
+     *
      * @var string
      */
     protected const ROUTE_SHOPPING_LIST_SHARE = 'shopping-list/share';
@@ -125,6 +135,7 @@ class ShoppingListPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_NAME_SHOPPING_LIST_PRINT} instead.
+     *
      * @var string
      */
     protected const ROUTE_SHOPPING_LIST_PRINT = 'shopping-list/print';
@@ -136,6 +147,7 @@ class ShoppingListPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_NAME_CART_TO_SHOPPING_LIST} instead.
+     *
      * @var string
      */
     protected const ROUTE_CART_TO_SHOPPING_LIST = 'shopping-list/create-from-exist-cart';
@@ -147,6 +159,7 @@ class ShoppingListPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_NAME_SHOPPING_LIST_DISMISS} instead.
+     *
      * @var string
      */
     protected const ROUTE_SHOPPING_LIST_DISMISS = 'shopping-list/dismiss';
@@ -158,6 +171,7 @@ class ShoppingListPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_NAME_SHOPPING_LIST_DISMISS_CONFIRM} instead.
+     *
      * @var string
      */
     protected const ROUTE_SHOPPING_LIST_DISMISS_CONFIRM = 'shopping-list/dismiss-confirm';
@@ -169,6 +183,7 @@ class ShoppingListPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_NAME_SHOPPING_LIST_QUICK_ADD_ITEM} instead.
+     *
      * @var string
      */
     protected const ROUTE_SHOPPING_LIST_QUICK_ADD_ITEM = 'shopping-list/quick-add-item';

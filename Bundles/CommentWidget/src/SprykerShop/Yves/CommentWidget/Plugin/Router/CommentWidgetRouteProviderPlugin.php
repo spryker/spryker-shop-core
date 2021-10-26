@@ -15,6 +15,7 @@ class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CommentWidget\Plugin\Router\CommentWidgetRouteProviderPlugin::ROUTE_NAME_COMMENT_ADD} instead.
+     *
      * @var string
      */
     protected const ROUTE_COMMENT_ADD = 'comment/add';
@@ -26,6 +27,7 @@ class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CommentWidget\Plugin\Router\CommentWidgetRouteProviderPlugin::ROUTE_NAME_COMMENT_UPDATE} instead.
+     *
      * @var string
      */
     protected const ROUTE_COMMENT_UPDATE = 'comment/update';
@@ -37,6 +39,7 @@ class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CommentWidget\Plugin\Router\CommentWidgetRouteProviderPlugin::ROUTE_NAME_COMMENT_REMOVE} instead.
+     *
      * @var string
      */
     protected const ROUTE_COMMENT_REMOVE = 'comment/remove';
@@ -48,6 +51,7 @@ class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CommentWidget\Plugin\Router\CommentWidgetRouteProviderPlugin::ROUTE_NAME_COMMENT_TAG_ADD} instead.
+     *
      * @var string
      */
     protected const ROUTE_COMMENT_TAG_ADD = 'comment/tag/add';
@@ -59,6 +63,7 @@ class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CommentWidget\Plugin\Router\CommentWidgetRouteProviderPlugin::ROUTE_NAME_COMMENT_TAG_REMOVE} instead.
+     *
      * @var string
      */
     protected const ROUTE_COMMENT_TAG_REMOVE = 'comment/tag/remove';

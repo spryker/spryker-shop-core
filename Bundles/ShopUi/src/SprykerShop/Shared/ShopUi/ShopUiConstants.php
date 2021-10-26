@@ -20,6 +20,7 @@ interface ShopUiConstants
      * @example '/assets/%theme%/'
      *
      * @api
+     *
      * @var string
      */
     public const YVES_ASSETS_URL_PATTERN = 'SHOP_UI:YVES_ASSETS_URL_PATTERN';

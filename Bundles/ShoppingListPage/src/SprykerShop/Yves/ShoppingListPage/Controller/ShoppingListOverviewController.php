@@ -82,18 +82,21 @@ class ShoppingListOverviewController extends AbstractShoppingListController
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_CART
+     *
      * @var string
      */
     protected const ROUTE_CART_PAGE = 'cart';
 
     /**
      * @uses \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_SHOPPING_LIST
+     *
      * @var string
      */
     protected const ROUTE_SHOPPING_LIST = 'shopping-list';
 
     /**
      * @uses \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_SHOPPING_LIST_UPDATE
+     *
      * @var string
      */
     protected const ROUTE_SHOPPING_LIST_UPDATE = 'shopping-list/update';

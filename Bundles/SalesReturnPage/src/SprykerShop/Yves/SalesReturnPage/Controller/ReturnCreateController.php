@@ -26,6 +26,7 @@ class ReturnCreateController extends AbstractReturnController
 
     /**
      * @uses \SprykerShop\Yves\SalesReturnPage\Plugin\Router\SalesReturnPageRouteProviderPlugin::ROUTE_RETURN_VIEW
+     *
      * @var string
      */
     protected const ROUTE_RETURN_VIEW = 'return/view';

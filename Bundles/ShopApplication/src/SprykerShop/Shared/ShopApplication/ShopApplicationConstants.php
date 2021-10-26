@@ -22,6 +22,7 @@ interface ShopApplicationConstants
      * - Defines environment name for twig.
      *
      * @api
+     *
      * @var string
      */
     public const TWIG_ENVIRONMENT_NAME = 'SHOP_APPLICATION:TWIG_ENVIRONMENT_NAME';

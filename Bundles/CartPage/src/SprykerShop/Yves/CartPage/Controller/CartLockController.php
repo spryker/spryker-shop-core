@@ -23,6 +23,7 @@ class CartLockController extends AbstractController
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART} instead.
+     *
      * @var string
      */
     protected const ROUTE_CART = 'cart';

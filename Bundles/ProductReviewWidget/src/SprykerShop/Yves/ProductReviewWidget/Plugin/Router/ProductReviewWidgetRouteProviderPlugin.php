@@ -14,6 +14,7 @@ class ProductReviewWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ProductReviewWidget\Plugin\Router\ProductReviewWidgetRouteProviderPlugin::ROUTE_NAME_PRODUCT_REVIEW_INDEX} instead.
+     *
      * @var string
      */
     protected const ROUTE_PRODUCT_REVIEW_INDEX = 'product-review/index';
@@ -25,6 +26,7 @@ class ProductReviewWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ProductReviewWidget\Plugin\Router\ProductReviewWidgetRouteProviderPlugin::ROUTE_NAME_PRODUCT_REVIEW_CREATE} instead.
+     *
      * @var string
      */
     protected const ROUTE_PRODUCT_REVIEW_CREATE = 'product-review/create';

@@ -42,12 +42,14 @@ class ProductReviewWidgetDependencyProvider extends AbstractBundleDependencyProv
 
     /**
      * @deprecated Use {@link \Spryker\Yves\Kernel\AbstractFactory::getContainer()} instead.
+     *
      * @var string
      */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
      * @uses `\Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK`
+     *
      * @var string
      */
     public const SERVICE_REQUEST_STACK = 'request_stack';

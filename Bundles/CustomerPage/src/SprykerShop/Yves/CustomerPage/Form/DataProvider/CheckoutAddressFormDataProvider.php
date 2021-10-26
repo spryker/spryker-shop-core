@@ -36,6 +36,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
 
     /**
      * @uses \Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper::BUNDLE_PRODUCT
+     *
      * @var string
      */
     protected const BUNDLE_PRODUCT = 'bundleProduct';

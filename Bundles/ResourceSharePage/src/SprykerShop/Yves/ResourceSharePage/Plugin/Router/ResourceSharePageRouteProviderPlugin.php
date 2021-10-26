@@ -14,6 +14,7 @@ class ResourceSharePageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ResourceSharePage\Plugin\Router\ResourceSharePageRouteProviderPlugin::ROUTE_NAME_RESOURCE_SHARE_LINK} instead.
+     *
      * @var string
      */
     protected const ROUTE_RESOURCE_SHARE_LINK = 'resource-share/link';

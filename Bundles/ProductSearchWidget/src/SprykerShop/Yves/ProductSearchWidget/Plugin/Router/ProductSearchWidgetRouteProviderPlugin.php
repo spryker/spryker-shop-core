@@ -14,6 +14,7 @@ class ProductSearchWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ProductSearchWidget\Plugin\Router\ProductSearchWidgetRouteProviderPlugin::ROUTE_NAME_PRODUCT_CONCRETE_SEARCH} instead.
+     *
      * @var string
      */
     protected const ROUTE_PRODUCT_CONCRETE_SEARCH = 'product-search/product-concrete-search';
@@ -25,6 +26,7 @@ class ProductSearchWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ProductSearchWidget\Plugin\Router\ProductSearchWidgetRouteProviderPlugin::ROUTE_NAME_PRODUCT_QUICK_ADD} instead.
+     *
      * @var string
      */
     protected const ROUTE_PRODUCT_QUICK_ADD = 'product-quick-add';

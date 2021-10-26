@@ -29,6 +29,7 @@ class ReturnCreateFormDataProvider
 
     /**
      * @uses \Spryker\Client\SalesReturnSearch\Plugin\Elasticsearch\ResultFormatter\ReturnReasonSearchResultFormatterPlugin::NAME
+     *
      * @var string
      */
     protected const RETURN_REASON_COLLECTION = 'ReturnReasonCollection';

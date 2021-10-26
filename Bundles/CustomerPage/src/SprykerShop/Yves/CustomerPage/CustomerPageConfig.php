@@ -16,6 +16,7 @@ class CustomerPageConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Zed\Customer\CustomerConfig::MIN_LENGTH_CUSTOMER_PASSWORD
+     *
      * @var int
      */
     protected const MIN_LENGTH_CUSTOMER_PASSWORD = 1;
@@ -42,6 +43,7 @@ class CustomerPageConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Shared\Sales\SalesConfig::ORDER_SEARCH_TYPES
+     *
      * @var array
      */
     protected const ORDER_SEARCH_TYPES = [
@@ -53,6 +55,7 @@ class CustomerPageConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Zed\Customer\CustomerConfig::MAX_LENGTH_CUSTOMER_PASSWORD
+     *
      * @var int
      */
     protected const MAX_LENGTH_CUSTOMER_PASSWORD = 72;

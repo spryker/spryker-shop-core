@@ -47,6 +47,7 @@ class CompanyUserInvitationPageControllerProvider extends AbstractYvesController
 
     /**
      * @see \Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants::ROUTE_INVITATION_ACCEPT
+     *
      * @var string
      */
     public const ROUTE_INVITATION_ACCEPT = 'invitation/accept';

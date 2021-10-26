@@ -25,6 +25,7 @@ class AgentAuthenticationFailureHandler extends AbstractPlugin implements Authen
 
     /**
      * @uses \SprykerShop\Yves\AgentPage\Plugin\Router\AgentPageRouteProviderPlugin::ROUTE_LOGIN
+     *
      * @var string
      */
     protected const ROUTE_LOGIN = 'agent/login';

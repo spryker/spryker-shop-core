@@ -14,6 +14,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_LOGIN} instead.
+     *
      * @var string
      */
     protected const ROUTE_LOGIN = 'login';
@@ -25,6 +26,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_LOGOUT} instead.
+     *
      * @var string
      */
     protected const ROUTE_LOGOUT = 'logout';
@@ -36,6 +38,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_REGISTER} instead.
+     *
      * @var string
      */
     protected const ROUTE_REGISTER = 'register';
@@ -47,6 +50,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_PASSWORD_FORGOTTEN} instead.
+     *
      * @var string
      */
     protected const ROUTE_PASSWORD_FORGOTTEN = 'password/forgotten';
@@ -58,6 +62,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_PASSWORD_RESTORE} instead.
+     *
      * @var string
      */
     protected const ROUTE_PASSWORD_RESTORE = 'password/restore';
@@ -69,6 +74,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_OVERVIEW} instead.
+     *
      * @var string
      */
     protected const ROUTE_CUSTOMER_OVERVIEW = 'customer/overview';
@@ -80,6 +86,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_PROFILE} instead.
+     *
      * @var string
      */
     protected const ROUTE_CUSTOMER_PROFILE = 'customer/profile';
@@ -91,6 +98,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_ADDRESS} instead.
+     *
      * @var string
      */
     protected const ROUTE_CUSTOMER_ADDRESS = 'customer/address';
@@ -102,6 +110,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_NEW_ADDRESS} instead.
+     *
      * @var string
      */
     protected const ROUTE_CUSTOMER_NEW_ADDRESS = 'customer/address/new';
@@ -113,6 +122,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_UPDATE_ADDRESS} instead.
+     *
      * @var string
      */
     protected const ROUTE_CUSTOMER_UPDATE_ADDRESS = 'customer/address/update';
@@ -124,6 +134,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_DELETE_ADDRESS} instead.
+     *
      * @var string
      */
     protected const ROUTE_CUSTOMER_DELETE_ADDRESS = 'customer/address/delete';
@@ -135,6 +146,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_REFRESH_ADDRESS} instead.
+     *
      * @var string
      */
     protected const ROUTE_CUSTOMER_REFRESH_ADDRESS = 'customer/address/refresh';
@@ -146,6 +158,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_ORDER} instead.
+     *
      * @var string
      */
     protected const ROUTE_CUSTOMER_ORDER = 'customer/order';
@@ -157,6 +170,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_ORDER_DETAILS} instead.
+     *
      * @var string
      */
     protected const ROUTE_CUSTOMER_ORDER_DETAILS = 'customer/order/details';
@@ -168,6 +182,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_DELETE} instead.
+     *
      * @var string
      */
     protected const ROUTE_CUSTOMER_DELETE = 'customer/delete';
@@ -179,6 +194,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_DELETE_CONFIRM} instead.
+     *
      * @var string
      */
     protected const ROUTE_CUSTOMER_DELETE_CONFIRM = 'customer/delete/confirm';
@@ -190,6 +206,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_TOKEN} instead.
+     *
      * @var string
      */
     protected const ROUTE_TOKEN = 'token';
@@ -201,6 +218,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CONFIRM_REGISTRATION} instead.
+     *
      * @var string
      */
     protected const ROUTE_CONFIRM_REGISTRATION = 'register/confirm';

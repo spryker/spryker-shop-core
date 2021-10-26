@@ -16,18 +16,21 @@ class PriceProductVolumeResolver implements PriceProductVolumeResolverInterface
 {
     /**
      * @see \Spryker\Shared\Price\PriceConfig::PRICE_MODE_NET
+     *
      * @var string
      */
     protected const PRICE_MODE_NET = 'NET_MODE';
 
     /**
      * @see \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     *
      * @var string
      */
     protected const PRICE_MODE_GROSS = 'GROSS_MODE';
 
     /**
      * @see \Spryker\Shared\PriceProductVolume\VolumePriceProductConfig::VOLUME_PRICE_TYPE
+     *
      * @var string
      */
     protected const VOLUME_PRICE_TYPE = 'volume_prices';

@@ -14,6 +14,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_CUSTOMER} instead.
+     *
      * @var string
      */
     protected const CHECKOUT_CUSTOMER = 'checkout-customer';
@@ -25,6 +26,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_ADDRESS} instead.
+     *
      * @var string
      */
     protected const CHECKOUT_ADDRESS = 'checkout-address';
@@ -36,6 +38,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_SHIPMENT} instead.
+     *
      * @var string
      */
     protected const CHECKOUT_SHIPMENT = 'checkout-shipment';
@@ -47,6 +50,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_PAYMENT} instead.
+     *
      * @var string
      */
     protected const CHECKOUT_PAYMENT = 'checkout-payment';
@@ -58,6 +62,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_SUMMARY} instead.
+     *
      * @var string
      */
     protected const CHECKOUT_SUMMARY = 'checkout-summary';
@@ -69,6 +74,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_PLACE_ORDER} instead.
+     *
      * @var string
      */
     protected const CHECKOUT_PLACE_ORDER = 'checkout-place-order';
@@ -80,6 +86,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_ERROR} instead.
+     *
      * @var string
      */
     protected const CHECKOUT_ERROR = 'checkout-error';
@@ -91,6 +98,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_INDEX} instead.
+     *
      * @var string
      */
     protected const CHECKOUT_SUCCESS = 'checkout-success';
@@ -102,6 +110,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_INDEX} instead.
+     *
      * @var string
      */
     protected const CHECKOUT_INDEX = 'checkout-index';

@@ -14,6 +14,7 @@ class AvailabilityNotificationWidgetRouteProviderPlugin extends AbstractRoutePro
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\AvailabilityNotificationWidget\Plugin\Router\AvailabilityNotificationWidgetRouteProviderPlugin::ROUTE_NAME_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE} instead.
+     *
      * @var string
      */
     protected const ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE = 'availability-notification/unsubscribe';
@@ -25,6 +26,7 @@ class AvailabilityNotificationWidgetRouteProviderPlugin extends AbstractRoutePro
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\AvailabilityNotificationWidget\Plugin\Router\AvailabilityNotificationWidgetRouteProviderPlugin::ROUTE_NAME_AVAILABILITY_NOTIFICATION_SUBSCRIBE} instead.
+     *
      * @var string
      */
     protected const ROUTE_AVAILABILITY_NOTIFICATION_SUBSCRIBE = 'availability-notification/subscribe';

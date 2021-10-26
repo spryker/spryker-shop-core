@@ -15,6 +15,7 @@ class MultiCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_INDEX} instead.
+     *
      * @var string
      */
     protected const ROUTE_MULTI_CART_INDEX = 'multi-cart';
@@ -26,6 +27,7 @@ class MultiCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_CREATE} instead.
+     *
      * @var string
      */
     protected const ROUTE_MULTI_CART_CREATE = 'multi-cart/create';
@@ -37,6 +39,7 @@ class MultiCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_UPDATE} instead.
+     *
      * @var string
      */
     protected const ROUTE_MULTI_CART_UPDATE = 'multi-cart/update';
@@ -48,6 +51,7 @@ class MultiCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_DELETE} instead.
+     *
      * @var string
      */
     protected const ROUTE_MULTI_CART_DELETE = 'multi-cart/delete';
@@ -59,6 +63,7 @@ class MultiCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_CONFIRM_DELETE} instead.
+     *
      * @var string
      */
     protected const ROUTE_MULTI_CART_CONFIRM_DELETE = 'multi-cart/confirm-delete';
@@ -70,6 +75,7 @@ class MultiCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_SET_DEFAULT} instead.
+     *
      * @var string
      */
     protected const ROUTE_MULTI_CART_SET_DEFAULT = 'multi-cart/set-default';
@@ -81,6 +87,7 @@ class MultiCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_CLEAR} instead.
+     *
      * @var string
      */
     protected const ROUTE_MULTI_CART_CLEAR = 'multi-cart/clear';
@@ -92,6 +99,7 @@ class MultiCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_DUPLICATE} instead.
+     *
      * @var string
      */
     protected const ROUTE_MULTI_CART_DUPLICATE = 'multi-cart/duplicate';

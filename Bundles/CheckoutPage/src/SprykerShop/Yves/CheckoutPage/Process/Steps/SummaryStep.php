@@ -21,6 +21,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
 {
     /**
      * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE
+     *
      * @var string
      */
     public const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';

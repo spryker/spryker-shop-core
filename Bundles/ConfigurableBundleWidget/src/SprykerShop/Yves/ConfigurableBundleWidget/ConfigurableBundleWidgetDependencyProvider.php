@@ -19,6 +19,7 @@ class ConfigurableBundleWidgetDependencyProvider extends AbstractBundleDependenc
 {
     /**
      * @see \Spryker\Shared\Application\ApplicationConstants::FORM_FACTORY
+     *
      * @var string
      */
     public const FORM_FACTORY = 'FORM_FACTORY';

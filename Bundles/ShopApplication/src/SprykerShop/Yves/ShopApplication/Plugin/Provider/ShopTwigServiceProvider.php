@@ -14,6 +14,7 @@ use Spryker\Shared\Kernel\Communication\Application as SprykerApplication;
 use Spryker\Shared\Twig\TwigConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ShopApplication\Exception\InvalidApplicationException;
+use Symfony\Bridge\Twig\Extension\RoutingExtension;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Twig\Environment;
@@ -130,7 +131,7 @@ class ShopTwigServiceProvider extends AbstractPlugin implements ServiceProviderI
         });
         $app['twig'] = $app->share(
             $app->extend('twig', function (Environment $twig) use ($app) {
-                if (class_exists('Symfony\Bridge\Twig\Extension\RoutingExtension')) {
+                if (class_exists(RoutingExtension::class)) {
                     if (isset($app['form.factory'])) {
                         $app['twig.loader']->addLoader(
                             new FilesystemLoader(__DIR__ . '/../../Resources/views/Form'),

@@ -21,30 +21,35 @@ class ContentProductSetTwigFunctionProvider extends TwigFunctionProvider
 {
     /**
      * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::TWIG_FUNCTION_NAME
+     *
      * @var string
      */
     protected const FUNCTION_CONTENT_PRODUCT_SET = 'content_product_set';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ContentProductSetWidget\Twig\ContentProductSetTwigFunctionProvider::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_TOP} instead.
+     *
      * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
 
     /**
      * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_TOP
+     *
      * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_TOP = 'cart-button-top';
 
     /**
      * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_BOTTOM
+     *
      * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_BOTTOM = 'cart-button-btm';
 
     /**
      * @uses \SprykerShop\Yves\ProductSetDetailPage\Controller\DetailController::PARAM_ATTRIBUTE
+     *
      * @var string
      */
     protected const PARAM_ATTRIBUTE = 'attributes';

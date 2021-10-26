@@ -24,6 +24,7 @@ class OrderController extends AbstractController
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
+     *
      * @var string
      */
     protected const ROUTE_SUCCESSFUL_REDIRECT = 'cart';

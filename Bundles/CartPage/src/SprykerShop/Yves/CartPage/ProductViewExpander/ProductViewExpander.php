@@ -14,6 +14,7 @@ class ProductViewExpander implements ProductViewExpanderInterface
 {
     /**
      * @see \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART_ADD
+     *
      * @var string
      */
     protected const URL_PATH_ADD_TO_CART = 'cart/add';

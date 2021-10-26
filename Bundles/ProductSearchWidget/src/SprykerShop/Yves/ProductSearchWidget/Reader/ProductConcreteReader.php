@@ -19,6 +19,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
 
     /**
      * @uses \Spryker\Client\Catalog\Plugin\Elasticsearch\ResultFormatter\ProductConcreteCatalogSearchResultFormatterPlugin::NAME
+     *
      * @var string
      */
     protected const RESULT_FORMATTER = 'ProductConcreteCatalogSearchResultFormatterPlugin';

@@ -121,18 +121,21 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @uses \Spryker\Yves\Messenger\Plugin\Application\FlashMessengerApplicationPlugin::SERVICE_FLASH_MESSENGER
+     *
      * @var string
      */
     public const SERVICE_FLASH_MESSENGER = 'flash_messenger';
 
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     *
      * @var string
      */
     public const SERVICE_ROUTER = 'routers';
 
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';

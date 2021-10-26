@@ -17,6 +17,7 @@ class ContentFileListTwigFunctionProvider extends TwigFunctionProvider
 {
     /**
      * @uses \Spryker\Shared\ContentFile\ContentFileConfig::TWIG_FUNCTION_NAME
+     *
      * @var string
      */
     protected const FUNCTION_CONTENT_FILE_LIST = 'content_file_list';
@@ -38,12 +39,14 @@ class ContentFileListTwigFunctionProvider extends TwigFunctionProvider
 
     /**
      * @uses \Spryker\Shared\ContentFile\ContentFileConfig::WIDGET_TEMPLATE_IDENTIFIER_TEXT_LINK
+     *
      * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_TEXT_LINK = 'text-link';
 
     /**
      * @uses \Spryker\Shared\ContentFile\ContentFileConfig::WIDGET_TEMPLATE_IDENTIFIER_FILE_ICON_AND_SIZE
+     *
      * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_FILE_ICON_AND_SIZE = 'file-icon-and-size';

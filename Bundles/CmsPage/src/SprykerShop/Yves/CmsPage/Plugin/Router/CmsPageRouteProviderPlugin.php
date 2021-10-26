@@ -14,6 +14,7 @@ class CmsPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CmsPage\Plugin\Router\CmsPageRouteProviderPlugin::ROUTE_NAME_PREVIEW} instead.
+     *
      * @var string
      */
     protected const ROUTE_PREVIEW = 'cms-preview';
@@ -25,6 +26,7 @@ class CmsPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CmsPage\Plugin\Router\CmsPageRouteProviderPlugin::ID_CMS_PAGE} instead.
+     *
      * @var string
      */
     protected const PARAM_PAGE = 'page';

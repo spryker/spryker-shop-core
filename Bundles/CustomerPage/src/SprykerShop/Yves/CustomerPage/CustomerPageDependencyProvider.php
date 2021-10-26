@@ -73,6 +73,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
@@ -144,6 +145,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\CustomerPageDependencyProvider::SERVICE_FLASH_MESSENGER} instead
+     *
      * @var string
      */
     public const FLASH_MESSENGER = 'FLASH_MESSENGER';
@@ -165,30 +167,35 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @uses \Spryker\Yves\Messenger\Plugin\Application\FlashMessengerApplicationPlugin::SERVICE_FLASH_MESSENGER
+     *
      * @var string
      */
     public const SERVICE_FLASH_MESSENGER = 'flash_messenger';
 
     /**
      * @uses \Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_TOKEN_STORAGE
+     *
      * @var string
      */
     public const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
 
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     *
      * @var string
      */
     public const SERVICE_ROUTER = 'routers';
 
     /**
      * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     *
      * @var string
      */
     public const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
      * @uses \Spryker\Yves\Locale\Plugin\Application\LocaleApplicationPlugin::SERVICE_LOCALE
+     *
      * @var string
      */
     public const SERVICE_LOCALE = 'locale';

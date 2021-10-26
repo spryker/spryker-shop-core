@@ -14,6 +14,7 @@ class OrderCancelWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\OrderCancelWidget\Plugin\Router\OrderCancelWidgetRouteProviderPlugin::ROUTE_NAME_ORDER_CANCEL} instead.
+     *
      * @var string
      */
     protected const ROUTE_ORDER_CANCEL = 'order/cancel';

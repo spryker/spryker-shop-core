@@ -23,6 +23,7 @@ class FixAgentTokenAfterCustomerAuthenticationSuccessPlugin extends AbstractPlug
 {
     /**
      * @uses \SprykerShop\Yves\AgentPage\Plugin\Security\AgentPageSecurityPlugin::ROLE_PREVIOUS_ADMIN
+     *
      * @var string
      */
     protected const ROLE_PREVIOUS_ADMIN = 'ROLE_PREVIOUS_ADMIN';

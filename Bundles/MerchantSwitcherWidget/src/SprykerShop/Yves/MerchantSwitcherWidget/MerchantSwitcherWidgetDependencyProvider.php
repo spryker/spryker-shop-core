@@ -22,6 +22,7 @@ class MerchantSwitcherWidgetDependencyProvider extends AbstractBundleDependencyP
 {
     /**
      * @see \Spryker\Shared\Application\ApplicationConstants::FORM_FACTORY
+     *
      * @var string
      */
     public const FORM_FACTORY = 'FORM_FACTORY';
@@ -33,6 +34,7 @@ class MerchantSwitcherWidgetDependencyProvider extends AbstractBundleDependencyP
 
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
@@ -49,12 +51,14 @@ class MerchantSwitcherWidgetDependencyProvider extends AbstractBundleDependencyP
 
     /**
      * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_COOKIES
+     *
      * @var string
      */
     public const SERVICE_COOKIES = 'cookies';
 
     /**
      * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     *
      * @var string
      */
     public const SERVICE_REQUEST_STACK = 'request_stack';

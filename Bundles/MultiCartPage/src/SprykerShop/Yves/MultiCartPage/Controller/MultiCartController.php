@@ -23,6 +23,7 @@ class MultiCartController extends AbstractController
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
+     *
      * @var string
      */
     protected const ROUTE_CART = 'cart';
@@ -54,6 +55,7 @@ class MultiCartController extends AbstractController
 
     /**
      * @uses \SprykerShop\Yves\MultiCartPage\Plugin\Router\MultiCartPageRouteProviderPlugin::PARAM_ID_QUOTE
+     *
      * @var string
      */
     protected const PARAM_ID_QUOTE = 'idQuote';

@@ -17,6 +17,7 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
 {
     /**
      * @uses \Spryker\Zed\CompanySalesConnector\CompanySalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY
+     *
      * @var string
      */
     public const CHOICE_COMPANY = 'company';
@@ -28,18 +29,21 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
 
     /**
      * @uses \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::FILTER_FIELD_TYPE_CUSTOMER_REFERENCE
+     *
      * @var string
      */
     protected const FILTER_FIELD_TYPE_CUSTOMER_REFERENCE = 'customerReference';
 
     /**
      * @uses \SprykerShop\Yves\CustomerPage\Form\OrderSearchForm::FIELD_FILTERS
+     *
      * @var string
      */
     protected const FIELD_FILTERS = 'filters';
 
     /**
      * @uses \Spryker\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT
+     *
      * @var string
      */
     protected const FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT = 'companyBusinessUnit';

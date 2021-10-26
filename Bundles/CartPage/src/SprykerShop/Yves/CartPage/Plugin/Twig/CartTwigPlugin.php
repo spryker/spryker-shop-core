@@ -20,6 +20,7 @@ class CartTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     /**
      * @deprecated Use {@link FUNCTION_NAME_GET_CART_QUANTITY} instead
+     *
      * @var string
      */
     protected const TWIG_GLOBAL_VARIABLE_NAME_CART_QUANTITY = 'cartQuantity';

@@ -14,6 +14,7 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT} instead.
+     *
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT = 'agent/quote-request';
@@ -25,6 +26,7 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_CANCEL} instead.
+     *
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CANCEL = 'agent/quote-request/cancel';
@@ -36,6 +38,7 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_DETAILS} instead.
+     *
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_DETAILS = 'agent/quote-request/details';
@@ -47,6 +50,7 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_EDIT} instead.
+     *
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_EDIT = 'agent/quote-request/edit';
@@ -58,6 +62,7 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_CREATE} instead.
+     *
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CREATE = 'agent/quote-request/create';
@@ -69,6 +74,7 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_SEND_TO_CUSTOMER} instead.
+     *
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_SEND_TO_CUSTOMER = 'agent/quote-request/send-to-customer';
@@ -80,6 +86,7 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_EDIT_ITEMS} instead.
+     *
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_EDIT_ITEMS = 'agent/quote-request/edit-items';
@@ -91,6 +98,7 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_EDIT_ITEMS_CONFIRM} instead.
+     *
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_EDIT_ITEMS_CONFIRM = 'agent/quote-request/edit-items-confirm';
@@ -102,6 +110,7 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_REVISE} instead.
+     *
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_REVISE = 'agent/quote-request/revise';
@@ -113,6 +122,7 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_CONVERT_TO_CART} instead.
+     *
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CONVERT_TO_CART = 'agent/quote-request/convert-to-cart';
@@ -124,18 +134,21 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
 
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Provider\QuoteRequestAgentPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE
+     *
      * @var string
      */
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Provider\QuoteRequestAgentPageControllerProvider::QUOTE_REQUEST_REFERENCE_REGEX
+     *
      * @var string
      */
     protected const QUOTE_REQUEST_REFERENCE_REGEX = '[a-zA-Z0-9-]+';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS} instead.
+     *
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS = 'agent/quote-request/checkout-address';
@@ -147,6 +160,7 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS_CONFIRM} instead.
+     *
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS_CONFIRM = 'agent/quote-request/checkout-address-confirm';
@@ -158,6 +172,7 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT} instead.
+     *
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT = 'agent/quote-request/checkout-shipment';
@@ -169,6 +184,7 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT_CONFIRM} instead.
+     *
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT_CONFIRM = 'agent/quote-request/checkout-shipment-confirm';
@@ -180,6 +196,7 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_SAVE} instead.
+     *
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SAVE = 'agent/quote-request/checkout-save';

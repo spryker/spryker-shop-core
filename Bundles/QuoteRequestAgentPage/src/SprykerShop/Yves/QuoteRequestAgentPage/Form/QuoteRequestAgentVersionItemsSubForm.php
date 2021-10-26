@@ -34,6 +34,7 @@ class QuoteRequestAgentVersionItemsSubForm extends AbstractType
 
     /**
      * @uses \Spryker\Shared\Calculation\CalculationPriceMode::PRICE_MODE_GROSS
+     *
      * @var string
      */
     protected const PRICE_MODE_GROSS = 'GROSS_MODE';

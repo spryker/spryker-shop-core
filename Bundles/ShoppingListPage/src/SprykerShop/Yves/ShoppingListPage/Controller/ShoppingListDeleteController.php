@@ -30,6 +30,7 @@ class ShoppingListDeleteController extends AbstractShoppingListController
 
     /**
      * @uses \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_SHOPPING_LIST
+     *
      * @var string
      */
     protected const ROUTE_SHOPPING_LIST = 'shopping-list';

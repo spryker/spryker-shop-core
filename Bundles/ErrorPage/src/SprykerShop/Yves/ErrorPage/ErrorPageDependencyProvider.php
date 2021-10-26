@@ -19,6 +19,7 @@ class ErrorPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
@@ -30,18 +31,21 @@ class ErrorPageDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     *
      * @var string
      */
     public const SERVICE_ROUTER = 'routers';
 
     /**
      * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     *
      * @var string
      */
     public const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
      * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_KERNEL
+     *
      * @var string
      */
     public const SERVICE_KERNEL = 'kernel';

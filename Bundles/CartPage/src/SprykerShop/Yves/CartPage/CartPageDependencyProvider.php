@@ -69,30 +69,35 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @uses \Spryker\Yves\Form\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
+     *
      * @var string
      */
     public const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
 
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     *
      * @var string
      */
     public const SERVICE_ROUTER = 'routers';
 
     /**
      * @uses \Spryker\Yves\Locale\Plugin\Application\LocaleApplicationPlugin::SERVICE_LOCALE
+     *
      * @var string
      */
     public const SERVICE_LOCALE = 'locale';
 
     /**
      * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     *
      * @var string
      */
     public const SERVICE_REQUEST_STACK = 'request_stack';

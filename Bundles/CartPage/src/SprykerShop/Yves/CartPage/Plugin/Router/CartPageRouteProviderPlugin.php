@@ -15,6 +15,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART} instead.
+     *
      * @var string
      */
     protected const ROUTE_CART = 'cart';
@@ -26,6 +27,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART_ADD} instead.
+     *
      * @var string
      */
     protected const ROUTE_CART_ADD = 'cart/add';
@@ -37,6 +39,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART_ADD_AJAX} instead.
+     *
      * @var string
      */
     protected const ROUTE_CART_ADD_AJAX = 'cart/add-ajax';
@@ -48,6 +51,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART_QUICK_ADD} instead.
+     *
      * @var string
      */
     protected const ROUTE_CART_QUICK_ADD = 'cart/quick-add';
@@ -59,6 +63,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART_REMOVE} instead.
+     *
      * @var string
      */
     protected const ROUTE_CART_REMOVE = 'cart/remove';
@@ -70,6 +75,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART_CHANGE} instead.
+     *
      * @var string
      */
     protected const ROUTE_CART_CHANGE = 'cart/change';
@@ -81,6 +87,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART_UPDATE} instead.
+     *
      * @var string
      */
     protected const ROUTE_CART_UPDATE = 'cart/update';
@@ -92,6 +99,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART_CHANGE_QUANTITY} instead.
+     *
      * @var string
      */
     protected const ROUTE_CART_CHANGE_QUANTITY = 'cart/change/quantity';
@@ -103,6 +111,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART_ADD_ITEMS} instead.
+     *
      * @var string
      */
     protected const ROUTE_CART_ADD_ITEMS = 'cart/add-items';
@@ -119,6 +128,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART_RESET_LOCK} instead.
+     *
      * @var string
      */
     protected const ROUTE_CART_RESET_LOCK = 'cart/reset-lock';

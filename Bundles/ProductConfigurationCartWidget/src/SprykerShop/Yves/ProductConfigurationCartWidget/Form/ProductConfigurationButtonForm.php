@@ -26,6 +26,7 @@ class ProductConfigurationButtonForm extends AbstractType
 
     /**
      * @uses \SprykerShop\Yves\ProductConfiguratorGatewayPage\Form\ProductConfiguratorRequestDataForm::PRODUCT_CONFIGURATION_CSRF_TOKEN_ID
+     *
      * @var string
      */
     public const PRODUCT_CONFIGURATION_CSRF_TOKEN_ID = 'product_configuration';

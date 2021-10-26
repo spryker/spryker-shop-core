@@ -19,6 +19,7 @@ class AccessTokenController extends AbstractCustomerController
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_CUSTOMER_OVERVIEW} instead.
+     *
      * @var string
      */
     protected const ROUTE_CUSTOMER_OVERVIEW = 'customer/overview';

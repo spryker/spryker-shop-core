@@ -21,6 +21,7 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**
      * @deprecated Use static::WIDGET_GLOBAL instead.
+     *
      * @var string
      */
     public const PLUGIN_GLOBAL_WIDGETS = 'PLUGIN_GLOBAL_WIDGETS';
@@ -32,6 +33,7 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ShopApplication\ShopApplicationDependencyProvider::GLOBAL_CONTAINER} instead.
+     *
      * @var string
      */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';

@@ -15,6 +15,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\WishlistPage\Plugin\Router\WishlistPageRouteProviderPlugin::ROUTE_NAME_ADD_TO_WISHLIST} instead.
+     *
      * @var string
      */
     protected const ROUTE_ADD_TO_WISHLIST = 'wishlist/add-to-wishlist';
@@ -26,6 +27,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\WishlistPage\Plugin\Router\WishlistPageRouteProviderPlugin::ROUTE_NAME_WISHLIST_OVERVIEW} instead.
+     *
      * @var string
      */
     protected const ROUTE_WISHLIST_OVERVIEW = 'wishlist/overview';
@@ -37,6 +39,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\WishlistPage\Plugin\Router\WishlistPageRouteProviderPlugin::ROUTE_NAME_WISHLIST_UPDATE} instead.
+     *
      * @var string
      */
     protected const ROUTE_WISHLIST_UPDATE = 'wishlist/update';
@@ -48,6 +51,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\WishlistPage\Plugin\Router\WishlistPageRouteProviderPlugin::ROUTE_NAME_WISHLIST_DELETE} instead.
+     *
      * @var string
      */
     protected const ROUTE_WISHLIST_DELETE = 'wishlist/delete';
@@ -59,6 +63,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\WishlistPage\Plugin\Router\WishlistPageRouteProviderPlugin::ROUTE_NAME_WISHLIST_DETAILS} instead.
+     *
      * @var string
      */
     protected const ROUTE_WISHLIST_DETAILS = 'wishlist/details';
@@ -70,6 +75,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\WishlistPage\Plugin\Router\WishlistPageRouteProviderPlugin::ROUTE_NAME_ADD_ITEM} instead.
+     *
      * @var string
      */
     protected const ROUTE_ADD_ITEM = 'wishlist/add-item';
@@ -81,6 +87,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\WishlistPage\Plugin\Router\WishlistPageRouteProviderPlugin::ROUTE_NAME_REMOVE_ITEM} instead.
+     *
      * @var string
      */
     protected const ROUTE_REMOVE_ITEM = 'wishlist/remove-item';
@@ -92,6 +99,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\WishlistPage\Plugin\Router\WishlistPageRouteProviderPlugin::ROUTE_NAME_MOVE_TO_CART} instead.
+     *
      * @var string
      */
     protected const ROUTE_MOVE_TO_CART = 'wishlist/move-to-cart';
@@ -103,6 +111,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\WishlistPage\Plugin\Router\WishlistPageRouteProviderPlugin::ROUTE_NAME_MOVE_ALL_AVAILABLE_TO_CART} instead.
+     *
      * @var string
      */
     protected const ROUTE_MOVE_ALL_AVAILABLE_TO_CART = 'wishlist/move-all-available-to-cart';

@@ -17,6 +17,7 @@ class MerchantReader implements MerchantReaderInterface
 {
     /**
      * @uses \Spryker\Client\MerchantSearch\Plugin\Elasticsearch\ResultFormatter\MerchantSearchResultFormatterPlugin::NAME
+     *
      * @var string
      */
     protected const MERCHANT_SEARCH_COLLECTION = 'MerchantSearchCollection';

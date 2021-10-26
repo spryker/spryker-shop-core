@@ -21,6 +21,7 @@ class PersistentCartSharePageDependencyProvider extends AbstractBundleDependency
 
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';

@@ -34,6 +34,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
 
     /**
      * @deprecated Exists for Backward Compatibility reasons only. Use {@link KEY_ATTRIBUTE_VARIANT_MAP} instead.
+     *
      * @var string
      */
     protected const KEY_ATTRIBUTE_VARIANTS = 'attribute_variants';

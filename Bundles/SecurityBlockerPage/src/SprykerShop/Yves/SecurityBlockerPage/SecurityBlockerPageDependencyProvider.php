@@ -30,12 +30,14 @@ class SecurityBlockerPageDependencyProvider extends AbstractBundleDependencyProv
 
     /**
      * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     *
      * @var string
      */
     public const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
      * @uses \Spryker\Yves\Locale\Plugin\Application\LocaleApplicationPlugin::SERVICE_LOCALE
+     *
      * @var string
      */
     public const SERVICE_LOCALE = 'locale';

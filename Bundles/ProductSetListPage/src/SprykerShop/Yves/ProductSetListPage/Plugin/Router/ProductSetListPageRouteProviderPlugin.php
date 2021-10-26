@@ -14,6 +14,7 @@ class ProductSetListPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ProductSetListPage\Plugin\Router\ProductSetListPageRouteProviderPlugin::ROUTE_NAME_PRODUCT_SETS} instead.
+     *
      * @var string
      */
     protected const ROUTE_PRODUCT_SETS = 'product-sets';

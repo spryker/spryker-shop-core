@@ -48,18 +48,21 @@ class QuoteRequestPageFactory extends AbstractFactory
 {
     /**
      * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_INDEX
+     *
      * @var string
      */
     protected const ROUTE_CHECKOUT_INDEX = 'checkout-index';
 
     /**
      * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_QUOTE_REQUEST
+     *
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST = 'quote-request';
 
     /**
      * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_QUOTE_REQUEST_SAVE
+     *
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_SAVE = 'quote-request/save';

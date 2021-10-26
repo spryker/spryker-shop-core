@@ -44,18 +44,21 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
 
     /**
      * @uses \Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin::SERVICE_DISPATCHER
+     *
      * @var string
      */
     protected const SERVICE_DISPATCHER = 'dispatcher';
 
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     *
      * @var string
      */
     protected const SERVICE_ROUTER = 'routers';
 
     /**
      * @uses \SprykerShop\Yves\AgentPage\Plugin\Router\AgentPageRouteProviderPlugin::ROUTE_LOGIN
+     *
      * @var string
      */
     protected const ROUTE_LOGIN = 'agent/login';
@@ -70,6 +73,7 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
 
     /**
      * @uses \SprykerShop\Yves\HomePage\Plugin\Router\HomePageRouteProviderPlugin::ROUTE_HOME
+     *
      * @var string
      */
     protected const ROUTE_HOME = 'home';

@@ -14,6 +14,7 @@ class ErrorPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ErrorPage\Plugin\Router\ErrorPageRouteProviderPlugin::ROUTE_NAME_ERROR_404} instead.
+     *
      * @var string
      */
     protected const ROUTE_ERROR_404 = 'error/404';
@@ -30,6 +31,7 @@ class ErrorPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ErrorPage\Plugin\Router\ErrorPageRouteProviderPlugin::ROUTE_NAME_ERROR_404_PATH} instead.
+     *
      * @var string
      */
     protected const ROUTE_ERROR_404_PATH = '/error/404';
@@ -46,6 +48,7 @@ class ErrorPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ErrorPage\Plugin\Router\ErrorPageRouteProviderPlugin::ROUTE_NAME_ERROR_403} instead.
+     *
      * @var string
      */
     protected const ROUTE_ERROR_403 = 'error/403';
@@ -62,6 +65,7 @@ class ErrorPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ErrorPage\Plugin\Router\ErrorPageRouteProviderPlugin::ROUTE_NAME_ERROR_403_PATH} instead.
+     *
      * @var string
      */
     protected const ROUTE_ERROR_403_PATH = '/error/403';

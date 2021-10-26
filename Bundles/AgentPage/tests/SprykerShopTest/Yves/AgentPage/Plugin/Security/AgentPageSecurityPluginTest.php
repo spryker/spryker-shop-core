@@ -28,18 +28,21 @@ class AgentPageSecurityPluginTest extends Unit
 {
     /**
      * @uses \Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_AUTHORIZATION_CHECKER
+     *
      * @var string
      */
     protected const SERVICE_SECURITY_AUTHORIZATION_CHECKER = 'security.authorization_checker';
 
     /**
      * @uses \Spryker\Yves\Session\Plugin\Application\SessionApplicationPlugin::SERVICE_SESSION
+     *
      * @var string
      */
     protected const SERVICE_SESSION = 'session';
 
     /**
      * @uses \Spryker\Yves\Messenger\Plugin\Application\FlashMessengerApplicationPlugin::SERVICE_FLASH_MESSENGER
+     *
      * @var string
      */
     protected const SERVICE_FLASH_MESSENGER = 'flash_messenger';

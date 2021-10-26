@@ -14,6 +14,7 @@ class CompanyUserInvitationPageRouteProviderPlugin extends AbstractRouteProvider
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Router\CompanyUserInvitationPageRouteProviderPlugin::ROUTE_NAME_OVERVIEW} instead.
+     *
      * @var string
      */
     protected const ROUTE_OVERVIEW = 'company/user-invitation';
@@ -25,6 +26,7 @@ class CompanyUserInvitationPageRouteProviderPlugin extends AbstractRouteProvider
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Router\CompanyUserInvitationPageRouteProviderPlugin::ROUTE_NAME_GET_IMPORT_ERRORS} instead.
+     *
      * @var string
      */
     protected const ROUTE_GET_IMPORT_ERRORS = 'company/user-invitation/get-import-errors';
@@ -36,6 +38,7 @@ class CompanyUserInvitationPageRouteProviderPlugin extends AbstractRouteProvider
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Router\CompanyUserInvitationPageRouteProviderPlugin::ROUTE_NAME_INVITATION_SEND} instead.
+     *
      * @var string
      */
     protected const ROUTE_INVITATION_SEND = 'company/user-invitation/send';
@@ -47,6 +50,7 @@ class CompanyUserInvitationPageRouteProviderPlugin extends AbstractRouteProvider
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Router\CompanyUserInvitationPageRouteProviderPlugin::ROUTE_NAME_INVITATION_SEND_ALL} instead.
+     *
      * @var string
      */
     protected const ROUTE_INVITATION_SEND_ALL = 'company/user-invitation/send-all';
@@ -58,6 +62,7 @@ class CompanyUserInvitationPageRouteProviderPlugin extends AbstractRouteProvider
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Router\CompanyUserInvitationPageRouteProviderPlugin::ROUTE_NAME_INVITATION_RESEND} instead.
+     *
      * @var string
      */
     protected const ROUTE_INVITATION_RESEND = 'company/user-invitation/resend';
@@ -69,6 +74,7 @@ class CompanyUserInvitationPageRouteProviderPlugin extends AbstractRouteProvider
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Router\CompanyUserInvitationPageRouteProviderPlugin::ROUTE_NAME_INVITATION_RESEND_CONFIRM} instead.
+     *
      * @var string
      */
     protected const ROUTE_INVITATION_RESEND_CONFIRM = 'company/user-invitation/resend/confirm';
@@ -80,6 +86,7 @@ class CompanyUserInvitationPageRouteProviderPlugin extends AbstractRouteProvider
 
     /**
      * @see \Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants::ROUTE_INVITATION_ACCEPT
+     *
      * @var string
      */
     protected const ROUTE_INVITATION_ACCEPT = 'invitation/accept';
@@ -91,6 +98,7 @@ class CompanyUserInvitationPageRouteProviderPlugin extends AbstractRouteProvider
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Router\CompanyUserInvitationPageRouteProviderPlugin::ROUTE_NAME_INVITATION_DELETE} instead.
+     *
      * @var string
      */
     protected const ROUTE_INVITATION_DELETE = 'company/user-invitation/delete';
@@ -102,6 +110,7 @@ class CompanyUserInvitationPageRouteProviderPlugin extends AbstractRouteProvider
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Router\CompanyUserInvitationPageRouteProviderPlugin::ROUTE_NAME_INVITATION_DELETE_CONFIRM} instead.
+     *
      * @var string
      */
     protected const ROUTE_INVITATION_DELETE_CONFIRM = 'company/user-invitation/delete/confirm';

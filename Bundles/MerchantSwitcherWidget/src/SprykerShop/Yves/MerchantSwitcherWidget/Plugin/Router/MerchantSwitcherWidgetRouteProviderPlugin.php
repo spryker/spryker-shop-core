@@ -14,6 +14,7 @@ class MerchantSwitcherWidgetRouteProviderPlugin extends AbstractRouteProviderPlu
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\MerchantSwitcherWidget\Plugin\Router\MerchantSwitcherWidgetRouteProviderPlugin::ROUTE_NAME_SWITCH_MERCHANT} instead.
+     *
      * @var string
      */
     protected const ROUTE_SWITCH_MERCHANT = 'switch-merchant';

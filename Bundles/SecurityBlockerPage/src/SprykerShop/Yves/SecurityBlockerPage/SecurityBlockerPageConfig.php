@@ -13,12 +13,14 @@ class SecurityBlockerPageConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Glue\SecurityBlockerRestApi\SecurityBlockerRestApiConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE
+     *
      * @var string
      */
     public const SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE = 'customer';
 
     /**
      * @uses \Spryker\Glue\SecurityBlockerRestApi\SecurityBlockerRestApiConfig::SECURITY_BLOCKER_AGENT_ENTITY_TYPE
+     *
      * @var string
      */
     public const SECURITY_BLOCKER_AGENT_ENTITY_TYPE = 'agent';

@@ -13,18 +13,21 @@ class CheckoutPageConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT
+     *
      * @var string
      */
     public const SHIPMENT_METHOD_NAME_NO_SHIPMENT = 'NoShipment';
 
     /**
      * @uses \Spryker\Shared\Nopayment\NopaymentConfig::PAYMENT_PROVIDER_NAME
+     *
      * @var string
      */
     public const PAYMENT_METHOD_NAME_NO_PAYMENT = 'Nopayment';
 
     /**
      * @uses \SprykerShop\Yves\HomePage\Plugin\Router\HomePageRouteProviderPlugin::ROUTE_HOME
+     *
      * @var string
      */
     public const ESCAPE_ROUTE = 'home';

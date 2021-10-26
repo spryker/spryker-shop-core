@@ -24,6 +24,7 @@ class QuoteController extends AbstractController
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
+     *
      * @var string
      */
     protected const ROUTE_NAME_CART = 'cart';

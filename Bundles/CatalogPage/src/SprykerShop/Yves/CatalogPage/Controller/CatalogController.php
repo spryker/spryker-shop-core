@@ -63,6 +63,7 @@ class CatalogController extends AbstractController
 
     /**
      * @uses \SprykerShop\Yves\CatalogPage\Plugin\Router\CatalogPageRouteProviderPlugin::ROUTE_NAME_SEARCH
+     *
      * @var string
      */
     protected const ROUTE_SEARCH_PAGE = 'search';

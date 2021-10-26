@@ -14,6 +14,7 @@ class ConfigurableBundleWidgetRouteProviderPlugin extends AbstractRouteProviderP
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ConfigurableBundleWidget\Plugin\Router\ConfigurableBundleWidgetRouteProviderPlugin::ROUTE_NAME_CART_CONFIGURED_BUNDLE_REMOVE} instead.
+     *
      * @var string
      */
     protected const ROUTE_CART_CONFIGURED_BUNDLE_REMOVE = 'cart/configured-bundle/remove';
@@ -25,6 +26,7 @@ class ConfigurableBundleWidgetRouteProviderPlugin extends AbstractRouteProviderP
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ConfigurableBundleWidget\Plugin\Router\ConfigurableBundleWidgetRouteProviderPlugin::ROUTE_NAME_CART_CONFIGURED_BUNDLE_CHANGE_QUANTITY} instead.
+     *
      * @var string
      */
     protected const ROUTE_CART_CONFIGURED_BUNDLE_CHANGE_QUANTITY = 'cart/configured-bundle/change';

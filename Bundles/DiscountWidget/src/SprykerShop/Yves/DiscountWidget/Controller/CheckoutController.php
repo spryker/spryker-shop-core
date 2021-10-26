@@ -18,6 +18,7 @@ class CheckoutController extends AbstractController
 {
     /**
      * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_SUMMARY
+     *
      * @var string
      */
     protected const ROUTE_CHECKOUT_SUMMARY = 'checkout-summary';

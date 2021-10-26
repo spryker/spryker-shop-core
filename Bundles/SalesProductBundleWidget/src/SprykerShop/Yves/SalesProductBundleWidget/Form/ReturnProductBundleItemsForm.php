@@ -33,6 +33,7 @@ class ReturnProductBundleItemsForm extends AbstractType
 
     /**
      * @uses \SprykerShop\Yves\SalesReturnPage\Form\ReturnItemsForm::FIELD_CUSTOM_REASON
+     *
      * @var string
      */
     public const FIELD_CUSTOM_REASON = 'customReason';
@@ -44,6 +45,7 @@ class ReturnProductBundleItemsForm extends AbstractType
 
     /**
      * @uses \SprykerShop\Yves\SalesReturnPage\Form\ReturnItemsForm::OPTION_RETURN_REASONS
+     *
      * @var string
      */
     public const OPTION_RETURN_REASONS = 'returnReasons';

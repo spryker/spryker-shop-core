@@ -16,6 +16,7 @@ class ContentBannerTwigFunctionProvider extends TwigFunctionProvider
 {
     /**
      * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::TWIG_FUNCTION_NAME
+     *
      * @var string
      */
     protected const TWIG_FUNCTION_NAME_CONTENT_BANNER = 'content_banner';
@@ -37,12 +38,14 @@ class ContentBannerTwigFunctionProvider extends TwigFunctionProvider
 
     /**
      * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE
+     *
      * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE = 'bottom-title';
 
     /**
      * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE
+     *
      * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';

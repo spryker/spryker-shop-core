@@ -23,6 +23,7 @@ class DiscountWidgetDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
@@ -34,6 +35,7 @@ class DiscountWidgetDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @uses \Spryker\Yves\Messenger\Plugin\Application\FlashMessengerApplicationPlugin::SERVICE_FLASH_MESSENGER
+     *
      * @var string
      */
     public const SERVICE_FLASH_MESSENGER = 'flash_messenger';

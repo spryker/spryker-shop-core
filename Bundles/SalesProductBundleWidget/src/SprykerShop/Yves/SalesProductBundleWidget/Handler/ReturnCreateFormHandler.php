@@ -17,6 +17,7 @@ class ReturnCreateFormHandler implements ReturnCreateFormHandlerInterface
 {
     /**
      * @uses \SprykerShop\Yves\SalesReturnPage\Form\DataProvider\ReturnCreateFormDataProvider::CUSTOM_REASON_VALUE
+     *
      * @var string
      */
     protected const CUSTOM_REASON_VALUE = 'custom_reason';

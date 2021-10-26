@@ -78,12 +78,14 @@ class QuickOrderController extends AbstractController
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
+     *
      * @var string
      */
     protected const ROUTE_NAME_CART = 'cart';
 
     /**
      * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_INDEX
+     *
      * @var string
      */
     protected const ROUTE_NAME_CHECKOUT_INDEX = 'checkout-index';

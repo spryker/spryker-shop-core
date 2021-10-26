@@ -46,12 +46,14 @@ class BusinessUnitAddressController extends AbstractCompanyController
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT} instead.
+     *
      * @var string
      */
     protected const ROUTE_COMPANY_BUSINESS_UNIT = 'company/business-unit';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT_UPDATE} instead.
+     *
      * @var string
      */
     protected const ROUTE_COMPANY_BUSINESS_UNIT_UPDATE = 'company/business-unit/update';

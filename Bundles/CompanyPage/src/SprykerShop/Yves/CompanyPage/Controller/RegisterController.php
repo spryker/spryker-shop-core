@@ -23,6 +23,7 @@ class RegisterController extends AbstractController
 {
     /**
      * @uses \SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin::ROUTE_COMPANY_OVERVIEW
+     *
      * @var string
      */
     protected const ROUTE_COMPANY_OVERVIEW = 'company/overview';

@@ -25,12 +25,14 @@ class QuoteRequestCartController extends AbstractController
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_NAME_CART
+     *
      * @var string
      */
     protected const ROUTE_CART = 'cart';
 
     /**
      * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_EDIT
+     *
      * @var string
      */
     protected const ROUTE_QUOTE_REQUEST_EDIT = 'quote-request/edit';

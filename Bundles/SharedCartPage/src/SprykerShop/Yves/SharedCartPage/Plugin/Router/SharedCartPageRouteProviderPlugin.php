@@ -14,6 +14,7 @@ class SharedCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\SharedCartPage\Plugin\Router\SharedCartPageRouteProviderPlugin::ROUTE_NAME_SHARED_CART_SHARE} instead.
+     *
      * @var string
      */
     protected const ROUTE_SHARED_CART_SHARE = 'shared-cart/share';
@@ -25,6 +26,7 @@ class SharedCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\SharedCartPage\Plugin\Router\SharedCartPageRouteProviderPlugin::ROUTE_NAME_SHARED_CART_DISMISS} instead.
+     *
      * @var string
      */
     protected const ROUTE_SHARED_CART_DISMISS = 'shared-cart/dismiss';
@@ -36,6 +38,7 @@ class SharedCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\SharedCartPage\Plugin\Router\SharedCartPageRouteProviderPlugin::ROUTE_NAME_SHARED_CART_DISMISS_CONFIRM} instead.
+     *
      * @var string
      */
     protected const ROUTE_SHARED_CART_DISMISS_CONFIRM = 'shared-cart/dismiss-confirm';

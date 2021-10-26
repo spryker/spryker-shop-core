@@ -24,6 +24,7 @@ class AcceptController extends AbstractController
 
     /**
      * @see \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_REGISTER
+     *
      * @var string
      */
     protected const REDIRECT_URL = 'register';

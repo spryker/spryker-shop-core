@@ -28,6 +28,7 @@ class ReturnHandler implements ReturnHandlerInterface
 
     /**
      * @uses \SprykerShop\Yves\SalesReturnPage\Form\ReturnItemsForm::FIELD_CUSTOM_REASON
+     *
      * @var string
      */
     protected const FIELD_CUSTOM_REASON = 'customReason';

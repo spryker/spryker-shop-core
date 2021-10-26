@@ -14,6 +14,7 @@ class PriceWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\PriceWidget\Plugin\Router\PriceWidgetRouteProviderPlugin::ROUTE_NAME_PRICE_SWITCH} instead.
+     *
      * @var string
      */
     protected const ROUTE_PRICE_SWITCH = 'price-mode-switch';

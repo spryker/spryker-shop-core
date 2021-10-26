@@ -27,6 +27,7 @@ class QuoteRequestSaveController extends QuoteRequestAbstractController
 
     /**
      * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE
+     *
      * @var string
      */
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';

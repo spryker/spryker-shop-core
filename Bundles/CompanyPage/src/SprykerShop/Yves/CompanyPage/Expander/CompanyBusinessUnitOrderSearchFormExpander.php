@@ -20,12 +20,14 @@ class CompanyBusinessUnitOrderSearchFormExpander implements CompanyBusinessUnitO
 
     /**
      * @uses \Spryker\Zed\CompanyBusinessUnitSalesConnector\CompanyBusinessUnitSalesConnectorConfig::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT
+     *
      * @var string
      */
     protected const FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT = 'companyBusinessUnit';
 
     /**
      * @uses \SprykerShop\Yves\CustomerPage\Form\OrderSearchForm::FIELD_FILTERS
+     *
      * @var string
      */
     protected const FIELD_FILTERS = 'filters';

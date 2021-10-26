@@ -17,12 +17,14 @@ class RouteResolver implements RouteResolverInterface
 {
     /**
      * @uses \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_NAME_LOGIN
+     *
      * @var string
      */
     protected const ROUTE_LOGIN = 'login';
 
     /**
      * @uses \SprykerShop\Yves\CustomerPage\Plugin\CustomerPage\RedirectUriCustomerRedirectStrategyPlugin::PARAM_REDIRECT_URI
+     *
      * @var string
      */
     protected const PARAM_REDIRECT_URI = 'redirectUri';

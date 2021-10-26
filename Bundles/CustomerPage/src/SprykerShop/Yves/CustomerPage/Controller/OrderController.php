@@ -23,30 +23,35 @@ class OrderController extends AbstractCustomerController
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\CustomerPageConfig::getDefaultOrderHistoryPerPage()} instead.
+     *
      * @var int
      */
     public const ORDER_LIST_LIMIT = 10;
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\CustomerPageConfig::getDefaultOrderHistorySortField()} instead.
+     *
      * @var string
      */
     public const ORDER_LIST_SORT_FIELD = 'created_at';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\CustomerPageConfig::getDefaultOrderHistorySortDirection()} instead.
+     *
      * @var string
      */
     public const ORDER_LIST_SORT_DIRECTION = 'DESC';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Reader\OrderReader::PARAM_PAGE} instead.
+     *
      * @var string
      */
     public const PARAM_PAGE = 'page';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Reader\OrderReader::DEFAULT_PAGE} instead.
+     *
      * @var int
      */
     public const DEFAULT_PAGE = 1;

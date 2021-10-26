@@ -19,18 +19,21 @@ class CartPreviewRouterStrategyPlugin extends AbstractPlugin implements Resource
 {
     /**
      * @uses \Spryker\Shared\PersistentCartShare\PersistentCartShareConfig::SHARE_OPTION_KEY_PREVIEW
+     *
      * @var string
      */
     protected const SHARE_OPTION_KEY_PREVIEW = 'PREVIEW';
 
     /**
      * @uses \Spryker\Shared\PersistentCartShare\PersistentCartShareConfig::RESOURCE_TYPE_QUOTE
+     *
      * @var string
      */
     protected const RESOURCE_TYPE_QUOTE = 'quote';
 
     /**
      * @uses \SprykerShop\Yves\PersistentCartSharePage\Plugin\Router\PersistentCartSharePageRouteProviderPlugin::ROUTE_NAME_CART_PREVIEW
+     *
      * @var string
      */
     protected const ROUTE_CART_PREVIEW = 'cart/preview';

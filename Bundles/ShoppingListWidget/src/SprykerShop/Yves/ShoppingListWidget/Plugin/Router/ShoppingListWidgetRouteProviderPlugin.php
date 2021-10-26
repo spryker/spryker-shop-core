@@ -14,6 +14,7 @@ class ShoppingListWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ShoppingListWidget\Plugin\Router\ShoppingListWidgetRouteProviderPlugin::ROUTE_NAME_ADD_ITEM} instead.
+     *
      * @var string
      */
     protected const ROUTE_ADD_ITEM = 'shopping-list/add-item';
@@ -25,6 +26,7 @@ class ShoppingListWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\ShoppingListWidget\Plugin\Router\ShoppingListWidgetRouteProviderPlugin::ROUTE_NAME_CART_TO_SHOPPING_LIST} instead.
+     *
      * @var string
      */
     protected const ROUTE_CART_TO_SHOPPING_LIST = 'shopping-list/create-from-cart';

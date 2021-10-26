@@ -19,12 +19,14 @@ class CreateController extends AbstractController
 {
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const ERROR_MESSAGE_NO_CUSTOMER = 'Only customers can use this feature. Please log in.';
 
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const SUCCESS_MESSAGE = 'Review was submitted';

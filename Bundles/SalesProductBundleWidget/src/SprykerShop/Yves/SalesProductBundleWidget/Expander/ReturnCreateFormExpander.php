@@ -15,6 +15,7 @@ class ReturnCreateFormExpander implements ReturnCreateFormExpanderInterface
 {
     /**
      * @uses \SprykerShop\Yves\SalesReturnPage\Form\ReturnCreateForm::FIELD_RETURN_ITEMS
+     *
      * @var string
      */
     protected const FIELD_RETURN_ITEMS = 'returnItems';

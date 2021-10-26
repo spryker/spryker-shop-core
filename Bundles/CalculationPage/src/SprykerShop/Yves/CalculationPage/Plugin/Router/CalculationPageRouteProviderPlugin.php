@@ -14,6 +14,7 @@ class CalculationPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CalculationPage\Plugin\Router\CalculationPageRouteProviderPlugin::ROUTE_NAME_CALCULATION_DEBUG} instead.
+     *
      * @var string
      */
     protected const ROUTE_CALCULATION_DEBUG = 'calculation-debug';

@@ -14,12 +14,14 @@ class CheckoutStepResolver implements CheckoutStepResolverInterface
 {
     /**
      * @uses \SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep::STEP_CODE
+     *
      * @var string
      */
     protected const ADDRESS_STEP_CODE = 'address';
 
     /**
      * @uses \SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep::STEP_CODE
+     *
      * @var string
      */
     protected const SHIPMENT_STEP_CODE = 'shipment';

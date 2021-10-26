@@ -28,18 +28,21 @@ class ShareCartForm extends AbstractType
 
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const FIELD_COMPANY_USER_ID = 'idCompanyUser';
 
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const FIELD_QUOTE_PERMISSION_GROUP_ID = 'idQuotePermissionGroup';
 
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const OPTION_CUSTOMERS = 'OPTION_CUSTOMERS';
