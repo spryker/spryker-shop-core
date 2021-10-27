@@ -54,7 +54,7 @@ class ShipmentCollectionForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -65,13 +65,13 @@ class ShipmentCollectionForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
     protected function addShipmentGroupsSubForm(FormBuilderInterface $builder, array $options)
     {
-        /** @var \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupCollection */
+        /** @var \ArrayObject<\Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupCollection */
         $shipmentGroupCollection = $options[static::OPTION_SHIPMENT_GROUPS];
 
         $builder->add(static::FIELD_SHIPMENT_GROUP_COLLECTION, CollectionType::class, [
