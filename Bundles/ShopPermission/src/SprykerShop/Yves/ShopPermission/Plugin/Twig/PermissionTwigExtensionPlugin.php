@@ -47,7 +47,7 @@ class PermissionTwigExtensionPlugin extends AbstractTwigExtensionPlugin
 
     /**
      * @param string $permissionKey
-     * @param mixed|string|int|null $context
+     * @param array|string|int|null $context
      *
      * @return bool
      */
