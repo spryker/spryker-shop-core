@@ -94,61 +94,22 @@ class WishlistController extends AbstractController
      * @param string $wishlistName
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
      * @return array
      */
     protected function executeIndexAction($wishlistName, Request $request): array
     {
-        $pageNumber = $this->getPageNumber($request);
-        $itemsPerPage = $this->getItemsPerPage($request);
+        $wishlistOverviewResponseTransfer = $this->getWishlistOverview($request, $wishlistName);
 
-        $customerTransfer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
+        $wishlistItems = $this->getWishlistItems($wishlistOverviewResponseTransfer);
 
-        $wishlistTransfer = (new WishlistTransfer())
-            ->setName($wishlistName)
-            ->setFkCustomer($customerTransfer->getIdCustomer());
-
-        $shopContextParams = $this->getFactory()
-            ->getShopContext()
-            ->toArray();
-        $wishlistTransfer->fromArray($shopContextParams, true);
-
-        $wishlistOverviewRequest = (new WishlistOverviewRequestTransfer())
-            ->setWishlist($wishlistTransfer)
-            ->setPage($pageNumber)
-            ->setItemsPerPage($itemsPerPage);
-
-        $wishlistOverviewResponse = $this->getFactory()
-            ->getWishlistClient()
-            ->getWishlistOverviewWithoutProductDetails($wishlistOverviewRequest);
-
-        if ($wishlistOverviewResponse->getErrors()->count() > 0) {
-            foreach ($wishlistOverviewResponse->getErrors() as $errorMessageTransfer) {
-                $translatedMessage = $this->translate(
-                    $errorMessageTransfer->getMessage(),
-                    $errorMessageTransfer->getParameters(),
-                );
-
-                $this->addErrorMessage($translatedMessage);
-            }
-        }
-
-        if (!$wishlistOverviewResponse->getWishlist()->getIdWishlist()) {
-            throw new NotFoundHttpException();
-        }
-
-        $wishlistItems = $this->getWishlistItems($wishlistOverviewResponse);
-
-        $addAllAvailableProductsToCartForm = $this->createAddAllAvailableProductsToCartForm($wishlistOverviewResponse);
+        $addAllAvailableProductsToCartForm = $this->createAddAllAvailableProductsToCartForm($wishlistOverviewResponseTransfer);
 
         return [
             'wishlistItems' => $wishlistItems,
-            'wishlistOverview' => $wishlistOverviewResponse,
-            'currentPage' => $wishlistOverviewResponse->getPagination()->getPage(),
-            'totalPages' => $wishlistOverviewResponse->getPagination()->getPagesTotal(),
+            'wishlistOverview' => $wishlistOverviewResponseTransfer,
+            'indexedWishlistItems' => $this->getWishlistItemsIndexedByIdWishlistItem($wishlistOverviewResponseTransfer),
+            'currentPage' => $wishlistOverviewResponseTransfer->getPagination()->getPage(),
+            'totalPages' => $wishlistOverviewResponseTransfer->getPagination()->getPagesTotal(),
             'wishlistName' => $wishlistName,
             'addAllAvailableProductsToCartForm' => $addAllAvailableProductsToCartForm->createView(),
             'wishlistRemoveItemFormCloner' => $this->getFactory()->getFormCloner()->setForm($this->getFactory()->getWishlistRemoveItemForm()),
@@ -280,8 +241,10 @@ class WishlistController extends AbstractController
      */
     public function moveAllAvailableToCartAction($wishlistName, Request $request)
     {
+        $wishlistOverviewResponseTransfer = $this->getWishlistOverview($request, $wishlistName);
+
         $addAllAvailableProductsToCartForm = $this
-            ->createAddAllAvailableProductsToCartForm()
+            ->createAddAllAvailableProductsToCartForm($wishlistOverviewResponseTransfer)
             ->handleRequest($request);
 
         if ($addAllAvailableProductsToCartForm->isSubmitted() && $addAllAvailableProductsToCartForm->isValid()) {
@@ -475,5 +438,80 @@ class WishlistController extends AbstractController
         return $this->getFactory()
             ->getGlossaryStorageClient()
             ->translate($key, $this->getLocale(), $parameters);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $wishlistName
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer
+     */
+    protected function getWishlistOverview(Request $request, string $wishlistName): WishlistOverviewResponseTransfer
+    {
+        $customerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
+
+        $wishlistTransfer = (new WishlistTransfer())
+            ->setName($wishlistName)
+            ->setFkCustomer($customerTransfer->getIdCustomer());
+
+        $shopContextParams = $this->getFactory()
+            ->getShopContext()
+            ->toArray();
+        $wishlistTransfer->fromArray($shopContextParams, true);
+
+        $wishlistOverviewRequestTransfer = (new WishlistOverviewRequestTransfer())
+            ->setWishlist($wishlistTransfer)
+            ->setPage($this->getPageNumber($request))
+            ->setItemsPerPage($this->getItemsPerPage($request));
+
+        $wishlistOverviewResponseTransfer = $this->getFactory()
+            ->getWishlistClient()
+            ->getWishlistOverviewWithoutProductDetails($wishlistOverviewRequestTransfer);
+
+        $this->handleWishlistErrors($wishlistOverviewResponseTransfer);
+
+        if (!$wishlistOverviewResponseTransfer->getWishlist()->getIdWishlist()) {
+            throw new NotFoundHttpException();
+        }
+
+        return $wishlistOverviewResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistOverviewResponseTransfer $wishlistOverviewResponseTransfer
+     *
+     * @return void
+     */
+    protected function handleWishlistErrors(WishlistOverviewResponseTransfer $wishlistOverviewResponseTransfer): void
+    {
+        foreach ($wishlistOverviewResponseTransfer->getErrors() as $messageTransfer) {
+            $translatedMessage = $this->translate(
+                $messageTransfer->getMessage(),
+                $messageTransfer->getParameters(),
+            );
+
+            $this->addErrorMessage($translatedMessage);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistOverviewResponseTransfer $wishlistOverviewResponseTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\WishlistItemTransfer>
+     */
+    protected function getWishlistItemsIndexedByIdWishlistItem(
+        WishlistOverviewResponseTransfer $wishlistOverviewResponseTransfer
+    ): array {
+        $indexedWishlistItemTransfers = [];
+
+        foreach ($wishlistOverviewResponseTransfer->getItems() as $wishlistItemTransfer) {
+            $indexedWishlistItemTransfers[$wishlistItemTransfer->getIdWishlistItem()] = $wishlistItemTransfer;
+        }
+
+        return $indexedWishlistItemTransfers;
     }
 }

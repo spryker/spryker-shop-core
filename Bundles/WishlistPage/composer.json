@@ -28,6 +28,7 @@
     "suggest": {
         "spryker-shop/merchant-product-offer-widget": "If you want to use MerchantProductOfferWidget or expander plugins.",
         "spryker-shop/merchant-product-widget": "If you want to use MerchantProductWidget or expander plugins.",
+        "spryker-shop/product-configuration-wishlist-widget": "Add the module if you want to use ProductConfigurationWishlistItemDisplayWidget or ProductConfigurationWishlistPageButtonWidget.",
         "spryker-shop/product-discontinued-widget": "If you want to use ProductDiscontinuedWidget or ProductDiscontinuedWidgetPlugin.",
         "spryker/router": "Use this module when you want to use the Router.",
         "spryker/silex": "Use this module when using plugins that need Silex dependencies."

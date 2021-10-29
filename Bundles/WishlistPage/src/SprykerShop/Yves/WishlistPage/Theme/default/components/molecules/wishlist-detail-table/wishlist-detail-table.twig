@@ -11,6 +11,7 @@
     wishlistName: required,
     wishlistRemoveItemFormClone: {},
     wishlistMoveToCartFormClone: {},
+    indexedWishlistItems: [],
 } %}
 
 {% block body %}
@@ -62,6 +63,12 @@
                                         list: listOfAttributes,
                                     },
                                 } only %}
+
+                                {% set wishlistItem = data.indexedWishlistItems[idWishlistItem] | default %}
+                                {% if wishlistItem %}
+                                    {% widget 'ProductConfigurationWishlistItemDisplayWidget' args [wishlistItem] only %}{% endwidget %}
+                                    {% widget 'ProductConfigurationWishlistPageButtonWidget' args [wishlistItem] only %}{% endwidget %}
+                                {% endif %}
                             </li>
                             <li>
                                 {% if widgetGlobalExists('SoldByMerchantWidget') %}
@@ -122,6 +129,8 @@
                                                     },
                                                 } only %}
                                             {% endif %}
+
+                                            {% widget 'ProductConfigurationWishlistFormWidget' args [item] only %}{% endwidget %}
                                         {{ form_end(wishlistMoveToCartForm) }}
                                     {% else %}
                                         {% set formName = 'addToCart_' ~ loop.index %}

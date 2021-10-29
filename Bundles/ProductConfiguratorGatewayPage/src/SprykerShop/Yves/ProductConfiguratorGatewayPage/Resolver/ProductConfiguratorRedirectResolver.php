@@ -7,48 +7,46 @@
 
 namespace SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
-use SprykerShop\Yves\ProductConfiguratorGatewayPage\Exception\MissingProductConfiguratorRequestStrategyPluginException;
-use SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorRequestStrategyPluginInterface;
 
 class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirectResolverInterface
 {
     /**
-     * @var array<\SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorRequestStrategyPluginInterface>
+     * @var string
      */
-    protected $productConfiguratorRequestStartegyPlugins;
+    protected const GLOSSARY_KEY_CONFIGURATOR_KEY_IS_NOT_SUPPORTED = 'product_configurator_gateway_page.configurator_key_is_not_supported';
 
     /**
-     * @param array<\SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorRequestStrategyPluginInterface> $productConfiguratorRequestStartegyPlugins
+     * @var array<\SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorRequestStrategyPluginInterface>
      */
-    public function __construct(array $productConfiguratorRequestStartegyPlugins)
+    protected $productConfiguratorRequestStrategyPlugins;
+
+    /**
+     * @param array<\SprykerShop\Yves\ProductConfiguratorGatewayPageExtension\Dependency\Plugin\ProductConfiguratorRequestStrategyPluginInterface> $productConfiguratorRequestStrategyPlugins
+     */
+    public function __construct(array $productConfiguratorRequestStrategyPlugins)
     {
-        $this->productConfiguratorRequestStartegyPlugins = $productConfiguratorRequestStartegyPlugins;
+        $this->productConfiguratorRequestStrategyPlugins = $productConfiguratorRequestStrategyPlugins;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
-     *
-     * @throws \SprykerShop\Yves\ProductConfiguratorGatewayPage\Exception\MissingProductConfiguratorRequestStrategyPluginException
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer
      */
     public function resolveProductConfiguratorAccessTokenRedirect(
         ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
     ): ProductConfiguratorRedirectTransfer {
-        foreach ($this->productConfiguratorRequestStartegyPlugins as $productConfiguratorRequestStrategyPlugin) {
+        foreach ($this->productConfiguratorRequestStrategyPlugins as $productConfiguratorRequestStrategyPlugin) {
             if ($productConfiguratorRequestStrategyPlugin->isApplicable($productConfiguratorRequestTransfer)) {
                 return $productConfiguratorRequestStrategyPlugin->resolveProductConfiguratorRedirect($productConfiguratorRequestTransfer);
             }
         }
 
-        throw new MissingProductConfiguratorRequestStrategyPluginException(
-            sprintf(
-                "Missing instance of %s! You need to provide product configurator request strategy plugin
-in your own ProductConfiguratorGatewayPageDependencyProvider::getProductConfiguratorRequestStrategyPlugins().",
-                ProductConfiguratorRequestStrategyPluginInterface::class,
-            ),
-        );
+        return (new ProductConfiguratorRedirectTransfer())
+            ->setIsSuccessful(false)
+            ->addMessage((new MessageTransfer())->setValue(static::GLOSSARY_KEY_CONFIGURATOR_KEY_IS_NOT_SUPPORTED));
     }
 }
