@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\CompanyPage;
 
 use Spryker\Shared\Kernel\ContainerInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
@@ -20,16 +19,21 @@ use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddre
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToGlossaryStorageClientBridge;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToLocaleClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToPermissionClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToStoreClientBridge;
-use SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreBridge;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageConfig getConfig()
  */
 class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
     /**
      * @var string
      */
@@ -88,11 +92,6 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
-    public const STORE = 'STORE';
-
-    /**
-     * @var string
-     */
     public const PLUGIN_COMPANY_OVERVIEW_WIDGETS = 'PLUGIN_COMPANY_OVERVIEW_WIDGETS';
 
     /**
@@ -120,6 +119,7 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addCustomerClient($container);
         $container = $this->addStoreClient($container);
+        $container = $this->addLocaleClient($container);
         $container = $this->addCompanyClient($container);
         $container = $this->addCompanyBusinessUnitClient($container);
         $container = $this->addCompanyUserClient($container);
@@ -127,7 +127,6 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCompanyUnitAddressClient($container);
         $container = $this->addCompanyOverviewWidgetPlugins($container);
         $container = $this->addPermissionClient($container);
-        $container = $this->addStore($container);
         $container = $this->addBusinessOnBehalfClient($container);
         $container = $this->addMessengerClient($container);
         $container = $this->addGlossaryStorageClient($container);
@@ -148,20 +147,6 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
             return new CompanyPageToBusinessOnBehalfClientBridge(
                 $container->getLocator()->businessOnBehalf()->client(),
             );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addStore(Container $container): Container
-    {
-        $container->set(static::STORE, function () {
-            return new CompanyPageToKernelStoreBridge(Store::getInstance());
         });
 
         return $container;
@@ -358,6 +343,22 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addLocaleClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
+            return new CompanyPageToLocaleClientBridge(
+                $container->getLocator()->locale()->client(),
+            );
         });
 
         return $container;

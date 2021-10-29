@@ -20,6 +20,7 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCartClientInte
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToLocaleClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPaymentClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
@@ -267,7 +268,7 @@ class StepFactory extends AbstractFactory
         return new PlaceOrderStep(
             $this->getCheckoutClient(),
             $this->getFlashMessenger(),
-            $this->getStore()->getCurrentLocale(),
+            $this->getLocaleClient()->getCurrentLocale(),
             $this->getGlossaryStorageClient(),
             CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_PLACE_ORDER,
             $this->getConfig()->getEscapeRoute(),
@@ -397,14 +398,6 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::STORE);
-    }
-
-    /**
      * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface
      */
     public function getGlossaryStorageClient(): CheckoutPageToGlossaryStorageClientInterface
@@ -510,5 +503,13 @@ class StepFactory extends AbstractFactory
     public function getCheckoutPageStepEnginePreRenderPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_PAGE_STEP_ENGINE_PRE_RENDER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToLocaleClientInterface
+     */
+    public function getLocaleClient(): CheckoutPageToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_LOCALE);
     }
 }

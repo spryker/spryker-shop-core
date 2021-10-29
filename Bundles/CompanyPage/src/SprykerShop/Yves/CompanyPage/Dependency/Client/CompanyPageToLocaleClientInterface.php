@@ -5,18 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CompanyPage\Dependency\Store;
+namespace SprykerShop\Yves\CompanyPage\Dependency\Client;
 
-interface CompanyPageToKernelStoreInterface
+interface CompanyPageToLocaleClientInterface
 {
     /**
-     * @return array
-     */
-    public function getCountries();
-
-    /**
-     * @throws \Spryker\Shared\Kernel\Locale\LocaleNotFoundException
-     *
      * @return string
      */
     public function getCurrentLocale();

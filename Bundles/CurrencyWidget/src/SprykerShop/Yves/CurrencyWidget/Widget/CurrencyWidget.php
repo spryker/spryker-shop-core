@@ -42,7 +42,7 @@ class CurrencyWidget extends AbstractWidget
     protected function getCurrencies(): array
     {
         $currencyClient = $this->getFactory()->getCurrencyClient();
-        $availableCurrencyCodes = $this->getFactory()->getStore()->getCurrencyIsoCodes();
+        $availableCurrencyCodes = $currencyClient->getCurrencyIsoCodes();
 
         $currencies = [];
         foreach ($availableCurrencyCodes as $currency) {
@@ -57,12 +57,6 @@ class CurrencyWidget extends AbstractWidget
      */
     protected function getCurrentCurrency(): string
     {
-        $currentCurrencyIsoCode = $this->getFactory()->getCurrencyClient()->getCurrent()->getCode();
-
-        if (!$currentCurrencyIsoCode) {
-            return $this->getFactory()->getStore()->getCurrencyIsoCode();
-        }
-
-        return $currentCurrencyIsoCode;
+        return $this->getFactory()->getCurrencyClient()->getCurrent()->getCodeOrFail();
     }
 }

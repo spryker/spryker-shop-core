@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\CustomerPage;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Twig\TwigFunctionProvider;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Router\Router\ChainRouter;
@@ -22,6 +21,7 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleC
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToStoreClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface;
 use SprykerShop\Yves\CustomerPage\Expander\CustomerAddressExpander;
@@ -181,7 +181,7 @@ class CustomerPageFactory extends AbstractFactory
     {
         return new CheckoutAddressFormDataProvider(
             $this->getCustomerClient(),
-            $this->getStore(),
+            $this->getStoreClient(),
             $this->getCustomerService(),
             $this->getShipmentClient(),
             $this->getProductBundleClient(),
@@ -509,14 +509,6 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore(): Store
-    {
-        return $this->getProvidedDependency(CustomerPageDependencyProvider::STORE);
-    }
-
-    /**
      * @return string
      */
     public function getLocale(): string
@@ -591,5 +583,13 @@ class CustomerPageFactory extends AbstractFactory
     public function getPreAuthUserCheckPlugins(): array
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGINS_PRE_AUTH_USER_CHECK);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToStoreClientInterface
+     */
+    public function getStoreClient(): CustomerPageToStoreClientInterface
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_STORE);
     }
 }

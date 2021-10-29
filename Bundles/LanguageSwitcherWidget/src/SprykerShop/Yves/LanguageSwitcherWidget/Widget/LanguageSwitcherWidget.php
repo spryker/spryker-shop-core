@@ -64,7 +64,7 @@ class LanguageSwitcherWidget extends AbstractWidget
         }
 
         $locales = $this->getFactory()
-            ->getStore()
+            ->getLocaleClient()
             ->getLocales();
 
         if (!empty($localeUrls)) {
@@ -169,7 +169,7 @@ class LanguageSwitcherWidget extends AbstractWidget
     protected function getCurrentLanguage(): string
     {
         return $this->getFactory()
-            ->getStore()
+            ->getLocaleClient()
             ->getCurrentLanguage();
     }
 

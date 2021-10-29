@@ -213,14 +213,6 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::STORE);
-    }
-
-    /**
      * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface
      */
     public function getCustomerClient(): CheckoutPageToCustomerClientInterface

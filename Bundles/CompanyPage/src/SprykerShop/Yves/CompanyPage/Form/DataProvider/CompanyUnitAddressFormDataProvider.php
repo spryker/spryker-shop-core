@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface;
-use SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreInterface;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToStoreClientInterface;
 use SprykerShop\Yves\CompanyPage\Form\CompanyUnitAddressForm;
 
 class CompanyUnitAddressFormDataProvider
@@ -33,23 +33,23 @@ class CompanyUnitAddressFormDataProvider
     protected $companyBusinessUnitClient;
 
     /**
-     * @var \SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreInterface
+     * @var \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToStoreClientInterface
      */
-    protected $store;
+    protected $storeClient;
 
     /**
      * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient
      * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface $companyBusinessUnitClient
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreInterface $store
+     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToStoreClientInterface $storeClient
      */
     public function __construct(
         CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient,
         CompanyPageToCompanyBusinessUnitClientInterface $companyBusinessUnitClient,
-        CompanyPageToKernelStoreInterface $store
+        CompanyPageToStoreClientInterface $storeClient
     ) {
         $this->companyUnitAddressClient = $companyUnitAddressClient;
         $this->companyBusinessUnitClient = $companyBusinessUnitClient;
-        $this->store = $store;
+        $this->storeClient = $storeClient;
     }
 
     /**
@@ -125,7 +125,7 @@ class CompanyUnitAddressFormDataProvider
     {
         $countries = [];
 
-        foreach ($this->store->getCountries() as $iso2Code) {
+        foreach ($this->storeClient->getCurrentStore()->getCountries() as $iso2Code) {
             $countries[$iso2Code] = static::COUNTRY_GLOSSARY_PREFIX . $iso2Code;
         }
 

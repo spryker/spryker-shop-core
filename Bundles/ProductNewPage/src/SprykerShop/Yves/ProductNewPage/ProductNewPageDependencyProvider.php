@@ -7,15 +7,23 @@
 
 namespace SprykerShop\Yves\ProductNewPage;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToCatalogClientBridge;
+use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToLocaleClientBridge;
 use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToProductNewClientBridge;
 use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToUrlStorageClientBridge;
 
+/**
+ * @method \SprykerShop\Yves\ProductNewPage\ProductNewPageConfig getConfig()
+ */
 class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
     /**
      * @var string
      */
@@ -25,11 +33,6 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_URL_STORAGE = 'CLIENT_URL_STORAGE';
-
-    /**
-     * @var string
-     */
-    public const STORE = 'STORE';
 
     /**
      * @var string
@@ -50,7 +53,7 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addProductNewClient($container);
         $container = $this->addUrlStorageClient($container);
-        $container = $this->addStore($container);
+        $container = $this->addLocaleClient($container);
         $container = $this->addCatalogClient($container);
         $container = $this->addProductNewPageWidgetPlugins($container);
 
@@ -104,20 +107,6 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addStore($container)
-    {
-        $container->set(static::STORE, function () {
-            return Store::getInstance();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addProductNewPageWidgetPlugins($container)
     {
         $container->set(static::PLUGIN_PRODUCT_NEW_PAGE_WIDGETS, function () {
@@ -133,5 +122,21 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function getProductNewPageWidgetPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addLocaleClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
+            return new ProductNewPageToLocaleClientBridge(
+                $container->getLocator()->locale()->client(),
+            );
+        });
+
+        return $container;
     }
 }

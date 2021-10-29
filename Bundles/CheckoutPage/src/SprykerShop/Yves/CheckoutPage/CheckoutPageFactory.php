@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CheckoutPage;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToLocaleClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPaymentClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
@@ -84,7 +85,7 @@ class CheckoutPageFactory extends AbstractFactory
         return new ShipmentFormDataProvider(
             $this->getShipmentClient(),
             $this->getGlossaryStorageClient(),
-            $this->getStore(),
+            $this->getLocaleClient(),
             $this->getMoneyPlugin(),
             $this->getShipmentService(),
             $this->getConfig(),
@@ -133,14 +134,6 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::STORE);
-    }
-
-    /**
      * @return \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
      */
     public function getShipmentService(): CheckoutPageToShipmentServiceInterface
@@ -181,5 +174,13 @@ class CheckoutPageFactory extends AbstractFactory
     protected function getSubFormFilterPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_SUB_FORM_FILTERS);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToLocaleClientInterface
+     */
+    public function getLocaleClient(): CheckoutPageToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_LOCALE);
     }
 }

@@ -11,6 +11,7 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CmsPage\Dependency\Client\CmsPageToCmsClientInterface;
 use SprykerShop\Yves\CmsPage\Dependency\Client\CmsPageToCmsStorageClientInterface;
 use SprykerShop\Yves\CmsPage\Dependency\Client\CmsPageToCustomerClientInterface;
+use SprykerShop\Yves\CmsPage\Dependency\Client\CmsPageToLocaleClientInterface;
 
 class CmsPageFactory extends AbstractFactory
 {
@@ -39,18 +40,18 @@ class CmsPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(CmsPageDependencyProvider::STORE);
-    }
-
-    /**
      * @return \SprykerShop\Yves\CmsPage\Dependency\Client\CmsPageToCmsStorageClientInterface
      */
     public function getCmsStorageClient(): CmsPageToCmsStorageClientInterface
     {
         return $this->getProvidedDependency(CmsPageDependencyProvider::CLIENT_CMS_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CmsPage\Dependency\Client\CmsPageToLocaleClientInterface
+     */
+    public function getLocaleClient(): CmsPageToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(CmsPageDependencyProvider::CLIENT_LOCALE);
     }
 }

@@ -27,4 +27,9 @@ interface CurrencyWidgetToCurrencyClientInterface
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function fromIsoCode($isoCode);
+
+    /**
+     * @return array<string>
+     */
+    public function getCurrencyIsoCodes(): array;
 }

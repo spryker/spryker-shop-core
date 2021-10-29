@@ -13,14 +13,6 @@ use SprykerShop\Yves\CurrencyWidget\Dependency\Client\CurrencyWidgetToCurrencyCl
 class CurrencyWidgetFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(CurrencyWidgetDependencyProvider::STORE);
-    }
-
-    /**
      * @return \SprykerShop\Yves\CurrencyWidget\Dependency\Client\CurrencyWidgetToCurrencyClientInterface
      */
     public function getCurrencyClient(): CurrencyWidgetToCurrencyClientInterface

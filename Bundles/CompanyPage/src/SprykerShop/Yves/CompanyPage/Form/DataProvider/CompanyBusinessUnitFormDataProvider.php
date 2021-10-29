@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToGlossaryStorageClientInterface;
-use SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreInterface;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToLocaleClientInterface;
 use SprykerShop\Yves\CompanyPage\Form\CompanyBusinessUnitForm;
 
 class CompanyBusinessUnitFormDataProvider
@@ -41,26 +41,26 @@ class CompanyBusinessUnitFormDataProvider
     protected $glossaryStorageClient;
 
     /**
-     * @var \SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreInterface
+     * @var \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToLocaleClientInterface
      */
-    protected $store;
+    protected $localeClient;
 
     /**
      * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface $businessUnitClient
      * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient
      * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToGlossaryStorageClientInterface $glossaryStorageClient
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreInterface $store
+     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToLocaleClientInterface $localeClient
      */
     public function __construct(
         CompanyPageToCompanyBusinessUnitClientInterface $businessUnitClient,
         CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient,
         CompanyPageToGlossaryStorageClientInterface $glossaryStorageClient,
-        CompanyPageToKernelStoreInterface $store
+        CompanyPageToLocaleClientInterface $localeClient
     ) {
         $this->businessUnitClient = $businessUnitClient;
         $this->companyUnitAddressClient = $companyUnitAddressClient;
         $this->glossaryStorageClient = $glossaryStorageClient;
-        $this->store = $store;
+        $this->localeClient = $localeClient;
     }
 
     /**
@@ -244,7 +244,7 @@ class CompanyBusinessUnitFormDataProvider
     protected function getTranslatedCountryNameByIso2Code(string $iso2Code): string
     {
         $translationKey = CompanyUnitAddressFormDataProvider::COUNTRY_GLOSSARY_PREFIX . $iso2Code;
-        $currentLocale = $this->store->getCurrentLocale();
+        $currentLocale = $this->localeClient->getCurrentLocale();
 
         return $this->glossaryStorageClient->translate($translationKey, $currentLocale);
     }

@@ -11,13 +11,13 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use SprykerShop\Yves\CustomerPage\CustomerAddress\AddressChoicesResolverInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToStoreClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface;
 use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressCollectionForm;
@@ -73,7 +73,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
 
     /**
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface $customerClient
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToStoreClientInterface $storeClient
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface $customerService
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientInterface $shipmentClient
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface $productBundleClient
@@ -82,14 +82,14 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     public function __construct(
         CustomerPageToCustomerClientInterface $customerClient,
-        Store $store,
+        CustomerPageToStoreClientInterface $storeClient,
         CustomerPageToCustomerServiceInterface $customerService,
         CustomerPageToShipmentClientInterface $shipmentClient,
         CustomerPageToProductBundleClientInterface $productBundleClient,
         CustomerPageToShipmentServiceInterface $shipmentService,
         AddressChoicesResolverInterface $addressChoicesResolver
     ) {
-        parent::__construct($customerClient, $store);
+        parent::__construct($customerClient, $storeClient);
 
         $this->customerService = $customerService;
         $this->customerTransfer = $this->getCustomer();

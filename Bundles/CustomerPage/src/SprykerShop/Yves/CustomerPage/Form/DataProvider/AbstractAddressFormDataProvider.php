@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\CustomerPage\Form\DataProvider;
 
-use Spryker\Shared\Kernel\Store;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToStoreClientInterface;
 
 abstract class AbstractAddressFormDataProvider
 {
@@ -23,28 +23,28 @@ abstract class AbstractAddressFormDataProvider
     protected $customerClient;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToStoreClientInterface
      */
-    protected $store;
+    protected $storeClient;
 
     /**
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface $customerClient
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToStoreClientInterface $storeClient
      */
-    public function __construct(CustomerPageToCustomerClientInterface $customerClient, Store $store)
+    public function __construct(CustomerPageToCustomerClientInterface $customerClient, CustomerPageToStoreClientInterface $storeClient)
     {
         $this->customerClient = $customerClient;
-        $this->store = $store;
+        $this->storeClient = $storeClient;
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
-    protected function getAvailableCountries()
+    protected function getAvailableCountries(): array
     {
         $countries = [];
 
-        foreach ($this->store->getCountries() as $iso2Code) {
+        foreach ($this->storeClient->getCurrentStore()->getCountries() as $iso2Code) {
             $countries[$iso2Code] = self::COUNTRY_GLOSSARY_PREFIX . $iso2Code;
         }
 

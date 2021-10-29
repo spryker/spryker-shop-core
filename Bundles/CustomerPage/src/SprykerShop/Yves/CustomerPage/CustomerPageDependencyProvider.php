@@ -17,6 +17,7 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientBri
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientAdapter;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToStoreClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceBridge;
@@ -31,6 +32,11 @@ use SprykerShop\Yves\CustomerPage\Plugin\RegistrationCheckoutAuthenticationHandl
  */
 class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const CLIENT_STORE = 'CLIENT_STORE';
+
     /**
      * @var string
      */
@@ -153,11 +159,6 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
-    public const STORE = 'STORE';
-
-    /**
-     * @var string
-     */
     public const PLUGINS_ORDER_SEARCH_FORM_EXPANDER = 'PLUGINS_ORDER_SEARCH_FORM_EXPANDER';
 
     /**
@@ -201,6 +202,16 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_LOCALE = 'locale';
 
     /**
+     * @var string
+     */
+    public const TIMEZONE_CURRENT = 'TIMEZONE_CURRENT';
+
+    /**
+     * @var string
+     */
+    public const SERVICE_TIMEZONE = 'SERVICE_TIMEZONE';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -222,7 +233,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addRouter($container);
         $container = $this->addLocale($container);
         $container = $this->addRequestStack($container);
-        $container = $this->addStore($container);
+        $container = $this->addStoreClient($container);
         $container = $this->addCustomerOverviewWidgetPlugins($container);
         $container = $this->addCustomerOrderListWidgetPlugins($container);
         $container = $this->addCustomerOrderViewWidgetPlugins($container);
@@ -236,21 +247,8 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCheckoutAddressStepPreGroupItemsByShipmentPlugins($container);
         $container = $this->addOrderSearchFormExpanderPlugins($container);
         $container = $this->addOrderSearchFormHandlerPlugins($container);
+        $container = $this->addCurrentTimezone($container);
         $container = $this->addPreAuthUserCheckPlugins($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addStore(Container $container): Container
-    {
-        $container->set(static::STORE, function () {
-            return Store::getInstance();
-        });
 
         return $container;
     }
@@ -751,5 +749,49 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function getOrderSearchFormHandlerPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCurrentTimezone(Container $container): Container
+    {
+        $container->set(static::TIMEZONE_CURRENT, function (Container $container) {
+            if ($container->hasApplicationService(static::SERVICE_TIMEZONE)) {
+                return $container->getApplicationService(static::SERVICE_TIMEZONE);
+            }
+
+            return $this->getStoreCurrentTimezone();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\CustomerPageDependencyProvider::SERVICE_TIMEZONE} instead.
+     *
+     * @return string|null
+     */
+    protected function getStoreCurrentTimezone(): ?string
+    {
+        return Store::getInstance()->getContexts()['*']['timezone'] ?? null;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return new CustomerPageToStoreClientBridge(
+                $container->getLocator()->store()->client(),
+            );
+        });
+
+        return $container;
     }
 }

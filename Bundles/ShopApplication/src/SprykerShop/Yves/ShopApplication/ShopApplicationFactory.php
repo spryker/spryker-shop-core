@@ -20,6 +20,7 @@ use Spryker\Yves\Kernel\Widget\WidgetCollection;
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 use Spryker\Yves\Kernel\Widget\WidgetContainerRegistry;
 use Spryker\Yves\Kernel\Widget\WidgetFactory as LegacyWidgetFactory;
+use SprykerShop\Yves\ShopApplication\Dependency\Client\ShopApplicationToLocaleClientInterface;
 use SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceInterface;
 use SprykerShop\Yves\ShopApplication\Plugin\ShopApplicationTwigExtensionPlugin;
 use SprykerShop\Yves\ShopApplication\Subscriber\ShopApplicationTwigEventSubscriber;
@@ -171,19 +172,19 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(ShopApplicationDependencyProvider::STORE);
-    }
-
-    /**
      * @return \SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceInterface
      */
     public function getUtilTextService(): ShopApplicationToUtilTextServiceInterface
     {
         return $this->getProvidedDependency(ShopApplicationDependencyProvider::SERVICE_UTIL_TEXT);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShopApplication\Dependency\Client\ShopApplicationToLocaleClientInterface
+     */
+    public function getLocaleClient(): ShopApplicationToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(ShopApplicationDependencyProvider::CLIENT_LOCALE);
     }
 
     /**

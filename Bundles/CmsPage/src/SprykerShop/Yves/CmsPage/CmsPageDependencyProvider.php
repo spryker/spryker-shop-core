@@ -7,16 +7,21 @@
 
 namespace SprykerShop\Yves\CmsPage;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPlugin;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\CmsPage\Dependency\Client\CmsPageToCmsClientBridge;
 use SprykerShop\Yves\CmsPage\Dependency\Client\CmsPageToCmsStorageClientBridge;
 use SprykerShop\Yves\CmsPage\Dependency\Client\CmsPageToCustomerClientBridge;
+use SprykerShop\Yves\CmsPage\Dependency\Client\CmsPageToLocaleClientBridge;
 
 class CmsPageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
     /**
      * @var string
      */
@@ -35,11 +40,6 @@ class CmsPageDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
-    public const STORE = 'STORE';
-
-    /**
-     * @var string
-     */
     public const CLIENT_CMS_STORAGE = 'CLIENT_CMS_STORAGE';
 
     /**
@@ -53,7 +53,7 @@ class CmsPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCmsClient($container);
         $container = $this->addCmsStorageClient($container);
         $container = $this->addCustomerClient($container);
-        $container = $this->addStore($container);
+        $container = $this->addLocaleClient($container);
 
         return $container;
     }
@@ -119,10 +119,12 @@ class CmsPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addStore(Container $container)
+    protected function addLocaleClient(Container $container): Container
     {
-        $container->set(static::STORE, function (Container $container) {
-            return Store::getInstance();
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
+            return new CmsPageToLocaleClientBridge(
+                $container->getLocator()->locale()->client(),
+            );
         });
 
         return $container;

@@ -81,7 +81,7 @@ class NewProductsController extends AbstractController
      */
     protected function findCategoryNode($categoryPath): ?array
     {
-        $categoryPathPrefix = '/' . $this->getFactory()->getStore()->getCurrentLanguage();
+        $categoryPathPrefix = '/' . $this->getFactory()->getLocaleClient()->getCurrentLanguage();
         $categoryPath = $categoryPathPrefix . '/' . ltrim($categoryPath, '/');
 
         $categoryNode = $this->getFactory()

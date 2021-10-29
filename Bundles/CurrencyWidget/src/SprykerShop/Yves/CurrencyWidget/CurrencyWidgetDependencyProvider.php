@@ -7,18 +7,12 @@
 
 namespace SprykerShop\Yves\CurrencyWidget;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\CurrencyWidget\Dependency\Client\CurrencyWidgetToCurrencyClientBridge;
 
 class CurrencyWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    /**
-     * @var string
-     */
-    public const STORE = 'STORE';
-
     /**
      * @var string
      */
@@ -31,22 +25,7 @@ class CurrencyWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container)
     {
-        $container = $this->addStore($container);
         $container = $this->addCurrencyClient($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addStore(Container $container)
-    {
-        $container->set(static::STORE, function () {
-            return Store::getInstance();
-        });
 
         return $container;
     }

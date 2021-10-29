@@ -28,13 +28,13 @@ class CompanyPageToCompanyUserClientBridge implements CompanyPageToCompanyUserCl
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserUserTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function createCompanyUser(CompanyUserTransfer $companyUserUserTransfer): CompanyUserResponseTransfer
+    public function createCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
-        return $this->companyUserClient->createCompanyUser($companyUserUserTransfer);
+        return $this->companyUserClient->createCompanyUser($companyUserTransfer);
     }
 
     /**

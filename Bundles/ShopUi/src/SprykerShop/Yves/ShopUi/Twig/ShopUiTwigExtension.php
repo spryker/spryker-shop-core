@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\ShopUi\Twig;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Twig\TwigExtension;
+use SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToLocaleClientInterface;
 use SprykerShop\Yves\ShopUi\ShopUiConfig;
 use SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProviderInterface;
 use SprykerShop\Yves\ShopUi\Twig\Node\ShopUiDefineTwigNode;
@@ -74,9 +74,9 @@ class ShopUiTwigExtension extends TwigExtension
     protected const FILTER_TRIM_LOCALE = 'trimLocale';
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var \SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToLocaleClientInterface
      */
-    protected $store;
+    protected $localeClient;
 
     /**
      * @var \SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProviderInterface|null
@@ -94,16 +94,16 @@ class ShopUiTwigExtension extends TwigExtension
     protected $shopUiConfig;
 
     /**
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToLocaleClientInterface $localeClient
      * @param \SprykerShop\Yves\ShopUi\ShopUiConfig $shopUiConfig
      * @param \SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProviderInterface|null $assetsUrlProvider
      */
     public function __construct(
-        Store $store,
+        ShopUiToLocaleClientInterface $localeClient,
         ShopUiConfig $shopUiConfig,
         ?AssetsUrlProviderInterface $assetsUrlProvider = null
     ) {
-        $this->store = $store;
+        $this->localeClient = $localeClient;
         $this->assetsUrlProvider = $assetsUrlProvider;
         $this->shopUiConfig = $shopUiConfig;
     }
@@ -323,7 +323,7 @@ class ShopUiTwigExtension extends TwigExtension
             return $this->localesFilterPattern;
         }
 
-        $locale = $this->store->getCurrentLocale();
+        $locale = $this->localeClient->getCurrentLocale();
         $this->localesFilterPattern = '#^\/(' . strtok($locale, '_') . ')\/#';
 
         return $this->localesFilterPattern;

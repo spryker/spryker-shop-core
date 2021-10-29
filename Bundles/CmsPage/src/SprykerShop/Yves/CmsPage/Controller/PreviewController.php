@@ -115,7 +115,7 @@ class PreviewController extends AbstractController
             'pageKeywords' => $metaData['meta_keywords'],
             'availablePreviewLanguages' => $this->getAvailablePreviewLanguages(
                 $this->getCurrentPreviewPageUri($idCmsPage),
-                $this->getFactory()->getStore()->getLocales(),
+                $this->getFactory()->getLocaleClient()->getLocales(),
                 $this->getLocale(),
             ),
         ];

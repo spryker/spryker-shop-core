@@ -15,13 +15,13 @@ use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToLocaleClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
@@ -53,11 +53,6 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     protected $glossaryStorageClient;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @var \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface
      */
     protected $moneyPlugin;
@@ -83,9 +78,14 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     protected $availableShipmentMethods;
 
     /**
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToLocaleClientInterface
+     */
+    protected $localeClient;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface $glossaryStorageClient
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToLocaleClientInterface $localeClient
      * @param \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface $moneyPlugin
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
      * @param \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig $checkoutPageConfig
@@ -94,7 +94,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     public function __construct(
         CheckoutPageToShipmentClientInterface $shipmentClient,
         CheckoutPageToGlossaryStorageClientInterface $glossaryStorageClient,
-        Store $store,
+        CheckoutPageToLocaleClientInterface $localeClient,
         MoneyPluginInterface $moneyPlugin,
         CheckoutPageToShipmentServiceInterface $shipmentService,
         CheckoutPageConfig $checkoutPageConfig,
@@ -102,11 +102,11 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     ) {
         $this->shipmentClient = $shipmentClient;
         $this->glossaryStorageClient = $glossaryStorageClient;
-        $this->store = $store;
         $this->moneyPlugin = $moneyPlugin;
         $this->shipmentService = $shipmentService;
         $this->checkoutPageConfig = $checkoutPageConfig;
         $this->productBundleClient = $productBundleClient;
+        $this->localeClient = $localeClient;
     }
 
     /**
@@ -428,7 +428,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     protected function translate($translationKey)
     {
-        return $this->glossaryStorageClient->translate($translationKey, $this->store->getCurrentLocale());
+        return $this->glossaryStorageClient->translate($translationKey, $this->localeClient->getCurrentLocale());
     }
 
     /**

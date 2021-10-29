@@ -11,6 +11,7 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CustomerPage\CustomerPageDependencyProvider;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToStoreClientInterface;
 use SprykerShop\Yves\CustomerPage\Form\DataProvider\AddressFormDataProvider;
 use SprykerShop\Yves\CustomerPage\Form\DataProvider\OrderSearchFormDataProvider;
 use Symfony\Component\Form\FormInterface;
@@ -43,7 +44,7 @@ class FormFactory extends AbstractFactory
      */
     public function createAddressFormDataProvider()
     {
-        return new AddressFormDataProvider($this->getCustomerClient(), $this->getStore());
+        return new AddressFormDataProvider($this->getCustomerClient(), $this->getStoreClient());
     }
 
     /**
@@ -131,7 +132,7 @@ class FormFactory extends AbstractFactory
     {
         return new OrderSearchFormDataProvider(
             $this->getConfig(),
-            $this->getStore(),
+            $this->getCurrentTimezone(),
         );
     }
 
@@ -141,14 +142,6 @@ class FormFactory extends AbstractFactory
     public function getCustomerClient()
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_CUSTOMER);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(CustomerPageDependencyProvider::STORE);
     }
 
     /**
@@ -165,5 +158,21 @@ class FormFactory extends AbstractFactory
     public function getOrderSearchFormExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGINS_ORDER_SEARCH_FORM_EXPANDER);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCurrentTimezone(): ?string
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::TIMEZONE_CURRENT);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToStoreClientInterface
+     */
+    public function getStoreClient(): CustomerPageToStoreClientInterface
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_STORE);
     }
 }

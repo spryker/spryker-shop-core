@@ -53,7 +53,7 @@ class ProductBreadcrumbsWithCategoriesWidget extends AbstractWidget
             ->findProductAbstractCategory(
                 $productViewTransfer->getIdProductAbstract(),
                 $this->getLocale(),
-                APPLICATION_STORE,
+                $this->getFactory()->getStoreClient()->getCurrentStore()->getNameOrFail(),
             );
 
         if ($productAbstractCategoryStorageTransfer === null) {

@@ -18,7 +18,8 @@ use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClien
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToGlossaryStorageClientInterface;
-use SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreInterface;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToLocaleClientInterface;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToStoreClientInterface;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyBusinessUnitFormDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyRoleDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyRolePermissionDataProvider;
@@ -185,7 +186,7 @@ class FormFactory extends AbstractFactory
             $this->getCompanyBusinessUnitClient(),
             $this->getCompanyUnitAddressClient(),
             $this->getGlossaryStorageClient(),
-            $this->getStore(),
+            $this->getLocaleClient(),
         );
     }
 
@@ -207,7 +208,7 @@ class FormFactory extends AbstractFactory
         return new CompanyUnitAddressFormDataProvider(
             $this->getCompanyUnitAddressClient(),
             $this->getCompanyBusinessUnitClient(),
-            $this->getStore(),
+            $this->getStoreClient(),
         );
     }
 
@@ -259,14 +260,6 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreInterface
-     */
-    public function getStore(): CompanyPageToKernelStoreInterface
-    {
-        return $this->getProvidedDependency(CompanyPageDependencyProvider::STORE);
-    }
-
-    /**
      * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClientInterface
      */
     public function getCompanyRoleClient(): CompanyPageToCompanyRoleClientInterface
@@ -288,5 +281,21 @@ class FormFactory extends AbstractFactory
     public function getGlossaryStorageClient(): CompanyPageToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToStoreClientInterface
+     */
+    public function getStoreClient(): CompanyPageToStoreClientInterface
+    {
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToLocaleClientInterface
+     */
+    public function getLocaleClient(): CompanyPageToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_LOCALE);
     }
 }

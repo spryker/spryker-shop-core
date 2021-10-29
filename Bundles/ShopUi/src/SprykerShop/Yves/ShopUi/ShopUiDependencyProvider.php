@@ -7,9 +7,9 @@
 
 namespace SprykerShop\Yves\ShopUi;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToLocaleClientBridge;
 use SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToTwigClientBridge;
 
 /**
@@ -20,12 +20,12 @@ class ShopUiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
-    public const CLIENT_TWIG = 'CLIENT_TWIG';
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
 
     /**
      * @var string
      */
-    public const STORE = 'STORE';
+    public const CLIENT_TWIG = 'CLIENT_TWIG';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -36,7 +36,7 @@ class ShopUiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideDependencies($container);
         $container = $this->addTwigClient($container);
-        $container = $this->addStore($container);
+        $container = $this->addLocaleClient($container);
 
         return $container;
     }
@@ -62,10 +62,12 @@ class ShopUiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addStore(Container $container): Container
+    protected function addLocaleClient(Container $container): Container
     {
-        $container->set(static::STORE, function () {
-            return Store::getInstance();
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
+            return new ShopUiToLocaleClientBridge(
+                $container->getLocator()->locale()->client(),
+            );
         });
 
         return $container;

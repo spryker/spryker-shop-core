@@ -82,14 +82,6 @@ class MoneyWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(MoneyWidgetDependencyProvider::STORE);
-    }
-
-    /**
      * @return \Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface
      */
     public function createMoneyToTransferMapper()

@@ -26,11 +26,11 @@ interface CompanyPageToCompanyRoleClientInterface
     public function createCompanyRole(CompanyRoleTransfer $companyRoleUserTransfer): CompanyRoleResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleUserTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
      * @return void
      */
-    public function updateCompanyRole(CompanyRoleTransfer $companyRoleUserTransfer): void;
+    public function updateCompanyRole(CompanyRoleTransfer $companyRoleTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer

@@ -50,6 +50,6 @@ class ProductAbstractLabelWidget extends AbstractWidget
     {
         return $this->getFactory()
             ->getProductLabelStorageClient()
-            ->findLabelsByIdProductAbstract($idProductAbstract, $this->getLocale(), APPLICATION_STORE);
+            ->findLabelsByIdProductAbstract($idProductAbstract, $this->getLocale(), $this->getFactory()->getStoreClient()->getCurrentStore()->getNameOrFail());
     }
 }

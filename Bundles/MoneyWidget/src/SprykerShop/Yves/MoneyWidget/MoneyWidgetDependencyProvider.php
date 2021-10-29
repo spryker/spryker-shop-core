@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\MoneyWidget;
 use Money\Currencies\ISOCurrencies;
 use Money\Parser\IntlMoneyParser;
 use NumberFormatter;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Money\Dependency\Parser\MoneyToParserBridge;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
@@ -21,7 +20,7 @@ class MoneyWidgetDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
-    public const STORE = 'MONEY_PARSER';
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
 
     /**
      * @var string
@@ -40,7 +39,6 @@ class MoneyWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container)
     {
-        $container = $this->addStore($container);
         $container = $this->addMoneyParser($container);
         $container = $this->addCurrencyPlugin($container);
 
@@ -52,32 +50,10 @@ class MoneyWidgetDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addStore(Container $container)
-    {
-        $container->set(static::STORE, function () {
-            return $this->getStore();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return Store::getInstance();
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addMoneyParser(Container $container)
     {
-        $container->set(static::MONEY_PARSER, function () {
-            $moneyToParserBridge = new MoneyToParserBridge($this->getIntlMoneyParser());
+        $container->set(static::MONEY_PARSER, function ($container) {
+            $moneyToParserBridge = new MoneyToParserBridge($this->getIntlMoneyParser($container));
 
             return $moneyToParserBridge;
         });
@@ -86,11 +62,13 @@ class MoneyWidgetDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
      * @return \Money\Parser\IntlMoneyParser
      */
-    protected function getIntlMoneyParser()
+    protected function getIntlMoneyParser(Container $container)
     {
-        $numberFormatter = $this->getNumberFormatter();
+        $numberFormatter = $this->getNumberFormatter($container);
         $currencies = $this->getIsoCurrencies();
         $intlMoneyParser = new IntlMoneyParser($numberFormatter, $currencies);
 
@@ -98,12 +76,14 @@ class MoneyWidgetDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
      * @return \NumberFormatter
      */
-    protected function getNumberFormatter()
+    protected function getNumberFormatter(Container $container)
     {
         $numberFormatter = new NumberFormatter(
-            $this->getStore()->getCurrentLocale(),
+            $container->getLocator()->locale()->client()->getCurrentLocale(),
             NumberFormatter::CURRENCY,
         );
 

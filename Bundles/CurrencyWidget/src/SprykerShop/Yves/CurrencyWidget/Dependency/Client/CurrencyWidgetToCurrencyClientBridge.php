@@ -49,4 +49,12 @@ class CurrencyWidgetToCurrencyClientBridge implements CurrencyWidgetToCurrencyCl
     {
         return $this->currencyClient->fromIsoCode($isoCode);
     }
+
+    /**
+     * @return array<string>
+     */
+    public function getCurrencyIsoCodes(): array
+    {
+        return $this->currencyClient->getCurrencyIsoCodes();
+    }
 }

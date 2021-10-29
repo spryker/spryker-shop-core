@@ -6,6 +6,7 @@
     "require": {
         "php": ">=7.4",
         "spryker/kernel": "^3.30.0",
+        "spryker/locale": "^3.0.0",
         "spryker/twig": "^3.7.0",
         "spryker/twig-extension": "^1.0.0"
     },
@@ -17,9 +18,9 @@
         "spryker/silex": "*"
     },
     "suggest": {
+        "spryker-shop/money-widget": "If you want to use widgets from module MoneyWidget",
         "spryker-shop/newsletter-widget": "If you want to use components from module NewsletterWidget.",
         "spryker-shop/product-group-widget": "If you want to use components from module ProductGroupColorWidget or ProductGroupWidget",
-        "spryker-shop/money-widget": "If you want to use widgets from module MoneyWidget",
         "spryker/container": "If you want to use Twig Plugins",
         "spryker/silex": "Use this module when using plugins that need Silex dependencies."
     },

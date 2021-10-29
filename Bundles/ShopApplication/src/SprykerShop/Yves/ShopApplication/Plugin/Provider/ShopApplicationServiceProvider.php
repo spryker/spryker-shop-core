@@ -113,19 +113,19 @@ class ShopApplicationServiceProvider extends AbstractPlugin implements ServicePr
      */
     protected function setLocale()
     {
-        $store = Store::getInstance();
-        $store->setCurrentLocale(current($store->getLocales()));
-        $this->application[self::LOCALE] = $store->getCurrentLocale();
+        $localeClient = $this->getFactory()->getLocaleClient();
+        $this->application[self::LOCALE] = $localeClient->getCurrentLocale();
 
         $requestUri = $this->getRequestUri();
 
         if ($requestUri) {
             $pathElements = explode('/', trim($requestUri, '/'));
             $identifier = $pathElements[0];
-            if ($identifier !== false && array_key_exists($identifier, $store->getLocales())) {
-                $store->setCurrentLocale($store->getLocales()[$identifier]);
-                $this->application[self::LOCALE] = $store->getCurrentLocale();
-                ApplicationEnvironment::initializeLocale($store->getCurrentLocale());
+            $locales = $localeClient->getLocales();
+            if ($identifier !== false && array_key_exists($identifier, $locales)) {
+                $currentLocale = $locales[$identifier];
+                $this->application[self::LOCALE] = $currentLocale;
+                ApplicationEnvironment::initializeLocale($currentLocale);
             }
         }
     }

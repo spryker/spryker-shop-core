@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ProductNewPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToCatalogClientInterface;
+use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToLocaleClientInterface;
 use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToProductNewClientInterface;
 use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToUrlStorageClientInterface;
 
@@ -39,18 +40,18 @@ class ProductNewPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(ProductNewPageDependencyProvider::STORE);
-    }
-
-    /**
      * @return \SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToCatalogClientInterface
      */
     public function getCatalogClient(): ProductNewPageToCatalogClientInterface
     {
         return $this->getProvidedDependency(ProductNewPageDependencyProvider::CLIENT_CATALOG);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToLocaleClientInterface
+     */
+    public function getLocaleClient(): ProductNewPageToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(ProductNewPageDependencyProvider::CLIENT_LOCALE);
     }
 }

@@ -359,4 +359,8 @@
         <property name="amount" type="int"/>
     </transfer>
 
+    <transfer name="Store">
+        <property name="countries" type="array" singular="country"/>
+    </transfer>
+
 </transfers>

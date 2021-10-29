@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CustomerPage\Form\DataProvider;
 
-use Spryker\Shared\Kernel\Store;
 use SprykerShop\Yves\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Form\OrderSearchForm;
 
@@ -19,18 +18,18 @@ class OrderSearchFormDataProvider
     protected $customerPageConfig;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var string|null
      */
-    protected $store;
+    protected $currentTimezone;
 
     /**
      * @param \SprykerShop\Yves\CustomerPage\CustomerPageConfig $customerPageConfig
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param string|null $currentTimezone
      */
-    public function __construct(CustomerPageConfig $customerPageConfig, Store $store)
+    public function __construct(CustomerPageConfig $customerPageConfig, ?string $currentTimezone)
     {
         $this->customerPageConfig = $customerPageConfig;
-        $this->store = $store;
+        $this->currentTimezone = $currentTimezone;
     }
 
     /**
@@ -63,7 +62,7 @@ class OrderSearchFormDataProvider
      */
     protected function getStoreTimezone(): ?string
     {
-        return $this->store->getContexts()['*']['timezone'] ?? null;
+        return $this->currentTimezone;
     }
 
     /**

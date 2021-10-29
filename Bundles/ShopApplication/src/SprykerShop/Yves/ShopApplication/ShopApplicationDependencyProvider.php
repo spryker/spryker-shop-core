@@ -8,10 +8,11 @@
 namespace SprykerShop\Yves\ShopApplication;
 
 use Spryker\Shared\Kernel\Container\GlobalContainer;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
+use SprykerShop\Yves\ShopApplication\Dependency\Client\ShopApplicationToLocaleClientBridge;
+use SprykerShop\Yves\ShopApplication\Dependency\Client\ShopApplicationToLocaleClientInterface;
 use SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceBridge;
 
 /**
@@ -51,11 +52,6 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
-    public const STORE = 'STORE';
-
-    /**
-     * @var string
-     */
     public const PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER = 'PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER';
 
     /**
@@ -69,6 +65,11 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_WIDGET_CACHE_KEY_GENERATOR_STRATEGY = 'PLUGINS_WIDGET_CACHE_KEY_GENERATOR_STRATEGY';
 
     /**
+     * @var string
+     */
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -78,8 +79,8 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addGlobalContainer($container);
         $container = $this->addApplicationPlugin($container);
         $container = $this->addGlobalWidgets($container);
-        $container = $this->addStore($container);
         $container = $this->addUtilTextService($container);
+        $container = $this->addLocaleClient($container);
         $container = $this->addFilterControllerEventSubscriberPlugins($container);
         $container = $this->addApplicationPlugins($container);
         $container = $this->addWidgetCacheKeyGeneratorStrategyPlugins($container);
@@ -124,10 +125,10 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addStore(Container $container)
+    protected function addUtilTextService(Container $container)
     {
-        $container->set(static::STORE, function () {
-            return Store::getInstance();
+        $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
+            return new ShopApplicationToUtilTextServiceBridge($container->getLocator()->utilText()->service());
         });
 
         return $container;
@@ -138,10 +139,10 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addUtilTextService(Container $container)
+    protected function addLocaleClient(Container $container): Container
     {
-        $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
-            return new ShopApplicationToUtilTextServiceBridge($container->getLocator()->utilText()->service());
+        $container->set(static::CLIENT_LOCALE, function (Container $container): ShopApplicationToLocaleClientInterface {
+            return new ShopApplicationToLocaleClientBridge($container->getLocator()->locale()->client());
         });
 
         return $container;
