@@ -22,7 +22,7 @@ class OptionResetUrlGenerator implements OptionResetUrlGeneratorInterface
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param array<\Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
      *
-     * @return array<string[]>
+     * @return array<array<string, string>>
      */
     public function generateOptionResetUrls(Request $request, array $productViewTransfers): array
     {
@@ -40,7 +40,7 @@ class OptionResetUrlGenerator implements OptionResetUrlGeneratorInterface
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param array $queryParamsArray
      *
-     * @return array<string[]>
+     * @return array<array<string, string>>
      */
     protected function getProductOptionResetUrls(
         ProductViewTransfer $productViewTransfer,

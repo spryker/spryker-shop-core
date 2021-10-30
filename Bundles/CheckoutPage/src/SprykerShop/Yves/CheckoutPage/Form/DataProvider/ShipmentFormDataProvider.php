@@ -224,7 +224,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array<int[]>
+     * @return array<string, array<string, int>>
      */
     protected function createAvailableShipmentChoiceList(QuoteTransfer $quoteTransfer)
     {

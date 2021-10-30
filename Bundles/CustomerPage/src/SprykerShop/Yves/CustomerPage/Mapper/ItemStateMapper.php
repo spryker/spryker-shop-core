@@ -15,7 +15,7 @@ class ItemStateMapper implements ItemStateMapperInterface
     /**
      * @param \ArrayObject<int, \Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return array<string[][]>
+     * @return array<array<string, array<string>>>
      */
     public function aggregateItemStatesDisplayNamesByOrderReference(ArrayObject $orderTransfers): array
     {
@@ -30,7 +30,7 @@ class ItemStateMapper implements ItemStateMapperInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return array<string[]>
+     * @return array<string, array<string>>
      */
     protected function aggregateItemStatesDisplayNamesByOrder(OrderTransfer $orderTransfer): array
     {

@@ -286,7 +286,7 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
     }
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function getDataCollectorPluginTemplates(): array
     {

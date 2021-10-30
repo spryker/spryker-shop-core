@@ -41,9 +41,9 @@ class ProductBundleReturnCreateFormHandlerPlugin extends AbstractPlugin implemen
      *
      * @api
      *
-     * @param array $formData
+     * @param array<string, mixed> $formData
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function expandFormData(array $formData): array
     {

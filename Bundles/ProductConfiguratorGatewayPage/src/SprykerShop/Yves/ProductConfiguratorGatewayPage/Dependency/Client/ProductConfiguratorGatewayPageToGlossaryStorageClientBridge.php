@@ -25,7 +25,7 @@ class ProductConfiguratorGatewayPageToGlossaryStorageClientBridge implements Pro
     /**
      * @param array<string> $keyNames
      * @param string $localeName
-     * @param array<string[]> $parameters
+     * @param array<array<string>> $parameters
      *
      * @return array<string>
      */

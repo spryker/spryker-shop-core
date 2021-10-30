@@ -21,9 +21,9 @@ class ReturnCreateFormExpander implements ReturnCreateFormExpanderInterface
     protected const FIELD_RETURN_ITEMS = 'returnItems';
 
     /**
-     * @param array $formData
+     * @param array<string, mixed> $formData
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function expandFormData(array $formData): array
     {
@@ -41,7 +41,7 @@ class ReturnCreateFormExpander implements ReturnCreateFormExpanderInterface
     }
 
     /**
-     * @param array $formData
+     * @param array<string, mixed> $formData
      *
      * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
@@ -59,7 +59,7 @@ class ReturnCreateFormExpander implements ReturnCreateFormExpanderInterface
     /**
      * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return array<\Generated\Shared\Transfer\ItemTransfer[]>
+     * @return array<array<string, \Generated\Shared\Transfer\ItemTransfer>>
      */
     protected function getFormFieldsWithoutBundles(array $itemTransfers): array
     {
@@ -77,7 +77,7 @@ class ReturnCreateFormExpander implements ReturnCreateFormExpanderInterface
     /**
      * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return array<\Generated\Shared\Transfer\ItemTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ItemTransfer>>
      */
     protected function getProductBundleFormFields(array $itemTransfers): array
     {
