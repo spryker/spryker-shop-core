@@ -72,7 +72,7 @@ class CompanyBusinessUnitTreeReader implements CompanyBusinessUnitTreeReaderInte
             $children = $this->mapTreeToArray($companyBusinessUnitTreeNode->getChildren());
 
             $idCompanyBusinessUnit = $companyBusinessUnitTreeNode->getCompanyBusinessUnit()->getIdCompanyBusinessUnit();
-            $companyBusinessUnitTreeNodeArray[static::CHILDREN_KEY] = $children ? $children : null;
+            $companyBusinessUnitTreeNodeArray[static::CHILDREN_KEY] = $children ?: null;
             $companyBusinessUnitTreeNodes[$idCompanyBusinessUnit] = $companyBusinessUnitTreeNodeArray;
         }
 
