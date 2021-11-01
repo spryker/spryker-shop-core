@@ -114,9 +114,9 @@ class CatalogController extends AbstractController
         $searchResults = $this->updateFacetFiltersByCategory($searchResults, $idCategory);
         $searchResults = $this->filterFacetsInSearchResults($searchResults);
 
-        $metaTitle = isset($categoryNode['meta_title']) ? $categoryNode['meta_title'] : '';
-        $metaDescription = isset($categoryNode['meta_description']) ? $categoryNode['meta_description'] : '';
-        $metaKeywords = isset($categoryNode['meta_keywords']) ? $categoryNode['meta_keywords'] : '';
+        $metaTitle = $categoryNode['meta_title'] ?? '';
+        $metaDescription = $categoryNode['meta_description'] ?? '';
+        $metaKeywords = $categoryNode['meta_keywords'] ?? '';
 
         $metaAttributes = [
             'idCategory' => $idCategory,

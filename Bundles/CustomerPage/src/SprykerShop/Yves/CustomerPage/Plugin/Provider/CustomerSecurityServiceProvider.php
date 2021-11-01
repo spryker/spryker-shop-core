@@ -203,7 +203,7 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
     protected function findSelectedLanguage(Application &$app)
     {
         $currentLocale = $app['locale'];
-        $requestUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+        $requestUri = $_SERVER['REQUEST_URI'] ?? '';
 
         $prefixLocale = mb_substr($currentLocale, 0, 2);
         $localePath = mb_substr($requestUri, 1, 3);
