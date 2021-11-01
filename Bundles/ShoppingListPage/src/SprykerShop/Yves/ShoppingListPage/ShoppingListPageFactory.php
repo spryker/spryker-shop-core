@@ -62,7 +62,7 @@ class ShoppingListPageFactory extends AbstractFactory
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer|null $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -73,7 +73,7 @@ class ShoppingListPageFactory extends AbstractFactory
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -84,7 +84,7 @@ class ShoppingListPageFactory extends AbstractFactory
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $data
-     * @param array<mixed> $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */

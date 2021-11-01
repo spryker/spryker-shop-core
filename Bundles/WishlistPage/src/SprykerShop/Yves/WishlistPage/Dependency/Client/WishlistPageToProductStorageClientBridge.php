@@ -23,14 +23,12 @@ class WishlistPageToProductStorageClientBridge implements WishlistPageToProductS
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @deprecated Use {@link findProductConcreteStorageData()} instead.
      *
      * @param int $idProductConcrete
      * @param string $localeName
      *
-     * @return array
+     * @return array<mixed>
      */
     public function getProductConcreteStorageData($idProductConcrete, $localeName)
     {
@@ -38,12 +36,10 @@ class WishlistPageToProductStorageClientBridge implements WishlistPageToProductS
     }
 
     /**
-     * @phpstan-return array<mixed>|null
-     *
      * @param int $idProductConcrete
      * @param string $localeName
      *
-     * @return array|null
+     * @return array<mixed>|null
      */
     public function findProductConcreteStorageData(int $idProductConcrete, string $localeName): ?array
     {

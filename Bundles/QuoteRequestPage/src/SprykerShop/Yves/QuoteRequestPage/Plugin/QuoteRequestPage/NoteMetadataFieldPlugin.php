@@ -40,7 +40,7 @@ class NoteMetadataFieldPlugin extends AbstractPlugin implements QuoteRequestForm
      * @api
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array<mixed> $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormBuilderInterface
      */

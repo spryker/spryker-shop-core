@@ -109,7 +109,7 @@ class CheckoutAddressForm extends AddressForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -134,7 +134,7 @@ class CheckoutAddressForm extends AddressForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -170,7 +170,7 @@ class CheckoutAddressForm extends AddressForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -197,7 +197,7 @@ class CheckoutAddressForm extends AddressForm
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Validator\Constraints\NotBlank
      */

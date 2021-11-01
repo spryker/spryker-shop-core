@@ -69,9 +69,7 @@ class CatalogController extends AbstractController
     protected const ROUTE_SEARCH_PAGE = 'search';
 
     /**
-     * @phpstan-param array<mixed> $categoryNode
-     *
-     * @param array $categoryNode
+     * @param array<string, mixed> $categoryNode
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Spryker\Yves\Kernel\View\View
@@ -90,15 +88,11 @@ class CatalogController extends AbstractController
     }
 
     /**
-     * @phpstan-param array<mixed> $categoryNode
-     *
-     * @phpstan-return array<mixed>
-     *
-     * @param array $categoryNode
+     * @param array<string, mixed> $categoryNode
      * @param int $idCategoryNode
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function executeIndexAction(array $categoryNode, int $idCategoryNode, Request $request): array
     {
@@ -168,11 +162,9 @@ class CatalogController extends AbstractController
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function executeFulltextSearchAction(Request $request): array
     {
@@ -241,14 +233,10 @@ class CatalogController extends AbstractController
     }
 
     /**
-     * @phpstan-param array<mixed> $searchResults
-     *
-     * @phpstan-return array<mixed>
-     *
-     * @param array $searchResults
+     * @param array<string, mixed> $searchResults
      * @param int $idCategory
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function updateFacetFiltersByCategory(array $searchResults, $idCategory)
     {
@@ -277,13 +265,9 @@ class CatalogController extends AbstractController
     }
 
     /**
-     * @phpstan-param array<mixed> $searchResults
+     * @param array<string, mixed> $searchResults
      *
-     * @phpstan-return array<mixed>
-     *
-     * @param array $searchResults
-     *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function filterFacetsInSearchResults(array $searchResults): array
     {
@@ -299,11 +283,9 @@ class CatalogController extends AbstractController
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getAllowedRequestParameters(Request $request): array
     {
@@ -314,13 +296,9 @@ class CatalogController extends AbstractController
     }
 
     /**
-     * @phpstan-param array<mixed> $parameters
+     * @param array<string, mixed> $parameters
      *
-     * @phpstan-return array<mixed>
-     *
-     * @param array $parameters
-     *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function reduceRestrictedParameters(array $parameters): array
     {
@@ -345,13 +323,9 @@ class CatalogController extends AbstractController
     }
 
     /**
-     * @phpstan-param array<mixed> $searchResults
+     * @param array<string, mixed> $searchResults
      *
-     * @phpstan-return array<mixed>
-     *
-     * @param array $searchResults
-     *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function reduceRestrictedSortingOptions(array $searchResults): array
     {
@@ -365,9 +339,7 @@ class CatalogController extends AbstractController
     }
 
     /**
-     * @phpstan-param array<mixed> $parameters
-     *
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      *
      * @return bool
      */
@@ -377,9 +349,7 @@ class CatalogController extends AbstractController
     }
 
     /**
-     * @phpstan-param array<mixed> $parameters
-     *
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      *
      * @return bool
      */

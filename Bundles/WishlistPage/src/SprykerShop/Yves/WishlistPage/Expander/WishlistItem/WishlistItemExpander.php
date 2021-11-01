@@ -35,10 +35,8 @@ class WishlistItemExpander implements WishlistItemExpanderIterface
     }
 
     /**
-     * @phpstan-param array<mixed> $requestParams
-     *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     * @param array $requestParams
+     * @param array<mixed> $requestParams
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
@@ -54,10 +52,8 @@ class WishlistItemExpander implements WishlistItemExpanderIterface
     }
 
     /**
-     * @phpstan-param array<mixed> $productConcreteStorageData
-     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param array $productConcreteStorageData
+     * @param array<mixed> $productConcreteStorageData
      * @param string $locale
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer

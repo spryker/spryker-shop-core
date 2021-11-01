@@ -26,7 +26,7 @@ class NewsletterPageFactory extends AbstractFactory
 
     /**
      * @param array|null $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */

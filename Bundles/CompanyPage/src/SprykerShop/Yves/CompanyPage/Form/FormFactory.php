@@ -114,7 +114,7 @@ class FormFactory extends AbstractFactory
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $data
-     * @param array<mixed> $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -125,7 +125,7 @@ class FormFactory extends AbstractFactory
 
     /**
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $data
-     * @param array<mixed> $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */

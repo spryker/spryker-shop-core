@@ -89,12 +89,10 @@ class WishlistController extends AbstractController
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param string $wishlistName
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function executeIndexAction($wishlistName, Request $request): array
     {
@@ -390,10 +388,8 @@ class WishlistController extends AbstractController
     }
 
     /**
-     * @phpstan-param array<mixed> $productConcreteStorageData
-     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param array $productConcreteStorageData
+     * @param array<mixed> $productConcreteStorageData
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */

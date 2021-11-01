@@ -34,7 +34,7 @@ class SummaryForm extends AbstractType
      * @see FormTypeExtensionInterface::buildForm()
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder The form builder
-     * @param array $options The options
+     * @param array<string, mixed> $options The options
      *
      * @return void
      */
@@ -65,7 +65,7 @@ class SummaryForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

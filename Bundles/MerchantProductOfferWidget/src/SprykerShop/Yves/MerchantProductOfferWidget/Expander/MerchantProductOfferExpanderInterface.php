@@ -13,10 +13,8 @@ use Generated\Shared\Transfer\WishlistItemTransfer;
 interface MerchantProductOfferExpanderInterface
 {
     /**
-     * @phpstan-param array<mixed> $params
-     *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     * @param array $params
+     * @param array<mixed> $params
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
@@ -26,10 +24,8 @@ interface MerchantProductOfferExpanderInterface
     ): WishlistItemTransfer;
 
     /**
-     * @phpstan-param array<mixed> $params
-     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param array $params
+     * @param array<mixed> $params
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */

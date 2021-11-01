@@ -42,7 +42,7 @@ class ProductConfiguratorRequestDataForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -103,7 +103,7 @@ class ProductConfiguratorRequestDataForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $formBuilder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

@@ -10,23 +10,19 @@ namespace SprykerShop\Yves\MerchantProductWidget\Dependency\Client;
 interface MerchantProductWidgetToProductStorageClientInterface
 {
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param string $mappingType
      * @param string $identifier
      * @param string $localeName
      *
-     * @return array|null
+     * @return array<mixed>|null
      */
     public function findProductConcreteStorageDataByMapping(string $mappingType, string $identifier, string $localeName): ?array;
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param int $idProductAbstract
      * @param string $localeName
      *
-     * @return array|null
+     * @return array<mixed>|null
      */
     public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array;
 }

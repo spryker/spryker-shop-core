@@ -55,7 +55,7 @@ class QuoteRequestAgentVersionItemsSubForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -72,7 +72,7 @@ class QuoteRequestAgentVersionItemsSubForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -95,7 +95,7 @@ class QuoteRequestAgentVersionItemsSubForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -132,7 +132,7 @@ class QuoteRequestAgentVersionItemsSubForm extends AbstractType
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Validator\Constraints\Regex
      */
@@ -146,7 +146,7 @@ class QuoteRequestAgentVersionItemsSubForm extends AbstractType
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */

@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CmsBlockWidget\Dependency\Client;
 interface CmsBlockWidgetToCmsBlockStorageClientInterface
 {
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      * @param string $localeName
      * @param string $storeName
      *

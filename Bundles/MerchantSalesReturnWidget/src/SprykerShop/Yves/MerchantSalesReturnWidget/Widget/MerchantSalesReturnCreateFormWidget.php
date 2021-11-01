@@ -73,8 +73,6 @@ class MerchantSalesReturnCreateFormWidget extends AbstractWidget
     }
 
     /**
-     * @phpstan-return array<int, string|null>
-     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return array<string>
@@ -84,6 +82,7 @@ class MerchantSalesReturnCreateFormWidget extends AbstractWidget
         $merchantReferences = [];
 
         foreach ($orderTransfer->getItems() as $itemTransfer) {
+            /** @var string $merchantReference */
             $merchantReference = $itemTransfer->getMerchantReference();
 
             if (!in_array($merchantReference, $merchantReferences)) {

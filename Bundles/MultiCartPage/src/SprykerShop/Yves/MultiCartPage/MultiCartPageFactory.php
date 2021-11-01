@@ -99,7 +99,7 @@ class MultiCartPageFactory extends AbstractFactory
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $data
-     * @param array<mixed> $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */

@@ -61,7 +61,7 @@ class CompanyUserFormDataProvider
     /**
      * @param int $idCompany
      * @param int|null $idCompanyUser
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */
@@ -98,7 +98,7 @@ class CompanyUserFormDataProvider
 
     /**
      * @param int $idCompany
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */
@@ -111,7 +111,7 @@ class CompanyUserFormDataProvider
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */

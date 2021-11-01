@@ -22,10 +22,8 @@ class MerchantProductOfferPreAddToCartPlugin extends AbstractPlugin implements P
      *
      * @api
      *
-     * @phpstan-param array<mixed> $params
-     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param array $params
+     * @param array<mixed> $params
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */

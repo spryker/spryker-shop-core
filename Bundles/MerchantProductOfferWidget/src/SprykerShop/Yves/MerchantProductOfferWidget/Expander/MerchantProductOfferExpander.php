@@ -32,10 +32,8 @@ class MerchantProductOfferExpander implements MerchantProductOfferExpanderInterf
     }
 
     /**
-     * @phpstan-param array<mixed> $params
-     *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     * @param array $params
+     * @param array<mixed> $params
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
@@ -43,14 +41,15 @@ class MerchantProductOfferExpander implements MerchantProductOfferExpanderInterf
         WishlistItemTransfer $wishlistItemTransfer,
         array $params
     ): WishlistItemTransfer {
-        return $this->expandItemWithProductOfferReference($wishlistItemTransfer, $params);
+        /** @var \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer */
+        $wishlistItemTransfer = $this->expandItemWithProductOfferReference($wishlistItemTransfer, $params);
+
+        return $wishlistItemTransfer;
     }
 
     /**
-     * @phpstan-param array<mixed> $params
-     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param array $params
+     * @param array<mixed> $params
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
@@ -58,16 +57,17 @@ class MerchantProductOfferExpander implements MerchantProductOfferExpanderInterf
         ItemTransfer $itemTransfer,
         array $params
     ): ItemTransfer {
-        return $this->expandItemWithProductOfferReference($itemTransfer, $params);
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $this->expandItemWithProductOfferReference($itemTransfer, $params);
+
+        return $itemTransfer;
     }
 
     /**
-     * @phpstan-param array<mixed> $params
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer|\Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param array<string, mixed> $params
      *
-     * @param mixed $itemTransfer
-     * @param array $params
-     *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer|\Generated\Shared\Transfer\ItemTransfer
      */
     protected function expandItemWithProductOfferReference($itemTransfer, array $params)
     {

@@ -37,7 +37,7 @@ class QuickOrderPageConfig extends AbstractBundleConfig
     protected const MAX_ALLOWED_QUANTITY = 100000;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected const ALLOWED_CSV_FILE_MIME_TYPES = [
         'text/csv',

@@ -60,7 +60,7 @@ class WishlistPageFactory extends AbstractFactory
      * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer|null $data
-     * @param array<mixed> $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -124,7 +124,7 @@ class WishlistPageFactory extends AbstractFactory
      * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
      *
      * @param array<mixed> $data
-     * @param array<mixed> $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
