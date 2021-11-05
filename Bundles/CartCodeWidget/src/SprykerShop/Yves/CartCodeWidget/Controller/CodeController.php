@@ -206,7 +206,7 @@ class CodeController extends AbstractController
         }
 
         switch ($messageTransfer->getType()) {
-            case self::MESSAGE_TYPE_SUCCESS:
+            case static::MESSAGE_TYPE_SUCCESS:
                 $this->addSuccessMessage($messageTransfer->getValue());
 
                 break;

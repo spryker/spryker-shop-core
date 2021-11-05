@@ -58,7 +58,7 @@ class DiscountWidgetControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addAddVoucherRoute()
     {
-        $this->createController('/{discount}/voucher/add', self::ROUTE_DISCOUNT_VOUCHER_ADD, 'DiscountWidget', 'Voucher', 'add')
+        $this->createController('/{discount}/voucher/add', static::ROUTE_DISCOUNT_VOUCHER_ADD, 'DiscountWidget', 'Voucher', 'add')
             ->assert('discount', $this->getAllowedLocalesPattern() . 'discount|discount')
             ->value('discount', 'discount');
 
@@ -70,7 +70,7 @@ class DiscountWidgetControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addRemoveVoucherRoute()
     {
-        $this->createController('/{discount}/voucher/remove', self::ROUTE_DISCOUNT_VOUCHER_REMOVE, 'DiscountWidget', 'Voucher', 'remove')
+        $this->createController('/{discount}/voucher/remove', static::ROUTE_DISCOUNT_VOUCHER_REMOVE, 'DiscountWidget', 'Voucher', 'remove')
             ->assert('discount', $this->getAllowedLocalesPattern() . 'discount|discount')
             ->value('discount', 'discount');
 
@@ -82,7 +82,7 @@ class DiscountWidgetControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addClearVoucherRoute()
     {
-        $this->createController('/{discount}/voucher/clear', self::ROUTE_DISCOUNT_VOUCHER_CLEAR, 'DiscountWidget', 'Voucher', 'clear')
+        $this->createController('/{discount}/voucher/clear', static::ROUTE_DISCOUNT_VOUCHER_CLEAR, 'DiscountWidget', 'Voucher', 'clear')
             ->assert('discount', $this->getAllowedLocalesPattern() . 'discount|discount')
             ->value('discount', 'discount');
 
@@ -94,7 +94,7 @@ class DiscountWidgetControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addCheckoutVoucherRoute()
     {
-        $this->createController('/{checkout}/add-voucher', self::CHECKOUT_VOUCHER_ADD, 'DiscountWidget', 'Checkout', 'addVoucher')
+        $this->createController('/{checkout}/add-voucher', static::CHECKOUT_VOUCHER_ADD, 'DiscountWidget', 'Checkout', 'addVoucher')
             ->assert('checkout', $this->getAllowedLocalesPattern() . 'checkout|checkout')
             ->value('checkout', 'checkout')
             ->method('GET|POST');

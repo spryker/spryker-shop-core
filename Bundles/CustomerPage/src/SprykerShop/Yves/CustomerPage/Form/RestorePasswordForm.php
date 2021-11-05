@@ -68,7 +68,7 @@ class RestorePasswordForm extends AbstractType
      */
     protected function addRestorePasswordKeyField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_RESTORE_PASSWORD_KEY, HiddenType::class);
+        $builder->add(static::FIELD_RESTORE_PASSWORD_KEY, HiddenType::class);
 
         return $this;
     }
@@ -80,7 +80,7 @@ class RestorePasswordForm extends AbstractType
      */
     protected function addPasswordField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_PASSWORD, RepeatedType::class, [
+        $builder->add(static::FIELD_PASSWORD, RepeatedType::class, [
             'first_name' => 'pass',
             'second_name' => 'confirm',
             'type' => PasswordType::class,

@@ -112,16 +112,16 @@ class UrlGenerator extends SymfonyUrlGenerator
      */
     protected function setVariablePath($name, $url, CompiledRoute $compiledRoute, Route $route, $referenceType)
     {
-        if ($compiledRoute->getStaticPrefix() === self::ERROR_PATH) {
+        if ($compiledRoute->getStaticPrefix() === static::ERROR_PATH) {
             return $url;
         }
 
         $baseUrl = '/';
-        if ($referenceType === self::ABSOLUTE_URL) {
+        if ($referenceType === static::ABSOLUTE_URL) {
             $baseUrl = $this->generateBaseUrl();
         }
 
-        if ($name !== self::HOME && $baseUrl === $url) {
+        if ($name !== static::HOME && $baseUrl === $url) {
             $firstPathVariable = current($compiledRoute->getPathVariables());
             $url .= $route->getDefault($firstPathVariable);
         }

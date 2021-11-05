@@ -118,7 +118,7 @@ class RegisterForm extends AbstractType
      */
     protected function addSalutationField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_SALUTATION, ChoiceType::class, [
+        $builder->add(static::FIELD_SALUTATION, ChoiceType::class, [
             'choices' => array_flip([
                 'Mr' => 'customer.salutation.mr',
                 'Ms' => 'customer.salutation.ms',
@@ -142,7 +142,7 @@ class RegisterForm extends AbstractType
      */
     protected function addFirstNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FIRST_NAME, TextType::class, [
+        $builder->add(static::FIELD_FIRST_NAME, TextType::class, [
             'label' => 'customer.first_name',
             'required' => true,
             'constraints' => [
@@ -160,7 +160,7 @@ class RegisterForm extends AbstractType
      */
     protected function addLastNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_LAST_NAME, TextType::class, [
+        $builder->add(static::FIELD_LAST_NAME, TextType::class, [
             'label' => 'customer.last_name',
             'required' => true,
             'constraints' => [
@@ -178,7 +178,7 @@ class RegisterForm extends AbstractType
      */
     protected function addEmailField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_EMAIL, EmailType::class, [
+        $builder->add(static::FIELD_EMAIL, EmailType::class, [
             'label' => 'auth.email',
             'required' => true,
             'constraints' => [
@@ -197,7 +197,7 @@ class RegisterForm extends AbstractType
      */
     protected function addPasswordField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_PASSWORD, RepeatedType::class, [
+        $builder->add(static::FIELD_PASSWORD, RepeatedType::class, [
             'first_name' => 'pass',
             'second_name' => 'confirm',
             'type' => PasswordType::class,
@@ -235,7 +235,7 @@ class RegisterForm extends AbstractType
      */
     protected function addAcceptTermsField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ACCEPT_TERMS, CheckboxType::class, [
+        $builder->add(static::FIELD_ACCEPT_TERMS, CheckboxType::class, [
             'label' => 'forms.accept_terms',
             'mapped' => false,
             'required' => true,
@@ -254,7 +254,7 @@ class RegisterForm extends AbstractType
      */
     protected function addIsGuestField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_IS_GUEST, HiddenType::class, [
+        $builder->add(static::FIELD_IS_GUEST, HiddenType::class, [
             'data' => false,
         ]);
 
@@ -270,7 +270,7 @@ class RegisterForm extends AbstractType
      */
     protected function addIsGuestTransformer(FormBuilderInterface $builder)
     {
-        $builder->get(self::FIELD_IS_GUEST)->addModelTransformer(new CallbackTransformer(
+        $builder->get(static::FIELD_IS_GUEST)->addModelTransformer(new CallbackTransformer(
             function ($isGuest) {
                 return $isGuest;
             },

@@ -47,7 +47,7 @@ class CatalogPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addFulltextSearchRoute()
     {
-        $this->createController('/{search}', self::ROUTE_SEARCH, 'CatalogPage', 'Catalog', 'fulltextSearch')
+        $this->createController('/{search}', static::ROUTE_SEARCH, 'CatalogPage', 'Catalog', 'fulltextSearch')
             ->assert('search', $this->getAllowedLocalesPattern() . 'search|search')
             ->value('search', 'search');
 
@@ -59,7 +59,7 @@ class CatalogPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addSuggestionRoute()
     {
-        $this->createController('/{search}/suggestion', self::ROUTE_SUGGESTION, 'CatalogPage', 'Suggestion', 'index')
+        $this->createController('/{search}/suggestion', static::ROUTE_SUGGESTION, 'CatalogPage', 'Suggestion', 'index')
             ->assert('search', $this->getAllowedLocalesPattern() . 'search|search')
             ->value('search', 'search');
 

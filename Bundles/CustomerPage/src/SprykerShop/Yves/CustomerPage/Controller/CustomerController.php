@@ -83,10 +83,10 @@ class CustomerController extends AbstractCustomerController
     {
         $filterTransfer = new FilterTransfer();
 
-        $filterTransfer->setLimit(self::ORDER_LIST_LIMIT);
+        $filterTransfer->setLimit(static::ORDER_LIST_LIMIT);
         $filterTransfer->setOffset(0);
-        $filterTransfer->setOrderBy(self::ORDER_LIST_SORT_FIELD);
-        $filterTransfer->setOrderDirection(self::ORDER_LIST_SORT_DIRECTION);
+        $filterTransfer->setOrderBy(static::ORDER_LIST_SORT_FIELD);
+        $filterTransfer->setOrderDirection(static::ORDER_LIST_SORT_DIRECTION);
 
         return $filterTransfer;
     }
@@ -106,11 +106,11 @@ class CustomerController extends AbstractCustomerController
         $addresses = [];
         foreach ($addressesTransfer->getAddresses() as $address) {
             if ($customerTransfer->getDefaultBillingAddress() === $address->getIdCustomerAddress()) {
-                $addresses[self::KEY_BILLING] = $address;
+                $addresses[static::KEY_BILLING] = $address;
             }
 
             if ($customerTransfer->getDefaultShippingAddress() === $address->getIdCustomerAddress()) {
-                $addresses[self::KEY_SHIPPING] = $address;
+                $addresses[static::KEY_SHIPPING] = $address;
             }
         }
 

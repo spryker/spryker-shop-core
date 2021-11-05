@@ -33,7 +33,7 @@ class CartCodeForm extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return self::FORM_NAME;
+        return static::FORM_NAME;
     }
 
     /**
@@ -54,7 +54,7 @@ class CartCodeForm extends AbstractType
      */
     protected function addCodeField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_CODE, TextType::class, [
+        $builder->add(static::FIELD_CODE, TextType::class, [
             'label' => static::GLOSSARY_KEY_ENTER_CART_CODE,
             'required' => false,
         ]);

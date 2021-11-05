@@ -35,7 +35,7 @@ class NewsletterPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addNewsletterRoute()
     {
-        $this->createController('/{customer}/newsletter', self::ROUTE_CUSTOMER_NEWSLETTER, 'NewsletterPage', 'Newsletter', 'index')
+        $this->createController('/{customer}/newsletter', static::ROUTE_CUSTOMER_NEWSLETTER, 'NewsletterPage', 'Newsletter', 'index')
             ->assert('customer', $this->getAllowedLocalesPattern() . 'customer|customer')
             ->value('customer', 'customer');
 

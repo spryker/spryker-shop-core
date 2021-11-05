@@ -45,7 +45,7 @@ abstract class AbstractAddressFormDataProvider
         $countries = [];
 
         foreach ($this->storeClient->getCurrentStore()->getCountries() as $iso2Code) {
-            $countries[$iso2Code] = self::COUNTRY_GLOSSARY_PREFIX . $iso2Code;
+            $countries[$iso2Code] = static::COUNTRY_GLOSSARY_PREFIX . $iso2Code;
         }
 
         return $countries;

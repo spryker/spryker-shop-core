@@ -36,7 +36,7 @@ class QuoteForm extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return self::FORM_NAME;
+        return static::FORM_NAME;
     }
 
     /**
@@ -69,7 +69,7 @@ class QuoteForm extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_NAME, TextType::class, [
+        $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => 'multi_cart.form.quote.name',
             'constraints' => $this->createNotBlankConstraint(),
         ]);

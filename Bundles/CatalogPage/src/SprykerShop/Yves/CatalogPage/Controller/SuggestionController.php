@@ -27,7 +27,7 @@ class SuggestionController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $searchString = $request->query->get(self::PARAM_SEARCH_QUERY);
+        $searchString = $request->query->get(static::PARAM_SEARCH_QUERY);
 
         if (empty($searchString)) {
             return $this->jsonResponse();

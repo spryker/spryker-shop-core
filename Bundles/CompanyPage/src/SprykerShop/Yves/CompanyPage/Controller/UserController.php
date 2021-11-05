@@ -340,7 +340,7 @@ class UserController extends AbstractCompanyController
         $criteriaFilterTransfer = new CompanyUserCriteriaFilterTransfer();
         $criteriaFilterTransfer->setIdCompany($this->findCurrentCompanyUserTransfer()->getFkCompany());
 
-        $filterTransfer = $this->createFilterTransfer(self::COMPANY_USER_LIST_SORT_FIELD);
+        $filterTransfer = $this->createFilterTransfer(static::COMPANY_USER_LIST_SORT_FIELD);
         $criteriaFilterTransfer->setFilter($filterTransfer);
 
         $paginationTransfer = $this->createPaginationTransfer($request);

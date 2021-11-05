@@ -59,7 +59,7 @@ class NewsletterSubscriptionForm extends AbstractType
     {
         $resolver->setDefaults([
             'attr' => [
-                'id' => self::FORM_ID,
+                'id' => static::FORM_ID,
             ],
         ]);
     }
@@ -73,7 +73,7 @@ class NewsletterSubscriptionForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->setAction('#' . self::FORM_ID);
+            ->setAction('#' . static::FORM_ID);
 
         $this->addSubscribeField($builder);
     }
@@ -85,7 +85,7 @@ class NewsletterSubscriptionForm extends AbstractType
      */
     protected function addSubscribeField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_SUBSCRIBE, EmailType::class, [
+        $builder->add(static::FIELD_SUBSCRIBE, EmailType::class, [
             'label' => 'newsletter.subscribe',
             'required' => false,
             'constraints' => [

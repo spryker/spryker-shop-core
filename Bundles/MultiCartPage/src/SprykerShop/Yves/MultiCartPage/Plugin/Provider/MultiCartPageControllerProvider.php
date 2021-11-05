@@ -96,7 +96,7 @@ class MultiCartPageControllerProvider extends AbstractYvesControllerProvider
     {
         $this->createController('/{multiCart}/update/{idQuote}', static::ROUTE_MULTI_CART_UPDATE, 'MultiCartPage', 'MultiCart', 'update')
             ->assert('multiCart', $this->getAllowedLocalesPattern() . 'multi-cart|multi-cart')
-            ->assert(self::PARAM_ID_QUOTE, '\d+')
+            ->assert(static::PARAM_ID_QUOTE, '\d+')
             ->value('multiCart', 'multi-cart');
 
         return $this;
@@ -109,7 +109,7 @@ class MultiCartPageControllerProvider extends AbstractYvesControllerProvider
     {
         $this->createGetController('/{multiCart}/delete/{idQuote}', static::ROUTE_MULTI_CART_DELETE, 'MultiCartPage', 'MultiCart', 'delete')
             ->assert('multiCart', $this->getAllowedLocalesPattern() . 'multi-cart|multi-cart')
-            ->assert(self::PARAM_ID_QUOTE, '\d+')
+            ->assert(static::PARAM_ID_QUOTE, '\d+')
             ->value('multiCart', 'multi-cart');
 
         return $this;
@@ -135,7 +135,7 @@ class MultiCartPageControllerProvider extends AbstractYvesControllerProvider
     {
         $this->createGetController('/{multiCart}/clear/{idQuote}', static::ROUTE_MULTI_CART_CLEAR, 'MultiCartPage', 'MultiCart', 'clear')
             ->assert('multiCart', $this->getAllowedLocalesPattern() . 'multi-cart|multi-cart')
-            ->assert(self::PARAM_ID_QUOTE, '\d+')
+            ->assert(static::PARAM_ID_QUOTE, '\d+')
             ->value('multiCart', 'multi-cart');
 
         return $this;
@@ -148,7 +148,7 @@ class MultiCartPageControllerProvider extends AbstractYvesControllerProvider
     {
         $this->createGetController('/{multiCart}/duplicate/{idQuote}', static::ROUTE_MULTI_CART_DUPLICATE, 'MultiCartPage', 'MultiCart', 'duplicate')
             ->assert('multiCart', $this->getAllowedLocalesPattern() . 'multi-cart|multi-cart')
-            ->assert(self::PARAM_ID_QUOTE, '\d+')
+            ->assert(static::PARAM_ID_QUOTE, '\d+')
             ->value('multiCart', 'multi-cart');
 
         return $this;
@@ -161,7 +161,7 @@ class MultiCartPageControllerProvider extends AbstractYvesControllerProvider
     {
         $this->createGetController('/{multiCart}/set-default/{idQuote}', static::ROUTE_MULTI_CART_SET_DEFAULT, 'MultiCartPage', 'MultiCart', 'setDefault')
             ->assert('multiCart', $this->getAllowedLocalesPattern() . 'multi-cart|multi-cart')
-            ->assert(self::PARAM_ID_QUOTE, '\d+')
+            ->assert(static::PARAM_ID_QUOTE, '\d+')
             ->value('multiCart', 'multi-cart');
 
         return $this;

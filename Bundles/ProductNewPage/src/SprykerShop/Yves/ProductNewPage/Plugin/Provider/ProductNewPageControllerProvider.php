@@ -35,7 +35,7 @@ class ProductNewPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addNewProductsRoute()
     {
-        $this->createController('/{newProducts}{categoryPath}', self::ROUTE_NEW_PRODUCTS, 'ProductNewPage', 'NewProducts', 'index')
+        $this->createController('/{newProducts}{categoryPath}', static::ROUTE_NEW_PRODUCTS, 'ProductNewPage', 'NewProducts', 'index')
             ->assert('newProducts', $this->getAllowedLocalesPattern() . 'new|new')
             ->value('newProducts', 'new')
             ->assert('categoryPath', '\/.+')

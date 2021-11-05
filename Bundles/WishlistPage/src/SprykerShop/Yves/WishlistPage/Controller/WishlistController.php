@@ -279,7 +279,7 @@ class WishlistController extends AbstractController
      */
     protected function getPageNumber(Request $request)
     {
-        $pageNumber = $request->query->getInt(self::PARAM_PAGE, 1);
+        $pageNumber = $request->query->getInt(static::PARAM_PAGE, 1);
         $pageNumber = $pageNumber <= 0 ? 1 : $pageNumber;
 
         return $pageNumber;
@@ -292,7 +292,7 @@ class WishlistController extends AbstractController
      */
     protected function getItemsPerPage(Request $request)
     {
-        $itemsPerPage = $request->query->getInt(self::PARAM_ITEMS_PER_PAGE, self::DEFAULT_ITEMS_PER_PAGE);
+        $itemsPerPage = $request->query->getInt(static::PARAM_ITEMS_PER_PAGE, static::DEFAULT_ITEMS_PER_PAGE);
         $itemsPerPage = ($itemsPerPage <= 0) ? 1 : $itemsPerPage;
         $itemsPerPage = ($itemsPerPage > 100) ? 10 : $itemsPerPage;
 
@@ -313,11 +313,11 @@ class WishlistController extends AbstractController
             return null;
         }
 
-        $wishlistName = $request->get(self::PARAM_WISHLIST_NAME) ?: self::DEFAULT_NAME;
+        $wishlistName = $request->get(static::PARAM_WISHLIST_NAME) ?: static::DEFAULT_NAME;
 
-        $sku = (string)$request->query->get(self::PARAM_SKU) ?: null;
+        $sku = (string)$request->query->get(static::PARAM_SKU) ?: null;
         $wishlistItemTransfer = (new WishlistItemTransfer())
-            ->setIdProduct($request->query->getInt(self::PARAM_PRODUCT_ID))
+            ->setIdProduct($request->query->getInt(static::PARAM_PRODUCT_ID))
             ->setSku($sku)
             ->setFkCustomer($customerTransfer->getIdCustomer())
             ->setWishlistName($wishlistName);

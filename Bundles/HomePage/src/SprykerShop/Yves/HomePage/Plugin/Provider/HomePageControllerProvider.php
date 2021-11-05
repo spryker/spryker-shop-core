@@ -35,7 +35,7 @@ class HomePageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addHomeRoute()
     {
-        $this->createController('/{root}', self::ROUTE_HOME, 'HomePage', 'Index')
+        $this->createController('/{root}', static::ROUTE_HOME, 'HomePage', 'Index')
             ->assert('root', $this->getAllowedLocalesPattern())
             ->value('root', '');
 

@@ -229,9 +229,9 @@ class AddressController extends AbstractCustomerController
     protected function getAddressListResponseData(CustomerTransfer $customerTransfer, ?AddressesTransfer $addressesTransfer = null)
     {
         $responseData = [
-            self::KEY_DEFAULT_BILLING_ADDRESS => null,
-            self::KEY_DEFAULT_SHIPPING_ADDRESS => null,
-            self::KEY_ADDRESSES => null,
+            static::KEY_DEFAULT_BILLING_ADDRESS => null,
+            static::KEY_DEFAULT_SHIPPING_ADDRESS => null,
+            static::KEY_ADDRESSES => null,
         ];
 
         if ($addressesTransfer === null) {
@@ -247,7 +247,7 @@ class AddressController extends AbstractCustomerController
                 $addressTransfer->setIsDefaultShipping(true);
             }
 
-            $responseData[self::KEY_ADDRESSES][] = $addressTransfer;
+            $responseData[static::KEY_ADDRESSES][] = $addressTransfer;
         }
 
         return $responseData;

@@ -136,73 +136,73 @@ class ShopUiTwigExtension extends TwigExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction(self::FUNCTION_GET_PUBLIC_FOLDER_PATH, function ($relativePath) {
+            new TwigFunction(static::FUNCTION_GET_PUBLIC_FOLDER_PATH, function ($relativePath) {
                 $publicFolderPath = $this->getPublicFolderPath();
 
                 return $publicFolderPath . $relativePath;
             }, [
                 $this,
-                self::FUNCTION_GET_PUBLIC_FOLDER_PATH,
+                static::FUNCTION_GET_PUBLIC_FOLDER_PATH,
             ]),
 
-            new TwigFunction(self::FUNCTION_GET_QA_ATTRIBUTE, function (array $qaValues = []) {
+            new TwigFunction(static::FUNCTION_GET_QA_ATTRIBUTE, function (array $qaValues = []) {
                 return $this->getQaAttribute($qaValues);
             }, [
                 $this,
-                self::FUNCTION_GET_QA_ATTRIBUTE,
+                static::FUNCTION_GET_QA_ATTRIBUTE,
                 'is_safe' => ['html'],
                 'is_variadic' => true,
             ]),
 
-            new TwigFunction(self::FUNCTION_GET_QA_ATTRIBUTE_SUB, function ($qaName, array $qaValues = []) {
+            new TwigFunction(static::FUNCTION_GET_QA_ATTRIBUTE_SUB, function ($qaName, array $qaValues = []) {
                 return $this->getQaAttribute($qaValues, $qaName);
             }, [
                 $this,
-                self::FUNCTION_GET_QA_ATTRIBUTE_SUB,
+                static::FUNCTION_GET_QA_ATTRIBUTE_SUB,
                 'is_safe' => ['html'],
                 'is_variadic' => true,
             ]),
 
-            new TwigFunction(self::FUNCTION_GET_UI_MODEL_COMPONENT_TEMPLATE, function ($modelName) {
+            new TwigFunction(static::FUNCTION_GET_UI_MODEL_COMPONENT_TEMPLATE, function ($modelName) {
                 return $this->getModelTemplate($modelName);
             }, [
                 $this,
-                self::FUNCTION_GET_UI_MODEL_COMPONENT_TEMPLATE,
+                static::FUNCTION_GET_UI_MODEL_COMPONENT_TEMPLATE,
             ]),
 
-            new TwigFunction(self::FUNCTION_GET_UI_ATOM_COMPONENT_TEMPLATE, function ($componentName, $componentModule = self::DEFAULT_MODULE) {
+            new TwigFunction(static::FUNCTION_GET_UI_ATOM_COMPONENT_TEMPLATE, function ($componentName, $componentModule = self::DEFAULT_MODULE) {
                 return $this->getComponentTemplate($componentModule, 'atoms', $componentName);
             }, [
                 $this,
-                self::FUNCTION_GET_UI_ATOM_COMPONENT_TEMPLATE,
+                static::FUNCTION_GET_UI_ATOM_COMPONENT_TEMPLATE,
             ]),
 
-            new TwigFunction(self::FUNCTION_GET_UI_MOLECULE_COMPONENT_TEMPLATE, function ($componentName, $componentModule = self::DEFAULT_MODULE) {
+            new TwigFunction(static::FUNCTION_GET_UI_MOLECULE_COMPONENT_TEMPLATE, function ($componentName, $componentModule = self::DEFAULT_MODULE) {
                 return $this->getComponentTemplate($componentModule, 'molecules', $componentName);
             }, [
                 $this,
-                self::FUNCTION_GET_UI_MOLECULE_COMPONENT_TEMPLATE,
+                static::FUNCTION_GET_UI_MOLECULE_COMPONENT_TEMPLATE,
             ]),
 
-            new TwigFunction(self::FUNCTION_GET_UI_ORGANISM_COMPONENT_TEMPLATE, function ($componentName, $componentModule = self::DEFAULT_MODULE) {
+            new TwigFunction(static::FUNCTION_GET_UI_ORGANISM_COMPONENT_TEMPLATE, function ($componentName, $componentModule = self::DEFAULT_MODULE) {
                 return $this->getComponentTemplate($componentModule, 'organisms', $componentName);
             }, [
                 $this,
-                self::FUNCTION_GET_UI_ORGANISM_COMPONENT_TEMPLATE,
+                static::FUNCTION_GET_UI_ORGANISM_COMPONENT_TEMPLATE,
             ]),
 
-            new TwigFunction(self::FUNCTION_GET_UI_TEMPLATE_COMPONENT_TEMPLATE, function ($templateName, $templateModule = self::DEFAULT_MODULE) {
+            new TwigFunction(static::FUNCTION_GET_UI_TEMPLATE_COMPONENT_TEMPLATE, function ($templateName, $templateModule = self::DEFAULT_MODULE) {
                 return $this->getTemplateTemplate($templateModule, $templateName);
             }, [
                 $this,
-                self::FUNCTION_GET_UI_TEMPLATE_COMPONENT_TEMPLATE,
+                static::FUNCTION_GET_UI_TEMPLATE_COMPONENT_TEMPLATE,
             ]),
 
-            new TwigFunction(self::FUNCTION_GET_UI_VIEW_COMPONENT_TEMPLATE, function ($viewName, $viewModule = self::DEFAULT_MODULE) {
+            new TwigFunction(static::FUNCTION_GET_UI_VIEW_COMPONENT_TEMPLATE, function ($viewName, $viewModule = self::DEFAULT_MODULE) {
                 return $this->getViewTemplate($viewModule, $viewName);
             }, [
                 $this,
-                self::FUNCTION_GET_UI_VIEW_COMPONENT_TEMPLATE,
+                static::FUNCTION_GET_UI_VIEW_COMPONENT_TEMPLATE,
             ]),
         ];
     }

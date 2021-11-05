@@ -29,7 +29,7 @@ class CartVoucherForm extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return self::FORM_NAME;
+        return static::FORM_NAME;
     }
 
     /**
@@ -52,7 +52,7 @@ class CartVoucherForm extends AbstractType
      */
     protected function addVoucherCodeField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_VOUCHER_CODE, TextType::class, [
+        $builder->add(static::FIELD_VOUCHER_CODE, TextType::class, [
             'label' => 'page.checkout.finalize.enter-voucher',
             'required' => false,
         ]);

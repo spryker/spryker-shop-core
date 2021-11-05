@@ -105,11 +105,11 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
         $app['security.access_rules'] = [
             [
                 $customerSecuredPattern,
-                self::ROLE_USER,
+                static::ROLE_USER,
             ],
             [
                 Config::get(CustomerConstants::CUSTOMER_ANONYMOUS_PATTERN),
-                self::IS_AUTHENTICATED_ANONYMOUSLY,
+                static::IS_AUTHENTICATED_ANONYMOUSLY,
             ],
         ];
     }

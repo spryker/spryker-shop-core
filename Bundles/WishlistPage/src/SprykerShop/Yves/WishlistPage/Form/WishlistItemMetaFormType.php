@@ -80,7 +80,7 @@ class WishlistItemMetaFormType extends AbstractType
      */
     protected function addIdProductAbstractField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_PRODUCT_ABSTRACT, HiddenType::class, [
+        $builder->add(static::FIELD_ID_PRODUCT_ABSTRACT, HiddenType::class, [
             'label' => false,
         ]);
 
@@ -96,7 +96,7 @@ class WishlistItemMetaFormType extends AbstractType
      */
     protected function addIdProductField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_PRODUCT, HiddenType::class, [
+        $builder->add(static::FIELD_ID_PRODUCT, HiddenType::class, [
             'label' => false,
         ]);
 
@@ -112,7 +112,7 @@ class WishlistItemMetaFormType extends AbstractType
      */
     protected function addSkuField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_SKU, HiddenType::class, [
+        $builder->add(static::FIELD_SKU, HiddenType::class, [
             'label' => false,
         ]);
 
@@ -128,7 +128,7 @@ class WishlistItemMetaFormType extends AbstractType
      */
     protected function addIdWishlistItemField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_WISHLIST_ITEM, HiddenType::class, [
+        $builder->add(static::FIELD_ID_WISHLIST_ITEM, HiddenType::class, [
             'label' => false,
         ]);
 

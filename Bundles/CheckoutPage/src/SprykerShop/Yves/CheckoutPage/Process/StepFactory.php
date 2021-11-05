@@ -273,7 +273,7 @@ class StepFactory extends AbstractFactory
             CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_PLACE_ORDER,
             $this->getConfig()->getEscapeRoute(),
             [
-                static::ERROR_CODE_GENERAL_FAILURE => self::ROUTE_CART,
+                static::ERROR_CODE_GENERAL_FAILURE => static::ROUTE_CART,
                 'payment failed' => CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_PAYMENT,
                 'shipment failed' => CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_SHIPMENT,
             ],

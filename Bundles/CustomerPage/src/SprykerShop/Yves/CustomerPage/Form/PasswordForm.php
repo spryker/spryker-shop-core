@@ -69,8 +69,8 @@ class PasswordForm extends AbstractType
      */
     protected function addNewPasswordField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_NEW_PASSWORD, RepeatedType::class, [
-            'first_name' => self::FIELD_PASSWORD,
+        $builder->add(static::FIELD_NEW_PASSWORD, RepeatedType::class, [
+            'first_name' => static::FIELD_PASSWORD,
             'second_name' => 'confirm',
             'type' => PasswordType::class,
             'invalid_message' => 'validator.constraints.password.do_not_match',
@@ -107,7 +107,7 @@ class PasswordForm extends AbstractType
      */
     protected function addPasswordField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_PASSWORD, PasswordType::class, [
+        $builder->add(static::FIELD_PASSWORD, PasswordType::class, [
             'label' => 'customer.password.old_password',
             'required' => true,
             'attr' => [

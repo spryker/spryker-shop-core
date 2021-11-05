@@ -53,7 +53,7 @@ class ErrorPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addError404Route()
     {
-        $this->createController(self::ROUTE_ERROR_404_PATH, self::ROUTE_ERROR_404, 'ErrorPage', 'Error404');
+        $this->createController(static::ROUTE_ERROR_404_PATH, static::ROUTE_ERROR_404, 'ErrorPage', 'Error404');
 
         return $this;
     }
@@ -65,7 +65,7 @@ class ErrorPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addError403Route()
     {
-        $this->createController(self::ROUTE_ERROR_403_PATH, self::ROUTE_ERROR_403, 'ErrorPage', 'Error403');
+        $this->createController(static::ROUTE_ERROR_403_PATH, static::ROUTE_ERROR_403, 'ErrorPage', 'Error403');
 
         return $this;
     }

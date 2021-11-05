@@ -35,7 +35,7 @@ class CalculationPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addCalculationDebugRoute()
     {
-        $this->createController('/calculation/debug', self::ROUTE_CALCULATION_DEBUG, 'CalculationPage', 'Debug', 'cart')
+        $this->createController('/calculation/debug', static::ROUTE_CALCULATION_DEBUG, 'CalculationPage', 'Debug', 'cart')
             ->method('GET');
 
         return $this;

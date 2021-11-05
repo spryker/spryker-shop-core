@@ -41,7 +41,7 @@ class NewsletterWidgetControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addNewsletterSubscribeRoute()
     {
-        $this->createController('/{newsletter}/subscribe', self::ROUTE_NEWSLETTER_SUBSCRIBE, 'NewsletterWidget', 'Subscription', 'subscribe')
+        $this->createController('/{newsletter}/subscribe', static::ROUTE_NEWSLETTER_SUBSCRIBE, 'NewsletterWidget', 'Subscription', 'subscribe')
             ->assert('newsletter', $this->getAllowedLocalesPattern() . 'newsletter|newsletter')
             ->value('newsletter', 'newsletter');
 
@@ -53,7 +53,7 @@ class NewsletterWidgetControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addNewsletterWidgetSubscribeRoute()
     {
-        $this->createController('/{newsletter-widget}/subscribe', self::ROUTE_NEWSLETTER_WIDGET_SUBSCRIBE, 'NewsletterWidget', 'SubscriptionWidget', 'subscribe')
+        $this->createController('/{newsletter-widget}/subscribe', static::ROUTE_NEWSLETTER_WIDGET_SUBSCRIBE, 'NewsletterWidget', 'SubscriptionWidget', 'subscribe')
             ->assert('newsletter-widget', $this->getAllowedLocalesPattern() . 'newsletter-widget|newsletter-widget')
             ->value('newsletter-widget', 'newsletter-widget');
 

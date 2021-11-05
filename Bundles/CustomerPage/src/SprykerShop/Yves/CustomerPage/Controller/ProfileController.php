@@ -102,7 +102,7 @@ class ProfileController extends AbstractCustomerController
         if ($customerResponseTransfer->getIsSuccess()) {
             $this->updateLoggedInCustomerTransfer($customerResponseTransfer->getCustomerTransfer());
 
-            $this->addSuccessMessage(self::MESSAGE_PROFILE_CHANGE_SUCCESS);
+            $this->addSuccessMessage(static::MESSAGE_PROFILE_CHANGE_SUCCESS);
 
             return true;
         }
@@ -138,7 +138,7 @@ class ProfileController extends AbstractCustomerController
                 ->createCustomerAuthenticator()
                 ->authenticateCustomer($customerTransfer, $token);
 
-            $this->addSuccessMessage(self::MESSAGE_PASSWORD_CHANGE_SUCCESS);
+            $this->addSuccessMessage(static::MESSAGE_PASSWORD_CHANGE_SUCCESS);
 
             return true;
         }

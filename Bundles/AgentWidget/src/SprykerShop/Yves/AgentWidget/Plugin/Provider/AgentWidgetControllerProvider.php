@@ -37,7 +37,7 @@ class AgentWidgetControllerProvider extends AbstractYvesControllerProvider
     {
         $this->createController(
             '/{agentWidget}/customer-autocomplete',
-            self::ROUTE_CUSTOMER_AUTOCOMPLETE,
+            static::ROUTE_CUSTOMER_AUTOCOMPLETE,
             'AgentWidget',
             'CustomerAutocomplete',
             'index',

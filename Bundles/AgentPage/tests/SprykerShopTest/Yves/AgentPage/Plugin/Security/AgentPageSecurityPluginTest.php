@@ -119,7 +119,7 @@ class AgentPageSecurityPluginTest extends Unit
         $this->tester->addSecurityPlugin($securityPlugin);
         $this->tester->addSecurityPlugin(new CustomerPageSecurityPlugin());
 
-        $container->get(self::SERVICE_SESSION)->start();
+        $container->get(static::SERVICE_SESSION)->start();
 
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
         $httpKernelBrowser->request('get', '/');
@@ -143,7 +143,7 @@ class AgentPageSecurityPluginTest extends Unit
         $this->tester->addSecurityPlugin($securityPlugin);
         $this->tester->addSecurityPlugin(new CustomerPageSecurityPlugin());
 
-        $container->get(self::SERVICE_SESSION)->start();
+        $container->get(static::SERVICE_SESSION)->start();
 
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
         $httpKernelBrowser->request('get', '/');

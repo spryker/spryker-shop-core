@@ -40,6 +40,6 @@ class CustomerCheckoutForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::SUB_FORM_CUSTOMER, $options[static::SUB_FORM_CUSTOMER], ['data_class' => CustomerTransfer::class, 'property_path' => 'customer']);
+        $builder->add(static::SUB_FORM_CUSTOMER, $options[static::SUB_FORM_CUSTOMER], ['data_class' => CustomerTransfer::class, 'property_path' => 'customer']);
     }
 }

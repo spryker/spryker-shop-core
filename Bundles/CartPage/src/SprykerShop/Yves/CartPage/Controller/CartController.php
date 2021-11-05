@@ -372,7 +372,7 @@ class CartController extends AbstractController
             return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
         }
 
-        $items = (array)$request->request->get(self::PARAM_ITEMS);
+        $items = (array)$request->request->get(static::PARAM_ITEMS);
         $itemTransfers = $this->mapItems($items);
 
         $this->getFactory()

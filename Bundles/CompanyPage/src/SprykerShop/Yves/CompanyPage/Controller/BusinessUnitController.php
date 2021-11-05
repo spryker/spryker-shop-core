@@ -306,7 +306,7 @@ class BusinessUnitController extends AbstractCompanyController
 
         $criteriaFilterTransfer->setIdCompany($this->findCurrentCompanyUserTransfer()->getFkCompany());
 
-        $filterTransfer = $this->createFilterTransfer(self::BUSINESS_UNIT_LIST_SORT_FIELD);
+        $filterTransfer = $this->createFilterTransfer(static::BUSINESS_UNIT_LIST_SORT_FIELD);
         $criteriaFilterTransfer->setFilter($filterTransfer);
 
         $paginationTransfer = $this->createPaginationTransfer($request);
@@ -368,7 +368,7 @@ class BusinessUnitController extends AbstractCompanyController
         $criteriaFilterTransfer = new CompanyUnitAddressCriteriaFilterTransfer();
         $criteriaFilterTransfer->setIdCompany($this->findCurrentCompanyUserTransfer()->getFkCompany());
 
-        $filterTransfer = $this->createFilterTransfer(self::COMPANY_UNIT_ADDRESS_LIST_SORT_FIELD);
+        $filterTransfer = $this->createFilterTransfer(static::COMPANY_UNIT_ADDRESS_LIST_SORT_FIELD);
         $criteriaFilterTransfer->setFilter($filterTransfer);
 
         $paginationTransfer = $this->createPaginationTransfer($request);

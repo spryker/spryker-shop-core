@@ -44,7 +44,7 @@ class NewsletterSubscriptionForm extends AbstractType
      */
     protected function addSubscribeField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_SUBSCRIBE, CheckboxType::class, [
+        $builder->add(static::FIELD_SUBSCRIBE, CheckboxType::class, [
             'label' => 'customer.newsletter.subscription_agreement',
             'required' => false,
         ]);

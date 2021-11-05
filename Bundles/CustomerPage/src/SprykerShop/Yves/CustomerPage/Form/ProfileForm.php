@@ -80,7 +80,7 @@ class ProfileForm extends AbstractType
      */
     public function addEmailField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_EMAIL, EmailType::class, [
+        $builder->add(static::FIELD_EMAIL, EmailType::class, [
             'label' => 'customer.profile.email',
             'required' => true,
             'constraints' => [
@@ -99,7 +99,7 @@ class ProfileForm extends AbstractType
      */
     public function addLastNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_LAST_NAME, TextType::class, [
+        $builder->add(static::FIELD_LAST_NAME, TextType::class, [
             'label' => 'customer.profile.last_name',
             'required' => true,
             'constraints' => [
@@ -117,7 +117,7 @@ class ProfileForm extends AbstractType
      */
     public function addFirstNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FIRST_NAME, TextType::class, [
+        $builder->add(static::FIELD_FIRST_NAME, TextType::class, [
             'label' => 'customer.profile.first_name',
             'required' => true,
             'constraints' => [
@@ -135,7 +135,7 @@ class ProfileForm extends AbstractType
      */
     public function addSalutationField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_SALUTATION, ChoiceType::class, [
+        $builder->add(static::FIELD_SALUTATION, ChoiceType::class, [
             'choices' => array_flip([
                 'Mr' => 'customer.salutation.mr',
                 'Ms' => 'customer.salutation.ms',

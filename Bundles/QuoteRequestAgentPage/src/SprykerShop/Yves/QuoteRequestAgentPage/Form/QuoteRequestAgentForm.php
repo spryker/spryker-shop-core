@@ -109,9 +109,9 @@ class QuoteRequestAgentForm extends AbstractType
             QuoteRequestTransfer::LATEST_VERSION,
             QuoteRequestAgentVersionSubForm::class,
             [
-                self::OPTION_PRICE_MODE => $options[self::OPTION_PRICE_MODE],
-                self::OPTION_IS_QUOTE_VALID => $options[self::OPTION_IS_QUOTE_VALID],
-                self::OPTION_SHIPMENT_GROUPS => $options[self::OPTION_SHIPMENT_GROUPS],
+                static::OPTION_PRICE_MODE => $options[static::OPTION_PRICE_MODE],
+                static::OPTION_IS_QUOTE_VALID => $options[static::OPTION_IS_QUOTE_VALID],
+                static::OPTION_SHIPMENT_GROUPS => $options[static::OPTION_SHIPMENT_GROUPS],
             ],
         );
 

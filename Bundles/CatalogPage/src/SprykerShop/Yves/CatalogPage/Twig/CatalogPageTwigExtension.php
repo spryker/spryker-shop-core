@@ -43,11 +43,11 @@ class CatalogPageTwigExtension extends TwigExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction(self::FUNCTION_GET_URL_WITHOUT_ACTIVE_SEARCH_FILTER, [$this, self::FUNCTION_GET_URL_WITHOUT_ACTIVE_SEARCH_FILTER], [
+            new TwigFunction(static::FUNCTION_GET_URL_WITHOUT_ACTIVE_SEARCH_FILTER, [$this, static::FUNCTION_GET_URL_WITHOUT_ACTIVE_SEARCH_FILTER], [
                 'needs_context' => true,
                 'is_safe' => ['html'],
             ]),
-            new TwigFunction(self::FUNCTION_GET_URL_WITHOUT_ALL_ACTIVE_SEARCH_FILTERS, [$this, self::FUNCTION_GET_URL_WITHOUT_ALL_ACTIVE_SEARCH_FILTERS], [
+            new TwigFunction(static::FUNCTION_GET_URL_WITHOUT_ALL_ACTIVE_SEARCH_FILTERS, [$this, static::FUNCTION_GET_URL_WITHOUT_ALL_ACTIVE_SEARCH_FILTERS], [
                 'needs_context' => true,
                 'is_safe' => ['html'],
             ]),

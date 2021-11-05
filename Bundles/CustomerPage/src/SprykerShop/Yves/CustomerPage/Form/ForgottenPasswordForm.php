@@ -59,7 +59,7 @@ class ForgottenPasswordForm extends AbstractType
      */
     protected function addEmailField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_EMAIL, EmailType::class, [
+        $builder->add(static::FIELD_EMAIL, EmailType::class, [
             'label' => 'customer.forgotten_password.email',
             'required' => true,
             'constraints' => [

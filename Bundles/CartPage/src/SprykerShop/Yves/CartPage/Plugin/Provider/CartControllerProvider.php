@@ -88,7 +88,7 @@ class CartControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addCartRoute()
     {
-        $this->createController('/{cart}', self::ROUTE_CART, 'CartPage', 'Cart')
+        $this->createController('/{cart}', static::ROUTE_CART, 'CartPage', 'Cart')
             ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
             ->value('cart', 'cart')
             ->convert('selectedAttributes', [$this, 'getSelectedAttributesFromRequest']);
@@ -101,7 +101,7 @@ class CartControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addCartAddItemsRoute()
     {
-        $this->createPostController('/{cart}/add-items', self::ROUTE_CART_ADD_ITEMS, 'CartPage', 'Cart', 'addItems')
+        $this->createPostController('/{cart}/add-items', static::ROUTE_CART_ADD_ITEMS, 'CartPage', 'Cart', 'addItems')
             ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
             ->value('cart', 'cart');
 
@@ -127,10 +127,10 @@ class CartControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addCartAddRoute()
     {
-        $this->createController('/{cart}/add/{sku}', self::ROUTE_CART_ADD, 'CartPage', 'Cart', 'add')
+        $this->createController('/{cart}/add/{sku}', static::ROUTE_CART_ADD, 'CartPage', 'Cart', 'add')
             ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
             ->value('cart', 'cart')
-            ->assert('sku', self::SKU_PATTERN)
+            ->assert('sku', static::SKU_PATTERN)
             ->convert('quantity', [$this, 'getQuantityFromRequest'])
             ->convert('optionValueIds', [$this, 'getProductOptionsFromRequest']);
 
@@ -159,10 +159,10 @@ class CartControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addCartRemoveRoute()
     {
-        $this->createController('/{cart}/remove/{sku}/{groupKey}', self::ROUTE_CART_REMOVE, 'CartPage', 'Cart', 'remove')
+        $this->createController('/{cart}/remove/{sku}/{groupKey}', static::ROUTE_CART_REMOVE, 'CartPage', 'Cart', 'remove')
             ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
             ->value('cart', 'cart')
-            ->assert('sku', self::SKU_PATTERN)
+            ->assert('sku', static::SKU_PATTERN)
             ->value('groupKey', '');
 
         return $this;
@@ -173,10 +173,10 @@ class CartControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addCartChangeQuantityRoute()
     {
-        $this->createController('/{cart}/change/{sku}', self::ROUTE_CART_CHANGE_QUANTITY, 'CartPage', 'Cart', 'change')
+        $this->createController('/{cart}/change/{sku}', static::ROUTE_CART_CHANGE_QUANTITY, 'CartPage', 'Cart', 'change')
             ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
             ->value('cart', 'cart')
-            ->assert('sku', self::SKU_PATTERN)
+            ->assert('sku', static::SKU_PATTERN)
             ->convert('quantity', [$this, 'getQuantityFromRequest'])
             ->convert('groupKey', [$this, 'getGroupKeyFromRequest'])
             ->method('POST');
@@ -189,10 +189,10 @@ class CartControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addCartUpdateRoute()
     {
-        $this->createController('/{cart}/update/{sku}', self::ROUTE_CART_UPDATE, 'CartPage', 'Cart', 'update')
+        $this->createController('/{cart}/update/{sku}', static::ROUTE_CART_UPDATE, 'CartPage', 'Cart', 'update')
             ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
             ->value('cart', 'cart')
-            ->assert('sku', self::SKU_PATTERN)
+            ->assert('sku', static::SKU_PATTERN)
             ->convert('quantity', [$this, 'getQuantityFromRequest'])
             ->convert('groupKey', [$this, 'getGroupKeyFromRequest'])
             ->convert('selectedAttributes', [$this, 'getSelectedAttributesFromRequest'])

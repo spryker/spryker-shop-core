@@ -56,7 +56,7 @@ class LoginForm extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return self::FORM_NAME;
+        return static::FORM_NAME;
     }
 
     /**
@@ -82,7 +82,7 @@ class LoginForm extends AbstractType
      */
     protected function addEmailField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_EMAIL, EmailType::class, [
+        $builder->add(static::FIELD_EMAIL, EmailType::class, [
             'label' => 'customer.login.email',
             'constraints' => [
                 $this->createNotBlankConstraint(),
@@ -101,7 +101,7 @@ class LoginForm extends AbstractType
      */
     protected function addPasswordField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_PASSWORD, PasswordType::class, [
+        $builder->add(static::FIELD_PASSWORD, PasswordType::class, [
             'label' => 'customer.login.password',
             'constraints' => $this->createNotBlankConstraint(),
             'mapped' => false,

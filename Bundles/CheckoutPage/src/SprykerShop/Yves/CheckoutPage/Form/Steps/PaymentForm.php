@@ -81,7 +81,7 @@ class PaymentForm extends AbstractType
     protected function addPaymentMethodChoices(FormBuilderInterface $builder, array $paymentMethodChoices)
     {
         $builder->add(
-            self::PAYMENT_SELECTION,
+            static::PAYMENT_SELECTION,
             ChoiceType::class,
             [
                 'choices' => $paymentMethodChoices,
@@ -90,7 +90,7 @@ class PaymentForm extends AbstractType
                 'expanded' => true,
                 'multiple' => false,
                 'placeholder' => false,
-                'property_path' => self::PAYMENT_SELECTION_PROPERTY_PATH,
+                'property_path' => static::PAYMENT_SELECTION_PROPERTY_PATH,
                 'constraints' => [
                     $this->createNotBlankConstraint(),
                 ],
@@ -114,7 +114,7 @@ class PaymentForm extends AbstractType
                 $paymentMethodSubForm->getName(),
                 get_class($paymentMethodSubForm),
                 [
-                    'property_path' => self::PAYMENT_PROPERTY_PATH . '.' . $paymentMethodSubForm->getPropertyPath(),
+                    'property_path' => static::PAYMENT_PROPERTY_PATH . '.' . $paymentMethodSubForm->getPropertyPath(),
                     'error_bubbling' => true,
                     'select_options' => $options['select_options'],
                 ],

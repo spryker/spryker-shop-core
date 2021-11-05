@@ -114,7 +114,7 @@ class ShopApplicationServiceProvider extends AbstractPlugin implements ServicePr
     protected function setLocale()
     {
         $localeClient = $this->getFactory()->getLocaleClient();
-        $this->application[self::LOCALE] = $localeClient->getCurrentLocale();
+        $this->application[static::LOCALE] = $localeClient->getCurrentLocale();
 
         $requestUri = $this->getRequestUri();
 
@@ -124,7 +124,7 @@ class ShopApplicationServiceProvider extends AbstractPlugin implements ServicePr
             $locales = $localeClient->getLocales();
             if ($identifier !== false && array_key_exists($identifier, $locales)) {
                 $currentLocale = $locales[$identifier];
-                $this->application[self::LOCALE] = $currentLocale;
+                $this->application[static::LOCALE] = $currentLocale;
                 ApplicationEnvironment::initializeLocale($currentLocale);
             }
         }
@@ -137,7 +137,7 @@ class ShopApplicationServiceProvider extends AbstractPlugin implements ServicePr
     {
         $store = Store::getInstance();
 
-        $this->application[self::STORE] = $store->getStoreName();
+        $this->application[static::STORE] = $store->getStoreName();
     }
 
     /**
@@ -154,7 +154,7 @@ class ShopApplicationServiceProvider extends AbstractPlugin implements ServicePr
     protected function getRequestUri()
     {
         $requestUri = Request::createFromGlobals()
-            ->server->get(self::REQUEST_URI);
+            ->server->get(static::REQUEST_URI);
 
         return $requestUri;
     }

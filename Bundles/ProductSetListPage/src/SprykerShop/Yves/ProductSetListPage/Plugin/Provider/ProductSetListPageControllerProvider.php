@@ -35,7 +35,7 @@ class ProductSetListPageControllerProvider extends AbstractYvesControllerProvide
      */
     protected function addProductSetListRoute()
     {
-        $this->createController('/{sets}', self::ROUTE_PRODUCT_SETS, 'ProductSetListPage', 'List', 'index')
+        $this->createController('/{sets}', static::ROUTE_PRODUCT_SETS, 'ProductSetListPage', 'List', 'index')
             ->assert('sets', $this->getAllowedLocalesPattern() . 'product-sets|product-sets')
             ->value('sets', 'product-sets');
 

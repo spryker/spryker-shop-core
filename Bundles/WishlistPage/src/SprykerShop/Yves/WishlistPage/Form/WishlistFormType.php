@@ -67,7 +67,7 @@ class WishlistFormType extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_NAME, TextType::class, [
+        $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => 'Name',
             'required' => true,
             'constraints' => [

@@ -749,7 +749,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSuccessPageWidgetPlugins(Container $container): Container
     {
-        $container->set(self::PLUGIN_SUCCESS_PAGE_WIDGETS, function () {
+        $container->set(static::PLUGIN_SUCCESS_PAGE_WIDGETS, function () {
             return $this->getSuccessPageWidgetPlugins();
         });
 

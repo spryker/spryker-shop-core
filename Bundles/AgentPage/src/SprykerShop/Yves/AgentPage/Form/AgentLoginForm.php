@@ -50,7 +50,7 @@ class AgentLoginForm extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return self::FORM_NAME;
+        return static::FORM_NAME;
     }
 
     /**
@@ -75,7 +75,7 @@ class AgentLoginForm extends AbstractType
      */
     protected function addEmailField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_EMAIL, EmailType::class, [
+        $builder->add(static::FIELD_EMAIL, EmailType::class, [
             'label' => 'agent.login.email',
             'constraints' => [
                 $this->createNotBlankConstraint(),
@@ -94,7 +94,7 @@ class AgentLoginForm extends AbstractType
      */
     protected function addPasswordField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_PASSWORD, PasswordType::class, [
+        $builder->add(static::FIELD_PASSWORD, PasswordType::class, [
             'label' => 'agent.login.password',
             'constraints' => $this->createNotBlankConstraint(),
             'mapped' => false,

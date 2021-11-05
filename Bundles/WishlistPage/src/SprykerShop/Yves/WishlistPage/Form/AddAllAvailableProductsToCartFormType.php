@@ -36,7 +36,7 @@ class AddAllAvailableProductsToCartFormType extends AbstractType
      */
     protected function addWishlistItemMetaCollectionField(FormBuilderInterface $builder)
     {
-        $builder->add(self::WISHLIST_ITEM_META_COLLECTION, CollectionType::class, [
+        $builder->add(static::WISHLIST_ITEM_META_COLLECTION, CollectionType::class, [
             'label' => false,
             'entry_type' => WishlistItemMetaFormType::class,
             'allow_add' => true,

@@ -89,7 +89,7 @@ abstract class AbstractCompanyController extends AbstractController
     protected function createPaginationTransfer(Request $request, $limit = 10): PaginationTransfer
     {
         $paginationTransfer = new PaginationTransfer();
-        $paginationTransfer->setPage($request->query->getInt(self::PARAM_PAGE, self::DEFAULT_PAGE));
+        $paginationTransfer->setPage($request->query->getInt(static::PARAM_PAGE, static::DEFAULT_PAGE));
         $paginationTransfer->setMaxPerPage($limit);
 
         return $paginationTransfer;

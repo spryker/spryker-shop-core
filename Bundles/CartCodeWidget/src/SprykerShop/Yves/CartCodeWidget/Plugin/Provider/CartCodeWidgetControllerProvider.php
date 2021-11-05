@@ -47,7 +47,7 @@ class CartCodeWidgetControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addAddCodeRoute()
     {
-        $this->createController('/{cartCode}/code/add', self::ROUTE_CART_CODE_ADD, 'CartCodeWidget', 'Code', 'add')
+        $this->createController('/{cartCode}/code/add', static::ROUTE_CART_CODE_ADD, 'CartCodeWidget', 'Code', 'add')
             ->assert('cartCode', $this->getAllowedLocalesPattern() . 'cart-code|cart-code')
             ->value('cartCode', 'cart-code');
 
@@ -59,7 +59,7 @@ class CartCodeWidgetControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addRemoveCodeRoute()
     {
-        $this->createController('/{cartCode}/code/remove', self::ROUTE_CART_CODE_REMOVE, 'CartCodeWidget', 'Code', 'remove')
+        $this->createController('/{cartCode}/code/remove', static::ROUTE_CART_CODE_REMOVE, 'CartCodeWidget', 'Code', 'remove')
             ->assert('cartCode', $this->getAllowedLocalesPattern() . 'cart-code|cart-code')
             ->value('cartCode', 'cart-code');
 
@@ -71,7 +71,7 @@ class CartCodeWidgetControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addClearCodeRoute()
     {
-        $this->createController('/{cartCode}/code/clear', self::ROUTE_CART_CODE_CLEAR, 'CartCodeWidget', 'Code', 'clear')
+        $this->createController('/{cartCode}/code/clear', static::ROUTE_CART_CODE_CLEAR, 'CartCodeWidget', 'Code', 'clear')
             ->assert('cartCode', $this->getAllowedLocalesPattern() . 'cart-code|cart-code')
             ->value('cartCode', 'cart-code');
 
