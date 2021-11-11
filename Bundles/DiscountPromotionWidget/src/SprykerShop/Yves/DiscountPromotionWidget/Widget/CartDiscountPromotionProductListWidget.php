@@ -7,6 +7,9 @@
 
 namespace SprykerShop\Yves\DiscountPromotionWidget\Widget;
 
+use Generated\Shared\Transfer\DiscountableItemTransfer;
+use Generated\Shared\Transfer\DiscountCalculationRequestTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\PromotionItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
@@ -17,6 +20,18 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CartDiscountPromotionProductListWidget extends AbstractWidget
 {
+    /**
+     * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_TYPE_DEFAULT
+     *
+     * @var string
+     */
+    protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
+
+    /**
+     * @var string
+     */
+    protected const PRICE_TYPE_ORIGINAL = 'ORIGINAL';
+
     /**
      * @var string
      */
@@ -85,6 +100,12 @@ class CartDiscountPromotionProductListWidget extends AbstractWidget
 
         foreach ($productViewTransfers as $productViewTransfer) {
             $promotionItemTransfer = $promotionItemTransfersIndexedByProductId[$productViewTransfer->getIdProductAbstract()];
+
+            $productViewTransfer = $this->applyProductViewPriceWithDiscountPromotionalPrice(
+                $promotionItemTransfer,
+                $productViewTransfer,
+            );
+
             $productViewTransfer->setPromotionItem($promotionItemTransfer);
             $promotionProducts[$this->createPromotionProductBucketIdentifier($promotionItemTransfer)] = $productViewTransfer;
         }
@@ -114,5 +135,39 @@ class CartDiscountPromotionProductListWidget extends AbstractWidget
     protected function createPromotionProductBucketIdentifier(PromotionItemTransfer $promotionItemTransfer): string
     {
         return $promotionItemTransfer->getAbstractSku() . '-' . $promotionItemTransfer->getIdDiscountPromotion();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PromotionItemTransfer $promotionItemTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    protected function applyProductViewPriceWithDiscountPromotionalPrice(
+        PromotionItemTransfer $promotionItemTransfer,
+        ProductViewTransfer $productViewTransfer
+    ): ProductViewTransfer {
+        if (empty($productViewTransfer->getPrices()[static::PRICE_TYPE_DEFAULT])) {
+            return $productViewTransfer;
+        }
+
+        $productViewDefaultPrice = $productViewTransfer->getPrices()[static::PRICE_TYPE_DEFAULT];
+
+        $discountableItemTransfer = (new DiscountableItemTransfer())->setUnitPrice($productViewDefaultPrice);
+
+        $discountCalculationRequestTransfer = (new DiscountCalculationRequestTransfer())
+            ->addDiscountableItem($discountableItemTransfer)
+            ->setDiscount($promotionItemTransfer->getDiscount());
+
+        $discountCalculationResponseTransfer = $this->getFactory()
+            ->getDiscountService()
+            ->calculate($discountCalculationRequestTransfer);
+
+        $productViewPrices = [];
+        $productViewPrices[static::PRICE_TYPE_ORIGINAL] = $productViewDefaultPrice;
+        $productViewPrices[static::PRICE_TYPE_DEFAULT] = $productViewDefaultPrice - $discountCalculationResponseTransfer->getAmount();
+        $productViewTransfer->setPrices($productViewPrices);
+
+        return $productViewTransfer;
     }
 }

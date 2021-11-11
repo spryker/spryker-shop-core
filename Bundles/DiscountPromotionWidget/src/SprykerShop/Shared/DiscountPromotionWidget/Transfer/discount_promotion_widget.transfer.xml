@@ -9,6 +9,7 @@
         <property name="availableAttributes" type="array" singular="availableAttribute"/>
         <property name="idProductConcrete" type="int"/>
         <property name="available" type="bool"/>
+        <property name="prices" type="array" singular="prices"/>
     </transfer>
 
     <transfer name="PromotionItem">
@@ -28,6 +29,19 @@
     </transfer>
 
     <transfer name="AttributeMapStorage">
+    </transfer>
+
+    <transfer name="DiscountCalculationRequest">
+        <property name="discountableItems" type="DiscountableItem[]" singular="discountableItem"/>
+        <property name="discount" type="Discount"/>
+    </transfer>
+
+    <transfer name="DiscountCalculationResponse">
+        <property name="amount" type="int"/>
+    </transfer>
+
+    <transfer name="DiscountableItem">
+        <property name="unitPrice" type="int"/>
     </transfer>
 
 </transfers>
