@@ -13,11 +13,11 @@ use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 interface AvailabilityNotificationPageToAvailabilityNotificationClientInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionRequest
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
     public function unsubscribeBySubscriptionKey(
-        AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionRequest
+        AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
     ): AvailabilityNotificationSubscriptionResponseTransfer;
 }
