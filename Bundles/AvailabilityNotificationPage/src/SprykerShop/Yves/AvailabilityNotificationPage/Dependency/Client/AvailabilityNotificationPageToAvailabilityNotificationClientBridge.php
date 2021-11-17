@@ -26,13 +26,13 @@ class AvailabilityNotificationPageToAvailabilityNotificationClientBridge impleme
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionRequest
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
     public function unsubscribeBySubscriptionKey(
-        AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionRequest
+        AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
     ): AvailabilityNotificationSubscriptionResponseTransfer {
-        return $this->availabilityNotificationClient->unsubscribeBySubscriptionKey($availabilityNotificationSubscriptionRequest);
+        return $this->availabilityNotificationClient->unsubscribeBySubscriptionKey($availabilityNotificationSubscriptionTransfer);
     }
 }

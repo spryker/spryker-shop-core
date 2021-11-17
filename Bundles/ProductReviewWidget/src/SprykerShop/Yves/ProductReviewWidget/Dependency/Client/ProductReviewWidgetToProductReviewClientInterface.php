@@ -48,13 +48,13 @@ interface ProductReviewWidgetToProductReviewClientInterface
 
     /**
      * @param array<\Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
-     * @param \Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer $bukkProductReviewSearchRequestTransfer
+     * @param \Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer
      *
      * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function expandProductViewBulkWithProductReviewData(
         array $productViewTransfers,
-        BulkProductReviewSearchRequestTransfer $bukkProductReviewSearchRequestTransfer
+        BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer
     ): array;
 
     /**
