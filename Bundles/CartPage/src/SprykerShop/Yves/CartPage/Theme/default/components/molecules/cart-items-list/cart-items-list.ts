@@ -5,6 +5,8 @@ import { mount } from 'ShopUi/app';
 export default class CartItemsList extends Component {
     protected providers: AjaxProvider[];
 
+    protected readyCallback(): void {}
+
     protected init(): void {
         /* tslint:disable: deprecation */
         this.providers = <AjaxProvider[]>Array.from(document.getElementsByClassName(this.providerClassName));
