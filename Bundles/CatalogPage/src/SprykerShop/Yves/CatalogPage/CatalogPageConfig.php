@@ -15,6 +15,8 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 class CatalogPageConfig extends AbstractBundleConfig
 {
     /**
+     * @deprecated Will be removed without replacement. Use {@link \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::DEFAULT_ITEMS_PER_PAGE} to set the default number of catalog items per page.
+     *
      * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::DEFAULT_ITEMS_PER_PAGE;
      *
      * @var int
@@ -81,6 +83,8 @@ class CatalogPageConfig extends AbstractBundleConfig
 
     /**
      * @api
+     *
+     * @deprecated Will be removed without replacement. Use {@link \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::DEFAULT_ITEMS_PER_PAGE} to set the default number of catalog items per page.
      *
      * @return int
      */
