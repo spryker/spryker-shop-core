@@ -23,7 +23,7 @@
 
     <transfer name="Customer">
         <property name="companyUserTransfer" type="CompanyUser"/>
-        <property name="addresses" type="Addresses" singular="address"/>
+        <property name="addresses" type="Addresses"/>
         <property name="lastName" type="string"/>
         <property name="firstName" type="string"/>
         <property name="salutation" type="string"/>

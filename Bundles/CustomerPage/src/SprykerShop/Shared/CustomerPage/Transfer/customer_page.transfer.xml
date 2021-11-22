@@ -274,7 +274,7 @@
         <property name="idCustomer" type="int"/>
         <property name="defaultBillingAddress" type="string"/>
         <property name="defaultShippingAddress" type="string"/>
-        <property name="addresses" type="Addresses" singular="address"/>
+        <property name="addresses" type="Addresses"/>
         <property name="email" type="string"/>
         <property name="password" type="string"/>
         <property name="salutation" type="string"/>
