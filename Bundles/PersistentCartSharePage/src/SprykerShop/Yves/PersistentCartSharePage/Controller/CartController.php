@@ -61,12 +61,11 @@ class CartController extends AbstractController
         }
 
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
-        $cartItems = $quoteTransfer->getItems() ?? [];
 
         return [
             'cart' => $quoteTransfer,
             'isQuoteEditable' => false,
-            'cartItems' => $cartItems,
+            'cartItems' => $quoteTransfer->getItems(),
             'attributes' => [],
             'isQuoteValid' => false,
             'isQuoteLocked' => false,

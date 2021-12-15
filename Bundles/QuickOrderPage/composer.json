@@ -22,8 +22,11 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/product": "*",
+        "spryker/propel": "*",
         "spryker/router": "*",
-        "spryker/silex": "*"
+        "spryker/silex": "*",
+        "spryker/testify": "*"
     },
     "suggest": {
         "spryker-shop/cart-page": "Widget plugins are available for this module.",
@@ -36,11 +39,16 @@
             "SprykerShop\\": "src/SprykerShop/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerShopTest\\": "tests/SprykerShopTest/"
+        }
+    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
     },
     "extra": {
         "branch-alias": {

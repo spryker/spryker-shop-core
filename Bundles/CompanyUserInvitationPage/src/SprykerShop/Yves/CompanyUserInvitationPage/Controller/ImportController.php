@@ -80,6 +80,7 @@ class ImportController extends AbstractController
             ->getCompanyUserInvitationForm()
             ->handleRequest($request);
 
+        $importedWithErrors = false;
         if ($companyUserInvitationForm->isSubmitted() && $companyUserInvitationForm->isValid()) {
             $companyUserInvitationImportResponseTransfer = $this->importCompanyUserInvitations($companyUserInvitationForm);
             if (!$companyUserInvitationImportResponseTransfer->getIsSuccess() && !$companyUserInvitationImportResponseTransfer->getErrors()) {
@@ -106,7 +107,7 @@ class ImportController extends AbstractController
 
         return [
             'form' => $companyUserInvitationForm->createView(),
-            'importedWithErrors' => isset($importedWithErrors) ?? false,
+            'importedWithErrors' => $importedWithErrors,
             'invitations' => $companyUserInvitationCollection->getCompanyUserInvitations(),
             'pagination' => $companyUserInvitationCollection->getPagination(),
         ];

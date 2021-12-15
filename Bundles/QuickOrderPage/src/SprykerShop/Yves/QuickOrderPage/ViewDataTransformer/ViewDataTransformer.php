@@ -85,7 +85,9 @@ class ViewDataTransformer implements ViewDataTransformerInterface
             $data = array_reduce(
                 $path,
                 function ($object, $property) {
-                    return is_object($property) ? $object->{$property} : $object[$property];
+                    $propertyGetter = sprintf('get%s', ucfirst($property));
+
+                    return is_object($object) ? $object->{$propertyGetter}() : $object[$property];
                 },
                 $productConcreteTransfer,
             );

@@ -46,7 +46,7 @@ class QuoteRequestAgentSaveController extends QuoteRequestAgentAbstractControlle
                     ->setQuoteRequestReference($quoteTransfer->getQuoteRequestReference()),
             );
 
-        if (!$quoteRequestTransfer && !$quoteTransfer->getQuoteRequestReference()) {
+        if (!$quoteRequestTransfer) {
             $this->addErrorMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS);
 
             return $this->redirectResponseInternal(QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT);
