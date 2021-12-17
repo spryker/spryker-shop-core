@@ -74,7 +74,7 @@ class DetailController extends AbstractController
      */
     protected function assertProductRestrictions(ProductSetDataStorageTransfer $productSetDataStorageTransfer, array $productViewTransfers): void
     {
-        if (empty($productSetDataStorageTransfer->getProductAbstractIds())) {
+        if (!$productSetDataStorageTransfer->getProductAbstractIds()) {
             return;
         }
 

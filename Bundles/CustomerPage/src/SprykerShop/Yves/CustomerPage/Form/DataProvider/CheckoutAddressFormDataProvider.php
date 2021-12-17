@@ -251,7 +251,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
 
         return $billingAddressTransfer->getIdCustomerAddress() !== null
             || $billingAddressTransfer->getIdCompanyUnitAddress() !== null
-            || !(empty(trim($billingAddressTransfer->getFirstName())) && empty($billingAddressTransfer->getLastName()));
+            || (trim($billingAddressTransfer->getFirstName()) && trim($billingAddressTransfer->getLastName()));
     }
 
     /**

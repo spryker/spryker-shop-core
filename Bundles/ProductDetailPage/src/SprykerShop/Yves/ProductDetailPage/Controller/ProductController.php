@@ -101,7 +101,7 @@ class ProductController extends AbstractController
      */
     protected function assertProductAbstractRestrictions(ProductViewTransfer $productViewTransfer): void
     {
-        if (empty($productViewTransfer->getIdProductAbstract())) {
+        if (!$productViewTransfer->getIdProductAbstract()) {
             return;
         }
 
@@ -123,7 +123,7 @@ class ProductController extends AbstractController
      */
     protected function assertProductConcreteRestrictions(ProductViewTransfer $productViewTransfer): void
     {
-        if (empty($productViewTransfer->getIdProductConcrete())) {
+        if (!$productViewTransfer->getIdProductConcrete()) {
             return;
         }
 

@@ -247,7 +247,7 @@ class QuickOrderController extends AbstractController
     {
         $filteredItems = [];
         foreach ($quickOrderItems as $quickOrderItem) {
-            if (empty($quickOrderItem->getSku()) && empty($quickOrderItem->getQuantity())) {
+            if (!$quickOrderItem->getSku() && !$quickOrderItem->getQuantity()) {
                 continue;
             }
 
