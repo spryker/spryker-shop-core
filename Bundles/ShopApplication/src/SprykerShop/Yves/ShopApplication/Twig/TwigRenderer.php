@@ -37,7 +37,7 @@ class TwigRenderer implements TwigRendererInterface
         $request = $application['request_stack']->getCurrentRequest();
         $controller = $request->attributes->get('_controller');
 
-        if (!is_string($controller) || empty($controller)) {
+        if (!is_string($controller) || !$controller) {
             return null;
         }
 

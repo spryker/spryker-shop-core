@@ -239,17 +239,17 @@ class ShopUiTwigExtension extends TwigExtension
     {
         $value = '';
 
-        if (empty($qaValues)) {
+        if (!$qaValues) {
             return '';
         }
 
         foreach ($qaValues as $qaValue) {
-            if (!empty($qaValue)) {
+            if ($qaValue) {
                 $value .= $qaValue . ' ';
             }
         }
 
-        if (empty($qaName)) {
+        if (!$qaName) {
             return 'data-qa="' . trim($value) . '"';
         }
 

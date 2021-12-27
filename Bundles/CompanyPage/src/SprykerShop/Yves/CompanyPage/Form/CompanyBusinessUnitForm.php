@@ -288,7 +288,7 @@ class CompanyBusinessUnitForm extends AbstractType
             ->addModelTransformer(
                 new CallbackTransformer(
                     function ($addresses) {
-                        if (empty($addresses)) {
+                        if (!$addresses) {
                             return $addresses;
                         }
 

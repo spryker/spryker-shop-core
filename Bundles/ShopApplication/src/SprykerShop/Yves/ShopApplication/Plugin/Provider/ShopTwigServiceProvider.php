@@ -80,7 +80,7 @@ class ShopTwigServiceProvider extends AbstractPlugin implements ServiceProviderI
     {
         $result = $event->getControllerResult();
 
-        if (empty($result) || is_array($result)) {
+        if (!$result || is_array($result)) {
             $response = $this->getFactory()
                 ->createTwigRenderer()
                 ->render($application, (array)$result);

@@ -50,7 +50,7 @@ class TextOrderParser implements TextOrderParserInterface
             [$sku, $quantity] = explode($separator, trim($row));
             $quantity = (int)$quantity;
 
-            if (empty($sku)) {
+            if (!$sku) {
                 continue;
             }
 

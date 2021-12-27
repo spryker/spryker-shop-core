@@ -93,7 +93,7 @@ class CodeController extends AbstractController
         }
 
         $code = (string)$request->query->get(static::PARAM_CODE);
-        if (empty($code)) {
+        if (!$code) {
             return $this->redirectResponseExternal($request->headers->get('referer'));
         }
 

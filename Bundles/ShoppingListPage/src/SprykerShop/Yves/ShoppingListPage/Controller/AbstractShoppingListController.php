@@ -61,7 +61,7 @@ class AbstractShoppingListController extends AbstractController
             ->findProductConcreteStorageData($shoppingListItemTransfer->getIdProduct(), $this->getLocale());
 
         $productViewTransfer = new ProductViewTransfer();
-        if (empty($productConcreteStorageData)) {
+        if (!$productConcreteStorageData) {
             $productConcreteStorageData = [
                 ProductViewTransfer::SKU => $shoppingListItemTransfer->getSku(),
             ];

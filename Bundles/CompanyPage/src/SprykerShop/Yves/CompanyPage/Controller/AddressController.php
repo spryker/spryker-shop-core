@@ -145,7 +145,7 @@ class AddressController extends AbstractCompanyController
                 '%address%' => $companyUnitAddressTransfer->getAddress1(),
             ]);
 
-            if (empty($idCompanyBusinessUnit)) {
+            if (!$idCompanyBusinessUnit) {
                 return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT);
             }
 
@@ -221,7 +221,7 @@ class AddressController extends AbstractCompanyController
                 '%address%' => $companyUnitAddressTransfer->getAddress1(),
             ]);
 
-            if (empty($idCompanyBusinessUnit)) {
+            if (!$idCompanyBusinessUnit) {
                 return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT);
             }
 
@@ -272,7 +272,7 @@ class AddressController extends AbstractCompanyController
 
         $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_ADDRESS_DELETE_SUCCESS);
 
-        if (empty($idCompanyBusinessUnit)) {
+        if (!$idCompanyBusinessUnit) {
             return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT);
         }
 

@@ -67,7 +67,7 @@ class LanguageSwitcherWidget extends AbstractWidget
             ->getLocaleClient()
             ->getLocales();
 
-        if (!empty($localeUrls)) {
+        if ($localeUrls) {
             return $this->attachLocaleUrlsFromStorageToLanguages($locales, $localeUrls, $queryString);
         }
 

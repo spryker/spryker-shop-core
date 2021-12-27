@@ -123,7 +123,7 @@ class PostConditionChecker implements PostConditionCheckerInterface
         $firstName = trim($addressTransfer->getFirstName());
         $lastName = trim($addressTransfer->getLastName());
 
-        return empty($firstName) && empty($lastName);
+        return !$firstName && !$lastName;
     }
 
     /**

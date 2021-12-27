@@ -122,7 +122,7 @@ class AttributeVariantsProvider
     protected function removeEmptyAttributes(array $itemAttributes)
     {
         return array_filter($itemAttributes, function ($value) {
-            return !empty($value);
+            return (bool)$value;
         });
     }
 }

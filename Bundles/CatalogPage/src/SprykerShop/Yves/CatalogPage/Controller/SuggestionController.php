@@ -29,7 +29,7 @@ class SuggestionController extends AbstractController
     {
         $searchString = $request->query->get(static::PARAM_SEARCH_QUERY);
 
-        if (empty($searchString)) {
+        if (!$searchString) {
             return $this->jsonResponse();
         }
 

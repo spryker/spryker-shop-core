@@ -54,7 +54,7 @@ class TextOrderFormatConstraintValidator extends ConstraintValidator
     protected function isValidFormat(string $textOrder, string $rowSplitterPattern, array $allowedSeparators): bool
     {
         $rows = $this->splitRows($textOrder, $rowSplitterPattern);
-        if (empty($rows)) {
+        if (!$rows) {
             return true;
         }
 
