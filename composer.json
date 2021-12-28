@@ -13,7 +13,10 @@
     "prefer-stable": true,
     "config": {
         "use-include-path": true,
-        "process-timeout": 1000
+        "process-timeout": 1000,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     },
     "scripts": {
         "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p --ignore=/node_modules/ Bundles/"
