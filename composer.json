@@ -7,7 +7,7 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "dev-master",
-        "spryker/spryker": "dev-master"
+        "spryker/spryker": "dev-feature/te-10233/dev-code-sniffer-core-module-run-as-separate-ones"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

@@ -26,7 +26,8 @@ install:
     - npm install -g git+https://github.com/spryker-sdk/frontend-sniffer.git#semver:^0.2.2
 
 script:
-    - composer cs-check
+    - chmod +x *.sh
+    - bash travis_check_touched_modules.sh
     - frontend-sniffer --config ./ --path ../../ --level-restriction core
     - npm run formatter
     - npm run stylelint
