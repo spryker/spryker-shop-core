@@ -18,6 +18,8 @@ use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 /**
+ * @deprecated Use {@link \SprykerShop\Yves\MoneyWidget\Plugin\Twig\MoneyWidgetTwigPlugin} and {@link \Spryker\Yves\Money\Plugin\Twig\MoneyTwigPlugin} instead.
+ *
  * @method \SprykerShop\Yves\MoneyWidget\MoneyWidgetFactory getFactory()
  */
 class MoneyTwigPlugin extends AbstractPlugin implements TwigPluginInterface

@@ -14,6 +14,8 @@ use Spryker\Shared\Money\Dependency\Parser\MoneyToParserBridge;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\CurrencyWidget\Plugin\CurrencyPlugin;
+use SprykerShop\Yves\MoneyWidget\Dependency\Client\MoneyWidgetToLocaleClientBridge;
+use SprykerShop\Yves\MoneyWidget\Dependency\Client\MoneyWidgetToLocaleClientInterface;
 
 class MoneyWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -41,6 +43,7 @@ class MoneyWidgetDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addMoneyParser($container);
         $container = $this->addCurrencyPlugin($container);
+        $container = $this->addLocaleClient($container);
 
         return $container;
     }
@@ -56,6 +59,22 @@ class MoneyWidgetDependencyProvider extends AbstractBundleDependencyProvider
             $moneyToParserBridge = new MoneyToParserBridge($this->getIntlMoneyParser($container));
 
             return $moneyToParserBridge;
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addLocaleClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_LOCALE, function (Container $container): MoneyWidgetToLocaleClientInterface {
+            return new MoneyWidgetToLocaleClientBridge(
+                $container->getLocator()->locale()->client(),
+            );
         });
 
         return $container;
@@ -109,6 +128,22 @@ class MoneyWidgetDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CURRENCY_PLUGIN, function () {
             return $this->getCurrencyPlugin();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addClientLocale(Container $container): Container
+    {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
+            return new MoneyWidgetToLocaleClientBridge(
+                $container->getLocator()->locale()->client(),
+            );
         });
 
         return $container;

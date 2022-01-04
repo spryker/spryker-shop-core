@@ -17,6 +17,7 @@ use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
 use Spryker\Shared\Money\Mapper\TransferToMoneyMapper;
 use Spryker\Shared\Money\Parser\Parser;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\MoneyWidget\Dependency\Client\MoneyWidgetToLocaleClientInterface;
 use SprykerShop\Yves\MoneyWidget\Mapper\MoneyToTransferMapper;
 
 class MoneyWidgetFactory extends AbstractFactory
@@ -100,6 +101,14 @@ class MoneyWidgetFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\MoneyWidget\Dependency\Client\MoneyWidgetToLocaleClientInterface
+     */
+    public function getLocaleClient(): MoneyWidgetToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(MoneyWidgetDependencyProvider::CLIENT_LOCALE);
+    }
+
+    /**
      * @return \Spryker\Shared\Money\Mapper\TransferToMoneyMapperInterface
      */
     public function createTransferToMoneyMapper()
@@ -114,6 +123,7 @@ class MoneyWidgetFactory extends AbstractFactory
     {
         return new IntlMoneyFormatterWithCurrency(
             $this->createTransferToMoneyMapper(),
+            $this->getLocaleClient()->getCurrentLocale(),
         );
     }
 
@@ -124,6 +134,7 @@ class MoneyWidgetFactory extends AbstractFactory
     {
         return new IntlMoneyFormatterWithoutCurrency(
             $this->createTransferToMoneyMapper(),
+            $this->getLocaleClient()->getCurrentLocale(),
         );
     }
 
