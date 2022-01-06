@@ -1,1 +1,114 @@
-[]
+[
+    {
+        "fileName": "src/SprykerShop/Yves/WishlistPage/Dependency/Client/WishlistPageToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCustomer()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/WishlistPage/Dependency/Client/WishlistPageToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `isLoggedIn()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/WishlistPage/Dependency/Client/WishlistPageToGlossaryStorageClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `translate()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/WishlistPage/Dependency/Client/WishlistPageToProductStorageClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getProductConcreteStorageData()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/WishlistPage/Dependency/Client/WishlistPageToWishlistClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `createWishlist()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/WishlistPage/Dependency/Client/WishlistPageToWishlistClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `validateAndCreateWishlist()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/WishlistPage/Dependency/Client/WishlistPageToWishlistClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `updateWishlist()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/WishlistPage/Dependency/Client/WishlistPageToWishlistClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `validateAndUpdateWishlist()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/WishlistPage/Dependency/Client/WishlistPageToWishlistClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `removeWishlistByName()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/WishlistPage/Dependency/Client/WishlistPageToWishlistClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `addItem()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/WishlistPage/Dependency/Client/WishlistPageToWishlistClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `removeItem()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/WishlistPage/Dependency/Client/WishlistPageToWishlistClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `removeItemCollection()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/WishlistPage/Dependency/Client/WishlistPageToWishlistClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `moveCollectionToCart()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/WishlistPage/Dependency/Client/WishlistPageToWishlistClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getWishlist()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/WishlistPage/Dependency/Client/WishlistPageToWishlistClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getWishlistOverviewWithoutProductDetails()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/WishlistPage/Dependency/Client/WishlistPageToWishlistClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCustomerWishlistCollection()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

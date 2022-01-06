@@ -1,1 +1,65 @@
-[]
+[
+    {
+        "fileName": "src/SprykerShop/Yves/CatalogPage/Dependency/Client/CatalogPageToCatalogClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `catalogSearch()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CatalogPage/Dependency/Client/CatalogPageToCatalogClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `catalogSuggestSearch()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CatalogPage/Dependency/Client/CatalogPageToCatalogClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCatalogViewMode()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CatalogPage/Dependency/Client/CatalogPageToCatalogClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `setCatalogViewMode()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CatalogPage/Dependency/Client/CatalogPageToLocaleClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CatalogPage/Dependency/Client/CatalogPageToProductCategoryFilterClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `updateCategoryFacets()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CatalogPage/Dependency/Client/CatalogPageToProductCategoryFilterStorageClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getProductCategoryFilterByIdCategory()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CatalogPage/Dependency/Client/CatalogPageToSearchClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getSearchConfig()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CatalogPage/Dependency/Client/CatalogPageToStoreClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentStore()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

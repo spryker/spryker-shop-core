@@ -1,1 +1,149 @@
-[]
+[
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Dependency/Client/CustomerPageToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `registerCustomer()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Dependency/Client/CustomerPageToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `sendPasswordRestoreMail()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Dependency/Client/CustomerPageToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `restorePassword()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Dependency/Client/CustomerPageToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `setCustomer()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Dependency/Client/CustomerPageToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCustomer()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Dependency/Client/CustomerPageToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCustomerByEmail()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Dependency/Client/CustomerPageToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `updateCustomer()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Dependency/Client/CustomerPageToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `updateCustomerPassword()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Dependency/Client/CustomerPageToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `logout()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Dependency/Client/CustomerPageToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `isLoggedIn()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Dependency/Client/CustomerPageToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getAddresses()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Dependency/Client/CustomerPageToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getAddress()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Dependency/Client/CustomerPageToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `updateAddressAndCustomerDefaultAddresses()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Dependency/Client/CustomerPageToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `createAddressAndUpdateCustomerDefaultAddresses()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Dependency/Client/CustomerPageToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `deleteAddress()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Dependency/Client/CustomerPageToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `anonymizeCustomer()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Dependency/Client/CustomerPageToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `markCustomerAsDirty()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Dependency/Client/CustomerPageToProductBundleClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getGroupedBundleItems()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Dependency/Client/CustomerPageToQuoteClientInteface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getQuote()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Dependency/Client/CustomerPageToStoreClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentStore()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Dependency/Service/CustomerPageToUtilValidateServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `isEmailFormatValid()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

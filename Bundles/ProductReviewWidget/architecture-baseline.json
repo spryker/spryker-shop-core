@@ -1,1 +1,37 @@
-[]
+[
+    {
+        "fileName": "src/SprykerShop/Yves/ProductReviewWidget/Dependency/Client/ProductReviewWidgetToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCustomer()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/ProductReviewWidget/Dependency/Client/ProductReviewWidgetToProductReviewClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getMaximumRating()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/ProductReviewWidget/Dependency/Client/ProductReviewWidgetToProductReviewClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `findProductReviewsInSearch()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/ProductReviewWidget/Dependency/Client/ProductReviewWidgetToProductReviewClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `submitCustomerReview()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/ProductReviewWidget/Dependency/Client/ProductReviewWidgetToProductReviewStorageClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `findProductAbstractReview()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

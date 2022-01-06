@@ -1,1 +1,30 @@
-[]
+[
+    {
+        "fileName": "src/SprykerShop/Yves/QuoteRequestPage/Dependency/Client/QuoteRequestPageToCartClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getQuote()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/QuoteRequestPage/Dependency/Client/QuoteRequestPageToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCustomer()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/QuoteRequestPage/Dependency/Client/QuoteRequestPageToQuoteClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `clearQuote()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/QuoteRequestPage/Dependency/Service/QuoteRequestPageToUtilDateTimeServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `formatDate()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

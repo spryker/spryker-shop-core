@@ -1,1 +1,107 @@
-[]
+[
+    {
+        "fileName": "src/SprykerShop/Yves/CartPage/Dependency/Client/CartPageToAvailabilityStorageClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getProductAvailabilityByIdProductAbstract()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CartPage/Dependency/Client/CartPageToCartClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `addItem()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CartPage/Dependency/Client/CartPageToCartClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `addItems()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CartPage/Dependency/Client/CartPageToCartClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `removeItem()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CartPage/Dependency/Client/CartPageToCartClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `removeItems()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CartPage/Dependency/Client/CartPageToCartClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `increaseItemQuantity()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CartPage/Dependency/Client/CartPageToCartClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `decreaseItemQuantity()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CartPage/Dependency/Client/CartPageToCartClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `changeItemQuantity()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CartPage/Dependency/Client/CartPageToCartClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getQuote()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CartPage/Dependency/Client/CartPageToCartClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getItemCount()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CartPage/Dependency/Client/CartPageToQuoteClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `setQuote()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CartPage/Dependency/Client/CartPageToQuoteClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getStorageStrategy()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CartPage/Dependency/Client/CartPageToZedRequestClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `addFlashMessagesFromLastZedRequest()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CartPage/Dependency/Client/CartPageToZedRequestClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getLastResponseErrorMessages()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CartPage/Dependency/Client/CartPageToZedRequestClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getLastResponseSuccessMessages()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

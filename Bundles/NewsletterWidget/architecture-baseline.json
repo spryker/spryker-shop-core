@@ -1,1 +1,30 @@
-[]
+[
+    {
+        "fileName": "src/SprykerShop/Yves/NewsletterWidget/Dependency/Client/NewsletterWidgetToNewsletterClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `subscribeWithSingleOptIn()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/NewsletterWidget/Dependency/Client/NewsletterWidgetToNewsletterClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `subscribeWithDoubleOptIn()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/NewsletterWidget/Dependency/Client/NewsletterWidgetToNewsletterClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `checkSubscription()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/NewsletterWidget/Dependency/Service/NewsletterWidgetToUtilValidateServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `isEmailFormatValid()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]
