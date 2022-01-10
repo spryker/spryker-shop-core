@@ -23,7 +23,7 @@ before_install:
 install:
     - composer install --no-interaction --prefer-dist --optimize-autoloader
     - npm ci
-    - npm install -g git+https://github.com/spryker-sdk/frontend-sniffer.git#semver:^0.2.2
+    - npm install -g git+https://github.com/spryker-sdk/frontend-sniffer.git#semver:^0.2.3
 
 script:
     - chmod +x *.sh
