@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Service;
 interface ProductPackagingUnitWidgetToUtilEncodingServiceInterface
 {
     /**
-     * @param array $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *

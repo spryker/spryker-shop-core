@@ -15,7 +15,7 @@ interface PriceProductVolumeWidgetToUtilEncodingServiceInterface
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return mixed|null
+     * @return array<mixed>|null
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
 }

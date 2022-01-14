@@ -71,7 +71,7 @@ class PriceProductVolumeResolver implements PriceProductVolumeResolverInterface
         $priceProductVolumeCollectionTransfer = new PriceProductVolumeCollectionTransfer();
         $priceData = $this->utilEncodingService->decodeJson($currentProductPriceTransfer->getPriceData(), true);
 
-        if (isset($priceData[static::VOLUME_PRICE_TYPE])) {
+        if ($priceData && isset($priceData[static::VOLUME_PRICE_TYPE])) {
             $priceProductVolumeCollectionTransfer = $this->mapVolumeProductPriceCollection(
                 $priceData[static::VOLUME_PRICE_TYPE],
                 $priceProductVolumeCollectionTransfer,

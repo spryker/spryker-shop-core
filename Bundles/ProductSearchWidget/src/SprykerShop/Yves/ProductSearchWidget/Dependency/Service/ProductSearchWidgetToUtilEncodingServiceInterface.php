@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\ProductSearchWidget\Dependency\Service;
 interface ProductSearchWidgetToUtilEncodingServiceInterface
 {
     /**
-     * @param array $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *
