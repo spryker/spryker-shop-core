@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/SprykerShop/Yves/CartCodeWidget/Controller/CodeController.php",
+        "description": "Prefix `is` must not be used with postfix `Exist`. Method: SprykerShop\\Yves\\CartCodeWidget\\Controller\\CodeController::isSuccessMessageExists().",
+        "rule": "ExistsPostfixRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/SprykerShop/Yves/CartCodeWidget/Dependency/Client/CartCodeWidgetToQuoteClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getQuote()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
