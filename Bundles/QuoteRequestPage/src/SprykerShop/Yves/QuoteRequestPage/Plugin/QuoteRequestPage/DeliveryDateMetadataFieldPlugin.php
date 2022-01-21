@@ -23,6 +23,8 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements QuoteRequestFormMetadataFieldPluginInterface
 {
     /**
+     * @uses \Spryker\Zed\QuoteRequest\Business\Validator\QuoteRequestMetadataValidator::FIELD_METADATA_DELIVERY_DATE
+     *
      * @var string
      */
     protected const FIELD_METADATA_DELIVERY_DATE = 'delivery_date';

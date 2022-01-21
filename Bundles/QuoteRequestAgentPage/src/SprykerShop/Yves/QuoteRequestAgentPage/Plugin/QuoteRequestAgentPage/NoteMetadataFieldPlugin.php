@@ -19,6 +19,8 @@ use Symfony\Component\Validator\Constraints\Length;
 class NoteMetadataFieldPlugin extends AbstractPlugin implements QuoteRequestAgentFormMetadataFieldPluginInterface
 {
     /**
+     * @uses \Spryker\Zed\QuoteRequest\Business\Validator\QuoteRequestMetadataValidator::KEY_NOTE
+     *
      * @var string
      */
     protected const FIELD_METADATA_NOTE = 'note';

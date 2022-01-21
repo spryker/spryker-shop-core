@@ -19,6 +19,8 @@ use Symfony\Component\Validator\Constraints\Length;
 class PurchaseOrderNumberMetadataFieldPlugin extends AbstractPlugin implements QuoteRequestAgentFormMetadataFieldPluginInterface
 {
     /**
+     * @uses \Spryker\Zed\QuoteRequest\Business\Validator\QuoteRequestMetadataValidator::KEY_PURCHASE_ORDER_NUMBER
+     *
      * @var string
      */
     protected const FIELD_METADATA_PURCHASE_ORDER_NUMBER = 'purchase_order_number';

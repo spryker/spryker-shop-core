@@ -19,6 +19,8 @@ use Symfony\Component\Validator\Constraints\Length;
 class NoteMetadataFieldPlugin extends AbstractPlugin implements QuoteRequestFormMetadataFieldPluginInterface
 {
     /**
+     * @uses \Spryker\Zed\QuoteRequest\Business\Validator\QuoteRequestMetadataValidator::KEY_NOTE
+     *
      * @var string
      */
     protected const FIELD_METADATA_NOTE = 'note';
@@ -29,6 +31,8 @@ class NoteMetadataFieldPlugin extends AbstractPlugin implements QuoteRequestForm
     protected const LABEL_METADATA_NOTE = 'quote_request_page.quote_request.metadata.label.note';
 
     /**
+     * @uses \Spryker\Zed\QuoteRequest\Business\Validator\QuoteRequestMetadataValidator::MAX_LENGTH_METADATA_NOTE
+     *
      * @var int
      */
     protected const MAX_LENGTH_NOTE = 1024;

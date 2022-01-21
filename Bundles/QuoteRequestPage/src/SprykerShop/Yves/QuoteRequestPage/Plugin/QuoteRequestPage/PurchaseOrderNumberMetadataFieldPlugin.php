@@ -29,6 +29,8 @@ class PurchaseOrderNumberMetadataFieldPlugin extends AbstractPlugin implements Q
     protected const LABEL_METADATA_PURCHASE_ORDER_NUMBER = 'quote_request_page.quote_request.metadata.label.purchase_order_number';
 
     /**
+     * @uses \Spryker\Zed\QuoteRequest\Business\Validator\QuoteRequestMetadataValidator::MAX_LENGTH_METADATA_PURCHASE_ORDER_NUMBER
+     *
      * @var int
      */
     protected const MAX_LENGTH_NUMBER = 128;
