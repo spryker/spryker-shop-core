@@ -69,7 +69,9 @@ class ProductConcreteAddController extends AbstractController
      */
     protected function addErrorFlashMessagesFromForm(FormInterface $form): void
     {
-        foreach ($form->getErrors(true) as $error) {
+        /** @var array<\Symfony\Component\Form\FormError> $errors */
+        $errors = $form->getErrors(true);
+        foreach ($errors as $error) {
             $this->addErrorMessage($error->getMessage());
         }
     }

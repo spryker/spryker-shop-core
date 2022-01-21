@@ -101,6 +101,7 @@ class OrderController extends AbstractController
         }
 
         $idSalesOrder = $request->request->getInt(static::PARAM_ID_ORDER);
+        /** @var array<int> $items */
         $items = (array)$request->request->get(static::PARAM_ITEMS);
 
         $orderReader = $this->getFactory()
@@ -149,7 +150,9 @@ class OrderController extends AbstractController
      */
     protected function addErrorMessagesFromForm(FormInterface $form): void
     {
-        foreach ($form->getErrors(true) as $error) {
+        /** @var array<\Symfony\Component\Form\FormError> $errors */
+        $errors = $form->getErrors(true);
+        foreach ($errors as $error) {
             $this->addErrorMessage($error->getMessage());
         }
     }

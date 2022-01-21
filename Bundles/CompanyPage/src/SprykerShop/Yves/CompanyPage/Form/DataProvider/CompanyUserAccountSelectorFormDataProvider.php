@@ -68,7 +68,7 @@ class CompanyUserAccountSelectorFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyCollection
      *
-     * @return array<int>
+     * @return array<string, int|string>
      */
     protected function mapCompanyUserCollectionToChoiceArray(CompanyUserCollectionTransfer $companyCollection): array
     {

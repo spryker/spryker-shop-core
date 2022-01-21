@@ -122,6 +122,7 @@ class ImportController extends AbstractController
 
         $streamedResponse = new StreamedResponse();
         $streamedResponse->setCallback(function () use ($importErrors) {
+            /** @var resource $handler */
             $handler = fopen('php://output', 'w+');
             fputcsv($handler, ['Import Errors']);
             foreach ($importErrors as $importError) {

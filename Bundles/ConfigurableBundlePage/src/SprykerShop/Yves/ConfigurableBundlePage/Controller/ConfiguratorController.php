@@ -235,10 +235,13 @@ class ConfiguratorController extends AbstractController
         }
 
         $selectedProductViewTransfer = $this->findSelectedProductConcreteForSlot($form, $idConfigurableBundleTemplateSlot);
+        /** @var array<int> $excludedProductIds */
+        $excludedProductIds = $selectedProductViewTransfer ? [$selectedProductViewTransfer->getIdProductConcrete()] : [];
+
         $productConcreteCriteriaFilterTransfer = $this->createProductConcreteCriteriaFilterTransfer(
             $configurableBundleTemplateStorageTransfer,
             $idConfigurableBundleTemplateSlot,
-            $selectedProductViewTransfer ? [$selectedProductViewTransfer->getIdProductConcrete()] : [],
+            $excludedProductIds,
         );
 
         $response = array_merge($response, [

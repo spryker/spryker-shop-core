@@ -38,9 +38,9 @@ class CatalogPageToCatalogClientBridge implements CatalogPageToCatalogClientInte
 
     /**
      * @param string $searchString
-     * @param array<mixed> $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     public function catalogSuggestSearch($searchString, array $requestParameters = [])
     {

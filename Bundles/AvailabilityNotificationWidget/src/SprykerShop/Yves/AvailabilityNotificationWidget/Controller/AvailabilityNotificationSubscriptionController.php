@@ -51,8 +51,8 @@ class AvailabilityNotificationSubscriptionController extends AbstractController
         $subscriptionForm->handleRequest($request);
 
         if ($subscriptionForm->isSubmitted() === false || $subscriptionForm->isValid() === false) {
+            /** @var array<\Symfony\Component\Form\FormError> $errors */
             $errors = $subscriptionForm->getErrors(true);
-
             foreach ($errors as $error) {
                 $this->addErrorMessage($error->getMessage());
             }

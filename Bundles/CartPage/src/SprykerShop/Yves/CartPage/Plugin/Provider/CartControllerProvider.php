@@ -227,10 +227,10 @@ class CartControllerProvider extends AbstractYvesControllerProvider
     public function getSelectedAttributesFromRequest($unusedParameter, Request $request)
     {
         if ($request->isMethod('POST')) {
-            return $request->request->get('selectedAttributes') ?: [];
+            return $request->request->get('selectedAttributes') ? (array)$request->request->get('selectedAttributes') : [];
         }
 
-        return $request->query->get('selectedAttributes') ?: [];
+        return $request->query->get('selectedAttributes') ? (array)$request->query->get('selectedAttributes') : [];
     }
 
     /**
@@ -242,10 +242,10 @@ class CartControllerProvider extends AbstractYvesControllerProvider
     public function getPreSelectedAttributesFromRequest($unusedParameter, Request $request)
     {
         if ($request->isMethod('POST')) {
-            return $request->request->get('preselectedAttributes') ?: [];
+            return $request->request->get('preselectedAttributes') ? (array)$request->request->get('preselectedAttributes') : [];
         }
 
-        return $request->query->get('preselectedAttributes') ?: [];
+        return $request->query->get('preselectedAttributes') ? (array)$request->query->get('preselectedAttributes') : [];
     }
 
     /**
@@ -257,10 +257,12 @@ class CartControllerProvider extends AbstractYvesControllerProvider
     public function getProductOptionsFromRequest($unusedParameter, Request $request)
     {
         if ($request->isMethod('POST')) {
-            return $request->request->get('product-option') ?: [];
+            /** @phpstan-var array<int> */
+            return $request->request->get('product-option') ? (array)$request->request->get('product-option') : [];
         }
 
-        return $request->query->get('product-option') ?: [];
+        /** @phpstan-var array<int> */
+        return $request->query->get('product-option') ? (array)$request->query->get('product-option') : [];
     }
 
     /**
@@ -272,9 +274,9 @@ class CartControllerProvider extends AbstractYvesControllerProvider
     public function getGroupKeyFromRequest($unusedParameter, Request $request)
     {
         if ($request->isMethod('POST')) {
-            return $request->request->get('groupKey');
+            return (string)$request->request->get('groupKey');
         }
 
-        return $request->query->get('groupKey');
+        return (string)$request->query->get('groupKey');
     }
 }

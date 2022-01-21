@@ -160,7 +160,7 @@ class LanguageSwitcherWidget extends AbstractWidget
      */
     protected function getLanguageFromLocale(string $locale): string
     {
-        return substr($locale, 0, strpos($locale, '_'));
+        return substr($locale, 0, strpos($locale, '_') ?: 0);
     }
 
     /**

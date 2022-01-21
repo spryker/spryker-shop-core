@@ -54,7 +54,7 @@ class VoucherController extends AbstractController
      */
     public function removeAction(Request $request)
     {
-        $voucherCode = $request->query->get('code');
+        $voucherCode = (string)$request->query->get('code');
         if ($voucherCode) {
             $this->getFactory()
                 ->createVoucherHandler()

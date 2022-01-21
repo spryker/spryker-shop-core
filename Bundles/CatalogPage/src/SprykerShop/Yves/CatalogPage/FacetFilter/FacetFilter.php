@@ -58,9 +58,9 @@ class FacetFilter implements FacetFilterInterface
 
     /**
      * @param \Generated\Shared\Transfer\RangeSearchResultTransfer $rangeSearchResultTransfer
-     * @param array<\Generated\Shared\Transfer\RangeSearchResultTransfer> $filteredFacets
+     * @param array<\Generated\Shared\Transfer\FacetSearchResultTransfer|\Generated\Shared\Transfer\RangeSearchResultTransfer> $filteredFacets
      *
-     * @return array<\Generated\Shared\Transfer\RangeSearchResultTransfer>
+     * @return array<\Generated\Shared\Transfer\FacetSearchResultTransfer|\Generated\Shared\Transfer\RangeSearchResultTransfer>
      */
     protected function filterRangeSearchResults(RangeSearchResultTransfer $rangeSearchResultTransfer, array $filteredFacets): array
     {

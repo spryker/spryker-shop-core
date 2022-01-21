@@ -70,6 +70,7 @@ class ImportErrorHandler implements ImportErrorHandlerInterface
      */
     protected function getImportErrorsFile(): string
     {
+        /** @phpstan-var string */
         return tempnam(
             CompanyUserInvitationPageConstants::IMPORT_ERRORS_FILE_PATH,
             CompanyUserInvitationPageConfig::IMPORT_ERRORS_FILE_PREFIX,

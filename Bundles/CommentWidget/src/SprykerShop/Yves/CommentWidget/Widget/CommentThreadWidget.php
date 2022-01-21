@@ -196,7 +196,9 @@ class CommentThreadWidget extends AbstractWidget
         foreach ($commentThreadTransfer->getComments() as $comment) {
             $taggedComments['all'][] = $comment;
 
-            foreach ($comment->getTagNames() as $tagName) {
+            /** @var array<string> $tagNames */
+            $tagNames = $comment->getTagNames();
+            foreach ($tagNames as $tagName) {
                 $taggedComments[$tagName][] = $comment;
             }
         }

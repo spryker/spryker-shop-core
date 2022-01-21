@@ -115,6 +115,7 @@ class ProductReviewForm extends AbstractType
         $choiceKeys = $choiceValues = range(static::MINIMUM_RATING, $this->getFactory()->getProductReviewClient()->getMaximumRating());
         array_unshift($choiceKeys, static::UNSELECTED_RATING);
         array_unshift($choiceValues, 'product_review.submit.rating.none');
+        /** @var array $choices */
         $choices = array_combine($choiceKeys, $choiceValues);
 
         return $choices;

@@ -96,7 +96,7 @@ class CatalogController extends AbstractController
      */
     protected function executeIndexAction(array $categoryNode, int $idCategoryNode, Request $request): array
     {
-        $searchString = $request->query->get('q', '');
+        $searchString = (string)$request->query->get('q', '');
         $idCategory = $categoryNode['id_category'];
         $isEmptyCategoryFilterValueVisible = $this->getFactory()
             ->getModuleConfig()
@@ -168,7 +168,7 @@ class CatalogController extends AbstractController
      */
     protected function executeFulltextSearchAction(Request $request): array
     {
-        $searchString = $request->query->get('q', '');
+        $searchString = (string)$request->query->get('q', '');
 
         $searchResults = $this
             ->getFactory()
@@ -199,8 +199,8 @@ class CatalogController extends AbstractController
      */
     public function changeViewModeAction(Request $request)
     {
-        $viewMode = $request->query->get(static::URL_PARAM_VIEW_MODE);
-        $refererUrl = $request->query->get(static::URL_PARAM_REFERER_URL);
+        $viewMode = (string)$request->query->get(static::URL_PARAM_VIEW_MODE) ?: null;
+        $refererUrl = (string)$request->query->get(static::URL_PARAM_REFERER_URL);
 
         $response = $this->redirectResponseExternal($refererUrl);
 

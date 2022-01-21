@@ -59,12 +59,12 @@ class QuoteController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|string
+     * @return string
      */
     protected function getRefererUrl(Request $request)
     {
         if ($request->headers->has(static::REQUEST_HEADER_REFERER)) {
-            return $request->headers->get(static::REQUEST_HEADER_REFERER);
+            return (string)$request->headers->get(static::REQUEST_HEADER_REFERER);
         }
 
         return static::ROUTE_NAME_CART;

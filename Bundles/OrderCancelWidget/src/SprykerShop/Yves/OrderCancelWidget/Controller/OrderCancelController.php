@@ -69,7 +69,7 @@ class OrderCancelController extends AbstractController
      */
     protected function executeIndexAction(Request $request): RedirectResponse
     {
-        $returnUrl = $request->query->get(static::PARAMETER_RETURN_URL);
+        $returnUrl = (string)$request->query->get(static::PARAMETER_RETURN_URL);
         $form = $this->getFactory()->getOrderCancelForm()->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {

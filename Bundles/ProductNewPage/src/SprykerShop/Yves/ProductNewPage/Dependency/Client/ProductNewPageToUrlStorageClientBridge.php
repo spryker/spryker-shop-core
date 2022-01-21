@@ -26,7 +26,7 @@ class ProductNewPageToUrlStorageClientBridge implements ProductNewPageToUrlStora
      * @param string $url
      * @param string $localeName
      *
-     * @return array|bool
+     * @return array<string, mixed>
      */
     public function matchUrl($url, $localeName)
     {

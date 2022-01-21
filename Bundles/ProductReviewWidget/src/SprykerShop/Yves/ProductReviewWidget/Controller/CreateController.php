@@ -88,8 +88,9 @@ class CreateController extends AbstractController
         }
 
         if (!$form->isValid()) {
-            foreach ($form->getErrors(true) as $error) {
-                $this->addErrorMessage($error->getMessage());
+            /** @var \Symfony\Component\Form\FormError $errorObject */
+            foreach ($form->getErrors(true) as $errorObject) {
+                $this->addErrorMessage($errorObject->getMessage());
             }
 
             return;

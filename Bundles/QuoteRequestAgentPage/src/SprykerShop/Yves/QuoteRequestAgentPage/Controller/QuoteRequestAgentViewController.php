@@ -103,7 +103,7 @@ class QuoteRequestAgentViewController extends QuoteRequestAgentAbstractControlle
         $version = $this->getQuoteRequestVersion(
             $quoteRequestTransfer,
             $quoteRequestVersionTransfers,
-            $request->query->get(static::PARAM_QUOTE_REQUEST_VERSION_REFERENCE),
+            (string)$request->query->get(static::PARAM_QUOTE_REQUEST_VERSION_REFERENCE) ?: null,
         );
 
         $quoteTransfer = $version->getQuote();

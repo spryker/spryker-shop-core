@@ -91,8 +91,8 @@ class CommentController extends CommentWidgetAbstractController
      */
     protected function executeAddAction(Request $request): RedirectResponse
     {
-        $returnUrl = $request->request->get(static::PARAMETER_RETURN_URL);
-        $tokenValue = $request->get(static::REQUEST_PARAMETER_TOKEN);
+        $returnUrl = (string)$request->request->get(static::PARAMETER_RETURN_URL);
+        $tokenValue = (string)$request->get(static::REQUEST_PARAMETER_TOKEN);
 
         if (!$this->validateCsrfToken(static::CSRF_TOKEN_ID_ADD_COMMENT_FORM, $tokenValue)) {
             $this->addErrorMessage(static::GLOSSARY_KEY_ERROR_MESSAGE_FORM_CSRF_ERROR);
@@ -129,8 +129,8 @@ class CommentController extends CommentWidgetAbstractController
      */
     protected function executeUpdateAction(Request $request): RedirectResponse
     {
-        $returnUrl = $request->request->get(static::PARAMETER_RETURN_URL);
-        $tokenValue = $request->get(static::REQUEST_PARAMETER_TOKEN);
+        $returnUrl = (string)$request->request->get(static::PARAMETER_RETURN_URL);
+        $tokenValue = (string)$request->get(static::REQUEST_PARAMETER_TOKEN);
 
         if (!$this->validateCsrfToken(static::CSRF_TOKEN_ID_UPDATE_COMMENT_FORM, $tokenValue)) {
             $this->addErrorMessage(static::GLOSSARY_KEY_ERROR_MESSAGE_FORM_CSRF_ERROR);
@@ -166,8 +166,8 @@ class CommentController extends CommentWidgetAbstractController
      */
     protected function executeRemoveAction(Request $request): RedirectResponse
     {
-        $returnUrl = $request->request->get(static::PARAMETER_RETURN_URL);
-        $tokenValue = $request->get(static::REQUEST_PARAMETER_TOKEN);
+        $returnUrl = (string)$request->request->get(static::PARAMETER_RETURN_URL);
+        $tokenValue = (string)$request->get(static::REQUEST_PARAMETER_TOKEN);
 
         if (!$this->validateCsrfToken(static::CSRF_TOKEN_ID_UPDATE_COMMENT_FORM, $tokenValue)) {
             $this->addErrorMessage(static::GLOSSARY_KEY_ERROR_MESSAGE_FORM_CSRF_ERROR);

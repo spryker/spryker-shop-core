@@ -25,8 +25,11 @@ class CategoryFilterTwigExtension extends TwigExtension
      */
     public function getFunctions()
     {
+        /** @var callable $callable */
+        $callable = [$this, static::FUNCTION_PREPARE_FILTER_CATEGORIES];
+
         return [
-            new TwigFunction(static::FUNCTION_PREPARE_FILTER_CATEGORIES, [$this, static::FUNCTION_PREPARE_FILTER_CATEGORIES], [
+            new TwigFunction(static::FUNCTION_PREPARE_FILTER_CATEGORIES, $callable, [
                 'needs_context' => true,
             ]),
         ];

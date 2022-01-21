@@ -77,7 +77,7 @@ class ReturnCreateFormExpander implements ReturnCreateFormExpanderInterface
     /**
      * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return array<array<\Generated\Shared\Transfer\ItemTransfer>>
+     * @return array<string, array<string, \Generated\Shared\Transfer\ItemTransfer>>
      */
     protected function getProductBundleFormFields(array $itemTransfers): array
     {
@@ -87,8 +87,10 @@ class ReturnCreateFormExpander implements ReturnCreateFormExpanderInterface
             $relatedBundleItemIdentifier = $itemTransfer->getRelatedBundleItemIdentifier();
 
             if ($relatedBundleItemIdentifier && !isset($productBundleFormFields[$relatedBundleItemIdentifier])) {
+                /** @var \Generated\Shared\Transfer\ItemTransfer $productBundleItemTransfer */
+                $productBundleItemTransfer = $itemTransfer->getProductBundle();
                 $productBundleFormFields[$relatedBundleItemIdentifier] = [
-                    ReturnProductBundleItemsForm::KEY_PRODUCT_BUNDLE_DATA => $itemTransfer->getProductBundle(),
+                    ReturnProductBundleItemsForm::KEY_PRODUCT_BUNDLE_DATA => $productBundleItemTransfer,
                 ];
             }
         }

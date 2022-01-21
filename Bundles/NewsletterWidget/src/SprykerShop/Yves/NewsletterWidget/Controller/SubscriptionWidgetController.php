@@ -67,6 +67,7 @@ class SubscriptionWidgetController extends AbstractController
         }
 
         if (!$subscriptionForm->isValid()) {
+            /** @var \Symfony\Component\Form\FormError $errorObject */
             foreach ($subscriptionForm->getErrors(true) as $errorObject) {
                 $this->addErrorMessage($errorObject->getMessage());
             }
@@ -102,12 +103,12 @@ class SubscriptionWidgetController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|string
+     * @return string
      */
     protected function getRefererUrl(Request $request)
     {
         if ($request->headers->has(static::REQUEST_HEADER_REFERER)) {
-            return $request->headers->get(static::REQUEST_HEADER_REFERER);
+            return (string)$request->headers->get(static::REQUEST_HEADER_REFERER);
         }
 
         return static::URL_CUSTOMER_OVERVIEW;
