@@ -1,4 +1,5 @@
 parameters:
+    level: 7
     dynamicConstantNames:
         - APPLICATION
         - APPLICATION_ENV

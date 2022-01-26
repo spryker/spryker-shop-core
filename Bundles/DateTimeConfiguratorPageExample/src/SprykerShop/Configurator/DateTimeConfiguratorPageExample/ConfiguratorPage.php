@@ -130,7 +130,7 @@ class ConfiguratorPage
      */
     protected function prepareConfigurationResponseAction(): Response
     {
-        $productConfiguration = $this->request->request->all() ?? [];
+        $productConfiguration = $this->request->request->all() ?: [];
         $checkSum = (new CrcOpenSslChecksumGenerator(
             getenv('SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR') ?: '',
         ))->generateChecksum(

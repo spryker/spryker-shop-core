@@ -1,8 +1,7 @@
 parameters:
+    level: 8
     checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
-    excludePaths:
-        - %rootDir%/../../../vendor/spryker/spryker-shop/Bundles/DateTimeConfiguratorPageExample/src/SprykerShop/Configurator/DateTimeConfiguratorPageExample/ConfiguratorPage.php
     ignoreErrors:
         - '#Parameter \#1 \$json of function json_decode expects string, resource\|string given.#'
         - '#Parameter \#1 \$value of method .+Decimal::lessThan\(\) expects float\|int\|.+Decimal\|string, int\|null given.#'
