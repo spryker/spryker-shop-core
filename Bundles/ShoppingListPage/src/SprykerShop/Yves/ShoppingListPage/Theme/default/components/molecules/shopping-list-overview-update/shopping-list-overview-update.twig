@@ -82,6 +82,8 @@
                 <div>{{ ('product.attribute.' ~ attribute) | trans }}: {{ item.attributes[attribute] }}</div>
             {% endif %}
         {% endfor %}
+        {% widget 'SoldByMerchantWidget' args [item] only %}
+        {% endwidget %}
     </td>
 {% endblock %}
 

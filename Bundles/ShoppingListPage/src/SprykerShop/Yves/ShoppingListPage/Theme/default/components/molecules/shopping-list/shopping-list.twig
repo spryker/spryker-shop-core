@@ -34,6 +34,17 @@
                 {% for item in data.shoppingListItems %}
                     {% block shoppingListItem %}
                         {% set isItemAvailable = item.available is defined and item.available and item.price is defined and item.price is not null %}
+                        {% set shoppingListMerchantWidget = findWidget('ShoppingListMerchantWidget', [item]) %}
+                        {% set shoppingListProductOfferWidget = findWidget('ShoppingListProductOfferWidget', [item]) %}
+
+                        {% if shoppingListProductOfferWidget and shoppingListProductOfferWidget.isProductOfferActive is not null %}
+                            {% set isItemAvailable = shoppingListProductOfferWidget.isProductOfferActive and isItemAvailable %}
+                        {% endif %}
+
+                        {% if shoppingListMerchantWidget and shoppingListMerchantWidget.isMerchantActive is not null %}
+                            {% set isItemAvailable = shoppingListMerchantWidget.isMerchantActive and isItemAvailable %}
+                        {% endif %}
+
                         {% set productDiscontinuedWidget = findWidget('ProductDiscontinuedWidget', [item.sku]) %}
                         {% set isDiscontinued = productDiscontinuedWidget.isDiscontinued %}
                         {% if isDiscontinued is not null %}
@@ -120,6 +131,14 @@
                                                             options: item.shoppingListItem.productOptions,
                                                         },
                                                     } only %}
+
+                                                    {% widget 'SoldByMerchantWidget' args [item] only %}
+                                                        {% block template %}
+                                                            <li class="list__item">
+                                                                {{ parent() }}
+                                                            </li>
+                                                        {% endblock %}
+                                                    {% endwidget %}
                                                 </ul>
                                             {% endblock %}
                                         </td>

@@ -66,4 +66,7 @@
     <transfer name="Quote">
     </transfer>
 
+    <transfer name="ProductView">
+    </transfer>
+
 </transfers>

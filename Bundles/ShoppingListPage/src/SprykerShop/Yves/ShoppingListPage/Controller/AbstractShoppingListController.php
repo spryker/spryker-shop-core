@@ -56,17 +56,24 @@ class AbstractShoppingListController extends AbstractController
      */
     protected function createProductView(ShoppingListItemTransfer $shoppingListItemTransfer): ProductViewTransfer
     {
+        $productViewTransfer = new ProductViewTransfer();
+
         $productConcreteStorageData = $this->getFactory()
             ->getProductStorageClient()
             ->findProductConcreteStorageData($shoppingListItemTransfer->getIdProduct(), $this->getLocale());
 
-        $productViewTransfer = new ProductViewTransfer();
-        if (!$productConcreteStorageData) {
-            $productConcreteStorageData = [
-                ProductViewTransfer::SKU => $shoppingListItemTransfer->getSku(),
-            ];
+        if ($productConcreteStorageData) {
+            $productViewTransfer->fromArray($productConcreteStorageData, true);
         }
-        $productViewTransfer->fromArray($productConcreteStorageData, true);
+
+        $productData = $productConcreteStorageData ?? [
+            ProductViewTransfer::SKU => $shoppingListItemTransfer->getSku(),
+        ];
+
+        $productViewTransfer->fromArray(
+            $productConcreteStorageData ? $shoppingListItemTransfer->toArray() : $productData,
+            true,
+        );
 
         $productViewTransfer->setQuantity($shoppingListItemTransfer->getQuantity());
         $productViewTransfer->setShoppingListItem($shoppingListItemTransfer);
@@ -75,7 +82,7 @@ class AbstractShoppingListController extends AbstractController
         foreach ($this->getFactory()->getShoppingListItemExpanderPlugins() as $productViewExpanderPlugin) {
             $productViewExpanderPlugin->expandProductViewTransfer(
                 $productViewTransfer,
-                $productConcreteStorageData,
+                $productData,
                 $this->getLocale(),
             );
         }

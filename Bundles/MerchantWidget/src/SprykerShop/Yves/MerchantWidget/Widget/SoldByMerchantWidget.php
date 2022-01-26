@@ -52,17 +52,19 @@ class SoldByMerchantWidget extends AbstractWidget
      */
     protected function addMerchantParameter(AbstractTransfer $abstractTransfer)
     {
-        $merchantStorageTransfer = null;
+        $this->addParameter(static::PARAMETER_MERCHANT, null);
+
+        /** @psalm-suppress UndefinedMethod */
         if ($abstractTransfer->getMerchantReference()) {
             $merchantStorageTransfer = $this->getFactory()
                 ->getMerchantStorageClient()
                 ->findOne(
+                    /** @psalm-suppress PossiblyNullArgument */
                     (new MerchantStorageCriteriaTransfer())
                         ->addMerchantReference($abstractTransfer->getMerchantReference()),
                 );
+            $this->addParameter(static::PARAMETER_MERCHANT, $merchantStorageTransfer);
         }
-
-        $this->addParameter(static::PARAMETER_MERCHANT, $merchantStorageTransfer);
 
         return $this;
     }

@@ -117,6 +117,8 @@
         "spryker-shop/product-label-widget": "*",
         "spryker-shop/product-measurement-unit-widget": "*",
         "spryker-shop/product-new-page": "*",
+        "spryker-shop/product-offer-shopping-list-widget": "*",
+        "spryker-shop/product-offer-widget": "*",
         "spryker-shop/product-option-widget": "*",
         "spryker-shop/product-packaging-unit-widget": "*",
         "spryker-shop/product-relation-widget": "*",

@@ -1,30 +1,18 @@
 {
-    "error": [
+    "error": [],
+    "warning": [
         {
-            "severity": "error",
-            "line_from": 52,
-            "line_to": 52,
-            "type": "UndefinedMethod",
-            "message": "Method Spryker\\Shared\\Kernel\\Transfer\\AbstractTransfer::getMerchantReference does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantWidget/src/SprykerShop/Yves/MerchantWidget/Widget/SoldByMerchantWidget.php",
-            "snippet": "        if ($abstractTransfer->getMerchantReference()) {",
-            "selected_text": "getMerchantReference",
-            "error_level": 6,
-            "shortcode": 22
-        },
-        {
-            "severity": "error",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "UndefinedMethod",
-            "message": "Method Spryker\\Shared\\Kernel\\Transfer\\AbstractTransfer::getMerchantReference does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantWidget/src/SprykerShop/Yves/MerchantWidget/Widget/SoldByMerchantWidget.php",
-            "snippet": "                ->findOneByMerchantReference($abstractTransfer->getMerchantReference());",
-            "selected_text": "getMerchantReference",
-            "error_level": 6,
-            "shortcode": 22
+            "severity": "info",
+            "line_from": 62,
+            "line_to": 62,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\MerchantStorageCriteriaTransfer::addMerchantReference cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantWidget/src/SprykerShop/Yves/MerchantWidget/Widget/ShoppingListMerchantWidget.php",
+            "snippet": "                        ->addMerchantReference($productViewTransfer->getMerchantReference()),",
+            "selected_text": "$productViewTransfer->getMerchantReference()",
+            "error_level": 3,
+            "shortcode": 78
         }
     ],
-    "warning": [],
     "deprecation": []
 }

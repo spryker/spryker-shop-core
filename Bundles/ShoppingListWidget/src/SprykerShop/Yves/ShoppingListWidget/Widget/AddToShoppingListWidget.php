@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ShoppingListWidget\Widget;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
@@ -31,16 +32,23 @@ class AddToShoppingListWidget extends AbstractWidget
     /**
      * @var string
      */
+    protected const PARAMETER_PRODUCT = 'product';
+
+    /**
+     * @var string
+     */
     protected const PARAMETER_SHOPPING_LIST_COLLECTION = 'shoppingListCollection';
 
     /**
      * @param string $sku
      * @param bool $isDisabled
+     * @param \Generated\Shared\Transfer\ProductViewTransfer|null $product
      */
-    public function __construct(string $sku, bool $isDisabled)
+    public function __construct(string $sku, bool $isDisabled, ?ProductViewTransfer $product = null)
     {
         $this->addParameter(static::PARAMETER_SKU, $sku)
             ->addParameter(static::PARAMETER_IS_DISABLED, $isDisabled)
+            ->addParameter(static::PARAMETER_PRODUCT, $product)
             ->addParameter(static::PARAMETER_SHOPPING_LIST_COLLECTION, $this->getShoppingListCollection());
     }
 

@@ -8,4 +8,8 @@
         <property name="merchantReferences" type="string[]" singular="merchantReference"/>
     </transfer>
 
+    <transfer name="ProductView">
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
 </transfers>
