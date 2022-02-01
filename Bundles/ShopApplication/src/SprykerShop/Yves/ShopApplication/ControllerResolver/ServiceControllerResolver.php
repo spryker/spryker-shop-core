@@ -47,6 +47,7 @@ class ServiceControllerResolver implements ControllerResolverInterface, Argument
             return $this->controllerResolver->getController($request);
         }
 
+        /** @phpstan-var callable */
         return $this->callbackResolver->convertCallback($controller);
     }
 

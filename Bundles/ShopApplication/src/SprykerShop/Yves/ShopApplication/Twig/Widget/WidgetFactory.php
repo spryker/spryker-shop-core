@@ -80,7 +80,10 @@ class WidgetFactory implements WidgetFactoryInterface
     {
         $this->assertClassIsWidget($widgetClassName);
 
-        return new $widgetClassName(...$arguments);
+        /** @var \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface $widget */
+        $widget = new $widgetClassName(...$arguments);
+
+        return $widget;
     }
 
     /**

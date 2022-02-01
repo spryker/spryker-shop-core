@@ -22,7 +22,7 @@ use SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPlugin
 class CmsSlotDataProvider implements CmsSlotDataProviderInterface
 {
     /**
-     * @var array<\SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface>
+     * @var array<string, \SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface>
      */
     protected $cmsSlotContentPlugins;
 
@@ -42,7 +42,7 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
     protected $shopCmsSlotConfig;
 
     /**
-     * @param array<\SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface> $cmsSlotContentPlugins
+     * @param array<string, \SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface> $cmsSlotContentPlugins
      * @param \SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotClientInterface $cmsSlotClient
      * @param \SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotStorageClientInterface $cmsSlotStorageClient
      * @param \SprykerShop\Yves\ShopCmsSlot\ShopCmsSlotConfig $shopCmsSlotConfig

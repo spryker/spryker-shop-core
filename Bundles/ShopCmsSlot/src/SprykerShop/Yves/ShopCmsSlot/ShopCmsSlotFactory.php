@@ -51,7 +51,7 @@ class ShopCmsSlotFactory extends AbstractFactory
     }
 
     /**
-     * @return array<\SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface>
+     * @return array<string, \SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface>
      */
     public function getCmsSlotContentPlugins(): array
     {
