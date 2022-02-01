@@ -4,6 +4,7 @@
     form: _widget.addToCartForm,
     config: _widget.config,
     product: _widget.product,
+    formNamePostfix: _widget.formNamePostfix,
     isDisabled: _widget.isAddToCartDisabled,
     options: _widget.quantityOptions,
 } %}
@@ -11,15 +12,15 @@
 {% block body %}
     {% set formClass = data.config.jsName ~ '__form-add-to-cart' %}
     {% set productSku = data.product.sku %}
+    {% set formNamePostfix = data.formNamePostfix %}
 
     {% block form %}
         {{ form_start(data.form, {
             'action': path('cart/add', {'sku': productSku}),
-            'name': 'addToCartForm_' ~ productSku,
+            'name': 'addToCartForm_' ~ productSku ~ '-' ~ formNamePostfix,
             attr: { class: formClass },
         }) }}
             {% block embeddedData %}{% endblock %}
-            {{ form_row(data.form._token, {id: ''}) }}
         {{ form_end(data.form) }}
     {% endblock %}
 {% endblock %}

@@ -4,4 +4,7 @@
     <transfer name="Item">
     </transfer>
 
+    <transfer name="ProductView">
+    </transfer>
+
 </transfers>

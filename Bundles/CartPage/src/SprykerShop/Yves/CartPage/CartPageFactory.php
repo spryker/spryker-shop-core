@@ -243,4 +243,12 @@ class CartPageFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CartPageDependencyProvider::SERVICE_FORM_CSRF_PROVIDER);
     }
+
+    /**
+     * @return array<\SprykerShop\Yves\CartPageExtension\Dependency\Plugin\AddToCartFormWidgetParameterExpanderPluginInterface>
+     */
+    public function getAddToCartFormWidgetParameterExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CartPageDependencyProvider::PLUGINS_ADD_TO_CART_FORM_WIDGET_PARAMETER_EXPANDER);
+    }
 }

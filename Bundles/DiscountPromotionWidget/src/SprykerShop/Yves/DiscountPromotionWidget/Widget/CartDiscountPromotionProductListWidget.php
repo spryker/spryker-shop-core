@@ -7,10 +7,6 @@
 
 namespace SprykerShop\Yves\DiscountPromotionWidget\Widget;
 
-use Generated\Shared\Transfer\DiscountableItemTransfer;
-use Generated\Shared\Transfer\DiscountCalculationRequestTransfer;
-use Generated\Shared\Transfer\ProductViewTransfer;
-use Generated\Shared\Transfer\PromotionItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,21 +17,24 @@ use Symfony\Component\HttpFoundation\Request;
 class CartDiscountPromotionProductListWidget extends AbstractWidget
 {
     /**
-     * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_TYPE_DEFAULT
-     *
      * @var string
      */
-    protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
+    protected const PARAMETER_CART = 'cart';
 
     /**
      * @var string
      */
-    protected const PRICE_TYPE_ORIGINAL = 'ORIGINAL';
+    protected const PARAMETER_ABSTRACT_SKUS_GROUPED_BY_ID_DISCOUNT = 'abstractSkusGroupedByIdDiscount';
 
     /**
      * @var string
      */
-    protected const PARAM_VARIANT_ATTRIBUTES = 'attributes';
+    protected const PARAMETER_PROMOTION_PRODUCTS = 'promotionProducts';
+
+    /**
+     * @var string
+     */
+    protected const PARAMETER_UNIQUE_DISCOUNTS = 'uniqueDiscounts';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -43,9 +42,10 @@ class CartDiscountPromotionProductListWidget extends AbstractWidget
      */
     public function __construct(QuoteTransfer $quoteTransfer, Request $request)
     {
-        $this
-            ->addParameter('cart', $quoteTransfer)
-            ->addParameter('promotionProducts', $this->getPromotionProducts($quoteTransfer, $request));
+        $this->addCartParameter($quoteTransfer);
+        $this->addPromotionProductsParameter($quoteTransfer, $request);
+        $this->addAbstractSkusGroupedByIdDiscountParameter($quoteTransfer);
+        $this->addUniqueDiscountsParameter($quoteTransfer);
     }
 
     /**
@@ -66,108 +66,57 @@ class CartDiscountPromotionProductListWidget extends AbstractWidget
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function addCartParameter(QuoteTransfer $quoteTransfer): void
+    {
+        $this->addParameter(static::PARAMETER_CART, $quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
+     * @return void
      */
-    protected function getPromotionProducts(QuoteTransfer $quoteTransfer, Request $request): array
+    protected function addPromotionProductsParameter(QuoteTransfer $quoteTransfer, Request $request): void
     {
-        $selectedAttributes = [];
-        $productAbstractIds = [];
-        $promotionItemTransfersIndexedByProductId = [];
-        foreach ($quoteTransfer->getPromotionItems() as $promotionItemTransfer) {
-            $productAbstractIds[] = $promotionItemTransfer->getIdProductAbstract();
-            $selectedAttributes[$promotionItemTransfer->getIdProductAbstract()] = $this->getSelectedAttributes($request, $promotionItemTransfer->getAbstractSku());
-            $promotionItemTransfersIndexedByProductId[$promotionItemTransfer->getIdProductAbstract()] = $promotionItemTransfer;
-        }
+        $promotionProducts = $this->getFactory()
+            ->createDiscountPromotionProductReader()
+            ->getPromotionProducts($quoteTransfer, $request, $this->getLocale());
 
-        $productViewTransfers = $this->getFactory()
-            ->getProductStorageClient()
-            ->getProductAbstractViewTransfers($productAbstractIds, $this->getLocale(), $selectedAttributes);
-
-        return $this->mapPromotionProducts($productViewTransfers, $promotionItemTransfersIndexedByProductId);
+        $this->addParameter(static::PARAMETER_PROMOTION_PRODUCTS, $promotionProducts);
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
-     * @param array<\Generated\Shared\Transfer\PromotionItemTransfer> $promotionItemTransfersIndexedByProductId
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
+     * @return void
      */
-    protected function mapPromotionProducts(array $productViewTransfers, array $promotionItemTransfersIndexedByProductId): array
+    protected function addAbstractSkusGroupedByIdDiscountParameter(QuoteTransfer $quoteTransfer): void
     {
-        $promotionProducts = [];
+        $abstractSkusGroupedByIdDiscount = $this->getFactory()
+            ->createDiscountPromotionDiscountReader()
+            ->getAbstractSkusGroupedByIdDiscount($quoteTransfer);
 
-        foreach ($productViewTransfers as $productViewTransfer) {
-            $promotionItemTransfer = $promotionItemTransfersIndexedByProductId[$productViewTransfer->getIdProductAbstract()];
-
-            $productViewTransfer = $this->applyProductViewPriceWithDiscountPromotionalPrice(
-                $promotionItemTransfer,
-                $productViewTransfer,
-            );
-
-            $productViewTransfer->setPromotionItem($promotionItemTransfer);
-            $promotionProducts[$this->createPromotionProductBucketIdentifier($promotionItemTransfer)] = $productViewTransfer;
-        }
-
-        return $promotionProducts;
+        $this->addParameter(
+            static::PARAMETER_ABSTRACT_SKUS_GROUPED_BY_ID_DISCOUNT,
+            $abstractSkusGroupedByIdDiscount,
+        );
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
+     * @return void
      */
-    protected function getSelectedAttributes(Request $request, $abstractSku): array
+    protected function addUniqueDiscountsParameter(QuoteTransfer $quoteTransfer): void
     {
-        /** @var array $selectedAttributes */
-        $selectedAttributes = $request->query->get(static::PARAM_VARIANT_ATTRIBUTES) ?: [];
+        $uniqueDiscounts = $this->getFactory()
+            ->createDiscountPromotionDiscountReader()
+            ->getUniqueDiscounts($quoteTransfer);
 
-        return isset($selectedAttributes[$abstractSku]) ? array_filter($selectedAttributes[$abstractSku]) : [];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PromotionItemTransfer $promotionItemTransfer
-     *
-     * @return string
-     */
-    protected function createPromotionProductBucketIdentifier(PromotionItemTransfer $promotionItemTransfer): string
-    {
-        return $promotionItemTransfer->getAbstractSku() . '-' . $promotionItemTransfer->getIdDiscountPromotion();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PromotionItemTransfer $promotionItemTransfer
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
-     */
-    protected function applyProductViewPriceWithDiscountPromotionalPrice(
-        PromotionItemTransfer $promotionItemTransfer,
-        ProductViewTransfer $productViewTransfer
-    ): ProductViewTransfer {
-        if (empty($productViewTransfer->getPrices()[static::PRICE_TYPE_DEFAULT])) {
-            return $productViewTransfer;
-        }
-
-        $productViewDefaultPrice = $productViewTransfer->getPrices()[static::PRICE_TYPE_DEFAULT];
-
-        $discountableItemTransfer = (new DiscountableItemTransfer())->setUnitPrice($productViewDefaultPrice);
-
-        $discountCalculationRequestTransfer = (new DiscountCalculationRequestTransfer())
-            ->addDiscountableItem($discountableItemTransfer)
-            ->setDiscount($promotionItemTransfer->getDiscount());
-
-        $discountCalculationResponseTransfer = $this->getFactory()
-            ->getDiscountService()
-            ->calculate($discountCalculationRequestTransfer);
-
-        $productViewPrices = [];
-        $productViewPrices[static::PRICE_TYPE_ORIGINAL] = $productViewDefaultPrice;
-        $productViewPrices[static::PRICE_TYPE_DEFAULT] = $productViewDefaultPrice - $discountCalculationResponseTransfer->getAmount();
-        $productViewTransfer->setPrices($productViewPrices);
-
-        return $productViewTransfer;
+        $this->addParameter(static::PARAMETER_UNIQUE_DISCOUNTS, $uniqueDiscounts);
     }
 }

@@ -26,6 +26,9 @@
     </transfer>
 
     <transfer name="Discount">
+        <property name="idDiscount" type="int"/>
+        <property name="displayName" type="string"/>
+        <property name="discountPromotion" type="DiscountPromotion"/>
     </transfer>
 
     <transfer name="AttributeMapStorage">
@@ -42,6 +45,10 @@
 
     <transfer name="DiscountableItem">
         <property name="unitPrice" type="int"/>
+    </transfer>
+
+    <transfer name="DiscountPromotion">
+        <property name="idDiscountPromotion" type="int"/>
     </transfer>
 
 </transfers>

@@ -103,6 +103,11 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_ADD_TO_CART_FORM_WIDGET_PARAMETER_EXPANDER = 'PLUGINS_ADD_TO_CART_FORM_WIDGET_PARAMETER_EXPANDER';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -123,6 +128,7 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addRouter($container);
         $container = $this->addLocale($container);
         $container = $this->addRequestStack($container);
+        $container = $this->addAddToCartFormWidgetParameterExpanderPlugins($container);
 
         return $container;
     }
@@ -251,6 +257,28 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addAddToCartFormWidgetParameterExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ADD_TO_CART_FORM_WIDGET_PARAMETER_EXPANDER, function () {
+            return $this->getAddToCartFormWidgetParameterExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\CartPageExtension\Dependency\Plugin\AddToCartFormWidgetParameterExpanderPluginInterface>
+     */
+    protected function getAddToCartFormWidgetParameterExpanderPlugins(): array
+    {
+        return [];
     }
 
     /**

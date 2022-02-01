@@ -106,6 +106,13 @@
                     },
                 } only %}
 
+                {% if data.isQuoteEditable and data.cart.idQuote is not empty %}
+                    {% widget 'CartOperationsWidget' args [data.cart] use view('cart-operations-actions', 'MultiCartWidget') only %}
+                    {% nowidget %}
+                        {{ widgetBlock('CartOperationsWidgetPlugin', 'actions', data.cart) }} {# @deprecated Use CartOperationsWidget instead. #}
+                    {% endwidget %}
+                {% endif %}
+
                 {% block promotionalItems %}
                     {% if data.isQuoteEditable %}
                         {% widget 'CartDiscountPromotionProductListWidget' args [data.cart, data.request] only %}
@@ -113,13 +120,6 @@
                         {% endwidget %}
                     {% endif %}
                 {% endblock %}
-
-                {% if data.isQuoteEditable and data.cart.idQuote is not empty %}
-                    {% widget 'CartOperationsWidget' args [data.cart] use view('cart-operations-actions', 'MultiCartWidget') only %}
-                    {% nowidget %}
-                        {{ widgetBlock('CartOperationsWidgetPlugin', 'actions', data.cart) }} {# @deprecated Use CartOperationsWidget instead. #}
-                    {% endwidget %}
-                {% endif %}
             </div>
 
             <div class="col col--sm-12 col--xl-4">
