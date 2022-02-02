@@ -108,7 +108,7 @@ class QuickOrderController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Spryker\Yves\Kernel\View\View
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Spryker\Yves\Kernel\View\View|array
      */
     public function indexAction(Request $request)
     {
@@ -144,8 +144,10 @@ class QuickOrderController extends AbstractController
             ->handleRequest($request);
 
         if (!$quickOrderForm->isSubmitted() || !$quickOrderForm->isValid()) {
-            foreach ($quickOrderForm->getErrors(true) as $formError) {
-                $this->addErrorMessage($formError->getMessage());
+            /** @var array<\Symfony\Component\Form\FormError> $errors */
+            $errors = $quickOrderForm->getErrors(true);
+            foreach ($errors as $error) {
+                $this->addErrorMessage($error->getMessage());
             }
 
             return [];
@@ -157,7 +159,7 @@ class QuickOrderController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     * @return array
      */
     protected function executeIndexAction(Request $request)
     {
@@ -471,7 +473,7 @@ class QuickOrderController extends AbstractController
     public function productAdditionalDataAction(Request $request)
     {
         $quantity = (int)$request->get('quantity', 1);
-        $sku = $request->query->get('sku');
+        $sku = (string)$request->query->get('sku') ?: null;
         $index = $request->query->get('index');
 
         $quickOrderItemTransfer = (new QuickOrderItemTransfer())->setSku($sku);

@@ -100,7 +100,10 @@ class TextOrderParser implements TextOrderParserInterface
      */
     protected function getTextOrderRows(string $textOrder): array
     {
-        return array_filter(preg_split($this->config->getTextOrderRowSplitterPattern(), $textOrder));
+        /** @var array<string> $array */
+        $array = preg_split($this->config->getTextOrderRowSplitterPattern(), $textOrder);
+
+        return array_filter($array);
     }
 
     /**

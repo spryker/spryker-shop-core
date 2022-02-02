@@ -96,6 +96,9 @@ class TextOrderFormatConstraintValidator extends ConstraintValidator
      */
     protected function splitRows(string $textOrder, string $rowSplitterPattern): array
     {
-        return array_filter(preg_split($rowSplitterPattern, $textOrder));
+        /** @var array<string> $array */
+        $array = preg_split($rowSplitterPattern, $textOrder);
+
+        return array_filter($array);
     }
 }

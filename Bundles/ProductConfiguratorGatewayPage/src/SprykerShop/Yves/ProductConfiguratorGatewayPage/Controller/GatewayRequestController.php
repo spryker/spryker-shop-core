@@ -115,6 +115,7 @@ class GatewayRequestController extends AbstractController
         if (!$productConfiguratorRequestDataForm->isSubmitted() || !$productConfiguratorRequestDataForm->isValid()) {
             $errorList = [];
 
+            /** @var \Symfony\Component\Form\FormError $error */
             foreach ($productConfiguratorRequestDataForm->getErrors(true) as $error) {
                 $errorList[] = $error->getMessage();
             }
