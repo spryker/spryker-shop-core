@@ -26,13 +26,13 @@ class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPl
 
     /**
      * @param array $configuration
-     * @param int|null $centAmount
+     * @param array|string|int|null $context Cent amount.
      *
      * @return bool
      */
-    public function can(array $configuration, $centAmount = null): bool
+    public function can(array $configuration, $context = null): bool
     {
-        if (!$centAmount) {
+        if (!$context) {
             return false;
         }
 
@@ -40,7 +40,7 @@ class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPl
             return false;
         }
 
-        if ((int)$configuration[static::FIELD_CENT_AMOUNT] <= (int)$centAmount) {
+        if (!is_array($context) && (int)$configuration[static::FIELD_CENT_AMOUNT] <= (int)$context) {
             return false;
         }
 

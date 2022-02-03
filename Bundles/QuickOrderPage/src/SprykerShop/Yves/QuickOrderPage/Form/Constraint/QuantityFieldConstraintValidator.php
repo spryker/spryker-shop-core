@@ -15,14 +15,14 @@ use Symfony\Component\Validator\ConstraintValidator;
 class QuantityFieldConstraintValidator extends ConstraintValidator
 {
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $orderItemTransfer The value that should be validated
+     * @param \Generated\Shared\Transfer\ItemTransfer $value The value that should be validated
      * @param \Symfony\Component\Validator\Constraint|\SprykerShop\Yves\QuickOrderPage\Form\Constraint\QuantityFieldConstraint $constraint The constraint for the validation
      *
      * @throws \InvalidArgumentException
      *
      * @return void
      */
-    public function validate($orderItemTransfer, Constraint $constraint): void
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof QuantityFieldConstraint) {
             throw new InvalidArgumentException(sprintf(
@@ -32,11 +32,11 @@ class QuantityFieldConstraintValidator extends ConstraintValidator
             ));
         }
 
-        if (!$orderItemTransfer->getSku()) {
+        if (!$value->getSku()) {
             return;
         }
 
-        if ($orderItemTransfer->getQuantity() > 0) {
+        if ($value->getQuantity() > 0) {
             return;
         }
 

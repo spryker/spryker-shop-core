@@ -14,14 +14,14 @@ use Symfony\Component\Validator\ConstraintValidator;
 class UploadOrderFormatConstraintValidator extends ConstraintValidator
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile|null $file
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile|null $value
      * @param \Symfony\Component\Validator\Constraint|\SprykerShop\Yves\QuickOrderPage\Form\Constraint\UploadOrderFormatConstraint $constraint The constraint for the validation
      *
      * @throws \InvalidArgumentException
      *
      * @return void
      */
-    public function validate($file, Constraint $constraint): void
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof UploadOrderFormatConstraint) {
             throw new InvalidArgumentException(sprintf(
@@ -31,7 +31,7 @@ class UploadOrderFormatConstraintValidator extends ConstraintValidator
             ));
         }
 
-        if ($file === null) {
+        if ($value === null) {
             $this->context
                 ->buildViolation($constraint->getNoFileMessage())
                 ->addViolation();
@@ -39,7 +39,7 @@ class UploadOrderFormatConstraintValidator extends ConstraintValidator
             return;
         }
 
-        if (!$constraint->getUploadedFileValidator()->isValidMimeType($file)) {
+        if (!$constraint->getUploadedFileValidator()->isValidMimeType($value)) {
             $this->context
                 ->buildViolation($constraint->getInvalidMimeTypeMessage())
                 ->addViolation();
@@ -47,7 +47,7 @@ class UploadOrderFormatConstraintValidator extends ConstraintValidator
             return;
         }
 
-        if (!$constraint->getUploadedFileValidator()->isValidFormat($file)) {
+        if (!$constraint->getUploadedFileValidator()->isValidFormat($value)) {
             $this->context
                 ->buildViolation($constraint->getInvalidFormatMessage())
                 ->addViolation();
@@ -55,7 +55,7 @@ class UploadOrderFormatConstraintValidator extends ConstraintValidator
             return;
         }
 
-        if (!$constraint->getUploadedFileValidator()->isValidRowCount($file, $constraint->getUploadRowCountLimit())) {
+        if (!$constraint->getUploadedFileValidator()->isValidRowCount($value, $constraint->getUploadRowCountLimit())) {
             $this->context
                 ->buildViolation($constraint->getInvalidAmountOfRowsMessage())
                 ->addViolation();

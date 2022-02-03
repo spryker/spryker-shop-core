@@ -14,14 +14,14 @@ use Symfony\Component\Validator\ConstraintValidator;
 class TextOrderFormatConstraintValidator extends ConstraintValidator
 {
     /**
-     * @param string|null $textOrder The value that should be validated
+     * @param string|null $value
      * @param \Symfony\Component\Validator\Constraint|\SprykerShop\Yves\QuickOrderPage\Form\Constraint\TextOrderFormatConstraint $constraint The constraint for the validation
      *
      * @throws \InvalidArgumentException
      *
      * @return void
      */
-    public function validate($textOrder, Constraint $constraint): void
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof TextOrderFormatConstraint) {
             throw new InvalidArgumentException(sprintf(
@@ -31,11 +31,11 @@ class TextOrderFormatConstraintValidator extends ConstraintValidator
             ));
         }
 
-        if ($textOrder === null) {
+        if ($value === null) {
             return;
         }
 
-        if ($this->isValidFormat($textOrder, $constraint->getRowSplitterPattern(), $constraint->getAllowedSeparators())) {
+        if ($this->isValidFormat($value, $constraint->getRowSplitterPattern(), $constraint->getAllowedSeparators())) {
             return;
         }
 

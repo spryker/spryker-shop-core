@@ -15,14 +15,14 @@ use Symfony\Component\Validator\ConstraintValidator;
 class ItemsFieldConstraintValidator extends ConstraintValidator
 {
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\QuickOrderItemTransfer> $orderItemTransfers The value that should be validated
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\QuickOrderItemTransfer> $value The value that should be validated
      * @param \Symfony\Component\Validator\Constraint|\SprykerShop\Yves\QuickOrderPage\Form\Constraint\ItemsFieldConstraint $constraint The constraint for the validation
      *
      * @throws \InvalidArgumentException
      *
      * @return void
      */
-    public function validate($orderItemTransfers, Constraint $constraint): void
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof ItemsFieldConstraint) {
             throw new InvalidArgumentException(sprintf(
@@ -32,7 +32,7 @@ class ItemsFieldConstraintValidator extends ConstraintValidator
             ));
         }
 
-        if ($this->hasSku($orderItemTransfers->getArrayCopy())) {
+        if ($this->hasSku($value->getArrayCopy())) {
             return;
         }
 
