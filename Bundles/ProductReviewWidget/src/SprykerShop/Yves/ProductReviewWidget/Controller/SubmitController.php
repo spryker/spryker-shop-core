@@ -95,7 +95,9 @@ class SubmitController extends AbstractController
             return true;
         }
 
-        $form->addError(new FormError($productReviewResponseTransfer->getErrors()[0]->getMessage()));
+        /** @var array<\Generated\Shared\Transfer\ProductReviewErrorTransfer> $errors */
+        $errors = $productReviewResponseTransfer->getErrors();
+        $form->addError(new FormError($errors[0]->getMessage()));
 
         return false;
     }

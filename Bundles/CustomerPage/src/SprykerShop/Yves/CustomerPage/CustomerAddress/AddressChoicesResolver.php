@@ -27,7 +27,7 @@ class AddressChoicesResolver implements AddressChoicesResolverInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
      *
-     * @return array<string, string>
+     * @return array<string, string|int>
      */
     public function getAddressChoices(?CustomerTransfer $customerTransfer): array
     {
@@ -58,10 +58,10 @@ class AddressChoicesResolver implements AddressChoicesResolverInterface
     }
 
     /**
-     * @param \ArrayObject|iterable<\Generated\Shared\Transfer\AddressTransfer> $customerAddressesCollection
+     * @param \ArrayObject<\Generated\Shared\Transfer\AddressTransfer>|iterable<\Generated\Shared\Transfer\AddressTransfer> $customerAddressesCollection
      * @param array<string, string> $choices
      *
-     * @return array<string, string>
+     * @return array<string, string|int>
      */
     protected function addCustomerAddressChoices(iterable $customerAddressesCollection, array $choices = []): array
     {
@@ -97,9 +97,9 @@ class AddressChoicesResolver implements AddressChoicesResolverInterface
     }
 
     /**
-     * @param iterable<string, string> $choices
+     * @param iterable<string, string|int> $choices
      *
-     * @return array<string, string>
+     * @return array<string, string|int>
      */
     protected function sanitizeDuplicatedCustomerAddressChoices(iterable $choices): array
     {
@@ -137,10 +137,10 @@ class AddressChoicesResolver implements AddressChoicesResolverInterface
     }
 
     /**
-     * @param array<string, string> $customerAddressChoices
+     * @param array<string, string|int> $customerAddressChoices
      * @param bool $canDeliverToMultipleShippingAddresses
      *
-     * @return array<string>
+     * @return array<string, string|int>
      */
     public function getSingleShippingAddressChoices(array $customerAddressChoices, bool $canDeliverToMultipleShippingAddresses): array
     {

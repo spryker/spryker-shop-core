@@ -39,7 +39,9 @@ class ErrorPageServiceProvider extends AbstractPlugin implements ServiceProvider
      */
     public function boot(Application $app)
     {
-        $app['dispatcher']->addListener(KernelEvents::EXCEPTION, [$this, 'onKernelException'], 50);
+        /** @var \Symfony\Component\EventDispatcher\EventDispatcher $appDispatcher */
+        $appDispatcher = $app['dispatcher'];
+        $appDispatcher->addListener(KernelEvents::EXCEPTION, [$this, 'onKernelException'], 50);
     }
 
     /**

@@ -75,7 +75,9 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
             ));
         }
 
-        $app['dispatcher']->addListener(KernelEvents::VIEW, function (ViewEvent $event) use ($app) {
+        /** @var \Symfony\Component\EventDispatcher\EventDispatcher $appDispatcher */
+        $appDispatcher = $app['dispatcher'];
+        $appDispatcher->addListener(KernelEvents::VIEW, function (ViewEvent $event) use ($app) {
             $this->onKernelView($event, $app);
         }, 0);
     }

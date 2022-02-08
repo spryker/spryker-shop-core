@@ -107,7 +107,10 @@ class ProductReviewWidgetFactory extends SprykerProductReviewFactory
      */
     public function getApplicationRequest(): Request
     {
-        return $this->getProvidedDependency(ProductReviewWidgetDependencyProvider::SERVICE_REQUEST_STACK)->getCurrentRequest();
+        /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
+        $requestStack = $this->getProvidedDependency(ProductReviewWidgetDependencyProvider::SERVICE_REQUEST_STACK);
+
+        return $requestStack->getCurrentRequest();
     }
 
     /**

@@ -246,12 +246,13 @@ class UserController extends AbstractCompanyController
             return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER);
         }
 
-        $companyUserTransfer = $companyUserDeleteForm->getData();
+        /** @var \Generated\Shared\Transfer\CompanyUserTransfer $submittedCompanyUserTransfer */
+        $submittedCompanyUserTransfer = $companyUserDeleteForm->getData();
         $currentCompanyUserTransfer = $this->findCurrentCompanyUserTransfer();
 
         if (
             $currentCompanyUserTransfer
-            && $currentCompanyUserTransfer->getIdCompanyUser() === $companyUserTransfer->getIdCompanyUser()
+            && $currentCompanyUserTransfer->getIdCompanyUser() === $submittedCompanyUserTransfer->getIdCompanyUser()
         ) {
             $this->addErrorMessage(static::ERROR_MESSAGE_DELETE_YOURSELF);
 
@@ -260,7 +261,7 @@ class UserController extends AbstractCompanyController
 
         $companyUserTransfer = $this->getFactory()
             ->getCompanyUserClient()
-            ->getCompanyUserById($companyUserTransfer);
+            ->getCompanyUserById($submittedCompanyUserTransfer);
 
         if (!$this->isCurrentCustomerRelatedToCompany($companyUserTransfer->getFkCompany())) {
             throw new NotFoundHttpException();

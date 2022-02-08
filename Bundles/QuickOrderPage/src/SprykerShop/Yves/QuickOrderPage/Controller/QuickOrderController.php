@@ -493,6 +493,7 @@ class QuickOrderController extends AbstractController
 
         $quickOrderItemTransfer->setQuantity($quantity);
         $quickOrderTransfer = $this->getQuickOrderTransfer([$quickOrderItemTransfer]);
+        /** @var \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer */
         $quickOrderItemTransfer = $quickOrderTransfer->getItems()->offsetGet(0);
         $form = $this->getFactory()
             ->createQuickOrderFormFactory()

@@ -65,7 +65,9 @@ class ShopTwigServiceProvider extends AbstractPlugin implements ServiceProviderI
             ->createSilexTwigServiceProvider()
             ->boot($app);
 
-        $app['dispatcher']->addListener(KernelEvents::VIEW, function (ViewEvent $event) use ($app) {
+        /** @var \Symfony\Component\EventDispatcher\EventDispatcher $appDispatcher */
+        $appDispatcher = $app['dispatcher'];
+        $appDispatcher->addListener(KernelEvents::VIEW, function (ViewEvent $event) use ($app) {
             $this->onKernelView($event, $app);
         }, 0);
     }
@@ -133,7 +135,9 @@ class ShopTwigServiceProvider extends AbstractPlugin implements ServiceProviderI
             $app->extend('twig', function (Environment $twig) use ($app) {
                 if (class_exists(RoutingExtension::class)) {
                     if (isset($app['form.factory'])) {
-                        $app['twig.loader']->addLoader(
+                        /** @var \Twig\Loader\ChainLoader $twigLoader */
+                        $twigLoader = $app['twig.loader'];
+                        $twigLoader->addLoader(
                             new FilesystemLoader(__DIR__ . '/../../Resources/views/Form'),
                         );
                     }

@@ -34,7 +34,9 @@ class TwigRenderer implements TwigRendererInterface
      */
     public function render(Application $application, array $parameters = [])
     {
-        $request = $application['request_stack']->getCurrentRequest();
+        /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
+        $requestStack = $application['request_stack'];
+        $request = $requestStack->getCurrentRequest();
         $controller = $request->attributes->get('_controller');
 
         if (!is_string($controller) || !$controller) {

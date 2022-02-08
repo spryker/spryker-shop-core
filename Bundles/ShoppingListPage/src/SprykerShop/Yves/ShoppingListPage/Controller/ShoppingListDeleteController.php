@@ -53,6 +53,7 @@ class ShoppingListDeleteController extends AbstractShoppingListController
             return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST);
         }
 
+        /** @var \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer */
         $shoppingListTransfer = $shoppingListDeleteForm->getData();
         $shoppingListTransfer->setIdCompanyUser(
             $this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser(),

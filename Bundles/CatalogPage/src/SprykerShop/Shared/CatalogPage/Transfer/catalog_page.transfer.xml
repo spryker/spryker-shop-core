@@ -69,4 +69,8 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="RestCatalogSearchSort">
+        <property name="sortParamNames" type="array" singular="sortParamNames"/>
+    </transfer>
+
 </transfers>

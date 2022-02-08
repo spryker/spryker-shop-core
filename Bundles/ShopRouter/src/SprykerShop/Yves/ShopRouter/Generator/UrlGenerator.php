@@ -42,6 +42,16 @@ class UrlGenerator extends SymfonyUrlGenerator
     protected $app;
 
     /**
+     * @var \Symfony\Component\Routing\RouteCollection
+     */
+    protected $routes;
+
+    /**
+     * @var \Symfony\Component\Routing\RequestContext
+     */
+    protected $context;
+
+    /**
      * @param \Pimple $app
      * @param \Symfony\Component\Routing\RouteCollection $routes
      * @param \Symfony\Component\Routing\RequestContext $context
@@ -64,10 +74,10 @@ class UrlGenerator extends SymfonyUrlGenerator
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {
         $route = $this->routes->get($name);
-
         if ($route === null) {
             return static::ROUTE_NOT_FOUND_URL;
         }
+
         $compiledRoute = $route->compile();
         $parameters = $this->convertParameters($parameters, $route);
 

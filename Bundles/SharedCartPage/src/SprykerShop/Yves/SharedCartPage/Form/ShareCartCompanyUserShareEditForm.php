@@ -87,6 +87,7 @@ class ShareCartCompanyUserShareEditForm extends AbstractType
     protected function createTransformCallback(): Closure
     {
         return function ($quotePermissionGroupTransfer) {
+            /** @var \Generated\Shared\Transfer\QuotePermissionGroupTransfer|null $quotePermissionGroupTransfer */
             if ($quotePermissionGroupTransfer) {
                 return $quotePermissionGroupTransfer->getIdQuotePermissionGroup();
             }

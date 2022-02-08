@@ -185,6 +185,9 @@
     </transfer>
 
     <transfer name="CompanyBusinessUnitTreeNode">
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
+        <property name="level" type="int"/>
+        <property name="children" type="CompanyBusinessUnitTreeNode[]" singular="children"/>
     </transfer>
 
     <transfer name="OrderList">

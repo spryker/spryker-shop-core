@@ -63,7 +63,9 @@ class ProductBundleItemsWidgetPlugin extends AbstractWidgetPlugin implements Pro
                 continue;
             }
 
-            if ($groupedItem['bundleProduct']->getSku() === $itemTransfer->getSku()) {
+            /** @var \Generated\Shared\Transfer\ItemTransfer $groupedItemTransfer */
+            $groupedItemTransfer = $groupedItem['bundleProduct'];
+            if ($groupedItemTransfer->getSku() === $itemTransfer->getSku()) {
                 return $groupedItem['bundleItems'];
             }
         }

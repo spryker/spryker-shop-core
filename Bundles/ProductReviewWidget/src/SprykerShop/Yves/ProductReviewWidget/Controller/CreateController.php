@@ -105,7 +105,9 @@ class CreateController extends AbstractController
             ->submitCustomerReview($productReviewRequestTransfer);
 
         if ($productReviewResponseTransfer->getIsSuccess() === false) {
-            $this->addErrorMessage($productReviewResponseTransfer->getErrors()[0]->getMessage());
+            /** @var array<\Generated\Shared\Transfer\ProductReviewErrorTransfer> $errors */
+            $errors = $productReviewResponseTransfer->getErrors();
+            $this->addErrorMessage($errors[0]->getMessage());
 
             return;
         }

@@ -317,11 +317,21 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
             return $container;
         }
 
+        /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher */
         $dispatcher = $container->get(EventDispatcherApplicationPlugin::SERVICE_DISPATCHER);
+        /** @var \Symfony\Component\HttpKernel\Profiler\Profiler $profilerService */
+        $profilerService = $container->get(static::SERVICE_PROFILER);
+        /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
+        $requestStack = $container->get(static::SERVICE_REQUEST_STACK);
+        /** @var \Twig\Environment $twigService */
+        $twigService = $container->get(static::SERVICE_TWIG);
 
-        $dispatcher->addSubscriber(new ProfilerListener($container->get(static::SERVICE_PROFILER), $container->get(static::SERVICE_REQUEST_STACK), null, false, false));
-        $dispatcher->addSubscriber(new WebDebugToolbarListener($container->get(static::SERVICE_TWIG), false, WebDebugToolbarListener::ENABLED));
-        $dispatcher->addSubscriber($container->get(static::SERVICE_PROFILER)->get(static::SERVICE_REQUEST));
+        $dispatcher->addSubscriber(new ProfilerListener($profilerService, $requestStack, null, false, false));
+        $dispatcher->addSubscriber(new WebDebugToolbarListener($twigService, false, WebDebugToolbarListener::ENABLED));
+
+        /** @var \Symfony\Component\EventDispatcher\EventSubscriberInterface $requestService */
+        $requestService = $profilerService->get(static::SERVICE_REQUEST);
+        $dispatcher->addSubscriber($requestService);
 
         return $container;
     }

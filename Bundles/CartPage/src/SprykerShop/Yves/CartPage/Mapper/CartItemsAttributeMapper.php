@@ -72,7 +72,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     }
 
     /**
-     * @param \ArrayObject $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject $items
      * @param string $localeName
      *
      * @return array

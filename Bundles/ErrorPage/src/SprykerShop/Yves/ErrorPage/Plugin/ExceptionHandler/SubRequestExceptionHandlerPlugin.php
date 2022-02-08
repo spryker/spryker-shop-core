@@ -122,7 +122,7 @@ class SubRequestExceptionHandlerPlugin extends AbstractPlugin implements Excepti
      */
     protected function getRequest(ContainerInterface $container): Request
     {
-        /**@var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
+        /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
         $requestStack = $container->get(static::SERVICE_REQUEST_STACK);
 
         return $requestStack->getCurrentRequest();

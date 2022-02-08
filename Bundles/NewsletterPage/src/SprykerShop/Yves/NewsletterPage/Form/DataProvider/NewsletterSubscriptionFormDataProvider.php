@@ -55,6 +55,9 @@ class NewsletterSubscriptionFormDataProvider
     {
         $subscriptionResultTransfer = $this->newsletterClient->checkSubscription($newsletterSubscriptionRequestTransfer);
 
-        return $subscriptionResultTransfer->getSubscriptionResults()[0]->getIsSuccess();
+        /** @var array<\Generated\Shared\Transfer\NewsletterSubscriptionResultTransfer> $newsletterSubscriptionResults */
+        $newsletterSubscriptionResults = $subscriptionResultTransfer->getSubscriptionResults();
+
+        return $newsletterSubscriptionResults[0]->getIsSuccess();
     }
 }

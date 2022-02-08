@@ -12,3 +12,12 @@ parameters:
     checkMissingIterableValueType: false
     featureToggles:
         bleedingEdge: true
+
+services:
+    -
+        class: Symplify\PHPStanRules\Rules\Explicit\NoMixedPropertyFetcherRule
+        tags: [phpstan.rules.rule]
+
+    -
+        class: Symplify\PHPStanRules\Rules\Explicit\NoMixedMethodCallerRule
+        tags: [phpstan.rules.rule]

@@ -53,6 +53,7 @@
     </transfer>
 
     <transfer name="ProductReviewError">
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="ProductView">

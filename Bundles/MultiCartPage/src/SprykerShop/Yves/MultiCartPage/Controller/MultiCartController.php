@@ -271,8 +271,10 @@ class MultiCartController extends AbstractController
             return $this->redirectResponseInternal(MultiCartPageRouteProviderPlugin::ROUTE_NAME_MULTI_CART_INDEX);
         }
 
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $submittedQuoteTransfer */
+        $submittedQuoteTransfer = $multiCartDeleteForm->getData();
         $quoteTransfer = $this->findQuoteOrFail(
-            $multiCartDeleteForm->getData()->getIdQuote(),
+            $submittedQuoteTransfer->getIdQuote(),
         );
 
         if (!$this->canWriteQuote($quoteTransfer)) {

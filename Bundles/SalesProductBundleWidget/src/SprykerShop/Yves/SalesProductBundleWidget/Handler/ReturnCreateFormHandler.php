@@ -64,6 +64,7 @@ class ReturnCreateFormHandler implements ReturnCreateFormHandlerInterface
         array $productBundleData,
         ReturnCreateRequestTransfer $returnCreateRequestTransfer
     ): ReturnCreateRequestTransfer {
+        /** @var \Generated\Shared\Transfer\ItemTransfer $productBundleItemTransfer */
         $productBundleItemTransfer = $productBundleData[ReturnProductBundleItemsForm::KEY_PRODUCT_BUNDLE_DATA];
 
         foreach ($productBundleItemTransferCollection as $itemTransfer) {

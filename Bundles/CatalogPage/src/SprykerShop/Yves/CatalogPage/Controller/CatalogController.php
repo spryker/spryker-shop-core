@@ -330,9 +330,14 @@ class CatalogController extends AbstractController
     protected function reduceRestrictedSortingOptions(array $searchResults): array
     {
         if (!$this->can('SeePricePermissionPlugin') && isset($searchResults[static::URL_PARAM_SORTING])) {
-            $sortParamNames = $searchResults[static::URL_PARAM_SORTING]->getSortParamNames();
+            /** @var \Generated\Shared\Transfer\RestCatalogSearchSortTransfer $sortTransfer */
+            $sortTransfer = $searchResults[static::URL_PARAM_SORTING];
+
+            $sortParamNames = $sortTransfer->getSortParamNames();
             $grantedSortParamNames = array_diff($sortParamNames, static::PRICE_SORTING_DIRECTIONS);
-            $searchResults[static::URL_PARAM_SORTING]->setSortParamNames($grantedSortParamNames);
+            $sortTransfer->setSortParamNames($grantedSortParamNames);
+
+            $searchResults[static::URL_PARAM_SORTING] = $sortTransfer;
         }
 
         return $searchResults;

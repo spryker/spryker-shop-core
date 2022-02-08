@@ -160,7 +160,7 @@ class QuoteRequestAgentViewController extends QuoteRequestAgentAbstractControlle
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     * @param array $quoteRequestVersionTransfers
+     * @param array<\Generated\Shared\Transfer\QuoteRequestVersionTransfer> $quoteRequestVersionTransfers
      * @param string|null $versionReference
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException

@@ -36,7 +36,9 @@ class YvesExceptionServiceProvider extends AbstractPlugin implements ServiceProv
      */
     public function boot(Application $app)
     {
-        $app['dispatcher']->addListener(KernelEvents::EXCEPTION, [$this, 'onKernelException'], -8);
+        /** @var \Symfony\Component\EventDispatcher\EventDispatcher $appDispatcher */
+        $appDispatcher = $app['dispatcher'];
+        $appDispatcher->addListener(KernelEvents::EXCEPTION, [$this, 'onKernelException'], -8);
     }
 
     /**

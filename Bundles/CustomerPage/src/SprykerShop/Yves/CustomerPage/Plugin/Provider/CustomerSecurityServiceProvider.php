@@ -69,6 +69,7 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
     {
         $selectedLanguage = $this->findSelectedLanguage($app);
 
+        /** @phpstan-var \Spryker\Service\Container\Container $app */
         $app['security.firewalls'] = [
             CustomerPageConfig::SECURITY_FIREWALL_NAME => [
                 'anonymous' => true,
@@ -147,6 +148,7 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
     {
         $selectedLanguage = $this->findSelectedLanguage($app);
 
+        /** @phpstan-var \Spryker\Service\Container\Container $app */
         $app['security.exception_listener._proto'] = $app->protect(function ($entryPoint, $name) use ($app, $selectedLanguage) {
             return $app->share(function () use ($app, $entryPoint, $name, $selectedLanguage) {
                 return new ExceptionListener(

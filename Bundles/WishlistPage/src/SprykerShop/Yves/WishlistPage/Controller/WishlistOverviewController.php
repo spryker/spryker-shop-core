@@ -173,6 +173,7 @@ class WishlistOverviewController extends AbstractController
      */
     protected function getWishlistTransfer(FormInterface $wishlistForm)
     {
+        /** @var \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer */
         $wishlistTransfer = $wishlistForm->getData();
         $wishlistTransfer->setFkCustomer($this->getIdCustomer());
 

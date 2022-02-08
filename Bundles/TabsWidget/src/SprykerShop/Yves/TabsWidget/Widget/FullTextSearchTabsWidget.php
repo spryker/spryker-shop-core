@@ -75,7 +75,7 @@ class FullTextSearchTabsWidget extends AbstractWidget
     }
 
     /**
-     * @return array
+     * @return array<\SprykerShop\Yves\TabsWidgetExtension\Plugin\FullTextSearchTabPluginInterface>
      */
     protected function getFullTextSearchTabPlugins(): array
     {

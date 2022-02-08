@@ -99,7 +99,9 @@ class StorageRouter extends AbstractRouter
     protected function getRequest()
     {
         $application = $this->getContainer();
-        $request = ($application->get('request_stack')) ? $application->get('request_stack')->getCurrentRequest() : $application->get('request');
+        /** @var \Symfony\Component\HttpFoundation\RequestStack|null $requestStack */
+        $requestStack = $application->get('request_stack');
+        $request = $requestStack ? $requestStack->getCurrentRequest() : $application->get('request');
 
         return $request;
     }

@@ -392,6 +392,7 @@ class CheckoutAddressCollectionForm extends AbstractType
      */
     protected function getQuoteItemShipmentTransfer(QuoteTransfer $quoteTransfer): ShipmentTransfer
     {
+        /** @var \Generated\Shared\Transfer\ItemTransfer|null $itemTransfer */
         $itemTransfer = $quoteTransfer->getItems()
             ->getIterator()
             ->current();

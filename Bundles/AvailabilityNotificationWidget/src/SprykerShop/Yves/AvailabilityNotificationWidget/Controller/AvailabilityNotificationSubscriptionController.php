@@ -60,6 +60,7 @@ class AvailabilityNotificationSubscriptionController extends AbstractController
             return;
         }
 
+        /** @var \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer */
         $availabilityNotificationSubscriptionTransfer = $subscriptionForm->getData();
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 

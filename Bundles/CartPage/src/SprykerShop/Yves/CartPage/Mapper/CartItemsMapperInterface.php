@@ -12,7 +12,7 @@ use ArrayObject;
 interface CartItemsMapperInterface
 {
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject $items
      * @param string $localeName
      *
      * @return array

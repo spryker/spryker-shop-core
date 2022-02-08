@@ -48,7 +48,9 @@ class ShopControllerEventServiceProvider extends AbstractPlugin implements Servi
             ));
         }
 
-        $app['dispatcher']->addListener(KernelEvents::CONTROLLER, function (ControllerEvent $event) use ($app) {
+        /** @var \Symfony\Component\EventDispatcher\EventDispatcher $appDispatcher */
+        $appDispatcher = $app['dispatcher'];
+        $appDispatcher->addListener(KernelEvents::CONTROLLER, function (ControllerEvent $event) use ($app) {
             $this->onKernelController($event, $app);
         }, 0);
     }
