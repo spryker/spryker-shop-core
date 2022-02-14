@@ -1,1 +1,16 @@
-[]
+[
+    {
+        "fileName": "src/SprykerShop/Yves/StorageRouter/Dependency/Client/StorageRouterToUrlStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `url` in method `SprykerShop\\Yves\\StorageRouter\\Dependency\\Client\\StorageRouterToUrlStorageClientBridge::matchUrl()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/StorageRouter/Dependency/Client/StorageRouterToUrlStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `localeName` in method `SprykerShop\\Yves\\StorageRouter\\Dependency\\Client\\StorageRouterToUrlStorageClientBridge::matchUrl()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

@@ -7,6 +7,20 @@
         "priority": "2"
     },
     {
+        "fileName": "src/SprykerShop/Yves/QuoteRequestAgentPage/Dependency/Client/QuoteRequestAgentPageToMessengerClientBridge.php",
+        "description": "Bridges: Type should be defined for param `message` in method `SprykerShop\\Yves\\QuoteRequestAgentPage\\Dependency\\Client\\QuoteRequestAgentPageToMessengerClientBridge::addSuccessMessage()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/QuoteRequestAgentPage/Dependency/Client/QuoteRequestAgentPageToMessengerClientBridge.php",
+        "description": "Bridges: Type should be defined for param `message` in method `SprykerShop\\Yves\\QuoteRequestAgentPage\\Dependency\\Client\\QuoteRequestAgentPageToMessengerClientBridge::addErrorMessage()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/SprykerShop/Yves/QuoteRequestAgentPage/Dependency/Client/QuoteRequestAgentPageToMessengerClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `addSuccessMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",

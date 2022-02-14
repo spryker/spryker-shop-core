@@ -14,6 +14,34 @@
         "priority": "2"
     },
     {
+        "fileName": "src/SprykerShop/Yves/ShoppingListPage/Dependency/Service/ShoppingListPageToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `jsonValue` in method `SprykerShop\\Yves\\ShoppingListPage\\Dependency\\Service\\ShoppingListPageToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/ShoppingListPage/Dependency/Service/ShoppingListPageToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `assoc` in method `SprykerShop\\Yves\\ShoppingListPage\\Dependency\\Service\\ShoppingListPageToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/ShoppingListPage/Dependency/Service/ShoppingListPageToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `SprykerShop\\Yves\\ShoppingListPage\\Dependency\\Service\\ShoppingListPageToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/ShoppingListPage/Dependency/Service/ShoppingListPageToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `SprykerShop\\Yves\\ShoppingListPage\\Dependency\\Service\\ShoppingListPageToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/SprykerShop/Yves/ShoppingListPage/Dependency/Service/ShoppingListPageToUtilEncodingServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `decodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",

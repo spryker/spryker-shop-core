@@ -1,14 +1,14 @@
 [
     {
         "fileName": "src/SprykerShop/Yves/CmsSearchPage/Dependency/Client/CmsSearchPageToCmsPageSearchClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `search()`. 2 params expexted but got 1. Got `array $requestParameters` but expected to be `array $requestParameters`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "description": "Bridges: The bridge interface has incorrect method signature for `search()`. 2 params expected but got 1. Got `array $requestParameters` but expected to be `array $requestParameters`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/SprykerShop/Yves/CmsSearchPage/Dependency/Client/CmsSearchPageToCmsPageSearchClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `searchCount()`. 2 params expexted but got 1. Got `array $requestParameters` but expected to be `array $requestParameters`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "description": "Bridges: The bridge interface has incorrect method signature for `searchCount()`. 2 params expected but got 1. Got `array $requestParameters` but expected to be `array $requestParameters`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"

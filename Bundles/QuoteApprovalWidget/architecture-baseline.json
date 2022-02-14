@@ -7,6 +7,20 @@
         "priority": "2"
     },
     {
+        "fileName": "src/SprykerShop/Yves/QuoteApprovalWidget/Dependency/Client/QuoteApprovalWidgetToGlossaryStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `id` in method `SprykerShop\\Yves\\QuoteApprovalWidget\\Dependency\\Client\\QuoteApprovalWidgetToGlossaryStorageClientBridge::translate()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/QuoteApprovalWidget/Dependency/Client/QuoteApprovalWidgetToGlossaryStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `localeName` in method `SprykerShop\\Yves\\QuoteApprovalWidget\\Dependency\\Client\\QuoteApprovalWidgetToGlossaryStorageClientBridge::translate()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/SprykerShop/Yves/QuoteApprovalWidget/Dependency/Client/QuoteApprovalWidgetToGlossaryStorageClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `translate()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",

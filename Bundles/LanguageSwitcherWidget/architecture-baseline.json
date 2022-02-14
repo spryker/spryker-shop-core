@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/SprykerShop/Yves/LanguageSwitcherWidget/Dependency/Client/LanguageSwitcherWidgetToUrlStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `url` in method `SprykerShop\\Yves\\LanguageSwitcherWidget\\Dependency\\Client\\LanguageSwitcherWidgetToUrlStorageClientBridge::findUrlStorageTransferByUrl()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/SprykerShop/Yves/LanguageSwitcherWidget/Dependency/Client/LanguageSwitcherWidgetToUrlStorageClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `findUrlStorageTransferByUrl()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",

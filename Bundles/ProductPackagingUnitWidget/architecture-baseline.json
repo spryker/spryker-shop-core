@@ -1,1 +1,16 @@
-[]
+[
+    {
+        "fileName": "src/SprykerShop/Yves/ProductPackagingUnitWidget/Dependency/Service/ProductPackagingUnitWidgetToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `SprykerShop\\Yves\\ProductPackagingUnitWidget\\Dependency\\Service\\ProductPackagingUnitWidgetToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/ProductPackagingUnitWidget/Dependency/Service/ProductPackagingUnitWidgetToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `SprykerShop\\Yves\\ProductPackagingUnitWidget\\Dependency\\Service\\ProductPackagingUnitWidgetToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

@@ -28,6 +28,27 @@
         "priority": "1"
     },
     {
+        "fileName": "src/SprykerShop/Yves/CatalogPage/Dependency/Client/CatalogPageToCatalogClientBridge.php",
+        "description": "Bridges: Type should be defined for param `searchString` in method `SprykerShop\\Yves\\CatalogPage\\Dependency\\Client\\CatalogPageToCatalogClientBridge::catalogSearch()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CatalogPage/Dependency/Client/CatalogPageToCatalogClientBridge.php",
+        "description": "Bridges: Type should be defined for param `searchString` in method `SprykerShop\\Yves\\CatalogPage\\Dependency\\Client\\CatalogPageToCatalogClientBridge::catalogSuggestSearch()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CatalogPage/Dependency/Client/CatalogPageToCatalogClientBridge.php",
+        "description": "Bridges: Type should be defined for param `mode` in method `SprykerShop\\Yves\\CatalogPage\\Dependency\\Client\\CatalogPageToCatalogClientBridge::setCatalogViewMode()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/SprykerShop/Yves/CatalogPage/Dependency/Client/CatalogPageToCatalogClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `catalogSearch()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -63,9 +84,30 @@
         "priority": "2"
     },
     {
+        "fileName": "src/SprykerShop/Yves/CatalogPage/Dependency/Client/CatalogPageToProductCategoryFilterClientBridge.php",
+        "description": "Bridges: Type should be defined for param `idCategory` in method `SprykerShop\\Yves\\CatalogPage\\Dependency\\Client\\CatalogPageToProductCategoryFilterClientBridge::updateCategoryFacets()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CatalogPage/Dependency/Client/CatalogPageToProductCategoryFilterClientBridge.php",
+        "description": "Bridges: Type should be defined for param `localeName` in method `SprykerShop\\Yves\\CatalogPage\\Dependency\\Client\\CatalogPageToProductCategoryFilterClientBridge::updateCategoryFacets()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/SprykerShop/Yves/CatalogPage/Dependency/Client/CatalogPageToProductCategoryFilterClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `updateCategoryFacets()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CatalogPage/Dependency/Client/CatalogPageToProductCategoryFilterStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `idCategory` in method `SprykerShop\\Yves\\CatalogPage\\Dependency\\Client\\CatalogPageToProductCategoryFilterStorageClientBridge::getProductCategoryFilterByIdCategory()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

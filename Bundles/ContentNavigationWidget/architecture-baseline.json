@@ -1,5 +1,19 @@
 [
     {
+        "fileName": "src/SprykerShop/Yves/ContentNavigationWidget/Dependency/Client/ContentNavigationWidgetToNavigationStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `navigationKey` in method `SprykerShop\\Yves\\ContentNavigationWidget\\Dependency\\Client\\ContentNavigationWidgetToNavigationStorageClientBridge::findNavigationTreeByKey()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/ContentNavigationWidget/Dependency/Client/ContentNavigationWidgetToNavigationStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `localeName` in method `SprykerShop\\Yves\\ContentNavigationWidget\\Dependency\\Client\\ContentNavigationWidgetToNavigationStorageClientBridge::findNavigationTreeByKey()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/SprykerShop/Yves/ContentNavigationWidget/Dependency/Client/ContentNavigationWidgetToNavigationStorageClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `findNavigationTreeByKey()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
