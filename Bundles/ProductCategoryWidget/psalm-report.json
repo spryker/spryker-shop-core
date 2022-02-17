@@ -3,27 +3,27 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "MismatchingDocblockReturnType",
-            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ProductCategoryStorageTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductCategoryWidget/src/SprykerShop/Yves/ProductCategoryWidget/Widget/ProductBreadcrumbsWithCategoriesWidget.php",
-            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\ProductCategoryStorageTransfer[]",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ProductCategoryStorageTransfer[]",
-            "error_level": 4,
-            "shortcode": 142
-        },
-        {
-            "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
+            "line_from": 54,
+            "line_to": 54,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\ProductCategoryWidget\\Dependency\\Client\\ProductCategoryWidgetToProductCategoryStorageClientInterface::findProductAbstractCategory cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ProductCategoryWidget/src/SprykerShop/Yves/ProductCategoryWidget/Widget/ProductBreadcrumbsWithCategoriesWidget.php",
-            "snippet": "            ->findProductAbstractCategory($productViewTransfer->getIdProductAbstract(), $this->getLocale());",
+            "snippet": "                $productViewTransfer->getIdProductAbstract(),",
             "selected_text": "$productViewTransfer->getIdProductAbstract()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductCategoryStorageTransfer> variable ",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductCategoryWidget/src/SprykerShop/Yves/ProductCategoryWidget/Widget/ProductBreadcrumbsWithCategoriesWidget.php",
+            "snippet": "        $productCategories = $productAbstractCategoryStorageTransfer->getCategories()->getArrayCopy();",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
         }
     ],
     "deprecation": [

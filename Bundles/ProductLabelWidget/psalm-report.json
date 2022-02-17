@@ -20,7 +20,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of SprykerShop\\Yves\\ProductLabelWidget\\Dependency\\Client\\ProductLabelWidgetToProductLabelStorageClientInterface::expandProductView cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ProductLabelWidget/src/SprykerShop/Yves/ProductLabelWidget/Plugin/ProductGroupWidget/ProductLabelProductViewExpanderPlugin.php",
-            "snippet": "                $storeTransfer->getName()",
+            "snippet": "                $storeTransfer->getName(),",
             "selected_text": "$storeTransfer->getName()",
             "error_level": 3,
             "shortcode": 78

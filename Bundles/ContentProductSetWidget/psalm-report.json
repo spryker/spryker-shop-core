@@ -12,13 +12,25 @@
             "selected_text": "$contentProductSetTypeTransfer->getIdProductSet()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 149,
+            "line_to": 155,
+            "type": "RedundantCast",
+            "message": "Redundant cast to string",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentProductSetWidget/src/SprykerShop/Yves/ContentProductSetWidget/Twig/ContentProductSetTwigFunctionProvider.php",
+            "snippet": "            return (string)$this->twig->render(\n                $this->getAvailableTemplates()[$templateIdentifier],\n                [\n                    'productSet' => $productSetDataStorageTransfer,\n                    'productViews' => $productAbstractViewCollection,\n                ],\n            );",
+            "selected_text": "(string)$this->twig->render(\n                $this->getAvailableTemplates()[$templateIdentifier],\n                [\n                    'productSet' => $productSetDataStorageTransfer,\n                    'productViews' => $productAbstractViewCollection,\n                ],\n            )",
+            "error_level": 4,
+            "shortcode": 262
         }
     ],
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 155,
-            "line_to": 155,
+            "line_from": 176,
+            "line_to": 176,
             "type": "DeprecatedConstant",
             "message": "Constant SprykerShop\\Yves\\ContentProductSetWidget\\Twig\\ContentProductSetTwigFunctionProvider::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT is deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ContentProductSetWidget/src/SprykerShop/Yves/ContentProductSetWidget/Twig/ContentProductSetTwigFunctionProvider.php",

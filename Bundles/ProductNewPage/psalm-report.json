@@ -1,19 +1,6 @@
 {
     "error": [],
-    "warning": [
-        {
-            "severity": "info",
-            "line_from": 91,
-            "line_to": 91,
-            "type": "PossiblyInvalidArrayAccess",
-            "message": "Cannot access array value on non-array variable $categoryNode of type true",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductNewPage/src/SprykerShop/Yves/ProductNewPage/Controller/NewProductsController.php",
-            "snippet": "        return $categoryNode ? $categoryNode['data'] : [];",
-            "selected_text": "$categoryNode['data']",
-            "error_level": 3,
-            "shortcode": 109
-        }
-    ],
+    "warning": [],
     "deprecation": [
         {
             "severity": "info",
@@ -36,6 +23,18 @@
             "file_name": "vendor/spryker/spryker-shop/Bundles/ProductNewPage/src/SprykerShop/Yves/ProductNewPage/Plugin/Provider/ProductNewPageControllerProvider.php",
             "snippet": "class ProductNewPageControllerProvider extends AbstractYvesControllerProvider",
             "selected_text": "AbstractYvesControllerProvider",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/Controller/AbstractController.php",
+            "snippet": "     * @var \\Spryker\\Yves\\Kernel\\Application|\\Spryker\\Service\\Container\\ContainerInterface",
+            "selected_text": "\\Spryker\\Yves\\Kernel\\Application|\\Spryker\\Service\\Container\\ContainerInterface",
             "error_level": 2,
             "shortcode": 98
         }

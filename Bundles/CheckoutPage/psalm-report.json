@@ -59,18 +59,6 @@
             "selected_text": "$choices[$paymentMethodSubForm->getProviderName()][$subFormName]",
             "error_level": 6,
             "shortcode": 115
-        },
-        {
-            "severity": "error",
-            "line_from": 75,
-            "line_to": 75,
-            "type": "MissingTemplateParam",
-            "message": "ArrayObject has missing template params, expecting 2",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CheckoutPage/src/SprykerShop/Yves/CheckoutPage/Form/Steps/ShipmentCollectionForm.php",
-            "snippet": "        /** @var \\ArrayObject<\\Generated\\Shared\\Transfer\\ShipmentGroupTransfer> $shipmentGroupCollection */\n        $shipmentGroupCollection = $options[static::OPTION_SHIPMENT_GROUPS];",
-            "selected_text": "$shipmentGroupCollection",
-            "error_level": -1,
-            "shortcode": 182
         }
     ],
     "warning": [
@@ -412,66 +400,6 @@
         },
         {
             "severity": "info",
-            "line_from": 74,
-            "line_to": 74,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of SprykerShop\\Yves\\CheckoutPage\\Form\\Steps\\MultiShipmentForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CheckoutPage/src/SprykerShop/Yves/CheckoutPage/Form/Steps/MultiShipmentForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of SprykerShop\\Yves\\CheckoutPage\\Form\\Steps\\PaymentForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CheckoutPage/src/SprykerShop/Yves/CheckoutPage/Form/Steps/PaymentForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of SprykerShop\\Yves\\CheckoutPage\\Form\\Steps\\ShipmentCollectionForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CheckoutPage/src/SprykerShop/Yves/CheckoutPage/Form/Steps/ShipmentCollectionForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 73,
-            "line_to": 73,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of SprykerShop\\Yves\\CheckoutPage\\Form\\Steps\\ShipmentForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CheckoutPage/src/SprykerShop/Yves/CheckoutPage/Form/Steps/ShipmentForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of SprykerShop\\Yves\\CheckoutPage\\Form\\Steps\\ShipmentGroupForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CheckoutPage/src/SprykerShop/Yves/CheckoutPage/Form/Steps/ShipmentGroupForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 63,
             "line_to": 63,
             "type": "PossiblyNullPropertyAssignmentValue",
@@ -481,18 +409,6 @@
             "selected_text": "$this->findShipmentGroupTransfer($builder, $options)",
             "error_level": 3,
             "shortcode": 148
-        },
-        {
-            "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of SprykerShop\\Yves\\CheckoutPage\\Form\\Steps\\SummaryForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CheckoutPage/src/SprykerShop/Yves/CheckoutPage/Form/Steps/SummaryForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",

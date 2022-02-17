@@ -53,8 +53,8 @@
         },
         {
             "severity": "info",
-            "line_from": 31,
-            "line_to": 31,
+            "line_from": 34,
+            "line_to": 34,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ShopTranslator/src/SprykerShop/Yves/ShopTranslator/Plugin/Provider/TranslationServiceProvider.php",
@@ -65,8 +65,8 @@
         },
         {
             "severity": "info",
-            "line_from": 31,
-            "line_to": 31,
+            "line_from": 34,
+            "line_to": 34,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ShopTranslator/src/SprykerShop/Yves/ShopTranslator/Plugin/Provider/TranslationServiceProvider.php",
@@ -77,8 +77,8 @@
         },
         {
             "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
+            "line_from": 44,
+            "line_to": 44,
             "type": "DeprecatedClass",
             "message": "SprykerShop\\Yves\\ShopTranslator\\Dependency\\Client\\ShopTranslatorToGlossaryStorageClientBridge is marked deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ShopTranslator/src/SprykerShop/Yves/ShopTranslator/ShopTranslatorDependencyProvider.php",

@@ -1,5 +1,18 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 2 of SprykerShop\\Yves\\ProductConfigurationCartWidget\\Form\\ProductConfigurationButtonForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductConfigurationCartWidget/src/SprykerShop/Yves/ProductConfigurationCartWidget/Form/ProductConfigurationButtonForm.php",
+            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
+            "selected_text": "$options",
+            "error_level": 5,
+            "shortcode": 140
+        }
+    ],
     "deprecation": []
 }

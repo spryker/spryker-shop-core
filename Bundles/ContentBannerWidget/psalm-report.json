@@ -1,5 +1,18 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 110,
+            "line_to": 113,
+            "type": "RedundantCast",
+            "message": "Redundant cast to string",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentBannerWidget/src/SprykerShop/Yves/ContentBannerWidget/Twig/ContentBannerTwigFunctionProvider.php",
+            "snippet": "            return (string)$this->twig->render(\n                $this->getAvailableTemplates()[$templateIdentifier],\n                ['banner' => $contentBannerTypeTransfer],\n            );",
+            "selected_text": "(string)$this->twig->render(\n                $this->getAvailableTemplates()[$templateIdentifier],\n                ['banner' => $contentBannerTypeTransfer],\n            )",
+            "error_level": 4,
+            "shortcode": 262
+        }
+    ],
     "deprecation": []
 }

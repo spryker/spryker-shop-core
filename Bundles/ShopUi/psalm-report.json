@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
+            "line_from": 66,
+            "line_to": 66,
             "type": "RedundantCondition",
             "message": "Twig\\TwigFunction|null can never contain false",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Plugin/Twig/FunctionTwigPlugin.php",
@@ -15,20 +15,20 @@
         },
         {
             "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
-            "type": "InternalMethod",
-            "message": "The method Twig\\Environment::getFunction is internal to Twig but called from SprykerShop\\Yves\\ShopUi\\Plugin\\Twig\\FunctionTwigPlugin",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Plugin/Twig/FunctionTwigPlugin.php",
-            "snippet": "                return $twig->getFunction($name) !== false;",
-            "selected_text": "getFunction",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "TypeDoesNotContainType",
+            "message": "\"development\" cannot be identical to \"\"",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/ShopUiConfig.php",
+            "snippet": "        return APPLICATION_ENV === 'development';",
+            "selected_text": "APPLICATION_ENV === 'development'",
             "error_level": 4,
-            "shortcode": 175
+            "shortcode": 56
         },
         {
             "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
+            "line_from": 108,
+            "line_to": 108,
             "type": "PossiblyNullOperand",
             "message": "Cannot concatenate with a possibly null null|string",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Twig/Node/ShopUiDefineTwigNode.php",
@@ -36,18 +36,6 @@
             "selected_text": "$this->getTemplateName()",
             "error_level": 1,
             "shortcode": 80
-        },
-        {
-            "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
-            "type": "InternalMethod",
-            "message": "The method Twig\\ExpressionParser::parseExpression is internal to Twig but called from SprykerShop\\Yves\\ShopUi\\Twig\\TokenParser\\ShopUiDefineTwigTokenParser",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Twig/TokenParser/ShopUiDefineTwigTokenParser.php",
-            "snippet": "        $value = $parser->getExpressionParser()->parseExpression();",
-            "selected_text": "parseExpression",
-            "error_level": 4,
-            "shortcode": 175
         }
     ],
     "deprecation": [

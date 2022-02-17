@@ -1,10 +1,23 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 107,
+            "line_to": 107,
+            "type": "InvalidArgument",
+            "message": "Argument 3 of Symfony\\Component\\Security\\Core\\Authentication\\Token\\UsernamePasswordToken::__construct expects array<array-key, string>, \"secured\" provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/Plugin/FixAgentTokenAfterCustomerAuthenticationSuccessPlugin.php",
+            "snippet": "            CustomerPageConfig::SECURITY_FIREWALL_NAME,",
+            "selected_text": "CustomerPageConfig::SECURITY_FIREWALL_NAME",
+            "error_level": 6,
+            "shortcode": 4
+        }
+    ],
     "warning": [
         {
             "severity": "info",
-            "line_from": 56,
-            "line_to": 56,
+            "line_from": 58,
+            "line_to": 58,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getUser on possibly null value",
             "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/Plugin/FixAgentTokenAfterCustomerAuthenticationSuccessPlugin.php",
@@ -15,8 +28,8 @@
         },
         {
             "severity": "info",
-            "line_from": 71,
-            "line_to": 71,
+            "line_from": 73,
+            "line_to": 73,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getUser on possibly null value",
             "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/Plugin/FixAgentTokenAfterCustomerAuthenticationSuccessPlugin.php",
@@ -24,6 +37,18 @@
             "selected_text": "getUser",
             "error_level": 3,
             "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 104,
+            "line_to": 109,
+            "type": "TooManyArguments",
+            "message": "Too many arguments for Symfony\\Component\\Security\\Core\\Authentication\\Token\\UsernamePasswordToken::__construct - expecting 3 but saw 4",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/Plugin/FixAgentTokenAfterCustomerAuthenticationSuccessPlugin.php",
+            "snippet": "        return new UsernamePasswordToken(\n            $user,\n            $user->getPassword(),\n            CustomerPageConfig::SECURITY_FIREWALL_NAME,\n            $this->getCustomerRoles($customer->getRoles()),\n        );",
+            "selected_text": "new UsernamePasswordToken(\n            $user,\n            $user->getPassword(),\n            CustomerPageConfig::SECURITY_FIREWALL_NAME,\n            $this->getCustomerRoles($customer->getRoles()),\n        )",
+            "error_level": 4,
+            "shortcode": 26
         },
         {
             "severity": "info",
@@ -36,6 +61,18 @@
             "selected_text": "$userTransfer",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 24,
+            "line_to": 24,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'array<string, array<int, array{0: string, 1?: int}|int|string>|string>' for Symfony\\Component\\EventDispatcher\\EventSubscriberInterface::getSubscribedEvents is more specific than the implemented return type for SprykerShop\\Yves\\AgentPage\\Plugin\\Subscriber\\SwitchUserEventSubscriber::getsubscribedevents 'array<array-key, mixed>'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/Plugin/Subscriber/SwitchUserEventSubscriber.php",
+            "snippet": "     * @return array",
+            "selected_text": "array",
+            "error_level": 5,
+            "shortcode": 166
         },
         {
             "severity": "info",
@@ -65,8 +102,8 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
+            "line_from": 94,
+            "line_to": 94,
             "type": "DeprecatedMethod",
             "message": "The method SprykerShop\\Yves\\AgentPage\\AgentPageDependencyProvider::addApplication has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/AgentPageDependencyProvider.php",
@@ -77,8 +114,8 @@
         },
         {
             "severity": "info",
-            "line_from": 184,
-            "line_to": 184,
+            "line_from": 218,
+            "line_to": 218,
             "type": "DeprecatedConstant",
             "message": "Constant SprykerShop\\Yves\\AgentPage\\AgentPageDependencyProvider::APPLICATION is deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/AgentPageDependencyProvider.php",
@@ -89,8 +126,8 @@
         },
         {
             "severity": "info",
-            "line_from": 185,
-            "line_to": 185,
+            "line_from": 219,
+            "line_to": 219,
             "type": "DeprecatedClass",
             "message": "Spryker\\Yves\\Kernel\\Plugin\\Pimple is marked deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/AgentPageDependencyProvider.php",
@@ -101,8 +138,8 @@
         },
         {
             "severity": "info",
-            "line_from": 151,
-            "line_to": 151,
+            "line_from": 156,
+            "line_to": 156,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/AgentPageFactory.php",
@@ -113,8 +150,8 @@
         },
         {
             "severity": "info",
-            "line_from": 153,
-            "line_to": 153,
+            "line_from": 158,
+            "line_to": 158,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/AgentPageFactory.php",
@@ -125,8 +162,8 @@
         },
         {
             "severity": "info",
-            "line_from": 155,
-            "line_to": 155,
+            "line_from": 160,
+            "line_to": 160,
             "type": "DeprecatedConstant",
             "message": "Constant SprykerShop\\Yves\\AgentPage\\AgentPageDependencyProvider::APPLICATION is deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/AgentPageFactory.php",
@@ -134,6 +171,18 @@
             "selected_text": "AgentPageDependencyProvider::APPLICATION",
             "error_level": 2,
             "shortcode": 170
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "DeprecatedMethod",
+            "message": "The method SprykerShop\\Yves\\AgentPage\\AgentPageConfig::isLocaleInLoginCheckPath has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/Formatter/LoginCheckUrlFormatter.php",
+            "snippet": "        if ($this->agentPageConfig->isLocaleInLoginCheckPath()) {",
+            "selected_text": "isLocaleInLoginCheckPath",
+            "error_level": 2,
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -173,8 +222,8 @@
         },
         {
             "severity": "info",
-            "line_from": 31,
-            "line_to": 31,
+            "line_from": 42,
+            "line_to": 42,
             "type": "DeprecatedMethod",
             "message": "The method SprykerShop\\Yves\\AgentPage\\Plugin\\Provider\\AgentPageControllerProvider::addLogoutRoute has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/Plugin/Provider/AgentPageControllerProvider.php",
@@ -185,8 +234,8 @@
         },
         {
             "severity": "info",
-            "line_from": 65,
-            "line_to": 65,
+            "line_from": 80,
+            "line_to": 80,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/Plugin/Provider/AgentPageSecurityServiceProvider.php",
@@ -197,8 +246,20 @@
         },
         {
             "severity": "info",
-            "line_from": 81,
-            "line_to": 81,
+            "line_from": 90,
+            "line_to": 90,
+            "type": "DeprecatedClass",
+            "message": "Class Symfony\\Component\\Security\\Http\\Firewall\\UsernamePasswordFormAuthenticationListener is deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/Plugin/Provider/AgentPageSecurityServiceProvider.php",
+            "snippet": "                    'listener_class' => UsernamePasswordFormAuthenticationListener::class,",
+            "selected_text": "UsernamePasswordFormAuthenticationListener::class",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 96,
+            "line_to": 96,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/Plugin/Provider/AgentPageSecurityServiceProvider.php",
@@ -209,8 +270,8 @@
         },
         {
             "severity": "info",
-            "line_from": 96,
-            "line_to": 96,
+            "line_from": 111,
+            "line_to": 111,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/Plugin/Provider/AgentPageSecurityServiceProvider.php",
@@ -221,8 +282,8 @@
         },
         {
             "severity": "info",
-            "line_from": 106,
-            "line_to": 106,
+            "line_from": 121,
+            "line_to": 121,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/Plugin/Provider/AgentPageSecurityServiceProvider.php",
@@ -233,8 +294,8 @@
         },
         {
             "severity": "info",
-            "line_from": 114,
-            "line_to": 114,
+            "line_from": 129,
+            "line_to": 129,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/Plugin/Provider/AgentPageSecurityServiceProvider.php",
@@ -245,8 +306,8 @@
         },
         {
             "severity": "info",
-            "line_from": 124,
-            "line_to": 124,
+            "line_from": 139,
+            "line_to": 139,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/Plugin/Provider/AgentPageSecurityServiceProvider.php",
@@ -257,8 +318,8 @@
         },
         {
             "severity": "info",
-            "line_from": 124,
-            "line_to": 124,
+            "line_from": 139,
+            "line_to": 139,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/Plugin/Provider/AgentPageSecurityServiceProvider.php",
@@ -269,8 +330,8 @@
         },
         {
             "severity": "info",
-            "line_from": 136,
-            "line_to": 136,
+            "line_from": 151,
+            "line_to": 151,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/Plugin/Provider/AgentPageSecurityServiceProvider.php",
@@ -281,8 +342,8 @@
         },
         {
             "severity": "info",
-            "line_from": 136,
-            "line_to": 136,
+            "line_from": 151,
+            "line_to": 151,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/Plugin/Provider/AgentPageSecurityServiceProvider.php",
@@ -293,8 +354,8 @@
         },
         {
             "severity": "info",
-            "line_from": 148,
-            "line_to": 148,
+            "line_from": 163,
+            "line_to": 163,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/Plugin/Provider/AgentPageSecurityServiceProvider.php",
@@ -305,8 +366,8 @@
         },
         {
             "severity": "info",
-            "line_from": 148,
-            "line_to": 148,
+            "line_from": 163,
+            "line_to": 163,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/Plugin/Provider/AgentPageSecurityServiceProvider.php",
@@ -317,13 +378,49 @@
         },
         {
             "severity": "info",
-            "line_from": 166,
-            "line_to": 166,
+            "line_from": 181,
+            "line_to": 181,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/Plugin/Provider/AgentPageSecurityServiceProvider.php",
             "snippet": "        $currentLocale = $app['locale'];",
             "selected_text": "$app",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "DeprecatedClass",
+            "message": "Symfony\\Component\\Security\\Core\\Exception\\UsernameNotFoundException is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/Plugin/Provider/AgentUserProvider.php",
+            "snippet": "            throw new UsernameNotFoundException();",
+            "selected_text": "new UsernameNotFoundException()",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 91,
+            "line_to": 91,
+            "type": "DeprecatedMethod",
+            "message": "The method Symfony\\Component\\Security\\Core\\User\\UserInterface::getUsername has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/Plugin/Provider/AgentUserProvider.php",
+            "snippet": "            return $this->findUserByUsername($user->getUsername());",
+            "selected_text": "getUsername",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 65,
+            "line_to": 65,
+            "type": "DeprecatedMethod",
+            "message": "The method SprykerShop\\Yves\\AgentPage\\Plugin\\Subscriber\\SwitchUserEventSubscriber::clearAgentsQuote has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/AgentPage/src/SprykerShop/Yves/AgentPage/Plugin/Subscriber/SwitchUserEventSubscriber.php",
+            "snippet": "        $this->clearAgentsQuote();",
+            "selected_text": "clearAgentsQuote",
             "error_level": 2,
             "shortcode": 1
         }

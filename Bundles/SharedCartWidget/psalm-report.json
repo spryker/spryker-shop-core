@@ -8,7 +8,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of SprykerShop\\Yves\\SharedCartWidget\\Widget\\CartDeleteSharingCompanyUsersListWidget::excludeCustomerFromCustomerCollection cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/SharedCartWidget/src/SprykerShop/Yves/SharedCartWidget/Widget/CartDeleteSharingCompanyUsersListWidget.php",
-            "snippet": "            $quoteTransfer->getCustomer()",
+            "snippet": "            $quoteTransfer->getCustomer(),",
             "selected_text": "$quoteTransfer->getCustomer()",
             "error_level": 3,
             "shortcode": 78
@@ -113,8 +113,8 @@
         },
         {
             "severity": "info",
-            "line_from": 34,
-            "line_to": 34,
+            "line_from": 37,
+            "line_to": 37,
             "type": "DeprecatedClass",
             "message": "SprykerShop\\Yves\\SharedCartWidget\\Widget\\CartDeleteCompanyUsersListWidget is marked deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/SharedCartWidget/src/SprykerShop/Yves/SharedCartWidget/Plugin/MultiCartPage/CartDeleteCompanyUsersListWidgetPlugin.php",
@@ -125,8 +125,8 @@
         },
         {
             "severity": "info",
-            "line_from": 60,
-            "line_to": 60,
+            "line_from": 63,
+            "line_to": 63,
             "type": "DeprecatedClass",
             "message": "SprykerShop\\Yves\\SharedCartWidget\\Widget\\CartDeleteCompanyUsersListWidget is marked deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/SharedCartWidget/src/SprykerShop/Yves/SharedCartWidget/Plugin/MultiCartPage/CartDeleteCompanyUsersListWidgetPlugin.php",

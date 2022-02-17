@@ -1,5 +1,18 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\ProductOfferWidget\\Dependency\\Client\\ProductOfferWidgetToMerchantProductOfferStorageClientBridge::findProductOfferStorageByReference cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductOfferWidget/src/SprykerShop/Yves/ProductOfferWidget/Widget/ShoppingListProductOfferWidget.php",
+            "snippet": "                $productViewTransfer->getProductOfferReference(),",
+            "selected_text": "$productViewTransfer->getProductOfferReference()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
     "deprecation": []
 }

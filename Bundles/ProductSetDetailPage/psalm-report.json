@@ -2,27 +2,15 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "InvalidReturnType",
-            "message": "The declared return type 'array<array-key, array<array-key, string>>' for SprykerShop\\Yves\\ProductSetDetailPage\\OptionResetUrlGenerator\\OptionResetUrlGenerator::getProductOptionResetUrls is incorrect, got 'non-empty-array<int|null, array<array-key, string>>'",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductSetDetailPage/src/SprykerShop/Yves/ProductSetDetailPage/OptionResetUrlGenerator/OptionResetUrlGenerator.php",
-            "snippet": "     * @return string[][]",
-            "selected_text": "string[][]",
-            "error_level": 6,
-            "shortcode": 11
-        },
-        {
-            "severity": "error",
             "line_from": 59,
             "line_to": 59,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'non-empty-array<int|null, array<array-key, string>>' does not match the declared return type 'array<array-key, array<array-key, string>>' for SprykerShop\\Yves\\ProductSetDetailPage\\OptionResetUrlGenerator\\OptionResetUrlGenerator::getProductOptionResetUrls",
+            "type": "InvalidArrayOffset",
+            "message": "Cannot create offset of type int|null, expecting array-key",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ProductSetDetailPage/src/SprykerShop/Yves/ProductSetDetailPage/OptionResetUrlGenerator/OptionResetUrlGenerator.php",
             "snippet": "        return [$idProductAbstract => $productOptionResetUrls];",
             "selected_text": "[$idProductAbstract => $productOptionResetUrls]",
             "error_level": 6,
-            "shortcode": 128
+            "shortcode": 115
         }
     ],
     "warning": [

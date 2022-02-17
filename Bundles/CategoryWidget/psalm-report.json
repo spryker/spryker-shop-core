@@ -28,12 +28,12 @@
         },
         {
             "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
+            "line_from": 53,
+            "line_to": 53,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CategoryWidget/src/SprykerShop/Yves/CategoryWidget/Plugin/Provider/CategoryServiceProvider.php",
-            "snippet": "            'categories' => $this->getFactory()->getCategoryStorageClient()->getCategories($app['locale']),",
+            "snippet": "                $app['locale'],",
             "selected_text": "$app",
             "error_level": 2,
             "shortcode": 1

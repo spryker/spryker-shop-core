@@ -3,20 +3,20 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Symfony\\Component\\Form\\FormErrorIterator::getMessage does not exist",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductSearchWidget/src/SprykerShop/Yves/ProductSearchWidget/Controller/ProductConcreteAddController.php",
-            "snippet": "            $this->addErrorMessage($error->getMessage());",
-            "selected_text": "getMessage",
-            "error_level": 3,
-            "shortcode": 108
+            "line_from": 87,
+            "line_to": 87,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 2 of SprykerShop\\Yves\\ProductSearchWidget\\Form\\ProductQuickAddForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductSearchWidget/src/SprykerShop/Yves/ProductSearchWidget/Form/ProductQuickAddForm.php",
+            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
+            "selected_text": "$options",
+            "error_level": 5,
+            "shortcode": 140
         },
         {
             "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
+            "line_from": 66,
+            "line_to": 66,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\ProductSearchWidget\\Reader\\ProductConcreteReader::filterProductConcretePageSearchTransfersByProductIds expects array<array-key, Generated\\Shared\\Transfer\\ProductConcretePageSearchTransfer>, possibly different type Elastica\\Result|non-empty-mixed provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ProductSearchWidget/src/SprykerShop/Yves/ProductSearchWidget/Reader/ProductConcreteReader.php",
@@ -27,12 +27,12 @@
         },
         {
             "severity": "info",
-            "line_from": 91,
-            "line_to": 91,
+            "line_from": 94,
+            "line_to": 94,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of urlencode cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ProductSearchWidget/src/SprykerShop/Yves/ProductSearchWidget/Widget/ProductConcreteAddWidget.php",
-            "snippet": "            $utilEncodingService->encodeJson($data)",
+            "snippet": "            $utilEncodingService->encodeJson($data),",
             "selected_text": "$utilEncodingService->encodeJson($data)",
             "error_level": 3,
             "shortcode": 78
@@ -65,13 +65,25 @@
         },
         {
             "severity": "info",
-            "line_from": 28,
-            "line_to": 28,
+            "line_from": 35,
+            "line_to": 35,
             "type": "DeprecatedClass",
             "message": "SprykerShop\\Yves\\ShopApplication\\Plugin\\Provider\\AbstractYvesControllerProvider is marked deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ProductSearchWidget/src/SprykerShop/Yves/ProductSearchWidget/Plugin/Provider/ProductSearchWidgetControllerProvider.php",
             "snippet": "        parent::__construct($sslEnabled);",
             "selected_text": "parent::__construct($sslEnabled)",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/Controller/AbstractController.php",
+            "snippet": "     * @var \\Spryker\\Yves\\Kernel\\Application|\\Spryker\\Service\\Container\\ContainerInterface",
+            "selected_text": "\\Spryker\\Yves\\Kernel\\Application|\\Spryker\\Service\\Container\\ContainerInterface",
             "error_level": 2,
             "shortcode": 98
         }

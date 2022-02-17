@@ -7,8 +7,8 @@
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, int>' for SprykerShop\\Yves\\SalesConfigurableBundleWidget\\Grouper\\SalesOrderConfiguredBundleGrouper::getSalesOrderItemIdsFromConfiguredBundle is incorrect, got 'list<int|mixed|null>'",
             "file_name": "vendor/spryker/spryker-shop/Bundles/SalesConfigurableBundleWidget/src/SprykerShop/Yves/SalesConfigurableBundleWidget/Grouper/SalesOrderConfiguredBundleGrouper.php",
-            "snippet": "     * @return int[]",
-            "selected_text": "int[]",
+            "snippet": "     * @return array<int>",
+            "selected_text": "array<int>",
             "error_level": 6,
             "shortcode": 11
         },
@@ -23,6 +23,18 @@
             "selected_text": "$salesOrderItemIds",
             "error_level": 6,
             "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of count expects Countable|ResourceBundle|SimpleXMLElement|array<array-key, mixed>, iterable<mixed, Generated\\Shared\\Transfer\\ItemTransfer> provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/SalesConfigurableBundleWidget/src/SprykerShop/Yves/SalesConfigurableBundleWidget/Widget/OrderConfiguredBundleWidget.php",
+            "snippet": "        if ($itemTransfers === null || !count($itemTransfers)) {",
+            "selected_text": "$itemTransfers",
+            "error_level": 6,
+            "shortcode": 4
         }
     ],
     "warning": [
@@ -69,7 +81,7 @@
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $salesOrderConfiguredBundleItemTransfers using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker-shop/Bundles/SalesConfigurableBundleWidget/src/SprykerShop/Yves/SalesConfigurableBundleWidget/Grouper/SalesOrderConfiguredBundleGrouper.php",
-            "snippet": "                    new ArrayObject($salesOrderConfiguredBundleItemTransfers[$idSalesOrderConfiguredBundle])",
+            "snippet": "                    new ArrayObject($salesOrderConfiguredBundleItemTransfers[$idSalesOrderConfiguredBundle]),",
             "selected_text": "$salesOrderConfiguredBundleItemTransfers",
             "error_level": 3,
             "shortcode": 125
@@ -100,22 +112,10 @@
         },
         {
             "severity": "info",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of count expects Countable|ResourceBundle|SimpleXMLElement|array<array-key, mixed>, possibly different type array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>|iterable<mixed, mixed> provided",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/SalesConfigurableBundleWidget/src/SprykerShop/Yves/SalesConfigurableBundleWidget/Widget/OrderConfiguredBundleWidget.php",
-            "snippet": "        if ($itemTransfers === null || !count($itemTransfers)) {",
-            "selected_text": "$itemTransfers",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 102,
-            "line_to": 102,
+            "line_from": 113,
+            "line_to": 113,
             "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $items[int|mixed|null] using possibly null offset int|mixed|null",
+            "message": "Cannot access value on variable $items[int|null] using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker-shop/Bundles/SalesConfigurableBundleWidget/src/SprykerShop/Yves/SalesConfigurableBundleWidget/Widget/OrderConfiguredBundleWidget.php",
             "snippet": "            $items[$itemTransfer->getIdSalesOrderItem()] = $itemTransfer;",
             "selected_text": "$items",
@@ -124,10 +124,10 @@
         },
         {
             "severity": "info",
-            "line_from": 83,
-            "line_to": 83,
+            "line_from": 90,
+            "line_to": 90,
             "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $indexedItemTransfers[int|mixed|null] using possibly null offset int|mixed|null",
+            "message": "Cannot access value on variable $indexedItemTransfers[int|null] using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker-shop/Bundles/SalesConfigurableBundleWidget/src/SprykerShop/Yves/SalesConfigurableBundleWidget/Widget/OrderItemsConfiguredBundleWidget.php",
             "snippet": "                $indexedItemTransfers[$itemTransfer->getIdSalesOrderItem()] = $itemTransfer;",
             "selected_text": "$indexedItemTransfers",
@@ -150,8 +150,8 @@
         },
         {
             "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
+            "line_from": 50,
+            "line_to": 50,
             "type": "DeprecatedMethod",
             "message": "The method SprykerShop\\Yves\\SalesConfigurableBundleWidget\\Grouper\\SalesOrderConfiguredBundleGrouperInterface::getSalesOrderConfiguredBundles has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/SalesConfigurableBundleWidget/src/SprykerShop/Yves/SalesConfigurableBundleWidget/Widget/OrderConfiguredBundleWidget.php",

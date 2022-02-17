@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 36,
-            "line_to": 36,
+            "line_from": 39,
+            "line_to": 39,
             "type": "PossiblyNullPropertyAssignmentValue",
             "message": "$this->activeWishlistId with non-nullable declared type 'int' cannot be assigned nullable type 'int|null'",
             "file_name": "vendor/spryker/spryker-shop/Bundles/WishlistWidget/src/SprykerShop/Yves/WishlistWidget/Widget/WishlistMenuItemWidget.php",

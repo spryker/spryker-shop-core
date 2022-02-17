@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 56,
-            "line_to": 56,
+            "line_from": 59,
+            "line_to": 59,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\OrderCustomReferenceWidget\\Dependency\\Client\\OrderCustomReferenceWidgetToQuoteClientInterface::setQuote cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/OrderCustomReferenceWidget/src/SprykerShop/Yves/OrderCustomReferenceWidget/Controller/OrderCustomReferenceController.php",
@@ -15,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
+            "line_from": 78,
+            "line_to": 78,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\OrderCustomReferenceWidget\\Controller\\OrderCustomReferenceController::addErrorMessage cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/OrderCustomReferenceWidget/src/SprykerShop/Yves/OrderCustomReferenceWidget/Controller/OrderCustomReferenceController.php",
@@ -26,5 +26,18 @@
             "shortcode": 78
         }
     ],
-    "deprecation": []
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/Controller/AbstractController.php",
+            "snippet": "     * @var \\Spryker\\Yves\\Kernel\\Application|\\Spryker\\Service\\Container\\ContainerInterface",
+            "selected_text": "\\Spryker\\Yves\\Kernel\\Application|\\Spryker\\Service\\Container\\ContainerInterface",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
 }

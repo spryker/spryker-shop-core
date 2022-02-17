@@ -1,18 +1,5 @@
 {
     "error": [],
-    "warning": [
-        {
-            "severity": "info",
-            "line_from": 118,
-            "line_to": 118,
-            "type": "InvalidScalarArgument",
-            "message": "Argument 2 of SprykerShop\\Yves\\StorageRouter\\UrlGenerator\\StorageUrlGenerator::buildUrl expects int, int|string provided",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/StorageRouter/src/SprykerShop/Yves/StorageRouter/UrlGenerator/StorageUrlGenerator.php",
-            "snippet": "                $url = $this->buildUrl($pathInfo, $referenceType);",
-            "selected_text": "$referenceType",
-            "error_level": 4,
-            "shortcode": 12
-        }
-    ],
+    "warning": [],
     "deprecation": []
 }

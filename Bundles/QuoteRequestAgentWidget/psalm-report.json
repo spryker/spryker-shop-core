@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 96,
-            "line_to": 96,
+            "line_from": 109,
+            "line_to": 109,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getQuoteRequestReference on possibly null value",
             "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestAgentWidget/src/SprykerShop/Yves/QuoteRequestAgentWidget/Controller/QuoteRequestAgentCartController.php",
@@ -15,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 112,
-            "line_to": 112,
+            "line_from": 125,
+            "line_to": 125,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\QuoteRequestAgentWidget\\Controller\\QuoteRequestAgentCartController::redirectResponseExternal cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestAgentWidget/src/SprykerShop/Yves/QuoteRequestAgentWidget/Controller/QuoteRequestAgentCartController.php",
@@ -27,8 +27,8 @@
         },
         {
             "severity": "info",
-            "line_from": 141,
-            "line_to": 141,
+            "line_from": 154,
+            "line_to": 154,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\QuoteRequestAgentWidget\\Controller\\QuoteRequestAgentCartController::addErrorMessage cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestAgentWidget/src/SprykerShop/Yves/QuoteRequestAgentWidget/Controller/QuoteRequestAgentCartController.php",
@@ -39,20 +39,8 @@
         },
         {
             "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of SprykerShop\\Yves\\QuoteRequestAgentWidget\\Dependency\\Client\\QuoteRequestAgentWidgetToQuoteRequestAgentClientInterface::findQuoteRequestByReference cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestAgentWidget/src/SprykerShop/Yves/QuoteRequestAgentWidget/Handler/QuoteRequestAgentCartHandler.php",
-            "snippet": "            ->findQuoteRequestByReference($quoteTransfer->getQuoteRequestReference());",
-            "selected_text": "$quoteTransfer->getQuoteRequestReference()",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 59,
-            "line_to": 59,
+            "line_from": 66,
+            "line_to": 66,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setQuote on possibly null value",
             "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestAgentWidget/src/SprykerShop/Yves/QuoteRequestAgentWidget/Handler/QuoteRequestAgentCartHandler.php",
@@ -63,6 +51,18 @@
         }
     ],
     "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Client\\QuoteRequestAgent\\QuoteRequestAgentClientInterface::findQuoteRequestByReference has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestAgentWidget/src/SprykerShop/Yves/QuoteRequestAgentWidget/Dependency/Client/QuoteRequestAgentWidgetToQuoteRequestAgentClientBridge.php",
+            "snippet": "        return $this->quoteRequestAgentClient->findQuoteRequestByReference($quoteRequestReference);",
+            "selected_text": "findQuoteRequestByReference",
+            "error_level": 2,
+            "shortcode": 1
+        },
         {
             "severity": "info",
             "line_from": 16,

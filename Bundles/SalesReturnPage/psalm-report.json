@@ -7,8 +7,8 @@
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, string>' for SprykerShop\\Yves\\SalesReturnPage\\Controller\\ReturnViewController::extractUniqueOrderReferencesFromReturn is incorrect, got 'array<array-key|mixed, mixed|null|string>'",
             "file_name": "vendor/spryker/spryker-shop/Bundles/SalesReturnPage/src/SprykerShop/Yves/SalesReturnPage/Controller/ReturnViewController.php",
-            "snippet": "     * @return string[]",
-            "selected_text": "string[]",
+            "snippet": "     * @return array<string>",
+            "selected_text": "array<string>",
             "error_level": 6,
             "shortcode": 11
         },
@@ -28,8 +28,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 86,
-            "line_to": 86,
+            "line_from": 94,
+            "line_to": 94,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getCustomerReference on possibly null value",
             "file_name": "vendor/spryker/spryker-shop/Bundles/SalesReturnPage/src/SprykerShop/Yves/SalesReturnPage/Controller/ReturnCreateController.php",
@@ -40,8 +40,8 @@
         },
         {
             "severity": "info",
-            "line_from": 94,
-            "line_to": 94,
+            "line_from": 102,
+            "line_to": 102,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\OrderTransfer> variable $orderTransfersCollection",
             "file_name": "vendor/spryker/spryker-shop/Bundles/SalesReturnPage/src/SprykerShop/Yves/SalesReturnPage/Controller/ReturnCreateController.php",
@@ -52,8 +52,8 @@
         },
         {
             "severity": "info",
-            "line_from": 98,
-            "line_to": 98,
+            "line_from": 106,
+            "line_to": 106,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\OrderTransfer> variable $orderTransfersCollection",
             "file_name": "vendor/spryker/spryker-shop/Bundles/SalesReturnPage/src/SprykerShop/Yves/SalesReturnPage/Controller/ReturnCreateController.php",
@@ -64,8 +64,8 @@
         },
         {
             "severity": "info",
-            "line_from": 117,
-            "line_to": 117,
+            "line_from": 125,
+            "line_to": 125,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getReturnReference on possibly null value",
             "file_name": "vendor/spryker/spryker-shop/Bundles/SalesReturnPage/src/SprykerShop/Yves/SalesReturnPage/Controller/ReturnCreateController.php",
@@ -76,8 +76,8 @@
         },
         {
             "severity": "info",
-            "line_from": 137,
-            "line_to": 137,
+            "line_from": 145,
+            "line_to": 145,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\SalesReturnPage\\Controller\\ReturnCreateController::addErrorMessage cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/SalesReturnPage/src/SprykerShop/Yves/SalesReturnPage/Controller/ReturnCreateController.php",
@@ -88,8 +88,8 @@
         },
         {
             "severity": "info",
-            "line_from": 73,
-            "line_to": 73,
+            "line_from": 80,
+            "line_to": 80,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getCustomerReference on possibly null value",
             "file_name": "vendor/spryker/spryker-shop/Bundles/SalesReturnPage/src/SprykerShop/Yves/SalesReturnPage/Controller/ReturnListController.php",
@@ -244,8 +244,8 @@
         },
         {
             "severity": "info",
-            "line_from": 92,
-            "line_to": 92,
+            "line_from": 100,
+            "line_to": 100,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
             "file_name": "vendor/spryker/spryker-shop/Bundles/SalesReturnPage/src/SprykerShop/Yves/SalesReturnPage/Form/DataProvider/ReturnCreateFormDataProvider.php",
@@ -256,8 +256,8 @@
         },
         {
             "severity": "info",
-            "line_from": 118,
-            "line_to": 118,
+            "line_from": 126,
+            "line_to": 126,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $returnReasonChoices[mixed|null|string] using possibly null offset mixed|null|string",
             "file_name": "vendor/spryker/spryker-shop/Bundles/SalesReturnPage/src/SprykerShop/Yves/SalesReturnPage/Form/DataProvider/ReturnCreateFormDataProvider.php",
@@ -268,8 +268,8 @@
         },
         {
             "severity": "info",
-            "line_from": 81,
-            "line_to": 81,
+            "line_from": 86,
+            "line_to": 86,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ReturnItemTransfer> variable ",
             "file_name": "vendor/spryker/spryker-shop/Bundles/SalesReturnPage/src/SprykerShop/Yves/SalesReturnPage/Form/Handler/ReturnHandler.php",
@@ -277,6 +277,30 @@
             "selected_text": "count",
             "error_level": 3,
             "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 2 of SprykerShop\\Yves\\SalesReturnPage\\Form\\ReturnCreateForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/SalesReturnPage/src/SprykerShop/Yves/SalesReturnPage/Form/ReturnCreateForm.php",
+            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
+            "selected_text": "$options",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 2 of SprykerShop\\Yves\\SalesReturnPage\\Form\\ReturnItemsForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/SalesReturnPage/src/SprykerShop/Yves/SalesReturnPage/Form/ReturnItemsForm.php",
+            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
+            "selected_text": "$options",
+            "error_level": 5,
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -291,5 +315,18 @@
             "shortcode": 113
         }
     ],
-    "deprecation": []
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/Controller/AbstractController.php",
+            "snippet": "     * @var \\Spryker\\Yves\\Kernel\\Application|\\Spryker\\Service\\Container\\ContainerInterface",
+            "selected_text": "\\Spryker\\Yves\\Kernel\\Application|\\Spryker\\Service\\Container\\ContainerInterface",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
 }

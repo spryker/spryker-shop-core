@@ -3,6 +3,30 @@
     "warning": [
         {
             "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 2 of SprykerShop\\Yves\\ShoppingListNoteWidget\\Form\\ShoppingListItemNoteForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListNoteWidget/src/SprykerShop/Yves/ShoppingListNoteWidget/Form/ShoppingListItemNoteForm.php",
+            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
+            "selected_text": "$options",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 3 of SprykerShop\\Yves\\ShoppingListNoteWidget\\Form\\ShoppingListItemNoteFormType::buildView has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildView",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ShoppingListNoteWidget/src/SprykerShop/Yves/ShoppingListNoteWidget/Form/ShoppingListItemNoteFormType.php",
+            "snippet": "    public function buildView(FormView $view, FormInterface $form, array $options): void",
+            "selected_text": "$options",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
             "line_from": 20,
             "line_to": 20,
             "type": "PossiblyNullReference",

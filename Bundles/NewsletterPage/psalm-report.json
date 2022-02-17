@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 56,
-            "line_to": 56,
+            "line_from": 63,
+            "line_to": 63,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\NewsletterPage\\Controller\\NewsletterController::createNewsletterSubscriptionRequest cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/NewsletterPage/src/SprykerShop/Yves/NewsletterPage/Controller/NewsletterController.php",
@@ -15,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 131,
-            "line_to": 131,
+            "line_from": 138,
+            "line_to": 138,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\NewsletterSubscriptionResultTransfer> variable ",
             "file_name": "vendor/spryker/spryker-shop/Bundles/NewsletterPage/src/SprykerShop/Yves/NewsletterPage/Controller/NewsletterController.php",
@@ -27,8 +27,8 @@
         },
         {
             "severity": "info",
-            "line_from": 138,
-            "line_to": 138,
+            "line_from": 145,
+            "line_to": 145,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\NewsletterPage\\Controller\\NewsletterController::addErrorMessage cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/NewsletterPage/src/SprykerShop/Yves/NewsletterPage/Controller/NewsletterController.php",
@@ -39,13 +39,25 @@
         },
         {
             "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "NullableReturnStatement",
-            "message": "The declared return type 'bool' for SprykerShop\\Yves\\NewsletterPage\\Form\\DataProvider\\NewsletterSubscriptionFormDataProvider::isSubscribed is not nullable, but the function returns 'bool|mixed|null'",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'bool' for SprykerShop\\Yves\\NewsletterPage\\Form\\DataProvider\\NewsletterSubscriptionFormDataProvider::isSubscribed is not nullable, but 'bool|null' contains null",
             "file_name": "vendor/spryker/spryker-shop/Bundles/NewsletterPage/src/SprykerShop/Yves/NewsletterPage/Form/DataProvider/NewsletterSubscriptionFormDataProvider.php",
-            "snippet": "        return $subscriptionResultTransfer->getSubscriptionResults()[0]->getIsSuccess();",
-            "selected_text": "$subscriptionResultTransfer->getSubscriptionResults()[0]->getIsSuccess()",
+            "snippet": "     * @return bool",
+            "selected_text": "bool",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'bool' for SprykerShop\\Yves\\NewsletterPage\\Form\\DataProvider\\NewsletterSubscriptionFormDataProvider::isSubscribed is not nullable, but the function returns 'bool|null'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/NewsletterPage/src/SprykerShop/Yves/NewsletterPage/Form/DataProvider/NewsletterSubscriptionFormDataProvider.php",
+            "snippet": "        return $newsletterSubscriptionResults[0]->getIsSuccess();",
+            "selected_text": "$newsletterSubscriptionResults[0]->getIsSuccess()",
             "error_level": 5,
             "shortcode": 139
         }

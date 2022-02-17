@@ -20,7 +20,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\ProductPackagingUnitWidget\\Dependency\\Client\\ProductPackagingUnitWidgetToProductPackagingUnitStorageClientInterface::findProductPackagingUnitById cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ProductPackagingUnitWidget/src/SprykerShop/Yves/ProductPackagingUnitWidget/Widget/ProductPackagingUnitWidget.php",
-            "snippet": "                $productViewTransfer->getIdProductConcrete()",
+            "snippet": "                $productViewTransfer->getIdProductConcrete(),",
             "selected_text": "$productViewTransfer->getIdProductConcrete()",
             "error_level": 3,
             "shortcode": 78
@@ -32,7 +32,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\ProductPackagingUnitWidget\\Dependency\\Client\\ProductPackagingUnitWidgetToProductMeasurementUnitStorageClientInterface::findProductMeasurementSalesUnitByIdProduct cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ProductPackagingUnitWidget/src/SprykerShop/Yves/ProductPackagingUnitWidget/Widget/ProductPackagingUnitWidget.php",
-            "snippet": "                $productViewTransfer->getIdProductConcrete()",
+            "snippet": "                $productViewTransfer->getIdProductConcrete(),",
             "selected_text": "$productViewTransfer->getIdProductConcrete()",
             "error_level": 3,
             "shortcode": 78
@@ -44,7 +44,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\ProductPackagingUnitWidget\\Dependency\\Client\\ProductPackagingUnitWidgetToProductMeasurementUnitStorageClientInterface::findProductMeasurementSalesUnitByIdProduct cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ProductPackagingUnitWidget/src/SprykerShop/Yves/ProductPackagingUnitWidget/Widget/ProductPackagingUnitWidget.php",
-            "snippet": "                    $productPackagingUnitStorageTransfer->getIdLeadProduct()",
+            "snippet": "                    $productPackagingUnitStorageTransfer->getIdLeadProduct(),",
             "selected_text": "$productPackagingUnitStorageTransfer->getIdLeadProduct()",
             "error_level": 3,
             "shortcode": 78

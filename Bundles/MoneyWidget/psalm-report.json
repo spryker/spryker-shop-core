@@ -50,6 +50,30 @@
             "selected_text": "share",
             "error_level": 2,
             "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 91,
+            "line_to": 91,
+            "type": "DeprecatedMethod",
+            "message": "The method SprykerShop\\Yves\\MoneyWidget\\Plugin\\Twig\\MoneyTwigPlugin::getCurrencyIsoCodeFunction has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MoneyWidget/src/SprykerShop/Yves/MoneyWidget/Plugin/Twig/MoneyTwigPlugin.php",
+            "snippet": "        $twig->addFunction($this->getCurrencyIsoCodeFunction());",
+            "selected_text": "getCurrencyIsoCodeFunction",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "DeprecatedMethod",
+            "message": "The method SprykerShop\\Yves\\MoneyWidget\\Plugin\\Twig\\MoneyWidgetTwigPlugin::getCurrencyIsoCodeFunction has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MoneyWidget/src/SprykerShop/Yves/MoneyWidget/Plugin/Twig/MoneyWidgetTwigPlugin.php",
+            "snippet": "        $twig->addFunction($this->getCurrencyIsoCodeFunction());",
+            "selected_text": "getCurrencyIsoCodeFunction",
+            "error_level": 2,
+            "shortcode": 1
         }
     ]
 }

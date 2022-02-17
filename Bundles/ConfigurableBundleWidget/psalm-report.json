@@ -2,13 +2,25 @@
     "error": [
         {
             "severity": "error",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of count expects Countable|ResourceBundle|SimpleXMLElement|array<array-key, mixed>, iterable<mixed, Generated\\Shared\\Transfer\\ItemTransfer> provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/Grouper/ConfiguredBundleGrouper.php",
+            "snippet": "        if (count($quoteTransfer->getItems()) === count($itemTransfers)) {",
+            "selected_text": "$itemTransfers",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
             "line_from": 76,
             "line_to": 76,
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, string>' for SprykerShop\\Yves\\ConfigurableBundleWidget\\Grouper\\ConfiguredBundleGrouper::getItemGroupKeysFromConfiguredBundle is incorrect, got 'list<mixed|null|string>'",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/Grouper/ConfiguredBundleGrouper.php",
-            "snippet": "     * @return string[]",
-            "selected_text": "string[]",
+            "snippet": "     * @return array<string>",
+            "selected_text": "array<string>",
             "error_level": 6,
             "shortcode": 11
         },
@@ -23,13 +35,25 @@
             "selected_text": "$itemGroupKeys",
             "error_level": 6,
             "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of count expects Countable|ResourceBundle|SimpleXMLElement|array<array-key, mixed>, iterable<mixed, Generated\\Shared\\Transfer\\ItemTransfer> provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/Widget/QuoteConfiguredBundleWidget.php",
+            "snippet": "        if ($itemTransfers === null || !count($itemTransfers)) {",
+            "selected_text": "$itemTransfers",
+            "error_level": 6,
+            "shortcode": 4
         }
     ],
     "warning": [
         {
             "severity": "info",
-            "line_from": 212,
-            "line_to": 212,
+            "line_from": 233,
+            "line_to": 233,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\ConfigurableBundleWidget\\Controller\\CartController::addErrorMessage cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/Controller/CartController.php",
@@ -37,18 +61,6 @@
             "selected_text": "$errorTransfer->getMessage()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of count expects Countable|ResourceBundle|SimpleXMLElement|array<array-key, mixed>, possibly different type array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>|iterable<mixed, mixed> provided",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/Grouper/ConfiguredBundleGrouper.php",
-            "snippet": "        if (count($quoteTransfer->getItems()) === count($itemTransfers)) {",
-            "selected_text": "$itemTransfers",
-            "error_level": 3,
-            "shortcode": 92
         },
         {
             "severity": "info",
@@ -136,22 +148,10 @@
         },
         {
             "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of count expects Countable|ResourceBundle|SimpleXMLElement|array<array-key, mixed>, possibly different type array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>|iterable<mixed, mixed> provided",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/Widget/QuoteConfiguredBundleWidget.php",
-            "snippet": "        if ($itemTransfers === null || !count($itemTransfers)) {",
-            "selected_text": "$itemTransfers",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 102,
-            "line_to": 102,
+            "line_from": 117,
+            "line_to": 117,
             "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $items[mixed|null|string] using possibly null offset mixed|null|string",
+            "message": "Cannot access value on variable $items[null|string] using possibly null offset null|string",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ConfigurableBundleWidget/src/SprykerShop/Yves/ConfigurableBundleWidget/Widget/QuoteConfiguredBundleWidget.php",
             "snippet": "            $items[$itemTransfer->getGroupKey()] = $itemTransfer;",
             "selected_text": "$items",

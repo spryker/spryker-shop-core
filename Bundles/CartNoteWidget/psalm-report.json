@@ -3,51 +3,15 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of SprykerShop\\Yves\\CartNoteWidget\\Controller\\ItemController::redirectResponseExternal expects string, possibly different type array<array-key, mixed>|string provided",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CartNoteWidget/src/SprykerShop/Yves/CartNoteWidget/Controller/ItemController.php",
-            "snippet": "        return $this->redirectResponseExternal($this->getRefererUrl($request));",
-            "selected_text": "$this->getRefererUrl($request)",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/CartNoteWidget/src/SprykerShop/Yves/CartNoteWidget/Plugin/ShopApplication/CartItemNoteFormWidgetCacheKeyGeneratorStrategyPlugin.php",
+            "snippet": "                $keyElements[] = sprintf('quote_id:%s', $argument->getIdQuote());",
+            "selected_text": "$argument->getIdQuote()",
             "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
-            "type": "NullableReturnStatement",
-            "message": "The declared return type 'array<array-key, mixed>|string' for SprykerShop\\Yves\\CartNoteWidget\\Controller\\ItemController::getRefererUrl is not nullable, but the function returns 'null|string'",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CartNoteWidget/src/SprykerShop/Yves/CartNoteWidget/Controller/ItemController.php",
-            "snippet": "            return $request->headers->get(static::REQUEST_HEADER_REFERER);",
-            "selected_text": "$request->headers->get(static::REQUEST_HEADER_REFERER)",
-            "error_level": 5,
-            "shortcode": 139
-        },
-        {
-            "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of SprykerShop\\Yves\\CartNoteWidget\\Controller\\QuoteController::redirectResponseExternal expects string, possibly different type array<array-key, mixed>|string provided",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CartNoteWidget/src/SprykerShop/Yves/CartNoteWidget/Controller/QuoteController.php",
-            "snippet": "        return $this->redirectResponseExternal($this->getRefererUrl($request));",
-            "selected_text": "$this->getRefererUrl($request)",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "NullableReturnStatement",
-            "message": "The declared return type 'array<array-key, mixed>|string' for SprykerShop\\Yves\\CartNoteWidget\\Controller\\QuoteController::getRefererUrl is not nullable, but the function returns 'null|string'",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CartNoteWidget/src/SprykerShop/Yves/CartNoteWidget/Controller/QuoteController.php",
-            "snippet": "            return $request->headers->get(static::REQUEST_HEADER_REFERER);",
-            "selected_text": "$request->headers->get(static::REQUEST_HEADER_REFERER)",
-            "error_level": 5,
-            "shortcode": 139
+            "shortcode": 78
         }
     ],
     "deprecation": [
@@ -216,6 +180,18 @@
             "file_name": "vendor/spryker/spryker-shop/Bundles/CartNoteWidget/src/SprykerShop/Yves/CartNoteWidget/Plugin/Provider/CartNoteWidgetControllerProvider.php",
             "snippet": "class CartNoteWidgetControllerProvider extends AbstractYvesControllerProvider",
             "selected_text": "AbstractYvesControllerProvider",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/Controller/AbstractController.php",
+            "snippet": "     * @var \\Spryker\\Yves\\Kernel\\Application|\\Spryker\\Service\\Container\\ContainerInterface",
+            "selected_text": "\\Spryker\\Yves\\Kernel\\Application|\\Spryker\\Service\\Container\\ContainerInterface",
             "error_level": 2,
             "shortcode": 98
         }

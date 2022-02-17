@@ -41,8 +41,8 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
+            "line_from": 35,
+            "line_to": 35,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CmsPage/src/SprykerShop/Yves/CmsPage/Plugin/Provider/CmsTwigFunctionServiceProvider.php",
@@ -53,8 +53,8 @@
         },
         {
             "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
+            "line_from": 35,
+            "line_to": 35,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CmsPage/src/SprykerShop/Yves/CmsPage/Plugin/Provider/CmsTwigFunctionServiceProvider.php",
@@ -65,8 +65,8 @@
         },
         {
             "severity": "info",
-            "line_from": 89,
-            "line_to": 89,
+            "line_from": 92,
+            "line_to": 92,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CmsPage/src/SprykerShop/Yves/CmsPage/Plugin/Provider/CmsTwigFunctionServiceProvider.php",
@@ -101,8 +101,8 @@
         },
         {
             "severity": "info",
-            "line_from": 54,
-            "line_to": 54,
+            "line_from": 69,
+            "line_to": 69,
             "type": "DeprecatedConstant",
             "message": "Constant SprykerShop\\Yves\\CmsPage\\Plugin\\Router\\CmsPageRouteProviderPlugin::PARAM_PAGE is deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CmsPage/src/SprykerShop/Yves/CmsPage/Plugin/Router/CmsPageRouteProviderPlugin.php",

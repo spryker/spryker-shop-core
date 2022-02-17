@@ -3,12 +3,12 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
+            "line_from": 65,
+            "line_to": 65,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Generated\\Shared\\Transfer\\MerchantStorageCriteriaTransfer::addMerchantReference cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/MerchantWidget/src/SprykerShop/Yves/MerchantWidget/Widget/ShoppingListMerchantWidget.php",
-            "snippet": "                        ->addMerchantReference($productViewTransfer->getMerchantReference()),",
+            "snippet": "                    ->addMerchantReference($productViewTransfer->getMerchantReference()),",
             "selected_text": "$productViewTransfer->getMerchantReference()",
             "error_level": 3,
             "shortcode": 78

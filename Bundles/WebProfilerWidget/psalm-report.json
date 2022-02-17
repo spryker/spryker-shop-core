@@ -2,10 +2,10 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 229,
-            "line_to": 229,
+            "line_from": 265,
+            "line_to": 265,
             "type": "UndefinedClass",
-            "message": "Class or interface Symfony\\Bundle\\WebProfilerBundle\\Controller\\ExceptionController does not exist",
+            "message": "Class, interface or enum named Symfony\\Bundle\\WebProfilerBundle\\Controller\\ExceptionController does not exist",
             "file_name": "vendor/spryker/spryker-shop/Bundles/WebProfilerWidget/src/SprykerShop/Yves/WebProfilerWidget/Plugin/Application/WebProfilerApplicationPlugin.php",
             "snippet": "            return new ExceptionController(",
             "selected_text": "ExceptionController",
@@ -16,20 +16,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 146,
-            "line_to": 146,
-            "type": "InternalClass",
-            "message": "Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension is internal to Symfony but called from SprykerShop\\Yves\\WebProfilerWidget\\Plugin\\Application\\WebProfilerApplicationPlugin",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/WebProfilerWidget/src/SprykerShop/Yves/WebProfilerWidget/Plugin/Application/WebProfilerApplicationPlugin.php",
-            "snippet": "            $twig->addExtension(new WebProfilerExtension());",
-            "selected_text": "new WebProfilerExtension()",
-            "error_level": 4,
-            "shortcode": 174
-        },
-        {
-            "severity": "info",
-            "line_from": 188,
-            "line_to": 188,
+            "line_from": 224,
+            "line_to": 224,
             "type": "TooManyArguments",
             "message": "Too many arguments for method Symfony\\Component\\Routing\\RouteCollection::add - saw 3",
             "file_name": "vendor/spryker/spryker-shop/Bundles/WebProfilerWidget/src/SprykerShop/Yves/WebProfilerWidget/Plugin/Application/WebProfilerApplicationPlugin.php",
@@ -37,42 +25,6 @@
             "selected_text": "add",
             "error_level": 4,
             "shortcode": 26
-        },
-        {
-            "severity": "info",
-            "line_from": 205,
-            "line_to": 210,
-            "type": "InternalClass",
-            "message": "Symfony\\Bundle\\WebProfilerBundle\\Controller\\ProfilerController is internal to Symfony but called from SprykerShop\\Yves\\WebProfilerWidget\\Plugin\\Application\\WebProfilerApplicationPlugin",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/WebProfilerWidget/src/SprykerShop/Yves/WebProfilerWidget/Plugin/Application/WebProfilerApplicationPlugin.php",
-            "snippet": "            return new ProfilerController(\n                $container->get(static::SERVICE_ROUTER),\n                $container->get(static::SERVICE_PROFILER),\n                $container->get(static::SERVICE_TWIG),\n                $this->getDataCollectorPluginTemplates()\n            );",
-            "selected_text": "new ProfilerController(\n                $container->get(static::SERVICE_ROUTER),\n                $container->get(static::SERVICE_PROFILER),\n                $container->get(static::SERVICE_TWIG),\n                $this->getDataCollectorPluginTemplates()\n            )",
-            "error_level": 4,
-            "shortcode": 174
-        },
-        {
-            "severity": "info",
-            "line_from": 214,
-            "line_to": 218,
-            "type": "InternalClass",
-            "message": "Symfony\\Bundle\\WebProfilerBundle\\Controller\\RouterController is internal to Symfony but called from SprykerShop\\Yves\\WebProfilerWidget\\Plugin\\Application\\WebProfilerApplicationPlugin",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/WebProfilerWidget/src/SprykerShop/Yves/WebProfilerWidget/Plugin/Application/WebProfilerApplicationPlugin.php",
-            "snippet": "            return new RouterController(\n                $container->get(static::SERVICE_PROFILER),\n                $container->get(static::SERVICE_TWIG),\n                $container->get(static::SERVICE_ROUTER)\n            );",
-            "selected_text": "new RouterController(\n                $container->get(static::SERVICE_PROFILER),\n                $container->get(static::SERVICE_TWIG),\n                $container->get(static::SERVICE_ROUTER)\n            )",
-            "error_level": 4,
-            "shortcode": 174
-        },
-        {
-            "severity": "info",
-            "line_from": 223,
-            "line_to": 226,
-            "type": "InternalClass",
-            "message": "Symfony\\Bundle\\WebProfilerBundle\\Controller\\ExceptionPanelController is internal to Symfony but called from SprykerShop\\Yves\\WebProfilerWidget\\Plugin\\Application\\WebProfilerApplicationPlugin",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/WebProfilerWidget/src/SprykerShop/Yves/WebProfilerWidget/Plugin/Application/WebProfilerApplicationPlugin.php",
-            "snippet": "                return new ExceptionPanelController(\n                    new HtmlErrorRenderer($container->get('debug')),\n                    $container->get(static::SERVICE_PROFILER)\n                );",
-            "selected_text": "new ExceptionPanelController(\n                    new HtmlErrorRenderer($container->get('debug')),\n                    $container->get(static::SERVICE_PROFILER)\n                )",
-            "error_level": 4,
-            "shortcode": 174
         }
     ],
     "deprecation": [
@@ -90,8 +42,8 @@
         },
         {
             "severity": "info",
-            "line_from": 31,
-            "line_to": 31,
+            "line_from": 39,
+            "line_to": 39,
             "type": "DeprecatedConstant",
             "message": "Constant SprykerShop\\Yves\\WebProfilerWidget\\WebProfilerWidgetDependencyProvider::PLUGINS_WEB_PROFILER is deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/WebProfilerWidget/src/SprykerShop/Yves/WebProfilerWidget/WebProfilerWidgetDependencyProvider.php",
@@ -102,8 +54,8 @@
         },
         {
             "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
+            "line_from": 40,
+            "line_to": 40,
             "type": "DeprecatedMethod",
             "message": "The method SprykerShop\\Yves\\WebProfilerWidget\\WebProfilerWidgetDependencyProvider::getWebProfilerPlugins has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/WebProfilerWidget/src/SprykerShop/Yves/WebProfilerWidget/WebProfilerWidgetDependencyProvider.php",

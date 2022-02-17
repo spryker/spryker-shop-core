@@ -1,5 +1,18 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 115,
+            "line_to": 120,
+            "type": "RedundantCast",
+            "message": "Redundant cast to string",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentProductWidget/src/SprykerShop/Yves/ContentProductWidget/Twig/ContentProductAbstractListTwigFunctionProvider.php",
+            "snippet": "            return (string)$this->twig->render(\n                $this->getAvailableTemplates()[$templateIdentifier],\n                [\n                    'productAbstractViewCollection' => $productAbstractViewCollection,\n                ],\n            );",
+            "selected_text": "(string)$this->twig->render(\n                $this->getAvailableTemplates()[$templateIdentifier],\n                [\n                    'productAbstractViewCollection' => $productAbstractViewCollection,\n                ],\n            )",
+            "error_level": 4,
+            "shortcode": 262
+        }
+    ],
     "deprecation": []
 }

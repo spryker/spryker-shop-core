@@ -119,10 +119,11 @@ class ShopApplicationServiceProvider extends AbstractPlugin implements ServicePr
         $requestUri = $this->getRequestUri();
 
         if ($requestUri) {
+            /** @var array<string> $pathElements */
             $pathElements = explode('/', trim($requestUri, '/'));
             $identifier = $pathElements[0];
             $locales = $localeClient->getLocales();
-            if ($identifier !== false && array_key_exists($identifier, $locales)) {
+            if (array_key_exists($identifier, $locales)) {
                 $currentLocale = $locales[$identifier];
                 $this->application[static::LOCALE] = $currentLocale;
                 ApplicationEnvironment::initializeLocale($currentLocale);

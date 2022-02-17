@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
+            "line_from": 62,
+            "line_to": 62,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\CartCodeWidget\\Controller\\CodeController::redirectResponseExternal cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CartCodeWidget/src/SprykerShop/Yves/CartCodeWidget/Controller/CodeController.php",
@@ -15,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 79,
-            "line_to": 79,
+            "line_from": 92,
+            "line_to": 92,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\CartCodeWidget\\Controller\\CodeController::redirectResponseExternal cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CartCodeWidget/src/SprykerShop/Yves/CartCodeWidget/Controller/CodeController.php",
@@ -27,8 +27,8 @@
         },
         {
             "severity": "info",
-            "line_from": 84,
-            "line_to": 84,
+            "line_from": 97,
+            "line_to": 97,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\CartCodeWidget\\Controller\\CodeController::redirectResponseExternal cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CartCodeWidget/src/SprykerShop/Yves/CartCodeWidget/Controller/CodeController.php",
@@ -39,8 +39,8 @@
         },
         {
             "severity": "info",
-            "line_from": 107,
-            "line_to": 107,
+            "line_from": 120,
+            "line_to": 120,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\CartCodeWidget\\Controller\\CodeController::redirectResponseExternal cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CartCodeWidget/src/SprykerShop/Yves/CartCodeWidget/Controller/CodeController.php",
@@ -51,8 +51,8 @@
         },
         {
             "severity": "info",
-            "line_from": 129,
-            "line_to": 129,
+            "line_from": 142,
+            "line_to": 142,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\CartCodeWidget\\Dependency\\Client\\CartCodeWidgetToQuoteClientInterface::setQuote cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CartCodeWidget/src/SprykerShop/Yves/CartCodeWidget/Controller/CodeController.php",
@@ -63,8 +63,8 @@
         },
         {
             "severity": "info",
-            "line_from": 136,
-            "line_to": 136,
+            "line_from": 149,
+            "line_to": 149,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\CartCodeWidget\\Controller\\CodeController::redirectResponseExternal cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CartCodeWidget/src/SprykerShop/Yves/CartCodeWidget/Controller/CodeController.php",
@@ -75,8 +75,8 @@
         },
         {
             "severity": "info",
-            "line_from": 197,
-            "line_to": 197,
+            "line_from": 210,
+            "line_to": 210,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\CartCodeWidget\\Controller\\CodeController::addSuccessMessage cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CartCodeWidget/src/SprykerShop/Yves/CartCodeWidget/Controller/CodeController.php",
@@ -87,8 +87,8 @@
         },
         {
             "severity": "info",
-            "line_from": 201,
-            "line_to": 201,
+            "line_from": 214,
+            "line_to": 214,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\CartCodeWidget\\Controller\\CodeController::addInfoMessage cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CartCodeWidget/src/SprykerShop/Yves/CartCodeWidget/Controller/CodeController.php",

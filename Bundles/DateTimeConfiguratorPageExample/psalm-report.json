@@ -1,5 +1,55 @@
 {
     "error": [],
-    "warning": [],
-    "deprecation": []
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 97,
+            "line_to": 97,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of json_decode expects string, possibly different type resource|string provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/DateTimeConfiguratorPageExample/src/SprykerShop/Configurator/DateTimeConfiguratorPageExample/ConfiguratorPage.php",
+            "snippet": "            json_decode($this->request->getContent(), true) ?? [],",
+            "selected_text": "$this->request->getContent()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 83,
+            "line_to": 83,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of SprykerShop\\Zed\\DateTimeConfiguratorPageExample\\Business\\Reader\\ProductConcreteAvailabilityReader::createProductConcreteAvailabilityTransfer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/DateTimeConfiguratorPageExample/src/SprykerShop/Zed/DateTimeConfiguratorPageExample/Business/Reader/ProductConcreteAvailabilityReader.php",
+            "snippet": "            return $this->createProductConcreteAvailabilityTransfer($sku, $productConfigurationAvailabilityQuantity);",
+            "selected_text": "$productConfigurationAvailabilityQuantity",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 86,
+            "line_to": 86,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of SprykerShop\\Zed\\DateTimeConfiguratorPageExample\\Business\\Reader\\ProductConcreteAvailabilityReader::createProductConcreteAvailabilityTransfer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/DateTimeConfiguratorPageExample/src/SprykerShop/Zed/DateTimeConfiguratorPageExample/Business/Reader/ProductConcreteAvailabilityReader.php",
+            "snippet": "        return $this->createProductConcreteAvailabilityTransfer($sku, $productConfigurationAvailabilityQuantity);",
+            "selected_text": "$productConfigurationAvailabilityQuantity",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\AvailabilityExtension\\Dependency\\Plugin\\AvailabilityStrategyPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/DateTimeConfiguratorPageExample/src/SprykerShop/Zed/DateTimeConfiguratorPageExample/Communication/Plugin/Availability/ExampleDateTimeConfiguratorAvailabilityStrategyPlugin.php",
+            "snippet": "class ExampleDateTimeConfiguratorAvailabilityStrategyPlugin extends AbstractPlugin implements AvailabilityStrategyPluginInterface",
+            "selected_text": "ExampleDateTimeConfiguratorAvailabilityStrategyPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        }
+    ]
 }

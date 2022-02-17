@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 105,
-            "line_to": 105,
+            "line_from": 118,
+            "line_to": 118,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\ContentNavigationWidget\\Dependency\\Client\\ContentNavigationWidgetToNavigationStorageClientInterface::findNavigationTreeByKey cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ContentNavigationWidget/src/SprykerShop/Yves/ContentNavigationWidget/Twig/ContentNavigationTwigFunctionProvider.php",
@@ -15,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 180,
-            "line_to": 180,
+            "line_from": 193,
+            "line_to": 193,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of DateTime::__construct cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ContentNavigationWidget/src/SprykerShop/Yves/ContentNavigationWidget/Twig/ContentNavigationTwigFunctionProvider.php",
@@ -27,8 +27,8 @@
         },
         {
             "severity": "info",
-            "line_from": 181,
-            "line_to": 181,
+            "line_from": 194,
+            "line_to": 194,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of DateTime::__construct cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ContentNavigationWidget/src/SprykerShop/Yves/ContentNavigationWidget/Twig/ContentNavigationTwigFunctionProvider.php",
@@ -39,8 +39,8 @@
         },
         {
             "severity": "info",
-            "line_from": 183,
-            "line_to": 183,
+            "line_from": 196,
+            "line_to": 196,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\NavigationNodeStorageTransfer> variable ",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ContentNavigationWidget/src/SprykerShop/Yves/ContentNavigationWidget/Twig/ContentNavigationTwigFunctionProvider.php",

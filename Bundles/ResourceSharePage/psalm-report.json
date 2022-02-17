@@ -8,7 +8,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\ResourceSharePage\\Controller\\LinkController::activateResourceShare cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ResourceSharePage/src/SprykerShop/Yves/ResourceSharePage/Controller/LinkController.php",
-            "snippet": "            $this->getResourceShareByUuid($resourceShareUuid)->getResourceShare()",
+            "snippet": "            $this->getResourceShareByUuid($resourceShareUuid)->getResourceShare(),",
             "selected_text": "$this->getResourceShareByUuid($resourceShareUuid)->getResourceShare()",
             "error_level": 3,
             "shortcode": 78
@@ -89,8 +89,8 @@
         },
         {
             "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
+            "line_from": 55,
+            "line_to": 55,
             "type": "DeprecatedMethod",
             "message": "The method SprykerShop\\Yves\\ResourceSharePage\\ResourceSharePageDependencyProvider::addApplication has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ResourceSharePage/src/SprykerShop/Yves/ResourceSharePage/ResourceSharePageDependencyProvider.php",
@@ -101,8 +101,8 @@
         },
         {
             "severity": "info",
-            "line_from": 91,
-            "line_to": 91,
+            "line_from": 107,
+            "line_to": 107,
             "type": "DeprecatedConstant",
             "message": "Constant SprykerShop\\Yves\\ResourceSharePage\\ResourceSharePageDependencyProvider::PLUGIN_APPLICATION is deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ResourceSharePage/src/SprykerShop/Yves/ResourceSharePage/ResourceSharePageDependencyProvider.php",
@@ -113,8 +113,8 @@
         },
         {
             "severity": "info",
-            "line_from": 92,
-            "line_to": 92,
+            "line_from": 108,
+            "line_to": 108,
             "type": "DeprecatedClass",
             "message": "Spryker\\Yves\\Kernel\\Plugin\\Pimple is marked deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ResourceSharePage/src/SprykerShop/Yves/ResourceSharePage/ResourceSharePageDependencyProvider.php",

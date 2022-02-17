@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 106,
-            "line_to": 106,
+            "line_from": 125,
+            "line_to": 125,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getName on possibly null value",
             "file_name": "vendor/spryker/spryker-shop/Bundles/BusinessOnBehalfWidget/src/SprykerShop/Yves/BusinessOnBehalfWidget/Widget/BusinessOnBehalfStatusWidget.php",
@@ -15,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 124,
-            "line_to": 124,
+            "line_from": 143,
+            "line_to": 143,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getName on possibly null value",
             "file_name": "vendor/spryker/spryker-shop/Bundles/BusinessOnBehalfWidget/src/SprykerShop/Yves/BusinessOnBehalfWidget/Widget/BusinessOnBehalfStatusWidget.php",

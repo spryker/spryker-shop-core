@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
+            "line_from": 43,
+            "line_to": 43,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $iconNames using possibly null offset null|string",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ContentFileWidget/src/SprykerShop/Yves/ContentFileWidget/Expander/IconNameFileStorageDataExpander.php",
@@ -15,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
+            "line_from": 44,
+            "line_to": 44,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $iconNames using possibly null offset null|string",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ContentFileWidget/src/SprykerShop/Yves/ContentFileWidget/Expander/IconNameFileStorageDataExpander.php",
@@ -27,27 +27,15 @@
         },
         {
             "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 2 of explode cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentFileWidget/src/SprykerShop/Yves/ContentFileWidget/Expander/IconNameFileStorageDataExpander.php",
-            "snippet": "        $fileType = explode('/', $fileStorageDataTransfer->getType())[0];",
-            "selected_text": "$fileStorageDataTransfer->getType()",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of SprykerShop\\Yves\\ContentFileWidget\\Expander\\IconNameFileStorageDataExpander::getFileIconNameByExtension cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentFileWidget/src/SprykerShop/Yves/ContentFileWidget/Expander/IconNameFileStorageDataExpander.php",
-            "snippet": "            $fileStorageDataTransfer->requireFileName()->getFileName()",
-            "selected_text": "$fileStorageDataTransfer->requireFileName()->getFileName()",
-            "error_level": 3,
-            "shortcode": 78
+            "line_from": 123,
+            "line_to": 128,
+            "type": "RedundantCast",
+            "message": "Redundant cast to string",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ContentFileWidget/src/SprykerShop/Yves/ContentFileWidget/Twig/ContentFileListTwigFunctionProvider.php",
+            "snippet": "            return (string)$this->twig->render(\n                $this->getAvailableTemplates()[$templateIdentifier],\n                [\n                    'fileViewCollection' => $fileViewCollection,\n                ],\n            );",
+            "selected_text": "(string)$this->twig->render(\n                $this->getAvailableTemplates()[$templateIdentifier],\n                [\n                    'fileViewCollection' => $fileViewCollection,\n                ],\n            )",
+            "error_level": 4,
+            "shortcode": 262
         }
     ],
     "deprecation": []

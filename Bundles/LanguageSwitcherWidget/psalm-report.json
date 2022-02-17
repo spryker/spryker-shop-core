@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 59,
-            "line_to": 59,
+            "line_from": 62,
+            "line_to": 62,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\UrlStorageTransfer> variable ",
             "file_name": "vendor/spryker/spryker-shop/Bundles/LanguageSwitcherWidget/src/SprykerShop/Yves/LanguageSwitcherWidget/Widget/LanguageSwitcherWidget.php",
@@ -12,18 +12,6 @@
             "selected_text": "count",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 160,
-            "line_to": 160,
-            "type": "PossiblyFalseArgument",
-            "message": "Argument 3 of substr cannot be false, possibly false value provided",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/LanguageSwitcherWidget/src/SprykerShop/Yves/LanguageSwitcherWidget/Widget/LanguageSwitcherWidget.php",
-            "snippet": "        return substr($locale, 0, strpos($locale, '_'));",
-            "selected_text": "strpos($locale, '_')",
-            "error_level": 3,
-            "shortcode": 104
         }
     ],
     "deprecation": [

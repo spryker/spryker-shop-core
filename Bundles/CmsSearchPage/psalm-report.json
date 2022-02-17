@@ -1,19 +1,6 @@
 {
     "error": [],
-    "warning": [
-        {
-            "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of SprykerShop\\Yves\\CmsSearchPage\\Dependency\\Client\\CmsSearchPageToCmsPageSearchClientInterface::search cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CmsSearchPage/src/SprykerShop/Yves/CmsSearchPage/Controller/CmsSearchController.php",
-            "snippet": "            ->search($searchString, $request->query->all());",
-            "selected_text": "$searchString",
-            "error_level": 3,
-            "shortcode": 78
-        }
-    ],
+    "warning": [],
     "deprecation": [
         {
             "severity": "info",

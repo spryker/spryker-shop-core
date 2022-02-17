@@ -1,93 +1,80 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 68,
-            "line_to": 68,
-            "type": "InvalidArgument",
-            "message": "Argument 1 of SprykerShop\\Yves\\DiscountPromotionWidget\\Dependency\\Client\\DiscountPromotionWidgetToProductStorageClientInterface::getProductAbstractViewTransfers expects array<array-key, int>, list<int|mixed|null> provided",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/DiscountPromotionWidget/src/SprykerShop/Yves/DiscountPromotionWidget/Widget/CartDiscountPromotionProductListWidget.php",
-            "snippet": "            ->getProductAbstractViewTransfers($productAbstractIds, $this->getLocale(), $selectedAttributes);",
-            "selected_text": "$productAbstractIds",
-            "error_level": 6,
-            "shortcode": 4
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $selectedAttributes[int|mixed|null] using possibly null offset int|mixed|null",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/DiscountPromotionWidget/src/SprykerShop/Yves/DiscountPromotionWidget/Widget/CartDiscountPromotionProductListWidget.php",
-            "snippet": "            $selectedAttributes[$promotionItemTransfer->getIdProductAbstract()] = $this->getSelectedAttributes($request, $promotionItemTransfer->getAbstractSku());",
-            "selected_text": "$selectedAttributes",
-            "error_level": 3,
-            "shortcode": 125
+            "line_from": 71,
+            "line_to": 71,
+            "type": "PossiblyNullOperand",
+            "message": "Right operand cannot be nullable, got int|null",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/DiscountPromotionWidget/src/SprykerShop/Yves/DiscountPromotionWidget/Expander/DiscountPromotionProductPriceExpander.php",
+            "snippet": "        $productViewPrices[static::PRICE_TYPE_DEFAULT] = $productViewDefaultPrice - $discountCalculationResponseTransfer->getAmount();",
+            "selected_text": "$discountCalculationResponseTransfer->getAmount()",
+            "error_level": 1,
+            "shortcode": 80
         },
         {
             "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
+            "line_from": 67,
+            "line_to": 67,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\PromotionItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/DiscountPromotionWidget/src/SprykerShop/Yves/DiscountPromotionWidget/Reader/DiscountPromotionProductReader.php",
+            "snippet": "        return $this->mapPromotionProducts($productViewTransfers, $quoteTransfer->getPromotionItems()->getArrayCopy());",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 139,
+            "line_to": 139,
             "type": "PossiblyNullArgument",
-            "message": "Argument 2 of SprykerShop\\Yves\\DiscountPromotionWidget\\Widget\\CartDiscountPromotionProductListWidget::getSelectedAttributes cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/DiscountPromotionWidget/src/SprykerShop/Yves/DiscountPromotionWidget/Widget/CartDiscountPromotionProductListWidget.php",
-            "snippet": "            $selectedAttributes[$promotionItemTransfer->getIdProductAbstract()] = $this->getSelectedAttributes($request, $promotionItemTransfer->getAbstractSku());",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/DiscountPromotionWidget/src/SprykerShop/Yves/DiscountPromotionWidget/Reader/DiscountPromotionProductReader.php",
+            "snippet": "            $promotionItemTransfer->getAbstractSku(),",
             "selected_text": "$promotionItemTransfer->getAbstractSku()",
             "error_level": 3,
             "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
-            "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $promotionItemTransfersIndexedByProductId[int|mixed|null] using possibly null offset int|mixed|null",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/DiscountPromotionWidget/src/SprykerShop/Yves/DiscountPromotionWidget/Widget/CartDiscountPromotionProductListWidget.php",
-            "snippet": "            $promotionItemTransfersIndexedByProductId[$promotionItemTransfer->getIdProductAbstract()] = $promotionItemTransfer;",
-            "selected_text": "$promotionItemTransfersIndexedByProductId",
-            "error_level": 3,
-            "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 84,
-            "line_to": 84,
-            "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $promotionItemTransfersIndexedByProductId using possibly null offset int|null",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/DiscountPromotionWidget/src/SprykerShop/Yves/DiscountPromotionWidget/Widget/CartDiscountPromotionProductListWidget.php",
-            "snippet": "            $promotionItemTransfer = $promotionItemTransfersIndexedByProductId[$productViewTransfer->getIdProductAbstract()];",
-            "selected_text": "$promotionItemTransfersIndexedByProductId",
-            "error_level": 3,
-            "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 113,
-            "line_to": 113,
-            "type": "PossiblyNullOperand",
-            "message": "Cannot concatenate with a possibly null null|string",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/DiscountPromotionWidget/src/SprykerShop/Yves/DiscountPromotionWidget/Widget/CartDiscountPromotionProductListWidget.php",
-            "snippet": "        return $promotionItemTransfer->getAbstractSku() . '-' . $promotionItemTransfer->getIdDiscountPromotion();",
-            "selected_text": "$promotionItemTransfer->getAbstractSku()",
-            "error_level": 1,
-            "shortcode": 80
-        },
-        {
-            "severity": "info",
-            "line_from": 113,
-            "line_to": 113,
-            "type": "PossiblyNullOperand",
-            "message": "Cannot concatenate with a possibly null int|null",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/DiscountPromotionWidget/src/SprykerShop/Yves/DiscountPromotionWidget/Widget/CartDiscountPromotionProductListWidget.php",
-            "snippet": "        return $promotionItemTransfer->getAbstractSku() . '-' . $promotionItemTransfer->getIdDiscountPromotion();",
+            "line_from": 140,
+            "line_to": 140,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/DiscountPromotionWidget/src/SprykerShop/Yves/DiscountPromotionWidget/Reader/DiscountPromotionProductReader.php",
+            "snippet": "            $promotionItemTransfer->getIdDiscountPromotion(),",
             "selected_text": "$promotionItemTransfer->getIdDiscountPromotion()",
-            "error_level": 1,
-            "shortcode": 80
+            "error_level": 3,
+            "shortcode": 78
         }
     ],
     "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 37,
+            "line_to": 37,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Service\\Discount\\DiscountServiceInterface::calculate has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/DiscountPromotionWidget/src/SprykerShop/Yves/DiscountPromotionWidget/Dependency/Service/DiscountPromotionWidgetToDiscountServiceBridge.php",
+            "snippet": "        return $this->discountService->calculate($discountCalculationRequestTransfer);",
+            "selected_text": "calculate",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "DeprecatedMethod",
+            "message": "The method SprykerShop\\Yves\\DiscountPromotionWidget\\Dependency\\Service\\DiscountPromotionWidgetToDiscountServiceInterface::calculate has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/DiscountPromotionWidget/src/SprykerShop/Yves/DiscountPromotionWidget/Expander/DiscountPromotionProductPriceExpander.php",
+            "snippet": "            ->calculate($discountCalculationRequestTransfer);",
+            "selected_text": "calculate",
+            "error_level": 2,
+            "shortcode": 1
+        },
         {
             "severity": "info",
             "line_from": 19,

@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 83,
-            "line_to": 83,
+            "line_from": 94,
+            "line_to": 94,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\SalesProductConfigurationWidget\\Resolver\\ProductConfigurationTemplateResolverInterface::resolveProductConfigurationTemplate cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/SalesProductConfigurationWidget/src/SprykerShop/Yves/SalesProductConfigurationWidget/Widget/ProductConfigurationOrderItemDisplayWidget.php",

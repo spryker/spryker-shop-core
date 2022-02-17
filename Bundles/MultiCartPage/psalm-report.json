@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 187,
-            "line_to": 187,
+            "line_from": 213,
+            "line_to": 213,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdQuote on possibly null value",
             "file_name": "vendor/spryker/spryker-shop/Bundles/MultiCartPage/src/SprykerShop/Yves/MultiCartPage/Controller/MultiCartController.php",
@@ -15,8 +15,20 @@
         },
         {
             "severity": "info",
-            "line_from": 348,
-            "line_to": 348,
+            "line_from": 277,
+            "line_to": 277,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\MultiCartPage\\Controller\\MultiCartController::findQuoteOrFail cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/MultiCartPage/src/SprykerShop/Yves/MultiCartPage/Controller/MultiCartController.php",
+            "snippet": "            $submittedQuoteTransfer->getIdQuote(),",
+            "selected_text": "$submittedQuoteTransfer->getIdQuote()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 376,
+            "line_to": 376,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getCustomerReference on possibly null value",
             "file_name": "vendor/spryker/spryker-shop/Bundles/MultiCartPage/src/SprykerShop/Yves/MultiCartPage/Controller/MultiCartController.php",
@@ -27,18 +39,6 @@
         }
     ],
     "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 191,
-            "line_to": 191,
-            "type": "DeprecatedClass",
-            "message": "Class SprykerShop\\Yves\\MultiCartPage\\Plugin\\Provider\\MultiCartPageControllerProvider is deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/MultiCartPage/src/SprykerShop/Yves/MultiCartPage/Controller/MultiCartController.php",
-            "snippet": "            [MultiCartPageControllerProvider::PARAM_ID_QUOTE => $idNewQuote]",
-            "selected_text": "MultiCartPageControllerProvider::PARAM_ID_QUOTE",
-            "error_level": 2,
-            "shortcode": 98
-        },
         {
             "severity": "info",
             "line_from": 16,

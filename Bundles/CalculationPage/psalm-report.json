@@ -6,7 +6,7 @@
             "line_from": 32,
             "line_to": 32,
             "type": "TypeDoesNotContainType",
-            "message": "string(development) cannot be identical to string()",
+            "message": "\"development\" cannot be identical to \"\"",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CalculationPage/src/SprykerShop/Yves/CalculationPage/CalculationPageConfig.php",
             "snippet": "        return APPLICATION_ENV === 'development';",
             "selected_text": "APPLICATION_ENV === 'development'",
@@ -48,6 +48,18 @@
             "file_name": "vendor/spryker/spryker-shop/Bundles/CalculationPage/src/SprykerShop/Yves/CalculationPage/Plugin/Provider/CalculationPageControllerProvider.php",
             "snippet": "class CalculationPageControllerProvider extends AbstractYvesControllerProvider",
             "selected_text": "AbstractYvesControllerProvider",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/Controller/AbstractController.php",
+            "snippet": "     * @var \\Spryker\\Yves\\Kernel\\Application|\\Spryker\\Service\\Container\\ContainerInterface",
+            "selected_text": "\\Spryker\\Yves\\Kernel\\Application|\\Spryker\\Service\\Container\\ContainerInterface",
             "error_level": 2,
             "shortcode": 98
         }
