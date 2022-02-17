@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
-            "type": "RedundantCondition",
-            "message": "Twig\\TwigFunction|null can never contain false",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Plugin/Twig/FunctionTwigPlugin.php",
-            "snippet": "                return $twig->getFunction($name) !== false;",
-            "selected_text": "$twig->getFunction($name) !== false",
-            "error_level": 4,
-            "shortcode": 122
-        },
-        {
-            "severity": "info",
             "line_from": 36,
             "line_to": 36,
             "type": "TypeDoesNotContainType",
@@ -24,18 +12,6 @@
             "selected_text": "APPLICATION_ENV === 'development'",
             "error_level": 4,
             "shortcode": 56
-        },
-        {
-            "severity": "info",
-            "line_from": 108,
-            "line_to": 108,
-            "type": "PossiblyNullOperand",
-            "message": "Cannot concatenate with a possibly null null|string",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Twig/Node/ShopUiDefineTwigNode.php",
-            "snippet": "            ->raw('throw new RuntimeError(\\'required <em>' . $this->getAttribute('name') . '</em> property \"\\'.$key.\\'\" is not defined for \"' . $this->getTemplateName() . ':' . $this->getTemplateLine() . '\"\\'); }')",
-            "selected_text": "$this->getTemplateName()",
-            "error_level": 1,
-            "shortcode": 80
         }
     ],
     "deprecation": [
