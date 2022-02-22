@@ -43,17 +43,17 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
     protected const TWIG_GLOBAL_VARIABLE_NAME_VIEW = '_view';
 
     /**
-     * @param \Silex\Application $application
+     * @param \Silex\Application $app
      *
      * @return void
      */
-    public function register(Application $application)
+    public function register(Application $app)
     {
-        $this->addWidgetTagService($application);
-        $this->addWidgetTagTokenParser($application);
+        $this->addWidgetTagService($app);
+        $this->addWidgetTagTokenParser($app);
 
-        $application['twig'] = $application->share(
-            $application->extend('twig', function (Environment $twig) {
+        $app['twig'] = $app->share(
+            $app->extend('twig', function (Environment $twig) {
                 return $this->registerWidgetTwigFunction($twig);
             }),
         );
