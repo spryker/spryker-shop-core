@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of SprykerShop\\Yves\\CompanyUserInvitationPage\\Model\\Error\\ImportErrorHandler::storeCompanyUserInvitationImportErrors has wrong name $companyUserInvitationImportResponseTransfer, expecting $companyUserInvitationImportReportTransfer as defined by SprykerShop\\Yves\\CompanyUserInvitationPage\\Model\\Error\\ImportErrorHandlerInterface::storeCompanyUserInvitationImportErrors",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CompanyUserInvitationPage/src/SprykerShop/Yves/CompanyUserInvitationPage/Model/Error/ImportErrorHandler.php",
-            "snippet": "        CompanyUserInvitationImportResponseTransfer $companyUserInvitationImportResponseTransfer",
-            "selected_text": "$companyUserInvitationImportResponseTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",

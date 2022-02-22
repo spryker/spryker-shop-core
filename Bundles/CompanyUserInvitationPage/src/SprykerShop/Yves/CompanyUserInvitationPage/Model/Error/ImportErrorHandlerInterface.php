@@ -13,12 +13,12 @@ use Iterator;
 interface ImportErrorHandlerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationImportResponseTransfer $companyUserInvitationImportReportTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationImportResponseTransfer $companyUserInvitationImportResponseTransfer
      *
      * @return mixed
      */
     public function storeCompanyUserInvitationImportErrors(
-        CompanyUserInvitationImportResponseTransfer $companyUserInvitationImportReportTransfer
+        CompanyUserInvitationImportResponseTransfer $companyUserInvitationImportResponseTransfer
     );
 
     /**

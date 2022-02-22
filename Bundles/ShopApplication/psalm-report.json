@@ -11,18 +11,6 @@
             "selected_text": "AbstractTwigExtensionPlugin",
             "error_level": -1,
             "shortcode": 71
-        },
-        {
-            "severity": "error",
-            "line_from": 50,
-            "line_to": 50,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of SprykerShop\\Yves\\ShopApplication\\Plugin\\Provider\\WidgetTagServiceProvider::register has wrong name $application, expecting $app as defined by Silex\\ServiceProviderInterface::register",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ShopApplication/src/SprykerShop/Yves/ShopApplication/Plugin/Provider/WidgetTagServiceProvider.php",
-            "snippet": "    public function register(Application $application)",
-            "selected_text": "$application",
-            "error_level": 7,
-            "shortcode": 230
         }
     ],
     "warning": [
@@ -522,8 +510,8 @@
         },
         {
             "severity": "info",
-            "line_from": 129,
-            "line_to": 129,
+            "line_from": 128,
+            "line_to": 128,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ShopApplication/src/SprykerShop/Yves/ShopApplication/Plugin/Provider/ShopApplicationServiceProvider.php",
@@ -534,8 +522,8 @@
         },
         {
             "severity": "info",
-            "line_from": 142,
-            "line_to": 142,
+            "line_from": 141,
+            "line_to": 141,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ShopApplication/src/SprykerShop/Yves/ShopApplication/Plugin/Provider/ShopApplicationServiceProvider.php",
@@ -546,8 +534,8 @@
         },
         {
             "severity": "info",
-            "line_from": 150,
-            "line_to": 150,
+            "line_from": 149,
+            "line_to": 149,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ShopApplication/src/SprykerShop/Yves/ShopApplication/Plugin/Provider/ShopApplicationServiceProvider.php",
@@ -558,8 +546,8 @@
         },
         {
             "severity": "info",
-            "line_from": 165,
-            "line_to": 165,
+            "line_from": 164,
+            "line_to": 164,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Shared\\Kernel\\Communication\\Application is marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ShopApplication/src/SprykerShop/Yves/ShopApplication/Plugin/Provider/ShopApplicationServiceProvider.php",
@@ -570,8 +558,8 @@
         },
         {
             "severity": "info",
-            "line_from": 172,
-            "line_to": 172,
+            "line_from": 171,
+            "line_to": 171,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ShopApplication/src/SprykerShop/Yves/ShopApplication/Plugin/Provider/ShopApplicationServiceProvider.php",
@@ -582,8 +570,8 @@
         },
         {
             "severity": "info",
-            "line_from": 172,
-            "line_to": 172,
+            "line_from": 171,
+            "line_to": 171,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ShopApplication/src/SprykerShop/Yves/ShopApplication/Plugin/Provider/ShopApplicationServiceProvider.php",
@@ -911,8 +899,8 @@
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ShopApplication/src/SprykerShop/Yves/ShopApplication/Plugin/Provider/WidgetTagServiceProvider.php",
-            "snippet": "        $application['twig'] = $application->share(",
-            "selected_text": "$application",
+            "snippet": "        $app['twig'] = $app->share(",
+            "selected_text": "$app",
             "error_level": 2,
             "shortcode": 1
         },
@@ -923,7 +911,7 @@
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ShopApplication/src/SprykerShop/Yves/ShopApplication/Plugin/Provider/WidgetTagServiceProvider.php",
-            "snippet": "        $application['twig'] = $application->share(",
+            "snippet": "        $app['twig'] = $app->share(",
             "selected_text": "share",
             "error_level": 2,
             "shortcode": 1
