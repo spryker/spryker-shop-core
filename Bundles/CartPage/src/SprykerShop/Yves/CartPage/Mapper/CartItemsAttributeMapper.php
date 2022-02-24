@@ -160,7 +160,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     }
 
     /**
-     * @deprecated Use {@link \SprykerShop\Yves\CartPage\Mapper\CartItemsAttributeMapper::findAttributesMapByProductAbstractIds()} instead.
+     * @deprecated Will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $item
      * @param string $localeName
