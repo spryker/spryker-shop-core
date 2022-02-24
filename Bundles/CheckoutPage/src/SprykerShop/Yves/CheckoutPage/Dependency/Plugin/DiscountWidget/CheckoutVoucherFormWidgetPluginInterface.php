@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use {@link \SprykerShop\Yves\DiscountWidget\Widget\VoucherFormWidget} instead.
+ * @deprecated Use {@link \SprykerShop\Yves\DiscountWidget\Form\CheckoutVoucherForm} instead.
  */
 interface CheckoutVoucherFormWidgetPluginInterface extends WidgetPluginInterface
 {
