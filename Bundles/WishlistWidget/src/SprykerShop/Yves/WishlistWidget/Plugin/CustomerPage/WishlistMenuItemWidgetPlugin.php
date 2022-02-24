@@ -51,7 +51,7 @@ class WishlistMenuItemWidgetPlugin extends AbstractWidgetPlugin implements Wishl
 
     /**
      * Specification:
-     * - Returns the the template file path to render the widget.
+     * - Returns the template file path to render the widget.
      *
      * @api
      *

@@ -47,7 +47,7 @@ class ProductBundleCartItemsWidgetPlugin extends AbstractWidgetPlugin implements
 
     /**
      * Specification:
-     * - Returns the the template file path to render the widget.
+     * - Returns the template file path to render the widget.
      *
      * @api
      *
