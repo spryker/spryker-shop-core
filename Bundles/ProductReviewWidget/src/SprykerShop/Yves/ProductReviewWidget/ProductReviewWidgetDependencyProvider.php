@@ -48,7 +48,7 @@ class ProductReviewWidgetDependencyProvider extends AbstractBundleDependencyProv
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
-     * @uses `\Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK`
+     * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
      *
      * @var string
      */
