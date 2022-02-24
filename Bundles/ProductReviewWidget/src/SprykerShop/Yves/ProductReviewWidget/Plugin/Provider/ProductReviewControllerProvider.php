@@ -61,7 +61,7 @@ class ProductReviewControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
-     * @deprecated Use {@link addProductReviewCreateRoute()} instead
+     * @deprecated Use {@link addProductReviewCreateRoute()} instead.
      *
      * @return $this
      */

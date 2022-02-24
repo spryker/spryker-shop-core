@@ -19,7 +19,7 @@ use Twig\TwigFunction;
 class CartTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     /**
-     * @deprecated Use {@link FUNCTION_NAME_GET_CART_QUANTITY} instead
+     * @deprecated Use {@link FUNCTION_NAME_GET_CART_QUANTITY} instead.
      *
      * @var string
      */
@@ -73,7 +73,7 @@ class CartTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     }
 
     /**
-     * @deprecated Use {@link getCartQuantityFunction()} instead
+     * @deprecated Use {@link getCartQuantityFunction()} instead.
      *
      * @param \Twig\Environment $twig
      *

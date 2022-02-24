@@ -150,7 +150,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
 
     /**
-     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\CustomerPageDependencyProvider::SERVICE_FLASH_MESSENGER} instead
+     * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\CustomerPageDependencyProvider::SERVICE_FLASH_MESSENGER} instead.
      *
      * @var string
      */
