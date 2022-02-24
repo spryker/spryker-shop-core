@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\ProductOfferWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\ProductOfferWidget\Dependency\Client\ProductOfferWidgetToMerchantProductOfferStorageClientBridge;
+use SprykerShop\Yves\ProductOfferWidget\Dependency\Client\ProductOfferWidgetToProductOfferStorageClientBridge;
 
 /**
  * @method \SprykerShop\Yves\ProductOfferWidget\ProductOfferWidgetConfig getConfig()
@@ -19,7 +19,7 @@ class ProductOfferWidgetDependencyProvider extends AbstractBundleDependencyProvi
     /**
      * @var string
      */
-    public const CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE = 'CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE';
+    public const CLIENT_PRODUCT_OFFER_STORAGE = 'CLIENT_PRODUCT_OFFER_STORAGE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -30,7 +30,7 @@ class ProductOfferWidgetDependencyProvider extends AbstractBundleDependencyProvi
     {
         parent::provideDependencies($container);
 
-        $container = $this->addMerchantProductOfferStorageClient($container);
+        $container = $this->addProductOfferStorageClient($container);
 
         return $container;
     }
@@ -40,11 +40,11 @@ class ProductOfferWidgetDependencyProvider extends AbstractBundleDependencyProvi
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addMerchantProductOfferStorageClient(Container $container): Container
+    protected function addProductOfferStorageClient(Container $container): Container
     {
-        $container->set(static::CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE, function (Container $container) {
-            return new ProductOfferWidgetToMerchantProductOfferStorageClientBridge(
-                $container->getLocator()->merchantProductOfferStorage()->client(),
+        $container->set(static::CLIENT_PRODUCT_OFFER_STORAGE, function (Container $container) {
+            return new ProductOfferWidgetToProductOfferStorageClientBridge(
+                $container->getLocator()->productOfferStorage()->client(),
             );
         });
 

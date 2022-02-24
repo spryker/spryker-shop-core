@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\ProductOfferWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\ProductOfferWidget\Dependency\Client\ProductOfferWidgetToMerchantProductOfferStorageClientInterface;
+use SprykerShop\Yves\ProductOfferWidget\Dependency\Client\ProductOfferWidgetToProductOfferStorageClientInterface;
 
 /**
  * @method \SprykerShop\Yves\ProductOfferWidget\ProductOfferWidgetConfig getConfig()
@@ -16,10 +16,10 @@ use SprykerShop\Yves\ProductOfferWidget\Dependency\Client\ProductOfferWidgetToMe
 class ProductOfferWidgetFactory extends AbstractFactory
 {
     /**
-     * @return \SprykerShop\Yves\ProductOfferWidget\Dependency\Client\ProductOfferWidgetToMerchantProductOfferStorageClientBridge
+     * @return \SprykerShop\Yves\ProductOfferWidget\Dependency\Client\ProductOfferWidgetToProductOfferStorageClientBridge
      */
-    public function getMerchantProductOfferStorageClient(): ProductOfferWidgetToMerchantProductOfferStorageClientInterface
+    public function getProductOfferStorageClient(): ProductOfferWidgetToProductOfferStorageClientInterface
     {
-        return $this->getProvidedDependency(ProductOfferWidgetDependencyProvider::CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE);
+        return $this->getProvidedDependency(ProductOfferWidgetDependencyProvider::CLIENT_PRODUCT_OFFER_STORAGE);
     }
 }

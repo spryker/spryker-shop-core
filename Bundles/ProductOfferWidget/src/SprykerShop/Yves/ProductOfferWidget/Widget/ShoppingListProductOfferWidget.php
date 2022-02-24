@@ -58,13 +58,13 @@ class ShoppingListProductOfferWidget extends AbstractWidget
             return $this;
         }
 
-        $merchantProductOfferStorageTransfer = $this->getFactory()
-            ->getMerchantProductOfferStorageClient()
+        $productOfferStorageTransfer = $this->getFactory()
+            ->getProductOfferStorageClient()
             ->findProductOfferStorageByReference(
                 $productViewTransfer->getProductOfferReference(),
             );
 
-        $this->addParameter(static::PARAMETER_IS_PRODUCT_OFFER_ACTIVE, $merchantProductOfferStorageTransfer !== null);
+        $this->addParameter(static::PARAMETER_IS_PRODUCT_OFFER_ACTIVE, $productOfferStorageTransfer !== null);
 
         return $this;
     }

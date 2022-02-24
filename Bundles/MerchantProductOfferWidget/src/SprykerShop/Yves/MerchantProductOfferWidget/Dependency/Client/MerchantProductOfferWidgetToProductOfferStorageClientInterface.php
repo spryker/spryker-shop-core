@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 
-interface MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface
+interface MerchantProductOfferWidgetToProductOfferStorageClientInterface
 {
     /**
      * @param string $productOfferReference
@@ -25,7 +25,7 @@ interface MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
-    public function getProductOffersBySkus(
+    public function getProductOfferStoragesBySkus(
         ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
     ): ProductOfferStorageCollectionTransfer;
 }

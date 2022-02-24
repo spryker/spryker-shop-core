@@ -8,8 +8,8 @@
 namespace SprykerShop\Yves\MerchantProductOfferWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantStorageClientInterface;
+use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToProductOfferStorageClientInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Expander\MerchantProductOfferExpander;
 use SprykerShop\Yves\MerchantProductOfferWidget\Expander\MerchantProductOfferExpanderInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Reader\MerchantProductOfferReader;
@@ -25,7 +25,7 @@ class MerchantProductOfferWidgetFactory extends AbstractFactory
     public function createProductOfferReader(): MerchantProductOfferReaderInterface
     {
         return new MerchantProductOfferReader(
-            $this->getMerchantProductOfferStorageClient(),
+            $this->getProductOfferStorageClient(),
             $this->createShopContextResolver(),
             $this->getMerchantStorageClient(),
         );
@@ -50,11 +50,11 @@ class MerchantProductOfferWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface
+     * @return \SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToProductOfferStorageClientInterface
      */
-    public function getMerchantProductOfferStorageClient(): MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface
+    public function getProductOfferStorageClient(): MerchantProductOfferWidgetToProductOfferStorageClientInterface
     {
-        return $this->getProvidedDependency(MerchantProductOfferWidgetDependencyProvider::CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE);
+        return $this->getProvidedDependency(MerchantProductOfferWidgetDependencyProvider::CLIENT_PRODUCT_OFFER_STORAGE);
     }
 
     /**
