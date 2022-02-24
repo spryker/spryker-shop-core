@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CartPage\Dependency\Plugin\CartToShoppingListWidget;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use {@link \SprykerShop\Yves\CartToShoppingListWidget\Widget\CreateShoppingListFromCartWidget} instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ShoppingListWidget\Widget\CreateShoppingListFromCartWidget} instead.
  */
 interface CartToShoppingListWidgetPluginInterface extends WidgetPluginInterface
 {
