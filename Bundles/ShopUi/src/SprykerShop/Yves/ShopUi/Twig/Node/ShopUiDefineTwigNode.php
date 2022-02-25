@@ -105,7 +105,7 @@ class ShopUiDefineTwigNode extends Node
 
         $compiler->raw('array_walk_recursive($context[' . $key . '], function($value, $key) {')
             ->raw('if ($value === ' . $requiredValue . ') {')
-            ->raw('throw new RuntimeError(\'required <em>' . $this->getAttribute('name') . '</em> property "\'.$key.\'" is not defined for "' . $this->getTemplateName() . ':' . $this->getTemplateLine() . '"\'); }')
+            ->raw('throw new RuntimeError(\'required <em>' . $this->getAttribute('name') . '</em> property "\'.$key.\'" is not defined for "' . (string)$this->getTemplateName() . ':' . $this->getTemplateLine() . '"\'); }')
             ->raw('});');
 
         return $compiler;
