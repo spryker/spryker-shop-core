@@ -11,7 +11,7 @@ Implements basic router plugins to use for YvesBootstrap::registerRouters().
 
 *SprykerShop\Yves\ShopRouter\Plugin\Router\StorageRouter*
 
-- Matches the path with the key-value storage. Check [URL](https://academy.spryker.com/developing_with_spryker/module_guide/url/url.html) module documentation for more info.
+- Matches the path with the key-value storage. Check [URL](https://docs.spryker.com) module documentation for more info.
 
 ## Installation
 
