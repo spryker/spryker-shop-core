@@ -1,6 +1,5 @@
 {
     "include": {
-        "spryker/transfer": "Provides transfer objects definition with `::get*OrFail()` functionality.",
         "spryker/product-offer-storage": "Provides dependency for included widgets"
     }
 }
