@@ -22,11 +22,11 @@ class SoldByMerchantWidget extends AbstractWidget
     protected const PARAMETER_MERCHANT = 'merchant';
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $abstractTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $transfer
      */
-    public function __construct(AbstractTransfer $abstractTransfer)
+    public function __construct(AbstractTransfer $transfer)
     {
-        $this->addMerchantParameter($abstractTransfer);
+        $this->addMerchantParameter($transfer);
     }
 
     /**
@@ -46,22 +46,21 @@ class SoldByMerchantWidget extends AbstractWidget
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $abstractTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $transfer
      *
      * @return $this
      */
-    protected function addMerchantParameter(AbstractTransfer $abstractTransfer)
+    protected function addMerchantParameter(AbstractTransfer $transfer)
     {
         $this->addParameter(static::PARAMETER_MERCHANT, null);
 
-        /** @psalm-suppress UndefinedMethod */
-        if ($abstractTransfer->getMerchantReference()) {
+        $merchantReference = $transfer->getMerchantReference();
+        if ($merchantReference) {
             $merchantStorageTransfer = $this->getFactory()
                 ->getMerchantStorageClient()
                 ->findOne(
-                    /** @psalm-suppress PossiblyNullArgument */
                     (new MerchantStorageCriteriaTransfer())
-                        ->addMerchantReference($abstractTransfer->getMerchantReference()),
+                        ->addMerchantReference($merchantReference),
                 );
             $this->addParameter(static::PARAMETER_MERCHANT, $merchantStorageTransfer);
         }

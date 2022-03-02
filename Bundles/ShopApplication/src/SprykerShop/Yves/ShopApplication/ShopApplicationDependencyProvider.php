@@ -194,6 +194,8 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @phpstan-return array<class-string<\Spryker\Yves\Kernel\Widget\AbstractWidget>>
+     *
      * @deprecated Use $this->getGlobalWidgets() instead.
      *
      * @return array<string>
@@ -204,6 +206,8 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @phpstan-return array<class-string<\Spryker\Yves\Kernel\Widget\AbstractWidget>>
+     *
      * @return array<string>
      */
     protected function getGlobalWidgets(): array
