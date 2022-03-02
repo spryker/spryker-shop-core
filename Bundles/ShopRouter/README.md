@@ -3,7 +3,7 @@
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
 
 ShopRouter
-Implements basic router plugins to use for YvesBootstrap::registerRouters().
+Implements basic router plugins to use for `YvesBootstrap::registerRouters()`.
 
 *SprykerShop\Yves\ShopRouter\Plugin\Router\SilexRouter*
 
@@ -11,7 +11,7 @@ Implements basic router plugins to use for YvesBootstrap::registerRouters().
 
 *SprykerShop\Yves\ShopRouter\Plugin\Router\StorageRouter*
 
-- Matches the path with the key-value storage. Check [URL](https://docs.spryker.com) module documentation for more info.
+- Matches the path with the key-value storage.
 
 ## Installation
 
