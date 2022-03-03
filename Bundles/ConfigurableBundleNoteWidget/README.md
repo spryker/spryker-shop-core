@@ -12,4 +12,4 @@ composer require spryker-shop/configurable-bundle-note-widget
 
 ## Documentation
 
-[Spryker Documentation](https://documentation.spryker.com/module_guide/overview.htm)
+[Spryker Documentation](https://documentation.spryker.com)
