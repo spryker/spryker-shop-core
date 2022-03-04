@@ -12,4 +12,4 @@ composer require spryker-shop/sales-return-page-extension
 
 ## Documentation
 
-[Spryker Documentation](https://documentation.spryker.com)
+[Spryker Documentation](https://docs.spryker.com)

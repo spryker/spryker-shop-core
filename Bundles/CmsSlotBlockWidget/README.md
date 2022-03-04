@@ -12,4 +12,4 @@ composer require spryker-shop/cms-slot-block-widget
 
 ## Documentation
 
-[Spryker Documentation](https://documentation.spryker.com)
+[Spryker Documentation](https://docs.spryker.com)
