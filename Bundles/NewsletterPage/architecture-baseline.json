@@ -33,5 +33,12 @@
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/NewsletterPage/Form/NewsletterSubscriptionForm.php",
+        "description": "Method `SprykerShop\\Yves\\NewsletterPage\\Form\\NewsletterSubscriptionForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
     }
 ]

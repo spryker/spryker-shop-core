@@ -12,5 +12,33 @@
         "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/StorageRouter/RequestMatcher/StorageRequestMatcher.php",
+        "description": "Method `SprykerShop\\Yves\\StorageRouter\\RequestMatcher\\StorageRequestMatcher::matchRequest()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/StorageRouter/RouteEnhancer/ControllerRouteEnhancer.php",
+        "description": "Method `SprykerShop\\Yves\\StorageRouter\\RouteEnhancer\\ControllerRouteEnhancer::enhance()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/StorageRouter/UrlGenerator/StorageUrlGenerator.php",
+        "description": "Method `SprykerShop\\Yves\\StorageRouter\\UrlGenerator\\StorageUrlGenerator::getContext()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/StorageRouter/UrlGenerator/StorageUrlGenerator.php",
+        "description": "Method `SprykerShop\\Yves\\StorageRouter\\UrlGenerator\\StorageUrlGenerator::generate()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
     }
 ]

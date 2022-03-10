@@ -40,5 +40,12 @@
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/ProductReviewWidget/Form/ProductReviewForm.php",
+        "description": "Method `SprykerShop\\Yves\\ProductReviewWidget\\Form\\ProductReviewForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
     }
 ]

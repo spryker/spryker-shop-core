@@ -131,5 +131,19 @@
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CatalogPage/Plugin/Twig/CategoryFilterTwigExtension.php",
+        "description": "Method `SprykerShop\\Yves\\CatalogPage\\Plugin\\Twig\\CategoryFilterTwigExtension::getFunctions()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CatalogPage/Twig/CatalogPageTwigExtension.php",
+        "description": "Method `SprykerShop\\Yves\\CatalogPage\\Twig\\CatalogPageTwigExtension::getFunctions()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
     }
 ]

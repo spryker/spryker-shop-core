@@ -19,5 +19,19 @@
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CartNoteWidget/Form/QuoteCartNoteForm.php",
+        "description": "Method `SprykerShop\\Yves\\CartNoteWidget\\Form\\QuoteCartNoteForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CartNoteWidget/Form/QuoteItemCartNoteForm.php",
+        "description": "Method `SprykerShop\\Yves\\CartNoteWidget\\Form\\QuoteItemCartNoteForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
     }
 ]

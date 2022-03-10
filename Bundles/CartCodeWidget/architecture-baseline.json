@@ -26,5 +26,12 @@
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CartCodeWidget/Form/CartCodeForm.php",
+        "description": "Method `SprykerShop\\Yves\\CartCodeWidget\\Form\\CartCodeForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
     }
 ]

@@ -154,6 +154,27 @@
         "priority": "2"
     },
     {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Form/AddressForm.php",
+        "description": "Method `SprykerShop\\Yves\\CustomerPage\\Form\\AddressForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Form/CheckoutAddressCollectionForm.php",
+        "description": "Method `SprykerShop\\Yves\\CustomerPage\\Form\\CheckoutAddressCollectionForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Form/CheckoutMultiShippingAddressesForm.php",
+        "description": "Method `SprykerShop\\Yves\\CustomerPage\\Form\\CheckoutMultiShippingAddressesForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/SprykerShop/Yves/CustomerPage/Form/CheckoutMultiShippingAddressesForm.php",
         "description": "Prefix `is` must not be used with postfix `Exist`. Method: SprykerShop\\Yves\\CustomerPage\\Form\\CheckoutMultiShippingAddressesForm::isIdCustomerAddressExistAndNotEmpty().",
         "rule": "ExistsPostfixRule",
@@ -192,6 +213,118 @@
         "fileName": "src/SprykerShop/Yves/CustomerPage/Form/CheckoutMultiShippingAddressesForm.php",
         "description": "Postfix `Exists` must be in the end of method name. Method: SprykerShop\\Yves\\CustomerPage\\Form\\CheckoutMultiShippingAddressesForm::isIdCompanyUnitAddressFieldExistAndNotEmpty().",
         "rule": "ExistsPostfixRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Form/ForgottenPasswordForm.php",
+        "description": "Method `SprykerShop\\Yves\\CustomerPage\\Form\\ForgottenPasswordForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Form/GuestForm.php",
+        "description": "Method `SprykerShop\\Yves\\CustomerPage\\Form\\GuestForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Form/LoginForm.php",
+        "description": "Method `SprykerShop\\Yves\\CustomerPage\\Form\\LoginForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Form/PasswordForm.php",
+        "description": "Method `SprykerShop\\Yves\\CustomerPage\\Form\\PasswordForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Form/ProfileForm.php",
+        "description": "Method `SprykerShop\\Yves\\CustomerPage\\Form\\ProfileForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Form/RegisterForm.php",
+        "description": "Method `SprykerShop\\Yves\\CustomerPage\\Form\\RegisterForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Form/RestorePasswordForm.php",
+        "description": "Method `SprykerShop\\Yves\\CustomerPage\\Form\\RestorePasswordForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Plugin/Provider/CustomerAuthenticationFailureHandler.php",
+        "description": "Method `SprykerShop\\Yves\\CustomerPage\\Plugin\\Provider\\CustomerAuthenticationFailureHandler::onAuthenticationFailure()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Plugin/Provider/CustomerAuthenticationSuccessHandler.php",
+        "description": "Method `SprykerShop\\Yves\\CustomerPage\\Plugin\\Provider\\CustomerAuthenticationSuccessHandler::onAuthenticationSuccess()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Plugin/Provider/CustomerUserProvider.php",
+        "description": "Method `SprykerShop\\Yves\\CustomerPage\\Plugin\\Provider\\CustomerUserProvider::loadUserByUsername()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Plugin/Provider/CustomerUserProvider.php",
+        "description": "Method `SprykerShop\\Yves\\CustomerPage\\Plugin\\Provider\\CustomerUserProvider::refreshUser()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Plugin/Provider/CustomerUserProvider.php",
+        "description": "Method `SprykerShop\\Yves\\CustomerPage\\Plugin\\Provider\\CustomerUserProvider::supportsClass()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Security/Customer.php",
+        "description": "Method `SprykerShop\\Yves\\CustomerPage\\Security\\Customer::getRoles()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Security/Customer.php",
+        "description": "Method `SprykerShop\\Yves\\CustomerPage\\Security\\Customer::getSalt()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Security/Customer.php",
+        "description": "Method `SprykerShop\\Yves\\CustomerPage\\Security\\Customer::getUsername()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerPage/Security/Customer.php",
+        "description": "Method `SprykerShop\\Yves\\CustomerPage\\Security\\Customer::getPassword()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
         "ruleset": "Spryker",
         "priority": "1"
     }

@@ -26,5 +26,47 @@
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/ShopApplication/Plugin/BaseAbstractTwigExtensionPlugin.php",
+        "description": "Method `SprykerShop\\Yves\\ShopApplication\\Plugin\\BaseAbstractTwigExtensionPlugin::getTokenParsers()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/ShopApplication/Plugin/BaseAbstractTwigExtensionPlugin.php",
+        "description": "Method `SprykerShop\\Yves\\ShopApplication\\Plugin\\BaseAbstractTwigExtensionPlugin::getNodeVisitors()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/ShopApplication/Plugin/BaseAbstractTwigExtensionPlugin.php",
+        "description": "Method `SprykerShop\\Yves\\ShopApplication\\Plugin\\BaseAbstractTwigExtensionPlugin::getFilters()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/ShopApplication/Plugin/BaseAbstractTwigExtensionPlugin.php",
+        "description": "Method `SprykerShop\\Yves\\ShopApplication\\Plugin\\BaseAbstractTwigExtensionPlugin::getTests()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/ShopApplication/Plugin/BaseAbstractTwigExtensionPlugin.php",
+        "description": "Method `SprykerShop\\Yves\\ShopApplication\\Plugin\\BaseAbstractTwigExtensionPlugin::getFunctions()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/ShopApplication/Plugin/BaseAbstractTwigExtensionPlugin.php",
+        "description": "Method `SprykerShop\\Yves\\ShopApplication\\Plugin\\BaseAbstractTwigExtensionPlugin::getOperators()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
     }
 ]

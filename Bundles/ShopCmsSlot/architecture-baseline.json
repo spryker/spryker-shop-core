@@ -1,1 +1,9 @@
-[]
+[
+    {
+        "fileName": "src/SprykerShop/Yves/ShopCmsSlot/Twig/TokenParser/ShopCmsSlotTokenParser.php",
+        "description": "Method `SprykerShop\\Yves\\ShopCmsSlot\\Twig\\TokenParser\\ShopCmsSlotTokenParser::parse()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    }
+]

@@ -26,5 +26,19 @@
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/DiscountWidget/Form/CartVoucherForm.php",
+        "description": "Method `SprykerShop\\Yves\\DiscountWidget\\Form\\CartVoucherForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/DiscountWidget/Form/CheckoutVoucherForm.php",
+        "description": "Method `SprykerShop\\Yves\\DiscountWidget\\Form\\CheckoutVoucherForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
     }
 ]

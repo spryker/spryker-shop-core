@@ -12,5 +12,12 @@
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/ShopPermission/Plugin/Twig/PermissionTwigExtensionPlugin.php",
+        "description": "Method `SprykerShop\\Yves\\ShopPermission\\Plugin\\Twig\\PermissionTwigExtensionPlugin::getFunctions()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
     }
 ]

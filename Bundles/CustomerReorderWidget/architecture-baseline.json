@@ -110,5 +110,19 @@
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerReorderWidget/Form/CustomerReorderItemsWidgetForm.php",
+        "description": "Method `SprykerShop\\Yves\\CustomerReorderWidget\\Form\\CustomerReorderItemsWidgetForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/SprykerShop/Yves/CustomerReorderWidget/Form/CustomerReorderWidgetForm.php",
+        "description": "Method `SprykerShop\\Yves\\CustomerReorderWidget\\Form\\CustomerReorderWidgetForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
     }
 ]
