@@ -12,4 +12,4 @@ composer require spryker-shop/cart-note-widget
 
 ## Documentation
 
-[Spryker Documentation](https://academy.spryker.com)
+[Spryker Documentation](https://docs.spryker.com)

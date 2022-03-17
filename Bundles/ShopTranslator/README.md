@@ -12,4 +12,4 @@ composer require spryker-shop/shop-translator
 
 ## Documentation
 
-[Spryker Documentation](https://academy.spryker.com)
+[Spryker Documentation](https://docs.spryker.com)

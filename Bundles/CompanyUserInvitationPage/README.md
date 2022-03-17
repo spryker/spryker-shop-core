@@ -17,4 +17,4 @@ composer require spryker-shop/company-user-invitation-page
 
 ## Documentation
 
-[Spryker Documentation](https://academy.spryker.com)
+[Spryker Documentation](https://docs.spryker.com)
