@@ -31,7 +31,13 @@
         {% block contentInner %}
             {% block generalInformation %}
                 {% block name -%}
-                    <h6>{{ data.name }}</h6>
+                    <h6>
+                        {% if data.url %}
+                            <a href="{{ path(data.url) }}">{{ data.name }}</a>
+                        {% else %}
+                            {{ data.name }}
+                        {% endif %}
+                    </h6>
                 {%- endblock %}
 
                 {% block sku -%}

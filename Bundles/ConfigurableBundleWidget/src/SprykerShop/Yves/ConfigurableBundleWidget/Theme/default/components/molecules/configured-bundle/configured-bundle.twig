@@ -31,7 +31,15 @@
                         {% block bundleName %}
                             <h6 class="spacing-right spacing-right--big">
                                 {%- block bundleNameText -%}
-                                    {{ data.bundle.template.name | trans }}
+                                    {% if data.bundle.template.idConfigurableBundleTemplate %}
+                                        <a href="{{ path(
+                                            'configurable-bundle/configurator/slots', {
+                                                'idConfigurableBundleTemplate': data.bundle.template.idConfigurableBundleTemplate,
+                                            }
+                                        ) }}">{{ data.bundle.template.name | trans }}</a>
+                                    {% else %}
+                                        {{ data.bundle.template.name | trans }}
+                                    {% endif %}
                                 {%- endblock -%}
                             </h6>
                         {% endblock %}
