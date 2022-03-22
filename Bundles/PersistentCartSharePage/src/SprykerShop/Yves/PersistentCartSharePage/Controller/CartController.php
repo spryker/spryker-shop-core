@@ -20,6 +20,20 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class CartController extends AbstractController
 {
     /**
+     * @uses \SprykerShop\Yves\CartPage\CartPageConfig::IS_CART_CART_ITEMS_VIA_AJAX_LOAD_ENABLED
+     *
+     * @var bool
+     */
+    protected const IS_CART_CART_ITEMS_VIA_AJAX_LOAD_ENABLED = false;
+
+    /**
+     * @uses \SprykerShop\Yves\CartPage\CartPageConfig::IS_LOADING_UPSELLING_PRODUCTS_VIA_AJAX_ENABLED
+     *
+     * @var bool
+     */
+    protected const IS_LOADING_UPSELLING_PRODUCTS_VIA_AJAX_ENABLED = false;
+
+    /**
      * @param string $resourceShareUuid
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -69,6 +83,8 @@ class CartController extends AbstractController
             'attributes' => [],
             'isQuoteValid' => false,
             'isQuoteLocked' => false,
+            'isCartItemsViaAjaxLoadEnabled' => static::IS_CART_CART_ITEMS_VIA_AJAX_LOAD_ENABLED,
+            'isUpsellingProductsViaAjaxEnabled' => static::IS_LOADING_UPSELLING_PRODUCTS_VIA_AJAX_ENABLED,
         ];
     }
 }

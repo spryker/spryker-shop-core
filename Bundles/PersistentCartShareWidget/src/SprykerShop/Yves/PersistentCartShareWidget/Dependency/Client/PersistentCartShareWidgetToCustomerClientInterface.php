@@ -7,10 +7,12 @@
 
 namespace SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+
 interface PersistentCartShareWidgetToCustomerClientInterface
 {
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomer();
+    public function getCustomer(): ?CustomerTransfer;
 }

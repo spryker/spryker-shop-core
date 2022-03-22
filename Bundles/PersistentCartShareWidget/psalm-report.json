@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 89,
-            "line_to": 89,
+            "line_from": 90,
+            "line_to": 90,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\PersistentCartShareWidget\\PersistentCartShare\\PersistentCartShareLinkGenerator::buildResourceShareLink cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/PersistentCartShareWidget/src/SprykerShop/Yves/PersistentCartShareWidget/PersistentCartShare/PersistentCartShareLinkGenerator.php",

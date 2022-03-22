@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+
 class PersistentCartShareWidgetToCustomerClientBridge implements PersistentCartShareWidgetToCustomerClientInterface
 {
     /**
@@ -25,7 +27,7 @@ class PersistentCartShareWidgetToCustomerClientBridge implements PersistentCartS
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomer()
+    public function getCustomer(): ?CustomerTransfer
     {
         return $this->customerClient->getCustomer();
     }

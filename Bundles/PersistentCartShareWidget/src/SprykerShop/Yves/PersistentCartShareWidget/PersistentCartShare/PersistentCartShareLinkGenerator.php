@@ -13,6 +13,7 @@ use SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartS
 use SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartShareWidgetToPersistentCartShareClientInterface;
 use SprykerShop\Yves\PersistentCartShareWidget\Exceptions\InvalidShareOptionGroupException;
 use SprykerShop\Yves\PersistentCartShareWidget\ResourceShare\ResourceShareRequestBuilder;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGeneratorInterface
 {
@@ -122,7 +123,11 @@ class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGenerat
      */
     protected function buildResourceShareLink(ResourceShareTransfer $cartResourceShare): string
     {
-        return $this->router->generate(static::LINK_ROUTE, [static::PARAM_RESOURCE_SHARE_UUID => $cartResourceShare->getUuid()]);
+        return $this->router->generate(
+            static::LINK_ROUTE,
+            [static::PARAM_RESOURCE_SHARE_UUID => $cartResourceShare->getUuid()],
+            UrlGeneratorInterface::ABSOLUTE_URL,
+        );
     }
 
     /**
