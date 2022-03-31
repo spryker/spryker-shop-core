@@ -1,3 +1,4 @@
+import './style.scss';
 import register from 'ShopUi/app/registry';
 export default register('image-carousel', () =>
     import(
