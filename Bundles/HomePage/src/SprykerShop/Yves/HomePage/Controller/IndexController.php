@@ -19,6 +19,7 @@ class IndexController extends AbstractController
      * @var int
      */
     public const FEATURED_PRODUCT_LIMIT = 6;
+
     public const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL;
 
     /**

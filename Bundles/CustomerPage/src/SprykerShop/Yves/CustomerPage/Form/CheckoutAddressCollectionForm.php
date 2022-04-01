@@ -97,7 +97,9 @@ class CheckoutAddressCollectionForm extends AbstractType
     public const OPTION_BUNDLE_ITEMS = 'bundleItems';
 
     public const GROUP_SHIPPING_ADDRESS = self::FIELD_SHIPPING_ADDRESS;
+
     public const GROUP_BILLING_ADDRESS = self::FIELD_BILLING_ADDRESS;
+
     public const GROUP_BILLING_SAME_AS_SHIPPING = self::FIELD_BILLING_SAME_AS_SHIPPING;
 
     /**

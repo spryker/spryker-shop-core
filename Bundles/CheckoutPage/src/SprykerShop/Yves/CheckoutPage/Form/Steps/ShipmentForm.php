@@ -39,6 +39,7 @@ class ShipmentForm extends AbstractType
      * @var string
      */
     protected const SHIPMENT_SELECTION = 'shipmentSelection';
+
     protected const SHIPMENT_SELECTION_PROPERTY_PATH = self::SHIPMENT_PROPERTY_PATH . '.' . self::SHIPMENT_SELECTION;
 
     /**

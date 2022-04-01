@@ -21,6 +21,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class ProductConfiguratorRequestDataForm extends AbstractType
 {
     public const FIELD_SOURCE_TYPE = ProductConfiguratorRequestDataTransfer::SOURCE_TYPE;
+
     public const OPTION_SOURCE_TYPE = self::FIELD_SOURCE_TYPE;
 
     protected const FIELD_CONFIGURATOR_KEY = ProductConfiguratorRequestDataTransfer::CONFIGURATOR_KEY;

@@ -22,6 +22,7 @@ class ProductDetailPageProductConfiguratorRequestDataFormExpander implements Pro
     protected $productConfiguratorGatewayPageConfig;
 
     protected const FIELD_SKU = ProductConfiguratorRequestDataTransfer::SKU;
+
     protected const FIELD_SOURCE_TYPE = ProductConfiguratorRequestDataTransfer::SOURCE_TYPE;
 
     /**

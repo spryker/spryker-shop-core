@@ -19,9 +19,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ProductConfigurationButtonForm extends AbstractType
 {
     protected const FILED_SKU = ProductConfiguratorRequestDataTransfer::SKU;
+
     protected const FILED_QUANTITY = ProductConfiguratorRequestDataTransfer::QUANTITY;
+
     protected const FILED_SOURCE_TYPE = ProductConfiguratorRequestDataTransfer::SOURCE_TYPE;
+
     protected const FILED_ITEM_GROUP_KEY = ProductConfiguratorRequestDataTransfer::ITEM_GROUP_KEY;
+
     protected const FIELD_CONFIGURATOR_KEY = ProductConfiguratorRequestDataTransfer::CONFIGURATOR_KEY;
 
     /**

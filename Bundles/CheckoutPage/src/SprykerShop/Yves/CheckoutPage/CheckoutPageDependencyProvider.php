@@ -200,6 +200,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_SUCCESS_PAGE_WIDGETS = 'PLUGIN_SUCCESS_PAGE_WIDGETS';
 
     public const PAYMENT_METHOD_HANDLER = SprykerCheckoutDependencyProvider::PAYMENT_METHOD_HANDLER; // constant value must be BC because of dependency injector
+
     public const PAYMENT_SUB_FORMS = SprykerCheckoutDependencyProvider::PAYMENT_SUB_FORMS; // constant value must be BC because of dependency injector
 
     /**
