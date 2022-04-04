@@ -7,6 +7,7 @@
         <property name="price" type="CurrentProductPrice"/>
         <property name="merchantStorage" type="MerchantStorage"/>
         <property name="merchantReference" type="string"/>
+        <property name="productConcreteSku" type="string"/>
     </transfer>
 
     <transfer name="MerchantStorage">
@@ -14,6 +15,7 @@
         <property name="merchantReference" type="string"/>
         <property name="idMerchant" type="int"/>
         <property name="urlCollection" type="Url[]" singular="url"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="ProductView">
@@ -53,6 +55,9 @@
 
     <transfer name="ProductOffer">
         <property name="productOfferReference" type="string"/>
+        <property name="merchantName" type="string"/>
+        <property name="merchantReference" type="string"/>
+        <property name="concreteSku" type="string"/>
     </transfer>
 
     <transfer name="ProductOfferStorageCriteria">
@@ -60,6 +65,7 @@
     </transfer>
 
     <transfer name="ShopContext">
+        <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="MerchantStorageCriteria">
@@ -69,6 +75,12 @@
     <transfer name="WishlistItem">
         <property name="productOfferReference" type="string"/>
         <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="QuickOrderItem">
+        <property name="productOfferReference" type="string"/>
+        <property name="merchantReference" type="string"/>
+        <property name="sku" type="string"/>
     </transfer>
 
 </transfers>

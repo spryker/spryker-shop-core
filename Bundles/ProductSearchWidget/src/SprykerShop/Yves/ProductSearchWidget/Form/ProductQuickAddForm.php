@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \SprykerShop\Yves\ProductSearchWidget\ProductSearchWidgetConfig getConfig()
+ * @method \SprykerShop\Yves\ProductSearchWidget\ProductSearchWidgetFactory getFactory()
  */
 class ProductQuickAddForm extends AbstractType
 {
@@ -90,6 +91,8 @@ class ProductQuickAddForm extends AbstractType
             ->addSku($builder)
             ->addRedirectRouteName($builder)
             ->addAdditionalRedirectParameters($builder);
+
+        $this->executeProductQuickAddFormExpanderPlugins($builder, $options);
     }
 
     /**
@@ -204,5 +207,18 @@ class ProductQuickAddForm extends AbstractType
             'value' => $maxValue,
             'message' => $message,
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, string> $options
+     *
+     * @return void
+     */
+    protected function executeProductQuickAddFormExpanderPlugins(FormBuilderInterface $builder, array $options): void
+    {
+        foreach ($this->getFactory()->getProductQuickAddFormExpanderPlugins() as $productQuickAddFormExpanderPlugin) {
+            $productQuickAddFormExpanderPlugin->expand($builder, $options);
+        }
     }
 }

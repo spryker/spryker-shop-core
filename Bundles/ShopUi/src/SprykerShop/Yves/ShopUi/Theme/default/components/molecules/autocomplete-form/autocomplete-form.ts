@@ -53,6 +53,8 @@ export default class AutocompleteForm extends Component {
      * The last selected saggestion item.
      */
     lastSelectedItem: HTMLElement;
+    protected injectorsExtraQueryValueList: HTMLSelectElement[] | HTMLInputElement[];
+    protected extraQueryValues = new Map();
 
     protected readyCallback(): void {
         this.ajaxProvider = <AjaxProvider>this.getElementsByClassName(`${this.jsName}__provider`)[0];
@@ -60,6 +62,12 @@ export default class AutocompleteForm extends Component {
         this.valueInput = <HTMLInputElement>this.getElementsByClassName(`${this.jsName}__value-input`)[0];
         this.suggestionsContainer = <HTMLElement>this.getElementsByClassName(`${this.jsName}__suggestions`)[0];
         this.cleanButton = <HTMLButtonElement>this.getElementsByClassName(`${this.jsName}__clean-button`)[0];
+
+        if (this.injectorsExtraQueryValueClassName) {
+            this.injectorsExtraQueryValueList = <HTMLSelectElement[] | HTMLInputElement[]>(
+                Array.from(document.getElementsByClassName(this.injectorsExtraQueryValueClassName))
+            );
+        }
 
         if (this.autoInitEnabled) {
             this.autoLoadInit();
@@ -127,13 +135,33 @@ export default class AutocompleteForm extends Component {
         this.suggestionsContainer.classList.add('is-hidden');
     }
 
+    protected setQueryParams(): void {
+        this.extraQueryValues.clear();
+        this.ajaxProvider.queryParams.clear();
+        this.ajaxProvider.queryParams.set(this.queryString, this.inputText);
+
+        if (!this.injectorsExtraQueryValueList || !this.injectorsExtraQueryValueList.length) {
+            return;
+        }
+
+        this.injectorsExtraQueryValueList.forEach((item) => {
+            if (!item.name || !item.value) {
+                return;
+            }
+
+            this.ajaxProvider.queryParams.set(item.name, item.value);
+            this.extraQueryValues.set(item.name, item.value);
+        });
+    }
+
     /**
      * Sends a request to the server and triggers the custom fetching and fetched events.
      */
     async loadSuggestions(): Promise<void> {
         this.dispatchCustomEvent(Events.FETCHING);
         this.showSuggestions();
-        this.ajaxProvider.queryParams.set(this.queryString, this.inputText);
+        this.setQueryParams();
+
         await this.ajaxProvider.fetch();
         /* tslint:disable: deprecation */
         this.suggestionItems = <HTMLElement[]>(
@@ -158,7 +186,11 @@ export default class AutocompleteForm extends Component {
     protected onItemClick(item: HTMLElement): void {
         this.inputText = item.textContent.trim();
         this.inputValue = item.getAttribute(this.valueAttributeName);
-        this.dispatchCustomEvent(Events.SET, { text: this.inputText, value: this.inputValue });
+        this.dispatchCustomEvent(Events.SET, {
+            text: this.inputText,
+            value: this.inputValue,
+            extraValues: this.extraQueryValues,
+        });
     }
 
     protected onItemSelected(item: HTMLElement): void {
@@ -277,8 +309,13 @@ export default class AutocompleteForm extends Component {
     get suggestedItemSelector(): string {
         return this.getAttribute('suggested-item-selector');
     }
+
     protected get suggestedItemClassName(): string {
         return this.getAttribute('suggested-item-class-name');
+    }
+
+    protected get injectorsExtraQueryValueClassName(): string {
+        return this.getAttribute('injectors-extra-query-value-class-name');
     }
 
     /**

@@ -5,6 +5,7 @@
         <property name="searchString" type="string"/>
         <property name="limit" type="int"/>
         <property name="excludedProductIds" type="int[]" singular="excludedProductId"/>
+        <property name="requestParams" type="array" singular="requestParams"/>
     </transfer>
 
     <transfer name="ProductConcretePageSearch">
@@ -15,6 +16,9 @@
     <transfer name="ProductView">
         <property name="idProductConcrete" type="int"/>
         <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="ShopContext">
     </transfer>
 
 </transfers>

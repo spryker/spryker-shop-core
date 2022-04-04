@@ -1,5 +1,5 @@
 import Component from '../../../models/component';
-import AjaxProvider from '../ajax-provider/ajax-provider';
+import AjaxProvider, { EVENT_FETCHED } from '../ajax-provider/ajax-provider';
 import { mount } from 'ShopUi/app';
 
 export default class AjaxRenderer extends Component {
@@ -23,7 +23,7 @@ export default class AjaxRenderer extends Component {
     }
 
     protected mapEvents(): void {
-        this.provider.addEventListener('fetched', (event: Event) => this.onFetched(event));
+        this.provider.addEventListener(EVENT_FETCHED, (event: Event) => this.onFetched(event));
     }
 
     protected onFetched(event: Event): void {

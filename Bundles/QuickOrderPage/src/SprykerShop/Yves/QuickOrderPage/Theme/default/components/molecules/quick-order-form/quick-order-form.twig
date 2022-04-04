@@ -39,6 +39,12 @@
         },
     } only %}
 
+    {% widget 'MerchantSearchWidget' with {
+        data: {
+            merchantsFormElementClassName: config.jsName ~ '__search-form-element',
+        },
+    } only %}{% endwidget %}
+
     {% embed molecule('form') with {
         data: {
             form: data.form,
@@ -48,8 +54,8 @@
             options: {
                 attr: {
                     class: config.jsName ~ '__form',
-                    'enctype': 'multipart/form-data'
-                }
+                    enctype: 'multipart/form-data',
+                },
             },
             textOrderForm: data.textOrderForm,
             uploadOrderForm: data.uploadOrderForm,
@@ -65,13 +71,14 @@
                 {% block fields %}
                     <div class="{{ config.name }}__field col col--sm-12 col--md-9">
                         <div class="box">
-                            <div class="{{embed.name}}__rows {{embed.jsName}}__rows">
+                            <div class="{{ embed.name }}__rows {{ embed.jsName }}__rows">
                                 {% include molecule('quick-order-rows', 'QuickOrderPage') with {
                                     data: {
                                         rows: data.form.items,
                                         products: data.products,
                                         prices: data.prices,
                                         additionalColumns: embed.additionalColumns,
+                                        extraSearchFormElementClassName: embed.jsName ~ '__search-form-element',
                                     },
                                 } only %}
                             </div>

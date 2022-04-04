@@ -75,8 +75,8 @@ class PriceResolver implements PriceResolverInterface
             return $quickOrderItemTransfer;
         }
 
-        $sumPrice = $this->getSumPriceForQuantity(
-            $quickOrderItemTransfer->getQuantity(),
+        $sumPrice = $this->getSumPriceForQuickOrderItemTransfer(
+            $quickOrderItemTransfer,
             $idProduct,
             $this->productResolver->getIdProductAbstractByIdProduct($idProduct),
         );
@@ -87,18 +87,19 @@ class PriceResolver implements PriceResolverInterface
     }
 
     /**
-     * @param int $quantity
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
      * @param int $idProduct
      * @param int $idProductAbstract
      *
      * @return int|null
      */
-    protected function getSumPriceForQuantity(int $quantity, int $idProduct, int $idProductAbstract): ?int
+    protected function getSumPriceForQuickOrderItemTransfer(QuickOrderItemTransfer $quickOrderItemTransfer, int $idProduct, int $idProductAbstract): ?int
     {
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
-            ->setQuantity($quantity)
+            ->fromArray($quickOrderItemTransfer->toArray(), true)
             ->setIdProduct($idProduct)
-            ->setIdProductAbstract($idProductAbstract);
+            ->setIdProductAbstract($idProductAbstract)
+            ->setSku(null);
 
         return $this->priceProductStorageClient
             ->getResolvedCurrentProductPriceTransfer($priceProductFilterTransfer)

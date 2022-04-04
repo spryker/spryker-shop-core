@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\QuickOrderPage\Form;
 
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
+use SprykerShop\Yves\QuickOrderPage\Form\EventSubscriber\QuickOrderItemsEventSubscriber;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,17 +23,17 @@ class QuickOrderForm extends AbstractType
     /**
      * @var string
      */
+    protected const SUBMIT_BUTTON_ADD_TO_CART = 'addToCart';
+
+    /**
+     * @var string
+     */
+    protected const SUBMIT_BUTTON_CREATE_ORDER = 'createOrder';
+
+    /**
+     * @var string
+     */
     protected const FIELD_ITEMS = 'items';
-
-    /**
-     * @var string
-     */
-    public const SUBMIT_BUTTON_ADD_TO_CART = 'addToCart';
-
-    /**
-     * @var string
-     */
-    public const SUBMIT_BUTTON_CREATE_ORDER = 'createOrder';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -42,8 +43,9 @@ class QuickOrderForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this
-            ->addItemsCollection($builder);
+        $this->addItemsCollection($builder);
+
+        $builder->addEventSubscriber(new QuickOrderItemsEventSubscriber());
     }
 
     /**

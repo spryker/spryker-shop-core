@@ -19,11 +19,6 @@ class MerchantProductExpander implements MerchantProductExpanderInterface
     protected const PARAM_MERCHANT_REFERENCE = 'merchant_reference';
 
     /**
-     * @var string
-     */
-    protected const PARAM_PRODUCT_OFFER_REFERENCE = 'product_offer_reference';
-
-    /**
      * @var \SprykerShop\Yves\MerchantProductWidget\Reader\MerchantProductReaderInterface
      */
     protected $merchantProductReader;
@@ -77,7 +72,7 @@ class MerchantProductExpander implements MerchantProductExpanderInterface
         array $params,
         string $locale
     ): ItemTransfer {
-        if (!empty($params[static::PARAM_PRODUCT_OFFER_REFERENCE])) {
+        if ($itemTransfer->getMerchantReference()) {
             return $itemTransfer;
         }
 

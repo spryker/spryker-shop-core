@@ -78,7 +78,7 @@ class QuickOrderFormDataProvider implements QuickOrderFormDataProviderInterface
             }
 
             $quickOrderItems[] = (new QuickOrderItemTransfer())
-                ->setSku($formDataItem[QuickOrderItemEmbeddedForm::FIELD_SKU] ?? null)
+                ->fromArray($formDataItem, true)
                 ->setQuantity(isset($formDataItem[QuickOrderItemEmbeddedForm::FIELD_QUANTITY]) ? (int)$formDataItem[QuickOrderItemEmbeddedForm::FIELD_QUANTITY] : null);
         }
 

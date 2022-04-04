@@ -8,4 +8,8 @@
     <transfer name="ProductOfferStorage">
     </transfer>
 
+    <transfer name="QuickOrderItem">
+        <property name="productOfferReference" type="string"/>
+    </transfer>
+
 </transfers>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ShopContext">
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantSearchRequest">
+    </transfer>
+
+    <transfer name="MerchantSearchCollection">
+        <property name="merchants" type="MerchantSearch[]" singular="merchant"/>
+    </transfer>
+
+    <transfer name="MerchantSearch">
+        <property name="merchantReference" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+</transfers>

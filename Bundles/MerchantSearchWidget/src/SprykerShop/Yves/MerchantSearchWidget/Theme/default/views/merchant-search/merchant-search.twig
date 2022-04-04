@@ -1,0 +1,31 @@
+{% extends template('widget') %}
+
+{% define data = {
+    merchantsFormElementClassName: required,
+    merchantForm: _widget.merchantForm,
+} %}
+
+{% block body %}
+    <div class="box grid">
+        {% block column %}
+            <div class="col col--sm-12 col--lg-6 col--xl-3">
+                {% block merchantForm %}
+                    {{ form_start(data.merchantForm) }}
+                        {% for child in data.merchantForm.children %}
+                            {% if loop.first %}
+                                {% block merchantFormInner %}
+                                    <b>{{ child.vars.label | trans }}</b>
+                                    {{ form_widget(child, {
+                                        attr: {
+                                            class: data.merchantsFormElementClassName,
+                                        },
+                                    }) }}
+                                {% endblock %}
+                            {% endif %}
+                        {% endfor %}
+                    {{ form_end(data.merchantForm) }}
+                {% endblock %}
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'merchant-product-offer-dynamic-form-elements',
+    tag: 'merchant-product-offer-dynamic-form-elements',
+} %}
+
+{% define data = {
+    id: required,
+    url: required,
+    method: 'get',
+    fetchOnLoad: false,
+    mounAfterRender: false,
+} %}
+
+{% define attributes = {
+    'autocomplete-form-class-name': required,
+    'query-string': 'sku',
+    'submit-button-class-name': '',
+} %}
+
+{% block body %}
+    {% set providerClassName = config.jsName ~ '__provider' %}
+    {% set providerClassNameWithID = providerClassName ~ '-' ~ data.id %}
+
+    {% block content %}
+        {% block ajaxProvider %}
+            {% include molecule('ajax-provider') with {
+                class: providerClassName ~ ' ' ~ providerClassNameWithID,
+                attributes: {
+                    url: data.url,
+                    method: data.method,
+                    'fetch-on-load': data.fetchOnLoad,
+                },
+            } only %}
+        {% endblock %}
+
+        {% block ajaxLoader %}
+            {% include molecule('ajax-loader') with {
+                class: config.name ~ '__loader',
+                attributes: {
+                    'provider-class-name': providerClassNameWithID,
+                },
+            } only %}
+        {% endblock %}
+
+        {% block ajaxRenderer %}
+            {% include molecule('ajax-renderer') with {
+                attributes: {
+                    'provider-class-name': providerClassNameWithID,
+                    'mount-after-render': data.mounAfterRender,
+                    'render-if-response-is-empty': true,
+                },
+            } only %}
+        {% endblock %}
+    {% endblock %}
+{% endblock %}

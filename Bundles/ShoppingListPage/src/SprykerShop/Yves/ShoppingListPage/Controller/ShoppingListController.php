@@ -439,8 +439,10 @@ class ShoppingListController extends AbstractShoppingListController
     {
         $customerTransfer = $this->getCustomer();
 
-        $shoppingListItemTransfer = (new ShoppingListItemTransfer())
-            ->setSku($sku)
+        $shoppingListItemTransfer = new ShoppingListItemTransfer();
+        $shoppingListItemTransfer->fromArray($request->query->all(), true);
+
+        $shoppingListItemTransfer->setSku($sku)
             ->setQuantity($quantity)
             ->setFkShoppingList($idShoppingList);
 

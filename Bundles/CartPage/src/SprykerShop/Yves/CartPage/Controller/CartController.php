@@ -253,22 +253,25 @@ class CartController extends AbstractController
             return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
         }
 
-        return $this->executeQuickAddAction($sku, $quantity);
+        return $this->executeQuickAddAction($request, $sku, $quantity);
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $sku
      * @param int $quantity
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeQuickAddAction(string $sku, int $quantity): RedirectResponse
+    protected function executeQuickAddAction(Request $request, string $sku, int $quantity): RedirectResponse
     {
         $itemTransfer = (new ItemTransfer())
             ->setSku($sku)
             ->setQuantity($quantity)
             ->addNormalizableField(static::FIELD_QUANTITY_TO_NORMALIZE)
             ->setGroupKeyPrefix(uniqid('', true));
+
+        $itemTransfer = $this->executePreAddToCartPlugins($itemTransfer, $request->query->all());
 
         $this->getFactory()
             ->getCartClient()

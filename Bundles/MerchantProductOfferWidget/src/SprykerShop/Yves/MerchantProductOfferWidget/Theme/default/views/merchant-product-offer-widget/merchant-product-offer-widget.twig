@@ -10,6 +10,7 @@
 
 {% block template %}
     {% set isRadioButtonVisible = data.productOffers | length > 1 %}
+
     {% if data.productOffers %}
         {% block content %}
             <div class="box box--dark box--spacingless spacing spacing--inner">
@@ -36,7 +37,7 @@
                                     },
                                     embed : {
                                         currentProductPrice: productOffer.price,
-                                    }
+                                    },
                                 } only %}
                                     {% block price %}
                                         {% widget 'CurrentProductPriceVolumeWidget' args [embed.currentProductPrice] only %}

@@ -40,7 +40,8 @@ class QuickOrderItemEmbeddedForm extends AbstractType
     {
         $this
             ->addSku($builder)
-            ->addQuantity($builder);
+            ->addQuantity($builder)
+            ->executeQuickOrderFormExpanderPlugins($builder, $options);
     }
 
     /**
@@ -94,6 +95,21 @@ class QuickOrderItemEmbeddedForm extends AbstractType
                 'attr' => ['min' => 1],
             ],
         );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
+     *
+     * @return $this
+     */
+    protected function executeQuickOrderFormExpanderPlugins(FormBuilderInterface $builder, array $options)
+    {
+        foreach ($this->getFactory()->getQuickOrderFormExpanderPlugins() as $quickOrderFormExpanderPlugin) {
+            $quickOrderFormExpanderPlugin->expand($builder, $options);
+        }
 
         return $this;
     }

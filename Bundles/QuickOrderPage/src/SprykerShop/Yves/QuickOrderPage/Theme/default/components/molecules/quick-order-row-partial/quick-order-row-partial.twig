@@ -2,7 +2,7 @@
 
 {% define config = {
     name: 'quick-order-row-partial',
-    tag: 'quick-order-row-partial'
+    tag: 'quick-order-row-partial',
 } %}
 
 {% define data = {
@@ -11,66 +11,112 @@
     customQuantityFieldName: null,
     price: null,
     additionalColumns: [],
-    messages: null
+    messages: null,
+    form: null,
+    customFieldNamePattern: null,
 } %}
 
 {% block body %}
-    <div class="grid grid--justify">
-        {% if data.additionalColumns is not empty %}
-            <div class="col col--sm-3">
-                {% for additionalColumn in data.additionalColumns %}
-                    <div class="col col--expand spacing spacing--inner">
+    {% set product = data.product %}
+    {% set additionalColumns = data.additionalColumns %}
+
+    {% set quantityColumnClass = additionalColumns ? (additionalColumns | length > 1 ? 'col--sm-4' : 'col--sm-5') : 'col--sm-6' %}
+    {% set priceColumnClass = additionalColumns ? 'col--sm-4' : 'col--sm-5' %}
+
+    {% block columns %}
+        <div class="grid grid--justify">
+            {% block additionalColumns %}
+                {% if additionalColumns and additionalColumns | length == 1 %}
+                    <div class="col col--sm-3 spacing spacing--inner">
                         {% block additionalColumn %}
-                            {% if data.product and data.product.columns[additionalColumn.dataPath] is defined %}
-                                {{ data.product.columns[additionalColumn.dataPath] | trans }}
+                            {% if product and product.columns[additionalColumns[0].dataPath] is defined %}
+                                {{ product.columns[additionalColumns[0].dataPath] | trans }}
                             {% endif %}
                         {% endblock %}
                     </div>
-                {% endfor %}
-            </div>
-        {% endif %}
+                {% elseif additionalColumns and additionalColumns | length > 1 %}
+                    {% for key, additionalColumn in additionalColumns %}
+                        {% if key is odd %}
+                            <div class="col col--sm-2 spacing spacing--inner">
+                                {% block oddAdditionalColumn %}
+                                    {% if product and product.columns[additionalColumn.dataPath] is defined %}
+                                        {{ product.columns[additionalColumn.dataPath] | trans }}
+                                    {% endif %}
 
-        <div class="col col--sm-5 spacing spacing--inner">
-            {% block quantity %}
-                {% set options = {
-                    required: true,
-                    label: false,
-                    attr: {
-                        class: config.jsName ~ '__quantity',
-                        min: 1,
-                        max: null,
-                        step: 1,
-                        disabled: data.product is empty,
-                        value: data.product is empty ? null : data.quantityField.vars.value
-                    }
-                } %}
+                                    {% if data.form.children[additionalColumn.dataPath] is defined %}
+                                        {# Don't replace class name with config.jsName, it's used also for `quick-order-row` component #}
+                                        {{ form_widget(data.form.children[additionalColumn.dataPath], {
+                                            full_name: data.customFieldNamePattern | replace({'%name%': data.form.children[additionalColumn.dataPath].vars.name}),
+                                            attr: {
+                                                class: 'js-quick-order-row-partial__additional-form-element',
+                                            },
+                                        }) }}
 
-                {% if (data.customQuantityFieldName) %}
-                    {% set options = options|merge({full_name: data.customQuantityFieldName}) %}
+                                        {% do data.form.children[additionalColumn.dataPath].setRendered %}
+                                    {% endif %}
+                                {% endblock %}
+                            </div>
+                        {% elseif key is even %}
+                            <div class="col col--sm-2 spacing spacing--inner">
+                                {% block evenAdditionalColumn %}
+                                    {{ block('oddAdditionalColumn') }}
+                                {% endblock %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 {% endif %}
-
-                {{ form_widget(data.quantityField, options) }}
             {% endblock %}
-        </div>
 
-        <div class="col col--sm-4 spacing spacing--inner">
+            {% block quantity %}
+                <div class="col {{ quantityColumnClass }} spacing spacing--inner">
+                    {% block quantityInner %}
+                        {% set options = {
+                            required: true,
+                            label: false,
+                            attr: {
+                                class: config.jsName ~ '__quantity',
+                                min: 1,
+                                max: null,
+                                step: 1,
+                                disabled: product is empty,
+                                value: product is empty ? null : data.quantityField.vars.value,
+                            },
+                        } %}
+
+                        {% if data.customQuantityFieldName %}
+                            {% set options = options | merge({ full_name: data.customQuantityFieldName }) %}
+                        {% endif %}
+
+                        {{ form_widget(data.quantityField, options) }}
+                    {% endblock %}
+                </div>
+            {% endblock %}
+
             {% block price %}
-                {% include molecule('money-price') with {
-                    data: {
-                        amount: data.price is empty ? null : data.price
-                    }
-                } only %}
+                <div class="col {{ priceColumnClass }} spacing spacing--inner">
+                    {% block priceInner %}
+                        {% include molecule('money-price') with {
+                            data: {
+                                amount: data.price is empty ? null : data.price,
+                            },
+                        } only %}
+                    {% endblock %}
+                </div>
             {% endblock %}
         </div>
-    </div>
+    {% endblock %}
 
-    {% if data.messages is not empty %}
-        {% for message in data.messages %}
-            <div class="{{ config.name }}__message {{ config.name }}__message--{{ message.type }} spacing-bottom spacing-bottom--big">
-                {{ message.value | trans(
-                    message.parameters
-                ) }}
-            </div>
-        {% endfor %}
-    {% endif %}
+    {% block messages %}
+        {% if data.messages is not empty %}
+            {% for message in data.messages %}
+                {% block message %}
+                    <div class="{{ config.name }}__message {{ config.name }}__message--{{ message.type }} spacing-bottom spacing-bottom--big">
+                        {{ message.value | trans(
+                            message.parameters
+                        ) }}
+                    </div>
+                {% endblock %}
+            {% endfor %}
+        {% endif %}
+    {% endblock %}
 {% endblock %}

@@ -14,9 +14,15 @@ use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidg
 use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToProductStorageClientInterface;
 use SprykerShop\Yves\MerchantProductWidget\Expander\MerchantProductExpander;
 use SprykerShop\Yves\MerchantProductWidget\Expander\MerchantProductExpanderInterface;
+use SprykerShop\Yves\MerchantProductWidget\Expander\MerchantProductOfferCollectionExpander;
+use SprykerShop\Yves\MerchantProductWidget\Expander\MerchantProductOfferCollectionExpanderInterface;
+use SprykerShop\Yves\MerchantProductWidget\Expander\QuickOrder\MerchantProductQuickOrderItemExpander;
+use SprykerShop\Yves\MerchantProductWidget\Expander\QuickOrder\MerchantProductQuickOrderItemExpanderInterface;
 use SprykerShop\Yves\MerchantProductWidget\Mapper\MerchantProductMapper;
 use SprykerShop\Yves\MerchantProductWidget\Reader\MerchantProductReader;
 use SprykerShop\Yves\MerchantProductWidget\Reader\MerchantProductReaderInterface;
+use SprykerShop\Yves\MerchantProductWidget\Resolver\ShopContextResolver;
+use SprykerShop\Yves\MerchantProductWidget\Resolver\ShopContextResolverInterface;
 
 class MerchantProductWidgetFactory extends AbstractFactory
 {
@@ -53,6 +59,24 @@ class MerchantProductWidgetFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\MerchantProductWidget\Expander\QuickOrder\MerchantProductQuickOrderItemExpanderInterface
+     */
+    public function createMerchantProductQuickOrderItemExpander(): MerchantProductQuickOrderItemExpanderInterface
+    {
+        return new MerchantProductQuickOrderItemExpander(
+            $this->createMerchantProductReader(),
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MerchantProductWidget\Resolver\ShopContextResolverInterface
+     */
+    public function createShopContextResolver(): ShopContextResolverInterface
+    {
+        return new ShopContextResolver($this->getContainer());
+    }
+
+    /**
      * @return \SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToMerchantStorageClientInterface
      */
     public function getMerchantStorageClient(): MerchantProductWidgetToMerchantStorageClientInterface
@@ -82,5 +106,17 @@ class MerchantProductWidgetFactory extends AbstractFactory
     public function getPriceProductStorageClient(): MerchantProductWidgetToPriceProductStorageClientInterface
     {
         return $this->getProvidedDependency(MerchantProductWidgetDependencyProvider::CLIENT_PRICE_PRODUCT_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MerchantProductWidget\Expander\MerchantProductOfferCollectionExpanderInterface
+     */
+    public function createMerchantProductOfferCollectionExpander(): MerchantProductOfferCollectionExpanderInterface
+    {
+        return new MerchantProductOfferCollectionExpander(
+            $this->getMerchantStorageClient(),
+            $this->createMerchantProductReader(),
+            $this->createShopContextResolver(),
+        );
     }
 }

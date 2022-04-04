@@ -6,7 +6,7 @@
     product: _view.product,
     messages: _view.messages,
     form: _view.form,
-    index: _view.index | default(0)
+    index: _view.index | default(0),
 } %}
 
 {% block template %}
@@ -17,8 +17,10 @@
             price: data.price,
             additionalColumns: data.additionalColumns,
             messages: data.messages,
-            product: data.product
-        }
+            product: data.product,
+            form: data.form,
+            customFieldNamePattern: 'quick_order_form[items][' ~ data.index ~ '][%name%]',
+        },
     } only %}
         {% block component %}
             {{ block('body') }}

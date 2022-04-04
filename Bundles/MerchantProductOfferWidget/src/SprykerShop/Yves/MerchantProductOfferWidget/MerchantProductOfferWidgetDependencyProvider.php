@@ -25,6 +25,11 @@ class MerchantProductOfferWidgetDependencyProvider extends AbstractBundleDepende
     public const CLIENT_PRODUCT_OFFER_STORAGE = 'CLIENT_PRODUCT_OFFER_STORAGE';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_MERCHANT_PRODUCT_OFFER_COLLECTION_EXPANDER = 'PLUGINS_MERCHANT_PRODUCT_OFFER_COLLECTION_EXPANDER';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -35,6 +40,7 @@ class MerchantProductOfferWidgetDependencyProvider extends AbstractBundleDepende
 
         $container = $this->addProductOfferStorageClient($container);
         $container = $this->addMerchantStorageClient($container);
+        $container = $this->addMerchantProductOfferCollectionExpanderPlugins($container);
 
         return $container;
     }
@@ -69,5 +75,27 @@ class MerchantProductOfferWidgetDependencyProvider extends AbstractBundleDepende
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addMerchantProductOfferCollectionExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_PRODUCT_OFFER_COLLECTION_EXPANDER, function () {
+            return $this->getMerchantProductOfferCollectionExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\MerchantProductOfferWidgetExtension\Dependency\Plugin\MerchantProductOfferCollectionExpanderPluginInterface>
+     */
+    protected function getMerchantProductOfferCollectionExpanderPlugins(): array
+    {
+        return [];
     }
 }

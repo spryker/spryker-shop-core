@@ -4,14 +4,13 @@
     forms: {
         quickOrderForm: _view.quickOrderForm,
         textOrderForm: _view.textOrderForm,
-        uploadOrderForm: _view.uploadOrderForm
+        uploadOrderForm: _view.uploadOrderForm,
     },
-
     additionalColumns: _view.additionalColumns,
     products: _view.products,
     prices: _view.prices,
     fileTemplateExtensions: _view.fileTemplateExtensions,
-    title: 'quick-order.page-title' | trans
+    title: 'quick-order.page-title' | trans,
 } %}
 
 {% block content %}
@@ -23,7 +22,7 @@
             fileTemplateExtensions: data.fileTemplateExtensions,
             additionalColumns: data.additionalColumns,
             textOrderForm: data.forms.textOrderForm,
-            uploadOrderForm: data.forms.uploadOrderForm
-        }
+            uploadOrderForm: data.forms.uploadOrderForm,
+        },
     } only %}
 {% endblock %}

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
-use SprykerShop\Yves\QuickOrderPage\Form\QuickOrderForm;
 use SprykerShop\Yves\QuickOrderPage\Form\TextOrderForm;
 use SprykerShop\Yves\QuickOrderPage\Form\UploadOrderForm;
 use SprykerShop\Yves\QuickOrderPage\Plugin\Router\QuickOrderPageRouteProviderPlugin;
@@ -104,6 +103,20 @@ class QuickOrderController extends AbstractController
      * @var string
      */
     protected const KEY_MESSAGES = 'messages';
+
+    /**
+     * @uses \SprykerShop\Yves\QuickOrderPage\Form\QuickOrderForm::SUBMIT_BUTTON_ADD_TO_CART
+     *
+     * @var string
+     */
+    protected const SUBMIT_BUTTON_ADD_TO_CART = 'addToCart';
+
+    /**
+     * @uses \SprykerShop\Yves\QuickOrderPage\Form\QuickOrderForm::SUBMIT_BUTTON_CREATE_ORDER
+     *
+     * @var string
+     */
+    protected const SUBMIT_BUTTON_CREATE_ORDER = 'createOrder';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -473,10 +486,11 @@ class QuickOrderController extends AbstractController
     public function productAdditionalDataAction(Request $request)
     {
         $quantity = (int)$request->get('quantity', 1);
-        $sku = (string)$request->query->get('sku') ?: null;
         $index = $request->query->get('index');
 
-        $quickOrderItemTransfer = (new QuickOrderItemTransfer())->setSku($sku);
+        $quickOrderItemTransfer = $this->getFactory()
+            ->createQuickOrderItemMapper()
+            ->mapRequestToQuickOrderItemTransfer($request, new QuickOrderItemTransfer());
 
         if ($quantity < 1) {
             $quantity = 1;
@@ -492,12 +506,12 @@ class QuickOrderController extends AbstractController
         }
 
         $quickOrderItemTransfer->setQuantity($quantity);
-        $quickOrderTransfer = $this->getQuickOrderTransfer([$quickOrderItemTransfer]);
-        /** @var \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer */
-        $quickOrderItemTransfer = $quickOrderTransfer->getItems()->offsetGet(0);
+
         $form = $this->getFactory()
             ->createQuickOrderFormFactory()
             ->getQuickOrderItemEmbeddedForm($quickOrderItemTransfer);
+
+        $quickOrderTransfer = $this->getQuickOrderTransfer([$form->getData()]);
 
         $products = $this->getProductsFromQuickOrderItems($quickOrderTransfer);
         $products = $this->transformProductsViewData($products);
@@ -621,11 +635,11 @@ class QuickOrderController extends AbstractController
             ->getQuickOrderClient()
             ->buildQuickOrderTransfer($quickOrderTransfer);
 
-        if ($request->get(QuickOrderForm::SUBMIT_BUTTON_ADD_TO_CART) !== null) {
+        if ($request->get(static::SUBMIT_BUTTON_ADD_TO_CART) !== null) {
             return $this->executeAddToCartAction($quickOrderTransfer);
         }
 
-        if ($request->get(QuickOrderForm::SUBMIT_BUTTON_CREATE_ORDER) !== null) {
+        if ($request->get(static::SUBMIT_BUTTON_CREATE_ORDER) !== null) {
             return $this->executeCreateOrderAction($quickOrderTransfer);
         }
 

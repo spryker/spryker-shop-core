@@ -1,0 +1,23 @@
+{% extends template('widget') %}
+
+{% define data = {
+    url: _widget.dataUrl,
+    id: '',
+    submitButtonClassName: '',
+    autocompleteFormClassName: '',
+    mounAfterRender: false,
+} %}
+
+{% block body %}
+    {% include molecule('merchant-product-offer-dynamic-form-elements', 'MerchantProductOfferWidget') with {
+        data: {
+            id: data.id,
+            url: url(data.url),
+            mounAfterRender: data.mounAfterRender,
+        },
+        attributes: {
+            'autocomplete-form-class-name': data.autocompleteFormClassName,
+            'submit-button-class-name': data.submitButtonClassName,
+        },
+    } only %}
+{% endblock %}

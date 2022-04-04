@@ -20,11 +20,15 @@ export default class QuickOrderRow extends Component {
      * The quantity number input element.
      */
     quantityInput: HTMLInputElement;
+    protected additionalFormElements: HTMLSelectElement[] | HTMLInputElement[];
+    protected extraQueryParams: Map<string, string>;
 
     protected readyCallback(): void {
         this.ajaxProvider = <AjaxProvider>this.getElementsByClassName(`${this.jsName}__provider`)[0];
         this.autocompleteInput = <AutocompleteForm>this.getElementsByTagName('autocomplete-form')[0];
+
         this.registerQuantityInput();
+        this.registerAdditionalFormElements();
         this.mapEvents();
     }
 
@@ -35,22 +39,47 @@ export default class QuickOrderRow extends Component {
         );
     }
 
+    protected registerAdditionalFormElements(): void {
+        this.additionalFormElements = <HTMLSelectElement[] | HTMLInputElement[]>(
+            Array.from(this.getElementsByClassName(`${this.jsName}-partial__additional-form-element`))
+        );
+    }
+
     protected mapEvents(): void {
-        this.autocompleteInput.addEventListener(AutocompleteEvents.SET, () => this.onAutocompleteSet());
+        this.autocompleteInput.addEventListener(AutocompleteEvents.SET, (event: CustomEvent) =>
+            this.onAutocompleteSet(event),
+        );
         this.autocompleteInput.addEventListener(AutocompleteEvents.UNSET, () => this.onAutocompleteUnset());
         this.mapQuantityInputChange();
+        this.mapAdditionalFormElementChange();
     }
 
     protected mapQuantityInputChange(): void {
         this.quantityInput.addEventListener(
             'input',
             debounce(() => {
-                this.onQuantityChange();
+                this.reloadField(this.autocompleteInput.inputValue);
             }, this.autocompleteInput.debounceDelay),
         );
     }
 
-    protected onAutocompleteSet(): void {
+    protected mapAdditionalFormElementChange(): void {
+        if (!this.additionalFormElements || !this.additionalFormElements.length) {
+            return;
+        }
+
+        this.additionalFormElements.forEach((item) => {
+            item.addEventListener(
+                'input',
+                debounce(() => {
+                    this.reloadField(this.autocompleteInput.inputValue);
+                }, this.autocompleteInput.debounceDelay),
+            );
+        });
+    }
+
+    protected onAutocompleteSet(event: CustomEvent): void {
+        this.extraQueryParams = event.detail.extraValues;
         this.reloadField(this.autocompleteInput.inputValue);
     }
 
@@ -58,27 +87,48 @@ export default class QuickOrderRow extends Component {
         this.reloadField();
     }
 
-    protected onQuantityChange(): void {
-        this.reloadField(this.autocompleteInput.inputValue);
+    protected setQueryParams(sku: string): void {
+        const quantityInputValue = this.quantityValue;
+
+        this.ajaxProvider.queryParams.clear();
+        this.ajaxProvider.queryParams.set('sku', sku);
+        this.ajaxProvider.queryParams.set('index', this.index);
+
+        if (Boolean(quantityInputValue)) {
+            this.ajaxProvider.queryParams.set('quantity', `${quantityInputValue}`);
+        }
+
+        if (this.additionalFormElements && this.additionalFormElements.length) {
+            this.additionalFormElements.forEach((item) => {
+                if (!item.name || !item.value) {
+                    return;
+                }
+
+                this.ajaxProvider.queryParams.set(item.name, item.value);
+            });
+        }
+
+        if (!this.extraQueryParams) {
+            return;
+        }
+
+        this.extraQueryParams.forEach((value, key) => this.ajaxProvider.queryParams.set(key, value));
     }
 
     /**
      * Sends an ajax request to the server and renders the response on the page.
      * @param sku A product SKU used for reloading autocomplete field.
      */
-    async reloadField(sku: string = '') {
-        const quantityInputValue = this.quantityValue;
-
-        this.ajaxProvider.queryParams.set('sku', sku);
-        this.ajaxProvider.queryParams.set('index', this.ajaxProvider.getAttribute('class').split('-').pop().trim());
-
-        if (!!quantityInputValue) {
-            this.ajaxProvider.queryParams.set('quantity', `${quantityInputValue}`);
-        }
+    async reloadField(sku: string = ''): Promise<void> {
+        this.setQueryParams(sku);
 
         await this.ajaxProvider.fetch();
+
         this.registerQuantityInput();
         this.mapQuantityInputChange();
+
+        this.registerAdditionalFormElements();
+        this.mapAdditionalFormElementChange();
 
         if (!sku) {
             return;
@@ -97,5 +147,9 @@ export default class QuickOrderRow extends Component {
      */
     get quantityValue(): string {
         return this.quantityInput.value;
+    }
+
+    protected get index(): string {
+        return this.getAttribute('index');
     }
 }

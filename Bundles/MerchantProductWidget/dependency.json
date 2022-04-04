@@ -1,5 +1,6 @@
 {
     "include": {
-        "spryker/merchant-product-storage": "Provides plugin for expanding product storage."
+        "spryker/merchant-product-storage": "Provides plugin for expanding product storage.",
+        "spryker/transfer": "Provides transfer objects definition with `::get*OrFail()` functionality."
     }
 }

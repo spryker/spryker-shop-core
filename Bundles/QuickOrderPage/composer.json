@@ -5,9 +5,9 @@
     "license": "proprietary",
     "require": {
         "php": ">=7.4",
-        "spryker-shop/quick-order-page-extension": "^1.1.0",
+        "spryker-shop/quick-order-page-extension": "^1.2.0",
         "spryker-shop/shop-application": "^1.0.0",
-        "spryker-shop/shop-ui": "^1.41.0",
+        "spryker-shop/shop-ui": "^1.58.0",
         "spryker/application": "^3.0.0",
         "spryker/cart": "^4.0.0 || ^5.0.0 || ^7.0.0",
         "spryker/kernel": "^3.52.0",
@@ -31,6 +31,7 @@
     "suggest": {
         "spryker-shop/cart-page": "Widget plugins are available for this module.",
         "spryker-shop/checkout-page": "Widget plugins are available for this module.",
+        "spryker-shop/merchant-search-widget": "If you want to render a Merchants filter.",
         "spryker/router": "If you want to use RouteProviderPlugins to be added to the Route Module.",
         "spryker/silex": "If you want to use ServiceProvider."
     },

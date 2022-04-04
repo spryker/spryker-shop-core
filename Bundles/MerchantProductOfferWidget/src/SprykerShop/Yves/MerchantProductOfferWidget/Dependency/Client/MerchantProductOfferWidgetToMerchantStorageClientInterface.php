@@ -18,4 +18,11 @@ interface MerchantProductOfferWidgetToMerchantStorageClientInterface
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
      */
     public function findOne(MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer): ?MerchantStorageTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\MerchantStorageTransfer>
+     */
+    public function get(MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer): array;
 }

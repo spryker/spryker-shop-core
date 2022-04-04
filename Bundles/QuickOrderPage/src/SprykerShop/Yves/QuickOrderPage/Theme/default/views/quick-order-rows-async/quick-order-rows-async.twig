@@ -4,7 +4,8 @@
     form: _view.form,
     products: _view.products,
     additionalColumns: _view.additionalColumns,
-    prices: _view.prices
+    prices: _view.prices,
+    extraSearchFormElementClassName: 'js-quick-order-form__search-form-element',
 } %}
 
 {% block template %}
@@ -13,7 +14,8 @@
             rows: data.form.items,
             products: data.products,
             additionalColumns: data.additionalColumns,
-            prices: data.prices
-        }
+            prices: data.prices,
+            extraSearchFormElementClassName: data.extraSearchFormElementClassName,
+        },
     } only %}
 {% endblock %}

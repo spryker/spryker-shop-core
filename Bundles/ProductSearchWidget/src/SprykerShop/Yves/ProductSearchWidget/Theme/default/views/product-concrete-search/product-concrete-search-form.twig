@@ -5,24 +5,28 @@
     skuFieldName: _widget.skuFieldName,
     skuFieldValue: _widget.skuFieldValue | default,
     searchFieldValue: _widget.searchFieldValue | default,
-    searchResultLimit: _widget.searchResultLimit
+    searchResultLimit: _widget.searchResultLimit,
+    injectorsExtraQueryValueClassName: '',
+    autocompleteFormClassName: '',
 } %}
 
 {% block body %}
     {% include molecule('autocomplete-form') with {
+        class: data.autocompleteFormClassName,
         data: {
             id: data.index,
             name: data.skuFieldName,
             hiddenValue: data.skuFieldValue,
             value: data.searchFieldValue,
             suggestionsUrl: path('product-search/product-concrete-search'),
-            placeholder: 'quick-order.input.placeholder'
+            placeholder: 'quick-order.input.placeholder',
         },
         attributes: {
             'suggested-item-class-name': 'products-list__item',
+            'injectors-extra-query-value-class-name': data.injectorsExtraQueryValueClassName,
             'query-string': 'limit=' ~ data.searchResultLimit ~ '&searchString',
             'value-attribute-name': 'data-value',
             'min-letters': 1,
-        }
+        },
     } only %}
 {% endblock %}

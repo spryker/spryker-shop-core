@@ -42,6 +42,8 @@ use SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuickOrderFormDataProvider
 use SprykerShop\Yves\QuickOrderPage\Form\FormFactory;
 use SprykerShop\Yves\QuickOrderPage\Form\Handler\QuickOrderFormHandler;
 use SprykerShop\Yves\QuickOrderPage\Form\Handler\QuickOrderFormHandlerInterface;
+use SprykerShop\Yves\QuickOrderPage\Mapper\QuickOrderItemMapper;
+use SprykerShop\Yves\QuickOrderPage\Mapper\QuickOrderItemMapperInterface;
 use SprykerShop\Yves\QuickOrderPage\PluginExecutor\QuickOrderItemPluginExecutor;
 use SprykerShop\Yves\QuickOrderPage\PriceResolver\PriceResolver;
 use SprykerShop\Yves\QuickOrderPage\PriceResolver\PriceResolverInterface;
@@ -146,6 +148,16 @@ class QuickOrderPageFactory extends AbstractFactory
         return new UploadedFileCsvTypeParser(
             $this->getUtilCsvService(),
             $this->createUploadedFileCsvTypeSanitizer(),
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\Mapper\QuickOrderItemMapperInterface
+     */
+    public function createQuickOrderItemMapper(): QuickOrderItemMapperInterface
+    {
+        return new QuickOrderItemMapper(
+            $this->getQuickOrderItemMapperPlugins(),
         );
     }
 
@@ -432,5 +444,21 @@ class QuickOrderPageFactory extends AbstractFactory
     public function getCsrfTokenManager(): CsrfTokenManagerInterface
     {
         return $this->getProvidedDependency(QuickOrderPageDependencyProvider::SERVICE_FORM_CSRF_PROVIDER);
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormExpanderPluginInterface>
+     */
+    public function getQuickOrderFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGINS_QUICK_ORDER_FORM_EXPANDER);
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemMapperPluginInterface>
+     */
+    public function getQuickOrderItemMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGINS_QUICK_ORDER_ITEM_MAPPER);
     }
 }

@@ -16,6 +16,8 @@ use SprykerShop\Yves\ProductSearchWidget\Mapper\ProductConcreteMapper;
 use SprykerShop\Yves\ProductSearchWidget\Mapper\ProductConcreteMapperInterface;
 use SprykerShop\Yves\ProductSearchWidget\Reader\ProductConcreteReader;
 use SprykerShop\Yves\ProductSearchWidget\Reader\ProductConcreteReaderInterface;
+use SprykerShop\Yves\ProductSearchWidget\Resolver\ShopContextResolver;
+use SprykerShop\Yves\ProductSearchWidget\Resolver\ShopContextResolverInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -70,5 +72,21 @@ class ProductSearchWidgetFactory extends AbstractFactory
     public function getUtilEncodingService(): ProductSearchWidgetToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(ProductSearchWidgetDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\ProductSearchWidgetExtension\Dependency\Plugin\ProductQuickAddFormExpanderPluginInterface>
+     */
+    public function getProductQuickAddFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductSearchWidgetDependencyProvider::PLUGINS_PRODUCT_QUICK_ADD_FORM_EXPANDER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductSearchWidget\Resolver\ShopContextResolverInterface
+     */
+    public function createShopContextResolver(): ShopContextResolverInterface
+    {
+        return new ShopContextResolver($this->getContainer());
     }
 }

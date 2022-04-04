@@ -1,8 +1,8 @@
 import { debug, error } from '../../../app/logger';
 import Component from '../../../models/component';
 
-const EVENT_FETCHING = 'fetching';
-const EVENT_FETCHED = 'fetched';
+export const EVENT_FETCHING = 'fetching';
+export const EVENT_FETCHED = 'fetched';
 
 /**
  * @event fetching An event which is triggered when an ajax request is sent to the server.

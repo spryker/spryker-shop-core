@@ -1,7 +1,7 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'quick-order-rows'
+    name: 'quick-order-rows',
 } %}
 
 {# data.prices is deprecated and will be removed. Use data.rows[%index%].vars.value.sumPrice instead. #}
@@ -9,62 +9,99 @@
     rows: required,
     products: [],
     prices: [],
-    additionalColumns: []
+    additionalColumns: [],
+    extraSearchFormElementClassName: '',
 } %}
 
 {% block body %}
+    {% set additionalColumns = data.additionalColumns %}
 
-    <div class="grid grid--justify grid--middle {{ config.name }}__row {{ config.name }}__row--head">
-        <div class="col col--sm-4 spacing spacing--inner">
-            {{ 'quick-order.input-label.sku.name' | trans }}
-        </div>
+    {% set quantityColumnClass = additionalColumns ? (additionalColumns | length > 1 ? 'col--sm-4' : 'col--sm-5') : 'col--sm-6' %}
+    {% set priceColumnClass = additionalColumns ? 'col--sm-4' : 'col--sm-5' %}
 
-        <div class="col col--sm-7">
-            <div class="grid grid--justify grid--middle">
-                {% if data.additionalColumns is not empty %}
-                    <div class="col col--sm-3">
-                        {% for additionalColumn in data.additionalColumns %}
-                            <div class="col col--expand spacing spacing--inner">
-                                {% block additionalColumn %}
-                                    {{ additionalColumn.title | trans }}
-                                {% endblock %}
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-
-                <div class="col col--sm-5 spacing spacing--inner">
-                    {{ 'quick-order.input-label.qty' | trans }}
-                </div>
-
+    {% block head %}
+        <div class="grid grid--justify grid--middle {{ config.name }}__row {{ config.name }}__row--head">
+            {% block sku %}
                 <div class="col col--sm-4 spacing spacing--inner">
-                    {{ 'quick-order.input-label.price' | trans }}
+                    {{ 'quick-order.input-label.sku.name' | trans }}
                 </div>
-            </div>
+            {% endblock %}
+
+            {% block partial %}
+                <div class="col col--sm-7">
+                    <div class="grid grid--justify grid--middle">
+                        {% block additionalColumns %}
+                            {% if additionalColumns and additionalColumns | length == 1 %}
+                                {% block additionalColumn %}
+                                    <div class="col col--sm-3 spacing spacing--inner">
+                                        {{ additionalColumns[0].title | trans }}
+                                    </div>
+                                {% endblock %}
+                            {% elseif additionalColumns and additionalColumns | length > 1 %}
+                                {% for key, additionalColumn in additionalColumns %}
+                                    {% if key is odd %}
+                                        <div class="col col--sm-2 spacing spacing--inner">
+                                            {% block oddAdditionalColumn %}
+                                                {{ additionalColumn.title | trans }}
+                                            {% endblock %}
+                                        </div>
+                                    {% elseif key is even %}
+                                        <div class="col col--sm-2 spacing spacing--inner">
+                                            {% block evenAdditionalColumn %}
+                                                {{ block('oddAdditionalColumn') }}
+                                            {% endblock %}
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endblock %}
+
+                        {% block quantity %}
+                            <div class="col {{ quantityColumnClass }} spacing spacing--inner">
+                                {{ 'quick-order.input-label.qty' | trans }}
+                            </div>
+                        {% endblock %}
+
+                        {% block price %}
+                            <div class="col {{ priceColumnClass }} spacing spacing--inner">
+                                {{ 'quick-order.input-label.price' | trans }}
+                            </div>
+                        {% endblock %}
+                    </div>
+                </div>
+            {% endblock %}
+
+            <div class="col col--sm-1"></div>
         </div>
+    {% endblock %}
 
-        <div class="col col--sm-1"></div>
-    </div>
+    {% block rows %}
+        {% for row in data.rows %}
+            {% set product = data.products[row.sku.vars.value] ?? null %}
+            {% set price = row.vars.value.sumPrice ?: (product is null ? null : data.prices[product.sku] | default()) %}
+            {% set searchFieldValue = product is null ? null : product.localizedAttributes[0] is defined ? product.localizedAttributes[0].name ~ ' (' ~ product.sku ~ ')': '' ~ ' (' ~ product.sku ~ ')' %}
 
-    {% for row in data.rows %}
-        {% set product = data.products[row.sku.vars.value] ?? null %}
-        {% include molecule('quick-order-row', 'QuickOrderPage') with {
-            class: config.name ~ '__row',
-            data: {
-                index: loop.index0,
-                quantityField: row.quantity,
-                skuField: row.sku,
-                messages: row.vars.value.messages,
-                additionalColumns: data.additionalColumns,
-                product: product,
-                price: row.vars.value.sumPrice ?: (product is null ? null : data.prices[product.sku] | default()),
-
-                autocomplete: {
-                    skuFieldName: row.vars.full_name,
-                    skuFieldValue: product is null ? null : product.sku,
-                    searchFieldValue: product is null ? null : product.localizedAttributes[0] is defined ? product.localizedAttributes[0].name ~ ' (' ~ product.sku ~ ')': '' ~ ' (' ~ product.sku ~ ')'
-                }
-            }
-        } only %}
-    {% endfor %}
+            {% block row %}
+                {% include molecule('quick-order-row', 'QuickOrderPage') with {
+                    class: config.name ~ '__row',
+                    data: {
+                        index: loop.index0,
+                        quantityField: row.quantity,
+                        skuField: row.sku,
+                        messages: row.vars.value.messages,
+                        additionalColumns: additionalColumns,
+                        product: product,
+                        price: price,
+                        autocomplete: {
+                            skuFieldName: row.vars.full_name,
+                            skuFieldValue: product is null ? null : product.sku,
+                            searchFieldValue: searchFieldValue,
+                            extraSearchFormElementClassName: data.extraSearchFormElementClassName,
+                        },
+                        form: row,
+                    },
+                } only %}
+            {% endblock %}
+        {% endfor %}
+    {% endblock %}
 {% endblock %}

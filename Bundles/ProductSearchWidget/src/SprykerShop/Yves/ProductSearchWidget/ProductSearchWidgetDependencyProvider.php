@@ -28,6 +28,11 @@ class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProv
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_PRODUCT_QUICK_ADD_FORM_EXPANDER = 'PLUGINS_PRODUCT_QUICK_ADD_FORM_EXPANDER';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -37,6 +42,7 @@ class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProv
         $container = parent::provideDependencies($container);
         $container = $this->addCatalogClient($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addProductQuickAddFormExpanderPlugins($container);
 
         return $container;
     }
@@ -71,5 +77,27 @@ class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProv
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductQuickAddFormExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_QUICK_ADD_FORM_EXPANDER, function () {
+            return $this->getProductQuickAddFormExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\ProductSearchWidgetExtension\Dependency\Plugin\ProductQuickAddFormExpanderPluginInterface>
+     */
+    protected function getProductQuickAddFormExpanderPlugins(): array
+    {
+        return [];
     }
 }

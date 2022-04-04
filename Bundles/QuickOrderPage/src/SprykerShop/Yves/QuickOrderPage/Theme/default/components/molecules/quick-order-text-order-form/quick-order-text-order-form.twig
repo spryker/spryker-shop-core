@@ -5,21 +5,31 @@
 } %}
 
 {% define data = {
-    textOrderForm: required
+    textOrderForm: required,
 } %}
 
 {% block body %}
-    <h5>{{ 'quick-order.paste-order.title' | trans }}</h5>
-    <p>{{ 'quick-order.paste-order.description' | trans }}</p>
-    {% include molecule('form') with {
-        data: {
-            form: data.textOrderForm,
-            enableStart: false,
-            enableEnd: false
-        }
-    } only %}
+    {% block title %}
+        <h5>{{ 'quick-order.paste-order.title' | trans }}</h5>
+    {% endblock %}
 
-    <button type="submit" name="textOrder" class="button button--expand button--success">
-        {{ 'quick-order.paste-order.button.verify' | trans }}
-    </button>
+    {% block text %}
+        <p>{{ 'quick-order.paste-order.description' | trans }}</p>
+    {% endblock %}
+
+    {% block textOrderForm %}
+        {% include molecule('form') with {
+            data: {
+                form: data.textOrderForm,
+                enableStart: false,
+                enableEnd: false,
+            },
+        } only %}
+    {% endblock %}
+
+    {% block button %}
+        <button name="textOrder" class="button button--expand button--success">
+            {{ 'quick-order.paste-order.button.verify' | trans }}
+        </button>
+    {% endblock %}
 {% endblock %}

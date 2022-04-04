@@ -14,10 +14,18 @@
         skuFieldName: required,
         skuFieldValue: null,
         searchFieldValue: null,
+        extraSearchFormElementClassName: '',
     },
+    customFieldNamePattern: 'quick_order_form[items][' ~ data.index ~ '][%name%]',
+} %}
+
+{% define attributes = {
+    index: data.index,
 } %}
 
 {% block body %}
+    {% set autocomplete = data.autocomplete %}
+
     {% include molecule('ajax-provider') with {
         class: config.jsName ~ '__provider ' ~ config.jsName ~ '__provider-' ~ data.index,
         attributes: {
@@ -36,37 +44,45 @@
     {% do data.skuField.setRendered %}
 
     <div class="grid grid--justify">
-        <div class="col col--sm-4 spacing spacing--inner">
-            {% block search %}
-                {% set skuFieldValue = (data.autocomplete.skuFieldValue | length > 1) ? data.autocomplete.skuFieldValue : data.skuField.vars.value %}
+        {% block search %}
+            <div class="col col--sm-4 spacing spacing--inner">
+                {% block searchInner %}
+                    {% set skuFieldValue = (autocomplete.skuFieldValue | length > 1) ? autocomplete.skuFieldValue : data.skuField.vars.value %}
 
-                {% widget 'ProductConcreteSearchWidget' args [
-                    'ajax-provider' ~ data.index,
-                    data.autocomplete.skuFieldName ~ '[sku]',
-                    skuFieldValue,
-                    data.autocomplete.searchFieldValue,
-                ] only %}
-                {% endwidget %}
-            {% endblock %}
-        </div>
+                    {% widget 'ProductConcreteSearchWidget' args [
+                        'ajax-provider' ~ data.index,
+                        autocomplete.skuFieldName ~ '[sku]',
+                        skuFieldValue,
+                        autocomplete.searchFieldValue,
+                    ] with {
+                        data: {
+                            injectorsExtraQueryValueClassName: autocomplete.extraSearchFormElementClassName,
+                        },
+                    } only %}
+                    {% endwidget %}
+                {% endblock %}
+            </div>
+        {% endblock %}
 
         <div class="col col--sm-7 {{ config.jsName }}__target {{ config.jsName }}__target-{{ data.index }}">
             {{ parent() }}
         </div>
 
-        <div class="col col--sm-1 spacing spacing--inner">
-            {% block delete %}
-                <button type="button"
-                    class="button button--expand button--warning js-quick-order-form__remove-row-trigger"
-                    data-row-index="{{ data.index }}">
-                    {% include atom('icon') with {
-                        modifiers: ['small'],
-                        data: {
-                            name: 'times',
-                        },
-                    } only %}
-                </button>
-            {% endblock %}
-        </div>
+        {% block delete %}
+            <div class="col col--sm-1 spacing spacing--inner">
+                {% block deleteInner %}
+                    <button type="button"
+                        class="button button--expand button--warning js-quick-order-form__remove-row-trigger"
+                        data-row-index="{{ data.index }}">
+                        {% include atom('icon') with {
+                            modifiers: ['small'],
+                            data: {
+                                name: 'times',
+                            },
+                        } only %}
+                    </button>
+                {% endblock %}
+            </div>
+        {% endblock %}
     </div>
 {% endblock %}

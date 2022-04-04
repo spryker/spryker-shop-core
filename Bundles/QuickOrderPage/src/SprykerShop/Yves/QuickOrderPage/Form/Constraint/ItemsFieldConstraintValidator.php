@@ -32,7 +32,7 @@ class ItemsFieldConstraintValidator extends ConstraintValidator
             ));
         }
 
-        if ($this->hasSku($value->getArrayCopy())) {
+        if (!$value->count() || $this->hasSku($value->getArrayCopy())) {
             return;
         }
 

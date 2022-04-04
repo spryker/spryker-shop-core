@@ -166,21 +166,14 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
     {
         /** @var array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers */
         $itemTransfers = [];
-        $quickOrderItemTransfers = $quickOrder->getItems();
-        foreach ($quickOrderItemTransfers as $quickOrderItemTransfer) {
-            $sku = $quickOrderItemTransfer->getSku();
-            if (!$sku) {
-                continue;
-            }
 
-            $quantity = $quickOrderItemTransfer->getQuantity();
-            if (!$quantity) {
-                continue;
+        foreach ($quickOrder->getItems() as $quickOrderItemTransfer) {
+            if ($quickOrderItemTransfer->getSku() && $quickOrderItemTransfer->getQuantity()) {
+                $itemTransfers[] = (new ItemTransfer())->fromArray(
+                    $quickOrderItemTransfer->toArray(),
+                    true,
+                );
             }
-
-            $itemTransfers[] = (new ItemTransfer())
-                ->setSku($sku)
-                ->setQuantity($quantity);
         }
 
         return $itemTransfers;

@@ -34,4 +34,14 @@ class MerchantProductOfferWidgetToMerchantStorageClientBridge implements Merchan
     {
         return $this->merchantStorageClient->findOne($merchantStorageCriteriaTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\MerchantStorageTransfer>
+     */
+    public function get(MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer): array
+    {
+        return $this->merchantStorageClient->get($merchantStorageCriteriaTransfer);
+    }
 }

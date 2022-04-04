@@ -111,6 +111,16 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_QUICK_ORDER_FORM_EXPANDER = 'PLUGINS_QUICK_ORDER_FORM_EXPANDER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_QUICK_ORDER_ITEM_MAPPER = 'PLUGINS_QUICK_ORDER_ITEM_MAPPER';
+
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_CSV = 'SERVICE_UTIL_CSV';
 
     /**
@@ -153,6 +163,8 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuickOrderFileTemplatePlugins($container);
         $container = $this->addQuickOrderUploadedFileParserPlugins($container);
         $container = $this->addQuickOrderUploadedFileValidatorPlugins($container);
+        $container = $this->addQuickOrderFormExpanderPlugins($container);
+        $container = $this->addQuickOrderItemMapperPlugins($container);
 
         return $container;
     }
@@ -432,6 +444,34 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addQuickOrderFormExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_QUICK_ORDER_FORM_EXPANDER, function (): array {
+            return $this->getQuickOrderFormExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addQuickOrderItemMapperPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_QUICK_ORDER_ITEM_MAPPER, function (): array {
+            return $this->getQuickOrderItemMapperPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * Returns a list of widget plugin class names that implement
      * Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
@@ -494,6 +534,22 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderUploadedFileValidatorStrategyPluginInterface>
      */
     protected function getQuickOrderUploadedFileValidatorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormExpanderPluginInterface>
+     */
+    protected function getQuickOrderFormExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemMapperPluginInterface>
+     */
+    protected function getQuickOrderItemMapperPlugins(): array
     {
         return [];
     }

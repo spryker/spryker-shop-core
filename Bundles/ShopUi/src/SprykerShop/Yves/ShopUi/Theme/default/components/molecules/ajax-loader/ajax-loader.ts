@@ -1,5 +1,5 @@
 import Component from '../../../models/component';
-import AjaxProvider from '../ajax-provider/ajax-provider';
+import AjaxProvider, { EVENT_FETCHING, EVENT_FETCHED } from '../ajax-provider/ajax-provider';
 
 export default class AjaxLoader extends Component {
     protected providers: AjaxProvider[];
@@ -19,8 +19,8 @@ export default class AjaxLoader extends Component {
 
     protected mapEvents(): void {
         this.providers.forEach((provider: AjaxProvider) => {
-            provider.addEventListener('fetching', (event: Event) => this.onFetching(event));
-            provider.addEventListener('fetched', (event: Event) => this.onFetched(event));
+            provider.addEventListener(EVENT_FETCHING, (event: Event) => this.onFetching(event));
+            provider.addEventListener(EVENT_FETCHED, (event: Event) => this.onFetched(event));
         });
     }
 

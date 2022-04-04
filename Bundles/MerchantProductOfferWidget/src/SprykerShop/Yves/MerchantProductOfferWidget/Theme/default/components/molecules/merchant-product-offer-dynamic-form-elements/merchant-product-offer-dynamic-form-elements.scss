@@ -1,0 +1,20 @@
+@mixin merchant-product-offer-widget-merchant-product-offer-dynamic-form-elements(
+    $name: '.merchant-product-offer-dynamic-form-elements'
+) {
+    #{$name} {
+        position: relative;
+        margin-bottom: 0.5rem;
+        width: 100%;
+
+        &__loader {
+            min-height: 3rem;
+            height: 100%;
+
+            &.is-invisible {
+                min-height: 0;
+            }
+        }
+
+        @content;
+    }
+}

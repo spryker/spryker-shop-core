@@ -1,0 +1,18 @@
+{% extends template('widget') %}
+
+{% define data = {
+    form: _view.form | default(null),
+} %}
+
+{% block body %}
+    {% if data.form is not null %}
+        {{ form_start(data.form) }}
+            {% for field in data.form.children %}
+                {% block productOffersForm %}
+                    <b>{{ field.vars.label | trans }}</b>
+                    {{ form_widget(field) }}
+                {% endblock %}
+            {% endfor %}
+        {{ form_end(data.form) }}
+    {% endif %}
+{% endblock %}

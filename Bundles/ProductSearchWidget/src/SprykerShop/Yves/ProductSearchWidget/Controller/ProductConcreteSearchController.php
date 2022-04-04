@@ -74,8 +74,15 @@ class ProductConcreteSearchController extends AbstractController
     {
         $productConcreteCriteriaFilterTransfer = new ProductConcreteCriteriaFilterTransfer();
 
+        $shopContextTransfer = $this->getFactory()
+            ->createShopContextResolver()
+            ->resolve();
+
+        $requestParams = array_merge($shopContextTransfer->toArray(), $request->query->all());
+
         $productConcreteCriteriaFilterTransfer->setSearchString($request->get(static::PARAM_SEARCH_STRING));
         $productConcreteCriteriaFilterTransfer->setLimit($request->get(static::PARAM_LIMIT));
+        $productConcreteCriteriaFilterTransfer->setRequestParams($requestParams);
 
         return $productConcreteCriteriaFilterTransfer;
     }

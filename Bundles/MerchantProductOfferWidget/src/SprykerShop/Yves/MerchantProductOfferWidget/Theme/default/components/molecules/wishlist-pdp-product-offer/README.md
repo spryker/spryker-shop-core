@@ -1,1 +1,1 @@
-# wishlist-pdp-product-offer (molecule)
+Renders hidden form input with `productOfferReference` info as value.
