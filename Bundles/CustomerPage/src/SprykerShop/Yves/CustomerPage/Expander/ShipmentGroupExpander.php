@@ -82,7 +82,7 @@ class ShipmentGroupExpander implements ShipmentGroupExpanderInterface
 
             $cartItems[$key][static::BUNDLE_ITEMS][] = $itemTransfer;
 
-            if (!$cartItems[$key][static::BUNDLE_PRODUCT] && isset($mappedBundleItems[$key])) {
+            if (empty($cartItems[$key][static::BUNDLE_PRODUCT]) && isset($mappedBundleItems[$key])) {
                 $cartItems[$key][static::BUNDLE_PRODUCT] = $mappedBundleItems[$key];
             }
         }
