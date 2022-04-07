@@ -1,4 +1,4 @@
-import { debug, error } from '../../../app/logger';
+import { debug } from '../../../app/logger';
 import Component from '../../../models/component';
 
 export const EVENT_FETCHING = 'fetching';
@@ -32,13 +32,17 @@ export default class AjaxProvider extends Component {
      */
     readonly xhr: XMLHttpRequest;
     protected xhrStatusSuccessOk: number = 200;
+    protected removeListeners: Function;
 
     constructor() {
         super();
+        this.removeListeners = () => {};
         this.xhr = new XMLHttpRequest();
     }
 
-    protected readyCallback(): void {
+    protected readyCallback(): void {}
+
+    protected init(): void {
         if (this.fetchOnLoad) {
             this.fetch();
         }
@@ -61,14 +65,30 @@ export default class AjaxProvider extends Component {
             this.xhr.open(this.method, this.url);
             this.headers.forEach((value: string, key: string) => this.xhr.setRequestHeader(key, value));
             this.xhr.responseType = this.responseType;
-            this.xhr.addEventListener('load', (event: Event) => this.onRequestLoad(resolve, reject, event));
-            this.xhr.addEventListener('error', (event: Event) => this.onRequestError(reject, event));
-            this.xhr.addEventListener('abort', (event: Event) => this.onRequestAbort(reject, event));
+
+            this.fetchEventsHandler(resolve, reject);
             this.xhr.send(data);
         });
     }
 
-    protected onRequestLoad(resolve: Function, reject: Function, loadEvent: Event): void {
+    protected fetchEventsHandler(resolve: Function, reject: Function) {
+        this.removeListeners();
+        const requestLoadHandler = () => this.onRequestLoad(resolve, reject);
+        const requestErrorHandler = () => this.onRequestError(reject);
+        const requestAbortHandler = () => this.onRequestAbort(reject);
+
+        this.xhr.addEventListener('load', requestLoadHandler);
+        this.xhr.addEventListener('error', requestErrorHandler);
+        this.xhr.addEventListener('abort', requestAbortHandler);
+
+        this.removeListeners = () => {
+            this.xhr.removeEventListener('load', requestLoadHandler);
+            this.xhr.removeEventListener('error', requestErrorHandler);
+            this.xhr.removeEventListener('abort', requestAbortHandler);
+        };
+    }
+
+    protected onRequestLoad(resolve: Function, reject: Function): void {
         this.isFetchingRequest = false;
         this.dispatchCustomEvent(EVENT_FETCHED);
 
@@ -82,13 +102,13 @@ export default class AjaxProvider extends Component {
         resolve(this.xhr.response);
     }
 
-    protected onRequestError(reject: Function, errorEvent: Event): void {
+    protected onRequestError(reject: Function): void {
         this.isFetchingRequest = false;
         this.dispatchCustomEvent(EVENT_FETCHED);
         reject(new Error(`${this.method} ${this.url} request error`));
     }
 
-    protected onRequestAbort(reject: Function, abortEvent: Event): void {
+    protected onRequestAbort(reject: Function): void {
         this.isFetchingRequest = false;
         this.dispatchCustomEvent(EVENT_FETCHED);
         reject(new Error(`${this.method} ${this.url} request aborted`));
