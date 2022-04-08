@@ -33,7 +33,7 @@ class CartItemsAvailabilityMapper implements CartItemsMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject $items
+     * @param \ArrayObject<\Generated\Shared\Transfer\ItemTransfer> $items
      * @param string $localeName
      *
      * @return array

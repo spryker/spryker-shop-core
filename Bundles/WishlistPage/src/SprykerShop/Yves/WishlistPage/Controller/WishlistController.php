@@ -335,11 +335,9 @@ class WishlistController extends AbstractController
     }
 
     /**
-     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
-     *
      * @param \Generated\Shared\Transfer\WishlistOverviewResponseTransfer|null $wishlistOverviewResponse
      *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Symfony\Component\Form\FormInterface<mixed>
      */
     protected function createAddAllAvailableProductsToCartForm(?WishlistOverviewResponseTransfer $wishlistOverviewResponse = null)
     {

@@ -57,12 +57,10 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
-     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
-     *
      * @param \Generated\Shared\Transfer\WishlistTransfer|null $data
      * @param array<string, mixed> $options
      *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Symfony\Component\Form\FormInterface<mixed>
      */
     public function getWishlistForm(?WishlistTransfer $data = null, array $options = []): FormInterface
     {
@@ -70,9 +68,7 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
-     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
-     *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Symfony\Component\Form\FormInterface<mixed>
      */
     public function getWishlistDeleteForm(): FormInterface
     {
@@ -80,9 +76,7 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
-     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
-     *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Symfony\Component\Form\FormInterface<mixed>
      */
     public function getWishlistRemoveItemForm(): FormInterface
     {
@@ -90,9 +84,7 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
-     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
-     *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Symfony\Component\Form\FormInterface<mixed>
      */
     public function getWishlistAddItemForm(): FormInterface
     {
@@ -100,9 +92,7 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
-     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
-     *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Symfony\Component\Form\FormInterface<mixed>
      */
     public function getWishlistMoveToCartForm(): FormInterface
     {
@@ -121,12 +111,10 @@ class WishlistPageFactory extends AbstractFactory
     }
 
     /**
-     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
-     *
      * @param array<mixed> $data
      * @param array<string, mixed> $options
      *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Symfony\Component\Form\FormInterface<mixed>
      */
     public function getAddAllAvailableProductsToCartForm(array $data, array $options = [])
     {
