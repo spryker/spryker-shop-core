@@ -71,7 +71,7 @@ class ShipmentCollectionForm extends AbstractType
      */
     protected function addShipmentGroupsSubForm(FormBuilderInterface $builder, array $options)
     {
-        /** @var \ArrayObject<\Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupCollection */
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupCollection */
         $shipmentGroupCollection = $options[static::OPTION_SHIPMENT_GROUPS];
 
         $builder->add(static::FIELD_SHIPMENT_GROUP_COLLECTION, CollectionType::class, [

@@ -38,7 +38,7 @@ interface CartPageToCartClientInterface
     public function removeItem($sku, $groupKey = null);
 
     /**
-     * @param \ArrayObject $items
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */

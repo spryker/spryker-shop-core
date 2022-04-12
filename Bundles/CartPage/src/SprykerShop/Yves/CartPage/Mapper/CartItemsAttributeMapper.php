@@ -72,7 +72,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\ItemTransfer> $items
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
      * @param string $localeName
      *
      * @return array
@@ -135,7 +135,8 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
 
         $attributeMapIterator = $this->createAttributeIterator($attributeMap);
 
-        foreach ($attributeMapIterator as $attribute => $productConcreteId) {
+        /** @var int $productConcreteId */
+        foreach ($attributeMapIterator as $productConcreteId) {
             if ($attributeMapIterator->callHasChildren() === true) {
                 continue;
             }
@@ -206,7 +207,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     }
 
     /**
-     * @param array $attributeMap
+     * @param array<string, mixed> $attributeMap
      *
      * @return \RecursiveIteratorIterator
      */

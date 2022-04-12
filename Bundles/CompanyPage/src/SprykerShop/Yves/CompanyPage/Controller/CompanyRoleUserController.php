@@ -151,7 +151,7 @@ class CompanyRoleUserController extends AbstractCompanyController
 
     /**
      * @param int $idCompanyUser
-     * @param \ArrayObject $companyRoles
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CompanyRoleTransfer> $companyRoles
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *

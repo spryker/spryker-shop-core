@@ -57,7 +57,7 @@ class SalesOrderThresholdWidgetPlugin extends AbstractWidgetPlugin implements Sa
     /**
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ExpenseTransfer> $expenseTransfers
      *
-     * @return \ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ExpenseTransfer>
      */
     protected function filterSalesOrderThresholdExpenses(ArrayObject $expenseTransfers): ArrayObject
     {

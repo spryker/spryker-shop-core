@@ -59,7 +59,7 @@ class AttributeVariantsProvider
      * @param string $sku
      * @param int $quantity
      * @param array $selectedAttributes
-     * @param \ArrayObject $items
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
      * @param string|null $groupKey
      * @param array $optionValueIds
      * @param string $localeName

@@ -58,7 +58,7 @@ class AddressChoicesResolver implements AddressChoicesResolverInterface
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\AddressTransfer>|iterable<\Generated\Shared\Transfer\AddressTransfer> $customerAddressesCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\AddressTransfer>|iterable<\Generated\Shared\Transfer\AddressTransfer> $customerAddressesCollection
      * @param array<string, string> $choices
      *
      * @return array<string, string|int>

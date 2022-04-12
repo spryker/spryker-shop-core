@@ -15,7 +15,7 @@ interface ItemExpanderInterface
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param string $localeName
      *
-     * @return \ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandItemTransfers(ArrayObject $itemTransfers, string $localeName): ArrayObject;
 }

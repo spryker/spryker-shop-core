@@ -21,7 +21,7 @@ class MerchantOrderReferenceForItemsWidget extends AbstractWidget
     protected const PARAMETER_MERCHANT_ORDER_REFERENCES = 'merchantOrderReferences';
 
     /**
-     * @param \ArrayObject $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      */
     public function __construct(ArrayObject $itemTransfers)
     {

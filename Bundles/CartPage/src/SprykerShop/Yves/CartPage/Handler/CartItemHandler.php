@@ -180,7 +180,7 @@ class CartItemHandler implements CartItemHandlerInterface
     }
 
     /**
-     * @param \ArrayObject $items
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
      * @param array $itemAttributes
      * @param string $sku
      * @param string $localeName

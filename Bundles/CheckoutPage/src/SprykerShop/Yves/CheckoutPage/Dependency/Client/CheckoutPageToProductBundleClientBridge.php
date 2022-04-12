@@ -25,8 +25,8 @@ class CheckoutPageToProductBundleClientBridge implements CheckoutPageToProductBu
     }
 
     /**
-     * @param \ArrayObject $items
-     * @param \ArrayObject $bundleItems
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $bundleItems
      *
      * @return array
      */

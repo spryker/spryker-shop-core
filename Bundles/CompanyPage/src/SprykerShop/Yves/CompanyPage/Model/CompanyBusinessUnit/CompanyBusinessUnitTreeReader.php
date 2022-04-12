@@ -58,7 +58,7 @@ class CompanyBusinessUnitTreeReader implements CompanyBusinessUnitTreeReaderInte
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeTransfer> $customerCompanyBusinessUnitTreeNodes
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeTransfer> $customerCompanyBusinessUnitTreeNodes
      *
      * @return array
      */

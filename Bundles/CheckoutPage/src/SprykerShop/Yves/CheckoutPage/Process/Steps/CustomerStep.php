@@ -147,7 +147,7 @@ class CustomerStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \ArrayObject|bool
+     * @return bool
      */
     protected function isGuestCustomerSelected(QuoteTransfer $quoteTransfer)
     {
