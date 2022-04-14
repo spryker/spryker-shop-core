@@ -17,6 +17,10 @@
 } %}
 
 {% block body %}
+    <meta itemprop="ratingValue" content="{{ data.summary.averageRating }}">
+    <meta itemprop="bestRating" content="{{ data.summary.maximumRating }}">
+    <meta itemprop="reviewCount" content="{{ data.summary.totalReview }}">
+
     {% include molecule('rating-selector', 'ProductReviewWidget') with {
         class: 'spacing-right',
         data: {
@@ -28,12 +32,6 @@
             readonly: true
         }
     } only %}
-
-    <span itemscope itemprop="aggregateRating" itemtype="https://schema.org/AggregateRating">
-        <meta itemprop="ratingValue" content="{{ data.summary.averageRating }}">
-        <meta itemprop="bestRating" content="{{ data.summary.maximumRating }}">
-        <meta itemprop="reviewCount" content="{{ data.summary.totalReview }}">
-    </span>
 
     {% if data.summary.totalReview > 0 %}
         <strong>{{ data.summary.averageRating }}</strong> {{ 'product_review.summary.out_of' | trans }}

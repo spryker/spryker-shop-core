@@ -9,14 +9,19 @@
 
 {% block body %}
     <hr>
-    {% include molecule('rating-selector', 'ProductReviewWidget') with {
-        modifiers: ['expand'],
-        data: {
-            value: data.value,
-            maxValue: data.maxValue,
-        },
-        attributes: {
-            readonly: true,
-        },
-    } only %}
+    <section itemscope itemtype="http://schema.org/AggregateRating" itemprop="aggregateRating">
+        <meta itemprop="ratingValue" content="{{ data.value }}">
+        <meta itemprop="bestRating" content="{{ data.maxValue }}">
+
+        {% include molecule('rating-selector', 'ProductReviewWidget') with {
+            modifiers: ['expand'],
+            data: {
+                value: data.value,
+                maxValue: data.maxValue,
+            },
+            attributes: {
+                readonly: true,
+            },
+        } only %}
+    </section>
 {% endblock %}

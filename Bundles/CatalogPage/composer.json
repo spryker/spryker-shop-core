@@ -35,7 +35,8 @@
         "spryker/router": "Use this module when you want to use the Router.",
         "spryker/container": "If you want to use Twig Plugins",
         "spryker/permission": "If you want to use permissions plugins.",
-        "spryker/silex": "Use this module when using plugins that need Silex dependencies."
+        "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
+        "spryker-shop/asset-widget": "If you want to use components from module AssetWidget"
     },
     "autoload": {
         "psr-4": {

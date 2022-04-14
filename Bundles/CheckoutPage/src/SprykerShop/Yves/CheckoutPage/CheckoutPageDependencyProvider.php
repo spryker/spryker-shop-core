@@ -199,8 +199,14 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public const PLUGIN_SUCCESS_PAGE_WIDGETS = 'PLUGIN_SUCCESS_PAGE_WIDGETS';
 
+    /**
+     * @var string
+     */
     public const PAYMENT_METHOD_HANDLER = SprykerCheckoutDependencyProvider::PAYMENT_METHOD_HANDLER; // constant value must be BC because of dependency injector
 
+    /**
+     * @var string
+     */
     public const PAYMENT_SUB_FORMS = SprykerCheckoutDependencyProvider::PAYMENT_SUB_FORMS; // constant value must be BC because of dependency injector
 
     /**
@@ -247,6 +253,11 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_CHECKOUT_PAGE_STEP_ENGINE_PRE_RENDER = 'PLUGINS_CHECKOUT_PAGE_STEP_ENGINE_PRE_RENDER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_PAYMENT_COLLECTION_EXTENDER = 'PLUGINS_PAYMENT_COLLECTION_EXTENDER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -298,6 +309,8 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addAddressStepExecutorAddressTransferExpanderPlugins($container);
         $container = $this->addCheckoutStepResolverStrategyPlugins($container);
         $container = $this->addCheckoutPageStepEnginePreRenderPlugins($container);
+
+        $container = $this->addPaymentCollectionExtenderPlugins($container);
 
         return $container;
     }
@@ -1017,6 +1030,28 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\StepEngine\CheckoutPageStepEnginePreRenderPluginInterface>
      */
     protected function getCheckoutPageStepEnginePreRenderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addPaymentCollectionExtenderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PAYMENT_COLLECTION_EXTENDER, function () {
+            return $this->getPaymentCollectionExtenderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\PaymentCollectionExtenderPluginInterface>
+     */
+    protected function getPaymentCollectionExtenderPlugins(): array
     {
         return [];
     }

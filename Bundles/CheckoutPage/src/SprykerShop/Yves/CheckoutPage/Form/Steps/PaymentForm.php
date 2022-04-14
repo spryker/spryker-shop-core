@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Form\Steps;
 
+use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
@@ -14,6 +15,8 @@ use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormProviderNameInterface;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
+use SprykerShop\Yves\CheckoutPage\Form\StepEngine\ExtraOptionsSubFormInterface;
+use SprykerShop\Yves\CheckoutPage\Form\StepEngine\StandaloneSubFormInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -66,9 +69,8 @@ class PaymentForm extends AbstractType
     protected function addPaymentMethods(FormBuilderInterface $builder, array $options)
     {
         $paymentMethodSubForms = $this->getPaymentMethodSubForms();
-        $paymentMethodChoices = $this->getPaymentMethodChoices($paymentMethodSubForms);
 
-        $this->addPaymentMethodChoices($builder, $paymentMethodChoices)
+        $this->addPaymentMethodChoices($builder, $paymentMethodSubForms)
             ->addPaymentMethodSubForms($builder, $paymentMethodSubForms, $options);
 
         return $this;
@@ -76,17 +78,44 @@ class PaymentForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $paymentMethodChoices
+     * @param array<\Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface> $paymentMethodSubForms
      *
      * @return $this
      */
-    protected function addPaymentMethodChoices(FormBuilderInterface $builder, array $paymentMethodChoices)
+    protected function addPaymentMethodChoices(FormBuilderInterface $builder, array $paymentMethodSubForms)
     {
         $builder->add(
             static::PAYMENT_SELECTION,
             ChoiceType::class,
             [
-                'choices' => $paymentMethodChoices,
+                'choices' => $this->getPaymentMethodChoices($paymentMethodSubForms),
+                'choice_name' => function ($choice, $key) use ($paymentMethodSubForms) {
+                    $paymentMethodSubForm = $paymentMethodSubForms[$key];
+
+                    return $paymentMethodSubForm->getName();
+                },
+                'choice_label' => function ($choice, $key) use ($paymentMethodSubForms) {
+                    $paymentMethodSubForm = $paymentMethodSubForms[$key];
+
+                    if ($paymentMethodSubForm instanceof StandaloneSubFormInterface) {
+                        return $paymentMethodSubForm->getLabelName();
+                    }
+
+                    return $paymentMethodSubForm->getName();
+                },
+                'group_by' => function ($choice, $key) use ($paymentMethodSubForms) {
+                    $paymentMethodSubForm = $paymentMethodSubForms[$key];
+
+                    if ($paymentMethodSubForm instanceof StandaloneSubFormInterface) {
+                        return $paymentMethodSubForm->getGroupName();
+                    }
+
+                    if ($paymentMethodSubForm instanceof SubFormProviderNameInterface) {
+                        return sprintf('checkout.payment.provider.%s', $paymentMethodSubForm->getProviderName());
+                    }
+
+                    return '';
+                },
                 'label' => false,
                 'required' => true,
                 'expanded' => true,
@@ -112,14 +141,12 @@ class PaymentForm extends AbstractType
     protected function addPaymentMethodSubForms(FormBuilderInterface $builder, array $paymentMethodSubForms, array $options)
     {
         foreach ($paymentMethodSubForms as $paymentMethodSubForm) {
+            $paymentMethodSubFormOptions = $this->getPaymentMethodSubFormOptions($paymentMethodSubForm);
+
             $builder->add(
                 $paymentMethodSubForm->getName(),
                 get_class($paymentMethodSubForm),
-                [
-                    'property_path' => static::PAYMENT_PROPERTY_PATH . '.' . $paymentMethodSubForm->getPropertyPath(),
-                    'error_bubbling' => true,
-                    'select_options' => $options['select_options'],
-                ],
+                ['select_options' => $options['select_options']] + $paymentMethodSubFormOptions,
             );
         }
 
@@ -127,31 +154,87 @@ class PaymentForm extends AbstractType
     }
 
     /**
+     * @param \Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface $paymentMethodSubForm
+     *
+     * @return array<mixed>
+     */
+    protected function getPaymentMethodSubFormOptions(SubFormInterface $paymentMethodSubForm): array
+    {
+        $defaultOptions = [
+            'property_path' => static::PAYMENT_PROPERTY_PATH . '.' . $paymentMethodSubForm->getPropertyPath(),
+            'error_bubbling' => true,
+            'label' => false,
+        ];
+
+        if (!$paymentMethodSubForm instanceof ExtraOptionsSubFormInterface) {
+            return $defaultOptions;
+        }
+
+        return $defaultOptions + $paymentMethodSubForm->getExtraOptions();
+    }
+
+    /**
      * @return array<\Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface>
      */
-    protected function getPaymentMethodSubForms()
+    protected function getPaymentMethodSubForms(): array
     {
         $paymentMethodSubForms = [];
 
+        $availablePaymentMethodsTransfer = $this->getFactory()->createPaymentMethodReader()
+            ->getAvailablePaymentMethods();
+
         $availablePaymentMethodSubFormPlugins = $this->getFactory()->getPaymentMethodSubForms();
-        $availablePaymentMethodSubFormPlugins = $this->filterOutNotAvailableForms($availablePaymentMethodSubFormPlugins);
+        $availablePaymentMethodSubFormPlugins = $this->filterOutNotAvailableForms(
+            $availablePaymentMethodSubFormPlugins,
+            $availablePaymentMethodsTransfer,
+        );
+        $availablePaymentMethodSubFormPlugins = $this->extendPaymentCollection(
+            $availablePaymentMethodSubFormPlugins,
+            $availablePaymentMethodsTransfer,
+        );
         $filteredPaymentMethodSubFormPlugins = $this->filterPaymentMethodSubFormPlugins($availablePaymentMethodSubFormPlugins);
 
         foreach ($filteredPaymentMethodSubFormPlugins as $paymentMethodSubFormPlugin) {
-            $paymentMethodSubForms[] = $this->createSubForm($paymentMethodSubFormPlugin);
+            $paymentMethodSubForm = $this->createSubForm($paymentMethodSubFormPlugin);
+            $paymentMethodSubForms[$paymentMethodSubForm->getName()] = $paymentMethodSubForm;
         }
 
         return $paymentMethodSubForms;
     }
 
     /**
-     * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $paymentMethodSubFormPlugins
+     * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $paymentSubFormPluginCollection
+     * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsTransfer
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
      */
-    protected function filterOutNotAvailableForms(SubFormPluginCollection $paymentMethodSubFormPlugins): SubFormPluginCollection
-    {
-        $paymentMethodNames = $this->getAvailablePaymentMethodNames();
+    protected function extendPaymentCollection(
+        SubFormPluginCollection $paymentSubFormPluginCollection,
+        PaymentMethodsTransfer $paymentMethodsTransfer
+    ): SubFormPluginCollection {
+        $paymentCollectionExtenderPlugins = $this->getFactory()->getPaymentCollectionExtenderPlugins();
+
+        foreach ($paymentCollectionExtenderPlugins as $paymentCollectionExtenderPlugin) {
+            $paymentSubFormPluginCollection = $paymentCollectionExtenderPlugin->extendCollection(
+                $paymentSubFormPluginCollection,
+                $paymentMethodsTransfer,
+            );
+        }
+
+        return $paymentSubFormPluginCollection;
+    }
+
+    /**
+     * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $paymentMethodSubFormPlugins
+     * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $availablePaymentMethodsTransfer
+     *
+     * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
+     */
+    protected function filterOutNotAvailableForms(
+        SubFormPluginCollection $paymentMethodSubFormPlugins,
+        PaymentMethodsTransfer $availablePaymentMethodsTransfer
+    ): SubFormPluginCollection {
+        $paymentMethodNames = $this->getAvailablePaymentMethodNames($availablePaymentMethodsTransfer);
         $paymentMethodNames = array_combine($paymentMethodNames, $paymentMethodNames);
 
         foreach ($paymentMethodSubFormPlugins as $key => $subFormPlugin) {
@@ -168,15 +251,14 @@ class PaymentForm extends AbstractType
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $availablePaymentMethodsTransfer
+     *
      * @return array<string>
      */
-    protected function getAvailablePaymentMethodNames(): array
+    protected function getAvailablePaymentMethodNames(PaymentMethodsTransfer $availablePaymentMethodsTransfer): array
     {
-        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
-        $paymentMethodsTransfer = $this->getFactory()->getPaymentClient()->getAvailableMethods($quoteTransfer);
-
         $paymentMethodNames = [];
-        foreach ($paymentMethodsTransfer->getMethods() as $paymentMethodTransfer) {
+        foreach ($availablePaymentMethodsTransfer->getMethods() as $paymentMethodTransfer) {
             $paymentMethodNames[] = $paymentMethodTransfer->getMethodName();
         }
 
@@ -193,19 +275,7 @@ class PaymentForm extends AbstractType
         $choices = [];
 
         foreach ($paymentMethodSubForms as $paymentMethodSubForm) {
-            $subFormName = ucfirst($paymentMethodSubForm->getName());
-
-            if (!$paymentMethodSubForm instanceof SubFormProviderNameInterface) {
-                $choices[$subFormName] = $paymentMethodSubForm->getPropertyPath();
-
-                continue;
-            }
-
-            if (!isset($choices[$paymentMethodSubForm->getProviderName()])) {
-                $choices[$paymentMethodSubForm->getProviderName()] = [];
-            }
-
-            $choices[$paymentMethodSubForm->getProviderName()][$subFormName] = $paymentMethodSubForm->getPropertyPath();
+            $choices[$paymentMethodSubForm->getName()] = $paymentMethodSubForm->getPropertyPath();
         }
 
         return $choices;
@@ -248,6 +318,8 @@ class PaymentForm extends AbstractType
     }
 
     /**
+     * @deprecated Exists for BC reasons. Will be removed in the next major release without replacement.
+     *
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $availablePaymentMethodSubFormPlugins
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection

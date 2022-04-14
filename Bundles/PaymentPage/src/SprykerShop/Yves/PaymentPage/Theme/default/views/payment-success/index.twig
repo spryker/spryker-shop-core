@@ -1,0 +1,49 @@
+{# @var quote \Generated\Shared\Transfer\QuoteTransfer #}
+{# @var quote.items \Generated\Shared\Transfer\ItemTransfer[] #}
+
+{% extends template('page-layout-payment', 'PaymentPage') %}
+
+{% define data = {
+    title: 'payment_foreign.thank_you' | trans,
+    message: 'payment_foreign.success.order.placement.message' | trans,
+    quote: _view.quote,
+} %}
+
+{% set currency %}
+    {% widget 'CurrencyIsoCodeWidget' only %}{% endwidget %}
+{% endset %}
+
+{% block content %}
+    <div class="box">
+        <h3>{{data.title}}</h3>
+        <p>{{data.message}}</p>
+        {% if isUserLoggedIn %}
+            <a href="{{ url('customer/overview') }}">{{ 'payment_foreign.go_to_my_account' | trans }}</a>
+        {% endif %}
+    </div>
+
+    <section itemscope itemtype="https://schema.org/Invoice">
+        <meta itemprop="identifier" content="{{ data.quote.orderReference }}">
+        <section itemprop="totalPaymentDue" itemscope itemtype="https://schema.org/PriceSpecification">
+            <meta itemprop="priceCurrency" content="{{ currency | spaceless }}">
+            <meta itemprop="price" content="{{ data.quote.totals.grandTotal | moneyRaw }}">
+        </section>
+
+        <section itemprop="referencesOrder" itemscope itemtype="https://schema.org/Order">
+            {% for item in data.quote.items %}
+                <section itemprop="orderedItem" itemscope itemtype="https://schema.org/OrderItem">
+                    <meta itemprop="orderQuantity" content="{{ item.quantity }}">
+
+                    <section itemprop="orderedItem" itemscope itemtype="https://schema.org/Product">
+                        <meta itemprop="sku" content="{{ item.sku }}">
+
+                        <section itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                            <meta itemprop="priceCurrency" content="{{ currency | spaceless }}">
+                            <meta itemprop="price" content="{{ item.sumSubtotalAggregation | moneyRaw }}">
+                        </section>
+                    </section>
+                </section>
+            {% endfor %}
+        </section>
+    </section>
+{% endblock %}

@@ -32,6 +32,7 @@ export default class ProductItemColorSelector extends ColorSelector {
             addToCartUrl: this.addToCartUrl,
             ajaxAddToCartUrl: this.ajaxAddToCartUrl,
             addToCartFormAction: this.addToCartFormAction,
+            sku: this.sku,
         };
     }
 
@@ -77,5 +78,9 @@ export default class ProductItemColorSelector extends ColorSelector {
 
     protected get productItemClassName(): string {
         return this.getAttribute('product-item-class-name');
+    }
+
+    protected get sku(): string {
+        return this.currentSelection.getAttribute('data-product-sku');
     }
 }

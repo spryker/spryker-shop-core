@@ -38,6 +38,9 @@
             {% endblock %}
 
             {% block headScripts %}
+                {% widget 'AssetWidget' args ['header-top'] only %}
+                {% endwidget %}
+
                 {% if isNewFrontendBuildSupported %}
                     {% block esmHeadScripts %}
                         <script nomodule type="application/javascript" src="{{ publicPath('js/yves_default.runtime.legacy.js') }}"></script>
@@ -48,6 +51,9 @@
                         <script src="{{ publicPath('js/yves_default.runtime.js') }}"></script>
                     {% endblock %}
                 {% endif %}
+
+                {% widget 'AssetWidget' args ['header'] only %}
+                {% endwidget %}
             {% endblock %}
 
             <title>{% block headTitle %}{{ data.title }}{% endblock %}</title>
@@ -58,6 +64,9 @@
             {{ parent() }}
 
             {% block footerScripts %}
+                {% widget 'AssetWidget' args ['footer'] only %}
+                {% endwidget %}
+
                 {% if isNewFrontendBuildSupported %}
                     {% block esmFooterScripts %}
                         <script nomodule type="application/javascript" src="{{ publicPath('js/yves_default.es6-polyfill.legacy.js') }}"></script>
@@ -75,6 +84,9 @@
                 {% endif %}
 
                 {%- block styleLazyLoader %}{% endblock -%}
+
+                {% widget 'AssetWidget' args ['footer-bottom'] only %}
+                {% endwidget %}
             {% endblock %}
         </body>
     </html>

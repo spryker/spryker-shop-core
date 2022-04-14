@@ -1,0 +1,20 @@
+{# @var category \Generated\Shared\Transfer\ProductCategoryStorage #}
+
+{% extends template('widget') %}
+
+{% define data = {
+    categories: _widget.categories,
+    product: _widget.product,
+} %}
+
+{% set categories = [] %}
+{% for category in data.categories %}
+    {% set categories = categories|merge([{
+        "id": category.categoryId,
+        "name": category.name,
+    }]) %}
+{% endfor %}
+
+{% block body %}
+    <meta itemprop="category" content="{{ categories|json_encode() }}">
+{% endblock %}

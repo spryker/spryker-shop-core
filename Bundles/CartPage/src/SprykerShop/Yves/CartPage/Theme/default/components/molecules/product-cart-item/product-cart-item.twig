@@ -39,6 +39,8 @@
         {%- endblock %}
 
         {% block sku -%}
+            <meta itemprop="sku" content="{{ data.sku }}">
+
             <small class="text-secondary" data-qa="cart-item-sku">
                 {{- 'cart.item.sku' | trans }} {{ data.sku -}}
             </small>

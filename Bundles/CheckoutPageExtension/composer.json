@@ -8,9 +8,11 @@
         "spryker/step-engine-extension": "^1.0.0"
     },
     "require-dev": {
-        "spryker/code-sniffer": "*"
+        "spryker/code-sniffer": "*",
+        "spryker/step-engine": "*"
     },
     "suggest": {
+        "spryker/step-engine": "If you want to use PaymentCollection extender plugins.",
         "spryker/symfony": "If you want to use CheckoutPage expander plugins."
     },
     "autoload": {

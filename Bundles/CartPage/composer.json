@@ -57,7 +57,8 @@
         "spryker/router": "Use this module when using plugins that adds routes to the Route Module.",
         "spryker/shipment": "If you want to use the shipment total price, min version 8.4.0",
         "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
-        "spryker/twig": "Use this module when using plugins that need Twig dependencies."
+        "spryker/twig": "Use this module when using plugins that need Twig dependencies.",
+        "spryker-shop/asset-widget": "If you want to use components from module AssetWidget"
     },
     "autoload": {
         "psr-4": {

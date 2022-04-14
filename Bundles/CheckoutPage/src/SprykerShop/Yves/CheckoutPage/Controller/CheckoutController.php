@@ -258,11 +258,14 @@ class CheckoutController extends AbstractController
      */
     public function successAction(Request $request)
     {
+        $quoteTransfer = $this->getFactory()->getCartClient()->getQuote();
         $response = $this->createStepProcess()->process($request);
 
         if (!is_array($response)) {
             return $response;
         }
+
+        $response['quote'] = $quoteTransfer;
 
         return $this->view(
             $response,

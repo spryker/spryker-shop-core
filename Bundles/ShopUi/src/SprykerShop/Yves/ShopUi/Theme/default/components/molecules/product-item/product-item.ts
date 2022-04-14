@@ -21,6 +21,7 @@ export interface ProductItemData {
     name: string;
     ratingValue: number;
     defaultPrice: string;
+    sku: string;
     originalPrice: string;
     detailPageUrl: string;
     addToCartUrl: string;
@@ -40,6 +41,7 @@ export default class ProductItem extends Component {
     protected productName: HTMLElement;
     protected productRating: HTMLInputElement;
     protected productDefaultPrice: HTMLElement;
+    protected productSku: HTMLElement;
     protected productOriginalPrice: HTMLElement;
     protected productLinkDetailPage: HTMLAnchorElement[];
     protected productLinkAddToCart: HTMLAnchorElement;
@@ -54,6 +56,7 @@ export default class ProductItem extends Component {
         this.productName = <HTMLElement>this.getElementsByClassName(`${this.jsName}__name`)[0];
         this.productRating = <HTMLInputElement>this.getElementsByClassName(`${this.jsName}__rating`)[0];
         this.productDefaultPrice = <HTMLElement>this.getElementsByClassName(`${this.jsName}__default-price`)[0];
+        this.productSku = <HTMLInputElement>this.getElementsByClassName(`${this.jsName}__sku`)[0];
         this.productOriginalPrice = <HTMLElement>this.getElementsByClassName(`${this.jsName}__original-price`)[0];
         this.productLinkDetailPage = <HTMLAnchorElement[]>(
             Array.from(this.getElementsByClassName(`${this.jsName}__link-detail-page`))
@@ -81,6 +84,7 @@ export default class ProductItem extends Component {
         this.productItemName = data.name;
         this.ratingValue = data.ratingValue;
         this.defaultPrice = data.defaultPrice;
+        this.sku = data.sku;
         this.originalPrice = data.originalPrice;
         this.detailPageUrl = data.detailPageUrl;
         this.addToCartUrl = data.addToCartUrl;
@@ -152,6 +156,16 @@ export default class ProductItem extends Component {
     set defaultPrice(defaultPrice: string) {
         if (this.productDefaultPrice) {
             this.productDefaultPrice.innerText = defaultPrice;
+        }
+    }
+
+    /**
+     * Sets the product card sku.
+     * @param productSku A product card sku.
+     */
+    set sku(productSku: string) {
+        if (this.productSku) {
+            this.productSku.content = productSku;
         }
     }
 
@@ -251,6 +265,15 @@ export default class ProductItem extends Component {
     get defaultPrice(): string {
         if (this.productDefaultPrice) {
             return this.productDefaultPrice.innerText;
+        }
+    }
+
+    /**
+     * Gets the product card sku.
+     */
+    get sku(): number {
+        if (this.productSku) {
+            return this.productSku.content;
         }
     }
 

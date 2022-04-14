@@ -1,0 +1,9 @@
+{% extends template('widget') %}
+
+{% define data = {
+    assetSlotContent: _widget.assetSlotContent | default('')
+} %}
+
+{% block body %}
+    {{ data.assetSlotContent | raw }}
+{% endblock %}

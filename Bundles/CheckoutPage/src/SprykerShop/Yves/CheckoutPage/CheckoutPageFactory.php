@@ -8,7 +8,9 @@
 namespace SprykerShop\Yves\CheckoutPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCartClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToLocaleClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPaymentClientInterface;
@@ -16,11 +18,15 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleC
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
+use SprykerShop\Yves\CheckoutPage\Extractor\PaymentMethodKeyExtractor;
+use SprykerShop\Yves\CheckoutPage\Extractor\PaymentMethodKeyExtractorInterface;
 use SprykerShop\Yves\CheckoutPage\Form\DataProvider\ShipmentFormDataProvider;
 use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilter;
 use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilterInterface;
 use SprykerShop\Yves\CheckoutPage\Form\FormFactory;
 use SprykerShop\Yves\CheckoutPage\Process\StepFactory;
+use SprykerShop\Yves\CheckoutPage\Reader\PaymentMethodReader;
+use SprykerShop\Yves\CheckoutPage\Reader\PaymentMethodReaderInterface;
 
 /**
  * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
@@ -51,6 +57,25 @@ class CheckoutPageFactory extends AbstractFactory
     public function createCheckoutFormFactory()
     {
         return new FormFactory();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Reader\PaymentMethodReaderInterface
+     */
+    public function createPaymentMethodReader(): PaymentMethodReaderInterface
+    {
+        return new PaymentMethodReader(
+            $this->getPaymentClient(),
+            $this->getQuoteClient(),
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Extractor\PaymentMethodKeyExtractorInterface
+     */
+    public function createPaymentMethodKeyExtractor(): PaymentMethodKeyExtractorInterface
+    {
+        return new PaymentMethodKeyExtractor();
     }
 
     /**
@@ -169,11 +194,35 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
+     * @return array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\PaymentCollectionExtenderPluginInterface>
+     */
+    public function getPaymentCollectionExtenderPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_PAYMENT_COLLECTION_EXTENDER);
+    }
+
+    /**
      * @return array<\Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface>
      */
     protected function getSubFormFilterPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_SUB_FORM_FILTERS);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface
+     */
+    public function getCustomerClient(): CheckoutPageToCustomerClientInterface
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCartClientInterface
+     */
+    public function getCartClient(): CheckoutPageToCartClientInterface
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CART);
     }
 
     /**

@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 18,
+            "line_to": 18,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'Generated\\Shared\\Transfer\\QuoteTransfer' for Spryker\\Yves\\StepEngine\\Dependency\\Form\\StepEngineFormDataProviderInterface::getData is more specific than the implemented return type for SprykerShop\\Yves\\PaymentPage\\Form\\DataProvider\\PaymentForeignFormDataProvider::getdata 'Spryker\\Shared\\Kernel\\Transfer\\AbstractTransfer'",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/PaymentPage/src/SprykerShop/Yves/PaymentPage/Form/DataProvider/PaymentForeignFormDataProvider.php",
+            "snippet": "     * @return \\Spryker\\Shared\\Kernel\\Transfer\\AbstractTransfer",
+            "selected_text": "\\Spryker\\Shared\\Kernel\\Transfer\\AbstractTransfer",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 89,
+            "line_to": 89,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/PaymentPage/src/SprykerShop/Yves/PaymentPage/Form/PaymentForeignSubForm.php",
+            "snippet": "            $this->getPaymentMethodTransfer()->getPaymentMethodKey(),",
+            "selected_text": "$this->getPaymentMethodTransfer()->getPaymentMethodKey()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

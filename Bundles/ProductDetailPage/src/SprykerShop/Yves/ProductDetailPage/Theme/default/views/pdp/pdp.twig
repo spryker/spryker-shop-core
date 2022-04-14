@@ -3,12 +3,21 @@
 {% define data = {
     product: _view.product,
     productUrl: _view.productUrl,
+    hostName: app.request.getSchemeAndHttpHost(),
 
     title: product.metaTitle | default(_view.product.name),
     metaTitle: _view.product.metaTitle | default(_view.product.name),
     metaDescription: _view.product.metaDescription | default,
     metaKeywords: _view.product.metaKeywords | default,
+    productId: _view.product.idProductConcrete is not empty ? _view.product.idProductConcrete : _view.product.idProductAbstract,
 } %}
+
+{% block headScripts %}
+    {{ parent() }}
+
+    {% widget 'AssetWidget' args ['pdp-header'] only %}
+    {% endwidget %}
+{% endblock %}
 
 {% block breadcrumbs %}
     {% widget 'ProductBreadcrumbsWithCategoriesWidget' args [data.product] only %}
@@ -17,66 +26,89 @@
 {% endblock %}
 
 {% block title %}
-    <h1 class="title--h3" itemprop="name">{{ data.product.name }}</h1>
-    <link itemprop="url" href="{{ data.productUrl }}">
+    <h1 class="title--h3">{{ data.product.name }}</h1>
 {% endblock %}
 
 {% block content %}
-    <div class="grid">
-        <div class="col col--sm-12 col--lg-7 col--xl-8">
-            {% include molecule('product-carousel', 'ProductDetailPage') with {
-                class: 'box',
-                data: {
-                    product: data.product
-                }
-            } only %}
+    <section itemscope itemtype="https://schema.org/Product">
+        <meta itemprop="name" content="{{ data.product.name }}">
+        <meta itemprop="url" content="{{ data.hostName }}{{ data.productUrl }}">
+        <meta itemprop="sku" content="{{ data.product.sku }}">
+
+        <meta itemprop="productId" content="{{ data.product.sku }}">
+        <meta itemprop="description" content="{{ data.product.metaDescription }}">
+        <meta itemprop="image" content="{{ data.product.images.0.externalUrlLarge }}">
+
+        <div itemprop="brand" itemscope itemtype="https://schema.org/Brand">
+            <meta itemprop="name" content="{{ data.product.attributes.brand }}">
         </div>
 
-        <div class="col col--sm-12 col--lg-5 col--xl-4">
-            {% include molecule('product-configurator', 'ProductDetailPage') with {
-                class: 'box',
-                data: {
-                    product: data.product
-                }
-            } only %}
+        {% widget 'ProductSchemaOrgCategoryWidget' args [data.product] only %}{% endwidget %}
+        <meta itemprop="inProductGroupWithID" content="{{ data.product.idProductAbstract }}">
+        <meta itemprop="gtin12" content="{{ data.product.attributes.upcs | default }}">
+
+        <div class="grid">
+            <div class="col col--sm-12 col--lg-7 col--xl-8">
+                {% include molecule('product-carousel', 'ProductDetailPage') with {
+                    class: 'box',
+                    data: {
+                        product: data.product,
+                    }
+                } only %}
+            </div>
+
+            <div class="col col--sm-12 col--lg-5 col--xl-4">
+                {% include molecule('product-configurator', 'ProductDetailPage') with {
+                    class: 'box',
+                    data: {
+                        product: data.product,
+                    }
+                } only %}
+            </div>
         </div>
-    </div>
 
-    {% widget 'ProductAlternativeListWidget' args [data.product] only %}
-    {% elsewidget 'ProductAlternativeWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductAlternativeListWidget instead. #}
+        {% widget 'ProductAlternativeListWidget' args [data.product] only %}
+        {% elsewidget 'ProductAlternativeWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductAlternativeListWidget instead. #}
+        {% endwidget %}
+
+        {% include molecule('product-detail', 'ProductDetailPage') with {
+            class: 'box',
+            data: {
+                description: data.product.description,
+                attributes: data.product.attributes,
+            }
+        } only %}
+
+        {% widget 'ProductReplacementForListWidget' args [data.product.sku] only %}
+        {% elsewidget 'ProductReplacementForWidgetPlugin' args [data.product.sku] only %} {# @deprecated Use ProductReplacementForListWidget instead. #}
+        {% endwidget %}
+
+        {% widget 'ProductDetailPageReviewWidget' args [data.product.idProductAbstract] only %}
+        {% elsewidget 'ProductReviewWidgetPlugin' args [data.product.idProductAbstract] only %} {# @deprecated Use ProductDetailPageReviewWidget instead. #}
+        {% endwidget %}
+
+        {% widget 'SimilarProductsWidget' args [data.product] only %}
+        {% elsewidget 'SimilarProductsWidgetPlugin' args [data.product] only %} {# @deprecated Use SimilarProductsWidget instead. #}
+        {% endwidget %}
+
+        {% block cmsContent %}
+            {% if widgetExists('ProductCmsBlockWidgetPlugin') %}
+                {{ widget('ProductCmsBlockWidgetPlugin', data.product) }} {# @deprecated Use molecule('product-cms-block', 'CmsBlockWidget') instead. #}
+            {% else %}
+                {% include molecule('product-cms-block', 'CmsBlockWidget') ignore missing with {
+                    class: 'box',
+                    data: {
+                        idProductAbstract: data.product.idProductAbstract,
+                    }
+                } only %}
+            {% endif %}
+        {% endblock %}
+    </section>
+{% endblock %}
+
+{% block footerScripts %}
+    {% widget 'AssetWidget' args ['pdp-footer'] only %}
     {% endwidget %}
 
-    {% include molecule('product-detail', 'ProductDetailPage') with {
-        class: 'box',
-        data: {
-            description: data.product.description,
-            attributes: data.product.attributes
-        }
-    } only %}
-
-    {% widget 'ProductReplacementForListWidget' args [data.product.sku] only %}
-    {% elsewidget 'ProductReplacementForWidgetPlugin' args [data.product.sku] only %} {# @deprecated Use ProductReplacementForListWidget instead. #}
-    {% endwidget %}
-
-    {% widget 'ProductDetailPageReviewWidget' args [data.product.idProductAbstract] only %}
-    {% elsewidget 'ProductReviewWidgetPlugin' args [data.product.idProductAbstract] only %} {# @deprecated Use ProductDetailPageReviewWidget instead. #}
-    {% endwidget %}
-
-    {% widget 'SimilarProductsWidget' args [data.product] only %}
-    {% elsewidget 'SimilarProductsWidgetPlugin' args [data.product] only %} {# @deprecated Use SimilarProductsWidget instead. #}
-    {% endwidget %}
-
-    {% block cmsContent %}
-        {% if widgetExists('ProductCmsBlockWidgetPlugin') %}
-            {{ widget('ProductCmsBlockWidgetPlugin', data.product) }} {# @deprecated Use molecule('product-cms-block', 'CmsBlockWidget') instead. #}
-        {% else %}
-            {% include molecule('product-cms-block', 'CmsBlockWidget') ignore missing with {
-                class: 'box',
-                data: {
-                    idProductAbstract: data.product.idProductAbstract
-                }
-            } only %}
-        {% endif %}
-    {% endblock %}
-
+    {{ parent() }}
 {% endblock %}

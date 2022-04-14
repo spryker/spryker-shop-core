@@ -19,6 +19,7 @@ use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPaymentClientInterface;
+use SprykerShop\Yves\CheckoutPage\Extractor\PaymentMethodKeyExtractorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
@@ -49,6 +50,11 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected $checkoutPaymentStepEnterPreCheckPlugins;
 
     /**
+     * @var \SprykerShop\Yves\CheckoutPage\Extractor\PaymentMethodKeyExtractorInterface
+     */
+    protected $paymentMethodKeyExtractor;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPaymentClientInterface $paymentClient
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection $paymentPlugins
      * @param string $stepRoute
@@ -56,6 +62,7 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
      * @param array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutPaymentStepEnterPreCheckPluginInterface> $checkoutPaymentStepEnterPreCheckPlugins
+     * @param \SprykerShop\Yves\CheckoutPage\Extractor\PaymentMethodKeyExtractorInterface $paymentMethodKeyExtractor
      */
     public function __construct(
         CheckoutPageToPaymentClientInterface $paymentClient,
@@ -64,7 +71,8 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
         $escapeRoute,
         FlashMessengerInterface $flashMessenger,
         CheckoutPageToCalculationClientInterface $calculationClient,
-        array $checkoutPaymentStepEnterPreCheckPlugins
+        array $checkoutPaymentStepEnterPreCheckPlugins,
+        PaymentMethodKeyExtractorInterface $paymentMethodKeyExtractor
     ) {
         parent::__construct($stepRoute, $escapeRoute);
 
@@ -73,6 +81,7 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
         $this->flashMessenger = $flashMessenger;
         $this->calculationClient = $calculationClient;
         $this->checkoutPaymentStepEnterPreCheckPlugins = $checkoutPaymentStepEnterPreCheckPlugins;
+        $this->paymentMethodKeyExtractor = $paymentMethodKeyExtractor;
     }
 
     /**
@@ -99,12 +108,14 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
             return $quoteTransfer;
         }
         $paymentSelection = $this->getPaymentSelectionWithFallback($quoteTransfer);
+        $paymentTransfer = (new PaymentTransfer())->setPaymentSelection($paymentSelection);
+        $paymentSelectionKey = $this->paymentMethodKeyExtractor->getPaymentSelectionKey($paymentTransfer);
 
-        if ($paymentSelection === null || !$this->paymentPlugins->has($paymentSelection)) {
+        if ($paymentSelection === null || !$this->paymentPlugins->has($paymentSelectionKey)) {
             return $quoteTransfer;
         }
 
-        $paymentHandler = $this->paymentPlugins->get($paymentSelection);
+        $paymentHandler = $this->paymentPlugins->get($paymentSelectionKey);
         if ($paymentHandler instanceof StepHandlerPluginWithMessengerInterface) {
             $paymentHandler->setFlashMessenger($this->flashMessenger);
         }

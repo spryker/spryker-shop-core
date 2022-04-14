@@ -17,6 +17,13 @@
     isUpsellingProductsViaAjaxEnabled: _view.isUpsellingProductsViaAjaxEnabled,
 } %}
 
+{% block headScripts %}
+    {{ parent() }}
+
+    {% widget 'AssetWidget' args ['cart-header'] only %}
+    {% endwidget %}
+{% endblock %}
+
 {% block breadcrumbs %}
     {% widget 'CheckoutBreadcrumbWidget' args [data.cart] only %}
     {% elsewidget 'CheckoutBreadcrumbWidgetPlugin' args [data.cart] only %} {# @deprecated Use CheckoutBreadcrumbWidget instead. #}
@@ -239,6 +246,13 @@
             isUpsellingProductsViaAjaxEnabled: data.isUpsellingProductsViaAjaxEnabled,
         },
     } only %}
+{% endblock %}
+
+{% block footerScripts %}
+    {% widget 'AssetWidget' args ['cart-footer'] only %}
+    {% endwidget %}
+
+    {{ parent() }}
 {% endblock %}
 
 {% block footer %}{% endblock %}

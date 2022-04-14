@@ -26,6 +26,8 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleC
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
+use SprykerShop\Yves\CheckoutPage\Extractor\PaymentMethodKeyExtractor;
+use SprykerShop\Yves\CheckoutPage\Extractor\PaymentMethodKeyExtractorInterface;
 use SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsChecker;
 use SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface;
 use SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin;
@@ -97,6 +99,14 @@ class StepFactory extends AbstractFactory
     public function getQuoteClient(): CheckoutPageToQuoteClientInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_QUOTE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Extractor\PaymentMethodKeyExtractorInterface
+     */
+    public function createPaymentMethodKeyExtractor(): PaymentMethodKeyExtractorInterface
+    {
+        return new PaymentMethodKeyExtractor();
     }
 
     /**
@@ -242,6 +252,7 @@ class StepFactory extends AbstractFactory
             $this->getFlashMessenger(),
             $this->getCalculationClient(),
             $this->getCheckoutPaymentStepEnterPreCheckPlugins(),
+            $this->createPaymentMethodKeyExtractor(),
         );
     }
 

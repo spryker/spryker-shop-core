@@ -38,6 +38,7 @@
         'data-product-add-to-cart-url': productSku ? path('cart/add', {sku: productSku}),
         'data-product-ajax-add-to-cart-url': isAvailable ? path('cart/add-ajax', {sku: productSku}),
         'data-product-add-to-cart-form-action': productSku ? path('cart/add', {sku: productSku}),
+        'data-product-sku': productSku,
     } %}
 
     {{ parent() }}

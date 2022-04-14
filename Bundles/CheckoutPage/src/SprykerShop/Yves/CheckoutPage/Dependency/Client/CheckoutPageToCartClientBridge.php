@@ -29,4 +29,12 @@ class CheckoutPageToCartClientBridge implements CheckoutPageToCartClientInterfac
     {
         $this->cartClient->clearQuote();
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getQuote()
+    {
+        return $this->cartClient->getQuote();
+    }
 }

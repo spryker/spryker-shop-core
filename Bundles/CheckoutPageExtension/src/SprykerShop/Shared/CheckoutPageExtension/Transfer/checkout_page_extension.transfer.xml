@@ -10,4 +10,7 @@
     <transfer name="Customer">
     </transfer>
 
+    <transfer name="PaymentMethods">
+    </transfer>
+
 </transfers>

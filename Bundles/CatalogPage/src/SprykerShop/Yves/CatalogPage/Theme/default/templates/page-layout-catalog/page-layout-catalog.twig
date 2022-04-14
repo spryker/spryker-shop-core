@@ -43,6 +43,13 @@
     {% endif %}
 {% endmacro %}
 
+{% block headScripts %}
+    {{ parent() }}
+
+    {% widget 'AssetWidget' args ['catalog-header'] only %}
+    {% endwidget %}
+{% endblock %}
+
 {% block breadcrumbs %}
     {% import _self as self %}
 
@@ -147,4 +154,11 @@
             </div>
         {% endblock %}
     </form>
+{% endblock %}
+
+{% block footerScripts %}
+    {% widget 'AssetWidget' args ['catalog-footer'] only %}
+    {% endwidget %}
+
+    {{ parent() }}
 {% endblock %}
