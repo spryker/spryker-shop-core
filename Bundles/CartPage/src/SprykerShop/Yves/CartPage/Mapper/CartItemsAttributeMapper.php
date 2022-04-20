@@ -209,7 +209,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     /**
      * @param array<string, mixed> $attributeMap
      *
-     * @return \RecursiveIteratorIterator
+     * @return \RecursiveIteratorIterator<\RecursiveArrayIterator<int|string, mixed>>
      */
     protected function createAttributeIterator(array $attributeMap)
     {
@@ -237,7 +237,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     }
 
     /**
-     * @param \RecursiveIteratorIterator $attributeMapIterator
+     * @param \RecursiveIteratorIterator<\RecursiveArrayIterator<int|string, mixed>> $attributeMapIterator
      *
      * @return string
      */
