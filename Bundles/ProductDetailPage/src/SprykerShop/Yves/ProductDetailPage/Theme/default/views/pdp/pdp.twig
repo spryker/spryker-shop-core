@@ -37,11 +37,15 @@
 
         <meta itemprop="productId" content="{{ data.product.sku }}">
         <meta itemprop="description" content="{{ data.product.metaDescription }}">
-        <meta itemprop="image" content="{{ data.product.images.0.externalUrlLarge }}">
+        {% if data.product.images.0.externalUrlLarge is defined %}
+            <meta itemprop="image" content="{{ data.product.images.0.externalUrlLarge }}">
+        {% endif %}
 
-        <div itemprop="brand" itemscope itemtype="https://schema.org/Brand">
-            <meta itemprop="name" content="{{ data.product.attributes.brand }}">
-        </div>
+        {% if data.product.attributes.brand is defined %}
+            <div itemprop="brand" itemscope itemtype="https://schema.org/Brand">
+                <meta itemprop="name" content="{{ data.product.attributes.brand }}">
+            </div>
+        {% endif %}
 
         {% widget 'ProductSchemaOrgCategoryWidget' args [data.product] only %}{% endwidget %}
         <meta itemprop="inProductGroupWithID" content="{{ data.product.idProductAbstract }}">
