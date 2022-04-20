@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\ShoppingListNoteWidget\Form;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \SprykerShop\Yves\ShoppingListNoteWidget\ShoppingListNoteWidgetConfig getConfig()
+ */
 class ShoppingListItemNoteForm extends ShoppingListItemNoteFormType
 {
     /**
