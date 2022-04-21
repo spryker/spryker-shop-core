@@ -121,17 +121,15 @@ class QuickOrderController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Spryker\Yves\Kernel\View\View|array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Spryker\Yves\Kernel\View\View
      */
     public function indexAction(Request $request)
     {
-        $response = $this->executeQuickOrderFormSubmitAction($request);
+        $response = $this->executeIndexAction($request);
 
-        if ($response) {
+        if (!is_array($response)) {
             return $response;
         }
-
-        $response = $this->executeIndexAction($request);
 
         return $this->view(
             $response,
@@ -172,7 +170,7 @@ class QuickOrderController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeIndexAction(Request $request)
     {
@@ -193,6 +191,14 @@ class QuickOrderController extends AbstractController
             $handledUploadOrderItems,
             $handledTextOrderItems,
         );
+
+        if (!$textOrderForm->isSubmitted() && !$uploadOrderForm->isSubmitted()) {
+            $response = $this->executeQuickOrderFormSubmitAction($request);
+
+            if ($response) {
+                return $response;
+            }
+        }
 
         if (count($handledUploadOrderItems) || count($handledTextOrderItems)) {
             $quickOrderItems = $this->filterQuickOrderItems($quickOrderItems);
