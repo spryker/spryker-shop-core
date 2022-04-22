@@ -395,7 +395,10 @@ class WishlistController extends AbstractController
         ProductViewTransfer $productViewTransfer,
         array $productConcreteStorageData
     ): ProductViewTransfer {
-        $productViewTransfer->fromArray($productConcreteStorageData, true);
+        $productViewTransfer = $this->mapProductConcreteStorageDataToProductViewTransfer(
+            $productConcreteStorageData,
+            $productViewTransfer,
+        );
 
         return $this->getFactory()
             ->createWishlistItemExpander()
@@ -404,6 +407,26 @@ class WishlistController extends AbstractController
                 $productConcreteStorageData,
                 $this->getLocale(),
             );
+    }
+
+    /**
+     * @param array<mixed> $productConcreteStorageData
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    protected function mapProductConcreteStorageDataToProductViewTransfer(
+        array $productConcreteStorageData,
+        ProductViewTransfer $productViewTransfer
+    ): ProductViewTransfer {
+        $productViewData = array_replace(
+            $productConcreteStorageData,
+            array_filter($productViewTransfer->toArray(), function ($value) {
+                return $value !== null;
+            }),
+        );
+
+        return $productViewTransfer->fromArray($productViewData, true);
     }
 
     /**
