@@ -26,7 +26,7 @@ class CmsProductContentWidgetPlugin extends SprykerCmsProductContentWidgetPlugin
 
     /**
      * @param \Twig\Environment $twig
-     * @param array $context
+     * @param array<string, mixed> $context
      * @param array|string $productAbstractSkuList $productAbstractSkuList
      * @param string|null $templateIdentifier
      *
@@ -53,7 +53,7 @@ class CmsProductContentWidgetPlugin extends SprykerCmsProductContentWidgetPlugin
     }
 
     /**
-     * @param array $productData
+     * @param array<string, mixed> $productData
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */

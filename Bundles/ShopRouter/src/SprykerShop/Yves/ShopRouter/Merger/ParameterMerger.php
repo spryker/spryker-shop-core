@@ -13,7 +13,7 @@ namespace SprykerShop\Yves\ShopRouter\Merger;
 class ParameterMerger implements ParameterMergerInterface
 {
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      * @param array $generationParameters
      *
      * @return array

@@ -24,7 +24,7 @@ class CmsSearchPageToCmsSearchPageClientBridge implements CmsSearchPageToCmsPage
 
     /**
      * @param string $searchString
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array
      */
@@ -35,7 +35,7 @@ class CmsSearchPageToCmsSearchPageClientBridge implements CmsSearchPageToCmsPage
 
     /**
      * @param string $searchString
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return int
      */

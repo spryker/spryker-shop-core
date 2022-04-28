@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\ProductNewPage\Dependency\Client;
 interface ProductNewPageToProductNewClientInterface
 {
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array
      */
