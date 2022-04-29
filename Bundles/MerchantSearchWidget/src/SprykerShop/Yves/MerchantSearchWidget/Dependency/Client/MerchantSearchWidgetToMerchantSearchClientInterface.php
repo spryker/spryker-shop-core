@@ -14,7 +14,7 @@ interface MerchantSearchWidgetToMerchantSearchClientInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantSearchRequestTransfer $merchantSearchRequestTransfer
      *
-     * @return array
+     * @return array<mixed>
      */
     public function search(MerchantSearchRequestTransfer $merchantSearchRequestTransfer): array;
 }

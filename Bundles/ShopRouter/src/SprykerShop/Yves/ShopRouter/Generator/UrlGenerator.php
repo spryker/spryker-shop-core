@@ -66,7 +66,7 @@ class UrlGenerator extends SymfonyUrlGenerator
 
     /**
      * @param string $name
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      * @param int $referenceType
      *
      * @return string
@@ -92,7 +92,7 @@ class UrlGenerator extends SymfonyUrlGenerator
     }
 
     /**
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      * @param \Symfony\Component\Routing\Route $route
      *
      * @return array

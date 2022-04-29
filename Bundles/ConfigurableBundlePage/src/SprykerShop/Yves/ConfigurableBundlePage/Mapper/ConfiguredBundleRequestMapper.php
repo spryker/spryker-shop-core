@@ -40,7 +40,7 @@ class ConfiguredBundleRequestMapper implements ConfiguredBundleRequestMapperInte
     }
 
     /**
-     * @param array $formData
+     * @param array<string, mixed> $formData
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
      * @param \Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
      *
@@ -73,7 +73,7 @@ class ConfiguredBundleRequestMapper implements ConfiguredBundleRequestMapperInte
     /**
      * @param \Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotStorageTransfer> $configurableBundleTemplateSlotStorageTransfers
-     * @param array $formData
+     * @param array<string, mixed> $formData
      *
      * @return \Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer
      */
@@ -116,7 +116,7 @@ class ConfiguredBundleRequestMapper implements ConfiguredBundleRequestMapperInte
     }
 
     /**
-     * @param array $slotStateFormData
+     * @param array<string, mixed> $slotStateFormData
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotStorageTransfer $configurableBundleTemplateSlotStorageTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer

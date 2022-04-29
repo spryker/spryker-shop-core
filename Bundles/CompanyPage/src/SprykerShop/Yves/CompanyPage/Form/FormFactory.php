@@ -48,7 +48,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @param array $formOptions
+     * @param array<string, mixed> $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -66,7 +66,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @param array $formOptions
+     * @param array<string, mixed> $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -84,7 +84,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @param array $formOptions
+     * @param array<string, mixed> $formOptions
      * @param array|null $formData
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -103,7 +103,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @param array $formOptions
+     * @param array<string, mixed> $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -223,8 +223,8 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @param array $data
-     * @param array $formOptions
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */

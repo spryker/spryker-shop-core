@@ -77,7 +77,7 @@ class UrlGenerator implements UrlGeneratorInterface
     }
 
     /**
-     * @param array $params
+     * @param array<string, mixed> $params
      * @param \Generated\Shared\Transfer\FacetSearchResultTransfer|\Generated\Shared\Transfer\RangeSearchResultTransfer $searchResultTransfer
      * @param string|null $filterValue
      *
@@ -107,7 +107,7 @@ class UrlGenerator implements UrlGeneratorInterface
     }
 
     /**
-     * @param array $params
+     * @param array<string, mixed> $params
      * @param \Generated\Shared\Transfer\FacetSearchResultTransfer $searchResultTransfer
      * @param string|null $filterValue
      *
@@ -130,7 +130,7 @@ class UrlGenerator implements UrlGeneratorInterface
     }
 
     /**
-     * @param array $params
+     * @param array<string, mixed> $params
      * @param \Generated\Shared\Transfer\RangeSearchResultTransfer $searchResultTransfer
      *
      * @return array
@@ -143,7 +143,7 @@ class UrlGenerator implements UrlGeneratorInterface
     }
 
     /**
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return array
      */

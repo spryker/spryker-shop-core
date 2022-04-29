@@ -140,7 +140,7 @@ class QuoteApprovalController extends AbstractController
 
     /**
      * @param string $key
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return string
      */

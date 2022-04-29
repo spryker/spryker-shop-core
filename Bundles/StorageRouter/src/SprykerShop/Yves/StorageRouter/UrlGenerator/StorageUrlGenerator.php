@@ -61,7 +61,7 @@ class StorageUrlGenerator implements UrlGeneratorInterface
 
     /**
      * @param string $name
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      * @param int $referenceType
      *
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
@@ -87,7 +87,7 @@ class StorageUrlGenerator implements UrlGeneratorInterface
     }
 
     /**
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      *
      * @return string
      */

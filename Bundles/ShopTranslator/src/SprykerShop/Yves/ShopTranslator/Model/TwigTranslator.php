@@ -42,7 +42,7 @@ class TwigTranslator implements TranslatorInterface
      * @api
      *
      * @param string $id The message identifier (may also be an object that can be cast to string)
-     * @param array $parameters An array of parameters for the message
+     * @param array<string, mixed> $parameters An array of parameters for the message
      * @param string|null $domain The domain for the message or null to use the default
      * @param string|null $locale The locale or null to use the default
      *
@@ -64,7 +64,7 @@ class TwigTranslator implements TranslatorInterface
      *
      * @param string $identifier The message id (may also be an object that can be cast to string)
      * @param int $number The number to use to find the indice of the message
-     * @param array $parameters An array of parameters for the message
+     * @param array<string, mixed> $parameters An array of parameters for the message
      * @param string|null $domain The domain for the message or null to use the default
      * @param string|null $locale The locale or null to use the default
      *

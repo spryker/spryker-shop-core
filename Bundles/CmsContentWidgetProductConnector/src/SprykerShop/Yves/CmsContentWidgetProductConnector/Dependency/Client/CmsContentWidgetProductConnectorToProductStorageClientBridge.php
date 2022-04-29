@@ -23,7 +23,7 @@ class CmsContentWidgetProductConnectorToProductStorageClientBridge implements Cm
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $localeName
      * @param array $selectedAttributes
      *
@@ -35,7 +35,7 @@ class CmsContentWidgetProductConnectorToProductStorageClientBridge implements Cm
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $localeName
      * @param array $selectedAttributes
      *

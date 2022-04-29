@@ -171,7 +171,7 @@ class ShopApplicationTwigEventSubscriber implements EventSubscriberInterface
 
     /**
      * @param mixed $result
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      *
      * @return string|null
      */
@@ -211,7 +211,7 @@ class ShopApplicationTwigEventSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      * @param string $controller
      *
      * @return string
@@ -227,7 +227,7 @@ class ShopApplicationTwigEventSubscriber implements EventSubscriberInterface
 
     /**
      * @param string $template
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */

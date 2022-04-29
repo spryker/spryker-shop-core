@@ -56,7 +56,7 @@ class SilexRouter extends AbstractPlugin implements RouterInterface
 
     /**
      * @param string $name
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      * @param int $referenceType
      *
      * @return string

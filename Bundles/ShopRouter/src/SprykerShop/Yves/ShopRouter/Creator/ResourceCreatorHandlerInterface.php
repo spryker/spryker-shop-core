@@ -14,7 +14,7 @@ interface ResourceCreatorHandlerInterface
 {
     /**
      * @param string $type
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array|null
      */

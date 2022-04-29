@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 interface ProductDetailPageToProductStorageClientInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $localeName
      * @param array $selectedAttributes
      * @param \Generated\Shared\Transfer\ProductStorageCriteriaTransfer|null $productStorageCriteriaTransfer

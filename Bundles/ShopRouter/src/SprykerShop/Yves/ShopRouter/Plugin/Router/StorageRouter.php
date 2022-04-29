@@ -19,7 +19,7 @@ class StorageRouter extends AbstractRouter
 {
     /**
      * @param string $name
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      * @param int $referenceType
      *
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException

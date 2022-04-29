@@ -34,7 +34,7 @@ class OrderCustomReferenceWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Symfony\Component\Form\FormInterface
      */

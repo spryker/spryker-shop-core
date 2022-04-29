@@ -63,7 +63,7 @@ class CheckoutAddressFormDataProviderTest extends Unit
      *
      * @param object &$object Instantiated object that we will run method on.
      * @param string $methodName Method name to call.
-     * @param array $parameters Array of parameters to pass into method.
+     * @param array<string, mixed> $parameters Array of parameters to pass into method.
      *
      * @return mixed Method return.
      */

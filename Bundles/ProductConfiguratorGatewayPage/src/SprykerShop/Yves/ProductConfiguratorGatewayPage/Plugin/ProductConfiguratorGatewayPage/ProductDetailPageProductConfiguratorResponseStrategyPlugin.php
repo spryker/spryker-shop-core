@@ -51,7 +51,7 @@ class ProductDetailPageProductConfiguratorResponseStrategyPlugin extends Abstrac
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
-     * @param array $configuratorResponseData
+     * @param array<string, mixed> $configuratorResponseData
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
      */

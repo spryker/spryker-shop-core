@@ -27,7 +27,7 @@ interface CartItemHandlerInterface
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param int $quantity
      * @param string $groupKey
-     * @param array $optionValueIds
+     * @param array<int> $optionValueIds
      *
      * @return void
      */

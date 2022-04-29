@@ -28,7 +28,7 @@ class ShopTranslatorToGlossaryStorageClientBridge implements ShopTranslatorToGlo
     /**
      * @param string $id
      * @param string $localeName
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      *
      * @return string
      */

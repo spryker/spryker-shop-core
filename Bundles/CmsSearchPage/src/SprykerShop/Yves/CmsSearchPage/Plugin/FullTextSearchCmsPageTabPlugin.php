@@ -34,7 +34,7 @@ class FullTextSearchCmsPageTabPlugin extends AbstractPlugin implements FullTextS
      * @api
      *
      * @param string $searchString
-     * @param array $requestParams
+     * @param array<string, mixed> $requestParams
      *
      * @return int
      */

@@ -18,7 +18,7 @@ interface QuickOrderItemMapperPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
      */

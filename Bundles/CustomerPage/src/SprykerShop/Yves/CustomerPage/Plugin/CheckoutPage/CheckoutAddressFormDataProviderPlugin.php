@@ -42,7 +42,7 @@ class CheckoutAddressFormDataProviderPlugin extends AbstractPlugin implements St
      *
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(AbstractTransfer $quoteTransfer): array
     {

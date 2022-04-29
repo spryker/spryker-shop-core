@@ -20,7 +20,7 @@ class FullTextSearchTabsWidget extends AbstractWidget
     /**
      * @param string $searchString
      * @param string $activeTabName
-     * @param array $requestParams
+     * @param array<string, mixed> $requestParams
      */
     public function __construct(string $searchString, string $activeTabName, array $requestParams = [])
     {
@@ -49,7 +49,7 @@ class FullTextSearchTabsWidget extends AbstractWidget
     /**
      * @param string $searchString
      * @param string $activeTabName
-     * @param array $requestParams
+     * @param array<string, mixed> $requestParams
      *
      * @return array
      */
@@ -101,7 +101,7 @@ class FullTextSearchTabsWidget extends AbstractWidget
     /**
      * @param \SprykerShop\Yves\TabsWidgetExtension\Plugin\FullTextSearchTabPluginInterface $fullTextSearchTabPlugin
      * @param string $searchString
-     * @param array $requestParams
+     * @param array<string, mixed> $requestParams
      *
      * @return int
      */

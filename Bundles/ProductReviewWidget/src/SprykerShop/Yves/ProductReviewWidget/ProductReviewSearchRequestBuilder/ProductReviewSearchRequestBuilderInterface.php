@@ -13,7 +13,7 @@ interface ProductReviewSearchRequestBuilderInterface
 {
     /**
      * @param int $idProductAbstract
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\ProductReviewSearchRequestTransfer
      */

@@ -25,7 +25,7 @@ class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPl
     protected const FIELD_CENT_AMOUNT = 'cent_amount';
 
     /**
-     * @param array $configuration
+     * @param array<string, mixed> $configuration
      * @param array|string|int|null $context Cent amount.
      *
      * @return bool

@@ -18,7 +18,7 @@ interface FullTextSearchTabPluginInterface
      * @api
      *
      * @param string $searchString
-     * @param array $requestParams
+     * @param array<string, mixed> $requestParams
      *
      * @return int
      */

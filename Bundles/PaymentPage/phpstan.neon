@@ -1,2 +1,5 @@
 parameters:
     level: 8
+    ignoreErrors:
+        - '#Method .+ has parameter \$builder with no value type specified in iterable type Symfony\\Component\\Form\\FormBuilderInterface.#'
+    reportUnmatchedIgnoredErrors: false

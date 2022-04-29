@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CmsPage\Dependency\Client;
 interface CmsPageToCmsStorageClientInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
      */

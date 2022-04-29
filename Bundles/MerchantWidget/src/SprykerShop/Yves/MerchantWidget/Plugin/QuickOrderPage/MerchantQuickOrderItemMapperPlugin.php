@@ -28,7 +28,7 @@ class MerchantQuickOrderItemMapperPlugin extends AbstractPlugin implements Quick
      * - Maps merchant reference to QuickOrderItem transfer.
      *
      * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
      */

@@ -61,7 +61,7 @@ class AttributeVariantsProvider
      * @param array $selectedAttributes
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
      * @param string|null $groupKey
-     * @param array $optionValueIds
+     * @param array<int> $optionValueIds
      * @param string $localeName
      *
      * @return bool

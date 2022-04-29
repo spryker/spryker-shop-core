@@ -83,7 +83,7 @@ class RegisterController extends AbstractController
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
@@ -99,7 +99,7 @@ class RegisterController extends AbstractController
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */

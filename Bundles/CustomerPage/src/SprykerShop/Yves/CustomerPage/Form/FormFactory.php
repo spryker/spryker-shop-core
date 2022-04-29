@@ -30,7 +30,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @param array $formOptions
+     * @param array<string, mixed> $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */

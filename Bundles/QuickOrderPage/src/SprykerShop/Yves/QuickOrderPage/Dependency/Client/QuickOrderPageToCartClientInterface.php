@@ -10,8 +10,8 @@ namespace SprykerShop\Yves\QuickOrderPage\Dependency\Client;
 interface QuickOrderPageToCartClientInterface
 {
     /**
-     * @param array $itemTransfers
-     * @param array $params
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */

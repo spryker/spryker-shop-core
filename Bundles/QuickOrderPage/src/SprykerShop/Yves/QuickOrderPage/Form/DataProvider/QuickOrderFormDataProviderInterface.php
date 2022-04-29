@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuickOrderTransfer;
 interface QuickOrderFormDataProviderInterface
 {
     /**
-     * @param array $orderItems
+     * @param array<\Generated\Shared\Transfer\QuickOrderItemTransfer> $orderItems
      *
      * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
@@ -26,7 +26,7 @@ interface QuickOrderFormDataProviderInterface
     public function appendEmptyQuickOrderItems(QuickOrderTransfer $quickOrder): QuickOrderTransfer;
 
     /**
-     * @param array $formDataItems
+     * @param array<array<string, mixed>> $formDataItems
      *
      * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */

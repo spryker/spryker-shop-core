@@ -18,7 +18,7 @@ interface ShoppingListFormDataProviderMapperPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */

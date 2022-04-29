@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class CmsController extends AbstractController
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Spryker\Yves\Kernel\View\View
@@ -36,7 +36,7 @@ class CmsController extends AbstractController
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\LocaleCmsPageDataTransfer $localeCmsPageDataTransfer
      * @param \Symfony\Component\HttpFoundation\Request $request
      *

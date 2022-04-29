@@ -45,7 +45,7 @@ class ShoppingListFormDataProvider
 
     /**
      * @param int $idShoppingList
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */

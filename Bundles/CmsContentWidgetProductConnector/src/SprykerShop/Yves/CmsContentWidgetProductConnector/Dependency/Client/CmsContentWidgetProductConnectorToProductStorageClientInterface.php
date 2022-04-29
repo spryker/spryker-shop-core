@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CmsContentWidgetProductConnector\Dependency\Client;
 interface CmsContentWidgetProductConnectorToProductStorageClientInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $localeName
      * @param array $selectedAttributes
      *
@@ -19,7 +19,7 @@ interface CmsContentWidgetProductConnectorToProductStorageClientInterface
     public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = []);
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $localeName
      * @param array $selectedAttributes
      *

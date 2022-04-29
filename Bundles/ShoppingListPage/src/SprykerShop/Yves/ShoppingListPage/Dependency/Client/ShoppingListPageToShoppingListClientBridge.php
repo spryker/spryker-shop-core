@@ -176,7 +176,7 @@ class ShoppingListPageToShoppingListClientBridge implements ShoppingListPageToSh
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */

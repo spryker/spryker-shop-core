@@ -48,7 +48,7 @@ class ControllerRouteEnhancer implements RouteEnhancerInterface
 
     /**
      * @param \SprykerShop\Yves\StorageRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface $resourceCreator
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

@@ -42,7 +42,7 @@ class ResourceCreatorHandler implements ResourceCreatorHandlerInterface
 
     /**
      * @param string $type
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array|null
      */
@@ -59,7 +59,7 @@ class ResourceCreatorHandler implements ResourceCreatorHandlerInterface
 
     /**
      * @param \SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface $resourceCreator
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

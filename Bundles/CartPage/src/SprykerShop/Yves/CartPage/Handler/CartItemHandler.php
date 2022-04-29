@@ -66,7 +66,7 @@ class CartItemHandler implements CartItemHandlerInterface
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param int $quantity
      * @param string $groupKey
-     * @param array $optionValueIds
+     * @param array<int> $optionValueIds
      *
      * @return void
      */
@@ -220,7 +220,7 @@ class CartItemHandler implements CartItemHandlerInterface
     }
 
     /**
-     * @param array $optionValueUsageIds
+     * @param array<int> $optionValueUsageIds
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void

@@ -373,7 +373,7 @@ class CompanyRoleController extends AbstractCompanyController
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
      */
@@ -388,7 +388,7 @@ class CompanyRoleController extends AbstractCompanyController
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return void
      */

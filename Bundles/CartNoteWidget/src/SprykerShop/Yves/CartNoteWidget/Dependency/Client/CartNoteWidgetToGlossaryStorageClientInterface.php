@@ -12,7 +12,7 @@ interface CartNoteWidgetToGlossaryStorageClientInterface
     /**
      * @param string $id
      * @param string $localeName
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      *
      * @return string
      */

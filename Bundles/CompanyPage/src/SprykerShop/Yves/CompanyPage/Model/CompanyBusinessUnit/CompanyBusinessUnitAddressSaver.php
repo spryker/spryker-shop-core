@@ -28,7 +28,7 @@ class CompanyBusinessUnitAddressSaver implements CompanyBusinessUnitAddressSaver
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */

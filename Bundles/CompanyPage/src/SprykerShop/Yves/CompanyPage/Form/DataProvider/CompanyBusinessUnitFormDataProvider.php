@@ -143,7 +143,7 @@ class CompanyBusinessUnitFormDataProvider
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      * @param int|null $idCompanyBusinessUnit
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(CompanyUserTransfer $companyUserTransfer, ?int $idCompanyBusinessUnit = null): array
     {

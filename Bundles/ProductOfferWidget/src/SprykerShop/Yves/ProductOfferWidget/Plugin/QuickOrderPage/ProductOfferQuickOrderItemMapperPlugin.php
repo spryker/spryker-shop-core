@@ -42,7 +42,7 @@ class ProductOfferQuickOrderItemMapperPlugin extends AbstractPlugin implements Q
      * - Maps product offer reference to QuickOrderItem transfer.
      *
      * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
      */

@@ -49,7 +49,7 @@ class PageResourceCreatorPlugin extends AbstractPlugin implements ResourceCreato
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

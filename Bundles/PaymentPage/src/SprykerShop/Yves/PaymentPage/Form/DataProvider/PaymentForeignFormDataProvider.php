@@ -25,7 +25,7 @@ class PaymentForeignFormDataProvider implements StepEngineFormDataProviderInterf
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(AbstractTransfer $quoteTransfer): array
     {

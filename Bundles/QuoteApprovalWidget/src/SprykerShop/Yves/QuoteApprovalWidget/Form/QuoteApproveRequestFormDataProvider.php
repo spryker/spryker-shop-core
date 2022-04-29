@@ -59,7 +59,7 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $localeName
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(QuoteTransfer $quoteTransfer, string $localeName): array
     {

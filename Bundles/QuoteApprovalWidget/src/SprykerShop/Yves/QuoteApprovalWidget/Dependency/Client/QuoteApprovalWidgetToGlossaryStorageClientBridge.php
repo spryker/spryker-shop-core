@@ -25,7 +25,7 @@ class QuoteApprovalWidgetToGlossaryStorageClientBridge implements QuoteApprovalW
     /**
      * @param string $id
      * @param string $localeName
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      *
      * @return string
      */

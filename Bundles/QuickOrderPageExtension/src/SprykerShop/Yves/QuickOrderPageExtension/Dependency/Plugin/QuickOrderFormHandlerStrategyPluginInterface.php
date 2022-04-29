@@ -19,7 +19,7 @@ interface QuickOrderFormHandlerStrategyPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return bool
      */
@@ -32,7 +32,7 @@ interface QuickOrderFormHandlerStrategyPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\QuickOrderFormProcessResponseTransfer
      */

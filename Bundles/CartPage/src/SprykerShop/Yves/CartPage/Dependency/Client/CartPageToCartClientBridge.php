@@ -28,7 +28,7 @@ class CartPageToCartClientBridge implements CartPageToCartClientInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -39,7 +39,7 @@ class CartPageToCartClientBridge implements CartPageToCartClientInterface
 
     /**
      * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */

@@ -130,7 +130,7 @@ abstract class AbstractCompanyController extends AbstractController
     /**
      * @param string $key
      * @param string $locale
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return string
      */
@@ -143,7 +143,7 @@ abstract class AbstractCompanyController extends AbstractController
 
     /**
      * @param string $key
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return void
      */
@@ -156,7 +156,7 @@ abstract class AbstractCompanyController extends AbstractController
 
     /**
      * @param string $key
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return void
      */

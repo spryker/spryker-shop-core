@@ -17,7 +17,7 @@ class AddItemsFormWidget extends AbstractWidget
 {
     /**
      * @param array $config
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param array $productViewTransfers
      */
     public function __construct(array $config, array $data, array $productViewTransfers)

@@ -54,7 +54,7 @@ class MerchantPageResourceCreatorPlugin extends AbstractPlugin implements Resour
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

@@ -29,7 +29,7 @@ class QuickOrderFormDataProvider implements QuickOrderFormDataProviderInterface
     }
 
     /**
-     * @param array $orderItems
+     * @param array<\Generated\Shared\Transfer\QuickOrderItemTransfer> $orderItems
      *
      * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
@@ -65,7 +65,7 @@ class QuickOrderFormDataProvider implements QuickOrderFormDataProviderInterface
     }
 
     /**
-     * @param array $formDataItems
+     * @param array<array<string, mixed>> $formDataItems
      *
      * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */

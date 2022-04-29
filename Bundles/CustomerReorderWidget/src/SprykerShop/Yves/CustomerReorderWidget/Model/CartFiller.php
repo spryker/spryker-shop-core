@@ -114,7 +114,7 @@ class CartFiller implements CartFillerInterface
     }
 
     /**
-     * @param array $orderItems
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $orderItems
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */

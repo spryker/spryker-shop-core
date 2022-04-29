@@ -13,7 +13,7 @@ interface TwigRendererInterface
 {
     /**
      * @param \Spryker\Shared\Kernel\Communication\Application $application
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      *
      * @return \Symfony\Component\HttpFoundation\Response|null
      */

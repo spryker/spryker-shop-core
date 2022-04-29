@@ -34,7 +34,7 @@ class FullTextSearchProductsTabPlugin extends AbstractPlugin implements FullText
      * @api
      *
      * @param string $searchString
-     * @param array $requestParams
+     * @param array<string, mixed> $requestParams
      *
      * @return int
      */

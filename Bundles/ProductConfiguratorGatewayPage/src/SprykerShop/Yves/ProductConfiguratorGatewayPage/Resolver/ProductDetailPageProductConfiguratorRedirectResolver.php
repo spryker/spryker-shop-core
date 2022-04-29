@@ -89,7 +89,7 @@ class ProductDetailPageProductConfiguratorRedirectResolver implements ProductDet
     /**
      * @param \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer $productConfiguratorRedirectTransfer
      * @param string $message
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer
      */

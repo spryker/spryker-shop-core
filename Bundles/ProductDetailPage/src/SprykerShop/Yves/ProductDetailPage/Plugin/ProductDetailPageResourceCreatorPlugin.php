@@ -52,7 +52,7 @@ class ProductDetailPageResourceCreatorPlugin extends AbstractPlugin implements R
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

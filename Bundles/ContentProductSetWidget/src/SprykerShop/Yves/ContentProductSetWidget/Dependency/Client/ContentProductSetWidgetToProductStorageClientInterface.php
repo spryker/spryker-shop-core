@@ -18,7 +18,7 @@ interface ContentProductSetWidgetToProductStorageClientInterface
     public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array;
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $localeName
      * @param array $selectedAttributes
      *

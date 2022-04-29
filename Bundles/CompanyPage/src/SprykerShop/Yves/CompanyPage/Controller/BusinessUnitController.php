@@ -378,7 +378,7 @@ class BusinessUnitController extends AbstractCompanyController
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */

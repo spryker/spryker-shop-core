@@ -70,7 +70,7 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(): array
     {

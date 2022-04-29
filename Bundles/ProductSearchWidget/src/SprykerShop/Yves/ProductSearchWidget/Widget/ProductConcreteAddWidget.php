@@ -82,7 +82,7 @@ class ProductConcreteAddWidget extends AbstractWidget implements WidgetInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return string
      */

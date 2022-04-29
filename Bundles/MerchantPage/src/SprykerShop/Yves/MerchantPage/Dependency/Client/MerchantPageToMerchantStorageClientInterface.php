@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\MerchantStorageTransfer;
 interface MerchantPageToMerchantStorageClientInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer
      */

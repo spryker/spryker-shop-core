@@ -28,7 +28,7 @@ class TwigRenderer implements TwigRendererInterface
      * Renders the template for the current controller/action
      *
      * @param \Spryker\Shared\Kernel\Communication\Application $application
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      *
      * @return \Symfony\Component\HttpFoundation\Response|null
      */
@@ -49,7 +49,7 @@ class TwigRenderer implements TwigRendererInterface
     }
 
     /**
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      * @param string $controller
      *
      * @return string

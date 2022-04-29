@@ -24,7 +24,7 @@ class FormFactory extends AbstractFactory
 
     /**
      * @param mixed $data
-     * @param array $formOptions
+     * @param array<string, mixed> $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -35,7 +35,7 @@ class FormFactory extends AbstractFactory
 
     /**
      * @param mixed $data
-     * @param array $formOptions
+     * @param array<string, mixed> $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -46,7 +46,7 @@ class FormFactory extends AbstractFactory
 
     /**
      * @param mixed $data
-     * @param array $formOptions
+     * @param array<string, mixed> $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -57,7 +57,7 @@ class FormFactory extends AbstractFactory
 
     /**
      * @param mixed $data
-     * @param array $formOptions
+     * @param array<string, mixed> $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */

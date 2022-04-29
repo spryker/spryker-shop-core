@@ -49,7 +49,7 @@ class QuoteRequestAgentFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(QuoteRequestTransfer $quoteRequestTransfer): array
     {

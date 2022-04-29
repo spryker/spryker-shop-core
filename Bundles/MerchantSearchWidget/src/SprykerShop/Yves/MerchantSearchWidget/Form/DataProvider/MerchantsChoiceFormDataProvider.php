@@ -45,17 +45,20 @@ class MerchantsChoiceFormDataProvider
     }
 
     /**
-     * @return array<string, array>
+     * @return array<string, array<string, string>>
      */
     public function getOptions(): array
     {
         $merchantSearchRequestTransfer = new MerchantSearchRequestTransfer();
+        /** @var \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer */
         $merchantSearchCollectionTransfer = $this->merchantSearchClient
             ->search($merchantSearchRequestTransfer)[static::MERCHANT_SEARCH_COLLECTION];
         $merchantChoice = [static::GLOSSARY_KEY_ALL_MERCHANTS => ''];
 
         foreach ($merchantSearchCollectionTransfer->getMerchants() as $merchantSearchTransfer) {
-            $merchantChoice[$merchantSearchTransfer->getName()] = $merchantSearchTransfer->getMerchantReference();
+            /** @var string $reference */
+            $reference = $merchantSearchTransfer->getMerchantReference();
+            $merchantChoice[$merchantSearchTransfer->getName()] = $reference;
         }
 
         return [static::OPTION_MERCHANTS => $merchantChoice];

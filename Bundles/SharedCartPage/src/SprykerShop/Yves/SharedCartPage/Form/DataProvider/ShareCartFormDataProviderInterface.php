@@ -19,7 +19,7 @@ interface ShareCartFormDataProviderInterface
     public function getData($idQuote): ShareCartRequestTransfer;
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(): array;
 }

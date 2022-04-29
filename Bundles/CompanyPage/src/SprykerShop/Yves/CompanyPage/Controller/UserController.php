@@ -351,7 +351,7 @@ class UserController extends AbstractCompanyController
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
@@ -370,7 +370,7 @@ class UserController extends AbstractCompanyController
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */

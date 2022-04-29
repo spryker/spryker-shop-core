@@ -545,7 +545,7 @@ class CartController extends AbstractController
     }
 
     /**
-     * @param array $optionValueUsageIds
+     * @param array<int> $optionValueUsageIds
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
@@ -622,7 +622,7 @@ class CartController extends AbstractController
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */

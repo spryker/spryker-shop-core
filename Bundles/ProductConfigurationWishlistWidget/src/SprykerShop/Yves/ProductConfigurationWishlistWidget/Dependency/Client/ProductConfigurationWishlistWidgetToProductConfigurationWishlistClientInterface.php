@@ -17,7 +17,7 @@ interface ProductConfigurationWishlistWidgetToProductConfigurationWishlistClient
 {
     /**
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
@@ -34,7 +34,7 @@ interface ProductConfigurationWishlistWidgetToProductConfigurationWishlistClient
 
     /**
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
-     * @param array $configuratorResponseData
+     * @param array<string, mixed> $configuratorResponseData
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
      */

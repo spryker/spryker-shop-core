@@ -13,7 +13,7 @@ interface CompanyUserSaverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollectionTransfer
-     * @param array $formData
+     * @param array<string, mixed> $formData
      * @param bool $isDefault
      *
      * @return void

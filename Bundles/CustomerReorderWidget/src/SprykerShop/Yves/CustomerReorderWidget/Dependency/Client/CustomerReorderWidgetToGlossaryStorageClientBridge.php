@@ -25,7 +25,7 @@ class CustomerReorderWidgetToGlossaryStorageClientBridge implements CustomerReor
     /**
      * @param string $key
      * @param string $localeName
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      *
      * @return string
      */

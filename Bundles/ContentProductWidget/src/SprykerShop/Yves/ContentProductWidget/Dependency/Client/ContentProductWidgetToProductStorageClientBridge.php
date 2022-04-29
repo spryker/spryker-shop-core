@@ -36,7 +36,7 @@ class ContentProductWidgetToProductStorageClientBridge implements ContentProduct
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $localeName
      * @param array $selectedAttributes
      *

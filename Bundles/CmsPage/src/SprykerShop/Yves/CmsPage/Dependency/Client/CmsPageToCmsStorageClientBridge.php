@@ -23,7 +23,7 @@ class CmsPageToCmsStorageClientBridge implements CmsPageToCmsStorageClientInterf
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
      */

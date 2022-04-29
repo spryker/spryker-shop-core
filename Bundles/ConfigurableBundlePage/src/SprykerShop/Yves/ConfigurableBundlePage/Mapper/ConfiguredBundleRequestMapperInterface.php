@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
 interface ConfiguredBundleRequestMapperInterface
 {
     /**
-     * @param array $formData
+     * @param array<string, mixed> $formData
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
      * @param \Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
      *

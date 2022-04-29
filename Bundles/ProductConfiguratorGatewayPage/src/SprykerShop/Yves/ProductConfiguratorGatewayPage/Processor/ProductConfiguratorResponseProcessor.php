@@ -29,7 +29,7 @@ class ProductConfiguratorResponseProcessor implements ProductConfiguratorRespons
 
     /**
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
-     * @param array $configuratorResponseData
+     * @param array<string, mixed> $configuratorResponseData
      *
      * @throws \SprykerShop\Yves\ProductConfiguratorGatewayPage\Exception\MissingProductConfiguratorResponseStrategyPluginException
      *

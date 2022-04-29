@@ -59,7 +59,7 @@ class ProductSetDetailPageResourceCreatorPlugin extends AbstractPlugin implement
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

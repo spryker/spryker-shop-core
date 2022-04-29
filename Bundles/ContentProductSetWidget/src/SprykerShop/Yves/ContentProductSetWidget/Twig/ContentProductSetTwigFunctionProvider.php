@@ -157,7 +157,7 @@ class ContentProductSetTwigFunctionProvider extends TwigFunctionProvider
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(): array
     {

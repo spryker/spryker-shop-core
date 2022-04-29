@@ -29,7 +29,7 @@ class ProductConfiguratorRequestDataFormDataProvider
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(Request $request): array
     {

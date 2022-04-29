@@ -26,7 +26,7 @@ class CompanyRolePermissionDataProvider
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions()
     {

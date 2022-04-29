@@ -47,7 +47,7 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
      * @api
      *
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return bool
      */
@@ -64,7 +64,7 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
      * @api
      *
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\QuickOrderFormProcessResponseTransfer
      */
@@ -139,7 +139,7 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */

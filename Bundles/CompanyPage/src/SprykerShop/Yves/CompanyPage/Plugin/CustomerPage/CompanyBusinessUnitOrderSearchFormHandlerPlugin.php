@@ -22,7 +22,7 @@ class CompanyBusinessUnitOrderSearchFormHandlerPlugin extends AbstractPlugin imp
      *
      * @api
      *
-     * @param array $orderSearchFormData
+     * @param array<string, mixed> $orderSearchFormData
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
