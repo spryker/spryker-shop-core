@@ -118,7 +118,7 @@ class CartController extends AbstractController
     /**
      * @param array $selectedAttributes
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function executeIndexAction(array $selectedAttributes = []): array
     {

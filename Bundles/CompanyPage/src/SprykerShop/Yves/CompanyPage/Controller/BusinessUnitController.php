@@ -52,7 +52,7 @@ class BusinessUnitController extends AbstractCompanyController
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function executeIndexAction(): array
     {

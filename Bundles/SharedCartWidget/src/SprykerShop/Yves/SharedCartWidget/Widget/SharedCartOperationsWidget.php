@@ -36,7 +36,7 @@ class SharedCartOperationsWidget extends AbstractWidget
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getCartActions(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): array
     {

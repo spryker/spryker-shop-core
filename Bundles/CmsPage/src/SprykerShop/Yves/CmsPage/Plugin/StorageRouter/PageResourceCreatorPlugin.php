@@ -51,7 +51,7 @@ class PageResourceCreatorPlugin extends AbstractPlugin implements ResourceCreato
     /**
      * @param array<string, mixed> $data
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function mergeResourceData(array $data): array
     {

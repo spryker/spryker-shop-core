@@ -29,7 +29,7 @@ class AddToWishlistController extends AbstractController
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function executeIndexAction(): array
     {

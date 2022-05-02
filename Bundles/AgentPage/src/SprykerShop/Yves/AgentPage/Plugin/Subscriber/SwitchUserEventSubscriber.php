@@ -21,7 +21,7 @@ use Symfony\Component\Security\Http\SecurityEvents;
 class SwitchUserEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public static function getSubscribedEvents()
     {

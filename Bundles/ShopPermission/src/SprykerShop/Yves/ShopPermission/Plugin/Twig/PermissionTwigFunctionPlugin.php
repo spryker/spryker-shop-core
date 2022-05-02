@@ -27,7 +27,7 @@ class PermissionTwigFunctionPlugin extends AbstractPlugin implements TwigFunctio
      *
      * @param \Silex\Application $application
      *
-     * @return array
+     * @return array<\Twig\TwigFunction>
      */
     public function getFunctions(Application $application)
     {

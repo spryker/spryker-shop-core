@@ -32,7 +32,7 @@ class StorageRequestMatcher implements RequestMatcherInterface
      *
      * @throws \Symfony\Component\Routing\Exception\ResourceNotFoundException
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function matchRequest(Request $request)
     {

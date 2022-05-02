@@ -52,7 +52,7 @@ class ProductDetailPageResourceCreatorPlugin extends AbstractPlugin implements R
     /**
      * @param array<string, mixed> $data
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function mergeResourceData(array $data): array
     {

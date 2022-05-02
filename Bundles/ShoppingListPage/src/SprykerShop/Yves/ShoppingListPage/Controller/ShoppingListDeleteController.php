@@ -89,7 +89,7 @@ class ShoppingListDeleteController extends AbstractShoppingListController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function executeDeleteConfirmAction(Request $request): array
     {

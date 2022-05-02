@@ -55,7 +55,7 @@ class CatalogPageTwigExtension extends TwigExtension
     }
 
     /**
-     * @param array $context
+     * @param array<string, mixed> $context
      * @param \Generated\Shared\Transfer\FacetSearchResultTransfer|\Generated\Shared\Transfer\RangeSearchResultTransfer $searchResultTransfer
      * @param string $filterValue
      *
@@ -69,7 +69,7 @@ class CatalogPageTwigExtension extends TwigExtension
     }
 
     /**
-     * @param array $context
+     * @param array<string, mixed> $context
      * @param array<\Generated\Shared\Transfer\FacetSearchResultTransfer|\Generated\Shared\Transfer\RangeSearchResultTransfer> $facetFilters
      *
      * @return string
@@ -82,7 +82,7 @@ class CatalogPageTwigExtension extends TwigExtension
     }
 
     /**
-     * @param array $context
+     * @param array<string, mixed> $context
      *
      * @return \Symfony\Component\HttpFoundation\Request
      */

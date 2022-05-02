@@ -24,7 +24,7 @@ class SharedCartDetailsWidgetPlugin extends AbstractWidgetPlugin implements Shar
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param array $actions
+     * @param array<string, mixed> $actions
      * @param array<string>|null $widgetList
      *
      * @return void

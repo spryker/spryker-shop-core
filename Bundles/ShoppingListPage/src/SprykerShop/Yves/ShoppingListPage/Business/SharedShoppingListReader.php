@@ -53,7 +53,7 @@ class SharedShoppingListReader implements SharedShoppingListReaderInterface
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getSharedShoppingListEntities(ShoppingListTransfer $shoppingListTransfer, CustomerTransfer $customerTransfer): array
     {

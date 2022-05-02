@@ -14,7 +14,7 @@ interface CartPageViewInterface
     /**
      * @param \Generated\Shared\Transfer\CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getViewData(CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer): array;
 }

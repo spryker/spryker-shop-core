@@ -45,7 +45,7 @@ class AddressController extends AbstractCustomerController
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function executeIndexAction(): array
     {

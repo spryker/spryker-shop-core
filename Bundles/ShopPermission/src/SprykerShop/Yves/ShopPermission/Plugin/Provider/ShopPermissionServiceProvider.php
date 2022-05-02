@@ -54,7 +54,7 @@ class ShopPermissionServiceProvider extends AbstractPlugin implements ServicePro
     /**
      * @param \Silex\Application $app
      *
-     * @return array
+     * @return array<\Twig\TwigFunction>
      */
     protected function getPermissionTwigFunctions(Application $app)
     {

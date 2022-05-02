@@ -21,7 +21,7 @@ class WidgetTagTwigPlugin extends AbstractTwigExtensionPlugin
     protected const TWIG_FUNCTION_NAME_FIND_WIDGET = 'findWidget';
 
     /**
-     * @return array
+     * @return array<\Twig\TokenParser\TokenParserInterface>
      */
     public function getTokenParsers(): array
     {
@@ -31,7 +31,7 @@ class WidgetTagTwigPlugin extends AbstractTwigExtensionPlugin
     }
 
     /**
-     * @return array
+     * @return array<\Twig\TwigFunction>
      */
     public function getFunctions(): array
     {

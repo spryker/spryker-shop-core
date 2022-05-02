@@ -110,9 +110,9 @@ class FixAgentTokenAfterCustomerAuthenticationSuccessPlugin extends AbstractPlug
     }
 
     /**
-     * @param array $roles
+     * @param array<string> $roles
      *
-     * @return array
+     * @return array<string>
      */
     protected function getCustomerRoles(array $roles): array
     {

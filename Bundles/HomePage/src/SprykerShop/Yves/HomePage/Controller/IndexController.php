@@ -37,7 +37,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     protected function executeIndexAction(): array
     {

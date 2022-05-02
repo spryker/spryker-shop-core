@@ -23,7 +23,7 @@ class SharedCartDetailsWidget extends AbstractWidget
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param array $actions
+     * @param array<string, mixed> $actions
      * @param array<string>|null $widgetList
      */
     public function __construct(QuoteTransfer $quoteTransfer, array $actions, ?array $widgetList = null)
@@ -39,9 +39,9 @@ class SharedCartDetailsWidget extends AbstractWidget
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param array $actions
+     * @param array<string, mixed> $actions
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function checkActionsPermission(QuoteTransfer $quoteTransfer, array $actions): array
     {

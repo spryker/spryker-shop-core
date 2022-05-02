@@ -30,10 +30,10 @@ class ControllerRouteEnhancer implements RouteEnhancerInterface
     }
 
     /**
-     * @param array $defaults
+     * @param array<string, mixed> $defaults
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function enhance(array $defaults, Request $request)
     {

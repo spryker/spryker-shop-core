@@ -21,7 +21,7 @@ class QuickOrderItemsEventSubscriber implements EventSubscriberInterface
     protected const FIELD_ITEMS = 'items';
 
     /**
-     * @return array<string>
+     * @return array<string, mixed>
      */
     public static function getSubscribedEvents(): array
     {

@@ -26,7 +26,7 @@ class AgentController extends AbstractController
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function executeIndexAction(): array
     {

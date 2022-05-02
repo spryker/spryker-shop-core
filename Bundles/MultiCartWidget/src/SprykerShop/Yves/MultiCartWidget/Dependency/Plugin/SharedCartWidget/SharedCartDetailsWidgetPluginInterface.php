@@ -20,7 +20,7 @@ interface SharedCartDetailsWidgetPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param array $actions
+     * @param array<string, mixed> $actions
      *
      * @return void
      */

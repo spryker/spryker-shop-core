@@ -51,7 +51,7 @@ class FullTextSearchTabsWidget extends AbstractWidget
      * @param string $activeTabName
      * @param array<string, mixed> $requestParams
      *
-     * @return array
+     * @return array<\Generated\Shared\Transfer\FullTextSearchTabTransfer>
      */
     protected function getTabs(string $searchString, string $activeTabName, array $requestParams = []): array
     {

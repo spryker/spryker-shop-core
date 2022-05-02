@@ -100,7 +100,7 @@ class SecurityBlockerCustomerEventSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public static function getSubscribedEvents(): array
     {

@@ -30,7 +30,7 @@ class PermissionTwigExtensionPlugin extends AbstractTwigExtensionPlugin
      *      {% productAbstract.price %}
      * {{ endif }}
      *
-     * @return array
+     * @return array<\Twig\TwigFunction>
      */
     public function getFunctions()
     {

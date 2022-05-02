@@ -46,7 +46,7 @@ interface ResourceCreatorPluginInterface
      *
      * @param array<string, mixed> $data
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function mergeResourceData(array $data): array;
 }
