@@ -1,11 +1,13 @@
 {% extends template('widget') %}
 
+{# @deprecated property "mounAfterRender" is deprecated: use "mountAfterRender" instead. #}
 {% define data = {
     url: _widget.dataUrl,
     id: '',
     submitButtonClassName: '',
     autocompleteFormClassName: '',
     mounAfterRender: false,
+    mountAfterRender: data.mounAfterRender | default(false),
 } %}
 
 {% block body %}
@@ -13,7 +15,7 @@
         data: {
             id: data.id,
             url: url(data.url),
-            mounAfterRender: data.mounAfterRender,
+            mountAfterRender: data.mountAfterRender,
         },
         attributes: {
             'autocomplete-form-class-name': data.autocompleteFormClassName,

@@ -5,12 +5,14 @@
     tag: 'merchant-product-offer-dynamic-form-elements',
 } %}
 
+{# @deprecated property "mounAfterRender" is deprecated: use "mountAfterRender" instead. #}
 {% define data = {
     id: required,
     url: required,
     method: 'get',
     fetchOnLoad: false,
     mounAfterRender: false,
+    mountAfterRender: data.mounAfterRender | default(false),
 } %}
 
 {% define attributes = {
@@ -48,7 +50,7 @@
             {% include molecule('ajax-renderer') with {
                 attributes: {
                     'provider-class-name': providerClassNameWithID,
-                    'mount-after-render': data.mounAfterRender,
+                    'mount-after-render': data.mountAfterRender,
                     'render-if-response-is-empty': true,
                 },
             } only %}
