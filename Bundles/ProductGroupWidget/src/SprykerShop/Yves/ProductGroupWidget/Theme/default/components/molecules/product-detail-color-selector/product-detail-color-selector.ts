@@ -3,19 +3,11 @@ import ImageCarousel from 'ShopUi/components/molecules/image-carousel/image-caro
 
 export default class ProductDetailColorSelector extends ColorSelector {
     protected imageCarousel: ImageCarousel;
-    protected productSku: HTMLElement;
-    protected productSkuValueDefault: string;
 
     protected init(): void {
         super.init();
 
         this.imageCarousel = <ImageCarousel>document.getElementsByClassName(this.imageCarouselClassName)[0];
-        this.productSku = <HTMLInputElement>document.getElementsByClassName(`${this.jsName}__sku`)[0];
-        this.productSkuValueDefault = '';
-
-        if (this.productSku) {
-            this.productSkuValueDefault = this.productSku.content ?? '';
-        }
     }
 
     protected mapEvents(): void {
@@ -32,7 +24,6 @@ export default class ProductDetailColorSelector extends ColorSelector {
     protected onTriggerSelection(event: Event): void {
         super.onTriggerSelection(event);
         this.imageCarousel.slideImageUrl = this.imageUrl;
-        this.productSku.content = this.sku;
     }
 
     protected onTriggerUnselection(): void {
@@ -41,22 +32,13 @@ export default class ProductDetailColorSelector extends ColorSelector {
         this.resetActiveItemSelections();
         this.setActiveItemSelection(firstTriggerElement);
         this.imageCarousel.restoreDefaultImageUrl();
-        this.restoreDefaultSku();
     }
 
     protected get imageUrl(): string {
         return this.currentSelection.getAttribute('data-product-image-src');
     }
 
-    protected get sku(): string {
-        return this.currentSelection.getAttribute('data-product-sku');
-    }
-
     protected get imageCarouselClassName(): string {
         return this.getAttribute('image-carousel-class-name');
-    }
-
-    protected restoreDefaultSku(): string {
-        this.productSku.content = this.productSkuValueDefault;
     }
 }
