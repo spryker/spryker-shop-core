@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\SalesReturnPage\Dependency\Client;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class SalesReturnPageToStoreClientBridge implements SalesReturnPageToStoreClientInterface
 {
     /**
@@ -25,7 +27,7 @@ class SalesReturnPageToStoreClientBridge implements SalesReturnPageToStoreClient
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore()
+    public function getCurrentStore(): StoreTransfer
     {
         return $this->storeClient->getCurrentStore();
     }

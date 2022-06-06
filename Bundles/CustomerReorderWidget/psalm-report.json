@@ -88,8 +88,8 @@
         },
         {
             "severity": "info",
-            "line_from": 146,
-            "line_to": 146,
+            "line_from": 152,
+            "line_to": 152,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setIdSalesShipment on possibly null value",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CustomerReorderWidget/src/SprykerShop/Yves/CustomerReorderWidget/Model/CartFiller.php",

@@ -7,10 +7,12 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+
 interface CustomerReorderWidgetToCustomerClientInterface
 {
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function getCustomer();
+    public function getCustomer(): CustomerTransfer;
 }

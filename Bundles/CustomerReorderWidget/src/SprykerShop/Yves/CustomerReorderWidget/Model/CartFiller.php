@@ -37,18 +37,26 @@ class CartFiller implements CartFillerInterface
     protected $postReorderPlugins;
 
     /**
+     * @var array<\SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\ReorderItemSanitizerPluginInterface>
+     */
+    protected $reorderItemSanitizerPlugins;
+
+    /**
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface $cartClient
      * @param \SprykerShop\Yves\CustomerReorderWidget\Model\ItemFetcherInterface $itemsFetcher
      * @param array<\SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\PostReorderPluginInterface> $postReorderPlugins
+     * @param array<\SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\ReorderItemSanitizerPluginInterface> $reorderItemSanitizerPlugins
      */
     public function __construct(
         CustomerReorderWidgetToCartClientInterface $cartClient,
         ItemFetcherInterface $itemsFetcher,
-        array $postReorderPlugins
+        array $postReorderPlugins,
+        array $reorderItemSanitizerPlugins
     ) {
         $this->cartClient = $cartClient;
         $this->itemsFetcher = $itemsFetcher;
         $this->postReorderPlugins = $postReorderPlugins;
+        $this->reorderItemSanitizerPlugins = $reorderItemSanitizerPlugins;
     }
 
     /**
@@ -120,16 +128,14 @@ class CartFiller implements CartFillerInterface
      */
     protected function sanitizeOrderItems(array $orderItems): ArrayObject
     {
-        $orderItemsSanitized = new ArrayObject();
         foreach ($orderItems as $itemTransfer) {
             $itemTransfer = $this->removeIdSalesShipmentFromItem($itemTransfer);
             $itemTransfer = $this->removeSalesOrderConfiguredBundleItemFromItemTransfer($itemTransfer);
             $itemTransfer = $this->removeStateFromItem($itemTransfer);
-            $itemTransfer = $this->removeSalesOrderItemConfigurationFromItem($itemTransfer);
-            $orderItemsSanitized->append($itemTransfer);
+            $this->removeSalesOrderItemConfigurationFromItem($itemTransfer);
         }
 
-        return $orderItemsSanitized;
+        return new ArrayObject($this->executeReorderItemSanitizerPlugins($orderItems));
     }
 
     /**
@@ -219,5 +225,19 @@ class CartFiller implements CartFillerInterface
         foreach ($this->postReorderPlugins as $postReorderPlugin) {
             $postReorderPlugin->execute($quoteTransfer, $itemTransfers);
         }
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
+     */
+    protected function executeReorderItemSanitizerPlugins(array $itemTransfers): array
+    {
+        foreach ($this->reorderItemSanitizerPlugins as $reorderItemSanitizerPlugin) {
+            $itemTransfers = $reorderItemSanitizerPlugin->execute($itemTransfers);
+        }
+
+        return $itemTransfers;
     }
 }

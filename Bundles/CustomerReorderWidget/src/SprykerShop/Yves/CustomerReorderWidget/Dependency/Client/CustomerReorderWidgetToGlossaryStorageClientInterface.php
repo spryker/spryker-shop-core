@@ -16,5 +16,5 @@ interface CustomerReorderWidgetToGlossaryStorageClientInterface
      *
      * @return string
      */
-    public function translate($key, $localeName, array $parameters = []);
+    public function translate(string $key, string $localeName, array $parameters = []): string;
 }

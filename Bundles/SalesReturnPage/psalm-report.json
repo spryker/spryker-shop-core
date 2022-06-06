@@ -280,30 +280,6 @@
         },
         {
             "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of SprykerShop\\Yves\\SalesReturnPage\\Form\\ReturnCreateForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/SalesReturnPage/src/SprykerShop/Yves/SalesReturnPage/Form/ReturnCreateForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of SprykerShop\\Yves\\SalesReturnPage\\Form\\ReturnItemsForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/SalesReturnPage/src/SprykerShop/Yves/SalesReturnPage/Form/ReturnItemsForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 44,
             "line_to": 44,
             "type": "PossiblyInvalidMethodCall",

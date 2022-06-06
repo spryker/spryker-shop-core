@@ -29,7 +29,7 @@ class CustomerReorderWidgetToGlossaryStorageClientBridge implements CustomerReor
      *
      * @return string
      */
-    public function translate($key, $localeName, array $parameters = []): string
+    public function translate(string $key, string $localeName, array $parameters = []): string
     {
         return $this->glossaryStorageClient->translate($key, $localeName, $parameters);
     }

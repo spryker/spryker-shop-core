@@ -21,6 +21,8 @@ use SprykerShop\Yves\SalesReturnPage\Form\Handler\ReturnHandlerInterface;
 use SprykerShop\Yves\SalesReturnPage\Form\ReturnCreateForm;
 use SprykerShop\Yves\SalesReturnPage\Reader\ReturnReader;
 use SprykerShop\Yves\SalesReturnPage\Reader\ReturnReaderInterface;
+use SprykerShop\Yves\SalesReturnPage\Sanitizer\ItemSanitizer;
+use SprykerShop\Yves\SalesReturnPage\Sanitizer\ItemSanitizerInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -140,5 +142,13 @@ class SalesReturnPageFactory extends AbstractFactory
     public function getSalesReturnSearchClient(): SalesReturnPageToSalesReturnSearchClientInterface
     {
         return $this->getProvidedDependency(SalesReturnPageDependencyProvider::CLIENT_SALES_RETURN_SEARCH);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\SalesReturnPage\Sanitizer\ItemSanitizerInterface
+     */
+    public function createItemSanitizer(): ItemSanitizerInterface
+    {
+        return new ItemSanitizer();
     }
 }

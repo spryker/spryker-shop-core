@@ -7,10 +7,12 @@
 
 namespace SprykerShop\Yves\SalesReturnPage\Dependency\Client;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface SalesReturnPageToStoreClientInterface
 {
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore();
+    public function getCurrentStore(): StoreTransfer;
 }

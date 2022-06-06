@@ -12,7 +12,7 @@ interface CustomerReorderWidgetToZedRequestClientInterface
     /**
      * @return void
      */
-    public function addFlashMessagesFromLastZedRequest();
+    public function addFlashMessagesFromLastZedRequest(): void;
 
     /**
      * @return void

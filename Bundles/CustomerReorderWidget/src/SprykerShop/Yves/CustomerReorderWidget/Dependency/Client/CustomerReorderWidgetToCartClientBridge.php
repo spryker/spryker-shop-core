@@ -28,7 +28,7 @@ class CustomerReorderWidgetToCartClientBridge implements CustomerReorderWidgetTo
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getQuote()
+    public function getQuote(): QuoteTransfer
     {
         return $this->cartClient->getQuote();
     }

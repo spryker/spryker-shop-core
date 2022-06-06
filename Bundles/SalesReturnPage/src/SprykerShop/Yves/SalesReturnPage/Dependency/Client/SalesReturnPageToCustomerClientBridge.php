@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\SalesReturnPage\Dependency\Client;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+
 class SalesReturnPageToCustomerClientBridge implements SalesReturnPageToCustomerClientInterface
 {
     /**
@@ -25,7 +27,7 @@ class SalesReturnPageToCustomerClientBridge implements SalesReturnPageToCustomer
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomer()
+    public function getCustomer(): ?CustomerTransfer
     {
         return $this->customerClient->getCustomer();
     }

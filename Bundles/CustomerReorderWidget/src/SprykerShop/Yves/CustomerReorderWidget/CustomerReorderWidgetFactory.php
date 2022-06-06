@@ -39,6 +39,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
             $this->getCartClient(),
             $this->createItemsFetcher(),
             $this->getPostReorderPlugins(),
+            $this->getReorderItemSanitizerPlugins(),
         );
     }
 
@@ -180,5 +181,13 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     public function createCustomerReorderWidgetFormFactory(): FormFactory
     {
         return new FormFactory();
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\ReorderItemSanitizerPluginInterface>
+     */
+    public function getReorderItemSanitizerPlugins(): array
+    {
+        return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::PLUGINS_REORDER_ITEM_SANITIZER);
     }
 }

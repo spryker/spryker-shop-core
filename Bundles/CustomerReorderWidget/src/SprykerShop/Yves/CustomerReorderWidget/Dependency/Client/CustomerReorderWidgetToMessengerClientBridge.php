@@ -27,7 +27,7 @@ class CustomerReorderWidgetToMessengerClientBridge implements CustomerReorderWid
      *
      * @return void
      */
-    public function addInfoMessage($message): void
+    public function addInfoMessage(string $message): void
     {
         $this->messengerClient->addInfoMessage($message);
     }
@@ -37,7 +37,7 @@ class CustomerReorderWidgetToMessengerClientBridge implements CustomerReorderWid
      *
      * @return void
      */
-    public function addErrorMessage($message): void
+    public function addErrorMessage(string $message): void
     {
         $this->messengerClient->addErrorMessage($message);
     }

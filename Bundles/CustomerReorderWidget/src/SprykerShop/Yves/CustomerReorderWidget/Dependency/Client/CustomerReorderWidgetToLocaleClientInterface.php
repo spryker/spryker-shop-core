@@ -12,5 +12,5 @@ interface CustomerReorderWidgetToLocaleClientInterface
     /**
      * @return string
      */
-    public function getCurrentLocale();
+    public function getCurrentLocale(): string;
 }

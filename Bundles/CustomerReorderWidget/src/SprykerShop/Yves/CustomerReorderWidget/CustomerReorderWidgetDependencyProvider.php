@@ -83,6 +83,11 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
     public const PLUGINS_REORDER_ITEM_EXPANDER = 'PLUGINS_REORDER_ITEM_EXPANDER';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_REORDER_ITEM_SANITIZER = 'PLUGINS_REORDER_ITEM_SANITIZER';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -101,6 +106,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addLocaleClient($container);
         $container = $this->addPostReorderPlugins($container);
         $container = $this->addReorderItemExpanderPlugins($container);
+        $container = $this->addReorderItemSanitizerPlugins($container);
 
         return $container;
     }
@@ -305,6 +311,28 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
      * @return array<\SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\ReorderItemExpanderPluginInterface>
      */
     protected function getReorderItemExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addReorderItemSanitizerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_REORDER_ITEM_SANITIZER, function () {
+            return $this->getReorderItemSanitizerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\ReorderItemSanitizerPluginInterface>
+     */
+    protected function getReorderItemSanitizerPlugins(): array
     {
         return [];
     }
