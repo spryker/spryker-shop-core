@@ -173,6 +173,7 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     protected function getPaymentCollection(QuoteTransfer $quoteTransfer): ArrayObject
     {
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\PaymentTransfer> $result */
         $result = new ArrayObject();
         foreach ($quoteTransfer->getPayments() as $payment) {
             $result[] = $payment;
