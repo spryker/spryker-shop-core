@@ -43,5 +43,9 @@
                 </section>
             {% endfor %}
         </section>
+
+        <section itemscope itemtype="https://schema.org/Person">
+            <meta itemprop="email" content="{{ data.quote.customer.email | default }}">
+        </section>
     </section>
 {% endblock %}
