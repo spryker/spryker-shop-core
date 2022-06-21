@@ -88,6 +88,11 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
     public const PLUGINS_REORDER_ITEM_SANITIZER = 'PLUGINS_REORDER_ITEM_SANITIZER';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_REORDER_ITEM_FETCHER = 'PLUGINS_REORDER_ITEM_FETCHER';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -107,6 +112,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addPostReorderPlugins($container);
         $container = $this->addReorderItemExpanderPlugins($container);
         $container = $this->addReorderItemSanitizerPlugins($container);
+        $container = $this->addReorderItemFetcherPlugins($container);
 
         return $container;
     }
@@ -300,6 +306,20 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addReorderItemFetcherPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_REORDER_ITEM_FETCHER, function () {
+            return $this->getReorderItemFetcherPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return array<\SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\PostReorderPluginInterface>
      */
     protected function getPostReorderPlugins(): array
@@ -333,6 +353,14 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
      * @return array<\SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\ReorderItemSanitizerPluginInterface>
      */
     protected function getReorderItemSanitizerPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\ReorderItemFetcherPluginInterface>
+     */
+    protected function getReorderItemFetcherPlugins(): array
     {
         return [];
     }

@@ -17,5 +17,5 @@ interface ProductBundleWidgetToProductBundleClientInterface
      *
      * @return array
      */
-    public function getGroupedBundleItems(ArrayObject $items, ArrayObject $bundleItems);
+    public function getGroupedBundleItems(ArrayObject $items, ArrayObject $bundleItems): array;
 }

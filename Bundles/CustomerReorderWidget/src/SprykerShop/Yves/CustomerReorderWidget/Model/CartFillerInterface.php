@@ -20,9 +20,9 @@ interface CartFillerInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param array<int> $idOrderItems
+     * @param array<mixed> $requestParams
      *
      * @return void
      */
-    public function fillSelectedFromOrder(OrderTransfer $orderTransfer, array $idOrderItems): void;
+    public function fillSelectedFromOrder(OrderTransfer $orderTransfer, array $requestParams): void;
 }

@@ -26,6 +26,11 @@ class ItemFetcher implements ItemFetcherInterface
     /**
      * @var string
      */
+    protected const PARAM_ITEMS = 'items';
+
+    /**
+     * @var string
+     */
     protected const MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED = 'reorder.info.restricted-product.removed';
 
     /**
@@ -59,12 +64,18 @@ class ItemFetcher implements ItemFetcherInterface
     protected $reorderItemExpanderPlugins;
 
     /**
+     * @var array<\SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\ReorderItemFetcherPluginInterface>
+     */
+    protected $reorderItemFetcherPlugins;
+
+    /**
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductBundleClientInterface $productBundleClient
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductStorageClientInterface $productStorageClient
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToMessengerClientInterface $messengerClient
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToGlossaryStorageClientInterface $glossaryStorageClient
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToLocaleClientInterface $localeClient
      * @param array<\SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\ReorderItemExpanderPluginInterface> $reorderItemExpanderPlugins
+     * @param array<\SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\ReorderItemFetcherPluginInterface> $reorderItemFetcherPlugins
      */
     public function __construct(
         CustomerReorderWidgetToProductBundleClientInterface $productBundleClient,
@@ -72,7 +83,8 @@ class ItemFetcher implements ItemFetcherInterface
         CustomerReorderWidgetToMessengerClientInterface $messengerClient,
         CustomerReorderWidgetToGlossaryStorageClientInterface $glossaryStorageClient,
         CustomerReorderWidgetToLocaleClientInterface $localeClient,
-        array $reorderItemExpanderPlugins
+        array $reorderItemExpanderPlugins,
+        array $reorderItemFetcherPlugins
     ) {
         $this->productBundleClient = $productBundleClient;
         $this->productStorageClient = $productStorageClient;
@@ -80,6 +92,7 @@ class ItemFetcher implements ItemFetcherInterface
         $this->glossaryStorageClient = $glossaryStorageClient;
         $this->localeClient = $localeClient;
         $this->reorderItemExpanderPlugins = $reorderItemExpanderPlugins;
+        $this->reorderItemFetcherPlugins = $reorderItemFetcherPlugins;
     }
 
     /**
@@ -96,16 +109,21 @@ class ItemFetcher implements ItemFetcherInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param array<int> $idOrderItems
+     * @param array<mixed> $requestParams
      *
      * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
-    public function getByIds(OrderTransfer $orderTransfer, array $idOrderItems): array
+    public function getByIds(OrderTransfer $orderTransfer, array $requestParams): array
     {
-        $sourceItems = $this->getOrderItemsTransfer($orderTransfer);
-        $filteredItems = $this->filterById($sourceItems, $idOrderItems);
+        $orderItemIds = $requestParams[static::PARAM_ITEMS] ?? [];
 
-        return $filteredItems;
+        $sourceItemTransfers = $this->getOrderItemsTransfer($orderTransfer);
+        $itemTransfers = $this->filterById($sourceItemTransfers, $orderItemIds);
+
+        return array_merge(
+            $itemTransfers,
+            $this->executeReorderItemFetcherPlugins($sourceItemTransfers, $requestParams),
+        );
     }
 
     /**
@@ -275,5 +293,21 @@ class ItemFetcher implements ItemFetcherInterface
         }
 
         return $itemTransfers;
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param array<mixed> $requestParams
+     *
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
+     */
+    protected function executeReorderItemFetcherPlugins(array $itemTransfers, array $requestParams): array
+    {
+        $fetchedItemTransfers = [];
+        foreach ($this->reorderItemFetcherPlugins as $reorderItemFetcherPlugin) {
+            $fetchedItemTransfers[] = $reorderItemFetcherPlugin->execute($itemTransfers, $requestParams);
+        }
+
+        return array_merge(...$fetchedItemTransfers);
     }
 }

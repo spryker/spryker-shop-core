@@ -5,44 +5,52 @@
     order: _view.order,
     orderItems: _view.items | default([]),
     shipmentGroups: _view.shipmentGroups,
-    orderShipmentExpenses: _view.orderShipmentExpenses,
+    orderShipmentExpenses: _view.orderShipmentExpenses | default([]),
     title: 'customer.account.order_history' | trans,
     activePage: 'order',
     requestUri: app.request.requestUri,
 } %}
 
 {% block customerContent %}
-    {% embed [
-        molecule('customer-reorder-form', 'CustomerReorderWidget'),
-        molecule('order-detail', 'CustomerPage'),
-    ] ignore missing with {
-        data: {
-            idSalesOrder: data.order.idSalesOrder,
-            shipmentGroups: data.shipmentGroups,
-            orderShipmentExpenses: data.orderShipmentExpenses | default([]),
-            order: data.order,
-        },
-    } only %}
-        {% block formContent %}
-            {% include molecule('order-detail', 'CustomerPage') with {
+    {% block orderDetail %}
+        {% widget 'CustomerReorderItemsFormWidget' args [
+            data.order,
+            {},
+            data.orderShipmentExpenses,
+            data.shipmentGroups
+        ] only %}
+        {% nowidget %}
+            {% embed molecule('order-detail', 'CustomerPage') with {
                 data: {
-                    order: data.order,
+                    idSalesOrder: data.order.idSalesOrder,
                     shipmentGroups: data.shipmentGroups,
                     orderShipmentExpenses: data.orderShipmentExpenses,
+                    order: data.order,
                 },
             } only %}
-        {% endblock %}
+                {% block orderDetailContent %}
+                    {{ widgetBlock('CustomerReorderWidgetPlugin', 'formStart', data.order) }} {# @deprecated Use molecule('customer-reorder-form', 'CustomerReorderWidget') instead. #}
 
-        {% block orderDetailContent %}
-            {{ widgetBlock('CustomerReorderWidgetPlugin', 'formStart', data.order) }} {# @deprecated Use molecule('customer-reorder-form', 'CustomerReorderWidget') instead. #}
+                    {{ parent() }}
 
-            {{ parent() }}
+                    {{ widgetBlock('CustomerReorderWidgetPlugin', 'formActions', data.order) }} {# @deprecated Use molecule('customer-reorder-form', 'CustomerReorderWidget') instead. #}
+                    {{ widgetBlock('CustomerReorderWidgetPlugin', 'formEnd', data.order) }} {# @deprecated Use molecule('customer-reorder-form', 'CustomerReorderWidget') instead. #}
+                {% endblock %}
+            {% endembed %}
+        {% endwidget %}
+    {% endblock %}
 
-            {{ widgetBlock('CustomerReorderWidgetPlugin', 'formActions', data.order) }} {# @deprecated Use molecule('customer-reorder-form', 'CustomerReorderWidget') instead. #}
-            {{ widgetBlock('CustomerReorderWidgetPlugin', 'formEnd', data.order) }} {# @deprecated Use molecule('customer-reorder-form', 'CustomerReorderWidget') instead. #}
-        {% endblock %}
-    {% endembed %}
+    {% block reorderAll %}
+        {% widget 'CustomerReorderFormWidget' args [data.order] only %}
+            {% block body %}
+                <div class="box text-right">
+                    {{ parent() }}
+                </div>
+            {% endblock %}
+        {% endwidget %}
+    {% endblock %}
 
+    {% block orderCancel %}
         {% widget 'OrderCancelButtonWidget' args [data.order, app.request.requestUri] only %}
             {% block formContent %}
                 <div class="box text-right">
@@ -51,14 +59,20 @@
                 </div>
             {% endblock %}
         {% endwidget %}
+    {% endblock %}
 
-    <div class="box">
+    {% block commentThread %}
         {% widget 'CommentThreadWidget' args [
             data.order.idSalesOrder,
             'sales_order',
             data.requestUri,
             data.order.commentThread
         ] only %}
+            {% block body %}
+                <div class="box">
+                    {{ parent() }}
+                </div>
+            {% endblock %}
         {% endwidget %}
-    </div>
+    {% endblock %}
 {% endblock %}

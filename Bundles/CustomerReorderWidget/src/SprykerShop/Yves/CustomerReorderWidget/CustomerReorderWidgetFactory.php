@@ -84,6 +84,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
             $this->getGlossaryStorageClient(),
             $this->getLocaleClient(),
             $this->getReorderItemExpanderPlugins(),
+            $this->getReorderItemFetcherPlugins(),
         );
     }
 
@@ -173,6 +174,14 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     public function getReorderItemExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::PLUGINS_REORDER_ITEM_EXPANDER);
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\ReorderItemFetcherPluginInterface>
+     */
+    public function getReorderItemFetcherPlugins(): array
+    {
+        return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::PLUGINS_REORDER_ITEM_FETCHER);
     }
 
     /**

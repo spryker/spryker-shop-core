@@ -9,9 +9,19 @@ namespace SprykerShop\Yves\ProductBundleWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductBundleWidget\Dependency\Client\ProductBundleWidgetToProductBundleClientInterface;
+use SprykerShop\Yves\ProductBundleWidget\ItemFetcher\BundleItemFetcher;
+use SprykerShop\Yves\ProductBundleWidget\ItemFetcher\BundleItemFetcherInterface;
 
 class ProductBundleWidgetFactory extends AbstractFactory
 {
+    /**
+     * @return \SprykerShop\Yves\ProductBundleWidget\ItemFetcher\BundleItemFetcherInterface
+     */
+    public function createBundleItemFetcher(): BundleItemFetcherInterface
+    {
+        return new BundleItemFetcher();
+    }
+
     /**
      * @return \SprykerShop\Yves\ProductBundleWidget\Dependency\Client\ProductBundleWidgetToProductBundleClientInterface
      */

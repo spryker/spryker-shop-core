@@ -2,8 +2,8 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 154,
-            "line_to": 154,
+            "line_from": 172,
+            "line_to": 172,
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, int>' for SprykerShop\\Yves\\CustomerReorderWidget\\Model\\ItemFetcher::getSalesOrderItemIdsForBundleItems is incorrect, got 'array<array-key|non-empty-mixed, int|mixed|null>'",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CustomerReorderWidget/src/SprykerShop/Yves/CustomerReorderWidget/Model/ItemFetcher.php",
@@ -14,8 +14,8 @@
         },
         {
             "severity": "error",
-            "line_from": 168,
-            "line_to": 168,
+            "line_from": 186,
+            "line_to": 186,
             "type": "InvalidReturnStatement",
             "message": "The inferred type 'array<array-key|non-empty-mixed, int|mixed|null>' does not match the declared return type 'array<array-key, int>' for SprykerShop\\Yves\\CustomerReorderWidget\\Model\\ItemFetcher::getSalesOrderItemIdsForBundleItems",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CustomerReorderWidget/src/SprykerShop/Yves/CustomerReorderWidget/Model/ItemFetcher.php",
@@ -100,8 +100,8 @@
         },
         {
             "severity": "info",
-            "line_from": 180,
-            "line_to": 180,
+            "line_from": 198,
+            "line_to": 198,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\CustomerReorderWidget\\Dependency\\Client\\CustomerReorderWidgetToProductStorageClientInterface::isProductConcreteRestricted cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CustomerReorderWidget/src/SprykerShop/Yves/CustomerReorderWidget/Model/ItemFetcher.php",
@@ -112,8 +112,8 @@
         },
         {
             "severity": "info",
-            "line_from": 193,
-            "line_to": 193,
+            "line_from": 211,
+            "line_to": 211,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $cleanItems[$idSaleOrderItem] using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CustomerReorderWidget/src/SprykerShop/Yves/CustomerReorderWidget/Model/ItemFetcher.php",
@@ -126,8 +126,8 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
+            "line_from": 47,
+            "line_to": 47,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Client\\AvailabilityStorage\\AvailabilityStorageClientInterface::getAvailabilityAbstract has been marked as deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CustomerReorderWidget/src/SprykerShop/Yves/CustomerReorderWidget/Dependency/Client/CustomerReorderWidgetToAvailabilityStorageClientBridge.php",

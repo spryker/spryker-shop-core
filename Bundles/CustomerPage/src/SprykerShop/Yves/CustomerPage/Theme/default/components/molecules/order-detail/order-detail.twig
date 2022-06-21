@@ -13,6 +13,7 @@
     shipmentGroups: data.orderItems | default([]),
     orderShipmentExpenses: data.orderShipmentExpenses | default([]),
     order: required,
+    reorderSelectionClassName: '',
 } %}
 
 {% block body %}
@@ -65,6 +66,7 @@
                     orderShipmentExpenses: data.orderShipmentExpenses,
                     currencyIsoCode: data.order.currencyIsoCode,
                     order: data.order,
+                    reorderSelectionClassName: data.reorderSelectionClassName,
                 },
             } only %}
         </div>

@@ -1,0 +1,20 @@
+{% extends template('widget') %}
+
+{% define data = {
+    availability: _widget.availability,
+    bundleItemIdentifier: _widget.item.bundleItemIdentifier,
+    checkboxClasses: '',
+} %}
+
+{% block body %}
+    {% include atom('checkbox') with {
+        data: {
+            inputClass: data.checkboxClasses,
+        },
+        attributes: {
+            name: 'bundle-item-identifiers[]',
+            disabled: not data.availability,
+            value: data.bundleItemIdentifier,
+        },
+    } only %}
+{% endblock %}

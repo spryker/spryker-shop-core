@@ -1,0 +1,20 @@
+{% extends template('widget') %}
+
+{% define data = {
+    availability: _widget.availability,
+    idSalesOrderItem: _widget.item.idSalesOrderItem,
+    checkboxClasses: '',
+} %}
+
+{% block body %}
+    {% include atom('checkbox') with {
+        data: {
+            inputClass: data.checkboxClasses,
+        },
+        attributes: {
+            name: 'items[]',
+            disabled: not data.availability,
+            value: data.idSalesOrderItem,
+        },
+    } only %}
+{% endblock %}

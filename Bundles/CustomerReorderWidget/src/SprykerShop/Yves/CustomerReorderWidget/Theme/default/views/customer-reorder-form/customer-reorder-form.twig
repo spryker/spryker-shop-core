@@ -7,6 +7,8 @@
 
 {% block body %}
     {{ form_start(data.form, {'action': path('customer/order/reorder', {'idSalesOrder': data.order.idSalesOrder})}) }}
-        {% block embeddedData %}{% endblock %}
+        {% block embeddedData %}
+            <button class="button">{{ 'customer.order.reorder_all' | trans }}</button>
+        {% endblock %}
     {{ form_end(data.form) }}
 {% endblock %}

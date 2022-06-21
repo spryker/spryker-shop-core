@@ -37,11 +37,6 @@ class OrderController extends AbstractController
     /**
      * @var string
      */
-    protected const PARAM_ITEMS = 'items';
-
-    /**
-     * @var string
-     */
     protected const PARAM_ID_ORDER = 'id';
 
     /**
@@ -101,11 +96,7 @@ class OrderController extends AbstractController
         }
 
         $idSalesOrder = $request->request->getInt(static::PARAM_ID_ORDER);
-        /** @var array<int> $items */
-        $items = (array)$request->request->get(static::PARAM_ITEMS);
-
-        $orderReader = $this->getFactory()
-            ->createOrderReader();
+        $orderReader = $this->getFactory()->createOrderReader();
 
         $orderTransfer = $orderReader->getOrderTransfer($idSalesOrder);
         if ($orderReader->hasIncompatibleItems($orderTransfer)) {
@@ -118,7 +109,7 @@ class OrderController extends AbstractController
 
         $this->getFactory()
             ->createCartFiller()
-            ->fillSelectedFromOrder($orderTransfer, $items);
+            ->fillSelectedFromOrder($orderTransfer, $request->request->all());
 
         $this->getFactory()
             ->getZedRequestClient()

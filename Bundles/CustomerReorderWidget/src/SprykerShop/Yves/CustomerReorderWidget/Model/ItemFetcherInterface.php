@@ -20,9 +20,9 @@ interface ItemFetcherInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param array<int> $idOrderItems
+     * @param array<mixed> $requestParams
      *
      * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
-    public function getByIds(OrderTransfer $orderTransfer, array $idOrderItems): array;
+    public function getByIds(OrderTransfer $orderTransfer, array $requestParams): array;
 }

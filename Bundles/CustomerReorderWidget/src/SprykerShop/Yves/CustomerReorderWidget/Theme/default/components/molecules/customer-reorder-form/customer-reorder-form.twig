@@ -2,38 +2,34 @@
 
 {% define config = {
     name: 'customer-reorder-form',
-    tag: 'customer-reorder-form'
+    tag: 'customer-reorder-form',
 } %}
 
+{# @deprecated property "idSalesOrder" is deprecated. #}
 {% define data = {
-    idSalesOrder: required
+    idSalesOrder: '',
+    order: '',
+    shipmentGroups: '',
+    orderShipmentExpenses: [],
 } %}
 
 {% block body %}
-    {% widget 'CustomerReorderItemsFormWidget'  args [data.order, config] with {
-        embed: {
-            formContent: block('formContent'),
-        },
-    } only %}
-        {% block embeddedData %}
-            <input type="hidden" name="id" value="{{ data.order.idSalesOrder }}">
-            {{ embed.formContent | raw }}
+    {% block formContent %}
+        {% include molecule('order-detail', 'CustomerPage') ignore missing with {
+            data: {
+                order: data.order,
+                shipmentGroups: data.shipmentGroups,
+                orderShipmentExpenses: data.orderShipmentExpenses,
+                reorderSelectionClassName: config.jsName ~ '__selection',
+            },
+        } only %}
+    {% endblock %}
 
-            {% block formActions %}
-                <div class="box text-right">
-                    <button class="button {{ data.config.jsName }}__trigger" disabled>
-                        {{ 'customer.order.reorder_selected' | trans }}
-                    </button>
-                </div>
-            {% endblock %}
-        {% endblock %}
-    {% endwidget %}
-
-    <div class="box text-right">
-        {% widget 'CustomerReorderFormWidget'  args [data.order] only %}
-            {% block embeddedData %}
-                <button class="button">{{ 'customer.order.reorder_all' | trans }}</button>
-            {% endblock %}
-        {% endwidget %}
-    </div>
+    {% block formActions %}
+        <div class="box text-right">
+            <button class="button {{ config.jsName }}__trigger" disabled>
+                {{ 'customer.order.reorder_selected' | trans }}
+            </button>
+        </div>
+    {% endblock %}
 {% endblock %}

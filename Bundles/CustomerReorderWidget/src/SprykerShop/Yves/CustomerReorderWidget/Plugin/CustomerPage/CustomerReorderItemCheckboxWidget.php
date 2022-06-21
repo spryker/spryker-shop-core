@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
+ * @deprecated {@link \SprykerShop\Yves\CustomerReorderWidget\Widget\CustomerReorderItemCheckboxWidget} instead.
+ *
  * @method \SprykerShop\Yves\CustomerReorderWidget\CustomerReorderWidgetFactory getFactory()
  */
 class CustomerReorderItemCheckboxWidget extends AbstractWidget

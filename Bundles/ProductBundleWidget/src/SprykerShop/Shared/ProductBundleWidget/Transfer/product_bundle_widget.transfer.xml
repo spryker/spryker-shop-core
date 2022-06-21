@@ -8,6 +8,7 @@
 
     <transfer name="Item">
         <property name="sku" type="string"/>
+        <property name="bundleItemIdentifier" type="string"/>
     </transfer>
 
 </transfers>

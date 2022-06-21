@@ -1,13 +1,29 @@
 {% extends template('widget') %}
 
+{# @deprecated property "config" is deprecated. #}
 {% define data = {
     form: _widget.form,
     order: _widget.order,
-    config: _widget.config,
+    config: _widget.config | default({}),
+    orderShipmentExpenses: _widget.orderShipmentExpenses | default([]),
+    shipmentGroups: _widget.shipmentGroups | default,
 } %}
 
 {% block body %}
     {{ form_start(data.form, {'action': path('customer/order/reorder-items')}) }}
-        {% block embeddedData %}{% endblock %}
+        {% block embeddedData %}
+            <input type="hidden" name="id" value="{{ data.order.idSalesOrder }}">
+
+            {% block reorderForm %}
+                {% include molecule('customer-reorder-form', 'CustomerReorderWidget') with {
+                    data: {
+                        idSalesOrder: data.order.idSalesOrder,
+                        shipmentGroups: data.shipmentGroups,
+                        orderShipmentExpenses: data.orderShipmentExpenses,
+                        order: data.order,
+                    },
+                } only %}
+            {% endblock %}
+        {% endblock %}
     {{ form_end(data.form) }}
 {% endblock %}
