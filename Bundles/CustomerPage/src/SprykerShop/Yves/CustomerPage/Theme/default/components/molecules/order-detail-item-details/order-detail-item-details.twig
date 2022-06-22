@@ -11,36 +11,37 @@
 } %}
 
 {% set wrapperClass = 'grid grid--justify' %}
-{% set merchantColumnClass = 'spacing-right spacing-right--inner col col--sm-8' %}
-{% set stateColumnClass = 'spacing-left spacing-left--inner col col--sm-4 text-right' %}
+{% set merchantColumnClass = 'spacing-right spacing-right--inner col col--expand' %}
+{% set stateColumnClass = 'spacing-left spacing-left--inner col text-right' %}
 
 {% block body %}
-    <div class="grid grid--justify">
-        <span class="spacing-right col col--sm-9">
-            {% if widgetGlobalExists('SoldByMerchantWidget') %}
-                {% widget 'SoldByMerchantWidget' args [data.orderItem] only %}{% endwidget %}
-            {% elseif widgetGlobalExists('ProductOfferSoldByMerchantWidget') %}
-                {% widget 'ProductOfferSoldByMerchantWidget' args [data.orderItem] only %}{% endwidget %}
-            {% elseif widgetGlobalExists('ProductSoldByMerchantWidget') %}
-                {% widget 'ProductSoldByMerchantWidget' args [data.orderItem] only %}{% endwidget %}
-            {% endif %}
-        </span>
-        <span class="spacing-right col col--sm-3 text-right">
-            {% set state = data.orderItem.state %}
-            {% if state is not empty %}
-                {% block state %}
-                    <p>
-                        <strong>
-                            {% include molecule('status') with {
-                                data: {
-                                    label: state.displayName | trans,
-                                    status: state.name | replace({' ': '-'}) | lower,
-                                },
-                            } only %}
-                        </strong>
-                    </p>
-                {% endblock %}
-            {% endif %}
-        </span>
+    <div class="{{ wrapperClass }}">
+        {% block merchantColumn %}
+            <span class="{{ merchantColumnClass }}">
+                {% widget 'SoldByMerchantWidget' args [data.orderItem] only %}
+                {% elsewidget 'ProductOfferSoldByMerchantWidget' args [data.orderItem] only %}
+                {% elsewidget 'ProductSoldByMerchantWidget' args [data.orderItem] only %}
+                {% endwidget %}
+            </span>
+        {% endblock %}
+
+        {% block stateColumn %}
+            <span class="{{ stateColumnClass }}">
+                {% set state = data.orderItem.state %}
+
+                {% if state %}
+                    {% block state %}
+                        {% include molecule('status') with {
+                            modifiers: ['text-bold'],
+                            class: 'spacing-top',
+                            data: {
+                                label: state.displayName | trans,
+                                status: state.name | replace({' ': '-'}) | lower,
+                            },
+                        } only %}
+                    {% endblock %}
+                {% endif %}
+            </span>
+        {% endblock %}
     </div>
 {% endblock %}

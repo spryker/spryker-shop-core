@@ -6,6 +6,7 @@
     locale: app.locale | slice(0, 2),
     productOffers: _widget.productOffers,
     productView: _widget.productView,
+    isTitleVisible: true,
 } %}
 
 {% block template %}
@@ -13,16 +14,16 @@
 
     {% if data.productOffers %}
         {% block content %}
-            <div class="box box--dark box--spacingless spacing spacing--inner">
-                {% block contentInner %}
-                    {% block title %}
-                        <div>
-                            <strong>{{ 'merchant_product_offer.sold_by' | trans }}</strong>
-                        </div>
-                    {% endblock %}
+            {% block contentInner %}
+                {% block title %}
+                    {% if data.isTitleVisible %}
+                        <h6 class="spacing-y">{{ 'merchant_product_offer.sold_by' | trans }}</h6>
+                    {% endif %}
+                {% endblock %}
 
-                    {% block productOfferList %}
-                        {% for productOffer in data.productOffers  %}
+                {% block productOfferList %}
+                    {% for productOffer in data.productOffers %}
+                        <div class="box box--dark box--spacingless spacing spacing--inner">
                             {% block productOffer %}
                                 {% embed molecule('merchant-product-offer-item', 'MerchantProductOfferWidget') with {
                                     data: {
@@ -35,7 +36,7 @@
                                         currencyIsoCode: productOffer.price.currency.code | default(null),
                                         isRadioButtonVisible: isRadioButtonVisible,
                                     },
-                                    embed : {
+                                    embed: {
                                         currentProductPrice: productOffer.price,
                                     },
                                 } only %}
@@ -48,10 +49,10 @@
                                     {% endblock %}
                                 {% endembed %}
                             {% endblock %}
-                        {% endfor %}
-                    {% endblock %}
+                        </div>
+                    {% endfor %}
                 {% endblock %}
-            </div>
+            {% endblock %}
         {% endblock %}
     {% endif %}
 {% endblock %}

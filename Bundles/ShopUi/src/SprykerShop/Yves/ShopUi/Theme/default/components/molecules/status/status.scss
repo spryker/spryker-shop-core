@@ -44,6 +44,10 @@
             color: helper-color-dark($setting-color-alt);
         }
 
+        &--text-bold {
+            @include helper-font-weight(bold);
+        }
+
         @content;
     }
 }
