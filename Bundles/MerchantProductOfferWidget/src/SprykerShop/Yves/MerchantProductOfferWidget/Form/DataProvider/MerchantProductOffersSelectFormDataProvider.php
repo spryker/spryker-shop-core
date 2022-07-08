@@ -19,11 +19,6 @@ use SprykerShop\Yves\MerchantProductOfferWidget\Resolver\ShopContextResolverInte
 class MerchantProductOffersSelectFormDataProvider
 {
     /**
-     * @var string
-     */
-    protected const PRODUCT_OFFER_NAME_TEMPLATE = '%s %s';
-
-    /**
      * @uses \SprykerShop\Yves\MerchantProductOfferWidget\Form\MerchantProductOffersSelectForm::FIELD_PRODUCT_OFFER_REFERENCE
      *
      * @var string
@@ -97,11 +92,14 @@ class MerchantProductOffersSelectFormDataProvider
             $productOfferStorageCollectionTransfer,
             $shopContextTransfer,
             $merchantNamesIndexedByMerchantReferences,
+            $sku,
         );
 
         foreach ($this->merchantProductOfferCollectionExpanderPlugins as $merchantProductOfferCollectionExpanderPlugin) {
             $productOfferTransfers = $merchantProductOfferCollectionExpanderPlugin->expand($productOfferTransfers);
         }
+
+        $productOfferTransfers = $this->getProductOffersWithMerchantReference($productOfferTransfers);
 
         if ($merchantReference) {
             $productOfferTransfers = $this->filterProductOffersByMerchantReference($productOfferTransfers, $merchantReference);
@@ -165,15 +163,19 @@ class MerchantProductOffersSelectFormDataProvider
      * @param \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer
      * @param \Generated\Shared\Transfer\ShopContextTransfer $shopContextTransfer
      * @param array<string, string> $merchantNamesIndexedByMerchantReferences
+     * @param string $sku
      *
      * @return array<\Generated\Shared\Transfer\ProductOfferTransfer>
      */
     protected function getProductOffers(
         ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer,
         ShopContextTransfer $shopContextTransfer,
-        array $merchantNamesIndexedByMerchantReferences
+        array $merchantNamesIndexedByMerchantReferences,
+        string $sku
     ): array {
-        $productOfferTransfers = [];
+        $productOfferTransfers = [
+            (new ProductOfferTransfer())->setConcreteSku($sku),
+        ];
 
         foreach ($productOfferStorageCollectionTransfer->getProductOffers() as $productOfferStorageTransfer) {
             $merchantReference = $productOfferStorageTransfer->getMerchantReferenceOrFail();
@@ -209,5 +211,20 @@ class MerchantProductOffersSelectFormDataProvider
         }
 
         return $productOfferTransfers;
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductOfferTransfer> $productOfferTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductOfferTransfer>
+     */
+    protected function getProductOffersWithMerchantReference(array $productOfferTransfers): array
+    {
+        return array_filter(
+            $productOfferTransfers,
+            function ($productOfferTransfer) {
+                return $productOfferTransfer->getMerchantReference();
+            },
+        );
     }
 }
