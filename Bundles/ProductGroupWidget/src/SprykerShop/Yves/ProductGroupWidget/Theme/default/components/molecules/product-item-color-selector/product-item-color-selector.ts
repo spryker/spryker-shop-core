@@ -76,11 +76,11 @@ export default class ProductItemColorSelector extends ColorSelector {
         return this.currentSelection.getAttribute('data-product-add-to-cart-form-action');
     }
 
-    protected get productItemClassName(): string {
-        return this.getAttribute('product-item-class-name');
-    }
-
     protected get sku(): string {
         return this.currentSelection.getAttribute('data-product-sku');
+    }
+
+    protected get productItemClassName(): string {
+        return this.getAttribute('product-item-class-name');
     }
 }
