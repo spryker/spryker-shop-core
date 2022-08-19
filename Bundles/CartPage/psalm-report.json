@@ -5,7 +5,7 @@
             "line_from": 93,
             "line_to": 93,
             "type": "InvalidArgument",
-            "message": "Argument 1 of SprykerShop\\Yves\\CartPage\\Dependency\\Client\\CartPageToProductStorageClientInterface::getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName expects array<array-key, int>, array<array-key, int|null> provided",
+            "message": "Argument 1 of SprykerShop\\Yves\\CartPage\\Dependency\\Client\\CartPageToProductStorageClientInterface::getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName expects array<array-key, int>, array<int, int|null> provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CartPage/src/SprykerShop/Yves/CartPage/Mapper/CartItemsAttributeMapper.php",
             "snippet": "            ->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);",
             "selected_text": "$productAbstractIds",
@@ -40,10 +40,10 @@
         },
         {
             "severity": "info",
-            "line_from": 415,
-            "line_to": 415,
+            "line_from": 418,
+            "line_to": 418,
             "type": "PossiblyInvalidArgument",
-            "message": "Argument 4 of SprykerShop\\Yves\\CartPage\\Plugin\\Provider\\AttributeVariantsProvider::tryToReplaceItem expects ArrayObject, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> provided",
+            "message": "Argument 4 of SprykerShop\\Yves\\CartPage\\Plugin\\Provider\\AttributeVariantsProvider::tryToReplaceItem expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CartPage/src/SprykerShop/Yves/CartPage/Controller/CartController.php",
             "snippet": "                $quoteTransfer->getItems(),",
             "selected_text": "$quoteTransfer->getItems()",
@@ -52,8 +52,8 @@
         },
         {
             "severity": "info",
-            "line_from": 609,
-            "line_to": 609,
+            "line_from": 612,
+            "line_to": 612,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getCompanyUserTransfer on possibly null value",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CartPage/src/SprykerShop/Yves/CartPage/Controller/CartController.php",
@@ -64,8 +64,8 @@
         },
         {
             "severity": "info",
-            "line_from": 663,
-            "line_to": 663,
+            "line_from": 666,
+            "line_to": 666,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\CartPage\\Controller\\CartController::addErrorMessage cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CartPage/src/SprykerShop/Yves/CartPage/Controller/CartController.php",
@@ -76,8 +76,8 @@
         },
         {
             "severity": "info",
-            "line_from": 675,
-            "line_to": 675,
+            "line_from": 678,
+            "line_to": 678,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\CartPage\\Controller\\CartController::addSuccessMessage cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CartPage/src/SprykerShop/Yves/CartPage/Controller/CartController.php",
@@ -100,34 +100,10 @@
         },
         {
             "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $items has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CartPage/src/SprykerShop/Yves/CartPage/Mapper/CartItemsAttributeMapper.php",
-            "snippet": "     * @param \\Generated\\Shared\\Transfer\\ItemTransfer[]|\\ArrayObject $items",
-            "selected_text": "\\Generated\\Shared\\Transfer\\ItemTransfer[]|\\ArrayObject",
-            "error_level": 4,
-            "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 89,
-            "line_to": 89,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable $items",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CartPage/src/SprykerShop/Yves/CartPage/Mapper/CartItemsAttributeMapper.php",
-            "snippet": "        }, $items->getArrayCopy());",
-            "selected_text": "getArrayCopy",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
             "line_from": 100,
             "line_to": 100,
             "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $abstractProductData using possibly null offset int|mixed|null",
+            "message": "Cannot access value on variable $abstractProductData using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CartPage/src/SprykerShop/Yves/CartPage/Mapper/CartItemsAttributeMapper.php",
             "snippet": "            $attributeMap = $abstractProductData[$item->getIdProductAbstract()][static::KEY_ATTRIBUTE_MAP];",
             "selected_text": "$abstractProductData",
@@ -160,8 +136,8 @@
         },
         {
             "severity": "info",
-            "line_from": 172,
-            "line_to": 172,
+            "line_from": 173,
+            "line_to": 173,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of SprykerShop\\Yves\\CartPage\\Dependency\\Client\\CartPageToProductStorageClientInterface::findProductAbstractStorageData cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CartPage/src/SprykerShop/Yves/CartPage/Mapper/CartItemsAttributeMapper.php",
@@ -169,18 +145,6 @@
             "selected_text": "$item->getIdProductAbstract()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 36,
-            "line_to": 36,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $items has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CartPage/src/SprykerShop/Yves/CartPage/Mapper/CartItemsAvailabilityMapper.php",
-            "snippet": "     * @param \\Generated\\Shared\\Transfer\\ItemTransfer[]|\\ArrayObject $items",
-            "selected_text": "\\Generated\\Shared\\Transfer\\ItemTransfer[]|\\ArrayObject",
-            "error_level": 4,
-            "shortcode": 141
         },
         {
             "severity": "info",
@@ -193,18 +157,6 @@
             "selected_text": "$item->getIdProductAbstract()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 15,
-            "line_to": 15,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $items has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CartPage/src/SprykerShop/Yves/CartPage/Mapper/CartItemsMapperInterface.php",
-            "snippet": "     * @param \\Generated\\Shared\\Transfer\\ItemTransfer[]|\\ArrayObject $items",
-            "selected_text": "\\Generated\\Shared\\Transfer\\ItemTransfer[]|\\ArrayObject",
-            "error_level": 4,
-            "shortcode": 141
         },
         {
             "severity": "info",
@@ -294,78 +246,6 @@
         },
         {
             "severity": "info",
-            "line_from": 293,
-            "line_to": 293,
-            "type": "DeprecatedConstant",
-            "message": "Constant SprykerShop\\Yves\\CartPage\\CartPageDependencyProvider::PLUGIN_APPLICATION is deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CartPage/src/SprykerShop/Yves/CartPage/CartPageDependencyProvider.php",
-            "snippet": "        $container->set(static::PLUGIN_APPLICATION, function () {",
-            "selected_text": "static::PLUGIN_APPLICATION",
-            "error_level": 2,
-            "shortcode": 170
-        },
-        {
-            "severity": "info",
-            "line_from": 294,
-            "line_to": 294,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Yves\\Kernel\\Plugin\\Pimple is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CartPage/src/SprykerShop/Yves/CartPage/CartPageDependencyProvider.php",
-            "snippet": "            $pimplePlugin = new Pimple();",
-            "selected_text": "new Pimple()",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 80,
-            "line_to": 80,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CartPage/src/SprykerShop/Yves/CartPage/CartPageFactory.php",
-            "snippet": "     * @return \\Spryker\\Yves\\Kernel\\Application",
-            "selected_text": "\\Spryker\\Yves\\Kernel\\Application",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 84,
-            "line_to": 84,
-            "type": "DeprecatedConstant",
-            "message": "Constant SprykerShop\\Yves\\CartPage\\CartPageDependencyProvider::PLUGIN_APPLICATION is deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CartPage/src/SprykerShop/Yves/CartPage/CartPageFactory.php",
-            "snippet": "        return $this->getProvidedDependency(CartPageDependencyProvider::PLUGIN_APPLICATION);",
-            "selected_text": "CartPageDependencyProvider::PLUGIN_APPLICATION",
-            "error_level": 2,
-            "shortcode": 170
-        },
-        {
-            "severity": "info",
-            "line_from": 94,
-            "line_to": 94,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CartPage/src/SprykerShop/Yves/CartPage/CartPageFactory.php",
-            "snippet": "        return $this->getApplication()['flash_messenger'];",
-            "selected_text": "$this->getApplication()",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 94,
-            "line_to": 94,
-            "type": "DeprecatedMethod",
-            "message": "The method SprykerShop\\Yves\\CartPage\\CartPageFactory::getApplication has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CartPage/src/SprykerShop/Yves/CartPage/CartPageFactory.php",
-            "snippet": "        return $this->getApplication()['flash_messenger'];",
-            "selected_text": "getApplication",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 58,
             "line_to": 58,
             "type": "DeprecatedMethod",
@@ -390,8 +270,8 @@
         },
         {
             "severity": "info",
-            "line_from": 216,
-            "line_to": 216,
+            "line_from": 217,
+            "line_to": 217,
             "type": "DeprecatedConstant",
             "message": "Constant SprykerShop\\Yves\\CartPage\\Mapper\\CartItemsAttributeMapper::KEY_ATTRIBUTE_VARIANTS is deprecated",
             "file_name": "vendor/spryker/spryker-shop/Bundles/CartPage/src/SprykerShop/Yves/CartPage/Mapper/CartItemsAttributeMapper.php",
@@ -399,66 +279,6 @@
             "selected_text": "static::KEY_ATTRIBUTE_VARIANTS",
             "error_level": 2,
             "shortcode": 170
-        },
-        {
-            "severity": "info",
-            "line_from": 20,
-            "line_to": 20,
-            "type": "DeprecatedInterface",
-            "message": "SprykerShop\\Yves\\ProductConfiguratorGatewayPageExtension\\Dependency\\Plugin\\ProductConfiguratorGatewayBackUrlResolverStrategyPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CartPage/src/SprykerShop/Yves/CartPage/Plugin/ProductConfiguratorGatewayPage/CartPageGatewayBackUrlResolverStrategyPlugin.php",
-            "snippet": "class CartPageGatewayBackUrlResolverStrategyPlugin extends AbstractPlugin implements ProductConfiguratorGatewayBackUrlResolverStrategyPluginInterface",
-            "selected_text": "CartPageGatewayBackUrlResolverStrategyPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 17,
-            "line_to": 17,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Yves\\Application\\Plugin\\Provider\\ControllerProviderInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CartPage/src/SprykerShop/Yves/CartPage/Plugin/Provider/CartControllerProvider.php",
-            "snippet": "class CartControllerProvider extends AbstractYvesControllerProvider",
-            "selected_text": "CartControllerProvider",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 17,
-            "line_to": 17,
-            "type": "DeprecatedClass",
-            "message": "SprykerShop\\Yves\\ShopApplication\\Plugin\\Provider\\AbstractYvesControllerProvider is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CartPage/src/SprykerShop/Yves/CartPage/Plugin/Provider/CartControllerProvider.php",
-            "snippet": "class CartControllerProvider extends AbstractYvesControllerProvider",
-            "selected_text": "AbstractYvesControllerProvider",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 28,
-            "line_to": 28,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CartPage/src/SprykerShop/Yves/CartPage/Plugin/Provider/CartServiceProvider.php",
-            "snippet": "        $app['cart.quantity'] = $app->share(function () {",
-            "selected_text": "$app",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 28,
-            "line_to": 28,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CartPage/src/SprykerShop/Yves/CartPage/Plugin/Provider/CartServiceProvider.php",
-            "snippet": "        $app['cart.quantity'] = $app->share(function () {",
-            "selected_text": "share",
-            "error_level": 2,
-            "shortcode": 1
         },
         {
             "severity": "info",
@@ -471,18 +291,7 @@
             "selected_text": "addCartQuantityGlobalVariable",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 88,
-            "line_to": 88,
-            "type": "DeprecatedConstant",
-            "message": "Constant SprykerShop\\Yves\\CartPage\\Plugin\\Twig\\CartTwigPlugin::TWIG_GLOBAL_VARIABLE_NAME_CART_QUANTITY is deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CartPage/src/SprykerShop/Yves/CartPage/Plugin/Twig/CartTwigPlugin.php",
-            "snippet": "        $twig->addGlobal(static::TWIG_GLOBAL_VARIABLE_NAME_CART_QUANTITY, $quantity);",
-            "selected_text": "static::TWIG_GLOBAL_VARIABLE_NAME_CART_QUANTITY",
-            "error_level": 2,
-            "shortcode": 170
         }
-    ]
+    ],
+    "count": 24
 }

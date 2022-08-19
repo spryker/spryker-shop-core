@@ -14,54 +14,6 @@
             "shortcode": 148
         }
     ],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 19,
-            "line_to": 19,
-            "type": "DeprecatedInterface",
-            "message": "SprykerShop\\Yves\\CustomerPage\\Dependency\\Plugin\\WishlistWidget\\WishlistMenuItemWidgetPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/WishlistWidget/src/SprykerShop/Yves/WishlistWidget/Plugin/CustomerPage/WishlistMenuItemWidgetPlugin.php",
-            "snippet": "class WishlistMenuItemWidgetPlugin extends AbstractWidgetPlugin implements WishlistMenuItemWidgetPluginInterface",
-            "selected_text": "WishlistMenuItemWidgetPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 19,
-            "line_to": 19,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Yves\\Kernel\\Widget\\AbstractWidgetPlugin is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/WishlistWidget/src/SprykerShop/Yves/WishlistWidget/Plugin/CustomerPage/WishlistMenuItemWidgetPlugin.php",
-            "snippet": "class WishlistMenuItemWidgetPlugin extends AbstractWidgetPlugin implements WishlistMenuItemWidgetPluginInterface",
-            "selected_text": "AbstractWidgetPlugin",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 17,
-            "line_to": 17,
-            "type": "DeprecatedInterface",
-            "message": "SprykerShop\\Yves\\ProductDetailPage\\Dependency\\Plugin\\WishlistWidget\\WishlistWidgetPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/WishlistWidget/src/SprykerShop/Yves/WishlistWidget/Plugin/ProductDetailPage/WishlistWidgetPlugin.php",
-            "snippet": "class WishlistWidgetPlugin extends AbstractWidgetPlugin implements WishlistWidgetPluginInterface",
-            "selected_text": "WishlistWidgetPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 17,
-            "line_to": 17,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Yves\\Kernel\\Widget\\AbstractWidgetPlugin is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/WishlistWidget/src/SprykerShop/Yves/WishlistWidget/Plugin/ProductDetailPage/WishlistWidgetPlugin.php",
-            "snippet": "class WishlistWidgetPlugin extends AbstractWidgetPlugin implements WishlistWidgetPluginInterface",
-            "selected_text": "AbstractWidgetPlugin",
-            "error_level": 2,
-            "shortcode": 98
-        }
-    ]
+    "deprecation": [],
+    "count": 1
 }

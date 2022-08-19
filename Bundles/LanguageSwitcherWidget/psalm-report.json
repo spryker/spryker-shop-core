@@ -14,30 +14,6 @@
             "shortcode": 113
         }
     ],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 17,
-            "line_to": 17,
-            "type": "DeprecatedInterface",
-            "message": "SprykerShop\\Yves\\ShopUi\\Dependency\\Plugin\\LanguageSwitcherWidget\\LanguageSwitcherWidgetPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/LanguageSwitcherWidget/src/SprykerShop/Yves/LanguageSwitcherWidget/Plugin/ShopUi/LanguageSwitcherWidgetPlugin.php",
-            "snippet": "class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements LanguageSwitcherWidgetPluginInterface",
-            "selected_text": "LanguageSwitcherWidgetPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 17,
-            "line_to": 17,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Yves\\Kernel\\Widget\\AbstractWidgetPlugin is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/LanguageSwitcherWidget/src/SprykerShop/Yves/LanguageSwitcherWidget/Plugin/ShopUi/LanguageSwitcherWidgetPlugin.php",
-            "snippet": "class LanguageSwitcherWidgetPlugin extends AbstractWidgetPlugin implements LanguageSwitcherWidgetPluginInterface",
-            "selected_text": "AbstractWidgetPlugin",
-            "error_level": 2,
-            "shortcode": 98
-        }
-    ]
+    "deprecation": [],
+    "count": 1
 }

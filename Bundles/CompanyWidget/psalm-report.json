@@ -231,30 +231,6 @@
             "shortcode": 83
         }
     ],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 17,
-            "line_to": 17,
-            "type": "DeprecatedInterface",
-            "message": "SprykerShop\\Yves\\ShopUi\\Dependency\\Plugin\\CompanyWidget\\MenuItemCompanyWidgetPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CompanyWidget/src/SprykerShop/Yves/CompanyWidget/Plugin/ShopUi/MenuItemCompanyWidgetPlugin.php",
-            "snippet": "class MenuItemCompanyWidgetPlugin extends AbstractWidgetPlugin implements MenuItemCompanyWidgetPluginInterface",
-            "selected_text": "MenuItemCompanyWidgetPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 17,
-            "line_to": 17,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Yves\\Kernel\\Widget\\AbstractWidgetPlugin is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CompanyWidget/src/SprykerShop/Yves/CompanyWidget/Plugin/ShopUi/MenuItemCompanyWidgetPlugin.php",
-            "snippet": "class MenuItemCompanyWidgetPlugin extends AbstractWidgetPlugin implements MenuItemCompanyWidgetPluginInterface",
-            "selected_text": "AbstractWidgetPlugin",
-            "error_level": 2,
-            "shortcode": 98
-        }
-    ]
+    "deprecation": [],
+    "count": 19
 }

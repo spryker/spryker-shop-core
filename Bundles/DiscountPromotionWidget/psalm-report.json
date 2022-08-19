@@ -53,18 +53,6 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 37,
-            "line_to": 37,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Discount\\DiscountServiceInterface::calculate has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/DiscountPromotionWidget/src/SprykerShop/Yves/DiscountPromotionWidget/Dependency/Service/DiscountPromotionWidgetToDiscountServiceBridge.php",
-            "snippet": "        return $this->discountService->calculate($discountCalculationRequestTransfer);",
-            "selected_text": "calculate",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 66,
             "line_to": 66,
             "type": "DeprecatedMethod",
@@ -74,30 +62,7 @@
             "selected_text": "calculate",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 19,
-            "line_to": 19,
-            "type": "DeprecatedInterface",
-            "message": "SprykerShop\\Yves\\CartPage\\Dependency\\Plugin\\DiscountPromotionWidget\\DiscountPromotionItemListWidgetPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/DiscountPromotionWidget/src/SprykerShop/Yves/DiscountPromotionWidget/Plugin/CartPage/DiscountPromotionItemListWidgetPlugin.php",
-            "snippet": "class DiscountPromotionItemListWidgetPlugin extends AbstractWidgetPlugin implements DiscountPromotionItemListWidgetPluginInterface",
-            "selected_text": "DiscountPromotionItemListWidgetPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 19,
-            "line_to": 19,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Yves\\Kernel\\Widget\\AbstractWidgetPlugin is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/DiscountPromotionWidget/src/SprykerShop/Yves/DiscountPromotionWidget/Plugin/CartPage/DiscountPromotionItemListWidgetPlugin.php",
-            "snippet": "class DiscountPromotionItemListWidgetPlugin extends AbstractWidgetPlugin implements DiscountPromotionItemListWidgetPluginInterface",
-            "selected_text": "AbstractWidgetPlugin",
-            "error_level": 2,
-            "shortcode": 98
         }
-    ]
+    ],
+    "count": 5
 }

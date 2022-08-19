@@ -1,42 +1,6 @@
 {
     "error": [],
     "warning": [],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 28,
-            "line_to": 28,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CategoryWidget/src/SprykerShop/Yves/CategoryWidget/Plugin/Provider/CategoryServiceProvider.php",
-            "snippet": "        $app['twig.global.variables'] = $app->share(",
-            "selected_text": "$app",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 28,
-            "line_to": 28,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CategoryWidget/src/SprykerShop/Yves/CategoryWidget/Plugin/Provider/CategoryServiceProvider.php",
-            "snippet": "        $app['twig.global.variables'] = $app->share(",
-            "selected_text": "share",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/CategoryWidget/src/SprykerShop/Yves/CategoryWidget/Plugin/Provider/CategoryServiceProvider.php",
-            "snippet": "                $app['locale'],",
-            "selected_text": "$app",
-            "error_level": 2,
-            "shortcode": 1
-        }
-    ]
+    "deprecation": [],
+    "count": 0
 }

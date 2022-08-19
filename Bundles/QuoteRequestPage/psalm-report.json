@@ -546,30 +546,6 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 24,
-            "line_to": 24,
-            "type": "DeprecatedMethod",
-            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getShipment has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestPage/src/SprykerShop/Yves/QuoteRequestPage/Checker/QuoteChecker.php",
-            "snippet": "        if (!$quoteTransfer->getShipment() || !$quoteTransfer->getShipment()->getMethod()) {",
-            "selected_text": "getShipment",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 24,
-            "line_to": 24,
-            "type": "DeprecatedMethod",
-            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getShipment has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestPage/src/SprykerShop/Yves/QuoteRequestPage/Checker/QuoteChecker.php",
-            "snippet": "        if (!$quoteTransfer->getShipment() || !$quoteTransfer->getShipment()->getMethod()) {",
-            "selected_text": "getShipment",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 35,
             "line_to": 35,
             "type": "DeprecatedMethod",
@@ -603,30 +579,6 @@
             "selected_text": "isQuoteLevelShipmentUsed",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 16,
-            "line_to": 16,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Yves\\Application\\Plugin\\Provider\\ControllerProviderInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestPage/src/SprykerShop/Yves/QuoteRequestPage/Plugin/Provider/QuoteRequestPageControllerProvider.php",
-            "snippet": "class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider",
-            "selected_text": "QuoteRequestPageControllerProvider",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 16,
-            "line_to": 16,
-            "type": "DeprecatedClass",
-            "message": "SprykerShop\\Yves\\ShopApplication\\Plugin\\Provider\\AbstractYvesControllerProvider is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/QuoteRequestPage/src/SprykerShop/Yves/QuoteRequestPage/Plugin/Provider/QuoteRequestPageControllerProvider.php",
-            "snippet": "class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider",
-            "selected_text": "AbstractYvesControllerProvider",
-            "error_level": 2,
-            "shortcode": 98
         },
         {
             "severity": "info",
@@ -916,5 +868,6 @@
             "error_level": 2,
             "shortcode": 170
         }
-    ]
+    ],
+    "count": 72
 }

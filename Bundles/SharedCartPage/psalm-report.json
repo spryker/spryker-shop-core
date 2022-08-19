@@ -255,30 +255,7 @@
             "selected_text": "addShareCart",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 16,
-            "line_to": 16,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Yves\\Application\\Plugin\\Provider\\ControllerProviderInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/SharedCartPage/src/SprykerShop/Yves/SharedCartPage/Plugin/Provider/SharedCartPageControllerProvider.php",
-            "snippet": "class SharedCartPageControllerProvider extends AbstractYvesControllerProvider",
-            "selected_text": "SharedCartPageControllerProvider",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 16,
-            "line_to": 16,
-            "type": "DeprecatedClass",
-            "message": "SprykerShop\\Yves\\ShopApplication\\Plugin\\Provider\\AbstractYvesControllerProvider is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/SharedCartPage/src/SprykerShop/Yves/SharedCartPage/Plugin/Provider/SharedCartPageControllerProvider.php",
-            "snippet": "class SharedCartPageControllerProvider extends AbstractYvesControllerProvider",
-            "selected_text": "AbstractYvesControllerProvider",
-            "error_level": 2,
-            "shortcode": 98
         }
-    ]
+    ],
+    "count": 21
 }

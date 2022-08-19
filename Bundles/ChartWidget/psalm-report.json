@@ -1,54 +1,6 @@
 {
     "error": [],
     "warning": [],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 16,
-            "line_to": 16,
-            "type": "DeprecatedInterface",
-            "message": "SprykerShop\\Yves\\CmsContentWidgetChartConnector\\Dependency\\Plugin\\ChartWidget\\ChartWidgetPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ChartWidget/src/SprykerShop/Yves/ChartWidget/Plugin/CmsContentWidgetChartConnector/ChartWidgetPlugin.php",
-            "snippet": "class ChartWidgetPlugin extends AbstractWidgetPlugin implements ChartWidgetPluginInterface",
-            "selected_text": "ChartWidgetPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 16,
-            "line_to": 16,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Yves\\Kernel\\Widget\\AbstractWidgetPlugin is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ChartWidget/src/SprykerShop/Yves/ChartWidget/Plugin/CmsContentWidgetChartConnector/ChartWidgetPlugin.php",
-            "snippet": "class ChartWidgetPlugin extends AbstractWidgetPlugin implements ChartWidgetPluginInterface",
-            "selected_text": "AbstractWidgetPlugin",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 29,
-            "line_to": 29,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ChartWidget/src/SprykerShop/Yves/ChartWidget/Plugin/Provider/TwigChartFunctionServiceProvider.php",
-            "snippet": "        $app['twig'] = $app->share(",
-            "selected_text": "$app",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 29,
-            "line_to": 29,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ChartWidget/src/SprykerShop/Yves/ChartWidget/Plugin/Provider/TwigChartFunctionServiceProvider.php",
-            "snippet": "        $app['twig'] = $app->share(",
-            "selected_text": "share",
-            "error_level": 2,
-            "shortcode": 1
-        }
-    ]
+    "deprecation": [],
+    "count": 0
 }

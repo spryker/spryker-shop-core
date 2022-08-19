@@ -53,78 +53,6 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 13,
-            "line_to": 13,
-            "type": "DeprecatedInterface",
-            "message": "SprykerShop\\Yves\\PriceProductVolumeWidget\\Dependency\\Client\\PriceProductVolumeWidgetToCurrencyClientInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/PriceProductVolumeWidget/src/SprykerShop/Yves/PriceProductVolumeWidget/Dependency/Client/PriceProductVolumeWidgetToCurrencyClientBridge.php",
-            "snippet": "class PriceProductVolumeWidgetToCurrencyClientBridge implements PriceProductVolumeWidgetToCurrencyClientInterface",
-            "selected_text": "PriceProductVolumeWidgetToCurrencyClientBridge",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 13,
-            "line_to": 13,
-            "type": "DeprecatedInterface",
-            "message": "SprykerShop\\Yves\\PriceProductVolumeWidget\\Dependency\\Client\\PriceProductVolumeWidgetToPriceClientInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/PriceProductVolumeWidget/src/SprykerShop/Yves/PriceProductVolumeWidget/Dependency/Client/PriceProductVolumeWidgetToPriceClientBridge.php",
-            "snippet": "class PriceProductVolumeWidgetToPriceClientBridge implements PriceProductVolumeWidgetToPriceClientInterface",
-            "selected_text": "PriceProductVolumeWidgetToPriceClientBridge",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 13,
-            "line_to": 13,
-            "type": "DeprecatedInterface",
-            "message": "SprykerShop\\Yves\\PriceProductVolumeWidget\\Dependency\\Client\\PriceProductVolumeWidgetToPriceProductStorageClientInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/PriceProductVolumeWidget/src/SprykerShop/Yves/PriceProductVolumeWidget/Dependency/Client/PriceProductVolumeWidgetToPriceProductStorageClientBridge.php",
-            "snippet": "class PriceProductVolumeWidgetToPriceProductStorageClientBridge implements PriceProductVolumeWidgetToPriceProductStorageClientInterface",
-            "selected_text": "PriceProductVolumeWidgetToPriceProductStorageClientBridge",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 21,
-            "line_to": 21,
-            "type": "DeprecatedInterface",
-            "message": "SprykerShop\\Yves\\ProductDetailPage\\Dependency\\Plugin\\VolumePriceProductWidget\\PriceProductVolumeWidgetPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/PriceProductVolumeWidget/src/SprykerShop/Yves/PriceProductVolumeWidget/Plugin/ProductDetailPage/PriceProductVolumeWidgetPlugin.php",
-            "snippet": "class PriceProductVolumeWidgetPlugin extends AbstractWidgetPlugin implements PriceProductVolumeWidgetPluginInterface",
-            "selected_text": "PriceProductVolumeWidgetPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 21,
-            "line_to": 21,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Yves\\Kernel\\Widget\\AbstractWidgetPlugin is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/PriceProductVolumeWidget/src/SprykerShop/Yves/PriceProductVolumeWidget/Plugin/ProductDetailPage/PriceProductVolumeWidgetPlugin.php",
-            "snippet": "class PriceProductVolumeWidgetPlugin extends AbstractWidgetPlugin implements PriceProductVolumeWidgetPluginInterface",
-            "selected_text": "AbstractWidgetPlugin",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "DeprecatedClass",
-            "message": "SprykerShop\\Yves\\PriceProductVolumeWidget\\Widget\\ProductPriceVolumeWidget is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/PriceProductVolumeWidget/src/SprykerShop/Yves/PriceProductVolumeWidget/Plugin/ProductDetailPage/PriceProductVolumeWidgetPlugin.php",
-            "snippet": "        return ProductPriceVolumeWidget::getTemplate();",
-            "selected_text": "ProductPriceVolumeWidget::getTemplate()",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
             "line_from": 72,
             "line_to": 72,
             "type": "DeprecatedMethod",
@@ -171,5 +99,6 @@
             "error_level": 2,
             "shortcode": 98
         }
-    ]
+    ],
+    "count": 8
 }

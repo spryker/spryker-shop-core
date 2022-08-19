@@ -1,30 +1,6 @@
 {
     "error": [],
     "warning": [],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 19,
-            "line_to": 19,
-            "type": "DeprecatedInterface",
-            "message": "SprykerShop\\Yves\\ShopUi\\Dependency\\Plugin\\ProductGroupWidget\\ProductGroupWidgetPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductGroupWidget/src/SprykerShop/Yves/ProductGroupWidget/Plugin/ShopUi/ProductGroupWidgetPlugin.php",
-            "snippet": "class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGroupWidgetPluginInterface",
-            "selected_text": "ProductGroupWidgetPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 19,
-            "line_to": 19,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Yves\\Kernel\\Widget\\AbstractWidgetPlugin is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductGroupWidget/src/SprykerShop/Yves/ProductGroupWidget/Plugin/ShopUi/ProductGroupWidgetPlugin.php",
-            "snippet": "class ProductGroupWidgetPlugin extends AbstractWidgetPlugin implements ProductGroupWidgetPluginInterface",
-            "selected_text": "AbstractWidgetPlugin",
-            "error_level": 2,
-            "shortcode": 98
-        }
-    ]
+    "deprecation": [],
+    "count": 0
 }

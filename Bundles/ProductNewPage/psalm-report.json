@@ -4,30 +4,6 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 16,
-            "line_to": 16,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Yves\\Application\\Plugin\\Provider\\ControllerProviderInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductNewPage/src/SprykerShop/Yves/ProductNewPage/Plugin/Provider/ProductNewPageControllerProvider.php",
-            "snippet": "class ProductNewPageControllerProvider extends AbstractYvesControllerProvider",
-            "selected_text": "ProductNewPageControllerProvider",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 16,
-            "line_to": 16,
-            "type": "DeprecatedClass",
-            "message": "SprykerShop\\Yves\\ShopApplication\\Plugin\\Provider\\AbstractYvesControllerProvider is marked deprecated",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductNewPage/src/SprykerShop/Yves/ProductNewPage/Plugin/Provider/ProductNewPageControllerProvider.php",
-            "snippet": "class ProductNewPageControllerProvider extends AbstractYvesControllerProvider",
-            "selected_text": "AbstractYvesControllerProvider",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
             "line_from": 66,
             "line_to": 66,
             "type": "DeprecatedClass",
@@ -38,5 +14,6 @@
             "error_level": 2,
             "shortcode": 98
         }
-    ]
+    ],
+    "count": 1
 }
