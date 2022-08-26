@@ -10,6 +10,7 @@
         "spryker-shop/product-configuration-wishlist-widget-extension": "^0.1.0",
         "spryker-shop/sales-product-configuration-widget-extension": "^0.1.0",
         "spryker-shop/shop-ui": "^1.45.0",
+        "spryker/application-extension": "^1.1.0",
         "spryker/availability": "^9.1.0",
         "spryker/availability-extension": "^1.0.0",
         "spryker/checksum-generator": "^1.0.0",
