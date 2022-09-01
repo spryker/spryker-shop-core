@@ -19,6 +19,13 @@ use Symfony\Component\HttpFoundation\Response;
 class CustomerPageSecurityPluginTest extends Unit
 {
     /**
+     * @uses \Spryker\Yves\Locale\Plugin\Application\LocaleApplicationPlugin::SERVICE_LOCALE
+     *
+     * @var string
+     */
+    protected const SERVICE_LOCALE = 'locale';
+
+    /**
      * @var \SprykerShopTest\Yves\CustomerPage\CustomerPageTester
      */
     protected $tester;
@@ -62,7 +69,7 @@ class CustomerPageSecurityPluginTest extends Unit
         $this->tester->addSecurityPlugin($securityPlugin);
 
         $container->get('session')->start();
-
+        $container->set(CustomerPageDependencyProvider::SERVICE_LOCALE, 'en');
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
         $httpKernelBrowser->request('get', '/');
         $httpKernelBrowser->request('post', '/login_check', ['loginForm' => ['email' => $customerTransfer->getEmail(), 'password' => 'foo']]);
@@ -84,6 +91,7 @@ class CustomerPageSecurityPluginTest extends Unit
         $this->tester->addSecurityPlugin($securityPlugin);
 
         $container->get('session')->start();
+        $container->set(CustomerPageDependencyProvider::SERVICE_LOCALE, 'en');
 
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
         $httpKernelBrowser->request('post', '/login_check', ['loginForm' => ['email' => $customerTransfer->getEmail(), 'password' => 'bar']]);
