@@ -9,6 +9,7 @@
     hasCookies: app.request.cookies.get('last-visit'),
 } %}
 
+{# @deprecated variable "isNewFrontendBuildSupported" is deprecated #}
 {% set isNewFrontendBuildSupported = false %}
 {% set isCssLazyLoadSupported = false %}
 
@@ -38,22 +39,16 @@
             {% endblock %}
 
             {% block headScripts %}
-                {% widget 'AssetWidget' args ['header-top'] only %}
-                {% endwidget %}
+                {% widget 'AssetWidget' args ['header-top'] only %}{% endwidget %}
 
-                {% if isNewFrontendBuildSupported %}
-                    {% block esmHeadScripts %}
-                        <script nomodule type="application/javascript" src="{{ publicPath('js/yves_default.runtime.legacy.js') }}"></script>
-                        <script type="module" src="{{ publicPath('js/yves_default.runtime.js') }}" crossorigin="anonymous"></script>
-                    {% endblock %}
-                {% else %}
-                    {% block legacyHeadScripts %}
-                        <script src="{{ publicPath('js/yves_default.runtime.js') }}"></script>
-                    {% endblock %}
-                {% endif %}
+                <script type="module" src="{{ publicPath('js/yves_default.runtime.js') }}" crossorigin="anonymous"></script>
 
-                {% widget 'AssetWidget' args ['header'] only %}
-                {% endwidget %}
+                {# @deprecated block "esmHeadScripts" is deprecated #}
+                {% block esmHeadScripts %}{% endblock %}
+                {# @deprecated block "legacyHeadScripts" is deprecated #}
+                {% block legacyHeadScripts %}{% endblock %}
+
+                {% widget 'AssetWidget' args ['header'] only %}{% endwidget %}
             {% endblock %}
 
             <title>{% block headTitle %}{{ data.title }}{% endblock %}</title>
@@ -64,29 +59,19 @@
             {{ parent() }}
 
             {% block footerScripts %}
-                {% widget 'AssetWidget' args ['footer'] only %}
-                {% endwidget %}
+                {% widget 'AssetWidget' args ['footer'] only %}{% endwidget %}
 
-                {% if isNewFrontendBuildSupported %}
-                    {% block esmFooterScripts %}
-                        <script nomodule type="application/javascript" src="{{ publicPath('js/yves_default.es6-polyfill.legacy.js') }}"></script>
-                        <script nomodule type="application/javascript" src="{{ publicPath('js/yves_default.vendor.legacy.js') }}"></script>
-                        <script nomodule type="application/javascript" src="{{ publicPath('js/yves_default.app.legacy.js') }}"></script>
-                        <script type="module" src="{{ publicPath('js/yves_default.vendor.js') }}" crossorigin="anonymous"></script>
-                        <script type="module" src="{{ publicPath('js/yves_default.app.js') }}" crossorigin="anonymous"></script>
-                    {% endblock %}
-                {% else %}
-                    {% block legacyFooterScripts %}
-                        <script src="{{ publicPath('js/yves_default.es6-polyfill.js') }}"></script>
-                        <script src="{{ publicPath('js/yves_default.vendor.js') }}"></script>
-                        <script src="{{ publicPath('js/yves_default.app.js') }}"></script>
-                    {% endblock %}
-                {% endif %}
+                <script type="module" src="{{ publicPath('js/yves_default.vendor.js') }}" crossorigin="anonymous"></script>
+                <script type="module" src="{{ publicPath('js/yves_default.app.js') }}" crossorigin="anonymous"></script>
+
+                {# @deprecated block "esmFooterScripts" is deprecated #}
+                {% block esmFooterScripts %}{% endblock %}
+                {# @deprecated block "legacyFooterScripts" is deprecated #}
+                {% block legacyFooterScripts %}{% endblock %}
 
                 {%- block styleLazyLoader %}{% endblock -%}
 
-                {% widget 'AssetWidget' args ['footer-bottom'] only %}
-                {% endwidget %}
+                {% widget 'AssetWidget' args ['footer-bottom'] only %}{% endwidget %}
             {% endblock %}
         </body>
     </html>

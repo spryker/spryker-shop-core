@@ -17,10 +17,6 @@
             &--transparent {
                 background-color: $setting-color-transparent;
             }
-
-            &::-ms-clear {
-                display: none;
-            }
         }
 
         &__item {
