@@ -46,7 +46,7 @@ export default class RemoteFormSubmit extends Component {
     }
 
     protected createForm(): void {
-        if (document.getElementById(this.formName)) {
+        if (document.getElementById(this.formName)?.tagName === 'form') {
             return;
         }
 

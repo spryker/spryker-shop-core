@@ -27,6 +27,11 @@ class ProductDetailPageProductConfiguratorRedirectResolver implements ProductDet
     protected const GLOSSARY_KEY_PARAM_SKU = '%sku%';
 
     /**
+     * @var int
+     */
+    protected const PRODUCT_QUANITY = 1;
+
+    /**
      * @var \SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductConfigurationClientInterface
      */
     protected $productConfigurationClient;
@@ -77,6 +82,8 @@ class ProductDetailPageProductConfiguratorRedirectResolver implements ProductDet
                 [static::GLOSSARY_KEY_PARAM_SKU => $productConfiguratorRequestTransfer->getProductConfiguratorRequestDataOrFail()->getSkuOrFail()],
             );
         }
+
+        $productConfigurationInstanceTransfer->setQuantity(static::PRODUCT_QUANITY);
 
         $productConfiguratorRequestTransfer = $this->productConfiguratorRequestMapper->mapProductConfigurationInstanceTransferToProductConfiguratorRequestTransfer(
             $productConfigurationInstanceTransfer,

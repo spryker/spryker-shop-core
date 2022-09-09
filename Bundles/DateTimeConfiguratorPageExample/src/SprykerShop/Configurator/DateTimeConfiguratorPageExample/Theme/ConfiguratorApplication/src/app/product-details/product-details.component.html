@@ -97,6 +97,7 @@
                 />
                 <input name="itemGroupKey" type="hidden" [value]="productData.item_group_key" />
                 <input name="idWishlistItem" type="hidden" [value]="productData.id_wishlist_item" />
+                <input name="shoppingListItemUuid" type="hidden" [value]="productData.shopping_list_item_uuid" />
                 <input
                     type="hidden"
                     name="productConfigurationInstance[configuration]"
@@ -108,7 +109,7 @@
                     [value]="productData.display_data | json"
                 />
                 <input
-                    *ngIf="productData.available_quantity"
+                    *ngIf="productData.available_quantity !== ''"
                     type="hidden"
                     name="productConfigurationInstance[availableQuantity]"
                     [value]="productData.available_quantity"

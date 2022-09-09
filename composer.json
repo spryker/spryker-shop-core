@@ -107,6 +107,8 @@
         "spryker-shop/product-category-widget": "*",
         "spryker-shop/product-configuration-cart-widget": "*",
         "spryker-shop/product-configuration-cart-widget-extension": "*",
+        "spryker-shop/product-configuration-shopping-list-widget": "*",
+        "spryker-shop/product-configuration-shopping-list-widget-extension": "*",
         "spryker-shop/product-configuration-widget": "*",
         "spryker-shop/product-configuration-widget-extension": "*",
         "spryker-shop/product-configuration-wishlist-widget": "*",

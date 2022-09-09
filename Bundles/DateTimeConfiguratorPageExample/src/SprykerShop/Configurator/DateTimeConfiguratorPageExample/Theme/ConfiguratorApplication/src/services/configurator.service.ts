@@ -132,12 +132,21 @@ export class ConfiguratorService {
 
     setQuantity(isAtStore: boolean, date: string, dayTime: string): number | string {
         const isDaytimeLunch = dayTime.toLowerCase().trim() === 'lunch hour';
+        const isDaytimeMorning = dayTime.toLowerCase().trim() === 'morning';
 
-        if (!isAtStore || !date || !isDaytimeLunch) {
+        if (!isAtStore || !date) {
             return '';
         }
 
-        return 5;
+        if (isDaytimeLunch) {
+            return 5;
+        }
+
+        if (isDaytimeMorning) {
+            return 0;
+        }
+
+        return '';
     }
 
     updateWithGeneratedProductData(newProductData): void {

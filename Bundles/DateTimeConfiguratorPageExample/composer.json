@@ -6,6 +6,7 @@
     "require": {
         "php": ">=7.4",
         "spryker-shop/product-configuration-cart-widget-extension": "^0.1.0",
+        "spryker-shop/product-configuration-shopping-list-widget-extension": "^0.1.0",
         "spryker-shop/product-configuration-widget-extension": "^0.1.0",
         "spryker-shop/product-configuration-wishlist-widget-extension": "^0.1.0",
         "spryker-shop/sales-product-configuration-widget-extension": "^0.1.0",

@@ -1,0 +1,35 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isVisible: _widget.isVisible,
+    form: _widget.form | default,
+    productConfiguratorRouteName: _widget.productConfiguratorRouteName | default,
+    actionParams: {},
+} %}
+
+{% set buttonIcon = 'wrench' %}
+{% set buttonClass = 'button button--expand' %}
+
+{% block body %}
+    {% embed molecule('remote-form-submit') with {
+        data: {
+            label: 'product_configuration_widget.configure' | trans,
+            iconName: buttonIcon,
+            buttonClass: buttonClass,
+            buttonExtraAttributes: {
+                'data-init-single-click': true,
+            },
+        },
+        attributes: {
+            'form-name': data.form.vars.id ~ data.form.vars.value.shoppingListItemUuid,
+            'form-action': path(data.productConfiguratorRouteName, data.actionParams),
+        },
+        embed: {
+            form: data.form,
+        },
+    } only %}
+        {% block fields %}
+            {{- form_widget(embed.form) -}}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

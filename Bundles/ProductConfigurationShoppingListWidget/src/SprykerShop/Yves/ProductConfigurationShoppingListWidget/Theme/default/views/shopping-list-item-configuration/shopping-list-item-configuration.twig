@@ -1,0 +1,55 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isVisible: _widget.isVisible,
+    productConfigurationInstance: _widget.productConfigurationInstance | default,
+    productConfigurationTemplate: _widget.productConfigurationTemplate | default,
+} %}
+
+{% import _self as macros %}
+
+{% block body %}
+    {% set isComplete = data.productConfigurationInstance.isComplete %}
+    {% set configurationLabel = (isComplete ? 'product_configuration_widget.complete' : 'product_configuration_widget.not_complete') | trans %}
+    {% set configurationStatusClassName = isComplete ? 'configured' : 'not-configured' %}
+    {% set statusClass = 'spacing-bottom' %}
+
+    {% block status %}
+        {% include molecule('status') with {
+            class: statusClass,
+            data: {
+                label: configurationLabel,
+                status: configurationStatusClassName,
+            },
+        } only %}
+    {% endblock %}
+
+    {% block productData %}
+        {% if isComplete %}
+            {% set productConfigurationTemplate = data.productConfigurationTemplate %}
+            {% set isTemplateDefined = productConfigurationTemplate.templateType and productConfigurationTemplate.templateName and productConfigurationTemplate.moduleName %}
+
+            {% if isTemplateDefined %}
+                {% set configurableTemplate = macros.getTemplate(
+                    productConfigurationTemplate.templateType,
+                    productConfigurationTemplate.templateName,
+                    productConfigurationTemplate.moduleName
+                ) | trim %}
+
+                {% block optionsTemplate %}
+                    {% include configurableTemplate ignore missing with {
+                        data: {
+                            listItems: productConfigurationTemplate.data,
+                        },
+                    } only %}
+                {% endblock %}
+            {% else %}
+                {% block optionsContent %}
+                    <div>
+                        {{ data.productConfigurationInstance.displayData }}
+                    </div>
+                {% endblock %}
+            {% endif %}
+        {% endif %}
+    {% endblock %}
+{% endblock %}

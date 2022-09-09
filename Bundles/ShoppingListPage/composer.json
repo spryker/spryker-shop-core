@@ -29,6 +29,7 @@
     },
     "suggest": {
         "spryker-shop/customer-page": "Use this module when you want to show shopping lists on a customer page",
+        "spryker-shop/product-configuration-shopping-list-widget": "Add the module if you want to use ProductConfigurationShoppingListItemDisplayWidget or ProductConfigurationShoppingListPageButtonWidget.",
         "spryker-shop/product-option-widget": "Use this module if you want to manage product options for shopping list items.",
         "spryker/router": "Use this module when you want to use the Router.",
         "spryker/silex": "Use this module when using plugins that need Silex dependencies."

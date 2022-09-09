@@ -84,6 +84,8 @@
         {% endfor %}
         {% widget 'SoldByMerchantWidget' args [item] only %}
         {% endwidget %}
+
+        {% widget 'ProductConfigurationShoppingListItemDisplayWidget' args [item.shoppingListItem] only %}{% endwidget %}
     </td>
 {% endblock %}
 

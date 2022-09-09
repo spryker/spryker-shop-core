@@ -139,6 +139,9 @@
                                                             </li>
                                                         {% endblock %}
                                                     {% endwidget %}
+
+                                                    {% widget 'ProductConfigurationShoppingListItemDisplayWidget' args [item.shoppingListItem] only %}{% endwidget %}
+                                                    {% widget 'ProductConfigurationShoppingListPageButtonWidget' args [item.shoppingListItem] only %}{% endwidget %}
                                                 </ul>
                                             {% endblock %}
                                         </td>

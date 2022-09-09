@@ -2,6 +2,7 @@ export interface ProductData {
     sku: string;
     item_group_key: string;
     id_wishlist_item: number;
+    shopping_list_item_uuid: string;
     quantity: number;
     configurator_key: string;
     customer_reference: string;

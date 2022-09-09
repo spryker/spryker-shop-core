@@ -21,6 +21,18 @@ class ExampleDateTimeProductConfiguratorRequestExpanderPlugin extends AbstractPl
     public function expand(
         ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
     ): ProductConfiguratorRequestTransfer {
-        return $productConfiguratorRequestTransfer->setAccessTokenRequestUrl(getenv('SPRYKER_PRODUCT_CONFIGURATOR_HOST') ?: '');
+        return $productConfiguratorRequestTransfer->setAccessTokenRequestUrl($this->createConfiguratorUrl());
+    }
+
+    /**
+     * @return string
+     */
+    protected function createConfiguratorUrl(): string
+    {
+        return sprintf(
+            '%s://%s',
+            getenv('SPRYKER_PRODUCT_CONFIGURATOR_PORT') === '443' ? 'https' : 'http',
+            getenv('SPRYKER_PRODUCT_CONFIGURATOR_HOST') ?: '',
+        );
     }
 }
