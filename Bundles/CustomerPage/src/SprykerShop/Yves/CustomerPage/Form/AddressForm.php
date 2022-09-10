@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CustomerPage\Form;
 
 use Spryker\Yves\Kernel\Form\AbstractType;
+use SprykerShop\Yves\CustomerPage\CustomerPageConfig;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -204,6 +205,7 @@ class AddressForm extends AbstractType
             'constraints' => [
                 $this->createNotBlankConstraint($options),
                 $this->createMinLengthConstraint($options),
+                $this->createFirstNameRegexConstraint(),
             ],
         ]);
 
@@ -225,6 +227,7 @@ class AddressForm extends AbstractType
             'constraints' => [
                 $this->createNotBlankConstraint($options),
                 $this->createMinLengthConstraint($options),
+                $this->createLastNameRegexConstraint(),
             ],
         ]);
 
@@ -447,6 +450,26 @@ class AddressForm extends AbstractType
             'min' => 3,
             'groups' => $validationGroup,
             'minMessage' => static::VALIDATION_MIN_LENGTH_MESSAGE,
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createFirstNameRegexConstraint(): Regex
+    {
+        return new Regex([
+            'pattern' => CustomerPageConfig::PATTERN_FIRST_NAME,
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createLastNameRegexConstraint(): Regex
+    {
+        return new Regex([
+            'pattern' => CustomerPageConfig::PATTERN_LAST_NAME,
         ]);
     }
 

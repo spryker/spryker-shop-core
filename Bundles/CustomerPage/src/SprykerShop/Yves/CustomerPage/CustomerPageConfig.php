@@ -61,6 +61,26 @@ class CustomerPageConfig extends AbstractBundleConfig
     protected const MAX_LENGTH_CUSTOMER_PASSWORD = 72;
 
     /**
+     * Specification:
+     * - Regular expression to validate Customer First Name field.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PATTERN_FIRST_NAME = '/^[^:\/<>]+$/';
+
+    /**
+     * Specification:
+     * - Regular expression to validate Customer Last Name field.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PATTERN_LAST_NAME = '/^[^:\/<>]+$/';
+
+    /**
      * @api
      *
      * @return string

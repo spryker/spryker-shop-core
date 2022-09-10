@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CompanyPage\Form;
 
+use SprykerShop\Yves\CompanyPage\CompanyPageConfig;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -18,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageConfig getConfig()
@@ -132,6 +134,7 @@ class CompanyRegisterForm extends AbstractType
             'required' => true,
             'constraints' => [
                 $this->createNotBlankConstraint(),
+                $this->createFirstNameRegexConstraint(),
             ],
         ]);
 
@@ -150,6 +153,7 @@ class CompanyRegisterForm extends AbstractType
             'required' => true,
             'constraints' => [
                 $this->createNotBlankConstraint(),
+                $this->createLastNameRegexConstraint(),
             ],
         ]);
 
@@ -282,5 +286,25 @@ class CompanyRegisterForm extends AbstractType
     protected function createNotBlankConstraint(): NotBlank
     {
         return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createFirstNameRegexConstraint(): Regex
+    {
+        return new Regex([
+            'pattern' => CompanyPageConfig::PATTERN_FIRST_NAME,
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createLastNameRegexConstraint(): Regex
+    {
+        return new Regex([
+            'pattern' => CompanyPageConfig::PATTERN_LAST_NAME,
+        ]);
     }
 }
