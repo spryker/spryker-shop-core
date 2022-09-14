@@ -8,6 +8,7 @@
 {% define data = {
     amount: required,
     originalAmount: null,
+    isVisible: data.amount is not null,
 } %}
 
 {% define attributes = {
@@ -15,6 +16,12 @@
     itemprop: 'offers',
     itemtype: 'https://schema.org/Offer',
 } %}
+
+{% block component %}
+    {% if data.isVisible -%}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
 
 {% block body %}
     {% if data.originalAmount is not empty and data.originalAmount > data.amount -%}
