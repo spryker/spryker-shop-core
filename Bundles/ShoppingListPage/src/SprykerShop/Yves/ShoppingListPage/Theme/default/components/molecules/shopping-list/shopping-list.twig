@@ -97,51 +97,90 @@
                                         <td class="{{ config.name }}__cell">
                                             {% block productColInner %}
                                                 <ul class="list spacing-y">
-                                                    <li class="list__item">
-                                                        <a itemprop="url" href="{{ item.url }}"><span itemprop="name">{{ item.name }}</span></a>
-                                                    </li>
-                                                    <li class="list__item">
-                                                        <small itemprop="sku" class="text-secondary">{{ item.sku }}</small>
-                                                        <input class="input" type="hidden"
-                                                               name="shoppingListItems[{{ item.idShoppingListItem }}]"
-                                                               value="{{ item.shoppingListItem.toArray | json_encode() }}">
-                                                    </li>
+                                                    {% block productName %}
+                                                        <li class="list__item">
+                                                            <a itemprop="url" href="{{ item.url }}"><span itemprop="name">{{ item.name }}</span></a>
+                                                        </li>
+                                                    {% endblock %}
 
-                                                    <li class="list__item">
-                                                        {% set listOfAttributes = {} %}
-                                                        {% for attribute in item.superAttributesDefinition %}
-                                                            {% if item.attributes[attribute] is defined %}
-                                                                {% set listOfAttributes = listOfAttributes | merge({ ('product.attribute.' ~ attribute) | trans: item.attributes[attribute] }) %}
-                                                            {% endif %}
-                                                        {% endfor %}
+                                                    {% block productSku %}
+                                                        <li class="list__item">
+                                                            <small itemprop="sku" class="text-secondary">{{ item.sku }}</small>
+                                                            <input class="input" type="hidden"
+                                                                   name="shoppingListItems[{{ item.idShoppingListItem }}]"
+                                                                   value="{{ item.shoppingListItem.toArray | json_encode() }}">
+                                                        </li>
+                                                    {% endblock %}
 
-                                                        {% include molecule('product-item-attributes') with {
+                                                    {% block productAttributes %}
+                                                        <li class="list__item">
+                                                            {% set listOfAttributes = {} %}
+                                                            {% for attribute in item.superAttributesDefinition %}
+                                                                {% if item.attributes[attribute] is defined %}
+                                                                    {% set listOfAttributes = listOfAttributes | merge({ ('product.attribute.' ~ attribute) | trans: item.attributes[attribute] }) %}
+                                                                {% endif %}
+                                                            {% endfor %}
+
+                                                            {% include molecule('product-item-attributes') with {
+                                                                data: {
+                                                                    list: listOfAttributes,
+                                                                },
+                                                            } only %}
+                                                        </li>
+                                                    {% endblock %}
+
+                                                    {% block productNote %}
+                                                        {% widget 'ShoppingListItemNoteWidget' args [item.shoppingListItem] only %}
+                                                            {% block body %}
+                                                                <li class="list__item">{{ parent() }}</li>
+                                                            {% endblock %}
+                                                        {% endwidget %}
+                                                    {% endblock %}
+
+                                                    {% block productOptions %}
+                                                        {% embed molecule('shopping-list-item-product-option-display', 'ProductOptionWidget') ignore missing with {
+                                                            class: 'list list--expand',
                                                             data: {
-                                                                list: listOfAttributes,
+                                                                options: item.shoppingListItem.productOptions,
                                                             },
                                                         } only %}
-                                                    </li>
+                                                            {% block component %}
+                                                                <li class="list__item">{{ parent() }}</li>
+                                                            {% endblock %}
+                                                        {% endembed %}
+                                                    {% endblock %}
 
-                                                    {% widget 'ShoppingListItemNoteWidget' args [item.shoppingListItem] only %}
-                                                    {% endwidget %}
+                                                    {% block productSoldBy %}
+                                                        {% widget 'SoldByMerchantWidget' args [item] only %}
+                                                            {% block body %}
+                                                                <li class="list__item">{{ parent() }}</li>
+                                                            {% endblock %}
+                                                        {% endwidget %}
+                                                    {% endblock %}
 
-                                                    {% include molecule('shopping-list-item-product-option-display', 'ProductOptionWidget') ignore missing with {
-                                                        class: 'list list--expand',
-                                                        data: {
-                                                            options: item.shoppingListItem.productOptions,
-                                                        },
-                                                    } only %}
+                                                    {% block productConfigurationInfo %}
+                                                        {% widget 'ProductConfigurationShoppingListItemDisplayWidget' args [item.shoppingListItem] only %}
+                                                            {% block body %}
+                                                                <li class="list__item">{{ parent() }}</li>
+                                                            {% endblock %}
+                                                        {% endwidget %}
+                                                    {% endblock %}
 
-                                                    {% widget 'SoldByMerchantWidget' args [item] only %}
-                                                        {% block template %}
-                                                            <li class="list__item">
-                                                                {{ parent() }}
-                                                            </li>
-                                                        {% endblock %}
-                                                    {% endwidget %}
+                                                    {% block productConfigurationButton %}
+                                                        {% widget 'ProductConfigurationShoppingListPageButtonWidget' args [item.shoppingListItem] with {
+                                                            embed: {
+                                                                configName: config.name,
+                                                            },
+                                                        } only %}
+                                                            {% block body %}
+                                                                <li class="list__item">
+                                                                    {% set buttonClass = embed.configName ~ '__configuration-button ' ~ buttonClass %}
 
-                                                    {% widget 'ProductConfigurationShoppingListItemDisplayWidget' args [item.shoppingListItem] only %}{% endwidget %}
-                                                    {% widget 'ProductConfigurationShoppingListPageButtonWidget' args [item.shoppingListItem] only %}{% endwidget %}
+                                                                    {{ parent() }}
+                                                                </li>
+                                                            {% endblock %}
+                                                        {% endwidget %}
+                                                    {% endblock %}
                                                 </ul>
                                             {% endblock %}
                                         </td>

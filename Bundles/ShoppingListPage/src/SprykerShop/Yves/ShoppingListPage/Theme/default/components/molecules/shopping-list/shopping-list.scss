@@ -15,13 +15,30 @@
             border-top: 1px solid $setting-color-light;
 
             &--disable {
-                opacity: 0.4;
+                position: relative;
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    height: 100%;
+                    width: 100%;
+                    background: $setting-color-white;
+                    opacity: 0.4;
+                    cursor: not-allowed;
+                }
             }
 
             &:first-child,
             &--borderless {
                 border: none;
             }
+        }
+
+        &__configuration-button {
+            position: relative;
+            z-index: $setting-zi-element;
         }
 
         @content;

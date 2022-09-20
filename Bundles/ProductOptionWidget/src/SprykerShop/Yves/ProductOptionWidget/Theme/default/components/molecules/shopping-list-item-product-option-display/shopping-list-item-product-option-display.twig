@@ -1,13 +1,15 @@
 {% extends model('component') %}
+
 {% define config = {
     name: 'shopping-list-item-product-option-display',
-    tag: 'ul'
-} %}
-{% define data = {
-    options: null
+    tag: 'ul',
 } %}
 
-{% block template %}
+{% define data = {
+    options: null,
+} %}
+
+{% block component %}
     {% if data.options is not empty %}
         {{ parent() }}
     {% endif %}
