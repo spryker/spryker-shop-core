@@ -1,0 +1,10 @@
+@mixin product-bundle-widget-bundle-items($name: '.bundle-items') {
+    #{$name} {
+        &__name {
+            display: block;
+            color: $setting-color-text;
+        }
+
+        @content;
+    }
+}

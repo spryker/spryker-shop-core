@@ -1,0 +1,15 @@
+{% extends template('widget') %}
+
+{% define data = {
+    items: _widget.bundleItems,
+    isVisible: _widget.isVisible,
+} %}
+
+{% block body %}
+    {% include molecule('bundle-items', 'ProductBundleWidget') with {
+        data: {
+            items: data.items,
+            isVisible: data.isVisible,
+        },
+    } only %}
+{% endblock %}

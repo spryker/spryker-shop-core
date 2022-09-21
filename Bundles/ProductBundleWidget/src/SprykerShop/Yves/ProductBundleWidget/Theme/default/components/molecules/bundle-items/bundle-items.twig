@@ -1,0 +1,72 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'bundle-items',
+} %}
+
+{% define data = {
+    title: 'product_bundle_product_detail_page_items_list_widget.title.bundle_includes' | trans,
+    items: required,
+    isVisible: data.items is not empty,
+} %}
+
+{%- block component -%}
+    {% if data.isVisible %}
+        {{ parent() }}
+    {% endif %}
+{%- endblock -%}
+
+{% block body %}
+    {% set itemClassName = config.name ~ '__item grid grid--middle' %}
+    {% set thumbnailClassName = 'col col--sm-2' %}
+    {% set thumbnailModifiers = ['thumbnail', 'smaller'] %}
+    {% set itemDetailsClassName = 'col col--sm-10' %}
+
+    {% block title %}
+        {% if data.title %}
+            <h2 class="{{ config.name }}__title title title--h6">{{ data.title }}</h2>
+        {% endif %}
+    {% endblock %}
+
+    {% block itemList %}
+        {% for item in data.items %}
+            {% set itemName = item.name | default %}
+            {% set itemUrl = item.url | default %}
+            {% set imageUrl = item.productImages.0.externalUrlSmall | default %}
+
+            <div class="{{ itemClassName }}">
+                {% block thumbnailWrapper %}
+                    <div class="{{ thumbnailClassName }}">
+                        {% if imageUrl %}
+                            {% if itemUrl %}
+                                <a href="{{ itemUrl }}">
+                                    {% block thumbnail %}
+                                        {% include molecule('lazy-image') with {
+                                            modifiers: thumbnailModifiers,
+                                            data: {
+                                                imageSrc: imageUrl,
+                                            },
+                                        } only %}
+                                    {% endblock %}
+                                </a>
+                            {% else %}
+                                {{ block('thumbnail') }}
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                {% endblock %}
+
+                {% block info %}
+                    <div class="{{ itemDetailsClassName }}">
+                        {% if itemUrl %}
+                            <a href="{{ itemUrl }}" class="{{ config.name }}__name">{{ itemName }}</a>
+                        {% else %}
+                            <span class="{{ config.name }}__name">{{ itemName }}</span>
+                        {% endif %}
+                        <span class="{{ config.name }}__quantity">x {{ item.quantity }}</span>
+                    </div>
+                {% endblock %}
+            </div>
+        {% endfor %}
+    {% endblock %}
+{% endblock %}

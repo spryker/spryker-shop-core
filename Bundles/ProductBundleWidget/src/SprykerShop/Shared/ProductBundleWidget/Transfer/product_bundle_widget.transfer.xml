@@ -11,4 +11,17 @@
         <property name="bundleItemIdentifier" type="string"/>
     </transfer>
 
+    <transfer name="ProductView">
+        <property name="bundledProducts" type="ProductForProductBundleStorage[]" singular="bundledProduct"/>
+        <property name="attributes" type="array" singular="attributes"/>
+    </transfer>
+
+    <transfer name="ProductForProductBundleStorage">
+        <property name="productImages" singular="image" type="ProductImageStorage[]"/>
+    </transfer>
+
+    <transfer name="ProductImageStorage">
+        <property name="externalUrlSmall" type="string"/>
+    </transfer>
+
 </transfers>

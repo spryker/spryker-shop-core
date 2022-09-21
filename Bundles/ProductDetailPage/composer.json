@@ -30,7 +30,8 @@
         "spryker-shop/product-configuration-widget": "Add the module if you want to use ProductConfigurationProductViewDisplayWidget or ProductConfigurationProductDetailPageButtonWidget.",
         "spryker-shop/wishlist-widget": "If you want to use components from module WishlistWidget or WishlistWidgetPlugin.",
         "spryker-shop/cart-page": "Add the module if you want to use CartAddProductAsSeparateItemWidget.",
-        "spryker-shop/asset-widget": "If you want to use components from module AssetWidget"
+        "spryker-shop/asset-widget": "If you want to use components from module AssetWidget",
+        "spryker-shop/product-bundle-widget": "If you want to use components from module ProductBundle"
     },
     "autoload": {
         "psr-4": {
