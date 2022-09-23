@@ -19,7 +19,7 @@
         }
     },
     "scripts": {
-        "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p --ignore=/node_modules/ Bundles/"
+        "cs-check": "phpcs"
     },
     "replace": {
         "spryker-shop/agent-page": "*",
