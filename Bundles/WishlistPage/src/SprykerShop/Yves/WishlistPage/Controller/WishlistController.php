@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\WishlistItemMetaTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
+use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -137,11 +138,29 @@ class WishlistController extends AbstractController
             ]);
         }
 
+        $wishlistResponseTransfer = new WishlistResponseTransfer();
+        if ($wishlistItemTransfer->getWishlistName() === static::DEFAULT_NAME) {
+            $wishlistResponseTransfer = $this->getFactory()->getWishlistClient()->validateAndCreateWishlist(
+                (new WishlistTransfer())
+                    ->setName(static::DEFAULT_NAME)
+                ->setFkCustomer($wishlistItemTransfer->getFkCustomer()),
+            );
+        }
+
         $wishlistItemTransfer = $this->getFactory()
             ->getWishlistClient()
             ->addItem($wishlistItemTransfer);
+
         if (!$wishlistItemTransfer->getIdWishlistItem()) {
+            if ($wishlistResponseTransfer->getWishlist()) {
+                $this->getFactory()->getWishlistClient()->removeWishlistByName($wishlistResponseTransfer->getWishlist());
+            }
+
             $this->addErrorMessage('customer.account.wishlist.item.not_added');
+
+            return $this->redirectResponseInternal(WishlistPageRouteProviderPlugin::ROUTE_NAME_WISHLIST_OVERVIEW, [
+                'wishlistName' => $wishlistItemTransfer->getWishlistName(),
+            ]);
         }
 
         return $this->redirectResponseInternal(WishlistPageRouteProviderPlugin::ROUTE_NAME_WISHLIST_DETAILS, [
@@ -306,13 +325,11 @@ class WishlistController extends AbstractController
      */
     protected function getWishlistItemTransferFromRequest(Request $request)
     {
-        $customerClient = $this->getFactory()->getCustomerClient();
-        $customerTransfer = $customerClient->getCustomer();
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
         if (!$customerTransfer) {
             return null;
         }
-
         $wishlistName = $request->get(static::PARAM_WISHLIST_NAME) ?: static::DEFAULT_NAME;
 
         $sku = (string)$request->query->get(static::PARAM_SKU) ?: null;

@@ -64,6 +64,7 @@
     <transfer name="WishlistResponse">
         <property name="isSuccess" type="bool"/>
         <property name="errors" type="array" singular="error"/>
+        <property name="wishlist" type="Wishlist"/>
     </transfer>
 
     <transfer name="WishlistPagination">
