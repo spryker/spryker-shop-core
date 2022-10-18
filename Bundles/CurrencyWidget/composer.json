@@ -4,7 +4,7 @@
     "description": "CurrencyWidget module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker-shop/shop-ui": "^1.27.0",
         "spryker/currency": "^3.14.0",
         "spryker/kernel": "^3.52.0",

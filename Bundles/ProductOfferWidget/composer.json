@@ -4,7 +4,7 @@
     "description": "ProductOfferWidget module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker-shop/quick-order-page-extension": "^1.2.0",
         "spryker/kernel": "^3.30.0",
         "spryker/product-offer-storage": "^1.0.0"

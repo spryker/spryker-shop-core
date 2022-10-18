@@ -1,6 +1,6 @@
 # CompanyUserInvitationPage Module
 [![Latest Stable Version](https://poser.pugx.org/spryker-shop/company-user-invitation-page/v/stable.svg)](https://packagist.org/packages/spryker-shop/company-user-invitation-page)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.0-8892BF.svg)](https://php.net/)
 
 The module allows company users with the appropriate permissions to import and send company user invitations.
 - Import CSV file with invitations

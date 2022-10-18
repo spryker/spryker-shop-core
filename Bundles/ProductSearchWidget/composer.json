@@ -4,7 +4,7 @@
     "description": "ProductSearchWidget module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker-shop/product-search-widget-extension": "^1.0.0",
         "spryker-shop/shop-ui": "^1.58.0",
         "spryker/application": "^3.0.0",

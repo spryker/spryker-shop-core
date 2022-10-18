@@ -4,7 +4,7 @@
     "description": "DateTimeConfiguratorPageExample module",
     "license": "MIT",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker-shop/product-configuration-cart-widget-extension": "^0.1.0",
         "spryker-shop/product-configuration-shopping-list-widget-extension": "^0.1.0",
         "spryker-shop/product-configuration-widget-extension": "^0.1.0",
