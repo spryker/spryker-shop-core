@@ -161,9 +161,11 @@ class GuestForm extends AbstractType
         $builder->add(static::FIELD_EMAIL, EmailType::class, [
             'label' => 'auth.email',
             'constraints' => [
-                $this->createNotBlankConstraint(),
                 new Callback([
                     'callback' => function ($email, ExecutionContextInterface $context) {
+                        if (!$email) {
+                            return $this->createNotBlankConstraint();
+                        }
                         $isEmailFormatValid = $this->getFactory()
                             ->getUtilValidateService()
                             ->isEmailFormatValid($email);
