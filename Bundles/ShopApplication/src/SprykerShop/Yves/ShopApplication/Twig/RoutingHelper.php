@@ -49,7 +49,7 @@ class RoutingHelper implements RoutingHelperInterface
         } else {
             throw new LogicException('Cannot parse destination');
         }
-        [$namespace, $application, $module, $layer, $controllerName] = explode('\\', $controllerNamespaceName);
+        [$namespace, $application, $module, $layer, $controllerName] = explode('\\', (string)$controllerNamespaceName);
 
         $module = $this->resolveModuleName($module);
 

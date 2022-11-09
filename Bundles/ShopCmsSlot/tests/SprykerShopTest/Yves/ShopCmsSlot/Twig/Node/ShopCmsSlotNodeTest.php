@@ -11,6 +11,7 @@ use SprykerShop\Yves\ShopCmsSlot\Twig\Node\ShopCmsSlotNode;
 use SprykerShop\Yves\ShopCmsSlot\Twig\TokenParser\ShopCmsSlotTokenParser;
 use Twig\Node\Expression\ArrayExpression;
 use Twig\Node\Expression\ConstantExpression;
+use Twig\Source;
 use Twig\Test\NodeTestCase;
 
 class ShopCmsSlotNodeTest extends NodeTestCase
@@ -59,7 +60,7 @@ EOF;
     {
         $templatePath = '@Home/index/home.twig';
         $node = new ShopCmsSlotNode('cms-slot-key', [], [], 1, 'cms_slot');
-        $node->setTemplateName($templatePath);
+        $node->setSourceContext(new Source('', $templatePath, ''));
 
         $expectedCode = <<<EOF
 // line 1
