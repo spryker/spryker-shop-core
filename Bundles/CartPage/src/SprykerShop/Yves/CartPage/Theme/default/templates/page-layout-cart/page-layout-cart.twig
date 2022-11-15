@@ -61,6 +61,15 @@
                 </div>
                 <div class="col col--xl-3">
                     <div class="box">
+                        {% if (not is_granted('ROLE_USER') or data.isQuoteEditable) and can('SeePricePermissionPlugin') %}
+                            {% widget 'CartCodeFormWidget' args [data.cart] only %}
+                                {% block body %}
+                                    {{ parent() }}
+                                    <hr>
+                                {% endblock %}
+                            {% endwidget %}
+                        {% endif %}
+                   
                         {% widget 'ProductConcreteAddWidget' args [
                             'cart.quick_add_to_cart' | trans,
                             'cart.quick_add_to_cart.submit' | trans,
