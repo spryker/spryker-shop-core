@@ -7,6 +7,7 @@
     metaDescription: '',
     metaKeywords: '',
     hasCookies: app.request.cookies.get('last-visit'),
+    appLocale: app.locale,
 } %}
 
 {# @deprecated variable "isNewFrontendBuildSupported" is deprecated #}
@@ -15,7 +16,7 @@
 
 {% block template %}
     <!doctype html>
-    <html lang="{{ data.locale }}">
+    <html lang="{{ data.locale }}" data-locale="{{ data.appLocale }}">
         <head>
             {% block meta %}
                 <meta charset="utf-8">
