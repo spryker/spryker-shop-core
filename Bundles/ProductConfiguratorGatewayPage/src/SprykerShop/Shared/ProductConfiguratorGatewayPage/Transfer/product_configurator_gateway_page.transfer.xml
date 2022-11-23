@@ -9,6 +9,7 @@
         <property name="quantity" type="int"/>
         <property name="availableQuantity" type="int"/>
         <property name="prices" type="PriceProduct[]" singular="price"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="Quote">
@@ -75,4 +76,15 @@
     <transfer name="ProductConcreteStorage">
     </transfer>
 
+    <transfer name="ProductConfigurationInstanceCollection">
+        <property name="productConfigurationInstances" type="ProductConfigurationInstance[]" singular="productConfigurationInstance"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationInstanceCriteria">
+        <property name="productConfigurationInstanceConditions" type="ProductConfigurationInstanceConditions"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationInstanceConditions">
+        <property name="skus" type="string[]" singular="sku"/>
+    </transfer>
 </transfers>

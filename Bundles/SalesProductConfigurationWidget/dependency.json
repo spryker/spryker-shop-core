@@ -1,6 +1,7 @@
 {
     "include": {
         "spryker-shop/shop-ui": "ShopUi provides basic frontend infrastructure.",
-        "spryker/sales-product-configuration": "SalesProductConfigurationWidget depends on SalesProductConfiguration functionality."
+        "spryker/sales-product-configuration": "SalesProductConfigurationWidget depends on SalesProductConfiguration functionality.",
+        "spryker/transfer": "Required for get*OrFail()."
     }
 }

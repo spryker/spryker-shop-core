@@ -5,13 +5,13 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.0",
-        "spryker-shop/product-configuration-wishlist-widget-extension": "^0.1.0",
-        "spryker-shop/product-configurator-gateway-page-extension": "^0.2.0",
+        "spryker-shop/product-configuration-wishlist-widget-extension": "^1.0.0",
+        "spryker-shop/product-configurator-gateway-page-extension": "^1.0.0",
         "spryker-shop/shop-ui": "^1.54.0",
         "spryker-shop/wishlist-page-extension": "^1.0.0",
         "spryker/application": "^3.8.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/product-configuration-wishlist": "^0.1.0",
+        "spryker/product-configuration-wishlist": "^1.0.0",
         "spryker/symfony": "^3.1.0",
         "spryker/transfer": "^3.25.0"
     },

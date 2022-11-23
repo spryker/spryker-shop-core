@@ -91,7 +91,7 @@ class ProductConfigurationOrderItemDisplayWidget extends AbstractWidget
     {
         $productConfigurationTemplateTransfer = $this->getFactory()
             ->createProductConfigurationTemplateResolver()
-            ->resolveProductConfigurationTemplate($itemTransfer->getSalesOrderItemConfiguration());
+            ->resolveProductConfigurationTemplate($itemTransfer->getSalesOrderItemConfigurationOrFail());
 
         $this->addParameter(static::PARAMETER_PRODUCT_CONFIGURATION_TEMPLATE, $productConfigurationTemplateTransfer);
     }

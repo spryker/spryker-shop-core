@@ -8,7 +8,11 @@
 namespace SprykerShop\Yves\ProductConfiguratorGatewayPage\Resolver;
 
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceConditionsTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer;
+use Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductConfigurationClientInterface;
 use SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductConfigurationStorageClientInterface;
@@ -34,17 +38,17 @@ class ProductDetailPageProductConfiguratorRedirectResolver implements ProductDet
     /**
      * @var \SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductConfigurationClientInterface
      */
-    protected $productConfigurationClient;
+    protected ProductConfiguratorGatewayPageToProductConfigurationClientInterface $productConfigurationClient;
 
     /**
      * @var \SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductConfigurationStorageClientInterface
      */
-    protected $productConfigurationStorageClient;
+    protected ProductConfiguratorGatewayPageToProductConfigurationStorageClientInterface $productConfigurationStorageClient;
 
     /**
      * @var \SprykerShop\Yves\ProductConfiguratorGatewayPage\Mapper\ProductConfiguratorRequestMapperInterface
      */
-    protected $productConfiguratorRequestMapper;
+    protected ProductConfiguratorRequestMapperInterface $productConfiguratorRequestMapper;
 
     /**
      * @param \SprykerShop\Yves\ProductConfiguratorGatewayPage\Dependency\Client\ProductConfiguratorGatewayPageToProductConfigurationClientInterface $productConfigurationClient
@@ -69,21 +73,21 @@ class ProductDetailPageProductConfiguratorRedirectResolver implements ProductDet
     public function resolveProductConfiguratorAccessTokenRedirect(
         ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
     ): ProductConfiguratorRedirectTransfer {
-        $productConfiguratorRedirectTransfer = new ProductConfiguratorRedirectTransfer();
+        $productConfiguratorRequestDataTransfer = $productConfiguratorRequestTransfer->getProductConfiguratorRequestDataOrFail();
+        $productConfigurationInstanceCollectionTransfer = $this->getProductConfigurationInstanceCollection($productConfiguratorRequestDataTransfer);
 
-        $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient->findProductConfigurationInstanceBySku(
-            $productConfiguratorRequestTransfer->getProductConfiguratorRequestDataOrFail()->getSkuOrFail(),
-        );
-
-        if (!$productConfigurationInstanceTransfer) {
+        if (!$productConfigurationInstanceCollectionTransfer->getProductConfigurationInstances()->count()) {
             return $this->addErrorToProductConfiguratorRedirect(
-                $productConfiguratorRedirectTransfer,
+                new ProductConfiguratorRedirectTransfer(),
                 static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_NOT_FOUND,
-                [static::GLOSSARY_KEY_PARAM_SKU => $productConfiguratorRequestTransfer->getProductConfiguratorRequestDataOrFail()->getSkuOrFail()],
+                [static::GLOSSARY_KEY_PARAM_SKU => $productConfiguratorRequestDataTransfer->getSkuOrFail()],
             );
         }
 
-        $productConfigurationInstanceTransfer->setQuantity(static::PRODUCT_QUANITY);
+        $productConfigurationInstanceTransfer = $productConfigurationInstanceCollectionTransfer->getProductConfigurationInstances()
+            ->getIterator()
+            ->current()
+            ->setQuantity(static::PRODUCT_QUANITY);
 
         $productConfiguratorRequestTransfer = $this->productConfiguratorRequestMapper->mapProductConfigurationInstanceTransferToProductConfiguratorRequestTransfer(
             $productConfigurationInstanceTransfer,
@@ -112,5 +116,23 @@ class ProductDetailPageProductConfiguratorRedirectResolver implements ProductDet
         return $productConfiguratorRedirectTransfer
             ->setIsSuccessful(false)
             ->addMessage($messageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer
+     */
+    protected function getProductConfigurationInstanceCollection(
+        ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer
+    ): ProductConfigurationInstanceCollectionTransfer {
+        $productConfigurationInstanceConditionsTransfer = (new ProductConfigurationInstanceConditionsTransfer())
+            ->addSku($productConfiguratorRequestDataTransfer->getSkuOrFail());
+
+        $productConfigurationInstanceCriteriaTransfer = (new ProductConfigurationInstanceCriteriaTransfer())
+            ->setProductConfigurationInstanceConditions($productConfigurationInstanceConditionsTransfer);
+
+        return $this->productConfigurationStorageClient
+            ->getProductConfigurationInstanceCollection($productConfigurationInstanceCriteriaTransfer);
     }
 }
