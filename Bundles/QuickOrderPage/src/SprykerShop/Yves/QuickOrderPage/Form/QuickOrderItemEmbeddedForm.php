@@ -9,8 +9,8 @@ namespace SprykerShop\Yves\QuickOrderPage\Form;
 
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
+use SprykerShop\Yves\ShopUi\Form\Type\FormattedIntegerType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -31,6 +31,11 @@ class QuickOrderItemEmbeddedForm extends AbstractType
     public const FIELD_QUANTITY = 'quantity';
 
     /**
+     * @var string
+     */
+    public const OPTION_LOCALE = 'locale';
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string, mixed> $options
      *
@@ -40,7 +45,7 @@ class QuickOrderItemEmbeddedForm extends AbstractType
     {
         $this
             ->addSku($builder)
-            ->addQuantity($builder)
+            ->addQuantity($builder, $options)
             ->executeQuickOrderFormExpanderPlugins($builder, $options);
     }
 
@@ -57,6 +62,8 @@ class QuickOrderItemEmbeddedForm extends AbstractType
                 $this->getFactory()->createQtyFieldConstraint(),
             ],
         ]);
+
+        $resolver->setRequired(static::OPTION_LOCALE);
     }
 
     /**
@@ -81,18 +88,20 @@ class QuickOrderItemEmbeddedForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addQuantity(FormBuilderInterface $builder)
+    protected function addQuantity(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
             static::FIELD_QUANTITY,
-            IntegerType::class,
+            FormattedIntegerType::class,
             [
                 'required' => false,
                 'label' => false,
                 'attr' => ['min' => 1],
+                'locale' => $options[static::OPTION_LOCALE],
             ],
         );
 

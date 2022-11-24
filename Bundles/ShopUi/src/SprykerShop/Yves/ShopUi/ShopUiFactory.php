@@ -10,6 +10,11 @@ namespace SprykerShop\Yves\ShopUi;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToLocaleClientInterface;
 use SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToTwigClientInterface;
+use SprykerShop\Yves\ShopUi\Dependency\Service\ShopUiToUtilNumberServiceInterface;
+use SprykerShop\Yves\ShopUi\Extender\NumberFormatterTwigFilterExtender;
+use SprykerShop\Yves\ShopUi\Extender\NumberFormatterTwigFilterExtenderInterface;
+use SprykerShop\Yves\ShopUi\Filter\NumberFormatterTwigFilterFactory;
+use SprykerShop\Yves\ShopUi\Filter\NumberFormatterTwigFilterFactoryInterface;
 use SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProvider;
 use SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProviderInterface;
 use SprykerShop\Yves\ShopUi\Twig\ShopUiTwigExtension;
@@ -43,6 +48,26 @@ class ShopUiFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\ShopUi\Extender\NumberFormatterTwigFilterExtenderInterface
+     */
+    public function createNumberFormatterTwigFilterExtender(): NumberFormatterTwigFilterExtenderInterface
+    {
+        return new NumberFormatterTwigFilterExtender(
+            $this->createNumberFormatterTwigFilterFactory(),
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShopUi\Filter\NumberFormatterTwigFilterFactoryInterface
+     */
+    public function createNumberFormatterTwigFilterFactory(): NumberFormatterTwigFilterFactoryInterface
+    {
+        return new NumberFormatterTwigFilterFactory(
+            $this->getUtilNumberService(),
+        );
+    }
+
+    /**
      * @return \SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToTwigClientInterface
      */
     public function getTwigClient(): ShopUiToTwigClientInterface
@@ -56,5 +81,13 @@ class ShopUiFactory extends AbstractFactory
     public function getLocaleClient(): ShopUiToLocaleClientInterface
     {
         return $this->getProvidedDependency(ShopUiDependencyProvider::CLIENT_LOCALE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShopUi\Dependency\Service\ShopUiToUtilNumberServiceInterface
+     */
+    public function getUtilNumberService(): ShopUiToUtilNumberServiceInterface
+    {
+        return $this->getProvidedDependency(ShopUiDependencyProvider::SERVICE_UTIL_NUMBER);
     }
 }

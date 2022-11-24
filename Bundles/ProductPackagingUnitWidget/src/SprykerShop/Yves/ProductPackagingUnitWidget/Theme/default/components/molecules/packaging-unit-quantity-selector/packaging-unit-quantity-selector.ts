@@ -5,6 +5,7 @@
  */
 
 import Component from 'ShopUi/models/component';
+import { mount } from 'ShopUi/app';
 
 interface UnitTranslationsJSONData {
     gram: string;
@@ -100,6 +101,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     protected readonly decimals: number = 4;
     protected readonly factor: number = 10;
     protected numberOfDecimalPlaces: number = 10;
+    protected unformattedValueRegExp: RegExp = new RegExp(`[^0-9${this.decimalSeparator}-]+`, 'g');
 
     /* tslint:disable: no-magic-numbers */
     protected readonly degree: number[] = [2, 3];
@@ -189,12 +191,14 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.productQuantityStorage = packagingUnitData.productQuantityStorage;
     }
 
-    protected initFormDefaultValues(): void {
+    protected async initFormDefaultValues(): Promise<void> {
         if (!this.amountInBaseUnitInput) {
             return;
         }
 
         this.qtyInSalesUnitInput.value = String(this.getMinQuantity());
+        await mount();
+        this.triggerChangeEvent(this.qtyInSalesUnitInput);
 
         if (this.leadSalesUnitSelect) {
             this.leadSalesUnitSelect.value = String(this.currentLeadSalesUnit.id_product_measurement_sales_unit);
@@ -237,7 +241,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
     protected qtyInputChange(qtyInSalesUnits?: number): void {
         if (typeof qtyInSalesUnits === 'undefined') {
-            qtyInSalesUnits = Number(this.qtyInSalesUnitInput.value);
+            qtyInSalesUnits = this.getUnformattedNumber(this.qtyInSalesUnitInput.value);
         }
 
         this.muError = false;
@@ -347,6 +351,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     protected selectQty(qtyInBaseUnits: number, qtyInSalesUnits: number): void {
         this.qtyInBaseUnitInput.value = String(qtyInBaseUnits);
         this.qtyInSalesUnitInput.value = String(this.round(qtyInSalesUnits, this.decimals));
+        this.triggerChangeEvent(this.qtyInSalesUnitInput);
         if (!this.puError && !this.isAddToCartDisabled) {
             this.addToCartButton.removeAttribute('disabled');
             this.qtyInSalesUnitInput.removeAttribute('disabled');
@@ -465,13 +470,14 @@ export default class PackagingUnitQuantitySelector extends Component {
     protected onMeasurementUnitInputChange(event: Event): void {
         const salesUnitId = parseInt((<HTMLSelectElement>event.currentTarget).value);
         const salesUnit = this.getSalesUnitById(salesUnitId);
-        let qtyInSalesUnits = Number(this.qtyInSalesUnitInput.value);
+        let qtyInSalesUnits = this.getUnformattedNumber(this.qtyInSalesUnitInput.value);
         const qtyInBaseUnits = this.multiply(qtyInSalesUnits, this.currentSalesUnit.conversion);
         this.currentSalesUnit = salesUnit;
         qtyInSalesUnits = this.convertBaseUnitsAmountToCurrentSalesUnitsAmount(qtyInBaseUnits);
 
         if (isFinite(qtyInSalesUnits)) {
             this.qtyInSalesUnitInput.value = String(this.round(qtyInSalesUnits, this.decimals));
+            this.triggerChangeEvent(this.qtyInSalesUnitInput);
         }
 
         this.qtyInputChange(qtyInSalesUnits);
@@ -490,17 +496,8 @@ export default class PackagingUnitQuantitySelector extends Component {
     }
 
     protected onAmountInputChange(amountInSalesUnitInput?: number): number {
-        const amountDecimalsMaxLength = new RegExp(`((\.|\,)\\d{${this.numberOfDecimalPlaces}})\\d+`, 'g');
-
-        if (this.amountInSalesUnitInput.value.match(/[,.]/)) {
-            this.amountInSalesUnitInput.value = this.amountInSalesUnitInput.value.replace(
-                amountDecimalsMaxLength,
-                '$1',
-            );
-        }
-
         if (typeof amountInSalesUnitInput === 'undefined') {
-            amountInSalesUnitInput = Number(this.amountInSalesUnitInput.value);
+            amountInSalesUnitInput = this.getUnformattedNumber(this.amountInSalesUnitInput.value);
         }
 
         const amountInBaseUnits = Number(
@@ -639,6 +636,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     protected selectAmount(amountInBaseUnits: number, amountInSalesUnits: number): void {
         this.amountInSalesUnitInput.value = String(amountInSalesUnits);
         this.amountInBaseUnitInput.value = String(amountInBaseUnits);
+        this.triggerChangeEvent(this.amountInSalesUnitInput);
         if (!this.muError && !this.isAddToCartDisabled) {
             this.addToCartButton.removeAttribute('disabled');
         }
@@ -651,7 +649,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         const salesUnit = this.getLeadSalesUnitById(salesUnitId);
 
         const amountInSalesUnits = this.getAmountConversion(
-            Number(this.amountInSalesUnitInput.value),
+            this.getUnformattedNumber(this.amountInSalesUnitInput.value),
             salesUnit.conversion,
         );
         const amountInSalesUnitsMin = this.getAmountConversion(
@@ -669,6 +667,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
         this.currentLeadSalesUnit = salesUnit;
         this.amountInSalesUnitInput.value = String(amountInSalesUnits);
+        this.triggerChangeEvent(this.amountInSalesUnitInput);
 
         if (this.amountInSalesUnitInput.min) {
             this.amountInSalesUnitInput.min = String(amountInSalesUnitsMin);
@@ -827,11 +826,24 @@ export default class PackagingUnitQuantitySelector extends Component {
         return Number(amountPercentageOfDivision);
     }
 
+    protected getUnformattedNumber(value: string): number {
+        return Number(value.replace(this.unformattedValueRegExp, '')) || Number(0);
+    }
+
+    protected triggerChangeEvent(input: HTMLInputElement): void {
+        const inputEvent = new Event('change');
+        input.dispatchEvent(inputEvent);
+    }
+
     protected get precision(): number {
         return Number(`1${'0'.repeat(this.numberOfDecimalPlaces)}`);
     }
 
     protected get packagingJSONString(): string {
         return this.getAttribute('json');
+    }
+
+    protected get decimalSeparator(): string {
+        return this.getAttribute('decimal-separator');
     }
 }

@@ -36,6 +36,11 @@ class QuickOrderForm extends AbstractType
     protected const FIELD_ITEMS = 'items';
 
     /**
+     * @var string
+     */
+    public const OPTION_LOCALE = 'locale';
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string, mixed> $options
      *
@@ -43,7 +48,7 @@ class QuickOrderForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addItemsCollection($builder);
+        $this->addItemsCollection($builder, $options);
 
         $builder->addEventSubscriber(new QuickOrderItemsEventSubscriber());
     }
@@ -58,14 +63,17 @@ class QuickOrderForm extends AbstractType
         $resolver->setDefaults([
             'data_class' => QuickOrderTransfer::class,
         ]);
+
+        $resolver->setRequired(static::OPTION_LOCALE);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addItemsCollection(FormBuilderInterface $builder)
+    protected function addItemsCollection(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
             static::FIELD_ITEMS,
@@ -77,6 +85,7 @@ class QuickOrderForm extends AbstractType
                 'label' => false,
                 'entry_options' => [
                     'label' => false,
+                    static::OPTION_LOCALE => $options[static::OPTION_LOCALE],
                 ],
                 'constraints' => [
                         $this->getFactory()->createItemsFieldConstraint(),

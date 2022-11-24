@@ -9,10 +9,12 @@ namespace SprykerShop\Yves\ProductPackagingUnitWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Client\ProductPackagingUnitWidgetToLocaleClientBridge;
 use SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Client\ProductPackagingUnitWidgetToProductMeasurementUnitStorageClientBridge;
 use SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Client\ProductPackagingUnitWidgetToProductPackagingUnitStorageClientBridge;
 use SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Client\ProductPackagingUnitWidgetToProductQuantityStorageClientBridge;
 use SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Service\ProductPackagingUnitWidgetToUtilEncodingServiceBridge;
+use SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Service\ProductPackagingUnitWidgetToUtilNumberServiceBridge;
 
 class ProductPackagingUnitWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -34,7 +36,17 @@ class ProductPackagingUnitWidgetDependencyProvider extends AbstractBundleDepende
     /**
      * @var string
      */
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
+    /**
+     * @var string
+     */
+    public const SERVICE_UTIL_NUMBER = 'SERVICE_UTIL_NUMBER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -46,7 +58,9 @@ class ProductPackagingUnitWidgetDependencyProvider extends AbstractBundleDepende
         $container = $this->addProductPackagingUnitStorageClient($container);
         $container = $this->addProductMeasurementUnitStorageClient($container);
         $container = $this->addProductQuantityStorageClient($container);
+        $container = $this->addLocaleClient($container);
         $container = $this->addEncodeService($container);
+        $container = $this->addUtilNumberService($container);
 
         return $container;
     }
@@ -104,11 +118,43 @@ class ProductPackagingUnitWidgetDependencyProvider extends AbstractBundleDepende
      *
      * @return \Spryker\Yves\Kernel\Container
      */
+    protected function addLocaleClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
+            return new ProductPackagingUnitWidgetToLocaleClientBridge(
+                $container->getLocator()->locale()->client(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
     protected function addEncodeService(Container $container): Container
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductPackagingUnitWidgetToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addUtilNumberService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_NUMBER, function (Container $container) {
+            return new ProductPackagingUnitWidgetToUtilNumberServiceBridge(
+                $container->getLocator()->utilNumber()->service(),
             );
         });
 

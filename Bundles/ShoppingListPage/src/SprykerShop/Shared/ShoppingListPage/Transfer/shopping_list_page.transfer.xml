@@ -169,4 +169,9 @@
     <transfer name="ProductImageStorage">
     </transfer>
 
+    <transfer name="NumberFormatConfig">
+        <property name="groupingSeparatorSymbol" type="string"/>
+        <property name="decimalSeparatorSymbol" type="string"/>
+    </transfer>
+
 </transfers>

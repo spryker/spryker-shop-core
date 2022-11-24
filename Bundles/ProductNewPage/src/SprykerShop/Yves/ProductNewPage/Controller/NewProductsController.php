@@ -71,6 +71,13 @@ class NewProductsController extends AbstractController
             ->getCatalogClient()
             ->getCatalogViewMode($request);
 
+        $searchResults['numberFormatConfig'] = $this->getFactory()
+            ->getUtilNumberService()
+            ->getNumberFormatConfig(
+                $this->getFactory()->getLocaleClient()->getCurrentLocale(),
+            )
+            ->toArray();
+
         return $searchResults;
     }
 

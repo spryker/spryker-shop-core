@@ -15,6 +15,7 @@
     category: null,
     isEmptyCategoryFilterValueVisible: null,
     parentJsName: '',
+    numberFormatConfig: {},
 } %}
 
 {% block body %}
@@ -49,6 +50,7 @@
                         activeMax: filter.activeMax | default(0),
                         isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible,
                         parentJsName: data.parentJsName,
+                        numberFormatConfig: data.numberFormatConfig,
                     },
                 } only %}
             {% endblock %}

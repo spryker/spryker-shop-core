@@ -17,7 +17,7 @@
         {% set salesUnitQuantity = data.concreteItem.quantity / data.concreteItem.quantitySalesUnit.conversion %}
         {% set salesUnitSummary = '' %}
         {% if salesUnitName %}
-            {% set salesUnitSummary = salesUnitQuantity | round(data.concreteItem.quantitySalesUnit.precision, 'floor') ~ ' ' ~ salesUnitName | trans %}
+            {% set salesUnitSummary = salesUnitQuantity | round(data.concreteItem.quantitySalesUnit.precision, 'floor') | executeFilterIfExists('formatFloat', app.locale) ~ ' ' ~ salesUnitName | trans %}
         {% endif %}
 
         {% set amountSalesUnitName = data.concreteItem.amountSalesUnit.productMeasurementUnit.name | default %}
@@ -29,14 +29,14 @@
     <td>
         {{ data.concreteItem.name }}<br>
         {% if data.concreteItem.amount and data.concreteItem.quantity %}
-            <span class="text-secondary">&times;</span> {{ data.concreteItem.amount.divide(data.concreteItem.quantity, data.countOfDecimalsInAmount).trim }} {{ 'packaging_units.cart.item' | trans }} (= {{ (data.concreteItem.amount.divide(data.concreteItem.quantity, data.countOfDecimalsInAmount)).divide(data.concreteItem.amountSalesUnit.conversion, data.countOfDecimalsInAmount).trim }}{{ amountSalesUnitName | trans }}) = {{ data.concreteItem.amount }} {{ 'packaging_units.cart.item' | trans }}
+            <span class="text-secondary">&times;</span> {{ data.concreteItem.amount.divide(data.concreteItem.quantity, data.countOfDecimalsInAmount).trim.toFloat() | executeFilterIfExists('formatFloat', app.locale) }} {{ 'packaging_units.cart.item' | trans }} (= {{ (data.concreteItem.amount.divide(data.concreteItem.quantity, data.countOfDecimalsInAmount)).divide(data.concreteItem.amountSalesUnit.conversion, data.countOfDecimalsInAmount).trim.toFloat() | executeFilterIfExists('formatFloat', app.locale) }}{{ amountSalesUnitName | trans }}) = {{ data.concreteItem.amount | executeFilterIfExists('formatFloat', app.locale) }} {{ 'packaging_units.cart.item' | trans }}
         {% endif %}
     </td>
     <td>
         {{ data.concreteItem.unitPrice | money(true, data.currencyIsoCode) }}
     </td>
     <td>
-        {{ data.concreteItem.quantity }} {% if salesUnitSummary is defined and salesUnitSummary is not empty %}(={{ salesUnitSummary }}){% endif %}
+        {{ data.concreteItem.quantity | executeFilterIfExists('formatInt', app.locale) }} {% if salesUnitSummary is defined and salesUnitSummary is not empty %}(={{ salesUnitSummary }}){% endif %}
     </td>
     <td>
         {{ data.concreteItem.unitPriceToPayAggregation | money(true, data.currencyIsoCode) }}

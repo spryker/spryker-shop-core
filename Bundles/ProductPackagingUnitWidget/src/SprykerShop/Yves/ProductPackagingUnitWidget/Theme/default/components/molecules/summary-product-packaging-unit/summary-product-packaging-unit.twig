@@ -37,10 +37,10 @@
         </div>
         <div class="col col--sm-12 col--lg-9">
             {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default %}
-            {% set salesUnitSummary = salesUnitName ? data.quantity / data.quantitySalesUnit.conversion ~ ' ' ~ salesUnitName | trans %}
+            {% set salesUnitSummary = salesUnitName ? (data.quantity / data.quantitySalesUnit.conversion) | executeFilterIfExists('formatFloat', app.locale) ~ ' ' ~ salesUnitName | trans %}
 
             <strong class="float-right">{{ can('SeePricePermissionPlugin') ? data.price : 'customer.access.cannot_see_price' | trans }}</strong>
-            <div>{{ data.quantity }} <span class="text-secondary">&times;</span> {{ data.name }} {% if salesUnitSummary %}(={{ salesUnitSummary }}){% endif %}</div>
+            <div>{{ data.quantity | executeFilterIfExists('formatInt', app.locale) }} <span class="text-secondary">&times;</span> {{ data.name }} {% if salesUnitSummary %}(={{ salesUnitSummary }}){% endif %}</div>
             <div>{{ 'packaging_units.cart.quantity' | trans }}: {{ data.quantity }}</div>
 
             {% if data.amountSalesUnit %}
@@ -50,11 +50,11 @@
 
                 <div>
                     <span class="text-secondary">&times;</span>
-                    {{ amountPerQuantity }} {{ amountSalesUnitName | trans }}
+                    {{ amountPerQuantity.toFloat() | executeFilterIfExists('formatFloat', app.locale) }} {{ amountSalesUnitName | trans }}
                     {% if amountPerQuantityConversion != amountPerQuantity %}
-                        (= {{ amountPerQuantityConversion }} {{ data.amountSalesUnit.productMeasurementUnit.name | trans }})
+                        (= {{ amountPerQuantityConversion.toFloat() | executeFilterIfExists('formatFloat', app.locale) }} {{ data.amountSalesUnit.productMeasurementUnit.name | trans }})
                     {% endif %}
-                    = {{ data.amount }} {{ amountSalesUnitName | trans }}
+                    = {{ data.amount.toFloat() | executeFilterIfExists('formatFloat', app.locale) }} {{ amountSalesUnitName | trans }}
                 </div>
             {% endif %}
         </div>

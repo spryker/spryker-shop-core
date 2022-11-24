@@ -34,7 +34,7 @@
                                 {% block bundleItemsNode %}
                                     <li>
                                         {{ 'summary_node_bundle_items_summary' | trans({
-                                                '%quantity%': item.quantity,
+                                                '%quantity%': item.quantity | executeFilterIfExists('formatInt', app.locale),
                                                 '%name%': item.name,
                                         })}}
                                     </li>

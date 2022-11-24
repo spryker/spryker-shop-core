@@ -9,6 +9,8 @@ namespace SprykerShop\Yves\CartPage\Controller;
 
 use Generated\Shared\Transfer\CartPageViewArgumentsTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\NumberFormatFilterTransfer;
+use Generated\Shared\Transfer\NumberFormatIntRequestTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\View\View;
@@ -96,6 +98,11 @@ class CartController extends AbstractController
      * @var string
      */
     protected const GLOSSARY_KEY_ERROR_MESSAGE_UNEXPECTED_ERROR = 'cart_page.error_message.unexpected_error';
+
+    /**
+     * @var string
+     */
+    protected const REQUEST_PARAMETER_QUANTITY_FORMATTED = 'quantityFormatted';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -512,6 +519,7 @@ class CartController extends AbstractController
             static::KEY_CODE => Response::HTTP_OK,
             static::KEY_MESSAGES => $this->renderView(static::FLASH_MESSAGE_LIST_TEMPLATE_PATH)->getContent(),
             static::REQUEST_PARAMETER_QUANTITY => $cartQuantity,
+            static::REQUEST_PARAMETER_QUANTITY_FORMATTED => $this->getFormattedCartQuantity($cartQuantity),
         ];
     }
 
@@ -677,5 +685,25 @@ class CartController extends AbstractController
         foreach ($messageTransfers as $messageTransfer) {
             $this->addSuccessMessage($messageTransfer->getValue());
         }
+    }
+
+    /**
+     * @param int $cartQuantity
+     *
+     * @return string
+     */
+    protected function getFormattedCartQuantity(int $cartQuantity): string
+    {
+        $numberFormatIntRequestTransfer = (new NumberFormatIntRequestTransfer())
+            ->setNumber($cartQuantity)
+            ->setNumberFormatFilter(
+                (new NumberFormatFilterTransfer())->setLocale(
+                    $this->getFactory()->getLocale(),
+                ),
+            );
+
+        return $this->getFactory()
+            ->getUtilNumberService()
+            ->formatInt($numberFormatIntRequestTransfer);
     }
 }

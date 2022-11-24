@@ -123,12 +123,12 @@
                 {% block productItemQuantityAmount %}
                     <div class="{{ productQuantityColumnClass }}">
                         {% block productItemQuantity %}
-                            <div>{{ 'return_page.quantity' | trans }} {{ data.item.quantity }}</div>
+                            <div>{{ 'return_page.quantity' | trans }} {{ data.item.quantity | executeFilterIfExists('formatInt', app.locale) }}</div>
                         {% endblock %}
 
                         {% if data.item.amount %}
                             {% block productItemAmount %}
-                                <div>{{ 'customer.order.item_amount' | trans }}: {{ data.item.amount.toFloat() }}</div>
+                                <div>{{ 'customer.order.item_amount' | trans }}: {{ data.item.amount.toFloat() | executeFilterIfExists('formatFloat', app.locale) }}</div>
                             {% endblock %}
                         {% endif %}
                     </div>

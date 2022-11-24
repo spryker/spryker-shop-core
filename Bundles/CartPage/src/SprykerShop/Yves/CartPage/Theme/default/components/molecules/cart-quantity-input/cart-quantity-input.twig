@@ -10,17 +10,5 @@
 } %}
 
 {% block body %}
-    {% widget 'CartChangeQuantityFormWidget'  args [data.cartItem, data.readOnly] only %}
-        {% block embeddedData %}
-            {% include molecule('quantity-input') with {
-                data: {
-                    maxQuantity: data.cartItem.maxQuantity,
-                    value: data.cartItem.quantity,
-                    readOnly: data.readOnly
-                }
-            } only %}
-
-            <input type="hidden" value="{{ data.cartItem.groupKey }}" name="groupKey">
-        {% endblock %}
-    {% endwidget %}
+    {% widget 'CartChangeQuantityFormWidget'  args [data.cartItem, data.readOnly] only %}{% endwidget %}
 {% endblock %}

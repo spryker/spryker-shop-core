@@ -9,7 +9,13 @@
     isEditable: true,
     isQuantitySummaryVisible: false,
     quote: _widget.quote,
+    numberFormatConfig: _widget.numberFormatConfig,
 } %}
+
+{% set numberFormatConfig = {} %}
+{% for key, value in data.numberFormatConfig %}
+    {% set numberFormatConfig = numberFormatConfig | merge ({ (key | replace({'_symbol': '', '_': '-'})): value }) %}
+{% endfor %}
 
 {% block body %}
     {% for bundle in data.configuredBundles %}
@@ -24,6 +30,7 @@
                     isEditable: data.isEditable,
                     isQuantitySummaryVisible: data.isQuantitySummaryVisible,
                     quote: data.quote,
+                    numberFormatConfig: numberFormatConfig,
                 },
             } only %}
         {% endblock %}

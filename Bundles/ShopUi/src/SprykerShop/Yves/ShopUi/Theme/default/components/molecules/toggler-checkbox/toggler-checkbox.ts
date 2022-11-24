@@ -29,7 +29,9 @@ export default class TogglerCheckbox extends Component {
         /* tslint:enable: deprecation */
     }
 
-    protected readyCallback(): void {
+    protected readyCallback(): void {}
+
+    protected init(): void {
         this.toggle();
         this.fireToggleEvent();
         this.mapEvents();

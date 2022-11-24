@@ -1,9 +1,11 @@
 import './style.scss';
 import register from 'ShopUi/app/registry';
-export default register('autocomplete-form', () =>
-    import(
-        /* webpackMode: "lazy" */
-        /* webpackChunkName: "autocomplete-form" */
-        './autocomplete-form'
-    ),
+export default register(
+    'autocomplete-form',
+    () =>
+        import(
+            /* webpackMode: "lazy" */
+            /* webpackChunkName: "autocomplete-form" */
+            './autocomplete-form'
+        ),
 );

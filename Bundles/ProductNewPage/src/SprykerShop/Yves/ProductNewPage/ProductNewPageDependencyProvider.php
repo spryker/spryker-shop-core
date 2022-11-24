@@ -13,6 +13,7 @@ use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToCatalogCli
 use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToLocaleClientBridge;
 use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToProductNewClientBridge;
 use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToUrlStorageClientBridge;
+use SprykerShop\Yves\ProductNewPage\Dependency\Service\ProductNewPageToUtilNumberServiceBridge;
 
 /**
  * @method \SprykerShop\Yves\ProductNewPage\ProductNewPageConfig getConfig()
@@ -45,6 +46,11 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_CATALOG = 'CLIENT_CATALOG';
 
     /**
+     * @var string
+     */
+    public const SERVICE_UTIL_NUMBER = 'SERVICE_UTIL_NUMBER';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -56,6 +62,7 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addLocaleClient($container);
         $container = $this->addCatalogClient($container);
         $container = $this->addProductNewPageWidgetPlugins($container);
+        $container = $this->addUtilNumberService($container);
 
         return $container;
     }
@@ -134,6 +141,22 @@ class ProductNewPageDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::CLIENT_LOCALE, function (Container $container) {
             return new ProductNewPageToLocaleClientBridge(
                 $container->getLocator()->locale()->client(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addUtilNumberService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_NUMBER, function (Container $container) {
+            return new ProductNewPageToUtilNumberServiceBridge(
+                $container->getLocator()->utilNumber()->service(),
             );
         });
 

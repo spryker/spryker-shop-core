@@ -32,6 +32,7 @@
         <property name="idProductAbstract" type="int"/>
         <property name="groupKey" type="string"/>
         <property name="configuredBundleItem" type="ConfiguredBundleItem"/>
+        <property name="maxQuantity" type="int"/>
     </transfer>
 
     <transfer name="ConfiguredBundleItem">
@@ -85,6 +86,18 @@
 
     <transfer name="PromotionItem">
         <property name="idDiscountPromotion" type="int"/>
+    </transfer>
+
+    <transfer name="NumberFormatIntRequest">
+        <property name="number" type="int"/>
+        <property name="numberFormatFilter" type="NumberFormatFilter"/>
+    </transfer>
+
+    <transfer name="NumberFormatFilter">
+        <property name="locale" type="string"/>
+    </transfer>
+
+    <transfer name="NumberFormatConfig">
     </transfer>
 
 </transfers>

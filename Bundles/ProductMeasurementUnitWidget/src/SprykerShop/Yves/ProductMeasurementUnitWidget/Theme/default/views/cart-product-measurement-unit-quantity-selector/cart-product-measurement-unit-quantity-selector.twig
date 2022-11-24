@@ -4,7 +4,13 @@
     cartItem: _widget.itemTransfer,
     quantitySalesUnit: _widget.quantitySalesUnit,
     quantitySalesUnitPrecision: _widget.quantitySalesUnitPrecision | default(null),
+    numberFormatConfig: _widget.numberFormatConfig,
 } %}
+
+{% set numberFormatConfig = {} %}
+{% for key, value in data.numberFormatConfig %}
+    {% set numberFormatConfig = numberFormatConfig | merge ({ (key | replace({'_symbol': '', '_': '-'})): value }) %}
+{% endfor %}
 
 {% set hasQuantitySalesUnit = data.quantitySalesUnit.idProductMeasurementSalesUnit | default(false) %}
 
@@ -17,6 +23,7 @@
         data: {
             cartItem: data.cartItem,
             readOnly: hasQuantitySalesUnit,
+            numberFormatConfig: numberFormatConfig,
         },
     } only %}
 

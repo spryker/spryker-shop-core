@@ -45,7 +45,7 @@ export default class AjaxAddToCart extends Component {
                 document.dispatchEvent(dynamicNotificationCustomEvent);
 
                 const cartCounterCustomEvent = new CustomEvent(EVENT_UPDATE_CART_QUANTITY, {
-                    detail: parsedResponse.quantity,
+                    detail: parsedResponse.quantityFormatted,
                 });
                 document.dispatchEvent(cartCounterCustomEvent);
             })

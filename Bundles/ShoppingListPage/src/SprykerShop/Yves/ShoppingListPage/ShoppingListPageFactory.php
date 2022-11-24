@@ -17,16 +17,19 @@ use SprykerShop\Yves\ShoppingListPage\Business\SharedShoppingListReaderInterface
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyBusinessUnitClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyUserClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface;
+use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToLocaleClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToMultiCartClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToPriceClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToProductStorageClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToZedRequestClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Service\ShoppingListPageToUtilEncodingServiceInterface;
+use SprykerShop\Yves\ShoppingListPage\Dependency\Service\ShoppingListPageToUtilNumberServiceInterface;
 use SprykerShop\Yves\ShoppingListPage\Form\AddShoppingListToCartForm;
 use SprykerShop\Yves\ShoppingListPage\Form\Constraint\ShareShoppingListRequiredIdConstraint;
 use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShareShoppingListDataProvider;
 use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShoppingListFormDataProvider;
+use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShoppingListUpdateFormDataProvider;
 use SprykerShop\Yves\ShoppingListPage\Form\Handler\AddToCartFormHandler;
 use SprykerShop\Yves\ShoppingListPage\Form\Handler\AddToCartFormHandlerInterface;
 use SprykerShop\Yves\ShoppingListPage\Form\ShareShoppingListForm;
@@ -73,13 +76,16 @@ class ShoppingListPageFactory extends AbstractFactory
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $data
-     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getShoppingListUpdateForm(ShoppingListTransfer $data, array $options = []): FormInterface
+    public function getShoppingListUpdateForm(ShoppingListTransfer $data): FormInterface
     {
-        return $this->getFormFactory()->create(ShoppingListUpdateForm::class, $data, $options);
+        return $this->getFormFactory()->create(
+            ShoppingListUpdateForm::class,
+            $data,
+            $this->createShoppingListUpdateFormDataProvider()->getOptions(),
+        );
     }
 
     /**
@@ -199,6 +205,16 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShoppingListUpdateFormDataProvider
+     */
+    public function createShoppingListUpdateFormDataProvider(): ShoppingListUpdateFormDataProvider
+    {
+        return new ShoppingListUpdateFormDataProvider(
+            $this->getLocaleClient(),
+        );
+    }
+
+    /**
      * @return \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyBusinessUnitClientInterface
      */
     public function getCompanyBusinessUnitClient(): ShoppingListPageToCompanyBusinessUnitClientInterface
@@ -244,6 +260,22 @@ class ShoppingListPageFactory extends AbstractFactory
     public function getUtilEncodingService(): ShoppingListPageToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(ShoppingListPageDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToLocaleClientInterface
+     */
+    public function getLocaleClient(): ShoppingListPageToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::CLIENT_LOCALE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShoppingListPage\Dependency\Service\ShoppingListPageToUtilNumberServiceInterface
+     */
+    public function getUtilNumberService(): ShoppingListPageToUtilNumberServiceInterface
+    {
+        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::SERVICE_UTIL_NUMBER);
     }
 
     /**

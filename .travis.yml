@@ -18,17 +18,17 @@ env:
 
 before_install:
     - phpenv config-rm xdebug.ini
-    - nvm install 10
+    - nvm install 16
 
 install:
     - composer install --no-interaction --prefer-dist --optimize-autoloader
     - npm ci
-    - npm install -g git+https://github.com/spryker-sdk/frontend-sniffer.git#semver:^0.2.3
+    - npm i git+https://github.com/spryker-sdk/frontend-sniffer.git#semver:^0.2.4
 
 script:
     - chmod +x *.sh
     - bash travis_check_touched_modules.sh
-    - frontend-sniffer --config ./ --path ../../ --level-restriction core
+    - node ./node_modules/@spryker/frontend-sniffer --config ./ --path ../../ --level-restriction core
     - npm run formatter
     - npm run stylelint
     - npm run tslint

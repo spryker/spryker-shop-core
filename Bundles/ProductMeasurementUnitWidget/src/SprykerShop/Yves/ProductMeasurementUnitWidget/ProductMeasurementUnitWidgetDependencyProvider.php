@@ -9,9 +9,11 @@ namespace SprykerShop\Yves\ProductMeasurementUnitWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client\ProductMeasurementUnitWidgetToLocaleClientBridge;
 use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client\ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientBridge;
 use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client\ProductMeasurementUnitWidgetToProductQuantityStorageClientBridge;
 use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Service\ProductMeasurementUnitWidgetToUtilEncodingServiceBridge;
+use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Service\ProductMeasurementUnitWidgetToUtilNumberServiceBridge;
 
 class ProductMeasurementUnitWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -28,7 +30,17 @@ class ProductMeasurementUnitWidgetDependencyProvider extends AbstractBundleDepen
     /**
      * @var string
      */
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
+    /**
+     * @var string
+     */
+    public const SERVICE_UTIL_NUMBER = 'SERVICE_UTIL_NUMBER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -39,7 +51,9 @@ class ProductMeasurementUnitWidgetDependencyProvider extends AbstractBundleDepen
     {
         $container = $this->addProductMeasurementUnitStorageClient($container);
         $container = $this->addProductQuantityStorageClient($container);
+        $container = $this->addLocaleClient($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addUtilNumberService($container);
 
         return $container;
     }
@@ -81,11 +95,43 @@ class ProductMeasurementUnitWidgetDependencyProvider extends AbstractBundleDepen
      *
      * @return \Spryker\Yves\Kernel\Container
      */
+    protected function addLocaleClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
+            return new ProductMeasurementUnitWidgetToLocaleClientBridge(
+                $container->getLocator()->locale()->client(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
     protected function addUtilEncodingService(Container $container): Container
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductMeasurementUnitWidgetToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addUtilNumberService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_NUMBER, function (Container $container) {
+            return new ProductMeasurementUnitWidgetToUtilNumberServiceBridge(
+                $container->getLocator()->utilNumber()->service(),
             );
         });
 

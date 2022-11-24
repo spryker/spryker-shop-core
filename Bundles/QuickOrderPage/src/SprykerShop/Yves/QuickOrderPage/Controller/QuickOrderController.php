@@ -145,13 +145,12 @@ class QuickOrderController extends AbstractController
      */
     protected function executeQuickOrderFormSubmitAction(Request $request)
     {
-        $quickOrderTransfer = $this->getFactory()
-            ->createQuickOrderFormDataProvider()
-            ->getQuickOrderTransfer();
+        $quickOrderFormDataProvider = $this->getFactory()
+            ->createQuickOrderFormDataProvider();
 
         $quickOrderForm = $this->getFactory()
             ->createQuickOrderFormFactory()
-            ->getQuickOrderForm($quickOrderTransfer)
+            ->getQuickOrderForm($quickOrderFormDataProvider->getQuickOrderTransfer(), $quickOrderFormDataProvider->getOptions())
             ->handleRequest($request);
 
         if (!$quickOrderForm->isSubmitted() || !$quickOrderForm->isValid()) {
@@ -204,11 +203,14 @@ class QuickOrderController extends AbstractController
             $quickOrderItems = $this->filterQuickOrderItems($quickOrderItems);
         }
 
-        $quickOrderTransfer = $this->getQuickOrderTransfer($quickOrderItems);
+        $quickOrderFormDataProvider = $this->getFactory()->createQuickOrderFormDataProvider();
+        $quickOrderTransfer = $this->getQuickOrderTransfer(
+            $quickOrderFormDataProvider->getQuickOrderTransfer($quickOrderItems),
+        );
 
         $quickOrderForm = $this->getFactory()
             ->createQuickOrderFormFactory()
-            ->getQuickOrderForm($quickOrderTransfer);
+            ->getQuickOrderForm($quickOrderTransfer, $quickOrderFormDataProvider->getOptions());
 
         $prices = $this->getProductPricesFromQuickOrderTransfer($quickOrderTransfer);
 
@@ -234,16 +236,12 @@ class QuickOrderController extends AbstractController
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\QuickOrderItemTransfer> $quickOrderItems
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      *
      * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
-    protected function getQuickOrderTransfer(array $quickOrderItems): QuickOrderTransfer
+    protected function getQuickOrderTransfer(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
     {
-        $quickOrderTransfer = $this->getFactory()
-            ->createQuickOrderFormDataProvider()
-            ->getQuickOrderTransfer($quickOrderItems);
-
         $quickOrderTransfer = $this->getFactory()
             ->getQuickOrderClient()
             ->buildQuickOrderTransfer($quickOrderTransfer);
@@ -252,11 +250,9 @@ class QuickOrderController extends AbstractController
             ->createQuickOrderItemPluginExecutor()
             ->applyQuickOrderItemFilterPluginsOnQuickOrder($quickOrderTransfer);
 
-        $quickOrderTransfer = $this->getFactory()
+        return $this->getFactory()
             ->createPriceResolver()
             ->setSumPriceForQuickOrderTransfer($quickOrderTransfer);
-
-        return $quickOrderTransfer;
     }
 
     /**
@@ -377,7 +373,7 @@ class QuickOrderController extends AbstractController
 
         $quickOrderForm = $this->getFactory()
             ->createQuickOrderFormFactory()
-            ->getQuickOrderForm($quickOrderTransfer);
+            ->getQuickOrderForm($quickOrderTransfer, $this->getFactory()->createQuickOrderFormDataProvider()->getOptions());
 
         $quickOrderTransfer = $this->getFactory()
             ->getQuickOrderClient()
@@ -447,13 +443,12 @@ class QuickOrderController extends AbstractController
         }
         unset($formDataItems[$rowIndex]);
 
-        $quickOrderTransfer = $this->getFactory()
-            ->createQuickOrderFormDataProvider()
-            ->mapFormDataToQuickOrderItems($formDataItems);
+        $quickOrderFormDataProvider = $this->getFactory()->createQuickOrderFormDataProvider();
+        $quickOrderTransfer = $quickOrderFormDataProvider->mapFormDataToQuickOrderItems($formDataItems);
 
         $quickOrderForm = $this->getFactory()
             ->createQuickOrderFormFactory()
-            ->getQuickOrderForm($quickOrderTransfer);
+            ->getQuickOrderForm($quickOrderTransfer, $quickOrderFormDataProvider->getOptions());
 
         $quickOrderTransfer = $this->getFactory()
             ->getQuickOrderClient()
@@ -512,12 +507,25 @@ class QuickOrderController extends AbstractController
         }
 
         $quickOrderItemTransfer->setQuantity($quantity);
+        $quickOrderTransfer = $this->getFactory()
+            ->createQuickOrderFormDataProvider()
+            ->getQuickOrderTransfer([$quickOrderItemTransfer]);
+
+        $quickOrderTransfer = $this->getQuickOrderTransfer($quickOrderTransfer);
+        $quickOrderItemTransfer = $quickOrderTransfer->getItems()->offsetGet(0);
 
         $form = $this->getFactory()
             ->createQuickOrderFormFactory()
-            ->getQuickOrderItemEmbeddedForm($quickOrderItemTransfer);
+            ->getQuickOrderItemEmbeddedForm(
+                $quickOrderItemTransfer,
+                $this->getFactory()->createQuickOrderItemEmbeddedFormDataProvider()->getOptions(),
+            );
 
-        $quickOrderTransfer = $this->getQuickOrderTransfer([$form->getData()]);
+        $quickOrderTransfer = $this->getFactory()
+            ->createQuickOrderFormDataProvider()
+            ->getQuickOrderTransfer([$form->getData()]);
+
+        $quickOrderTransfer = $this->getQuickOrderTransfer($quickOrderTransfer);
 
         $products = $this->getProductsFromQuickOrderItems($quickOrderTransfer);
         $products = $this->transformProductsViewData($products);

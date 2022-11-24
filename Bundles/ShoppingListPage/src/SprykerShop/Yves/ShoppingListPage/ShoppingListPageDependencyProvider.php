@@ -12,12 +12,14 @@ use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyBusinessUnitClientBridge;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyUserClientBridge;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientBridge;
+use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToLocaleClientBridge;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToMultiCartClientBridge;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToPriceClientBridge;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToProductStorageClientBridge;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientBridge;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToZedRequestClientBridge;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Service\ShoppingListPageToUtilEncodingServiceBridge;
+use SprykerShop\Yves\ShoppingListPage\Dependency\Service\ShoppingListPageToUtilNumberServiceBridge;
 
 /**
  * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig getConfig()
@@ -82,7 +84,17 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     /**
      * @var string
      */
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
+    /**
+     * @var string
+     */
+    public const SERVICE_UTIL_NUMBER = 'SERVICE_UTIL_NUMBER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -92,6 +104,7 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
+
         $container = $this->addCustomerClient($container);
         $container = $this->addShoppingListClient($container);
         $container = $this->addProductStorageClient($container);
@@ -100,10 +113,12 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addMultiCartClient($container);
         $container = $this->addZedRequestClient($container);
         $container = $this->addPriceClient($container);
+        $container = $this->addLocaleClient($container);
         $container = $this->addShoppingListItemExpanderPlugins($container);
         $container = $this->addShoppingListItemFormExpanderPlugins($container);
         $container = $this->addShoppingListFormDataProviderMapperPlugins($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addUtilNumberService($container);
 
         return $container;
     }
@@ -302,5 +317,37 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     protected function getShoppingListFormDataProviderMapperPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addLocaleClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
+            return new ShoppingListPageToLocaleClientBridge(
+                $container->getLocator()->locale()->client(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addUtilNumberService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_NUMBER, function (Container $container) {
+            return new ShoppingListPageToUtilNumberServiceBridge(
+                $container->getLocator()->utilNumber()->service(),
+            );
+        });
+
+        return $container;
     }
 }

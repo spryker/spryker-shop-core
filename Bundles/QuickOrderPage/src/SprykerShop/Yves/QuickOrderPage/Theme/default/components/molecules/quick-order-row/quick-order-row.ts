@@ -16,6 +16,8 @@ export default class QuickOrderRow extends Component {
      */
     autocompleteInput: AutocompleteForm;
 
+    protected quantityHiddenInput: HTMLInputElement;
+
     /**
      * The quantity number input element.
      */
@@ -34,8 +36,12 @@ export default class QuickOrderRow extends Component {
 
     protected registerQuantityInput(): void {
         this.quantityInput = <HTMLInputElement>(
-            (this.getElementsByClassName(`${this.jsName}__quantity`)[0] ||
-                this.getElementsByClassName(`${this.jsName}-partial__quantity`)[0])
+            (this.getElementsByClassName(`${this.jsName}__quantity-input`)[0] ||
+                this.getElementsByClassName(`${this.jsName}-partial__quantity-input`)[0])
+        );
+        this.quantityHiddenInput = <HTMLInputElement>(
+            (this.getElementsByClassName(`${this.jsName}__hidden-input`)[0] ||
+                this.getElementsByClassName(`${this.jsName}-partial__hidden-input`)[0])
         );
     }
 
@@ -137,16 +143,14 @@ export default class QuickOrderRow extends Component {
         const quantityValueLength = this.quantityValue.length;
 
         this.quantityInput.focus();
-        this.quantityInput.type = 'text';
         this.quantityInput.setSelectionRange(quantityValueLength, quantityValueLength);
-        this.quantityInput.type = 'number';
     }
 
     /**
-     * Gets the value attribute from the quantity input field.
+     * Gets the unformatted quantity value.
      */
     get quantityValue(): string {
-        return this.quantityInput.value;
+        return this.quantityHiddenInput.value;
     }
 
     protected get index(): string {

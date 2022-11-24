@@ -21,7 +21,13 @@
         config: _view.pagination.config,
         currentItemsPerPage: _view.pagination.currentItemsPerPage,
     },
+    numberFormatConfig: _view.numberFormatConfig,
 } %}
+
+{% set numberFormatConfig = {} %}
+{% for key, value in data.numberFormatConfig %}
+    {% set numberFormatConfig = numberFormatConfig | merge ({ (key | replace({'_symbol': '', '_': '-'})): value }) %}
+{% endfor %}
 
 {% macro renderBreadcrumbSteps(categoryNode, isLastLeaf, filterPath) %}
     {% import _self as self %}
@@ -105,6 +111,7 @@
                             category: data.category,
                             isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible,
                             parentJsName: catalogJsName,
+                            numberFormatConfig: numberFormatConfig,
                         },
                     } only %}
                 {% endblock %}

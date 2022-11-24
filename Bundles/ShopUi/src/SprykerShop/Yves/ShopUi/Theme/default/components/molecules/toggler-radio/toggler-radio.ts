@@ -6,11 +6,13 @@ export default class TogglerRadio extends TogglerCheckbox {
      */
     togglers: TogglerRadio[];
 
-    protected readyCallback(): void {
+    protected readyCallback(): void {}
+
+    protected init(): void {
         this.togglers = <TogglerRadio[]>(
             Array.from(document.querySelectorAll(`${this.name}[group-name="${this.groupName}"]`))
         );
-        super.readyCallback();
+        super.init();
     }
 
     protected onTriggerClick(event: Event): void {

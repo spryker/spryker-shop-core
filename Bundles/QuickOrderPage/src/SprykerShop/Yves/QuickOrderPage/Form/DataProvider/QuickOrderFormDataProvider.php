@@ -10,6 +10,8 @@ namespace SprykerShop\Yves\QuickOrderPage\Form\DataProvider;
 use ArrayObject;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToLocaleClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Form\QuickOrderForm;
 use SprykerShop\Yves\QuickOrderPage\Form\QuickOrderItemEmbeddedForm;
 use SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig;
 
@@ -21,11 +23,28 @@ class QuickOrderFormDataProvider implements QuickOrderFormDataProviderInterface
     protected $config;
 
     /**
-     * @param \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig $config
+     * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToLocaleClientInterface
      */
-    public function __construct(QuickOrderPageConfig $config)
+    protected $localeClient;
+
+    /**
+     * @param \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig $config
+     * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToLocaleClientInterface $localeClient
+     */
+    public function __construct(QuickOrderPageConfig $config, QuickOrderPageToLocaleClientInterface $localeClient)
     {
         $this->config = $config;
+        $this->localeClient = $localeClient;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptions(): array
+    {
+        return [
+            QuickOrderForm::OPTION_LOCALE => $this->localeClient->getCurrentLocale(),
+        ];
     }
 
     /**

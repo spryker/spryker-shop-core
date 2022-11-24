@@ -13,6 +13,7 @@
 {% define data = {
     shoppingList: required,
     shoppingListItems: required,
+    numberFormatConfig: {},
 } %}
 
 {% block body %}
@@ -209,12 +210,26 @@
 
                                     {% block quantityCol %}
                                         <td class="{{ config.name }}__cell text-center">
-                                            {% set isDisabled = not isItemAvailable ? 'disabled' %}
+                                            {% set isDisabled = not isItemAvailable %}
 
                                             {% block quantityColInner %}
-                                                <input class="input" type="number"
-                                                       name="shoppingListItem[quantity][{{ item.idShoppingListItem }}]"
-                                                       value="{{ item.quantity }}" {{ isDisabled }}>
+                                                {% set formattedNumberAttributes = {
+                                                    min: 0,
+                                                } | merge(data.numberFormatConfig) %}
+
+                                                {% block quantityInput %}
+                                                    {% include molecule('formatted-number-input') with {
+                                                        data: {
+                                                            inputName: 'shoppingListItem[quantity][' ~ item.idShoppingListItem ~ ']',
+                                                            inputExtraClasses: 'input',
+                                                            inputValue: item.quantity,
+                                                            inputAttributes: {
+                                                                disabled: isDisabled,
+                                                            },
+                                                        },
+                                                        attributes: formattedNumberAttributes,
+                                                    } only %}
+                                                {% endblock %}
                                             {% endblock %}
                                         </td>
                                     {% endblock %}

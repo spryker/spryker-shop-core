@@ -118,7 +118,7 @@
                     {% endwidget %}
                 {% else %}
                     {{ 'cart.item_quantity' | trans }}:
-                    <strong>{{ data.product.quantity }}</strong>
+                    <strong>{{ data.product.quantity | executeFilterIfExists('formatInt', app.locale) }}</strong>
                 {% endif %}
             {% endif %}
 

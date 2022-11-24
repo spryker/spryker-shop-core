@@ -10,7 +10,9 @@ namespace SprykerShop\Yves\ProductSearchWidget;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToCatalogClientInterface;
+use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToLocaleClientInterface;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Service\ProductSearchWidgetToUtilEncodingServiceInterface;
+use SprykerShop\Yves\ProductSearchWidget\Form\DataProvider\ProductQuickAddFormDataProvider;
 use SprykerShop\Yves\ProductSearchWidget\Form\ProductQuickAddForm;
 use SprykerShop\Yves\ProductSearchWidget\Mapper\ProductConcreteMapper;
 use SprykerShop\Yves\ProductSearchWidget\Mapper\ProductConcreteMapperInterface;
@@ -55,7 +57,11 @@ class ProductSearchWidgetFactory extends AbstractFactory
      */
     public function getProductQuickAddForm(): FormInterface
     {
-        return $this->getFormFactory()->create(ProductQuickAddForm::class);
+        return $this->getFormFactory()->create(
+            ProductQuickAddForm::class,
+            [],
+            $this->createProductQuickAddFormDataProvider()->getOptions(),
+        );
     }
 
     /**
@@ -72,6 +78,22 @@ class ProductSearchWidgetFactory extends AbstractFactory
     public function getUtilEncodingService(): ProductSearchWidgetToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(ProductSearchWidgetDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductSearchWidget\Form\DataProvider\ProductQuickAddFormDataProvider
+     */
+    public function createProductQuickAddFormDataProvider(): ProductQuickAddFormDataProvider
+    {
+        return new ProductQuickAddFormDataProvider($this->getLocaleClient());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToLocaleClientInterface
+     */
+    public function getLocaleClient(): ProductSearchWidgetToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(ProductSearchWidgetDependencyProvider::CLIENT_LOCALE);
     }
 
     /**

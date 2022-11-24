@@ -4,10 +4,12 @@ export default class ImageCarousel extends SimpleCarousel {
     protected defaultImageUrl: string;
     protected currentSlideImage: HTMLImageElement;
 
-    protected readyCallback(): void {
+    protected readyCallback(): void {}
+
+    protected init(): void {
         this.getCurrentSlideImage();
         this.setDefaultImageUrl();
-        super.readyCallback();
+        super.init();
     }
 
     /**

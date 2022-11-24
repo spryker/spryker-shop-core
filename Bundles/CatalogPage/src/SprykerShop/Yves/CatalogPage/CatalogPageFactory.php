@@ -18,6 +18,7 @@ use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToProductCategoryF
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToProductCategoryFilterStorageClientInterface;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientInterface;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToStoreClientInterface;
+use SprykerShop\Yves\CatalogPage\Dependency\Service\CatalogPageToUtilNumberServiceInterface;
 use SprykerShop\Yves\CatalogPage\FacetFilter\FacetFilter;
 use SprykerShop\Yves\CatalogPage\FacetFilter\FacetFilterInterface;
 use SprykerShop\Yves\CatalogPage\Resolver\ShopContextResolver;
@@ -156,5 +157,13 @@ class CatalogPageFactory extends AbstractFactory
     public function getApplication(): Application
     {
         return $this->getProvidedDependency(CatalogPageDependencyProvider::PLUGIN_APPLICATION);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CatalogPage\Dependency\Service\CatalogPageToUtilNumberServiceInterface
+     */
+    public function getUtilNumberService(): CatalogPageToUtilNumberServiceInterface
+    {
+        return $this->getProvidedDependency(CatalogPageDependencyProvider::SERVICE_UTIL_NUMBER);
     }
 }

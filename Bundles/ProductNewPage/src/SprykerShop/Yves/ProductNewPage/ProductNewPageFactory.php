@@ -12,6 +12,7 @@ use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToCatalogCli
 use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToLocaleClientInterface;
 use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToProductNewClientInterface;
 use SprykerShop\Yves\ProductNewPage\Dependency\Client\ProductNewPageToUrlStorageClientInterface;
+use SprykerShop\Yves\ProductNewPage\Dependency\Service\ProductNewPageToUtilNumberServiceInterface;
 
 class ProductNewPageFactory extends AbstractFactory
 {
@@ -53,5 +54,13 @@ class ProductNewPageFactory extends AbstractFactory
     public function getLocaleClient(): ProductNewPageToLocaleClientInterface
     {
         return $this->getProvidedDependency(ProductNewPageDependencyProvider::CLIENT_LOCALE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductNewPage\Dependency\Service\ProductNewPageToUtilNumberServiceInterface
+     */
+    public function getUtilNumberService(): ProductNewPageToUtilNumberServiceInterface
+    {
+        return $this->getProvidedDependency(ProductNewPageDependencyProvider::SERVICE_UTIL_NUMBER);
     }
 }

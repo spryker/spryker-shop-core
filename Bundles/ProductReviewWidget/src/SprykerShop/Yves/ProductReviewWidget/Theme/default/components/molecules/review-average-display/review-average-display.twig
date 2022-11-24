@@ -34,10 +34,10 @@
     } only %}
 
     {% if data.summary.totalReview > 0 %}
-        <strong>{{ data.summary.averageRating }}</strong> {{ 'product_review.summary.out_of' | trans }}
+        <strong>{{ data.summary.averageRating | executeFilterIfExists('formatFloat', app.locale) }}</strong> {{ 'product_review.summary.out_of' | trans }}
         {{ data.summary.maximumRating }} {{ 'product_review.summary.stars' | trans }}
         (
-            {{- data.summary.totalReview }}
+            {{- data.summary.totalReview | executeFilterIfExists('formatInt', app.locale) }}
 
             {% set amount = data.summary.totalReview > 1 ? 'multiple' : data.summary.totalReview %}
 

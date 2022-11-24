@@ -101,7 +101,7 @@
                                     {% if not hasMultiShipments and data.itemsWithShipment | length %}
                                         <div class="{{ numberOfItemsClass }}">
                                             {{ 'quote_request_page.quote_request.item' | trans({
-                                                '%count%': data.itemsWithShipment | length,
+                                                '%count%': data.itemsWithShipment | length | executeFilterIfExists('formatInt', app.locale),
                                             }) }}
                                         </div>
                                     {% endif %}
@@ -131,7 +131,7 @@
                                         {% block itemsCounterForItemsWithoutShipment %}
                                             <div class="{{ numberOfItemsClass }}">
                                                 {{ 'quote_request_page.quote_request.item' | trans({
-                                                    '%count%': data.itemsWithoutShipment | length,
+                                                    '%count%': data.itemsWithoutShipment | length | executeFilterIfExists('formatInt', app.locale),
                                                 }) }}
                                             </div>
                                         {% endblock %}
@@ -165,8 +165,8 @@
                                                 {% block titleForMultiShipments %}
                                                     <h4 class="{{ titleMultiShipmentClass }}">
                                                         {{ 'quote_request_page.quote_request.shipment_counter' | trans({
-                                                            '%index%': loop.index,
-                                                            '%length%': data.shipmentGroups | length,
+                                                            '%index%': loop.index | executeFilterIfExists('formatInt', app.locale),
+                                                            '%length%': data.shipmentGroups | length | executeFilterIfExists('formatInt', app.locale),
                                                         }) }}
                                                     </h4>
                                                 {% endblock %}
@@ -174,7 +174,7 @@
                                                 {% block itemsCounterForMultiShipments %}
                                                     <div class="{{ numberOfItemsClass }}">
                                                         {{ 'quote_request_page.quote_request.item' | trans({
-                                                            '%count%': shipmentGroup.items | length,
+                                                            '%count%': shipmentGroup.items | length | executeFilterIfExists('formatInt', app.locale),
                                                         }) }}
                                                     </div>
                                                 {% endblock %}

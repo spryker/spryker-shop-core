@@ -82,7 +82,7 @@
                                     },
                                 } only %}
                             </td>
-                            <td class="text-center">{{ shoppingList.numberOfItems }}</td>
+                            <td class="text-center">{{ shoppingList.numberOfItems | default(0) | executeFilterIfExists('formatInt', app.locale) }}</td>
                             <td>
                                 {% include molecule('shopping-list-action-navigation', 'ShoppingListPage') with {
                                     data: {

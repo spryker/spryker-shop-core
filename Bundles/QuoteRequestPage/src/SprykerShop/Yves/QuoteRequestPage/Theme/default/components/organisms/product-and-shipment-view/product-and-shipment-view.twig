@@ -57,16 +57,17 @@
                         {% block actions %}
                             {% if data.product.amountSalesUnit is empty %}
                                 {{ 'cart.item_quantity' | trans }}:
-                                <strong>{{ data.product.quantity }}</strong>
+                                <strong>{{ data.product.quantity | executeFilterIfExists('formatInt', app.locale) }}</strong>
 
                                 {% if data.product.quantitySalesUnit %}
                                     {% set value = data.product.quantitySalesUnit.value %}
                                     {% set precision = data.product.quantitySalesUnit.precision %}
                                     {% set salesUnitName = data.product.quantitySalesUnit.productMeasurementUnit.name | default %}
+                                    {% set salesUnitValue = value / precision %}
 
                                     <p>
                                         <small class="text-secondary">
-                                            [= {{ value / precision }} {{ salesUnitName | trans }}]
+                                            [= {{ salesUnitValue | executeFilterIfExists('formatFloat', app.locale) }} {{ salesUnitName | trans }}]
                                         </small>
                                     </p>
                                 {% endif %}

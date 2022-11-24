@@ -24,7 +24,7 @@
 
                 <li class="menu__item {{ childrenClass }}">
                     <button class="link {{ data.parentJsName ? data.parentJsName ~ '__trigger' }}" type="button" {{ isDisabled }} data-url={{ categoryNode.url }}>
-                        {{ categoryNode.name }} ({{ categoryNode.quantity }})
+                        {{ categoryNode.name }} ({{ categoryNode.quantity | executeFilterIfExists('formatInt', app.locale) }})
                     </button>
 
                     {% if categoryNode.hasChildren %}

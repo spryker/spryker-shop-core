@@ -17,14 +17,35 @@ use Symfony\Component\Form\FormView;
 class CartChangeQuantityFormWidget extends AbstractWidget
 {
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $cartItem
+     * @var string
+     */
+    protected const PARAMETER_CART_CHANGE_QUANTITY_FORM = 'cartChangeQuantityForm';
+
+    /**
+     * @var string
+     */
+    protected const PARAMETER_CART_ITEM = 'cartItem';
+
+    /**
+     * @var string
+     */
+    protected const PARAMETER_READ_ONLY = 'readOnly';
+
+    /**
+     * @var string
+     */
+    protected const PARAMETER_NUMBER_FORMAT_CONFIG = 'numberFormatConfig';
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param bool $readOnly
      */
-    public function __construct(ItemTransfer $cartItem, bool $readOnly)
+    public function __construct(ItemTransfer $itemTransfer, bool $readOnly)
     {
-        $this->addParameter('cartChangeQuantityForm', $this->createCartChangeQuantityFormView());
-        $this->addParameter('cartItem', $cartItem);
-        $this->addParameter('readOnly', $readOnly);
+        $this->addCartChangeQuantityFormParameter();
+        $this->addCartItemParameter($itemTransfer);
+        $this->addReadOnlyParameter($readOnly);
+        $this->addNumberFormatConfigParameter();
     }
 
     /**
@@ -52,5 +73,53 @@ class CartChangeQuantityFormWidget extends AbstractWidget
             ->createCartPageFormFactory()
             ->getCartChangeQuantityForm()
             ->createView();
+    }
+
+    /**
+     * @return void
+     */
+    protected function addCartChangeQuantityFormParameter(): void
+    {
+        $this->addParameter(
+            static::PARAMETER_CART_CHANGE_QUANTITY_FORM,
+            $this->getFactory()
+                ->createCartPageFormFactory()
+                ->getCartChangeQuantityForm()
+                ->createView(),
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function addCartItemParameter(ItemTransfer $itemTransfer): void
+    {
+        $this->addParameter(static::PARAMETER_CART_ITEM, $itemTransfer);
+    }
+
+    /**
+     * @param bool $readOnly
+     *
+     * @return void
+     */
+    protected function addReadOnlyParameter(bool $readOnly): void
+    {
+        $this->addParameter(static::PARAMETER_READ_ONLY, $readOnly);
+    }
+
+    /**
+     * @return void
+     */
+    protected function addNumberFormatConfigParameter(): void
+    {
+        $numberFormatConfigTransfer = $this->getFactory()
+            ->getUtilNumberService()
+            ->getNumberFormatConfig(
+                $this->getFactory()->getLocale(),
+            );
+
+        $this->addParameter(static::PARAMETER_NUMBER_FORMAT_CONFIG, $numberFormatConfigTransfer->toArray());
     }
 }

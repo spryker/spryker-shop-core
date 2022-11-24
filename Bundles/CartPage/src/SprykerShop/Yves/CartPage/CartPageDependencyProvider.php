@@ -15,6 +15,7 @@ use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientBridge;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientBridge;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToQuoteClientBridge;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToZedRequestClientBridge;
+use SprykerShop\Yves\CartPage\Dependency\Service\CartPageToUtilNumberServiceBridge;
 use SprykerShop\Yves\CartPage\Plugin\CartVariantAttributeMapperPlugin;
 
 /**
@@ -66,6 +67,11 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+
+    /**
+     * @var string
+     */
+    public const SERVICE_UTIL_NUMBER = 'SERVICE_UTIL_NUMBER';
 
     /**
      * @uses \Spryker\Yves\Form\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
@@ -128,6 +134,7 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addRouter($container);
         $container = $this->addLocale($container);
         $container = $this->addRequestStack($container);
+        $container = $this->addUtilNumberService($container);
         $container = $this->addAddToCartFormWidgetParameterExpanderPlugins($container);
 
         return $container;
@@ -380,5 +387,19 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function getPreAddToCartPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addUtilNumberService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_NUMBER, function (Container $container) {
+            return new CartPageToUtilNumberServiceBridge($container->getLocator()->utilNumber()->service());
+        });
+
+        return $container;
     }
 }

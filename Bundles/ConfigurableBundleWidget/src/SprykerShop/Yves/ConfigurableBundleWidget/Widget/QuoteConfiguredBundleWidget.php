@@ -37,6 +37,11 @@ class QuoteConfiguredBundleWidget extends AbstractWidget
     protected const PARAMETER_IS_QUANTITY_CHANGEABLE = 'isQuantityChangeable';
 
     /**
+     * @var string
+     */
+    protected const PARAMETER_NUMBER_FORMAT_CONFIG = 'numberFormatConfig';
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param iterable<\Generated\Shared\Transfer\ItemTransfer>|null $itemTransfers
      */
@@ -56,6 +61,7 @@ class QuoteConfiguredBundleWidget extends AbstractWidget
         $this->addQuoteParameter($quoteTransfer);
         $this->addConfiguredBundlesParameter($configuredBundleTransfers);
         $this->addIsQuantityChangeableParameter();
+        $this->addNumberFormatConfigParameter();
     }
 
     /**
@@ -126,5 +132,19 @@ class QuoteConfiguredBundleWidget extends AbstractWidget
     protected function addIsQuantityChangeableParameter(): void
     {
         $this->addParameter(static::PARAMETER_IS_QUANTITY_CHANGEABLE, $this->getConfig()->isQuantityChangeable());
+    }
+
+    /**
+     * @return void
+     */
+    protected function addNumberFormatConfigParameter(): void
+    {
+        $numberFormatConfigTransfer = $this->getFactory()
+            ->getUtilNumberService()
+            ->getNumberFormatConfig(
+                $this->getFactory()->getLocaleClient()->getCurrentLocale(),
+            );
+
+        $this->addParameter(static::PARAMETER_NUMBER_FORMAT_CONFIG, $numberFormatConfigTransfer->toArray());
     }
 }

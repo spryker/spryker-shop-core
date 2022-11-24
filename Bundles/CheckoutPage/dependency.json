@@ -1,6 +1,7 @@
 {
     "include": {
         "spryker-shop/shop-ui": "ShopUi provides basic frontend infrastructure.",
-        "spryker/transfer": "Provides transfer objects strict (type-safe) functionality."
+        "spryker/transfer": "Provides transfer objects strict (type-safe) functionality.",
+        "spryker/twig": "Provides `executeFilterIfExists` filter functionality."
     }
 }

@@ -1,9 +1,11 @@
 import './style.scss';
 import register from 'ShopUi/app/registry';
-export default register('flash-message', () =>
-    import(
-        /* webpackMode: "lazy" */
-        /* webpackChunkName: "flash-message" */
-        './flash-message'
-    ),
+export default register(
+    'flash-message',
+    () =>
+        import(
+            /* webpackMode: "lazy" */
+            /* webpackChunkName: "flash-message" */
+            './flash-message'
+        ),
 );

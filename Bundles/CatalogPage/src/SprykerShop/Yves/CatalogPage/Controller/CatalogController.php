@@ -118,6 +118,12 @@ class CatalogController extends AbstractController
         $metaDescription = $categoryNode['meta_description'] ?? '';
         $metaKeywords = $categoryNode['meta_keywords'] ?? '';
 
+        $numberFormatConfigTransfer = $this->getFactory()
+            ->getUtilNumberService()
+            ->getNumberFormatConfig(
+                $this->getFactory()->getLocaleClient()->getCurrentLocale(),
+            );
+
         $metaAttributes = [
             'idCategory' => $idCategory,
             'category' => $categoryNode,
@@ -129,6 +135,7 @@ class CatalogController extends AbstractController
             'viewMode' => $this->getFactory()
                 ->getCatalogClient()
                 ->getCatalogViewMode($request),
+            'numberFormatConfig' => $numberFormatConfigTransfer->toArray(),
         ];
 
         return array_merge($searchResults, $metaAttributes);
@@ -188,6 +195,13 @@ class CatalogController extends AbstractController
         $searchResults['viewMode'] = $this->getFactory()
             ->getCatalogClient()
             ->getCatalogViewMode($request);
+
+        $searchResults['numberFormatConfig'] = $this->getFactory()
+            ->getUtilNumberService()
+            ->getNumberFormatConfig(
+                $this->getFactory()->getLocaleClient()->getCurrentLocale(),
+            )
+            ->toArray();
 
         return $searchResults;
     }

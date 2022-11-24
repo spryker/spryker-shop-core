@@ -29,7 +29,7 @@
 
                 {% block itemsToReturnInnerValue %}
                     <span class="{{ itemsToReturnValueClass }}">
-                        {{ data.returnItemsCount }} {{ 'return_page.details.total.items_to_return.count' | trans }}
+                        {{ data.returnItemsCount | executeFilterIfExists('formatInt', app.locale) }} {{ 'return_page.details.total.items_to_return.count' | trans }}
                     </span>
                 {% endblock %}
             {% endblock %}

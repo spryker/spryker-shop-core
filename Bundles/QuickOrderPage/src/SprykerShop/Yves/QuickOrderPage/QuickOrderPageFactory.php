@@ -12,6 +12,7 @@ use Spryker\Yves\Kernel\Application;
 use SprykerShop\Yves\QuickOrderPage\ColumnProvider\QuickOrderFormAdditionalColumnProvider;
 use SprykerShop\Yves\QuickOrderPage\ColumnProvider\QuickOrderFormAdditionalColumnProviderInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToLocaleClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToPriceProductStorageClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityStorageClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductStorageClientInterface;
@@ -39,6 +40,7 @@ use SprykerShop\Yves\QuickOrderPage\Form\Constraint\TextOrderFormatConstraint;
 use SprykerShop\Yves\QuickOrderPage\Form\Constraint\UploadOrderFormatConstraint;
 use SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuickOrderFormDataProvider;
 use SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuickOrderFormDataProviderInterface;
+use SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuickOrderItemEmbeddedFormDataProvider;
 use SprykerShop\Yves\QuickOrderPage\Form\FormFactory;
 use SprykerShop\Yves\QuickOrderPage\Form\Handler\QuickOrderFormHandler;
 use SprykerShop\Yves\QuickOrderPage\Form\Handler\QuickOrderFormHandlerInterface;
@@ -101,7 +103,10 @@ class QuickOrderPageFactory extends AbstractFactory
      */
     public function createQuickOrderFormDataProvider(): QuickOrderFormDataProviderInterface
     {
-        return new QuickOrderFormDataProvider($this->getConfig());
+        return new QuickOrderFormDataProvider(
+            $this->getConfig(),
+            $this->getLocaleClient(),
+        );
     }
 
     /**
@@ -444,6 +449,22 @@ class QuickOrderPageFactory extends AbstractFactory
     public function getCsrfTokenManager(): CsrfTokenManagerInterface
     {
         return $this->getProvidedDependency(QuickOrderPageDependencyProvider::SERVICE_FORM_CSRF_PROVIDER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\Form\DataProvider\QuickOrderItemEmbeddedFormDataProvider
+     */
+    public function createQuickOrderItemEmbeddedFormDataProvider(): QuickOrderItemEmbeddedFormDataProvider
+    {
+        return new QuickOrderItemEmbeddedFormDataProvider($this->getLocaleClient());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToLocaleClientInterface
+     */
+    public function getLocaleClient(): QuickOrderPageToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_LOCALE);
     }
 
     /**

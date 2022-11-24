@@ -22,19 +22,19 @@
 
     <li class="{{ config.name }}__item">
         <div>{{ 'packaging_units.cart.quantity' | trans }}</div>
-        <div class="{{ config.name }}__value">{{ data.quantity }}</div>
+        <div class="{{ config.name }}__value">{{ data.quantity | executeFilterIfExists('formatInt', app.locale) }}</div>
         {% if data.quantityConversion %}
             <small class="text-secondary">
-                [= {{ data.quantity / data.quantityConversion }} {{ salesUnitName | trans }}]
+                [= {{ (data.quantity / data.quantityConversion) | executeFilterIfExists('formatFloat', app.locale) }} {{ salesUnitName | trans }}]
             </small>
         {% endif %}
     </li>
     <li class="{{ config.name }}__item">
         <div>{{ 'packaging_units.cart.amount' | trans }}</div>
-        <div class="{{ config.name }}__value">{{ amountPerQuantity }}</div>
+        <div class="{{ config.name }}__value">{{ amountPerQuantity.toFloat() | executeFilterIfExists('formatFloat', app.locale) }}</div>
         {% if data.amountConversion %}
             <small class="text-secondary">
-                [= {{ amountPerQuantity.divide(data.amountConversion, data.countOfDecimalsInAmount).trim }} {{ leadSalesUnitName | trans }}]
+                [= {{ amountPerQuantity.divide(data.amountConversion, data.countOfDecimalsInAmount).trim.toFloat() | executeFilterIfExists('formatFloat', app.locale) }} {{ leadSalesUnitName | trans }}]
             </small>
         {% endif %}
     </li>

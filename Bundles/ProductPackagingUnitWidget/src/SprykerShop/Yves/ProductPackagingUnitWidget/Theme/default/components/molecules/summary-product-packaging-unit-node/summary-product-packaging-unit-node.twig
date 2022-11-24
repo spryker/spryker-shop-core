@@ -54,7 +54,7 @@
             <div class="col col--sm-12 col--lg-9">
                 {% block contentInner %}
                     {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default %}
-                    {% set salesUnitSummary = salesUnitName ? data.quantity / data.quantitySalesUnit.conversion ~ ' ' ~ salesUnitName | trans %}
+                    {% set salesUnitSummary = salesUnitName ? (data.quantity / data.quantitySalesUnit.conversion) | executeFilterIfExists('formatFloat', app.locale) ~ ' ' ~ salesUnitName | trans %}
 
                     {% block price %}
                         <strong class="float-right">{{ can('SeePricePermissionPlugin') ? data.price | money : 'customer.access.cannot_see_price' | trans }}</strong>
@@ -63,7 +63,7 @@
                     {% block summary %}
                         <div>
                             {% block summaryInner %}
-                                {{ data.quantity }} <span class="text-secondary">&times;</span> {{ data.name }}
+                                {{ data.quantity | executeFilterIfExists('formatInt', app.locale) }} <span class="text-secondary">&times;</span> {{ data.name }}
 
                                 {% block summaryInformation %}
                                     {% if salesUnitSummary %}
@@ -77,7 +77,7 @@
                     {% endblock %}
 
                     {% block quantity %}
-                        <div>{{ 'packaging_units.cart.quantity' | trans }}: {{ data.quantity }}</div>
+                        <div>{{ 'packaging_units.cart.quantity' | trans }}: {{ data.quantity | executeFilterIfExists('formatInt', app.locale) }}</div>
                     {% endblock %}
 
                     {% block offerByMerchant %}
@@ -105,18 +105,18 @@
                                         {% block amountSalesUnitSymbol %}
                                             <span class="text-secondary">&times;</span>
                                         {% endblock %}
-                                        {{ amountPerQuantity }} {{ amountSalesUnitName | trans }}
+                                        {{ amountPerQuantity.toFloat() | executeFilterIfExists('formatFloat', app.locale) }} {{ amountSalesUnitName | trans }}
 
                                         {% block amountSalesUnitSummary %}
                                             {% if amountPerQuantityConversion != amountPerQuantity %}
                                                 {{ 'product_packaging_unit_node_summary' | trans({
-                                                    '%summary%': amountPerQuantityConversion ~ ' ' ~ data.amountSalesUnit.productMeasurementUnit.name | trans,
+                                                    '%summary%': amountPerQuantityConversion.toFloat() | executeFilterIfExists('formatFloat', app.locale) ~ ' ' ~ data.amountSalesUnit.productMeasurementUnit.name | trans,
                                                 })}}
                                             {% endif %}
                                         {% endblock %}
 
                                         {{ 'product_packaging_unit_node_amount_summary' | trans({
-                                            '%summary%': data.amount ~ ' ' ~ amountSalesUnitName | trans,
+                                            '%summary%': data.amount.toFloat() | executeFilterIfExists('formatFloat', app.locale) ~ ' ' ~ amountSalesUnitName | trans,
                                         })}}
                                     {% endblock %}
                                 </div>

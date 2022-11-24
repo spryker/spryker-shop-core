@@ -12,6 +12,7 @@ use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageCli
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToQuoteClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToZedRequestClientInterface;
+use SprykerShop\Yves\CartPage\Dependency\Service\CartPageToUtilNumberServiceInterface;
 use SprykerShop\Yves\CartPage\Form\FormFactory;
 use SprykerShop\Yves\CartPage\Handler\CartItemHandler;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAttributeMapper;
@@ -242,6 +243,14 @@ class CartPageFactory extends AbstractFactory
     public function getCsrfTokenManager(): CsrfTokenManagerInterface
     {
         return $this->getProvidedDependency(CartPageDependencyProvider::SERVICE_FORM_CSRF_PROVIDER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CartPage\Dependency\Service\CartPageToUtilNumberServiceInterface
+     */
+    public function getUtilNumberService(): CartPageToUtilNumberServiceInterface
+    {
+        return $this->getProvidedDependency(CartPageDependencyProvider::SERVICE_UTIL_NUMBER);
     }
 
     /**

@@ -12,6 +12,7 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientBridge;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToLocaleClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToPriceProductStorageClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityStorageClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductStorageClientBridge;
@@ -124,6 +125,11 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_CSV = 'SERVICE_UTIL_CSV';
 
     /**
+     * @var string
+     */
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
+    /**
      * @uses \Spryker\Yves\Form\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
      *
      * @var string
@@ -163,6 +169,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuickOrderFileTemplatePlugins($container);
         $container = $this->addQuickOrderUploadedFileParserPlugins($container);
         $container = $this->addQuickOrderUploadedFileValidatorPlugins($container);
+        $container = $this->addLocaleClient($container);
         $container = $this->addQuickOrderFormExpanderPlugins($container);
         $container = $this->addQuickOrderItemMapperPlugins($container);
 
@@ -438,6 +445,20 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::PLUGINS_QUICK_ORDER_FILE_TEMPLATE, function (): array {
             return $this->getQuickOrderFileTemplatePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addLocaleClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
+            return new QuickOrderPageToLocaleClientBridge($container->getLocator()->locale()->client());
         });
 
         return $container;

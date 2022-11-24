@@ -7,6 +7,7 @@
 {% define data = {
     configuredBundle: required,
     readOnly: false,
+    numberFormatConfig: {},
 } %}
 
 {% block body %}
@@ -15,7 +16,7 @@
             <div class="{{ config.name }}__text text-center">
                 {% block quantity %}
                     <span class="{{ config.name }}__text">
-                        {{ 'configured_bundle.quantity' | trans }} {{ data.configuredBundle.quantity }}
+                        {{ 'configured_bundle.quantity' | trans }} {{ data.configuredBundle.quantity | executeFilterIfExists('formatInt', app.locale) }}
                     </span>
                 {% endblock %}
             </div>
@@ -26,7 +27,8 @@
                 {% include molecule('quantity-input') with {
                     data: {
                         value: data.configuredBundle.quantity,
-                        readOnly: data.readOnly
+                        readOnly: data.readOnly,
+                        numberFormatConfig: data.numberFormatConfig,
                     }
                 } only %}
                 <input type="hidden" name="change_configured_bundle_quantity_form[_token]" value="{{ csrf_token('change_configured_bundle_quantity_form') }}">

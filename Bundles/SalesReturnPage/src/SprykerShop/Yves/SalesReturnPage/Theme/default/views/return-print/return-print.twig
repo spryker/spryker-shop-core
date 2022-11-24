@@ -111,7 +111,7 @@
                                         {% endif %}
                                     </td>
                                     <td class="{{ noBottomBorderClass }}">
-                                        {{ orderItem.quantity }}
+                                        {{ orderItem.quantity | executeFilterIfExists('formatInt', app.locale) }}
                                     </td>
                                     <td class="{{ noBottomBorderClass }}">
                                         {{ orderItem.sumPriceToPayAggregation | money(true, orderItem.currencyIsoCode) }}
@@ -193,7 +193,7 @@
                                         {% endif %}
                                     </td>
                                     <td class="no-bottom-border">
-                                        {{ bundleProduct.quantity }}
+                                        {{ bundleProduct.quantity | executeFilterIfExists('formatInt', app.locale) }}
                                     </td>
                                     <td class="no-bottom-border">
                                         {{ bundleProduct.sumPriceToPayAggregation | money(true, firstBundleItem.currencyIsoCode) }}
@@ -221,7 +221,7 @@
                                         </td>
                                         <td class="no-top-border {{ noBottomBorderClass }}"></td>
                                         <td class="no-top-border {{ noBottomBorderClass }}">
-                                            {{ bundleItem.quantity }}
+                                            {{ bundleItem.quantity | executeFilterIfExists('formatInt', app.locale) }}
                                         </td>
                                         <td class="no-top-border {{ noBottomBorderClass }}"></td>
                                         <td class="no-top-border {{ noBottomBorderClass }}"></td>
@@ -266,7 +266,7 @@
                                     <td class="no-bottom-border"></td>
                                     <td class="no-bottom-border"><strong>{{ bundle.name | trans }}</strong></td>
                                     <td class="no-bottom-border"></td>
-                                    <td class="no-bottom-border">{{ bundle.quantity }}</td>
+                                    <td class="no-bottom-border">{{ bundle.quantity | executeFilterIfExists('formatInt', app.locale) }}</td>
                                     <td class="no-bottom-border">
                                         {% set bundleSumPriceToPayAggregation = 0 %}
                                         {% set currencyIsoCode = null %}
@@ -326,7 +326,7 @@
                                                 {% endif %}
                                             </td>
                                             <td class="no-top-border {{ noBottomBorderClass }}">
-                                                {{ product.quantity }}
+                                                {{ product.quantity | executeFilterIfExists('formatInt', app.locale) }}
                                             </td>
                                             <td class="no-top-border {{ noBottomBorderClass }}">
                                                 {{ product.sumSubtotalAggregation | money(true, product.currencyIsoCode) }}
@@ -354,7 +354,7 @@
             <table align="right">
                 <tr>
                     <td><strong>{{ 'return_page.slip.items_to_return' | trans }}</strong></td>
-                    <td>{{ data.return.returnItems | length }}</td>
+                    <td>{{ data.return.returnItems | length | executeFilterIfExists('formatInt', app.locale) }}</td>
                 </tr>
                 <tr>
                     <td><strong>{{ 'return_page.slip.remuneration_total' | trans }}</strong></td>

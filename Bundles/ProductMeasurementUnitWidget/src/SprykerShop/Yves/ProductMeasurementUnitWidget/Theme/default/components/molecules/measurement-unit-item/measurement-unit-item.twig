@@ -13,6 +13,6 @@
 
 {% block body %}
     <small class="text-secondary">
-        [= {{ data.quantitySalesUnitPrecision }} {{ data.quantitySalesUnit.productMeasurementUnit.name | default | trans }}]
+        [= {{ data.quantitySalesUnitPrecision is not empty ? data.quantitySalesUnitPrecision | executeFilterIfExists('formatFloat', app.locale) }} {{ data.quantitySalesUnit.productMeasurementUnit.name | default | trans }}]
     </small>
 {% endblock %}

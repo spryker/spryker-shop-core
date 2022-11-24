@@ -16,7 +16,7 @@
     {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default('') %}
     {% set salesUnitSummary = '' %}
     {% if salesUnitName %}
-        {% set salesUnitSummary = data.quantitySalesUnit.value / data.quantitySalesUnit.precision ~ ' ' ~ salesUnitName | trans %}
+        {% set salesUnitSummary = (data.quantitySalesUnit.value / data.quantitySalesUnit.precision) | executeFilterIfExists('formatFloat', app.locale) ~ ' ' ~ salesUnitName | trans %}
     {% endif %}
     {% if can('SeePricePermissionPlugin') %}
         <strong class="float-right">{{data.price}}</strong>

@@ -13,7 +13,8 @@
         "spryker/kernel": "^3.52.0",
         "spryker/shopping-list": "^2.8.0 || ^4.10.0",
         "spryker/shopping-list-session": "^1.0.0",
-        "spryker/symfony": "^3.1.0"
+        "spryker/symfony": "^3.1.0",
+        "spryker/twig": "^3.18.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
@@ -24,8 +25,8 @@
         "spryker-shop/multi-cart-page": "Widget are available for this module.",
         "spryker-shop/product-detail-page": "Widget are available for this module.",
         "spryker-shop/quick-order-page": "Widget are available for this module.",
-        "spryker/router": "Use this module when you want to use the Router.",
         "spryker-shop/shopping-list-page": "Use this module if you want see shopping list pages",
+        "spryker/router": "Use this module when you want to use the Router.",
         "spryker/silex": "Use this module when using plugins that need Silex dependencies."
     },
     "autoload": {

@@ -46,7 +46,7 @@
         </td>
         <td class="{{ config.name }}__col">
             {%- block quantity -%}
-                {{ data.quantity }}
+                {{ data.quantity | executeFilterIfExists('formatInt', app.locale) }}
             {%- endblock -%}
         </td>
         <td class="{{ config.name }}__col">

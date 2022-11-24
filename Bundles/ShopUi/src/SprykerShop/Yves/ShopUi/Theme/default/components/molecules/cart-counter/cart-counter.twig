@@ -50,7 +50,7 @@
 
                 {% block quantity %}
                     <span class="{{ config.name }}__quantity {{ config.jsName }}__quantity {{ hiddenQuantityClass }}">
-                        {{- quantity -}}
+                        {{- quantity | trim | executeFilterIfExists('formatInt', app.locale) -}}
                     </span>
                 {% endblock %}
             {% endblock %}

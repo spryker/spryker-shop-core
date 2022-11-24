@@ -121,7 +121,7 @@
                                                     {{ 'sales_product_bundle_widget.quantity' | trans }}
                                                 {% endblock %}
 
-                                                {{ data.quantity }}
+                                                {{ data.quantity | executeFilterIfExists('formatInt', app.locale) }}
                                             </div>
                                         {% endblock %}
 

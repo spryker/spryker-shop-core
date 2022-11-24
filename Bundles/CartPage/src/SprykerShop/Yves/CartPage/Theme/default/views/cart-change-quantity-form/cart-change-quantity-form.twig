@@ -6,7 +6,13 @@
     form: _widget.cartChangeQuantityForm,
     cartItem: _widget.cartItem,
     readOnly: _widget.readOnly,
+    numberFormatConfig: _widget.numberFormatConfig,
 } %}
+
+{% set numberFormatConfig = {} %}
+{% for key, value in data.numberFormatConfig %}
+    {% set numberFormatConfig = numberFormatConfig | merge ({ (key | replace({'_symbol': '', '_': '-'})): value }) %}
+{% endfor %}
 
 {% block body %}
     {% set cartItem = data.cartItem %}
@@ -15,7 +21,17 @@
         'action': path('cart/change/quantity', {'sku': cartItem.sku }),
         'name': 'cartChangeQuantityForm_' ~ cartItem.groupKey,
     }) }}
-        {% block embeddedData %}{% endblock %}
+        {% block embeddedData %}
+            {% include molecule('quantity-input') with {
+                data: {
+                    maxQuantity: cartItem.maxQuantity,
+                    value: cartItem.quantity,
+                    readOnly: data.readOnly,
+                    numberFormatConfig: numberFormatConfig,
+                }
+            } only %}
+            <input type="hidden" value="{{ cartItem.groupKey }}" name="groupKey">
+        {% endblock %}
         {{ form_row(data.form._token, {id: ''}) }}
     {{ form_end(data.form) }}
 {% endblock %}

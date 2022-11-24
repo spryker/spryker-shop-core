@@ -12,6 +12,11 @@ use Generated\Shared\Transfer\QuickOrderTransfer;
 interface QuickOrderFormDataProviderInterface
 {
     /**
+     * @return array
+     */
+    public function getOptions(): array;
+
+    /**
      * @param array<\Generated\Shared\Transfer\QuickOrderItemTransfer> $orderItems
      *
      * @return \Generated\Shared\Transfer\QuickOrderTransfer

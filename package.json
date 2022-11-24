@@ -17,17 +17,17 @@
         "tslint:fix": "tslint -p tsconfig.json -c tslint.json --fix"
     },
     "engines": {
-        "node": ">=12.0.0",
-        "npm": ">=6.9.0"
+        "node": ">=16.0.0",
+        "npm": ">=8.0.0"
     },
     "devDependencies": {
         "@prettier/plugin-xml": "^0.13.1",
         "@spryker/frontend-config.prettier": "~0.0.5",
         "@spryker/frontend-config.stylelint": "~0.0.5",
         "@spryker/frontend-config.tslint": "~0.0.5",
-        "prettier": "~2.0.5",
-        "stylelint": "~13.8.0",
+        "prettier": "~2.5.1",
+        "stylelint": "~13.13.1",
         "tslint": "~6.1.3",
-        "typescript": "~3.8.3"
+        "typescript": "~4.2.4"
     }
 }

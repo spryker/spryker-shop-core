@@ -11,7 +11,8 @@
         "spryker/locale": "^3.8.0",
         "spryker/product-new": "^1.1.0",
         "spryker/symfony": "^3.1.0",
-        "spryker/url-storage": "^1.0.0"
+        "spryker/url-storage": "^1.0.0",
+        "spryker/util-number": "^1.0.0"
     },
     "require-dev": {
         "spryker-shop/catalog-page": "*",

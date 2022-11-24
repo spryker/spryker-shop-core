@@ -45,7 +45,7 @@
         <ul>
             <li>{{ 'checkout.summary.item.bundle.description' | trans }}</li>
             {% for item in data.bundleItems %}
-                <li> - {{ item.quantity }} x {{ item.name }}  </li>
+                <li> - {{ item.quantity | executeFilterIfExists('formatInt', app.locale) }} x {{ item.name }}  </li>
             {% endfor %}
         </ul>
     {% endif %}

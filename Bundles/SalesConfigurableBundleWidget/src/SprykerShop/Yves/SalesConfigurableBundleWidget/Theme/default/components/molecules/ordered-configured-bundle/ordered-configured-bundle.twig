@@ -99,7 +99,7 @@
                     {% endif %}
                 {% endfor %}
 
-                {{ 'configured_bundle_widget.items' | trans }} {{ partialItemCount }} / {{ data.bundle.salesOrderConfiguredBundleItems | length }}
+                {{ 'configured_bundle_widget.items' | trans }} {{ partialItemCount | executeFilterIfExists('formatInt', app.locale) }} / {{ data.bundle.salesOrderConfiguredBundleItems | length | executeFilterIfExists('formatInt', app.locale) }}
             {% endblock %}
         </div>
     {% endblock %}

@@ -12,7 +12,7 @@
     <div class="text-center">
         {% block quantity %}
             <span>
-                {{ 'configured_bundle.quantity' | trans }} {{ data.quantity }}
+                {{ 'configured_bundle.quantity' | trans }} {{ data.quantity | executeFilterIfExists('formatInt', app.locale) }}
             </span>
         {% endblock %}
     </div>

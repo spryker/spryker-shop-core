@@ -8,9 +8,10 @@
 namespace SprykerShop\Yves\ProductSearchWidget\Form;
 
 use Spryker\Yves\Kernel\Form\AbstractType;
+use SprykerShop\Yves\ShopUi\Form\Type\FormattedIntegerType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -40,6 +41,11 @@ class ProductQuickAddForm extends AbstractType
      * @var string
      */
     public const FIELD_REDIRECT_ROUTE_PARAMETERS = 'redirect-route-parameters';
+
+    /**
+     * @var string
+     */
+    public const OPTION_LOCALE = 'locale';
 
     /**
      * @var string
@@ -80,6 +86,16 @@ class ProductQuickAddForm extends AbstractType
     }
 
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setRequired(static::OPTION_LOCALE);
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string, mixed> $options
      *
@@ -87,7 +103,7 @@ class ProductQuickAddForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addQuantity($builder)
+        $this->addQuantity($builder, $options)
             ->addSku($builder)
             ->addRedirectRouteName($builder)
             ->addAdditionalRedirectParameters($builder);
@@ -133,15 +149,17 @@ class ProductQuickAddForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addQuantity(FormBuilderInterface $builder)
+    protected function addQuantity(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_QUANTITY, IntegerType::class, [
+        $builder->add(static::FIELD_QUANTITY, FormattedIntegerType::class, [
                 'required' => true,
                 'label' => false,
                 'attr' => ['min' => 1],
+                'locale' => $options[static::OPTION_LOCALE],
                 'constraints' => [
                     $this->createNotBlankConstraint(static::ERROR_MESSAGE_QUANTITY_REQUIRED),
                     $this->createMinLengthConstraint(static::ERROR_MESSAGE_QUANTITY_REQUIRED),

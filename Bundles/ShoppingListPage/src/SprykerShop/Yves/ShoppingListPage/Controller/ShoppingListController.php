@@ -186,10 +186,17 @@ class ShoppingListController extends AbstractShoppingListController
 
         $shoppingListItems = $this->getShoppingListItems($shoppingListOverviewResponseTransfer);
 
+        $numberFormatConfigTransfer = $this->getFactory()
+            ->getUtilNumberService()
+            ->getNumberFormatConfig(
+                $this->getFactory()->getLocaleClient()->getCurrentLocale(),
+            );
+
         return [
             'addItemToCartForm' => $this->getFactory()->getShoppingListAddItemToCartForm()->createView(),
             'shoppingListItems' => $shoppingListItems,
             'shoppingListOverview' => $shoppingListOverviewResponseTransfer,
+            'numberFormatConfig' => $numberFormatConfigTransfer->toArray(),
         ];
     }
 

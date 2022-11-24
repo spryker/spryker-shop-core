@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\ProductSearchWidget;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToCatalogClientBridge;
+use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToLocaleClientBridge;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Service\ProductSearchWidgetToUtilEncodingServiceBridge;
 
 /**
@@ -21,6 +22,11 @@ class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const CLIENT_CATALOG = 'CLIENT_CATALOG';
+
+    /**
+     * @var string
+     */
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
 
     /**
      * @var string
@@ -42,6 +48,7 @@ class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProv
         $container = parent::provideDependencies($container);
         $container = $this->addCatalogClient($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addLocaleClient($container);
         $container = $this->addProductQuickAddFormExpanderPlugins($container);
 
         return $container;
@@ -74,6 +81,20 @@ class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProv
             return new ProductSearchWidgetToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service(),
             );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addLocaleClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
+            return new ProductSearchWidgetToLocaleClientBridge($container->getLocator()->locale()->client());
         });
 
         return $container;

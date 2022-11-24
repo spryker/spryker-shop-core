@@ -77,7 +77,7 @@
                                                 <p>{{ orderReference }}</p>
                                             {% endfor %}
                                         </td>
-                                        <td>{{ return.returnItems| length }}</td>
+                                        <td>{{ return.returnItems | length | executeFilterIfExists('formatInt', app.locale) }}</td>
                                         <td>{{ date(return.createdAt) | formatDateTime }}</td>
                                         <td>
                                             {% for state in itemStates %}

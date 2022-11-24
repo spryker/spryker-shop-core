@@ -9,7 +9,9 @@ namespace SprykerShop\Yves\ConfigurableBundleWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToConfigurableBundleCartClientInterface;
+use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToLocaleClientInterface;
 use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToQuoteClientInterface;
+use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Service\ConfigurableBundleWidgetToUtilNumberServiceInterface;
 use SprykerShop\Yves\ConfigurableBundleWidget\Form\ChangeConfiguredBundleQuantityForm;
 use SprykerShop\Yves\ConfigurableBundleWidget\Form\ConfiguredBundleRemoveItemForm;
 use SprykerShop\Yves\ConfigurableBundleWidget\Grouper\ConfiguredBundleGrouper;
@@ -88,5 +90,21 @@ class ConfigurableBundleWidgetFactory extends AbstractFactory
     public function getConfiguredBundleRemoveItemForm(): FormInterface
     {
         return $this->getFormFactory()->create(ConfiguredBundleRemoveItemForm::class);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToLocaleClientInterface
+     */
+    public function getLocaleClient(): ConfigurableBundleWidgetToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleWidgetDependencyProvider::CLIENT_LOCALE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Service\ConfigurableBundleWidgetToUtilNumberServiceInterface
+     */
+    public function getUtilNumberService(): ConfigurableBundleWidgetToUtilNumberServiceInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleWidgetDependencyProvider::SERVICE_UTIL_NUMBER);
     }
 }

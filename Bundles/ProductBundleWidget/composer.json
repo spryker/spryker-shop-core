@@ -9,7 +9,8 @@
         "spryker-shop/shop-ui": "^1.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/product-bundle": "^4.1.0 || ^6.0.0 || ^7.0.0",
-        "spryker/transfer": "^3.25.0"
+        "spryker/transfer": "^3.25.0",
+        "spryker/twig": "^3.18.0"
     },
     "require-dev": {
         "spryker-shop/cart-page": "*",

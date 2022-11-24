@@ -69,7 +69,7 @@
                                     <strong class="col col--sm-3 text-right">{{ concreteItem.sumSubtotalAggregation | money(true, data.currencyIsoCode) }}</strong>
                                 </div>
 
-                                <p>{{ 'customer.order.item_quantity' | trans }}: {{ concreteItem.quantity }}</p>
+                                <p>{{ 'customer.order.item_quantity' | trans }}: {{ concreteItem.quantity | executeFilterIfExists('formatInt', app.locale) }}</p>
 
                                 {% include molecule('order-detail-item-details', 'CustomerPage') ignore missing with {
                                     data: {
@@ -78,7 +78,7 @@
                                 } only %}
 
                                 {% if concreteItem.amount %}
-                                    <p>{{ 'customer.order.item_amount' | trans }}: {{ concreteItem.amount.toFloat() }}</p>
+                                    <p>{{ 'customer.order.item_amount' | trans }}: {{ concreteItem.amount.toFloat() | executeFilterIfExists('formatFloat', app.locale) }}</p>
                                 {% endif %}
 
                                 {% widget 'ProductConfigurationOrderItemDisplayWidget' args [concreteItem] only %}
@@ -91,7 +91,7 @@
                                             <ul>
                                                 {% for bundledItem in item.bundleItems %}
                                                     <li>
-                                                        &nbsp; - {{ bundledItem.quantity }} x {{ bundledItem.name }}
+                                                        &nbsp; - {{ bundledItem.quantity | executeFilterIfExists('formatInt', app.locale) }} x {{ bundledItem.name }}
                                                         {% include molecule('order-detail-item-details', 'CustomerPage') ignore missing with {
                                                             data: {
                                                                 orderItem: bundledItem,

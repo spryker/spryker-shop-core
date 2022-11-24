@@ -1,0 +1,40 @@
+{% extends model('component') %}
+{% import _self as component %}
+
+{% define config = {
+    name: 'formatted-number-input',
+    tag: 'formatted-number-input',
+} %}
+
+{% define data = {
+    inputName: required,
+    inputValue: required,
+    inputExtraClasses: '',
+    inputAttributes: {},
+    hiddenInputExtraClasses: '',
+    hiddenInputAttributes: {},
+} %}
+
+{% define attributes = {
+    'grouping-separator': '',
+    'decimal-separator': '.',
+    'decimal-rounding': 3,
+    'decimal-filling': false,
+    'watch-external-changes': false,
+    min: false,
+    max: false,
+} %}
+
+{% block body %}
+    <input value="{{ data.inputValue }}"
+           class="{{ config.jsName }}__input {{ component.renderClass(config.name ~ '__input', modifiers) }} {{ data.inputExtraClasses }}"
+           {{ component.renderAttributes(data.inputAttributes) }}>
+
+    {% block hiddenInput %}
+        <input type="hidden"
+               value="{{ data.inputValue }}"
+               name="{{ data.inputName }}"
+               class="{{ config.jsName }}__hidden-input {{ config.name }}__hidden-input {{ data.hiddenInputExtraClasses }}"
+               {{ component.renderAttributes(data.hiddenInputAttributes) }}>
+    {% endblock %}
+{% endblock %}

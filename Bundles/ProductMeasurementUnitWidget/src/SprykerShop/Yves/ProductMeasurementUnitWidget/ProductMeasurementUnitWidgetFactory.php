@@ -8,9 +8,11 @@
 namespace SprykerShop\Yves\ProductMeasurementUnitWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client\ProductMeasurementUnitWidgetToLocaleClientInterface;
 use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client\ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientInterface;
 use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client\ProductMeasurementUnitWidgetToProductQuantityStorageClientInterface;
 use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Service\ProductMeasurementUnitWidgetToUtilEncodingServiceInterface;
+use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Service\ProductMeasurementUnitWidgetToUtilNumberServiceInterface;
 
 class ProductMeasurementUnitWidgetFactory extends AbstractFactory
 {
@@ -36,5 +38,21 @@ class ProductMeasurementUnitWidgetFactory extends AbstractFactory
     public function getUtilEncodingService(): ProductMeasurementUnitWidgetToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(ProductMeasurementUnitWidgetDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client\ProductMeasurementUnitWidgetToLocaleClientInterface
+     */
+    public function getLocaleClient(): ProductMeasurementUnitWidgetToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(ProductMeasurementUnitWidgetDependencyProvider::CLIENT_LOCALE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Service\ProductMeasurementUnitWidgetToUtilNumberServiceInterface
+     */
+    public function getUtilNumberService(): ProductMeasurementUnitWidgetToUtilNumberServiceInterface
+    {
+        return $this->getProvidedDependency(ProductMeasurementUnitWidgetDependencyProvider::SERVICE_UTIL_NUMBER);
     }
 }

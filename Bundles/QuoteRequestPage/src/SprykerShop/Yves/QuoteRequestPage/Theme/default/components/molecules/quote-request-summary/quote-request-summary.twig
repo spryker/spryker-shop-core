@@ -31,7 +31,7 @@
                     {% widget 'ProductBundleItemCounterWidget' args [data.cart] only %}
                     {% nowidget %}
                         {{ 'quote_request_page.quote_request.item' | trans({
-                            '%count%': data.cart.items | length,
+                            '%count%': data.cart.items | length | executeFilterIfExists('formatInt', app.locale),
                         }) }}
                     {% endwidget %}
                 </div>

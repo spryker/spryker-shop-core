@@ -73,4 +73,9 @@
         <property name="sortParamNames" type="array" singular="sortParamNames"/>
     </transfer>
 
+    <transfer name="NumberFormatConfig">
+        <property name="groupingSeparatorSymbol" type="string"/>
+        <property name="decimalSeparatorSymbol" type="string"/>
+    </transfer>
+
 </transfers>

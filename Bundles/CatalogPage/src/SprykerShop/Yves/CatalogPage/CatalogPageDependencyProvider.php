@@ -17,6 +17,7 @@ use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToProductCategoryF
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToProductCategoryFilterStorageClientBridge;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientBridge;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToStoreClientBridge;
+use SprykerShop\Yves\CatalogPage\Dependency\Service\CatalogPageToUtilNumberServiceBridge;
 
 /**
  * @method \SprykerShop\Yves\CatalogPage\CatalogPageConfig getConfig()
@@ -69,6 +70,11 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
+     * @var string
+     */
+    public const SERVICE_UTIL_NUMBER = 'SERVICE_UTIL_NUMBER';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -84,6 +90,7 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStoreClient($container);
         $container = $this->addCatalogPageWidgetPlugins($container);
         $container = $this->addApplication($container);
+        $container = $this->addUtilNumberService($container);
 
         return $container;
     }
@@ -219,6 +226,22 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addUtilNumberService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_NUMBER, function (Container $container) {
+            return new CatalogPageToUtilNumberServiceBridge(
+                $container->getLocator()->utilNumber()->service(),
+            );
         });
 
         return $container;

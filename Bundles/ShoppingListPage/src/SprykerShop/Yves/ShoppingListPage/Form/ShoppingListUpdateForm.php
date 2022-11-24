@@ -38,14 +38,22 @@ class ShoppingListUpdateForm extends AbstractType
     public const FIELD_ITEMS = 'items';
 
     /**
+     * @var string
+     */
+    public const OPTION_LOCALE = 'locale';
+
+    /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefaults([
             'data_class' => ShoppingListTransfer::class,
+            static::OPTION_LOCALE => null,
         ]);
     }
 
@@ -59,7 +67,7 @@ class ShoppingListUpdateForm extends AbstractType
     {
         $this->addNameField($builder);
         $this->addIdField($builder);
-        $this->addItemsField($builder);
+        $this->addItemsField($builder, $options);
     }
 
     /**
@@ -99,15 +107,19 @@ class ShoppingListUpdateForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return void
      */
-    protected function addItemsField(FormBuilderInterface $builder): void
+    protected function addItemsField(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(static::FIELD_ITEMS, CollectionType::class, [
             'required' => false,
             'label' => false,
             'entry_type' => ShoppingListItemForm::class,
+            'entry_options' => [
+                'locale' => $options[static::OPTION_LOCALE],
+            ],
         ]);
     }
 }

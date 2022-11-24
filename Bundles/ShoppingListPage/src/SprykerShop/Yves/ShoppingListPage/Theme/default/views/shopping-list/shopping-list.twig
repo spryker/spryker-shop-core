@@ -9,7 +9,13 @@
     shoppingListCollection: _view.shoppingListOverview.shoppingLists,
     shoppingListItems: _view.shoppingListItems,
     addItemToCartForm: _view.addItemToCartForm,
+    numberFormatConfig: _view.numberFormatConfig,
 } %}
+
+{% set numberFormatConfig = {} %}
+{% for key, value in data.numberFormatConfig %}
+    {% set numberFormatConfig = numberFormatConfig | merge ({ (key | replace({'_symbol': '', '_': '-'})): value }) %}
+{% endfor %}
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
@@ -117,6 +123,7 @@
                                     data: {
                                         shoppingList: data.shoppingList,
                                         shoppingListItems: data.shoppingListItems,
+                                        numberFormatConfig: numberFormatConfig,
                                     },
                                 } only %}
                             {% endblock %}

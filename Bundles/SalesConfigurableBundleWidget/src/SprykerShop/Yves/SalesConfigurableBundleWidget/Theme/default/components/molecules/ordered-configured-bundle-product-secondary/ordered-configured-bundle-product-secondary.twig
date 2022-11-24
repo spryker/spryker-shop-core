@@ -89,7 +89,7 @@
 
                 {% block quantity %}
                     <div class="{{ productQuantityColumnClass }}">
-                        {{ 'configured_bundle.quantity' | trans }} {{ data.product.quantity }}
+                        {{ 'configured_bundle.quantity' | trans }} {{ data.product.quantity | executeFilterIfExists('formatInt', app.locale) }}
                     </div>
                 {% endblock %}
 

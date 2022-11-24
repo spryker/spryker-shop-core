@@ -1,6 +1,7 @@
 {
     "include": {
         "spryker-shop/shop-ui": "ShopUi provides basic frontend infrastructure.",
-        "spryker/sales-configurable-bundle": "SalesConfigurableBundleWidget depends on SalesConfigurableBundle functionality."
+        "spryker/sales-configurable-bundle": "SalesConfigurableBundleWidget depends on SalesConfigurableBundle functionality.",
+        "spryker/twig": "Provides `executeFilterIfExists` filter functionality."
     }
 }

@@ -6,6 +6,7 @@
     tag: 'label'
 } %}
 
+{# @deprecated property "step" is deprecated. #}
 {% define data = {
     label: 'cart.item_quantity' | trans,
     maxQuantity: null,
@@ -14,20 +15,33 @@
     readOnly: false,
     hasUpdateButton: true,
     step: 1,
+    inputAttributes: {
+        class: 'input input--expand',
+        name: 'quantity',
+        min: data.minQuantity | default(1),
+        max: data.maxQuantity | default(null) < 0 or data.maxQuantity | default(null) < data.minQuantity | default(1) ? false : data.maxQuantity | default(null),
+        value: data.readOnly | default(false) and data.value | default(1) is not empty ? data.value | default(1) | executeFilterIfExists('formatFloat', app.locale) : data.value | default(1),
+        disabled: data.readOnly | default(false),
+    },
+    numberFormatConfig: {},
 } %}
 
-{% set maxQuantity = data.maxQuantity < 0 or data.maxQuantity < data.minQuantity ? null : data.maxQuantity %}
+{# @deprecated "define inputAttributes" is deprecated. Use data.inputAttributes instead. #}
+{% define inputAttributes = {} %}
 
-{% define inputAttributes = {
-    type: 'number',
-    name: 'quantity',
-    class: 'input input--expand',
-    min: data.minQuantity,
-    max: maxQuantity is empty ? false : maxQuantity,
-    value: data.value,
-    step: data.step,
-    disabled: data.readOnly,
+{% set inputAttributes = inputAttributes | merge(data.inputAttributes) %}
+{% set inputAttributeFilters = {
+    type: false,
+    value: false,
+    name: false,
+    class: false,
 } %}
+{% set filteredInputAttributes = inputAttributes | filter((value, key) => inputAttributeFilters[key] ?? true) %}
+
+{% set numberFormatConfig = {
+    min: inputAttributes.min,
+    max: inputAttributes.max,
+} | merge(data.numberFormatConfig) %}
 
 {% block body %}
     {% block label %}
@@ -37,7 +51,20 @@
     <span class="grid">
         <span class="col col--expand">
             {% block input %}
-                <input {{component.renderAttributes(inputAttributes)}} {{qa('quantity-input')}}>
+                {% include molecule('formatted-number-input') with {
+                    modifiers: ['expand'],
+                    data: {
+                        inputName: inputAttributes.name,
+                        inputExtraClasses: inputAttributes.class,
+                        inputValue: inputAttributes.value,
+                        inputAttributes: filteredInputAttributes,
+                        hiddenInputAttributes: {
+                            'data-qa': config.name,
+                            disabled: inputAttributes.disabled,
+                        }
+                    },
+                    attributes: numberFormatConfig,
+                } only %}
             {% endblock %}
         </span>
 

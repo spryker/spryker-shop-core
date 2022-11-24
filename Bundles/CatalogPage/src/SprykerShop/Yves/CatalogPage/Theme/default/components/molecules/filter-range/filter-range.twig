@@ -9,8 +9,15 @@
     min: required,
     activeMin: required,
     max: required,
-    activeMax: required
+    activeMax: required,
+    numberFormatConfig: {},
 } %}
+
+{% set inputAttributes = {
+    min: data.min,
+    max: data.max,
+    'decimal-rounding': 0,
+} | merge(data.numberFormatConfig) %}
 
 {% block body %}
     <h3 class="title--h6">{{ ('product.filter.' ~ data.filter.name | lower) | trans }}</h3>
@@ -19,32 +26,30 @@
         <div class="col col--sm-5">
             <label>
                 {{ 'catalog.filter.rangeFrom'|trans }}
-                <input class="input input--expand"
-                       type="number"
-                       name="{{ data.parameter }}[min]"
-                       value="{{ data.activeMin }}"
-                       placeholder="{{ data.min }}"
-                       min="{{ data.min }}"
-                       max="{{ data.max }}"
-                       data-default-value-disabler
-                       data-default-value-input="{{ data.min }}"
-                >
+
+                {% include molecule('formatted-number-input') with {
+                    modifiers: ['expand'],
+                    data: {
+                        inputName: data.parameter ~ '[min]',
+                        inputValue: data.activeMin,
+                    },
+                    attributes: inputAttributes,
+                } only %}
             </label>
         </div>
 
         <div class="col col--sm-5">
             <label>
                 {{ 'catalog.filter.rangeTo'|trans }}
-                <input class="input input--expand"
-                       type="number"
-                       name="{{ data.parameter }}[max]"
-                       value="{{ data.activeMax }}"
-                       placeholder="{{ data.max }}"
-                       min="{{ data.min }}"
-                       max="{{ data.max }}"
-                       data-default-value-disabler
-                       data-default-value-input="{{ data.max }}"
-                >
+
+                {% include molecule('formatted-number-input') with {
+                    modifiers: ['expand'],
+                    data: {
+                        inputName: data.parameter ~ '[max]',
+                        inputValue: data.activeMax,
+                    },
+                    attributes: inputAttributes,
+                } only %}
             </label>
         </div>
     </div>

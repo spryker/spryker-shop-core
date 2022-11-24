@@ -6,10 +6,11 @@
     "require": {
         "php": ">=8.0",
         "spryker-shop/product-search-widget-extension": "^1.0.0",
-        "spryker-shop/shop-ui": "^1.58.0",
+        "spryker-shop/shop-ui": "^1.63.0",
         "spryker/application": "^3.0.0",
         "spryker/catalog": "^5.5.0",
         "spryker/kernel": "^3.52.0",
+        "spryker/locale": "^3.0.0",
         "spryker/symfony": "^3.0.0",
         "spryker/util-encoding": "^2.0.0"
     },
@@ -20,8 +21,8 @@
         "spryker/silex": "*"
     },
     "suggest": {
-        "spryker-shop/shop-application": "Use this module when using plugins that need ShopApplication dependencies.",
         "spryker-shop/quick-order-page": "Use this module when using plugins that need QuickOrderPage dependencies.",
+        "spryker-shop/shop-application": "Use this module when using plugins that need ShopApplication dependencies.",
         "spryker/router": "If you want to use RouteProviderPlugins to be added to the Route Module.",
         "spryker/silex": "Use this module when using plugins that need Silex dependencies."
     },

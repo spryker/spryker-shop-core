@@ -38,7 +38,7 @@
             {% block shoppingListInfoInner %}
                 {% block numberOfItems %}
                     <span class="{{ config.name }}__items-count">
-                        {{ data.shoppingList.numberOfItems }}
+                        {{ data.shoppingList.numberOfItems | default(0) | executeFilterIfExists('formatInt', app.locale) }}
                         {{ 'shopping_list_widget.items' | trans }}
                     </span>
                 {% endblock %}

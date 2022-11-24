@@ -1,8 +1,10 @@
 import './style.scss';
 import register from 'ShopUi/app/registry';
-export default register('ajax-loader', () =>
-    import(
-        /* webpackMode: "eager" */
-        './ajax-loader'
-    ),
+export default register(
+    'ajax-loader',
+    () =>
+        import(
+            /* webpackMode: "eager" */
+            './ajax-loader'
+        ),
 );

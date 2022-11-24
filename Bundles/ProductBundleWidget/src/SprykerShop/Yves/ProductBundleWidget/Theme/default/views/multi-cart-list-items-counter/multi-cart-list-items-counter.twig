@@ -9,6 +9,6 @@
 
 {% block body %}
     <span class="cart-items-quantity">
-        {{ itemCount }} {{ label | trans }}
+        {{ itemCount | executeFilterIfExists('formatInt', app.locale) }} {{ label | trans }}
     </span>
 {% endblock %}

@@ -14,17 +14,17 @@
 
 {% block body %}
     {% block price %}
-        <strong class="float-right">{{ can('SeePricePermissionPlugin') ? data.price : 'customer.access.cannot_see_price' | trans }}</strong>
+        <strong class="float-right">{{ can('SeePricePermissionPlugin') ? data.price | money : 'customer.access.cannot_see_price' | trans }}</strong>
     {% endblock %}
 
     {% block summary %}
         {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default %}
-        {% set salesUnitSummary = salesUnitName ? data.quantity / data.quantitySalesUnit.conversion ~ ' ' ~ salesUnitName | trans %}
+        {% set salesUnitSummary = salesUnitName ? (data.quantity / data.quantitySalesUnit.conversion) | executeFilterIfExists('formatFloat', app.locale) ~ ' ' ~ salesUnitName | trans %}
 
         {% block summaryContainer %}
             <div>
                 {% block summaryInner %}
-                    {{ data.quantity }} <span class="text-secondary">&times;</span> {{ data.name }}
+                    {{ data.quantity | executeFilterIfExists('formatInt', app.locale) }} <span class="text-secondary">&times;</span> {{ data.name }}
 
                     {% block summaryInformation %}
                         {% if salesUnitSummary %}

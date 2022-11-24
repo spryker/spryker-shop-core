@@ -18,7 +18,7 @@
 
 {% block body %}
     {% block cartQuantity %}
-        <h6 class="text-secondary float-right">{{ data.cartQuantity }} {{ 'item' | trans }}</h6>
+        <h6 class="text-secondary float-right">{{ data.cartQuantity | executeFilterIfExists('formatInt', app.locale) }} {{ 'item' | trans }}</h6>
         <h6>{{ 'cart.your-order' | trans }}</h6>
         <hr>
     {% endblock %}

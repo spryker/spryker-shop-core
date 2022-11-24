@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\ShoppingListPage\Form;
 
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use SprykerShop\Yves\ShopUi\Form\Type\FormattedIntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -37,14 +37,22 @@ class ShoppingListItemForm extends AbstractType
     protected const MIN_QUANTITY_RANGE = 1;
 
     /**
+     * @var string
+     */
+    protected const OPTION_LOCALE = 'locale';
+
+    /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefaults([
             'data_class' => ShoppingListItemTransfer::class,
+            static::OPTION_LOCALE => null,
         ]);
     }
 
@@ -57,19 +65,21 @@ class ShoppingListItemForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
-            ->addQuantityField($builder);
+            ->addQuantityField($builder, $options);
 
         $this->addFormExpanders($builder, $options);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addQuantityField(FormBuilderInterface $builder)
+    protected function addQuantityField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_QUANTITY, HiddenType::class, [
+        $builder->add(static::FIELD_QUANTITY, FormattedIntegerType::class, [
+            'locale' => $options[static::OPTION_LOCALE],
             'constraints' => [
                 new NotBlank(),
                 new Range([

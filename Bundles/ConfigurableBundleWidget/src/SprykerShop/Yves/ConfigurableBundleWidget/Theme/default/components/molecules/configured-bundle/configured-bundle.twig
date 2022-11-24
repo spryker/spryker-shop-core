@@ -18,6 +18,7 @@
     isEditable: true,
     isQuantitySummaryVisible: false,
     quote: null,
+    numberFormatConfig: {},
 } %}
 
 {%- block extraClass %} box{% endblock -%}
@@ -53,6 +54,7 @@
                                 data: {
                                     configuredBundle: data.bundle,
                                     readOnly: not (data.isEditable and data.isQuantityChangeable),
+                                    numberFormatConfig: data.numberFormatConfig,
                                 },
                             } only %}
                         {% endblock %}
@@ -116,7 +118,7 @@
                     {% for bundleItem in data.bundle.items %}
                         {% set totalSumItemQuantity = totalSumItemQuantity + bundleItem.quantity %}
                     {% endfor %}
-                    {{ 'configured_bundle_widget.items' | trans }} {{ partialSumItemQuantity }} / {{ totalSumItemQuantity }}
+                    {{ 'configured_bundle_widget.items' | trans }} {{ partialSumItemQuantity | executeFilterIfExists('formatInt', app.locale) }} / {{ totalSumItemQuantity | executeFilterIfExists('formatInt', app.locale) }}
                 {% endif %}
             {% endblock %}
         </div>

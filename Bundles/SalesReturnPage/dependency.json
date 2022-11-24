@@ -1,6 +1,7 @@
 {
     "include": {
         "spryker-shop/shop-ui": "ShopUi provides basic frontend infrastructure.",
-        "spryker-shop/barcode-widget": "Widget that generates barcode by text."
+        "spryker-shop/barcode-widget": "Widget that generates barcode by text.",
+        "spryker/twig": "Provides `executeFilterIfExists` filter functionality."
     }
 }

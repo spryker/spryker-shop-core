@@ -75,8 +75,9 @@
                         {% set options = {
                             required: true,
                             label: false,
+                            hiddenInputClass: config.jsName ~ '__hidden-input',
                             attr: {
-                                class: config.jsName ~ '__quantity',
+                                class: config.jsName ~ '__quantity-input',
                                 min: 1,
                                 max: null,
                                 step: 1,
