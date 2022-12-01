@@ -11,10 +11,12 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToLocaleClientInterface;
 use SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToTwigClientInterface;
 use SprykerShop\Yves\ShopUi\Dependency\Service\ShopUiToUtilNumberServiceInterface;
-use SprykerShop\Yves\ShopUi\Extender\NumberFormatterTwigFilterExtender;
-use SprykerShop\Yves\ShopUi\Extender\NumberFormatterTwigFilterExtenderInterface;
+use SprykerShop\Yves\ShopUi\Extender\NumberFormatterTwigExtender;
+use SprykerShop\Yves\ShopUi\Extender\NumberFormatterTwigExtenderInterface;
 use SprykerShop\Yves\ShopUi\Filter\NumberFormatterTwigFilterFactory;
 use SprykerShop\Yves\ShopUi\Filter\NumberFormatterTwigFilterFactoryInterface;
+use SprykerShop\Yves\ShopUi\Function\NumberFormatterTwigFunctionFactory;
+use SprykerShop\Yves\ShopUi\Function\NumberFormatterTwigFunctionFactoryInterface;
 use SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProvider;
 use SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProviderInterface;
 use SprykerShop\Yves\ShopUi\Twig\ShopUiTwigExtension;
@@ -48,12 +50,13 @@ class ShopUiFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ShopUi\Extender\NumberFormatterTwigFilterExtenderInterface
+     * @return \SprykerShop\Yves\ShopUi\Extender\NumberFormatterTwigExtenderInterface
      */
-    public function createNumberFormatterTwigFilterExtender(): NumberFormatterTwigFilterExtenderInterface
+    public function createNumberFormatterTwigExtender(): NumberFormatterTwigExtenderInterface
     {
-        return new NumberFormatterTwigFilterExtender(
+        return new NumberFormatterTwigExtender(
             $this->createNumberFormatterTwigFilterFactory(),
+            $this->createNumberFormatterTwigFunctionFactory(),
         );
     }
 
@@ -63,6 +66,16 @@ class ShopUiFactory extends AbstractFactory
     public function createNumberFormatterTwigFilterFactory(): NumberFormatterTwigFilterFactoryInterface
     {
         return new NumberFormatterTwigFilterFactory(
+            $this->getUtilNumberService(),
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShopUi\Function\NumberFormatterTwigFunctionFactoryInterface
+     */
+    public function createNumberFormatterTwigFunctionFactory(): NumberFormatterTwigFunctionFactoryInterface
+    {
+        return new NumberFormatterTwigFunctionFactory(
             $this->getUtilNumberService(),
         );
     }

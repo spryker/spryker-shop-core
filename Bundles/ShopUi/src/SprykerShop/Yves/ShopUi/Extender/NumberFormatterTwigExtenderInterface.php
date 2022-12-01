@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\ShopUi\Extender;
 
 use Twig\Environment;
 
-interface NumberFormatterTwigFilterExtenderInterface
+interface NumberFormatterTwigExtenderInterface
 {
     /**
      * @param \Twig\Environment $twig

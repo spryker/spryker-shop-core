@@ -20,6 +20,7 @@ class NumberFormatterTwigPlugin extends AbstractPlugin implements TwigPluginInte
     /**
      * {@inheritDoc}
      * - Extends Twig with `formatInt()` and `formatFloat()` filter functions.
+     * - Extends Twig with `getNumberFormatConfig()` function.
      *
      * @api
      *
@@ -30,16 +31,8 @@ class NumberFormatterTwigPlugin extends AbstractPlugin implements TwigPluginInte
      */
     public function extend(Environment $twig, ContainerInterface $container): Environment
     {
-        return $this->addTwigFilters($twig);
-    }
-
-    /**
-     * @param \Twig\Environment $twig
-     *
-     * @return \Twig\Environment
-     */
-    protected function addTwigFilters(Environment $twig): Environment
-    {
-        return $this->getFactory()->createNumberFormatterTwigFilterExtender()->extend($twig);
+        return $this->getFactory()
+            ->createNumberFormatterTwigExtender()
+            ->extend($twig);
     }
 }

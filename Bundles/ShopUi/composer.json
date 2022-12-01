@@ -18,26 +18,32 @@
         "spryker-shop/product-group-widget": "*",
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
-        "spryker/silex": "*"
+        "spryker/silex": "*",
+        "spryker/testify": "*"
     },
     "suggest": {
+        "spryker-shop/asset-widget": "If you want to use components from module AssetWidget",
         "spryker-shop/money-widget": "If you want to use widgets from module MoneyWidget",
         "spryker-shop/newsletter-widget": "If you want to use components from module NewsletterWidget.",
         "spryker-shop/product-group-widget": "If you want to use components from module ProductGroupColorWidget or ProductGroupWidget",
         "spryker/container": "If you want to use Twig Plugins",
-        "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
-        "spryker-shop/asset-widget": "If you want to use components from module AssetWidget"
+        "spryker/silex": "Use this module when using plugins that need Silex dependencies."
     },
     "autoload": {
         "psr-4": {
             "SprykerShop\\": "src/SprykerShop/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerShopTest\\": "tests/SprykerShopTest/"
+        }
+    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
     },
     "extra": {
         "branch-alias": {
