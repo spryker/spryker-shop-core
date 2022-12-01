@@ -201,6 +201,10 @@
         {%- set inputAttributes = inputAttributes | merge({'grouping-separator': grouping_separator_symbol}) -%}
     {% endif %}
 
+    {% if decimal_separator_symbol ?? false %}
+        {%- set inputAttributes = inputAttributes | merge({'decimal-separator': decimal_separator_symbol}) -%}
+    {% endif %}
+
     {% if attr.min ?? false %}
         {%- set inputAttributes = inputAttributes | merge({min: attr.min}) -%}
     {% endif %}

@@ -37,7 +37,7 @@ class NumberFormatterTwigPluginTest extends Unit
     protected const FORMAT_FLOAT_FILTER_NAME = 'formatFloat';
 
     /**
-     * @uses \SprykerShop\Yves\ShopUi\Function\NumberFormatterTwigFunctionFactory::GET_NUMBER_FORMAT_CONFIG_FUNCTION_NAME
+     * @uses \SprykerShop\Yves\ShopUi\TwigFunction\NumberFormatterTwigFunctionFactory::GET_NUMBER_FORMAT_CONFIG_FUNCTION_NAME
      *
      * @var string
      */

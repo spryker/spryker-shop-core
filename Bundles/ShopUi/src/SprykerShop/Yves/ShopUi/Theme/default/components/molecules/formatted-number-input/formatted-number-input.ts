@@ -12,6 +12,11 @@ export default class FormattedNumberInput extends Component {
     protected init(): void {
         this.input = <HTMLInputElement>this.getElementsByClassName(`${this.jsName}__input`)[0];
         this.hiddenInput = <HTMLInputElement>this.getElementsByClassName(`${this.jsName}__hidden-input`)[0];
+
+        if (this.isDisabled) {
+            return;
+        }
+
         this.autoNumericConfig = {
             digitGroupSeparator: this.digitGroupSeparator,
             decimalCharacter: this.decimalCharacter,
@@ -87,5 +92,9 @@ export default class FormattedNumberInput extends Component {
 
     protected get watchExternalChanges(): boolean {
         return this.hasAttribute('watch-external-changes');
+    }
+
+    protected get isDisabled(): boolean {
+        return this.input.hasAttribute('disabled');
     }
 }

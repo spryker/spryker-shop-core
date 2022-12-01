@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\ShopUi\Extender;
 
 use SprykerShop\Yves\ShopUi\Filter\NumberFormatterTwigFilterFactoryInterface;
-use SprykerShop\Yves\ShopUi\Function\NumberFormatterTwigFunctionFactoryInterface;
+use SprykerShop\Yves\ShopUi\TwigFunction\NumberFormatterTwigFunctionFactoryInterface;
 use Twig\Environment;
 
 class NumberFormatterTwigExtender implements NumberFormatterTwigExtenderInterface

@@ -15,11 +15,11 @@ use SprykerShop\Yves\ShopUi\Extender\NumberFormatterTwigExtender;
 use SprykerShop\Yves\ShopUi\Extender\NumberFormatterTwigExtenderInterface;
 use SprykerShop\Yves\ShopUi\Filter\NumberFormatterTwigFilterFactory;
 use SprykerShop\Yves\ShopUi\Filter\NumberFormatterTwigFilterFactoryInterface;
-use SprykerShop\Yves\ShopUi\Function\NumberFormatterTwigFunctionFactory;
-use SprykerShop\Yves\ShopUi\Function\NumberFormatterTwigFunctionFactoryInterface;
 use SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProvider;
 use SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProviderInterface;
 use SprykerShop\Yves\ShopUi\Twig\ShopUiTwigExtension;
+use SprykerShop\Yves\ShopUi\TwigFunction\NumberFormatterTwigFunctionFactory;
+use SprykerShop\Yves\ShopUi\TwigFunction\NumberFormatterTwigFunctionFactoryInterface;
 
 /**
  * @method \SprykerShop\Yves\ShopUi\ShopUiConfig getConfig()
@@ -71,7 +71,7 @@ class ShopUiFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ShopUi\Function\NumberFormatterTwigFunctionFactoryInterface
+     * @return \SprykerShop\Yves\ShopUi\TwigFunction\NumberFormatterTwigFunctionFactoryInterface
      */
     public function createNumberFormatterTwigFunctionFactory(): NumberFormatterTwigFunctionFactoryInterface
     {
