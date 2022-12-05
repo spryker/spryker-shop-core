@@ -19,13 +19,13 @@ class NumberFormatterTwigExtender implements NumberFormatterTwigExtenderInterfac
     protected NumberFormatterTwigFilterFactoryInterface $numberFormatterTwigFilterFactory;
 
     /**
-     * @var \SprykerShop\Yves\ShopUi\Function\NumberFormatterTwigFunctionFactoryInterface
+     * @var \SprykerShop\Yves\ShopUi\TwigFunction\NumberFormatterTwigFunctionFactoryInterface
      */
     protected NumberFormatterTwigFunctionFactoryInterface $numberFormatterTwigFunctionFactory;
 
     /**
      * @param \SprykerShop\Yves\ShopUi\Filter\NumberFormatterTwigFilterFactoryInterface $numberFormatterTwigFilterFactory
-     * @param \SprykerShop\Yves\ShopUi\Function\NumberFormatterTwigFunctionFactoryInterface $numberFormatterTwigFunctionFactory
+     * @param \SprykerShop\Yves\ShopUi\TwigFunction\NumberFormatterTwigFunctionFactoryInterface $numberFormatterTwigFunctionFactory
      */
     public function __construct(
         NumberFormatterTwigFilterFactoryInterface $numberFormatterTwigFilterFactory,
