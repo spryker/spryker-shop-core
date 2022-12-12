@@ -20,6 +20,7 @@
     tag: 'packaging-unit-quantity-selector',
 } %}
 
+{# @deprecated property 'decimal-separator' is deprecated. #}
 {% define attributes = {
     json: data.json,
     'decimal-separator': data.numberFormatConfig['decimal-separator'] | default('.'),
@@ -47,6 +48,7 @@
                 {% block salesInput %}
                     {% include molecule('formatted-number-input') with {
                         modifiers: ['expand'],
+                        class: config.jsName ~ '__formatted-sales-unit-quantity',
                         data: {
                             inputName: 'sales-unit-quantity',
                             inputValue: data.minQuantityInBaseUnit,
@@ -150,6 +152,7 @@
                     {% block amountInput %}
                         {% include molecule('formatted-number-input') with {
                             modifiers: ['expand'],
+                            class: config.jsName ~ '__formatted-user-amount',
                             data: {
                                 inputName: 'amount-sales-unit[' ~ data.product.sku ~ ']',
                                 inputValue: defaultAmount,

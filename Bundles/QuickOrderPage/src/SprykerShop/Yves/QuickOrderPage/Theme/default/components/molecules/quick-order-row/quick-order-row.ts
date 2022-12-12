@@ -61,12 +61,7 @@ export default class QuickOrderRow extends Component {
     }
 
     protected mapQuantityInputChange(): void {
-        this.quantityInput.addEventListener(
-            'input',
-            debounce(() => {
-                this.reloadField(this.autocompleteInput.inputValue);
-            }, this.autocompleteInput.debounceDelay),
-        );
+        this.quantityInput.addEventListener('change', () => this.reloadField(this.autocompleteInput.inputValue));
     }
 
     protected mapAdditionalFormElementChange(): void {
