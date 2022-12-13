@@ -23,6 +23,7 @@
     },
     "replace": {
         "spryker-shop/agent-page": "*",
+        "spryker-shop/agent-page-extension": "*",
         "spryker-shop/agent-widget": "*",
         "spryker-shop/asset-widget": "*",
         "spryker-shop/availability-notification-page": "*",
@@ -158,6 +159,8 @@
         "spryker-shop/security-blocker-page": "*",
         "spryker-shop/session-agent-validation": "*",
         "spryker-shop/session-agent-validation-extension": "*",
+        "spryker-shop/session-customer-validation-page": "*",
+        "spryker-shop/session-customer-validation-page-extension": "*",
         "spryker-shop/shared-cart-page": "*",
         "spryker-shop/shared-cart-widget": "*",
         "spryker-shop/shop-application": "*",

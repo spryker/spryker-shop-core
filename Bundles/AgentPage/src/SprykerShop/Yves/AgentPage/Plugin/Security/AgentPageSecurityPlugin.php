@@ -82,6 +82,7 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
      * {@inheritDoc}
      * - Adds a firewall for the AgentPages.
      * - Adds a context and switch_user to the existing CustomerPage firewall configuration.
+     * - Executes {@link \SprykerShop\Yves\AgentPageExtension\Dependency\Plugin\SessionPostImpersonationPluginInterface} plugin stack.
      *
      * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
      * @param \Spryker\Service\Container\ContainerInterface $container

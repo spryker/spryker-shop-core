@@ -19,6 +19,8 @@ use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToQuoteClientInterface
 use SprykerShop\Yves\AgentPage\Form\AgentLoginForm;
 use SprykerShop\Yves\AgentPage\Formatter\LoginCheckUrlFormatter;
 use SprykerShop\Yves\AgentPage\Formatter\LoginCheckUrlFormatterInterface;
+use SprykerShop\Yves\AgentPage\Impersonator\SessionImpersonator;
+use SprykerShop\Yves\AgentPage\Impersonator\SessionImpersonatorInterface;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationFailureHandler;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationSuccessHandler;
 use SprykerShop\Yves\AgentPage\Plugin\Provider\AccessDeniedHandler;
@@ -209,5 +211,24 @@ class AgentPageFactory extends AbstractFactory
     public function createLoginCheckUrlFormatter(): LoginCheckUrlFormatterInterface
     {
         return new LoginCheckUrlFormatter($this->getConfig(), $this->getLocale());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\AgentPage\Impersonator\SessionImpersonatorInterface
+     */
+    public function createSessionImpersonator(): SessionImpersonatorInterface
+    {
+        return new SessionImpersonator(
+            $this->getCustomerClient(),
+            $this->getSessionPostImpersonationPlugins(),
+        );
+    }
+
+    /**
+     * @return list<\SprykerShop\Yves\AgentPageExtension\Dependency\Plugin\SessionPostImpersonationPluginInterface>
+     */
+    public function getSessionPostImpersonationPlugins(): array
+    {
+        return $this->getProvidedDependency(AgentPageDependencyProvider::PLUGINS_SESSION_POST_IMPERSONATION);
     }
 }
