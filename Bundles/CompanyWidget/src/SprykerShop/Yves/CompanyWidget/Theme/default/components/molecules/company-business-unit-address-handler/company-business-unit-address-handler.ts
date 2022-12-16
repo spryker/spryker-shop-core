@@ -70,7 +70,9 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
 
     protected initHiddenAddressInputChangeEvent(): void {
         this.hiddenAddressInputChangeEvent = new CustomEvent(EVENT_HIDDEN_ADDRESS_INPUT_CHANGE);
+        /* tslint:disable: deprecation */
         this.hiddenAddressInputChangeEvent.initEvent('change', true, true);
+        /* tslint:enable: deprecation */
     }
 
     protected toggleSplitDeliveryAddressFormValue(): void {
