@@ -1,11 +1,14 @@
 import Component from '../../../models/component';
 import AutoNumeric from 'autonumeric';
 
+export const EVENT_FORMATTED_NUMBER = 'formattedNumber';
+
 export default class FormattedNumberInput extends Component {
     protected input: HTMLInputElement;
     protected hiddenInput: HTMLInputElement;
     protected formattedInput: AutoNumeric;
     protected autoNumericConfig: object;
+    protected inputChangeEvent: CustomEvent = new CustomEvent(EVENT_FORMATTED_NUMBER);
 
     protected readyCallback(): void {}
 
@@ -13,16 +16,12 @@ export default class FormattedNumberInput extends Component {
         this.input = <HTMLInputElement>this.getElementsByClassName(`${this.jsName}__input`)[0];
         this.hiddenInput = <HTMLInputElement>this.getElementsByClassName(`${this.jsName}__hidden-input`)[0];
 
-        if (this.isDisabled) {
-            return;
-        }
-
         this.autoNumericConfig = {
             digitGroupSeparator: this.digitGroupSeparator,
             decimalCharacter: this.decimalCharacter,
             decimalPlaces: this.decimalPlaces,
             allowDecimalPadding: this.allowDecimalPadding,
-            digitalGroupSpacing: 3,
+            digitalGroupSpacing: '3',
             modifyValueOnWheel: false,
             watchExternalChanges: this.watchExternalChanges,
         };
@@ -32,25 +31,32 @@ export default class FormattedNumberInput extends Component {
     }
 
     protected mapEvents(): void {
-        this.mapInputEvent();
+        this.mapInputEvents();
     }
 
-    protected mapInputEvent(): void {
+    protected mapInputEvents(): void {
+        this.input.addEventListener('input', () => this.onInput());
         this.input.addEventListener('change', () => this.onChange());
+    }
+
+    protected onInput(): void {
+        this.updateHiddenInput();
     }
 
     protected onChange(): void {
         this.validate();
-        this.updateHiddenInput(this.getUnformattedValue);
+        this.input.dispatchEvent(this.inputChangeEvent);
     }
 
     protected validate(): void {
-        if (this.getUnformattedValue < this.min) {
+        if (this.unformattedValue < this.min) {
             this.formattedInput.set(this.min);
+            this.updateHiddenInput();
         }
 
-        if (this.getUnformattedValue > this.max) {
+        if (this.unformattedValue > this.max) {
             this.formattedInput.set(this.max);
+            this.updateHiddenInput();
         }
     }
 
@@ -58,7 +64,7 @@ export default class FormattedNumberInput extends Component {
         this.formattedInput = new AutoNumeric(this.input, this.autoNumericConfig);
     }
 
-    protected updateHiddenInput(value: number): void {
+    protected updateHiddenInput(value: number = this.unformattedValue): void {
         this.hiddenInput.value = String(value);
     }
 
@@ -70,16 +76,19 @@ export default class FormattedNumberInput extends Component {
         return this.getAttribute('decimal-separator');
     }
 
-    protected get decimalPlaces(): string {
-        return this.getAttribute('decimal-rounding');
+    protected get decimalPlaces(): number {
+        return Number(this.getAttribute('decimal-rounding'));
     }
 
     protected get allowDecimalPadding(): boolean {
         return this.hasAttribute('decimal-filling');
     }
 
-    protected get getUnformattedValue(): number {
-        return Number(this.formattedInput.rawValue);
+    /**
+     * Gets the current unformated value of the component.
+     */
+    get unformattedValue(): number {
+        return Number(this.formattedInput.getNumericString());
     }
 
     protected get min(): number {
@@ -92,9 +101,5 @@ export default class FormattedNumberInput extends Component {
 
     protected get watchExternalChanges(): boolean {
         return this.hasAttribute('watch-external-changes');
-    }
-
-    protected get isDisabled(): boolean {
-        return this.input.hasAttribute('disabled');
     }
 }

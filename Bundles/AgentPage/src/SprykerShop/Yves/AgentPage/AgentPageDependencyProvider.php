@@ -81,12 +81,19 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_LOCALE = 'locale';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_SESSION_POST_IMPERSONATION = 'PLUGINS_SESSION_POST_IMPERSONATION';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
+        $container = parent::provideDependencies($container);
+
         $container = $this->addAgentClient($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addMessengerClient($container);
@@ -96,6 +103,7 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSecurityAuthorizationChecker($container);
         $container = $this->addRouter($container);
         $container = $this->addLocale($container);
+        $container = $this->addSessionPostImpersonationPlugins($container);
 
         return $container;
     }
@@ -234,5 +242,27 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSessionPostImpersonationPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SESSION_POST_IMPERSONATION, function () {
+            return $this->getSessionPostImpersonationPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\SprykerShop\Yves\AgentPageExtension\Dependency\Plugin\SessionPostImpersonationPluginInterface>
+     */
+    protected function getSessionPostImpersonationPlugins(): array
+    {
+        return [];
     }
 }

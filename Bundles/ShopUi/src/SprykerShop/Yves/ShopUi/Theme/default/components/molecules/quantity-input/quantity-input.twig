@@ -20,7 +20,7 @@
         name: 'quantity',
         min: data.minQuantity | default(1),
         max: data.maxQuantity | default(null) < 0 or data.maxQuantity | default(null) < data.minQuantity | default(1) ? false : data.maxQuantity | default(null),
-        value: data.readOnly | default(false) and data.value | default(1) is not empty ? data.value | default(1) | executeFilterIfExists('formatFloat', app.locale) : data.value | default(1),
+        value: data.value | default(1),
         disabled: data.readOnly | default(false),
     },
     numberFormatConfig: {},

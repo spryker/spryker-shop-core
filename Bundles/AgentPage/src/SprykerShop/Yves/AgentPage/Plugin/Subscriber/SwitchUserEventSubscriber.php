@@ -53,7 +53,9 @@ class SwitchUserEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function onImpersonationStart(Customer $customer): void
     {
-        $this->loginCustomer($customer);
+        $this->getFactory()
+            ->createSessionImpersonator()
+            ->impersonate($customer);
     }
 
     /**
@@ -63,18 +65,6 @@ class SwitchUserEventSubscriber extends AbstractPlugin implements EventSubscribe
     {
         $this->getFactory()->getAgentClient()->finishImpersonationSession();
         $this->clearAgentsQuote();
-    }
-
-    /**
-     * @param \SprykerShop\Yves\CustomerPage\Security\Customer $customer
-     *
-     * @return void
-     */
-    protected function loginCustomer(Customer $customer): void
-    {
-        $this->getFactory()
-            ->getCustomerClient()
-            ->setCustomer($customer->getCustomerTransfer());
     }
 
     /**
