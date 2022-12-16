@@ -10,9 +10,9 @@
     "scripts": {
         "formatter": "npm run formatter:run -- --check",
         "formatter:fix": "npm run formatter:run -- --write",
-        "formatter:run": "prettier --config ../../../node_modules/@spryker/frontend-config.prettier/.prettierrc.json \"**/*.(scss|css|less|js|ts|json|html|yml|yaml|xml)\"",
-        "stylelint": "npx stylelint '**/*.scss' '!**/DateTimeConfiguratorPageExample/**/*.scss' '!vendor/**' 'vendor/spryker/spryker-shop/**' --config ../../../node_modules/@spryker/frontend-config.stylelint/.stylelintrc.json",
-        "stylelint:fix": "npx stylelint '**/*.scss' '!**/DateTimeConfiguratorPageExample/**/*.scss' '!vendor/**' 'vendor/spryker/spryker-shop/**' --config ../../../node_modules/@spryker/frontend-config.stylelint/.stylelintrc.json --fix",
+        "formatter:run": "prettier --config node_modules/@spryker/frontend-config.prettier/.prettierrc.json \"**/*.(scss|css|less|js|ts|json|html|yml|yaml|xml)\"",
+        "stylelint": "npx stylelint '**/*.scss' '!**/DateTimeConfiguratorPageExample/**/*.scss' '!vendor/**' 'vendor/spryker/spryker-shop/**' --config node_modules/@spryker/frontend-config.stylelint/.stylelintrc.json",
+        "stylelint:fix": "npx stylelint '**/*.scss' '!**/DateTimeConfiguratorPageExample/**/*.scss' '!vendor/**' 'vendor/spryker/spryker-shop/**' --config node_modules/@spryker/frontend-config.stylelint/.stylelintrc.json --fix",
         "tslint": "tslint -p tsconfig.json -c tslint.json",
         "tslint:fix": "tslint -p tsconfig.json -c tslint.json --fix"
     },
