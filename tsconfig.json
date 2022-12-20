@@ -15,8 +15,8 @@
         "typeRoots": ["node_modules/@types"],
         "lib": ["dom", "esnext"],
         "baseUrl": ".",
-        "removeComments": true,
         "rootDir": ".",
+        "removeComments": true,
         "paths": {
             "*": ["*"],
             "ShopUi/*": ["./Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Theme/default/*"]
