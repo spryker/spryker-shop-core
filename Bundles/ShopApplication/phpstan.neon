@@ -17,5 +17,7 @@ parameters:
         - '#Comparison operation "<" between [1-9] and 3 is always (true|false).#'
         - '#Method .+\\WidgetTagTwigPlugin::openWidgetContext\(\) should return .+\\WidgetInterface\|null but returns .+\\WidgetPluginInterface\|.+\\WidgetInterface\|null.#'
         - '#Parameter \#2 \$string of function explode expects string, string\|false given.#'
+        - '#^Call to function method_exists\(\) with Symfony\\Component\\HttpKernel\\Event\\ViewEvent and#'
+        - '#Call to an undefined method Symfony\\Component\\HttpKernel\\Event\\ViewEvent\:\:isMainRequest\(\).#'
     excludePaths:
         - '%rootDir%/../../../vendor/spryker/spryker-shop/Bundles/ShopApplication/src/SprykerShop/Yves/ShopApplication/Plugin/AbstractTwigExtensionPlugin.php'

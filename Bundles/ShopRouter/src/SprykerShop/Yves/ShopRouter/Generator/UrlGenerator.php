@@ -71,7 +71,7 @@ class UrlGenerator extends SymfonyUrlGenerator
      *
      * @return string
      */
-    public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
+    public function generate(string $name, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
         $route = $this->routes->get($name);
         if ($route === null) {

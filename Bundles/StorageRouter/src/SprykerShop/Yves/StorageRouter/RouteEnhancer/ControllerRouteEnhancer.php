@@ -35,7 +35,7 @@ class ControllerRouteEnhancer implements RouteEnhancerInterface
      *
      * @return array<string, mixed>
      */
-    public function enhance(array $defaults, Request $request)
+    public function enhance(array $defaults, Request $request): array
     {
         foreach ($this->resourceCreatorPlugins as $resourceCreator) {
             if ($defaults['type'] === $resourceCreator->getType()) {

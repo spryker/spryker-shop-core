@@ -54,7 +54,7 @@ class StorageUrlGenerator implements UrlGeneratorInterface
     /**
      * @return \Symfony\Component\Routing\RequestContext
      */
-    public function getContext()
+    public function getContext(): RequestContext
     {
         return $this->context;
     }
@@ -68,7 +68,7 @@ class StorageUrlGenerator implements UrlGeneratorInterface
      *
      * @return string
      */
-    public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
+    public function generate(string $name, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
         $localeName = $this->getContext()->getParameter('_locale');
         if (!$this->urlStorageClient->matchUrl($name, $localeName)) {

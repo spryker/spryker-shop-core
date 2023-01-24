@@ -34,7 +34,7 @@ class StorageRequestMatcher implements RequestMatcherInterface
      *
      * @return array<string, mixed>
      */
-    public function matchRequest(Request $request)
+    public function matchRequest(Request $request): array
     {
         $pathinfo = $request->getPathInfo();
         if ($pathinfo !== '/') {
