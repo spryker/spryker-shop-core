@@ -108,7 +108,7 @@ class ShopApplicationTwigEventSubscriber implements EventSubscriberInterface
         $masterGlobalView = null;
 
         if ($result instanceof ViewInterface) {
-            if (!$event->isMasterRequest()) {
+            if (!$this->isMainRequest($event)) {
                 $masterGlobalView = $this->getGlobalView();
             }
 
@@ -269,5 +269,19 @@ class ShopApplicationTwigEventSubscriber implements EventSubscriberInterface
     protected function addWidgetContainerRegister(WidgetContainerInterface $result): void
     {
         $this->widgetContainerRegistry->add($result);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\ViewEvent $event
+     *
+     * @return bool
+     */
+    protected function isMainRequest(ViewEvent $event): bool
+    {
+        if (method_exists($event, 'isMasterRequest')) {
+            return $event->isMasterRequest();
+        }
+
+        return $event->isMainRequest();
     }
 }

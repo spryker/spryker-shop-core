@@ -39,7 +39,7 @@ class ServiceControllerResolver implements ControllerResolverInterface, Argument
     /**
      * @inheritDoc
      */
-    public function getController(Request $request)
+    public function getController(Request $request): callable|false
     {
         $controller = $request->attributes->get('_controller', null);
 
@@ -52,14 +52,12 @@ class ServiceControllerResolver implements ControllerResolverInterface, Argument
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param callable $controller
      *
      * @return array
      */
-    public function getArguments(Request $request, $controller)
+    public function getArguments(Request $request, callable $controller): array
     {
         if (method_exists($this->controllerResolver, 'getArguments')) {
             return $this->controllerResolver->getArguments($request, $controller);
