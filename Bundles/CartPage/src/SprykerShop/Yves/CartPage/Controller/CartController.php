@@ -111,8 +111,7 @@ class CartController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $attributes = $request->query->all()['selectedAttributes'] ?? [];
-        $viewData = $this->executeIndexAction($attributes);
+        $viewData = $this->executeIndexAction($request->get('selectedAttributes', []));
         $viewData['isCartItemsViaAjaxLoadEnabled'] = $this->getFactory()->getConfig()->isCartCartItemsViaAjaxLoadEnabled();
         $viewData['isUpsellingProductsViaAjaxEnabled'] = $this->getFactory()->getConfig()->isLoadingUpsellingProductsViaAjaxEnabled();
 
@@ -230,8 +229,7 @@ class CartController extends AbstractController
             ->setSku($sku)
             ->setQuantity($quantity);
 
-        $productOptions = $request->request->all()['product-option'] ?? [];
-        $this->addProductOptions($productOptions, $itemTransfer);
+        $this->addProductOptions($request->get('product-option', []), $itemTransfer);
 
         $itemTransfer = $this->executePreAddToCartPlugins($itemTransfer, $request->request->all());
 
@@ -418,18 +416,15 @@ class CartController extends AbstractController
             ->getCartClient()
             ->getQuote();
 
-        $preSelectedAttributes = $request->request->all()['preselectedAttributes'] ?? [];
-        $selectedAttributes = $request->request->all()['selectedAttributes'] ?? [];
-        $productOptions = $request->request->all()['product-option'] ?? [];
         $isItemReplacedInCart = $this->getFactory()
             ->createCartItemsAttributeProvider()
             ->tryToReplaceItem(
                 $sku,
                 $quantity,
-                array_replace($selectedAttributes, $preSelectedAttributes),
+                array_replace($request->get('selectedAttributes', []), $request->get('preselectedAttributes', [])),
                 $quoteTransfer->getItems(),
                 $request->get('groupKey'),
-                $productOptions,
+                $request->get('product-option', []),
                 $this->getLocale(),
             );
 
@@ -438,13 +433,12 @@ class CartController extends AbstractController
         }
 
         $this->addInfoMessage('cart.item_attributes_needed');
-        $selectedAttributes = $request->request->all()['selectedAttributes'] ?? [];
 
         return $this->redirectResponseInternal(
             CartPageRouteProviderPlugin::ROUTE_NAME_CART,
             $this->getFactory()
                 ->createCartItemsAttributeProvider()
-                ->formatUpdateActionResponse($sku, $selectedAttributes),
+                ->formatUpdateActionResponse($sku, $request->get('selectedAttributes', [])),
         );
     }
 

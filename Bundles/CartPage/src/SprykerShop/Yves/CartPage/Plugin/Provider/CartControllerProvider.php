@@ -226,11 +226,7 @@ class CartControllerProvider extends AbstractYvesControllerProvider
      */
     public function getSelectedAttributesFromRequest($unusedParameter, Request $request)
     {
-        if ($request->isMethod('POST')) {
-            return $request->request->all()['selectedAttributes'] ?? [];
-        }
-
-        return $request->query->all()['selectedAttributes'] ?? [];
+        return $request->get('selectedAttributes') ?? [];
     }
 
     /**
@@ -241,11 +237,7 @@ class CartControllerProvider extends AbstractYvesControllerProvider
      */
     public function getPreSelectedAttributesFromRequest($unusedParameter, Request $request)
     {
-        if ($request->isMethod('POST')) {
-            return $request->request->all()['preselectedAttributes'] ?? [];
-        }
-
-        return $request->query->all()['preselectedAttributes'] ?? [];
+        return $request->get('preselectedAttributes') ?? [];
     }
 
     /**
@@ -256,13 +248,8 @@ class CartControllerProvider extends AbstractYvesControllerProvider
      */
     public function getProductOptionsFromRequest($unusedParameter, Request $request)
     {
-        if ($request->isMethod('POST')) {
-            /** @phpstan-var array<int> */
-            return $request->request->all()['product-option'] ?? [];
-        }
-
         /** @phpstan-var array<int> */
-        return $request->query->all()['product-option'] ?? [];
+        return $request->get('product-option') ?? [];
     }
 
     /**
