@@ -111,7 +111,7 @@ class CartController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $attributes = $request->all()['selectedAttributes'] ?? [];
+        $attributes = $request->query->all()['selectedAttributes'] ?? [];
         $viewData = $this->executeIndexAction($attributes);
         $viewData['isCartItemsViaAjaxLoadEnabled'] = $this->getFactory()->getConfig()->isCartCartItemsViaAjaxLoadEnabled();
         $viewData['isUpsellingProductsViaAjaxEnabled'] = $this->getFactory()->getConfig()->isLoadingUpsellingProductsViaAjaxEnabled();
@@ -230,7 +230,7 @@ class CartController extends AbstractController
             ->setSku($sku)
             ->setQuantity($quantity);
 
-        $productOptions = $request->all()['product-option'] ?? [];
+        $productOptions = $request->request->all()['product-option'] ?? [];
         $this->addProductOptions($productOptions, $itemTransfer);
 
         $itemTransfer = $this->executePreAddToCartPlugins($itemTransfer, $request->request->all());
@@ -418,9 +418,9 @@ class CartController extends AbstractController
             ->getCartClient()
             ->getQuote();
 
-        $preSelectedAttributes = $request->all()['preselectedAttributes'] ?? [];
-        $selectedAttributes = $request->all()['selectedAttributes'] ?? [];
-        $productOptions = $request->all()['product-option'] ?? [];
+        $preSelectedAttributes = $request->request->all()['preselectedAttributes'] ?? [];
+        $selectedAttributes = $request->request->all()['selectedAttributes'] ?? [];
+        $productOptions = $request->request->all()['product-option'] ?? [];
         $isItemReplacedInCart = $this->getFactory()
             ->createCartItemsAttributeProvider()
             ->tryToReplaceItem(
@@ -438,7 +438,7 @@ class CartController extends AbstractController
         }
 
         $this->addInfoMessage('cart.item_attributes_needed');
-        $selectedAttributes = $request->all()['selectedAttributes'] ?? [];
+        $selectedAttributes = $request->request->all()['selectedAttributes'] ?? [];
 
         return $this->redirectResponseInternal(
             CartPageRouteProviderPlugin::ROUTE_NAME_CART,

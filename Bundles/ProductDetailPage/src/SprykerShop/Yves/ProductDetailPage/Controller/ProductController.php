@@ -30,6 +30,9 @@ class ProductController extends AbstractController
      */
     public const PARAM_ATTRIBUTE = 'attribute';
 
+    /**
+     * @var string
+     */
     public const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL;
 
     /**
@@ -165,9 +168,8 @@ class ProductController extends AbstractController
      */
     protected function getSelectedAttributes(Request $request): array
     {
-        //print_r($request->query->all()); die;
         /** @var array<mixed> $data */
-        $data = $request->query->get(static::PARAM_ATTRIBUTE) ?: [];
+        $data = $request->query->all()[static::PARAM_ATTRIBUTE] ?? [];
 
         return array_filter($data, function ($value) {
             return (bool)mb_strlen($value);

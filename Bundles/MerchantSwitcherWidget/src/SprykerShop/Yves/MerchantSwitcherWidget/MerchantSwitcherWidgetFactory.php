@@ -57,7 +57,6 @@ class MerchantSwitcherWidgetFactory extends AbstractFactory
      */
     public function createSelectedMerchantCookie(): SelectedMerchantCookieInterface
     {
-        var_dump($this->getRequestStack()); die;
         return new SelectedMerchantCookie(
             $this->getCookies(),
             $this->getRequestStack(),
