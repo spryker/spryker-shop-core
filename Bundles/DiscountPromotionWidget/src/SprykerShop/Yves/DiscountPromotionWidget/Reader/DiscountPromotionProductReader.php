@@ -76,7 +76,7 @@ class DiscountPromotionProductReader implements DiscountPromotionProductReaderIn
     protected function getSelectedAttributes(Request $request, $abstractSku): array
     {
         /** @var array $selectedAttributes */
-        $selectedAttributes = $request->query->get(static::PARAM_VARIANT_ATTRIBUTES) ?: [];
+        $selectedAttributes = $request->query->all()[static::PARAM_VARIANT_ATTRIBUTES] ?? [];
 
         return isset($selectedAttributes[$abstractSku]) ? array_filter($selectedAttributes[$abstractSku]) : [];
     }

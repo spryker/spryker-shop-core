@@ -143,7 +143,7 @@ class OrderController extends AbstractCustomerController
         OrderListTransfer $orderListTransfer
     ): OrderListTransfer {
         /** @var array $data */
-        $data = $request->query->get(OrderSearchForm::FORM_NAME) ?: [];
+        $data = $request->query->all()[OrderSearchForm::FORM_NAME] ?? [];
         $isReset = $data[OrderSearchForm::FIELD_RESET] ?? null;
 
         if ($isReset) {

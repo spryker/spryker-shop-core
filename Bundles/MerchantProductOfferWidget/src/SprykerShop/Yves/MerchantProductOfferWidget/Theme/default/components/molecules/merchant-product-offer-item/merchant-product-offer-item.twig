@@ -25,7 +25,7 @@
 
                 <div class="col {{ radioColVisibilityClass }}">
                     {% block radio %}
-                        {% set selectedAttributes = app.request.query.get('attribute') | default([]) %}
+                        {% set selectedAttributes = app.request.get('attribute') | default([]) %}
                         {% set itemAttributes = {
                             'selected_merchant_reference_type': 'product_offer_reference',
                             'selected_merchant_reference': data.productOfferReference

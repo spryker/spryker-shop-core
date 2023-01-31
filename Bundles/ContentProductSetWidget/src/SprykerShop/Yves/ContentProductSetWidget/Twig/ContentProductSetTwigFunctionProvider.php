@@ -142,7 +142,7 @@ class ContentProductSetTwigFunctionProvider extends TwigFunctionProvider
             }
 
             /** @var array $selectedAttributes */
-            $selectedAttributes = $this->getRequest($context)->query->get(static::PARAM_ATTRIBUTE) ?: [];
+            $selectedAttributes = $this->getRequest($context)->query->all()[static::PARAM_ATTRIBUTE] ?? [];
             $productAbstractViewCollection = $this->contentProductAbstractReader
                 ->findProductAbstractCollection($productSetDataStorageTransfer, $selectedAttributes, $this->localeName);
 
