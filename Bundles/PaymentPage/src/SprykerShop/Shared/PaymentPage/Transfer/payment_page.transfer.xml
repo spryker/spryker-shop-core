@@ -25,6 +25,10 @@
     </transfer>
 
     <transfer name="Item">
+        <property name="quantity" type="int"/>
+        <property name="name" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="sumSubtotalAggregation" type="int"/>
     </transfer>
 
 </transfers>
