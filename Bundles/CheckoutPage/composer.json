@@ -51,6 +51,7 @@
         "spryker-shop/company-widget": "Add the module if you want to use company widget",
         "spryker-shop/configurable-bundle-widget": "Add the module if you want to use QuoteConfiguredBundleWidget.",
         "spryker-shop/gift-card-widget": "Add the module if you want to use gift card widget",
+        "spryker-shop/merchant-widget": "If you want to use MerchantMetaSchemaWidget use the version >= 1.3.0",
         "spryker-shop/order-custom-reference-widget": "Add the module if you want to use order custom reference functionality",
         "spryker-shop/product-packaging-unit-widget": "If you want to use components from module ProductPackagingUnitWidget or SummaryProductPackagingUnitWidgetPlugin: ^0.5.2",
         "spryker-shop/quote-request-widget": "If you want to use QuoteRequestActionsWidget: ^2.2.0",

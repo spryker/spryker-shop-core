@@ -1,5 +1,5 @@
 {# @var quote \Generated\Shared\Transfer\QuoteTransfer #}
-{# @var quote.items \Generated\Shared\Transfer\item[] #}
+{# @var quote.items \Generated\Shared\Transfer\ItemTransfer[] #}
 
 {% extends template('page-layout-order-submitted', 'CheckoutPage') %}
 
@@ -32,12 +32,15 @@
 
                     <section itemprop="orderedItem" itemscope itemtype="https://schema.org/Product">
                         <meta itemprop="sku" content="{{ item.sku }}">
+                        <meta itemprop="name" content="{{ item.name }}">
 
                         <section itemprop="offers" itemscope itemtype="https://schema.org/Offer">
                             {% if currency %}
                                 <meta itemprop="priceCurrency" content="{{ currency | spaceless }}">
                             {% endif %}
                             <meta itemprop="price" content="{{ item.sumSubtotalAggregation | moneyRaw }}">
+
+                            {% widget 'MerchantMetaSchema' args [item] only %}{% endwidget %}
                         </section>
                     </section>
                 </section>

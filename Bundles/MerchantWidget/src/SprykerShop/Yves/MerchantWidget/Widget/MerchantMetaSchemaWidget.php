@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 /**
  * @method \SprykerShop\Yves\MerchantWidget\MerchantWidgetFactory getFactory()
  */
-class SoldByMerchantWidget extends AbstractWidget
+class MerchantMetaSchemaWidget extends AbstractWidget
 {
     /**
      * @var string
@@ -33,7 +33,7 @@ class SoldByMerchantWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'SoldByMerchantWidget';
+        return 'MerchantMetaSchema';
     }
 
     /**
@@ -41,7 +41,7 @@ class SoldByMerchantWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@MerchantWidget/views/sold-by-merchant/sold-by-merchant.twig';
+        return '@MerchantWidget/views/merchant-meta-schema/merchant-meta-schema.twig';
     }
 
     /**
