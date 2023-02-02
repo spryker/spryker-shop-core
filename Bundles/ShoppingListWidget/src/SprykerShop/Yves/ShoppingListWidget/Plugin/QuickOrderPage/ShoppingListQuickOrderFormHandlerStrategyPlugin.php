@@ -159,21 +159,21 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\QuickOrderItemTransfer> $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\QuickOrderItemTransfer> $quickOrderItemTransfers
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\ShoppingListItemTransfer>
      */
-    protected function mapShoppingListItems(ArrayObject $itemTransfers): ArrayObject
+    protected function mapShoppingListItems(ArrayObject $quickOrderItemTransfers): ArrayObject
     {
         $shoppingListItems = new ArrayObject();
-        foreach ($itemTransfers as $itemTransfer) {
-            if (!$itemTransfer->getSku()) {
+        foreach ($quickOrderItemTransfers as $quickOrderItemTransfer) {
+            if (!$quickOrderItemTransfer->getSku()) {
                 continue;
             }
 
-            $shoppingListItems->append((new ShoppingListItemTransfer())
-                ->setSku($itemTransfer->getSku())
-                ->setQuantity($itemTransfer->getQuantity()));
+            $shoppingListItems->append(
+                (new ShoppingListItemTransfer())->fromArray($quickOrderItemTransfer->toArray(), true),
+            );
         }
 
         return $shoppingListItems;
