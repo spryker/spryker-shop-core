@@ -69,6 +69,7 @@
         "spryker-shop/customer-page-extension": "*",
         "spryker-shop/customer-reorder-widget": "*",
         "spryker-shop/customer-reorder-widget-extension": "*",
+        "spryker-shop/customer-validation-page": "*",
         "spryker-shop/date-time-configurator-page-example": "*",
         "spryker-shop/discount-promotion-widget": "*",
         "spryker-shop/discount-widget": "*",

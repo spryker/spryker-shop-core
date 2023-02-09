@@ -1,0 +1,25 @@
+namespace: SprykerShopTest\Yves\CustomerValidationPage
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Yves:
+        path: .
+        actor: CustomerValidationPageYvesTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Yves\Application\Helper\ApplicationHelper
