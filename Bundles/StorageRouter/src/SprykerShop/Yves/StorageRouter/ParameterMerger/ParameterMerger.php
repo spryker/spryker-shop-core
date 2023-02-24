@@ -10,10 +10,10 @@ namespace SprykerShop\Yves\StorageRouter\ParameterMerger;
 class ParameterMerger implements ParameterMergerInterface
 {
     /**
-     * @param array<string, mixed> $requestParameters
-     * @param array $generationParameters
+     * @param array<int|string, mixed> $requestParameters
+     * @param array<int|string, mixed> $generationParameters
      *
-     * @return array
+     * @return array<int|string, mixed>
      */
     public function mergeParameters(array $requestParameters, array $generationParameters)
     {

@@ -101,7 +101,7 @@ class ProductSetDetailPageResourceCreatorPlugin extends AbstractPlugin implement
     protected function getSelectedAttributes($idProductAbstract): array
     {
         /** @var array $attributes */
-        $attributes = $this->getRequest()->query->get(DetailController::PARAM_ATTRIBUTE) ?: [];
+        $attributes = $this->getRequest()->query->all()[DetailController::PARAM_ATTRIBUTE] ?? [];
 
         return isset($attributes[$idProductAbstract]) ? array_filter($attributes[$idProductAbstract]) : [];
     }

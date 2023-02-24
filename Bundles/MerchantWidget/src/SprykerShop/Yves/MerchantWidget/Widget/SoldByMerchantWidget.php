@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\MerchantWidget\Widget;
 
-use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
@@ -57,11 +56,9 @@ class SoldByMerchantWidget extends AbstractWidget
         $merchantReference = $transfer->getMerchantReference();
         if ($merchantReference) {
             $merchantStorageTransfer = $this->getFactory()
-                ->getMerchantStorageClient()
-                ->findOne(
-                    (new MerchantStorageCriteriaTransfer())
-                        ->addMerchantReference($merchantReference),
-                );
+                ->createMerchantReader()
+                ->findOneByMerchantReference($merchantReference);
+
             $this->addParameter(static::PARAMETER_MERCHANT, $merchantStorageTransfer);
         }
 

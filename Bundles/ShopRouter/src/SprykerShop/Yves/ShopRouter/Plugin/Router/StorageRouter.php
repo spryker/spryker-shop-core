@@ -26,7 +26,7 @@ class StorageRouter extends AbstractRouter
      *
      * @return string
      */
-    public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
+    public function generate(string $name, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
         $urlMatcher = $this->getFactory()->getUrlMatcher();
         $localeName = $this->getLocale();
@@ -61,7 +61,7 @@ class StorageRouter extends AbstractRouter
      *
      * @throws \Symfony\Component\Routing\Exception\ResourceNotFoundException
      */
-    public function match($pathinfo)
+    public function match(string $pathinfo): array
     {
         $defaultLocalePrefix = $this->getDefaultLocalePrefix();
 

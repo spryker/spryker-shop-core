@@ -1,0 +1,21 @@
+{# @var merchant \Generated\Shared\Transfer\MerchantStorageTransfer #}
+
+{% extends template('widget') %}
+
+{% define data = {
+    merchant: _widget.merchant,
+    merchantReference: _widget.merchant ? _widget.merchant.merchantReference : null,
+    merchantName: _widget.merchant ? _widget.merchant.name : null,
+    isVisible: _widget.merchant
+} %}
+
+{% block body %}
+    {% if data.isVisible %}
+        {% block schema %}
+            <section itemprop="seller" itemscope itemtype="https://schema.org/Organization">
+                <meta itemprop="name" content="{{ data.merchantName }}">
+                <meta itemprop="identifier" content="{{ data.merchantReference }}">
+            </section>
+        {% endblock %}
+    {% endif %}
+{% endblock %}

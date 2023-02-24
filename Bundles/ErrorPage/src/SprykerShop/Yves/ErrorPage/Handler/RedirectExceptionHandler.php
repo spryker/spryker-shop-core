@@ -53,6 +53,6 @@ class RedirectExceptionHandler implements RedirectExceptionHandlerInterface
             UrlGeneratorInterface::ABSOLUTE_URL,
         );
 
-        return RedirectResponse::create($errorPageUrl, Response::HTTP_MOVED_PERMANENTLY);
+        return new RedirectResponse($errorPageUrl, Response::HTTP_MOVED_PERMANENTLY);
     }
 }

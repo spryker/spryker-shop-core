@@ -176,7 +176,7 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
         /** @var \Twig\Environment $twig */
         $twig = $application['twig'];
 
-        if (!$event->isMasterRequest()) {
+        if (!$this->isMainRequest($event)) {
             $masterGlobalView = $this->getGlobalView($twig);
         }
 
@@ -229,5 +229,19 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
         }
 
         return [];
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\ViewEvent $event
+     *
+     * @return bool
+     */
+    protected function isMainRequest(ViewEvent $event): bool
+    {
+        if (method_exists($event, 'isMasterRequest')) {
+            return $event->isMasterRequest();
+        }
+
+        return $event->isMainRequest();
     }
 }
