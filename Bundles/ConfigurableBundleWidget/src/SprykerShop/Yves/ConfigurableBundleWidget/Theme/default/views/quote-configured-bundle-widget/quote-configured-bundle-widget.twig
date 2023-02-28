@@ -9,7 +9,7 @@
     isEditable: true,
     isQuantitySummaryVisible: false,
     quote: _widget.quote,
-    numberFormatConfig: _widget.numberFormatConfig,
+    numberFormatConfig: _widget.numberFormatConfig | default({}),
 } %}
 
 {% set numberFormatConfig = {} %}

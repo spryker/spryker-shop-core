@@ -9,7 +9,7 @@
     shoppingListCollection: _view.shoppingListOverview.shoppingLists,
     shoppingListItems: _view.shoppingListItems,
     addItemToCartForm: _view.addItemToCartForm,
-    numberFormatConfig: _view.numberFormatConfig,
+    numberFormatConfig: _view.numberFormatConfig | default({}),
 } %}
 
 {% set numberFormatConfig = {} %}

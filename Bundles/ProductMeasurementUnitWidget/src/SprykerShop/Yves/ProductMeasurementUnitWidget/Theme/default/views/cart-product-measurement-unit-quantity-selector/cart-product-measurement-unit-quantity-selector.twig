@@ -4,7 +4,7 @@
     cartItem: _widget.itemTransfer,
     quantitySalesUnit: _widget.quantitySalesUnit,
     quantitySalesUnitPrecision: _widget.quantitySalesUnitPrecision | default(null),
-    numberFormatConfig: _widget.numberFormatConfig,
+    numberFormatConfig: _widget.numberFormatConfig | default({}),
 } %}
 
 {% set numberFormatConfig = {} %}

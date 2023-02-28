@@ -21,7 +21,7 @@
         config: _view.pagination.config,
         currentItemsPerPage: _view.pagination.currentItemsPerPage,
     },
-    numberFormatConfig: _view.numberFormatConfig,
+    numberFormatConfig: _view.numberFormatConfig | default({}),
 } %}
 
 {% set numberFormatConfig = {} %}

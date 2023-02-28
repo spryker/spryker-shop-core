@@ -6,7 +6,7 @@
     form: _widget.cartChangeQuantityForm,
     cartItem: _widget.cartItem,
     readOnly: _widget.readOnly,
-    numberFormatConfig: _widget.numberFormatConfig,
+    numberFormatConfig: _widget.numberFormatConfig | default({}),
 } %}
 
 {% set numberFormatConfig = {} %}

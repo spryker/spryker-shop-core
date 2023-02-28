@@ -21,7 +21,7 @@
     jsonScheme: _widget.jsonScheme,
     minQuantityInBaseUnit: _widget.minQuantityInBaseUnit | default(1),
     minQuantityInSalesUnits: _widget.minQuantityInSalesUnits | default(1),
-    numberFormatConfig: _widget.numberFormatConfig,
+    numberFormatConfig: _widget.numberFormatConfig | default({}),
 } %}
 
 {% set numberFormatConfig = {'watch-external-changes': true} %}
