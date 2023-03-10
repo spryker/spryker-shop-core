@@ -85,8 +85,7 @@ class BusinessOnBehalfController extends AbstractController
             return $isDefault;
         }
 
-        /** @var array $data */
-        $data = $request->request->get(CompanyUserAccountSelectorForm::FORM_NAME);
+        $data = $request->request->all(CompanyUserAccountSelectorForm::FORM_NAME) ?: null;
         if (!empty($data[CompanyUserAccountSelectorForm::FIELD_IS_DEFAULT])) {
             $isDefault = true;
         }

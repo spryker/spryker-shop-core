@@ -339,8 +339,7 @@ class ConfiguratorController extends AbstractController
 
         $form = $this->getFactory()->getConfiguratorStateForm();
 
-        /** @var array $data */
-        $data = $request->request->get($form->getName()) ?: [];
+        $data = $request->request->all($form->getName());
         $formData = $data[ConfiguratorStateForm::FIELD_SLOTS] ?? null;
 
         $form->submit($data);

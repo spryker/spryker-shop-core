@@ -95,7 +95,7 @@ class AddToCartFormHandler implements AddToCartFormHandlerInterface
         $shoppingListItemTransfer = $this->createShoppingListItemTransfer(
             $request->request->getInt(static::PARAM_ID_ADD_ITEM),
             $request->request->getInt(static::PARAM_ID_SHOPPING_LIST),
-            (array)$request->request->get(static::PARAM_SHOPPING_LIST_ITEMS),
+            $request->request->all(static::PARAM_SHOPPING_LIST_ITEMS),
         );
 
         return (new ShoppingListItemCollectionTransfer())->addItem($shoppingListItemTransfer);
@@ -110,7 +110,7 @@ class AddToCartFormHandler implements AddToCartFormHandlerInterface
     {
         $shoppingListItemCollectionTransfer = new ShoppingListItemCollectionTransfer();
         /** @var array<string> $shoppingListItemInformation */
-        $shoppingListItemInformation = (array)$request->request->get(static::PARAM_SHOPPING_LIST_ITEMS);
+        $shoppingListItemInformation = $request->request->all(static::PARAM_SHOPPING_LIST_ITEMS);
 
         foreach ($shoppingListItemInformation as $shoppingListItem) {
             $shoppingListItemTransfer = new ShoppingListItemTransfer();
@@ -134,7 +134,7 @@ class AddToCartFormHandler implements AddToCartFormHandlerInterface
         $shoppingListItemRequest = $request->get(static::PARAM_SHOPPING_LIST_ITEM);
 
         if (!empty($shoppingListItemRequest[static::PARAM_ID_SHOPPING_LIST_ITEM])) {
-            $shoppingListItemInformation = (array)$request->request->get(static::PARAM_SHOPPING_LIST_ITEMS);
+            $shoppingListItemInformation = $request->request->all(static::PARAM_SHOPPING_LIST_ITEMS);
             $idShoppingList = $request->request->getInt(static::PARAM_ID_SHOPPING_LIST);
 
             foreach ($shoppingListItemRequest[static::PARAM_ID_SHOPPING_LIST_ITEM] as $idShoppingListItem) {
