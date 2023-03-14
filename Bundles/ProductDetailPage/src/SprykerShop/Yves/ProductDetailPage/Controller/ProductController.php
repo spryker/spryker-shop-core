@@ -41,6 +41,20 @@ class ProductController extends AbstractController
     protected const GLOSSARY_KEY_PRODUCT_ACCESS_DENIED = 'product.access.denied';
 
     /**
+     * @uses \Generated\Shared\Transfer\AttributeMapStorageTransfer::SUPER_ATTRIBUTES
+     *
+     * @var string
+     */
+    protected const PRODUCT_DATA_KEY_SUPER_ATTRIBUTES = 'super_attributes';
+
+    /**
+     * @uses \Generated\Shared\Transfer\ProductAbstractStorageTransfer::ATTRIBUTE_MAP
+     *
+     * @var string
+     */
+    protected const PRODUCT_DATA_KEY_ATTRIBUTE_MAP = 'attribute_map';
+
+    /**
      * @param array<mixed> $productData
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -58,10 +72,10 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @param array<mixed> $productData
+     * @param array<string, mixed> $productData
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     protected function executeDetailAction(array $productData, Request $request): array
     {
@@ -72,9 +86,16 @@ class ProductController extends AbstractController
         $productStorageCriteriaTransfer = (new ProductStorageCriteriaTransfer())
             ->fromArray($shopContextTransfer->toArray());
 
+        $selectedAttributes = $this->getSelectedAttributesWithoutPostfix($productData, $request);
+
         $productViewTransfer = $this->getFactory()
             ->getProductStorageClient()
-            ->mapProductStorageData($productData, $this->getLocale(), $this->getSelectedAttributes($request), $productStorageCriteriaTransfer);
+            ->mapProductStorageData(
+                $productData,
+                $this->getLocale(),
+                $selectedAttributes,
+                $productStorageCriteriaTransfer,
+            );
 
         $this->assertProductRestrictions($productViewTransfer);
 
@@ -108,11 +129,11 @@ class ProductController extends AbstractController
             return;
         }
 
-        $poductAbstractRestricted = $this->getFactory()
+        $productAbstractRestricted = $this->getFactory()
             ->getProductStorageClient()
             ->isProductAbstractRestricted($productViewTransfer->getIdProductAbstract());
 
-        if ($poductAbstractRestricted) {
+        if ($productAbstractRestricted) {
             throw new ProductAccessDeniedException(static::GLOSSARY_KEY_PRODUCT_ACCESS_DENIED);
         }
     }
@@ -168,11 +189,60 @@ class ProductController extends AbstractController
      */
     protected function getSelectedAttributes(Request $request): array
     {
-        /** @var array<mixed> $data */
-        $data = $request->query->all()[static::PARAM_ATTRIBUTE] ?? [];
+        /** @var array<mixed> $selectedAttributes */
+        $selectedAttributes = $request->query->all()[static::PARAM_ATTRIBUTE] ?? [];
 
-        return array_filter($data, function ($value) {
-            return (bool)mb_strlen($value);
+        return array_filter($selectedAttributes, function ($selectedAttributeValue) {
+            return (bool)mb_strlen($selectedAttributeValue);
         });
+    }
+
+    /**
+     * @param array<string, mixed> $productData
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array<string, string>
+     */
+    protected function getSelectedAttributesWithoutPostfix(array $productData, Request $request): array
+    {
+        $selectedAttributes = $this->getSelectedAttributes($request);
+        if (!isset($productData[static::PRODUCT_DATA_KEY_ATTRIBUTE_MAP][static::PRODUCT_DATA_KEY_SUPER_ATTRIBUTES])) {
+            return $selectedAttributes;
+        }
+        $productSuperAttributes = $productData[static::PRODUCT_DATA_KEY_ATTRIBUTE_MAP][static::PRODUCT_DATA_KEY_SUPER_ATTRIBUTES];
+
+        foreach ($selectedAttributes as $selectedAttributeKey => $selectedAttributeValue) {
+            if (isset($productSuperAttributes[$selectedAttributeKey])) {
+                $selectedAttributes[$selectedAttributeKey] = $this->getSelectedAttributeValueWithoutPostfix(
+                    $productSuperAttributes[$selectedAttributeKey],
+                    $selectedAttributeValue,
+                );
+            }
+        }
+
+        return $selectedAttributes;
+    }
+
+    /**
+     * @param list<string> $superAttributeValues
+     * @param string $selectedAttributeValue
+     *
+     * @return string
+     */
+    protected function getSelectedAttributeValueWithoutPostfix(
+        array $superAttributeValues,
+        string $selectedAttributeValue
+    ): string {
+        $maxContainedSuperAttributeValue = '';
+        foreach ($superAttributeValues as $superAttributeValue) {
+            if (
+                strrpos($selectedAttributeValue, $superAttributeValue) !== false &&
+                strlen($superAttributeValue) > strlen($maxContainedSuperAttributeValue)
+            ) {
+                $maxContainedSuperAttributeValue = $superAttributeValue;
+            }
+        }
+
+        return $maxContainedSuperAttributeValue;
     }
 }
