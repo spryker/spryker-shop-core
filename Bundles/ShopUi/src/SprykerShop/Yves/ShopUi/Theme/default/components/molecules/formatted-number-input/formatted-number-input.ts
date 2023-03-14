@@ -7,7 +7,7 @@ export default class FormattedNumberInput extends Component {
     protected input: HTMLInputElement;
     protected hiddenInput: HTMLInputElement;
     protected formattedInput: AutoNumeric;
-    protected autoNumericConfig: object;
+    protected autoNumericConfig: AutoNumeric.Options;
     protected inputChangeEvent: CustomEvent = new CustomEvent(EVENT_FORMATTED_NUMBER);
 
     protected readyCallback(): void {}
@@ -89,6 +89,13 @@ export default class FormattedNumberInput extends Component {
      */
     get unformattedValue(): number {
         return Number(this.formattedInput.getNumericString());
+    }
+
+    /**
+     * Gets the number format configuration.
+     */
+    get numberFormatConfig(): AutoNumeric.Options {
+        return this.autoNumericConfig;
     }
 
     protected get min(): number {

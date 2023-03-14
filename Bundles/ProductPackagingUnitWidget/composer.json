@@ -6,7 +6,7 @@
     "require": {
         "php": ">=8.0",
         "spryker-shop/quick-order-page-extension": "^1.0.0",
-        "spryker-shop/shop-ui": "^1.66.0",
+        "spryker-shop/shop-ui": "^1.67.0",
         "spryker/kernel": "^3.30.0",
         "spryker/locale": "^3.0.0",
         "spryker/product-measurement-unit-storage": "^1.1.0",

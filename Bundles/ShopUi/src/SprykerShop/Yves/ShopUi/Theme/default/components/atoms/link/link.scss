@@ -28,6 +28,10 @@
             }
         }
 
+        &--expand {
+            display: block;
+        }
+
         &[disabled],
         &--disabled {
             color: $setting-color-dark;

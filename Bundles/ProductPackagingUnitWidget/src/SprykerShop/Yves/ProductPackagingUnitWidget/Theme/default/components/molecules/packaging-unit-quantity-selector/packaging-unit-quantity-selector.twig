@@ -1,5 +1,10 @@
 {% extends model('component') %}
 
+{% define config = {
+    name: 'packaging-unit-quantity-selector',
+    tag: 'packaging-unit-quantity-selector',
+} %}
+
 {% define data = {
     salesUnits: required,
     productPackagingUnit: required,
@@ -13,11 +18,6 @@
     minQuantityInBaseUnit: '',
     minQuantityInSalesUnits: '',
     numberFormatConfig: {},
-} %}
-
-{% define config = {
-    name: 'packaging-unit-quantity-selector',
-    tag: 'packaging-unit-quantity-selector',
 } %}
 
 {# @deprecated property 'decimal-separator' is deprecated. #}
