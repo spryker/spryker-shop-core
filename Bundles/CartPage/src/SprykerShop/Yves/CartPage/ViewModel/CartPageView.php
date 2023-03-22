@@ -92,7 +92,7 @@ class CartPageView implements CartPageViewInterface
     {
         return [
             'cart' => $this->getQuote(),
-            'cartItems' => $this->getItems(),
+            'cartItems' => $cartPageViewArgumentsTransfer->getWithItems() ? $this->getItems() : [],
             'attributes' => $this->getAttributes(
                 $cartPageViewArgumentsTransfer->getLocaleOrFail(),
                 $cartPageViewArgumentsTransfer->getSelectedAttributes(),

@@ -111,8 +111,10 @@ class CartController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $viewData = $this->executeIndexAction($request->get('selectedAttributes', []));
-        $viewData['isCartItemsViaAjaxLoadEnabled'] = $this->getFactory()->getConfig()->isCartCartItemsViaAjaxLoadEnabled();
+        $isCartItemsViaAjaxLoadEnabled = $this->getFactory()->getConfig()->isCartCartItemsViaAjaxLoadEnabled();
+
+        $viewData = $this->executeIndexAction($request->get('selectedAttributes', []), !$isCartItemsViaAjaxLoadEnabled);
+        $viewData['isCartItemsViaAjaxLoadEnabled'] = $isCartItemsViaAjaxLoadEnabled;
         $viewData['isUpsellingProductsViaAjaxEnabled'] = $this->getFactory()->getConfig()->isLoadingUpsellingProductsViaAjaxEnabled();
 
         return $this->view(
@@ -124,14 +126,16 @@ class CartController extends AbstractController
 
     /**
      * @param array $selectedAttributes
+     * @param bool $withItems
      *
      * @return array<string, mixed>
      */
-    protected function executeIndexAction(array $selectedAttributes = []): array
+    protected function executeIndexAction(array $selectedAttributes = [], bool $withItems = true): array
     {
         $cartPageViewArgumentsTransfer = new CartPageViewArgumentsTransfer();
         $cartPageViewArgumentsTransfer->setLocale($this->getLocale())
-            ->setSelectedAttributes($selectedAttributes);
+            ->setSelectedAttributes($selectedAttributes)
+            ->setWithItems($withItems);
 
         $viewData = $this->getFactory()->createCartPageView()->getViewData($cartPageViewArgumentsTransfer);
 
@@ -193,7 +197,8 @@ class CartController extends AbstractController
     {
         $cartPageViewArgumentsTransfer = new CartPageViewArgumentsTransfer();
         $cartPageViewArgumentsTransfer->setLocale($this->getLocale())
-            ->setSelectedAttributes([]);
+            ->setSelectedAttributes([])
+            ->setWithItems(true);
 
         $viewData = $this->getFactory()->createCartPageView()->getViewData($cartPageViewArgumentsTransfer);
 
