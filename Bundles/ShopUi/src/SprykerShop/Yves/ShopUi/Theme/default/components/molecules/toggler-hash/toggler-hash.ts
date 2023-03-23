@@ -8,15 +8,12 @@ export default class TogglerHash extends Component {
 
     constructor() {
         super();
-        /* tslint:disable: deprecation */
-        this.targets = <HTMLElement[]>(
-            Array.from(
-                this.targetClassName
-                    ? document.getElementsByClassName(this.targetClassName)
-                    : document.querySelectorAll(this.targetSelector),
-            )
+        this.targets = <HTMLElement[]>Array.from(
+            this.targetClassName
+                ? document.getElementsByClassName(this.targetClassName)
+                : // eslint-disable-next-line deprecation/deprecation
+                  document.querySelectorAll(this.targetSelector),
         );
-        /* tslint:enable: deprecation */
     }
 
     protected readyCallback(): void {
@@ -25,10 +22,10 @@ export default class TogglerHash extends Component {
     }
 
     protected mapEvents(): void {
-        window.addEventListener('hashchange', (event: Event) => this.onHashChange(event));
+        window.addEventListener('hashchange', () => this.onHashChange());
     }
 
-    protected onHashChange(event: Event): void {
+    protected onHashChange(): void {
         this.checkHash();
     }
 

@@ -1,5 +1,4 @@
 import Component from '../../../models/component';
-import { EVENT_UPDATE_DYNAMIC_MESSAGES } from 'ShopUi/components/organisms/dynamic-notification-area/dynamic-notification-area';
 
 /**
  * @event updateCartQuantity An event emitted when need to update cart quantity.

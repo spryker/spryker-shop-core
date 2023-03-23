@@ -49,12 +49,6 @@ export default class SeparateReturnsByMerchant extends Component {
         this.enableAllItems();
     }
 
-    protected getCheckedItems(target: HTMLInputElement): void {
-        this.checkedItems = this.checkboxes.filter((checkbox) => {
-            return checkbox.checked;
-        });
-    }
-
     protected disableItem(target: HTMLInputElement): void {
         const currentMerchantReference = target.getAttribute(this.merchantReference);
 

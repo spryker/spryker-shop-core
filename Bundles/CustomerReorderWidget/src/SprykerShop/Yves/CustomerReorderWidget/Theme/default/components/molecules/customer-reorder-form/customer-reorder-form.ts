@@ -16,11 +16,11 @@ export default class CustomerReorderForm extends Component {
 
     protected mapEvents(): void {
         this.selections.forEach((selection: HTMLInputElement) =>
-            selection.addEventListener('change', (event: Event) => this.onSelectionChange(event)),
+            selection.addEventListener('change', () => this.onSelectionChange()),
         );
     }
 
-    protected onSelectionChange(event: Event): void {
+    protected onSelectionChange(): void {
         const isEnabled = this.selections.some((selection: HTMLInputElement) => selection.checked);
         this.enableTrigger(isEnabled);
     }

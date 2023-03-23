@@ -20,23 +20,20 @@ export default class TogglerClick extends Component {
     protected readyCallback(): void {}
 
     protected init(): void {
-        /* tslint:disable: deprecation */
-        this.triggersList = <HTMLElement[]>(
-            Array.from(
-                this.triggerClassName
-                    ? document.getElementsByClassName(this.triggerClassName)
-                    : document.querySelectorAll(this.triggerSelector),
-            )
+        this.triggersList = <HTMLElement[]>Array.from(
+            this.triggerClassName
+                ? document.getElementsByClassName(this.triggerClassName)
+                : // eslint-disable-next-line deprecation/deprecation
+                  document.querySelectorAll(this.triggerSelector),
         );
-        this.targetsList = <HTMLElement[]>(
-            Array.from(
-                this.targetClassName
-                    ? document.getElementsByClassName(this.targetClassName)
-                    : document.querySelectorAll(this.targetSelector),
-            )
+        this.targetsList = <HTMLElement[]>Array.from(
+            this.targetClassName
+                ? document.getElementsByClassName(this.targetClassName)
+                : // eslint-disable-next-line deprecation/deprecation
+                  document.querySelectorAll(this.targetSelector),
         );
+        // eslint-disable-next-line deprecation/deprecation
         [this.triggers, this.targets] = [this.triggersList, this.targetsList];
-        /* tslint:enable: deprecation */
 
         this.mapEvents();
     }

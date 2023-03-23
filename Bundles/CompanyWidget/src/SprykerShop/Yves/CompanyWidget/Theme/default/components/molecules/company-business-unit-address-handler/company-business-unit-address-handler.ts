@@ -12,9 +12,8 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     /**
      * Data object of the address list.
      */
-    /* tslint:disable:no-any */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     addressesDataObject: any;
-    /* tslint:enable:no-any */
     /**
      * Collection of the address select elements.
      */
@@ -70,9 +69,8 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
 
     protected initHiddenAddressInputChangeEvent(): void {
         this.hiddenAddressInputChangeEvent = new CustomEvent(EVENT_HIDDEN_ADDRESS_INPUT_CHANGE);
-        /* tslint:disable: deprecation */
+        // eslint-disable-next-line deprecation/deprecation
         this.hiddenAddressInputChangeEvent.initEvent('change', true, true);
-        /* tslint:enable: deprecation */
     }
 
     protected toggleSplitDeliveryAddressFormValue(): void {

@@ -4,6 +4,7 @@ export default class TogglerRadio extends TogglerCheckbox {
     /**
      * Collection of the toggle triggers.
      */
+    // eslint-disable-next-line no-use-before-define
     togglers: TogglerRadio[];
 
     protected readyCallback(): void {}

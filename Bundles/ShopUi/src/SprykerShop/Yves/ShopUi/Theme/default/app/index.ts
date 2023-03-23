@@ -23,12 +23,11 @@ function onApplicationError(e: CustomEvent): void {
     error('application error ->', e.detail);
 }
 
-/* tslint:disable: no-any */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function dispatchCustomEvent(name: string, detail: any = {}): void {
     const event = new CustomEvent(name, { detail });
     document.dispatchEvent(event);
 }
-/* tslint:enable */
 
 function mountComponent(component: Component): void {
     component.mountCallback();
@@ -79,9 +78,8 @@ export async function mount(): Promise<void> {
         /**
          * @deprecated Use events.mount instead.
          */
-        /* tslint:disable: deprecation */
+        // eslint-disable-next-line deprecation/deprecation
         dispatchCustomEvent(config().events.ready);
-        /* tslint:enable: deprecation */
 
         if (isBootstrap) {
             dispatchCustomEvent(config().events.bootstrap);

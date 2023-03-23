@@ -14,8 +14,8 @@ export default class SourcePriceForm extends Component {
     }
 
     protected mapEvents(): void {
-        this.input.addEventListener('input', (event: Event) => this.onInputType(event));
-        this.checkbox.addEventListener('change', (event: Event) => this.onCheckboxChange(event));
+        this.input.addEventListener('input', () => this.onInputType());
+        this.checkbox.addEventListener('change', () => this.onCheckboxChange());
     }
 
     protected setSourcePrice(): void {
@@ -27,14 +27,14 @@ export default class SourcePriceForm extends Component {
         this.inputContainer.classList.remove('is-hidden');
     }
 
-    protected onInputType(event: Event): void {
+    protected onInputType(): void {
         this.checkboxChecked = this.inputValueLength === 0;
         if (this.checkboxChecked) {
             this.inputContainer.classList.add('is-hidden');
         }
     }
 
-    protected onCheckboxChange(event: Event): void {
+    protected onCheckboxChange(): void {
         if (this.checkboxChecked) {
             this.inputValue = '';
             this.inputContainer.classList.add('is-hidden');
@@ -62,18 +62,18 @@ export default class SourcePriceForm extends Component {
     }
 
     /**
-     * Gets if the checkbox is checked.
-     */
-    get checkboxChecked(): boolean {
-        return this.checkbox.checked;
-    }
-
-    /**
      * Sets an input value.
      * @param value A typed text in the input field.
      */
     set inputValue(value: string) {
         this.input.value = value;
+    }
+
+    /**
+     * Gets if the checkbox is checked.
+     */
+    get checkboxChecked(): boolean {
+        return this.checkbox.checked;
     }
 
     /**

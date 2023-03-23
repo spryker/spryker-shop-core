@@ -18,28 +18,24 @@ export default class ClipboardCopy extends Component {
     readonly defaultDuration: number = 5000;
 
     protected readyCallback(): void {
-        /* tslint:disable: deprecation */
-        this.trigger = <HTMLButtonElement>(
-            (this.triggerClassName
-                ? document.getElementsByClassName(this.triggerClassName)[0]
-                : document.querySelector(this.triggerSelector))
-        );
-        this.target = <HTMLInputElement | HTMLTextAreaElement>(
-            (this.targetClassName
-                ? document.getElementsByClassName(this.targetClassName)[0]
-                : document.querySelector(this.targetSelector))
-        );
-        /* tslint:enable: deprecation */
+        this.trigger = <HTMLButtonElement>(this.triggerClassName
+            ? document.getElementsByClassName(this.triggerClassName)[0]
+            : // eslint-disable-next-line deprecation/deprecation
+              document.querySelector(this.triggerSelector));
+        this.target = <HTMLInputElement | HTMLTextAreaElement>(this.targetClassName
+            ? document.getElementsByClassName(this.targetClassName)[0]
+            : // eslint-disable-next-line deprecation/deprecation
+              document.querySelector(this.targetSelector));
         this.successCopyMessage = <HTMLElement>this.getElementsByClassName(`${this.jsName}__success-message`)[0];
         this.errorCopyMessage = <HTMLElement>this.getElementsByClassName(`${this.jsName}__error-message`)[0];
         this.mapEvents();
     }
 
     protected mapEvents(): void {
-        this.trigger.addEventListener('click', (event: Event) => this.onClick(event));
+        this.trigger.addEventListener('click', () => this.onClick());
     }
 
-    protected onClick(event: Event): void {
+    protected onClick(): void {
         this.copyToClipboard();
     }
 
@@ -54,6 +50,7 @@ export default class ClipboardCopy extends Component {
         }
 
         this.target.select();
+        // eslint-disable-next-line deprecation/deprecation
         document.execCommand('copy');
         this.showMessage(this.successCopyMessage, this.defaultDuration);
         this.dispatchCustomEvent(EVENT_COPY);
@@ -106,6 +103,7 @@ export default class ClipboardCopy extends Component {
      * Gets if a browser supports the automatically copy to clipboard feature.
      */
     get isCopyCommandSupported(): boolean {
+        // eslint-disable-next-line deprecation/deprecation
         return document.queryCommandSupported('copy');
     }
 

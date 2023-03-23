@@ -31,7 +31,7 @@ export default class MerchantProductOfferDynamicFormElements extends Component {
         this.sendRequest(event);
     }
 
-    protected toggleSubmitButton(isDisabled: boolean = true): void {
+    protected toggleSubmitButton(isDisabled = true): void {
         if (this.submitButton) {
             this.submitButton.disabled = isDisabled;
         }

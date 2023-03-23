@@ -12,9 +12,8 @@ export default class MiniCartRadio extends Component {
     protected readyCallback(): void {}
 
     protected init(): void {
-        /* tslint:disable: deprecation */
+        // eslint-disable-next-line deprecation/deprecation
         this.radio = <HTMLElement>this.getElementsByClassName(`${this.jsName}__input`)[0];
-        /* tslint:enable: deprecation */
         this.form = <HTMLFormElement>this.getElementsByClassName(`${this.jsName}__form`)[0];
 
         this.mapEvents();
@@ -34,8 +33,7 @@ export default class MiniCartRadio extends Component {
      * @deprecated
      */
     get locationUrl(): string {
-        /* tslint:disable: deprecation */
+        // eslint-disable-next-line deprecation/deprecation
         return this.radio.dataset.href;
-        /* tslint:enable: deprecation */
     }
 }

@@ -1,4 +1,3 @@
-/* tslint:disable: max-file-line-count */
 import Component from '../../../models/component';
 
 /**
@@ -14,6 +13,11 @@ export const EVENT_UPDATE_ADD_TO_CART_URL = 'updateAddToCartUrl';
 export const EVENT_UPDATE_AJAX_ADD_TO_CART_URL = 'updateAjaxAddToCartUrl';
 export const EVENT_UPDATE_ADD_TO_CART_FORM_ACTION = 'updateAddToCartFormAction';
 
+export interface ProductItemLabelsData {
+    text: string;
+    type: string;
+}
+
 export interface ProductItemData {
     imageUrl: string;
     imageAlt: string;
@@ -27,11 +31,6 @@ export interface ProductItemData {
     addToCartUrl: string;
     ajaxAddToCartUrl?: string;
     addToCartFormAction?: string;
-}
-
-export interface ProductItemLabelsData {
-    text: string;
-    type: string;
 }
 
 type Url = string | null;
@@ -104,6 +103,15 @@ export default class ProductItem extends Component {
     }
 
     /**
+     * Gets the product card image URL.
+     */
+    get imageUrl(): string {
+        if (this.productImage) {
+            return this.productImage.src;
+        }
+    }
+
+    /**
      * Sets the product card image URL.
      * @param imageUrl A product card image URL.
      */
@@ -132,12 +140,30 @@ export default class ProductItem extends Component {
     }
 
     /**
+     * Gets the product card name.
+     */
+    get productItemName(): string {
+        if (this.productName) {
+            return this.productName.innerText;
+        }
+    }
+
+    /**
      * Sets the product card name.
      * @param name A product card name.
      */
     set productItemName(name: string) {
         if (this.productName) {
             this.productName.innerText = name;
+        }
+    }
+
+    /**
+     * Gets the product card rating.
+     */
+    get ratingValue(): number {
+        if (this.productRating) {
+            return Number(this.productRating.value);
         }
     }
 
@@ -150,12 +176,30 @@ export default class ProductItem extends Component {
     }
 
     /**
+     * Gets the product card default price.
+     */
+    get defaultPrice(): string {
+        if (this.productDefaultPrice) {
+            return this.productDefaultPrice.innerText;
+        }
+    }
+
+    /**
      * Sets the product card default price.
      * @param defaultPrice A product card default price.
      */
     set defaultPrice(defaultPrice: string) {
         if (this.productDefaultPrice) {
             this.productDefaultPrice.innerText = defaultPrice;
+        }
+    }
+
+    /**
+     * Gets the product card sku.
+     */
+    get sku(): string {
+        if (this.productSku) {
+            return this.productSku.content;
         }
     }
 
@@ -170,6 +214,15 @@ export default class ProductItem extends Component {
     }
 
     /**
+     * Gets the product card original price.
+     */
+    get originalPrice(): string {
+        if (this.productOriginalPrice) {
+            return this.productOriginalPrice.innerText;
+        }
+    }
+
+    /**
      * Sets the product card original price.
      * @param originalPrice A product card original price.
      */
@@ -180,12 +233,30 @@ export default class ProductItem extends Component {
     }
 
     /**
+     * Gets the product card detail page URL.
+     */
+    get detailPageUrl(): string {
+        if (this.productLinkDetailPage) {
+            return this.productLinkDetailPage[0].href;
+        }
+    }
+
+    /**
      * Sets the product card detail page URL.
      * @param detailPageUrl A product card detail page URL.
      */
     set detailPageUrl(detailPageUrl: string) {
         if (this.productLinkDetailPage) {
             this.productLinkDetailPage.forEach((element: HTMLAnchorElement) => (element.href = detailPageUrl));
+        }
+    }
+
+    /**
+     * Gets the product card 'add to cart' URL.
+     */
+    get addToCartUrl(): string {
+        if (this.productLinkAddToCart) {
+            return this.productLinkAddToCart.href;
         }
     }
 
@@ -202,6 +273,15 @@ export default class ProductItem extends Component {
     }
 
     /**
+     * Gets the product card AJAX 'add to cart' URL.
+     */
+    get ajaxAddToCartUrl(): string {
+        if (this.productAjaxButtonAddToCart) {
+            return this.productAjaxButtonAddToCart.dataset.url;
+        }
+    }
+
+    /**
      * Sets the product card AJAX 'add to cart' URL.
      * @param ajaxAddToCartUrl A product card AJAX 'add to cart' URL.
      */
@@ -212,6 +292,19 @@ export default class ProductItem extends Component {
         }
 
         this.dispatchCustomEvent(EVENT_UPDATE_AJAX_ADD_TO_CART_URL, { sku: this.getSkuFromUrl(ajaxAddToCartUrl) });
+    }
+
+    /**
+     * Gets the product card 'add to cart' form action.
+     */
+    get addToCartFormAction(): string {
+        if (this.productFormAddToCart) {
+            return this.productFormAddToCart.action;
+        }
+
+        if (this.productButtonAddToCart) {
+            return this.productButtonAddToCart.dataset.formAction;
+        }
     }
 
     /**
@@ -230,99 +323,5 @@ export default class ProductItem extends Component {
         this.dispatchCustomEvent(EVENT_UPDATE_ADD_TO_CART_FORM_ACTION, {
             sku: this.getSkuFromUrl(addToCartFormAction),
         });
-    }
-
-    /**
-     * Gets the product card image URL.
-     */
-    get imageUrl(): string {
-        if (this.productImage) {
-            return this.productImage.src;
-        }
-    }
-
-    /**
-     * Gets the product card name.
-     */
-    get productItemName(): string {
-        if (this.productName) {
-            return this.productName.innerText;
-        }
-    }
-
-    /**
-     * Gets the product card rating.
-     */
-    get ratingValue(): number {
-        if (this.productRating) {
-            return Number(this.productRating.value);
-        }
-    }
-
-    /**
-     * Gets the product card default price.
-     */
-    get defaultPrice(): string {
-        if (this.productDefaultPrice) {
-            return this.productDefaultPrice.innerText;
-        }
-    }
-
-    /**
-     * Gets the product card sku.
-     */
-    get sku(): string {
-        if (this.productSku) {
-            return this.productSku.content;
-        }
-    }
-
-    /**
-     * Gets the product card original price.
-     */
-    get originalPrice(): string {
-        if (this.productOriginalPrice) {
-            return this.productOriginalPrice.innerText;
-        }
-    }
-
-    /**
-     * Gets the product card detail page URL.
-     */
-    get detailPageUrl(): string {
-        if (this.productLinkDetailPage) {
-            return this.productLinkDetailPage[0].href;
-        }
-    }
-
-    /**
-     * Gets the product card 'add to cart' URL.
-     */
-    get addToCartUrl(): string {
-        if (this.productLinkAddToCart) {
-            return this.productLinkAddToCart.href;
-        }
-    }
-
-    /**
-     * Gets the product card AJAX 'add to cart' URL.
-     */
-    get ajaxAddToCartUrl(): string {
-        if (this.productAjaxButtonAddToCart) {
-            return this.productAjaxButtonAddToCart.dataset.url;
-        }
-    }
-
-    /**
-     * Gets the product card 'add to cart' form action.
-     */
-    get addToCartFormAction(): string {
-        if (this.productFormAddToCart) {
-            return this.productFormAddToCart.action;
-        }
-
-        if (this.productButtonAddToCart) {
-            return this.productButtonAddToCart.dataset.formAction;
-        }
     }
 }

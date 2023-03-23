@@ -2,20 +2,9 @@ declare const __NAME__: string;
 declare const __PRODUCTION__: boolean;
 import { LogLevel } from './logger';
 
-/* tslint:disable: no-redundant-jsdoc */
-/**
- * Defines the application configuration.
- *
- * @module Config
- */
-/* tslint:enable */
-
-let applicationConfig: Config;
-
 /**
  * Defines the structure of the application configuration object.
  */
-/* tslint:disable: no-any */
 export interface Config {
     readonly name: string;
     readonly isProduction: boolean;
@@ -34,10 +23,9 @@ export interface Config {
         prefix: string;
         level: LogLevel;
     };
-
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     extra?: any;
 }
-/* tslint:enable */
 
 /**
  * Defines the default application configuration object.
@@ -51,6 +39,7 @@ export const defaultConfig: Config = {
         /**
          * @deprecated Use events.mount instead.
          */
+        // eslint-disable-next-line deprecation/deprecation
         ready: 'components-ready',
         bootstrap: 'application-bootstrap',
         error: 'application-error',
@@ -61,6 +50,14 @@ export const defaultConfig: Config = {
         level: __PRODUCTION__ ? LogLevel.ERRORS_ONLY : LogLevel.VERBOSE,
     },
 };
+
+/**
+ * Defines the application configuration.
+ *
+ * @module Config
+ */
+
+let applicationConfig: Config;
 
 /**
  * Sets a new configuration.

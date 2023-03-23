@@ -120,7 +120,7 @@ export default class QuickOrderRow extends Component {
      * Sends an ajax request to the server and renders the response on the page.
      * @param sku A product SKU used for reloading autocomplete field.
      */
-    async reloadField(sku: string = ''): Promise<void> {
+    async reloadField(sku = ''): Promise<void> {
         this.setQueryParams(sku);
 
         await this.ajaxProvider.fetch();

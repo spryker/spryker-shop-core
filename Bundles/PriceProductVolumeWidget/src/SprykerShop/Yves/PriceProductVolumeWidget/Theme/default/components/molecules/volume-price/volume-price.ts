@@ -24,7 +24,7 @@ export default class VolumePrice extends Component {
     /**
      * The custom class for price animation.
      */
-    highLightedClass: string = `${this.name}__price--highlighted`;
+    highLightedClass = `${this.name}__price--highlighted`;
 
     /**
      * The current quantity select/input value.
@@ -32,7 +32,7 @@ export default class VolumePrice extends Component {
      * @deprecated
      */
     currentQuantityValue: number;
-    protected timeout: number = 400;
+    protected timeout = 400;
 
     protected readyCallback(): void {}
 

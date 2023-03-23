@@ -1,4 +1,4 @@
-/* tslint:disable: max-file-line-count */
+/* eslint-disable max-lines */
 
 /*
  * @tag example This code provides example of using the Product Measurement Unit.
@@ -62,14 +62,12 @@ export default class MeasurementQuantitySelector extends Component {
     protected productQuantityStorage: ProductQuantityStorage;
     protected currentValue: number;
     protected translations: UnitTranslationsJSONData;
-    protected readonly decimals: number = 4;
-    protected readonly factor: number = 10;
+    protected readonly decimals = 4;
+    protected readonly factor = 10;
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    protected readonly degree = [2, 3];
 
-    /* tslint:disable: no-magic-numbers */
-    protected readonly degree: number[] = [2, 3];
-
-    /* tslint:enable: no-magic-numbers */
-    protected readyCallback(event?: Event): void {}
+    protected readyCallback(): void {}
 
     protected init(): void {
         this.qtyInSalesUnitInput = <HTMLInputElement>(

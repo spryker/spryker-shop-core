@@ -31,7 +31,7 @@ script:
     - node ./node_modules/@spryker/frontend-sniffer --config ./ --path ../../ --level-restriction core
     - npm run formatter
     - npm run stylelint
-    - npm run tslint
+    - npm run eslint
 
 notifications:
     email: false

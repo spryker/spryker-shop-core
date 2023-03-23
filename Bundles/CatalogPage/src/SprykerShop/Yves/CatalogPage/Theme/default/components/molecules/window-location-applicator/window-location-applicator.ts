@@ -21,11 +21,9 @@ export default class WindowLocationApplicator extends Component {
 
     protected onTriggerEvent(event: Event): void {
         const categoryUrl = (<HTMLButtonElement>event.currentTarget).getAttribute('data-url');
-        /* tslint:disable: no-unbound-method */
         const isFormData = typeof FormData !== 'undefined' && typeof FormData.prototype.get !== 'undefined';
         const isURLSearchParams =
             typeof URLSearchParams !== 'undefined' && typeof URLSearchParams.prototype.get !== 'undefined';
-        /* tslint:enable: no-unbound-method */
 
         if (isFormData && isURLSearchParams) {
             this.getQueryString(categoryUrl ? categoryUrl : '');

@@ -39,7 +39,7 @@ export default class SimpleCarousel extends Component {
     /**
      * The index of the active slide.
      */
-    viewCurrentIndex: number = 0;
+    viewCurrentIndex = 0;
 
     /**
      * Dot element selector.
@@ -50,7 +50,7 @@ export default class SimpleCarousel extends Component {
      * Dot element "is current" modifier.
      */
     readonly dotCurrentModifier: string;
-    protected fullSliderWidth: number = 100;
+    protected fullSliderWidth = 100;
 
     constructor() {
         super();

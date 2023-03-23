@@ -1,4 +1,4 @@
-/* tslint:disable: max-file-line-count */
+/* eslint-disable max-lines */
 import Component from '../../../models/component';
 import AjaxProvider from '../../../components/molecules/ajax-provider/ajax-provider';
 import debounce from 'lodash-es/debounce';
@@ -43,7 +43,7 @@ export default class SuggestSearch extends Component {
     /**
      * The index of the active suggestion item.
      */
-    activeItemIndex: number = 0;
+    activeItemIndex = 0;
 
     /**
      * The class name of the active suggestion item.
@@ -53,13 +53,10 @@ export default class SuggestSearch extends Component {
     protected readyCallback(): void {
         this.ajaxProvider = <AjaxProvider>this.getElementsByClassName(`${this.jsName}__ajax-provider`)[0];
         this.suggestionsContainer = <HTMLElement>this.getElementsByClassName(`${this.jsName}__container`)[0];
-        /* tslint:disable: deprecation */
-        this.searchInput = <HTMLInputElement>(
-            (this.searchInputClassName
-                ? document.getElementsByClassName(this.searchInputClassName)[0]
-                : document.querySelector(this.searchInputSelector))
-        );
-        /* tslint:enable: deprecation */
+        this.searchInput = <HTMLInputElement>(this.searchInputClassName
+            ? document.getElementsByClassName(this.searchInputClassName)[0]
+            : // eslint-disable-next-line deprecation/deprecation
+              document.querySelector(this.searchInputSelector));
         this.navigationActiveClass = `${this.name}__item--active`;
         this.createHintInput();
         this.mapEvents();

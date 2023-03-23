@@ -3,13 +3,17 @@ import Component from '../../../models/component';
 
 export const EVENT_FETCHING = 'fetching';
 export const EVENT_FETCHED = 'fetched';
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Resolve = (value: any) => void;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Reject = (reason?: any) => void;
 
 /**
  * @event fetching An event which is triggered when an ajax request is sent to the server.
  * @event fetched An event which is triggered when an ajax request is closed.
  */
 export default class AjaxProvider extends Component {
-    protected isFetchingRequest: boolean = false;
+    protected isFetchingRequest = false;
 
     /**
      * Defines the key/value pairs which are send with the request as query parameters.
@@ -31,11 +35,12 @@ export default class AjaxProvider extends Component {
      * Represents the request object used by the component to perform the fetch operation.
      */
     readonly xhr: XMLHttpRequest;
-    protected xhrStatusSuccessOk: number = 200;
-    protected removeListeners: Function;
+    protected xhrStatusSuccessOk = 200;
+    protected removeListeners: () => void;
 
     constructor() {
         super();
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
         this.removeListeners = () => {};
         this.xhr = new XMLHttpRequest();
     }
@@ -54,9 +59,8 @@ export default class AjaxProvider extends Component {
      * @param data Optional data sent to the server in the request body.
      * @returns A generic typed promise connected to the ajax request.
      */
-    /* tslint:disable: no-any */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async fetch<T = string>(data?: any): Promise<T> {
-        /* tslint:enable */
         debug(this.method, this.url, 'fetching...');
         this.isFetchingRequest = true;
         this.dispatchCustomEvent(EVENT_FETCHING);
@@ -71,7 +75,7 @@ export default class AjaxProvider extends Component {
         });
     }
 
-    protected fetchEventsHandler(resolve: Function, reject: Function) {
+    protected fetchEventsHandler(resolve: Resolve, reject: Reject): void {
         this.removeListeners();
         const requestLoadHandler = () => this.onRequestLoad(resolve, reject);
         const requestErrorHandler = () => this.onRequestError(reject);
@@ -88,7 +92,7 @@ export default class AjaxProvider extends Component {
         };
     }
 
-    protected onRequestLoad(resolve: Function, reject: Function): void {
+    protected onRequestLoad(resolve: Resolve, reject: Reject): void {
         this.isFetchingRequest = false;
         this.dispatchCustomEvent(EVENT_FETCHED);
 
@@ -102,13 +106,13 @@ export default class AjaxProvider extends Component {
         resolve(this.xhr.response);
     }
 
-    protected onRequestError(reject: Function): void {
+    protected onRequestError(reject: Reject): void {
         this.isFetchingRequest = false;
         this.dispatchCustomEvent(EVENT_FETCHED);
         reject(new Error(`${this.method} ${this.url} request error`));
     }
 
-    protected onRequestAbort(reject: Function): void {
+    protected onRequestAbort(reject: Reject): void {
         this.isFetchingRequest = false;
         this.dispatchCustomEvent(EVENT_FETCHED);
         reject(new Error(`${this.method} ${this.url} request aborted`));

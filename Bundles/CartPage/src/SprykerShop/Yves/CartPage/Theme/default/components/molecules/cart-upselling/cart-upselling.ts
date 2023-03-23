@@ -6,19 +6,18 @@ export default class CartUpselling extends Component {
     protected providers: AjaxProvider[];
 
     protected readyCallback(): void {
-        /* tslint:disable: deprecation */
         this.providers = <AjaxProvider[]>Array.from(document.getElementsByClassName(this.providerClassName));
-        /* tslint:enable: deprecation */
+
         this.mapEvents();
     }
 
     protected mapEvents(): void {
         this.providers.forEach((provider: AjaxProvider) => {
-            provider.addEventListener('fetched', (event: Event) => this.onFetched(event));
+            provider.addEventListener('fetched', () => this.onFetched());
         });
     }
 
-    protected async onFetched(event: Event): Promise<void> {
+    protected async onFetched(): Promise<void> {
         await mount();
     }
 

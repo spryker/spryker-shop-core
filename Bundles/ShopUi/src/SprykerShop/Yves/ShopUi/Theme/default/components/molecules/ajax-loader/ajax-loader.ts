@@ -5,30 +5,28 @@ export default class AjaxLoader extends Component {
     protected providers: AjaxProvider[];
 
     protected readyCallback(): void {
-        /* tslint:disable: deprecation */
-        this.providers = <AjaxProvider[]>(
-            Array.from(
-                this.providerClassName
-                    ? document.getElementsByClassName(this.providerClassName)
-                    : document.querySelectorAll(this.providerSelector),
-            )
+        this.providers = <AjaxProvider[]>Array.from(
+            this.providerClassName
+                ? document.getElementsByClassName(this.providerClassName)
+                : // eslint-disable-next-line deprecation/deprecation
+                  document.querySelectorAll(this.providerSelector),
         );
-        /* tslint:enable: deprecation */
+
         this.mapEvents();
     }
 
     protected mapEvents(): void {
         this.providers.forEach((provider: AjaxProvider) => {
-            provider.addEventListener(EVENT_FETCHING, (event: Event) => this.onFetching(event));
-            provider.addEventListener(EVENT_FETCHED, (event: Event) => this.onFetched(event));
+            provider.addEventListener(EVENT_FETCHING, () => this.onFetching());
+            provider.addEventListener(EVENT_FETCHED, () => this.onFetched());
         });
     }
 
-    protected onFetching(event: Event): void {
+    protected onFetching(): void {
         this.classList.remove('is-invisible');
     }
 
-    protected onFetched(event: Event): void {
+    protected onFetched(): void {
         this.classList.add('is-invisible');
     }
 

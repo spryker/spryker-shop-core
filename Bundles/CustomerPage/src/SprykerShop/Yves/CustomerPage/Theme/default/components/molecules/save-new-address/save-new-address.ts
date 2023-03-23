@@ -1,4 +1,3 @@
-/* tslint:disable */
 import Component from 'ShopUi/models/component';
 
 const EVENT_ADD_NEW_ADDRESS = 'add-new-address';
@@ -11,8 +10,8 @@ export default class SaveNewAddress extends Component {
     addNewShippingAddress: HTMLButtonElement;
     addNewBillingAddress: HTMLButtonElement;
 
-    newShippingAddressChecked: boolean = false;
-    newBillingAddressChecked: boolean = false;
+    newShippingAddressChecked = false;
+    newBillingAddressChecked = false;
     readonly hideClass: string = 'is-hidden';
 
     protected readyCallback(): void {

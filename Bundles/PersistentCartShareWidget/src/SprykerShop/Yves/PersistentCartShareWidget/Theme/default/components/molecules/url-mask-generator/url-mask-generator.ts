@@ -5,27 +5,25 @@ import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provide
 export default class UrlMaskGenerator extends Component {
     protected provider: AjaxProvider;
     protected trigger: HTMLInputElement;
-    protected isActionsRendered: boolean = false;
+    protected isActionsRendered = false;
 
     protected readyCallback(): void {
         this.provider = <AjaxProvider>(
             this.getElementsByClassName(`${this.jsName}__provider-${this.shareOptionGroup}`)[0]
         );
-        /* tslint:disable: deprecation */
-        this.trigger = <HTMLInputElement>(
-            (this.triggerClassName
-                ? this.getElementsByClassName(this.triggerClassName)[0]
-                : this.querySelector(this.triggerSelector))
-        );
-        /* tslint:enable: deprecation */
+        this.trigger = <HTMLInputElement>(this.triggerClassName
+            ? this.getElementsByClassName(this.triggerClassName)[0]
+            : // eslint-disable-next-line deprecation/deprecation
+              this.querySelector(this.triggerSelector));
+
         this.mapEvents();
     }
 
     protected mapEvents(): void {
-        this.trigger.addEventListener('change', (event: Event) => this.onChange(event));
+        this.trigger.addEventListener('change', () => this.onChange());
     }
 
-    protected onChange(event: Event): void {
+    protected onChange(): void {
         if (!this.isActionsRendered) {
             this.render();
             this.isActionsRendered = true;

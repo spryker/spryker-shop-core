@@ -37,10 +37,10 @@ export default class ScriptLoader extends Component {
     }
 
     protected mapEvents(): void {
-        this.script.addEventListener('load', (event: Event) => this.onScriptLoad(event), { once: true });
+        this.script.addEventListener('load', () => this.onScriptLoad(), { once: true });
     }
 
-    protected onScriptLoad(event: Event): void {
+    protected onScriptLoad(): void {
         this.dispatchCustomEvent(EVENT_SCRIPT_LOAD);
     }
 

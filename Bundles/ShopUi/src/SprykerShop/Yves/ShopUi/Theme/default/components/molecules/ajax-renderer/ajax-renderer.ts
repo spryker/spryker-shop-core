@@ -7,26 +7,23 @@ export default class AjaxRenderer extends Component {
     protected target: HTMLElement;
 
     protected readyCallback(): void {
-        /* tslint:disable: deprecation */
-        this.provider = <AjaxProvider>(
-            (this.providerClassName
-                ? document.getElementsByClassName(this.providerClassName)[0]
-                : document.querySelector(this.providerSelector))
-        );
-        this.target = <HTMLElement>(
-            (this.targetClassName
-                ? document.getElementsByClassName(this.targetClassName)[0]
-                : document.querySelector(this.targetSelector ? this.targetSelector : undefined))
-        );
-        /* tslint:enable: deprecation */
+        this.provider = <AjaxProvider>(this.providerClassName
+            ? document.getElementsByClassName(this.providerClassName)[0]
+            : // eslint-disable-next-line deprecation/deprecation
+              document.querySelector(this.providerSelector));
+        this.target = <HTMLElement>(this.targetClassName
+            ? document.getElementsByClassName(this.targetClassName)[0]
+            : // eslint-disable-next-line deprecation/deprecation
+              document.querySelector(this.targetSelector ? this.targetSelector : undefined));
+
         this.mapEvents();
     }
 
     protected mapEvents(): void {
-        this.provider.addEventListener(EVENT_FETCHED, (event: Event) => this.onFetched(event));
+        this.provider.addEventListener(EVENT_FETCHED, () => this.onFetched());
     }
 
-    protected onFetched(event: Event): void {
+    protected onFetched(): void {
         this.render();
     }
 

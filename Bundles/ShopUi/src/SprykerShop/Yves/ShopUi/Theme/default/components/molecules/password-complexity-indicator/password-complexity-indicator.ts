@@ -12,14 +12,14 @@ enum ComplexityWeight {
 
 export default class PasswordComplexityIndicator extends Component {
     protected availableProperties = ['min', 'lowercase', 'uppercase', 'digits', 'symbols'];
-    /* tslint:disable: no-magic-numbers */
+    /* eslint-disable @typescript-eslint/no-magic-numbers */
     protected complexityGradation = new Map([
         ['weak', 0],
         ['medium', 25],
         ['strong', 50],
         ['very-strong', 75],
     ]);
-    /* tslint:enable */
+    /* eslint-enable */
     protected currentComplexity = '';
     protected maxPasswordComplexity = 0;
     protected factor = 100;

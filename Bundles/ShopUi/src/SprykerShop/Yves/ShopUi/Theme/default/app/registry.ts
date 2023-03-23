@@ -1,6 +1,5 @@
 import Candidate from './candidate';
 
-/* tslint:disable: no-redundant-jsdoc */
 /**
  * Defines a registry for all the webcomponents potentially used inside the application.
  *
@@ -9,7 +8,6 @@ import Candidate from './candidate';
  * @remarks
  * Registry is used directly by the application to know which webcomponents are available and can be defined.
  */
-/* tslint:enable */
 
 const registry: Map<string, Candidate> = new Map();
 

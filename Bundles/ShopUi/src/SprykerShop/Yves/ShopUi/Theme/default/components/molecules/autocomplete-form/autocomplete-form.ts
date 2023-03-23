@@ -1,4 +1,4 @@
-/* tslint:disable: max-file-line-count */
+/* eslint-disable max-lines */
 import Component from '../../../models/component';
 import AjaxProvider from '../../../components/molecules/ajax-provider/ajax-provider';
 import debounce from 'lodash-es/debounce';
@@ -163,14 +163,11 @@ export default class AutocompleteForm extends Component {
         this.setQueryParams();
 
         await this.ajaxProvider.fetch();
-        /* tslint:disable: deprecation */
-        this.suggestionItems = <HTMLElement[]>(
-            Array.from(
-                this.suggestionsContainer.getElementsByClassName(this.suggestedItemClassName) ||
-                    this.suggestionsContainer.querySelectorAll(this.suggestedItemSelector),
-            )
+        this.suggestionItems = <HTMLElement[]>Array.from(
+            this.suggestionsContainer.getElementsByClassName(this.suggestedItemClassName) ||
+                // eslint-disable-next-line deprecation/deprecation
+                this.suggestionsContainer.querySelectorAll(this.suggestedItemSelector),
         );
-        /* tslint:enable: deprecation */
         this.lastSelectedItem = this.suggestionItems[0];
         this.mapSuggestionItemsEvents();
         this.dispatchCustomEvent(Events.FETCHED);
@@ -253,9 +250,8 @@ export default class AutocompleteForm extends Component {
      * Gets the css query selector of the selected suggestion items.
      */
     get selectedInputClass(): string {
-        /* tslint:disable: deprecation */
+        // eslint-disable-next-line deprecation/deprecation
         return `${this.suggestedItemClassName}--selected` || `${this.suggestedItemSelector}--selected`.substr(1);
-        /* tslint:enable: deprecation */
     }
 
     /**

@@ -1,4 +1,4 @@
-/* tslint:disable: max-file-line-count */
+/* eslint-disable max-lines */
 
 /*
  * @tag example This code provides example of using the Product Packaging Unit.
@@ -102,15 +102,13 @@ export default class PackagingUnitQuantitySelector extends Component {
     protected puMaxNotificationElement: HTMLDivElement;
     protected puIntervalNotificationElement: HTMLDivElement;
     protected isAddToCartDisabled: boolean;
-    protected muError: boolean = false;
-    protected puError: boolean = false;
-    protected readonly decimals: number = 4;
-    protected readonly factor: number = 10;
-    protected numberOfDecimalPlaces: number = 10;
-
-    /* tslint:disable: no-magic-numbers */
+    protected muError = false;
+    protected puError = false;
+    protected readonly decimals = 4;
+    protected readonly factor = 10;
+    protected numberOfDecimalPlaces = 10;
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     protected readonly degree: number[] = [2, 3];
-    /* tslint:enable: no-magic-numbers */
 
     protected readyCallback(): void {}
 
@@ -575,8 +573,8 @@ export default class PackagingUnitQuantitySelector extends Component {
     }
 
     protected priceCalculation(amountInBaseUnits: number): void {
-        const itemBasePrice: number = Number(this.itemBasePriceInput.value);
-        const amountDefaultInBaseUnitInputValue: number = Number(this.amountDefaultInBaseUnitInput.value);
+        const itemBasePrice = Number(this.itemBasePriceInput.value);
+        const amountDefaultInBaseUnitInputValue = Number(this.amountDefaultInBaseUnitInput.value);
 
         if (amountDefaultInBaseUnitInputValue !== amountInBaseUnits) {
             let newPrice = (amountInBaseUnits / amountDefaultInBaseUnitInputValue) * itemBasePrice;

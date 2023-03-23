@@ -1,11 +1,9 @@
-/* tslint:disable: no-redundant-jsdoc */
 /**
  * Defines the application log layer, manageable by configuration.
  * According to the provided log level, specific logging functions will be voided and related messages hidden.
  *
  * @module Logger
  */
-/* tslint:enable */
 
 /**
  * Defines the log levels:
@@ -19,11 +17,11 @@ export enum LogLevel {
     VERBOSE,
 }
 
-/* tslint:disable: no-any */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type LogFunction = (...args: any[]) => void;
-/* tslint:enable */
 
 let prefix = '';
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 const VOID_FUNCTION: LogFunction = () => {};
 const getPrefix = (type: string) => `[${prefix}@${type}]`;
 
@@ -33,11 +31,11 @@ const getPrefix = (type: string) => `[${prefix}@${type}]`;
  *
  * @param args List of arguments to log.
  */
-/* tslint:disable: no-console no-any */
+/* eslint-disable @typescript-eslint/no-explicit-any, no-console */
 export let debug: LogFunction = (...args: any[]): void => {
     console.debug(getPrefix('debug'), ...args);
 };
-/* tslint:enable */
+/* eslint-enable */
 
 /**
  * Outputs a log message to the console, but only with VERBOSE and DEFAULT log levels.
@@ -45,11 +43,11 @@ export let debug: LogFunction = (...args: any[]): void => {
  *
  * @param args List of arguments to log.
  */
-/* tslint:disable: no-console no-any */
+/* eslint-disable @typescript-eslint/no-explicit-any, no-console */
 export let log: LogFunction = (...args: any[]): void => {
     console.log(getPrefix('log'), ...args);
 };
-/* tslint:enable */
+/* eslint-enable */
 
 /**
  * Outputs an info message to the console, but only with VERBOSE and DEFAULT log levels.
@@ -57,11 +55,11 @@ export let log: LogFunction = (...args: any[]): void => {
  *
  * @param args List of arguments to log.
  */
-/* tslint:disable: no-console no-any */
+/* eslint-disable @typescript-eslint/no-explicit-any, no-console */
 export let info: LogFunction = (...args: any[]): void => {
     console.info(getPrefix('info'), ...args);
 };
-/* tslint:enable */
+/* eslint-enable */
 
 /**
  * Outputs a warn message to the console, but only with VERBOSE and DEFAULT log levels.
@@ -69,11 +67,11 @@ export let info: LogFunction = (...args: any[]): void => {
  *
  * @param args List of arguments to log.
  */
-/* tslint:disable: no-console no-any */
+/* eslint-disable @typescript-eslint/no-explicit-any, no-console */
 export let warn: LogFunction = (...args: any[]): void => {
     console.warn(getPrefix('warn'), ...args);
 };
-/* tslint:enable */
+/* eslint-enable */
 
 /**
  * Outputs an error message to the console, with any given log level.
@@ -81,11 +79,11 @@ export let warn: LogFunction = (...args: any[]): void => {
  *
  * @param args List of arguments to log.
  */
-/* tslint:disable: no-console no-any */
+/* eslint-disable @typescript-eslint/no-explicit-any, no-console */
 export const error: LogFunction = (...args: any[]): void => {
     console.error(getPrefix('error'), ...args);
 };
-/* tslint:enable */
+/* eslint-enable */
 
 /**
  * Configures the log system according the log level and defines the log prefix for every message.
