@@ -1,0 +1,32 @@
+{% extends template('widget') %}
+
+{% define data = {
+    storeNames: _widget.storeNames,
+    currentStoreName: _widget.currentStoreName,
+    isVisible: _widget.storeNames is not empty,
+} %}
+
+{% block body %}
+    <form method="GET" action="/">
+        {% set options = [] %}
+
+        {% for storeName in data.storeNames %}
+            {% set options = options | merge([{
+                label: 'store_widget.switcher.store' | trans ~ ' ' ~ storeName,
+                value: storeName,
+                selected: storeName == data.currentStoreName,
+            }]) %}
+        {% endfor %}
+
+        {% include atom('select') with {
+            modifiers: ['naked'],
+            data: {
+                options: options,
+            },
+            attributes: {
+                name: '_store',
+                'data-form-submitter': true,
+            },
+        } only %}
+    </form>
+{% endblock %}

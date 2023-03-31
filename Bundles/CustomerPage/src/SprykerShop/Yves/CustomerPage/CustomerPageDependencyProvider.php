@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CustomerPage;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
@@ -763,7 +762,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
                 return $container->getApplicationService(static::SERVICE_TIMEZONE);
             }
 
-            return $this->getStoreCurrentTimezone();
+            return $this->getStoreCurrentTimezone($container);
         });
 
         return $container;
@@ -772,11 +771,13 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\CustomerPageDependencyProvider::SERVICE_TIMEZONE} instead.
      *
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
      * @return string|null
      */
-    protected function getStoreCurrentTimezone(): ?string
+    protected function getStoreCurrentTimezone(Container $container): ?string
     {
-        return Store::getInstance()->getContexts()['*']['timezone'] ?? null;
+        return $container->get(static::CLIENT_STORE)->getCurrentStore()->getTimezone();
     }
 
     /**
