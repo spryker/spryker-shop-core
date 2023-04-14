@@ -31,4 +31,12 @@ class StoreWidgetToStoreClientBridge implements StoreWidgetToStoreClientInterfac
     {
         return $this->storeClient->getCurrentStore();
     }
+
+    /**
+     * @return bool
+     */
+    public function isDynamicStoreEnabled(): bool
+    {
+        return $this->storeClient->isDynamicStoreEnabled();
+    }
 }

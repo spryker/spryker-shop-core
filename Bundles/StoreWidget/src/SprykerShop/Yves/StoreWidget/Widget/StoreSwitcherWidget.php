@@ -24,10 +24,16 @@ class StoreSwitcherWidget extends AbstractWidget
      */
     protected const PARAMETER_STORE_NAMES = 'storeNames';
 
+    /**
+     * @var string
+     */
+    protected const PARAMETER_IS_DYNAMIC_STORE_ENABLED = 'isDynamicStoreEnabled';
+
     public function __construct()
     {
         $this->addCurrentStoreParameter();
         $this->addStoreNamesParameter();
+        $this->addIsDynamicStoreEnabledParameter();
     }
 
     /**
@@ -65,6 +71,17 @@ class StoreSwitcherWidget extends AbstractWidget
         $this->addParameter(
             static::PARAMETER_STORE_NAMES,
             $this->getFactory()->getStoreStorageClient()->getStoreNames(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    protected function addIsDynamicStoreEnabledParameter(): void
+    {
+        $this->addParameter(
+            static::PARAMETER_IS_DYNAMIC_STORE_ENABLED,
+            $this->getFactory()->getStoreClient()->isDynamicStoreEnabled(),
         );
     }
 }

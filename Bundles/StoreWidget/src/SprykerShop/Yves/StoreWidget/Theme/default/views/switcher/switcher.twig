@@ -3,7 +3,7 @@
 {% define data = {
     storeNames: _widget.storeNames,
     currentStoreName: _widget.currentStoreName,
-    isVisible: _widget.storeNames is not empty,
+    isVisible: _widget.storeNames is not empty and (_widget.isDynamicStoreEnabled ?? true),
 } %}
 
 {% block body %}
