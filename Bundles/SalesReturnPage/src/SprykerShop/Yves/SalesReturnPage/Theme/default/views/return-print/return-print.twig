@@ -19,7 +19,7 @@
 {% block body %}
     <div class="wrapper">
         {% block returnHeader %}
-            <div class="return-header">
+            <div class="return-slip-header">
                 <div>
                     <table>
                         <tr>
@@ -40,8 +40,10 @@
         {% endblock %}
 
         {% for orderReference in orderReferences %}
+            {% set lastReturnSlipItemClass = loop.last ? 'return-slip-items--last' %}
+
             {% block orderReference %}
-                <table class="order-reference">
+                <table class="return-slip-order-reference">
                     <tr>
                         <td width="90"><strong>{{ 'return_page.slip.order_reference' | trans }}</strong></td>
                         <td width="125">{{ orderReference }}</td>
@@ -50,7 +52,7 @@
             {% endblock %}
 
             {% block productsTable %}
-                <table class="products-table">
+                <table class="return-slip-items {{ lastReturnSlipItemClass }}">
                     {% block productsTableHeader %}
                         <tr>
                             <th width="100">{{ 'return_page.slip.barcode' | trans }}</th>
@@ -79,7 +81,7 @@
                                     <td class="{{ noBottomBorderClass }}">
                                         {% widget 'BarcodeWidget' args [orderItem.sku] only %}
                                             {% block body %}
-                                                {% set imageClass = 'order-item-image' %}
+                                                {% set imageClass = 'return-slip-barcode-image' %}
                                                 {{ parent() }}
                                             {% endblock %}
                                         {% endwidget %}
@@ -92,6 +94,7 @@
                                         <div>
                                             {% block productConfiguration %}
                                                 {% widget 'ProductConfigurationOrderItemDisplayWidget' args [orderItem] only %}
+                                                    {% block body %}<br> {{ parent() }}{% endblock %}
                                                 {% endwidget %}
                                             {% endblock %}
                                         </div>
@@ -123,16 +126,18 @@
 
                                 {% for productOption in orderItem.productOptions %}
                                     {% set noBottomBorderClass = not loop.last ? 'no-bottom-border' %}
+                                    {% set firstProductOptionClass = loop.first ? 'return-slip-product-option--first' %}
+
                                     <tr>
                                         <td class="no-top-border {{ noBottomBorderClass }}"></td>
                                         <td class="no-top-border {{ noBottomBorderClass }}"></td>
-                                        <td class="no-top-border {{ noBottomBorderClass }} product-option">
+                                        <td class="no-top-border {{ noBottomBorderClass }} return-slip-product-option {{ firstProductOptionClass }}">
                                             {% if loop.first %}
                                                 <hr>
                                             {% endif %}
                                             {{ productOption.value }}
                                         </td>
-                                        <td class="no-top-border {{ noBottomBorderClass }} product-option">
+                                        <td class="no-top-border {{ noBottomBorderClass }} return-slip-product-option {{ firstProductOptionClass }}">
                                             {% if loop.first %}
                                                 <hr>
                                             {% endif %}
@@ -167,7 +172,7 @@
                                     <td class="no-bottom-border">
                                         {% widget 'BarcodeWidget' args [bundleProduct.sku] only %}
                                             {% block body %}
-                                                {% set imageClass = 'order-item-image' %}
+                                                {% set imageClass = 'return-slip-barcode-image' %}
                                                 {{ parent() }}
                                             {% endblock %}
                                         {% endwidget %}
@@ -176,7 +181,7 @@
                                         {{ bundleProduct.sku }}
                                     </td>
                                     <td class="no-bottom-border">
-                                        {{ bundleProduct.name }}
+                                        <strong>{{ bundleProduct.name }}</strong>
                                     </td>
                                     <td class="no-bottom-border">
                                         {% if isBundleDiscount %}
@@ -200,6 +205,7 @@
                                     </td>
                                     <td class="no-bottom-border">
                                         {% set reasonText = '--' %}
+
                                         {% for returnItem in embed.returnItems %}
                                             {% set hasReason = returnItem.orderItem.IdSalesOrderItem == firstBundleItem.IdSalesOrderItem and returnItem.reason %}
 
@@ -213,6 +219,7 @@
 
                                 {% for bundleItem in productBundle.bundleItems %}
                                     {% set noBottomBorderClass = not loop.last or hasBundleOptions ? 'no-bottom-border' %}
+
                                     <tr>
                                         <td class="no-top-border {{ noBottomBorderClass }}"></td>
                                         <td class="no-top-border {{ noBottomBorderClass }}"></td>
@@ -230,16 +237,18 @@
 
                                 {% for productOption in bundleProduct.productOptions %}
                                     {% set noBottomBorderClass = not loop.last ? 'no-bottom-border' %}
+                                    {% set firstProductOptionClass = loop.first ? 'return-slip-product-option--first' %}
+
                                     <tr>
                                         <td class="no-top-border {{ noBottomBorderClass }}"></td>
                                         <td class="no-top-border {{ noBottomBorderClass }}"></td>
-                                        <td class="no-top-border {{ noBottomBorderClass }} product-option">
+                                        <td class="no-top-border {{ noBottomBorderClass }} return-slip-product-option {{ firstProductOptionClass }}">
                                             {% if loop.first %}
                                                 <hr>
                                             {% endif %}
                                             {{ productOption.value }}
                                         </td>
-                                        <td class="no-top-border {{ noBottomBorderClass }} product-option">
+                                        <td class="no-top-border {{ noBottomBorderClass }} return-slip-product-option {{ firstProductOptionClass }}">
                                             {% if loop.first %}
                                                 <hr>
                                             {% endif %}
@@ -289,11 +298,12 @@
                                         {% set product = data.items[item.IdSalesOrderItem] %}
                                         {% set noBottomBorderClass = not loop.last ? 'no-bottom-border' %}
                                         {% set isConfiguredBundleDiscount = product.sumDiscountAmountFullAggregation is defined and product.sumDiscountAmountFullAggregation is not null %}
+
                                         <tr>
                                             <td class="no-top-border {{ noBottomBorderClass }}">
                                                 {% widget 'BarcodeWidget' args [product.sku] only %}
                                                     {% block body %}
-                                                        {% set imageClass = 'order-item-image' %}
+                                                        {% set imageClass = 'return-slip-barcode-image' %}
                                                         {{ parent() }}
                                                     {% endblock %}
                                                 {% endwidget %}
@@ -329,10 +339,11 @@
                                                 {{ product.quantity | executeFilterIfExists('formatInt', app.locale) }}
                                             </td>
                                             <td class="no-top-border {{ noBottomBorderClass }}">
-                                                {{ product.sumSubtotalAggregation | money(true, product.currencyIsoCode) }}
+                                                {{ product.sumPriceToPayAggregation | money(true, product.currencyIsoCode) }}
                                             </td>
                                             <td class="no-top-border {{ noBottomBorderClass }}">
-                                                {% set reasonText = 'custom_reason' | trans %}
+                                                {% set reasonText = '--' %}
+
                                                 {% for returnItem in embed.returnItems %}
                                                     {% if returnItem.orderItem.IdSalesOrderItem == item.IdSalesOrderItem and returnItem.reason %}
                                                         {% set reasonText = returnItem.reason | trans %}
@@ -351,14 +362,14 @@
         {% endfor %}
 
         {% block returnTotal %}
-            <table align="right">
+            <table align="right" class="return-slip-total">
                 <tr>
-                    <td><strong>{{ 'return_page.slip.items_to_return' | trans }}</strong></td>
-                    <td>{{ data.return.returnItems | length | executeFilterIfExists('formatInt', app.locale) }}</td>
+                    <td width="120"><strong>{{ 'return_page.slip.items_to_return' | trans }}</strong></td>
+                    <td width="90">{{ data.return.returnItems | length | executeFilterIfExists('formatInt', app.locale) }}</td>
                 </tr>
                 <tr>
-                    <td><strong>{{ 'return_page.slip.remuneration_total' | trans }}</strong></td>
-                    <td>{{ data.return.returnTotals.remunerationTotal | money(true, data.return.returnItems[0].orderItem.currencyIsoCode) }}</td>
+                    <td width="120"><strong>{{ 'return_page.slip.remuneration_total' | trans }}</strong></td>
+                    <td width="90">{{ data.return.returnTotals.remunerationTotal | money(true, data.return.returnItems[0].orderItem.currencyIsoCode) }}</td>
                 </tr>
             </table>
         {% endblock %}
@@ -367,7 +378,7 @@
 
 {% block headStyles %}
     <style>
-        html {
+        td {
             font-size: 13px;
         }
 
@@ -385,7 +396,11 @@
             border: 0;
             border-top: 1px solid #ccc;
             margin: 0 0 5px;
-            height: 1px;
+        }
+
+        img {
+            display: inline-block;
+            vertical-align: top;
         }
 
         .wrapper {
@@ -393,29 +408,38 @@
             margin: auto;
         }
 
-        .return-header {
+        .return-slip-header {
             display: flex;
-            justify-content:space-between;
-            margin-bottom: 40px;
+            justify-content: space-between;
+            margin-bottom: 32px;
         }
 
-        .order-reference {
-            margin-bottom: 15px;
+        .return-slip-order-reference,
+        .return-slip-total {
+            margin-bottom: 12px;
         }
 
-        .products-table {
+        .return-slip-items {
             width: 100%;
+            margin-bottom: 36px;
+        }
+
+        .return-slip-items--last {
             margin-bottom: 30px;
         }
 
-        .order-item-image {
+        .return-slip-barcode-image {
             width: 90px;
             display: block;
         }
 
-        .product-option {
+        .return-slip-product-option {
             font-size: 11px;
             padding: 2px 5px;
+        }
+
+        .return-slip-product-option--first {
+            padding-top: 0;
         }
 
         .text-secondary {

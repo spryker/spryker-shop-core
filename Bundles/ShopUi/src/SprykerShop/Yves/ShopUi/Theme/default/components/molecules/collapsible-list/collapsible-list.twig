@@ -17,10 +17,9 @@
 } %}
 
 {% macro listItem(label, value) %}
-    <div class="col col--sm-12">
-        <strong>{{ label }}</strong>
+    <div class="col col--sm-12 spacing-bottom">
+        <strong>{{ label }}:</strong> {{ value }}
     </div>
-    <div class="col col--sm-12 spacing-bottom">{{ value }}</div>
 {% endmacro %}
 
 {% import _self as macros %}
