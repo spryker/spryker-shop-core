@@ -17,12 +17,23 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class ProductBreadcrumbsWithCategoriesWidget extends AbstractWidget
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @var string
      */
-    public function __construct(ProductViewTransfer $productViewTransfer)
+    protected const PARAMETER_PRODUCT = 'product';
+
+    /**
+     * @var string
+     */
+    protected const PARAMETER_CATEGORIES = 'categories';
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string|null $httpReferer
+     */
+    public function __construct(ProductViewTransfer $productViewTransfer, ?string $httpReferer = null)
     {
-        $this->addParameter('product', $productViewTransfer)
-            ->addParameter('categories', $this->getCategories($productViewTransfer));
+        $this->addProductParameter($productViewTransfer);
+        $this->addCategoriesParameter($this->getCategories($productViewTransfer, $httpReferer));
     }
 
     /**
@@ -44,24 +55,73 @@ class ProductBreadcrumbsWithCategoriesWidget extends AbstractWidget
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
+     * @return void
+     */
+    protected function addProductParameter(ProductViewTransfer $productViewTransfer): void
+    {
+        $this->addParameter(static::PARAMETER_PRODUCT, $productViewTransfer);
+    }
+
+    /**
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductCategoryStorageTransfer> $productCategoryStorageTransfers
+     *
+     * @return void
+     */
+    protected function addCategoriesParameter(ArrayObject $productCategoryStorageTransfers): void
+    {
+        $this->addParameter(static::PARAMETER_CATEGORIES, $productCategoryStorageTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string|null $httpReferer
+     *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductCategoryStorageTransfer>
      */
-    protected function getCategories(ProductViewTransfer $productViewTransfer): ArrayObject
+    protected function getCategories(ProductViewTransfer $productViewTransfer, ?string $httpReferer = null): ArrayObject
     {
-        $productAbstractCategoryStorageTransfer = $this->getFactory()
+        $productAbstractCategoryStorageTransfers = $this->getFactory()
             ->getProductCategoryStorageClient()
-            ->findProductAbstractCategory(
-                $productViewTransfer->getIdProductAbstract(),
+            ->findBulkProductAbstractCategory(
+                [$productViewTransfer->getIdProductAbstractOrFail()],
                 $this->getLocale(),
                 $this->getFactory()->getStoreClient()->getCurrentStore()->getNameOrFail(),
             );
 
-        if ($productAbstractCategoryStorageTransfer === null) {
+        /** @var \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer|false $productAbstractCategoryStorageTransfer */
+        $productAbstractCategoryStorageTransfer = reset($productAbstractCategoryStorageTransfers);
+        if (!$productAbstractCategoryStorageTransfer || !$productAbstractCategoryStorageTransfer->getCategories()->count()) {
             return new ArrayObject();
         }
 
-        $productCategories = $productAbstractCategoryStorageTransfer->getCategories()->getArrayCopy();
+        $productCategoryStorageTransfers = $productAbstractCategoryStorageTransfer->getCategories()->getArrayCopy();
 
-        return new ArrayObject(array_reverse($productCategories));
+        $sortedProductCategoryStorageTransfers = $this->getFactory()
+            ->getProductCategoryStorageClient()
+            ->sortProductCategories($productCategoryStorageTransfers);
+
+        if (!$httpReferer) {
+            return $this->getMainProductCategoryStorageTransfers($sortedProductCategoryStorageTransfers);
+        }
+
+        $filteredProductCategoryStorageTransfers = $this->getFactory()
+            ->getProductCategoryStorageClient()
+            ->filterProductCategoriesByHttpReferer($sortedProductCategoryStorageTransfers, $httpReferer);
+
+        if (!$filteredProductCategoryStorageTransfers) {
+            return $this->getMainProductCategoryStorageTransfers($sortedProductCategoryStorageTransfers);
+        }
+
+        return new ArrayObject($filteredProductCategoryStorageTransfers);
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\ProductCategoryStorageTransfer> $productCategoryStorageTransfers
+     *
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductCategoryStorageTransfer>
+     */
+    protected function getMainProductCategoryStorageTransfers(array $productCategoryStorageTransfers): ArrayObject
+    {
+        return new ArrayObject(array_slice($productCategoryStorageTransfers, 0, 1));
     }
 }

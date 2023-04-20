@@ -7,11 +7,15 @@
 
     <transfer name="ProductAbstractCategoryStorage">
         <property name="categories" singular="category" type="ProductCategoryStorage[]"/>
+        <property name="idProductAbstract" type="int"/>
     </transfer>
 
     <transfer name="ProductCategoryStorage">
+        <property name="parentCategoryIds" type="int[]" singular="idParentCategory" strict="true"/>
         <property name="url" type="string"/>
         <property name="name" type="string"/>
+        <property name="categoryId" type="int"/>
+        <property name="categoryNodeId" type="int"/>
     </transfer>
 
     <transfer name="Store">

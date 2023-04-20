@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\ProductCategoryWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
-
 class ProductCategoryWidgetToProductCategoryStorageClientBridge implements ProductCategoryWidgetToProductCategoryStorageClientInterface
 {
     /**
@@ -25,17 +23,35 @@ class ProductCategoryWidgetToProductCategoryStorageClientBridge implements Produ
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param list<int> $productAbstractIds
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer|null
+     * @return list<\Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer>
      */
-    public function findProductAbstractCategory(
-        int $idProductAbstract,
-        string $localeName,
-        string $storeName
-    ): ?ProductAbstractCategoryStorageTransfer {
-        return $this->productCategoryStorageClient->findProductAbstractCategory($idProductAbstract, $localeName, $storeName);
+    public function findBulkProductAbstractCategory(array $productAbstractIds, string $localeName, string $storeName): array
+    {
+        return $this->productCategoryStorageClient->findBulkProductAbstractCategory($productAbstractIds, $localeName, $storeName);
+    }
+
+    /**
+     * @param array<int, \Generated\Shared\Transfer\ProductCategoryStorageTransfer> $productCategoryStorageTransfers
+     * @param string $httpReferer
+     *
+     * @return list<\Generated\Shared\Transfer\ProductCategoryStorageTransfer>
+     */
+    public function filterProductCategoriesByHttpReferer(array $productCategoryStorageTransfers, string $httpReferer): array
+    {
+        return $this->productCategoryStorageClient->filterProductCategoriesByHttpReferer($productCategoryStorageTransfers, $httpReferer);
+    }
+
+    /**
+     * @param array<int, \Generated\Shared\Transfer\ProductCategoryStorageTransfer> $productCategoryStorageTransfers
+     *
+     * @return list<\Generated\Shared\Transfer\ProductCategoryStorageTransfer>
+     */
+    public function sortProductCategories(array $productCategoryStorageTransfers): array
+    {
+        return $this->productCategoryStorageClient->sortProductCategories($productCategoryStorageTransfers);
     }
 }

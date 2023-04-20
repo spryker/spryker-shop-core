@@ -7,20 +7,29 @@
 
 namespace SprykerShop\Yves\ProductCategoryWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
-
 interface ProductCategoryWidgetToProductCategoryStorageClientInterface
 {
     /**
-     * @param int $idProductAbstract
+     * @param list<int> $productAbstractIds
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer|null
+     * @return list<\Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer>
      */
-    public function findProductAbstractCategory(
-        int $idProductAbstract,
-        string $localeName,
-        string $storeName
-    ): ?ProductAbstractCategoryStorageTransfer;
+    public function findBulkProductAbstractCategory(array $productAbstractIds, string $localeName, string $storeName): array;
+
+    /**
+     * @param array<int, \Generated\Shared\Transfer\ProductCategoryStorageTransfer> $productCategoryStorageTransfers
+     * @param string $httpReferer
+     *
+     * @return list<\Generated\Shared\Transfer\ProductCategoryStorageTransfer>
+     */
+    public function filterProductCategoriesByHttpReferer(array $productCategoryStorageTransfers, string $httpReferer): array;
+
+    /**
+     * @param array<int, \Generated\Shared\Transfer\ProductCategoryStorageTransfer> $productCategoryStorageTransfers
+     *
+     * @return list<\Generated\Shared\Transfer\ProductCategoryStorageTransfer>
+     */
+    public function sortProductCategories(array $productCategoryStorageTransfers): array;
 }

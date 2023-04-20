@@ -3,8 +3,8 @@
 {% define data = {
     product: _view.product,
     productUrl: _view.productUrl,
+    requestReferer: app.request.headers.get('referer'),
     hostName: app.request.getSchemeAndHttpHost(),
-
     title: product.metaTitle | default(_view.product.name),
     metaTitle: _view.product.metaTitle | default(_view.product.name),
     metaDescription: _view.product.metaDescription | default,
@@ -20,7 +20,7 @@
 {% endblock %}
 
 {% block breadcrumbs %}
-    {% widget 'ProductBreadcrumbsWithCategoriesWidget' args [data.product] only %}
+    {% widget 'ProductBreadcrumbsWithCategoriesWidget' args [data.product, data.requestReferer] only %}
     {% elsewidget 'ProductCategoryWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductBreadcrumbsWithCategoriesWidget instead. #}
     {% endwidget %}
 {% endblock %}

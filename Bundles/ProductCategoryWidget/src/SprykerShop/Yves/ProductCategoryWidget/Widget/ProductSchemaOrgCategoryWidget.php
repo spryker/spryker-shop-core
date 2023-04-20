@@ -48,15 +48,17 @@ class ProductSchemaOrgCategoryWidget extends AbstractWidget
      */
     protected function getCategories(ProductViewTransfer $productViewTransfer): ArrayObject
     {
-        $productAbstractCategoryStorageTransfer = $this->getFactory()
+        $productAbstractCategoryStorageTransfers = $this->getFactory()
             ->getProductCategoryStorageClient()
-            ->findProductAbstractCategory(
-                $productViewTransfer->getIdProductAbstract(),
+            ->findBulkProductAbstractCategory(
+                [$productViewTransfer->getIdProductAbstractOrFail()],
                 $this->getLocale(),
                 $this->getFactory()->getStoreClient()->getCurrentStore()->getNameOrFail(),
             );
 
-        if ($productAbstractCategoryStorageTransfer === null) {
+        /** @var \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer|false $productAbstractCategoryStorageTransfer */
+        $productAbstractCategoryStorageTransfer = reset($productAbstractCategoryStorageTransfers);
+        if (!$productAbstractCategoryStorageTransfer) {
             return new ArrayObject();
         }
 
