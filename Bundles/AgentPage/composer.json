@@ -30,6 +30,7 @@
         "spryker/silex": "*",
         "spryker/storage": "*",
         "spryker/storage-redis": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "suggest": {

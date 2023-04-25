@@ -81,6 +81,9 @@ class AgentPageSecurityPluginTest extends Unit
         $this->tester->addRoute('login', '/login', function () {
             return new Response('loginpage');
         });
+        $this->tester->addRoute('agent/login', '/agent/login', function () {
+            return new Response('agent/loginpage');
+        });
     }
 
     /**
@@ -153,5 +156,33 @@ class AgentPageSecurityPluginTest extends Unit
         $httpKernelBrowser->followRedirect();
 
         $this->assertSame($customerTransfer->getEmail() . 'AUTHENTICATED', $httpKernelBrowser->getResponse()->getContent());
+    }
+
+    /**
+     * @return void
+     */
+    public function testInactiveAgentCanNotLogin(): void
+    {
+        // Arrange
+        $container = $this->tester->getContainer();
+        $userTransfer = $this->tester->haveRegisteredAgent(['password' => 'foo']);
+
+        $this->tester->getLocator()->user()->facade()->deactivateUser($userTransfer->getIdUser());
+
+        // Act
+        $securityPlugin = new AgentPageSecurityPlugin();
+        $securityPlugin->setFactory($this->tester->getFactory());
+        $this->tester->addSecurityPlugin($securityPlugin);
+        $this->tester->addSecurityPlugin(new CustomerPageSecurityPlugin());
+
+        $container->get(static::SERVICE_SESSION)->start();
+
+        $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
+        $httpKernelBrowser->request('get', '/');
+        $httpKernelBrowser->request('post', '/agent/login_check', ['loginForm' => ['email' => $userTransfer->getUsername(), 'password' => 'foo']]);
+        $httpKernelBrowser->followRedirect();
+
+        // Assert
+        $this->assertSame('ANONYMOUS', $httpKernelBrowser->getResponse()->getContent());
     }
 }

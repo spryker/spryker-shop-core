@@ -163,7 +163,7 @@ class ValidateAgentSessionListenerTest extends Unit
             ->getMock();
 
         $sessionMock->method('getId')
-            ->willReturn(1);
+            ->willReturn('1');
 
         return $sessionMock;
     }

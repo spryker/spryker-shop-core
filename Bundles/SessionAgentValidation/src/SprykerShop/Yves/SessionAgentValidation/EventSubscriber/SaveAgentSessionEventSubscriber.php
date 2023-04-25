@@ -27,6 +27,13 @@ class SaveAgentSessionEventSubscriber implements EventSubscriberInterface
     protected const ROLE_AGENT = 'ROLE_AGENT';
 
     /**
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
+     *
+     * @var string
+     */
+    protected const COL_STATUS_ACTIVE = 'active';
+
+    /**
      * @var \SprykerShop\Yves\SessionAgentValidation\Dependency\Client\SessionAgentValidationToAgentClientInterface
      */
     protected SessionAgentValidationToAgentClientInterface $agentClient;
@@ -87,7 +94,7 @@ class SaveAgentSessionEventSubscriber implements EventSubscriberInterface
             (new UserTransfer())->setUsername($user->getUsername()),
         );
 
-        if ($userTransfer === null || !$userTransfer->getIdUser()) {
+        if ($userTransfer === null || !$userTransfer->getIdUser() || $userTransfer->getStatus() !== static::COL_STATUS_ACTIVE) {
             return;
         }
 

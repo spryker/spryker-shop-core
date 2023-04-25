@@ -34,3 +34,4 @@ suites:
                 - \SprykerTest\Yves\Router\Helper\RouterHelper
                 - \SprykerTest\Yves\Security\Helper\SecurityHelper
                 - \SprykerTest\Yves\Session\Helper\SessionHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper

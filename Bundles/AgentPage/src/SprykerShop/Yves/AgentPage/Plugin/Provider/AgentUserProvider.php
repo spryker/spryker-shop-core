@@ -21,6 +21,13 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 class AgentUserProvider extends AbstractPlugin implements UserProviderInterface
 {
     /**
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
+     *
+     * @var string
+     */
+    protected const COL_STATUS_ACTIVE = 'active';
+
+    /**
      * @param string $username
      *
      * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
@@ -75,9 +82,15 @@ class AgentUserProvider extends AbstractPlugin implements UserProviderInterface
         $userTransfer = new UserTransfer();
         $userTransfer->setUsername($username);
 
-        return $this->getFactory()
+        $userTransfer = $this->getFactory()
             ->getAgentClient()
             ->findAgentByUsername($userTransfer);
+
+        if ($userTransfer && $userTransfer->getStatus() === static::COL_STATUS_ACTIVE) {
+            return $userTransfer;
+        }
+
+        return null;
     }
 
     /**

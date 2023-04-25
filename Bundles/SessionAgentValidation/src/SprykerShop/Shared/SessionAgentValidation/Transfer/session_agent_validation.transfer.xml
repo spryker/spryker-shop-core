@@ -4,6 +4,7 @@
     <transfer name="User">
         <property name="idUser" type="int"/>
         <property name="username" type="string"/>
+        <property name="status" type="string"/>
     </transfer>
 
     <transfer name="SessionEntityRequest">

@@ -4,6 +4,7 @@
     <transfer name="User">
         <property name="password" type="string"/>
         <property name="username" type="string"/>
+        <property name="status" type="string"/>
     </transfer>
 
     <transfer name="Quote">

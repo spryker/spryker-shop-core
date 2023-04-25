@@ -10,6 +10,7 @@ namespace SprykerShopTest\Yves\SessionAgentValidation\EventSubscriber;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\UserTransfer;
 use SprykerShop\Yves\SessionAgentValidation\EventSubscriber\SaveAgentSessionEventSubscriber;
+use SprykerShop\Yves\SessionAgentValidationExtension\Dependency\Plugin\SessionAgentSaverPluginInterface;
 use SprykerShopTest\Yves\SessionAgentValidation\SessionAgentValidationYvesTester;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -36,6 +37,13 @@ class SaveAgentSessionEventSubscriberTest extends Unit
      * @var string
      */
     protected const ROLE_AGENT = 'ROLE_AGENT';
+
+    /**
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_DELETED
+     *
+     * @var string
+     */
+    protected const COL_STATUS_DELETED = 'deleted';
 
     /**
      * @var \SprykerShopTest\Yves\SessionAgentValidation\SessionAgentValidationYvesTester
@@ -208,6 +216,33 @@ class SaveAgentSessionEventSubscriberTest extends Unit
 
         // Assert
         $saverPluginMock->expects($this->once())->method('saveSession');
+
+        // Act
+        $saveAgentSessionEventSubscriber->onInteractiveLogin($event);
+    }
+
+    /**
+     * @return void
+     */
+    public function testOnInteractiveLoginShouldNotSaveSessionAgentDataWhenAgentHasInactiveStatus(): void
+    {
+        // Arrange
+        $saverPluginMock = $this->getMockBuilder(SessionAgentSaverPluginInterface::class)->getMock();
+        $saveAgentSessionEventSubscriber = new SaveAgentSessionEventSubscriber(
+            $this->tester->createAgentClientMock((new UserTransfer())->setIdUser(1)->setStatus(static::COL_STATUS_DELETED)),
+            $saverPluginMock,
+            $this->tester->createConfigMock(),
+        );
+
+        $event = new InteractiveLoginEvent(
+            $this->createRequestMock(true),
+            $this->createAuthenticationTokenMock(
+                $this->createUserMock([static::ROLE_AGENT]),
+            ),
+        );
+
+        // Assert
+        $saverPluginMock->expects($this->never())->method('saveSession');
 
         // Act
         $saveAgentSessionEventSubscriber->onInteractiveLogin($event);
