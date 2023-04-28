@@ -20,6 +20,7 @@ use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddre
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToGlossaryStorageClientInterface;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToLocaleClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToPermissionClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToStoreClientInterface;
@@ -28,6 +29,7 @@ use SprykerShop\Yves\CompanyPage\Expander\CompanyBusinessUnitOrderSearchFormExpa
 use SprykerShop\Yves\CompanyPage\Expander\CompanyUnitAddressExpander;
 use SprykerShop\Yves\CompanyPage\Expander\CompanyUnitAddressExpanderInterface;
 use SprykerShop\Yves\CompanyPage\Form\Cloner\FormCloner;
+use SprykerShop\Yves\CompanyPage\Form\Constraint\CompanyUserRelationConstraint;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyBusinessUnitOrderSearchFormDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\FormFactory;
 use SprykerShop\Yves\CompanyPage\FormHandler\OrderSearchFormHandler;
@@ -44,6 +46,7 @@ use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserSaver;
 use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserSaverInterface;
 use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserValidator;
 use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserValidatorInterface;
+use Symfony\Component\Validator\Constraint;
 
 class CompanyPageFactory extends AbstractFactory
 {
@@ -279,5 +282,25 @@ class CompanyPageFactory extends AbstractFactory
     public function createPreAuthUserChecker(): PreAuthUserCheckerInterface
     {
         return new PreAuthUserChecker();
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    public function createCompanyUserRelationConstraint(): Constraint
+    {
+        return new CompanyUserRelationConstraint([
+            CompanyUserRelationConstraint::OPTION_CUSTOMER_CLIENT => $this->getCustomerClient(),
+            CompanyUserRelationConstraint::OPTION_GLOSSARY_STORAGE_CLIENT => $this->getGlossaryStorageClient(),
+            CompanyUserRelationConstraint::OPTION_LOCALE_CLIENT => $this->getLocaleClient(),
+        ]);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToLocaleClientInterface
+     */
+    public function getLocaleClient(): CompanyPageToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_LOCALE);
     }
 }
