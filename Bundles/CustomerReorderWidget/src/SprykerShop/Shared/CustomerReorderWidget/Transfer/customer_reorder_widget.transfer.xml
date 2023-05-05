@@ -21,6 +21,7 @@
 
     <transfer name="Shipment">
         <property name="idSalesShipment" type="int"/>
+        <property name="uuid" type="string" strict="true"/>
         <property name="shippingAddress" type="Address"/>
     </transfer>
 
