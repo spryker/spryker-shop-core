@@ -13,18 +13,39 @@
 {% block body %}
 
     {% for merchantReference in data.merchantReferences %}
+        {% set productBundleItems = [] %}
+        {% set itemsForCurrentMerchant = [] %}
+        {% set formProductBundleItems = data.form.vars.value.productBundleItems | default([]) %}
+        {% set formReturnItems = data.form.vars.value.returnItems | default([]) %}
+
+        {% for orderItem in formProductBundleItems %}
+            {% if orderItem.getMerchantReference() == merchantReference %}
+                {% set productBundleItems = productBundleItems | merge([orderItem])  %}
+            {% endif %}
+        {% endfor %}
+
+        {% for returnItem in formReturnItems %}
+            {% if returnItem['orderItem'].getMerchantReference() == merchantReference %}
+                {% set itemsForCurrentMerchant = itemsForCurrentMerchant | merge([returnItem['orderItem']])  %}
+            {% endif %}
+        {% endfor %}
+
         {% embed molecule('return-create-form', 'SalesReturnPage') with {
             data: {
-                form: data.createReturnForm,
+                form: data.form,
                 order: data.order,
+                productBundleItems: productBundleItems,
+                configurableBundleItems: itemsForCurrentMerchant
+            },
+            embed: {
                 merchantReference: merchantReference,
                 firstIteration: loop.first,
                 lastIteration: loop.last
             },
         } only %}
             {% block formStart %}
-                {% if data.firstIteration %}
-                    {{ form_start(data.form) }}
+                {% if embed.firstIteration %}
+                    {{ parent() }}
                 {% endif %}
             {% endblock %}
 
@@ -33,7 +54,7 @@
                 {% set alreadyRendered = false %}
                 {% for returnItem in data.form.returnItems %}
                     {% set orderItem = returnItem.vars.value.orderItem %}
-                    {% if not alreadyRendered and orderItem.getMerchantReference() == data.merchantReference %}
+                    {% if not alreadyRendered and orderItem.getMerchantReference() == embed.merchantReference %}
                         <hr class="box__separator">
                         {% widget 'SoldByMerchantWidget' args [orderItem] only %}{% endwidget %}
                         {% set alreadyRendered = true %}
@@ -42,7 +63,7 @@
             {% endblock %}
 
             {% block salesReturnProductItem %}
-                {% if orderItem.getMerchantReference() == data.merchantReference %}
+                {% if orderItem.getMerchantReference() == embed.merchantReference %}
                     {{ parent() }}
                 {% endif %}
             {% endblock %}
@@ -62,13 +83,13 @@
             {% endblock %}
 
             {% block salesReturnPageActions %}
-                {% if data.lastIteration %}
+                {% if embed.lastIteration %}
                     {{ parent() }}
                 {% endif %}
             {% endblock %}
 
             {% block formEnd %}
-                {% if data.lastIteration %}
+                {% if embed.lastIteration %}
                     {{ parent() }}
                 {% endif %}
             {% endblock %}

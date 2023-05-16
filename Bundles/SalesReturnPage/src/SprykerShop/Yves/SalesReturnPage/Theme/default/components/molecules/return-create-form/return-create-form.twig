@@ -7,6 +7,8 @@
 {% define data = {
     order: required,
     form: required,
+    productBundleItems: null,
+    configurableBundleItems: null,
 } %}
 
 {% block body %}
@@ -99,8 +101,9 @@
                 {% set salesReturnProductBundleItemClass = '' %}
 
                 {% block productBundle %}
+                    {% set productBundleItems = data.productBundleItems ?? data.form.vars.value.productBundleItems %}
                     <div class="{{ salesReturnProductBundleItemClass }}">
-                        {% widget 'OrderItemsProductBundleWidget' args [data.form.vars.value.productBundleItems] with {
+                        {% widget 'OrderItemsProductBundleWidget' args [productBundleItems] with {
                             embed: {
                                 form: data.form,
                             },
@@ -181,9 +184,10 @@
                 {% set salesReturnConfigurableBundleItemClass = '' %}
 
                 {% block configurableBundle %}
+                    {% set configurableBundleItems = data.configurableBundleItems ?? orderItems %}
                     <div class="{{ salesReturnConfigurableBundleItemClass }}">
                         {% widget 'OrderItemsConfiguredBundleWidget'
-                            args [orderItems]
+                            args [configurableBundleItems]
                             use view('order-returnable-items-configured-bundle-widget', 'SalesConfigurableBundleWidget')
                             with {
                             embed: {

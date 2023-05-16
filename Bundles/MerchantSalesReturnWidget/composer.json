@@ -16,7 +16,7 @@
         "spryker/code-sniffer": "*"
     },
     "suggest": {
-        "spryker-shop/sales-return-page": "Add the module if you want to use return-create-link molecule."
+        "spryker-shop/sales-return-page": "Add the module if you want to use return-create-link molecule: ^1.7.0"
     },
     "autoload": {
         "psr-4": {

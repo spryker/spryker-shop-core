@@ -30,7 +30,7 @@
 
     {% include molecule('merchant-sales-return-create-form', 'MerchantSalesReturnWidget') with {
         data: {
-            createReturnForm: data.createReturnForm,
+            form: data.createReturnForm,
             order: data.order,
             merchantReferences: data.merchantReferences,
         },
