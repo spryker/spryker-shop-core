@@ -5,8 +5,10 @@ export default class SourcePriceForm extends Component {
     protected inputContainer: HTMLElement;
     protected checkbox: HTMLInputElement;
 
-    protected readyCallback(): void {
-        this.input = <HTMLInputElement>this.querySelector(`.${this.jsName}__input-container .input`);
+    protected readyCallback(): void {}
+
+    protected init(): void {
+        this.input = <HTMLInputElement>this.getElementsByClassName(`${this.jsName}__hidden-input`)[0];
         this.inputContainer = <HTMLElement>this.getElementsByClassName(`${this.jsName}__input-container`)[0];
         this.checkbox = <HTMLInputElement>this.getElementsByClassName(`${this.jsName}__checkbox-container`)[0];
         this.setSourcePrice();

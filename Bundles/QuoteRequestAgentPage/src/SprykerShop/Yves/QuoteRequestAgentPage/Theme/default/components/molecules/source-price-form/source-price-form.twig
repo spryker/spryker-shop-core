@@ -38,7 +38,12 @@
             {% endembed %}
         </div>
         <div class="col col--sm-12 col--xl-10">
-            {{ form_row(data.priceForm, {'attr': {'class': config.jsName ~ '__input-container is-hidden spacing-top spacing-top--small'}}) }}
+            {{ form_row(data.priceForm, {
+                attr: {
+                    class: config.jsName ~ '__input-container is-hidden spacing-top spacing-top--small',
+                },
+                hiddenInputClass: config.jsName ~ '__hidden-input',
+            }) }}
         </div>
     </div>
 {% endblock %}

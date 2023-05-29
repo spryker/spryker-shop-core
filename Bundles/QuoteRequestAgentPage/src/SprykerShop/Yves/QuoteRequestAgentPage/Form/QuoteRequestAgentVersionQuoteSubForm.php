@@ -36,6 +36,7 @@ class QuoteRequestAgentVersionQuoteSubForm extends AbstractType
             QuoteRequestAgentForm::OPTION_PRICE_MODE,
             QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID,
             QuoteRequestAgentForm::OPTION_SHIPMENT_GROUPS,
+            QuoteRequestAgentForm::OPTION_LOCALE,
         ]);
     }
 
@@ -65,6 +66,7 @@ class QuoteRequestAgentVersionQuoteSubForm extends AbstractType
             'disabled' => !$options[QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID],
             'entry_options' => [
                 QuoteRequestAgentForm::OPTION_PRICE_MODE => $options[QuoteRequestAgentForm::OPTION_PRICE_MODE],
+                QuoteRequestAgentForm::OPTION_LOCALE => $options[QuoteRequestAgentForm::OPTION_LOCALE],
             ],
         ]);
 

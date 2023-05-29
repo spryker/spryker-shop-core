@@ -9,8 +9,8 @@ namespace SprykerShop\Yves\QuoteRequestAgentPage\Form;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
+use SprykerShop\Yves\ShopUi\Form\Type\FormattedMoneyType;
 use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
@@ -50,7 +50,10 @@ class QuoteRequestAgentVersionItemsSubForm extends AbstractType
             'data_class' => ItemTransfer::class,
             'label' => false,
         ]);
-        $resolver->setRequired([QuoteRequestAgentForm::OPTION_PRICE_MODE]);
+        $resolver->setRequired([
+            QuoteRequestAgentForm::OPTION_PRICE_MODE,
+            QuoteRequestAgentForm::OPTION_LOCALE,
+        ]);
     }
 
     /**
@@ -78,8 +81,9 @@ class QuoteRequestAgentVersionItemsSubForm extends AbstractType
      */
     protected function addManualGrossPriceField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(ItemTransfer::SOURCE_UNIT_GROSS_PRICE, NumberType::class, [
+        $builder->add(ItemTransfer::SOURCE_UNIT_GROSS_PRICE, FormattedMoneyType::class, [
             'label' => false,
+            'locale' => $options[QuoteRequestAgentForm::OPTION_LOCALE],
             'required' => false,
             'constraints' => [
                 $this->createMoneyConstraint($options),
@@ -101,8 +105,9 @@ class QuoteRequestAgentVersionItemsSubForm extends AbstractType
      */
     protected function addManualNetPriceField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(ItemTransfer::SOURCE_UNIT_NET_PRICE, NumberType::class, [
+        $builder->add(ItemTransfer::SOURCE_UNIT_NET_PRICE, FormattedMoneyType::class, [
             'label' => false,
+            'locale' => $options[QuoteRequestAgentForm::OPTION_LOCALE],
             'required' => false,
             'constraints' => [
                 $this->createMoneyConstraint($options),

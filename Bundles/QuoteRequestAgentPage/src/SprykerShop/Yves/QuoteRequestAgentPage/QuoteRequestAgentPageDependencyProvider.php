@@ -12,6 +12,7 @@ use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCompanyUserClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCustomerClientBridge;
+use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToLocaleClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToMessengerClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToPersistentCartClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToPriceClientBridge;
@@ -80,6 +81,11 @@ class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyPr
     /**
      * @var string
      */
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
     /**
@@ -110,6 +116,7 @@ class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addStoreClient($container);
         $container = $this->addMessengerClient($container);
         $container = $this->addPersistentCartClient($container);
+        $container = $this->addLocaleClient($container);
 
         $container = $this->addUtilDateTimeService($container);
         $container = $this->addShipmentService($container);
@@ -307,6 +314,22 @@ class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyPr
         $container->set(static::CLIENT_PERSISTENT_CART, function (Container $container) {
             return new QuoteRequestAgentPageToPersistentCartClientBridge(
                 $container->getLocator()->persistentCart()->client(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addLocaleClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
+            return new QuoteRequestAgentPageToLocaleClientBridge(
+                $container->getLocator()->locale()->client(),
             );
         });
 

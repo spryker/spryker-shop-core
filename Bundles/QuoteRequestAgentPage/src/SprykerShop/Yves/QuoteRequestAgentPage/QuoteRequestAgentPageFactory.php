@@ -20,6 +20,7 @@ use SprykerShop\Yves\QuoteRequestAgentPage\Converter\QuoteRequestConverterInterf
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCompanyUserClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCustomerClientInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToLocaleClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToMessengerClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToPersistentCartClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToPriceClientInterface;
@@ -142,6 +143,7 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
         return new QuoteRequestAgentFormDataProvider(
             $this->getCartClient(),
             $this->getPriceClient(),
+            $this->getLocaleClient(),
             $this->createShipmentGrouper(),
         );
     }
@@ -322,6 +324,14 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     public function getPriceClient(): QuoteRequestAgentPageToPriceClientInterface
     {
         return $this->getProvidedDependency(QuoteRequestAgentPageDependencyProvider::CLIENT_PRICE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToLocaleClientInterface
+     */
+    public function getLocaleClient(): QuoteRequestAgentPageToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestAgentPageDependencyProvider::CLIENT_LOCALE);
     }
 
     /**

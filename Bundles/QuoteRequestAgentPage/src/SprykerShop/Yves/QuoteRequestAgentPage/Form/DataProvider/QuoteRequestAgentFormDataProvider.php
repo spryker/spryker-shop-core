@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\QuoteRequestAgentPage\Form\DataProvider;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToLocaleClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToPriceClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentForm;
 use SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouperInterface;
@@ -27,6 +28,11 @@ class QuoteRequestAgentFormDataProvider
     protected $priceClient;
 
     /**
+     * @var \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToLocaleClientInterface
+     */
+    protected QuoteRequestAgentPageToLocaleClientInterface $localeClient;
+
+    /**
      * @var \SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouperInterface
      */
     protected $shipmentGrouper;
@@ -34,15 +40,18 @@ class QuoteRequestAgentFormDataProvider
     /**
      * @param \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientInterface $cartClient
      * @param \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToPriceClientInterface $priceClient
+     * @param \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToLocaleClientInterface $localeClient
      * @param \SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouperInterface $shipmentGrouper
      */
     public function __construct(
         QuoteRequestAgentPageToCartClientInterface $cartClient,
         QuoteRequestAgentPageToPriceClientInterface $priceClient,
+        QuoteRequestAgentPageToLocaleClientInterface $localeClient,
         ShipmentGrouperInterface $shipmentGrouper
     ) {
         $this->cartClient = $cartClient;
         $this->priceClient = $priceClient;
+        $this->localeClient = $localeClient;
         $this->shipmentGrouper = $shipmentGrouper;
     }
 
@@ -63,6 +72,7 @@ class QuoteRequestAgentFormDataProvider
             QuoteRequestAgentForm::OPTION_PRICE_MODE => $this->getPriceMode($quoteTransfer),
             QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID => $this->isQuoteValid($quoteTransfer),
             QuoteRequestAgentForm::OPTION_SHIPMENT_GROUPS => $this->shipmentGrouper->groupItemsByShippingMethod($quoteTransfer),
+            QuoteRequestAgentForm::OPTION_LOCALE => $this->localeClient->getCurrentLocale(),
         ];
     }
 

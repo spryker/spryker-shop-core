@@ -50,6 +50,11 @@ class QuoteRequestAgentForm extends AbstractType
     /**
      * @var string
      */
+    public const OPTION_LOCALE = 'option_locale';
+
+    /**
+     * @var string
+     */
     public const FIELD_SHIPMENT_GROUPS = 'shipmentGroups';
 
     /**
@@ -81,6 +86,7 @@ class QuoteRequestAgentForm extends AbstractType
             static::OPTION_PRICE_MODE,
             static::OPTION_IS_QUOTE_VALID,
             static::OPTION_SHIPMENT_GROUPS,
+            static::OPTION_LOCALE,
         ]);
     }
 
@@ -112,6 +118,7 @@ class QuoteRequestAgentForm extends AbstractType
                 static::OPTION_PRICE_MODE => $options[static::OPTION_PRICE_MODE],
                 static::OPTION_IS_QUOTE_VALID => $options[static::OPTION_IS_QUOTE_VALID],
                 static::OPTION_SHIPMENT_GROUPS => $options[static::OPTION_SHIPMENT_GROUPS],
+                static::OPTION_LOCALE => $options[static::OPTION_LOCALE],
             ],
         );
 
