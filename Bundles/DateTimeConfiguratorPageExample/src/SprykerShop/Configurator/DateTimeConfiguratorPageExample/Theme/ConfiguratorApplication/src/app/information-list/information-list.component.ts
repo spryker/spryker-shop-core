@@ -16,8 +16,6 @@ export class InformationListComponent implements OnChanges {
     @Input() productData: ProductData;
     items: InformationItem[] = [];
 
-    constructor() {}
-
     ngOnChanges(): void {
         this.items = [
             {

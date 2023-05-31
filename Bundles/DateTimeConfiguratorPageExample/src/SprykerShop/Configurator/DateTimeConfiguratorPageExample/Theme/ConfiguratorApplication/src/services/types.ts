@@ -27,7 +27,7 @@ export interface ConfiguredProduct extends ProductData {
     configuration: DayConfiguration;
     display_data: DateConfiguration;
     available_quantity: number | string;
-    volume_prices?: VolumePrices | {};
+    volume_prices?: VolumePrices | Record<string, never>;
 }
 
 export interface VolumePrices {

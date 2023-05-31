@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { JsonOutputComponent } from './json-output.component';
+import { AppModule } from '../app.module';
 
 describe('JsonOutputComponent', () => {
     let component: JsonOutputComponent;
@@ -8,6 +9,7 @@ describe('JsonOutputComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
+            imports: [AppModule],
             declarations: [JsonOutputComponent],
         }).compileComponents();
     });

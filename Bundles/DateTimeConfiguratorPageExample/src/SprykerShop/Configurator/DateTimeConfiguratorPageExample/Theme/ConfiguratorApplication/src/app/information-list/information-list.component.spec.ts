@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InformationListComponent } from './information-list.component';
+import { AppModule } from '../app.module';
 
 describe('InformationListComponent', () => {
     let component: InformationListComponent;
@@ -8,6 +9,7 @@ describe('InformationListComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
+            imports: [AppModule],
             declarations: [InformationListComponent],
         }).compileComponents();
     });

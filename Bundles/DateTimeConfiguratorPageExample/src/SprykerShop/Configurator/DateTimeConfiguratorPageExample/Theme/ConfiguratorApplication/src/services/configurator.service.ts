@@ -25,8 +25,6 @@ export class ConfiguratorService {
         ],
     };
 
-    constructor() {}
-
     generateConfiguredData(response: ServerData): void {
         const configuration = JSON.parse(response.configuration) as DayConfiguration;
         const displayData = this.generateDate(JSON.parse(response.display_data));
@@ -78,7 +76,7 @@ export class ConfiguratorService {
     }
 
     updateConfiguredValues(productData: ConfiguredProduct): ConfiguredProduct {
-        const isAtStore = productData.store_name.toLowerCase().trim() == 'at';
+        const isAtStore = productData.store_name.toLowerCase().trim() === 'at';
         const date = productData.display_data.Date;
         const dayTime = productData.display_data['Preferred time of the day'];
 
@@ -118,7 +116,7 @@ export class ConfiguratorService {
         dayTime: string,
         priceMode: string,
         isAtStore: boolean,
-    ): VolumePrices | {} {
+    ): VolumePrices | Record<string, never> {
         const isEvening = dayTime.toLowerCase().trim() === 'evening';
 
         if (!isAtStore || !date || !isEvening) {

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
 import { ConfiguredProduct } from '../../services/types';
 import { ConfiguratorService } from '../../services/configurator.service';
 import { ProductService } from '../../services/product.service';
@@ -27,8 +27,8 @@ export class ProductDetailsComponent implements OnChanges {
 
     constructor(private productService: ProductService, private configuratorService: ConfiguratorService) {}
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (!this.productData.timestamp && !this.productData.checkSum) {
+    ngOnChanges(): void {
+        if (!this.productData?.timestamp && !this.productData?.checkSum) {
             return;
         }
 
@@ -36,15 +36,15 @@ export class ProductDetailsComponent implements OnChanges {
     }
 
     isComplete(): boolean {
-        const isDayTimeSelected = this.productData.configuration.time_of_day !== null;
-        const isDateEntered = this.productData.display_data.Date.length > 0;
+        const isDayTimeSelected = this.productData?.configuration.time_of_day !== null;
+        const isDateEntered = this.productData?.display_data.Date.length > 0;
 
         return isDayTimeSelected && isDateEntered;
     }
 
     isAvailableQuantityChange(): boolean {
-        const isAavailableQuantityNumber = typeof this.productData.available_quantity === 'number';
-        const isQuantityBiggerThanAvailability = this.productData.available_quantity < this.productData.quantity;
+        const isAavailableQuantityNumber = typeof this.productData?.available_quantity === 'number';
+        const isQuantityBiggerThanAvailability = this.productData?.available_quantity < this.productData?.quantity;
 
         return isAavailableQuantityNumber && isQuantityBiggerThanAvailability;
     }
@@ -54,26 +54,26 @@ export class ProductDetailsComponent implements OnChanges {
         const dayTimeMorningName = 'morning';
         const displayDataFieldName = 'Preferred time of the day';
 
-        const isAtStore = this.productData.store_name.toLowerCase().trim() === atStoreName;
-        const dayTime = this.productData.display_data[displayDataFieldName];
-        const isDayTimeMorning = dayTime.toLowerCase().trim() === dayTimeMorningName;
+        const isAtStore = this.productData?.store_name.toLowerCase().trim() === atStoreName;
+        const dayTime = this.productData?.display_data[displayDataFieldName];
+        const isDayTimeMorning = dayTime?.toLowerCase().trim() === dayTimeMorningName;
 
         return !(isAtStore && isDayTimeMorning);
     }
 
     isOptionActive(index: number): boolean {
-        if (this.productData.configuration.time_of_day === null) {
+        if (this.productData?.configuration.time_of_day === null) {
             return false;
         }
 
-        return Number(this.productData.configuration.time_of_day) === index;
+        return Number(this.productData?.configuration.time_of_day) === index;
     }
 
     isSubmitDisabled(): boolean {
         const sourceTypeCart = 'source_type_cart';
 
         const isProductAvailable = this.isProductAvailable();
-        const isProductInCart = this.productData.source_type.toLowerCase().trim() === sourceTypeCart;
+        const isProductInCart = this.productData?.source_type.toLowerCase().trim() === sourceTypeCart;
 
         return !isProductAvailable && isProductInCart;
     }

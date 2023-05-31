@@ -5,5 +5,5 @@
  * @return {Number}
  */
 @function helper-grid-span($column, $columns: $setting-grid-columns) {
-    @return (100% / $columns) * $column;
+    @return calc((100% / #{$columns}) * #{$column});
 }

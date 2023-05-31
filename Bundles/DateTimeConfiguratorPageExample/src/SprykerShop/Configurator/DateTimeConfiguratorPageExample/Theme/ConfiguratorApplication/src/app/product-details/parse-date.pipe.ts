@@ -5,6 +5,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ParseDatePipe implements PipeTransform {
     transform(date: string): string {
-        return date.split('.').reverse().join('-');
+        return date?.split('.').reverse().join('-');
     }
 }

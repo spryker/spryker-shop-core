@@ -8,7 +8,11 @@
         "project": "./tsconfig.json"
     },
     "plugins": ["deprecation"],
-    "ignorePatterns": ["**/dist/", "**/node_modules/"],
+    "ignorePatterns": [
+        "**/dist/",
+        "**/node_modules/",
+        "**/DateTimeConfiguratorPageExample/**/ConfiguratorApplication/"
+    ],
     "rules": {
         "accessor-pairs": ["error", { "setWithoutGet": true, "enforceForClassMembers": false }],
         "@typescript-eslint/no-empty-function": ["error", { "allow": ["methods"] }],
