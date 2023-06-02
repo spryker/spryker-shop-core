@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\CompanyPage\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Yves\Kernel\Form\AbstractType;
 
 /**
  * This class is empty because this form needs to implement CSRF protection and all options and form content

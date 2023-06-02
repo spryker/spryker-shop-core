@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\CompanyPage\Form;
 
 use Generated\Shared\Transfer\CompanyRoleTransfer;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
