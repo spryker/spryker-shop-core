@@ -11,15 +11,18 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToLocaleClientInterface;
 use SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToTwigClientInterface;
 use SprykerShop\Yves\ShopUi\Dependency\Service\ShopUiToUtilNumberServiceInterface;
+use SprykerShop\Yves\ShopUi\Dependency\Service\ShopUiToUtilSanitizeXssServiceInterface;
 use SprykerShop\Yves\ShopUi\Extender\NumberFormatterTwigExtender;
 use SprykerShop\Yves\ShopUi\Extender\NumberFormatterTwigExtenderInterface;
 use SprykerShop\Yves\ShopUi\Filter\NumberFormatterTwigFilterFactory;
 use SprykerShop\Yves\ShopUi\Filter\NumberFormatterTwigFilterFactoryInterface;
+use SprykerShop\Yves\ShopUi\Form\Type\Extension\SanitizeXssTypeExtension;
 use SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProvider;
 use SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProviderInterface;
 use SprykerShop\Yves\ShopUi\Twig\ShopUiTwigExtension;
 use SprykerShop\Yves\ShopUi\TwigFunction\NumberFormatterTwigFunctionFactory;
 use SprykerShop\Yves\ShopUi\TwigFunction\NumberFormatterTwigFunctionFactoryInterface;
+use Symfony\Component\Form\FormTypeExtensionInterface;
 
 /**
  * @method \SprykerShop\Yves\ShopUi\ShopUiConfig getConfig()
@@ -81,6 +84,14 @@ class ShopUiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Symfony\Component\Form\FormTypeExtensionInterface
+     */
+    public function createSanitizeXssTypeExtension(): FormTypeExtensionInterface
+    {
+        return new SanitizeXssTypeExtension($this->getUtilSanitizeXssService());
+    }
+
+    /**
      * @return \SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToTwigClientInterface
      */
     public function getTwigClient(): ShopUiToTwigClientInterface
@@ -102,5 +113,13 @@ class ShopUiFactory extends AbstractFactory
     public function getUtilNumberService(): ShopUiToUtilNumberServiceInterface
     {
         return $this->getProvidedDependency(ShopUiDependencyProvider::SERVICE_UTIL_NUMBER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShopUi\Dependency\Service\ShopUiToUtilSanitizeXssServiceInterface
+     */
+    public function getUtilSanitizeXssService(): ShopUiToUtilSanitizeXssServiceInterface
+    {
+        return $this->getProvidedDependency(ShopUiDependencyProvider::SERVICE_UTIL_SANITIZE_XSS);
     }
 }

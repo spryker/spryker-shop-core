@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -202,6 +203,7 @@ class AddressForm extends AbstractType
             'label' => 'customer.address.first_name',
             'required' => true,
             'trim' => true,
+            'sanitize_xss' => true,
             'constraints' => [
                 $this->createNotBlankConstraint($options),
                 $this->createMinLengthConstraint($options),
@@ -224,6 +226,7 @@ class AddressForm extends AbstractType
             'label' => 'customer.address.last_name',
             'required' => true,
             'trim' => true,
+            'sanitize_xss' => true,
             'constraints' => [
                 $this->createNotBlankConstraint($options),
                 $this->createMinLengthConstraint($options),
@@ -245,6 +248,7 @@ class AddressForm extends AbstractType
             'label' => 'customer.address.company',
             'required' => false,
             'trim' => true,
+            'sanitize_xss' => true,
         ]);
 
         return $this;
@@ -262,6 +266,7 @@ class AddressForm extends AbstractType
             'label' => 'customer.address.address1',
             'required' => true,
             'trim' => true,
+            'sanitize_xss' => true,
             'constraints' => [
                 $this->createNotBlankConstraint($options),
                 $this->createMinLengthConstraint($options),
@@ -283,6 +288,7 @@ class AddressForm extends AbstractType
             'label' => 'customer.address.number',
             'required' => true,
             'trim' => true,
+            'sanitize_xss' => true,
             'constraints' => [
                 $this->createNotBlankConstraint($options),
                 $this->createAddressNumberConstraint($options),
@@ -303,6 +309,7 @@ class AddressForm extends AbstractType
             'label' => 'customer.address.address3',
             'required' => false,
             'trim' => true,
+            'sanitize_xss' => true,
         ]);
 
         return $this;
@@ -320,6 +327,7 @@ class AddressForm extends AbstractType
             'label' => 'customer.address.zip_code',
             'required' => true,
             'trim' => true,
+            'sanitize_xss' => true,
             'constraints' => [
                 $this->createNotBlankConstraint($options),
             ],
@@ -336,10 +344,11 @@ class AddressForm extends AbstractType
      */
     protected function addCityField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_CITY, TextType::class, [
+        $builder->add(static::FIELD_CITY, TextareaType::class, [
             'label' => 'customer.address.city',
             'required' => true,
             'trim' => true,
+            'sanitize_xss' => true,
             'constraints' => [
                 $this->createNotBlankConstraint($options),
                 $this->createMinLengthConstraint($options),
@@ -380,6 +389,7 @@ class AddressForm extends AbstractType
             'label' => 'customer.address.phone',
             'required' => false,
             'trim' => true,
+            'sanitize_xss' => true,
         ]);
 
         return $this;

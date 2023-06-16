@@ -202,6 +202,7 @@ class CompanyUnitAddressForm extends AbstractType
         $builder->add(static::FIELD_ADDRESS_1, TextType::class, [
             'label' => 'company.account.address.address1',
             'required' => true,
+            'sanitize_xss' => true,
             'constraints' => [
                 $this->createNotBlankConstraint(),
                 $this->createMinLengthConstraint($options),
@@ -222,6 +223,7 @@ class CompanyUnitAddressForm extends AbstractType
         $builder->add(static::FIELD_ADDRESS_2, TextType::class, [
             'label' => 'company.account.address.number',
             'required' => true,
+            'sanitize_xss' => true,
             'constraints' => [
                 $this->createNotBlankConstraint(),
                 $this->createAddressNumberConstraint($options),
@@ -242,6 +244,7 @@ class CompanyUnitAddressForm extends AbstractType
         $builder->add(static::FIELD_ADDRESS_3, TextType::class, [
             'label' => 'company.account.address.address3',
             'required' => false,
+            'sanitize_xss' => true,
         ]);
 
         return $this;
@@ -258,6 +261,7 @@ class CompanyUnitAddressForm extends AbstractType
         $builder->add(static::FIELD_ZIP_CODE, TextType::class, [
             'label' => 'company.account.address.zip_code',
             'required' => true,
+            'sanitize_xss' => true,
             'constraints' => [
                 $this->createNotBlankConstraint(),
                 $this->createZipCodeLengthConstraint($options),
@@ -279,6 +283,7 @@ class CompanyUnitAddressForm extends AbstractType
         $builder->add(static::FIELD_CITY, TextType::class, [
             'label' => 'company.account.address.city',
             'required' => true,
+            'sanitize_xss' => true,
             'constraints' => [
                 $this->createNotBlankConstraint(),
                 $this->createMinLengthConstraint($options),
@@ -319,6 +324,7 @@ class CompanyUnitAddressForm extends AbstractType
         $builder->add(static::FIELD_PHONE, TelType::class, [
             'label' => 'company.account.address.phone',
             'required' => false,
+            'sanitize_xss' => true,
         ]);
 
         return $this;
