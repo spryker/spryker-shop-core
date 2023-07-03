@@ -1,0 +1,20 @@
+@mixin service-point-widget-service-point($name: '.service-point') {
+    #{$name} {
+        padding: map-get($setting-spacing, big) 1.5rem;
+
+        &:not(:last-child) {
+            border-bottom: solid 1px $setting-color-input-border;
+        }
+
+        &__name {
+            @include helper-font-size(big);
+            margin-bottom: map-get($setting-spacing, small);
+        }
+
+        &__address {
+            margin-bottom: map-get($setting-spacing, default);
+        }
+
+        @content;
+    }
+}

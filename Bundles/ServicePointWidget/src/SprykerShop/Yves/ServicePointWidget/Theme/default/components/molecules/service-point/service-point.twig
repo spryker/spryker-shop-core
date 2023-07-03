@@ -1,0 +1,39 @@
+{# @var data.servicePoint \Generated\Shared\Transfer\ServicePointTransfer #}
+{# @var data.servicePoint.address \Generated\Shared\Transfer\ServicePointAddressTransfer #}
+
+{% extends model('component') %}
+
+{% define config = {
+    name: 'service-point',
+} %}
+
+{% define data = {
+    servicePoint: required,
+} %}
+
+{% set address = data.servicePoint.address %}
+
+{% block body %}
+    {% block name %}
+        <div class="{{ config.name }}__name">
+            {{ data.servicePoint.name }}
+        </div>
+    {% endblock %}
+
+    {% block address %}
+        <address class="{{ config.name }}__address">
+            {{ address.address1 }} {{ address.address2 }} {{ address.address3 }},
+            {{ address.zipCode }} {{ address.city }}
+        </address>
+    {% endblock %}
+
+    {% block actions %}
+        <div class="{{ config.name }}__actions">
+            <button type="button"
+                    class="button {{ config.jsName }}__select-button"
+                    data-service-point-uuid="{{ data.servicePoint.uuid }}">
+                {{ 'service_point_widget.select_store_action' | trans }}
+            </button>
+        </div>
+    {% endblock %}
+{% endblock %}

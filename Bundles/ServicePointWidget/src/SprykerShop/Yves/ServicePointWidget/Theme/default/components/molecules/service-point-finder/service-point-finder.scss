@@ -1,0 +1,38 @@
+@mixin service-point-widget-service-point-finder($name: '.service-point-finder') {
+    #{$name} {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        &__search {
+            position: relative;
+            margin: 0 1.5rem map-get($setting-spacing, default);
+        }
+
+        @include shop-ui-input(#{$name}__search-field) {
+            padding-left: 2.2rem;
+        }
+
+        &__content {
+            position: relative;
+            overflow: hidden;
+            max-height: 40rem;
+        }
+
+        &__icon {
+            position: absolute;
+            top: map-get($setting-spacing, default);
+            left: map-get($setting-spacing, default);
+            color: $setting-color-darker;
+        }
+
+        &__service-points {
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            max-height: 100%;
+        }
+
+        @content;
+    }
+}

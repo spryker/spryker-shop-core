@@ -14,6 +14,7 @@
 {% define attributes = {
     'provider-selector': 'ajax-provider',
     'provider-class-name': '',
+    'parent-class-name': '',
 } %}
 
 {% block class %}{{parent()}} {% if not data.showSpinnerOnLoad %}is-invisible{% endif %} grid grid--center grid--middle{% endblock %}

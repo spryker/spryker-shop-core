@@ -1,0 +1,65 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'endless-scroll',
+    tag: 'endless-scroll',
+} %}
+
+{% define data = {
+    content: required,
+    hasLoader: true,
+} %}
+
+{% define attributes = {
+    url: required,
+    method: 'GET',
+    'response-type': 'text/html',
+    'result-offset': 0,
+    'result-limit': 10,
+    'result-total': null,
+    'query-range': 'limit=' ~ attributes['result-limit'] ~ '&offset',
+    'percentage-request-trigger': 80,
+    'target-class-name': '',
+    'has-initial-request': false,
+    'has-content-mount': false,
+} %}
+
+{% set providerClassName = 'js-' ~ config.name ~ '__ajax-provider' %}
+
+{% block body %}
+    {% block scrollContainer %}
+        <div class="{{ config.name }}__scroll-container {{ config.jsName }}__scroll-container">
+            {% block content %}
+                <div class="{{ config.name }}__container {{ config.jsName }}__container">
+                    {{ data.content | raw }}
+                </div>
+            {% endblock %}
+
+            {% block ajaxLoader %}
+                {% if data.hasLoader %}
+                    <div class="{{ config.name }}__loader">
+                        {% include molecule('ajax-loader') with {
+                            modifiers: ['bottom', 'big'],
+                            attributes: {
+                                'provider-class-name': providerClassName,
+                                'parent-class-name': config.name,
+                            },
+                        } only %}
+                    </div>
+                {% endif %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block ajaxProvider %}
+        {% include molecule('ajax-provider') with {
+            class: providerClassName,
+            attributes: {
+                url: attributes.url,
+                method: attributes.method,
+                'response-type': attributes['response-type'],
+                'fetch-on-load': attributes['has-initial-request'],
+            },
+        } only %}
+    {% endblock %}
+{% endblock %}

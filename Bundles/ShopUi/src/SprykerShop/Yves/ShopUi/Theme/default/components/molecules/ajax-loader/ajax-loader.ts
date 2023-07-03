@@ -2,14 +2,18 @@ import Component from '../../../models/component';
 import AjaxProvider, { EVENT_FETCHING, EVENT_FETCHED } from '../ajax-provider/ajax-provider';
 
 export default class AjaxLoader extends Component {
+    protected parent: HTMLElement;
     protected providers: AjaxProvider[];
 
-    protected readyCallback(): void {
+    protected readyCallback(): void {}
+
+    protected init(): void {
+        this.parent = <HTMLElement>(this.parentClassName ? this.closest(`.${this.parentClassName}`) : document);
         this.providers = <AjaxProvider[]>Array.from(
             this.providerClassName
-                ? document.getElementsByClassName(this.providerClassName)
+                ? this.parent.getElementsByClassName(this.providerClassName)
                 : // eslint-disable-next-line deprecation/deprecation
-                  document.querySelectorAll(this.providerSelector),
+                  this.parent.querySelectorAll(this.providerSelector),
         );
 
         this.mapEvents();
@@ -41,5 +45,9 @@ export default class AjaxLoader extends Component {
 
     protected get providerClassName(): string {
         return this.getAttribute('provider-class-name');
+    }
+
+    protected get parentClassName(): string {
+        return this.getAttribute('parent-class-name');
     }
 }

@@ -29,6 +29,10 @@
             @include helper-font-size(big);
         }
 
+        &--bottom {
+            top: auto;
+        }
+
         @content;
     }
 }

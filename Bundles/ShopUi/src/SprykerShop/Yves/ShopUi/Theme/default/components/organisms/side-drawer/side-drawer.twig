@@ -11,23 +11,24 @@
 } %}
 
 {% block body %}
-    <div class="{{config.name}}__overlay {{attributes['trigger-selector']}}"></div>
-
-    <aside class="{{config.name}}__drawer">
+    <aside class="{{ config.name }}__drawer">
         {% block close %}
-            <div class="{{config.name}}__close">
-                <a href="#" class="link link--alt {{attributes['trigger-selector']}}">
-                    {{'global.close' | trans}}
-                    {% include atom('icon') with {
-                        data: {
-                            name: 'times'
-                        }
-                    } only %}
-                </a>
+            <div class="{{ config.name }}__close">
+                <button type="button" class="link link--alt {{ attributes['trigger-selector'] }}">
+                    {{ 'global.close' | trans }}
+
+                    {% block closeIcon %}
+                        {% include atom('icon') with {
+                            data: {
+                                name: 'times',
+                            },
+                        } only %}
+                    {% endblock %}
+                </button>
             </div>
         {% endblock %}
 
-        <div class="{{config.name}}__navigation">
+        <div class="{{ config.name }}__navigation">
             {% block mobileNavigation %}
                 {% widget 'NavigationWidget' args ['MAIN_NAVIGATION', 'navigation-main-mobile'] %}
                 {% nowidget %}
@@ -40,8 +41,8 @@
                 class: 'text-left',
                 data: {
                     isInline: false,
-                    withSeparators: false
-                }
+                    withSeparators: false,
+                },
             } only %}
                 {% block multiCart %}
                     <li class="menu__item">
@@ -59,6 +60,6 @@
             {% endembed %}
         </div>
 
-        {{block('close')}}
+        {{ block('close') }}
     </aside>
 {% endblock %}

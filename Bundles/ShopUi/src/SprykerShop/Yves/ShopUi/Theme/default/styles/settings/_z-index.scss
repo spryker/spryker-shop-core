@@ -9,9 +9,9 @@ $setting-zi-element: 1 !default;
 $setting-zi-element-floating: 350 !default;
 
 /**
- * Defines z-index value for the notification area context.
+ * Defines z-index value for the header context.
  */
-$setting-zi-notification-area: 600 !default;
+$setting-zi-header: 400 !default;
 
 /**
  * Defines z-index value for the side drawer context.
@@ -19,9 +19,19 @@ $setting-zi-notification-area: 600 !default;
 $setting-zi-side-drawer: 500 !default;
 
 /**
- * Defines z-index value for the header context.
+ * Defines z-index value for the popup.
  */
-$setting-zi-header: 400 !default;
+$setting-zi-popup: 550 !default;
+
+/**
+ * Defines z-index value for the overlay.
+ */
+$setting-zi-overlay: 550 !default;
+
+/**
+ * Defines z-index value for the notification area context.
+ */
+$setting-zi-notification-area: 600 !default;
 
 /**
  * Defines z-index value for the search suggestions context.

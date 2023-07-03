@@ -1,0 +1,95 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'service-point-finder',
+    tag: 'service-point-finder',
+} %}
+
+{% define data = {
+    content: '',
+    fieldExtraAttributes: {},
+    placeholder: 'service_point_widget.search' | trans,
+    iconName: 'search',
+    hasLoader: true,
+} %}
+
+{% define attributes = {
+    url: required,
+    method: 'GET',
+    'query-string': 'searchString',
+    'response-type': 'text/html',
+    'debounce-delay': 500,
+    'min-letters': 2,
+    'has-initial-request': false,
+    'has-content-mount': true,
+    'service-point-trigger-class-name': 'js-service-point__select-button',
+    'service-point-uuid-data-attribute': 'servicePointUuid',
+} %}
+
+{% block body %}
+    {% set providerClassName = config.jsName ~ '__ajax-provider' %}
+
+    {% block search %}
+        <div class="{{ config.name }}__search">
+            {% block searchField %}
+                <input placeholder="{{ data.placeholder }}"
+                       class="{{ config.name }}__search-field {{ config.name }}__search-field--expand {{ config.jsName }}__search-field"
+                       {{ _self.renderAttributes(data.fieldExtraAttributes) }}>
+            {% endblock %}
+
+            {% block searchIcon %}
+                {% include atom('icon') with {
+                    class: config.name ~ '__icon',
+                    data: {
+                        name: data.iconName,
+                    },
+                } only %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block content %}
+        <div class="{{ config.name }}__content">
+            {% block servicePoints %}
+                {% embed molecule('ajax-renderer') with {
+                    class: config.name ~ '__service-points ' ~ config.jsName ~ '__service-points',
+                    attributes: {
+                        'provider-class-name': providerClassName,
+                        'parent-class-name': config.name,
+                        'mount-after-render': attributes['has-content-mount'],
+                    },
+                    embed: {
+                        content: data.content,
+                    },
+                } only %}
+                    {% block body %}
+                        {{ embed.content | raw }}
+                    {% endblock %}
+                {% endembed %}
+            {% endblock %}
+
+            {% block ajaxLoader %}
+                {% if data.hasLoader %}
+                    {% include molecule('ajax-loader') with {
+                        modifiers: ['big'],
+                        attributes: {
+                            'provider-class-name': providerClassName,
+                            'parent-class-name': config.name,
+                        },
+                    } only %}
+                {% endif %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block ajaxProvider %}
+        {% include molecule('ajax-provider') with {
+            class: providerClassName,
+            attributes: {
+                url: attributes.url,
+                method: attributes.method,
+                'response-type': attributes['response-type'],
+            },
+        } only %}
+    {% endblock %}
+{% endblock %}

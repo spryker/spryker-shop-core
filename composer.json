@@ -158,6 +158,7 @@
         "spryker-shop/sales-return-page": "*",
         "spryker-shop/sales-return-page-extension": "*",
         "spryker-shop/security-blocker-page": "*",
+        "spryker-shop/service-point-widget": "*",
         "spryker-shop/session-agent-validation": "*",
         "spryker-shop/session-agent-validation-extension": "*",
         "spryker-shop/session-customer-validation-page": "*",

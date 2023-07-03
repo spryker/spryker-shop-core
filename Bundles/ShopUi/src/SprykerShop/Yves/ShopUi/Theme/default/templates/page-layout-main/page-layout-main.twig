@@ -1,5 +1,9 @@
 {% extends template('page-blank') %}
 
+{% define data = {
+    isOverlayOpen: false,
+} %}
+
 {%- block class -%}js-page-layout-main{%- endblock -%}
 
 {% block body %}
@@ -81,6 +85,12 @@
         } only %}
 
         {% include molecule('viewport-intersection-observer') only %}
+
+        {% include molecule('main-overlay') with {
+            attributes: {
+                'is-open': data.isOverlayOpen,
+            },
+        } only %}
     {% endblock %}
 
     {% block icons %}

@@ -1,0 +1,77 @@
+@mixin service-point-widget-main-popup($name: '.main-popup') {
+    #{$name} {
+        @include helper-visibility-invisible;
+        @include helper-ui-shadow;
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 28.75rem;
+        max-width: 90vw;
+        max-height: 90vh;
+        border-radius: 0.625rem;
+        background: $setting-color-white;
+        z-index: $setting-zi-popup;
+        overflow: hidden;
+
+        &__head {
+            min-height: 2rem;
+        }
+
+        &__title {
+            @include helper-font-size(big);
+            @include helper-font-weight(bold);
+            padding: map-get($setting-spacing, big) 1.5rem;
+        }
+
+        &__close {
+            @include helper-effect-transition(color);
+            position: absolute;
+            top: 0.625rem;
+            right: 1.5rem;
+            width: 2rem;
+            height: 2rem;
+            border: none;
+            background: $setting-color-transparent;
+            color: $setting-color-darker;
+            cursor: pointer;
+
+            &:hover,
+            &:focus,
+            &:active {
+                border: none;
+                background-color: $setting-color-transparent;
+                color: $setting-color-main;
+            }
+        }
+
+        &__content {
+            padding: 0 map-get($setting-spacing, big) 1.5rem;
+            overflow-y: auto;
+        }
+
+        &--spaceless {
+            #{$name}__head {
+                min-height: 3rem;
+            }
+
+            #{$name}__content {
+                padding: 0;
+            }
+        }
+
+        &--open {
+            @include helper-visibility-visible;
+        }
+
+        &--flex-content {
+            #{$name}__content {
+                display: flex;
+            }
+        }
+
+        @content;
+    }
+}

@@ -1,0 +1,18 @@
+@mixin shop-ui-main-overlay($name: '.main-overlay') {
+    #{$name} {
+        @include helper-visibility-invisible;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: $setting-color-overlay;
+        z-index: $setting-zi-overlay;
+
+        &--show {
+            @include helper-visibility-visible;
+        }
+
+        @content;
+    }
+}

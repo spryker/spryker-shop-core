@@ -1,0 +1,35 @@
+{% extends template('widget') %}
+
+{% define data = {
+    searchResultLimit: _widget.searchResultLimit,
+    searchResults: _widget.searchResults,
+    searchRoute: _widget.searchRoute,
+    serviceTypeKey: _widget.serviceTypeKey,
+    searchValue: '',
+} %}
+
+{% set searchFieldAttributes = {} %}
+{% set serviceTypeKeyQuery = '' %}
+
+{% block body %}
+    {% if data.searchValue %}
+        {% set searchFieldAttributes = searchFieldAttributes | merge({ value: data.searchValue }) %}
+    {% endif %}
+
+    {% if data.serviceTypeKey %}
+        {% set serviceTypeKeyQuery = '&serviceTypeKey=' ~ data.serviceTypeKey %}
+    {% endif %}
+
+    {% block servicePointFinder %}
+        {% include molecule('service-point-finder', 'ServicePointWidget') with {
+            data: {
+                content: data.searchResults,
+                fieldExtraAttributes: searchFieldAttributes,
+            },
+            attributes: {
+                url: path(data.searchRoute),
+                'query-string': 'offset=0&limit=' ~ data.searchResultLimit ~ serviceTypeKeyQuery ~ '&searchString',
+            },
+        } only %}
+    {% endblock %}
+{% endblock %}

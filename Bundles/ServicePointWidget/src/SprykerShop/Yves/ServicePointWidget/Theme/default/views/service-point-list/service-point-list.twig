@@ -1,0 +1,50 @@
+{# @var data.servicePoints \Generated\Shared\Transfer\ServicePointTransfer[] #}
+
+{% extends template('widget') %}
+
+{% define data = {
+    servicePoints: servicePoints,
+    offset: offset,
+    limit: limit,
+    nbResults: nbResults,
+    searchRoute: searchRoute,
+    searchString: searchString,
+    serviceTypeKey: serviceTypeKey,
+} %}
+
+{%- block body -%}
+    {% if data.servicePoints %}
+        {% if data.offset > 0 or data.nbResults <= data.limit %}
+            {% block servicePointList %}
+                {% for servicePoint in data.servicePoints %}
+                    {% include molecule('service-point', 'ServicePointWidget') with {
+                        data: {
+                            servicePoint: servicePoint,
+                        },
+                    } only %}
+                {% endfor %}
+            {% endblock %}
+        {% else %}
+            {% block scroll %}
+                {% include molecule('endless-scroll', 'ServicePointWidget') with {
+                    data: {
+                        content: block('servicePointList'),
+                    },
+                    attributes: {
+                        url: path(data.searchRoute),
+                        'result-offset': data.offset + data.limit,
+                        'result-limit': data.limit,
+                        'result-total': data.nbResults,
+                        'query-range': 'serviceTypeKey=' ~ data.serviceTypeKey ~ '&searchString=' ~ data.searchString ~ '&limit=' ~ data.limit ~ '&offset',
+                    },
+                } only %}
+            {% endblock %}
+        {% endif %}
+    {% else %}
+        {% block emptyText %}
+            <div class="spacing spacing--big text-center">
+                {{ 'service_point_widget.no_results' | trans }}
+            </div>
+        {% endblock %}
+    {% endif %}
+{%- endblock -%}
