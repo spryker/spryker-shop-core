@@ -13,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -344,7 +343,7 @@ class AddressForm extends AbstractType
      */
     protected function addCityField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_CITY, TextareaType::class, [
+        $builder->add(static::FIELD_CITY, TextType::class, [
             'label' => 'customer.address.city',
             'required' => true,
             'trim' => true,
