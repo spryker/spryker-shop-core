@@ -13,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -130,7 +132,48 @@ class CheckoutAddressForm extends AddressForm
             ->addIso2CodeField($builder, $options)
             ->addPhoneField($builder)
             ->addIdCompanyUnitAddressTextField($builder)
-            ->addIsAddressSavingSkippedField($builder, $options);
+            ->addIsAddressSavingSkippedField($builder, $options)
+            ->addFormSubmitEventListener($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormEvent $event
+     *
+     * @return \Symfony\Component\Form\FormEvent
+     */
+    protected function cleanUpFormData(FormEvent $event): FormEvent
+    {
+        $addressTransfer = $event->getForm()->getData();
+        $submittedAddressData = $event->getData();
+        if (!$addressTransfer || !$submittedAddressData || $this->isExistingAddress($submittedAddressData)) {
+            return $event;
+        }
+
+        $event->getForm()->setData(null);
+
+        return $event;
+    }
+
+    /**
+     * @param array<string, mixed> $submittedAddressData
+     *
+     * @return bool
+     */
+    protected function isExistingAddress(array $submittedAddressData): bool
+    {
+        return $this->isFieldNotEmpty(AddressForm::FIELD_ID_CUSTOMER_ADDRESS, $submittedAddressData) ||
+            $this->isFieldNotEmpty(static::FIELD_ID_COMPANY_UNIT_ADDRESS, $submittedAddressData);
+    }
+
+    /**
+     * @param string $fieldName
+     * @param array<string, mixed> $submittedAddressData
+     *
+     * @return bool
+     */
+    protected function isFieldNotEmpty(string $fieldName, array $submittedAddressData): bool
+    {
+        return array_key_exists($fieldName, $submittedAddressData) && (int)$submittedAddressData[$fieldName];
     }
 
     /**
@@ -218,5 +261,19 @@ class CheckoutAddressForm extends AddressForm
         return function (?bool $value): bool {
             return !$value;
         };
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addFormSubmitEventListener(FormBuilderInterface $builder)
+    {
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+            $this->cleanUpFormData($event);
+        });
+
+        return $this;
     }
 }
