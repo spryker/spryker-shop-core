@@ -30,6 +30,11 @@ class SecurityBlockerCustomerEventSubscriberTest extends Unit
     protected $tester;
 
     /**
+     * @var string
+     */
+    protected const LOCALE_NAME_EN = 'en';
+
+    /**
      * @return void
      */
     public function testSecurityBlockerCustomerEventSubscriberWillCallSecurityBlockerClientOnKernelRequestLoginAttempt(): void
@@ -50,8 +55,8 @@ class SecurityBlockerCustomerEventSubscriberTest extends Unit
             $this->getMockBuilder(RequestStack::class)->getMock(),
             $securityBlockerMock,
             $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
-            $this->getMockBuilder(SecurityBlockerPageConfig::class)->getMock(),
-            'en',
+            $this->getSecurityBlockerPageConfigMock(true),
+            static::LOCALE_NAME_EN,
         );
 
         $eventDispatcher = new EventDispatcher();
@@ -84,8 +89,8 @@ class SecurityBlockerCustomerEventSubscriberTest extends Unit
             $this->getMockBuilder(RequestStack::class)->getMock(),
             $securityBlockerMock,
             $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
-            $this->getMockBuilder(SecurityBlockerPageConfig::class)->getMock(),
-            'en',
+            $this->getSecurityBlockerPageConfigMock(true),
+            static::LOCALE_NAME_EN,
         );
 
         $eventDispatcher = new EventDispatcher();
@@ -120,8 +125,8 @@ class SecurityBlockerCustomerEventSubscriberTest extends Unit
             $this->getMockBuilder(RequestStack::class)->getMock(),
             $securityBlockerMock,
             $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
-            $this->getMockBuilder(SecurityBlockerPageConfig::class)->getMock(),
-            'en',
+            $this->getSecurityBlockerPageConfigMock(true),
+            static::LOCALE_NAME_EN,
         );
 
         $eventDispatcher = new EventDispatcher();
@@ -154,8 +159,8 @@ class SecurityBlockerCustomerEventSubscriberTest extends Unit
             $requestStackMock,
             $securityBlockerMock,
             $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
-            $this->getMockBuilder(SecurityBlockerPageConfig::class)->getMock(),
-            'en',
+            $this->getSecurityBlockerPageConfigMock(true),
+            static::LOCALE_NAME_EN,
         );
 
         $eventDispatcher = new EventDispatcher();
@@ -188,8 +193,8 @@ class SecurityBlockerCustomerEventSubscriberTest extends Unit
             $requestStackMock,
             $securityBlockerMock,
             $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
-            $this->getMockBuilder(SecurityBlockerPageConfig::class)->getMock(),
-            'en',
+            $this->getSecurityBlockerPageConfigMock(true),
+            static::LOCALE_NAME_EN,
         );
 
         $eventDispatcher = new EventDispatcher();
@@ -199,6 +204,63 @@ class SecurityBlockerCustomerEventSubscriberTest extends Unit
 
         // Act
         $eventDispatcher->dispatch($event, AuthenticationEvents::AUTHENTICATION_FAILURE);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSecurityBlockerCustomerEventSubscriberShouldUseOnlyIPWhenUseEmailForLoginSecurityBlockerConfigDisabled(): void
+    {
+        // Arrange
+        $securityCheckAuthContextTransfer = (new SecurityCheckAuthContextTransfer())
+            ->setType(SecurityBlockerPageConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE)
+            ->setIp('66.66.66.6');
+
+        $securityCheckAuthResponseTransfer = (new SecurityCheckAuthResponseTransfer())->setIsBlocked(false);
+
+        $securityBlockerMock = $this->getMockBuilder(SecurityBlockerPageToSecurityBlockerClientInterface::class)->getMock();
+        $securityBlockerMock->expects($this->once())
+            ->method('isAccountBlocked')
+            ->with($securityCheckAuthContextTransfer)
+            ->willReturn($securityCheckAuthResponseTransfer);
+        $securityBlockerMock->expects($this->once())
+            ->method('incrementLoginAttemptCount')
+            ->with($securityCheckAuthContextTransfer);
+
+        $requestStackMock = $this->getMockBuilder(RequestStack::class)->getMock();
+        $requestStackMock->method('getCurrentRequest')
+            ->willReturn($this->tester->getRequest($securityCheckAuthContextTransfer));
+
+        $securityBlockerCustomerEventSubscriber = new SecurityBlockerCustomerEventSubscriber(
+            $requestStackMock,
+            $securityBlockerMock,
+            $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
+            $this->getSecurityBlockerPageConfigMock(false),
+            static::LOCALE_NAME_EN,
+        );
+
+        $eventDispatcher = new EventDispatcher();
+        $eventDispatcher->addSubscriber($securityBlockerCustomerEventSubscriber);
+
+        $event = $this->getRequestEvent($securityCheckAuthContextTransfer);
+
+        // Act
+        $eventDispatcher->dispatch($event, KernelEvents::REQUEST);
+        $eventDispatcher->dispatch($event, AuthenticationEvents::AUTHENTICATION_FAILURE);
+    }
+
+    /**
+     * @param bool $useEmailForLoginSecurityBlocker
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerShop\Yves\SecurityBlockerPage\SecurityBlockerPageConfig
+     */
+    protected function getSecurityBlockerPageConfigMock(bool $useEmailForLoginSecurityBlocker): SecurityBlockerPageConfig
+    {
+        $securityBlockerPageConfig = $this->getMockBuilder(SecurityBlockerPageConfig::class)->getMock();
+        $securityBlockerPageConfig->method('useEmailContextForLoginSecurityBlocker')
+            ->willReturn($useEmailForLoginSecurityBlocker);
+
+        return $securityBlockerPageConfig;
     }
 
     /**

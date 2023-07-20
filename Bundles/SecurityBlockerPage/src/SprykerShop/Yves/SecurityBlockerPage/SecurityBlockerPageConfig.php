@@ -26,6 +26,11 @@ class SecurityBlockerPageConfig extends AbstractBundleConfig
     public const SECURITY_BLOCKER_AGENT_ENTITY_TYPE = 'agent';
 
     /**
+     * @var bool
+     */
+    protected const USE_EMAIL_CONTEXT_FOR_LOGIN_SECURITY_BLOCKER = true;
+
+    /**
      * Specification:
      * - Controls if local prefix is used in the /login_check path used for customer.
      *
@@ -57,5 +62,18 @@ class SecurityBlockerPageConfig extends AbstractBundleConfig
     public function isLocaleInAgentLoginCheckPath(): bool
     {
         return false;
+    }
+
+    /**
+     * Specification:
+     * - Defines whether the email context needs to be included in the login security blocker mechanism.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function useEmailContextForLoginSecurityBlocker(): bool
+    {
+        return static::USE_EMAIL_CONTEXT_FOR_LOGIN_SECURITY_BLOCKER;
     }
 }

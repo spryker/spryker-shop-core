@@ -176,9 +176,14 @@ class SecurityBlockerAgentEventSubscriber implements EventSubscriberInterface
      */
     protected function createSecurityCheckAuthContextTransfer(Request $request): SecurityCheckAuthContextTransfer
     {
-        return (new SecurityCheckAuthContextTransfer())
+        $securityCheckAuthContextTransfer = (new SecurityCheckAuthContextTransfer())
             ->setType(SecurityBlockerPageConfig::SECURITY_BLOCKER_AGENT_ENTITY_TYPE)
-            ->setAccount($request->get(static::FORM_LOGIN_FORM)[static::FORM_FIELD_EMAIL] ?? '')
             ->setIp($request->getClientIp());
+
+        if ($this->securityBlockerPageConfig->useEmailContextForLoginSecurityBlocker()) {
+            $securityCheckAuthContextTransfer->setAccount($request->get(static::FORM_LOGIN_FORM)[static::FORM_FIELD_EMAIL] ?? '');
+        }
+
+        return $securityCheckAuthContextTransfer;
     }
 }
