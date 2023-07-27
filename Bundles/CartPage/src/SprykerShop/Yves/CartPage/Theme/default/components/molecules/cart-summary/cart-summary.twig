@@ -11,6 +11,7 @@
     cartQuantity: cartQuantity is defined ? cartQuantity : app['cart.quantity'] | default,
 } %}
 
+{% set shipmentExpenseType = 'SHIPMENT_EXPENSE_TYPE' %}
 {% set canProceedToCheckout = data.cart.items is not empty
     and data.isQuoteValid
     and (not is_granted('ROLE_USER') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote))
@@ -54,15 +55,29 @@
 
             <ul class="list spacing-y">
                 {% block cartShipment %}
-                    {% if data.cart.shipment is not empty and data.cart.shipment.method is not empty %}
-                        {% set shipmentTotalPrice = data.cart.totals.shipmentTotal is defined ? data.cart.totals.shipmentTotal : data.cart.shipment.method.storeCurrencyPrice %}
+                    {% if data.cart.totals.shipmentTotal is defined and data.cart.currency.code is defined %}
                         <li class="list__item spacing-y">
                             <strong>{{ 'cart.shipping' | trans }}</strong>
-                            <br>
-                            {{ data.cart.shipment.method.name }}
-                            <span class="float-right">{{ shipmentTotalPrice | money(true, data.cart.currency.code) }}</span>
-                            <hr>
+                            <strong class="float-right">{{ data.cart.totals.shipmentTotal | money(true, data.cart.currency.code) }}</strong>
                         </li>
+
+                        {% block cartShipmentPrices %}
+                            {% for expense in data.cart.expenses %}
+                                {% if expense.type == shipmentExpenseType %}
+                                    <li class="list__item spacing-y">
+                                        {{ expense.shipment.method.carrierName }} - {{ expense.shipment.method.name }}
+                                        <span class="float-right">{{ expense.sumPrice | money }}</span>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        {% endblock %}
+
+                        {% block listSeparator %}
+                            <li class="list__item">
+                                <hr>
+                            </li>
+                        {% endblock %}
+
                     {% endif %}
                 {% endblock %}
 
@@ -77,8 +92,8 @@
                     {% block body %}
                         <li class="list__item spacing-y">
                             {{ parent() }}
+                            <hr>
                         </li>
-                        <hr>
                     {% endblock %}
                 {% endwidget %}
 
