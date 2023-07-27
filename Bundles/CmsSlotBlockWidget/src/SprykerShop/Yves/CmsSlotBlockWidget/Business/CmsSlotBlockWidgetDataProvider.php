@@ -95,7 +95,12 @@ class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderIn
             ));
         }
 
-        return $twigFunction->getCallable();
+        /**
+         * @var callable $callable
+         */
+        $callable = $twigFunction->getCallable();
+
+        return $callable;
     }
 
     /**
