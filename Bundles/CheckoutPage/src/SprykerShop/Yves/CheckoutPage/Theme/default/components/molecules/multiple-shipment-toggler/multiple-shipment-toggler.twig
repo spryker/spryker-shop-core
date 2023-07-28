@@ -1,0 +1,36 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'multiple-shipment-toggler',
+    tag: 'multiple-shipment-toggler',
+} %}
+
+{% define data = {
+    singeShipmentText: 'page.checkout.address.single_address' | trans,
+    multipleShipmentText: 'page.checkout.address.multiple_addresses' | trans,
+    isVisible: true,
+    isMultipleShipmentSelected: false,
+} %}
+
+{% define attributes = {
+    'select-class-name': required,
+    'toggle-targets-class-name': '',
+    'toggle-class-name': 'is-hidden',
+    'toggle-button-class-name': 'button--hollow',
+    'single-shipment-value': '0',
+    'multiple-shipment-value': '-1',
+} %}
+
+{% block component %}
+    {% if data.isVisible %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% set singeShipmentClassName = 'button ' ~ (data.isMultipleShipmentSelected ? attributes['toggle-button-class-name']) %}
+{% set multipleShipmentClassName = 'button ' ~ (not data.isMultipleShipmentSelected ? attributes['toggle-button-class-name']) %}
+
+{% block body %}
+    <button class="{{ config.jsName }}__single-shipment-trigger {{ singeShipmentClassName }}" type="button">{{ data.singeShipmentText }}</button>
+    <button class="{{ config.jsName }}__multiple-shipment-trigger {{ multipleShipmentClassName }}" type="button">{{ data.multipleShipmentText }}</button>
+{% endblock %}

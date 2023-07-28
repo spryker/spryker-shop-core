@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="spryker:transfer-01" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="Item">
+        <property name="shipmentType" type="ShipmentType" strict="true"/>
+    </transfer>
+
+    <transfer name="ShipmentType" strict="true">
+        <property name="key" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="store" type="Store"/>
+    </transfer>
+
+    <transfer name="ShipmentTypeStorageConditions" strict="true">
+        <property name="storeName" type="string"/>
+    </transfer>
+
+    <transfer name="ShipmentTypeStorageCriteria" strict="true">
+        <property name="shipmentTypeStorageConditions" type="ShipmentTypeStorageConditions"/>
+    </transfer>
+
+    <transfer name="ShipmentTypeCollection" strict="true">
+        <property name="shipmentTypes" type="ShipmentType[]" singular="shipmentType"/>
+    </transfer>
+
+    <transfer name="ShipmentTypeStorageCollection" strict="true">
+        <property name="shipmentTypeStorages" type="ShipmentTypeStorage[]" singular="shipmentTypeStorage"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ShipmentTypeStorage" strict="true">
+    </transfer>
+
+</transfers>

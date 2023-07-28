@@ -17,6 +17,28 @@ class ServicePointWidgetConfig extends AbstractBundleConfig
     protected const SEARCH_RESULT_LIMIT = 10;
 
     /**
+     * @uses \Spryker\Shared\ShipmentType\ShipmentTypeConfig::SHIPMENT_TYPE_DELIVERY
+     *
+     * @var string
+     */
+    protected const SHIPMENT_TYPE_DELIVERY = 'delivery';
+
+    /**
+     * @uses \Spryker\Shared\ShipmentType\ShipmentTypeConfig::SHIPMENT_TYPE_PICKUP
+     *
+     * @var string
+     */
+    protected const SHIPMENT_TYPE_PICKUP = 'pickup';
+
+    /**
+     * @var list<string>
+     */
+    protected const CLICK_AND_COLLECT_SHIPMENT_TYPES = [
+        self::SHIPMENT_TYPE_DELIVERY,
+        self::SHIPMENT_TYPE_PICKUP,
+    ];
+
+    /**
      * Specification:
      * - Defines number of search results returned in single batch.
      * - Used as a fallback.
@@ -28,5 +50,18 @@ class ServicePointWidgetConfig extends AbstractBundleConfig
     public function getSearchResultLimit(): int
     {
         return static::SEARCH_RESULT_LIMIT;
+    }
+
+    /**
+     * Specification:
+     * - Returns list of shipment types that can be used for click and collect operations.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getClickAndCollectShipmentTypes(): array
+    {
+        return static::CLICK_AND_COLLECT_SHIPMENT_TYPES;
     }
 }

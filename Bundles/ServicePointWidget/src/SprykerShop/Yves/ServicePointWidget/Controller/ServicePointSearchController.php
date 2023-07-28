@@ -41,6 +41,11 @@ class ServicePointSearchController extends AbstractController
     /**
      * @var string
      */
+    protected const SEARCH_REQUEST_PARAMETER_SORT = 'sort';
+
+    /**
+     * @var string
+     */
     protected const PARAMETER_SERVICE_TYPE_KEY = 'serviceTypeKey';
 
     /**
@@ -74,6 +79,7 @@ class ServicePointSearchController extends AbstractController
         $requestParameters = [
             static::SEARCH_REQUEST_PARAMETER_OFFSET => $request->get(static::SEARCH_REQUEST_PARAMETER_OFFSET),
             static::SEARCH_REQUEST_PARAMETER_LIMIT => $request->get(static::SEARCH_REQUEST_PARAMETER_LIMIT),
+            static::SEARCH_REQUEST_PARAMETER_SORT => $request->get(static::SEARCH_REQUEST_PARAMETER_SORT),
         ];
 
         $serviceTypeKey = $request->get(static::PARAMETER_SERVICE_TYPE_KEY);

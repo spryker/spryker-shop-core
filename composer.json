@@ -165,6 +165,7 @@
         "spryker-shop/session-customer-validation-page-extension": "*",
         "spryker-shop/shared-cart-page": "*",
         "spryker-shop/shared-cart-widget": "*",
+        "spryker-shop/shipment-type-widget": "*",
         "spryker-shop/shop-application": "*",
         "spryker-shop/shop-application-extension": "*",
         "spryker-shop/shop-cms-slot": "*",

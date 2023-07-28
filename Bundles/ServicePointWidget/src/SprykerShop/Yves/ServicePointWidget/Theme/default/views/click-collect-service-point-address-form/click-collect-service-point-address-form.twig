@@ -1,0 +1,18 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isVisible: _widget.isVisible,
+    servicePointForm: _widget.servicePointForm,
+    pickupableServiceType: _widget.pickupableServiceType,
+    selectedServicePoint: _widget.selectedServicePoint | default(null),
+} %}
+
+{% block body %}
+    {% include molecule('service-point-selector', 'ServicePointWidget') with {
+        data: {
+            servicePointForm: data.servicePointForm,
+            pickupableServiceType: data.pickupableServiceType,
+            selectedServicePoint: data.selectedServicePoint,
+        },
+    } only %}
+{% endblock %}

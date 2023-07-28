@@ -21,6 +21,73 @@
     </transfer>
 
     <transfer name="ServicePointAddress" strict="true">
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="city" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="country" type="Country"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="servicePoint" type="ServicePoint" strict="true"/>
+        <property name="shipment" type="Shipment"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="customer" type="Customer"/>
+        <property name="store" type="Store"/>
+    </transfer>
+
+    <transfer name="Address">
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="salutation" type="string"/>
+        <property name="iso2Code" type="string"/>
+        <property name="isAddressSavingSkipped" type="bool"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="salutation" type="string"/>
+    </transfer>
+
+    <transfer name="ServicePointStorageConditions" strict="true">
+        <property name="uuids" type="string[]" singular="uuid"/>
+        <property name="storeName" type="string"/>
+    </transfer>
+
+    <transfer name="ServicePointStorageCriteria" strict="true">
+        <property name="servicePointStorageConditions" type="ServicePointStorageConditions"/>
+    </transfer>
+
+    <transfer name="ServicePointStorageCollection" strict="true">
+        <property name="servicePointStorages" type="ServicePointStorage[]" singular="servicePointStorage"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ServicePointStorage" strict="true">
+        <property name="uuid" type="string"/>
+        <property name="services" type="ServiceStorage[]" singular="service"/>
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="shippingAddress" type="Address"/>
+    </transfer>
+
+    <transfer name="ServiceStorage" strict="true">
+    </transfer>
+
+    <transfer name="Country">
+        <property name="iso2Code" type="string"/>
+    </transfer>
+
+    <transfer name="ShipmentType" strict="true">
+        <property name="serviceType" type="string"/>
     </transfer>
 
 </transfers>

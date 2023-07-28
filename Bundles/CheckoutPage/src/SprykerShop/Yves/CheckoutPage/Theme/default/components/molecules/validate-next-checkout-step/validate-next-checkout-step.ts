@@ -8,6 +8,7 @@ export const EVENT_INIT = 'afterInit';
 export default class ValidateNextCheckoutStep extends Component {
     protected containers: HTMLElement[];
     protected triggers: HTMLFormElement[];
+    protected extraTriggers: HTMLFormElement[];
     protected target: HTMLButtonElement;
     protected dropdownTriggers: HTMLSelectElement[];
     protected parentTarget: HTMLElement;
@@ -18,12 +19,15 @@ export default class ValidateNextCheckoutStep extends Component {
     protected init(): void {
         this.containers = <HTMLElement[]>Array.from(document.querySelectorAll(this.containerSelector));
         this.target = <HTMLButtonElement>document.querySelector(this.targetSelector);
-        this.dropdownTriggers = <HTMLSelectElement[]>(
-            Array.from(document.querySelectorAll(this.dropdownTriggerSelector))
-        );
 
         if (this.parentTargetClassName) {
             this.parentTarget = <HTMLElement>document.getElementsByClassName(this.parentTargetClassName)[0];
+        }
+
+        if (this.extraTriggersClassName) {
+            this.extraTriggers = <HTMLFormElement[]>(
+                Array.from(document.getElementsByClassName(this.extraTriggersClassName))
+            );
         }
 
         if (this.isTriggerEnabled) {
@@ -43,6 +47,12 @@ export default class ValidateNextCheckoutStep extends Component {
         if (this.parentTarget) {
             this.parentTarget.addEventListener('toggleForm', () => this.onDropdownTriggerChange());
         }
+
+        if (this.extraTriggers) {
+            this.extraTriggers.forEach((extraTrigger: HTMLFormElement) => {
+                extraTrigger.addEventListener('change', () => this.onExtraTriggerChange());
+            });
+        }
     }
 
     protected mapTriggerEvents(): void {
@@ -57,9 +67,16 @@ export default class ValidateNextCheckoutStep extends Component {
      * Init the methods, which fill the collection of form fields and toggle disabling of button.
      */
     initTriggerState(): void {
+        this.fillDropdownTriggersCollection();
         this.fillFormFieldsCollection();
         this.toggleDisablingNextStepButton();
         this.mapEvents();
+    }
+
+    protected fillDropdownTriggersCollection(): void {
+        this.dropdownTriggers = <HTMLSelectElement[]>(
+            Array.from(document.querySelectorAll(this.dropdownTriggerSelector))
+        );
     }
 
     protected fillFormFieldsCollection(): void {
@@ -90,6 +107,10 @@ export default class ValidateNextCheckoutStep extends Component {
         this.mapTriggerEvents();
     }
 
+    protected onExtraTriggerChange(): void {
+        this.initTriggerState();
+    }
+
     protected toggleDisablingNextStepButton(): void {
         if (!this.target) {
             return;
@@ -114,6 +135,10 @@ export default class ValidateNextCheckoutStep extends Component {
     }
 
     protected get isDropdownTriggerPreSelected(): boolean {
+        if (!this.dropdownTriggers) {
+            return false;
+        }
+
         return this.dropdownTriggers.some((element: HTMLSelectElement) => !element.value);
     }
 
@@ -161,5 +186,9 @@ export default class ValidateNextCheckoutStep extends Component {
 
     protected get parentTargetClassName(): string {
         return this.getAttribute('parent-target-class-name');
+    }
+
+    protected get extraTriggersClassName(): string {
+        return this.getAttribute('extra-triggers-class-name');
     }
 }

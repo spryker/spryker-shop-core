@@ -1,0 +1,47 @@
+{
+    "name": "spryker-shop/shipment-type-widget",
+    "type": "library",
+    "description": "ShipmentTypeWidget module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.0",
+        "spryker-shop/customer-page-extension": "^1.6.0",
+        "spryker-shop/shop-application-extension": "^1.2.0",
+        "spryker-shop/shop-ui": "^1.72.0",
+        "spryker/kernel": "^3.52.0",
+        "spryker/shipment-type": "^0.1.0",
+        "spryker/shipment-type-storage": "^0.1.1",
+        "spryker/symfony": "^3.0.0",
+        "spryker/transfer": "^3.27.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*"
+    },
+    "suggest": {
+        "spryker-shop/service-point-widget": "Add the module if you want to use ServicePointAddressFormWidget.",
+        "spryker/router": "Use this module when you want to use the Router.",
+        "spryker/silex": "Use this module when using plugins that need Silex dependencies."
+    },
+    "autoload": {
+        "psr-4": {
+            "SprykerShop\\": "src/SprykerShop/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

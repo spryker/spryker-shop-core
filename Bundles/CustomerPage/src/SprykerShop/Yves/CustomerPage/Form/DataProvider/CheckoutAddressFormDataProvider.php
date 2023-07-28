@@ -21,6 +21,7 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToStoreClientInt
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface;
 use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressCollectionForm;
+use SprykerShop\Yves\CustomerPage\Form\CheckoutMultiShippingAddressesForm;
 
 class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider implements StepEngineFormDataProviderInterface
 {
@@ -72,6 +73,11 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     protected $addressChoicesResolver;
 
     /**
+     * @var array<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CheckoutAddressCollectionFormExpanderPluginInterface>
+     */
+    protected array $checkoutAddressCollectionFormExpanderPlugins;
+
+    /**
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface $customerClient
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToStoreClientInterface $storeClient
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface $customerService
@@ -79,6 +85,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface $productBundleClient
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface $shipmentService
      * @param \SprykerShop\Yves\CustomerPage\CustomerAddress\AddressChoicesResolverInterface $addressChoicesResolver
+     * @param array<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CheckoutAddressCollectionFormExpanderPluginInterface> $checkoutAddressCollectionFormExpanderPlugins
      */
     public function __construct(
         CustomerPageToCustomerClientInterface $customerClient,
@@ -87,7 +94,8 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         CustomerPageToShipmentClientInterface $shipmentClient,
         CustomerPageToProductBundleClientInterface $productBundleClient,
         CustomerPageToShipmentServiceInterface $shipmentService,
-        AddressChoicesResolverInterface $addressChoicesResolver
+        AddressChoicesResolverInterface $addressChoicesResolver,
+        array $checkoutAddressCollectionFormExpanderPlugins
     ) {
         parent::__construct($customerClient, $storeClient);
 
@@ -97,6 +105,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         $this->productBundleClient = $productBundleClient;
         $this->shipmentService = $shipmentService;
         $this->addressChoicesResolver = $addressChoicesResolver;
+        $this->checkoutAddressCollectionFormExpanderPlugins = $checkoutAddressCollectionFormExpanderPlugins;
     }
 
     /**
@@ -130,7 +139,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         $canDeliverToMultipleShippingAddresses = $this->canDeliverToMultipleShippingAddresses($quoteTransfer);
         $defaultAddressChoices = $this->addressChoicesResolver->getAddressChoices($this->customerTransfer);
 
-        return [
+        $options = [
             CheckoutAddressCollectionForm::OPTION_SINGLE_SHIPPING_ADDRESS_CHOICES => $this->addressChoicesResolver->getSingleShippingAddressChoices(
                 $defaultAddressChoices,
                 $canDeliverToMultipleShippingAddresses,
@@ -142,6 +151,15 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
             CheckoutAddressCollectionForm::OPTION_IS_CUSTOMER_LOGGED_IN => $this->customerClient->isLoggedIn(),
             CheckoutAddressCollectionForm::OPTION_BUNDLE_ITEMS => $this->getBundleItemsFromQuote($quoteTransfer),
         ];
+
+        $options[CheckoutMultiShippingAddressesForm::OPTION_MULTI_SHIPPING_OPTIONS] = [
+            CheckoutMultiShippingAddressesForm::OPTION_VALIDATION_GROUP => CheckoutAddressCollectionForm::GROUP_SHIPPING_ADDRESS,
+            CheckoutMultiShippingAddressesForm::OPTION_ADDRESS_CHOICES => $options[CheckoutAddressCollectionForm::OPTION_MULTIPLE_SHIPPING_ADDRESS_CHOICES],
+            CheckoutMultiShippingAddressesForm::OPTION_COUNTRY_CHOICES => $options[CheckoutAddressCollectionForm::OPTION_COUNTRY_CHOICES],
+            CheckoutMultiShippingAddressesForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[CheckoutAddressCollectionForm::OPTION_IS_CUSTOMER_LOGGED_IN],
+        ];
+
+        return $this->executeCheckoutAddressCollectionFormExpanderPlugins($quoteTransfer, $options);
     }
 
     /**
@@ -445,5 +463,20 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     protected function isShippingAddressDefined(AddressTransfer $shipmentShippingAddress): bool
     {
         return $shipmentShippingAddress->getIdCustomerAddress() || $shipmentShippingAddress->getIdCompanyUnitAddress();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param array<string, mixed> $options
+     *
+     * @return array<string, mixed> $options
+     */
+    protected function executeCheckoutAddressCollectionFormExpanderPlugins(QuoteTransfer $quoteTransfer, array $options): array
+    {
+        foreach ($this->checkoutAddressCollectionFormExpanderPlugins as $checkoutAddressCollectionFormExpanderPlugin) {
+            $options = $checkoutAddressCollectionFormExpanderPlugin->expandOptions($quoteTransfer, $options);
+        }
+
+        return $options;
     }
 }

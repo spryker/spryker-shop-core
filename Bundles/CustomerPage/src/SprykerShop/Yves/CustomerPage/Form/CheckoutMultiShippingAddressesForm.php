@@ -54,6 +54,11 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
     /**
      * @var string
      */
+    public const OPTION_MULTI_SHIPPING_OPTIONS = 'multiShippingOptions';
+
+    /**
+     * @var string
+     */
     protected const PROPERTY_PATH_SHIPPING_ADDRESS = 'shipment.shippingAddress';
 
     /**
@@ -88,6 +93,8 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
             ->setRequired(static::OPTION_COUNTRY_CHOICES)
             ->setRequired(static::OPTION_IS_CUSTOMER_LOGGED_IN)
             ->setRequired(static::OPTION_VALIDATION_GROUP);
+
+        $this->configureOptionsByCheckoutMultiShippingAddressesFormExpanderPlugins($resolver);
     }
 
     /**
@@ -98,7 +105,9 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addShippingAddressField($builder, $options);
+        $this
+            ->addShippingAddressField($builder, $options)
+            ->executeCheckoutMultiShippingAddressesFormExpanderPlugins($builder, $options);
     }
 
     /**
@@ -183,7 +192,9 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
      */
     protected function isNewAddressFormShouldNotBeValidated(FormInterface $form): bool
     {
-        return $this->isIdCustomerAddressExistAndNotEmpty($form) || $this->isIdCompanyUnitAddressFieldExistAndNotEmpty($form);
+        $skipValidation = $form->getExtraData()[AddressForm::EXTRA_FIELD_SKIP_VALIDATION] ?? null;
+
+        return $skipValidation || $this->isIdCustomerAddressExistAndNotEmpty($form) || $this->isIdCompanyUnitAddressFieldExistAndNotEmpty($form);
     }
 
     /**
@@ -206,5 +217,32 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
     {
         return $form->has(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)
             && $form->get(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)->getData();
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $formBuilder
+     * @param array<string, mixed> $options
+     *
+     * @return $this
+     */
+    protected function executeCheckoutMultiShippingAddressesFormExpanderPlugins(FormBuilderInterface $formBuilder, array $options)
+    {
+        foreach ($this->getFactory()->getCheckoutMultiShippingAddressesFormExpanderPlugins() as $checkoutMultiShippingAddressesFormExpanderPlugin) {
+            $formBuilder = $checkoutMultiShippingAddressesFormExpanderPlugin->expand($formBuilder, $options);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    protected function configureOptionsByCheckoutMultiShippingAddressesFormExpanderPlugins(OptionsResolver $resolver): void
+    {
+        foreach ($this->getFactory()->getCheckoutMultiShippingAddressesFormExpanderPlugins() as $checkoutMultiShippingAddressesFormExpanderPlugin) {
+            $checkoutMultiShippingAddressesFormExpanderPlugin->configureOptions($resolver);
+        }
     }
 }

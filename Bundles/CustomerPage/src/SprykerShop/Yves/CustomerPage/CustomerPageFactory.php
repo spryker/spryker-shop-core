@@ -187,6 +187,7 @@ class CustomerPageFactory extends AbstractFactory
             $this->getProductBundleClient(),
             $this->getShipmentService(),
             $this->createAddressChoicesResolver(),
+            $this->getCheckoutAddressCollectionFormExpanderPlugins(),
         );
     }
 
@@ -591,5 +592,21 @@ class CustomerPageFactory extends AbstractFactory
     public function getStoreClient(): CustomerPageToStoreClientInterface
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
+     * @return list<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CheckoutAddressCollectionFormExpanderPluginInterface>
+     */
+    public function getCheckoutAddressCollectionFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGINS_CHECKOUT_ADDRESS_COLLECTION_FORM_EXPANDER);
+    }
+
+    /**
+     * @return list<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CheckoutMultiShippingAddressesFormExpanderPluginInterface>
+     */
+    public function getCheckoutMultiShippingAddressesFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGINS_CHECKOUT_MULTI_SHIPPING_ADDRESSES_FORM_EXPANDER);
     }
 }

@@ -12,6 +12,8 @@
 } %}
 
 {% set address = data.servicePoint.address %}
+{% set formattedAddress = [address.address1, address.address2, address.address3] | filter(address => address) | join(' ') %}
+{% set fullAddress = formattedAddress ~ ', ' ~ address.zipCode ~ ' ' ~ address.city %}
 
 {% block body %}
     {% block name %}
@@ -22,8 +24,7 @@
 
     {% block address %}
         <address class="{{ config.name }}__address">
-            {{ address.address1 }} {{ address.address2 }} {{ address.address3 }},
-            {{ address.zipCode }} {{ address.city }}
+            {{ fullAddress }}
         </address>
     {% endblock %}
 
@@ -31,7 +32,8 @@
         <div class="{{ config.name }}__actions">
             <button type="button"
                     class="button {{ config.jsName }}__select-button"
-                    data-service-point-uuid="{{ data.servicePoint.uuid }}">
+                    data-service-point-uuid="{{ data.servicePoint.uuid }}"
+                    data-service-point-address="{{ data.servicePoint.name }} {{ fullAddress }}">
                 {{ 'service_point_widget.select_store_action' | trans }}
             </button>
         </div>

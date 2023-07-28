@@ -153,7 +153,10 @@ class CheckoutAddressCollectionForm extends AbstractType
             ->setRequired(static::OPTION_COUNTRY_CHOICES)
             ->setRequired(static::OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES)
             ->setRequired(static::OPTION_IS_CUSTOMER_LOGGED_IN)
-            ->setRequired(static::OPTION_BUNDLE_ITEMS);
+            ->setRequired(static::OPTION_BUNDLE_ITEMS)
+            ->setRequired(CheckoutMultiShippingAddressesForm::OPTION_MULTI_SHIPPING_OPTIONS);
+
+        $this->configureOptionsByCheckoutAddressCollectionFormExpanderPlugins($resolver);
     }
 
     /**
@@ -170,7 +173,8 @@ class CheckoutAddressCollectionForm extends AbstractType
             ->addItemShippingAddressForBundlesSubForm($builder, $options)
             ->addSameAsShippingCheckboxField($builder)
             ->addBillingAddressSubForm($builder, $options)
-            ->addIsMultipleShipmentEnabledField($builder, $options);
+            ->addIsMultipleShipmentEnabledField($builder, $options)
+            ->executeCheckoutAddressCollectionFormExpanderPlugins($builder, $options);
     }
 
     /**
@@ -188,10 +192,8 @@ class CheckoutAddressCollectionForm extends AbstractType
             'required' => true,
             'mapped' => false,
             'validation_groups' => function (FormInterface $form) {
-                if (
-                    $this->isIdCustomerAddressFieldNotEmpty($form)
-                    || $this->isIdCompanyUnitAddressFieldNotEmpty($form)
-                ) {
+                $skipValidation = $form->getExtraData()[AddressForm::EXTRA_FIELD_SKIP_VALIDATION] ?? null;
+                if ($skipValidation || $this->isIdCustomerAddressFieldNotEmpty($form) || $this->isIdCompanyUnitAddressFieldNotEmpty($form)) {
                     return false;
                 }
 
@@ -536,6 +538,7 @@ class CheckoutAddressCollectionForm extends AbstractType
                 CheckoutMultiShippingAddressesForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_MULTIPLE_SHIPPING_ADDRESS_CHOICES],
                 CheckoutMultiShippingAddressesForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
                 CheckoutMultiShippingAddressesForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
+                ...$options[CheckoutMultiShippingAddressesForm::OPTION_MULTI_SHIPPING_OPTIONS],
             ],
         ];
 
@@ -566,10 +569,7 @@ class CheckoutAddressCollectionForm extends AbstractType
                 'entry_options' => [
                     'data_class' => ItemTransfer::class,
                     'label' => false,
-                    CheckoutMultiShippingAddressesForm::OPTION_VALIDATION_GROUP => static::GROUP_SHIPPING_ADDRESS,
-                    CheckoutMultiShippingAddressesForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_MULTIPLE_SHIPPING_ADDRESS_CHOICES],
-                    CheckoutMultiShippingAddressesForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
-                    CheckoutMultiShippingAddressesForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
+                    ...$options[CheckoutMultiShippingAddressesForm::OPTION_MULTI_SHIPPING_OPTIONS],
                 ],
             ];
 
@@ -626,5 +626,32 @@ class CheckoutAddressCollectionForm extends AbstractType
     {
         return $form->has(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)
             && $form->get(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)->getData();
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $formBuilder
+     * @param array<string, mixed> $options
+     *
+     * @return $this
+     */
+    protected function executeCheckoutAddressCollectionFormExpanderPlugins(FormBuilderInterface $formBuilder, array $options)
+    {
+        foreach ($this->getFactory()->getCheckoutAddressCollectionFormExpanderPlugins() as $checkoutAddressCollectionFormExpanderPlugin) {
+            $formBuilder = $checkoutAddressCollectionFormExpanderPlugin->expand($formBuilder, $options);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    protected function configureOptionsByCheckoutAddressCollectionFormExpanderPlugins(OptionsResolver $resolver): void
+    {
+        foreach ($this->getFactory()->getCheckoutAddressCollectionFormExpanderPlugins() as $checkoutAddressCollectionFormExpanderPlugin) {
+            $checkoutAddressCollectionFormExpanderPlugin->configureOptions($resolver);
+        }
     }
 }

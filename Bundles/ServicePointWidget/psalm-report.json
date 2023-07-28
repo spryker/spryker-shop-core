@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 74,
-            "line_to": 74,
+            "line_from": 89,
+            "line_to": 89,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ServicePointSearchTransfer> variable ",
             "file_name": "vendor/spryker/spryker-shop/Bundles/ServicePointWidget/src/SprykerShop/Yves/ServicePointWidget/Reader/ServicePointReader.php",

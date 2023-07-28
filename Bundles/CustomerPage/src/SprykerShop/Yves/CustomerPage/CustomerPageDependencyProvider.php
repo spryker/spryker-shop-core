@@ -211,6 +211,16 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_TIMEZONE = 'SERVICE_TIMEZONE';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_CHECKOUT_ADDRESS_COLLECTION_FORM_EXPANDER = 'PLUGINS_CHECKOUT_ADDRESS_COLLECTION_FORM_EXPANDER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_CHECKOUT_MULTI_SHIPPING_ADDRESSES_FORM_EXPANDER = 'PLUGINS_CHECKOUT_MULTI_SHIPPING_ADDRESSES_FORM_EXPANDER';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -248,6 +258,8 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addOrderSearchFormHandlerPlugins($container);
         $container = $this->addCurrentTimezone($container);
         $container = $this->addPreAuthUserCheckPlugins($container);
+        $container = $this->addCheckoutAddressCollectionFormExpanderPlugins($container);
+        $container = $this->addCheckoutMultiShippingAddressesFormExpanderPlugins($container);
 
         return $container;
     }
@@ -794,5 +806,49 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCheckoutAddressCollectionFormExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CHECKOUT_ADDRESS_COLLECTION_FORM_EXPANDER, function () {
+            return $this->getCheckoutAddressCollectionFormExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CheckoutAddressCollectionFormExpanderPluginInterface>
+     */
+    protected function getCheckoutAddressCollectionFormExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCheckoutMultiShippingAddressesFormExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CHECKOUT_MULTI_SHIPPING_ADDRESSES_FORM_EXPANDER, function () {
+            return $this->getCheckoutMultiShippingAddressesFormExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CheckoutMultiShippingAddressesFormExpanderPluginInterface>
+     */
+    protected function getCheckoutMultiShippingAddressesFormExpanderPlugins(): array
+    {
+        return [];
     }
 }

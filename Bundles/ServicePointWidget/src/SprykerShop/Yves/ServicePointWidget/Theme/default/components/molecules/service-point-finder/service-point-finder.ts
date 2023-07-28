@@ -62,9 +62,11 @@ export default class ServicePointFinder extends Component {
 
     protected dispatchSetServicePointEvent(servicePointTrigger: HTMLElement): void {
         const uuid = servicePointTrigger.dataset[this.servicePointUuidDataAttribute];
+        const address = servicePointTrigger.dataset[this.servicePointAddressDataAttribute];
 
         this.dispatchCustomEvent(EVENT_SET_SERVICE_POINT, {
             uuid: uuid,
+            address: address,
         });
     }
 
@@ -99,5 +101,9 @@ export default class ServicePointFinder extends Component {
 
     protected get servicePointUuidDataAttribute(): string {
         return this.getAttribute('service-point-uuid-data-attribute');
+    }
+
+    protected get servicePointAddressDataAttribute(): string {
+        return this.getAttribute('service-point-address-data-attribute');
     }
 }

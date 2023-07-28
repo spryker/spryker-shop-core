@@ -9,7 +9,13 @@
     formBundle: null,
     shippingForm: required,
     jsAddressClass: '',
+    hiddenClassName: 'is-hidden',
 } %}
+
+{% set addressSelectClassName = 'js-address-item-form__address-select' %}
+{% set validatorClassName = 'js-address-item-form__validate-next-checkout-step' %}
+{% set validatorTriggerClassName = 'js-address-item-form__validator-trigger' %}
+{% set itemShippingClassName = 'js-address-item-form__item-shipping' %}
 
 {% block body %}
     {% if is_granted('ROLE_USER') %}
@@ -32,6 +38,10 @@
             embed: {
                 jsName: config.jsName,
                 shippingForm: data.shippingForm,
+                addressSelectClassName: addressSelectClassName,
+                validatorTriggerClassName: validatorTriggerClassName,
+                itemShippingClassName: itemShippingClassName,
+                hiddenClassName: data.hiddenClassName,
             },
         } only %}
             {% block fields %}
@@ -41,7 +51,10 @@
                         data: {
                             items: data.form,
                             shippingForm: embed.shippingForm,
-                            parentJsName: embed.jsName,
+                            addressSelectClassName: embed.addressSelectClassName,
+                            validatorTriggerClassName: embed.validatorTriggerClassName,
+                            itemShippingClassName: embed.itemShippingClassName,
+                            hiddenClassName: embed.hiddenClassName,
                         },
                     } only %}
                 </div>
@@ -80,16 +93,17 @@
         {% include molecule('is-next-checkout-step-enabled', 'CheckoutPage') with {
             attributes: {
                 'trigger-selector': '.' ~ data.jsAddressClass ~ '__form-select-shippingAddress',
-                'target-selector': '.' ~ config.jsName ~ '__validate-next-checkout-step',
+                'target-selector': '.' ~ validatorClassName,
             },
         } only %}
 
         {% include molecule('validate-next-checkout-step', 'CheckoutPage') with {
-            class: config.jsName ~ '__validate-next-checkout-step',
+            class: validatorClassName,
             attributes: {
-                'container-selector': '.' ~ config.jsName ~ '__item-shipping',
+                'container-selector': '.' ~ itemShippingClassName,
                 'target-selector': '.' ~ data.jsAddressClass ~ '__form-submit',
-                'dropdown-trigger-selector': '.' ~ config.jsName ~ '__trigger',
+                'dropdown-trigger-selector': '.' ~ addressSelectClassName ~ ':not(.' ~ data.hiddenClassName ~ ')',
+                'extra-triggers-class-name': validatorTriggerClassName,
                 'parent-target-class-name': config.jsName ~ '__items',
                 'is-enable': false,
             },

@@ -1,0 +1,7 @@
+{
+    "include": {
+        "spryker-shop/shop-ui": "ShopUi provides basic frontend infrastructure.",
+        "spryker/shipment-type": "Defined for forward-compatibility reasons.",
+        "spryker/transfer": "Provides transfer objects definition with strict types."
+    }
+}

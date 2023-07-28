@@ -1,0 +1,27 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isVisible: _widget.isVisible,
+    shipmentTypeForm: _widget.shipmentTypeForm,
+    checkoutAddressForm: _widget.checkoutAddressForm,
+    defaultShipmentType: _widget.defaultShipmentType,
+    billingSameAsShippingContainerClassName: '',
+    shipmentTypesClassName: '',
+    servicePointClassName: '',
+} %}
+
+{% block body %}
+    {% include molecule('shipment-type-toggler', 'ShipmentTypeWidget') with {
+        data: {
+            shipmentTypeForm: data.shipmentTypeForm,
+            checkoutAddressForm: data.checkoutAddressForm,
+            shipmentTypesClassName: data.shipmentTypesClassName,
+            servicePointClassName: data.servicePointClassName,
+        },
+        attributes: {
+            'default-shipment-type': data.defaultShipmentType,
+            'delivery-targets-class-name': data.deliveryContainerClassName,
+            'billing-same-as-shipping-container-class-name': data.billingSameAsShippingContainerClassName,
+        },
+    } only %}
+{% endblock %}

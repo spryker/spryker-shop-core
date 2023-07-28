@@ -9,10 +9,13 @@
     'container-selector': required,
     'target-selector': required,
     'dropdown-trigger-selector': required,
+    'extra-triggers-class-name': '',
     'is-enable': true,
     'class-to-toggle': 'is-hidden',
 } %}
 
-{%- block class -%}
-    {{parent()}} {{ config.jsName }}
-{%- endblock -%}
+{% block extraClass %}
+    {{ config.jsName }}
+{% endblock %}
+
+{% block body %}{% endblock %}

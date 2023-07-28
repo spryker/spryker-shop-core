@@ -6,6 +6,7 @@
     searchRoute: _widget.searchRoute,
     serviceTypeKey: _widget.serviceTypeKey,
     searchValue: '',
+    extraClassName: '',
 } %}
 
 {% set searchFieldAttributes = {} %}
@@ -22,6 +23,7 @@
 
     {% block servicePointFinder %}
         {% include molecule('service-point-finder', 'ServicePointWidget') with {
+            class: data.extraClassName,
             data: {
                 content: data.searchResults,
                 fieldExtraAttributes: searchFieldAttributes,

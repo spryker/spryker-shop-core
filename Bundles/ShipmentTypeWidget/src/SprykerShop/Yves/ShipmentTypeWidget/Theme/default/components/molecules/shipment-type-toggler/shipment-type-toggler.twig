@@ -1,0 +1,45 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'shipment-type-toggler',
+    tag: 'shipment-type-toggler',
+} %}
+
+{% define data = {
+    shipmentTypeForm: required,
+    checkoutAddressForm: null,
+    shipmentTypesClassName: '',
+    servicePointClassName: '',
+} %}
+
+{% define attributes = {
+    'default-shipment-type': required,
+    'delivery-targets-class-name': '',
+    'toggle-class-name': 'is-hidden',
+    'billing-same-as-shipping-container-class-name': '',
+} %}
+
+{% set activeShipmentType = data.shipmentTypeForm.key.vars.value %}
+
+{% block body %}
+    {% block radioButtons %}
+        <div class="spacing-y spacing-y--big">
+            {{ form_row(data.shipmentTypeForm.key, {
+                label_attr: {
+                    class: 'list--inline',
+                },
+                choices_attr: {
+                    class: config.jsName ~ '__trigger ' ~ data.shipmentTypesClassName,
+                },
+            }) }}
+        </div>
+    {% endblock %}
+
+    {% set servicePointType = 'pickup' %}
+
+    {% block ServicePointForm %}
+        <div class="{{ config.jsName }}__service-point {{ activeShipmentType != servicePointType ? attributes['toggle-class-name'] }} {{ data.servicePointClassName }}">
+            {% widget 'ClickCollectServicePointAddressFormWidget' args [data.checkoutAddressForm] only %}{% endwidget %}
+        </div>
+    {% endblock %}
+{% endblock %}

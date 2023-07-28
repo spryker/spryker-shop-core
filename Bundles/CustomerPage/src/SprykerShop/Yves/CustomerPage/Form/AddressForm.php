@@ -99,6 +99,11 @@ class AddressForm extends AbstractType
     /**
      * @var string
      */
+    public const EXTRA_FIELD_SKIP_VALIDATION = 'skip_validation';
+
+    /**
+     * @var string
+     */
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
 
     /**
