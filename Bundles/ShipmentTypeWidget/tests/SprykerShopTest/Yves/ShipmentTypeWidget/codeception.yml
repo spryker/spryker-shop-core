@@ -1,0 +1,20 @@
+namespace: SprykerShopTest\Yves\ShipmentTypeWidget
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Yves:
+        path: .
+        actor: ShipmentTypeWidgetYvesTester
+        modules:
+            enabled:
+                - \SprykerTest\Shared\Testify\Helper\Environment

@@ -10,7 +10,11 @@ namespace SprykerShop\Yves\ShipmentTypeWidget;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ShipmentTypeWidget\Checker\AddressFormChecker;
 use SprykerShop\Yves\ShipmentTypeWidget\Checker\AddressFormCheckerInterface;
+use SprykerShop\Yves\ShipmentTypeWidget\Cleaner\QuoteCleaner;
+use SprykerShop\Yves\ShipmentTypeWidget\Cleaner\QuoteCleanerInterface;
 use SprykerShop\Yves\ShipmentTypeWidget\Dependency\Client\ShipmentTypeWidgetToShipmentTypeStorageClientInterface;
+use SprykerShop\Yves\ShipmentTypeWidget\Expander\QuoteExpander;
+use SprykerShop\Yves\ShipmentTypeWidget\Expander\QuoteExpanderInterface;
 use SprykerShop\Yves\ShipmentTypeWidget\Expander\ShipmentTypeFormOptionExpander;
 use SprykerShop\Yves\ShipmentTypeWidget\Expander\ShipmentTypeFormOptionExpanderInterface;
 use SprykerShop\Yves\ShipmentTypeWidget\Form\ShipmentTypeAddressStepForm;
@@ -79,6 +83,22 @@ class ShipmentTypeWidgetFactory extends AbstractFactory
         return new ShipmentTypeReader(
             $this->getShipmentTypeStorageClient(),
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShipmentTypeWidget\Expander\QuoteExpanderInterface
+     */
+    public function createQuoteExpander(): QuoteExpanderInterface
+    {
+        return new QuoteExpander();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShipmentTypeWidget\Cleaner\QuoteCleanerInterface
+     */
+    public function createQuoteCleaner(): QuoteCleanerInterface
+    {
+        return new QuoteCleaner();
     }
 
     /**

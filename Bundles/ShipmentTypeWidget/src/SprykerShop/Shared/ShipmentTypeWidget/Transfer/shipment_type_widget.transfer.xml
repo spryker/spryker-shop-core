@@ -3,9 +3,15 @@
 
     <transfer name="Item">
         <property name="shipmentType" type="ShipmentType" strict="true"/>
+        <property name="shipment" type="Shipment"/>
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="shipmentTypeUuid" type="string" strict="true"/>
     </transfer>
 
     <transfer name="ShipmentType" strict="true">
+        <property name="uuid" type="string"/>
         <property name="key" type="string"/>
         <property name="name" type="string"/>
     </transfer>
