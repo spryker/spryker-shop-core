@@ -57,6 +57,7 @@
         "spryker-shop/sales-configurable-bundle-widget": "Add the module if you want to use OrderItemsConfiguredBundleWidget.",
         "spryker-shop/sales-product-configuration-widget": "Add the module if you want to use ProductConfigurationOrderItemDisplayWidget.",
         "spryker-shop/sales-return-page": "Add the module if you want to use return-create-link molecule.",
+        "spryker-shop/sales-service-point-widget": "Add the module if you want to display the service point related information.",
         "spryker/config": "Use this module when using plugins that need Config dependencies.",
         "spryker/container": "If you want to use twig plugins.",
         "spryker/messenger": "Use this module when using plugins that need Messenger dependencies.",

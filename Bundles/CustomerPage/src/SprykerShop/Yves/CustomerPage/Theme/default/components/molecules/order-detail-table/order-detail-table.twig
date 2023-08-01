@@ -148,6 +148,9 @@
                 <div class="{{ config.name }}__item {{ config.name }}__item--spacingless">
                     <h5>{{ 'customer.order.delivery_address' | trans }}</h5>
                     <div class="spacing-y spacing-y--inner">
+                        {% block salesServicePointNameForShipmentGroup %}
+                            {% widget 'SalesServicePointNameForShipmentGroupWidget' args [shipmentGroup] only %}{% endwidget %}
+                        {% endblock %}
                         {% include molecule('display-address') with {
                             data: {
                                 address: shipmentGroup.shipment.shippingAddress,

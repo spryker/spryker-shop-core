@@ -1,0 +1,7 @@
+{
+    "include": {
+        "spryker/transfer": "Provides transfer objects definition with strict types.",
+        "spryker-shop/shop-ui": "ShopUi provides basic frontend infrastructure.",
+        "spryker/sales-service-point": "Provices ability to manage service points in OMS."
+    }
+}
