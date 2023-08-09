@@ -204,6 +204,7 @@ class StepFactory extends AbstractFactory
             CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_ADDRESS,
             $this->getConfig()->getEscapeRoute(),
             $this->getCheckoutAddressStepEnterPreCheckPlugins(),
+            $this->getCheckoutAddressStepPostExecutePlugins(),
         );
     }
 
@@ -522,5 +523,13 @@ class StepFactory extends AbstractFactory
     public function getLocaleClient(): CheckoutPageToLocaleClientInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_LOCALE);
+    }
+
+    /**
+     * @return list<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepPostExecutePluginInterface>
+     */
+    public function getCheckoutAddressStepPostExecutePlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_ADDRESS_STEP_POST_EXECUTE);
     }
 }

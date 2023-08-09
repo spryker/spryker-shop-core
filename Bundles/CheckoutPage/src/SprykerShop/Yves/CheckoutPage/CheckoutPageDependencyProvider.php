@@ -260,6 +260,11 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_PAYMENT_COLLECTION_EXTENDER = 'PLUGINS_PAYMENT_COLLECTION_EXTENDER';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_CHECKOUT_ADDRESS_STEP_POST_EXECUTE = 'PLUGINS_CHECKOUT_ADDRESS_STEP_POST_EXECUTE';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -311,6 +316,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCheckoutPageStepEnginePreRenderPlugins($container);
 
         $container = $this->addPaymentCollectionExtenderPlugins($container);
+        $container = $this->addCheckoutAddressStepPostExecutePlugins($container);
 
         return $container;
     }
@@ -1052,6 +1058,28 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\PaymentCollectionExtenderPluginInterface>
      */
     protected function getPaymentCollectionExtenderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCheckoutAddressStepPostExecutePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CHECKOUT_ADDRESS_STEP_POST_EXECUTE, function () {
+            return $this->getCheckoutAddressStepPostExecutePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepPostExecutePluginInterface>
+     */
+    protected function getCheckoutAddressStepPostExecutePlugins(): array
     {
         return [];
     }

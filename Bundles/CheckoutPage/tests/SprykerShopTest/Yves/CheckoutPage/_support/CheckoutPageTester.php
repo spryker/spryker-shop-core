@@ -28,7 +28,7 @@ use Spryker\Shared\Price\PriceConfig;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerShopTest\Yves\CheckoutPage\PHPMD)
  */
 class CheckoutPageTester extends Actor
 {

@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
+use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithCodeInterface;
@@ -47,6 +49,11 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected $checkoutPageConfig;
 
     /**
+     * @var list<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepPostExecutePluginInterface>
+     */
+    protected array $checkoutAddressStepPostExecutePlugins;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
      * @param \SprykerShop\Yves\CheckoutPage\Process\Steps\StepExecutorInterface $stepExecutor
      * @param \SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface $postConditionChecker
@@ -54,6 +61,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      * @param string $stepRoute
      * @param string|null $escapeRoute
      * @param array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepEnterPreCheckPluginInterface> $checkoutAddressStepEnterPreCheckPlugins
+     * @param list<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepPostExecutePluginInterface> $checkoutAddressStepPostExecutePlugins
      */
     public function __construct(
         CheckoutPageToCalculationClientInterface $calculationClient,
@@ -62,7 +70,8 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
         CheckoutPageConfig $checkoutPageConfig,
         $stepRoute,
         $escapeRoute,
-        array $checkoutAddressStepEnterPreCheckPlugins
+        array $checkoutAddressStepEnterPreCheckPlugins,
+        array $checkoutAddressStepPostExecutePlugins
     ) {
         parent::__construct($stepRoute, $escapeRoute);
 
@@ -71,6 +80,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
         $this->postConditionChecker = $postConditionChecker;
         $this->checkoutPageConfig = $checkoutPageConfig;
         $this->checkoutAddressStepEnterPreCheckPlugins = $checkoutAddressStepEnterPreCheckPlugins;
+        $this->checkoutAddressStepPostExecutePlugins = $checkoutAddressStepPostExecutePlugins;
     }
 
     /**
@@ -105,6 +115,8 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
             return $quoteTransfer;
         }
         $quoteTransfer = $this->stepExecutor->execute($request, $quoteTransfer);
+
+        $quoteTransfer = $this->executeCheckoutAddressStepPostExecutePlugins($quoteTransfer)->getQuoteTransfer();
 
         return $this->calculationClient->recalculate($quoteTransfer);
     }
@@ -169,5 +181,27 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     public function getCode(): string
     {
         return static::STEP_CODE;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function executeCheckoutAddressStepPostExecutePlugins(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        $quoteResponseTransfer = (new QuoteResponseTransfer())
+            ->setQuoteTransfer($quoteTransfer)
+            ->setIsSuccessful(true);
+
+        foreach ($this->checkoutAddressStepPostExecutePlugins as $checkoutAddressStepPostExecutePlugin) {
+            $quoteResponseTransfer = $checkoutAddressStepPostExecutePlugin->execute($quoteTransfer);
+
+            if (!$quoteResponseTransfer->getIsSuccessfulOrFail()) {
+                return $quoteResponseTransfer;
+            }
+        }
+
+        return $quoteResponseTransfer;
     }
 }
