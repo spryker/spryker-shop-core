@@ -1,18 +1,29 @@
 {% extends template('widget') %}
 
 {% define data = {
-    cart:  _view.cart,
-    cartItems:  _view.cartItems,
-    isQuoteEditable:  _view.isQuoteEditable,
-    attributes:  _view.attributes,
+    cart: _view.cart,
+    cartItems: _view.cartItems,
+    isQuoteEditable: _view.isQuoteEditable,
+    attributes: _view.attributes,
 } %}
+
 {% block body %}
-    {% include molecule('product-cart-items-list', 'CartPage') with {
-        data: {
-            cart: data.cart,
-            cartItems: data.cartItems,
-            isQuoteEditable: data.isQuoteEditable,
-            attributes: data.attributes,
-        },
-    } only %}
+    {% block cartItemsList %}
+        {% include molecule('product-cart-items-list', 'CartPage') with {
+            data: {
+                cart: data.cart,
+                cartItems: data.cartItems,
+                isQuoteEditable: data.isQuoteEditable,
+                attributes: data.attributes,
+            },
+        } only %}
+    {% endblock %}
+
+    {% block formSubmitter %}
+        {% include molecule('form-submitter') with {
+            attributes: {
+                'trigger-selector': '[data-cart-form-submitter]',
+            },
+        } only %}
+    {% endblock %}
 {% endblock %}
