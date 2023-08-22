@@ -1,0 +1,5 @@
+{
+    "include": {
+        "spryker/shipment": "Added for forward compatibility."
+    }
+}
