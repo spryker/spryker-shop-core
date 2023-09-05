@@ -74,8 +74,8 @@ class ClickCollectServiceTypeSubForm extends AbstractType
         }
 
         foreach ($availableShipmentTypes as $shipmentTypeTransfer) {
-            if ($shipmentTypeTransfer->getServiceType() && $shipmentTypeTransfer->getServiceType() === static::SERVICE_TYPE_PICKUP) {
-                return $shipmentTypeTransfer->getServiceType();
+            if ($shipmentTypeTransfer->getServiceType() && $shipmentTypeTransfer->getServiceTypeOrFail()->getKeyOrFail() === static::SERVICE_TYPE_PICKUP) {
+                return $shipmentTypeTransfer->getServiceType()->getKeyOrFail();
             }
         }
 

@@ -87,7 +87,11 @@
     </transfer>
 
     <transfer name="ShipmentType" strict="true">
-        <property name="serviceType" type="string"/>
+        <property name="serviceType" type="ServiceType"/>
+    </transfer>
+
+    <transfer name="ServiceType" strict="true">
+        <property name="key" type="string"/>
     </transfer>
 
 </transfers>
