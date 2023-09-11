@@ -27,8 +27,8 @@
 
         {% if filterHasValues %}
             {% block filters %}
-                {% set filterName = filter.config.name %}
-                {% set filterType = filter.config.type %}
+                {% set filterName = filter.config.name | default %}
+                {% set filterType = filter.config.type | default %}
 
                {% if filterType == 'category' %}
                    <h2 class="title--h6">{{ ('product.filter.' ~ filterName | lower) | trans }}</h2>

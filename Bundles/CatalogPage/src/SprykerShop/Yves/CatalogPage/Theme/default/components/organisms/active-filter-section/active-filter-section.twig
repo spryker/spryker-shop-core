@@ -21,8 +21,8 @@
     {% for filter in facets %}
         {% set activeFilter = include(
             [
-                molecule('active-filter-' ~ filter.config.name, 'CatalogPage'),
-                molecule('active-filter-' ~ filter.config.type, 'CatalogPage')
+                molecule('active-filter-' ~ filter.config.name | default, 'CatalogPage'),
+                molecule('active-filter-' ~ filter.config.type | default, 'CatalogPage')
             ],
             {
                 class: config.name ~ '__item',

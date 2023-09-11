@@ -28,7 +28,7 @@
             },
         } only %}
             {% block labels %}
-                {% widget 'ProductConcreteLabelWidget' args [data.product.id_product_labels] with {
+                {% widget 'ProductAbstractLabelWidget' args [data.idProductAbstract]  with {
                     data: {
                         parentJsName: config.jsName,
                     },

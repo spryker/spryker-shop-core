@@ -1,11 +1,11 @@
 {% extends template('page-layout-catalog', 'CatalogPage') %}
 
 {% define data = {
-    products: _view.products,
-    facets: _view.facets,
+    products: _view.products | default([]),
+    facets: _view.facets | default([]),
     filteredFacets: _view.filteredFacets | default([]),
     searchString: _view.searchString,
-    suggestion: _view.spellingSuggestion,
+    suggestion: _view.spellingSuggestion | default([]),
     category: _view.category | default,
     categories: categories | default([]),
     categoryId: _view.idCategory | default,
@@ -20,9 +20,9 @@
 
     pagination: {
         parameters: app.request.query.all(),
-        currentPage: _view.pagination.currentPage,
+        currentPage: _view.pagination.currentPage | default,
         paginationPath: app.request.attributes.get('_route'),
-        maxPage: _view.pagination.maxPage,
+        maxPage: _view.pagination.maxPage | default,
         showAlwaysFirstAndLast: true
     }
 } %}
