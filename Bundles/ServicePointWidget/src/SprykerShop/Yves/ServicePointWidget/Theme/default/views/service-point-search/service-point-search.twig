@@ -5,21 +5,28 @@
     searchResults: _widget.searchResults,
     searchRoute: _widget.searchRoute,
     serviceTypeKey: _widget.serviceTypeKey,
+    serviceTypeUuid: _widget.serviceTypeUuid,
+    shipmentTypeUuid: _widget.shipmentTypeUuid,
+    itemGroupKeys: _widget.itemGroupKeys,
     searchValue: '',
     extraClassName: '',
 } %}
 
 {% set searchFieldAttributes = {} %}
-{% set serviceTypeKeyQuery = '' %}
 
 {% block body %}
     {% if data.searchValue %}
         {% set searchFieldAttributes = searchFieldAttributes | merge({ value: data.searchValue }) %}
     {% endif %}
 
-    {% if data.serviceTypeKey %}
-        {% set serviceTypeKeyQuery = '&serviceTypeKey=' ~ data.serviceTypeKey %}
-    {% endif %}
+    {% set queryStringObject = {
+        'offset': 0,
+        'limit': data.searchResultLimit,
+        'serviceTypeKey': data.serviceTypeKey,
+        'serviceTypeUuid': data.serviceTypeUuid,
+        'shipmentTypeUuid': data.shipmentTypeUuid,
+        'itemGroupKeys': data.itemGroupKeys,
+    } %}
 
     {% block servicePointFinder %}
         {% include molecule('service-point-finder', 'ServicePointWidget') with {
@@ -30,7 +37,7 @@
             },
             attributes: {
                 url: path(data.searchRoute),
-                'query-string': 'offset=0&limit=' ~ data.searchResultLimit ~ serviceTypeKeyQuery ~ '&searchString',
+                'query-string': queryStringObject | url_encode ~ '&searchString',
             },
         } only %}
     {% endblock %}

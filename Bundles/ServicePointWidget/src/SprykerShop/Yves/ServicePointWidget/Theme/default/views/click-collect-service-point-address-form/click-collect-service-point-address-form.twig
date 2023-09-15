@@ -1,17 +1,26 @@
+{# @var data.pickupableServiceType \Generated\Shared\Transfer\ServiceTypeTransfer #}
+{# @var data.pickupableShipmentType \Generated\Shared\Transfer\ShipmentTypeTransfer #}
+{# @var data.item \Generated\Shared\Transfer\ItemTransfer #}
+
 {% extends template('widget') %}
 
 {% define data = {
     isVisible: _widget.isVisible,
     servicePointForm: _widget.servicePointForm,
     pickupableServiceType: _widget.pickupableServiceType,
+    pickupableShipmentType: _widget.pickupableShipmentType,
     selectedServicePoint: _widget.selectedServicePoint | default(null),
+    item: _widget.item | default(null),
 } %}
 
 {% block body %}
     {% include molecule('service-point-selector', 'ServicePointWidget') with {
         data: {
             servicePointForm: data.servicePointForm,
-            pickupableServiceType: data.pickupableServiceType,
+            pickupableServiceTypeKey: data.pickupableServiceType.key,
+            pickupableServiceTypeUuid: data.pickupableServiceType.uuid,
+            pickupableShipmentTypeUuid: data.pickupableShipmentType.uuid,
+            itemGroupKeys: data.item ? [data.item.groupKey] : [],
             selectedServicePoint: data.selectedServicePoint,
         },
     } only %}

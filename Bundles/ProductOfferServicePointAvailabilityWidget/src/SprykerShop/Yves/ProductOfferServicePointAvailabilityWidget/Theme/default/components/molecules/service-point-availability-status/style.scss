@@ -1,0 +1,3 @@
+@include helper-import(molecule, service-point-availability-status) {
+    @include product-offer-service-point-availability-widget-service-point-availability-status;
+}

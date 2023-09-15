@@ -74,7 +74,7 @@ class ServicePointFormSubmitDataHydrator implements ServicePointFormSubmitDataHy
             return;
         }
 
-        /** @var \Generated\Shared\Transfer\ItemTransfer $data */
+        /** @phpstan-var \Generated\Shared\Transfer\ItemTransfer $data */
         $this->hydrateServicePointToItem($data, $form, $event);
     }
 

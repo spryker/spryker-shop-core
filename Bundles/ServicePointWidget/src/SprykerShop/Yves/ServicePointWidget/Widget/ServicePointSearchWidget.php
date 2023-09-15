@@ -42,6 +42,21 @@ class ServicePointSearchWidget extends AbstractWidget
     protected const PARAMETER_SERVICE_TYPE_KEY = 'serviceTypeKey';
 
     /**
+     * @var string
+     */
+    protected const PARAMETER_SERVICE_TYPE_UUID = 'serviceTypeUuid';
+
+    /**
+     * @var string
+     */
+    protected const PARAMETER_SHIPMENT_TYPE_UUID = 'shipmentTypeUuid';
+
+    /**
+     * @var string
+     */
+    protected const PARAMETER_ITEM_GROUP_KEYS = 'itemGroupKeys';
+
+    /**
      * @uses \Spryker\Client\ServicePointSearch\Plugin\Elasticsearch\Query\ServiceTypesServicePointSearchQueryExpanderPlugin::PARAMETER_SERVICE_TYPES
      *
      * @var string
@@ -71,11 +86,17 @@ class ServicePointSearchWidget extends AbstractWidget
 
     /**
      * @param string|null $serviceTypeKey
+     * @param string|null $serviceTypeUuid
+     * @param string|null $shipmentTypeUuid
+     * @param list<string> $itemGroupKeys
      * @param int|null $searchResultLimit
      * @param bool $isInitialRenderEnabled
      */
     public function __construct(
         ?string $serviceTypeKey = null,
+        ?string $serviceTypeUuid = null,
+        ?string $shipmentTypeUuid = null,
+        array $itemGroupKeys = [],
         ?int $searchResultLimit = null,
         bool $isInitialRenderEnabled = true
     ) {
@@ -84,9 +105,19 @@ class ServicePointSearchWidget extends AbstractWidget
         }
 
         $this->addSearchResultLimitParameter($searchResultLimit);
-        $this->addSearchResultsParameter($isInitialRenderEnabled, $searchResultLimit, $serviceTypeKey);
         $this->addSearchRouteParameter();
         $this->addServiceTypeKeyParameter($serviceTypeKey);
+        $this->addServiceTypeUuidParameter($serviceTypeUuid);
+        $this->addShipmentTypeUuidParameter($shipmentTypeUuid);
+        $this->addItemGroupKeysParameter($itemGroupKeys);
+        $this->addSearchResultsParameter(
+            $isInitialRenderEnabled,
+            $searchResultLimit,
+            $serviceTypeKey,
+            $serviceTypeUuid,
+            $shipmentTypeUuid,
+            $itemGroupKeys,
+        );
     }
 
     /**
@@ -127,17 +158,30 @@ class ServicePointSearchWidget extends AbstractWidget
      * @param bool $isInitialRenderEnabled
      * @param int $searchResultLimit
      * @param string|null $serviceTypeKey
+     * @param string|null $serviceTypeUuid
+     * @param string|null $shipmentTypeUuid
+     * @param list<string> $itemGroupKeys
      *
      * @return void
      */
     protected function addSearchResultsParameter(
         bool $isInitialRenderEnabled,
         int $searchResultLimit,
-        ?string $serviceTypeKey = null
+        ?string $serviceTypeKey = null,
+        ?string $serviceTypeUuid = null,
+        ?string $shipmentTypeUuid = null,
+        array $itemGroupKeys = []
     ): void {
         $this->addParameter(
             static::PARAMETER_SEARCH_RESULTS,
-            $this->getSearchResults($isInitialRenderEnabled, $searchResultLimit, $serviceTypeKey),
+            $this->getSearchResults(
+                $isInitialRenderEnabled,
+                $searchResultLimit,
+                $serviceTypeKey,
+                $serviceTypeUuid,
+                $shipmentTypeUuid,
+                $itemGroupKeys,
+            ),
         );
     }
 
@@ -160,16 +204,52 @@ class ServicePointSearchWidget extends AbstractWidget
     }
 
     /**
+     * @param string|null $serviceTypeUuid
+     *
+     * @return void
+     */
+    protected function addServiceTypeUuidParameter(?string $serviceTypeUuid = null): void
+    {
+        $this->addParameter(static::PARAMETER_SERVICE_TYPE_UUID, $serviceTypeUuid);
+    }
+
+    /**
+     * @param string|null $shipmentTypeUuid
+     *
+     * @return void
+     */
+    protected function addShipmentTypeUuidParameter(?string $shipmentTypeUuid = null): void
+    {
+        $this->addParameter(static::PARAMETER_SHIPMENT_TYPE_UUID, $shipmentTypeUuid);
+    }
+
+    /**
+     * @param list<string> $itemGroupKeys
+     *
+     * @return void
+     */
+    protected function addItemGroupKeysParameter(array $itemGroupKeys): void
+    {
+        $this->addParameter(static::PARAMETER_ITEM_GROUP_KEYS, $itemGroupKeys);
+    }
+
+    /**
      * @param bool $isInitialRenderEnabled
      * @param int $searchResultLimit
      * @param string|null $serviceTypeKey
+     * @param string|null $serviceTypeUuid
+     * @param string|null $shipmentTypeUuid
+     * @param list<string> $itemGroupKeys
      *
      * @return string
      */
     protected function getSearchResults(
         bool $isInitialRenderEnabled,
         int $searchResultLimit,
-        ?string $serviceTypeKey = null
+        ?string $serviceTypeKey = null,
+        ?string $serviceTypeUuid = null,
+        ?string $shipmentTypeUuid = null,
+        array $itemGroupKeys = []
     ): string {
         if (!$isInitialRenderEnabled) {
             return '';
@@ -178,6 +258,9 @@ class ServicePointSearchWidget extends AbstractWidget
         $servicePointSearchRequestTransfer = $this->createServicePointSearchRequestTransfer(
             $searchResultLimit,
             $serviceTypeKey,
+            $serviceTypeUuid,
+            $shipmentTypeUuid,
+            $itemGroupKeys,
         );
 
         return $this->getFactory()
@@ -188,12 +271,18 @@ class ServicePointSearchWidget extends AbstractWidget
     /**
      * @param int $searchResultLimit
      * @param string|null $serviceTypeKey
+     * @param string|null $serviceTypeUuid
+     * @param string|null $shipmentTypeUuid
+     * @param list<string> $itemGroupKeys
      *
      * @return \Generated\Shared\Transfer\ServicePointSearchRequestTransfer
      */
     protected function createServicePointSearchRequestTransfer(
         int $searchResultLimit,
-        ?string $serviceTypeKey = null
+        ?string $serviceTypeKey = null,
+        ?string $serviceTypeUuid = null,
+        ?string $shipmentTypeUuid = null,
+        array $itemGroupKeys = []
     ): ServicePointSearchRequestTransfer {
         $requestParameters = [
             static::SEARCH_REQUEST_PARAMETER_OFFSET => 0,
@@ -202,6 +291,18 @@ class ServicePointSearchWidget extends AbstractWidget
 
         if ($serviceTypeKey) {
             $requestParameters[static::SEARCH_REQUEST_PARAMETER_SERVICE_TYPES] = [$serviceTypeKey];
+        }
+
+        if ($serviceTypeUuid) {
+            $requestParameters[static::PARAMETER_SERVICE_TYPE_UUID] = $serviceTypeUuid;
+        }
+
+        if ($shipmentTypeUuid) {
+            $requestParameters[static::PARAMETER_SHIPMENT_TYPE_UUID] = $shipmentTypeUuid;
+        }
+
+        if ($itemGroupKeys) {
+            $requestParameters[static::PARAMETER_ITEM_GROUP_KEYS] = $itemGroupKeys;
         }
 
         return (new ServicePointSearchRequestTransfer())->setRequestParameters($requestParameters);

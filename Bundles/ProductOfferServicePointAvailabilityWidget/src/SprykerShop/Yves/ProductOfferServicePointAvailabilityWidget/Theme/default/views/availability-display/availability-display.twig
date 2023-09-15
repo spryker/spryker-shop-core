@@ -1,0 +1,13 @@
+{% extends template('widget') %}
+
+{% define data = {
+    productOfferServicePointAvailabilityMessage: _widget.productOfferServicePointAvailabilityMessage,
+} %}
+
+{%- block body -%}
+    {% include molecule('service-point-availability-status', 'ProductOfferServicePointAvailabilityWidget') with {
+        data: {
+            availabilityMessage: data.productOfferServicePointAvailabilityMessage,
+        },
+    } only %}
+{%- endblock -%}

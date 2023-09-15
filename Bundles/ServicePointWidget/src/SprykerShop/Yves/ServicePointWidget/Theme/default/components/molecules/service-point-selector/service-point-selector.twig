@@ -1,3 +1,5 @@
+{# @var data.selectedServicePoint \Generated\Shared\Transfer\ServicePointSearchTransfer #}
+
 {% extends model('component') %}
 
 {% define config = {
@@ -7,7 +9,10 @@
 
 {% define data = {
     servicePointForm: required,
-    pickupableServiceType: required,
+    pickupableServiceTypeKey: required,
+    pickupableServiceTypeUuid: required,
+    pickupableShipmentTypeUuid: required,
+    itemGroupKeys: [],
     selectedServicePoint: null,
     id: data.servicePointForm.uuid.vars.id | default,
 } %}
@@ -19,7 +24,12 @@
 } %}
 
 {% block locationsWidget %}
-    {% widget 'ServicePointSearchWidget' args [data.pickupableServiceType] with {
+    {% widget 'ServicePointSearchWidget' args [
+        data.pickupableServiceTypeKey,
+        data.pickupableServiceTypeUuid,
+        data.pickupableShipmentTypeUuid,
+        data.itemGroupKeys,
+    ] with {
         data: {
             extraClassName: attributes['finder-class-name'],
         },
@@ -31,7 +41,7 @@
 
 {% block body %}
     {% block noLocation %}
-        <div class="{{ config.jsName }}__no-location {{ isServicePointSelected ? attributes['toggle-class-name']}}">
+        <div class="{{ config.jsName }}__no-location {{ isServicePointSelected ? attributes['toggle-class-name'] }}">
             <button type="button" class="button {{ attributes['trigger-class-name'] }}">
                 {{ 'service_point_widget.select_location_action' | trans }}
             </button>
@@ -39,7 +49,7 @@
     {% endblock %}
 
     {% block selectedLocation %}
-        <div class="{{ config.jsName }}__location-container {{ not isServicePointSelected ? attributes['toggle-class-name']}}">
+        <div class="{{ config.jsName }}__location-container {{ not isServicePointSelected ? attributes['toggle-class-name'] }}">
             <strong>{{ 'service_point_widget.location_label' | trans }}</strong>
             <span class="{{ config.jsName }}__location">
                 {% if data.selectedServicePoint %}

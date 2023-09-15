@@ -12,6 +12,8 @@
     </transfer>
 
     <transfer name="ServicePointSearch" strict="true">
+        <property name="address" type="ServicePointAddress"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="ServicePoint" strict="true">
@@ -31,6 +33,7 @@
     <transfer name="Item">
         <property name="servicePoint" type="ServicePoint" strict="true"/>
         <property name="shipment" type="Shipment"/>
+        <property name="groupKey" type="string"/>
     </transfer>
 
     <transfer name="Quote">
@@ -88,10 +91,12 @@
 
     <transfer name="ShipmentType" strict="true">
         <property name="serviceType" type="ServiceType"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="ServiceType" strict="true">
         <property name="key" type="string"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
 </transfers>

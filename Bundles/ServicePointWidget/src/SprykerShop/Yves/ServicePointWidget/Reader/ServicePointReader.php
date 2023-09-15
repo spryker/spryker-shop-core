@@ -36,6 +36,21 @@ class ServicePointReader implements ServicePointReaderInterface
     protected const SEARCH_REQUEST_PARAMETER_SERVICE_TYPES = 'serviceTypes';
 
     /**
+     * @var string
+     */
+    protected const SEARCH_REQUEST_PARAMETER_SERVICE_TYPE_UUID = 'serviceTypeUuid';
+
+    /**
+     * @var string
+     */
+    protected const SEARCH_REQUEST_PARAMETER_SHIPMENT_TYPE_UUID = 'shipmentTypeUuid';
+
+    /**
+     * @var string
+     */
+    protected const SEARCH_REQUEST_PARAMETER_ITEM_GROUP_KEYS = 'itemGroupKeys';
+
+    /**
      * @uses \Spryker\Client\ServicePointSearch\Plugin\Elasticsearch\Query\PaginatedServicePointSearchQueryExpanderPlugin::PARAMETER_OFFSET
      *
      * @var string
@@ -82,6 +97,9 @@ class ServicePointReader implements ServicePointReaderInterface
         $servicePointSearchCollectionTransfer = $searchResults[static::RESULT_FORMATTER] ?? new ServicePointSearchCollectionTransfer();
         $requestParameters = $servicePointSearchRequestTransfer->getRequestParameters();
         $serviceTypeKeys = $requestParameters[static::SEARCH_REQUEST_PARAMETER_SERVICE_TYPES] ?? null;
+        $serviceTypeUuid = $requestParameters[static::SEARCH_REQUEST_PARAMETER_SERVICE_TYPE_UUID] ?? null;
+        $shipmentTypeUuid = $requestParameters[static::SEARCH_REQUEST_PARAMETER_SHIPMENT_TYPE_UUID] ?? null;
+        $itemGroupKeys = $requestParameters[static::SEARCH_REQUEST_PARAMETER_ITEM_GROUP_KEYS] ?? [];
 
         return $this->twigEnvironment->render(
             '@ServicePointWidget/views/service-point-list/service-point-list.twig',
@@ -91,6 +109,9 @@ class ServicePointReader implements ServicePointReaderInterface
                 'offset' => $requestParameters[static::SEARCH_REQUEST_PARAMETER_OFFSET],
                 'limit' => $requestParameters[static::SEARCH_REQUEST_PARAMETER_LIMIT],
                 'serviceTypeKey' => $serviceTypeKeys ? reset($serviceTypeKeys) : null,
+                'serviceTypeUuid' => $serviceTypeUuid,
+                'shipmentTypeUuid' => $shipmentTypeUuid,
+                'itemGroupKeys' => $itemGroupKeys,
                 'searchString' => $servicePointSearchRequestTransfer->getSearchString(),
                 'searchRoute' => static::ROUTE_NAME_SEARCH,
             ],

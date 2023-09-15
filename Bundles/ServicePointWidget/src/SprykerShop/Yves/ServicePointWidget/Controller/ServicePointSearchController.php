@@ -25,6 +25,16 @@ class ServicePointSearchController extends AbstractController
     protected const SEARCH_REQUEST_PARAMETER_SERVICE_TYPES = 'serviceTypes';
 
     /**
+     * @var string
+     */
+    protected const SEARCH_REQUEST_PARAMETER_SERVICE_TYPE_UUID = 'serviceTypeUuid';
+
+    /**
+     * @var string
+     */
+    protected const SEARCH_REQUEST_PARAMETER_SHIPMENT_TYPE_UUID = 'shipmentTypeUuid';
+
+    /**
      * @uses \Spryker\Client\ServicePointSearch\Plugin\Elasticsearch\Query\PaginatedServicePointSearchQueryExpanderPlugin::PARAMETER_OFFSET
      *
      * @var string
@@ -77,8 +87,8 @@ class ServicePointSearchController extends AbstractController
     protected function createServicePointSearchRequestTransfer(Request $request): ServicePointSearchRequestTransfer
     {
         $requestParameters = [
-            static::SEARCH_REQUEST_PARAMETER_OFFSET => $request->get(static::SEARCH_REQUEST_PARAMETER_OFFSET),
-            static::SEARCH_REQUEST_PARAMETER_LIMIT => $request->get(static::SEARCH_REQUEST_PARAMETER_LIMIT),
+            static::SEARCH_REQUEST_PARAMETER_OFFSET => (int)$request->get(static::SEARCH_REQUEST_PARAMETER_OFFSET),
+            static::SEARCH_REQUEST_PARAMETER_LIMIT => (int)$request->get(static::SEARCH_REQUEST_PARAMETER_LIMIT),
             static::SEARCH_REQUEST_PARAMETER_SORT => $request->get(static::SEARCH_REQUEST_PARAMETER_SORT),
         ];
 
@@ -86,6 +96,18 @@ class ServicePointSearchController extends AbstractController
 
         if ($serviceTypeKey) {
             $requestParameters[static::SEARCH_REQUEST_PARAMETER_SERVICE_TYPES] = [$serviceTypeKey];
+        }
+
+        $serviceTypeUuid = $request->get(static::SEARCH_REQUEST_PARAMETER_SERVICE_TYPE_UUID);
+
+        if ($serviceTypeUuid) {
+            $requestParameters[static::SEARCH_REQUEST_PARAMETER_SERVICE_TYPE_UUID] = $serviceTypeUuid;
+        }
+
+        $shipmentTypeUuid = $request->get(static::SEARCH_REQUEST_PARAMETER_SHIPMENT_TYPE_UUID);
+
+        if ($shipmentTypeUuid) {
+            $requestParameters[static::SEARCH_REQUEST_PARAMETER_SHIPMENT_TYPE_UUID] = $shipmentTypeUuid;
         }
 
         return (new ServicePointSearchRequestTransfer())

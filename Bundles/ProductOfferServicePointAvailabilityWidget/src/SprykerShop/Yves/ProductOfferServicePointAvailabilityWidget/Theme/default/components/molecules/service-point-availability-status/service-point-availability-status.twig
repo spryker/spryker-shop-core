@@ -1,0 +1,20 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'service-point-availability-status',
+} %}
+
+{% define data = {
+    availabilityMessage: required,
+    availabilityState: data.availabilityMessage | split('.') | last | replace({'_': '-'}),
+} %}
+
+{% block body %}
+    {% block indicator %}
+        <span class="{{ config.name }}__indicator {{ config.name }}__indicator--{{ data.availabilityState }}"></span>
+    {% endblock %}
+
+    {% block message %}
+        {{ data.availabilityMessage | trans }}
+    {% endblock %}
+{% endblock %}

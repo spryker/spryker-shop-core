@@ -1,0 +1,46 @@
+{
+    "name": "spryker-shop/product-offer-service-point-availability-widget",
+    "type": "library",
+    "description": "ProductOfferServicePointAvailabilityWidget module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.0",
+        "spryker-shop/shop-ui": "^1.45.1",
+        "spryker/cart": "^7.0.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/product-offer-service-point-availability-calculator": "^0.1.0",
+        "spryker/transfer": "^3.27.0"
+    },
+    "require-dev": {
+        "spryker/application": "*",
+        "spryker/code-sniffer": "*",
+        "spryker/testify": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "SprykerShop\\": "src/SprykerShop/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerShopTest\\": "tests/SprykerShopTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

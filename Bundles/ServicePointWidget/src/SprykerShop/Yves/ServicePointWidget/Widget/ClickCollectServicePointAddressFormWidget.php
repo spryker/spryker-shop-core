@@ -7,8 +7,12 @@
 
 namespace SprykerShop\Yves\ServicePointWidget\Widget;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
+use Generated\Shared\Transfer\ServiceTypeTransfer;
+use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
+use SprykerShop\Yves\ServicePointWidget\Form\ClickCollectServiceTypeSubForm;
 use SprykerShop\Yves\ServicePointWidget\Form\ServicePointAddressStepForm;
 use Symfony\Component\Form\FormView;
 
@@ -29,6 +33,16 @@ class ClickCollectServicePointAddressFormWidget extends AbstractWidget
      * @var string
      */
     protected const PARAMETER_PICKUPABLE_SERVICE_TYPE = 'pickupableServiceType';
+
+    /**
+     * @var string
+     */
+    protected const PARAMETER_PICKUPABLE_SHIPMENT_TYPE = 'pickupableShipmentType';
+
+    /**
+     * @var string
+     */
+    protected const PARAMETER_ITEM = 'item';
 
     /**
      * @var string
@@ -60,7 +74,9 @@ class ClickCollectServicePointAddressFormWidget extends AbstractWidget
     public function __construct(FormView $checkoutAddressForm)
     {
         $this->addIsVisibleParameter($checkoutAddressForm);
-        $this->addPickupableTypeParameter($checkoutAddressForm);
+        $this->addPickupableServiceTypeParameter($checkoutAddressForm);
+        $this->addPickupableShipmentTypeParameter($checkoutAddressForm);
+        $this->addItemParameter($checkoutAddressForm);
         $this->addServicePointFormParameter($checkoutAddressForm);
         $this->addSelectedServicePointParameter($checkoutAddressForm);
     }
@@ -86,12 +102,44 @@ class ClickCollectServicePointAddressFormWidget extends AbstractWidget
      *
      * @return void
      */
-    protected function addPickupableTypeParameter(FormView $checkoutAddressForm): void
+    protected function addPickupableServiceTypeParameter(FormView $checkoutAddressForm): void
     {
         $this->addParameter(
             static::PARAMETER_PICKUPABLE_SERVICE_TYPE,
             $this->getPickupableServiceType($checkoutAddressForm),
         );
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormView $checkoutAddressForm
+     *
+     * @return void
+     */
+    protected function addPickupableShipmentTypeParameter(FormView $checkoutAddressForm): void
+    {
+        $this->addParameter(
+            static::PARAMETER_PICKUPABLE_SHIPMENT_TYPE,
+            $this->getPickupableShipmentType($checkoutAddressForm),
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormView $checkoutAddressForm
+     *
+     * @return void
+     */
+    protected function addItemParameter(FormView $checkoutAddressForm): void
+    {
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $checkoutAddressForm->vars['value'];
+
+        if (!$checkoutAddressForm->parent) {
+            return;
+        }
+
+        if ($itemTransfer instanceof ItemTransfer) {
+            $this->addParameter(static::PARAMETER_ITEM, $itemTransfer);
+        }
     }
 
     /**
@@ -178,9 +226,9 @@ class ClickCollectServicePointAddressFormWidget extends AbstractWidget
     /**
      * @param \Symfony\Component\Form\FormView $checkoutAddressForm
      *
-     * @return string|null
+     * @return \Generated\Shared\Transfer\ServiceTypeTransfer|null
      */
-    protected function getPickupableServiceType(FormView $checkoutAddressForm): ?string
+    protected function getPickupableServiceType(FormView $checkoutAddressForm): ?ServiceTypeTransfer
     {
         $servicePointForm = $this->getServicePointForm($checkoutAddressForm);
         if (!$servicePointForm) {
@@ -192,7 +240,38 @@ class ClickCollectServicePointAddressFormWidget extends AbstractWidget
             return null;
         }
 
-        return $pickupableServiceType->vars['value'] ?? null;
+        if (isset($pickupableServiceType->vars['value']) && isset($pickupableServiceType->vars['attr'][ClickCollectServiceTypeSubForm::ATTRIBUTE_DATA_SERVICE_TYPE_UUID])) {
+            return (new ServiceTypeTransfer())
+                ->setUuid($pickupableServiceType->vars['attr'][ClickCollectServiceTypeSubForm::ATTRIBUTE_DATA_SERVICE_TYPE_UUID])
+                ->setKey($pickupableServiceType->vars['value']);
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormView $checkoutAddressForm
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTypeTransfer|null
+     */
+    protected function getPickupableShipmentType(FormView $checkoutAddressForm): ?ShipmentTypeTransfer
+    {
+        $servicePointForm = $this->getServicePointForm($checkoutAddressForm);
+        if (!$servicePointForm) {
+            return null;
+        }
+
+        $pickupableServiceType = $servicePointForm->children[static::PARAMETER_PICKUPABLE_SERVICE_TYPE] ?? null;
+        if (!$pickupableServiceType) {
+            return null;
+        }
+
+        if (isset($pickupableServiceType->vars['attr'][ClickCollectServiceTypeSubForm::ATTRIBUTE_DATA_SHIPMENT_TYPE_UUID])) {
+            return (new ShipmentTypeTransfer())
+                ->setUuid($pickupableServiceType->vars['attr'][ClickCollectServiceTypeSubForm::ATTRIBUTE_DATA_SHIPMENT_TYPE_UUID]);
+        }
+
+        return null;
     }
 
     /**

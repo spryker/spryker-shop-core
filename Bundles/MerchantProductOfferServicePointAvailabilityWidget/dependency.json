@@ -1,0 +1,6 @@
+{
+    "include": {
+        "spryker-shop/product-offer-service-point-availability-widget": "Added for forward compatibility.",
+        "spryker/transfer": "Provides transfer objects definition with strict types."
+    }
+}

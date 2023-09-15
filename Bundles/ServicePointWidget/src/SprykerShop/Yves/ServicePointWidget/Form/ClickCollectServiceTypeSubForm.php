@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ServicePointWidget\Form;
 
+use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,6 +21,16 @@ class ClickCollectServiceTypeSubForm extends AbstractType
      * @var string
      */
     public const FIELD_PICKUPABLE_SERVICE_TYPE = 'pickupableServiceType';
+
+    /**
+     * @var string
+     */
+    public const ATTRIBUTE_DATA_SERVICE_TYPE_UUID = 'data-service-type-uuid';
+
+    /**
+     * @var string
+     */
+    public const ATTRIBUTE_DATA_SHIPMENT_TYPE_UUID = 'data-shipment-type-uuid';
 
     /**
      * @uses \SprykerShop\Yves\ShipmentTypeWidget\Form\ShipmentTypeSubForm::OPTION_AVAILABLE_SHIPMENT_TYPES
@@ -51,9 +62,19 @@ class ClickCollectServiceTypeSubForm extends AbstractType
                 return;
             }
 
+            $shipmentTypeTransfer = $this->findShipmentTypeByPickupServiceType($options);
+
+            if (!$shipmentTypeTransfer) {
+                return;
+            }
+
             $servicePointForm->add(static::FIELD_PICKUPABLE_SERVICE_TYPE, HiddenType::class, [
                 'mapped' => false,
-                'data' => $this->findServiceTypePickup($options),
+                'data' => $shipmentTypeTransfer->getServiceTypeOrFail()->getKeyOrFail(),
+                'attr' => [
+                    static::ATTRIBUTE_DATA_SHIPMENT_TYPE_UUID => $shipmentTypeTransfer->getUuidOrFail(),
+                    static::ATTRIBUTE_DATA_SERVICE_TYPE_UUID => $shipmentTypeTransfer->getServiceTypeOrFail()->getUuidOrFail(),
+                ],
             ]);
         });
 
@@ -63,9 +84,9 @@ class ClickCollectServiceTypeSubForm extends AbstractType
     /**
      * @param array<string, mixed> $options
      *
-     * @return string|null
+     * @return \Generated\Shared\Transfer\ShipmentTypeTransfer|null
      */
-    protected function findServiceTypePickup(array $options): ?string
+    protected function findShipmentTypeByPickupServiceType(array $options): ?ShipmentTypeTransfer
     {
         /** @var array<string, \Generated\Shared\Transfer\ShipmentTypeTransfer>|null $availableShipmentTypes */
         $availableShipmentTypes = $options[static::OPTION_AVAILABLE_SHIPMENT_TYPES] ?? null;
@@ -75,7 +96,7 @@ class ClickCollectServiceTypeSubForm extends AbstractType
 
         foreach ($availableShipmentTypes as $shipmentTypeTransfer) {
             if ($shipmentTypeTransfer->getServiceType() && $shipmentTypeTransfer->getServiceTypeOrFail()->getKeyOrFail() === static::SERVICE_TYPE_PICKUP) {
-                return $shipmentTypeTransfer->getServiceType()->getKeyOrFail();
+                return $shipmentTypeTransfer;
             }
         }
 

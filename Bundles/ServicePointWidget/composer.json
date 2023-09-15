@@ -20,6 +20,7 @@
         "spryker/router": "*"
     },
     "suggest": {
+        "spryker-shop/product-offer-service-point-availability-widget": "Use this module if you need use product offer service point availability widgets.",
         "spryker/router": "Use this module if you need use the RouterProviderPlugin.",
         "spryker/silex": "Use this module when using plugins that need Silex dependencies."
     },

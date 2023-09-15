@@ -10,21 +10,41 @@
     searchRoute: searchRoute,
     searchString: searchString,
     serviceTypeKey: serviceTypeKey,
+    serviceTypeUuid: serviceTypeUuid,
+    shipmentTypeUuid: shipmentTypeUuid,
+    itemGroupKeys: itemGroupKeys,
 } %}
 
 {%- block body -%}
     {% if data.servicePoints %}
         {% if data.offset > 0 or data.nbResults <= data.limit %}
             {% block servicePointList %}
+                {% set productOfferServicePointAvailabilityWidget = findWidget('ProductOfferServicePointAvailabilityWidget', [
+                    servicePoints,
+                    itemGroupKeys,
+                    data.serviceTypeUuid,
+                    data.shipmentTypeUuid,
+                ]) %}
+
                 {% for servicePoint in data.servicePoints %}
                     {% include molecule('service-point', 'ServicePointWidget') with {
                         data: {
                             servicePoint: servicePoint,
+                            availabilityGlossaryKey: productOfferServicePointAvailabilityWidget.productOfferServicePointAvailabilities[servicePoint.uuid] | default,
                         },
                     } only %}
                 {% endfor %}
             {% endblock %}
         {% else %}
+            {% set queryStringObject = {
+                'serviceTypeKey': data.serviceTypeKey,
+                'serviceTypeUuid': data.serviceTypeUuid,
+                'shipmentTypeUuid': data.shipmentTypeUuid,
+                'itemGroupKeys': data.itemGroupKeys,
+                'searchString': data.searchString,
+                'limit': data.limit,
+            } %}
+
             {% block scroll %}
                 {% include molecule('endless-scroll', 'ServicePointWidget') with {
                     data: {
@@ -35,7 +55,7 @@
                         'result-offset': data.offset + data.limit,
                         'result-limit': data.limit,
                         'result-total': data.nbResults,
-                        'query-range': 'serviceTypeKey=' ~ data.serviceTypeKey ~ '&searchString=' ~ data.searchString ~ '&limit=' ~ data.limit ~ '&offset',
+                        'query-range': queryStringObject | url_encode ~ '&offset',
                     },
                 } only %}
             {% endblock %}

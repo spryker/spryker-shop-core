@@ -1,0 +1,30 @@
+@mixin product-offer-service-point-availability-widget-service-point-availability-status(
+    $name: '.service-point-availability-status'
+) {
+    #{$name} {
+        font-size: helper-font-size(small);
+        margin-bottom: map-get($setting-spacing, big);
+
+        &__indicator {
+            display: inline-block;
+            width: 0.7rem;
+            height: 0.7rem;
+            margin-right: map-get($setting-spacing, default);
+            border-radius: 100%;
+
+            &--all-items-available {
+                background: map-get($setting-color-actions, 'success');
+            }
+
+            &--some-items-not-available {
+                background: map-get($setting-color-actions, 'warning');
+            }
+
+            &--all-items-not-available {
+                background: map-get($setting-color-actions, 'alert');
+            }
+        }
+
+        @content;
+    }
+}
