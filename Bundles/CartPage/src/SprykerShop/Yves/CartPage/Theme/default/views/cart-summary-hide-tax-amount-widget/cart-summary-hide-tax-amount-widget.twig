@@ -1,0 +1,17 @@
+{# @var data.cart \Generated\Shared\Transfer\QuoteTransfer #}
+
+{% extends template('widget') %}
+
+{% define data = {
+    cart: _widget.cart,
+} %}
+
+{% block body %}
+    <span class="float-right">
+        {% if data.cart.hideTaxInCart is defined and data.cart.hideTaxInCart %}
+            {{ 'cart.total.tax_total.calculated_at_checkout' | trans }}
+        {% else %}
+            {{ data.cart.totals.taxTotal.amount | money(true, data.cart.currency.code) }}
+        {% endif %}
+    </span>
+{% endblock %}
