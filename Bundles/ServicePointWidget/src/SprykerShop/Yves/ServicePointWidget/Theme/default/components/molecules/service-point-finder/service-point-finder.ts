@@ -3,6 +3,11 @@ import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provide
 import debounce from 'lodash-es/debounce';
 
 export const EVENT_SET_SERVICE_POINT = 'setServicePoint';
+export interface ServicePointEventDetail {
+    uuid: string;
+    address: string;
+    partiallyAvailable?: boolean;
+}
 
 export default class ServicePointFinder extends Component {
     protected searchInput: HTMLInputElement;
@@ -61,13 +66,18 @@ export default class ServicePointFinder extends Component {
     }
 
     protected dispatchSetServicePointEvent(servicePointTrigger: HTMLElement): void {
-        const uuid = servicePointTrigger.dataset[this.servicePointUuidDataAttribute];
-        const address = servicePointTrigger.dataset[this.servicePointAddressDataAttribute];
+        const eventDetail: ServicePointEventDetail = {
+            uuid: servicePointTrigger.dataset[this.servicePointUuidDataAttribute],
+            address: servicePointTrigger.dataset[this.servicePointAddressDataAttribute],
+        };
+        const hasServicePointPartiallyAvailableDataAttribute =
+            this.servicePointPartiallyAvailableDataAttribute in servicePointTrigger.dataset;
 
-        this.dispatchCustomEvent(EVENT_SET_SERVICE_POINT, {
-            uuid: uuid,
-            address: address,
-        });
+        if (hasServicePointPartiallyAvailableDataAttribute) {
+            eventDetail.partiallyAvailable = hasServicePointPartiallyAvailableDataAttribute;
+        }
+
+        this.dispatchCustomEvent(EVENT_SET_SERVICE_POINT, eventDetail);
     }
 
     protected fetchServicePoints(): void {
@@ -105,5 +115,9 @@ export default class ServicePointFinder extends Component {
 
     protected get servicePointAddressDataAttribute(): string {
         return this.getAttribute('service-point-address-data-attribute');
+    }
+
+    protected get servicePointPartiallyAvailableDataAttribute(): string {
+        return this.getAttribute('service-point-partially-available-data-attribute');
     }
 }

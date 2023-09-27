@@ -1,5 +1,8 @@
 import Component from 'ShopUi/models/component';
-import ServicePointFinder, { EVENT_SET_SERVICE_POINT } from '../service-point-finder/service-point-finder';
+import ServicePointFinder, {
+    EVENT_SET_SERVICE_POINT,
+    ServicePointEventDetail,
+} from '../service-point-finder/service-point-finder';
 import MainPopup, { EVENT_CLOSE_POPUP } from '../main-popup/main-popup';
 import { mount } from 'ShopUi/app';
 
@@ -11,6 +14,7 @@ export default class ServicePointSelector extends Component {
     protected triggers: HTMLButtonElement[];
     protected finder: ServicePointFinder;
     protected popup: MainPopup;
+    protected deliverySelect: HTMLSelectElement;
 
     protected readyCallback(): void {}
 
@@ -21,6 +25,7 @@ export default class ServicePointSelector extends Component {
         this.locationContainer = <HTMLElement>this.getElementsByClassName(`${this.jsName}__location-container`)[0];
         this.triggers = <HTMLButtonElement[]>Array.from(this.getElementsByClassName(this.triggerClassName));
         this.popup = <MainPopup>this.getElementsByClassName(`${this.jsName}__popup`)[0];
+        this.deliverySelect = <HTMLSelectElement>document.getElementsByClassName(this.deliverySelectClassName)[0];
 
         this.mapEvents();
     }
@@ -49,17 +54,29 @@ export default class ServicePointSelector extends Component {
         }
 
         this.finder = <ServicePointFinder>document.getElementsByClassName(this.finderClassName)[0];
-        this.finder.addEventListener(EVENT_SET_SERVICE_POINT, (event: CustomEvent) =>
-            this.onServicePointSelected(event),
+        this.finder.addEventListener(EVENT_SET_SERVICE_POINT, (event: CustomEvent<ServicePointEventDetail>) =>
+            this.onServicePointSelected(event.detail),
         );
     }
 
-    protected onServicePointSelected(event: CustomEvent): void {
-        this.input.value = event.detail.uuid;
-        this.location.innerHTML = event.detail.address;
-        this.popup.dispatchEvent(new CustomEvent(EVENT_CLOSE_POPUP));
+    protected onServicePointSelected(detail: ServicePointEventDetail): void {
+        if (this.deliverySelect && detail.partiallyAvailable) {
+            this.deliverySelect.value = this.deliverySelectValue;
+            this.deliverySelect.dispatchEvent(new Event('change'));
+            this.closePopup();
+
+            return;
+        }
+
+        this.input.value = detail.uuid;
+        this.location.innerHTML = detail.address;
         this.input.dispatchEvent(new Event('input'));
+        this.closePopup();
         this.toggleContainer();
+    }
+
+    protected closePopup(): void {
+        this.popup.dispatchEvent(new CustomEvent(EVENT_CLOSE_POPUP));
     }
 
     protected toggleContainer(): void {
@@ -79,5 +96,13 @@ export default class ServicePointSelector extends Component {
 
     protected get toggleClassName(): string {
         return this.getAttribute('toggle-class-name');
+    }
+
+    protected get deliverySelectClassName(): string {
+        return this.getAttribute('delivery-select-class-name');
+    }
+
+    protected get deliverySelectValue(): string {
+        return this.getAttribute('delivery-select-value');
     }
 }

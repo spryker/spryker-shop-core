@@ -10,6 +10,7 @@
     checkoutAddressForm: null,
     shipmentTypesClassName: '',
     servicePointClassName: '',
+    deliverySelectClassName: '',
 } %}
 
 {% define attributes = {
@@ -37,9 +38,13 @@
 
     {% set servicePointType = 'pickup' %}
 
-    {% block ServicePointForm %}
+    {% block servicePointForm %}
         <div class="{{ config.jsName }}__service-point {{ activeShipmentType != servicePointType ? attributes['toggle-class-name'] }} {{ data.servicePointClassName }}">
-            {% widget 'ClickCollectServicePointAddressFormWidget' args [data.checkoutAddressForm] only %}{% endwidget %}
+            {% widget 'ClickCollectServicePointAddressFormWidget' args [data.checkoutAddressForm] with {
+                data: {
+                    deliverySelectClassName: data.deliverySelectClassName,
+                },
+            } only %}{% endwidget %}
         </div>
     {% endblock %}
 {% endblock %}

@@ -91,15 +91,15 @@
                                     data: {
                                         deliveryContainerClassName: deliveryContainerClassName,
                                         billingSameAsShippingContainerClassName: embed.jsAddressClass ~ '__wrapper-billingSameAsShipping',
+                                        deliverySelectClassName: deliverySelectClassName,
                                     },
                                     embed: {
                                         singleDeliveryContainerClassName: singleDeliveryContainerClassName,
-                                        isMultipleShipmentSelected: isMultipleShipmentSelected,
-                                        hiddenClassName: hiddenClassName,
+                                        hiddenClassName: isMultipleShipmentSelected ? hiddenClassName,
                                     },
                                 } only %}
                                     {% block body %}
-                                        <li class="list__item spacing-y {{ embed.singleDeliveryContainerClassName }} {{ embed.isMultipleShipmentSelected ? embed.hiddenClassName }}">
+                                        <li class="list__item spacing-y {{ embed.singleDeliveryContainerClassName }} {{ embed.hiddenClassName }}">
                                             {{ parent() }}
                                         </li>
                                     {% endblock %}

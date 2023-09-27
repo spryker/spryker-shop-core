@@ -35,23 +35,39 @@ export default class MultipleShipmentToggler extends Component {
     }
 
     protected mapEvents(): void {
+        this.mapSingleShipmentTriggerClickEvent();
+        this.mapMultipleShipmentTriggerClickEvent();
+        this.mapShipmentTypeSelectСhangeEvent();
+    }
+
+    protected mapSingleShipmentTriggerClickEvent(): void {
         this.singleShipmentTrigger.addEventListener('click', () => this.onSingleShipmentTriggerClick());
+    }
+
+    protected mapMultipleShipmentTriggerClickEvent(): void {
         this.multipleShipmentTrigger.addEventListener('click', () => this.onMultipleShipmentTriggerClick());
     }
 
+    protected mapShipmentTypeSelectСhangeEvent(): void {
+        this.shipmentTypeSelect.addEventListener('change', () => this.onShipmentTypeSelectChange());
+    }
+
     protected onSingleShipmentTriggerClick(): void {
-        this.toggleTarget(false);
         this.shipmentTypeSelect.value = this.prevShipmentValue ? this.prevShipmentValue : this.singleShipmentValue;
         this.dispatchChangeEvent();
-        this.updateButtonsState(false);
     }
 
     protected onMultipleShipmentTriggerClick(): void {
-        this.toggleTarget(true);
         this.prevShipmentValue = this.shipmentTypeSelect.value;
         this.shipmentTypeSelect.value = this.multipleShipmentValue;
         this.dispatchChangeEvent();
-        this.updateButtonsState(true);
+    }
+
+    protected onShipmentTypeSelectChange(): void {
+        const isMultipleShipmentActive = this.shipmentTypeSelect.value === this.multipleShipmentValue;
+
+        this.updateButtonsState(isMultipleShipmentActive);
+        this.toggleTarget(isMultipleShipmentActive);
     }
 
     protected dispatchChangeEvent(): void {
