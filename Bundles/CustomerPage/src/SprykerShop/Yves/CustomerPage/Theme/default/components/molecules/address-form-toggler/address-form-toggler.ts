@@ -32,11 +32,20 @@ export default class AddressFormToggler extends Component {
 
         this.toggler = <HTMLSelectElement>document.querySelector(this.triggerSelector);
         this.form = <HTMLFormElement>document.querySelector(this.targetSelector);
-        this.containerBillingAddress = <HTMLElement>document.querySelector(this.containerBillingAddressSelector);
-        this.billingSameAsShipping = <HTMLElement>document.querySelector(this.billingSameAsShippingSelector);
-        this.billingSameAsShippingToggler = <HTMLInputElement>(
-            document.querySelector(this.billingSameAsShippingTogglerSelector)
-        );
+
+        if (this.containerBillingAddressSelector) {
+            this.containerBillingAddress = <HTMLElement>document.querySelector(this.containerBillingAddressSelector);
+        }
+
+        if (this.billingSameAsShippingSelector) {
+            this.billingSameAsShipping = <HTMLElement>document.querySelector(this.billingSameAsShippingSelector);
+        }
+
+        if (this.billingSameAsShippingTogglerSelector) {
+            this.billingSameAsShippingToggler = <HTMLInputElement>(
+                document.querySelector(this.billingSameAsShippingTogglerSelector)
+            );
+        }
 
         if (this.subTargetSelector) {
             this.subForm = <HTMLFormElement>document.querySelector(this.subTargetSelector);
@@ -46,7 +55,6 @@ export default class AddressFormToggler extends Component {
             this.parentTarget = <HTMLElement>document.getElementsByClassName(this.parentTargetClassName)[0];
         }
 
-        this.onTogglerChange();
         this.setTriggerPreSelectedOption();
         this.mapEvents();
     }

@@ -18,6 +18,8 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleC
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
+use SprykerShop\Yves\CheckoutPage\Expander\AddressViewDataExpanderInterface;
+use SprykerShop\Yves\CheckoutPage\Expander\CustomerAddressViewDataExpander;
 use SprykerShop\Yves\CheckoutPage\Extractor\PaymentMethodKeyExtractor;
 use SprykerShop\Yves\CheckoutPage\Extractor\PaymentMethodKeyExtractorInterface;
 use SprykerShop\Yves\CheckoutPage\Form\DataProvider\ShipmentFormDataProvider;
@@ -190,6 +192,26 @@ class CheckoutPageFactory extends AbstractFactory
         return new SubFormFilter(
             $this->getSubFormFilterPlugins(),
             $this->getQuoteClient(),
+        );
+    }
+
+    /**
+     * @return list<\SprykerShop\Yves\CheckoutPage\Expander\AddressViewDataExpanderInterface>
+     */
+    public function getAddressViewDataExpanders(): array
+    {
+        return [
+            $this->createCustomerAddressViewDataExpander(),
+        ];
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Expander\AddressViewDataExpanderInterface
+     */
+    public function createCustomerAddressViewDataExpander(): AddressViewDataExpanderInterface
+    {
+        return new CustomerAddressViewDataExpander(
+            $this->getCustomerClient(),
         );
     }
 

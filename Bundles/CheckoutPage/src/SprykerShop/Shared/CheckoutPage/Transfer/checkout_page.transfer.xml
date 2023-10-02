@@ -91,6 +91,7 @@
 
     <transfer name="Customer">
         <property name="isGuest" type="bool"/>
+        <property name="addresses" type="Addresses"/>
     </transfer>
 
     <transfer name="PaymentMethod">
@@ -185,6 +186,10 @@
     <transfer name="QuoteResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="quoteTransfer" type="Quote"/>
+    </transfer>
+
+    <transfer name="Addresses">
+        <property name="addresses" type="Address[]" singular="address"/>
     </transfer>
 
 </transfers>

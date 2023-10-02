@@ -102,19 +102,19 @@ class CheckoutController extends AbstractController
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
-        $response = $this->createStepProcess()->process(
+        $viewData = $this->createStepProcess()->process(
             $request,
             $this->getFactory()
                 ->createCheckoutFormFactory()
                 ->createAddressFormCollection(),
         );
 
-        if (!is_array($response)) {
-            return $response;
+        if (!is_array($viewData)) {
+            return $viewData;
         }
 
         return $this->view(
-            $response,
+            $this->executeAddressViewDataExpanders($viewData),
             $this->getFactory()->getCustomerPageWidgetPlugins(),
             '@CheckoutPage/views/address/address.twig',
         );
@@ -326,5 +326,19 @@ class CheckoutController extends AbstractController
     protected function createStepProcess()
     {
         return $this->getFactory()->createCheckoutProcess();
+    }
+
+    /**
+     * @param array<string, mixed> $viewData
+     *
+     * @return array<string, mixed>
+     */
+    protected function executeAddressViewDataExpanders(array $viewData): array
+    {
+        foreach ($this->getFactory()->getAddressViewDataExpanders() as $addressViewDataExpander) {
+            $viewData = $addressViewDataExpander->expand($viewData);
+        }
+
+        return $viewData;
     }
 }

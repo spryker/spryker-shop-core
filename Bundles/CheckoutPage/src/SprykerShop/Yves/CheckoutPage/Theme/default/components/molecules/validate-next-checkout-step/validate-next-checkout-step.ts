@@ -1,33 +1,32 @@
 import Component from 'ShopUi/models/component';
 
-export const EVENT_INIT = 'afterInit';
-
 /**
  * @event afterInit An event emitted when the component has been initialized.
  */
+export const EVENT_INIT = 'afterInit';
+
+type FormFieldElement = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+
 export default class ValidateNextCheckoutStep extends Component {
     protected containers: HTMLElement[];
-    protected triggers: HTMLFormElement[];
-    protected extraTriggers: HTMLFormElement[];
+    protected triggers: FormFieldElement[];
+    protected extraTriggers: HTMLInputElement[];
     protected target: HTMLButtonElement;
     protected dropdownTriggers: HTMLSelectElement[];
     protected parentTarget: HTMLElement;
     protected readonly requiredFormFieldSelectors: string = 'select[required], input[required]';
+    protected dropdownTriggersChangeHandler: () => void;
+    protected parentTargetToggleFormHandler: () => void;
+    protected extraTriggerChangeHandler: () => void;
+    protected triggerInputHandler: () => void;
 
     protected readyCallback(): void {}
 
     protected init(): void {
-        this.containers = <HTMLElement[]>Array.from(document.querySelectorAll(this.containerSelector));
         this.target = <HTMLButtonElement>document.querySelector(this.targetSelector);
 
         if (this.parentTargetClassName) {
             this.parentTarget = <HTMLElement>document.getElementsByClassName(this.parentTargetClassName)[0];
-        }
-
-        if (this.extraTriggersClassName) {
-            this.extraTriggers = <HTMLFormElement[]>(
-                Array.from(document.getElementsByClassName(this.extraTriggersClassName))
-            );
         }
 
         if (this.isTriggerEnabled) {
@@ -40,25 +39,56 @@ export default class ValidateNextCheckoutStep extends Component {
     protected mapEvents(): void {
         this.mapTriggerEvents();
 
+        this.dropdownTriggersChangeHandler = () => this.onDropdownTriggerChange();
         this.dropdownTriggers.forEach((element: HTMLSelectElement) => {
-            element.addEventListener('change', () => this.onDropdownTriggerChange());
+            element.addEventListener('change', this.dropdownTriggersChangeHandler);
         });
 
         if (this.parentTarget) {
-            this.parentTarget.addEventListener('toggleForm', () => this.onDropdownTriggerChange());
+            this.parentTargetToggleFormHandler = () => this.onDropdownTriggerChange();
+            this.parentTarget.addEventListener('toggleForm', this.parentTargetToggleFormHandler);
         }
 
         if (this.extraTriggers) {
-            this.extraTriggers.forEach((extraTrigger: HTMLFormElement) => {
-                extraTrigger.addEventListener('change', () => this.onExtraTriggerChange());
+            this.extraTriggerChangeHandler = () => this.onExtraTriggerChange();
+            this.extraTriggers.forEach((extraTrigger: HTMLInputElement) => {
+                extraTrigger.addEventListener('change', this.extraTriggerChangeHandler);
+            });
+        }
+    }
+
+    /**
+     * Resets events that were subscribed in the `mapEvents` method.
+     */
+    resetEvents(): void {
+        if (this.triggers) {
+            this.triggers.forEach((element: FormFieldElement) => {
+                element.removeEventListener('input', this.triggerInputHandler);
+            });
+        }
+
+        if (this.dropdownTriggers) {
+            this.dropdownTriggers.forEach((element: HTMLSelectElement) => {
+                element.removeEventListener('change', this.dropdownTriggersChangeHandler);
+            });
+        }
+
+        if (this.parentTarget) {
+            this.parentTarget.removeEventListener('toggleForm', this.parentTargetToggleFormHandler);
+        }
+
+        if (this.extraTriggers) {
+            this.extraTriggers.forEach((extraTrigger: HTMLInputElement) => {
+                extraTrigger.removeEventListener('change', this.extraTriggerChangeHandler);
             });
         }
     }
 
     protected mapTriggerEvents(): void {
         if (this.triggers) {
-            this.triggers.forEach((element: HTMLFormElement) => {
-                element.addEventListener('input', () => this.onTriggerInput());
+            this.triggerInputHandler = () => this.onTriggerInput();
+            this.triggers.forEach((element: FormFieldElement) => {
+                element.addEventListener('input', this.triggerInputHandler);
             });
         }
     }
@@ -66,10 +96,14 @@ export default class ValidateNextCheckoutStep extends Component {
     /**
      * Init the methods, which fill the collection of form fields and toggle disabling of button.
      */
-    initTriggerState(): void {
+    async initTriggerState(): Promise<void> {
+        this.containers = <HTMLElement[]>Array.from(document.querySelectorAll(this.containerSelector));
+
         this.fillDropdownTriggersCollection();
         this.fillFormFieldsCollection();
+        await this.fillExtraTriggersCollection();
         this.toggleDisablingNextStepButton();
+        this.resetEvents();
         this.mapEvents();
     }
 
@@ -79,22 +113,42 @@ export default class ValidateNextCheckoutStep extends Component {
         );
     }
 
-    protected fillFormFieldsCollection(): void {
+    protected async fillFormFieldsCollection(): Promise<void> {
         this.triggers = [];
 
         if (!this.containers) {
             return;
         }
 
-        this.triggers = <HTMLFormElement[]>this.containers.reduce((collection: HTMLElement[], element: HTMLElement) => {
-            if (!element.classList.contains(this.classToToggle)) {
-                collection.push(
-                    ...(<HTMLFormElement[]>Array.from(element.querySelectorAll(this.requiredFormFieldSelectors))),
-                );
-            }
+        this.triggers = <FormFieldElement[]>this.containers.reduce(
+            (collection: HTMLElement[], element: HTMLElement) => {
+                const extraContainer = this.extraContainerSelector
+                    ? element.closest(this.extraContainerSelector)
+                    : null;
 
-            return collection;
-        }, []);
+                if (
+                    !element.classList.contains(this.classToToggle) &&
+                    !extraContainer?.classList.contains(this.classToToggle)
+                ) {
+                    collection.push(
+                        ...(<FormFieldElement[]>Array.from(element.querySelectorAll(this.requiredFormFieldSelectors))),
+                    );
+                }
+
+                return collection;
+            },
+            [],
+        );
+    }
+
+    protected fillExtraTriggersCollection(): void {
+        if (!this.extraTriggersClassName) {
+            return;
+        }
+
+        this.extraTriggers = <HTMLInputElement[]>(
+            Array.from(document.getElementsByClassName(this.extraTriggersClassName))
+        );
     }
 
     protected onTriggerInput(): void {
@@ -116,13 +170,9 @@ export default class ValidateNextCheckoutStep extends Component {
             return;
         }
 
-        if (this.isFormFieldsEmpty || this.isDropdownTriggerPreSelected) {
-            this.disableNextStepButton(true);
-
-            return;
-        }
-
-        this.disableNextStepButton(false);
+        const isFormInvalid =
+            this.isFormFieldsEmpty || this.isDropdownTriggerPreSelected || this.isExtraTriggersUnchecked;
+        this.disableNextStepButton(isFormInvalid);
     }
 
     /**
@@ -142,11 +192,35 @@ export default class ValidateNextCheckoutStep extends Component {
         return this.dropdownTriggers.some((element: HTMLSelectElement) => !element.value);
     }
 
+    protected get isExtraTriggersUnchecked(): boolean {
+        if (!this.extraTriggers) {
+            return false;
+        }
+
+        const groupExtraTriggers = {};
+        const checkedGroup = [];
+
+        this.extraTriggers.forEach((extraTrigger: HTMLInputElement) => {
+            const triggerName = extraTrigger.name;
+
+            if (groupExtraTriggers[triggerName] !== extraTrigger.checked) {
+                groupExtraTriggers[triggerName] = extraTrigger.checked;
+            }
+
+            if (groupExtraTriggers[triggerName]) {
+                checkedGroup.push(triggerName);
+                groupExtraTriggers[triggerName] = false;
+            }
+        });
+
+        return Object.keys(groupExtraTriggers).length !== checkedGroup.length;
+    }
+
     /**
      * Checks if the form fields are empty.
      */
     get isFormFieldsEmpty(): boolean {
-        return this.triggers.some((element: HTMLFormElement) => !element.value);
+        return this.triggers.some((element: FormFieldElement) => !element.value);
     }
 
     /**
@@ -161,6 +235,10 @@ export default class ValidateNextCheckoutStep extends Component {
      */
     get containerSelector(): string {
         return this.getAttribute('container-selector');
+    }
+
+    protected get extraContainerSelector(): string {
+        return this.getAttribute('extra-container-selector');
     }
 
     /**

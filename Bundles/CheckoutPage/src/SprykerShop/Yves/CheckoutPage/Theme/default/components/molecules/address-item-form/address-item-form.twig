@@ -10,12 +10,13 @@
     shippingForm: required,
     jsAddressClass: '',
     hiddenClassName: 'is-hidden',
+    validatorClassName: '',
 } %}
 
-{% set addressSelectClassName = 'js-address-item-form__address-select' %}
-{% set validatorClassName = 'js-address-item-form__validate-next-checkout-step' %}
-{% set validatorTriggerClassName = 'js-address-item-form__validator-trigger' %}
-{% set itemShippingClassName = 'js-address-item-form__item-shipping' %}
+{% set addressSelectClassName = 'js-' ~ config.name ~ '__address-select' %}
+{% set validatorTriggerClassName = 'js-' ~ config.name ~ '__validator-trigger' %}
+{% set itemShippingClassName = 'js-' ~ config.name ~ '__item-shipping' %}
+{% set itemDeliveryValidationClassName = 'js-' ~ config.name ~ '__item-delivery-validation' %}
 
 {% block body %}
     {% if is_granted('ROLE_USER') %}
@@ -41,6 +42,7 @@
                 addressSelectClassName: addressSelectClassName,
                 validatorTriggerClassName: validatorTriggerClassName,
                 itemShippingClassName: itemShippingClassName,
+                itemDeliveryValidationClassName: itemDeliveryValidationClassName,
                 hiddenClassName: data.hiddenClassName,
             },
         } only %}
@@ -54,6 +56,7 @@
                             addressSelectClassName: embed.addressSelectClassName,
                             validatorTriggerClassName: embed.validatorTriggerClassName,
                             itemShippingClassName: embed.itemShippingClassName,
+                            validationClassName: embed.itemDeliveryValidationClassName,
                             hiddenClassName: embed.hiddenClassName,
                         },
                     } only %}
@@ -90,17 +93,11 @@
     {% endif %}
 
     {% block stepValidation %}
-        {% include molecule('is-next-checkout-step-enabled', 'CheckoutPage') with {
-            attributes: {
-                'trigger-selector': '.' ~ data.jsAddressClass ~ '__form-select-shippingAddress',
-                'target-selector': '.' ~ validatorClassName,
-            },
-        } only %}
-
         {% include molecule('validate-next-checkout-step', 'CheckoutPage') with {
-            class: validatorClassName,
+            class: data.validatorClassName,
             attributes: {
                 'container-selector': '.' ~ itemShippingClassName,
+                'extra-container-selector': '.' ~ itemDeliveryValidationClassName,
                 'target-selector': '.' ~ data.jsAddressClass ~ '__form-submit',
                 'dropdown-trigger-selector': '.' ~ addressSelectClassName ~ ':not(.' ~ data.hiddenClassName ~ ')',
                 'extra-triggers-class-name': validatorTriggerClassName,
