@@ -7,17 +7,11 @@
 
 namespace SprykerShop\Yves\CartPage\Dependency\Plugin;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use SprykerShop\Yves\CartPageExtension\Dependency\Plugin\CartItemTransformerPluginInterface as ExtensionCartItemTransformerPluginInterface;
 
-interface CartItemTransformerPluginInterface
+/**
+ * @deprecated Use {@link \SprykerShop\Yves\CartPageExtension\Dependency\Plugin\CartItemTransformerPluginInterface} instead.
+ */
+interface CartItemTransformerPluginInterface extends ExtensionCartItemTransformerPluginInterface
 {
-    /**
-     * @api
-     *
-     * @param array<\Generated\Shared\Transfer\ItemTransfer> $cartItems
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return array<\Generated\Shared\Transfer\ItemTransfer>
-     */
-    public function transformCartItems(array $cartItems, QuoteTransfer $quoteTransfer): array;
 }

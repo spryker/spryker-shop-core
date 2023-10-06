@@ -179,7 +179,7 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
-     * @return array<\SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemTransformerPluginInterface>
+     * @return array<\SprykerShop\Yves\CartPageExtension\Dependency\Plugin\CartItemTransformerPluginInterface>
      */
     public function getCartItemTransformerPlugins()
     {

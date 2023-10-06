@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShopTest\Yves\CartPage;
+namespace SprykerShopTest\Yves\UrlPage;
 
 use Codeception\Actor;
 
@@ -19,11 +19,11 @@ use Codeception\Actor;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method void pause()
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(\SprykerShopTest\Yves\CartPage\PHPMD)
+ * @SuppressWarnings(\SprykerShopTest\Yves\UrlPage\PHPMD)
  */
-class CartPageTester extends Actor
+class UrlPageYvesTester extends Actor
 {
-    use _generated\CartPageTesterActions;
+    use _generated\UrlPageYvesTesterActions;
 }

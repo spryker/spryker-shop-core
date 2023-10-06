@@ -5,7 +5,7 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.0",
-        "spryker-shop/cart-page-extension": "^1.1.0",
+        "spryker-shop/cart-page-extension": "^1.2.0",
         "spryker-shop/comment-widget-extension": "^1.0.0",
         "spryker-shop/product-configurator-gateway-page-extension": "^0.1.0 || ^0.2.0 || ^1.0.0",
         "spryker-shop/product-group-widget-extension": "^1.0.0",

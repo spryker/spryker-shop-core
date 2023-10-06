@@ -189,6 +189,7 @@
         "spryker-shop/store-widget": "*",
         "spryker-shop/tabs-widget": "*",
         "spryker-shop/tabs-widget-extension": "*",
+        "spryker-shop/url-page": "*",
         "spryker-shop/web-profiler-widget": "*",
         "spryker-shop/wishlist-page": "*",
         "spryker-shop/wishlist-page-extension": "*",
