@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace SprykerShop\Yves\ServicePointWidget\Plugin\CustomerPage;
+namespace SprykerShop\Yves\ClickAndCollectPageExample\Plugin\CustomerPage;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CheckoutMultiShippingAddressesFormExpanderPluginInterface;
@@ -13,9 +13,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @method \SprykerShop\Yves\ServicePointWidget\ServicePointWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\ClickAndCollectPageExample\ClickAndCollectPageExampleFactory getFactory()
  */
-class ClickCollectServiceTypeCheckoutMultiShippingAddressesFormExpanderPlugin extends AbstractPlugin implements CheckoutMultiShippingAddressesFormExpanderPluginInterface
+class ClickAndCollectServiceTypeCheckoutMultiShippingAddressesFormExpanderPlugin extends AbstractPlugin implements CheckoutMultiShippingAddressesFormExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -44,7 +44,7 @@ class ClickCollectServiceTypeCheckoutMultiShippingAddressesFormExpanderPlugin ex
     public function expand(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
         return $this->getFactory()
-            ->createClickCollectServiceTypeSubForm()
+            ->createClickAndCollectServiceTypeSubForm()
             ->buildForm($builder, $options);
     }
 }

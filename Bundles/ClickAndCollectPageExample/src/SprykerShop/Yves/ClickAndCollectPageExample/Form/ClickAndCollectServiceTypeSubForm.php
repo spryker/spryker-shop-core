@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace SprykerShop\Yves\ServicePointWidget\Form;
+namespace SprykerShop\Yves\ClickAndCollectPageExample\Form;
 
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
@@ -15,7 +15,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 
-class ClickCollectServiceTypeSubForm extends AbstractType
+class ClickAndCollectServiceTypeSubForm extends AbstractType
 {
     /**
      * @var string
@@ -45,6 +45,13 @@ class ClickCollectServiceTypeSubForm extends AbstractType
      * @var string
      */
     protected const SERVICE_TYPE_PICKUP = 'pickup';
+
+    /**
+     * @uses \SprykerShop\Yves\ServicePointWidget\Form\ServicePointAddressStepForm::FIELD_SERVICE_POINT
+     *
+     * @var string
+     */
+    protected const FIELD_SERVICE_POINT = 'servicePoint';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -110,6 +117,6 @@ class ClickCollectServiceTypeSubForm extends AbstractType
      */
     protected function findServicePointForm(FormInterface $form): ?FormInterface
     {
-        return $form->has(ServicePointAddressStepForm::FIELD_SERVICE_POINT) ? $form->get(ServicePointAddressStepForm::FIELD_SERVICE_POINT) : null;
+        return $form->has(static::FIELD_SERVICE_POINT) ? $form->get(static::FIELD_SERVICE_POINT) : null;
     }
 }

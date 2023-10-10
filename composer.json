@@ -43,6 +43,7 @@
         "spryker-shop/checkout-page": "*",
         "spryker-shop/checkout-page-extension": "*",
         "spryker-shop/checkout-widget": "*",
+        "spryker-shop/click-and-collect-page-example": "*",
         "spryker-shop/cms-block-widget": "*",
         "spryker-shop/cms-content-widget-chart-connector": "*",
         "spryker-shop/cms-content-widget-product-connector": "*",

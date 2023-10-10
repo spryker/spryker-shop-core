@@ -14,7 +14,6 @@ use SprykerShop\Yves\ServicePointWidget\Dependency\Client\ServicePointWidgetToSe
 use SprykerShop\Yves\ServicePointWidget\Dependency\Client\ServicePointWidgetToServicePointStorageClientInterface;
 use SprykerShop\Yves\ServicePointWidget\Expander\ServicePointAddressExpander;
 use SprykerShop\Yves\ServicePointWidget\Expander\ServicePointAddressExpanderInterface;
-use SprykerShop\Yves\ServicePointWidget\Form\ClickCollectServiceTypeSubForm;
 use SprykerShop\Yves\ServicePointWidget\Form\ServicePointAddressStepForm;
 use SprykerShop\Yves\ServicePointWidget\Hydrator\ServicePointFormPreSetDataHydrator;
 use SprykerShop\Yves\ServicePointWidget\Hydrator\ServicePointFormPreSetDataHydratorInterface;
@@ -48,14 +47,6 @@ class ServicePointWidgetFactory extends AbstractFactory
     public function createServicePointAddressStepForm(): FormTypeInterface
     {
         return new ServicePointAddressStepForm();
-    }
-
-    /**
-     * @return \Symfony\Component\Form\FormTypeInterface
-     */
-    public function createClickCollectServiceTypeSubForm(): FormTypeInterface
-    {
-        return new ClickCollectServiceTypeSubForm();
     }
 
     /**

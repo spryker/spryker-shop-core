@@ -40,7 +40,7 @@
 
     {% block servicePointForm %}
         <div class="{{ config.jsName }}__service-point {{ activeShipmentType != servicePointType ? attributes['toggle-class-name'] }} {{ data.servicePointClassName }}">
-            {% widget 'ClickCollectServicePointAddressFormWidget' args [data.checkoutAddressForm] with {
+            {% widget 'ClickAndCollectServicePointAddressFormWidget' args [data.checkoutAddressForm] with {
                 data: {
                     deliverySelectClassName: data.deliverySelectClassName,
                 },

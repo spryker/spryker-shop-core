@@ -1,26 +1,25 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace SprykerShop\Yves\ServicePointWidget\Widget;
+namespace SprykerShop\Yves\ClickAndCollectPageExample\Widget;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 use Generated\Shared\Transfer\ServiceTypeTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
-use SprykerShop\Yves\ServicePointWidget\Form\ClickCollectServiceTypeSubForm;
-use SprykerShop\Yves\ServicePointWidget\Form\ServicePointAddressStepForm;
+use SprykerShop\Yves\ClickAndCollectPageExample\Form\ClickAndCollectServiceTypeSubForm;
 use Symfony\Component\Form\FormView;
 
 /**
- * @method \SprykerShop\Yves\ServicePointWidget\ServicePointWidgetFactory getFactory()
- * @method \SprykerShop\Yves\ServicePointWidget\ServicePointWidgetConfig getConfig()
+ * @method \SprykerShop\Yves\ClickAndCollectPageExample\ClickAndCollectPageExampleFactory getFactory()
+ * @method \SprykerShop\Yves\ClickAndCollectPageExample\ClickAndCollectPageExampleConfig getConfig()
  */
-class ClickCollectServicePointAddressFormWidget extends AbstractWidget
+class ClickAndCollectServicePointAddressFormWidget extends AbstractWidget
 {
     /**
      * @var string
@@ -28,7 +27,7 @@ class ClickCollectServicePointAddressFormWidget extends AbstractWidget
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
 
     /**
-     * @uses \SprykerShop\Yves\ServicePointWidget\Form\ClickCollectServiceTypeSubForm::FIELD_PICKUPABLE_SERVICE_TYPE
+     * @uses \SprykerShop\Yves\ClickAndCollectPageExample\Form\ClickAndCollectServiceTypeSubForm::FIELD_PICKUPABLE_SERVICE_TYPE
      *
      * @var string
      */
@@ -69,6 +68,13 @@ class ClickCollectServicePointAddressFormWidget extends AbstractWidget
     protected const FIELD_SHIPMENT_TYPE_KEY = 'key';
 
     /**
+     * @uses \SprykerShop\Yves\ServicePointWidget\Form\ServicePointAddressStepForm::FIELD_SERVICE_POINT
+     *
+     * @var string
+     */
+    protected const FIELD_SERVICE_POINT = 'servicePoint';
+
+    /**
      * @param \Symfony\Component\Form\FormView $checkoutAddressForm
      */
     public function __construct(FormView $checkoutAddressForm)
@@ -86,7 +92,7 @@ class ClickCollectServicePointAddressFormWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'ClickCollectServicePointAddressFormWidget';
+        return 'ClickAndCollectServicePointAddressFormWidget';
     }
 
     /**
@@ -94,7 +100,7 @@ class ClickCollectServicePointAddressFormWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@ServicePointWidget/views/click-collect-service-point-address-form/click-collect-service-point-address-form.twig';
+        return '@ClickAndCollectPageExample/views/click-and-collect-service-point-address-form/click-and-collect-service-point-address-form.twig';
     }
 
     /**
@@ -188,7 +194,7 @@ class ClickCollectServicePointAddressFormWidget extends AbstractWidget
      */
     protected function getServicePointForm(FormView $checkoutAddressForm): ?FormView
     {
-        return $checkoutAddressForm->children[ServicePointAddressStepForm::FIELD_SERVICE_POINT] ?? null;
+        return $checkoutAddressForm->children[static::FIELD_SERVICE_POINT] ?? null;
     }
 
     /**
@@ -240,9 +246,9 @@ class ClickCollectServicePointAddressFormWidget extends AbstractWidget
             return null;
         }
 
-        if (isset($pickupableServiceType->vars['value']) && isset($pickupableServiceType->vars['attr'][ClickCollectServiceTypeSubForm::ATTRIBUTE_DATA_SERVICE_TYPE_UUID])) {
+        if (isset($pickupableServiceType->vars['value']) && isset($pickupableServiceType->vars['attr'][ClickAndCollectServiceTypeSubForm::ATTRIBUTE_DATA_SERVICE_TYPE_UUID])) {
             return (new ServiceTypeTransfer())
-                ->setUuid($pickupableServiceType->vars['attr'][ClickCollectServiceTypeSubForm::ATTRIBUTE_DATA_SERVICE_TYPE_UUID])
+                ->setUuid($pickupableServiceType->vars['attr'][ClickAndCollectServiceTypeSubForm::ATTRIBUTE_DATA_SERVICE_TYPE_UUID])
                 ->setKey($pickupableServiceType->vars['value']);
         }
 
@@ -266,9 +272,9 @@ class ClickCollectServicePointAddressFormWidget extends AbstractWidget
             return null;
         }
 
-        if (isset($pickupableServiceType->vars['attr'][ClickCollectServiceTypeSubForm::ATTRIBUTE_DATA_SHIPMENT_TYPE_UUID])) {
+        if (isset($pickupableServiceType->vars['attr'][ClickAndCollectServiceTypeSubForm::ATTRIBUTE_DATA_SHIPMENT_TYPE_UUID])) {
             return (new ShipmentTypeTransfer())
-                ->setUuid($pickupableServiceType->vars['attr'][ClickCollectServiceTypeSubForm::ATTRIBUTE_DATA_SHIPMENT_TYPE_UUID]);
+                ->setUuid($pickupableServiceType->vars['attr'][ClickAndCollectServiceTypeSubForm::ATTRIBUTE_DATA_SHIPMENT_TYPE_UUID]);
         }
 
         return null;

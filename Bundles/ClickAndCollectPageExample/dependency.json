@@ -1,0 +1,7 @@
+{
+    "include": {
+        "spryker/transfer": "Provides transfer objects definition with strict types.",
+        "spryker-shop/service-point-widget": "If you want to use molecules and components from module ServicePointWidget.",
+        "spryker-shop/shop-ui": "ShopUi provides basic frontend infrastructure."
+    }
+}
