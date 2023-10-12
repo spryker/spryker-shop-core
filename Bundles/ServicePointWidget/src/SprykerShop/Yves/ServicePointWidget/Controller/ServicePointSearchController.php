@@ -35,6 +35,11 @@ class ServicePointSearchController extends AbstractController
     protected const SEARCH_REQUEST_PARAMETER_SHIPMENT_TYPE_UUID = 'shipmentTypeUuid';
 
     /**
+     * @var string
+     */
+    protected const SEARCH_REQUEST_PARAMETER_ITEM_GROUP_KEYS = 'itemGroupKeys';
+
+    /**
      * @uses \Spryker\Client\ServicePointSearch\Plugin\Elasticsearch\Query\PaginatedServicePointSearchQueryExpanderPlugin::PARAMETER_OFFSET
      *
      * @var string
@@ -108,6 +113,12 @@ class ServicePointSearchController extends AbstractController
 
         if ($shipmentTypeUuid) {
             $requestParameters[static::SEARCH_REQUEST_PARAMETER_SHIPMENT_TYPE_UUID] = $shipmentTypeUuid;
+        }
+
+        $groupKeys = $request->get(static::SEARCH_REQUEST_PARAMETER_ITEM_GROUP_KEYS);
+
+        if ($groupKeys) {
+            $requestParameters[static::SEARCH_REQUEST_PARAMETER_ITEM_GROUP_KEYS] = $groupKeys;
         }
 
         return (new ServicePointSearchRequestTransfer())
