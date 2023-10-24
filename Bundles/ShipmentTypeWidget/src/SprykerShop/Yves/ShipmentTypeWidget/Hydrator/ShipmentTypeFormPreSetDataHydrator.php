@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\ShipmentTypeWidget\Hydrator;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use SprykerShop\Yves\ShipmentTypeWidget\Checker\AddressFormCheckerInterface;
 use SprykerShop\Yves\ShipmentTypeWidget\Form\ShipmentTypeAddressStepForm;
 use SprykerShop\Yves\ShipmentTypeWidget\Form\ShipmentTypeSubForm;
 use Symfony\Component\Form\FormEvent;
@@ -24,6 +25,19 @@ class ShipmentTypeFormPreSetDataHydrator implements ShipmentTypeFormPreSetDataHy
     protected const SHIPMENT_TYPE_DELIVERY = 'delivery';
 
     /**
+     * @var \SprykerShop\Yves\ShipmentTypeWidget\Checker\AddressFormCheckerInterface
+     */
+    protected AddressFormCheckerInterface $addressFormChecker;
+
+    /**
+     * @param \SprykerShop\Yves\ShipmentTypeWidget\Checker\AddressFormCheckerInterface $addressFormChecker
+     */
+    public function __construct(AddressFormCheckerInterface $addressFormChecker)
+    {
+        $this->addressFormChecker = $addressFormChecker;
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormEvent $event
      * @param array<string, mixed> $options
      *
@@ -35,7 +49,7 @@ class ShipmentTypeFormPreSetDataHydrator implements ShipmentTypeFormPreSetDataHy
         $data = $event->getData();
         $form = $event->getForm();
 
-        if (!$this->isApplicable($data)) {
+        if (!$this->addressFormChecker->isApplicableForShipmentTypeAddressStepFormHydration($data)) {
             return;
         }
 
@@ -47,16 +61,6 @@ class ShipmentTypeFormPreSetDataHydrator implements ShipmentTypeFormPreSetDataHy
             ShipmentTypeSubForm::OPTION_AVAILABLE_SHIPMENT_TYPES => $options[ShipmentTypeSubForm::OPTION_AVAILABLE_SHIPMENT_TYPES],
             ShipmentTypeSubForm::OPTION_SELECTED_SHIPMENT_TYPE => $this->getSelectedShipmentTypeKey($data),
         ]);
-    }
-
-    /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $data
-     *
-     * @return bool
-     */
-    protected function isApplicable(?AbstractTransfer $data): bool
-    {
-        return $data instanceof QuoteTransfer || $data instanceof ItemTransfer;
     }
 
     /**

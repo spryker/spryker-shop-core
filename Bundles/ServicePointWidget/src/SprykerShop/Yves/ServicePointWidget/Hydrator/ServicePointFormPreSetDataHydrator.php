@@ -11,12 +11,26 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use SprykerShop\Yves\ServicePointWidget\Checker\AddressFormCheckerInterface;
 use SprykerShop\Yves\ServicePointWidget\Form\ServicePointAddressStepForm;
 use SprykerShop\Yves\ServicePointWidget\Form\ServicePointSubForm;
 use Symfony\Component\Form\FormEvent;
 
 class ServicePointFormPreSetDataHydrator implements ServicePointFormPreSetDataHydratorInterface
 {
+    /**
+     * @var \SprykerShop\Yves\ServicePointWidget\Checker\AddressFormCheckerInterface
+     */
+    protected AddressFormCheckerInterface $addressFormChecker;
+
+    /**
+     * @param \SprykerShop\Yves\ServicePointWidget\Checker\AddressFormCheckerInterface $addressFormChecker
+     */
+    public function __construct(AddressFormCheckerInterface $addressFormChecker)
+    {
+        $this->addressFormChecker = $addressFormChecker;
+    }
+
     /**
      * @param \Symfony\Component\Form\FormEvent $event
      *
@@ -28,7 +42,7 @@ class ServicePointFormPreSetDataHydrator implements ServicePointFormPreSetDataHy
         $data = $event->getData();
         $form = $event->getForm();
 
-        if (!$this->isApplicable($data)) {
+        if (!$this->addressFormChecker->isApplicableForServicePointAddressStepFormHydration($data)) {
             return;
         }
 
@@ -38,16 +52,6 @@ class ServicePointFormPreSetDataHydrator implements ServicePointFormPreSetDataHy
             'label' => false,
             ServicePointSubForm::OPTION_SELECTED_SERVICE_POINT => $this->getSelectedServicePoint($data),
         ]);
-    }
-
-    /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $data
-     *
-     * @return bool
-     */
-    protected function isApplicable(?AbstractTransfer $data): bool
-    {
-        return $data instanceof QuoteTransfer || $data instanceof ItemTransfer;
     }
 
     /**

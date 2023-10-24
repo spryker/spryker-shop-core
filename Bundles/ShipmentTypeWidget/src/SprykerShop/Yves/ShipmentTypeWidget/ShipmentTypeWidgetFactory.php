@@ -44,7 +44,9 @@ class ShipmentTypeWidgetFactory extends AbstractFactory
      */
     public function createShipmentTypeFormPreSetDataHydrator(): ShipmentTypeFormPreSetDataHydratorInterface
     {
-        return new ShipmentTypeFormPreSetDataHydrator();
+        return new ShipmentTypeFormPreSetDataHydrator(
+            $this->createAddressFormChecker(),
+        );
     }
 
     /**
@@ -72,7 +74,9 @@ class ShipmentTypeWidgetFactory extends AbstractFactory
      */
     public function createAddressFormChecker(): AddressFormCheckerInterface
     {
-        return new AddressFormChecker();
+        return new AddressFormChecker(
+            $this->getConfig(),
+        );
     }
 
     /**

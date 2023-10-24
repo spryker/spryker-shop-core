@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ServicePointWidget\Checker;
 
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Symfony\Component\Form\FormInterface;
 
 interface AddressFormCheckerInterface
@@ -31,4 +32,11 @@ interface AddressFormCheckerInterface
      * @return bool
      */
     public function isBillingAddressTheSameAsShipping(FormInterface $form): bool;
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $data
+     *
+     * @return bool
+     */
+    public function isApplicableForServicePointAddressStepFormHydration(?AbstractTransfer $data): bool;
 }

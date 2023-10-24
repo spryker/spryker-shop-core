@@ -30,4 +30,18 @@ class ShipmentTypeWidgetConfig extends AbstractBundleConfig
     {
         return static::SHIPMENT_TYPE_DELIVERY;
     }
+
+    /**
+     * Specification:
+     * - Defines a list of properties in a `ItemTransfer` that are not intended for form hydration.
+     * - Items with such properties should not be included in the form hydration process, as they are not relevant to the `ShipmentTypeAddressStepForm`.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getNotApplicableShipmentTypeAddressStepFormItemPropertiesForHydration(): array
+    {
+        return [];
+    }
 }

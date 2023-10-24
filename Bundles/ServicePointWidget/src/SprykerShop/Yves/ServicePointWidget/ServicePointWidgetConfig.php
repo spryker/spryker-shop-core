@@ -29,4 +29,18 @@ class ServicePointWidgetConfig extends AbstractBundleConfig
     {
         return static::SEARCH_RESULT_LIMIT;
     }
+
+    /**
+     * Specification:
+     * - Defines a list of properties in a `ItemTransfer` that are not intended for form hydration.
+     * - Items with such properties should not be included in the form hydration process, as they are not relevant to the `ServicePointAddressStepForm`.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getNotApplicableServicePointAddressStepFormItemPropertiesForHydration(): array
+    {
+        return [];
+    }
 }

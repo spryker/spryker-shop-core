@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\ServicePointWidget\Hydrator;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use SprykerShop\Yves\ServicePointWidget\Checker\AddressFormCheckerInterface;
 use SprykerShop\Yves\ServicePointWidget\Form\ServicePointAddressStepForm;
 use SprykerShop\Yves\ServicePointWidget\Form\ServicePointSubForm;
@@ -62,7 +61,7 @@ class ServicePointFormSubmitDataHydrator implements ServicePointFormSubmitDataHy
         $data = $event->getData();
         $form = $event->getForm();
 
-        if (!$this->isApplicable($data)) {
+        if (!$this->addressFormChecker->isApplicableForServicePointAddressStepFormHydration($data)) {
             return;
         }
 
@@ -76,16 +75,6 @@ class ServicePointFormSubmitDataHydrator implements ServicePointFormSubmitDataHy
 
         /** @phpstan-var \Generated\Shared\Transfer\ItemTransfer $data */
         $this->hydrateServicePointToItem($data, $form, $event);
-    }
-
-    /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $data
-     *
-     * @return bool
-     */
-    protected function isApplicable(?AbstractTransfer $data): bool
-    {
-        return $data instanceof QuoteTransfer || $data instanceof ItemTransfer;
     }
 
     /**

@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\ShipmentTypeWidget\Hydrator;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use SprykerShop\Yves\ShipmentTypeWidget\Checker\AddressFormCheckerInterface;
 use SprykerShop\Yves\ShipmentTypeWidget\Form\ShipmentTypeAddressStepForm;
 use SprykerShop\Yves\ShipmentTypeWidget\Form\ShipmentTypeSubForm;
@@ -44,7 +43,7 @@ class ShipmentTypeFormSubmitDataHydrator implements ShipmentTypeFormSubmitDataHy
         $data = $event->getData();
         $form = $event->getForm();
 
-        if (!$this->isApplicable($data)) {
+        if (!$this->addressFormChecker->isApplicableForShipmentTypeAddressStepFormHydration($data)) {
             return;
         }
 
@@ -56,16 +55,6 @@ class ShipmentTypeFormSubmitDataHydrator implements ShipmentTypeFormSubmitDataHy
 
         /** @var \Generated\Shared\Transfer\ItemTransfer $data */
         $this->hydrateShipmentTypeToItem($data, $form, $event);
-    }
-
-    /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $data
-     *
-     * @return bool
-     */
-    protected function isApplicable(?AbstractTransfer $data): bool
-    {
-        return $data instanceof QuoteTransfer || $data instanceof ItemTransfer;
     }
 
     /**

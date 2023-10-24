@@ -7,6 +7,10 @@
 
 namespace SprykerShop\Yves\ServicePointWidget\Checker;
 
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use SprykerShop\Yves\ServicePointWidget\ServicePointWidgetConfig;
 use Symfony\Component\Form\FormInterface;
 
 class AddressFormChecker implements AddressFormCheckerInterface
@@ -59,6 +63,19 @@ class AddressFormChecker implements AddressFormCheckerInterface
      * @var string
      */
     protected const VALUE_DELIVER_TO_MULTIPLE_ADDRESSES = '-1';
+
+    /**
+     * @var \SprykerShop\Yves\ServicePointWidget\ServicePointWidgetConfig
+     */
+    protected ServicePointWidgetConfig $servicePointWidgetConfig;
+
+    /**
+     * @param \SprykerShop\Yves\ServicePointWidget\ServicePointWidgetConfig $servicePointWidgetConfig
+     */
+    public function __construct(ServicePointWidgetConfig $servicePointWidgetConfig)
+    {
+        $this->servicePointWidgetConfig = $servicePointWidgetConfig;
+    }
 
     /**
      * @param \Symfony\Component\Form\FormInterface $form
@@ -116,6 +133,17 @@ class AddressFormChecker implements AddressFormCheckerInterface
     }
 
     /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $data
+     *
+     * @return bool
+     */
+    public function isApplicableForServicePointAddressStepFormHydration(?AbstractTransfer $data): bool
+    {
+        return $data instanceof QuoteTransfer
+            || $data instanceof ItemTransfer && $this->checkNotApplicableServicePointAddressStepFormItemPropertiesForHydration($data);
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormInterface $form
      *
      * @return \Symfony\Component\Form\FormInterface|null
@@ -139,5 +167,21 @@ class AddressFormChecker implements AddressFormCheckerInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function checkNotApplicableServicePointAddressStepFormItemPropertiesForHydration(ItemTransfer $itemTransfer): bool
+    {
+        foreach ($this->servicePointWidgetConfig->getNotApplicableServicePointAddressStepFormItemPropertiesForHydration() as $notApplicableItemProperty) {
+            if ($itemTransfer->offsetGet($notApplicableItemProperty) !== null) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

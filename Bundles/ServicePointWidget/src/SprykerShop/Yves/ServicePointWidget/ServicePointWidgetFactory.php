@@ -28,6 +28,9 @@ use SprykerShop\Yves\ServicePointWidget\Validator\ServicePointFormValidatorInter
 use Symfony\Component\Form\FormTypeInterface;
 use Twig\Environment;
 
+/**
+ * @method \SprykerShop\Yves\ServicePointWidget\ServicePointWidgetConfig getConfig()
+ */
 class ServicePointWidgetFactory extends AbstractFactory
 {
     /**
@@ -54,7 +57,9 @@ class ServicePointWidgetFactory extends AbstractFactory
      */
     public function createServicePointFormPreSetDataHydrator(): ServicePointFormPreSetDataHydratorInterface
     {
-        return new ServicePointFormPreSetDataHydrator();
+        return new ServicePointFormPreSetDataHydrator(
+            $this->createAddressFormChecker(),
+        );
     }
 
     /**
@@ -92,7 +97,9 @@ class ServicePointWidgetFactory extends AbstractFactory
      */
     public function createAddressFormChecker(): AddressFormCheckerInterface
     {
-        return new AddressFormChecker();
+        return new AddressFormChecker(
+            $this->getConfig(),
+        );
     }
 
     /**

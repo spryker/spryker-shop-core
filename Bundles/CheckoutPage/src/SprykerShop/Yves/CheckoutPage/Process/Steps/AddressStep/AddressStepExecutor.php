@@ -69,6 +69,7 @@ class AddressStepExecutor implements StepExecutorInterface
         $customerTransfer = $this->getCustomerTransfer();
 
         $quoteTransfer = $this->hydrateItemLevelShippingAddresses($quoteTransfer, $customerTransfer);
+        $quoteTransfer = $this->hydrateBundleItemLevelShippingAddresses($quoteTransfer, $customerTransfer);
         $quoteTransfer = $this->hydrateBillingAddress($quoteTransfer, $customerTransfer);
         $quoteTransfer = $this->setQuoteShippingAddress($quoteTransfer, $customerTransfer);
 
@@ -101,6 +102,28 @@ class AddressStepExecutor implements StepExecutorInterface
         }
 
         return $this->setDefaultShippingAddress($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function hydrateBundleItemLevelShippingAddresses(
+        QuoteTransfer $quoteTransfer,
+        ?CustomerTransfer $customerTransfer
+    ): QuoteTransfer {
+        foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
+            $shipmentTransfer = $this->getShipmentWithUniqueShippingAddress(
+                $itemTransfer->getShipmentOrFail(),
+                $customerTransfer,
+            );
+
+            $itemTransfer->setShipment($shipmentTransfer);
+        }
+
+        return $quoteTransfer;
     }
 
     /**
