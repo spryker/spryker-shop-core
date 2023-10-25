@@ -11,7 +11,7 @@
         "spryker-shop/shop-ui": "^1.72.0",
         "spryker/kernel": "^3.52.0",
         "spryker/shipment-type": "^0.1.0",
-        "spryker/shipment-type-storage": "^0.1.1",
+        "spryker/shipment-type-storage": "^0.2.0",
         "spryker/symfony": "^3.0.0",
         "spryker/transfer": "^3.27.0"
     },
