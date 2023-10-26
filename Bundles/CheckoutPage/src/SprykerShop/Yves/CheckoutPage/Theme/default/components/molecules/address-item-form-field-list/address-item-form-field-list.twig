@@ -55,10 +55,11 @@
 
                     {% set formFieldUniqueName = 'multiShippingAddresses' %}
                     {% set deliveryContainerClassName = config.jsName ~ '__delivery-' ~ loop.index %}
+                    {% set hasShipmentTypes = item.shipmentType is defined %}
                     {% set defaultShipmentType = 'delivery' %}
                     {% set currentShipmentType = item.shipmentType.key.vars.value | default %}
                     {% set isDefaultShipmentType = currentShipmentType == defaultShipmentType %}
-                    {% set shipmentTypeHiddenClassName = not isDefaultShipmentType ? data.hiddenClassName %}
+                    {% set shipmentTypeHiddenClassName = hasShipmentTypes and not isDefaultShipmentType ? data.hiddenClassName %}
 
                     {% block multiShippingAddresses %}
                         {% if hasShippingAddressesAndApplicable %}
