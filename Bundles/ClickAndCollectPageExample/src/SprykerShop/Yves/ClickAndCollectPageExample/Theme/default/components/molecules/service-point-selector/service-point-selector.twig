@@ -18,8 +18,8 @@
 } %}
 
 {% define attributes = {
-    'trigger-class-name': 'js-service-point-selector__trigger-' ~ data.id,
-    'finder-class-name': 'js-service-point-selector__finder-' ~ data.id,
+    'trigger-class-name': 'js-' ~ config.name ~ '__trigger-' ~ data.id,
+    'finder-class-name': 'js-' ~ config.name ~ '__finder-' ~ data.id,
     'toggle-class-name': 'is-hidden',
     'delivery-select-class-name': '',
     'delivery-select-value': '-1',
@@ -69,7 +69,7 @@
     {% endblock %}
 
     {% block popup %}
-        {% include molecule('main-popup', 'ServicePointWidget') with {
+        {% include molecule('main-popup') with {
             modifiers: ['spaceless', 'flex-content'],
             class: config.jsName ~ '__popup',
             data: {

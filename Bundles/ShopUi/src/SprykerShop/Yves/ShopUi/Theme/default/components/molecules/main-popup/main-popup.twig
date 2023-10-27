@@ -9,6 +9,7 @@
     content: required,
     title: '',
     closeIconName: 'cross',
+    closeButtonTitle: 'global.close' | trans,
 } %}
 
 {% define attributes = {
@@ -31,8 +32,8 @@
             {% endblock %}
 
             {% block closeButton %}
-                <button class="{{ config.name }}__close {{ config.jsName }}__close" type="button" title="{{ 'global.close' | trans }}">
-                    {% block closeButtonIcon %}
+                <button class="{{ config.name }}__close {{ config.jsName }}__close" type="button" title="{{ data.closeButtonTitle }}">
+                    {% block closeButtonContent %}
                         {% include atom('icon') with {
                             modifiers: ['big'],
                             data: {

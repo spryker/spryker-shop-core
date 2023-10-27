@@ -11,7 +11,7 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Builder\ServicePointAvailabilityMessageBuilder;
 use SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Builder\ServicePointAvailabilityMessageBuilderInterface;
 use SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Dependency\Client\ProductOfferServicePointAvailabilityWidgetToCartClientInterface;
-use SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Dependency\Client\ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorClientInterface;
+use SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Dependency\Client\ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorStorageClientInterface;
 use SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Reader\ProductOfferServicePointAvailabilityReader;
 use SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Reader\ProductOfferServicePointAvailabilityReaderInterface;
 use SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Reader\QuoteItemReader;
@@ -27,7 +27,7 @@ class ProductOfferServicePointAvailabilityWidgetFactory extends AbstractFactory
         return new ProductOfferServicePointAvailabilityReader(
             $this->createQuoteItemReader(),
             $this->createServicePointAvailabilityMessageBuilder(),
-            $this->getProductOfferServicePointAvailabilityCalculatorClient(),
+            $this->getProductOfferServicePointAvailabilityCalculatorStorageClient(),
         );
     }
 
@@ -50,11 +50,11 @@ class ProductOfferServicePointAvailabilityWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Dependency\Client\ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorClientInterface
+     * @return \SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Dependency\Client\ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorStorageClientInterface
      */
-    public function getProductOfferServicePointAvailabilityCalculatorClient(): ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorClientInterface
+    public function getProductOfferServicePointAvailabilityCalculatorStorageClient(): ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorStorageClientInterface
     {
-        return $this->getProvidedDependency(ProductOfferServicePointAvailabilityWidgetDependencyProvider::CLIENT_PRODUCT_OFFER_SERVICE_POINT_AVAILABILITY_CALCULATOR);
+        return $this->getProvidedDependency(ProductOfferServicePointAvailabilityWidgetDependencyProvider::CLIENT_PRODUCT_OFFER_SERVICE_POINT_AVAILABILITY_CALCULATOR_STORAGE);
     }
 
     /**

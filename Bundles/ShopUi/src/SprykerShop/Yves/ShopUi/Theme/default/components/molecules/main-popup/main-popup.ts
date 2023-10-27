@@ -1,13 +1,10 @@
-import Component from 'ShopUi/models/component';
-import { mount } from 'ShopUi/app';
-import {
-    EVENT_SHOW_OVERLAY,
-    EVENT_HIDE_OVERLAY,
-    OverlayEventDetail,
-} from 'ShopUi/components/molecules/main-overlay/main-overlay';
+import Component from '../../../models/component';
+import { mount } from '../../../app';
+import { EVENT_SHOW_OVERLAY, EVENT_HIDE_OVERLAY, OverlayEventDetail } from '../main-overlay/main-overlay';
 
 export const EVENT_OPEN_POPUP = 'openPopup';
 export const EVENT_CLOSE_POPUP = 'closePopup';
+export const EVENT_POPUP_OPENED = 'popupOpened';
 
 export default class MainPopup extends Component {
     protected triggers: HTMLElement[];
@@ -125,6 +122,10 @@ export default class MainPopup extends Component {
 
         if (this.overlay) {
             this.toggleOverlay();
+        }
+
+        if (this.isPopupOpened) {
+            this.dispatchCustomEvent(EVENT_POPUP_OPENED);
         }
     }
 

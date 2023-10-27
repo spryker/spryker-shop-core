@@ -67,30 +67,6 @@ class ShipmentTypeReader implements ShipmentTypeReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return array<string, \Generated\Shared\Transfer\ShipmentTypeTransfer>
-     */
-    protected function getAllShipmentTypes(QuoteTransfer $quoteTransfer): array
-    {
-        $shipmentTypeStorageConditionsTransfer = (new ShipmentTypeStorageConditionsTransfer())
-            ->setStoreName($quoteTransfer->getStoreOrFail()->getName());
-
-        $shipmentTypeStorageCriteriaTransfer = (new ShipmentTypeStorageCriteriaTransfer())
-            ->setShipmentTypeStorageConditions($shipmentTypeStorageConditionsTransfer);
-
-        $shipmentTypeStorageCollectionTransfer = $this->shipmentTypeStorageClient
-            ->getShipmentTypeStorageCollection($shipmentTypeStorageCriteriaTransfer);
-
-        $shipmentTypeCollectionTransfer = $this->mapShipmentTypeStorageCollectionTransferToShipmentTypeCollectionTransfer(
-            $shipmentTypeStorageCollectionTransfer,
-            new ShipmentTypeCollectionTransfer(),
-        );
-
-        return $this->getShipmentTypesIndexedByKey($shipmentTypeCollectionTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ShipmentTypeCollectionTransfer $shipmentTypeCollectionTransfer
      *
      * @return array<string, \Generated\Shared\Transfer\ShipmentTypeTransfer>

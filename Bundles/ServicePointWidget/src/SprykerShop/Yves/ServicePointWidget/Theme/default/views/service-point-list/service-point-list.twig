@@ -46,7 +46,7 @@
             } %}
 
             {% block scroll %}
-                {% include molecule('endless-scroll', 'ServicePointWidget') with {
+                {% include molecule('endless-scroll') with {
                     data: {
                         content: block('servicePointList'),
                     },

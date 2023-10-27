@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\ServicePointSearchTransfer;
 use SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Builder\ServicePointAvailabilityMessageBuilder;
 use SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Builder\ServicePointAvailabilityMessageBuilderInterface;
 use SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Dependency\Client\ProductOfferServicePointAvailabilityWidgetToCartClientInterface;
-use SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Dependency\Client\ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorClientInterface;
+use SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Dependency\Client\ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorStorageClientInterface;
 use SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Reader\ProductOfferServicePointAvailabilityReader;
 use SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Reader\ProductOfferServicePointAvailabilityReaderInterface;
 use SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Reader\QuoteItemReader;
@@ -245,7 +245,7 @@ class ProductOfferServicePointAvailabilityReaderTest extends Unit
         return new ProductOfferServicePointAvailabilityReader(
             $this->createQuoteItemReader($quoteTransfer),
             $this->createServicePointAvailabilityMessageBuilder(),
-            $this->createProductOfferServicePointAvailabilityCalculatorClientMock($productOfferServicePointAvailabilityResponseItemTransfers),
+            $this->createProductOfferServicePointAvailabilityCalculatorStorageClientMock($productOfferServicePointAvailabilityResponseItemTransfers),
         );
     }
 
@@ -260,7 +260,7 @@ class ProductOfferServicePointAvailabilityReaderTest extends Unit
         return new ProductOfferServicePointAvailabilityReader(
             $this->createQuoteItemReaderMock($extractItemsFromQuoteByGroupKeysMethodShouldBeCalled),
             $this->createServicePointAvailabilityMessageBuilder(),
-            $this->createProductOfferServicePointAvailabilityCalculatorClientMock([]),
+            $this->createProductOfferServicePointAvailabilityCalculatorStorageClientMock([]),
         );
     }
 
@@ -326,19 +326,19 @@ class ProductOfferServicePointAvailabilityReaderTest extends Unit
     /**
      * @param array<string, list<\Generated\Shared\Transfer\ProductOfferServicePointAvailabilityResponseItemTransfer>> $productOfferServicePointAvailabilityResponseItemTransfers
      *
-     * @return \SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Dependency\Client\ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorClientInterface|\PHPUnit\Framework\MockObject\MockObject
+     * @return \SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Dependency\Client\ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorStorageClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createProductOfferServicePointAvailabilityCalculatorClientMock(
+    protected function createProductOfferServicePointAvailabilityCalculatorStorageClientMock(
         array $productOfferServicePointAvailabilityResponseItemTransfers
-    ): ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorClientInterface {
-        $ProductOfferServicePointAvailabilityCalculatorClientMock = $this->getMockBuilder(
-            ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorClientInterface::class,
+    ): ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorStorageClientInterface {
+        $ProductOfferServicePointAvailabilityCalculatorStorageClientMock = $this->getMockBuilder(
+            ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorStorageClientInterface::class,
         )->getMock();
 
-        $ProductOfferServicePointAvailabilityCalculatorClientMock
+        $ProductOfferServicePointAvailabilityCalculatorStorageClientMock
             ->method('calculateProductOfferServicePointAvailabilities')
             ->willReturn($productOfferServicePointAvailabilityResponseItemTransfers);
 
-        return $ProductOfferServicePointAvailabilityCalculatorClientMock;
+        return $ProductOfferServicePointAvailabilityCalculatorStorageClientMock;
     }
 }

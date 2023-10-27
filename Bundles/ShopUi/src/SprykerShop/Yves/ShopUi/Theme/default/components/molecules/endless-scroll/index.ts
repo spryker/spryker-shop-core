@@ -5,6 +5,7 @@ export default register(
     () =>
         import(
             /* webpackMode: "lazy" */
+            /* webpackChunkName: "endless-scroll" */
             './endless-scroll'
         ),
 );

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductOfferServicePointAvailabilityConditionsTran
 use Generated\Shared\Transfer\ProductOfferServicePointAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferServicePointAvailabilityRequestItemTransfer;
 use SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Builder\ServicePointAvailabilityMessageBuilderInterface;
-use SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Dependency\Client\ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorClientInterface;
+use SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Dependency\Client\ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorStorageClientInterface;
 
 class ProductOfferServicePointAvailabilityReader implements ProductOfferServicePointAvailabilityReaderInterface
 {
@@ -27,23 +27,23 @@ class ProductOfferServicePointAvailabilityReader implements ProductOfferServiceP
     protected ServicePointAvailabilityMessageBuilderInterface $servicePointAvailabilityMessageBuilder;
 
     /**
-     * @var \SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Dependency\Client\ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorClientInterface
+     * @var \SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Dependency\Client\ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorStorageClientInterface
      */
-    protected ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorClientInterface $productOfferServicePointAvailabilityCalculatorClient;
+    protected ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorStorageClientInterface $productOfferServicePointAvailabilityCalculatorStorageClient;
 
     /**
      * @param \SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Reader\QuoteItemReaderInterface $quoteItemReader
      * @param \SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Builder\ServicePointAvailabilityMessageBuilderInterface $servicePointAvailabilityMessageBuilder
-     * @param \SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Dependency\Client\ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorClientInterface $productOfferServicePointAvailabilityCalculatorClient
+     * @param \SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Dependency\Client\ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorStorageClientInterface $productOfferServicePointAvailabilityCalculatorStorageClient
      */
     public function __construct(
         QuoteItemReaderInterface $quoteItemReader,
         ServicePointAvailabilityMessageBuilderInterface $servicePointAvailabilityMessageBuilder,
-        ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorClientInterface $productOfferServicePointAvailabilityCalculatorClient
+        ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorStorageClientInterface $productOfferServicePointAvailabilityCalculatorStorageClient
     ) {
         $this->quoteItemReader = $quoteItemReader;
         $this->servicePointAvailabilityMessageBuilder = $servicePointAvailabilityMessageBuilder;
-        $this->productOfferServicePointAvailabilityCalculatorClient = $productOfferServicePointAvailabilityCalculatorClient;
+        $this->productOfferServicePointAvailabilityCalculatorStorageClient = $productOfferServicePointAvailabilityCalculatorStorageClient;
     }
 
     /**
@@ -88,7 +88,7 @@ class ProductOfferServicePointAvailabilityReader implements ProductOfferServiceP
             $shipmentTypeUuid,
         );
 
-        $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid = $this->productOfferServicePointAvailabilityCalculatorClient
+        $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid = $this->productOfferServicePointAvailabilityCalculatorStorageClient
             ->calculateProductOfferServicePointAvailabilities($productOfferServicePointAvailabilityCriteriaTransfer);
 
         return $this->servicePointAvailabilityMessageBuilder->buildAvailabilityMessagesPerServicePoint(

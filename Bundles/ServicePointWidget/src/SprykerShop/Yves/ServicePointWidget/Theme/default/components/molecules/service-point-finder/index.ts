@@ -5,6 +5,7 @@ export default register(
     () =>
         import(
             /* webpackMode: "lazy" */
+            /* webpackChunkName: "service-point-finder" */
             './service-point-finder'
         ),
 );

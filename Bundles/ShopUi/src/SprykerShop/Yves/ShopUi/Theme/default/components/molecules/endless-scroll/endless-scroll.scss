@@ -1,4 +1,4 @@
-@mixin service-point-widget-endless-scroll($name: '.endless-scroll') {
+@mixin shop-ui-endless-scroll($name: '.endless-scroll') {
     #{$name} {
         display: flex;
         max-height: 100%;

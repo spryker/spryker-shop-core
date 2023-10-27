@@ -15,8 +15,7 @@
 } %}
 
 {% block body %}
-    {# TODO: "service-point-selector" MUST BE moved to `ClickAndCollectPageExample` module #}
-    {% include molecule('service-point-selector', 'ServicePointWidget') with {
+    {% include molecule('service-point-selector', 'ClickAndCollectPageExample') with {
         data: {
             servicePointForm: data.servicePointForm,
             pickupableServiceTypeKey: data.pickupableServiceType.key,

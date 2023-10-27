@@ -8,12 +8,14 @@
         "spryker-shop/shop-ui": "^1.45.1",
         "spryker/cart": "^7.0.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/product-offer-service-point-availability-calculator": "^0.1.0",
+        "spryker/product-offer-service-point-availability": "^0.2.0",
+        "spryker/product-offer-service-point-availability-calculator-storage": "^0.1.0",
         "spryker/transfer": "^3.27.0"
     },
     "require-dev": {
         "spryker/application": "*",
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/testify": "*"
     },
     "autoload": {
@@ -29,8 +31,8 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
     },
     "extra": {
         "branch-alias": {

@@ -1,17 +1,15 @@
 import Component from 'ShopUi/models/component';
+import MainPopup, { EVENT_CLOSE_POPUP, EVENT_POPUP_OPENED } from 'ShopUi/components/molecules/main-popup/main-popup';
 import ServicePointFinder, {
     EVENT_SET_SERVICE_POINT,
     ServicePointEventDetail,
-} from '../service-point-finder/service-point-finder';
-import MainPopup, { EVENT_CLOSE_POPUP } from '../main-popup/main-popup';
-import { mount } from 'ShopUi/app';
+} from 'ServicePointWidget/components/molecules/service-point-finder/service-point-finder';
 
 export default class ServicePointSelector extends Component {
     protected input: HTMLInputElement;
     protected noLocationContainer: HTMLElement;
     protected location: HTMLElement;
     protected locationContainer: HTMLElement;
-    protected triggers: HTMLButtonElement[];
     protected finder: ServicePointFinder;
     protected popup: MainPopup;
     protected deliverySelect: HTMLSelectElement;
@@ -23,7 +21,6 @@ export default class ServicePointSelector extends Component {
         this.noLocationContainer = <HTMLElement>this.getElementsByClassName(`${this.jsName}__no-location`)[0];
         this.location = <HTMLElement>this.getElementsByClassName(`${this.jsName}__location`)[0];
         this.locationContainer = <HTMLElement>this.getElementsByClassName(`${this.jsName}__location-container`)[0];
-        this.triggers = <HTMLButtonElement[]>Array.from(this.getElementsByClassName(this.triggerClassName));
         this.popup = <MainPopup>this.getElementsByClassName(`${this.jsName}__popup`)[0];
         this.deliverySelect = <HTMLSelectElement>document.getElementsByClassName(this.deliverySelectClassName)[0];
 
@@ -31,20 +28,14 @@ export default class ServicePointSelector extends Component {
     }
 
     protected mapEvents(): void {
-        this.mapTriggerClickEvent();
+        this.mapPopupOpenedEvent();
     }
 
-    protected mapTriggerClickEvent(): void {
-        this.triggers.forEach((trigger: HTMLButtonElement) => {
-            trigger.addEventListener('click', () => this.onTriggerClick());
-        });
+    protected mapPopupOpenedEvent(): void {
+        this.popup.addEventListener(EVENT_POPUP_OPENED, () => this.onPopupOpened());
     }
 
-    protected async onTriggerClick(): Promise<void> {
-        if (this.popup) {
-            await mount();
-        }
-
+    protected onPopupOpened(): void {
         this.mapFinderSetServicePointEvent();
     }
 
@@ -60,10 +51,11 @@ export default class ServicePointSelector extends Component {
     }
 
     protected onServicePointSelected(detail: ServicePointEventDetail): void {
+        this.closePopup();
+
         if (this.deliverySelect && detail.partiallyAvailable) {
             this.deliverySelect.value = this.deliverySelectValue;
             this.deliverySelect.dispatchEvent(new Event('change'));
-            this.closePopup();
 
             return;
         }
@@ -71,7 +63,6 @@ export default class ServicePointSelector extends Component {
         this.input.value = detail.uuid;
         this.location.innerHTML = detail.address;
         this.input.dispatchEvent(new Event('input'));
-        this.closePopup();
         this.toggleContainer();
     }
 
@@ -84,10 +75,6 @@ export default class ServicePointSelector extends Component {
 
         this.noLocationContainer.classList.toggle(this.toggleClassName, hasInputValue);
         this.locationContainer.classList.toggle(this.toggleClassName, !hasInputValue);
-    }
-
-    protected get triggerClassName(): string {
-        return this.getAttribute('trigger-class-name');
     }
 
     protected get finderClassName(): string {

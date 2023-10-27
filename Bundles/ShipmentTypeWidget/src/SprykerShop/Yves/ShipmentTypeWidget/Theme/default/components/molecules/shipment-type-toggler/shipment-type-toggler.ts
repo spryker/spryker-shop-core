@@ -36,7 +36,7 @@ export default class ShipmentTypeToggler extends Component {
 
         this.toggleContentVisibility(isDefaultShipmentTypeSelected);
 
-        if (this.billingSameAsShippingContainerClassName) {
+        if (this.billingSameAsShippingContainer) {
             this.toggleBillingSameAsShipping(isDefaultShipmentTypeSelected);
         }
     }
@@ -56,6 +56,11 @@ export default class ShipmentTypeToggler extends Component {
         }
 
         this.billingSameAsShippingContainer.classList.add(this.toggleClassName);
+
+        if (!this.billingSameAsShippingInput) {
+            return;
+        }
+
         this.billingSameAsShippingInput.checked = false;
         this.billingSameAsShippingInput.dispatchEvent(new Event('change'));
     }

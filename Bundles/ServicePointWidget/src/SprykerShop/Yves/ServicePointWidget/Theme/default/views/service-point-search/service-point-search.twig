@@ -12,33 +12,26 @@
     extraClassName: '',
 } %}
 
-{% set searchFieldAttributes = {} %}
+{% set searchFieldAttributes = data.searchValue ? { value: data.searchValue } : {} %}
+{% set queryStringObject = {
+    'offset': 0,
+    'limit': data.searchResultLimit,
+    'serviceTypeKey': data.serviceTypeKey,
+    'serviceTypeUuid': data.serviceTypeUuid,
+    'shipmentTypeUuid': data.shipmentTypeUuid,
+    'itemGroupKeys': data.itemGroupKeys,
+} %}
 
 {% block body %}
-    {% if data.searchValue %}
-        {% set searchFieldAttributes = searchFieldAttributes | merge({ value: data.searchValue }) %}
-    {% endif %}
-
-    {% set queryStringObject = {
-        'offset': 0,
-        'limit': data.searchResultLimit,
-        'serviceTypeKey': data.serviceTypeKey,
-        'serviceTypeUuid': data.serviceTypeUuid,
-        'shipmentTypeUuid': data.shipmentTypeUuid,
-        'itemGroupKeys': data.itemGroupKeys,
-    } %}
-
-    {% block servicePointFinder %}
-        {% include molecule('service-point-finder', 'ServicePointWidget') with {
-            class: data.extraClassName,
-            data: {
-                content: data.searchResults,
-                fieldExtraAttributes: searchFieldAttributes,
-            },
-            attributes: {
-                url: path(data.searchRoute),
-                'query-string': queryStringObject | url_encode ~ '&searchString',
-            },
-        } only %}
-    {% endblock %}
+    {% include molecule('service-point-finder', 'ServicePointWidget') with {
+        class: data.extraClassName,
+        data: {
+            content: data.searchResults,
+            fieldExtraAttributes: searchFieldAttributes,
+        },
+        attributes: {
+            url: path(data.searchRoute),
+            'query-string': queryStringObject | url_encode ~ '&searchString',
+        },
+    } only %}
 {% endblock %}

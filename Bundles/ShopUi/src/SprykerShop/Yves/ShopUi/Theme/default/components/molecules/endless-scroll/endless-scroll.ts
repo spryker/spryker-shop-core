@@ -1,6 +1,6 @@
-import Component from 'ShopUi/models/component';
-import AjaxProvider, { EVENT_FETCHED, EVENT_FETCHING } from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
-import { mount } from 'ShopUi/app';
+import Component from '../../../models/component';
+import { mount } from '../../../app';
+import AjaxProvider, { EVENT_FETCHED, EVENT_FETCHING } from '../ajax-provider/ajax-provider';
 
 export const EVENT_CONTENT_UPDATED = 'scrollContentUpdated';
 

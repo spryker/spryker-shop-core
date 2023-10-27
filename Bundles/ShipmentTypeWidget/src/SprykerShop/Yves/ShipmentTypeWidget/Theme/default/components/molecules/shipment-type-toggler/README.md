@@ -1,1 +1,1 @@
-Displays shipment type selectors.
+Displays shipment type selectors with the active type.

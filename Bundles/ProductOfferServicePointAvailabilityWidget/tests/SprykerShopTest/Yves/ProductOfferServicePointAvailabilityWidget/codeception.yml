@@ -17,6 +17,7 @@ suites:
         actor: ProductOfferServicePointAvailabilityWidgetYvesTester
         modules:
             enabled:
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper

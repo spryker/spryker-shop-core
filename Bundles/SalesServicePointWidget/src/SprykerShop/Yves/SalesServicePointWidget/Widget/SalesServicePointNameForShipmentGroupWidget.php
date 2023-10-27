@@ -10,10 +10,6 @@ namespace SprykerShop\Yves\SalesServicePointWidget\Widget;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
-/**
- * @method \SprykerShop\Yves\SalesServicePointWidget\SalesServicePointWidgetFactory getFactory()
- * @method \SprykerShop\Yves\SalesServicePointWidget\SalesServicePointWidgetConfig getConfig()
- */
 class SalesServicePointNameForShipmentGroupWidget extends AbstractWidget
 {
     /**

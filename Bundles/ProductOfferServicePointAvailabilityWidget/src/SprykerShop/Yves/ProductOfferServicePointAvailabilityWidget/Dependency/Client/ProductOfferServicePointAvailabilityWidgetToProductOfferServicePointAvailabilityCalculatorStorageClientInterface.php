@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\ProductOfferServicePointAvailabilityWidget\Dependency
 
 use Generated\Shared\Transfer\ProductOfferServicePointAvailabilityCriteriaTransfer;
 
-interface ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorClientInterface
+interface ProductOfferServicePointAvailabilityWidgetToProductOfferServicePointAvailabilityCalculatorStorageClientInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductOfferServicePointAvailabilityCriteriaTransfer $productOfferServicePointAvailabilityCriteriaTransfer

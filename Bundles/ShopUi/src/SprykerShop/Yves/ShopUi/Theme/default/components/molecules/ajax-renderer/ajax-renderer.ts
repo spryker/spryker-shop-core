@@ -1,6 +1,6 @@
 import Component from '../../../models/component';
+import { mount } from '../../../app';
 import AjaxProvider, { EVENT_FETCHED } from '../ajax-provider/ajax-provider';
-import { mount } from 'ShopUi/app';
 
 export default class AjaxRenderer extends Component {
     protected parent: HTMLElement;

@@ -37,9 +37,10 @@
     {% endblock %}
 
     {% set servicePointType = 'pickup' %}
+    {% set servicePointHiddenClassName = activeShipmentType != servicePointType ? attributes['toggle-class-name'] %}
 
     {% block servicePointForm %}
-        <div class="{{ config.jsName }}__service-point {{ activeShipmentType != servicePointType ? attributes['toggle-class-name'] }} {{ data.servicePointClassName }}">
+        <div class="{{ config.jsName }}__service-point {{ servicePointHiddenClassName }} {{ data.servicePointClassName }}">
             {% widget 'ClickAndCollectServicePointAddressFormWidget' args [data.checkoutAddressForm] with {
                 data: {
                     deliverySelectClassName: data.deliverySelectClassName,

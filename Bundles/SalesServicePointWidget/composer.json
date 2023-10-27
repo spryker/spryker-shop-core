@@ -7,7 +7,7 @@
         "php": ">=8.0",
         "spryker-shop/shop-ui": "^1.72.0",
         "spryker/kernel": "^3.52.0",
-        "spryker/sales-service-point": "^0.1.0",
+        "spryker/sales-service-point": "^0.2.0",
         "spryker/transfer": "^3.27.0"
     },
     "require-dev": {

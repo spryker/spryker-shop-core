@@ -1,4 +1,4 @@
-@mixin service-point-widget-main-popup($name: '.main-popup') {
+@mixin shop-ui-main-popup($name: '.main-popup') {
     #{$name} {
         @include helper-visibility-invisible;
         @include helper-ui-shadow;

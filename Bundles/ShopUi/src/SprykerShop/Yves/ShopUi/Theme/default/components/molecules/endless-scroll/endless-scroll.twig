@@ -13,7 +13,6 @@
 {% define attributes = {
     url: required,
     method: 'GET',
-    'response-type': 'text/html',
     'result-offset': 0,
     'result-limit': 10,
     'result-total': null,
@@ -57,7 +56,6 @@
             attributes: {
                 url: attributes.url,
                 method: attributes.method,
-                'response-type': attributes['response-type'],
                 'fetch-on-load': attributes['has-initial-request'],
             },
         } only %}
