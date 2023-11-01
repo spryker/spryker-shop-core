@@ -7,15 +7,14 @@
 
 namespace SprykerShop\Yves\ServicePointCartPage\Dependency\Client;
 
-use Generated\Shared\Transfer\QuoteReplacementResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface ServicePointCartPageToServicePointCartClientInterface
+interface ServicePointCartPageToQuoteClientInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteReplacementResponseTransfer
+     * @return void
      */
-    public function replaceQuoteItems(QuoteTransfer $quoteTransfer): QuoteReplacementResponseTransfer;
+    public function setQuote(QuoteTransfer $quoteTransfer): void;
 }
