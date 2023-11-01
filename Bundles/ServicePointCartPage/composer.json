@@ -11,7 +11,7 @@
         "spryker/locale": "^3.0.0 || ^4.0.0",
         "spryker/messenger": "^3.1.0",
         "spryker/quote": "^2.0.0",
-        "spryker/service-point-cart": "^0.3.0",
+        "spryker/service-point-cart": "^1.0.0",
         "spryker/transfer": "^3.27.0"
     },
     "require-dev": {

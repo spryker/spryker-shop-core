@@ -6,7 +6,7 @@
     "require": {
         "php": ">=8.0",
         "spryker-shop/customer-page-extension": "^1.6.0",
-        "spryker-shop/service-point-widget": "^0.7.0",
+        "spryker-shop/service-point-widget": "^1.0.0",
         "spryker-shop/shop-application-extension": "^1.2.0",
         "spryker-shop/shop-ui": "^1.73.0",
         "spryker/kernel": "^3.52.0",

@@ -8,8 +8,8 @@
         "spryker-shop/shop-ui": "^1.45.1",
         "spryker/cart": "^7.0.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/product-offer-service-point-availability": "^0.2.0",
-        "spryker/product-offer-service-point-availability-calculator-storage": "^0.1.0",
+        "spryker/product-offer-service-point-availability": "^1.0.0",
+        "spryker/product-offer-service-point-availability-calculator-storage": "^1.0.0",
         "spryker/transfer": "^3.27.0"
     },
     "require-dev": {

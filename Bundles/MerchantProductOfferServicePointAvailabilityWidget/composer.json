@@ -5,7 +5,7 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.0",
-        "spryker-shop/product-offer-service-point-availability-widget": "^0.2.0",
+        "spryker-shop/product-offer-service-point-availability-widget": "^1.0.0",
         "spryker/merchant": "^3.0.0",
         "spryker/merchant-storage": "^1.0.0",
         "spryker/transfer": "^3.27.0"
