@@ -37,7 +37,7 @@ class QuoteCartNoteForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addCartNoteField($builder);
     }

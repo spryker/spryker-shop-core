@@ -22,7 +22,7 @@ class GreaterThanOrEqualDateValidator extends GreaterThanOrEqualValidator
      *
      * @return void
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         $valueAsDateTime = new DateTime($value);
 

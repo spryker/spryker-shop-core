@@ -30,9 +30,11 @@ class ProductBundleReturnCreateFormHandlerPlugin extends AbstractPlugin implemen
      */
     public function buildForm(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createReturnProductBundleForm()
             ->buildForm($builder, $options);
+
+        return $builder;
     }
 
     /**

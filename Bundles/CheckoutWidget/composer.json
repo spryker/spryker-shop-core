@@ -4,7 +4,7 @@
     "description": "CheckoutWidget module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "spryker-shop/checkout-page": "^1.0.0 || ^2.0.0 || ^3.0.0",
         "spryker-shop/shop-ui": "^1.54.0",
         "spryker/checkout": "^4.3.0 || ^6.0.0",

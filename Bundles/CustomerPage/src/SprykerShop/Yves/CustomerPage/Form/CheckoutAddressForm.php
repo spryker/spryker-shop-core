@@ -94,7 +94,7 @@ class CheckoutAddressForm extends AddressForm
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 
@@ -116,7 +116,7 @@ class CheckoutAddressForm extends AddressForm
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
             ->addAddressSelectField($builder, $options)

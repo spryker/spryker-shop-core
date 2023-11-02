@@ -38,7 +38,7 @@ class SummaryForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addAcceptTermsAndConditionsField($builder, $options);
     }

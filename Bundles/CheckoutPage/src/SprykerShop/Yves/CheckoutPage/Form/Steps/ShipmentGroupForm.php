@@ -58,7 +58,7 @@ class ShipmentGroupForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->shipmentGroupTransfer = $this->findShipmentGroupTransfer($builder, $options);
         if ($this->shipmentGroupTransfer === null) {

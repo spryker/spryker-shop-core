@@ -45,8 +45,10 @@ class ShipmentTypeCheckoutMultiShippingAddressesFormExpanderPlugin extends Abstr
      */
     public function expand(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createShipmentTypeAddressStepForm()
             ->buildForm($builder, $options);
+
+        return $builder;
     }
 }

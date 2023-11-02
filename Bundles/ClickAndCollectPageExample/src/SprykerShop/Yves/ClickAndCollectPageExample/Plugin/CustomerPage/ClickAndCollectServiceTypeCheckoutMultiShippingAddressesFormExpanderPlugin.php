@@ -43,8 +43,10 @@ class ClickAndCollectServiceTypeCheckoutMultiShippingAddressesFormExpanderPlugin
      */
     public function expand(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createClickAndCollectServiceTypeSubForm()
             ->buildForm($builder, $options);
+
+        return $builder;
     }
 }

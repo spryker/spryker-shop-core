@@ -43,8 +43,10 @@ class ServicePointCheckoutMultiShippingAddressesFormExpanderPlugin extends Abstr
      */
     public function expand(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createServicePointAddressStepForm()
             ->buildForm($builder, $options);
+
+        return $builder;
     }
 }

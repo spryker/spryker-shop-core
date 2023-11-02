@@ -33,7 +33,7 @@ class QuoteApproveRequestForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addApproverField($builder, $options);
     }
@@ -43,7 +43,7 @@ class QuoteApproveRequestForm extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(static::OPTION_APPROVERS_LIST);
     }
