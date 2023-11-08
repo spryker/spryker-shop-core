@@ -30,9 +30,12 @@
 
         {% if not isItemRelatedToBundle %}
             <div class="grid {{ config.jsName }}__item-shipping-{{ loop.index }}">
-                {% set hasShippingAddresses = item.shippingAddress.id_customer_address is defined %}
-                {% set hasCompanyUnitAddresses = item.shippingAddress.id_company_unit_address is defined %}
-                {% set companyBusinessUnitShippingAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress', item.shippingAddress.vars.data]) %}
+                {% set shippingAddress = item.shippingAddress %}
+                {% set hasShippingAddresses = shippingAddress.id_customer_address is defined %}
+                {% set hasCompanyUnitAddresses = shippingAddress.id_company_unit_address is defined %}
+                {% set isSavedAddressSelected = shippingAddress.id_customer_address.vars.value | default is not empty or shippingAddress.id_company_unit_address.vars.value | default is not empty %}
+                {% set isNewAddressSelected = shippingAddress.first_name.vars.value | default is not empty or shippingAddress.last_name.vars.value | default is not empty %}
+                {% set companyBusinessUnitShippingAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress', shippingAddress.vars.data]) %}
                 {% set isCompanyBusinessUnitShippingAddressApplicable = companyBusinessUnitShippingAddressWidget and companyBusinessUnitShippingAddressWidget.isApplicable %}
                 {% set hasShippingAddressesAndApplicable = isCompanyBusinessUnitShippingAddressApplicable ?: hasShippingAddresses %}
                 {% set itemName = item.vars.data.name | default %}
@@ -60,6 +63,7 @@
                     {% set currentShipmentType = item.shipmentType.key.vars.value | default %}
                     {% set isDefaultShipmentType = currentShipmentType == defaultShipmentType %}
                     {% set shipmentTypeHiddenClassName = hasShipmentTypes and not isDefaultShipmentType ? data.hiddenClassName %}
+                    {% set newAddressHiddenClassName = (isSavedAddressSelected or not isNewAddressSelected) and hasShippingAddressesAndApplicable ? ' ' ~ data.hiddenClassName %}
 
                     {% block multiShippingAddresses %}
                         {% if hasShippingAddressesAndApplicable %}
@@ -77,7 +81,7 @@
                                         {% widget companyBusinessUnitShippingAddressWidget with {
                                             data: {
                                                 itemShippingTriggerJsClass: data.addressSelectClassName ~ ' ' ~ deliveryContainerClassName ~ ' ' ~ shipmentTypeHiddenClassName ~ ' ' ~ config.jsName ~ '__trigger--' ~ loop.index,
-                                                hasPreselectedOption: true,
+                                                hasPreselectedOption: not isSavedAddressSelected and not isNewAddressSelected,
                                             },
                                             embed: {
                                                 index: loop.index,
@@ -109,15 +113,15 @@
                                         {% endwidget %}
 
                                         {% if hasShippingAddresses %}
-                                            {% do item.shippingAddress.id_customer_address.setRendered %}
+                                            {% do shippingAddress.id_customer_address.setRendered %}
                                         {% endif %}
 
                                         {% if hasCompanyUnitAddresses %}
-                                            {% do item.shippingAddress.id_company_unit_address.setRendered %}
+                                            {% do shippingAddress.id_company_unit_address.setRendered %}
                                         {% endif %}
 
                                     {% else %}
-                                        {{ form_row(item.shippingAddress.id_customer_address, {
+                                        {{ form_row(shippingAddress.id_customer_address, {
                                             label: 'page.checkout.address.delivery.address_select' | trans,
                                             attr: {
                                                 class: data.addressSelectClassName ~ ' ' ~ deliveryContainerClassName ~ ' ' ~ shipmentTypeHiddenClassName ~ ' ' ~ config.jsName ~ '__trigger--' ~ loop.index,
@@ -132,9 +136,9 @@
 
                     <div class="{{ deliveryContainerClassName }} {{ data.validationClassName }} {{ shipmentTypeHiddenClassName }}">
                         {% include molecule('form') with {
-                            class: data.itemShippingClassName ~ ' ' ~ (hasShippingAddressesAndApplicable ? data.hiddenClassName ~ ' ') ~ config.jsName ~ '__item-shipping--' ~ loop.index,
+                            class: data.itemShippingClassName ~ ' ' ~ config.jsName ~ '__item-shipping--' ~ loop.index ~ newAddressHiddenClassName,
                             data: {
-                                form: item.shippingAddress,
+                                form: shippingAddress,
                                 enableStart: false,
                                 enableEnd: false,
                                 layout: {
@@ -157,7 +161,6 @@
                                     'trigger-selector': '.' ~ config.jsName ~ '__trigger--' ~ loop.index,
                                     'target-selector': '.' ~ config.jsName ~ '__item-shipping--' ~ loop.index,
                                     'parent-target-class-name': config.jsName,
-                                    'is-trigger-has-preselected-option': true,
                                 },
                             } only %}
                         {% endif %}
