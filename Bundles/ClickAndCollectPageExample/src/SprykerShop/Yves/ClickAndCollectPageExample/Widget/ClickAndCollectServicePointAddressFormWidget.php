@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ClickAndCollectPageExample\Widget;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 use Generated\Shared\Transfer\ServiceTypeTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
@@ -178,13 +179,8 @@ class ClickAndCollectServicePointAddressFormWidget extends AbstractWidget
      */
     protected function addSelectedServicePointParameter(FormView $checkoutAddressForm): void
     {
-        $servicePointForm = $this->getServicePointForm($checkoutAddressForm);
-
-        if (!$servicePointForm || !$this->isServicePointWithAddress($servicePointForm)) {
-            return;
-        }
-
-        $this->addParameter(static::PARAMETER_SELECTED_SERVICE_POINT, $servicePointForm->vars['value']);
+        $this->setSelectedServicePointForQuoteLevel($checkoutAddressForm);
+        $this->setSelectedServicePointForItemLevel($checkoutAddressForm);
     }
 
     /**
@@ -195,18 +191,6 @@ class ClickAndCollectServicePointAddressFormWidget extends AbstractWidget
     protected function getServicePointForm(FormView $checkoutAddressForm): ?FormView
     {
         return $checkoutAddressForm->children[static::FIELD_SERVICE_POINT] ?? null;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormView $servicePointForm
-     *
-     * @return bool
-     */
-    protected function isServicePointWithAddress(FormView $servicePointForm): bool
-    {
-        return $servicePointForm->vars['value']
-            && $servicePointForm->vars['value'] instanceof ServicePointTransfer
-            && $this->hasServicePointAddress($servicePointForm->vars['value']);
     }
 
     /**
@@ -307,5 +291,59 @@ class ClickAndCollectServicePointAddressFormWidget extends AbstractWidget
 
         return !array_diff($shipmentTypeKeys, $clickAndCollectShipmentTypes)
             && !array_diff($clickAndCollectShipmentTypes, $shipmentTypeKeys);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormView $checkoutAddressForm
+     *
+     * @return void
+     */
+    protected function setSelectedServicePointForItemLevel(FormView $checkoutAddressForm): void
+    {
+        if (!$checkoutAddressForm->vars['value'] instanceof ItemTransfer) {
+            return;
+        }
+
+        $servicePointTransfer = $checkoutAddressForm->vars['value']->getServicePoint();
+        if ($servicePointTransfer && $this->hasServicePointAddress($servicePointTransfer)) {
+            $this->addParameter(static::PARAMETER_SELECTED_SERVICE_POINT, $servicePointTransfer);
+        }
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormView $checkoutAddressForm
+     *
+     * @return void
+     */
+    protected function setSelectedServicePointForQuoteLevel(FormView $checkoutAddressForm): void
+    {
+        if (!$checkoutAddressForm->vars['value'] instanceof QuoteTransfer) {
+            return;
+        }
+
+        /** @var \Generated\Shared\Transfer\ServicePointTransfer|null $selectedServicePointForQuoteLevel */
+        $selectedServicePointForQuoteLevel = null;
+        $quoteTransfer = $checkoutAddressForm->vars['value'];
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if (!$itemTransfer->getServicePoint() || !$this->hasServicePointAddress($itemTransfer->getServicePoint())) {
+                $selectedServicePointForQuoteLevel = null;
+
+                break;
+            }
+
+            if (
+                $selectedServicePointForQuoteLevel
+                && $selectedServicePointForQuoteLevel->getIdServicePoint() !== $itemTransfer->getServicePointOrFail()->getIdServicePoint()
+            ) {
+                $selectedServicePointForQuoteLevel = null;
+
+                break;
+            }
+
+            $selectedServicePointForQuoteLevel = $itemTransfer->getServicePointOrFail();
+        }
+
+        $this->addParameter(static::PARAMETER_SELECTED_SERVICE_POINT, $selectedServicePointForQuoteLevel);
     }
 }
