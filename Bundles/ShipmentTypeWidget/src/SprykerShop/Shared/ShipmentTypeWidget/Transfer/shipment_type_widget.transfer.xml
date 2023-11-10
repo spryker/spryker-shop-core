@@ -8,6 +8,11 @@
 
     <transfer name="Shipment">
         <property name="shipmentTypeUuid" type="string" strict="true"/>
+        <property name="method" type="ShipmentMethod"/>
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="shipmentType" type="ShipmentType" strict="true"/>
     </transfer>
 
     <transfer name="ShipmentType" strict="true">

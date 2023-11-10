@@ -10,7 +10,9 @@ namespace SprykerShopTest\Yves\ShipmentTypeWidget\Plugin\CustomerPage;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use SprykerShop\Yves\ShipmentTypeWidget\Plugin\CustomerPage\ShipmentTypeCheckoutAddressStepPreGroupItemsByShipmentPlugin;
 use SprykerShopTest\Yves\ShipmentTypeWidget\ShipmentTypeWidgetYvesTester;
 
@@ -32,7 +34,10 @@ class ShipmentTypeCheckoutAddressStepPreGroupItemsByShipmentPluginTest extends U
     public function testPreGroupItemsByShipmentCleansShipmentTypeUuidsFromQuoteItems(): void
     {
         // Arrange
+        $shipmentTypeTransfer = (new ShipmentTypeTransfer())->setUuid(static::TEST_UUID_1);
+        $shipmentMethodTransfer = (new ShipmentMethodTransfer())->setShipmentType($shipmentTypeTransfer);
         $shipmentTransfer = (new ShipmentTransfer())
+            ->setMethod($shipmentMethodTransfer)
             ->setShipmentTypeUuid(static::TEST_UUID_1);
         $itemTransfer = (new ItemTransfer())
             ->setShipment($shipmentTransfer);
@@ -48,6 +53,9 @@ class ShipmentTypeCheckoutAddressStepPreGroupItemsByShipmentPluginTest extends U
         $itemTransfer = $quoteTransfer->getItems()->offsetGet(0);
         $this->assertEmpty(
             $itemTransfer->getShipmentOrFail()->getShipmentTypeUuid(),
+        );
+        $this->assertEmpty(
+            $itemTransfer->getShipmentOrFail()->getMethodOrFail()->getShipmentType(),
         );
     }
 }

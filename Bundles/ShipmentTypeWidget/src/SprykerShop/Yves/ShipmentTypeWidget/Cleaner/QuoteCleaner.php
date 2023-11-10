@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ShipmentTypeWidget\Cleaner;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class QuoteCleaner implements QuoteCleanerInterface
@@ -23,8 +24,24 @@ class QuoteCleaner implements QuoteCleanerInterface
                 continue;
             }
             $itemTransfer->getShipmentOrFail()->setShipmentTypeUuid(null);
+
+            $this->cleanShipmentTypeFromItemShipmentMethod($itemTransfer);
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function cleanShipmentTypeFromItemShipmentMethod(ItemTransfer $itemTransfer): void
+    {
+        if (!$itemTransfer->getShipmentOrFail()->getMethod() || !$itemTransfer->getShipmentOrFail()->getMethodOrFail()->getShipmentType()) {
+            return;
+        }
+
+        $itemTransfer->getShipmentOrFail()->getMethodOrFail()->setShipmentType(null);
     }
 }

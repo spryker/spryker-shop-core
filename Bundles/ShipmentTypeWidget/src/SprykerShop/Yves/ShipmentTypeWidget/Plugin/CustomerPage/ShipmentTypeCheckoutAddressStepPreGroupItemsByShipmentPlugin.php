@@ -18,7 +18,7 @@ class ShipmentTypeCheckoutAddressStepPreGroupItemsByShipmentPlugin extends Abstr
 {
     /**
      * {@inheritDoc}
-     * - Cleans `Shipment.shipmentTypeUuid` from each item in `Quote.items`.
+     * - Cleans `Shipment.shipmentTypeUuid` and `Shipment.method.shipmentType` from each item in `Quote.items`.
      *
      * @api
      *
