@@ -40,8 +40,9 @@ export class ConfiguratorService {
     }
 
     generateDate(displayData: DateConfiguration): DateConfiguration {
-        const today = new Date().getTime();
-        const serverDate = new Date(this.convertDate(displayData.Date)).getTime();
+        const serverDate = new Date(this.convertDate(displayData.Date));
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
 
         if (serverDate < today) {
             displayData.Date = '';
