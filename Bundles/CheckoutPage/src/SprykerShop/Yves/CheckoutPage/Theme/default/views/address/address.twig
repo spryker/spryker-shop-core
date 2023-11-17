@@ -85,7 +85,7 @@
 
                     {% if embed.isCompanyBusinessUnitShippingAddressApplicable %}
                         {% set isAddressSelected = isAddressSelected or embed.forms.shipping.id_company_unit_address.vars.value is not empty %}
-                    {% endif %}                
+                    {% endif %}
 
                     <div class="form__field col col--sm-6">
                         {% block multipleShipmentToggler %}

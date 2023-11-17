@@ -27,6 +27,7 @@
 {% block body %}
     {% set defaultAddressKey = null %}
     {% set optionValueDeliverToMultipleAddresses = '-1' %}
+    {% set optionValueDefineNewAddress = '0' %}
     {% set shippingAddress = 'shippingAddress' %}
     {% set billingAddress = 'billingAddress' %}
     {% set fullAddresses = data.customerAddresses ? data.customerAddresses | merge(data.companyBusinessUnitAddresses) : data.companyBusinessUnitAddresses %}
@@ -72,6 +73,7 @@
             currentAddressId: data.currentAddressId,
             isMultipleShipmentEnabled: data.isMultipleShipmentEnabled,
             optionValueDeliverToMultipleAddresses: optionValueDeliverToMultipleAddresses,
+            optionValueDefineNewAddress: optionValueDefineNewAddress,
             itemShippingTriggerJsClass: data.itemShippingTriggerJsClass,
             items: data.items,
             shippingAddress: shippingAddress,
@@ -106,7 +108,7 @@
                 <option value="" disabled selected>{{ 'checkout.step.address.select_address' | trans }}</option>
             {% endif %}
 
-            <option value="0">{{ 'company.account.add_new_address' | trans }}</option>
+            <option value="{{ embed.optionValueDefineNewAddress }}">{{ 'company.account.add_new_address' | trans }}</option>
 
             {% if embed.customerAddresses %}
                 <optgroup label="{{ 'page.checkout.address.option_group.customer' | trans }}">
@@ -145,6 +147,7 @@
                 'shipping-company-address-hidden-input-selector': '[name="addressesForm[' ~ shippingAddress ~ '][id_company_unit_address]"]',
                 'addresses': data.addresses,
                 'toggle-option-value': optionValueDeliverToMultipleAddresses,
+                'new-address-option-value': optionValueDefineNewAddress,
             },
         } only %}
     {% endblock %}

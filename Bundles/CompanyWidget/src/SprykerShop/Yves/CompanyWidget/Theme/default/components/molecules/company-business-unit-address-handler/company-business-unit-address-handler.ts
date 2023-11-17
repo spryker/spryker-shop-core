@@ -122,6 +122,10 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     fillHiddenInputAddressesFields(address: object, selector: string, idAddressKey: string): void {
         const hiddenInputIdAddress = <HTMLInputElement>this.form.querySelector(selector);
         hiddenInputIdAddress.value = address ? address[idAddressKey] : '';
+
+        if (!hiddenInputIdAddress.value && this.currentAddress === this.newAddressOptionValue) {
+            hiddenInputIdAddress.value = this.newAddressOptionValue;
+        }
     }
 
     protected initAddressesData(): void {
@@ -190,5 +194,9 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
      */
     get shippingAddressTogglerSelector(): string {
         return this.getAttribute('shipping-address-toggler-selector');
+    }
+
+    protected get newAddressOptionValue(): string {
+        return this.getAttribute('new-address-option-value');
     }
 }

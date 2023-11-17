@@ -21,6 +21,7 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToStoreClientInt
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface;
 use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressCollectionForm;
+use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressForm;
 use SprykerShop\Yves\CustomerPage\Form\CheckoutMultiShippingAddressesForm;
 
 class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider implements StepEngineFormDataProviderInterface
@@ -324,14 +325,17 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         $previouslySelectedShipmentMethod = $this->resolveShipmentForSingleAddressDelivery($quoteTransfer);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (
-                $itemTransfer->getShipment() !== null
-                && $itemTransfer->getShipment()->getShippingAddress() !== null
-            ) {
+            $shipmentTransfer = $itemTransfer->getShipment();
+            if ($shipmentTransfer === null || $shipmentTransfer->getShippingAddress() === null) {
+                $itemTransfer->setShipment($this->getItemShipment($itemTransfer, $previouslySelectedShipmentMethod));
+
                 continue;
             }
 
-            $itemTransfer->setShipment($this->getItemShipment($itemTransfer, $previouslySelectedShipmentMethod));
+            $shippingAddressTransfer = $shipmentTransfer->getShippingAddressOrFail();
+            if (!$this->isShippingAddressDefined($shippingAddressTransfer)) {
+                $shippingAddressTransfer->setIdCustomerAddress((int)CheckoutAddressForm::VALUE_ADD_NEW_ADDRESS);
+            }
         }
 
         return $quoteTransfer;

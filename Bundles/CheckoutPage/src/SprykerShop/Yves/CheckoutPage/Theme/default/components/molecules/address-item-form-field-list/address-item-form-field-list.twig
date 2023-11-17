@@ -18,7 +18,7 @@
     validationClassName: '',
 } %}
 
-{%- block extraClass -%}
+{%- block extraClass %}
     {{ config.jsName }}
 {%- endblock -%}
 
@@ -33,8 +33,10 @@
                 {% set shippingAddress = item.shippingAddress %}
                 {% set hasShippingAddresses = shippingAddress.id_customer_address is defined %}
                 {% set hasCompanyUnitAddresses = shippingAddress.id_company_unit_address is defined %}
-                {% set isSavedAddressSelected = shippingAddress.id_customer_address.vars.value | default is not empty or shippingAddress.id_company_unit_address.vars.value | default is not empty %}
-                {% set isNewAddressSelected = shippingAddress.first_name.vars.value | default is not empty or shippingAddress.last_name.vars.value | default is not empty %}
+                {% set shippingAddressValue = shippingAddress.id_customer_address.vars.value | default %}
+                {% set shippingCompanyAddressValue = shippingAddress.id_company_unit_address.vars.value | default %}
+                {% set isNewAddressSelected = shippingAddressValue == 0 or shippingCompanyAddressValue == 0 %}
+                {% set isSavedAddressSelected = (shippingAddressValue is not empty or shippingCompanyAddressValue is not empty) and not isNewAddressSelected %}
                 {% set companyBusinessUnitShippingAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress', shippingAddress.vars.data]) %}
                 {% set isCompanyBusinessUnitShippingAddressApplicable = companyBusinessUnitShippingAddressWidget and companyBusinessUnitShippingAddressWidget.isApplicable %}
                 {% set hasShippingAddressesAndApplicable = isCompanyBusinessUnitShippingAddressApplicable ?: hasShippingAddresses %}
@@ -88,6 +90,8 @@
                                                 item: item,
                                                 jsName: config.jsName,
                                                 formFieldUniqueName: formFieldUniqueName,
+                                                shippingAddressValue: shippingAddressValue,
+                                                shippingCompanyAddressValue: shippingCompanyAddressValue,
                                             },
                                         } only %}
                                             {% block addressHandler %}
@@ -106,8 +110,8 @@
 
                                             {% block hiddenFields %}
                                                 {% set index0 = embed.index - 1 %}
-                                                <input type="hidden" name="addressesForm[{{ embed.formFieldUniqueName }}][{{ index0 }}][shippingAddress][id_customer_address]">
-                                                <input type="hidden" name="addressesForm[{{ embed.formFieldUniqueName }}][{{ index0 }}][shippingAddress][id_company_unit_address]">
+                                                <input type="hidden" name="addressesForm[{{ embed.formFieldUniqueName }}][{{ index0 }}][shippingAddress][id_customer_address]" value="{{ embed.shippingAddressValue }}">
+                                                <input type="hidden" name="addressesForm[{{ embed.formFieldUniqueName }}][{{ index0 }}][shippingAddress][id_company_unit_address]" value="{{ embed.shippingCompanyAddressValue }}">
                                                 <input type="hidden" class="{{ embed.jsName }}__default-address-item-shipping-{{ embed.index }}" value="{{ defaultAddressKey }}">
                                             {% endblock %}
                                         {% endwidget %}
