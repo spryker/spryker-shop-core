@@ -1,0 +1,10 @@
+{% extends template('widget') %}
+
+{% define data = {
+    servicePointName: _widget.servicePointName,
+    isVisible:  _widget.servicePointName is not empty,
+} %}
+
+{% block body %}
+    {{ data.servicePointName }}
+{% endblock %}

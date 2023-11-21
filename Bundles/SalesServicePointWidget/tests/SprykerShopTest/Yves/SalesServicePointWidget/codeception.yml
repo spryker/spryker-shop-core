@@ -1,0 +1,20 @@
+namespace: SprykerShopTest\Yves\SalesServicePointWidget
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Yves:
+        path: .
+        actor: SalesServicePointWidgetTester
+        modules:
+            enabled:
+                - \SprykerTest\Shared\Testify\Helper\Environment

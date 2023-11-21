@@ -108,6 +108,11 @@
                 <div class="box">
                     <h6>{{ 'checkout.step.summary.delivery_address' | trans }}</h6>
                     <hr>
+                    
+                    {% block servicePointNameForShipmentGroup %}
+                        {% widget 'ServicePointNameForShipmentGroupWidget' args [shipmentGroup] only %}{% endwidget %}
+                    {% endblock %}
+                    
                     {% embed molecule('display-address') with {
                         data: {
                             address: shipmentGroup.shipment.shippingAddress,

@@ -5,13 +5,15 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.1",
+        "spryker-shop/customer-reorder-widget-extension": "^1.2.0",
         "spryker-shop/shop-ui": "^1.72.0",
         "spryker/kernel": "^3.52.0",
         "spryker/sales-service-point": "^1.0.0",
         "spryker/transfer": "^3.27.0"
     },
     "require-dev": {
-        "spryker/code-sniffer": "*"
+        "spryker/code-sniffer": "*",
+        "spryker/testify": "*"
     },
     "suggest": {
         "spryker/router": "Use this module if you need use the RouterProviderPlugin.",
@@ -22,11 +24,16 @@
             "SprykerShop\\": "src/SprykerShop/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerShopTest\\": "tests/SprykerShopTest/"
+        }
+    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
-        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
     },
     "extra": {
         "branch-alias": {
