@@ -14,6 +14,7 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClient
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientAdapter;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSecurityBlockerClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToStoreClientBridge;
@@ -60,6 +61,11 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+
+    /**
+     * @var string
+     */
+    public const CLIENT_SECURITY_BLOCKER = 'CLIENT_SECURITY_BLOCKER';
 
     /**
      * @var string
@@ -260,6 +266,21 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPreAuthUserCheckPlugins($container);
         $container = $this->addCheckoutAddressCollectionFormExpanderPlugins($container);
         $container = $this->addCheckoutMultiShippingAddressesFormExpanderPlugins($container);
+        $container = $this->addSecurityBlockerClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSecurityBlockerClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_SECURITY_BLOCKER, function (Container $container) {
+            return new CustomerPageToSecurityBlockerClientBridge($container->getLocator()->securityBlocker()->client());
+        });
 
         return $container;
     }

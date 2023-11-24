@@ -8,16 +8,24 @@
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
 use Spryker\Shared\Customer\Code\Messages;
 use SprykerShop\Yves\CustomerPage\Form\RestorePasswordForm;
 use SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
  */
 class PasswordController extends AbstractCustomerController
 {
+    /**
+     * @var string
+     */
+    protected const BLOCKER_IDENTIFIER = 'password-reset';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -33,7 +41,54 @@ class PasswordController extends AbstractCustomerController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return void
+     */
+    protected function incrementPasswordResetBlocker(Request $request): void
+    {
+        $config = $this->getFactory()->getConfig();
+        if (!$config->isCustomerSecurityBlockerEnabled()) {
+            return;
+        }
+
+        $securityCheckAuthContextTransfer = (new SecurityCheckAuthContextTransfer())
+            ->setIp($request->getClientIp())
+            ->setAccount(static::BLOCKER_IDENTIFIER)
+            ->setType($config->getCustomerSecurityBlockerEntityType());
+
+        $this
+            ->getFactory()
+            ->getSecurityBlockerClient()
+            ->incrementLoginAttemptCount($securityCheckAuthContextTransfer);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return bool
+     */
+    protected function isPasswordResetBlocked(Request $request): bool
+    {
+        $config = $this->getFactory()->getConfig();
+        if (!$config->isCustomerSecurityBlockerEnabled()) {
+            return false;
+        }
+
+        $securityCheckAuthContextTransfer = (new SecurityCheckAuthContextTransfer())
+            ->setIp($request->getClientIp())
+            ->setAccount(static::BLOCKER_IDENTIFIER)
+            ->setType($config->getCustomerSecurityBlockerEntityType());
+
+        return $this
+            ->getFactory()
+            ->getSecurityBlockerClient()
+            ->isAccountBlocked($securityCheckAuthContextTransfer)
+            ->getIsBlocked();
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array<string, mixed>
      */
     protected function executeForgottenPasswordAction(Request $request): array
     {
@@ -42,6 +97,16 @@ class PasswordController extends AbstractCustomerController
             ->createCustomerFormFactory()
             ->getForgottenPasswordForm()
             ->handleRequest($request);
+
+        if ($this->isPasswordResetBlocked($request)) {
+            return [
+                'form' => $form->createView(),
+            ];
+        }
+
+        if ($form->isSubmitted()) {
+            $this->incrementPasswordResetBlocker($request);
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $customerTransfer = new CustomerTransfer();
@@ -81,9 +146,9 @@ class PasswordController extends AbstractCustomerController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
      */
-    protected function executeRestorePasswordAction(Request $request)
+    protected function executeRestorePasswordAction(Request $request): RedirectResponse|array
     {
         if ($this->isLoggedInCustomer()) {
             $this->addErrorMessage('customer.reset.password.error.already.loggedIn');

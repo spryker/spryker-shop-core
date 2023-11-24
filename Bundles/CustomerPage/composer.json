@@ -17,6 +17,7 @@
         "spryker/quote": "^1.0.0 || ^2.1.0",
         "spryker/router": "^1.6.0",
         "spryker/sales": "^8.15.0 || ^10.0.0 || ^11.8.0",
+        "spryker/security-blocker": "^1.0.0",
         "spryker/security-extension": "^1.0.0",
         "spryker/shipment": "^7.0.0 || ^8.0.0",
         "spryker/step-engine": "^3.3.0",

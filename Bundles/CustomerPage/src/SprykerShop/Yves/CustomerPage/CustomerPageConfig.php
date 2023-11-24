@@ -44,7 +44,7 @@ class CustomerPageConfig extends AbstractBundleConfig
     /**
      * @uses \Spryker\Shared\Sales\SalesConfig::ORDER_SEARCH_TYPES
      *
-     * @var array
+     * @var array<int, string>
      */
     protected const ORDER_SEARCH_TYPES = [
         'all',
@@ -79,6 +79,45 @@ class CustomerPageConfig extends AbstractBundleConfig
      * @var string
      */
     public const PATTERN_LAST_NAME = '/^[^:\/<>]+$/';
+
+    /**
+     * @uses \Spryker\Client\SecurityBlockerStorefrontCustomer\SecurityBlockerStorefrontCustomerConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE
+     *
+     * @var string
+     */
+    protected const CUSTOMER_SECURITY_BLOCKER_ENTITY_TYPE = 'customer';
+
+    /**
+     * @var bool
+     */
+    protected const CUSTOMER_SECURITY_BLOCKER_ENABLED = false;
+
+    /**
+     * Specification:
+     * - Checks if the security blocker is enabled.
+     * - It is disabled by default.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isCustomerSecurityBlockerEnabled(): bool
+    {
+        return static::CUSTOMER_SECURITY_BLOCKER_ENABLED;
+    }
+
+    /**
+     * Specification:
+     * - Returns the entity identifier that is used to block the password resets.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getCustomerSecurityBlockerEntityType(): string
+    {
+        return static::CUSTOMER_SECURITY_BLOCKER_ENTITY_TYPE;
+    }
 
     /**
      * @api

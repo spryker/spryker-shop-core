@@ -20,6 +20,7 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClient
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSecurityBlockerClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToStoreClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface;
@@ -608,5 +609,13 @@ class CustomerPageFactory extends AbstractFactory
     public function getCheckoutMultiShippingAddressesFormExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGINS_CHECKOUT_MULTI_SHIPPING_ADDRESSES_FORM_EXPANDER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSecurityBlockerClientInterface
+     */
+    public function getSecurityBlockerClient(): CustomerPageToSecurityBlockerClientInterface
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_SECURITY_BLOCKER);
     }
 }
