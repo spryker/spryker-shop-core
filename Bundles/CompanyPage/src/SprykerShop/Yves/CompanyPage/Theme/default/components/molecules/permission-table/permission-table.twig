@@ -7,6 +7,8 @@
 {% define data = {
     permissions: required,
     idCompanyRole: required,
+    companyRolePermissionAssignFormCloner: null,
+    companyRolePermissionUnassignFormCloner: null,
     actions: {
         configure: false,
         switch: false,
@@ -31,6 +33,7 @@
         <tbody>
         {% for permission in data.permissions %}
             {% set isAssigned = permission.idCompanyRole | default(false) %}
+            
             <tr>
                 <td>{{ permission.key | trans }}</td>
                 {% if data.actions.switch %}
@@ -58,13 +61,41 @@
                             {% if data.actions.switch %}
                                 <li class="menu__item">
                                     {% if isAssigned %}
-                                        <a href="{{ path('company/company-role-permission/unassign', {'id-permission': permission.idPermission, 'id-company-role': _view.idCompanyRole}) }}">
-                                            {{ 'company.account.company_role.permission.unassign' | trans }}
-                                        </a>
+                                        {% set companyRolePermissionUnassignForm = data.companyRolePermissionUnassignFormCloner.getForm.createView ?? null %}
+                                        {% set formAction = path('company/company-role-permission/unassign', {
+                                            'id-permission': permission.idPermission,
+                                            'id-company-role': data.idCompanyRole,
+                                        }) %}
+                                        {% set linkText = 'company.account.company_role.permission.unassign' | trans %}
+
+                                        {% if companyRolePermissionUnassignForm %}
+                                            {{ form_start(companyRolePermissionUnassignForm, { action: formAction }) }}
+                                                <button class="link" data-init-single-click>{{ linkText }}</button>
+                                            {{ form_end(companyRolePermissionUnassignForm) }}
+                                        {% else %}
+                                            <form name="company_role_permission_unassign_form" method="POST" action="{{ formAction }}">
+                                                <button class="link" data-init-single-click>{{ linkText }}</button>
+                                                <input type="hidden" name="company_role_permission_unassign_form[_token]" value="{{ csrf_token('company_role_permission_unassign_form') }}">
+                                            </form>
+                                        {% endif %}
                                     {% else %}
-                                        <a href="{{ path('company/company-role-permission/assign', {'id-permission': permission.idPermission, 'id-company-role': _view.idCompanyRole}) }}">
-                                            {{ 'company.account.company_role.permission.assign' | trans }}
-                                        </a>
+                                        {% set companyRolePermissionAssignForm = data.companyRolePermissionAssignFormCloner.getForm.createView ?? null %}
+                                        {% set formAction = path('company/company-role-permission/assign', {
+                                            'id-permission': permission.idPermission,
+                                            'id-company-role': data.idCompanyRole,
+                                        }) %}
+                                        {% set linkText = 'company.account.company_role.permission.assign' | trans %}
+
+                                        {% if companyRolePermissionAssignForm %}
+                                            {{ form_start(companyRolePermissionAssignForm, { action: formAction }) }}
+                                                <button class="link" data-init-single-click>{{ linkText }}</button>
+                                            {{ form_end(companyRolePermissionAssignForm) }}
+                                        {% else %}
+                                            <form name="company_role_permission_assign_form" method="POST" action="{{ formAction }}">
+                                                <button class="link" data-init-single-click>{{ linkText }}</button>
+                                                <input type="hidden" name="company_role_permission_assign_form[_token]" value="{{ csrf_token('company_role_permission_assign_form') }}">
+                                            </form>
+                                        {% endif %}
                                     {% endif %}
                                 </li>
                             {% endif %}

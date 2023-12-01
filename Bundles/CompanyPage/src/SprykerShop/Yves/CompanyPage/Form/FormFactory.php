@@ -176,7 +176,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @SuppressWarnings(PHPMD)
+     * @SuppressWarnings(\SprykerShop\Yves\CompanyPage\Form\PHPMD)
      *
      * @return \SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyBusinessUnitFormDataProvider
      */
@@ -199,7 +199,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @SuppressWarnings(PHPMD)
+     * @SuppressWarnings(\SprykerShop\Yves\CompanyPage\Form\PHPMD)
      *
      * @return \SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUnitAddressFormDataProvider
      */
@@ -213,7 +213,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @SuppressWarnings(PHPMD)
+     * @SuppressWarnings(\SprykerShop\Yves\CompanyPage\Form\PHPMD)
      *
      * @return \SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyRoleDataProvider
      */
@@ -231,6 +231,22 @@ class FormFactory extends AbstractFactory
     public function getCompanyUserAccountForm(array $data = [], array $formOptions = []): FormInterface
     {
         return $this->getFormFactory()->create(CompanyUserAccountSelectorForm::class, $data, $formOptions);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCompanyRolePermissionAssignForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(CompanyRolePermissionAssignForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCompanyRolePermissionUnassignForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(CompanyRolePermissionUnassignForm::class);
     }
 
     /**

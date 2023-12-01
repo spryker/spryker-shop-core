@@ -49,6 +49,16 @@ class CompanyRolePermissionController extends AbstractCompanyController
      */
     public function assignAction(Request $request): RedirectResponse
     {
+        $companyRolePermissionAssignForm = $this->getFactory()
+            ->createCompanyPageFormFactory()
+            ->getCompanyRolePermissionAssignForm()
+            ->handleRequest($request);
+        if (!$companyRolePermissionAssignForm->isSubmitted() || !$companyRolePermissionAssignForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_ERROR_PERMISSION_SAVE_FAILED);
+
+            return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE);
+        }
+
         $idCompanyRole = $request->query->getInt('id-company-role');
         $idPermission = $request->query->getInt('id-permission');
 
@@ -73,6 +83,16 @@ class CompanyRolePermissionController extends AbstractCompanyController
      */
     public function unassignAction(Request $request): RedirectResponse
     {
+        $companyRolePermissionUnassignForm = $this->getFactory()
+            ->createCompanyPageFormFactory()
+            ->getCompanyRolePermissionUnassignForm()
+            ->handleRequest($request);
+        if (!$companyRolePermissionUnassignForm->isSubmitted() || !$companyRolePermissionUnassignForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_ERROR_PERMISSION_SAVE_FAILED);
+
+            return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE);
+        }
+
         $idCompanyRole = $request->query->getInt('id-company-role');
         $idPermission = $request->query->getInt('id-permission');
 

@@ -353,6 +353,12 @@ class CompanyRoleController extends AbstractCompanyController
             'companyRoleForm' => $companyRoleForm->createView(),
             'idCompanyRole' => $idCompanyRole,
             'permissions' => $this->getSelectablePermissionsList($idCompanyRole)->getPermissions(),
+            'companyRolePermissionAssignFormCloner' => $this->getFactory()->createFormCloner()->setForm(
+                $this->getFactory()->createCompanyPageFormFactory()->getCompanyRolePermissionAssignForm(),
+            ),
+            'companyRolePermissionUnassignFormCloner' => $this->getFactory()->createFormCloner()->setForm(
+                $this->getFactory()->createCompanyPageFormFactory()->getCompanyRolePermissionUnassignForm(),
+            ),
         ];
     }
 
