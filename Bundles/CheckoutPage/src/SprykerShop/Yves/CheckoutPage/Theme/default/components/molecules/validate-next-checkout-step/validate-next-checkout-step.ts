@@ -97,11 +97,11 @@ export default class ValidateNextCheckoutStep extends Component {
      * Init the methods, which fill the collection of form fields and toggle disabling of button.
      */
     async initTriggerState(): Promise<void> {
-        this.containers = <HTMLElement[]>Array.from(document.querySelectorAll(this.containerSelector));
+        await this.fillExtraTriggersCollection();
 
+        this.containers = <HTMLElement[]>Array.from(document.querySelectorAll(this.containerSelector));
         this.fillDropdownTriggersCollection();
         this.fillFormFieldsCollection();
-        await this.fillExtraTriggersCollection();
         this.toggleDisablingNextStepButton();
         this.resetEvents();
         this.mapEvents();

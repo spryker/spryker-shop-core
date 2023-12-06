@@ -1,11 +1,10 @@
 {% extends template('widget') %}
 
 {#
-    @deprecated property "data.formAddressTransfer" is deprecated.
-    @deprecated property "data.isCustomAddress" is deprecated.
-    @deprecated property "data.currentCompanyBusinessUnitAddress" is deprecated.
+    @deprecated property "formAddressTransfer" is deprecated.
+    @deprecated property "isCustomAddress" is deprecated.
+    @deprecated property "currentCompanyBusinessUnitAddress" is deprecated.
 #}
-
 {% define data = {
     formType: _widget.formType,
     currentAddressId: _widget.formAddressTransfer.idCustomerAddress | default,
@@ -22,6 +21,8 @@
     currentCompanyBusinessUnitAddress: _widget.currentCompanyBusinessUnitAddress,
     isCurrentAddressEmpty: _widget.isCurrentAddressEmpty,
     hasPreselectedOption: false,
+    addressFormClassName: '',
+    addressSelectClassName: '',
 } %}
 
 {% block body %}
@@ -43,9 +44,7 @@
             {% set isCurrentCompanyUnitAddress = data.currentCompanyUnitAddressId and data.currentCompanyUnitAddressId == address.idCompanyUnitAddress %}
             {% set isCurrentValueDeliverToMultipleAddresses = data.currentAddressId == optionValueDeliverToMultipleAddresses %}
 
-            {% if canUseCurrentAsDefaultCustomerAddress or canUseCurrentAsDefaultCompanyUnitAddress
-                    or isCurrentCustomerAddress or isCurrentCompanyUnitAddress
-            %}
+            {% if canUseCurrentAsDefaultCustomerAddress or canUseCurrentAsDefaultCompanyUnitAddress or isCurrentCustomerAddress or isCurrentCompanyUnitAddress %}
                 {% set defaultAddressKey = address.key %}
             {% endif %}
 
@@ -68,7 +67,6 @@
         embed: {
             customerAddresses: data.customerAddresses,
             companyBusinessUnitAddresses: data.companyBusinessUnitAddresses,
-            formType: data.formType,
             defaultAddressKey: defaultAddressKey,
             currentAddressId: data.currentAddressId,
             isMultipleShipmentEnabled: data.isMultipleShipmentEnabled,
@@ -76,13 +74,11 @@
             optionValueDefineNewAddress: optionValueDefineNewAddress,
             itemShippingTriggerJsClass: data.itemShippingTriggerJsClass,
             items: data.items,
-            shippingAddress: shippingAddress,
-            jsAddressClass: data.jsAddressClass,
+            isShippingAddressFormType: isShippingAddressFormType,
             hasPreselectedOption: data.hasPreselectedOption,
         },
     } only %}
         {% block selectClass -%}
-            {{ embed.jsAddressClass ? embed.jsAddressClass ~ '__form-select-' ~ embed.formType }}
             {{ embed.itemShippingTriggerJsClass ? embed.itemShippingTriggerJsClass }}
         {%- endblock %}
         {% block option %}
@@ -126,7 +122,7 @@
                 </optgroup>
             {% endif %}
 
-            {% if embed.formType == embed.shippingAddress and embed.isMultipleShipmentEnabled %}
+            {% if embed.isShippingAddressFormType and embed.isMultipleShipmentEnabled %}
                 <option value="{{ embed.optionValueDeliverToMultipleAddresses }}" {% if embed.defaultAddressKey == embed.optionValueDeliverToMultipleAddresses %}selected{% endif %}>
                     {{ 'customer.account.deliver_to_multiple_addresses' | trans }}
                 </option>
@@ -137,9 +133,9 @@
     {% block addressHandler %}
         {% include molecule('company-business-unit-address-handler', 'CompanyWidget') with {
             attributes: {
-                'form-selector': '.' ~ data.jsAddressClass ~ '__form-handler-' ~ data.formType,
-                'data-selector': '.' ~ data.jsAddressClass ~ '__form-select-' ~ data.formType,
-                'shipping-address-toggler-selector': '.' ~ data.jsAddressClass ~ '__form-select-' ~ shippingAddress,
+                'form-selector': '.' ~ data.addressFormClassName ?: '.' ~ data.jsAddressClass ~ '__form-handler-' ~ data.formType,
+                'data-selector': '.' ~ data.addressSelectClassName ?: '.' ~ data.jsAddressClass ~ '__form-select-' ~ data.formType,
+                'shipping-address-toggler-selector': isShippingAddressFormType ? ('.' ~ data.addressSelectClassName ?: '.' ~ data.jsAddressClass ~ '__form-select-' ~ shippingAddress),
                 'default-address-selector': '.' ~ data.jsAddressClass ~ '__default-address-' ~ data.formType,
                 'address-hidden-input-selector': '[name="addressesForm[' ~ data.formType ~ '][id_customer_address]"]',
                 'company-address-hidden-input-selector': '[name="addressesForm[' ~ data.formType ~ '][id_company_unit_address]"]',

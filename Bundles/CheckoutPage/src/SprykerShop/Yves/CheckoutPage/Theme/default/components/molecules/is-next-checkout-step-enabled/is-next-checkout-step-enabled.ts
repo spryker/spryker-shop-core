@@ -3,6 +3,7 @@ import ValidateNextCheckoutStep, { EVENT_INIT } from '../validate-next-checkout-
 
 export default class IsNextCheckoutStepEnabled extends Component {
     protected trigger: HTMLSelectElement;
+    protected extraTriggers: HTMLInputElement[];
     protected target: ValidateNextCheckoutStep;
     protected extraTarget: ValidateNextCheckoutStep;
 
@@ -11,6 +12,12 @@ export default class IsNextCheckoutStepEnabled extends Component {
     protected init(): void {
         if (this.triggerSelector) {
             this.trigger = <HTMLSelectElement>document.querySelector(this.triggerSelector);
+        }
+
+        if (this.extraTriggersClassName) {
+            this.extraTriggers = <HTMLInputElement[]>(
+                Array.from(document.getElementsByClassName(this.extraTriggersClassName))
+            );
         }
 
         this.target = <ValidateNextCheckoutStep>document.querySelector(this.targetSelector);
@@ -25,8 +32,28 @@ export default class IsNextCheckoutStepEnabled extends Component {
     }
 
     protected mapEvents(): void {
-        const target = this.extraTarget ? this.extraTarget : this.target;
+        this.mapTriggerChangeEvent();
+        this.mapExtraTriggersToggleEvent();
+        this.mapTargetInitEvent();
+    }
+
+    protected mapTriggerChangeEvent(): void {
         this.trigger.addEventListener('change', () => this.onTriggerChange());
+    }
+
+    protected mapExtraTriggersToggleEvent(): void {
+        if (!this.extraTriggers) {
+            return;
+        }
+
+        this.extraTriggers.forEach((extraTrigger: HTMLInputElement) => {
+            extraTrigger.addEventListener('toggle', () => this.onTriggerChange());
+        });
+    }
+
+    protected mapTargetInitEvent(): void {
+        const target = this.extraTarget ? this.extraTarget : this.target;
+
         target.addEventListener(EVENT_INIT, () => this.initTriggerState());
     }
 
@@ -67,6 +94,10 @@ export default class IsNextCheckoutStepEnabled extends Component {
      */
     get triggerSelector(): string {
         return this.getAttribute('trigger-selector');
+    }
+
+    protected get extraTriggersClassName(): string {
+        return this.getAttribute('extra-triggers-class-name');
     }
 
     /**

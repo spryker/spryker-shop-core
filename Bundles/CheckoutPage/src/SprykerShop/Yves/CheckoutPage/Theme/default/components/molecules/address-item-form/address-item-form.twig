@@ -4,6 +4,7 @@
     name: 'address-item-form',
 } %}
 
+{# @deprecated property "jsAddressClass" is deprecated. #}
 {% define data = {
     form: required,
     formBundle: null,
@@ -11,12 +12,16 @@
     jsAddressClass: '',
     hiddenClassName: 'is-hidden',
     validatorClassName: '',
+    formSubmitClassName: '',
+    addressSelectClassName: '',
+    addressFormClassName: '',
+    addressFormContainerClassName: '',
 } %}
 
-{% set addressSelectClassName = 'js-' ~ config.name ~ '__address-select' %}
 {% set validatorTriggerClassName = 'js-' ~ config.name ~ '__validator-trigger' %}
-{% set itemShippingClassName = 'js-' ~ config.name ~ '__item-shipping' %}
-{% set itemDeliveryValidationClassName = 'js-' ~ config.name ~ '__item-delivery-validation' %}
+{% set addressSelectClassName = data.addressSelectClassName ?: 'js-' ~ config.name ~ '__address-select' %}
+{% set itemShippingClassName = data.addressFormClassName ?: 'js-' ~ config.name ~ '__item-shipping' %}
+{% set itemDeliveryValidationClassName = data.addressFormContainerClassName ?: 'js-' ~ config.name ~ '__item-delivery-validation' %}
 
 {% block body %}
     {% if is_granted('ROLE_USER') %}
@@ -98,7 +103,7 @@
             attributes: {
                 'container-selector': '.' ~ itemShippingClassName,
                 'extra-container-selector': '.' ~ itemDeliveryValidationClassName,
-                'target-selector': '.' ~ data.jsAddressClass ~ '__form-submit',
+                'target-selector': '.' ~ data.formSubmitClassName ?: '.' ~ data.jsAddressClass ~ '__form-submit',
                 'dropdown-trigger-selector': '.' ~ addressSelectClassName ~ ':not(.' ~ data.hiddenClassName ~ ')',
                 'extra-triggers-class-name': validatorTriggerClassName,
                 'parent-target-class-name': config.jsName ~ '__items',

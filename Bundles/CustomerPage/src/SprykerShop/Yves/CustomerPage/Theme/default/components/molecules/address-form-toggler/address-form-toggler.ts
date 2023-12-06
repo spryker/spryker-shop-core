@@ -81,6 +81,7 @@ export default class AddressFormToggler extends Component {
             this.containerBillingAddress.classList.remove(this.classToToggle);
             this.billingSameAsShipping.classList.add(this.classToToggle);
             this.billingSameAsShippingToggler.checked = false;
+            this.billingSameAsShippingToggler.dispatchEvent(new Event('change'));
         }
     }
 
