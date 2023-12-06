@@ -130,6 +130,56 @@ class CheckoutAddressFormDataProviderTest extends Unit
     }
 
     /**
+     * @dataProvider getSetBundleItemLevelShippingAddressesWithPreviouslySelectedShipmentDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $previouslySelectedShipmentTransfer
+     *
+     * @return void
+     */
+    public function testSetBundleItemLevelShippingAddressesWithPreviouslySelectedShipment(
+        QuoteTransfer $quoteTransfer,
+        ShipmentTransfer $previouslySelectedShipmentTransfer
+    ): void {
+        // Arrange
+        $this->dataProvider->method('resolveShipmentForSingleAddressDelivery')->willReturn($previouslySelectedShipmentTransfer);
+
+        // Act
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = $this->invokeMethod($this->dataProvider, 'setBundleItemLevelShippingAddresses', [$quoteTransfer]);
+
+        // Assert
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $quoteTransfer->getBundleItems()->getIterator()->current();
+        $this->assertSame($previouslySelectedShipmentTransfer, $itemTransfer->getShipment());
+    }
+
+    /**
+     * @dataProvider getSetBundleItemLevelShippingAddressesDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int|null $expectedIdCustomerAddress
+     *
+     * @return void
+     */
+    public function testSetBundleItemLevelShippingAddresses(
+        QuoteTransfer $quoteTransfer,
+        ?int $expectedIdCustomerAddress
+    ): void {
+        // Arrange
+        $this->dataProvider->method('resolveShipmentForSingleAddressDelivery')->willReturn(new ShipmentTransfer());
+
+        // Act
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = $this->invokeMethod($this->dataProvider, 'setBundleItemLevelShippingAddresses', [$quoteTransfer]);
+
+        // Assert
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $quoteTransfer->getBundleItems()->getIterator()->current();
+        $this->assertSame($expectedIdCustomerAddress, $itemTransfer->getShipmentOrFail()->getShippingAddressOrFail()->getIdCustomerAddress());
+    }
+
+    /**
      * @return array<string, list<\Generated\Shared\Transfer\QuoteTransfer>>
      */
     protected function getSetItemLevelShippingAddressesWithPreviouslySelectedShipmentDataProvider(): array
@@ -164,6 +214,48 @@ class CheckoutAddressFormDataProviderTest extends Unit
             ],
             'Should set `addNewAddress` value to address transfer when item has shipping address without customer address ID and company unit address ID.' => [
                 (new QuoteTransfer())->addItem((new ItemTransfer())->setShipment(
+                    (new ShipmentTransfer())->setShippingAddress(new AddressTransfer()),
+                )),
+                static::VALUE_ADD_NEW_ADDRESS,
+            ],
+        ];
+    }
+
+    /**
+     * @return array<string, list<\Generated\Shared\Transfer\QuoteTransfer>>
+     */
+    protected function getSetBundleItemLevelShippingAddressesWithPreviouslySelectedShipmentDataProvider(): array
+    {
+        return [
+            'Should set previously selected shipment when bundle item does not have shipment.' => [
+                (new QuoteTransfer())->addBundleItem(new ItemTransfer()), new ShipmentTransfer(),
+            ],
+            'Should set previously selected shipment when bundle item does not have shipment address.' => [
+                (new QuoteTransfer())->addBundleItem((new ItemTransfer())->setShipment(new ShipmentTransfer())), new ShipmentTransfer(),
+            ],
+        ];
+    }
+
+    /**
+     * @return array<string, array<\Generated\Shared\Transfer\QuoteTransfer|int|null>>
+     */
+    protected function getSetBundleItemLevelShippingAddressesDataProvider(): array
+    {
+        return [
+            'Should not set `addNewAddress` value to address transfer when bundle item has shipping address with customer address ID.' => [
+                (new QuoteTransfer())->addBundleItem((new ItemTransfer())->setShipment(
+                    (new ShipmentTransfer())->setShippingAddress((new AddressTransfer())->setIdCustomerAddress(static::ID_CUSTOMER_ADDRESS)),
+                )),
+                static::ID_CUSTOMER_ADDRESS,
+            ],
+            'Should not set `addNewAddress` value to address transfer when bundle item has shipping address with company unit address ID.' => [
+                (new QuoteTransfer())->addBundleItem((new ItemTransfer())->setShipment(
+                    (new ShipmentTransfer())->setShippingAddress((new AddressTransfer())->setIdCompanyUnitAddress(static::ID_COMPANY_UNIT_ADDRESS)),
+                )),
+                null,
+            ],
+            'Should set `addNewAddress` value to address transfer when bundle item has shipping address without customer address ID and company unit address ID.' => [
+                (new QuoteTransfer())->addBundleItem((new ItemTransfer())->setShipment(
                     (new ShipmentTransfer())->setShippingAddress(new AddressTransfer()),
                 )),
                 static::VALUE_ADD_NEW_ADDRESS,

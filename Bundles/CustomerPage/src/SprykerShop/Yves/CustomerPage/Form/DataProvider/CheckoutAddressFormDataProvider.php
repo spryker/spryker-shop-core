@@ -325,17 +325,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         $previouslySelectedShipmentMethod = $this->resolveShipmentForSingleAddressDelivery($quoteTransfer);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $shipmentTransfer = $itemTransfer->getShipment();
-            if ($shipmentTransfer === null || $shipmentTransfer->getShippingAddress() === null) {
-                $itemTransfer->setShipment($this->getItemShipment($itemTransfer, $previouslySelectedShipmentMethod));
-
-                continue;
-            }
-
-            $shippingAddressTransfer = $shipmentTransfer->getShippingAddressOrFail();
-            if (!$this->isShippingAddressDefined($shippingAddressTransfer)) {
-                $shippingAddressTransfer->setIdCustomerAddress((int)CheckoutAddressForm::VALUE_ADD_NEW_ADDRESS);
-            }
+            $this->addShippingAddressToItemTransfer($itemTransfer, $previouslySelectedShipmentMethod);
         }
 
         return $quoteTransfer;
@@ -348,18 +338,36 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     protected function setBundleItemLevelShippingAddresses(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
+        $previouslySelectedShipmentMethod = $this->resolveShipmentForSingleAddressDelivery($quoteTransfer);
+
         foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() && $itemTransfer->getShipment()->getShippingAddress()) {
-                continue;
-            }
-
-            $shipmentTransfer = $itemTransfer->getShipment() ?? new ShipmentTransfer();
-            $shipmentTransfer->setShippingAddress(new AddressTransfer());
-
-            $itemTransfer->setShipment($shipmentTransfer);
+            $this->addShippingAddressToItemTransfer($itemTransfer, $previouslySelectedShipmentMethod);
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer|null $previouslySelectedShipmentMethod
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function addShippingAddressToItemTransfer(ItemTransfer $itemTransfer, ?ShipmentTransfer $previouslySelectedShipmentMethod): ItemTransfer
+    {
+        $shipmentTransfer = $itemTransfer->getShipment();
+        if ($shipmentTransfer === null || $shipmentTransfer->getShippingAddress() === null) {
+            $itemTransfer->setShipment($this->getItemShipment($itemTransfer, $previouslySelectedShipmentMethod));
+
+            return $itemTransfer;
+        }
+
+        $shippingAddressTransfer = $shipmentTransfer->getShippingAddressOrFail();
+        if (!$this->isShippingAddressDefined($shippingAddressTransfer)) {
+            $shippingAddressTransfer->setIdCustomerAddress((int)CheckoutAddressForm::VALUE_ADD_NEW_ADDRESS);
+        }
+
+        return $itemTransfer;
     }
 
     /**
