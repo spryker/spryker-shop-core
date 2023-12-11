@@ -2,7 +2,7 @@ $shopping-list-product-option-list-padding: map-get($setting-spacing, 'small');
 
 @mixin product-option-widget-shopping-list-product-option-list($name: '.shopping-list-product-option-list') {
     #{$name} {
-        margin: 0 -$shopping-list-product-option-list-padding;
+        margin: 0 (-$shopping-list-product-option-list-padding);
 
         &__item {
             padding: 0 $shopping-list-product-option-list-padding map-get($setting-spacing, 'default');
