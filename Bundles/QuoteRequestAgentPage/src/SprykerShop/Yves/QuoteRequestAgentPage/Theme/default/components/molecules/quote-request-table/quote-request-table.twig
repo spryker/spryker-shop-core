@@ -1,3 +1,13 @@
+{# @var quoteRequest \Generated\Shared\Transfer\QuoteRequestTransfer #}
+{# @var quoteRequest.companyUser \Generated\Shared\Transfer\CompanyUserTransfer #}
+{# @var quoteRequest.companyUser.company \Generated\Shared\Transfer\CompanyTransfer #}
+{# @var quoteRequest.companyUser.companyBusinessUnit \Generated\Shared\Transfer\CompanyBusinessUnitTransfer #}
+{# @var quoteRequest.companyUser.customer \Generated\Shared\Transfer\CustomerTransfer #}
+{# @var quoteRequest.latestVersion \Generated\Shared\Transfer\QuoteRequestVersionTransfer #}
+{# @var quoteRequest.latestVersion.quote \Generated\Shared\Transfer\QuoteTransfer #}
+{# @var quoteRequest.latestVersion.quote.totals \Generated\Shared\Transfer\TotalsTransfer #}
+{# @var quoteRequest.latestVersion.quote.currency \Generated\Shared\Transfer\CurrencyTransfer #}
+
 {% extends model('component') %}
 
 {% define config = {
@@ -6,6 +16,7 @@
 
 {% define data = {
     quoteRequests: required,
+    emailSliceLength: 15,
 } %}
 
 {% block body %}
@@ -36,6 +47,12 @@
                 </td>
                 <td>
                     {{ quoteRequest.companyUser.customer.firstName ~ ' ' ~ quoteRequest.companyUser.customer.lastName }}
+
+                    {% if (not quoteRequest.companyUser.customer.firstName and not quoteRequest.companyUser.customer.lastName) %}
+                        {{ quoteRequest.companyUser.customer.email | length <= data.emailSliceLength ?
+                            quoteRequest.companyUser.customer.email :
+                            quoteRequest.companyUser.customer.email | slice (0, data.emailSliceLength) ~ '...' }}
+                    {% endif %}
                 </td>
                 <td class="text-center">
                     <strong>{{ quoteRequest.latestVersion.quote.totals.grandTotal | default(0) | money(true, quoteRequest.latestVersion.quote.currency ? quoteRequest.latestVersion.quote.currency.code : '') }}</strong>

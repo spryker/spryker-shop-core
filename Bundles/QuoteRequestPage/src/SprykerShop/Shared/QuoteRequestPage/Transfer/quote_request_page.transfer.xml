@@ -23,6 +23,7 @@
     <transfer name="Customer">
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>
+        <property name="email" type="string"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnit">

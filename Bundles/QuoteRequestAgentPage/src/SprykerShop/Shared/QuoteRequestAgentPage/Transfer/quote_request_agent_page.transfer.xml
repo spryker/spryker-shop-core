@@ -49,6 +49,7 @@
         <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
         <property name="quoteRequestVersionReference" type="string"/>
         <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="currency" type="Currency"/>
     </transfer>
 
     <transfer name="Totals">
@@ -134,6 +135,10 @@
     <transfer name="Expense">
         <property name="type" type="string"/>
         <property name="shipment" type="Shipment"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
     </transfer>
 
 </transfers>

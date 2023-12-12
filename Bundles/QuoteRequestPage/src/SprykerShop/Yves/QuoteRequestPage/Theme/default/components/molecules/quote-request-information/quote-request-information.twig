@@ -1,3 +1,9 @@
+{# @var data.quoteRequest \Generated\Shared\Transfer\QuoteRequestTransfer #}
+{# @var quoteRequest.companyUser \Generated\Shared\Transfer\CompanyUserTransfer #}
+{# @var data.quoteRequest.companyUser.company \Generated\Shared\Transfer\CompanyTransfer #}
+{# @var data.quoteRequest.companyUser.companyBusinessUnit \Generated\Shared\Transfer\CompanyBusinessUnitTransfer #}
+{# @var data.quoteRequest.companyUser.customer \Generated\Shared\Transfer\CustomerTransfer #}
+
 {% extends model('component') %}
 
 {% define config = {
@@ -8,6 +14,7 @@
     quoteRequest: required,
     quoteRequestVersionReferences: null,
     version: null,
+    emailSliceLength: 15,
 } %}
 
 {% block body %}
@@ -49,6 +56,12 @@
                 {{ 'quote_request_page.quote_request.labels.customer' | trans }}:
                 <span class="text-secondary">
                     {{ data.quoteRequest.companyUser.customer.firstName }} {{ data.quoteRequest.companyUser.customer.lastName }}
+
+                    {% if (not data.quoteRequest.companyUser.customer.firstName and not data.quoteRequest.companyUser.customer.lastName) %}
+                        {{ data.quoteRequest.companyUser.customer.email | length <= data.emailSliceLength ?
+                            data.quoteRequest.companyUser.customer.email :
+                            data.quoteRequest.companyUser.customer.email | slice (0, data.emailSliceLength) ~ '...' }}
+                    {% endif %}
                 </span>
             </p>
         {% endblock %}
