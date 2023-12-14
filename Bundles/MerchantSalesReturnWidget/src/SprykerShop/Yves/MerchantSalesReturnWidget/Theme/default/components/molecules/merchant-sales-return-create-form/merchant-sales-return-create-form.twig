@@ -72,9 +72,11 @@
                 <div class="{{ checkboxWrapperClass }}">
                     {{ form_row(returnItem.isReturnable, {
                         label: ' ',
-                        attr: {'class': 'js-return-create__trigger-state-toggler'},
+                        attr: {
+                            class: 'js-return-create__trigger-state-toggler',
+                        },
                         attributes: {
-                            'merchant-reference': orderItem.merchantReference,
+                            'merchant-reference': orderItem.merchantReference ?? false,
                             'is-returnable': isReturnable,
                         },
                         disabled: not isReturnable,

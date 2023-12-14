@@ -47,7 +47,12 @@
                                         <div class="{{ checkboxWrapperClass }}">
                                             {{ form_row(returnItem.isReturnable, {
                                                 label: ' ',
-                                                attr: {'class': 'js-return-create__trigger-state-toggler'},
+                                                attr: {
+                                                    class: 'js-return-create__trigger-state-toggler',
+                                                },
+                                                attributes: {
+                                                    'is-returnable': isReturnable,
+                                                },
                                                 disabled: not isReturnable,
                                             }) }}
                                         </div>
@@ -133,7 +138,12 @@
                                                         <div class="spacing-top spacing-top--big">
                                                             {{ form_row(productBundle.isReturnable, {
                                                                 label: ' ',
-                                                                attr: {'class': 'js-return-create__trigger-state-toggler'},
+                                                                attr: {
+                                                                    class: 'js-return-create__trigger-state-toggler',
+                                                                },
+                                                                attributes: {
+                                                                    'is-returnable': isReturnable,
+                                                                },
                                                                 disabled: not isReturnable,
                                                             }) }}
                                                         </div>
@@ -227,7 +237,10 @@
                                                             {{ form_row(returnItem.isReturnable, {
                                                                 label: ' ',
                                                                 attr: {
-                                                                    'class': 'js-return-create__trigger-state-toggler',
+                                                                    class: 'js-return-create__trigger-state-toggler',
+                                                                },
+                                                                attributes: {
+                                                                    'is-returnable': data.product.isReturnable,
                                                                 },
                                                                 disabled: not data.product.isReturnable,
                                                             }) }}

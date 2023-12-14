@@ -60,7 +60,7 @@ export default class SeparateReturnsByMerchant extends Component {
             checkbox.disabled = true;
             checkbox
                 .closest(`.${this.checkboxComponentClassname}`)
-                .classList.add(`.${this.checkboxDisabledComponentClassname}`);
+                .classList.add(`${this.checkboxDisabledComponentClassname}`);
         });
     }
 
@@ -73,7 +73,7 @@ export default class SeparateReturnsByMerchant extends Component {
             checkbox.disabled = false;
             checkbox
                 .closest(`.${this.checkboxComponentClassname}`)
-                .classList.remove(`.${this.checkboxDisabledComponentClassname}`);
+                .classList.remove(`${this.checkboxDisabledComponentClassname}`);
         });
     }
 
@@ -85,16 +85,12 @@ export default class SeparateReturnsByMerchant extends Component {
         return this.getAttribute('checkbox-classname');
     }
 
-    protected get productItemClassname(): string {
-        return this.getAttribute('product-item-classname');
-    }
-
     protected get checkboxComponentClass(): string {
         return this.getAttribute('checkbox-component-classname');
     }
 
     protected get checkboxDisabledComponentClass(): string {
-        return this.getAttribute('checkbox-disabled-component-classname');
+        return this.getAttribute('checkbox-component-disabled-classname');
     }
 
     protected get isReturnable(): string {
