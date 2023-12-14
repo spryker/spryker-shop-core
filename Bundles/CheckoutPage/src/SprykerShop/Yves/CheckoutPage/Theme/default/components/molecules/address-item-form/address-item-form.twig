@@ -80,6 +80,11 @@
             embed: {
                 jsName: config.jsName,
                 shippingForm: data.shippingForm,
+                addressSelectClassName: addressSelectClassName,
+                validatorTriggerClassName: validatorTriggerClassName,
+                itemShippingClassName: itemShippingClassName,
+                itemDeliveryValidationClassName: itemDeliveryValidationClassName,
+                hiddenClassName: data.hiddenClassName,
             },
         } only %}
             {% block fields %}
@@ -89,7 +94,11 @@
                         data: {
                             items: data.form,
                             shippingForm: embed.shippingForm,
-                            parentJsName: embed.jsName,
+                            addressSelectClassName: embed.addressSelectClassName,
+                            validatorTriggerClassName: embed.validatorTriggerClassName,
+                            itemShippingClassName: embed.itemShippingClassName,
+                            validationClassName: embed.itemDeliveryValidationClassName,
+                            hiddenClassName: embed.hiddenClassName,
                         },
                     } only %}
                 </div>
@@ -103,7 +112,7 @@
             attributes: {
                 'container-selector': '.' ~ itemShippingClassName,
                 'extra-container-selector': '.' ~ itemDeliveryValidationClassName,
-                'target-selector': '.' ~ data.formSubmitClassName ?: '.' ~ data.jsAddressClass ~ '__form-submit',
+                'target-selector': data.formSubmitClassName ? '.' ~ data.formSubmitClassName : '.' ~ data.jsAddressClass ~ '__form-submit',
                 'dropdown-trigger-selector': '.' ~ addressSelectClassName ~ ':not(.' ~ data.hiddenClassName ~ ')',
                 'extra-triggers-class-name': validatorTriggerClassName,
                 'parent-target-class-name': config.jsName ~ '__items',

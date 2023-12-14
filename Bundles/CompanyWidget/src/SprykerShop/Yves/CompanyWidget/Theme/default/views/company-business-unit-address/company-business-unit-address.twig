@@ -133,9 +133,9 @@
     {% block addressHandler %}
         {% include molecule('company-business-unit-address-handler', 'CompanyWidget') with {
             attributes: {
-                'form-selector': '.' ~ data.addressFormClassName ?: '.' ~ data.jsAddressClass ~ '__form-handler-' ~ data.formType,
-                'data-selector': '.' ~ data.addressSelectClassName ?: '.' ~ data.jsAddressClass ~ '__form-select-' ~ data.formType,
-                'shipping-address-toggler-selector': isShippingAddressFormType ? ('.' ~ data.addressSelectClassName ?: '.' ~ data.jsAddressClass ~ '__form-select-' ~ shippingAddress),
+                'form-selector': data.addressFormClassName ? '.' ~ data.addressFormClassName : '.' ~ data.jsAddressClass ~ '__form-handler-' ~ data.formType,
+                'data-selector': data.addressSelectClassName ? '.' ~ data.addressSelectClassName : '.' ~ data.jsAddressClass ~ '__form-select-' ~ data.formType,
+                'shipping-address-toggler-selector': isShippingAddressFormType and data.addressSelectClassName ? '.' ~ data.addressSelectClassName : '.' ~ data.jsAddressClass ~ '__form-select-' ~ shippingAddress,
                 'default-address-selector': '.' ~ data.jsAddressClass ~ '__default-address-' ~ data.formType,
                 'address-hidden-input-selector': '[name="addressesForm[' ~ data.formType ~ '][id_customer_address]"]',
                 'company-address-hidden-input-selector': '[name="addressesForm[' ~ data.formType ~ '][id_company_unit_address]"]',
