@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\WishlistPage\Dependency\Client;
 
-use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
@@ -31,31 +30,11 @@ class WishlistPageToWishlistClientBridge implements WishlistPageToWishlistClient
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
-     */
-    public function createWishlist(WishlistTransfer $wishlistTransfer)
-    {
-        return $this->wishlistClient->createWishlist($wishlistTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
     public function validateAndCreateWishlist(WishlistTransfer $wishlistTransfer)
     {
         return $this->wishlistClient->validateAndCreateWishlist($wishlistTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
-     */
-    public function updateWishlist(WishlistTransfer $wishlistTransfer)
-    {
-        return $this->wishlistClient->updateWishlist($wishlistTransfer);
     }
 
     /**
@@ -96,16 +75,6 @@ class WishlistPageToWishlistClientBridge implements WishlistPageToWishlistClient
     public function removeItem(WishlistItemTransfer $wishlistItemTransfer)
     {
         return $this->wishlistClient->removeItem($wishlistItemTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
-     */
-    public function removeItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection)
-    {
-        return $this->wishlistClient->removeItemCollection($wishlistItemTransferCollection);
     }
 
     /**

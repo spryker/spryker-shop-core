@@ -18,23 +18,9 @@ interface WishlistPageToWishlistClientInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
-     */
-    public function createWishlist(WishlistTransfer $wishlistTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
     public function validateAndCreateWishlist(WishlistTransfer $wishlistTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
-     */
-    public function updateWishlist(WishlistTransfer $wishlistTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -63,13 +49,6 @@ interface WishlistPageToWishlistClientInterface
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
     public function removeItem(WishlistItemTransfer $wishlistItemTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
-     */
-    public function removeItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection);
 
     /**
      * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer
