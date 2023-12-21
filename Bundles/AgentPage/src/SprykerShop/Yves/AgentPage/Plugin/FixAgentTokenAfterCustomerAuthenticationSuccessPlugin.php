@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\AgentPage\Plugin;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
+use SprykerShop\Yves\AgentPage\Updater\AgentTokenAfterCustomerAuthenticationSuccessUpdaterInterface;
 use SprykerShop\Yves\CustomerPage\Security\Customer;
 use SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\AfterCustomerAuthenticationSuccessPluginInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -17,9 +18,11 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
+ * @deprecated Use {@link \SprykerShop\Yves\AgentPage\Plugin\Security\UpdateAgentTokenAfterCustomerAuthenticationSuccessPlugin} instead.
+ *
  * @method \SprykerShop\Yves\AgentPage\AgentPageFactory getFactory()
  */
-class FixAgentTokenAfterCustomerAuthenticationSuccessPlugin extends AbstractPlugin implements AfterCustomerAuthenticationSuccessPluginInterface
+class FixAgentTokenAfterCustomerAuthenticationSuccessPlugin extends AbstractPlugin implements AfterCustomerAuthenticationSuccessPluginInterface, AgentTokenAfterCustomerAuthenticationSuccessUpdaterInterface
 {
     /**
      * @uses \SprykerShop\Yves\AgentPage\Plugin\Security\AgentPageSecurityPlugin::ROLE_PREVIOUS_ADMIN

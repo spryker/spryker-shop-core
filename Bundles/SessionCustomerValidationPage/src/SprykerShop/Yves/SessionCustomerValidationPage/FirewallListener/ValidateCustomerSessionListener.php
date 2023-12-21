@@ -112,7 +112,7 @@ class ValidateCustomerSessionListener extends AbstractListener implements Valida
 
         /** @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage */
         $tokenStorage = $this->tokenStorage;
-        $tokenStorage->setToken();
+        $tokenStorage->setToken(null);
 
         $event->setResponse(new RedirectResponse(static::LOGIN_PATH));
     }

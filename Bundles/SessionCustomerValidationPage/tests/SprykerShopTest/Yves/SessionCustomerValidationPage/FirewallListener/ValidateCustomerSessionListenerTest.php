@@ -127,7 +127,7 @@ class ValidateCustomerSessionListenerTest extends Unit
         );
 
         $eventMock = $this->createEventMock(
-            $this->createRequestMock(),
+            $this->createRequestMock($this->createSessionMock()),
         );
 
         // Assert
@@ -227,7 +227,7 @@ class ValidateCustomerSessionListenerTest extends Unit
             ->getMock();
 
         $sessionMock->method('getId')
-            ->willReturn(1);
+            ->willReturn('1');
 
         return $sessionMock;
     }

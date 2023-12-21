@@ -30,7 +30,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerShopTest\Yves\SessionCustomerValidationPage\PHPMD)
  */
 class SessionCustomerValidationPageYvesTester extends Actor
 {

@@ -11,6 +11,7 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
 use SprykerShop\Yves\SessionAgentValidation\FirewallListener\ValidateAgentSessionListenerInterface;
 use SprykerShop\Yves\SessionAgentValidation\SessionAgentValidationConfig;
+use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 
 class SessionAgentValidationSecurityExtender implements SessionAgentValidationSecurityExtenderInterface
 {
@@ -151,12 +152,18 @@ class SessionAgentValidationSecurityExtender implements SessionAgentValidationSe
                     );
                 }
 
-                return [
-                    sprintf('security.authentication_provider.%s.dao', $firewallName),
-                    $listenerName,
-                    null,
-                    $this->config->getAuthenticationListenerFactoryType(),
-                ];
+                return $this->isSymfonyVersion5() === true ?
+                     [
+                         sprintf('security.authentication_provider.%s.dao', $firewallName),
+                         $listenerName,
+                         null,
+                         $this->config->getAuthenticationListenerFactoryType(),
+                     ] :
+                     [
+                         $listenerName,
+                         null,
+                         $this->config->getAuthenticationListenerFactoryType(),
+                     ];
             }),
         );
 
@@ -196,5 +203,15 @@ class SessionAgentValidationSecurityExtender implements SessionAgentValidationSe
         }
 
         return null;
+    }
+
+    /**
+     * @deprecated Shim for Symfony Security Core 5.x, to be removed when Symfony Security Core dependency becomes 6.x+.
+     *
+     * @return bool
+     */
+    protected function isSymfonyVersion5(): bool
+    {
+        return class_exists(AuthenticationProviderManager::class);
     }
 }

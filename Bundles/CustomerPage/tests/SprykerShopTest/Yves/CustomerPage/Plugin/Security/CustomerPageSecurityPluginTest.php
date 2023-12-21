@@ -37,6 +37,10 @@ class CustomerPageSecurityPluginTest extends Unit
     {
         parent::setUp();
 
+        if ($this->tester->isSymfonyVersion5() !== true) {
+            $this->markTestSkipped('Compatible only with `symfony/security-core` package version ^5.0.0. To be removed once Symfony 5 support is discontinued.');
+        }
+
         $container = $this->tester->getContainer();
         $container->set('flash_messenger', function () {
             return Stub::makeEmpty(FlashMessengerInterface::class);
@@ -69,7 +73,7 @@ class CustomerPageSecurityPluginTest extends Unit
         $this->tester->addSecurityPlugin($securityPlugin);
 
         $container->get('session')->start();
-        $container->set(CustomerPageDependencyProvider::SERVICE_LOCALE, 'en');
+        $container->set(CustomerPageDependencyProvider::SERVICE_LOCALE, 'en_US');
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
         $httpKernelBrowser->request('get', '/');
         $httpKernelBrowser->request('post', '/login_check', ['loginForm' => ['email' => $customerTransfer->getEmail(), 'password' => 'foo']]);
@@ -91,7 +95,7 @@ class CustomerPageSecurityPluginTest extends Unit
         $this->tester->addSecurityPlugin($securityPlugin);
 
         $container->get('session')->start();
-        $container->set(CustomerPageDependencyProvider::SERVICE_LOCALE, 'en');
+        $container->set(CustomerPageDependencyProvider::SERVICE_LOCALE, 'en_US');
 
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
         $httpKernelBrowser->request('post', '/login_check', ['loginForm' => ['email' => $customerTransfer->getEmail(), 'password' => 'bar']]);

@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CustomerPage\Plugin\Provider;
 
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use SprykerShop\Yves\CustomerPage\Exception\NotConfirmedAccountException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
@@ -55,7 +56,7 @@ class CustomerAuthenticationFailureHandler extends BaseCustomerAuthenticationHan
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): RedirectResponse
     {
         $this->flashMessenger->addErrorMessage($this->buildErrorMessage($exception));
 

@@ -8,8 +8,9 @@
 namespace SprykerShop\Yves\CustomerPage\Security;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
-class Customer implements CustomerUserInterface
+class Customer implements CustomerUserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @var \Generated\Shared\Transfer\CustomerTransfer
@@ -48,7 +49,7 @@ class Customer implements CustomerUserInterface
     /**
      * @return array<string>
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         return $this->roles;
     }
@@ -72,17 +73,25 @@ class Customer implements CustomerUserInterface
     }
 
     /**
-     * @return string The password
+     * @return string|null The password
      */
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
     /**
+     * @return string
+     */
+    public function getUserIdentifier(): string
+    {
+        return $this->username;
+    }
+
+    /**
      * @return void
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
     }
 

@@ -12,15 +12,21 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Application;
 use Spryker\Yves\Router\Router\RouterInterface;
+use SprykerShop\Yves\AgentPage\Authenticator\AgentLoginFormAuthenticator;
+use SprykerShop\Yves\AgentPage\Builder\AgentSecurityOptionsBuilder;
+use SprykerShop\Yves\AgentPage\Builder\AgentSecurityOptionsBuilderInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToAgentClientInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToCustomerClientInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToMessengerClientInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToQuoteClientInterface;
+use SprykerShop\Yves\AgentPage\Expander\SecurityBuilderExpander;
+use SprykerShop\Yves\AgentPage\Expander\SecurityBuilderExpanderInterface;
 use SprykerShop\Yves\AgentPage\Form\AgentLoginForm;
 use SprykerShop\Yves\AgentPage\Formatter\LoginCheckUrlFormatter;
 use SprykerShop\Yves\AgentPage\Formatter\LoginCheckUrlFormatterInterface;
 use SprykerShop\Yves\AgentPage\Impersonator\SessionImpersonator;
 use SprykerShop\Yves\AgentPage\Impersonator\SessionImpersonatorInterface;
+use SprykerShop\Yves\AgentPage\Plugin\FixAgentTokenAfterCustomerAuthenticationSuccessPlugin;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationFailureHandler;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationSuccessHandler;
 use SprykerShop\Yves\AgentPage\Plugin\Provider\AccessDeniedHandler;
@@ -28,14 +34,18 @@ use SprykerShop\Yves\AgentPage\Plugin\Provider\AgentUserProvider;
 use SprykerShop\Yves\AgentPage\Plugin\Security\AgentPageSecurityPlugin;
 use SprykerShop\Yves\AgentPage\Plugin\Subscriber\SwitchUserEventSubscriber;
 use SprykerShop\Yves\AgentPage\Security\Agent;
+use SprykerShop\Yves\AgentPage\Updater\AgentTokenAfterCustomerAuthenticationSuccessUpdater;
+use SprykerShop\Yves\AgentPage\Updater\AgentTokenAfterCustomerAuthenticationSuccessUpdaterInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
+use Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface;
 use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
 
 /**
@@ -230,5 +240,64 @@ class AgentPageFactory extends AbstractFactory
     public function getSessionPostImpersonationPlugins(): array
     {
         return $this->getProvidedDependency(AgentPageDependencyProvider::PLUGINS_SESSION_POST_IMPERSONATION);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\AgentPage\Builder\AgentSecurityOptionsBuilderInterface
+     */
+    public function createAgentSecurityOptionsBuilder(): AgentSecurityOptionsBuilderInterface
+    {
+        return new AgentSecurityOptionsBuilder(
+            $this->getConfig(),
+            $this->createAgentUserProvider(),
+            $this->createLoginCheckUrlFormatter(),
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface
+     */
+    public function createAgentLoginAuthenticator(): AuthenticatorInterface
+    {
+        return new AgentLoginFormAuthenticator(
+            $this->createAgentUserProvider(),
+            $this->createAgentAuthenticationSuccessHandler(),
+            $this->createAgentAuthenticationFailureHandler(),
+            $this->getRouter(),
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\AgentPage\Expander\SecurityBuilderExpanderInterface
+     */
+    public function createSecurityBuilderExpander(): SecurityBuilderExpanderInterface
+    {
+        if (class_exists(AuthenticationProviderManager::class) === true) {
+            return new AgentPageSecurityPlugin();
+        }
+
+        return new SecurityBuilderExpander(
+            $this->createAgentSecurityOptionsBuilder(),
+            $this->getConfig(),
+            $this->createSwitchUserEventSubscriber(),
+            $this->createAgentLoginAuthenticator(),
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\AgentPage\Updater\AgentTokenAfterCustomerAuthenticationSuccessUpdaterInterface
+     */
+    public function createAgentTokenAfterCustomerAuthenticationSuccessUpdater(): AgentTokenAfterCustomerAuthenticationSuccessUpdaterInterface
+    {
+        if (class_exists(AuthenticationProviderManager::class) === true) {
+            return new FixAgentTokenAfterCustomerAuthenticationSuccessPlugin();
+        }
+
+        return new AgentTokenAfterCustomerAuthenticationSuccessUpdater(
+            $this->getSecurityAuthorizationChecker(),
+            $this->getAgentClient(),
+            $this->getTokenStorage(),
+            $this->getCustomerClient(),
+        );
     }
 }

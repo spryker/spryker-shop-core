@@ -106,7 +106,7 @@ class ValidateAgentSessionListener extends AbstractListener implements ValidateA
         $event->setResponse(new RedirectResponse(static::LOGIN_PATH));
 
         if ($this->tokenStorage !== null) {
-            $this->tokenStorage->setToken();
+            $this->tokenStorage->setToken(null);
         }
     }
 

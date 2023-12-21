@@ -14,6 +14,7 @@ use SprykerShopTest\Yves\SessionCustomerValidationPage\SessionCustomerValidation
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 use Symfony\Component\Security\Http\SecurityEvents;
 
 /**
@@ -43,7 +44,15 @@ class SaveCustomerSessionEventSubscriberTest extends Unit
 
         // Assert
         $this->assertNotEmpty($subscribedEvents);
-        $this->assertArrayHasKey(SecurityEvents::INTERACTIVE_LOGIN, $subscribedEvents);
+
+        /** @deprecated Exists for Symfony 5 support only. */
+        if (!class_exists(LoginSuccessEvent::class)) {
+            $this->assertArrayHasKey(SecurityEvents::INTERACTIVE_LOGIN, $subscribedEvents);
+
+            return;
+        }
+
+        $this->assertArrayHasKey(LoginSuccessEvent::class, $subscribedEvents);
     }
 
     /**

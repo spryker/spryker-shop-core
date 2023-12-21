@@ -13,8 +13,11 @@ use SprykerShop\Yves\SessionCustomerValidationPage\Dependency\Client\SessionCust
 use SprykerShop\Yves\SessionCustomerValidationPage\SessionCustomerValidationPageConfig;
 use SprykerShop\Yves\SessionCustomerValidationPageExtension\Dependency\Plugin\CustomerSessionSaverPluginInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 use Symfony\Component\Security\Http\SecurityEvents;
 
 class SaveCustomerSessionEventSubscriber implements EventSubscriberInterface
@@ -54,8 +57,15 @@ class SaveCustomerSessionEventSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents(): array
     {
+        /** @deprecated Exists for Symfony 5 support only. */
+        if (!class_exists(LoginSuccessEvent::class)) {
+            return [
+                SecurityEvents::INTERACTIVE_LOGIN => 'onInteractiveLogin',
+            ];
+        }
+
         return [
-            SecurityEvents::INTERACTIVE_LOGIN => 'onInteractiveLogin',
+            LoginSuccessEvent::class => 'onLoginSuccess',
         ];
     }
 
@@ -66,18 +76,37 @@ class SaveCustomerSessionEventSubscriber implements EventSubscriberInterface
      */
     public function onInteractiveLogin(InteractiveLoginEvent $event): void
     {
-        $request = $event->getRequest();
+        $this->saveSession($event->getRequest(), $event->getAuthenticationToken()->getUser());
+    }
+
+    /**
+     * @param \Symfony\Component\Security\Http\Event\LoginSuccessEvent $event
+     *
+     * @return void
+     */
+    public function onLoginSuccess(LoginSuccessEvent $event): void
+    {
+        $this->saveSession($event->getRequest(), $event->getUser());
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\Security\Core\User\UserInterface|null $user
+     *
+     * @return void
+     */
+    protected function saveSession(Request $request, ?UserInterface $user): void
+    {
         if (!$request->hasSession()) {
             return;
         }
 
-        $user = $event->getAuthenticationToken()->getUser();
         if (!$user instanceof UserInterface) {
             return;
         }
 
         $customerTransfer = $this->customerClient->getCustomerByEmail(
-            (new CustomerTransfer())->setEmail($user->getUsername()),
+            (new CustomerTransfer())->setEmail($this->getUserIdentifier($user)),
         );
 
         if (!$customerTransfer->getIdCustomer()) {
@@ -90,5 +119,29 @@ class SaveCustomerSessionEventSubscriber implements EventSubscriberInterface
                 ->setIdSession($request->getSession()->getId())
                 ->setEntityType($this->sessionCustomerValidationPageConfig->getSessionEntityType()),
         );
+    }
+
+    /**
+     * @param \Symfony\Component\Security\Core\User\UserInterface $user
+     *
+     * @return string
+     */
+    protected function getUserIdentifier(UserInterface $user): string
+    {
+        if ($this->isSymfonyVersion5() === true) {
+            return $user->getUsername();
+        }
+
+        return $user->getUserIdentifier();
+    }
+
+    /**
+     * @deprecated Shim for Symfony Security Core 5.x, to be removed when Symfony Security Core dependency becomes 6.x+.
+     *
+     * @return bool
+     */
+    protected function isSymfonyVersion5(): bool
+    {
+        return class_exists(AuthenticationProviderManager::class);
     }
 }

@@ -70,27 +70,6 @@
         "priority": "1"
     },
     {
-        "fileName": "src/SprykerShop/Yves/AgentPage/Plugin/Handler/AgentAuthenticationFailureHandler.php",
-        "description": "Method `SprykerShop\\Yves\\AgentPage\\Plugin\\Handler\\AgentAuthenticationFailureHandler::onAuthenticationFailure()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/SprykerShop/Yves/AgentPage/Plugin/Handler/AgentAuthenticationSuccessHandler.php",
-        "description": "Method `SprykerShop\\Yves\\AgentPage\\Plugin\\Handler\\AgentAuthenticationSuccessHandler::onAuthenticationSuccess()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/SprykerShop/Yves/AgentPage/Plugin/Provider/AgentUserProvider.php",
-        "description": "Method `SprykerShop\\Yves\\AgentPage\\Plugin\\Provider\\AgentUserProvider::loadUserByUsername()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
         "fileName": "src/SprykerShop/Yves/AgentPage/Plugin/Provider/AgentUserProvider.php",
         "description": "Method `SprykerShop\\Yves\\AgentPage\\Plugin\\Provider\\AgentUserProvider::refreshUser()` must have return type.",
         "rule": "ExternalMethodExtensionReturnTypeRule",
@@ -107,34 +86,6 @@
     {
         "fileName": "src/SprykerShop/Yves/AgentPage/Plugin/Subscriber/SwitchUserEventSubscriber.php",
         "description": "Method `SprykerShop\\Yves\\AgentPage\\Plugin\\Subscriber\\SwitchUserEventSubscriber::getSubscribedEvents()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/SprykerShop/Yves/AgentPage/Security/Agent.php",
-        "description": "Method `SprykerShop\\Yves\\AgentPage\\Security\\Agent::getRoles()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/SprykerShop/Yves/AgentPage/Security/Agent.php",
-        "description": "Method `SprykerShop\\Yves\\AgentPage\\Security\\Agent::getSalt()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/SprykerShop/Yves/AgentPage/Security/Agent.php",
-        "description": "Method `SprykerShop\\Yves\\AgentPage\\Security\\Agent::getUsername()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/SprykerShop/Yves/AgentPage/Security/Agent.php",
-        "description": "Method `SprykerShop\\Yves\\AgentPage\\Security\\Agent::getPassword()` must have return type.",
         "rule": "ExternalMethodExtensionReturnTypeRule",
         "ruleset": "Spryker",
         "priority": "1"

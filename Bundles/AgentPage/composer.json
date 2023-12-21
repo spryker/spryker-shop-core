@@ -34,8 +34,6 @@
         "spryker/testify": "*"
     },
     "suggest": {
-        "spryker/container": "Add this module to use the ContainerInterface.",
-        "spryker/security": "Add this module to use the SecurityPlugin.",
         "spryker/silex": "Use this module when using plugins that need Silex dependencies."
     },
     "autoload": {

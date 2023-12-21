@@ -8,9 +8,10 @@
 namespace SprykerShop\Yves\AgentPage\Security;
 
 use Generated\Shared\Transfer\UserTransfer;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class Agent implements UserInterface
+class Agent implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @var \Generated\Shared\Transfer\UserTransfer
@@ -47,7 +48,7 @@ class Agent implements UserInterface
     /**
      * @return array<string>
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         return $this->roles;
     }
@@ -71,9 +72,9 @@ class Agent implements UserInterface
     }
 
     /**
-     * @return string The password
+     * @return string|null The password
      */
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -81,7 +82,7 @@ class Agent implements UserInterface
     /**
      * @return void
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
     }
 
@@ -91,5 +92,13 @@ class Agent implements UserInterface
     public function getUserTransfer()
     {
         return $this->userTransfer;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserIdentifier(): string
+    {
+        return $this->username;
     }
 }

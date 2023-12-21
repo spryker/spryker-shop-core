@@ -59,6 +59,10 @@ class AgentPageSecurityPluginTest extends Unit
     {
         parent::setUp();
 
+        if ($this->tester->isSymfonyVersion5() !== true) {
+            $this->markTestSkipped('Compatible only with `symfony/security-core` package version ^5.0.0. To be removed once Symfony 5 support is discontinued.');
+        }
+
         $container = $this->tester->getContainer();
         $container->set(static::SERVICE_FLASH_MESSENGER, function () {
             return Stub::makeEmpty(FlashMessengerInterface::class);

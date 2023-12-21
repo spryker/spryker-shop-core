@@ -28,7 +28,7 @@ use SprykerShop\Yves\SessionAgentValidationExtension\Dependency\Plugin\SessionAg
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerShopTest\Yves\SessionAgentValidation\PHPMD)
  */
 class SessionAgentValidationYvesTester extends Actor
 {

@@ -11,6 +11,7 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
 use SprykerShop\Yves\SessionCustomerValidationPage\FirewallListener\ValidateCustomerSessionListenerInterface;
 use SprykerShop\Yves\SessionCustomerValidationPage\SessionCustomerValidationPageConfig;
+use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 
 class SessionCustomerValidationSecurityExtender implements SessionCustomerValidationSecurityExtenderInterface
 {
@@ -125,12 +126,18 @@ class SessionCustomerValidationSecurityExtender implements SessionCustomerValida
                         );
                     }
 
-                    return [
-                        sprintf('security.authentication_provider.%s.anonymous', $firewallName),
-                        $listenerName,
-                        null,
-                        $this->sessionCustomerValidationPageConfig->getAuthenticationListenerFactoryType(),
-                    ];
+                    return $this->isSymfonyVersion5() === true ?
+                        [
+                            sprintf('security.authentication_provider.%s.anonymous', $firewallName),
+                            $listenerName,
+                            null,
+                            $this->sessionCustomerValidationPageConfig->getAuthenticationListenerFactoryType(),
+                        ] :
+                        [
+                            $listenerName,
+                            null,
+                            $this->sessionCustomerValidationPageConfig->getAuthenticationListenerFactoryType(),
+                        ];
                 },
             ),
         );
@@ -171,5 +178,15 @@ class SessionCustomerValidationSecurityExtender implements SessionCustomerValida
         }
 
         return null;
+    }
+
+    /**
+     * @deprecated Shim for Symfony Security Core 5.x, to be removed when Symfony Security Core dependency becomes 6.x+.
+     *
+     * @return bool
+     */
+    protected function isSymfonyVersion5(): bool
+    {
+        return class_exists(AuthenticationProviderManager::class);
     }
 }

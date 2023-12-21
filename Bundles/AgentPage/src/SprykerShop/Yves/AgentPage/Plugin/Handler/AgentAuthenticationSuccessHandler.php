@@ -12,6 +12,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\AgentPage\Security\Agent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 
@@ -46,7 +47,7 @@ class AgentAuthenticationSuccessHandler extends AbstractPlugin implements Authen
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token): Response
     {
         $this->setAgentSession(
             $this->getSecurityUser($token)->getUserTransfer(),

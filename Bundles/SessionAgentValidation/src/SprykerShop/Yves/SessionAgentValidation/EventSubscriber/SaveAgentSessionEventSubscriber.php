@@ -13,8 +13,11 @@ use SprykerShop\Yves\SessionAgentValidation\Dependency\Client\SessionAgentValida
 use SprykerShop\Yves\SessionAgentValidation\SessionAgentValidationConfig;
 use SprykerShop\Yves\SessionAgentValidationExtension\Dependency\Plugin\SessionAgentSaverPluginInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 use Symfony\Component\Security\Http\SecurityEvents;
 
 class SaveAgentSessionEventSubscriber implements EventSubscriberInterface
@@ -68,8 +71,15 @@ class SaveAgentSessionEventSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents(): array
     {
+        /** @deprecated Exists for Symfony 5 support only. */
+        if (!class_exists(LoginSuccessEvent::class)) {
+            return [
+                SecurityEvents::INTERACTIVE_LOGIN => 'onInteractiveLogin',
+            ];
+        }
+
         return [
-            SecurityEvents::INTERACTIVE_LOGIN => 'onInteractiveLogin',
+            LoginSuccessEvent::class => 'onLoginSuccess',
         ];
     }
 
@@ -80,18 +90,37 @@ class SaveAgentSessionEventSubscriber implements EventSubscriberInterface
      */
     public function onInteractiveLogin(InteractiveLoginEvent $event): void
     {
-        $request = $event->getRequest();
+        $this->saveSession($event->getRequest(), $event->getAuthenticationToken()->getUser());
+    }
+
+    /**
+     * @param \Symfony\Component\Security\Http\Event\LoginSuccessEvent $event
+     *
+     * @return void
+     */
+    public function onLoginSuccess(LoginSuccessEvent $event): void
+    {
+        $this->saveSession($event->getRequest(), $event->getUser());
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\Security\Core\User\UserInterface|null $user
+     *
+     * @return void
+     */
+    protected function saveSession(Request $request, ?UserInterface $user): void
+    {
         if (!$request->hasSession()) {
             return;
         }
 
-        $user = $event->getAuthenticationToken()->getUser();
         if (!$user instanceof UserInterface || !$this->hasAgentRole($user)) {
             return;
         }
 
         $userTransfer = $this->agentClient->findAgentByUsername(
-            (new UserTransfer())->setUsername($user->getUsername()),
+            (new UserTransfer())->setUsername($this->getUserIdentifier($user)),
         );
 
         if ($userTransfer === null || !$userTransfer->getIdUser() || $userTransfer->getStatus() !== static::COL_STATUS_ACTIVE) {
@@ -114,5 +143,29 @@ class SaveAgentSessionEventSubscriber implements EventSubscriberInterface
     protected function hasAgentRole(UserInterface $user): bool
     {
         return in_array(static::ROLE_AGENT, $user->getRoles(), true);
+    }
+
+    /**
+     * @param \Symfony\Component\Security\Core\User\UserInterface $user
+     *
+     * @return string
+     */
+    protected function getUserIdentifier(UserInterface $user): string
+    {
+        if ($this->isSymfonyVersion5() === true) {
+            return $user->getUsername();
+        }
+
+        return $user->getUserIdentifier();
+    }
+
+    /**
+     * @deprecated Shim for Symfony Security Core 5.x, to be removed when Symfony Security Core dependency becomes 6.x+.
+     *
+     * @return bool
+     */
+    protected function isSymfonyVersion5(): bool
+    {
+        return class_exists(AuthenticationProviderManager::class);
     }
 }

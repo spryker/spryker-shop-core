@@ -14,13 +14,16 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Router\Router\ChainRouter;
 use SprykerShop\Shared\AgentPage\AgentPageConfig;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
+use SprykerShop\Yves\AgentPage\Expander\SecurityBuilderExpanderInterface;
 use SprykerShop\Yves\AgentPage\Form\AgentLoginForm;
 
 /**
+ * @deprecated Use {@link \SprykerShop\Yves\AgentPage\Plugin\Security\YvesAgentPageSecurityPlugin} instead.
+ *
  * @method \SprykerShop\Yves\AgentPage\AgentPageFactory getFactory()
  * @method \SprykerShop\Yves\AgentPage\AgentPageConfig getConfig()
  */
-class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface
+class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface, SecurityBuilderExpanderInterface
 {
     /**
      * @var string

@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CustomerPage\Plugin\Provider;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CustomerPage\Security\Customer;
+use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -19,18 +20,6 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  */
 class CustomerUserProvider extends AbstractPlugin implements UserProviderInterface
 {
-    /**
-     * @param string $username
-     *
-     * @return \Symfony\Component\Security\Core\User\UserInterface
-     */
-    public function loadUserByUsername($username)
-    {
-        $customerTransfer = $this->loadCustomerByEmail($username);
-
-        return $this->getFactory()->createSecurityUser($customerTransfer);
-    }
-
     /**
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
      *
@@ -48,6 +37,28 @@ class CustomerUserProvider extends AbstractPlugin implements UserProviderInterfa
     }
 
     /**
+     * @param string $username
+     *
+     * @return \Symfony\Component\Security\Core\User\UserInterface
+     */
+    public function loadUserByUsername($username) /** @phpstan-ignore-line */
+    {
+        return $this->loadUserByIdentifier($username);
+    }
+
+    /**
+     * @param string $identifier
+     *
+     * @return \Symfony\Component\Security\Core\User\UserInterface
+     */
+    public function loadUserByIdentifier(string $identifier): UserInterface
+    {
+        $customerTransfer = $this->loadCustomerByEmail($identifier);
+
+        return $this->getFactory()->createSecurityUser($customerTransfer);
+    }
+
+    /**
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -55,7 +66,9 @@ class CustomerUserProvider extends AbstractPlugin implements UserProviderInterfa
     protected function getCustomerTransfer(UserInterface $user)
     {
         if ($this->getFactory()->getCustomerClient()->isLoggedIn() === false) {
-            $customerTransfer = $this->loadCustomerByEmail($user->getUsername());
+            $customerTransfer = $this->loadCustomerByEmail(
+                $this->getUserIdentifier($user),
+            );
 
             return $customerTransfer;
         }
@@ -99,7 +112,9 @@ class CustomerUserProvider extends AbstractPlugin implements UserProviderInterfa
             ->getCustomerByEmail($customerTransfer);
 
         if ($customerTransfer->getIdCustomer() === null) {
-            throw new AuthenticationException(sprintf('Customer with email "%s" not found.', $email));
+            throw new AuthenticationException(
+                sprintf('Customer with email "%s" not found.', $email),
+            );
         }
 
         return $customerTransfer;
@@ -112,11 +127,38 @@ class CustomerUserProvider extends AbstractPlugin implements UserProviderInterfa
      */
     protected function updateUser(UserInterface $user)
     {
-        $customerTransfer = $this->loadCustomerByEmail($user->getUsername());
+        $customerTransfer = $this->loadCustomerByEmail(
+            $this->getUserIdentifier($user),
+        );
+
         $this->getFactory()
             ->getCustomerClient()
             ->setCustomer($customerTransfer);
 
         return $customerTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\Security\Core\User\UserInterface $user
+     *
+     * @return string
+     */
+    protected function getUserIdentifier(UserInterface $user): string
+    {
+        if ($this->isSymfonyVersion5() === true) {
+            return $user->getUsername();
+        }
+
+        return $user->getUserIdentifier();
+    }
+
+    /**
+     * @deprecated Shim for Symfony Security Core 5.x, to be removed when Symfony Security Core dependency becomes 6.x+.
+     *
+     * @return bool
+     */
+    protected function isSymfonyVersion5(): bool
+    {
+        return class_exists(AuthenticationProviderManager::class);
     }
 }

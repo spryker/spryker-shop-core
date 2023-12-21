@@ -11,6 +11,8 @@ use Exception;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @method \SprykerShop\Yves\StoreWidget\StoreWidgetConfig getConfig()
@@ -102,11 +104,17 @@ class StoreApplicationPlugin extends AbstractPlugin implements ApplicationPlugin
      */
     protected function getStoreRequestUrlParameter(): ?string
     {
-        if (!$this->getFactory()->getRequest()) {
-            return null;
+        $requestStack = $this->getFactory()->getRequestStack();
+
+        if ($requestStack->getCurrentRequest() === null) {
+            $requestStack = $this->getFactory()->createRequestStack();
+            $requestStack->push(Request::createFromGlobals());
         }
 
+        /** @var \Symfony\Component\HttpFoundation\Request $currentRequest */
+        $currentRequest = $requestStack->getCurrentRequest();
+
         /** @phpstan-var string|null */
-        return $this->getFactory()->getRequest()->query->get('_store');
+        return $currentRequest->query->get('_store');
     }
 }

@@ -9,10 +9,9 @@ namespace SprykerShop\Yves\CustomerPage\UserChecker;
 
 use SprykerShop\Yves\CustomerPage\Exception\NotConfirmedAccountException;
 use SprykerShop\Yves\CustomerPage\Security\CustomerUserInterface;
-use Symfony\Component\Security\Core\User\UserChecker;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class CustomerConfirmationUserChecker extends UserChecker
+class CustomerConfirmationUserChecker extends InMemoryUserChecker
 {
     /**
      * @var array<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\PreAuthUserCheckPluginInterface>

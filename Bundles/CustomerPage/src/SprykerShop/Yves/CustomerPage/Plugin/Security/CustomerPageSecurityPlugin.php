@@ -13,14 +13,17 @@ use Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Router\Router\ChainRouter;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
+use SprykerShop\Yves\CustomerPage\Expander\SecurityBuilderExpanderInterface;
 use SprykerShop\Yves\CustomerPage\Form\LoginForm;
 
 /**
+ * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Security\YvesCustomerPageSecurityPlugin} instead.
+ *
  * @method \Spryker\Client\Customer\CustomerClientInterface getClient()
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
  */
-class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface
+class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface, SecurityBuilderExpanderInterface
 {
     /**
      * @deprecated Use {@link \SprykerShop\Yves\CustomerPage\Plugin\Security\CustomerPageSecurityPlugin::ROLE_NAME_USER} instead.

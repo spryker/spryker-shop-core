@@ -58,4 +58,12 @@ class StoreWidgetFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(StoreWidgetDependencyProvider::SERVICE_REQUEST_STACK);
     }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RequestStack
+     */
+    public function createRequestStack(): RequestStack
+    {
+        return new RequestStack();
+    }
 }

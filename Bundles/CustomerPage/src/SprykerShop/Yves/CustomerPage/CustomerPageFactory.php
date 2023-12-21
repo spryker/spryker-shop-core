@@ -14,6 +14,9 @@ use Spryker\Yves\Router\Router\ChainRouter;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Authenticator\CustomerAuthenticator;
 use SprykerShop\Yves\CustomerPage\Authenticator\CustomerAuthenticatorInterface;
+use SprykerShop\Yves\CustomerPage\Authenticator\CustomerLoginFormAuthenticator;
+use SprykerShop\Yves\CustomerPage\Builder\CustomerSecurityOptionsBuilder;
+use SprykerShop\Yves\CustomerPage\Builder\CustomerSecurityOptionsBuilderInterface;
 use SprykerShop\Yves\CustomerPage\CustomerAddress\AddressChoicesResolver;
 use SprykerShop\Yves\CustomerPage\CustomerAddress\AddressChoicesResolverInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
@@ -27,6 +30,10 @@ use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServi
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface;
 use SprykerShop\Yves\CustomerPage\Expander\CustomerAddressExpander;
 use SprykerShop\Yves\CustomerPage\Expander\CustomerAddressExpanderInterface;
+use SprykerShop\Yves\CustomerPage\Expander\CustomerRememberMeExpander;
+use SprykerShop\Yves\CustomerPage\Expander\CustomerRememberMeExpanderInterface;
+use SprykerShop\Yves\CustomerPage\Expander\SecurityBuilderExpander;
+use SprykerShop\Yves\CustomerPage\Expander\SecurityBuilderExpanderInterface;
 use SprykerShop\Yves\CustomerPage\Expander\ShipmentExpander;
 use SprykerShop\Yves\CustomerPage\Expander\ShipmentExpanderInterface;
 use SprykerShop\Yves\CustomerPage\Expander\ShipmentGroupExpander;
@@ -59,9 +66,12 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
+use Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
 use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
 use Twig\TwigFunction;
 
@@ -146,9 +156,17 @@ class CustomerPageFactory extends AbstractFactory
     {
         $user = $this->createSecurityUser($customerTransfer);
 
+        if (class_exists(AuthenticationProviderManager::class) === true) {
+            return new UsernamePasswordToken(
+                $user,
+                $user->getPassword(),
+                CustomerPageConfig::SECURITY_FIREWALL_NAME,
+                [CustomerPageSecurityPlugin::ROLE_NAME_USER],
+            );
+        }
+
         return new UsernamePasswordToken(
             $user,
-            $user->getPassword(),
             CustomerPageConfig::SECURITY_FIREWALL_NAME,
             [CustomerPageSecurityPlugin::ROLE_NAME_USER],
         );
@@ -617,5 +635,68 @@ class CustomerPageFactory extends AbstractFactory
     public function getSecurityBlockerClient(): CustomerPageToSecurityBlockerClientInterface
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_SECURITY_BLOCKER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Builder\CustomerSecurityOptionsBuilderInterface
+     */
+    public function createCustomerSecurityOptionsBuilder(): CustomerSecurityOptionsBuilderInterface
+    {
+        return new CustomerSecurityOptionsBuilder(
+            $this->getConfig(),
+            $this->createCustomerUserProvider(),
+            $this->createLoginCheckUrlFormatter(),
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface
+     */
+    public function createCustomerLoginAuthenticator(): AuthenticatorInterface
+    {
+        return new CustomerLoginFormAuthenticator(
+            $this->createCustomerUserProvider(),
+            $this->createRememberMeBadge(),
+            $this->createCustomerAuthenticationSuccessHandler(),
+            $this->createCustomerAuthenticationFailureHandler(),
+            $this->getRouter(),
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge
+     */
+    public function createRememberMeBadge(): RememberMeBadge
+    {
+        return new RememberMeBadge();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Expander\SecurityBuilderExpanderInterface
+     */
+    public function createSecurityBuilderExpander(): SecurityBuilderExpanderInterface
+    {
+        if (class_exists(AuthenticationProviderManager::class) === true) {
+            return new CustomerPageSecurityPlugin();
+        }
+
+        return new SecurityBuilderExpander(
+            $this->createCustomerSecurityOptionsBuilder(),
+            $this->getCustomerClient(),
+            $this->getConfig(),
+            $this->createInteractiveLoginEventSubscriber(),
+            $this->createCustomerLoginAuthenticator(),
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Expander\CustomerRememberMeExpanderInterface
+     */
+    public function createCustomerRememberMeExpander(): CustomerRememberMeExpanderInterface
+    {
+        return new CustomerRememberMeExpander(
+            $this->createCustomerUserProvider(),
+            $this->createCustomerSecurityOptionsBuilder(),
+        );
     }
 }
