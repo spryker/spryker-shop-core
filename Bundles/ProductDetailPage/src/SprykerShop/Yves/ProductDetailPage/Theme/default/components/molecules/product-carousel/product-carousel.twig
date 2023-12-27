@@ -2,11 +2,15 @@
 
 {% define config = {
     name: 'product-carousel',
-    tag: 'section'
+    tag: 'section',
 } %}
 
 {% define data = {
-    product: required
+    product: required,
+} %}
+
+{% set defaultSlide = {
+    externalUrlLarge: '',
 } %}
 
 {% block body %}
@@ -15,7 +19,7 @@
     {% else %}
         {% include molecule('image-carousel') with {
             data: {
-                slides: data.product.images | default([]),
+                slides: data.product.images | default([defaultSlide]),
             },
         } only %}
     {% endif %}
