@@ -22,37 +22,39 @@
         {% endif %}
     </div>
 
-    <section itemscope itemtype="https://schema.org/Invoice">
-        <meta itemprop="identifier" content="{{ data.quote.orderReference }}">
-        <section itemprop="totalPaymentDue" itemscope itemtype="https://schema.org/PriceSpecification">
-            <meta itemprop="priceCurrency" content="{{ currency | spaceless }}">
-            <meta itemprop="price" content="{{ data.quote.totals.grandTotal | moneyRaw }}">
-        </section>
+    {% if data.quote.orderReference %}
+        <section itemscope itemtype="https://schema.org/Invoice">
+            <meta itemprop="identifier" content="{{ data.quote.orderReference }}">
+            <section itemprop="totalPaymentDue" itemscope itemtype="https://schema.org/PriceSpecification">
+                <meta itemprop="priceCurrency" content="{{ currency | spaceless }}">
+                <meta itemprop="price" content="{{ data.quote.totals.grandTotal | moneyRaw }}">
+            </section>
 
-        <section itemprop="referencesOrder" itemscope itemtype="https://schema.org/Order">
-            {% for item in data.quote.items %}
-                <section itemprop="orderedItem" itemscope itemtype="https://schema.org/OrderItem">
-                    <meta itemprop="orderQuantity" content="{{ item.quantity }}">
+            <section itemprop="referencesOrder" itemscope itemtype="https://schema.org/Order">
+                {% for item in data.quote.items %}
+                    <section itemprop="orderedItem" itemscope itemtype="https://schema.org/OrderItem">
+                        <meta itemprop="orderQuantity" content="{{ item.quantity }}">
 
-                    <section itemprop="orderedItem" itemscope itemtype="https://schema.org/Product">
-                        <meta itemprop="sku" content="{{ item.sku }}">
-                        <meta itemprop="name" content="{{ item.name }}">
+                        <section itemprop="orderedItem" itemscope itemtype="https://schema.org/Product">
+                            <meta itemprop="sku" content="{{ item.sku }}">
+                            <meta itemprop="name" content="{{ item.name }}">
 
-                        <section itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                            {% if currency %}
-                                <meta itemprop="priceCurrency" content="{{ currency | spaceless }}">
-                            {% endif %}
-                            <meta itemprop="price" content="{{ item.sumSubtotalAggregation | moneyRaw }}">
+                            <section itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                                {% if currency %}
+                                    <meta itemprop="priceCurrency" content="{{ currency | spaceless }}">
+                                {% endif %}
+                                <meta itemprop="price" content="{{ item.sumSubtotalAggregation | moneyRaw }}">
 
-                            {% widget 'MerchantMetaSchema' args [item] only %}{% endwidget %}
+                                {% widget 'MerchantMetaSchema' args [item] only %}{% endwidget %}
+                            </section>
                         </section>
                     </section>
-                </section>
-            {% endfor %}
-        </section>
+                {% endfor %}
+            </section>
 
-        <section itemscope itemtype="https://schema.org/Person">
-            <meta itemprop="email" content="{{ data.quote.customer.email | default }}">
+            <section itemscope itemtype="https://schema.org/Person">
+                <meta itemprop="email" content="{{ data.quote.customer.email | default }}">
+            </section>
         </section>
-    </section>
+    {% endif %}
 {% endblock %}
