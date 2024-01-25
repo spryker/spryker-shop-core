@@ -41,7 +41,9 @@ class DetailController extends AbstractController
         $data = [
             'productSet' => $productSetDataStorageTransfer,
             'productViews' => $productViewTransfers,
-            'optionResetUrls' => $this->generateOptionResetUrls($request, $productViewTransfers),
+            'optionResetUrls' => $this->getFactory()
+                ->getProductStorageClient()
+                ->generateProductAttributesResetUrlQueryParameters($request, $productViewTransfers),
         ];
 
         return $this->view(
@@ -49,19 +51,6 @@ class DetailController extends AbstractController
             $this->getFactory()->getProductSetDetailPageWidgetPlugins(),
             '@ProductSetDetailPage/views/set-detail/set-detail.twig',
         );
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param array<\Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
-     *
-     * @return array<array<string, string>>
-     */
-    protected function generateOptionResetUrls(Request $request, array $productViewTransfers): array
-    {
-        return $this->getFactory()
-            ->createOptionResetUrlGenerator()
-            ->generateOptionResetUrls($request, $productViewTransfers);
     }
 
     /**

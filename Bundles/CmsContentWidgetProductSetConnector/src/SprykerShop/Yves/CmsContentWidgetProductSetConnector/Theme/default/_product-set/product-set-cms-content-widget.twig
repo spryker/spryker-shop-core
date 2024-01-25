@@ -9,7 +9,8 @@
                         products: productSet.productViews,
                         name: productSet.productSet.name,
                         description: productSet.productSet.description,
-                        images: productSet.productSet.imageSets.0.images | default([])
+                        images: productSet.productSet.imageSets.0.images | default([]),
+                        optionResetUrls: optionResetUrls | default([]),
                     }
                 } only %}
             {% endif %}
@@ -26,7 +27,8 @@
                 products: productViews,
                 name: productSet.name,
                 description: productSet.description,
-                images: productSet.imageSets.0.images | default([])
+                images: productSet.imageSets.0.images | default([]),
+                optionResetUrls: optionResetUrls | default([]),
             }
         } only %}
     {% endif %}

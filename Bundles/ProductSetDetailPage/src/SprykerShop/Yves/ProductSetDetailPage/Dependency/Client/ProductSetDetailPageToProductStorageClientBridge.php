@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ProductSetDetailPage\Dependency\Client;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
+use Symfony\Component\HttpFoundation\Request;
 
 class ProductSetDetailPageToProductStorageClientBridge implements ProductSetDetailPageToProductStorageClientInterface
 {
@@ -46,5 +47,16 @@ class ProductSetDetailPageToProductStorageClientBridge implements ProductSetDeta
     public function getProductAbstractViewTransfers(array $productAbstractIds, string $localeName, array $selectedAttributes = []): array
     {
         return $this->productStorageClient->getProductAbstractViewTransfers($productAbstractIds, $localeName, $selectedAttributes);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param list<\Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
+     *
+     * @return array<int, array<string, string>>
+     */
+    public function generateProductAttributesResetUrlQueryParameters(Request $request, array $productViewTransfers): array
+    {
+        return $this->productStorageClient->generateProductAttributesResetUrlQueryParameters($request, $productViewTransfers);
     }
 }

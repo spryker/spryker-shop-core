@@ -21,7 +21,7 @@ use Codeception\Actor;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerShopTest\Yves\ContentProductSetWidget\PHPMD)
  */
 class ContentProductSetWidgetYvesTester extends Actor
 {

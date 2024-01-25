@@ -64,9 +64,18 @@ class CmsProductSetContentWidgetPlugin extends SprykerCmsProductSetContentWidget
             return [];
         }
 
+        $productViewTransfers = $this->mapProductSetDataStorageTransfers($context, $productSet);
+        $optionResetUrls = $this->getFactory()
+            ->getProductStorageClient()
+            ->generateProductAttributesResetUrlQueryParameters(
+                $this->getRequest($context),
+                $productViewTransfers,
+            );
+
         return [
             'productSet' => $productSet,
-            'productViews' => $this->mapProductSetDataStorageTransfers($context, $productSet),
+            'productViews' => $productViewTransfers,
+            'optionResetUrls' => $optionResetUrls,
         ];
     }
 

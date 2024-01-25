@@ -5,17 +5,18 @@
     name: productSet.name,
     description: productSet.description,
     images: productSet.imageSets.0.images | default([]),
+    optionResetUrls: optionResetUrls,
 } %}
 
 {% block body %}
-    {% embed organism('product-set-cms-content', 'ProductSetWidget') ignore missing with {
+    {% embed organism('product-set-cms-content', 'ProductSetWidget') with {
         data: {
-            formClass: 'text-center',
             buttonClass: 'float-none',
             products: data.products,
             name: data.name,
             description: data.description,
             images: data.images,
+            optionResetUrls: data.optionResetUrls,
         },
     } only %}
         {% block title %}{% endblock %}
