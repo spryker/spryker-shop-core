@@ -1,0 +1,40 @@
+- pipeline: 'SprykerShop'
+  events:
+      - type: 'PUSH'
+        refs:
+            - 'refs/pull/*'
+  terminate_stale_runs: true
+  fail_on_prepare_env_warning: true
+  auto_clear_cache: true
+  resources: 'NANO'
+  actions:
+      - action: 'Build Project'
+        type: 'BUILD'
+        docker_image_name: 'spryker/php'
+        docker_image_tag: '8.1'
+        execute_commands:
+            - 'composer config github-oauth.github.com ${GITHUB_TOKEN}'
+            - 'COMPOSER_MEMORY_LIMIT=-1 composer install --no-interaction --prefer-dist --optimize-autoloader'
+        cache_base_image: false
+        shell: 'BASH'
+      - action: 'Js Validation'
+        type: 'BUILD'
+        docker_image_name: 'node'
+        docker_image_tag: '18'
+        execute_commands:
+            - 'npm ci'
+            - 'npm i git+https://github.com/spryker-sdk/frontend-sniffer.git#semver:^0.2.6'
+            - 'npm run formatter'
+            - 'npm run stylelint'
+            - 'npm run lint'
+        cache_base_image: false
+        shell: 'BASH'
+      - action: 'PHP Validation'
+        type: 'BUILD'
+        docker_image_name: 'spryker/php'
+        docker_image_tag: '8.1'
+        execute_commands:
+            - 'chmod +x *.sh'
+            - 'bash travis_check_touched_modules.sh'
+        cache_base_image: false
+        shell: 'BASH'
