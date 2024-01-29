@@ -3,8 +3,10 @@
       - type: 'PUSH'
         refs:
             - 'refs/pull/*'
+            - 'refs/heads/master'
   terminate_stale_runs: true
   fail_on_prepare_env_warning: true
+  concurrent_pipeline_runs: true
   auto_clear_cache: true
   resources: 'NANO'
   actions:
