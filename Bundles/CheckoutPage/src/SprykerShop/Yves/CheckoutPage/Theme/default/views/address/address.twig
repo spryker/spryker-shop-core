@@ -82,8 +82,9 @@
                     {% set hasShipmentTypes = data.form.shipmentType is defined %}
                     {% set defaultShipmentType = 'delivery' %}
                     {% set currentShipmentType = data.form.shipmentType.key.vars.value | default %}
+                    {% set hasCurrentShipmentType = currentShipmentType is not empty %}
                     {% set isDefaultShipmentType = currentShipmentType == defaultShipmentType %}
-                    {% set shipmentTypeHiddenClassName = hasShipmentTypes and not isDefaultShipmentType ? hiddenClassName %}
+                    {% set shipmentTypeHiddenClassName = hasShipmentTypes and not isDefaultShipmentType and hasCurrentShipmentType ? hiddenClassName %}
                     {% set shippingAddressValue = embed.forms.shipping.id_customer_address.vars.value %}
                     {% set optionValueDeliverToMultipleAddresses = '-1' %}
                     {% set isMultipleShipmentSelected = shippingAddressValue == optionValueDeliverToMultipleAddresses %}

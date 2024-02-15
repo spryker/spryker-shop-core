@@ -31,6 +31,13 @@ interface AddressFormCheckerInterface
      *
      * @return bool
      */
+    public function hasShipmentTypes(FormInterface $form): bool;
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return bool
+     */
     public function isBillingAddressTheSameAsShipping(FormInterface $form): bool;
 
     /**

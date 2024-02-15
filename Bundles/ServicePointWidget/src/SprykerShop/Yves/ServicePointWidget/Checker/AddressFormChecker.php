@@ -118,6 +118,22 @@ class AddressFormChecker implements AddressFormCheckerInterface
      *
      * @return bool
      */
+    public function hasShipmentTypes(FormInterface $form): bool
+    {
+        $shipmentTypeForm = $this->findShipmentTypeForm($form);
+
+        if ($shipmentTypeForm !== null && $shipmentTypeForm->get(static::FIELD_SHIPMENT_TYPE_KEY)->all() === []) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return bool
+     */
     public function isBillingAddressTheSameAsShipping(FormInterface $form): bool
     {
         $parentForm = $form->getRoot();

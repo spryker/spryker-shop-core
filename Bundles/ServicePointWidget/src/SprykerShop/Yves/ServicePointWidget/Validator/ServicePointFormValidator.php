@@ -68,6 +68,10 @@ class ServicePointFormValidator implements ServicePointFormValidatorInterface
      */
     protected function assertServicePointSelection(AbstractTransfer $data, FormInterface $form): void
     {
+        if (!$this->addressFormChecker->hasShipmentTypes($form)) {
+            return;
+        }
+
         if (!$this->checkCorrespondenceOfSubmittedData($data, $form)) {
             return;
         }
@@ -100,6 +104,7 @@ class ServicePointFormValidator implements ServicePointFormValidatorInterface
         if (
             !$this->addressFormChecker->isBillingAddressTheSameAsShipping($form)
             || $this->addressFormChecker->isShipmentTypeDelivery($form)
+            || !$this->addressFormChecker->hasShipmentTypes($form)
         ) {
             return;
         }
