@@ -30,7 +30,7 @@ runCommand() {
         TESTS_FOLDER="$CURRENT_PATH/Bundles/$module/tests/"
     fi
 
-    php -d memory_limit=1300M vendor/bin/phpcs $CURRENT_PATH/Bundles/$module/ --standard=$RULESET -p $SRC_FOLDER $TESTS_FOLDER
+    php -d memory_limit=10GB vendor/bin/phpcs $CURRENT_PATH/Bundles/$module/ --standard=$RULESET -p $SRC_FOLDER $TESTS_FOLDER
 }
 
 validateModuleCodeSniffer() {
