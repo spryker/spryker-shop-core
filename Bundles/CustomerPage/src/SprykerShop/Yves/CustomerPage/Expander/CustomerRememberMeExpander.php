@@ -14,12 +14,25 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Symfony\Component\Security\Core\Signature\SignatureHasher;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Component\Security\Http\Authenticator\InteractiveAuthenticatorInterface;
+use Symfony\Component\Security\Http\Authenticator\RememberMeAuthenticator;
 use Symfony\Component\Security\Http\EventListener\RememberMeListener;
+use Symfony\Component\Security\Http\RememberMe\RememberMeHandlerInterface;
 use Symfony\Component\Security\Http\RememberMe\ResponseListener;
 use Symfony\Component\Security\Http\RememberMe\SignatureRememberMeHandler;
 
 class CustomerRememberMeExpander implements CustomerRememberMeExpanderInterface
 {
+    /**
+     * @var string
+     */
+    protected const SECURITY_REMEMBER_ME_AUTHENTICATOR = 'security.secured.remember_me.authenticator';
+
+    /**
+     * @var string
+     */
+    protected const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
+
     /**
      * @uses \Spryker\Yves\Http\Plugin\Application\YvesHttpApplicationPlugin::SERVICE_REQUEST_STACK
      *
@@ -36,6 +49,11 @@ class CustomerRememberMeExpander implements CustomerRememberMeExpanderInterface
      * @var string
      */
     protected const KEY_SECRET = 'secret';
+
+    /**
+     * @var string
+     */
+    protected const REMEMBER_ME_COOKIE_NAME = 'REMEMBERME';
 
     /**
      * @var \Symfony\Component\Security\Core\User\UserProviderInterface
@@ -67,19 +85,12 @@ class CustomerRememberMeExpander implements CustomerRememberMeExpanderInterface
      */
     public function expand(SecurityBuilderInterface $securityBuilder, ContainerInterface $container): SecurityBuilderInterface
     {
-        $securityBuilder->addEventSubscriber(function () use ($container): EventSubscriberInterface {
-            $signatureHandler = new SignatureRememberMeHandler(
-                new SignatureHasher(
-                    new PropertyAccessor(),
-                    [],
-                    $this->customerSecurityOptionsBuilder->buildOptions()[static::OPTION_REMEMBER_ME][static::KEY_SECRET],
-                ),
-                $this->userProvider,
-                $container->get(static::REQUEST_STACK),
-                $this->customerSecurityOptionsBuilder->buildOptions(),
-            );
+        $this->addRememberMeAuthenticator($container);
 
-            return new RememberMeListener($signatureHandler);
+        $securityBuilder->addEventSubscriber(function () use ($container): EventSubscriberInterface {
+            return new RememberMeListener(
+                $this->createSignatureRememberMeHandler($container),
+            );
         });
 
         $securityBuilder->addEventSubscriber(function (): EventSubscriberInterface {
@@ -87,5 +98,41 @@ class CustomerRememberMeExpander implements CustomerRememberMeExpanderInterface
         });
 
         return $securityBuilder;
+    }
+
+    /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return void
+     */
+    protected function addRememberMeAuthenticator(ContainerInterface $container): void
+    {
+        $container->set(static::SECURITY_REMEMBER_ME_AUTHENTICATOR, function () use ($container): InteractiveAuthenticatorInterface {
+            return new RememberMeAuthenticator(
+                $this->createSignatureRememberMeHandler($container),
+                $this->customerSecurityOptionsBuilder->buildOptions()[static::OPTION_REMEMBER_ME][static::KEY_SECRET],
+                $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
+                static::REMEMBER_ME_COOKIE_NAME,
+            );
+        });
+    }
+
+    /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Symfony\Component\Security\Http\RememberMe\RememberMeHandlerInterface
+     */
+    protected function createSignatureRememberMeHandler(ContainerInterface $container): RememberMeHandlerInterface
+    {
+        return new SignatureRememberMeHandler(
+            new SignatureHasher(
+                new PropertyAccessor(),
+                [],
+                $this->customerSecurityOptionsBuilder->buildOptions()[static::OPTION_REMEMBER_ME][static::KEY_SECRET],
+            ),
+            $this->userProvider,
+            $container->get(static::REQUEST_STACK),
+            $this->customerSecurityOptionsBuilder->buildOptions(),
+        );
     }
 }

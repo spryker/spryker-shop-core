@@ -481,7 +481,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param array<string, mixed> $options
      *
-     * @return array<string, mixed> $options
+     * @return array<string, mixed>
      */
     protected function executeCheckoutAddressCollectionFormExpanderPlugins(QuoteTransfer $quoteTransfer, array $options): array
     {

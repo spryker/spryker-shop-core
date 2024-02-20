@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Spryker\Shared\Security\Configuration\SecurityConfiguration;
 use SprykerShop\Yves\CustomerPage\CustomerPageDependencyProvider;
 use SprykerShop\Yves\CustomerPage\Plugin\Security\CustomerRememberMeSecurityPlugin;
+use SprykerShopTest\Yves\CustomerPage\CustomerPageTester;
 use SprykerShopTest\Yves\CustomerPage\Fixtures\DefaultAuthenticator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -59,9 +60,9 @@ class CustomerRememberMeSecurityPluginTest extends Unit
     protected const SECURITY_DEFAULT_LOGIN_FORM_AUTHENTICATOR = 'security.default.login_form.authenticator';
 
     /**
-     * @var \SprykerTest\Yves\Security\SecurityTester
+     * @var \SprykerShopTest\Yves\CustomerPage\CustomerPageTester
      */
-    protected $tester;
+    protected CustomerPageTester $tester;
 
     /**
      * @return void
@@ -98,6 +99,14 @@ class CustomerRememberMeSecurityPluginTest extends Unit
 
         $this->assertSame(static::AUTHENTICATED_FULLY, $httpKernelBrowser->getResponse()->getContent());
         $this->assertNotNull($httpKernelBrowser->getCookiejar()->get(static::REMEMBERME), 'The REMEMBERME cookie is not set');
+
+        $httpKernelBrowser->getCookiejar()->expire($this->tester::MOCKSESSID);
+        $httpKernelBrowser->request('get', '/');
+        $this->assertSame(static::ACCESS_MODE_PUBLIC, $httpKernelBrowser->getResponse()->getContent());
+
+        $httpKernelBrowser->request('get', '/logout');
+        $httpKernelBrowser->followRedirect();
+        $this->assertNull($httpKernelBrowser->getCookiejar()->get(static::REMEMBERME), 'The REMEMBERME cookie has not been removed yet');
     }
 
     /**

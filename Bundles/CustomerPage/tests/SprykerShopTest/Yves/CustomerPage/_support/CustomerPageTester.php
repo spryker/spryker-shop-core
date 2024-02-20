@@ -26,4 +26,9 @@ use Codeception\Actor;
 class CustomerPageTester extends Actor
 {
     use _generated\CustomerPageTesterActions;
+
+    /**
+     * @var string
+     */
+    public const MOCKSESSID = 'MOCKSESSID';
 }
