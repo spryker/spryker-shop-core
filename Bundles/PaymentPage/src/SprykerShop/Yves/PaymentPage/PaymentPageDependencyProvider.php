@@ -11,6 +11,7 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\PaymentPage\Dependency\Client\PaymentPageToCartClientBridge;
 use SprykerShop\Yves\PaymentPage\Dependency\Client\PaymentPageToCustomerClientBridge;
+use SprykerShop\Yves\PaymentPage\Dependency\Client\PaymentPageToSalesClientBridge;
 
 /**
  * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
@@ -28,6 +29,11 @@ class PaymentPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
     /**
+     * @var string
+     */
+    public const CLIENT_SALES = 'CLIENT_SALES';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -36,6 +42,7 @@ class PaymentPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addCartClient($container);
         $container = $this->addCustomerClient($container);
+        $container = $this->addSalesClient($container);
 
         return $container;
     }
@@ -63,6 +70,20 @@ class PaymentPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new PaymentPageToCustomerClientBridge($container->getLocator()->customer()->client());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSalesClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_SALES, function (Container $container) {
+            return new PaymentPageToSalesClientBridge($container->getLocator()->sales()->client());
         });
 
         return $container;

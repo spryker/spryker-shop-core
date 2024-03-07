@@ -31,4 +31,21 @@
         <property name="sumSubtotalAggregation" type="int"/>
     </transfer>
 
+    <transfer name="Customer">
+    </transfer>
+
+    <transfer name="OrderCancelRequest">
+        <property name="customer" type="Customer"/>
+        <property name="orderReference" type="string" strict="true"/>
+    </transfer>
+
+    <transfer name="OrderCancelResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
 </transfers>

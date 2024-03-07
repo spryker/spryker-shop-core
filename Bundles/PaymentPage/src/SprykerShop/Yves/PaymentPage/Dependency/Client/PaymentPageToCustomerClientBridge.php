@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\PaymentPage\Dependency\Client;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+
 class PaymentPageToCustomerClientBridge implements PaymentPageToCustomerClientInterface
 {
     /**
@@ -28,5 +30,13 @@ class PaymentPageToCustomerClientBridge implements PaymentPageToCustomerClientIn
     public function markCustomerAsDirty(): void
     {
         $this->customerClient->markCustomerAsDirty();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function getCustomer(): ?CustomerTransfer
+    {
+        return $this->customerClient->getCustomer();
     }
 }

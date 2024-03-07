@@ -12,6 +12,7 @@ use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use SprykerShop\Yves\CheckoutPage\Form\StepEngine\ExtraOptionsSubFormInterface;
 use SprykerShop\Yves\PaymentPage\Dependency\Client\PaymentPageToCartClientInterface;
 use SprykerShop\Yves\PaymentPage\Dependency\Client\PaymentPageToCustomerClientInterface;
+use SprykerShop\Yves\PaymentPage\Dependency\Client\PaymentPageToSalesClientInterface;
 use SprykerShop\Yves\PaymentPage\Form\DataProvider\PaymentForeignFormDataProvider;
 use SprykerShop\Yves\PaymentPage\Form\PaymentForeignSubForm;
 use SprykerShop\Yves\PaymentPage\Plugin\StepEngine\AbstractPaymentForeignSubFormPlugin;
@@ -60,5 +61,13 @@ class PaymentPageFactory extends AbstractFactory
     public function getCustomerClient(): PaymentPageToCustomerClientInterface
     {
         return $this->getProvidedDependency(PaymentPageDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\PaymentPage\Dependency\Client\PaymentPageToSalesClientInterface
+     */
+    public function getSalesClient(): PaymentPageToSalesClientInterface
+    {
+        return $this->getProvidedDependency(PaymentPageDependencyProvider::CLIENT_SALES);
     }
 }
