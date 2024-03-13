@@ -158,7 +158,7 @@ class ProductQuickAddForm extends AbstractType
         $builder->add(static::FIELD_QUANTITY, FormattedIntegerType::class, [
                 'required' => true,
                 'label' => false,
-                'attr' => ['min' => 1],
+                'attr' => ['min' => 1, 'data-qa' => 'product-quick-add-form-quantity-input'],
                 'locale' => $options[static::OPTION_LOCALE],
                 'constraints' => [
                     $this->createNotBlankConstraint(static::ERROR_MESSAGE_QUANTITY_REQUIRED),

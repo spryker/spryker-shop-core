@@ -17,16 +17,21 @@
     submit: {
         text: '',
         action: '',
+        qa: null,
     },
 
     remove: {
         text: '',
         action: '',
+        qa: null,
     },
 } %}
 
 {% set isAddFormView = data.formView == 'add' %}
 {% set isUpdateFormView = data.formView == 'update' %}
+
+{% set dataQaUpdateAttribute = data.submit.qa ? 'data-qa=' ~ data.submit.qa : '' %}
+{% set dataQaRemoveAttribute = data.remove.qa ? 'data-qa=' ~ data.remove.qa : '' %}
 
 {% block body %}
     {% set uuidField %}
@@ -78,12 +83,12 @@
 
             {% block formHandlers %}
                 <div class="{{ config.name }}__handlers">
-                    <button action="{{ data.submit.action }}" class="button button--primary {{ config.jsName }}__submit-button" data-init-single-click>
+                    <button action="{{ data.submit.action }}" class="button button--primary {{ config.jsName }}__submit-button" {{ dataQaUpdateAttribute }} data-init-single-click>
                         {{ data.submit.text }}
                     </button>
 
                     {% if isUpdateFormView %}
-                        <button action="{{ data.remove.action }}" class="button button--success {{ config.jsName }}__remove-button" data-init-single-click>
+                        <button action="{{ data.remove.action }}" class="button button--success {{ config.jsName }}__remove-button" {{ dataQaRemoveAttribute }} data-init-single-click>
                             {{ data.remove.text }}
                         </button>
                     {% endif %}

@@ -82,6 +82,7 @@ class AgentLoginForm extends AbstractType
                 $this->createEmailConstraint(),
             ],
             'mapped' => false,
+            'attr' => ['data-qa' => 'agent-login-form-email-input'],
         ]);
 
         return $this;
@@ -98,7 +99,7 @@ class AgentLoginForm extends AbstractType
             'label' => 'agent.login.password',
             'constraints' => $this->createNotBlankConstraint(),
             'mapped' => false,
-            'attr' => ['autocomplete' => 'off'],
+            'attr' => ['autocomplete' => 'off', 'data-qa' => 'agent-login-form-password-input'],
         ]);
 
         return $this;

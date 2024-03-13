@@ -33,7 +33,7 @@
                 {% if shipmentGroupForm.hash is defined %}
                     {% do shipmentGroupForm.hash.setRendered %}
                 {% endif %}
-                <article class="col col--sm-12 grid spacing spacing--inner">
+                <article class="col col--sm-12 grid spacing spacing--inner" data-qa="multi-shipment-group">
                     <div class="col col--sm-12 spacing-bottom">
                         <h3>
                             {{ 'page.checkout.shipment.shipping_address.title' | trans }}:

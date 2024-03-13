@@ -8,9 +8,6 @@
 namespace SprykerShop\Yves\ShopUi\Form\Type;
 
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()

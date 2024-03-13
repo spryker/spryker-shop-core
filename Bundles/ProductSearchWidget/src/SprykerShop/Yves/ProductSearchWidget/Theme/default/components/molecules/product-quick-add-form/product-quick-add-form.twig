@@ -50,7 +50,7 @@
 
                     {% block button %}
                         <div class="col col--sm-12 {{ not data.verticalLayout ? 'col--md-2' }}">
-                            <button class="{{ config.jsName }}__submit-button button button--expand button--success">
+                            <button data-qa="product-quick-add-form-submit-button" class="{{ config.jsName }}__submit-button button button--expand button--success">
                                 {{ data.submitButtonTitle }}
                             </button>
                         </div>

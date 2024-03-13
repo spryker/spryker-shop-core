@@ -7,7 +7,10 @@
 
 {% block body %}
     <div class="box box--borderless">
-        {{ form_start(data.multiCartClearForm, {'action': path('multi-cart/clear', {'idQuote': data.idQuote}) }) }}
+        {{ form_start(data.multiCartClearForm, {
+            'action': path('multi-cart/clear', {'idQuote': data.idQuote}),
+            'attr': {'data-qa': 'multi-cart-clear-form'}
+        }) }}
             <button class="button" data-init-single-click>
                 {{ "multi_cart_widget.cart.action.clear" | trans }}
             </button>

@@ -31,6 +31,6 @@
 {% set multipleShipmentClassName = 'button ' ~ (not data.isMultipleShipmentSelected ? attributes['toggle-button-class-name']) %}
 
 {% block body %}
-    <button class="{{ config.jsName }}__single-shipment-trigger {{ singeShipmentClassName }}" type="button">{{ data.singeShipmentText }}</button>
-    <button class="{{ config.jsName }}__multiple-shipment-trigger {{ multipleShipmentClassName }}" type="button">{{ data.multipleShipmentText }}</button>
+    <button class="{{ config.jsName }}__single-shipment-trigger {{ singeShipmentClassName }}" type="button" data-qa="single-shipment-trigger-button">{{ data.singeShipmentText }}</button>
+    <button class="{{ config.jsName }}__multiple-shipment-trigger {{ multipleShipmentClassName }}" type="button" data-qa="multiple-shipment-trigger-button">{{ data.multipleShipmentText }}</button>
 {% endblock %}

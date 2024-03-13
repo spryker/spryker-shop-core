@@ -22,6 +22,7 @@
         max: data.maxQuantity | default(null) < 0 or data.maxQuantity | default(null) < data.minQuantity | default(1) ? false : data.maxQuantity | default(null),
         value: data.value | default(1),
         disabled: data.readOnly | default(false),
+        'data-qa': 'cart-item-quantity-input',
     },
     numberFormatConfig: {},
 } %}
