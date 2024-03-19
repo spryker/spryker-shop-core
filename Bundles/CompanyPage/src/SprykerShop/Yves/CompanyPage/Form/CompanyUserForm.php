@@ -25,6 +25,7 @@ use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
+ * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageConfig getConfig()
  */
 class CompanyUserForm extends AbstractType
@@ -167,6 +168,7 @@ class CompanyUserForm extends AbstractType
             'required' => true,
             'constraints' => [
                 $this->createNotBlankConstraint(),
+                $this->getFactory()->createCompanyUserRelationConstraint(),
             ],
         ]);
 
