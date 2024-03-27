@@ -35,6 +35,7 @@
                                         price: productOffer.price.price | default(null),
                                         currencyIsoCode: productOffer.price.currency.code | default(null),
                                         isRadioButtonVisible: isRadioButtonVisible,
+                                        merchantReference: productOffer.merchantStorage.merchantReference | default,
                                     },
                                     embed: {
                                         currentProductPrice: productOffer.price,

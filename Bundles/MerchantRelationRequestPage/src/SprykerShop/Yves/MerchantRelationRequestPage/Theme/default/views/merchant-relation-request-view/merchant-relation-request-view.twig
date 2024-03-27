@@ -1,0 +1,100 @@
+{# @var data.merchantRelationRequests array<\Generated\Shared\Transfer\MerchantRelationRequestTransfer> #}
+
+{% extends template('page-layout-company', 'CompanyPage') %}
+
+{% define data = {
+    title: 'merchant_relation_request_page.merchant_relation_request' | trans,
+    activePage: 'merchantRelationRequest',
+    currentBreadcrumb: 'merchant_relation_request_page.merchant_relation_request' | trans,
+    merchantRelationRequests: _view.merchantRelationRequests,
+    merchantRelationRequestSearchForm: _view.merchantRelationRequestSearchForm,
+    pagination: {
+        parameters: app.request.query.all(),
+        currentPage: _view.pagination.page,
+        paginationPath: 'company/merchant-relation-request',
+        maxPage: _view.pagination.lastPage,
+        showAlwaysFirstAndLast: true,
+    },
+} %}
+
+{% set jsPrefix = 'js-merchant-relation-request-' %}
+
+{% block companyContent %}
+    {% block relationRequestHeading %}
+        {% if can('CreateMerchantRelationRequestPermissionPlugin') %}
+            <div class="box">
+                <a class="button float-right" href="{{ url('company/merchant-relation-request/create') }}" data-qa="create-merchant-relation-request-button">
+                    {{ 'merchant_relation_request_page.merchant_relation_request.list.create_link' | trans }}
+                </a>
+            </div>
+        {% endif %}
+    {% endblock %}
+
+    <div class="box">
+        {% block relationRequestFiltersSecion %}
+            {% set formClass = jsPrefix ~ 'form' %}
+
+            {% block relationRequestFormStart %}
+                {{ form_start(data.merchantRelationRequestSearchForm, {
+                    attr: {
+                        class: formClass,
+                    },
+                }) }}
+            {% endblock %}
+
+            {% block relationRequesFilters %}
+                {% include molecule('merchant-relation-request-filters', 'MerchantRelationRequestPage') with {
+                    data: {
+                        merchantRelationRequestSearchForm: data.merchantRelationRequestSearchForm,
+                        jsPrefix: jsPrefix,
+                    },
+                } only %}
+            {% endblock %}
+
+            {% block relationRequesActiveFilters %}
+                {% include molecule('merchant-relation-request-active-filters', 'MerchantRelationRequestPage') with {
+                    data: {
+                        merchantRelationRequestSearchForm: data.merchantRelationRequestSearchForm,
+                        jsPrefix: jsPrefix,
+                    },
+                } only %}
+            {% endblock %}
+
+            {% block relationRequestFormEnd %}
+                {{ form_end(data.merchantRelationRequestSearchForm) }}
+            {% endblock %}
+
+            {% block relationRequestSeparator %}
+                <hr class="box__separator">
+            {% endblock %}
+        {% endblock %}
+
+        {% block merchantRelationRequests %}
+            {% if data.merchantRelationRequests | length %}
+                {% block merchantRelationRequestList %}
+                    {% include molecule('merchant-relation-request-view-table', 'MerchantRelationRequestPage') with {
+                        data: {
+                            merchantRelationRequests: data.merchantRelationRequests,
+                        },
+                    } only %}
+                {% endblock %}
+
+                {% block merchantRelationRequestPagination %}
+                    {% block merchantRelationRequestPaginationSeparator %}
+                        {% if data.pagination.maxPage > 1 %}
+                            <hr class="box__separator">
+                        {% endif %}
+                     {% endblock %}
+
+                    {% include molecule('pagination') with {
+                        data: data.pagination,
+                    } only %}
+                {% endblock %}
+            {% else %}
+                {% block emptyMerchantRelationRequest %}
+                    {{ 'merchant_relation_request_page.merchant_relation_request.view.empty' | trans }}
+                {% endblock %}
+            {% endif %}
+        {% endblock %}
+    </div>
+{% endblock %}

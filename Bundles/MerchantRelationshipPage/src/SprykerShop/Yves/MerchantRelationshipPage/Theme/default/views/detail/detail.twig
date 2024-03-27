@@ -1,0 +1,103 @@
+{# @var _view.merchantRelationship \Generated\Shared\Transfer\MerchantRelationshipTransfer #}
+{# @var _view.merchant \Generated\Shared\Transfer\MerchantStorageTransfer #}
+
+{% extends template('page-layout-company', 'CompanyPage') %}
+
+{% define data = {
+    title: 'company.account.merchant_relations' | trans,
+    activePage: 'merchant-relationships',
+    currentBreadcrumb: null,
+    merchantRelationship: _view.merchantRelationship,
+    merchant: _view.merchant,
+    merchantUrl: _view.merchantUrl | default(null),
+} %}
+
+{% block breadcrumbs %}
+    {% set breadcrumbs = [
+        {
+            label: 'company.account.merchant_relations' | trans,
+            url: path('company/merchant-relation'),
+        },
+        {
+            label: 'merchant_relationship_page.merchant_relationsip_detail.view' | trans,
+        }
+    ] %}
+
+    {% block breadcrumbsContent %}
+        {{ parent() }}
+    {% endblock %}
+{% endblock %}
+
+{% block companyContent %}
+    <div class="box">
+        {% block relationsHeading %}
+            <p><strong>{{ 'merchant_relationship_page.merchant_relationsip_detail' | trans }}</strong></p>
+
+            <hr class="box__separator">
+
+            <ul>
+                <li>
+                    {{ 'merchant_relationship_page.merchant_relationsip_detail.date_created' | trans  ~ ': ' }}
+                    <strong>{{ data.merchantRelationship.createdAt | formatDateTime }}</strong>
+                <li>
+            </ul>
+
+            <hr class="box__separator">
+        {% endblock %}
+
+
+        {% block relationsLogo %}
+            <div class="grid grid--middle">
+                {% if data.merchant.merchantProfile.logoUrl %}
+                    <div class="col spacing">
+                        {% include molecule('lazy-image') with {
+                            data: {
+                                imageSrc: data.merchant.merchantProfile.logoUrl,
+                                alt: data.merchant.name
+                            },
+                        } only %}
+                    </div>
+                {% endif %}
+
+                <div class="col">
+                    {% if data.merchantUrl is not null %}
+                        <a href="{{ data.merchantUrl }}">
+                            {{ data.merchant.name }}
+                        </a>
+                    {% else %}
+                        {{ data.merchant.name }}
+                    {% endif %}
+                </div>
+            </div>
+
+            <hr class="box__separator">
+        {% endblock %}
+
+        {% block relationsDesctiption %}
+            <ul>
+                <li class="spacing-bottom">
+                    <strong>{{ 'merchant_relationship_page.merchant_relationsip_detail.company_details' | trans }}</strong>
+                <li>
+                <li>
+                    {{ 'merchant_relationship_page.merchant_relationsip_detail.company' | trans  ~ ': ' }}
+                    <strong>{{ data.merchantRelationship.ownerCompanyBusinessUnit.company.name }}</strong>
+                <li>
+                <li>
+                    {{ 'merchant_relationship_page.merchant_relationsip_detail.business_unit_owner' | trans  ~ ': ' }}
+                    <strong>{{ data.merchantRelationship.ownerCompanyBusinessUnit.name }}</strong>
+                <li>
+                <li>
+                    {{ 'merchant_relationship_page.merchant_relationsip_detail.business_units' | trans  ~ ': ' }}
+                    <strong>
+                        {% set companyBusinessUnits = [] %}
+                        {% for companyBusinessUnit in data.merchantRelationship.assigneeCompanyBusinessUnits.companyBusinessUnits %}
+                            {% set companyBusinessUnits = companyBusinessUnits | merge([companyBusinessUnit.name]) %}
+                        {% endfor %}
+
+                        {{ companyBusinessUnits | join(', ') }}
+                    </strong>
+                <li>
+            </ul>
+        {% endblock %}
+    </div>
+{% endblock %}

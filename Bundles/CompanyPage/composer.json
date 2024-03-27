@@ -39,6 +39,8 @@
     "suggest": {
         "spryker-shop/company-user-invitation-page": "If you want to import new invitations from file: ^2.1.0",
         "spryker-shop/customer-page": "If you wat to use CompanyUserPreAuthUserCheckPlugin: ^2.34.0",
+        "spryker-shop/merchant-relation-request-widget": "Add the module if you want to use MerchantRelationRequestMenuItemWidget.",
+        "spryker-shop/merchant-relationship-widget": "If you want to use MerchantRelationshipMenuItemWidget: ^1.0.0",
         "spryker/company-business-unit-sales-connector": "If you want to use CompanyBusinessUnitOrderSearchFormExpanderPlugin, CompanyBusinessUnitOrderSearchFormHandlerPlugin: ^1.0.0",
         "spryker/company-sales-connector": "If you want to use CompanyBusinessUnitOrderSearchFormExpanderPlugin, CompanyBusinessUnitOrderSearchFormHandlerPlugin: ^1.0.0",
         "spryker/silex": "*"

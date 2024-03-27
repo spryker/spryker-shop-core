@@ -1,0 +1,168 @@
+{# @var _view.merchantRelationRequest \Generated\Shared\Transfer\MerchantRelationRequestTransfer #}
+{# @var _view.merchant \Generated\Shared\Transfer\MerchantStorageTransfer #}
+
+{% extends template('page-layout-merchant-relation-request', 'MerchantRelationRequestPage') %}
+
+{% define data = {
+    title: 'merchant_relation_request_page.merchant_relation_request' | trans,
+    merchantRelationRequest: _view.merchantRelationRequest,
+    isRequestCancellable: _view.isRequestCancellable,
+    merchant: _view.merchant,
+    merchantUrl: _view.merchantUrl | default(null),
+} %}
+
+{% block breadcrumbsContent %}
+    {% set breadcrumbs = breadcrumbs | merge([
+        {
+            label: 'merchant_relation_request_page.merchant_relation_request.actions.view' | trans,
+        },
+    ]) %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block companyContent %}
+    <div class="box">
+        {% block heading %}
+            <p><strong>{{ 'merchant_relation_request_page.merchant_relation_request.title_create' | trans }}</strong></p>
+
+            {% block headingSeparator %}
+                <hr class="box__separator">
+            {% endblock %}
+
+            <ul>
+                <li>
+                    {{ 'merchant_relation_request_page.merchant_relation_request_detail.date_created' | trans  ~ ': ' }}
+                    <strong>{{ data.merchantRelationRequest.createdAt | formatDateTime }}</strong>
+                <li>
+            </ul>
+        {% endblock %}
+
+        {% block notification %}
+            {% include molecule('merchant-relation-request-status-notification', 'MerchantRelationRequestPage') with {
+                class: 'spacing-y spacing-y--big',
+                modifiers: [data.merchantRelationRequest.status],
+                data: {
+                    status: data.merchantRelationRequest.status,
+                    isCancellable: data.isRequestCancellable,
+                    uuid: data.merchantRelationRequest.uuid,
+                    merchantRelationships: data.merchantRelationRequest.merchantRelationships,
+                },
+            } only %}
+        {% endblock %}
+
+        {% block merchantLogo %}
+            <div class="grid grid--middle">
+                {% if data.merchant.merchantProfile.logoUrl %}
+                    <div class="col spacing">
+                        {% include molecule('lazy-image') with {
+                            data: {
+                                imageSrc: data.merchant.merchantProfile.logoUrl,
+                                alt: data.merchant.name
+                            },
+                        } only %}
+                    </div>
+                {% endif %}
+
+                <div class="col">
+                    {% if data.merchantUrl is not null %}
+                        <a href="{{ data.merchantUrl }}">
+                            {{ data.merchant.name }}
+                        </a>
+                    {% else %}
+                        {{ data.merchant.name }}
+                    {% endif %}
+                </div>
+            </div>
+        {% endblock %}
+
+        {% block companyDetails %}
+            <ul>
+                <li class="spacing-bottom">
+                    <strong>{{ 'merchant_relation_request_page.merchant_relation_request_detail.company_details' | trans }}</strong>
+                <li>
+                <li>
+                    {{ 'merchant_relation_request_page.merchant_relation_request_detail.company' | trans  ~ ': ' }}
+                    <strong>{{ data.merchantRelationRequest.ownerCompanyBusinessUnit.company.name }}</strong>
+                <li>
+                <li>
+                    {{ 'merchant_relation_request_page.merchant_relation_request_detail.business_unit_owner' | trans  ~ ': ' }}
+                    <strong>{{ data.merchantRelationRequest.ownerCompanyBusinessUnit.name }}</strong>
+                <li>
+                <li>
+                    {{ 'merchant_relation_request_page.merchant_relation_request_detail.business_units' | trans  ~ ': ' }}
+                    <strong>
+                        {% set companyBusinessUnits = [] %}
+                        {% for companyBusinessUnit in data.merchantRelationRequest.assigneeCompanyBusinessUnits %}
+                            {% set companyBusinessUnits = companyBusinessUnits | merge([companyBusinessUnit.name]) %}
+                        {% endfor %}
+
+                        {{ companyBusinessUnits | join(', ') }}
+                    </strong>
+                <li>
+            </ul>
+        {% endblock %}
+
+        {% block customerDetails %}
+            {% block customerDetailsSeparator %}
+                <hr class="box__separator">
+            {% endblock %}
+
+            <ul>
+                <li class="spacing-bottom">
+                    <strong>{{ 'merchant_relation_request_page.merchant_relation_request_detail.details' | trans }}</strong>
+                <li>
+                <li>
+                    {{ 'merchant_relation_request_page.merchant_relation_request_detail.first_name' | trans  ~ ': ' }}
+                    <strong>{{ data.merchantRelationRequest.companyUser.customer.firstName }}</strong>
+                <li>
+                <li>
+                    {{ 'merchant_relation_request_page.merchant_relation_request_detail.last_name' | trans  ~ ': ' }}
+                    <strong>{{ data.merchantRelationRequest.companyUser.customer.lastName }}</strong>
+                <li>
+                <li>
+                    {{ 'merchant_relation_request_page.merchant_relation_request_detail.email' | trans  ~ ': ' }}
+                    <a href="mailto:{{ data.merchantRelationRequest.companyUser.customer.email }}">
+                        {{ data.merchantRelationRequest.companyUser.customer.email }}
+                    </a>
+                <li>
+            </ul>
+        {% endblock %}
+
+        {% block requestNote %}
+            {% if data.merchantRelationRequest.requestNote ?? '' | length %}
+                {% block requestNoteSeparator %}
+                    <hr class="box__separator">
+                {% endblock %}
+
+                <ul>
+                    <li class="spacing-bottom">
+                        <strong>{{ 'merchant_relation_request_page.merchant_relation_request_detail.additional_details' | trans }}</strong>
+                    <li>
+                    <li>
+                        {{ 'merchant_relation_request_page.merchant_relation_request.request_note_label' | trans  ~ ': ' }}
+                        {{ data.merchantRelationRequest.requestNote }}
+                    <li>
+                </ul>
+             {% endif %}
+        {% endblock %}
+
+        {% block desisionNote %}
+            {% if data.merchantRelationRequest.decisionNote ?? '' | length %}
+                {% block desisionNoteSeparator %}
+                    <hr class="box__separator">
+                {% endblock %}
+
+                <ul>
+                    <li class="spacing-bottom">
+                        <strong>{{ 'merchant_relation_request_page.merchant_relation_request_detail.comment_from_merchant' | trans }}</strong>
+                    <li>
+                    <li>
+                        {{ 'merchant_relation_request_page.merchant_relation_request.request_note_label' | trans  ~ ': ' }}
+                        {{  data.merchantRelationRequest.decisionNote }}
+                    <li>
+                </ul>
+            {% endif %}
+        {% endblock %}
+    </div>
+{% endblock %}

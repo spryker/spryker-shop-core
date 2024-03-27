@@ -1,0 +1,158 @@
+{# @var data.merchantRelationRequest \Generated\Shared\Transfer\MerchantRelationRequestTransfer #}
+
+{% extends template('page-layout-merchant-relation-request', 'MerchantRelationRequestPage') %}
+
+{% define data = {
+    title: 'merchant_relation_request_page.merchant_relation_request.title_create' | trans,
+    merchantRelationRequestForm: _view.merchantRelationRequestForm,
+    merchantRelationRequest: _view.merchantRelationRequestForm.vars.value,
+} %}
+
+{% block breadcrumbsContent %}
+    {% set breadcrumbs = breadcrumbs | merge([
+        {
+            label: 'merchant_relation_request_page.merchant_relation_request.breadcrumb.create' | trans,
+        },
+    ]) %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block companyContent %}
+    <div class="box">
+        {% block formStart %}
+            {{ form_start(data.merchantRelationRequestForm, {
+                attr: {
+                    class: 'form',
+                },
+            }) }}
+        {% endblock %}
+
+        {% block merchant %}
+            <div class="form__fields grid grid--bottom">
+                <div class="form__field col col--sm-12">
+                    {{ form_row(data.merchantRelationRequestForm.merchant) }}
+                </div>
+            </div>
+
+            {% block merchantSeparator %}
+                <hr class="box__separator">
+            {% endblock %}
+        {% endblock %}
+
+        {% block companyDetails %}
+            {% block companyDetailsTitle %}
+                <p class="spacing-bottom"><strong>{{ 'merchant_relation_request_page.merchant_relation_request_detail.company_details' | trans }}</strong></p>
+            {% endblock %}
+
+            {% block companyDetailsForm %}
+                <div class="form__fields grid grid--bottom">
+                    {% block companyDetailsFields %}
+                        {% block companyDetailsName %}
+                            <div class="form__field col col--sm-12 col--lg-6">
+                                <label class="label">{{ 'merchant_relation_request_page.merchant_relation_request_detail.company' | trans }}</label>
+                                <input class="input input--expand" value="{{ data.merchantRelationRequest.companyUser.company.name }}" disabled />
+                            </div>
+                        {% endblock %}
+
+                        {% block companyDetailsOwner %}
+                            <div class="form__field col col--sm-12 col--lg-6">
+                                {{ form_row(data.merchantRelationRequestForm.ownerCompanyBusinessUnit) }}
+                            </div>
+                        {% endblock %}
+
+                        {% block companyDetailsUnits %}
+                            <div class="form__field">
+                                {{ form_row(data.merchantRelationRequestForm.assigneeCompanyBusinessUnits) }}
+                            </div>
+                        {% endblock %}
+                    {% endblock %}
+                </div>
+            {% endblock %}
+
+            {% block companyDetailsSeparator %}
+                <hr class="box__separator">
+            {% endblock %}
+        {% endblock %}
+
+        {% block contactDetails %}
+            {% block contactDetailsTitle %}
+                <p class="spacing-bottom"><strong>{{ 'merchant_relation_request_page.merchant_relation_request_detail.details' | trans }}</strong></p>
+            {% endblock %}
+
+
+            {% block contactDetailsForm %}
+                <div class="form__fields grid grid--bottom">
+                    {% block contactDetailsFields %}
+                        {% block contactDetailsFirstName %}
+                            <div class="form__field col col--sm-12 col--lg-6">
+                                <label class="label">{{ 'merchant_relation_request_page.merchant_relation_request_detail.first_name' | trans }}</label>
+                                <input class="input input--expand" value="{{ data.merchantRelationRequest.companyUser.customer.firstName }}" disabled />
+                            </div>
+                        {% endblock %}
+
+                        {% block contactDetailsLastName %}
+                            <div class="form__field col col--sm-12 col--lg-6">
+                                <label class="label">{{ 'merchant_relation_request_page.merchant_relation_request_detail.last_name' | trans }}</label>
+                                <input class="input input--expand" value="{{ data.merchantRelationRequest.companyUser.customer.lastName }}" disabled />
+                            </div>
+                        {% endblock %}
+
+                        {% block contactDetailsEmail %}
+                            <div class="form__field col col--sm-12 col--lg-6">
+                                <label class="label">{{ 'merchant_relation_request_page.merchant_relation_request_detail.email' | trans }}</label>
+                                <input class="input input--expand" value="{{ data.merchantRelationRequest.companyUser.customer.email }}" disabled />
+                            </div>
+                        {% endblock %}
+                    {% endblock %}
+                </div>
+            {% endblock %}
+
+            {% block contactDetailsSeparator %}
+                <hr class="box__separator">
+            {% endblock %}
+        {% endblock %}
+
+        {% block additionalDetails %}
+            {% block additionalDetailsTitle %}
+                <p class="spacing-bottom"><strong>{{ 'merchant_relation_request_page.merchant_relation_request_detail.additional_details' | trans }}</strong></p>
+            {% endblock %}
+
+            <div class="form__fields grid grid--bottom">
+                <div class="form__field col col--sm-12">
+                    {{ form_row(data.merchantRelationRequestForm.requestNote) }}
+                </div>
+            </div>
+
+            {% block additionalDetailsSeparator %}
+                <hr class="box__separator">
+             {% endblock %}
+        {% endblock %}
+
+        {% block actions %}
+            <div class="grid grid--justify">
+                <div class="col">
+                    <a href="{{ url('company/merchant-relation-request') }}" class="button button--secondary button--hollow">
+                        {% include atom('icon') with {
+                            modifiers: ['small'],
+                            data: {
+                                name: 'chevron-left'
+                            }
+                        } only %}
+                        {{ 'merchant_relation_request_page.merchant_relation_request.actions.back' | trans }}
+                    </a>
+                </div>
+
+                <div class="form__field">
+                    <button type="submit" class="button button--success" data-init-single-click>
+                        {{ 'merchant_relation_request_page.merchant_relation_request.actions.send_request' | trans }}
+                    </button>
+                </div>
+            </div>
+        {% endblock %}
+
+        {% block formEnd %}
+            {{ form_end(data.merchantRelationRequestForm) }}
+        {% endblock %}
+    </div>
+{% endblock %}

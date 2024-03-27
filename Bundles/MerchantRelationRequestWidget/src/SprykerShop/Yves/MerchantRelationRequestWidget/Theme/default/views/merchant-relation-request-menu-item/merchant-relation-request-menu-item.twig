@@ -1,0 +1,14 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isActivePage: _widget.isActivePage,
+    isVisible: _widget.isVisible,
+} %}
+
+{% set itemClass = data.isActivePage ? ' menu__item--active' : '' %}
+
+{% block body %}
+    <li class="menu__item {{ itemClass }}">
+        <a href="{{ url('company/merchant-relation-request') }}" data-id="sidebar-merchant-realtion-request">{{ 'merchant_relation_request_widget.merchant_relation_request.list.title' | trans }}</a>
+    </li>
+{% endblock %}

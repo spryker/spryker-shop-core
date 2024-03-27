@@ -166,6 +166,11 @@
                                 {% endblock %}
                             </div>
                         {% endblock %}
+
+                        {% block merchantRelationRequestCreateButton %}
+                            {% widget 'MerchantRelationRequestCreateButtonWidget' args [data.merchantReference] only %}
+                            {% endwidget %}
+                        {% endblock %}
                     </div>
                 {% endblock %}
 

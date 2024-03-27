@@ -13,6 +13,7 @@
         "spryker/code-sniffer": "*"
     },
     "suggest": {
+        "spryker-shop/merchant-relation-request-widget": "Add the module if you want to use MerchantRelationRequestCreateButtonWidget.",
         "spryker-shop/merchant-page": "To use information-item molecule."
     },
     "autoload": {

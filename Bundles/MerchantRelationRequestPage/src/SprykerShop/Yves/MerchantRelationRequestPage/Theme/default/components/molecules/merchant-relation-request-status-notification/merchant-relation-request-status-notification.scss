@@ -1,0 +1,40 @@
+@mixin merchant-relation-request-status-notification($name: '.merchant-relation-request-status-notification') {
+    #{$name} {
+        padding: 1.25rem;
+        border: 0.125rem solid helper-color-light(map-get($setting-color-actions, 'warning'));
+        color: helper-color-dark(map-get($setting-color-actions, 'warning'));
+
+        &--canceled {
+            border-color: helper-color-light($setting-color-darker);
+            color: helper-color-dark($setting-color-darker);
+        }
+
+        &--approved {
+            border-color: helper-color-light(map-get($setting-color-actions, 'success'));
+            color: helper-color-dark(map-get($setting-color-actions, 'success'));
+        }
+
+        &--rejected {
+            border-color: helper-color-light(map-get($setting-color-actions, 'alert'));
+            color: helper-color-dark(map-get($setting-color-actions, 'alert'));
+        }
+
+        &__grid {
+            gap: 1.25rem;
+        }
+
+        &__col--information {
+            color: $setting-color-text;
+        }
+
+        &__title,
+        &__description {
+            display: block;
+        }
+
+        &__title {
+            font-size: 1.125rem;
+            line-height: 1.4;
+        }
+    }
+}

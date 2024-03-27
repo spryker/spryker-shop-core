@@ -1,0 +1,91 @@
+{# @var _view.merchantRelationships array<\Generated\Shared\Transfer\MerchantRelationshipTransfer> #}
+{# @var _view.pagination \Generated\Shared\Transfer\PaginationTransfer #}
+
+{% extends template('page-layout-company', 'CompanyPage') %}
+
+{% define data = {
+    title: 'company.account.merchant_relations' | trans,
+    activePage: 'merchant-relationships',
+    currentBreadcrumb: 'company.account.merchant_relations' | trans,
+    merchantRelationships: _view.merchantRelationships,
+    merchantRelationshipSearchForm: _view.merchantRelationshipSearchForm,
+    pagination: {
+        parameters: app.request.query.all(),
+        currentPage: _view.pagination.page,
+        paginationPath: 'company/merchant-relation',
+        maxPage: _view.pagination.lastPage,
+        showAlwaysFirstAndLast: true,
+    },
+} %}
+
+{% set jsPrefix = 'js-merchant-relationship-' %}
+
+{% block companyContent %}
+    <div class="box">
+        {% block relationshipFiltersSection %}
+            {% set formClass = jsPrefix ~ 'form' %}
+
+            {% block relationshipFormStart %}
+                {{ form_start(data.merchantRelationshipSearchForm, {
+                    attr: {
+                        class: formClass,
+                    },
+                }) }}
+            {% endblock %}
+
+            {% block relationshipFilters %}
+                {% include molecule('merchant-relationship-filters', 'MerchantRelationshipPage') with {
+                    data: {
+                        merchantRelationshipSearchForm: data.merchantRelationshipSearchForm,
+                        jsPrefix: jsPrefix,
+                    },
+                } only %}
+            {% endblock %}
+
+            {% block relationshipActiveFilters %}
+                {% include molecule('merchant-relationship-active-filters', 'MerchantRelationshipPage') with {
+                    data: {
+                        merchantRelationshipSearchForm: data.merchantRelationshipSearchForm,
+                        jsPrefix: jsPrefix,
+                    },
+                } only %}
+            {% endblock %}
+
+            {% block relationshipFormEnd %}
+                {{ form_end(data.merchantRelationshipSearchForm) }}
+            {% endblock %}
+
+            {% block relationshipFiltersSeparator %}
+                <hr class="box__separator">
+            {% endblock %}
+        {% endblock %}
+
+        {% block relationshipSection %}
+            {% if data.merchantRelationships | length %}
+                {% block relationsList %}
+                    {% include molecule('merchant-relationship-table', 'MerchantRelationshipPage') with {
+                        data: {
+                            merchantRelationships: data.merchantRelationships,
+                        }
+                    } only %}
+                {% endblock %}
+
+                {% block merchantRelationshipPagination %}
+                    {% block merchantRelationshipPaginationSeparator %}
+                        {% if data.pagination.maxPage > 1 %}
+                            <hr class="box__separator">
+                        {% endif %}
+                    {% endblock %}
+
+                    {% include molecule('pagination') with {
+                        data: data.pagination,
+                    } only %}
+                {% endblock %}
+            {% else %}
+                {% block emptyMerchantRelationship %}
+                    {{ 'merchant_relation_page.merchant_relation.view.empty' | trans }}
+                {% endblock %}
+            {% endif %}
+        {% endblock %}
+    </div>
+{% endblock %}

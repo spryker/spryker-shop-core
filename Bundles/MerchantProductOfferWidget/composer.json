@@ -23,6 +23,7 @@
         "spryker/router": "*"
     },
     "suggest": {
+        "spryker-shop/merchant-relation-request-widget": "Add the module if you want to use MerchantRelationRequestCreateLinkWidget.",
         "spryker/router": "Use this module when you want to use the RouteProviderPlugin."
     },
     "autoload": {

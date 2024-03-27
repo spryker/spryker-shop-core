@@ -1,0 +1,38 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'merchant-relationship-table-filter-form',
+} %}
+
+{% define data = {
+    merchantRelationshipTableFilterForm: required,
+} %}
+
+{% block body %}
+    {{ form_start(data.merchantRelationshipTableFilterForm, {
+        attr: {
+            class: 'form',
+        },
+    }) }}
+
+    <div class="form__fields grid grid--bottom">
+        {% if data.merchantRelationshipTableFilterForm.merchant is defined %}
+            <div class="form__field col col--sm-12 col--lg-6">
+                {{ form_row(data.merchantRelationshipTableFilterForm.merchant) }}
+            </div>
+        {% endif %}
+
+
+        <div class="form__field col col--sm-12 col--lg-6">
+            {{ form_row(data.merchantRelationshipTableFilterForm.ownerCompanyBusinessUnit) }}
+        </div>
+
+        <div class="form__field col--right">
+            <button type="submit" class="button button--success">
+                {{ 'merchant_relationship_page.table.filter.apply' | trans }}
+            </button>
+        </div>
+    </div>
+
+    {{ form_end(data.merchantRelationshipTableFilterForm) }}
+{% endblock %}

@@ -22,6 +22,7 @@
         "spryker/symfony": "*"
     },
     "suggest": {
+        "spryker-shop/merchant-relation-request-widget": "Add the module if you want to use MerchantRelationRequestCreateLinkWidget.",
         "spryker/symfony": "If you want to use MerchantProductWidget expander plugins."
     },
     "autoload": {

@@ -1,0 +1,68 @@
+{# @var data.merchantRelationships array<\Generated\Shared\Transfer\MerchantRelationshipTransfer> #}
+
+{% extends model('component') %}
+
+{% define config = {
+    name: 'merchant-relation-request-status-notification',
+} %}
+
+{% define data = {
+    status: required,
+    icon: null,
+    isCancellable: false,
+    uuid: null,
+    merchantRelationships: [],
+} %}
+
+{% block body %}
+    <div class="{{config.name}}__grid grid grid--nowrap">
+        {% block decoaration %}
+            {% set iconMapper = {
+                canceled: 'action-default',
+                pending: 'action-default',
+                rejected: 'action-alert',
+                approved: 'action-success',
+            } %}
+            {% set icon = data.icon ?? iconMapper[data.status] ?? '' %}
+
+            {% if icon | length %}
+                <div class="{{config.name}}__col {{config.name}}__col--decoration  col">
+                    {% include atom('icon') with {
+                        modifiers: ['big'],
+                        data: {
+                            name: icon,
+                        },
+                    } only %}
+                </div>
+            {% endif %}
+        {% endblock %}
+
+        {% block information %}
+            <div class="{{config.name}}__col {{config.name}}__col--information col">
+                {% block title %}
+                    <strong class="{{config.name}}__title">{{ ('merchant_relation_request_page.merchant_relation_request_detail.notification.title.' ~ data.status) | trans }}</strong>
+                {% endblock %}
+
+                {% block description %}
+                    <span class="{{config.name}}__description">{{ ('merchant_relation_request_page.merchant_relation_request_detail.notification.description.' ~ data.status) | trans }}</span>
+                {% endblock %}
+
+                {% block content %}
+                    <div class="{{config.name}}__content spacing-top spacing-top--inner">
+                         {% if data.merchantRelationships | length %}
+                            {% widget 'MerchantRelationshipLinkListWidget' args [data.merchantRelationships] only %}{% endwidget %}
+                        {% endif %}
+
+                        {% if data.isCancellable %}
+                            <div class="{{config.name}}__cancel">
+                                <a href="{{ url('company/merchant-relation-request/cancel', {uuid: data.uuid}) }}" class="{{config.name}}__calcel-button button button--hollow button--warning" data-qa="merchant-relation-request-cancel-button">
+                                    {{ 'merchant_relation_request_page.merchant_relation_request.actions.cancel' | trans }}
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endblock %}
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}

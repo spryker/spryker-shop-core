@@ -30,5 +30,7 @@
             <a href="{{ path('company/business-unit') }}" data-id="sidebar-business-unit">{{ 'company.account.business_unit' | trans }}</a>
             {% block businessUnitSubmenu %}{% endblock %}
         </li>
+        {% widget 'MerchantRelationshipMenuItemWidget' args [data.activePage] only %}{% endwidget %}
+        {% widget 'MerchantRelationRequestMenuItemWidget' args [data.activePage] only %}{% endwidget %}
     </ul>
 {% endblock %}

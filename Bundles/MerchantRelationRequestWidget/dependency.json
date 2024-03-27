@@ -1,0 +1,7 @@
+{
+    "include": {
+        "spryker-shop/shop-ui": "ShopUi provides basic frontend infrastructure.",
+        "spryker/merchant-relation-request": "Added for forward compatibility.",
+        "spryker/transfer": "Provides transfer objects definition with strict types."
+    }
+}

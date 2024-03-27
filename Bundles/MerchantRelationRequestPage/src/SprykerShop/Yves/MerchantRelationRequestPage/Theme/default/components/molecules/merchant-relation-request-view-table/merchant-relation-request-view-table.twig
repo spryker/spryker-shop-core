@@ -1,0 +1,61 @@
+{# @var data.merchantRelationRequests array<\Generated\Shared\Transfer\MerchantRelationRequestTransfer> #}
+
+{% extends model('component') %}
+
+{% define config = {
+    name: 'merchant-relation-request-view-table',
+} %}
+
+{% define data = {
+    merchantRelationRequests: required,
+} %}
+
+{% block body %}
+    <table class="table table--expand">
+        <thead>
+            <tr>
+                <th class="text-left">{{ 'merchant_relation_request_page.merchant_relation_request.merchant' | trans }}</th>
+                <th>{{ 'merchant_relation_request_page.merchant_relation_request.company_user' | trans }}</th>
+                <th>{{ 'merchant_relation_request_page.merchant_relation_request.business_unit_owner' | trans }}</th>
+                <th>{{ 'merchant_relation_request_page.merchant_relation_request.business_units' | trans }}</th>
+                <th>{{ 'merchant_relation_request_page.merchant_relation_request.created_at' | trans }}</th>
+                <th>{{ 'merchant_relation_request_page.merchant_relation_request.status' | trans }}</th>
+                <th>{{ 'merchant_relation_request_page.merchant_relation_request.actions' | trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for merchantRelationRequest in data.merchantRelationRequests %}
+            <tr>
+                <td>{{ merchantRelationRequest.merchant.name }}</td>
+                <td>{{ merchantRelationRequest.companyUser.customer.firstName ~ ' ' ~ merchantRelationRequest.companyUser.customer.lastName }}</td>
+                <td>{{ merchantRelationRequest.ownerCompanyBusinessUnit.name }}</td>
+                <td>
+                    {% for companyBusinessUnit in merchantRelationRequest.assigneeCompanyBusinessUnits %}
+                        {{  companyBusinessUnit.name }}{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+                <td>{{ merchantRelationRequest.createdAt | formatDateTime }}</td>
+                <td>
+                    {% block stateWrapper %}
+                        {% include molecule('status') with {
+                            data: {
+                                label: ('merchant_relation_request_page.merchant_relation_request.status.' ~ merchantRelationRequest.status) | trans,
+                                status: merchantRelationRequest.status,
+                            },
+                        } only %}
+                    {% endblock %}
+                </td>
+                <td>
+                    <ul class="menu menu--inline">
+                        <li class="menu__item">
+                            <a href="{{ path('company/merchant-relation-request/details', { uuid: (merchantRelationRequest.uuid) }) }}" data-qa="merchant-relation-request-view-link">
+                                {{ 'merchant_relation_request_page.merchant_relation_request.actions.view' | trans }}
+                            </a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

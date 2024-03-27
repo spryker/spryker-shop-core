@@ -2,23 +2,28 @@
 
 {% define data = {
     activePage: 'overview',
-    currentBreadcrumb: 'customer.account.overview'
+    currentBreadcrumb: 'customer.account.overview',
 } %}
 
 {% block breadcrumbs %}
-    {% include molecule('breadcrumb') with {
-        data: {
-            steps: [
-                {
-                    label: 'company.account.page-title' | trans,
-                    url: url('company/overview')
-                },
-                {
-                    label: data.currentBreadcrumb | trans
-                }
-            ]
-        }
-    } only %}
+    {% set breadcrumbs = [] %}
+
+    {% block breadcrumbsContent %}
+        {% set breadcrumbBase = [{
+            label: 'company.account.page-title' | trans,
+            url: url('company/overview'),
+        }] %}
+
+        {% set breadcrumbsList = data.currentBreadcrumb ? breadcrumbBase | merge([{
+            label: data.currentBreadcrumb | trans
+        }]) : breadcrumbBase | merge(breadcrumbs) %}
+
+        {% include molecule('breadcrumb') with {
+            data: {
+                steps: breadcrumbsList,
+            }
+        } only %}
+    {% endblock %}
 {% endblock %}
 
 {% block content %}

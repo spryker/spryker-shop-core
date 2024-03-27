@@ -1,11 +1,13 @@
 @mixin shop-ui-status($name: '.status') {
     @include shop-ui-badge($name) {
+        &--rejected,
         &--in-progress,
         &--refunded {
             background-color: helper-color-light(map-get($setting-color-actions, 'alert'));
             color: helper-color-dark(map-get($setting-color-actions, 'alert'));
         }
 
+        &--approved,
         &--ready,
         &--paid,
         &--delivered,
@@ -14,6 +16,7 @@
             color: helper-color-dark(map-get($setting-color-actions, 'success'));
         }
 
+        &--pending,
         &--waiting,
         &--payment-pending,
         &--confirmed,
