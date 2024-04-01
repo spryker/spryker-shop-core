@@ -53,7 +53,7 @@
 
         {% block merchantLogo %}
             <div class="grid grid--middle">
-                {% if data.merchant.merchantProfile.logoUrl %}
+                {% if data.merchant.merchantProfile and data.merchant.merchantProfile.logoUrl %}
                     <div class="col spacing">
                         {% include molecule('lazy-image') with {
                             data: {

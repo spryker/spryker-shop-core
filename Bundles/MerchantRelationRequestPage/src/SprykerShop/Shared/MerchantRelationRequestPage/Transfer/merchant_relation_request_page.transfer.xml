@@ -107,7 +107,13 @@
     </transfer>
 
     <transfer name="MerchantStorage">
+        <property name="name" type="string"/>
         <property name="urlCollection" type="Url[]" singular="url"/>
+        <property name="merchantProfile" type="MerchantStorageProfile"/>
+    </transfer>
+
+    <transfer name="MerchantStorageProfile">
+        <property name="logoUrl" type="string"/>
     </transfer>
 
     <transfer name="Url">
