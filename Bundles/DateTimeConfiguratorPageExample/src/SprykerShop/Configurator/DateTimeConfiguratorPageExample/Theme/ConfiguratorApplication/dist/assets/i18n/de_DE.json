@@ -1,42 +1,21 @@
 {
     "global": {
-        "title": "Konfigurator",
-        "subtitle": "(Beispiel)",
-        "store": "Store",
-        "locale": "Locale",
-        "priceMode": "Preis",
-        "currency": "Währung",
-        "customerId": "Kundennummer",
+        "title": "Service-Konfiguration",
+        "heading": "Konfigurieren",
+        "back": "Zurück zur Produktseite",
         "loading": "Wird geladen"
-    },
-    "product": {
-        "title": "Konfiguratorname",
-        "image": "Sie können das Bild des konfigurierbaren Produktes hier anzeigen",
-        "priceItem": "Artikelpreis",
-        "quantity": "Anzahl",
-        "availableQuantity": "Nur {{value}} Artikel verfügbar",
-        "confirmChangeQuantity": "Die Anzahl wird nach dem Speichern geändert",
-        "unavailableProductMessage": "Für Ihre Konfiguration ist kein Element verfügbar",
-        "totalPrice": "Gesamtpreis"
-    },
-    "fields": {
-        "date": "Datum",
-        "options": "Bevorzugte Uhrzeit",
-        "checkbox": " Is complete"
-    },
-    "deliveryOptions": {
-        "select": "Wähle eine Option",
-        "morning": "Morgen",
-        "lunch": "Mittagszeit",
-        "afternoon": "Nachmittag",
-        "evening": "Abend"
     },
     "buttons": {
         "cancel": "Abbrechen",
-        "submit": "Konfigurationen speichern"
+        "submit": "Konfigurationen speichern",
+        "leave": "Verlassen"
     },
-    "configurations": {
-        "pre": "Basiskonfiguration",
-        "current": "Aktuelle Konfiguration"
+    "guard": {
+        "title": "Ungespeicherte Produktkonfigurationen",
+        "body": "Möchten Sie die Produktkonfigurationen verlassen, ohne sie zu speichern?"
+    },
+    "details": {
+        "sku": "Artikelnummer: {{value}}",
+        "info": "Die Auswahl dieser Option kann zu zusätzlichen Upgrades der Gesamtkonfiguration führen und sich auf den Gesamtpreis auswirken."
     }
 }

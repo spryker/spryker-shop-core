@@ -39,7 +39,7 @@
                 <li>
                     {{ 'merchant_relationship_page.merchant_relationsip_detail.date_created' | trans  ~ ': ' }}
                     <strong>{{ data.merchantRelationship.createdAt | formatDateTime }}</strong>
-                <li>
+                </li>
             </ul>
 
             <hr class="box__separator">
@@ -77,15 +77,15 @@
             <ul>
                 <li class="spacing-bottom">
                     <strong>{{ 'merchant_relationship_page.merchant_relationsip_detail.company_details' | trans }}</strong>
-                <li>
+                </li>
                 <li>
                     {{ 'merchant_relationship_page.merchant_relationsip_detail.company' | trans  ~ ': ' }}
                     <strong>{{ data.merchantRelationship.ownerCompanyBusinessUnit.company.name }}</strong>
-                <li>
+                </li>
                 <li>
                     {{ 'merchant_relationship_page.merchant_relationsip_detail.business_unit_owner' | trans  ~ ': ' }}
                     <strong>{{ data.merchantRelationship.ownerCompanyBusinessUnit.name }}</strong>
-                <li>
+                </li>
                 <li>
                     {{ 'merchant_relationship_page.merchant_relationsip_detail.business_units' | trans  ~ ': ' }}
                     <strong>
@@ -96,7 +96,7 @@
 
                         {{ companyBusinessUnits | join(', ') }}
                     </strong>
-                <li>
+                </li>
             </ul>
         {% endblock %}
     </div>

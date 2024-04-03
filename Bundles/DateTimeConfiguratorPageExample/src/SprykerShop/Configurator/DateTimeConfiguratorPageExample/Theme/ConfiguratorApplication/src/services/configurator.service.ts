@@ -1,155 +1,133 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
-import { ConfiguredProduct, DateConfiguration, DayConfiguration, ServerData, VolumePrices } from './types';
+import {
+    BehaviorSubject,
+    Observable,
+    combineLatest,
+    map,
+    merge,
+    of,
+    scan,
+    shareReplay,
+    startWith,
+    switchMap,
+    withLatestFrom,
+} from 'rxjs';
+import { environment } from '../environments/environment';
+import { ProductService } from './product.service';
+import { ConfiguredProduct, MockConfigurator, ServerData } from './types';
 
-@Injectable()
+export const ASSETS = !environment.production ? '' : './dist';
+const CONFIGURATOR = !environment.production ? `${ASSETS}/assets/data/configurator.json` : './configurator.json';
+
+@Injectable({ providedIn: 'root' })
 export class ConfiguratorService {
-    configurator = new ReplaySubject();
-    defaultPrice = 30000;
-    volumePricesGross = {
-        volume_prices: [
-            {
-                quantity: 5,
-                net_price: 28500,
-                gross_price: 29000,
-            },
-        ],
-    };
-    volumePricesNet = {
-        volume_prices: [
-            {
-                quantity: 5,
-                net_price: 23500,
-                gross_price: 24000,
-            },
-        ],
-    };
+    constructor(private http: HttpClient, private product: ProductService) {}
 
-    generateConfiguredData(response: ServerData): void {
-        const configuration = JSON.parse(response.configuration) as DayConfiguration;
-        const displayData = this.generateDate(JSON.parse(response.display_data));
-        const productData = Object.assign({}, response, {
-            configuration: configuration,
-            display_data: displayData,
-        } as ConfiguredProduct);
+    configuration$ = this.http.get<MockConfigurator>(CONFIGURATOR).pipe(shareReplay({ bufferSize: 1, refCount: true }));
 
-        this.configurator.next({
+    data$ = this.configuration$.pipe(map((data) => data.configuration));
+    defaults$ = this.configuration$.pipe(map((data) => data.defaults));
+    productData$ = this.configuration$.pipe(
+        withLatestFrom(this.product.getData()),
+        map(([data, product]) => ({
+            ...data.data,
+            ...product,
+        })),
+        shareReplay({ bufferSize: 1, refCount: true }),
+    );
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setConfigurator$ = new BehaviorSubject<Partial<Record<string, any>>>({});
+
+    configurator$: Observable<ConfiguredProduct & { price: number }> = this.product.getData().pipe(
+        switchMap((_data: ServerData) => {
+            const data = this.generateConfiguredData(_data);
+            return this.setConfigurator$.pipe(
+                startWith(data),
+                scan((config, newConfig) => ({
+                    ...config,
+                    ...newConfig,
+                    configuration: {
+                        ...config.configuration,
+                        ...newConfig.configuration,
+                    },
+                })),
+                switchMap((configurator) => combineLatest([of(configurator), this.defaults$])),
+                switchMap(([configurator, defaults]) => {
+                    configurator.configuration = {
+                        ...defaults,
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        ...(configurator.configuration as Record<string, any>),
+                    };
+
+                    return this.data$.pipe(
+                        map((data) => {
+                            const displayData: Record<string, string> = {};
+                            const price = Object.entries(configurator.configuration).reduce((price, [key, value]) => {
+                                const config = data.find((configs) => configs.id === key);
+                                const active = config?.data?.find((options) => options.value === value);
+                                const uncheck = active?.disabled
+                                    ? Object.entries(active.disabled).some(([key, value]) =>
+                                          (value.condition as string[]).includes(configurator.configuration[key]),
+                                      )
+                                    : null;
+
+                                if (uncheck) {
+                                    delete configurator.configuration[key];
+                                }
+
+                                if (active && !uncheck) {
+                                    displayData[config.label] = active.title;
+                                }
+
+                                return active && !uncheck ? active.price + price : price;
+                            }, 0);
+
+                            return {
+                                ...configurator,
+                                display_data: displayData,
+                                price,
+                            } as ConfiguredProduct & { price: number };
+                        }),
+                    );
+                }),
+            );
+        }),
+        shareReplay({ bufferSize: 1, refCount: true }),
+    );
+    loading$ = merge(this.product.getData().pipe(map(() => true)), this.configurator$.pipe(map(() => false))).pipe(
+        startWith(true),
+    );
+    dirty$ = combineLatest([this.configurator$, this.defaults$]).pipe(
+        map(([data, defaults]) => JSON.stringify(data.configuration) !== JSON.stringify(defaults)),
+    );
+
+    private generateConfiguredData(response: ServerData): ConfiguredProduct {
+        const configuration = JSON.parse(response.configuration);
+        const displayData = JSON.parse(response.display_data);
+        const productData = {
+            ...response,
+            ...({
+                configuration,
+                display_data: displayData,
+            } as ConfiguredProduct),
+        };
+
+        return {
             ...productData,
-            ...this.updateConfiguredValues(productData),
+            price: 0,
+        };
+    }
+
+    updateConfiguratorConfiguration(data: Record<string, unknown>) {
+        this.setConfigurator$.next({
+            configuration: data,
         });
     }
 
-    generateDate(displayData: DateConfiguration): DateConfiguration {
-        const serverDate = new Date(this.convertDate(displayData.Date));
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        if (serverDate < today) {
-            displayData.Date = '';
-        }
-
-        return displayData;
-    }
-
-    updateDate(date: string, productData: ConfiguredProduct): void {
-        const displayTime = productData.display_data;
-
-        displayTime.Date = this.setDate(date);
-
-        productData.display_data = displayTime;
-        productData = this.updateConfiguredValues(productData);
-
-        this.updateWithGeneratedProductData(productData);
-    }
-
-    updateDayTime(index: number, dayTime: string, productData: ConfiguredProduct): void {
-        const displayTime = productData.display_data;
-        const configuration = productData.configuration;
-
-        displayTime['Preferred time of the day'] = dayTime;
-        configuration.time_of_day = index;
-
-        productData.display_data = displayTime;
-        productData.configuration = configuration;
-        productData = this.updateConfiguredValues(productData);
-
-        this.updateWithGeneratedProductData(productData);
-    }
-
-    updateConfiguredValues(productData: ConfiguredProduct): ConfiguredProduct {
-        const isAtStore = productData.store_name.toLowerCase().trim() === 'at';
-        const date = productData.display_data.Date;
-        const dayTime = productData.display_data['Preferred time of the day'];
-
-        productData.price = this.setPrice(
-            productData.currency_code,
-            productData.display_data,
-            productData.price_mode,
-            isAtStore,
-        );
-        productData.volume_prices = this.setVolumePrices(
-            productData.currency_code,
-            date,
-            dayTime,
-            productData.price_mode,
-            isAtStore,
-        );
-        productData.available_quantity = this.setQuantity(isAtStore, date, dayTime);
-
-        return productData;
-    }
-
-    setPrice(currency: string, displayData: DateConfiguration, priceMode: string, isAtStore: boolean): number | null {
-        const isDayTimeEvening = displayData['Preferred time of the day'].toLowerCase().trim() === 'evening';
-
-        if (!isAtStore || !displayData.Date || !isDayTimeEvening) {
-            return null;
-        }
-
-        const isNetMode = priceMode.toLowerCase().trim() === 'net_mode';
-
-        return this.defaultPrice - (isNetMode ? 5000 : 0);
-    }
-
-    setVolumePrices(
-        currency: string,
-        date: string,
-        dayTime: string,
-        priceMode: string,
-        isAtStore: boolean,
-    ): VolumePrices | Record<string, never> {
-        const isEvening = dayTime.toLowerCase().trim() === 'evening';
-
-        if (!isAtStore || !date || !isEvening) {
-            return {};
-        }
-
-        const isNetMode = priceMode.toLowerCase().trim() === 'net_mode';
-
-        return isNetMode ? this.volumePricesNet : this.volumePricesGross;
-    }
-
-    setQuantity(isAtStore: boolean, date: string, dayTime: string): number | string {
-        const isDaytimeLunch = dayTime.toLowerCase().trim() === 'lunch hour';
-        const isDaytimeMorning = dayTime.toLowerCase().trim() === 'morning';
-
-        if (!isAtStore || !date) {
-            return '';
-        }
-
-        if (isDaytimeLunch) {
-            return 5;
-        }
-
-        if (isDaytimeMorning) {
-            return 0;
-        }
-
-        return '';
-    }
-
     updateWithGeneratedProductData(newProductData): void {
-        this.configurator.next(Object.assign({}, newProductData));
+        this.setConfigurator$.next(newProductData);
     }
 
     setDate(date: string): string {

@@ -1,39 +1,41 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { InformationListComponent } from './information-list/information-list.component';
-
+import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { ProductService } from '../services/product.service';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ASSETS } from '../services/configurator.service';
+import { ConfigurePricePipe } from '../utils/configure-price.pipe';
+import { AppComponent } from './app.component';
+import { ConfiguratorGroupComponent } from './configurator-group/configurator-group.component';
+import { ConfiguratorItemComponent } from './configurator-item/configurator-item.component';
 import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './header/header.component';
+import { ProductConfiguratorComponent } from './product-configurator/product-configurator.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
-import { JsonOutputComponent } from './json-output/json-output.component';
-import { ConfiguratorService } from '../services/configurator.service';
-import { ConfigurePricePipe } from './product-details/configure-price.pipe';
-import { ParseDatePipe } from './product-details/parse-date.pipe';
 
 export function HttpLoaderFactory(httpClient: HttpClient): TranslateLoader {
-    return new TranslateHttpLoader(httpClient, './dist/assets/i18n/');
+    return new TranslateHttpLoader(httpClient, `${ASSETS}/assets/i18n/`);
 }
 
 @NgModule({
     declarations: [
         AppComponent,
         HeaderComponent,
-        InformationListComponent,
         FooterComponent,
         ProductDetailsComponent,
-        JsonOutputComponent,
         ConfigurePricePipe,
-        ParseDatePipe,
+        ProductConfiguratorComponent,
+        ConfiguratorGroupComponent,
+        ConfiguratorItemComponent,
     ],
     imports: [
+        FormsModule,
+        CommonModule,
         BrowserModule,
         HttpClientModule,
+        TranslateModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -42,7 +44,6 @@ export function HttpLoaderFactory(httpClient: HttpClient): TranslateLoader {
             },
         }),
     ],
-    providers: [ProductService, ConfiguratorService],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

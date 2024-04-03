@@ -11,26 +11,27 @@
         "formatter": "npm run formatter:run -- --check",
         "formatter:fix": "npm run formatter:run -- --write",
         "formatter:run": "prettier --config node_modules/@spryker/frontend-config.prettier/.prettierrc.json '**/*.(scss|css|less|js|ts|json|html|yml|yaml|xml)'",
-        "stylelint": "npx stylelint '**/*.scss' '!**/DateTimeConfiguratorPageExample/**/*.scss' '!vendor/**' 'vendor/spryker/spryker-shop/**' --config node_modules/@spryker/frontend-config.stylelint/.stylelintrc.json",
-        "stylelint:fix": "npx stylelint '**/*.scss' '!**/DateTimeConfiguratorPageExample/**/*.scss' '!vendor/**' 'vendor/spryker/spryker-shop/**' --config node_modules/@spryker/frontend-config.stylelint/.stylelintrc.json --fix",
+        "stylelint": "stylelint '**/*.scss' '!**/DateTimeConfiguratorPageExample/**/*.scss' '!vendor/**/*.scss'",
+        "stylelint:fix": "stylelint '**/*.scss' '!**/DateTimeConfiguratorPageExample/**/*.scss'",
         "lint": "eslint --no-error-on-unmatched-pattern './Bundles/**/Yves/*/Theme/**/*.{js,ts}'",
         "lint:fix": "eslint --no-error-on-unmatched-pattern --fix './Bundles/**/Yves/*/Theme/**/*.{js,ts}'"
     },
     "engines": {
-        "node": ">=18.0.0",
+        "node": ">=18.13.0",
         "npm": ">=9.0.0"
     },
     "devDependencies": {
         "@prettier/plugin-xml": "^0.13.1",
         "@spryker/frontend-config.eslint": "~0.1.0",
         "@spryker/frontend-config.prettier": "~0.0.5",
-        "@spryker/frontend-config.stylelint": "~0.0.5",
-        "@typescript-eslint/eslint-plugin": "~5.54.0",
-        "@typescript-eslint/parser": "~5.54.0",
-        "eslint": "~8.35.0",
-        "eslint-plugin-deprecation": "~1.3.3",
+        "@spryker/frontend-config.stylelint": "~0.0.6",
+        "@typescript-eslint/eslint-plugin": "7.2.0",
+        "@typescript-eslint/parser": "7.2.0",
+        "eslint": "~8.57.0",
+        "eslint-plugin-deprecation": "~2.0.0",
         "prettier": "~2.7.1",
-        "stylelint": "~13.13.1",
-        "typescript": "~4.8.4"
+        "stylelint": "~16.2.1",
+        "stylelint-config-standard-scss": "^13.0.0",
+        "typescript": "~5.4.2"
     }
 }

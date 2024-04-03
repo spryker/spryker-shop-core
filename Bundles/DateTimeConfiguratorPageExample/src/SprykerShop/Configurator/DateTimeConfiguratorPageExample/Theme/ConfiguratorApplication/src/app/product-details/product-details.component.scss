@@ -1,228 +1,58 @@
-@import '../styles/shared';
-
-.image-overlay {
-    min-height: 100px;
-    padding: 25px;
-    margin-bottom: 25px;
-    background: $setting-color-image-overlay;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    @include helper-breakpoint(lg) {
-        min-height: 570px;
-        margin-bottom: 0;
-    }
-
-    &__container {
-        text-align: center;
-    }
-
-    &__message {
-        margin-top: 16px;
-    }
-}
-
-.icon {
-    fill: currentColor;
-
-    &--image-placeholder {
-        width: 56px;
-        height: 56px;
-    }
-
-    &--info {
-        margin-right: 15px;
-        color: $setting-color-blue-2;
-        width: 24px;
-        height: 24px;
-    }
-
-    &--alert {
-        margin-right: 15px;
-        color: $setting-color-orange-2;
-        width: 24px;
-        height: 24px;
-    }
-}
-
 .details {
-    @include helper-breakpoint(lg) {
-        padding-top: 38px;
+    display: flex;
+    gap: 30px;
+    flex-direction: column;
+
+    @media (width > 768px) {
+        flex-direction: row;
     }
 
-    &__list {
-        border-top: 1px solid $setting-color-gray-10;
-        border-bottom: 1px solid $setting-color-gray-10;
-        padding: 20px 0 5px;
-        margin: 20px 0;
+    &__col {
+        &--info {
+            @media (width > 768px) {
+                width: 40%;
+            }
+        }
 
-        &-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-
-            &--available-quantity {
-                border-radius: $setting-border-radius;
-                padding: 0 15px;
-                background-color: $setting-color-blue-1;
-                justify-content: flex-start;
-                height: 50px;
+        &--configurator {
+            @media (width > 768px) {
+                width: 60%;
             }
         }
     }
-}
 
-.title {
-    margin-bottom: 8px;
-
-    @include helper-breakpoint(lg) {
-        margin-bottom: 15px;
-    }
-}
-
-.price {
-    @include helper-font-weight(bold);
-    color: $setting-color-black;
-}
-
-input[type='date'],
-select {
-    display: block;
-    width: 100%;
-    height: 46px;
-    padding: 0 15px;
-    font-size: 15px;
-    line-height: 1.2;
-    border: 1px solid $setting-color-gray-5;
-    background: $setting-color-gray-1;
-    border-radius: 0;
-    color: $setting-color-gray-7;
-    transition: border-color 300ms;
-
-    &:focus {
-        border-color: $setting-color-green-2;
-    }
-}
-
-select {
-    background: $setting-color-gray-1
-        url("data:image/svg+xml;utf8,<svg fill='gray' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 7' width='12' height='7'><path fill-rule='none' d='M5.826 4.254L1.896.326a1.11 1.11 0 10-1.57 1.57L5.039 6.61a1.11 1.11 0 001.571.001l4.714-4.714a1.111 1.111 0 00-1.57-1.57L5.825 4.253z'/></svg>")
-        no-repeat 96% 20px;
-    appearance: none;
-}
-
-input[type='checkbox'] {
-    display: inline-block;
-    margin-right: 5px;
-    vertical-align: middle;
-    width: 20px;
-    height: 20px;
-}
-
-.label {
-    display: inline-block;
-    margin-bottom: 10px;
-    font-size: 12px;
-    text-transform: uppercase;
-    color: $setting-color-black;
-    font-weight: bold;
-
-    &--spaceless {
-        margin-bottom: 0;
-    }
-}
-
-:host {
-    font-size: 15px;
-}
-
-.product-form {
-    &__field {
-        margin-bottom: 20px;
-    }
-
-    &__total {
-        padding: 14px;
-        background: $setting-color-gray-1;
-        color: $setting-color-black;
-        font-weight: bold;
-    }
-
-    &__actions {
+    &__image-overlay {
+        padding: 25px;
+        margin-bottom: 25px;
+        background: #f0f0f0;
         display: flex;
-        flex-wrap: wrap;
-        flex-direction: column-reverse;
-
-        @include helper-breakpoint(md) {
-            display: block;
-        }
-    }
-
-    &__alert-message {
-        border-radius: $setting-border-radius;
-        padding: 0 15px;
-        background-color: $setting-color-orange-1;
-        display: flex;
+        justify-content: center;
         align-items: center;
-        justify-content: flex-start;
-        height: 50px;
+        min-height: 370px;
     }
 
-    &__button {
+    &__info {
+        padding-bottom: 30px;
+
+        @media (width > 768px) {
+            position: sticky;
+            top: 40px;
+        }
+    }
+
+    &__price {
         display: block;
-        width: 100%;
-        padding: 13px 16px;
-        font-size: 15px;
-        background: $setting-color-green-1;
-        color: $setting-color-white;
-        cursor: pointer;
-        transition: background 300ms;
-        text-align: center;
+        color: #4c4c4c;
+        font-size: 26px;
+        font-weight: 700;
+        padding-bottom: 8px;
+        line-height: 1;
+    }
 
-        @include helper-breakpoint(md) {
-            display: inline-block;
-            width: auto;
-        }
-
-        @include helper-breakpoint(xl) {
-            &:hover,
-            &:focus {
-                text-decoration: none;
-                background: $setting-color-green-2;
-            }
-        }
-
-        &[disabled] {
-            background-color: $setting-color-gray-1;
-            color: $setting-color-gray-7;
-            border: 1px solid $setting-color-gray-7;
-            cursor: not-allowed;
-        }
-
-        &--cancel {
-            padding: 12px 15px;
-            margin-top: 15px;
-            background: $setting-color-white;
-            color: $setting-color-gray-7;
-            border: 1px solid transparent;
-            transition: background, border-color, color 300ms;
-
-            @include helper-breakpoint(md) {
-                margin-top: 0;
-                margin-right: 30px;
-                border-color: $setting-color-gray-7;
-            }
-
-            @include helper-breakpoint(xl) {
-                &:hover,
-                &:focus {
-                    background: $setting-color-white;
-                    color: $setting-color-gray-8;
-                    border-color: $setting-color-gray-8;
-                }
-            }
-        }
+    &__text {
+        display: block;
+        padding-bottom: 8px;
+        font-size: 14px;
+        color: #8f8f8f;
     }
 }

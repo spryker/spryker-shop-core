@@ -1,19 +1,6 @@
-@import '../styles/shared';
-
 :host {
     display: block;
-    background: $setting-color-gray-3;
+    background: #e7eaee;
     padding: 17px 30px 18px;
-
-    @include helper-breakpoint(lg) {
-        padding: 30px 30px 28px;
-    }
-}
-
-.title {
     text-align: center;
-
-    &__subtext {
-        color: $setting-color-gray-7;
-    }
 }

@@ -34,7 +34,7 @@
                 <li>
                     {{ 'merchant_relation_request_page.merchant_relation_request_detail.date_created' | trans  ~ ': ' }}
                     <strong>{{ data.merchantRelationRequest.createdAt | formatDateTime }}</strong>
-                <li>
+                </li>
             </ul>
         {% endblock %}
 
@@ -80,15 +80,15 @@
             <ul>
                 <li class="spacing-bottom">
                     <strong>{{ 'merchant_relation_request_page.merchant_relation_request_detail.company_details' | trans }}</strong>
-                <li>
+                </li>
                 <li>
                     {{ 'merchant_relation_request_page.merchant_relation_request_detail.company' | trans  ~ ': ' }}
                     <strong>{{ data.merchantRelationRequest.ownerCompanyBusinessUnit.company.name }}</strong>
-                <li>
+                </li>
                 <li>
                     {{ 'merchant_relation_request_page.merchant_relation_request_detail.business_unit_owner' | trans  ~ ': ' }}
                     <strong>{{ data.merchantRelationRequest.ownerCompanyBusinessUnit.name }}</strong>
-                <li>
+                </li>
                 <li>
                     {{ 'merchant_relation_request_page.merchant_relation_request_detail.business_units' | trans  ~ ': ' }}
                     <strong>
@@ -99,7 +99,7 @@
 
                         {{ companyBusinessUnits | join(', ') }}
                     </strong>
-                <li>
+                </li>
             </ul>
         {% endblock %}
 
@@ -111,21 +111,21 @@
             <ul>
                 <li class="spacing-bottom">
                     <strong>{{ 'merchant_relation_request_page.merchant_relation_request_detail.details' | trans }}</strong>
-                <li>
+                </li>
                 <li>
                     {{ 'merchant_relation_request_page.merchant_relation_request_detail.first_name' | trans  ~ ': ' }}
                     <strong>{{ data.merchantRelationRequest.companyUser.customer.firstName }}</strong>
-                <li>
+                </li>
                 <li>
                     {{ 'merchant_relation_request_page.merchant_relation_request_detail.last_name' | trans  ~ ': ' }}
                     <strong>{{ data.merchantRelationRequest.companyUser.customer.lastName }}</strong>
-                <li>
+                </li>
                 <li>
                     {{ 'merchant_relation_request_page.merchant_relation_request_detail.email' | trans  ~ ': ' }}
                     <a href="mailto:{{ data.merchantRelationRequest.companyUser.customer.email }}">
                         {{ data.merchantRelationRequest.companyUser.customer.email }}
                     </a>
-                <li>
+                </li>
             </ul>
         {% endblock %}
 
@@ -138,11 +138,11 @@
                 <ul>
                     <li class="spacing-bottom">
                         <strong>{{ 'merchant_relation_request_page.merchant_relation_request_detail.additional_details' | trans }}</strong>
-                    <li>
+                    </li>
                     <li>
                         {{ 'merchant_relation_request_page.merchant_relation_request.request_note_label' | trans  ~ ': ' }}
                         {{ data.merchantRelationRequest.requestNote }}
-                    <li>
+                    </li>
                 </ul>
              {% endif %}
         {% endblock %}
@@ -156,11 +156,11 @@
                 <ul>
                     <li class="spacing-bottom">
                         <strong>{{ 'merchant_relation_request_page.merchant_relation_request_detail.comment_from_merchant' | trans }}</strong>
-                    <li>
+                    </li>
                     <li>
                         {{ 'merchant_relation_request_page.merchant_relation_request.request_note_label' | trans  ~ ': ' }}
                         {{  data.merchantRelationRequest.decisionNote }}
-                    <li>
+                    </li>
                 </ul>
             {% endif %}
         {% endblock %}

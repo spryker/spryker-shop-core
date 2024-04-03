@@ -1,17 +1,19 @@
 {
-    "sku": "12",
-    "itemGroupKey": "item-1",
-    "quantity": 2,
-    "configuratorKey": "DATE_TIME_CONFIGURATOR",
-    "customerReference": "DE-1",
-    "storeName": "DE",
-    "currencyCode": "EUR",
-    "localeName": "de_DE",
-    "priceMode": "NET_MODE",
-    "sourceType": "pdp",
-    "backUrl": "http://www.de.suite.local/en/acer-chromebook-c730-c8t7-136",
-    "submitUrl": "http://...",
-    "configuration": {
-        "time_of_day": 2
+    "data": {
+        "sku": "mocked-sony-laptop-1",
+        "source_type": "SOURCE_TYPE_PDP",
+        "item_group_key": null,
+        "quantity": 1,
+        "configurator_key": "NYM_CONFIGURATOR",
+        "shopping_list_item_uuid": null,
+        "configuration": "{}",
+        "display_data": "{}",
+        "customer_reference": null,
+        "store_name": "DE",
+        "currency_code": "EUR",
+        "locale_name": "en_US",
+        "price_mode": "GROSS_MODE",
+        "back_url": "http://yves.de.spryker.local/en/sony-laptop",
+        "submit_url": "http://yves.de.spryker.local/en/product-configurator-gateway/response"
     }
 }

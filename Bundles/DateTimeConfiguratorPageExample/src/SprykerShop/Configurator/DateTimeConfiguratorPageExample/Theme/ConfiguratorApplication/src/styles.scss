@@ -1,12 +1,31 @@
-@import 'app/styles/shared';
-@import 'app/styles/basic';
-@import 'app/styles/util';
-
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap');
 
-@include basic-reset;
-@include basic-grid;
-@include util-visibility;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    color: inherit;
+    -webkit-tap-highlight-color: transparent;
+
+    &:hover,
+    &:active,
+    &:focus {
+        outline: 0;
+    }
+
+    &::before,
+    &::after {
+        box-sizing: border-box;
+        color: inherit;
+    }
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
 
 html,
 body {
@@ -14,13 +33,13 @@ body {
 }
 
 body {
-    @include helper-font-weight(regular);
-    @include helper-font-size(default);
-    @include helper-font-line-height(default);
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 1.2;
     position: relative;
-    background-color: $setting-color-bg;
-    color: $setting-color-text;
-    font-family: $setting-font-family;
+    background-color: #fff;
+    color: #8f8f8f;
+    font-family: 'Montserrat', sans-serif;
 }
 
 * {
@@ -28,39 +47,31 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-@each $i in (1, 2, 3, 4) {
-    h#{$i} {
-        @include helper-font-weight(bold);
-        @include helper-font-size($i);
-        @include helper-font-line-height($i);
-        color: $setting-color-black;
-    }
+.container {
+    display: block;
+    width: 100%;
+    max-width: 1230px;
+    padding: 0 15px;
+    margin: auto;
 }
 
-a {
-    color: $setting-color-main;
-    text-decoration: none;
-
-    &:hover {
-        text-decoration: underline;
-    }
+h1,
+h2,
+h3 {
+    font-weight: 600;
+    color: #000;
 }
 
-b,
-strong {
-    @include helper-font-weight(bold);
+h1 {
+    font-size: 28px;
+    font-weight: 700;
+    text-transform: capitalize;
 }
 
-i,
-em,
-cite {
-    font-style: italic;
+h2 {
+    font-size: 20px;
 }
 
-small {
-    @include helper-font-size(small);
-}
-
-big {
-    @include helper-font-size(big);
+h3 {
+    font-size: 17px;
 }

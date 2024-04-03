@@ -1,34 +1,46 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { ProductData } from './types';
+import { catchError, map, shareReplay, switchMap, tap } from 'rxjs/operators';
+import { environment } from '../environments/environment';
+import { ProductData, ProductMetaData } from './types';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ProductService {
-    productData: ProductData;
-    token: string;
-
-    constructor(private http: HttpClient) {
-        this.token = this.getToken();
+    constructor(private http: HttpClient, private translate: TranslateService) {
+        translate.addLangs(['en_US', 'de_DE']);
+        translate.setDefaultLang('en_US');
     }
+
+    private token = this.getToken();
+
+    private data$ = this.http
+        .get<{ data: ProductData }>('/', {
+            params: { getConfigurationByToken: this.token },
+        })
+        .pipe(
+            !environment.production
+                ? catchError(() => this.http.get<{ data: ProductData }>('/assets/mock.json'))
+                : tap(),
+            switchMap((response) => {
+                if (!response) {
+                    return;
+                }
+
+                return this.translate.use(response.data.locale_name).pipe(map(() => response.data));
+            }),
+            shareReplay({ bufferSize: 1, refCount: true }),
+        );
 
     getData(): Observable<ProductData> {
-        return this.http
-            .get<{ data: ProductData }>('/', {
-                params: { getConfigurationByToken: this.token },
-            })
-            .pipe(
-                map((response) => {
-                    this.productData = response.data;
-
-                    return this.productData;
-                }),
-            );
+        return this.data$;
     }
 
-    sendData(data: FormData): Observable<ProductData> {
-        return this.http.post<ProductData>('/', data, { params: { prepareConfiguration: this.token } });
+    getMetaData(data: FormData): Observable<ProductMetaData> {
+        return this.http.post<ProductMetaData>('/', data, {
+            params: { prepareConfiguration: this.token },
+        });
     }
 
     private getToken(): string {
@@ -36,4 +48,5 @@ export class ProductService {
 
         return locationSearchArr[locationSearchArr.length - 1];
     }
+    /* tslint:enable */
 }

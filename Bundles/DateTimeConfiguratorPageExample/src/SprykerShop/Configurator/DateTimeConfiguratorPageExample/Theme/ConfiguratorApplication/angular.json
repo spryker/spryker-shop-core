@@ -15,17 +15,13 @@
             "prefix": "app",
             "architect": {
                 "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
+                    "builder": "@angular-devkit/build-angular:browser-esbuild",
                     "options": {
                         "outputPath": "./dist",
-                        "deployUrl": "./dist/",
-                        "index": {
-                            "input": "src/index.html",
-                            "output": "../../index.html"
-                        },
+                        "index": "src/index.html",
                         "main": "src/main.ts",
-                        "polyfills": "src/polyfills.ts",
-                        "tsConfig": "tsconfig.app.json",
+                        "polyfills": ["src/polyfills.ts"],
+                        "tsConfig": "tsconfig.json",
                         "aot": true,
                         "assets": ["src/favicon.ico", "src/assets"],
                         "styles": ["src/styles.scss"],
@@ -51,8 +47,6 @@
                             "sourceMap": false,
                             "namedChunks": false,
                             "extractLicenses": true,
-                            "vendorChunk": false,
-                            "buildOptimizer": true,
                             "budgets": [
                                 {
                                     "type": "initial",
@@ -71,30 +65,18 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "demo-configurator-page:build"
+                        "buildTarget": "demo-configurator-page:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "demo-configurator-page:build:production"
+                            "buildTarget": "demo-configurator-page:build:production"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "demo-configurator-page:build"
-                    }
-                },
-                "test": {
-                    "builder": "@angular-devkit/build-angular:karma",
-                    "options": {
-                        "main": "src/test.ts",
-                        "polyfills": "src/polyfills.ts",
-                        "tsConfig": "tsconfig.spec.json",
-                        "karmaConfig": "karma.conf.js",
-                        "assets": ["src/favicon.ico", "src/assets"],
-                        "styles": ["src/styles.scss"],
-                        "scripts": []
+                        "buildTarget": "demo-configurator-page:build"
                     }
                 },
                 "lint": {
