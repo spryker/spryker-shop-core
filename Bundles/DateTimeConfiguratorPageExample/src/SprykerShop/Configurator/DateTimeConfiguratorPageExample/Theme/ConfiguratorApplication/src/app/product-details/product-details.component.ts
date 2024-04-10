@@ -14,10 +14,7 @@ export class ProductDetailsComponent {
 
     @ViewChild('configurator') configurator: ProductConfiguratorComponent;
 
-    productData$ = this.configuratorService.configurator$;
-    productInfo$ = this.configuratorService.productData$;
-
-    data$ = combineLatest([this.productData$, this.productInfo$]).pipe(
+    data$ = combineLatest([this.configuratorService.configurator$, this.configuratorService.productData$]).pipe(
         map(([configurator, productData]) => ({ configurator, product: productData })),
     );
 

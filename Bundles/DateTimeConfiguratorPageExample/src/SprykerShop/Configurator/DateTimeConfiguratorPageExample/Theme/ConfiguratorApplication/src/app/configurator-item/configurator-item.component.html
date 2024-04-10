@@ -1,6 +1,7 @@
 <div class="tile tooltip">
-    <label class="tile__inner" (click)="onClick()">
+    <label data-qa="configurator-item-label" class="tile__inner" (click)="onClick()">
         <input
+            data-qa="configurator-item-input"
             class="tile__input"
             [disabled]="disabled"
             type="radio"
@@ -8,11 +9,13 @@
             [attr.checked]="checked || null"
         />
         <ng-content></ng-content>
-        <span class="tile__price">+ {{ price | configurePrice | currency: currency }}</span>
+        <span data-qa="configurator-item-price" class="tile__price"
+            >+ {{ price | configurePrice | currency: currency }}</span
+        >
     </label>
 
     @if (withTooltip()) {
-    <div class="tooltip__content">
+    <div data-qa="configurator-item-tooltip" class="tooltip__content">
         {{ disabled }}
     </div>
     }

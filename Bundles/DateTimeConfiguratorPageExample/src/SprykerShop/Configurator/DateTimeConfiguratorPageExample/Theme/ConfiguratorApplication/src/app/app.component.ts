@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 
+import { map } from 'rxjs';
 import { ConfiguratorService } from '../services/configurator.service';
 
 @Component({
@@ -13,4 +14,5 @@ export class AppComponent {
     constructor(private configuratorService: ConfiguratorService) {}
 
     loading$ = this.configuratorService.loading$;
+    debug$ = this.configuratorService.configuration$.pipe(map((data) => data.debug));
 }

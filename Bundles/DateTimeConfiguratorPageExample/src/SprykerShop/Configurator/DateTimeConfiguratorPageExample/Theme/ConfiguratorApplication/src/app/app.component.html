@@ -8,6 +8,9 @@
 <app-header></app-header>
 <main class="container">
     <app-product-details></app-product-details>
+    @if (debug$ | async) {
+    <app-json-output></app-json-output>
+    }
 </main>
 <app-footer></app-footer>
 }

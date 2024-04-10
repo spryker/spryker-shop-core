@@ -1,8 +1,8 @@
 <div class="group__heading">
-    <h3>{{ group.label }}</h3>
+    <h3 data-qa="configurator-group-heading">{{ group.label }}</h3>
 
     @if (group.tooltip) {
-    <div class="tooltip">
+    <div data-qa="configurator-group-tooltip" class="tooltip">
         <svg viewBox="0 0 512 512" class="icon">
             <path
                 d="M256,0C114.497,0,0,114.507,0,256c0,141.503,114.507,256,256,256c141.503,0,256-114.507,256-256    C512,114.497,397.492,0,256,0z M256,472c-119.393,0-216-96.615-216-216c0-119.393,96.615-216,216-216    c119.393,0,216,96.615,216,216C472,375.393,375.384,472,256,472z"
@@ -23,12 +23,13 @@
 <div class="group__section">
     @for (item of group.data; track item; let index = $index) {
     <app-configurator-item
+        data-qa="configurator-group-item"
         class="group__item"
         [currency]="currency"
         [value]="item.value"
         [price]="item.price"
         [disabled]="isDisabled(item)"
-        [checked]="isChecked(item, index)"
+        [checked]="isChecked(item)"
         (onChange)="this.onChange.emit($event)"
     >
         {{ item.title }}

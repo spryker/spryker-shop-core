@@ -12,6 +12,7 @@ import { ConfiguratorGroupComponent } from './configurator-group/configurator-gr
 import { ConfiguratorItemComponent } from './configurator-item/configurator-item.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
+import { JsonOutputComponent } from './json-output/json-output.component';
 import { ProductConfiguratorComponent } from './product-configurator/product-configurator.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 
@@ -29,6 +30,7 @@ export function HttpLoaderFactory(httpClient: HttpClient): TranslateLoader {
         ProductConfiguratorComponent,
         ConfiguratorGroupComponent,
         ConfiguratorItemComponent,
+        JsonOutputComponent,
     ],
     imports: [
         FormsModule,

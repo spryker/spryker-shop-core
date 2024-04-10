@@ -1,6 +1,30 @@
+export interface VolumePrices {
+    quantity: number;
+    net_price: number;
+    gross_price: number;
+}
+
 export interface MockDataItemDisabled {
     condition: string[];
     text: string;
+}
+
+export interface MockAvailabilityQuantity {
+    condition: Partial<ProductData>;
+    quantity: number;
+}
+
+export interface MockVolumePrices {
+    condition: Partial<ProductData>;
+    quantity: number;
+}
+
+export interface MockVolumePricesConfig {
+    condition: Record<string, string>;
+    prices: {
+        GROSS_MODE: VolumePrices;
+        NET_MODE: VolumePrices;
+    };
 }
 
 export interface MockDataItem {
@@ -8,6 +32,7 @@ export interface MockDataItem {
     title: string;
     price: number;
     disabled?: MockDataItemDisabled;
+    availableQuantity?: number | MockAvailabilityQuantity[];
 }
 
 export interface MockData {
@@ -18,14 +43,19 @@ export interface MockData {
     data: MockDataItem[];
 }
 
+export interface MockProductInfo {
+    name: string;
+    image: string;
+    logo: string;
+    defaultPrice?: number;
+}
+
 export interface MockConfigurator {
     configuration: MockData[];
-    data: {
-        name: string;
-        image: string;
-        logo: string;
-    };
+    data: MockProductInfo;
     defaults: Record<string, string>;
+    volumePrices?: MockVolumePricesConfig[];
+    debug?: boolean;
 }
 
 export interface ProductMetaData {
@@ -57,14 +87,8 @@ export interface ConfiguredProduct extends ProductData {
     price: number;
     configuration: Record<string, string>;
     display_data: Record<string, string>;
-    available_quantity: number | string;
-    volume_prices?: VolumePrices | object;
-}
-
-export interface VolumePrices {
-    volume_prices: Array<{
-        quantity: number;
-        net_price: number;
-        gross_price: number;
-    }>;
+    available_quantity: number | null;
+    volume_prices?: {
+        volume_prices?: VolumePrices[];
+    };
 }

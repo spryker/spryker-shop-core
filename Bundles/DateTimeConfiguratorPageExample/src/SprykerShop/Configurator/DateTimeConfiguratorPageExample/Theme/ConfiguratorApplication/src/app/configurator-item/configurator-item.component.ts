@@ -21,6 +21,7 @@ export class ConfiguratorItemComponent {
 
     onClick() {
         if (this.disabled) return;
-        this.onChange.emit(this.value);
+        this.checked = !this.checked;
+        this.onChange.emit(this.checked ? null : this.value);
     }
 }

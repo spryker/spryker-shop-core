@@ -98,4 +98,34 @@
             background-color: #1ebea0;
         }
     }
+
+    &[disabled] {
+        background-color: #e3e3e3;
+        border-color: #e3e3e3;
+        color: #fff;
+        cursor: not-allowed;
+    }
+}
+
+.notification {
+    border-radius: 2px;
+    padding: 0 15px;
+    margin: 15px 0;
+    background-color: #eaf1fa;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 50px;
+    gap: 15px;
+    font-weight: 700;
+    color: #0064b4;
+
+    &--alert {
+        background-color: #fff7e6;
+        color: #fdbe36;
+    }
+
+    &__details {
+        color: #000;
+    }
 }

@@ -14,6 +14,30 @@ export class HeaderComponent {
 
     title$ = this.configuration.productData$.pipe(map((data) => data.name));
     logo$ = this.configuration.productData$.pipe(map((data) => data.logo));
+    info$ = this.configuration.productData$.pipe(
+        map((data) => [
+            {
+                title: 'global.store',
+                value: data.store_name,
+            },
+            {
+                title: 'global.locale',
+                value: data.locale_name,
+            },
+            {
+                title: 'global.priceMode',
+                value: data.price_mode,
+            },
+            {
+                title: 'global.currency',
+                value: data.currency_code,
+            },
+            {
+                title: 'global.customerId',
+                value: data.customer_reference,
+            },
+        ]),
+    );
     modalTrigger$ = new Subject<boolean>();
     modal$ = this.modalTrigger$.pipe(
         withLatestFrom(this.configuration.dirty$),

@@ -23,9 +23,7 @@ export class ConfiguratorGroupComponent {
         )?.[1]?.tooltip;
     }
 
-    isChecked(item: MockDataItem, index: number): boolean {
-        const configuration = this.configuration[this.group.id];
-
-        return configuration ? configuration === item.value : index === 0;
+    isChecked(item: MockDataItem): boolean {
+        return this.configuration[this.group.id] === item.value;
     }
 }
