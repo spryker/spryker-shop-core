@@ -480,6 +480,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
             $updatedShipmentGroups[] = $shipmentGroupTransfer;
         }
 
+        /** @var array<\Generated\Shared\Transfer\ShipmentGroupTransfer> $updatedShipmentGroups */
         return new ArrayObject($updatedShipmentGroups);
     }
 
@@ -502,6 +503,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
             $updatedItemTransfers[] = $itemTransfer;
         }
 
+        /** @var array<\Generated\Shared\Transfer\ItemTransfer> $updatedItemTransfers */
         return new ArrayObject($updatedItemTransfers);
     }
 }

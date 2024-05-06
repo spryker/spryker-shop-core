@@ -119,6 +119,7 @@ class ShoppingListTransferMapper implements ShoppingListTransferMapperInterface
             $productOptionTransfers[] = $this->createProductOptionTransfer($productOptionValueId);
         }
 
+        /** @var array<\Generated\Shared\Transfer\ProductOptionTransfer> $productOptionTransfers */
         return new ArrayObject($productOptionTransfers);
     }
 
