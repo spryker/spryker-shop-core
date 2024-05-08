@@ -12,7 +12,11 @@
 
         <input name="sourceType" type="hidden" [value]="productData.source_type" />
 
-        @if (productData.available_quantity) {
+        @if (productData.id_wishlist_item) {
+        <input name="idWishlistItem" type="hidden" [value]="productData.id_wishlist_item" />
+        } @if (productData.shopping_list_item_uuid) {
+        <input name="shoppingListItemUuid" type="hidden" [value]="productData.shopping_list_item_uuid" />
+        } @if (productData.available_quantity) {
         <input
             type="hidden"
             name="productConfigurationInstance[availableQuantity]"

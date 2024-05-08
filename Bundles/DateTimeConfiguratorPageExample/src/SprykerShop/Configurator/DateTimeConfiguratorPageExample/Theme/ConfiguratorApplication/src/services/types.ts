@@ -76,6 +76,8 @@ export interface ProductData {
     source_type: string;
     back_url: string;
     submit_url: string;
+    id_wishlist_item: string;
+    shopping_list_item_uuid: string;
 }
 
 export interface ServerData extends ProductData {
