@@ -18,6 +18,7 @@
         <property name="priceMode" type="string"/>
         <property name="hideTaxInCart" type="bool" strict="true"/>
         <property name="currency" type="Currency"/>
+        <property name="taxVendor" type="string" strict="true"/>
     </transfer>
 
     <transfer name="QuoteApproval">

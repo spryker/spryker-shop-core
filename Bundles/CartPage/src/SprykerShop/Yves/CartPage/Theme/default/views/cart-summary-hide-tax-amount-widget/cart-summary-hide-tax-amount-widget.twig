@@ -7,7 +7,7 @@
 } %}
 
 {% block body %}
-    <span class="float-right">
+    <span class="float-right" data-qa="tax-amount" data-qa-tax-vendor="{{ data.cart.taxVendor | default('') | capitalize }}">
         {% if data.cart.hideTaxInCart is defined and data.cart.hideTaxInCart %}
             {{ 'cart.total.tax_total.calculated_at_checkout' | trans }}
         {% else %}
