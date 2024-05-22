@@ -74,5 +74,9 @@
         overflow-y: hidden;
     }
 
+    .is-position-relative {
+        position: relative;
+    }
+
     @content;
 }

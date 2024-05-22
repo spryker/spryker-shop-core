@@ -25,6 +25,7 @@
     "suggest": {
         "spryker/router": "Use this module if you want use the RouterProviderPlugin.",
         "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
+        "spryker-shop/cart-page": "Use this module to have an access to the routes of the cart page.",
         "spryker-shop/configurable-bundle-note-widget": "If you want to use configurable bundle note feature."
     },
     "autoload": {

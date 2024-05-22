@@ -19,6 +19,7 @@
         <property name="hideTaxInCart" type="bool" strict="true"/>
         <property name="currency" type="Currency"/>
         <property name="taxVendor" type="string" strict="true"/>
+        <property name="totalItemCount" type="int" strict="true"/>
     </transfer>
 
     <transfer name="QuoteApproval">
@@ -105,6 +106,11 @@
     </transfer>
 
     <transfer name="Currency">
+    </transfer>
+
+    <transfer name="MiniCartView" strict="true">
+        <property name="content" type="string"/>
+        <property name="counterOnly" type="bool"/>
     </transfer>
 
 </transfers>

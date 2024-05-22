@@ -7,10 +7,14 @@
     customer: _widget.customer,
     taggedComments: _widget.taggedComments,
     availableCommentTags: _widget.availableCommentTags,
+    ajaxTriggerAttribute: data.ajaxTriggerAttribute | default,
 } %}
 
 {% set commentListOptions = [] %}
 {% set commentThreadSelectClass = 'js-comments-cart' %}
+{% set ajaxContentClass = 'js-comment-thread-content' %}
+{% set ajaxProviderClass = data.ajaxTriggerAttribute ? 'js-comment-thread-provider' : null %}
+{% set ajaxTriggerAttribute = data.ajaxTriggerAttribute ? 'data-comment-ajax-form-submitter' : null %}
 
 {% for key, comments in data.taggedComments %}
     {% set commentListOptions = commentListOptions | merge([{
@@ -20,61 +24,107 @@
 {% endfor %}
 
 {% block body %}
-    {% block title %}
-        <h5>{{ 'comment_widget.comments_to_cart' | trans }}</h5>
+    {% block contentOuter %}
+        <div {% if data.ajaxTriggerAttribute %}class="is-position-relative {{ ajaxContentClass }}"{% endif %}>
+            {% block contentInner %}
+                {% block title %}
+                    <h5>{{ 'comment_widget.comments_to_cart' | trans }}</h5>
+                {% endblock %}
+
+                {% if data.taggedComments is not empty %}
+                    {% block selectCommentThread %}
+                        {% embed atom('select') with {
+                            modifiers: ['expand'],
+                            class: commentThreadSelectClass ~ ' spacing-bottom spacing-bottom--big',
+                            embed: {
+                                commentListOptions: commentListOptions,
+                            },
+                        } only %}
+                            {% block options %}
+                                {% for commentOption in embed.commentListOptions %}
+                                    <option value="{{ commentOption.value }}">
+                                        {{ ('comment_widget.tags.' ~ commentOption.value) | trans ~ ' (' ~ commentOption.count ~ ')' }}
+                                    </option>
+                                {% endfor %}
+                            {% endblock %}
+                        {% endembed %}
+
+                        <hr>
+                    {% endblock %}
+
+                    {% block commentThreadList %}
+                        {% include molecule('comment-thread-list', 'CommentWidget') with {
+                            attributes: {
+                                'comment-thread-select-selector': '.' ~ commentThreadSelectClass,
+                            },
+                            data: {
+                                commentsThreadList: data.taggedComments,
+                                availableCommentTags: data.availableCommentTags,
+                                returnUrl: data.returnUrl,
+                                idCustomer: data.customer ? data.customer.idCustomer : null,
+                                ajaxTriggerAttribute: ajaxTriggerAttribute,
+                            },
+                        } only %}
+                    {% endblock %}
+                {% endif %}
+
+                {% block newCommentForm %}
+                    {% if data.customer %}
+                        {% include molecule('comment-form', 'CommentWidget') with {
+                            data: {
+                                formView: 'add',
+                                returnUrl: data.returnUrl,
+                                ownerId: data.ownerId,
+                                ownerType: data.ownerType,
+                                ajaxTriggerAttribute: ajaxTriggerAttribute,
+                                submit: {
+                                    text: 'comment_widget.form.add_comment' | trans,
+                                    action: path(data.ajaxTriggerAttribute ? 'comment/async/add' : 'comment/add'),
+                                    qa: 'comment-form-add-button',
+                                },
+                            },
+                        } only %}
+                    {% endif %}
+                {% endblock %}
+
+                {% if data.ajaxTriggerAttribute %}
+                    {% block ajaxLoader %}
+                        {% include molecule('ajax-loader') with {
+                            attributes: {
+                                'provider-class-name': ajaxProviderClass,
+                            },
+                        } only %}
+                    {% endblock %}
+                {% endif %}
+            {% endblock %}
+        </div>
     {% endblock %}
 
-    {% if data.taggedComments is not empty %}
-        {% block selectCommentThread %}
-            {% embed atom('select') with {
-                modifiers: ['expand'],
-                class: commentThreadSelectClass ~ ' spacing-bottom spacing-bottom--big',
-                embed: {
-                    commentListOptions: commentListOptions,
+    {% if data.ajaxTriggerAttribute %}
+        {% block ajaxAction %}
+            {% include molecule('ajax-provider') with {
+                class: ajaxProviderClass,
+                attributes: {
+                    url: '',
+                    method: 'POST',
                 },
             } only %}
-                {% block options %}
-                    {% for commentOption in embed.commentListOptions %}
-                        <option value="{{ commentOption.value }}">
-                            {{ ('comment_widget.tags.' ~ commentOption.value) | trans ~ ' (' ~ commentOption.count ~ ')' }}
-                        </option>
-                    {% endfor %}
-                {% endblock %}
-            {% endembed %}
 
-            <hr>
-        {% endblock %}
-
-        {% block commentThreadList %}
-            {% include molecule('comment-thread-list', 'CommentWidget') with {
+            {% include molecule('ajax-renderer') with {
                 attributes: {
-                    'comment-thread-select-selector': '.' ~ commentThreadSelectClass,
+                    'provider-class-name': ajaxProviderClass,
+                    'target-class-name': ajaxContentClass,
+                    'mount-after-render': true,
                 },
-                data: {
-                    commentsThreadList: data.taggedComments,
-                    availableCommentTags: data.availableCommentTags,
-                    returnUrl: data.returnUrl,
-                    idCustomer: data.customer ? data.customer.idCustomer : null,
+            } only %}
+
+            {% include molecule('ajax-form-submitter') with {
+                attributes: {
+                    'trigger-attribute': ajaxTriggerAttribute,
+                    'provider-class-name': ajaxProviderClass,
+                    event: 'click:change',
                 },
             } only %}
         {% endblock %}
     {% endif %}
-
-    {% block newCommentForm %}
-        {% if data.customer %}
-            {% include molecule('comment-form', 'CommentWidget') with {
-                data: {
-                    formView: 'add',
-                    returnUrl: data.returnUrl,
-                    ownerId: data.ownerId,
-                    ownerType: data.ownerType,
-                    submit: {
-                        text: 'comment_widget.form.add_comment' | trans,
-                        action: path('comment/add'),
-                        qa: 'comment-form-add-button',
-                    },
-                },
-            } only %}
-        {% endif %}
-    {% endblock %}
 {% endblock %}

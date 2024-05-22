@@ -1,0 +1,14 @@
+{% extends view('create-shopping-list-from-cart', 'ShoppingListWidget') %}
+
+{% set _widget = {
+    form: form,
+    isVisible: isVisible,
+}%}
+
+{% set data = {
+    ajaxTriggerAttribute: true,
+} %}
+
+{% block template %}
+    {{ block('contentInner') }}
+{% endblock %}

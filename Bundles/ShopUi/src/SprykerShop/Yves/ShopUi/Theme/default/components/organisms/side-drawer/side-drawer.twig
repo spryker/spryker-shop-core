@@ -10,6 +10,11 @@
     'container-selector': '',
 } %}
 
+{% define data = {
+    isAjaxMode: false,
+    ajaxCartUrl: '',
+} %}
+
 {% block body %}
     <aside class="{{ config.name }}__drawer">
         {% block close %}
@@ -43,15 +48,26 @@
                     isInline: false,
                     withSeparators: false,
                 },
+                embed: {
+                    isAjaxMode: data.isAjaxMode,
+                },
             } only %}
                 {% block multiCart %}
                     <li class="menu__item">
-                        {% widget 'MiniCartWidget' args [cartQuantity] only %}
+                        {% widget 'MiniCartWidget' args [cartQuantity] with {
+                            data: {
+                                isAjaxMode: embed.isAjaxMode,
+                                ajaxClassSuffix: 'sidedrawer',
+                                counterOnly: true,
+                            },
+                        }  only %}
                             {% block cartList %}{% endblock %}
                         {% nowidget %}
                             {% include molecule('cart-counter') with {
                                 data: {
                                     quantity: data.cartQuantity,
+                                    ajaxCartUrl: data.isAjaxMode ? data.ajaxCartUrl : null,
+                                    ajaxClassSuffix: 'sidedrawer',
                                 },
                             } only %}
                         {% endwidget %}

@@ -10,6 +10,8 @@
     url: url('cart'),
     quantity: null,
     iconName: 'shopping-cart',
+    ajaxCartUrl: null,
+    ajaxClassSuffix: '',
 } %}
 
 {% define attributes = {
@@ -17,43 +19,73 @@
 } %}
 
 {% block body %}
-    {% set linkClass = '' %}
-    {% set label = data.label %}
-    {% set labelClass = '' %}
-    {% set iconName = data.iconName %}
-    {% set iconModifiers = [] %}
-    {% set quantity = data.quantity ?: 0 %}
-    {% set hiddenQuantityClass = not quantity ? attributes['hidden-quantity-class-name'] %}
+    {% set ajaxClassSuffix = data.ajaxClassSuffix ?: 'main' %}
+    {% set ajaxContentClass = config.jsName ~ '-content-' ~ ajaxClassSuffix %}
+    {% set ajaxCartProvider = data.ajaxCartUrl ? config.jsName ~ '-provider-' ~ ajaxClassSuffix : null %}
 
-    {% block content %}
-        <a class="{{ linkClass }}" href="{{ data.url }}">
-            {% block link %}
-                {% block label %}
-                    {% if label %}
-                        <span class="{{ labelClass }}">
-                            {{- label -}}
-                        </span>
-                    {% endif %}
-                {% endblock %}
+    {% block contentOuter %}
+        <span {% if data.ajaxCartUrl %}class="{{ ajaxContentClass }}"{% endif %}>
+            {% block contentInner %}
+                {% set linkClass = '' %}
+                {% set label = data.label %}
+                {% set labelClass = '' %}
+                {% set iconName = data.iconName %}
+                {% set iconModifiers = [] %}
+                {% set quantity = data.quantity ?: 0 %}
+                {% set hiddenQuantityClass = not quantity ? attributes['hidden-quantity-class-name'] %}
 
-                {% block icon %}
-                    {% if iconName %}
-                        {% include atom('icon') with {
-                            class: config.name ~ '__icon',
-                            modifiers: iconModifiers,
-                            data: {
-                                name: iconName,
-                            },
-                        } only %}
-                    {% endif %}
-                {% endblock %}
+                {% block content %}
+                    <a class="{{ linkClass }}" href="{{ data.url }}">
+                        {% block link %}
+                            {% block label %}
+                                {% if label %}
+                                    <span class="{{ labelClass }}">
+                                        {{- label -}}
+                                    </span>
+                                {% endif %}
+                            {% endblock %}
 
-                {% block quantity %}
-                    <span class="{{ config.name }}__quantity {{ config.jsName }}__quantity {{ hiddenQuantityClass }}">
-                        {{- quantity | trim | executeFilterIfExists('formatInt', app.locale) -}}
-                    </span>
+                            {% block icon %}
+                                {% if iconName %}
+                                    {% include atom('icon') with {
+                                        class: config.name ~ '__icon',
+                                        modifiers: iconModifiers,
+                                        data: {
+                                            name: iconName,
+                                        },
+                                    } only %}
+                                {% endif %}
+                            {% endblock %}
+
+                            {% block quantity %}
+                                <span class="{{ config.name }}__quantity {{ config.jsName }}__quantity {{ hiddenQuantityClass }}">
+                                    {{- quantity | trim | executeFilterIfExists('formatInt', app.locale) -}}
+                                </span>
+                            {% endblock %}
+                        {% endblock %}
+                    </a>
                 {% endblock %}
             {% endblock %}
-        </a>
+        </span>
     {% endblock %}
+
+    {% if data.ajaxCartUrl %}
+        {% include molecule('ajax-provider') with {
+            class: ajaxCartProvider,
+            attributes: {
+                url: data.ajaxCartUrl,
+                method: 'POST',
+                'event-host': 'CART_UPDATE_EVENT',
+                'element-visibility-checker-class-name': ajaxContentClass,
+            },
+        } only %}
+
+        {% include molecule('ajax-renderer') with {
+            attributes: {
+                'provider-class-name': ajaxCartProvider,
+                'target-class-name': ajaxContentClass,
+                'mount-after-render': true,
+            },
+        } only %}
+    {% endif %}
 {% endblock %}

@@ -2,11 +2,15 @@
 
 {% define data = {
     form: _widget.cartCodeForm,
-    isQuoteEditable: _widget.isQuoteEditable
+    isQuoteEditable: _widget.isQuoteEditable,
+    ajaxTriggerAttribute: null,
+    redirectRoute: null,
 } %}
 
 {% block body %}
     {% if data.isQuoteEditable %}
+        {% set formActionRoute = data.ajaxTriggerAttribute ? 'cart-code/code-async/add' : 'cart-code/code/add' %}
+
         {% include molecule('form') with {
             modifiers: ['inline'],
             data: {
@@ -15,10 +19,11 @@
                     enable: true,
                     text: 'cart.voucher.redeem' | trans,
                     icon: 'gift',
-                    class: 'button'
+                    class: 'button',
+                    attributes: data.ajaxTriggerAttribute,
                 },
                 options: {
-                    action: path('cart-code/code/add')
+                    action: data.redirectRoute ? path(formActionRoute, {'redirectRouteName': data.redirectRoute}) : path(formActionRoute)
                 }
             }
         } only %}

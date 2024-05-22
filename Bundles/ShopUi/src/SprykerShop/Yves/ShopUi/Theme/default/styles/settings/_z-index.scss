@@ -4,6 +4,11 @@
 $setting-zi-element: 1 !default;
 
 /**
+ * Defines z-index value for ajax dynamic loader.
+ */
+$setting-zi-ajax-dynamic-loader: 300 !default;
+
+/**
  * Defines z-index value for the floating elements.
  */
 $setting-zi-element-floating: 350 !default;

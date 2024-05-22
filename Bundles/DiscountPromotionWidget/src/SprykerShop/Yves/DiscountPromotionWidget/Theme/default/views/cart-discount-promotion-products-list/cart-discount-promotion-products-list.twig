@@ -8,6 +8,7 @@
     promotionProducts: _widget.promotionProducts,
     abstractSkusGroupedByIdDiscount: _widget.abstractSkusGroupedByIdDiscount,
     uniqueDiscounts: _widget.uniqueDiscounts,
+    ajaxTriggerAttribute: data.ajaxTriggerAttribute | default,
 } %}
 
 {% set titleClassName = 'spacing spacing-top spacing-top--big' %}
@@ -39,6 +40,7 @@
                             embed: {
                                 promotionProducts: data.promotionProducts,
                                 idDiscountPromotion: discount.discountPromotion.idDiscountPromotion,
+                                ajaxTriggerAttribute: data.ajaxTriggerAttribute,
                             },
                             attributes: {
                                 'slides-to-show': 3,
@@ -48,6 +50,9 @@
                                 {% embed molecule('product-item') with {
                                     data: {
                                         product: embed.promotionProducts[slide ~ "-" ~ embed.idDiscountPromotion],
+                                    },
+                                    embed: {
+                                        ajaxTriggerAttribute: embed.ajaxTriggerAttribute,
                                     },
                                 } only %}
                                     {% block sku %}
@@ -68,6 +73,8 @@
                                                 superAttributes: data.product.attributeMap.superAttributes,
                                                 selectedAttributes: data.product.selectedAttributes,
                                                 availableAttributes: data.product.availableAttributes,
+                                                ajaxTriggerAttribute: embed.ajaxTriggerAttribute,
+                                                formAction: embed.ajaxTriggerAttribute ? path('cart/async/view'),
                                             },
                                         } only %}
                                             {% block body %}
@@ -97,12 +104,16 @@
                                             {% widget 'AddToCartFormWidget' args [config, data.product, isDisabled] with {
                                                 embed: {
                                                     buttonContent: buttonContent,
+                                                    ajaxTriggerAttribute: embed.ajaxTriggerAttribute,
+                                                },
+                                                data: {
+                                                    isAsyncMode: embed.ajaxTriggerAttribute,
                                                 },
                                             } only %}
                                                 {% block embeddedData %}
                                                     <input type="hidden" value="{{ productSku }}" name="groupKey">
                                                     <input type="hidden" value="{{ data.product.promotionItem.discount.discountPromotion.idDiscountPromotion }}" name="idDiscountPromotion">
-                                                    <button class="button button--expand" data-init-single-click {{ qa('add-to-cart-button') }}>
+                                                    <button {{ embed.ajaxTriggerAttribute }} class="button button--expand" data-init-single-click {{ qa('add-to-cart-button') }}>
                                                         {{- embed.buttonContent -}}
                                                     </button>
                                                 {% endblock %}

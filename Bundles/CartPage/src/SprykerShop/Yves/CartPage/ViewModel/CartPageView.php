@@ -101,6 +101,7 @@ class CartPageView implements CartPageViewInterface
             'isQuoteLocked' => $this->isQuoteLocked(),
             'isQuoteValid' => $this->isQuoteValid(),
             'removeCartItemForm' => $this->getRemoveCartItemForm(),
+            'isCartActionsAsyncModeEnabled' => $this->config->isCartActionsAsyncModeEnabled(),
         ];
     }
 

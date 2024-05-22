@@ -51,6 +51,16 @@ export default class AjaxProvider extends Component {
         if (this.fetchOnLoad) {
             this.fetch();
         }
+
+        if (this.eventHost) {
+            document.addEventListener(this.eventHost, this.fetch.bind(this));
+        }
+    }
+
+    disconnectedCallback() {
+        if (this.eventHost) {
+            document.removeEventListener(this.eventHost, this.fetch.bind(this));
+        }
     }
 
     /**
@@ -61,6 +71,13 @@ export default class AjaxProvider extends Component {
      */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async fetch<T = string>(data?: any): Promise<T> {
+        if (
+            this.elementVisibilityChecker &&
+            !document.querySelector<HTMLElement>(`.${this.elementVisibilityChecker}`).offsetParent
+        ) {
+            return;
+        }
+
         debug(this.method, this.url, 'fetching...');
         this.isFetchingRequest = true;
         this.dispatchCustomEvent(EVENT_FETCHING);
@@ -104,6 +121,10 @@ export default class AjaxProvider extends Component {
 
         debug(this.method, this.xhr.status, this.url);
         resolve(this.xhr.response);
+
+        if (this.eventRevealer) {
+            this.dispatchCustomEvent(this.eventRevealer, null, { bubbles: true });
+        }
     }
 
     protected onRequestError(reject: Reject): void {
@@ -164,5 +185,26 @@ export default class AjaxProvider extends Component {
      */
     get isFetching(): boolean {
         return this.isFetchingRequest;
+    }
+
+    /**
+     * Gets events which should be dispatched after the fetch operation.
+     */
+    get eventRevealer(): string | null {
+        return this.getAttribute('event-revealer');
+    }
+
+    /**
+     * Gets events which should trigger the fetch operation.
+     */
+    get eventHost(): string | null {
+        return this.getAttribute('event-host');
+    }
+
+    /**
+     * Gets class name of container which give a condition of fetching necessity.
+     */
+    get elementVisibilityChecker(): string | null {
+        return this.getAttribute('element-visibility-checker-class-name');
     }
 }

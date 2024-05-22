@@ -37,6 +37,18 @@ class MultiCartWidgetDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_VIEW_EXTEND = 'PLUGINS_VIEW_EXTEND';
 
     /**
+     * @var string
+     */
+    public const TWIG_ENVIRONMENT = 'TWIG_ENVIRONMENT';
+
+    /**
+     * @uses \Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     *
+     * @var string
+     */
+    protected const SERVICE_TWIG = 'twig';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container|array
@@ -46,6 +58,7 @@ class MultiCartWidgetDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMultiCartClient($container);
         $container = $this->addQuoteClient($container);
         $container = $this->addViewExtendWidgetPlugins($container);
+        $container = $this->addTwigService($container);
 
         return $container;
     }
@@ -98,5 +111,19 @@ class MultiCartWidgetDependencyProvider extends AbstractBundleDependencyProvider
     protected function getViewExtendWidgetPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addTwigService(Container $container): Container
+    {
+        $container->set(static::TWIG_ENVIRONMENT, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_TWIG);
+        });
+
+        return $container;
     }
 }

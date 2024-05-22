@@ -9,6 +9,7 @@
     cart: {},
     isQuoteEditable: false,
     attributes: [],
+    ajaxTriggerAttribute: null,
 } %}
 
 {% set canEditCart = not is_granted('ROLE_USER') or data.isQuoteEditable %}
@@ -53,6 +54,7 @@
                         cartItem: data.product,
                         cartItemAttributes: data.attributes,
                         canEditCart: canEditCart,
+                        ajaxTriggerAttribute: data.ajaxTriggerAttribute,
                     },
                 } only %}
             {% endif %}
@@ -105,14 +107,18 @@
         {% endif %}
 
         {% block actions %}
-
             {% if data.product.amountSalesUnit is empty %}
                 {% if canEditCart %}
-                    {% widget 'CartProductMeasurementUnitQuantitySelectorWidget' args [data.product] only %}
+                    {% widget 'CartProductMeasurementUnitQuantitySelectorWidget' args [data.product] with {
+                        data: {
+                            ajaxTriggerAttribute: data.ajaxTriggerAttribute,
+                        },
+                    } only %}
                     {% nowidget %}
                         {% include molecule('cart-quantity-input', 'CartPage') with {
                             data: {
                                 cartItem: data.product,
+                                ajaxTriggerAttribute: data.ajaxTriggerAttribute,
                             },
                         } only %}
                     {% endwidget %}
@@ -123,9 +129,16 @@
             {% endif %}
 
             {% if canEditCart %}
-                {% widget 'RemoveFromCartFormWidget' args [data.product] only %}
+                {% widget 'RemoveFromCartFormWidget' args [data.product] with {
+                    data: {
+                        ajaxTriggerAttribute: data.ajaxTriggerAttribute,
+                    },
+                    embed: {
+                        ajaxTriggerAttribute: data.ajaxTriggerAttribute,
+                    },
+                }  only %}
                     {% block embeddedData %}
-                        <button class="float-right link" data-init-single-click>
+                        <button {{ embed.ajaxTriggerAttribute }} class="float-right link" data-init-single-click>
                             {{ 'product_cart_item.remove' | trans }}
                         </button>
                     {% endblock %}
@@ -134,7 +147,11 @@
 
             {% if data.cart %}
                 {% block cartItemNote %}
-                    {% widget 'CartItemNoteFormWidget' args [data.product, data.cart] only %}{% endwidget %}
+                    {% widget 'CartItemNoteFormWidget' args [data.product, data.cart] with {
+                        data: {
+                            ajaxTriggerAttribute: data.ajaxTriggerAttribute,
+                        },
+                    }  only %}{% endwidget %}
                 {% endblock %}
             {% endif %}
         {% endblock %}

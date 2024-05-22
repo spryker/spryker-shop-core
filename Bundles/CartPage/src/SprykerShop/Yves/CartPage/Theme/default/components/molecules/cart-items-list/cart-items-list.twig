@@ -5,18 +5,18 @@
     tag: 'cart-items-list',
 } %}
 
-
 {% define data = {
     cart: required,
     cartItems: [],
     isQuoteEditable: false,
     attributes: [],
     isUpsellingProductsViaAjaxEnabled: false,
+    ajaxTriggerAttribute: null,
 } %}
 
- {% define attributes = {
-     'provider-class-name': 'js-' ~ config.name ~ '__ajax-provider',
- } %}
+{% define attributes = {
+    'provider-class-name': 'js-' ~ config.name ~ '__ajax-provider',
+} %}
 
 {% block body %}
     {% if data.isUpsellingProductsViaAjaxEnabled is not empty %}
@@ -29,7 +29,7 @@
         } only %}
 
         {% include molecule('ajax-loader') with {
-            modifiers: ['big'],
+            modifiers: ['big', 'dynamic'] | merge(data.ajaxTriggerAttribute ? ['viewport-centered'] : []),
             attributes: {
                 'provider-class-name': attributes['provider-class-name'],
             },
@@ -47,13 +47,18 @@
     {% endif %}
 
     {% if data.isUpsellingProductsViaAjaxEnabled is empty %}
-        {% include molecule('product-cart-items-list', 'CartPage') with {
-            data: {
-                cart: data.cart,
-                cartItems: data.cartItems,
-                isQuoteEditable: data.isQuoteEditable,
-                attributes: data.attributes,
-            },
-        } only %}
+        {% block staticUpsellingProducts %}
+            <div {% if data.ajaxTriggerAttribute %}class="box"{% endif %}>
+                {% include molecule('product-cart-items-list', 'CartPage') with {
+                    data: {
+                        cart: data.cart,
+                        cartItems: data.cartItems,
+                        isQuoteEditable: data.isQuoteEditable,
+                        attributes: data.attributes,
+                        ajaxTriggerAttribute: data.ajaxTriggerAttribute,
+                    },
+                } only %}
+            </div>
+        {% endblock %}
     {% endif %}
 {% endblock %}

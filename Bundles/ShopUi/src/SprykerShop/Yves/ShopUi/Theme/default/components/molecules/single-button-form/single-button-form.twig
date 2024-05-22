@@ -13,6 +13,7 @@
     buttonClass: config.name ~ '__button',
     fieldName: '',
     fieldValue: '',
+    buttonAttributes: null,
 } %}
 
 {% set iconName = data.iconName %}
@@ -20,7 +21,7 @@
 {% block body %}
     <form method="POST" action="{{ data.formAction }}">
         {% block button %}
-            <button class="{{ data.buttonClass }}">
+            <button {{ data.buttonAttributes }} class="{{ data.buttonClass }}">
                 {% block icon %}
                     {% if iconName %}
                         {% include atom('icon') with {

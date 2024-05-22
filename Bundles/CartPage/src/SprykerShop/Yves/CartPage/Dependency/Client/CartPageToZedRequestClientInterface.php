@@ -33,4 +33,9 @@ interface CartPageToZedRequestClientInterface
      * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getLastResponseSuccessMessages();
+
+    /**
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
+     */
+    public function getLastResponseInfoMessages(): array;
 }

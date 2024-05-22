@@ -25,6 +25,7 @@
         enable: false,
         isSingleClickEnforcerEnabled: true,
         qa: 'submit-button',
+        attributes: '',
     },
 
     cancel: {
@@ -103,6 +104,7 @@
                         <button type="submit"
                                 class="{{config.name}}__action {{data.submit.class}}"
                                 {{ data.submit.isSingleClickEnforcerEnabled ? 'data-init-single-click' }}
+                                {{ data.submit.attributes }}
                                 {{qa(data.submit.qa)}}>
                             {% if data.submit.icon is not empty %}
                                 {% include atom('icon') with {

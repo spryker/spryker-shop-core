@@ -9,9 +9,15 @@
         <property name="isDefault" type="bool"/>
         <property name="idQuote" type="int"/>
         <property name="isLocked" type="bool"/>
+        <property name="totalItemCount" type="int" strict="true"/>
     </transfer>
 
     <transfer name="ProductView">
+    </transfer>
+
+    <transfer name="MiniCartView" strict="true">
+        <property name="content" type="string"/>
+        <property name="counterOnly" type="bool"/>
     </transfer>
 
 </transfers>

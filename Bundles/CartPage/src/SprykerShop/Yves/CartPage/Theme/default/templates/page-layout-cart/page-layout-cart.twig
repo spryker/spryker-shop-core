@@ -15,6 +15,9 @@
     requestUri: app.request.requestUri,
     isCartItemsViaAjaxLoadEnabled: _view.isCartItemsViaAjaxLoadEnabled,
     isUpsellingProductsViaAjaxEnabled: _view.isUpsellingProductsViaAjaxEnabled,
+    isCartActionsAsyncModeEnabled: _view.isCartActionsAsyncModeEnabled,
+    isAjaxHeader: _view.isCartActionsAsyncModeEnabled,
+    ajaxCartUrl: '/cart/async/mini-cart-view',
 } %}
 
 {% block headScripts %}
@@ -41,220 +44,318 @@
     {% endwidget %}
 {% endblock %}
 
+{% set ajaxContentClass = 'js-page-layout-cart__content' %}
+{% set ajaxProviderClass = data.isCartActionsAsyncModeEnabled ? 'js-page-layout-cart__provider' : null %}
+{% set ajaxTriggerAttribute = data.isCartActionsAsyncModeEnabled ? 'data-cart-ajax-form-submitter' : null %}
+
 {% block content %}
-    {% if data.cart.items is empty %}
-        {% block emptyCart %}
-            <div class="grid">
-                <div class="col col--xl-9">
-                    {% block emptyCartMessage %}
-                        <div class="box text-center">
-                            {% include atom('icon') with {
-                                modifiers: ['biggest'],
-                                class: 'text-alt',
-                                data: {
-                                    name: 'shopping-cart',
-                                },
-                            } only %}
-                            <h6>{{ 'cart.empty' | trans }}</h6>
+    {% block contentOuter %}
+        <div {% if data.isCartActionsAsyncModeEnabled %}class="is-position-relative {{ ajaxContentClass }}"{% endif %}>
+            {% block contentInner %}
+                {% if data.cart.items is empty %}
+                    {% block emptyCart %}
+                        <div class="grid">
+                            <div class="col col--xl-9">
+                                {% block emptyCartMessage %}
+                                    <div class="box text-center">
+                                        {% include atom('icon') with {
+                                            modifiers: ['biggest'],
+                                            class: 'text-alt',
+                                            data: {
+                                                name: 'shopping-cart',
+                                            },
+                                        } only %}
+                                        <h6>{{ 'cart.empty' | trans }}</h6>
+                                    </div>
+                                {% endblock %}
+                            </div>
+                            <div class="col col--xl-3">
+                                <div class="box">
+                                    {% if (not is_granted('ROLE_USER') or data.isQuoteEditable) and can('SeePricePermissionPlugin') %}
+                                        {% widget 'CartCodeFormWidget' args [data.cart] with {
+                                            data: {
+                                                ajaxTriggerAttribute: ajaxTriggerAttribute,
+                                                redirectRoute: data.isCartActionsAsyncModeEnabled ? 'cart/async/view' : null,
+                                            },
+                                        } only %}
+                                            {% block body %}
+                                                {{ parent() }}
+                                                <hr>
+                                            {% endblock %}
+                                        {% endwidget %}
+                                    {% endif %}
+
+                                    {% widget 'ProductConcreteAddWidget' args [
+                                        'cart.quick_add_to_cart' | trans,
+                                        'cart.quick_add_to_cart.submit' | trans,
+                                        'cart/quick-add',
+                                        true
+                                    ] with {
+                                        data: {
+                                            ajaxTriggerAttribute: ajaxTriggerAttribute,
+                                        },
+                                    } only %}
+                                    {% endwidget %}
+                                </div>
+                                {% if data.cart.idQuote is not empty %}
+                                    <div class="box">
+                                        {% widget 'CommentThreadWidget' args [
+                                            data.cart.idQuote,
+                                            'quote',
+                                            data.requestUri,
+                                            data.cart.commentThread
+                                        ] with {
+                                            data: {
+                                                ajaxTriggerAttribute: ajaxTriggerAttribute,
+                                            },
+                                        } only %}
+                                        {% endwidget %}
+                                    </div>
+                                {% endif %}
+                            </div>
                         </div>
                     {% endblock %}
-                </div>
-                <div class="col col--xl-3">
-                    <div class="box">
-                        {% if (not is_granted('ROLE_USER') or data.isQuoteEditable) and can('SeePricePermissionPlugin') %}
-                            {% widget 'CartCodeFormWidget' args [data.cart] only %}
-                                {% block body %}
-                                    {{ parent() }}
-                                    <hr>
-                                {% endblock %}
-                            {% endwidget %}
-                        {% endif %}
-
-                        {% widget 'ProductConcreteAddWidget' args [
-                            'cart.quick_add_to_cart' | trans,
-                            'cart.quick_add_to_cart.submit' | trans,
-                            'cart/quick-add',
-                            true
-                        ] only %}
-                        {% endwidget %}
-                    </div>
-                    {% if data.cart.idQuote is not empty %}
-                        <div class="box">
-                            {% widget 'CommentThreadWidget' args [
-                                data.cart.idQuote,
-                                'quote',
-                                data.requestUri,
-                                data.cart.commentThread
-                            ] only %}
-                            {% endwidget %}
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-        {% endblock %}
-    {% else %}
-        <div class="grid">
-            <div class="col col--sm-12 col--xl-8">
-                {% if data.cart.priceMode is not empty %}
-                    <div class="box">
-                        {% include molecule('price-mode') with {
-                            data: {
-                                priceMode: data.cart.priceMode,
-                            },
-                        } only %}
-                    </div>
-                {% endif %}
-
-                {% widget 'QuoteConfiguredBundleWidget' args [data.cart] with {
-                    data: {
-                        isEditable: data.isQuoteEditable,
-                    },
-                } only %}
-                {% endwidget %}
-
-                {% include molecule('cart-items-list', 'CartPage') with {
-                    data: {
-                        cart: data.cart,
-                        cartItems: data.cartItems,
-                        isQuoteEditable: data.isQuoteEditable,
-                        attributes: data.attributes,
-                        isUpsellingProductsViaAjaxEnabled: data.isCartItemsViaAjaxLoadEnabled,
-                    },
-                } only %}
-
-                {% if data.isQuoteEditable and data.cart.idQuote is not empty %}
-                    {% widget 'CartOperationsWidget' args [data.cart] use view('cart-operations-actions', 'MultiCartWidget') only %}
-                    {% nowidget %}
-                        {{ widgetBlock('CartOperationsWidgetPlugin', 'actions', data.cart) }} {# @deprecated Use CartOperationsWidget instead. #}
-                    {% endwidget %}
-                {% endif %}
-
-                {% block promotionalItems %}
-                    {% if data.isQuoteEditable %}
-                        {% widget 'CartDiscountPromotionProductListWidget' args [data.cart, data.request] only %}
-                        {% elsewidget 'DiscountPromotionItemListWidgetPlugin' args [data.cart, data.request] only %} {# @deprecated Use CartDiscountPromotionProductListWidget instead. #}
-                        {% endwidget %}
-                    {% endif %}
-                {% endblock %}
-            </div>
-
-            <div class="col col--sm-12 col--xl-4">
-                <div class="box">
-                    {% if data.isQuoteLocked %}
-                        <form method="POST" action="{{ path('cart/reset-lock') }}">
-                            <p>
-                                <strong>{{ 'cart_page.quote.label.locked_cart' | trans }}</strong>
-                            </p>
-
-                            {% if data.cart.quoteApprovals is not empty %}
-                                {{ 'persistent_cart.quote.label.locked_cart.by_quote_approval' | trans }}
-                            {% elseif data.cart.quoteRequestVersionReference %}
-                                {{ 'persistent_cart.quote.label.locked_cart.by_quote_request' | trans }}
-                            {% else %}
-                                {{ 'persistent_cart.quote.label.locked_cart' | trans }}
+                {% else %}
+                    <div class="grid">
+                        <div class="col col--sm-12 col--xl-8">
+                            {% if data.cart.priceMode is not empty %}
+                                <div class="box">
+                                    {% include molecule('price-mode') with {
+                                        data: {
+                                            priceMode: data.cart.priceMode,
+                                        },
+                                    } only %}
+                                </div>
                             {% endif %}
 
-                            <button type="submit" class="link">{{ 'persistent_cart.quote.button.reset_lock' | trans }}</button>
-                            {{ 'persistent_cart.quote.label.discarded_locked_cart' | trans }}
-                        </form>
-                        <hr>
-                    {% endif %}
-
-                    {% block cartNote %}
-                        {% widget 'CartNoteFormWidget' args [data.cart] only %}
-                        {% elsewidget 'CartNoteQuoteWidgetPlugin' args [data.cart] only %} {# @deprecated Use CartNoteFormWidget instead. #}
-                        {% endwidget %}
-                    {% endblock %}
-
-                    {% block cartActions %}
-                        {% if (not is_granted('ROLE_USER') or data.isQuoteEditable) and can('SeePricePermissionPlugin') %}
-                            {% widget 'CartCodeFormWidget' args [data.cart] only %}
-                                {% block body %}
-                                    {{ parent() }}
-                                    <hr>
-                                {% endblock %}
-                            {% elsewidget 'DiscountVoucherFormWidget' only %}
-                                {% block body %}
-                                    {{ parent() }}
-                                    <hr>
-                                {% endblock %}
-                            {% elsewidget 'DiscountVoucherFormWidgetPlugin' only %} {# @deprecated Use VoucherFormWidget instead. #}
-                                {% block body %}
-                                    {{ parent() }}
-                                    <hr>
-                                {% endblock %}
+                            {% widget 'QuoteConfiguredBundleWidget' args [data.cart] with {
+                                data: {
+                                    isEditable: data.isQuoteEditable,
+                                    ajaxTriggerAttribute: ajaxTriggerAttribute,
+                                },
+                            } only %}
                             {% endwidget %}
-                        {% endif %}
 
-                        {% if data.cart.idQuote is not empty %}
-                            <div class="box">
-                                {% widget 'CommentThreadWidget' args [
-                                    data.cart.idQuote,
-                                    'quote',
-                                    data.requestUri,
-                                    data.cart.commentThread
-                                ] only %}
-                                {% endwidget %}
-                            </div>
+                            {% include molecule('cart-items-list', 'CartPage') with {
+                                data: {
+                                    cart: data.cart,
+                                    cartItems: data.cartItems,
+                                    isQuoteEditable: data.isQuoteEditable,
+                                    attributes: data.attributes,
+                                    isUpsellingProductsViaAjaxEnabled: data.isCartItemsViaAjaxLoadEnabled,
+                                    ajaxTriggerAttribute: ajaxTriggerAttribute,
+                                },
+                            } only %}
 
-                            {% block orderCustomReference %}
-                                {% widget 'OrderCustomReferenceWidget' args [
-                                    data.cart,
-                                    '/cart'
-                                ] only %}
-                                    {% block body %}
-                                        {{ parent() }}
-                                        <hr>
-                                    {% endblock %}
+                            {% if data.isQuoteEditable and data.cart.idQuote is not empty %}
+                                {% widget 'CartOperationsWidget' args [data.cart] use view('cart-operations-actions', 'MultiCartWidget') with {
+                                    data: {
+                                        ajaxTriggerAttribute: ajaxTriggerAttribute,
+                                    },
+                                } only %}
+                                {% nowidget %}
+                                    {{ widgetBlock('CartOperationsWidgetPlugin', 'actions', data.cart) }} {# @deprecated Use CartOperationsWidget instead. #}
                                 {% endwidget %}
+                            {% endif %}
+
+                            {% block promotionalItems %}
+                                {% if data.isQuoteEditable %}
+                                    {% widget 'CartDiscountPromotionProductListWidget' args [data.cart, data.request] with {
+                                        data: {
+                                            ajaxTriggerAttribute: ajaxTriggerAttribute,
+                                        },
+                                    } only %}
+                                    {% elsewidget 'DiscountPromotionItemListWidgetPlugin' args [data.cart, data.request] only %} {# @deprecated Use CartDiscountPromotionProductListWidget instead. #}
+                                    {% endwidget %}
+                                {% endif %}
                             {% endblock %}
-                        {% endif %}
+                        </div>
 
-                        {% if data.isQuoteEditable and data.cart.idQuote %}
-                            {% widget 'CreateShoppingListFromCartWidget' args [data.cart.idQuote] only %}
-                            {% elsewidget 'CartToShoppingListWidgetPlugin' args [data.cart.idQuote] only %} {# @deprecated Use CreateShoppingListFromCartWidget instead. #}
-                            {% endwidget %}
+                        <div class="col col--sm-12 col--xl-4">
+                            <div class="box">
+                                {% if data.isQuoteLocked %}
+                                    <form method="POST" action="{{ path('cart/reset-lock') }}">
+                                        <p>
+                                            <strong>{{ 'cart_page.quote.label.locked_cart' | trans }}</strong>
+                                        </p>
 
-                            <hr>
+                                        {% if data.cart.quoteApprovals is not empty %}
+                                            {{ 'persistent_cart.quote.label.locked_cart.by_quote_approval' | trans }}
+                                        {% elseif data.cart.quoteRequestVersionReference %}
+                                            {{ 'persistent_cart.quote.label.locked_cart.by_quote_request' | trans }}
+                                        {% else %}
+                                            {{ 'persistent_cart.quote.label.locked_cart' | trans }}
+                                        {% endif %}
 
-                            {% widget 'ShareCartByLinkWidget' args [data.cart] only %}
-                                {% block body %}
-                                    {{ parent() }}
+                                        <button class="link">{{ 'persistent_cart.quote.button.reset_lock' | trans }}</button>
+                                        {{ 'persistent_cart.quote.label.discarded_locked_cart' | trans }}
+                                    </form>
                                     <hr>
+                                {% endif %}
+
+                                {% block cartNote %}
+                                    {% widget 'CartNoteFormWidget' args [data.cart] only %}
+                                    {% elsewidget 'CartNoteQuoteWidgetPlugin' args [data.cart] only %} {# @deprecated Use CartNoteFormWidget instead. #}
+                                    {% endwidget %}
                                 {% endblock %}
-                            {% endwidget %}
-                        {% endif %}
 
-                        {% if data.isQuoteEditable %}
-                            {% widget 'ProductConcreteAddWidget' args [
-                                'cart.quick_add_to_cart' | trans,
-                                'cart.quick_add_to_cart.submit' | trans,
-                                'cart/quick-add',
-                                true
-                            ] only %}
-                            {% endwidget %}
-                        {% endif %}
-                    {% endblock %}
+                                {% block cartActions %}
+                                    {% if (not is_granted('ROLE_USER') or data.isQuoteEditable) and can('SeePricePermissionPlugin') %}
+                                        {% widget 'CartCodeFormWidget' args [data.cart] with {
+                                            data: {
+                                                ajaxTriggerAttribute: ajaxTriggerAttribute,
+                                                redirectRoute: data.isCartActionsAsyncModeEnabled ? 'cart/async/view' : null,
+                                            },
+                                        } only %}
+                                            {% block body %}
+                                                {{ parent() }}
+                                                <hr>
+                                            {% endblock %}
+                                        {% elsewidget 'DiscountVoucherFormWidget' only %}
+                                            {% block body %}
+                                                {{ parent() }}
+                                                <hr>
+                                            {% endblock %}
+                                        {% elsewidget 'DiscountVoucherFormWidgetPlugin' only %} {# @deprecated Use VoucherFormWidget instead. #}
+                                            {% block body %}
+                                                {{ parent() }}
+                                                <hr>
+                                            {% endblock %}
+                                        {% endwidget %}
+                                    {% endif %}
 
-                    {% block cartSummary %}
-                        {% include molecule('cart-summary', 'CartPage') with {
-                            data: {
-                                cart: data.cart,
-                                isQuoteValid: data.isQuoteValid,
-                                isQuoteEditable: data.isQuoteEditable,
-                            },
-                        } only %}
+                                    {% if data.cart.idQuote is not empty %}
+                                        <div class="box">
+                                            {% widget 'CommentThreadWidget' args [
+                                                data.cart.idQuote,
+                                                'quote',
+                                                data.requestUri,
+                                                data.cart.commentThread
+                                            ]  with {
+                                                data: {
+                                                    ajaxTriggerAttribute: ajaxTriggerAttribute,
+                                                },
+                                            } only %}
+                                            {% endwidget %}
+                                        </div>
+
+                                        {% block orderCustomReference %}
+                                            {% widget 'OrderCustomReferenceWidget' args [
+                                                data.cart,
+                                                '/cart'
+                                            ] with {
+                                                data: {
+                                                    ajaxTriggerAttribute: ajaxTriggerAttribute,
+                                                },
+                                            } only %}
+                                                {% block body %}
+                                                    {{ parent() }}
+                                                    <hr>
+                                                {% endblock %}
+                                            {% endwidget %}
+                                        {% endblock %}
+                                    {% endif %}
+
+                                    {% if data.isQuoteEditable and data.cart.idQuote %}
+                                        {% widget 'CreateShoppingListFromCartWidget' args [data.cart.idQuote] with {
+                                            data: {
+                                                ajaxTriggerAttribute: ajaxTriggerAttribute,
+                                            },
+                                        } only %}
+                                        {% elsewidget 'CartToShoppingListWidgetPlugin' args [data.cart.idQuote] only %} {# @deprecated Use CreateShoppingListFromCartWidget instead. #}
+                                        {% endwidget %}
+
+                                        <hr>
+
+                                        {% widget 'ShareCartByLinkWidget' args [data.cart] only %}
+                                            {% block body %}
+                                                {{ parent() }}
+                                                <hr>
+                                            {% endblock %}
+                                        {% endwidget %}
+                                    {% endif %}
+
+                                    {% if data.isQuoteEditable %}
+                                        {% widget 'ProductConcreteAddWidget' args [
+                                            'cart.quick_add_to_cart' | trans,
+                                            'cart.quick_add_to_cart.submit' | trans,
+                                            'cart/quick-add',
+                                            true
+                                        ] with {
+                                            data: {
+                                                ajaxTriggerAttribute: ajaxTriggerAttribute,
+                                            },
+                                        } only %}
+                                        {% endwidget %}
+                                    {% endif %}
+                                {% endblock %}
+
+                                {% block cartSummary %}
+                                    {% include molecule('cart-summary', 'CartPage') with {
+                                        data: {
+                                            cart: data.cart,
+                                            isQuoteValid: data.isQuoteValid,
+                                            isQuoteEditable: data.isQuoteEditable,
+                                            ajaxTriggerAttribute: ajaxTriggerAttribute,
+                                        },
+                                    } only %}
+                                {% endblock %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% include molecule('cart-upselling', 'CartPage') ignore missing with {
+                    data: {
+                        cart: data.cart,
+                        isUpsellingProductsViaAjaxEnabled: data.isUpsellingProductsViaAjaxEnabled,
+                        ajaxTriggerAttribute: ajaxTriggerAttribute,
+                    },
+                } only %}
+
+                {% if data.isCartActionsAsyncModeEnabled %}
+                    {% block ajaxLoader %}
+                        {% include molecule('ajax-loader') with {
+                                modifiers: ['big', 'dynamic', 'viewport-centered'],
+                                attributes: {
+                                    'provider-class-name': ajaxProviderClass,
+                                },
+                                qa: 'page-layout-cart-ajax-loader'
+                            } only %}
                     {% endblock %}
-                </div>
-            </div>
+                {% endif %}
+            {% endblock %}
         </div>
+    {% endblock %}
+
+    {% if data.isCartActionsAsyncModeEnabled %}
+        {% block ajaxAction %}
+            {% include molecule('ajax-provider') with {
+                class: ajaxProviderClass,
+                attributes: {
+                    url: '',
+                    method: 'POST',
+                    'event-revealer': 'CART_UPDATE_EVENT',
+                },
+            } only %}
+
+            {% include molecule('ajax-renderer') with {
+                attributes: {
+                    'provider-class-name': ajaxProviderClass,
+                    'target-class-name': ajaxContentClass,
+                    'mount-after-render': true,
+                },
+            } only %}
+
+            {% include molecule('ajax-form-submitter') with {
+                attributes: {
+                    'trigger-attribute': ajaxTriggerAttribute,
+                    'provider-class-name': ajaxProviderClass,
+                    event: 'click:change',
+                },
+            } only %}
+        {% endblock %}
     {% endif %}
-    {% include molecule('cart-upselling', 'CartPage') ignore missing with {
-        data: {
-            cart: data.cart,
-            isUpsellingProductsViaAjaxEnabled: data.isUpsellingProductsViaAjaxEnabled,
-        },
-    } only %}
 {% endblock %}
 
 {% block footerScripts %}

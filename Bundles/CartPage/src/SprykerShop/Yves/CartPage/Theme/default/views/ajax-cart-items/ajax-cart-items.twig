@@ -5,6 +5,7 @@
     cartItems: _view.cartItems,
     isQuoteEditable: _view.isQuoteEditable,
     attributes: _view.attributes,
+    ajaxTriggerAttribute: _view.isCartActionsAsyncModeEnabled ? 'data-cart-ajax-form-submitter' : null,
 } %}
 
 {% block body %}
@@ -15,6 +16,7 @@
                 cartItems: data.cartItems,
                 isQuoteEditable: data.isQuoteEditable,
                 attributes: data.attributes,
+                ajaxTriggerAttribute: data.ajaxTriggerAttribute,
             },
         } only %}
     {% endblock %}

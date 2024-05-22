@@ -23,7 +23,7 @@
         "spryker/silex": "*"
     },
     "suggest": {
-        "spryker-shop/cart-page": "Widget plugins are available for this module.",
+        "spryker-shop/cart-page": "Widget plugins are available for this module. If you want to use async functionality: ^3.41.0.",
         "spryker-shop/checkout-page": "Widget plugins are available for this module.",
         "spryker-shop/customer-page": "Widget plugins are available for this module.",
         "spryker-shop/shop-application": "Use this module when using plugins that need ShopApplication dependencies.",

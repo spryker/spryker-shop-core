@@ -1,0 +1,22 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'ajax-form-submitter',
+    tag: 'ajax-form-submitter',
+} %}
+
+{#
+    Property `event` might have multiple values separated by colon (e.g 'click:change')
+
+    Property `trigger-attribute` might have value on specific element which interpreted as a event for only closest form.
+    (e.g. <select data-trigger-attribute-key="change">...</select>)
+#}
+{% define attributes = {
+    'trigger-attribute': required,
+    'provider-class-name': required,
+    'event': 'click',
+} %}
+
+{%- block class -%}
+    {{ parent() }} {{ config.jsName }}
+{%- endblock -%}

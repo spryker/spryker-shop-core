@@ -6,7 +6,7 @@
     "require": {
         "php": ">=8.1",
         "spryker-shop/shop-application": "^1.0.0",
-        "spryker-shop/shop-ui": "^1.6.0",
+        "spryker-shop/shop-ui": "^1.41.0",
         "spryker/application": "^3.0.0",
         "spryker/cart": "^5.0.0 || ^7.0.0",
         "spryker/kernel": "^3.52.0",
@@ -24,6 +24,7 @@
         "spryker/silex": "*"
     },
     "suggest": {
+        "spryker-shop/cart-page": "Use this module to have an access to the routes of the cart page.",
         "spryker-shop/customer-page": "if you want to use customer layout templates: ^1.0.0",
         "spryker/router": "Use this module when you want to use the Router.",
         "spryker-shop/shared-cart-widget": "If you want to use CartListPermissionGroupWidget",

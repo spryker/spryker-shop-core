@@ -8,7 +8,8 @@
     cart: required,
     isQuoteValid: required,
     isQuoteEditable: required,
-    cartQuantity: cartQuantity is defined ? cartQuantity : app['cart.quantity'] | default,
+    cartQuantity: functionExists('getCartQuantity') ? getCartQuantity() : (cartQuantity is defined ? cartQuantity : app['cart.quantity'] | default),
+    ajaxTriggerAttribute: null,
 } %}
 
 {% set shipmentExpenseType = 'SHIPMENT_EXPENSE_TYPE' %}
@@ -49,6 +50,8 @@
                         discountTotal: data.cart.totals.discounttotal,
                         isQuoteEditable: data.isQuoteEditable,
                         currencyIsoCode: data.cart.currency.code,
+                        ajaxTriggerAttribute: data.ajaxTriggerAttribute,
+                        redirectRoute: data.ajaxTriggerAttribute ? 'cart/async/view' : null,
                     },
                 } only %}
             {% endif %}

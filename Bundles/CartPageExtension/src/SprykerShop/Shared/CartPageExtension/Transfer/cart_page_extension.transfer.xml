@@ -10,4 +10,7 @@
     <transfer name="Quote">
     </transfer>
 
+    <transfer name="MiniCartView" strict="true">
+    </transfer>
+
 </transfers>

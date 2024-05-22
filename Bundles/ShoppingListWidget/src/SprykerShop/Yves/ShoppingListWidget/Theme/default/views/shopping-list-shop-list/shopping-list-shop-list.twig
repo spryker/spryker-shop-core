@@ -1,68 +1,100 @@
 {# @var data.shoppingListCollection \Generated\Shared\Transfer\ShoppingListCollectionTransfer #}
 {# @var shoppingList \Generated\Shared\Transfer\ShoppingListTransfer #}
 
+
+
 {% extends template('widget') %}
 
 {% define data = {
     shoppingListCollection: _widget.shoppingListCollection,
+    isAjaxMode: false,
 } %}
 
+{% set ajaxContentClass = 'js-shopping-list-content' %}
+{% set ajaxCartProvider = data.isAjaxMode ? 'js-shopping-list-provider' : null %}
+
 {% block body %}
-    {% block navLink %}
-        <a href="{{ path('shopping-list') }}">
-            {% block navLinkInner %}
-                {{ 'shopping_list.shopping_list' | trans }}
+    {% block contentOuter %}
+        <span class="menu__item-inner {% if data.isAjaxMode %}{{ ajaxContentClass }}{% endif %}">
+            {% block contentInner %}
+                {% block navLink %}
+                    <a href="{{ path('shopping-list') }}">
+                        {% block navLinkInner %}
+                            {{ 'shopping_list.shopping_list' | trans }}
 
-                {% include atom('icon') with {
-                    data: {
-                        name: 'th-list',
-                    },
-                } only %}
-            {% endblock %}
-        </a>
-    {% endblock %}
-
-    {% block list %}
-        <ul class="menu menu--wide text-left shop-list-item__list">
-            {% block listInner %}
-                {% block shoppingListItems %}
-                    {% for shoppingList in data.shoppingListCollection.shoppingLists %}
-                        {% block shoppingListItem %}
-                            <li class="menu__item">
-                                {% block shoppingListItemInner %}
-                                    {% include molecule('shop-list-item', 'ShoppingListWidget') with {
-                                        data: {
-                                            shoppingList: shoppingList,
-                                        },
-                                    } only %}
-                                {% endblock %}
-                            </li>
+                            {% include atom('icon') with {
+                                data: {
+                                    name: 'th-list',
+                                },
+                            } only %}
                         {% endblock %}
-                    {% endfor %}
-
-                    {% if not data.shoppingListCollection.shoppingLists | length %}
-                        {% block listEmptyItem %}
-                            <li class="menu__item">
-                                {% block listEmptyItemInner %}
-                                    <span class="no-items no-shopping-lists">
-                                        {{ 'shopping_list.no_lists_created' | trans }}
-                                    </span>
-                                {% endblock %}
-                            </li>
-                        {% endblock %}
-                    {% endif %}
+                    </a>
                 {% endblock %}
 
-                {% block listItem %}
-                    <li class="menu__item">
-                        {% block listItemInner %}
-                            <a href="{{ path('shopping-list') }}" class="button">
-                                {{ 'shopping_list.create_new_list' | trans }}
-                            </a>
+                {% block list %}
+                    <ul class="menu menu--wide text-left shop-list-item__list">
+                        {% block listInner %}
+                            {% block shoppingListItems %}
+                                {% for shoppingList in data.shoppingListCollection.shoppingLists %}
+                                    {% block shoppingListItem %}
+                                        <li class="menu__item">
+                                            {% block shoppingListItemInner %}
+                                                {% include molecule('shop-list-item', 'ShoppingListWidget') with {
+                                                    data: {
+                                                        shoppingList: shoppingList,
+                                                    },
+                                                } only %}
+                                            {% endblock %}
+                                        </li>
+                                    {% endblock %}
+                                {% endfor %}
+
+                                {% if not data.shoppingListCollection.shoppingLists | length %}
+                                    {% block listEmptyItem %}
+                                        <li class="menu__item">
+                                            {% block listEmptyItemInner %}
+                                                <span class="no-items no-shopping-lists">
+                                                    {{ 'shopping_list.no_lists_created' | trans }}
+                                                </span>
+                                            {% endblock %}
+                                        </li>
+                                    {% endblock %}
+                                {% endif %}
+                            {% endblock %}
+
+                            {% block listItem %}
+                                <li class="menu__item">
+                                    {% block listItemInner %}
+                                        <a href="{{ path('shopping-list') }}" class="button">
+                                            {{ 'shopping_list.create_new_list' | trans }}
+                                        </a>
+                                    {% endblock %}
+                                </li>
+                            {% endblock %}
                         {% endblock %}
-                    </li>
+                    </ul>
                 {% endblock %}
             {% endblock %}
-        </ul>
+        </span>
     {% endblock %}
+
+    {% if data.isAjaxMode %}
+        {% include molecule('ajax-provider') with {
+            class: ajaxCartProvider,
+            attributes: {
+                url: 'shopping-list/async/navigation-widget/view',
+                method: 'POST',
+                'event-host': 'SHOPPING_LIST_UPDATE_EVENT',
+            },
+        } only %}
+
+        {% include molecule('ajax-renderer') with {
+            attributes: {
+                'provider-class-name': ajaxCartProvider,
+                'target-class-name': ajaxContentClass,
+                'mount-after-render': true,
+            },
+        } only %}
+    {% endif %}
 {% endblock %}
+

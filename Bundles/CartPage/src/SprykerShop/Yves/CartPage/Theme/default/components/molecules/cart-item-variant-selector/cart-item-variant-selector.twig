@@ -8,6 +8,7 @@
     cartItem: required,
     canEditCart: required,
     cartItemAttributes: [],
+    ajaxTriggerAttribute: null,
 } %}
 
 {% block component %}
@@ -22,8 +23,10 @@
         {% set isProductSalesUnit = cartProductMeasurementUnitQuantitySelectorWidget.quantitySalesUnit.idProductMeasurementSalesUnit is defined
             or cartProductMeasurementUnitQuantitySelectorWidget.parameters.itemTransfer.amountSalesUnit is not null %}
     {% endif %}
+    {% set submitterKey = data.ajaxTriggerAttribute ?: 'data-cart-form-submitter' %}
+    {% set submitterValue = data.ajaxTriggerAttribute ? 'change' : true %}
 
-    <form method="POST" action="{{ path('cart/update', {'sku': data.cartItem.sku }) }}">
+    <form method="POST" action="{{ path(data.ajaxTriggerAttribute ? 'cart/async/update' : 'cart/update', {'sku': data.cartItem.sku }) }}">
         <ul class="list spacing-y">
             {% for attributeName, attributeOptions in data.cartItemAttributes %}
                 {% set options = [] %}
@@ -48,7 +51,7 @@
                             },
                             attributes: {
                                 name: 'preselectedAttributes[' ~ attributeName ~ ']',
-                                'data-cart-form-submitter': true,
+                                (submitterKey): submitterValue,
                                 disabled: not data.canEditCart or isProductSalesUnit,
                             },
                         } only %}

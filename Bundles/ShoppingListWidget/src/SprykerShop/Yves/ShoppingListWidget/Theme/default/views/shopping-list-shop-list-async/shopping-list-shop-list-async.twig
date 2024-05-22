@@ -1,0 +1,13 @@
+{% extends view('shopping-list-shop-list', 'ShoppingListWidget') %}
+
+{% set _widget = {
+    shoppingListCollection: _view.shoppingListCollection,
+} %}
+
+{% set data = {
+    isAjaxMode: true,
+} %}
+
+{% block template %}
+    {{ block('contentInner') }}
+{% endblock %}

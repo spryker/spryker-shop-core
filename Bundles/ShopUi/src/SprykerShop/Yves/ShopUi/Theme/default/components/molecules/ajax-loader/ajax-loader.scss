@@ -33,6 +33,22 @@
             top: auto;
         }
 
+        &--dynamic {
+            z-index: $setting-zi-ajax-dynamic-loader;
+        }
+
+        &--viewport-centered {
+            display: block;
+
+            #{$name}__layout {
+                display: inline-block;
+                position: sticky;
+                top: 50%;
+                margin-left: 50%;
+                transform: translate(-50%);
+            }
+        }
+
         @content;
     }
 }

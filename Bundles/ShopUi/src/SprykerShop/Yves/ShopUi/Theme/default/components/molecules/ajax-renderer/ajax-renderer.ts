@@ -1,5 +1,6 @@
-import Component from '../../../models/component';
+import { EVENT_UPDATE_DYNAMIC_MESSAGES } from 'ShopUi/components/organisms/dynamic-notification-area/dynamic-notification-area';
 import { mount } from '../../../app';
+import Component from '../../../models/component';
 import AjaxProvider, { EVENT_FETCHED } from '../ajax-provider/ajax-provider';
 
 export default class AjaxRenderer extends Component {
@@ -35,17 +36,32 @@ export default class AjaxRenderer extends Component {
      * Gets a response from the server and renders it on the page.
      */
     render(): void {
-        const response = this.provider.xhr.response;
+        let response = this.provider.xhr.response;
 
         if (!response && !this.renderIfResponseIsEmpty) {
             return;
         }
 
-        if (this.target) {
-            this.target.innerHTML = response;
-        } else {
-            this.innerHTML = response;
+        const holder = this.target ?? this;
+
+        if (this.provider.xhr.getResponseHeader('Content-Type') === 'application/json') {
+            const parsedResponse = JSON.parse(response);
+
+            if (parsedResponse.messages) {
+                const dynamicNotificationCustomEvent = new CustomEvent(EVENT_UPDATE_DYNAMIC_MESSAGES, {
+                    detail: parsedResponse.messages,
+                });
+                document.dispatchEvent(dynamicNotificationCustomEvent);
+            }
+
+            if (!parsedResponse.content) {
+                return;
+            }
+
+            response = parsedResponse.content;
         }
+
+        holder.innerHTML = response;
 
         if (this.mountAfterRender) {
             mount();

@@ -5,6 +5,7 @@
     quantitySalesUnit: _widget.quantitySalesUnit,
     quantitySalesUnitPrecision: _widget.quantitySalesUnitPrecision | default(null),
     numberFormatConfig: _widget.numberFormatConfig | default({}),
+    ajaxTriggerAttribute: null,
 } %}
 
 {% set numberFormatConfig = {} %}
@@ -24,6 +25,7 @@
             cartItem: data.cartItem,
             readOnly: hasQuantitySalesUnit,
             numberFormatConfig: numberFormatConfig,
+            ajaxTriggerAttribute: data.ajaxTriggerAttribute,
         },
     } only %}
 

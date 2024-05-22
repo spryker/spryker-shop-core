@@ -8,16 +8,37 @@
 namespace SprykerShop\Yves\MultiCartWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\MultiCartWidget\DataProvider\MiniCartWidgetDataProvider;
+use SprykerShop\Yves\MultiCartWidget\DataProvider\MiniCartWidgetDataProviderInterface;
 use SprykerShop\Yves\MultiCartWidget\Dependency\Client\MultiCartWidgetToMultiCartClientInterface;
 use SprykerShop\Yves\MultiCartWidget\Dependency\Client\MultiCartWidgetToQuoteClientInterface;
+use SprykerShop\Yves\MultiCartWidget\Expander\MiniCartViewExpander;
+use SprykerShop\Yves\MultiCartWidget\Expander\MiniCartViewExpanderInterface;
 use SprykerShop\Yves\MultiCartWidget\Form\MultiCartClearForm;
 use SprykerShop\Yves\MultiCartWidget\Form\MultiCartDuplicateForm;
 use SprykerShop\Yves\MultiCartWidget\Form\MultiCartSetDefaultForm;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Twig\Environment;
 
 class MultiCartWidgetFactory extends AbstractFactory
 {
+    /**
+     * @return \SprykerShop\Yves\MultiCartWidget\DataProvider\MiniCartWidgetDataProviderInterface
+     */
+    public function createMiniCartWidgetDataProvider(): MiniCartWidgetDataProviderInterface
+    {
+        return new MiniCartWidgetDataProvider($this->getMultiCartClient());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MultiCartWidget\Expander\MiniCartViewExpanderInterface
+     */
+    public function createMiniCartViewExpander(): MiniCartViewExpanderInterface
+    {
+        return new MiniCartViewExpander($this->createMiniCartWidgetDataProvider(), $this->getTwigEnvironment());
+    }
+
     /**
      * @return \SprykerShop\Yves\MultiCartWidget\Dependency\Client\MultiCartWidgetToMultiCartClientInterface
      */
@@ -72,5 +93,13 @@ class MultiCartWidgetFactory extends AbstractFactory
     public function getMultiCartSetDefaultForm(): FormInterface
     {
         return $this->getFormFactory()->create(MultiCartSetDefaultForm::class);
+    }
+
+    /**
+     * @return \Twig\Environment
+     */
+    public function getTwigEnvironment(): Environment
+    {
+        return $this->getProvidedDependency(MultiCartWidgetDependencyProvider::TWIG_ENVIRONMENT);
     }
 }

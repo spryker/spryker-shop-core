@@ -10,19 +10,24 @@
     availableTags: required,
     tagNames: required,
     returnUrl: required,
+    ajaxTriggerAttribute: null,
 } %}
 
 {% define attributes = {
     name: 'name',
+    'ajax-mode': data.ajaxTriggerAttribute,
 } %}
 
 {% block body %}
-    <form class="{{ config.jsName }}__form" method="GET" action="{{ data.action }}">
+    {% set method = data.ajaxTriggerAttribute ? 'POST' : 'GET' %}
+
+    <form class="{{ config.jsName }}__form" method="{{ method }}" action="{{ data.action }}">
         {% embed atom('select') with {
             class: config.jsName ~ '__select',
             modifiers: ['expand'],
             attributes: {
                 name: attributes.name,
+                (data.ajaxTriggerAttribute): 'change',
             },
             embed: {
                 availableTags: data.availableTags,
@@ -41,5 +46,6 @@
         {% endembed %}
 
         <input type="hidden" name="returnUrl" value="{{ data.returnUrl }}">
+        <input type="hidden" name="_token" value="{{ csrf_token('comment-tag-form') }}">
     </form>
 {% endblock %}

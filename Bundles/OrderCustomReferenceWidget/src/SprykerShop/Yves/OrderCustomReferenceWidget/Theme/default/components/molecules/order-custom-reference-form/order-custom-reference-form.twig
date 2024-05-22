@@ -2,6 +2,7 @@
 
 {% define data = {
     form: required,
+    ajaxTriggerAttribute: null,
 } %}
 
 {% define config = {
@@ -23,9 +24,10 @@
                 submit: {
                     enable: true,
                     text: 'order_custom_reference.save' | trans,
+                    attributes: data.ajaxTriggerAttribute,
                 },
                 options: {
-                    action: path('order-custom-reference/save'),
+                    action: path(data.ajaxTriggerAttribute ? 'order-custom-reference/async/save' : 'order-custom-reference/save'),
                 },
             },
         } only %}

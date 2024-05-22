@@ -7,6 +7,7 @@
     cartItem: _widget.cartItem,
     readOnly: _widget.readOnly,
     numberFormatConfig: _widget.numberFormatConfig | default({}),
+    ajaxTriggerAttribute: null,
 } %}
 
 {% set numberFormatConfig = {} %}
@@ -16,10 +17,11 @@
 
 {% block body %}
     {% set cartItem = data.cartItem %}
+    {% set formAction = data.ajaxTriggerAttribute ? 'cart/async/change-quantity' : 'cart/change/quantity' %}
 
     {{ form_start(data.form, {
-        'action': path('cart/change/quantity', {'sku': cartItem.sku }),
-        'name': 'cartChangeQuantityForm_' ~ cartItem.groupKey,
+        action: path(formAction, {'sku': cartItem.sku }),
+        name: 'cartChangeQuantityForm_' ~ cartItem.groupKey,
     }) }}
         {% block embeddedData %}
             {% include molecule('quantity-input') with {
@@ -28,6 +30,7 @@
                     value: cartItem.quantity,
                     readOnly: data.readOnly,
                     numberFormatConfig: numberFormatConfig,
+                    buttonAttributes: data.ajaxTriggerAttribute,
                 }
             } only %}
             <input type="hidden" value="{{ cartItem.groupKey }}" name="groupKey">

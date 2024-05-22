@@ -2,7 +2,7 @@
 
 {% define config = {
     name: 'navigation-top',
-    tag: 'nav'
+    tag: 'nav',
 } %}
 
 {% define data = {
@@ -13,6 +13,8 @@
     pathInfo: app.request.pathInfo,
     queryString: app.request.queryString,
     requestUri: app.request.requestUri,
+    isAjaxMode: false,
+    ajaxCartUrl: '',
 } %}
 
 {% set cartQuantity = data.cartQuantity > 0 ? data.cartQuantity ~ ' ' : '' %}
@@ -64,12 +66,17 @@
 
         {% block multiCart %}
             <li class="menu__item menu__item--has-children-dropdown">
-                {% widget 'MiniCartWidget' args [cartQuantity] only %}
+                {% widget 'MiniCartWidget' args [cartQuantity] with {
+                    data: {
+                        isAjaxMode: data.isAjaxMode,
+                    },
+                } only %}
                 {% elsewidget 'MiniCartWidgetPlugin' args [cartQuantity] only %} {# @deprecated Use MiniCartWidget instead. #}
                 {% nowidget %}
                     {% include molecule('cart-counter') with {
                         data: {
                             quantity: data.cartQuantity,
+                            ajaxCartUrl: data.isAjaxMode ? data.ajaxCartUrl : null,
                         },
                     } only %}
                 {% endwidget %}
@@ -82,7 +89,12 @@
 
         {% if data.showUserMenu %}
             {% if is_granted('ROLE_USER') %}
-                {% widget 'ShoppingListNavigationMenuWidget' with {withSeparators: data.withSeparators} only %}
+                {% widget 'ShoppingListNavigationMenuWidget' with {
+                    withSeparators: data.withSeparators,
+                    data: {
+                        isAjaxMode: data.isAjaxMode,
+                    },
+                } only %}
                     {% block body %}
                         <li class="menu__item menu__item--has-children-dropdown">
                             {{ parent() }}

@@ -18,11 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 class CommentTagController extends CommentWidgetAbstractController
 {
     /**
-     * @var string
-     */
-    protected const PARAMETER_NAME = 'name';
-
-    /**
      * @param string $uuid
      * @param \Symfony\Component\HttpFoundation\Request $request
      *

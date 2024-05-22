@@ -26,6 +26,11 @@ class CartPageConfig extends AbstractBundleConfig
     protected const IS_CART_CART_ITEMS_VIA_AJAX_LOAD_ENABLED = false;
 
     /**
+     * @var bool
+     */
+    protected const IS_CART_ACTIONS_ASYNC_MODE_ENABLED = false;
+
+    /**
      * Specification:
      * - Enables loading the cart items via AJAX.
      *
@@ -59,5 +64,18 @@ class CartPageConfig extends AbstractBundleConfig
     public function isQuoteValidationEnabled(): bool
     {
         return true;
+    }
+
+    /**
+     * Specification:
+     * - Enables performing the cart actions via AJAX.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isCartActionsAsyncModeEnabled(): bool
+    {
+        return static::IS_CART_ACTIONS_ASYNC_MODE_ENABLED;
     }
 }

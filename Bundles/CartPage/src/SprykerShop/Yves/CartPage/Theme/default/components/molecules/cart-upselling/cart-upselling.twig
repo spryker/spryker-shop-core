@@ -8,6 +8,7 @@
 {% define data = {
     cart: required,
     isUpsellingProductsViaAjaxEnabled: false,
+    ajaxTriggerAttribute: null,
 } %}
 
 {% define attributes = {
@@ -25,7 +26,7 @@
         } only %}
 
         {% include molecule('ajax-loader') with {
-            modifiers: ['big'],
+            modifiers: ['big', 'dynamic'] | merge(data.ajaxTriggerAttribute ? ['viewport-centered'] : []),
             attributes: {
                 'provider-class-name': config.jsName ~ '__ajax-provider',
             },

@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\MultiCartWidget\Widget;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
@@ -16,8 +15,6 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class MiniCartWidget extends AbstractWidget
 {
-    use PermissionAwareTrait;
-
     /**
      * @param int $cartQuantity
      */
@@ -53,7 +50,7 @@ class MiniCartWidget extends AbstractWidget
      */
     protected function getActiveCart(): QuoteTransfer
     {
-        return $this->getFactory()->getMultiCartClient()->getDefaultCart();
+        return $this->getFactory()->createMiniCartWidgetDataProvider()->getActiveCart();
     }
 
     /**
@@ -61,18 +58,7 @@ class MiniCartWidget extends AbstractWidget
      */
     protected function getInActiveQuoteList(): array
     {
-        $quoteCollectionTransfer = $this->getFactory()
-            ->getMultiCartClient()
-            ->getQuoteCollection();
-
-        $inActiveQuoteTransferList = [];
-        foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
-            if (!$quoteTransfer->getIsDefault() && $this->can('ReadSharedCartPermissionPlugin', $quoteTransfer->getIdQuote())) {
-                $inActiveQuoteTransferList[] = $quoteTransfer;
-            }
-        }
-
-        return $inActiveQuoteTransferList;
+        return $this->getFactory()->createMiniCartWidgetDataProvider()->getInActiveQuoteList();
     }
 
     /**
@@ -80,8 +66,6 @@ class MiniCartWidget extends AbstractWidget
      */
     protected function isMultiCartAllowed(): bool
     {
-        return $this->getFactory()
-            ->getMultiCartClient()
-            ->isMultiCartAllowed();
+        return $this->getFactory()->createMiniCartWidgetDataProvider()->isMultiCartAllowed();
     }
 }

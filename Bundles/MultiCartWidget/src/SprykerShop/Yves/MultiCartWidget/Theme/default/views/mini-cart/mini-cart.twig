@@ -4,82 +4,116 @@
     cartQuantity: _widget.cartQuantity | default,
     activeCart: _widget.activeCart,
     carts: _widget.cartList,
-    isMultiCartAllowed: _widget.isMultiCartAllowed
+    isMultiCartAllowed: _widget.isMultiCartAllowed,
+    isAjaxMode: false,
+    ajaxClassSuffix: '',
+    counterOnly: false,
 } %}
 
 {% set cartAmount = data.carts | length + 1 %}
+{% set ajaxClassSuffix = data.ajaxClassSuffix ?: 'main' %}
+{% set ajaxContentClass = 'js-mini-cart-content-' ~ ajaxClassSuffix %}
+{% set ajaxCartProvider = data.isAjaxMode ? 'js-mini-cart-provider-' ~ ajaxClassSuffix : null %}
 
 {% block body %}
-    {% if data.isMultiCartAllowed is not empty %}
-        {% block multiCartCounter %}
-            {% include molecule('cart-counter') with {
-                data: {
-                    label: (cartAmount == 1 ? 'multi_cart_widget.cart.cart' : 'multi_cart_widget.cart.carts') | trans,
-                    quantity: data.cartQuantity,
-                },
-            } only %}
-        {% endblock %}
-
-        {% set menuClassName = 'menu menu--wide' %}
-        {% set menuItemClassName = 'menu__item' %}
-
-        {% block cartList %}
-            <ul class="{{ menuClassName }}">
-                {% if data.activeCart is not empty %}
-                    {% block menuItemActiveCart %}
-                        <li class="{{ menuItemClassName }}">
-                            {% include molecule('mini-cart-detail', 'MultiCartWidget') with {
-                                data: {
-                                    cart: data.activeCart,
-                                },
-                            } only %}
-                        </li>
+    {% block contentOuter %}
+        <span class="menu__item-inner {% if data.isAjaxMode %}{{ ajaxContentClass }}{% endif %}">
+            {% block contentInner %}
+                {% if data.isMultiCartAllowed is not empty %}
+                    {% block multiCartCounter %}
+                        {% include molecule('cart-counter') with {
+                            data: {
+                                label: (cartAmount == 1 ? 'multi_cart_widget.cart.cart' : 'multi_cart_widget.cart.carts') | trans,
+                                quantity: data.cartQuantity,
+                            },
+                        } only %}
                     {% endblock %}
 
-                    {% block separatorCartItem %}
-                        <li class="menu__separator menu__separator--horizontal-line"></li>
+                    {% set menuClassName = 'menu menu--wide' %}
+                    {% set menuItemClassName = 'menu__item' %}
+
+                    {% block cartList %}
+                        {% if data.counterOnly == false %}
+                            <ul class="{{ menuClassName }}">
+                                {% if data.activeCart is not empty %}
+                                    {% block menuItemActiveCart %}
+                                        <li class="{{ menuItemClassName }}">
+                                            {% include molecule('mini-cart-detail', 'MultiCartWidget') with {
+                                                data: {
+                                                    cart: data.activeCart,
+                                                },
+                                            } only %}
+                                        </li>
+                                    {% endblock %}
+
+                                    {% block separatorCartItem %}
+                                        <li class="menu__separator menu__separator--horizontal-line"></li>
+                                    {% endblock %}
+                                {% endif %}
+
+                                {% if data.carts is not empty %}
+                                    {% for cart in data.carts %}
+                                        {% block menuItemCart %}
+                                            <li class="{{ menuItemClassName }}">
+                                                {% include molecule('mini-cart-detail', 'MultiCartWidget') with {
+                                                    data: {
+                                                        cart: cart,
+                                                    },
+                                                } only %}
+                                            </li>
+                                        {% endblock %}
+
+                                        {{ block('separatorCartItem') }}
+                                    {% endfor %}
+                                {% endif %}
+
+                                {% block menuItem %}
+                                    <li class="{{ menuItemClassName }}">
+                                        <div class="grid grid--justify">
+                                            <div class="col">
+                                                <a class="button" href="{{ path('multi-cart') }}" title="{{ 'multi_cart_widget.cart.view_all' | trans }}">
+                                                    {{ 'multi_cart_widget.cart.view_all' | trans }}
+                                                </a>
+                                            </div>
+                                            <div class="col">
+                                                <a class="button" href="{{ url('multi-cart/create') }}" title="{{ 'multi_cart_widget.cart.add' | trans }}">{{ 'multi_cart_widget.cart.add' | trans }}</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endblock %}
+                            </ul>
+                        {% endif %}
+                    {% endblock %}
+                {% else %}
+                    {% block cartCounter %}
+                        {% include molecule('cart-counter') with {
+                            data: {
+                                quantity: data.cartQuantity,
+                            },
+                        } only %}
                     {% endblock %}
                 {% endif %}
+            {% endblock %}
+        </span>
+    {% endblock %}
 
-                {% if data.carts is not empty %}
-                    {% for cart in data.carts %}
-                        {% block menuItemCart %}
-                            <li class="{{ menuItemClassName }}">
-                                {% include molecule('mini-cart-detail', 'MultiCartWidget') with {
-                                    data: {
-                                        cart: cart,
-                                    },
-                                } only %}
-                            </li>
-                        {% endblock %}
+    {% if data.isAjaxMode %}
+        {% include molecule('ajax-provider') with {
+            class: ajaxCartProvider,
+            attributes: {
+                url: path('cart/async/mini-cart-view', { counterOnly: data.counterOnly }),
+                method: 'POST',
+                'event-host': 'CART_UPDATE_EVENT',
+                'element-visibility-checker-class-name': ajaxContentClass,
+            },
+        } only %}
 
-                        {{ block('separatorCartItem') }}
-                    {% endfor %}
-                {% endif %}
-
-                {% block menuItem %}
-                    <li class="{{ menuItemClassName }}">
-                        <div class="grid grid--justify">
-                            <div class="col">
-                                <a class="button" href="{{ path('multi-cart') }}" title="{{ 'multi_cart_widget.cart.view_all' | trans }}">
-                                    {{ 'multi_cart_widget.cart.view_all' | trans }}
-                                </a>
-                            </div>
-                            <div class="col">
-                                <a class="button" href="{{ url('multi-cart/create') }}" title="{{ 'multi_cart_widget.cart.add' | trans }}">{{ 'multi_cart_widget.cart.add' | trans }}</a>
-                            </div>
-                        </div>
-                    </li>
-                {% endblock %}
-            </ul>
-        {% endblock %}
-    {% else %}
-        {% block cartCounter %}
-            {% include molecule('cart-counter') with {
-                data: {
-                    quantity: data.cartQuantity,
-                },
-            } only %}
-        {% endblock %}
+        {% include molecule('ajax-renderer') with {
+            attributes: {
+                'provider-class-name': ajaxCartProvider,
+                'target-class-name': ajaxContentClass,
+                'mount-after-render': true,
+            },
+        } only %}
     {% endif %}
 {% endblock %}

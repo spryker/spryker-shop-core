@@ -1,0 +1,17 @@
+{% extends view('mini-cart', 'MultiCartWidget') %}
+
+{% set _widget = {
+    cartQuantity: cartQuantity | default,
+    activeCart: activeCart,
+    cartList: cartList,
+    isMultiCartAllowed: isMultiCartAllowed,
+} %}
+
+{% set data = {
+    isAjaxMode: true,
+    counterOnly: counterOnly,
+} %}
+
+{% block template %}
+    {{ block('contentInner') }}
+{% endblock %}

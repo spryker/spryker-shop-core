@@ -11,6 +11,8 @@
     discountTotal: null,
     isQuoteEditable: false,
     currencyIsoCode: null,
+    ajaxTriggerAttribute: null,
+    redirectRoute: null,
 } %}
 
 {% block component %}
@@ -23,10 +25,15 @@
     {% if data.voucherDiscounts is not empty %}
         <li class="list__item">
             {% if data.isQuoteEditable %}
+                {% set formActionRoute = data.ajaxTriggerAttribute ? 'cart-code/code-async/clear' : 'cart-code/code/clear' %}
+
                 {% include molecule('single-button-form') with {
                     class: 'float-right text-small',
                     data: {
-                        formAction: url('cart-code/code/clear'),
+                        buttonAttributes: data.ajaxTriggerAttribute,
+                        formAction: data.redirectRoute
+                            ? url(formActionRoute, {'redirectRouteName': data.redirectRoute})
+                            : url(formActionRoute),
                         buttonText: 'cart.vouchers.clear-all' | trans,
                         fieldName: 'cart_code_clear_form[_token]',
                         fieldValue: csrf_token('cart_code_clear_form'),
@@ -46,7 +53,13 @@
                                 {% include molecule('single-button-form') with {
                                     class: 'text-small',
                                     data: {
-                                        formAction: url('cart-code/code/remove', {'code': voucherDiscount.voucherCode}),
+                                        buttonAttributes: data.ajaxTriggerAttribute,
+                                        formAction: url(
+                                            data.ajaxTriggerAttribute ? 'cart-code/code-async/remove' : 'cart-code/code/remove',
+                                            data.redirectRoute
+                                                ? {'code': voucherDiscount.voucherCode, 'redirectRouteName': data.redirectRoute}
+                                                : {'code': voucherDiscount.voucherCode}
+                                            ),
                                         buttonText: 'cart.voucher.remove' | trans,
                                         fieldName: 'cart_code_remove_form[_token]',
                                         fieldValue: csrf_token('cart_code_remove_form'),

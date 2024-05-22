@@ -12,8 +12,12 @@ use SprykerShop\Yves\CommentWidget\Checker\CommentChecker;
 use SprykerShop\Yves\CommentWidget\Checker\CommentCheckerInterface;
 use SprykerShop\Yves\CommentWidget\Dependency\Client\CommentWidgetToCommentClientInterface;
 use SprykerShop\Yves\CommentWidget\Dependency\Client\CommentWidgetToCustomerClientInterface;
+use SprykerShop\Yves\CommentWidget\Expander\CommentThreadExpander;
+use SprykerShop\Yves\CommentWidget\Expander\CommentThreadExpanderInterface;
 use SprykerShop\Yves\CommentWidget\Operation\CommentOperation;
 use SprykerShop\Yves\CommentWidget\Operation\CommentOperationInterface;
+use SprykerShop\Yves\CommentWidget\Preparer\CommentThreadPreparer;
+use SprykerShop\Yves\CommentWidget\Preparer\CommentThreadPreparerInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
@@ -37,6 +41,22 @@ class CommentWidgetFactory extends AbstractFactory
     public function createCommentChecker(): CommentCheckerInterface
     {
         return new CommentChecker();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CommentWidget\Preparer\CommentThreadPreparerInterface
+     */
+    public function createCommentThreadPreparer(): CommentThreadPreparerInterface
+    {
+        return new CommentThreadPreparer();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CommentWidget\Expander\CommentThreadExpanderInterface
+     */
+    public function createCommentThreadExpander(): CommentThreadExpanderInterface
+    {
+        return new CommentThreadExpander();
     }
 
     /**

@@ -10,6 +10,7 @@
     options: required,
     submitButtonTitle: '',
     verticalLayout: false,
+    ajaxTriggerAttribute: null,
 } %}
 
 {% block body %}
@@ -25,7 +26,11 @@
         {% set fieldsAlignment = not data.verticalLayout ? 'col--md-10' %}
 
         <div class="col col--sm-12 {{ fieldsAlignment }}">
-            {{ form_start(data.form, data.options) }}
+            {{ form_start(data.form, data.options | merge({
+                attr: {
+                    class: config.jsName ~ '__form',
+                },
+            })) }}
                 <div class="grid">
                     {% block fields %}
                         {% include molecule('product-quick-add-fields', 'ProductSearchWidget') with {
@@ -50,7 +55,7 @@
 
                     {% block button %}
                         <div class="col col--sm-12 {{ not data.verticalLayout ? 'col--md-2' }}">
-                            <button data-qa="product-quick-add-form-submit-button" class="{{ config.jsName }}__submit-button button button--expand button--success">
+                            <button data-qa="product-quick-add-form-submit-button" {{ data.ajaxTriggerAttribute }} class="{{ config.jsName }}__submit-button button button--expand button--success">
                                 {{ data.submitButtonTitle }}
                             </button>
                         </div>

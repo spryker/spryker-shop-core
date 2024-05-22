@@ -1,0 +1,14 @@
+{% extends view('order-custom-reference', 'OrderCustomReferenceWidget') %}
+
+{% set _widget = {
+    quote: quote | default,
+    orderCustomReferenceForm: orderCustomReferenceForm | default,
+}%}
+
+{% set data = {
+    ajaxTriggerAttribute: true,
+} %}
+
+{% block template %}
+    {{ block('contentInner') }}
+{% endblock %}

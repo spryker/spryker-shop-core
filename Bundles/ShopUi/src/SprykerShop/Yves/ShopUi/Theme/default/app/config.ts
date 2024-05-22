@@ -17,6 +17,7 @@ export interface Config {
         ready: string;
         bootstrap: string;
         error: string;
+        upgrade: string;
     };
 
     log: {
@@ -43,6 +44,7 @@ export const defaultConfig: Config = {
         ready: 'components-ready',
         bootstrap: 'application-bootstrap',
         error: 'application-error',
+        upgrade: 'components-upgrade',
     },
 
     log: {

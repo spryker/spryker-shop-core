@@ -7,6 +7,7 @@
     formNamePostfix: _widget.formNamePostfix,
     isDisabled: _widget.isAddToCartDisabled,
     options: _widget.quantityOptions,
+    isAsyncMode: data.isAsyncMode | default,
 } %}
 
 {% block body %}
@@ -16,7 +17,7 @@
 
     {% block form %}
         {{ form_start(data.form, {
-            'action': path('cart/add', {'sku': productSku}),
+            'action': path(data.isAsyncMode ? 'cart/async/add' : 'cart/add', {'sku': productSku}),
             'name': 'addToCartForm_' ~ productSku ~ '-' ~ formNamePostfix,
             attr: { class: formClass },
         }) }}

@@ -19,6 +19,7 @@
     isQuantitySummaryVisible: false,
     quote: null,
     numberFormatConfig: {},
+    ajaxTriggerAttribute: null,
 } %}
 
 {%- block extraClass %} box{% endblock -%}
@@ -55,6 +56,7 @@
                                     configuredBundle: data.bundle,
                                     readOnly: not (data.isEditable and data.isQuantityChangeable),
                                     numberFormatConfig: data.numberFormatConfig,
+                                    ajaxTriggerAttribute: data.ajaxTriggerAttribute,
                                 },
                             } only %}
                         {% endblock %}
@@ -129,9 +131,9 @@
     {% block bundleActions %}
         {% if data.isEditable %}
             {% block bundleActionsInner %}
-                <form method="POST" action="{{ path('cart/configured-bundle/remove', {'configuredBundleGroupKey': data.bundle.groupKey}) }}">
+                <form method="POST" action="{{ path(data.ajaxTriggerAttribute ? 'cart/configured-bundle/async/remove' : 'cart/configured-bundle/remove', {'configuredBundleGroupKey': data.bundle.groupKey}) }}">
                     <input type="hidden" name="configured_bundle_remove_item_form[_token]" value="{{ csrf_token('configured_bundle_remove_item_form') }}">
-                    <button data-init-single-click class="link {{ bundleActionClassName }}">
+                    <button {{ data.ajaxTriggerAttribute }} data-init-single-click class="link {{ bundleActionClassName }}">
                         {% block removeLinkInner %}
                             {{- 'configured_bundle.remove' | trans | raw -}}
                         {% endblock %}
@@ -144,7 +146,11 @@
     {% block configurableBundleNote %}
         {% if data.isEditable %}
             {% block editableConfigurableBundleNote %}
-                {% widget 'ConfiguredBundleNoteWidget' args [data.bundle, data.quote] only %}{% endwidget %}
+                {% widget 'ConfiguredBundleNoteWidget' args [data.bundle, data.quote] with {
+                    data: {
+                        ajaxTriggerAttribute: data.ajaxTriggerAttribute,
+                    },
+                } only %}{% endwidget %}
             {% endblock %}
         {% else %}
             {% block notEditableConfigurableBundleNote %}

@@ -11,14 +11,8 @@ use Generated\Shared\Transfer\CartPageViewArgumentsTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\NumberFormatFilterTransfer;
 use Generated\Shared\Transfer\NumberFormatIntRequestTransfer;
-use Generated\Shared\Transfer\ProductOptionTransfer;
-use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\View\View;
-use SprykerShop\Shared\CartPage\Plugin\AddCartItemPermissionPlugin;
-use SprykerShop\Shared\CartPage\Plugin\ChangeCartItemPermissionPlugin;
-use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
 use SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin;
-use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,10 +24,8 @@ use Symfony\Component\Security\Csrf\CsrfToken;
  * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
  * @method \SprykerShop\Yves\CartPage\CartPageConfig getConfig()
  */
-class CartController extends AbstractController
+class CartController extends AbstractCartController
 {
-    use PermissionAwareTrait;
-
     /**
      * @var string
      */
@@ -52,32 +44,12 @@ class CartController extends AbstractController
     /**
      * @var string
      */
-    protected const REQUEST_PARAMETER_SKU = 'sku';
-
-    /**
-     * @var string
-     */
-    protected const REQUEST_PARAMETER_QUANTITY = 'quantity';
-
-    /**
-     * @var string
-     */
     protected const REQUEST_PARAMETER_TOKEN = '_token';
 
     /**
      * @var string
      */
-    protected const FIELD_QUANTITY_TO_NORMALIZE = 'quantity';
-
-    /**
-     * @var string
-     */
     protected const KEY_CODE = 'code';
-
-    /**
-     * @var string
-     */
-    protected const KEY_MESSAGES = 'messages';
 
     /**
      * @var string
@@ -113,7 +85,7 @@ class CartController extends AbstractController
     {
         $isCartItemsViaAjaxLoadEnabled = $this->getFactory()->getConfig()->isCartCartItemsViaAjaxLoadEnabled();
 
-        $viewData = $this->executeIndexAction($request->get('selectedAttributes', []), !$isCartItemsViaAjaxLoadEnabled);
+        $viewData = $this->executeIndexAction($request->get(static::REQUEST_PARAMETER_SELECTED_ATTRIBUTES, []), !$isCartItemsViaAjaxLoadEnabled);
         $viewData['isCartItemsViaAjaxLoadEnabled'] = $isCartItemsViaAjaxLoadEnabled;
         $viewData['isUpsellingProductsViaAjaxEnabled'] = $this->getFactory()->getConfig()->isLoadingUpsellingProductsViaAjaxEnabled();
 
@@ -234,7 +206,7 @@ class CartController extends AbstractController
             ->setSku($sku)
             ->setQuantity($quantity);
 
-        $this->addProductOptions($request->get('product-option', []), $itemTransfer);
+        $this->addProductOptions($request->get(static::REQUEST_PARAMETER_PRODUCT_OPTION, []), $itemTransfer);
 
         $itemTransfer = $this->executePreAddToCartPlugins($itemTransfer, $request->request->all());
 
@@ -304,7 +276,7 @@ class CartController extends AbstractController
      */
     public function removeAction(Request $request, $sku)
     {
-        $groupKey = $request->get('groupKey', null);
+        $groupKey = $request->get(static::REQUEST_PARAMETER_GROUP_KEY, null);
 
         if (!$this->canRemoveCartItem()) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
@@ -357,7 +329,7 @@ class CartController extends AbstractController
 
         $this->getFactory()
             ->getCartClient()
-            ->changeItemQuantity($sku, $request->get('groupKey'), $quantity);
+            ->changeItemQuantity($sku, $request->get(static::REQUEST_PARAMETER_GROUP_KEY), $quantity);
 
         $this->getFactory()
             ->getZedRequestClient()
@@ -417,33 +389,19 @@ class CartController extends AbstractController
             return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
         }
 
-        $quoteTransfer = $this->getFactory()
-            ->getCartClient()
-            ->getQuote();
-
-        $isItemReplacedInCart = $this->getFactory()
-            ->createCartItemsAttributeProvider()
-            ->tryToReplaceItem(
-                $sku,
-                $quantity,
-                array_replace($request->get('selectedAttributes', []), $request->get('preselectedAttributes', [])),
-                $quoteTransfer->getItems(),
-                $request->get('groupKey'),
-                $request->get('product-option', []),
-                $this->getLocale(),
-            );
+        $isItemReplacedInCart = $this->replaceItem($sku, (int)$quantity, $request);
 
         if ($isItemReplacedInCart) {
             return $this->redirectResponseInternal(CartPageRouteProviderPlugin::ROUTE_NAME_CART);
         }
 
-        $this->addInfoMessage('cart.item_attributes_needed');
+        $this->addInfoMessage(static::MESSAGE_ITEM_ATTRIBUTES_NEEDED);
 
         return $this->redirectResponseInternal(
             CartPageRouteProviderPlugin::ROUTE_NAME_CART,
             $this->getFactory()
                 ->createCartItemsAttributeProvider()
-                ->formatUpdateActionResponse($sku, $request->get('selectedAttributes', [])),
+                ->formatUpdateActionResponse($sku, $request->get(static::REQUEST_PARAMETER_SELECTED_ATTRIBUTES, [])),
         );
     }
 
@@ -558,97 +516,6 @@ class CartController extends AbstractController
     }
 
     /**
-     * @param array<int> $optionValueUsageIds
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
-    protected function addProductOptions(array $optionValueUsageIds, ItemTransfer $itemTransfer)
-    {
-        foreach ($optionValueUsageIds as $idOptionValueUsage) {
-            if (!$idOptionValueUsage) {
-                continue;
-            }
-
-            $productOptionTransfer = new ProductOptionTransfer();
-            $productOptionTransfer->setIdProductOptionValue($idOptionValueUsage);
-
-            $itemTransfer->addProductOption($productOptionTransfer);
-        }
-    }
-
-    /**
-     * @return bool
-     */
-    protected function canAddCartItem(): bool
-    {
-        return $this->canPerformCartItemAction(AddCartItemPermissionPlugin::KEY);
-    }
-
-    /**
-     * @param int|null $itemQuantity
-     *
-     * @return bool
-     */
-    protected function canChangeCartItem(?int $itemQuantity = null): bool
-    {
-        if ($itemQuantity === 0) {
-            return $this->canRemoveCartItem();
-        }
-
-        return $this->canPerformCartItemAction(ChangeCartItemPermissionPlugin::KEY);
-    }
-
-    /**
-     * @return bool
-     */
-    protected function canRemoveCartItem(): bool
-    {
-        return $this->canPerformCartItemAction(RemoveCartItemPermissionPlugin::KEY);
-    }
-
-    /**
-     * @param string $permissionPluginKey
-     *
-     * @return bool
-     */
-    protected function canPerformCartItemAction(string $permissionPluginKey): bool
-    {
-        $quoteTransfer = $this->getFactory()
-            ->getCartClient()
-            ->getQuote();
-
-        if ($quoteTransfer->getCustomer() === null) {
-            return true;
-        }
-
-        if ($quoteTransfer->getCustomer()->getCompanyUserTransfer() === null) {
-            return true;
-        }
-
-        if ($this->can($permissionPluginKey)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param array<string, mixed> $params
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
-    protected function executePreAddToCartPlugins(ItemTransfer $itemTransfer, array $params): ItemTransfer
-    {
-        foreach ($this->getFactory()->getPreAddToCartPlugins() as $preAddToCartPlugin) {
-            $itemTransfer = $preAddToCartPlugin->preAddToCart($itemTransfer, $params);
-        }
-
-        return $itemTransfer;
-    }
-
-    /**
      * @param int $code
      * @param array<string> $messages
      *
@@ -666,30 +533,6 @@ class CartController extends AbstractController
             static::KEY_CODE => $code,
             static::KEY_MESSAGES => $flashMessageListHtml,
         ];
-    }
-
-    /**
-     * @param array<\Generated\Shared\Transfer\MessageTransfer> $messageTransfers
-     *
-     * @return void
-     */
-    protected function addErrorMessages(array $messageTransfers): void
-    {
-        foreach ($messageTransfers as $messageTransfer) {
-            $this->addErrorMessage($messageTransfer->getValue());
-        }
-    }
-
-    /**
-     * @param array<\Generated\Shared\Transfer\MessageTransfer> $messageTransfers
-     *
-     * @return void
-     */
-    protected function addSuccessMessages(array $messageTransfers): void
-    {
-        foreach ($messageTransfers as $messageTransfer) {
-            $this->addSuccessMessage($messageTransfer->getValue());
-        }
     }
 
     /**

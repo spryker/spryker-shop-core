@@ -9,6 +9,7 @@
     cartItems: required,
     isQuoteEditable: required,
     attributes: [],
+    ajaxTriggerAttribute: '',
 } %}
 
 {% block body %}
@@ -21,6 +22,7 @@
                         cart: data.cart,
                         isQuoteEditable: data.isQuoteEditable,
                         attributes: data.attributes[cartItem.sku] | default([]),
+                        ajaxTriggerAttribute: data.ajaxTriggerAttribute,
                     },
                 } only %}
             {% endif %}

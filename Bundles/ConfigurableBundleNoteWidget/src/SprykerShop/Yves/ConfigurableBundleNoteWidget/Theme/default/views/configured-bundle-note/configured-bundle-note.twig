@@ -4,6 +4,7 @@
     bundle: _widget.configuredBundle,
     form: _widget.configurableBundleNoteForm,
     quote: _widget.quote,
+    ajaxTriggerAttribute: data.ajaxTriggerAttribute | default,
 } %}
 
 {% block body %}
@@ -16,11 +17,12 @@
                     data: {
                         form: data.form,
                         options: {
-                            action: url('configurable-bundle-note/add'),
+                            action: url(data.ajaxTriggerAttribute ? 'configurable-bundle-note/async/add' : 'configurable-bundle-note/add'),
                         },
                         submit: {
                             enable: true,
                             text: 'configurable_bundle_note.form.save' | trans,
+                            attributes: data.ajaxTriggerAttribute,
                         },
                     },
                 } only %}

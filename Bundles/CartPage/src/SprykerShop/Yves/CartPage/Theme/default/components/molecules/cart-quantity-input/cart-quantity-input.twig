@@ -7,8 +7,13 @@
 {% define data = {
     cartItem: required,
     readOnly: false,
+    ajaxTriggerAttribute: null,
 } %}
 
 {% block body %}
-    {% widget 'CartChangeQuantityFormWidget'  args [data.cartItem, data.readOnly] only %}{% endwidget %}
+    {% widget 'CartChangeQuantityFormWidget'  args [data.cartItem, data.readOnly] with {
+        data: {
+            ajaxTriggerAttribute: data.ajaxTriggerAttribute,
+        },
+    } only %}{% endwidget %}
 {% endblock %}

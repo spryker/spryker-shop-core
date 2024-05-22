@@ -3,15 +3,16 @@
 {% define data = {
     idQuote: _widget.cart.idQuote,
     multiCartClearForm: _widget.multiCartClearForm,
+    ajaxTriggerAttribute: null,
 } %}
 
 {% block body %}
     <div class="box box--borderless">
         {{ form_start(data.multiCartClearForm, {
-            'action': path('multi-cart/clear', {'idQuote': data.idQuote}),
+            'action': path(data.ajaxTriggerAttribute ? 'multi-cart-async/clear' : 'multi-cart/clear', {'idQuote': data.idQuote}),
             'attr': {'data-qa': 'multi-cart-clear-form'}
         }) }}
-            <button class="button" data-init-single-click>
+            <button {{ data.ajaxTriggerAttribute }} class="button" data-init-single-click>
                 {{ "multi_cart_widget.cart.action.clear" | trans }}
             </button>
         {{ form_end(data.multiCartClearForm) }}

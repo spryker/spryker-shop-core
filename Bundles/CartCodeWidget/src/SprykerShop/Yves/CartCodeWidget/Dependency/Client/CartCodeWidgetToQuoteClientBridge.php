@@ -27,7 +27,7 @@ class CartCodeWidgetToQuoteClientBridge implements CartCodeWidgetToQuoteClientIn
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getQuote()
+    public function getQuote(): QuoteTransfer
     {
         return $this->quoteClient->getQuote();
     }

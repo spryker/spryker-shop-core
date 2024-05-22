@@ -1,5 +1,8 @@
 import Component from 'ShopUi/models/component';
 
+/**
+ * @deprecated Typescript file only. Use native formaction html attribute.
+ */
 export default class CommentForm extends Component {
     protected commentForm: HTMLFormElement;
     protected submitButton: HTMLButtonElement;
@@ -13,11 +16,13 @@ export default class CommentForm extends Component {
     }
 
     protected mapEvents(): void {
-        this.submitButton.addEventListener('click', (event: Event) => {
-            this.onButtonFormClick(event, this.editFormActionAttribute);
-        });
+        if (!this.submitButton.hasAttribute('formaction')) {
+            this.submitButton.addEventListener('click', (event: Event) => {
+                this.onButtonFormClick(event, this.editFormActionAttribute);
+            });
+        }
 
-        if (this.removeButton) {
+        if (this.removeButton && !this.submitButton.hasAttribute('formaction')) {
             this.removeButton.addEventListener('click', (event: Event) => {
                 this.onButtonFormClick(event, this.removeFormActionAttribute);
             });

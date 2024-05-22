@@ -3,12 +3,61 @@
 {% define data = {
     quote: _widget.quote,
     orderCustomReferenceForm: _widget.orderCustomReferenceForm,
+    ajaxTriggerAttribute: data.ajaxTriggerAttribute | default,
 } %}
 
+{% set ajaxContentClass = 'js-order-custom-reference-content' %}
+{% set ajaxProviderClass = data.ajaxTriggerAttribute ? 'js-order-custom-reference-provider' : null %}
+{% set ajaxTriggerAttribute = data.ajaxTriggerAttribute ? 'data-order-custom-reference-submitter' : null %}
+
 {% block body %}
-    {% include molecule('order-custom-reference-form', 'OrderCustomReferenceWidget') with {
-        data: {
-            form: data.orderCustomReferenceForm,
-        },
-    } only %}
+    {% block contentOuter %}
+        <div {% if data.ajaxTriggerAttribute %}class="is-position-relative {{ ajaxContentClass }}"{% endif %}>
+            {% block contentInner %}
+                {% include molecule('order-custom-reference-form', 'OrderCustomReferenceWidget') with {
+                    data: {
+                        form: data.orderCustomReferenceForm,
+                        ajaxTriggerAttribute: ajaxTriggerAttribute,
+                    },
+                } only %}
+
+                {% if data.ajaxTriggerAttribute %}
+                    {% block ajaxLoader %}
+                        {% include molecule('ajax-loader') with {
+                            attributes: {
+                                'provider-class-name': ajaxProviderClass,
+                            },
+                        } only %}
+                    {% endblock %}
+                {% endif %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% if data.ajaxTriggerAttribute %}
+        {% block ajaxAction %}
+            {% include molecule('ajax-provider') with {
+                class: ajaxProviderClass,
+                attributes: {
+                    url: '',
+                    method: 'POST',
+                },
+            } only %}
+
+            {% include molecule('ajax-renderer') with {
+                attributes: {
+                    'provider-class-name': ajaxProviderClass,
+                    'target-class-name': ajaxContentClass,
+                    'mount-after-render': true,
+                },
+            } only %}
+
+            {% include molecule('ajax-form-submitter') with {
+                attributes: {
+                    'trigger-attribute': ajaxTriggerAttribute,
+                    'provider-class-name': ajaxProviderClass,
+                },
+            } only %}
+        {% endblock %}
+    {% endif %}
 {% endblock %}

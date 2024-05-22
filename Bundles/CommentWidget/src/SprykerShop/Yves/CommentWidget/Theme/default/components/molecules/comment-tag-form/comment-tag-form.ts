@@ -11,8 +11,16 @@ export default class CommentTagForm extends Component {
     }
 
     protected mapEvents(): void {
+        if (this.isAjaxMode) {
+            return;
+        }
+
         this.commentTagSelectComponent.addEventListener('change', () => {
             this.commentTagForm.submit();
         });
+    }
+
+    get isAjaxMode(): string {
+        return this.getAttribute('ajax-mode');
     }
 }

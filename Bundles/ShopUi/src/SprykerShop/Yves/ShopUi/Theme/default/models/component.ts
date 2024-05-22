@@ -1,3 +1,9 @@
+interface CustomEventOptions {
+    bubbles?: boolean;
+    cancelable?: boolean;
+    composed?: boolean;
+}
+
 /**
  * A Component is an extension of an HTMLElement.
  * It is used in Spryker Shop as base class for every components.
@@ -26,8 +32,8 @@ export default abstract class Component extends HTMLElement {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    protected dispatchCustomEvent(name: string, detail: any = {}): void {
-        const customEvent = new CustomEvent(name, { detail });
+    protected dispatchCustomEvent(name: string, detail: any = {}, options?: CustomEventOptions): void {
+        const customEvent = new CustomEvent(name, { detail, ...options });
         this.dispatchEvent(customEvent);
     }
 

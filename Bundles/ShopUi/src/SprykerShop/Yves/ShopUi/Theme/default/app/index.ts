@@ -1,8 +1,8 @@
-import Candidate from './candidate';
-import { LogLevel, debug, log, error, config as setLogConfig } from './logger';
-import { get as getCandidates } from './registry';
-import { get as config, set as setConfig, defaultConfig, Config } from './config';
 import Component from '../models/component';
+import Candidate from './candidate';
+import { Config, get as config, defaultConfig, set as setConfig } from './config';
+import { LogLevel, debug, error, log, config as setLogConfig } from './logger';
+import { get as getCandidates } from './registry';
 
 let isBootstrap = true;
 

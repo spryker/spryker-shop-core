@@ -1,0 +1,7 @@
+{% extends template('page-layout-cart', 'CartPage') %}
+
+{% block template %}
+    {% include organism('notification-area') only %}
+
+    {{ block('contentInner') }}
+{% endblock %}

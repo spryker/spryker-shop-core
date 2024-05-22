@@ -6,17 +6,19 @@
     form: _widget.removeFromCartForm,
     cartItem: _widget.cartItem,
     formNamePostfix: _widget.formNamePostfix,
+    ajaxTriggerAttribute: null,
 } %}
 
 {% block body %}
     {% set cartItem = data.cartItem %}
     {% set cartItemGroupKey = cartItem.groupKey %}
     {% set formNamePostfix = data.formNamePostfix %}
+    {% set formAction = data.ajaxTriggerAttribute ? 'cart/async/remove' : 'cart/remove' %}
 
     {% block form %}
         {{ form_start(data.form, {
-            'action': path('cart/remove', {'sku': cartItem.sku, 'groupKey': cartItemGroupKey }),
-            'name': 'removeFromCartForm_' ~ cartItemGroupKey ~ (formNamePostfix ? '-' ~ formNamePostfix),
+            action: path(formAction, {'sku': cartItem.sku, 'groupKey': cartItemGroupKey }),
+            name: 'removeFromCartForm_' ~ cartItemGroupKey ~ (formNamePostfix ? '-' ~ formNamePostfix),
         }) }}
             {% block embeddedData %}{% endblock %}
             {{ form_row(data.form._token, {id: ''}) }}

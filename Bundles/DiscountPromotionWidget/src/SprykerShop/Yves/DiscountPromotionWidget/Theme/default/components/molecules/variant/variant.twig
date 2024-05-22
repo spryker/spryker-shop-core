@@ -11,9 +11,13 @@
     selectedValue: null,
     label: '',
     isAvailable: true,
+    ajaxTriggerAttribute: null,
 } %}
 
 {% block body %}
+    {% set submitterKey = data.ajaxTriggerAttribute ?: 'data-form-submitter' %}
+    {% set submitterValue = data.ajaxTriggerAttribute ? 'change' : true %}
+
     <strong>{{data.label}}</strong>
     {% if data.selectedValue is null %}
         {% if data.isAvailable %}
@@ -21,7 +25,7 @@
                 modifiers: ['expand'],
                 attributes: {
                     name: data.formName,
-                    'data-form-submitter': true,
+                    (submitterKey): submitterValue,
                 },
                 embed: {
                     values: data.values,
@@ -38,7 +42,14 @@
             {{ 'product.attribute.not_available' | trans }}
         {% endif %}
     {% else %}
-        {{data.selectedValue}} <a href="?">{{ 'Reset' | trans }}</a>
-        <input type="hidden" name="{{data.formName}}" value="{{data.selectedValue}}">
+        {{ data.selectedValue }}
+
+        {% if data.ajaxTriggerAttribute %}
+            <button class="link" data-form-data-url-builder-skip-field="{{ data.formName }}" {{ data.ajaxTriggerAttribute }}>{{ 'Reset' | trans }}</button>
+        {% else %}
+            <a href="?">{{ 'Reset' | trans }}</a>
+        {% endif %}
+
+        <input type="hidden" name="{{ data.formName }}" value="{{ data.selectedValue }}">
     {% endif %}
 {% endblock %}

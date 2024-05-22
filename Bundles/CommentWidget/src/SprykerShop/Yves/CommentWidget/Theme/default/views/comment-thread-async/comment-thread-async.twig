@@ -1,0 +1,18 @@
+{% extends view('comment-thread', 'CommentWidget') %}
+
+{% set _widget = {
+    ownerId: ownerId | default(0),
+    ownerType: ownerType | default,
+    returnUrl: returnUrl | default,
+    customer: customer | default(null),
+    taggedComments: taggedComments | default([]),
+    availableCommentTags: availableCommentTags | default([]),
+}%}
+
+{% set data = {
+    ajaxTriggerAttribute: true,
+} %}
+
+{% block template %}
+    {{ block('contentInner') }}
+{% endblock %}

@@ -5,7 +5,7 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.1",
-        "spryker-shop/shop-ui": "^1.0.0",
+        "spryker-shop/shop-ui": "^1.41.0",
         "spryker/application": "^3.8.0",
         "spryker/configurable-bundle-note": "^1.0.0",
         "spryker/glossary-storage": "^1.0.0",
@@ -18,7 +18,8 @@
         "spryker/router": "*"
     },
     "suggest": {
-        "spryker/router": "Use this module when using plugins that need Router dependencies."
+        "spryker/router": "Use this module when using plugins that need Router dependencies.",
+        "spryker-shop/cart-page": "Use this module to have an access to the routes of the cart page."
     },
     "autoload": {
         "psr-4": {

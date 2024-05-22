@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\CommentWidget\Widget;
 
 use Generated\Shared\Transfer\CommentThreadTransfer;
-use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
@@ -61,13 +60,17 @@ class CommentThreadWidget extends AbstractWidget
         ?CommentThreadTransfer $commentThreadTransfer
     ) {
         $commentThreadTransfer = $commentThreadTransfer ?: new CommentThreadTransfer();
-        $this->expandCommentsWithPlainTags($commentThreadTransfer);
+        $this->getFactory()
+            ->createCommentThreadExpander()
+            ->expandCommentsWithPlainTags($commentThreadTransfer);
 
         $customerTransfer = $this->getFactory()
             ->getCustomerClient()
             ->getCustomer();
 
-        $taggedComments = $this->prepareTaggedComments($commentThreadTransfer);
+        $taggedComments = $this->getFactory()
+            ->createCommentThreadPreparer()
+            ->prepareTaggedComments($commentThreadTransfer);
 
         $this->addOwnerIdParameter($ownerId);
         $this->addOwnerTypeParameter($ownerType);
@@ -152,57 +155,5 @@ class CommentThreadWidget extends AbstractWidget
     protected function addTaggedCommentsParameter(array $taggedComments): void
     {
         $this->addParameter(static::PARAMETER_TAGGED_COMMENTS, $taggedComments);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
-     *
-     * @return \Generated\Shared\Transfer\CommentThreadTransfer
-     */
-    protected function expandCommentsWithPlainTags(CommentThreadTransfer $commentThreadTransfer): CommentThreadTransfer
-    {
-        foreach ($commentThreadTransfer->getComments() as $commentTransfer) {
-            $commentTransfer->setTagNames($this->mapCommentTags($commentTransfer));
-        }
-
-        return $commentThreadTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
-     *
-     * @return array
-     */
-    protected function mapCommentTags(CommentTransfer $commentTransfer): array
-    {
-        $tags = [];
-
-        foreach ($commentTransfer->getCommentTags() as $commentTagTransfer) {
-            $tags[] = $commentTagTransfer->getName();
-        }
-
-        return $tags;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
-     *
-     * @return array<string, array<\Generated\Shared\Transfer\CommentTransfer>>
-     */
-    protected function prepareTaggedComments(CommentThreadTransfer $commentThreadTransfer): array
-    {
-        $taggedComments = [];
-
-        foreach ($commentThreadTransfer->getComments() as $comment) {
-            $taggedComments['all'][] = $comment;
-
-            /** @var array<string> $tagNames */
-            $tagNames = $comment->getTagNames();
-            foreach ($tagNames as $tagName) {
-                $taggedComments[$tagName][] = $comment;
-            }
-        }
-
-        return $taggedComments;
     }
 }

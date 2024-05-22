@@ -14,7 +14,7 @@ interface CartCodeWidgetToQuoteClientInterface
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getQuote();
+    public function getQuote(): QuoteTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

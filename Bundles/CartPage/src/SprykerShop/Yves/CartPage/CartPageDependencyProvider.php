@@ -66,6 +66,11 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_MINI_CART_VIEW_EXPANDER = 'PLUGINS_MINI_CART_VIEW_EXPANDER';
+
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**
@@ -129,6 +134,7 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCartPageWidgetPlugins($container);
         $container = $this->addCartItemTransformerPlugins($container);
         $container = $this->addPreAddToCartPlugins($container);
+        $container = $this->addMiniCartViewExpanderPlugins($container);
         $container = $this->addZedRequestClient($container);
         $container = $this->addCsrfProviderService($container);
         $container = $this->addRouter($container);
@@ -385,6 +391,28 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\SprykerShop\Yves\CartPageExtension\Dependency\Plugin\PreAddToCartPluginInterface>
      */
     protected function getPreAddToCartPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addMiniCartViewExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MINI_CART_VIEW_EXPANDER, function () {
+            return $this->getMiniCartViewExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\CartPageExtension\Dependency\Plugin\MiniCartViewExpanderPluginInterface>
+     */
+    protected function getMiniCartViewExpanderPlugins(): array
     {
         return [];
     }

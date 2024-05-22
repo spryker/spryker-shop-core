@@ -195,6 +195,14 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
+     * @return array<\SprykerShop\Yves\CartPageExtension\Dependency\Plugin\MiniCartViewExpanderPluginInterface>
+     */
+    public function getMiniCartViewExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CartPageDependencyProvider::PLUGINS_MINI_CART_VIEW_EXPANDER);
+    }
+
+    /**
      * @return \SprykerShop\Yves\CartPage\Mapper\CartItemsAttributeMapper
      */
     public function createCartItemsAttributeMapper()
