@@ -81,6 +81,13 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_LOCALE = 'locale';
 
     /**
+     * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     *
+     * @var string
+     */
+    public const SERVICE_REQUEST_STACK = 'request_stack';
+
+    /**
      * @var string
      */
     public const PLUGINS_SESSION_POST_IMPERSONATION = 'PLUGINS_SESSION_POST_IMPERSONATION';
@@ -103,6 +110,7 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSecurityAuthorizationChecker($container);
         $container = $this->addRouter($container);
         $container = $this->addLocale($container);
+        $container = $this->addRequestStackService($container);
         $container = $this->addSessionPostImpersonationPlugins($container);
 
         return $container;
@@ -239,6 +247,20 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_LOCALE, function (Container $container) {
             return $container->getApplicationService(static::SERVICE_LOCALE);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addRequestStackService(Container $container): Container
+    {
+        $container->set(static::SERVICE_REQUEST_STACK, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_REQUEST_STACK);
         });
 
         return $container;

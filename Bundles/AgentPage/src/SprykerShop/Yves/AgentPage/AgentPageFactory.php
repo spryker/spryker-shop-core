@@ -26,6 +26,10 @@ use SprykerShop\Yves\AgentPage\Formatter\LoginCheckUrlFormatter;
 use SprykerShop\Yves\AgentPage\Formatter\LoginCheckUrlFormatterInterface;
 use SprykerShop\Yves\AgentPage\Impersonator\SessionImpersonator;
 use SprykerShop\Yves\AgentPage\Impersonator\SessionImpersonatorInterface;
+use SprykerShop\Yves\AgentPage\Logger\AuditLogger;
+use SprykerShop\Yves\AgentPage\Logger\AuditLoggerInterface;
+use SprykerShop\Yves\AgentPage\Logger\DataProvider\AuditLoggerCustomerProvider;
+use SprykerShop\Yves\AgentPage\Logger\DataProvider\AuditLoggerCustomerProviderInterface;
 use SprykerShop\Yves\AgentPage\Plugin\FixAgentTokenAfterCustomerAuthenticationSuccessPlugin;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationFailureHandler;
 use SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationSuccessHandler;
@@ -33,12 +37,15 @@ use SprykerShop\Yves\AgentPage\Plugin\Provider\AccessDeniedHandler;
 use SprykerShop\Yves\AgentPage\Plugin\Provider\AgentUserProvider;
 use SprykerShop\Yves\AgentPage\Plugin\Security\AgentPageSecurityPlugin;
 use SprykerShop\Yves\AgentPage\Plugin\Subscriber\SwitchUserEventSubscriber;
+use SprykerShop\Yves\AgentPage\Processor\CurrentRequestProcessor;
+use SprykerShop\Yves\AgentPage\Processor\CurrentRequestProcessorInterface;
 use SprykerShop\Yves\AgentPage\Security\Agent;
 use SprykerShop\Yves\AgentPage\Updater\AgentTokenAfterCustomerAuthenticationSuccessUpdater;
 use SprykerShop\Yves\AgentPage\Updater\AgentTokenAfterCustomerAuthenticationSuccessUpdaterInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -299,5 +306,37 @@ class AgentPageFactory extends AbstractFactory
             $this->getTokenStorage(),
             $this->getCustomerClient(),
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\AgentPage\Logger\AuditLoggerInterface
+     */
+    public function createAuditLogger(): AuditLoggerInterface
+    {
+        return new AuditLogger($this->createAuditLoggerCustomerProvider());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\AgentPage\Logger\DataProvider\AuditLoggerCustomerProviderInterface
+     */
+    public function createAuditLoggerCustomerProvider(): AuditLoggerCustomerProviderInterface
+    {
+        return new AuditLoggerCustomerProvider($this->getTokenStorage());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\AgentPage\Processor\CurrentRequestProcessorInterface
+     */
+    public function createCurrentRequestProcessor(): CurrentRequestProcessorInterface
+    {
+        return new CurrentRequestProcessor($this->getRequestStackService());
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RequestStack
+     */
+    public function getRequestStackService(): RequestStack
+    {
+        return $this->getProvidedDependency(AgentPageDependencyProvider::SERVICE_REQUEST_STACK);
     }
 }

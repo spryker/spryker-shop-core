@@ -118,6 +118,8 @@ class PasswordController extends AbstractCustomerController
             if ($customerResponseTransfer->getIsSuccess()) {
                 $this->addSuccessMessage(Messages::CUSTOMER_PASSWORD_RECOVERY_MAIL_SENT);
             }
+
+            $this->getFactory()->createAuditLogger()->addPasswordResetRequestedAuditLog();
         }
 
         $data = [
@@ -179,6 +181,8 @@ class PasswordController extends AbstractCustomerController
                     ->logout();
 
                 $this->addSuccessMessage(Messages::CUSTOMER_PASSWORD_CHANGED);
+
+                $this->getFactory()->createAuditLogger()->addPasswordUpdatedAfterResetAuditLog($customerResponseTransfer);
 
                 return $this->redirectResponseInternal(CustomerPageRouteProviderPlugin::ROUTE_NAME_LOGIN);
             }

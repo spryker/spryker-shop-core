@@ -60,6 +60,8 @@ class CustomerAuthenticationFailureHandler extends BaseCustomerAuthenticationHan
     {
         $this->flashMessenger->addErrorMessage($this->buildErrorMessage($exception));
 
+        $this->getFactory()->createAuditLogger()->addFailedLoginAuditLog();
+
         return $this->createRefererRedirectResponse($request, $this->targetUrl);
     }
 

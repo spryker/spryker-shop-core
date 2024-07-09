@@ -42,6 +42,8 @@ class CustomerAuthenticationSuccessHandler extends AbstractPlugin implements Aut
 
         $this->executeAfterPlugins();
 
+        $this->getFactory()->createAuditLogger()->addSuccessfulLoginAuditLog();
+
         return $response;
     }
 

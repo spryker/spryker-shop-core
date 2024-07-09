@@ -55,6 +55,8 @@ class AgentAuthenticationFailureHandler extends AbstractPlugin implements Authen
             ->getMessengerClient()
             ->addErrorMessage(static::MESSAGE_AGENT_AUTHENTICATION_FAILED);
 
+        $this->getFactory()->createAuditLogger()->addAgentFailedLoginAuditLog();
+
         return new RedirectResponse($this->targetUrl ?? $this->getRedirectUrl());
     }
 

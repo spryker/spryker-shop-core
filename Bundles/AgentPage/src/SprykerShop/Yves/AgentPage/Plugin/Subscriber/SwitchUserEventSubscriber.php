@@ -41,8 +41,12 @@ class SwitchUserEventSubscriber extends AbstractPlugin implements EventSubscribe
 
         if ($targetUser instanceof Customer) {
             $this->onImpersonationStart($targetUser);
+
+            $this->getFactory()->createAuditLogger()->addImpersonationStartedAuditLog();
         } elseif ($targetUser instanceof Agent) {
             $this->onImpersonationEnd();
+
+            $this->getFactory()->createAuditLogger()->addImpersonationEndedAuditLog();
         }
     }
 

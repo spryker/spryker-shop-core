@@ -53,6 +53,8 @@ class AgentAuthenticationSuccessHandler extends AbstractPlugin implements Authen
             $this->getSecurityUser($token)->getUserTransfer(),
         );
 
+        $this->getFactory()->createAuditLogger()->addAgentSuccessfulLoginAuditLog();
+
         return $this->createRedirectResponse();
     }
 

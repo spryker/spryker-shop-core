@@ -46,6 +46,8 @@ use SprykerShop\Yves\CustomerPage\Formatter\LoginCheckUrlFormatter;
 use SprykerShop\Yves\CustomerPage\Formatter\LoginCheckUrlFormatterInterface;
 use SprykerShop\Yves\CustomerPage\Handler\OrderSearchFormHandler;
 use SprykerShop\Yves\CustomerPage\Handler\OrderSearchFormHandlerInterface;
+use SprykerShop\Yves\CustomerPage\Logger\AuditLogger;
+use SprykerShop\Yves\CustomerPage\Logger\AuditLoggerInterface;
 use SprykerShop\Yves\CustomerPage\Mapper\CustomerMapper;
 use SprykerShop\Yves\CustomerPage\Mapper\CustomerMapperInterface;
 use SprykerShop\Yves\CustomerPage\Mapper\ItemStateMapper;
@@ -698,5 +700,13 @@ class CustomerPageFactory extends AbstractFactory
             $this->createCustomerUserProvider(),
             $this->createCustomerSecurityOptionsBuilder(),
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Logger\AuditLoggerInterface
+     */
+    public function createAuditLogger(): AuditLoggerInterface
+    {
+        return new AuditLogger();
     }
 }
