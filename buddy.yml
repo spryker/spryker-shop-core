@@ -19,13 +19,13 @@
             - 'COMPOSER_MEMORY_LIMIT=-1 composer install --no-interaction --prefer-dist --optimize-autoloader'
         cache_base_image: false
         shell: 'BASH'
-      - action: 'Js Validation'
+      - action: 'Frontend Validation'
         type: 'BUILD'
         docker_image_name: 'node'
         docker_image_tag: '18'
         execute_commands:
             - 'npm ci'
-            - 'npm i git+https://github.com/spryker-sdk/frontend-sniffer.git#semver:^0.2.6'
+            - 'npm i git+https://github.com/spryker-sdk/frontend-sniffer.git#semver:^0.2.7'
             - 'npm run formatter'
             - 'npm run stylelint'
             - 'npm run lint'
