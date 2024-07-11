@@ -37,7 +37,7 @@ interface SubmitProps {
     trigger: HTMLButtonElement | HTMLInputElement;
 }
 
-export default class FormSubmitter extends Component {
+export default class AjaxFormSubmitter extends Component {
     protected provider: AjaxProvider;
 
     protected readyCallback(): void {}

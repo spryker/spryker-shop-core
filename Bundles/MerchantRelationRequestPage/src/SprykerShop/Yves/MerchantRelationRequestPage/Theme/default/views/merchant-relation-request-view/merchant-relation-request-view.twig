@@ -43,7 +43,7 @@
             {% endblock %}
 
             {% block relationRequesFilters %}
-                {% include molecule('merchant-relation-request-filters', 'MerchantRelationRequestPage') with {
+                {% include molecule('filters', 'MerchantRelationRequestPage') with {
                     data: {
                         merchantRelationRequestSearchForm: data.merchantRelationRequestSearchForm,
                         jsPrefix: jsPrefix,
@@ -52,7 +52,7 @@
             {% endblock %}
 
             {% block relationRequesActiveFilters %}
-                {% include molecule('merchant-relation-request-active-filters', 'MerchantRelationRequestPage') with {
+                {% include molecule('active-filters', 'MerchantRelationRequestPage') with {
                     data: {
                         merchantRelationRequestSearchForm: data.merchantRelationRequestSearchForm,
                         jsPrefix: jsPrefix,
@@ -72,7 +72,7 @@
         {% block merchantRelationRequests %}
             {% if data.merchantRelationRequests | length %}
                 {% block merchantRelationRequestList %}
-                    {% include molecule('merchant-relation-request-view-table', 'MerchantRelationRequestPage') with {
+                    {% include molecule('view-table', 'MerchantRelationRequestPage') with {
                         data: {
                             merchantRelationRequests: data.merchantRelationRequests,
                         },

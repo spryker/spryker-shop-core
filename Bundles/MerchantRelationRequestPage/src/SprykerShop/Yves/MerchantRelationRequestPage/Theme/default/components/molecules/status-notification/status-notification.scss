@@ -1,9 +1,6 @@
-/**
- * @deprecated Use merchant-relation-request-page-status-notification mixin instead.
- */
-
-/* fe-sniffer:disabled correct-scss-component-structure */
-@mixin merchant-relation-request-status-notification($name: '.merchant-relation-request-status-notification') {
+@mixin merchant-relation-request-page-status-notification(
+    $name: '.merchant-relation-request-page-status-notification'
+) {
     #{$name} {
         padding: 1.25rem;
         border: 0.125rem solid helper-color-light(map-get($setting-color-actions, 'warning'));
@@ -41,5 +38,7 @@
             font-size: 1.125rem;
             line-height: 1.4;
         }
+
+        @content;
     }
 }

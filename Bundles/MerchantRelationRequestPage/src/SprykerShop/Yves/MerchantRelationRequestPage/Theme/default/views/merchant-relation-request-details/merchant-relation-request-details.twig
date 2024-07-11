@@ -39,7 +39,7 @@
         {% endblock %}
 
         {% block notification %}
-            {% include molecule('merchant-relation-request-status-notification', 'MerchantRelationRequestPage') with {
+            {% include molecule('status-notification', 'MerchantRelationRequestPage') with {
                 class: 'spacing-y spacing-y--big',
                 modifiers: [data.merchantRelationRequest.status],
                 data: {
