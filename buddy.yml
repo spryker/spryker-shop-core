@@ -8,7 +8,7 @@
   fail_on_prepare_env_warning: true
   concurrent_pipeline_runs: true
   auto_clear_cache: true
-  resources: 'SMALL'
+  resources: 'MEDIUM'
   actions:
       - action: 'Build Project'
         type: 'BUILD'
