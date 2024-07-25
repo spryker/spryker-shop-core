@@ -43,6 +43,11 @@ class CompanyRolePermissionController extends AbstractCompanyController
     protected const PARAMETER_ID_COMPANY_ROLE = 'id';
 
     /**
+     * @var string
+     */
+    protected const PERMISSION_ID = 'idPermission';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -53,14 +58,18 @@ class CompanyRolePermissionController extends AbstractCompanyController
             ->createCompanyPageFormFactory()
             ->getCompanyRolePermissionAssignForm()
             ->handleRequest($request);
-        if (!$companyRolePermissionAssignForm->isSubmitted() || !$companyRolePermissionAssignForm->isValid()) {
-            $this->addErrorMessage(static::MESSAGE_ERROR_PERMISSION_SAVE_FAILED);
 
-            return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE);
+        if (!$companyRolePermissionAssignForm->isSubmitted() || !$companyRolePermissionAssignForm->isValid()) {
+            return $this->redirectWithSaveFailedError();
         }
 
         $idCompanyRole = $request->query->getInt('id-company-role');
         $idPermission = $request->query->getInt('id-permission');
+
+        $allowedPermissions = $this->getSelectablePermissionsList($idCompanyRole)->getPermissions();
+        if (!$this->isPermissionInAllowedPermissions($allowedPermissions, $idPermission)) {
+            return $this->redirectWithSaveFailedError();
+        }
 
         $newPermission = new PermissionTransfer();
         $newPermission->setIdPermission($idPermission);
@@ -158,8 +167,9 @@ class CompanyRolePermissionController extends AbstractCompanyController
      *
      * @return void
      */
-    protected function generateMessagesByCompanyRolePermissionResponse(CompanyRolePermissionResponseTransfer $responseTransfer)
-    {
+    protected function generateMessagesByCompanyRolePermissionResponse(
+        CompanyRolePermissionResponseTransfer $responseTransfer
+    ): void {
         if ($responseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_SUCCESSFUL_PERMISSION_SAVED);
 
@@ -214,5 +224,34 @@ class CompanyRolePermissionController extends AbstractCompanyController
             ->findCompanyRolePermissions($companyRoleTransfer);
 
         return $permissionCollection->getPermissions();
+    }
+
+    /**
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PermissionTransfer> $allowedPermissions
+     * @param int $idPermission
+     *
+     * @return bool
+     */
+    protected function isPermissionInAllowedPermissions(
+        ArrayObject $allowedPermissions,
+        int $idPermission
+    ): bool {
+        foreach ($allowedPermissions as $allowedPermission) {
+            if ($allowedPermission[static::PERMISSION_ID] === $idPermission) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function redirectWithSaveFailedError(): RedirectResponse
+    {
+        $this->addErrorMessage(static::MESSAGE_ERROR_PERMISSION_SAVE_FAILED);
+
+        return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE);
     }
 }

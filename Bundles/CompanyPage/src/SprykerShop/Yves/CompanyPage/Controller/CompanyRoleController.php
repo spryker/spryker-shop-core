@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
-use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use SprykerShop\Yves\CompanyPage\Form\CompanyRoleForm;
 use SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -436,20 +435,5 @@ class CompanyRoleController extends AbstractCompanyController
         }
 
         return $companyUserCollection;
-    }
-
-    /**
-     * @param int $idCompanyRole
-     *
-     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
-     */
-    protected function getSelectablePermissionsList(int $idCompanyRole): PermissionCollectionTransfer
-    {
-        $companyRoleTransfer = (new CompanyRoleTransfer())
-            ->setIdCompanyRole($idCompanyRole);
-
-        return $this->getFactory()
-            ->getCompanyRoleClient()
-            ->findNonInfrastructuralCompanyRolePermissionsByIdCompanyRole($companyRoleTransfer);
     }
 }

@@ -7,10 +7,12 @@
 
 namespace SprykerShop\Yves\CompanyPage\Controller;
 
+use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -177,5 +179,20 @@ abstract class AbstractCompanyController extends AbstractController
         $companyUserTransfer = $this->findCurrentCompanyUserTransfer();
 
         return ($companyUserTransfer !== null && $companyUserTransfer->getFkCompany() === $idCompany);
+    }
+
+    /**
+     * @param int $idCompanyRole
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    protected function getSelectablePermissionsList(int $idCompanyRole): PermissionCollectionTransfer
+    {
+        $companyRoleTransfer = (new CompanyRoleTransfer())
+            ->setIdCompanyRole($idCompanyRole);
+
+        return $this->getFactory()
+            ->getCompanyRoleClient()
+            ->findNonInfrastructuralCompanyRolePermissionsByIdCompanyRole($companyRoleTransfer);
     }
 }
