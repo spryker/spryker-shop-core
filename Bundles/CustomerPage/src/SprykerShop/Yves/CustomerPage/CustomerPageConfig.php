@@ -27,6 +27,11 @@ class CustomerPageConfig extends AbstractBundleConfig
     protected const IS_ORDER_HISTORY_SEARCH_ENABLED = false;
 
     /**
+     * @var bool
+     */
+    protected const IS_REMEMBER_ME_ENABLED = true;
+
+    /**
      * @var int
      */
     protected const DEFAULT_ORDER_HISTORY_PER_PAGE = 10;
@@ -270,5 +275,18 @@ class CustomerPageConfig extends AbstractBundleConfig
     public function isLocaleInLoginCheckPath(): bool
     {
         return false;
+    }
+
+    /**
+     * Specification:
+     * - Returns true if the remember me functionality is enabled for the log in form.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isRememberMeEnabled(): bool
+    {
+        return static::IS_REMEMBER_ME_ENABLED;
     }
 }

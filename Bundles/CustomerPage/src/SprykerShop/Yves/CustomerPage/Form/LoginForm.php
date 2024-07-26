@@ -71,8 +71,11 @@ class LoginForm extends AbstractType
 
         $this
             ->addEmailField($builder)
-            ->addPasswordField($builder)
-            ->addRememberMeField($builder);
+            ->addPasswordField($builder);
+
+        if ($this->getConfig()->isRememberMeEnabled()) {
+            $this->addRememberMeField($builder);
+        }
     }
 
     /**

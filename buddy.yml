@@ -26,7 +26,7 @@
         execute_commands:
             - 'npm ci'
             - 'npm i git+https://github.com/spryker-sdk/frontend-sniffer.git#semver:^0.2.7'
-            - 'node ./node_modules/@spryker/frontend-sniffer --config ./ --path ../../ --level-restriction core --max-old-space-size=4096'
+            - 'node --max-old-space-size=8192 ./node_modules/@spryker/frontend-sniffer --config ./ --path ../../ --level-restriction core'
             - 'npm run formatter'
             - 'npm run stylelint'
             - 'npm run lint'
