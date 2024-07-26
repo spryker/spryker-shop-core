@@ -65,6 +65,8 @@ class CompanyRoleUserController extends AbstractCompanyController
             )
             ->getRoles();
 
+        $this->assertCompanyRoleIsRelatedToCurrentUser($idCompanyRole);
+
         $companyRoleTransfer = (new CompanyRoleTransfer())->setIdCompanyRole($idCompanyRole);
         $companyRoles->append($companyRoleTransfer);
 
@@ -111,11 +113,28 @@ class CompanyRoleUserController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array
      */
     protected function getCompanyUserList(Request $request): array
     {
         $idCompanyRole = $request->query->getInt('id');
+
+        $companyRoleUserList = $this->getFactory()
+            ->getCompanyRoleClient()
+            ->getCompanyRoleById((new CompanyRoleTransfer())->setIdCompanyRole($idCompanyRole))
+            ->getCompanyUserCollection()
+            ->getCompanyUsers();
+
+        if ($companyRoleUserList->count() === 0) {
+            return [];
+        }
+
+        $idCompany = $companyRoleUserList->offsetGet(0)->getFkCompanyOrFail();
+        if (!$this->isCurrentCustomerRelatedToCompany($idCompany)) {
+            throw new NotFoundHttpException();
+        }
 
         $companyUserList = $this->getFactory()
             ->getCompanyUserClient()
@@ -123,12 +142,6 @@ class CompanyRoleUserController extends AbstractCompanyController
                 (new CompanyUserCriteriaFilterTransfer())
                     ->setIdCompany($this->findCurrentCompanyUserTransfer()->getFkCompany()),
             )
-            ->getCompanyUsers();
-
-        $companyRoleUserList = $this->getFactory()
-            ->getCompanyRoleClient()
-            ->getCompanyRoleById((new CompanyRoleTransfer())->setIdCompanyRole($idCompanyRole))
-            ->getCompanyUserCollection()
             ->getCompanyUsers();
 
         $userList = [];
@@ -177,5 +190,26 @@ class CompanyRoleUserController extends AbstractCompanyController
         $this->getFactory()
             ->getCompanyRoleClient()
             ->saveCompanyUser($companyUserTransfer);
+    }
+
+    /**
+     * @param int $idCompanyRole
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return void
+     */
+    protected function assertCompanyRoleIsRelatedToCurrentUser(int $idCompanyRole): void
+    {
+        $companyRoleTransfer = (new CompanyRoleTransfer())->setIdCompanyRole($idCompanyRole);
+        $companyRoleTransfer = $this->getFactory()
+            ->getCompanyRoleClient()
+            ->getCompanyRoleById($companyRoleTransfer);
+
+        if (!$this->isCurrentCustomerRelatedToCompany($companyRoleTransfer->getFkCompanyOrFail())) {
+            return;
+        }
+
+        throw new NotFoundHttpException();
     }
 }
