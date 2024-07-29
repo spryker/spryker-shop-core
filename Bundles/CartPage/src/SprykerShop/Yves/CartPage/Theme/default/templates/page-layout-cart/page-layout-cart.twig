@@ -15,8 +15,8 @@
     requestUri: app.request.requestUri,
     isCartItemsViaAjaxLoadEnabled: _view.isCartItemsViaAjaxLoadEnabled,
     isUpsellingProductsViaAjaxEnabled: _view.isUpsellingProductsViaAjaxEnabled,
-    isCartActionsAsyncModeEnabled: _view.isCartActionsAsyncModeEnabled,
-    isAjaxHeader: _view.isCartActionsAsyncModeEnabled,
+    isCartActionsAsyncModeEnabled: _view.isCartActionsAsyncModeEnabled | default(false),
+    isAjaxHeader: _view.isCartActionsAsyncModeEnabled | default(false),
     ajaxCartUrl: '/cart/async/mini-cart-view',
 } %}
 
@@ -136,16 +136,18 @@
                             } only %}
                             {% endwidget %}
 
-                            {% include molecule('cart-items-list', 'CartPage') with {
-                                data: {
-                                    cart: data.cart,
-                                    cartItems: data.cartItems,
-                                    isQuoteEditable: data.isQuoteEditable,
-                                    attributes: data.attributes,
-                                    isUpsellingProductsViaAjaxEnabled: data.isCartItemsViaAjaxLoadEnabled,
-                                    ajaxTriggerAttribute: ajaxTriggerAttribute,
-                                },
-                            } only %}
+                            {% block cartItems %}
+                                {% include molecule('cart-items-list', 'CartPage') with {
+                                    data: {
+                                        cart: data.cart,
+                                        cartItems: data.cartItems,
+                                        isQuoteEditable: data.isQuoteEditable,
+                                        attributes: data.attributes,
+                                        isUpsellingProductsViaAjaxEnabled: data.isCartItemsViaAjaxLoadEnabled,
+                                        ajaxTriggerAttribute: ajaxTriggerAttribute,
+                                    },
+                                } only %}
+                            {% endblock %}
 
                             {% if data.isQuoteEditable and data.cart.idQuote is not empty %}
                                 {% widget 'CartOperationsWidget' args [data.cart] use view('cart-operations-actions', 'MultiCartWidget') with {

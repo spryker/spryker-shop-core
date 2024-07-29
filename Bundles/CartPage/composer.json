@@ -27,7 +27,6 @@
         "spryker/zed-request": "^3.6.0"
     },
     "require-dev": {
-        "spryker-shop/discount-promotion-widget": "*",
         "spryker-shop/discount-widget": "*",
         "spryker-shop/gift-card-widget": "*",
         "spryker-shop/multi-cart-widget": "*",
@@ -44,7 +43,6 @@
     },
     "suggest": {
         "spryker-shop/configurable-bundle-widget": "Add the module if you want to use QuoteConfiguredBundleWidget.",
-        "spryker-shop/discount-promotion-widget": "If you want to use components from module DiscountPromotionWidget.",
         "spryker-shop/discount-widget": "If you want to use components from module DiscountWidget or DiscountSummaryWidgetPlugin",
         "spryker-shop/gift-card-widget": "If you want to use components from module GiftCardWidget.",
         "spryker-shop/multi-cart-widget": "If you want to use components from module MultiCartWidget or CartOperationsWidgetPlugin",
