@@ -75,7 +75,7 @@ class StoreSwitcherWidget extends AbstractWidget
     }
 
     /**
-     * Required by infrastructure, exists only for BC reasons with DMS mode.
+     * Required by infrastructure, exists only for BC with DMS OFF mode.
      *
      * @return void
      */
