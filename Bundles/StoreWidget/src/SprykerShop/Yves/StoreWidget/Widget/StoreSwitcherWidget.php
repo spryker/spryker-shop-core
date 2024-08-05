@@ -75,6 +75,8 @@ class StoreSwitcherWidget extends AbstractWidget
     }
 
     /**
+     * Required by infrastructure, exists only for BC reasons with DMS mode.
+     *
      * @return void
      */
     protected function addIsDynamicStoreEnabledParameter(): void
