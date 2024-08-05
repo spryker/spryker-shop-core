@@ -50,6 +50,7 @@
                 },
                 embed: {
                     isAjaxMode: data.isAjaxMode,
+                    ajaxCartUrl: data.ajaxCartUrl,
                 },
             } only %}
                 {% block multiCart %}
@@ -66,7 +67,7 @@
                             {% include molecule('cart-counter') with {
                                 data: {
                                     quantity: data.cartQuantity,
-                                    ajaxCartUrl: data.isAjaxMode ? data.ajaxCartUrl : null,
+                                    ajaxCartUrl: embed.isAjaxMode ? embed.ajaxCartUrl : null,
                                     ajaxClassSuffix: 'sidedrawer',
                                 },
                             } only %}
