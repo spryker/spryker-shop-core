@@ -1,0 +1,16 @@
+{% extends template('page-layout-main') %}
+
+{% define data = {
+    loginRedirectUrl: _view.loginRedirectUrl
+} %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h5>{{ 'agent.account.redirect-to-login' | trans }}</h5>
+                <meta http-equiv="refresh" content="0; url={{ data.loginRedirectUrl }}">
+            </div>
+        </div>
+    </div>
+{% endblock %}

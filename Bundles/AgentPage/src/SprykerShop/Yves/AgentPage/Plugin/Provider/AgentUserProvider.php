@@ -66,9 +66,13 @@ class AgentUserProvider extends AbstractPlugin implements UserProviderInterface
             return $user;
         }
 
-        $userTransfer = $this->getUserTransfer($user);
+        $agentUserTransfer = $this->getUserTransfer($user);
 
-        return $this->getFactory()->createSecurityUser($userTransfer);
+        if ($agentUserTransfer === null) {
+            return $user;
+        }
+
+        return $this->getFactory()->createSecurityUser($agentUserTransfer);
     }
 
     /**
@@ -109,15 +113,17 @@ class AgentUserProvider extends AbstractPlugin implements UserProviderInterface
      */
     protected function getUserTransfer(UserInterface $user): ?UserTransfer
     {
-        if ($this->getFactory()->getAgentClient()->isLoggedIn() === false) {
-            return $this->findUserByUsername(
-                $this->getUserIdentifier($user),
-            );
+        $userTransfer = $this->findUserByUsername(
+            $this->getUserIdentifier($user),
+        );
+
+        if ($userTransfer === null) {
+             $this->getFactory()
+                ->getAgentClient()
+                ->invalidateAgentSession();
         }
 
-        return $this->getFactory()
-            ->getAgentClient()
-            ->getAgent();
+        return $userTransfer;
     }
 
     /**

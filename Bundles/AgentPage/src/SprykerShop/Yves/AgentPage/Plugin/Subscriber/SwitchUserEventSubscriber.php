@@ -8,10 +8,12 @@
 namespace SprykerShop\Yves\AgentPage\Plugin\Subscriber;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\AgentPage\Security\Agent;
 use SprykerShop\Yves\CustomerPage\Security\Customer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Security\Core\Authentication\Token\SwitchUserToken;
 use Symfony\Component\Security\Http\Event\SwitchUserEvent;
 use Symfony\Component\Security\Http\SecurityEvents;
 
@@ -20,6 +22,13 @@ use Symfony\Component\Security\Http\SecurityEvents;
  */
 class SwitchUserEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
+    /**
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
+     *
+     * @var string
+     */
+    protected const COL_STATUS_ACTIVE = 'active';
+
     /**
      * @return array<string, mixed>
      */
@@ -38,6 +47,14 @@ class SwitchUserEventSubscriber extends AbstractPlugin implements EventSubscribe
     public function switchUser(SwitchUserEvent $switchUserEvent)
     {
         $targetUser = $switchUserEvent->getTargetUser();
+
+        $agentUserTransfer = $this->findAgentUserByUsername($this->findAgentUsername($switchUserEvent));
+
+        if ($agentUserTransfer === null) {
+            $this->onImpersonationEnd();
+
+            return;
+        }
 
         if ($targetUser instanceof Customer) {
             $this->onImpersonationStart($targetUser);
@@ -81,5 +98,46 @@ class SwitchUserEventSubscriber extends AbstractPlugin implements EventSubscribe
         $this->getFactory()
             ->getQuoteClient()
             ->setQuote(new QuoteTransfer());
+    }
+
+    /**
+     * @param \Symfony\Component\Security\Http\Event\SwitchUserEvent $switchUserEvent
+     *
+     * @return string|null
+     */
+    protected function findAgentUsername(SwitchUserEvent $switchUserEvent): ?string
+    {
+        $token = $switchUserEvent->getToken();
+        if (!$token instanceof SwitchUserToken) {
+            return null;
+        }
+
+        $originalUser = $token->getOriginalToken()->getUser();
+        if (!$originalUser instanceof Agent) {
+            return null;
+        }
+
+        return $originalUser->getUsername();
+    }
+
+    /**
+     * @param string $username
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    protected function findAgentUserByUsername(string $username): ?UserTransfer
+    {
+        $userTransfer = new UserTransfer();
+        $userTransfer->setUsername($username);
+
+        $userTransfer = $this->getFactory()
+            ->getAgentClient()
+            ->findAgentByUsername($userTransfer);
+
+        if ($userTransfer && $userTransfer->getStatus() === static::COL_STATUS_ACTIVE) {
+            return $userTransfer;
+        }
+
+        return null;
     }
 }

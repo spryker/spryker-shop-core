@@ -38,5 +38,10 @@ interface AgentPageToAgentClientInterface
     /**
      * @return void
      */
+    public function invalidateAgentSession(): void;
+
+    /**
+     * @return void
+     */
     public function finishImpersonationSession(): void;
 }

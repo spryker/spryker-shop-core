@@ -63,6 +63,14 @@ class AgentPageToAgentClientBridge implements AgentPageToAgentClientInterface
     /**
      * @return void
      */
+    public function invalidateAgentSession(): void
+    {
+        $this->agentClient->invalidateAgentSession();
+    }
+
+    /**
+     * @return void
+     */
     public function finishImpersonationSession(): void
     {
         $this->agentClient->finishImpersonationSession();
