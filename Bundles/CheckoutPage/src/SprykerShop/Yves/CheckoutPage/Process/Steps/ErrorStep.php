@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
+use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,6 +25,16 @@ class ErrorStep extends AbstractBaseStep
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function preCondition(AbstractTransfer $quoteTransfer): bool
+    {
+        return $quoteTransfer->getErrors()->count() > 0;
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -31,7 +42,10 @@ class ErrorStep extends AbstractBaseStep
      */
     public function execute(Request $request, AbstractTransfer $quoteTransfer): QuoteTransfer
     {
-        return $quoteTransfer->setOrderReference(null);
+        $quoteTransfer->setOrderReference(null)
+            ->setErrors(new ArrayObject());
+
+        return $quoteTransfer;
     }
 
     /**
@@ -41,6 +55,6 @@ class ErrorStep extends AbstractBaseStep
      */
     public function postCondition(AbstractTransfer $quoteTransfer): bool
     {
-        return $quoteTransfer->getOrderReference() === null;
+        return $quoteTransfer->getOrderReference() === null && $quoteTransfer->getErrors()->count() === 0;
     }
 }

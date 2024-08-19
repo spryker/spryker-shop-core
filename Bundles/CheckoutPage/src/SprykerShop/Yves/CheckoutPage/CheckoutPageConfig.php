@@ -61,4 +61,17 @@ class CheckoutPageConfig extends AbstractBundleConfig
     {
         return [];
     }
+
+    /**
+     * Specification:
+     * - Returns escape route for success step.
+     *
+     * @api
+     *
+     * @return string|null
+     */
+    public function getSuccessStepEscapeRoute(): ?string
+    {
+        return null;
+    }
 }

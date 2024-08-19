@@ -302,7 +302,7 @@ class StepFactory extends AbstractFactory
             $this->getCartClient(),
             $this->getConfig(),
             CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_SUCCESS,
-            $this->getConfig()->getEscapeRoute(),
+            $this->getConfig()->getSuccessStepEscapeRoute() ?: $this->getConfig()->getEscapeRoute(),
         );
     }
 

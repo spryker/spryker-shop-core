@@ -87,8 +87,21 @@ class SuccessStep extends AbstractBaseStep
      *
      * @return bool
      */
+    public function preCondition(AbstractTransfer $quoteTransfer): bool
+    {
+        return $quoteTransfer->getErrors()->count() === 0;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
     public function postCondition(AbstractTransfer $quoteTransfer)
     {
+        if ($quoteTransfer->getErrors()->count() > 0) {
+            return true;
+        }
         if ($quoteTransfer->getOrderReference() === null) {
             return false;
         }

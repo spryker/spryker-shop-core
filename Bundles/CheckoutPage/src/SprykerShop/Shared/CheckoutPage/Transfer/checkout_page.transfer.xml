@@ -20,6 +20,11 @@
         <property name="priceMode" type="string"/>
         <property name="acceptTermsAndConditions" type="bool"/>
         <property name="isOrderPlacedSuccessfully" type="bool"/>
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="Message">

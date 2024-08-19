@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
@@ -119,6 +120,10 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
             return false;
         }
 
+        if ($quoteTransfer->getErrors()->count() > 0) {
+            return true;
+        }
+
         if ($this->checkoutResponseTransfer && !$this->checkoutResponseTransfer->getIsSuccess()) {
             $this->setPostConditionErrorRoute($this->checkoutResponseTransfer);
 
@@ -165,6 +170,10 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
         if ($checkoutResponseTransfer->getSaveOrder() !== null) {
             $quoteTransfer->setOrderReference($checkoutResponseTransfer->getSaveOrder()->getOrderReference());
             $quoteTransfer->setIsOrderPlacedSuccessfully($checkoutResponseTransfer->getIsSuccess());
+        }
+
+        if (!$checkoutResponseTransfer->getIsSuccess()) {
+            $this->setQuoteErrorMessages($checkoutResponseTransfer, $quoteTransfer);
         }
 
         $this->setCheckoutErrorMessages($checkoutResponseTransfer);
@@ -215,6 +224,22 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
                 $this->translateCheckoutErrorMessage($checkoutErrorTransfer),
             );
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setQuoteErrorMessages(CheckoutResponseTransfer $checkoutResponseTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($checkoutResponseTransfer->getErrors() as $checkoutErrorTransfer) {
+            $errorTransfer = (new ErrorTransfer())->setMessage($this->translateCheckoutErrorMessage($checkoutErrorTransfer));
+            $quoteTransfer->addError($errorTransfer);
+        }
+
+        return $quoteTransfer;
     }
 
     /**
