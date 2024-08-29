@@ -70,6 +70,7 @@ export class ConfiguratorService {
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         ...(configurator.configuration as Record<string, any>),
                     };
+                    configurator.display_data = {};
                     configurator.available_quantity = null;
 
                     this.assignVolumePrices(configurator, volumePrices);
@@ -86,6 +87,7 @@ export class ConfiguratorService {
 
                         if (uncheck) {
                             delete configurator.configuration[key];
+                            delete configurator.display_data[config.label];
                         }
 
                         if (active && !uncheck) {
