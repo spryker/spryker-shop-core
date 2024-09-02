@@ -20,7 +20,7 @@
             {% if name %}
                 <p class="col col--sm-12 col--md-6 col--lg-4 col--xl-3" itemprop="additionalProperty" itemscope itemtype="https://schema.org/PropertyValue">
                     <strong itemprop="name">{{ ('product.attribute.' ~ name) | trans }}</strong><br>
-                    <span itemprop="value">{{ value }}</span>
+                    <span itemprop="value">{{ value | join(', ') }}</span>
                 </p>
             {% endif %}
         {% endfor %}
