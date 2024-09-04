@@ -4,6 +4,7 @@
     productAbstract: _widget.productAbstract,
     buttonClasses: 'button button--success button--expand',
     buttonExtraClasses: '',
+    eventRevealer: null,
 } %}
 
 {% set extraClasses = 'spacing-left' %}
@@ -19,6 +20,9 @@
             buttonClasses: data.buttonClasses,
             buttonExtraClasses: data.buttonExtraClasses,
             extraAttributes: not addToCartSku ? {disabled: true},
+        },
+        attributes: {
+            'event-revealer': data.eventRevealer,
         },
     } only %}
 {% endblock %}

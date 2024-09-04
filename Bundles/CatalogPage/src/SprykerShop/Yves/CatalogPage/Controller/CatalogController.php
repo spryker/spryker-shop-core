@@ -52,7 +52,7 @@ class CatalogController extends AbstractController
     protected const URL_PARAM_SORTING = 'sort';
 
     /**
-     * @var array
+     * @var list<string>
      */
     protected const PRICE_SORTING_DIRECTIONS = ['price_desc', 'price_asc'];
 
@@ -98,9 +98,7 @@ class CatalogController extends AbstractController
     {
         $searchString = (string)$request->query->get('q', '');
         $idCategory = $categoryNode['id_category'];
-        $isEmptyCategoryFilterValueVisible = $this->getFactory()
-            ->getModuleConfig()
-            ->isEmptyCategoryFilterValueVisible();
+        $catalogPageConfig = $this->getFactory()->getModuleConfig();
 
         $parameters = $this->getAllowedRequestParameters($request);
         $parameters[PageIndexMap::CATEGORY] = $idCategoryNode;
@@ -127,7 +125,7 @@ class CatalogController extends AbstractController
         $metaAttributes = [
             'idCategory' => $idCategory,
             'category' => $categoryNode,
-            'isEmptyCategoryFilterValueVisible' => $isEmptyCategoryFilterValueVisible,
+            'isEmptyCategoryFilterValueVisible' => $catalogPageConfig->isEmptyCategoryFilterValueVisible(),
             'pageTitle' => ($metaTitle ?: $categoryNode['name']),
             'pageDescription' => $metaDescription,
             'pageKeywords' => $metaKeywords,
@@ -136,6 +134,7 @@ class CatalogController extends AbstractController
                 ->getCatalogClient()
                 ->getCatalogViewMode($request),
             'numberFormatConfig' => $numberFormatConfigTransfer->toArray(),
+            'isMiniCartAsyncModeEnabled' => $catalogPageConfig->isMiniCartAsyncModeEnabled(),
         ];
 
         return array_merge($searchResults, $metaAttributes);
@@ -182,16 +181,14 @@ class CatalogController extends AbstractController
             ->getCatalogClient()
             ->catalogSearch($searchString, $this->getAllowedRequestParameters($request));
 
+        $catalogPageConfig = $this->getFactory()->getModuleConfig();
         $searchResults = $this->reduceRestrictedSortingOptions($searchResults);
         $searchResults = $this->filterFacetsInSearchResults($searchResults);
 
-        $isEmptyCategoryFilterValueVisible = $this->getFactory()
-            ->getModuleConfig()
-            ->isEmptyCategoryFilterValueVisible();
-
         $searchResults['searchString'] = $searchString;
         $searchResults['idCategory'] = null;
-        $searchResults['isEmptyCategoryFilterValueVisible'] = $isEmptyCategoryFilterValueVisible;
+        $searchResults['isEmptyCategoryFilterValueVisible'] = $catalogPageConfig->isEmptyCategoryFilterValueVisible();
+        $searchResults['isMiniCartAsyncModeEnabled'] = $catalogPageConfig->isMiniCartAsyncModeEnabled();
         $searchResults['viewMode'] = $this->getFactory()
             ->getCatalogClient()
             ->getCatalogViewMode($request);

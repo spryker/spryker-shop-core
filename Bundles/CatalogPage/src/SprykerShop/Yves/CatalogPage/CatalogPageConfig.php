@@ -43,6 +43,11 @@ class CatalogPageConfig extends AbstractBundleConfig
     protected const CATALOG_PAGE_LIMIT = 10000;
 
     /**
+     * @var bool
+     */
+    protected const IS_MINI_CART_ASYNC_MODE_ENABLED = false;
+
+    /**
      * Specification:
      * - Choose, how handel blacklisted category.
      * - If return value is true - category will be shown, but gray out.
@@ -126,5 +131,18 @@ class CatalogPageConfig extends AbstractBundleConfig
     public function isVisibleEmptyRangeFilters(): bool
     {
         return true;
+    }
+
+    /**
+     * Specification:
+     * - Enables async rendering of mini cart during AJAX add to cart action.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isMiniCartAsyncModeEnabled(): bool
+    {
+        return static::IS_MINI_CART_ASYNC_MODE_ENABLED;
     }
 }

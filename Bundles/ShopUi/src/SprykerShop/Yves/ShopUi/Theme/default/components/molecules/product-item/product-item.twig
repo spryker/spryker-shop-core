@@ -14,6 +14,7 @@
     idProductAbstract: data.product.idProductAbstract | default,
     currencyIsoCode: null,
     metaSku: data.product.sku is defined ? data.product.sku : (data.product.abstract_sku is defined ? data.product.abstract_sku : ''),
+    eventRevealer: null,
 } %}
 
 {% define attributes = {
@@ -191,6 +192,7 @@
                                 {% widget 'ProductAbstractAddToCartButtonWidget' args [data.product] with {
                                     data: {
                                         buttonExtraClasses: config.jsName ~ '__ajax-button-add-to-cart',
+                                        eventRevealer: data.eventRevealer,
                                     },
                                 } only %}
                                 {% endwidget %}

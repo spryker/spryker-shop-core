@@ -116,6 +116,18 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const TWIG_ENVIRONMENT = 'TWIG_ENVIRONMENT';
+
+    /**
+     * @uses \Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     *
+     * @var string
+     */
+    protected const SERVICE_TWIG = 'twig';
+
+    /**
+     * @var string
+     */
     public const PLUGINS_ADD_TO_CART_FORM_WIDGET_PARAMETER_EXPANDER = 'PLUGINS_ADD_TO_CART_FORM_WIDGET_PARAMETER_EXPANDER';
 
     /**
@@ -142,6 +154,7 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addRequestStack($container);
         $container = $this->addUtilNumberService($container);
         $container = $this->addAddToCartFormWidgetParameterExpanderPlugins($container);
+        $container = $this->addTwigService($container);
 
         return $container;
     }
@@ -426,6 +439,20 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_NUMBER, function (Container $container) {
             return new CartPageToUtilNumberServiceBridge($container->getLocator()->utilNumber()->service());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addTwigService(Container $container): Container
+    {
+        $container->set(static::TWIG_ENVIRONMENT, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_TWIG);
         });
 
         return $container;

@@ -13,6 +13,8 @@ use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientIn
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToQuoteClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToZedRequestClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Service\CartPageToUtilNumberServiceInterface;
+use SprykerShop\Yves\CartPage\Expander\MiniCartViewExpander;
+use SprykerShop\Yves\CartPage\Expander\MiniCartViewExpanderInterface;
 use SprykerShop\Yves\CartPage\Form\FormFactory;
 use SprykerShop\Yves\CartPage\Handler\CartItemHandler;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAttributeMapper;
@@ -26,6 +28,7 @@ use SprykerShop\Yves\CartPage\ViewModel\CartPageViewInterface;
 use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Twig\Environment;
 
 /**
  * @method \SprykerShop\Yves\CartPage\CartPageConfig getConfig()
@@ -246,6 +249,17 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\CartPage\Expander\MiniCartViewExpanderInterface
+     */
+    public function createMiniCartViewExpander(): MiniCartViewExpanderInterface
+    {
+        return new MiniCartViewExpander(
+            $this->getTwigEnvironment(),
+            $this->getConfig(),
+        );
+    }
+
+    /**
      * @return \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface
      */
     public function getCsrfTokenManager(): CsrfTokenManagerInterface
@@ -267,5 +281,13 @@ class CartPageFactory extends AbstractFactory
     public function getAddToCartFormWidgetParameterExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CartPageDependencyProvider::PLUGINS_ADD_TO_CART_FORM_WIDGET_PARAMETER_EXPANDER);
+    }
+
+    /**
+     * @return \Twig\Environment
+     */
+    public function getTwigEnvironment(): Environment
+    {
+        return $this->getProvidedDependency(CartPageDependencyProvider::TWIG_ENVIRONMENT);
     }
 }

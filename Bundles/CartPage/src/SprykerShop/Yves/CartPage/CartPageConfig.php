@@ -31,6 +31,11 @@ class CartPageConfig extends AbstractBundleConfig
     protected const IS_CART_ACTIONS_ASYNC_MODE_ENABLED = false;
 
     /**
+     * @var string|null
+     */
+    protected const CART_BLOCK_MINI_CART_VIEW_TEMPLATE_PATH = null;
+
+    /**
      * Specification:
      * - Enables loading the cart items via AJAX.
      *
@@ -77,5 +82,18 @@ class CartPageConfig extends AbstractBundleConfig
     public function isCartActionsAsyncModeEnabled(): bool
     {
         return static::IS_CART_ACTIONS_ASYNC_MODE_ENABLED;
+    }
+
+    /**
+     * Specification:
+     * - Returns the template path for the cart block mini cart view.
+     *
+     * @api
+     *
+     * @return string|null
+     */
+    public function getCartBlockMiniCartViewTemplatePath(): ?string
+    {
+        return static::CART_BLOCK_MINI_CART_VIEW_TEMPLATE_PATH;
     }
 }

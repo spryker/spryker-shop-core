@@ -22,6 +22,7 @@
         currentItemsPerPage: _view.pagination.currentItemsPerPage | default,
     },
     numberFormatConfig: _view.numberFormatConfig | default({}),
+    isAjaxHeader: _view.isMiniCartAsyncModeEnabled | default(false),
 } %}
 
 {% set numberFormatConfig = {} %}
@@ -143,7 +144,11 @@
                 <div class="grid grid--stretch">
                     {% if data.products %}
                         {% for product in data.products %}
-                            {% widget 'CatalogPageProductWidget' args [product, data.viewMode] only %}
+                            {% widget 'CatalogPageProductWidget' args [product, data.viewMode] with {
+                                data: {
+                                    eventRevealer: data.isAjaxHeader ? 'CART_UPDATE_EVENT' : null,
+                                },
+                            } only %}
                             {% elsewidget 'ProductWidgetPlugin' args [product, data.viewMode] only %} {# @deprecated Use CatalogPageProductWidget instead. #}
                             {% endwidget %}
                         {% endfor %}
