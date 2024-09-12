@@ -78,7 +78,7 @@ export default class ProductItem extends Component {
      */
     updateProductItemData(data: ProductItemData): void {
         this.imageUrl = data.imageUrl;
-        this.imageAlt = data.name;
+        this.imageAlt = data.imageAlt;
         this.labels = data.labels;
         this.productItemName = data.name;
         this.ratingValue = data.ratingValue;

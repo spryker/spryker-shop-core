@@ -33,6 +33,9 @@
                 {% if data.showSearchForm %}
                     {% include molecule('search-form') with {
                         class: config.name ~ '__search-form is-hidden-sm-md',
+                        data: {
+                            byImage: true,
+                        },
                         attributes: {
                             'data-search-id': 'desktop'
                         }
@@ -60,6 +63,9 @@
         {% if data.showSearchForm %}
             {% include molecule('search-form') with {
                 class: config.name ~ '__row ' ~ config.name ~ '__search-form is-hidden-lg-xl',
+                data: {
+                    byImage: true,
+                },
                 attributes: {
                     'data-search-id': 'mobile'
                 }

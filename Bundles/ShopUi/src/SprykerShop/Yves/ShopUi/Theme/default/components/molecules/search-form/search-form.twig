@@ -7,6 +7,7 @@
 {% define data = {
     searchUrl: path('search'),
     searchValue: app.request.get('q'),
+    byImage: false,
 } %}
 
 {% define attributes = {
@@ -17,7 +18,17 @@
     <form action="{{ data.searchUrl }}">
         <div class="grid">
             <div class="col col--sm-10">
-                <input name="q" type="text" class="input input--expand suggest-search__input {{ config.jsName }}__input--{{ attributes['data-search-id'] }}" placeholder="{{ 'global.search' | trans }}" value="{{ data.searchValue }}" autocomplete="off">
+                <div class="grid">
+                    <div class="is-position-relative col col--expand">
+                        <input name="q" type="text" class="input input--expand suggest-search__input {{ config.jsName }}__input--{{ attributes['data-search-id'] }}" placeholder="{{ 'global.search' | trans }}" value="{{ data.searchValue }}" autocomplete="off">
+                    </div>
+
+                    {% if data.byImage and widgetGlobalExists('ImageSearchAiWidget') %}
+                        <div class="col col--sm-auto-width">
+                            {% widget 'ImageSearchAiWidget' only %}{% endwidget %}
+                        </div>
+                    {% endif %}
+                </div>
             </div>
             <div class="col col--sm-2">
                 <button type="submit" class="{{ config.name }}__submit button button--expand">

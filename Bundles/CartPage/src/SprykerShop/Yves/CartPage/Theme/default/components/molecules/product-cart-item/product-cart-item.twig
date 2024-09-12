@@ -21,7 +21,7 @@
 {% endblock %}
 
 {% block image %}
-    {{ macros.thumbnail(data.image, data.name, extraClass, ['small']) }}
+    {{ macros.thumbnail(data.image, data.imageAlt | default(data.name), extraClass, ['small']) }}
 {% endblock %}
 
 {% block labels %}{% endblock %}

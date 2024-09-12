@@ -39,6 +39,10 @@ $shop-ui-icon-size-biggest: map-get($setting-icon-sizes, 'icon-size-biggest');
             height: $shop-ui-icon-size-biggest;
         }
 
+        &--spinner {
+            animation: spin-to 1s linear infinite;
+        }
+
         @content;
     }
 }

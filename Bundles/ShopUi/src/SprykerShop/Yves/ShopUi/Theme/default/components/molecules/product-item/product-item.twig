@@ -11,6 +11,7 @@
     sku: data.product.sku | default,
     url: data.product.url | default,
     image: data.product.images is defined ? data.product.images.0.externalUrlSmall | default,
+    imageAlt: data.product.images is defined and data.product.images.0.altText is defined ? data.product.images.0.altText : data.name,
     idProductAbstract: data.product.idProductAbstract | default,
     currencyIsoCode: null,
     metaSku: data.product.sku is defined ? data.product.sku : (data.product.abstract_sku is defined ? data.product.abstract_sku : ''),
@@ -56,13 +57,13 @@
                 {% if data.url %}
                     {% block imageLink %}
                         <a class="{{ config.jsName }}__link-detail-page" itemprop="url" href="{{ path(data.url) }}">
-                            {{ macros.thumbnail(data.image, data.name, extraClass, modifiers, config.jsName) }}
+                            {{ macros.thumbnail(data.image, data.imageAlt | default(data.name), extraClass, modifiers, config.jsName) }}
                         </a>
                     {% endblock %}
                 {% endif %}
                 {% if not data.url %}
                     {% block productThumbnail %}
-                        {{ macros.thumbnail(data.image, data.name, extraClass, modifiers, config.jsName) }}
+                        {{ macros.thumbnail(data.image, data.imageAlt | default(data.name), extraClass, modifiers, config.jsName) }}
                     {% endblock %}
                 {% endif %}
             {% endblock %}

@@ -20,6 +20,7 @@
         modifiers: ['thumbnail', 'bigger'],
         data: {
             imageSrc: slide.externalUrlLarge,
+            imageTitle: slide.altText | default,
             extraAttributes: {
                 itemprop: 'image',
             },

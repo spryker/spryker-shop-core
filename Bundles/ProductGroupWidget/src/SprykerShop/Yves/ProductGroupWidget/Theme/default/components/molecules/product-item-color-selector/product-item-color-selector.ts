@@ -1,5 +1,5 @@
-import ColorSelector from '../color-selector/color-selector';
 import ProductItem, { ProductItemData } from 'ShopUi/components/molecules/product-item/product-item';
+import ColorSelector from '../color-selector/color-selector';
 
 export default class ProductItemColorSelector extends ColorSelector {
     protected productItemData: ProductItemData;
@@ -22,7 +22,7 @@ export default class ProductItemColorSelector extends ColorSelector {
     protected getProductItemData(): void {
         this.productItemData = {
             imageUrl: this.imageUrl,
-            imageAlt: this.productItemName,
+            imageAlt: this.productImageAlt,
             labels: this.labels ? JSON.parse(this.labels) : [],
             name: this.productItemName,
             ratingValue: this.ratingValue,
@@ -82,5 +82,9 @@ export default class ProductItemColorSelector extends ColorSelector {
 
     protected get productItemClassName(): string {
         return this.getAttribute('product-item-class-name');
+    }
+
+    protected get productImageAlt(): string {
+        return this.currentSelection.getAttribute('data-product-image-alt');
     }
 }

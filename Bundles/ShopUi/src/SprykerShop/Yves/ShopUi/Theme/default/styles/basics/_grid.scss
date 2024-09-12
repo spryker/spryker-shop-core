@@ -26,6 +26,13 @@
                         width: helper-grid-span($column);
                         min-width: helper-grid-span($column);
                     }
+
+                    &--#{$breakpoint}-auto-width {
+                        flex: 0;
+                        flex-basis: auto;
+                        width: auto;
+                        min-width: 0;
+                    }
                 }
             }
         }

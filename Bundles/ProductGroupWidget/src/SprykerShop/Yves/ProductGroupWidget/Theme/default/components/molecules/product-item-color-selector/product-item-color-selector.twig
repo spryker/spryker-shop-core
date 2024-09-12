@@ -29,6 +29,7 @@
     {% set dataAttributesList = {
         type: 'button',
         'data-product-image-src': item.images[0].externalUrlSmall ?? '',
+        'data-product-image-alt': item.images[0].altText ?? item.name,
         'data-product-labels': labels | json_encode,
         'data-product-name': item.name ?: '',
         'data-product-rating': item.rating ? item.rating.averageRating,

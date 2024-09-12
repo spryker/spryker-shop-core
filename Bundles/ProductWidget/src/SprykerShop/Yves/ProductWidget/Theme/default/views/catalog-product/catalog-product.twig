@@ -25,6 +25,7 @@
                 product: data.product,
                 name: data.product.abstract_name,
                 image: data.product.images ? data.product.images.0.external_url_small,
+                imageAlt: data.product.images ? data.product.images.0.alt_text | default,
                 idProductAbstract: data.product.id_product_abstract,
                 eventRevealer: data.eventRevealer,
             },
