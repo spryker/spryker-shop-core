@@ -11,7 +11,7 @@
     sku: data.product.sku | default,
     url: data.product.url | default,
     image: data.product.images is defined ? data.product.images.0.externalUrlSmall | default,
-    imageAlt: data.product.images is defined and data.product.images.0.altText is defined ? data.product.images.0.altText : data.name,
+    imageAlt: data.product.images is defined and data.product.images.0.altText is defined ? data.product.images.0.altText : data.name | default,
     idProductAbstract: data.product.idProductAbstract | default,
     currencyIsoCode: null,
     metaSku: data.product.sku is defined ? data.product.sku : (data.product.abstract_sku is defined ? data.product.abstract_sku : ''),
