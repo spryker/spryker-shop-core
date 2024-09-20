@@ -64,13 +64,12 @@ class ShipmentTypeFormPreSetDataHydrator implements ShipmentTypeFormPreSetDataHy
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $data
+     * @param \Generated\Shared\Transfer\QuoteTransfer|\Generated\Shared\Transfer\ItemTransfer $data
      *
      * @return string|null
      */
     protected function getSelectedShipmentTypeKey(AbstractTransfer $data): ?string
     {
-        /** @var \Generated\Shared\Transfer\QuoteTransfer|\Generated\Shared\Transfer\ItemTransfer $data */
         if ($data instanceof QuoteTransfer) {
             return $this->getSelectedShipmentTypeKeyForQuote($data);
         }

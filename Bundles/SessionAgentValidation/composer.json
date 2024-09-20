@@ -4,7 +4,7 @@
     "description": "SessionAgentValidation module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "spryker-shop/customer-page-extension": "^1.2.0",
         "spryker-shop/session-agent-validation-extension": "^1.0.0",
         "spryker/agent": "^1.4.0",

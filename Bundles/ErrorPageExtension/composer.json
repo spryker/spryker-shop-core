@@ -4,7 +4,7 @@
     "description": "ErrorPageExtension module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "spryker/symfony": "^3.5.0"
     },
     "require-dev": {

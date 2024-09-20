@@ -53,8 +53,11 @@ class ShipmentTypeFormSubmitDataHydrator implements ShipmentTypeFormSubmitDataHy
             return;
         }
 
-        /** @var \Generated\Shared\Transfer\ItemTransfer $data */
-        $this->hydrateShipmentTypeToItem($data, $form, $event);
+        if ($data instanceof ItemTransfer) {
+            $this->hydrateShipmentTypeToItem($data, $form, $event);
+
+            return;
+        }
     }
 
     /**

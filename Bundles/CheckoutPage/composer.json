@@ -4,7 +4,7 @@
     "description": "CheckoutPage module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "spryker-shop/checkout-page-extension": "^1.5.0",
         "spryker-shop/customer-page": "^2.46.0",
         "spryker-shop/money-widget": "^1.0.0",
