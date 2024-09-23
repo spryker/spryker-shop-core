@@ -17,7 +17,8 @@
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
         "spryker/event-dispatcher": "*",
-        "spryker/silex": "*"
+        "spryker/silex": "*",
+        "spryker/testify": "*"
     },
     "suggest": {
         "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
@@ -29,11 +30,16 @@
             "SprykerShop\\": "src/SprykerShop/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerShopTest\\": "tests/SprykerShopTest/"
+        }
+    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
     },
     "extra": {
         "branch-alias": {
