@@ -73,7 +73,7 @@ class QuoteRequestAgentPageControllerProvider extends AbstractYvesControllerProv
     /**
      * @var string
      */
-    protected const QUOTE_REQUEST_REFERENCE_REGEX = '[a-zA-Z0-9-]+';
+    protected const QUOTE_REQUEST_REFERENCE_REGEX = '[a-zA-Z0-9-_]+';
 
     /**
      * @param \Silex\Application $app

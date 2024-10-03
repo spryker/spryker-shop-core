@@ -73,7 +73,7 @@ class SalesReturnPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     /**
      * @var string
      */
-    protected const REFERENCE_REGEX = '[a-zA-Z0-9-]+';
+    protected const REFERENCE_REGEX = '[a-zA-Z0-9-_]+';
 
     /**
      * Specification:

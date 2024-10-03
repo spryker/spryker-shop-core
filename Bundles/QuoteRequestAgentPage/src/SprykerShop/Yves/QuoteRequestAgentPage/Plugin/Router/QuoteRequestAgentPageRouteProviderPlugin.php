@@ -144,7 +144,7 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
      *
      * @var string
      */
-    protected const QUOTE_REQUEST_REFERENCE_REGEX = '[a-zA-Z0-9-]+';
+    protected const QUOTE_REQUEST_REFERENCE_REGEX = '[a-zA-Z0-9-_]+';
 
     /**
      * @deprecated Use {@link \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_NAME_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS} instead.
