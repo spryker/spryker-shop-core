@@ -157,14 +157,13 @@ class MerchantProductReader implements MerchantProductReaderInterface
             return null;
         }
 
-        /** @var array<mixed> $productAbstractStorageData */
         $productAbstractStorageData = $this->productStorageClient
             ->findProductAbstractStorageData(
                 $productConcreteStorageData[static::ID_PRODUCT_ABSTRACT],
                 $locale,
             );
 
-        if (!array_key_exists(static::PARAM_MERCHANT_REFERENCE, $productAbstractStorageData)) {
+        if ($productAbstractStorageData === null || !array_key_exists(static::PARAM_MERCHANT_REFERENCE, $productAbstractStorageData)) {
             return null;
         }
 
