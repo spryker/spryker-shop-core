@@ -1,0 +1,71 @@
+@mixin product-comparison-page-comparison-table($name: '.comparison-table') {
+    #{$name} {
+        overflow-x: auto;
+
+        &__list {
+            display: grid;
+            grid-template-columns: repeat(var(--comparison-repeat-columns, 1), minmax(10rem, 1fr));
+
+            @include helper-breakpoint-media-min(helper-breakpoint-edge-min(map-get($setting-breakpoints, lg))) {
+                grid-template-columns: minmax(min-content, 15rem) repeat(
+                        var(--comparison-repeat-columns, 1),
+                        minmax(15rem, 1fr)
+                    );
+            }
+
+            /* stylelint-disable selector-not-notation */
+            &:not(&--size-1):not(&--size-2) {
+                min-width: 50rem;
+            }
+            /* stylelint-enable */
+        }
+
+        &__list-row {
+            display: contents;
+
+            @include helper-breakpoint-media-min(helper-breakpoint-edge-min(map-get($setting-breakpoints, lg))) {
+                &:nth-child(2n + 2) #{$name}__list-cell {
+                    background: $setting-color-light;
+                }
+            }
+        }
+
+        &__list-cell {
+            padding: 0.5rem 0.25rem;
+
+            &--name,
+            &--attribute {
+                text-align: center;
+            }
+
+            &--name {
+                background: $setting-color-light;
+
+                @include helper-breakpoint-media-min(helper-breakpoint-edge-min(map-get($setting-breakpoints, lg))) {
+                    text-align: left;
+                    background: $setting-color-transparent;
+                }
+            }
+
+            &--sm-full {
+                grid-column: 1 / -1;
+
+                @include helper-breakpoint-media-min(helper-breakpoint-edge-min(map-get($setting-breakpoints, lg))) {
+                    grid-column: 1;
+                }
+            }
+
+            &--products {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+        }
+
+        &__product {
+            flex-grow: 1;
+        }
+
+        @content;
+    }
+}

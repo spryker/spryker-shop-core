@@ -113,6 +113,8 @@
         "spryker-shop/product-barcode-widget": "*",
         "spryker-shop/product-bundle-widget": "*",
         "spryker-shop/product-category-widget": "*",
+        "spryker-shop/product-comparison-page": "*",
+        "spryker-shop/product-comparison-widget": "*",
         "spryker-shop/product-configuration-cart-widget": "*",
         "spryker-shop/product-configuration-cart-widget-extension": "*",
         "spryker-shop/product-configuration-shopping-list-widget": "*",

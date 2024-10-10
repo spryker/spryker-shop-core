@@ -1,0 +1,95 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'comparison-product-toggler',
+    tag: 'comparison-product-toggler',
+} %}
+
+{% define data = {
+    sku: required,
+    isDisabled: false,
+    maxItems: 'Infinity',
+    icon: 'compare',
+    text: 'product_comparison_page.add_to_comparison-list' | trans,
+    removeText: 'product_comparison_page.remove_from_comparison-list' | trans,
+} %}
+
+{% define attributes = {
+    sku: data.sku,
+    maxItems: data.maxItems,
+    url: path('product-comparison'),
+    redirectLength: 2,
+    updateUrlOnRemove: false,
+} %}
+
+{% block component %}
+    {% if data.icon or data.text %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <template class="{{ config.jsName }}__remove-message-template">
+        {% block removeMessage %}
+            {% include molecule('flash-message') with {
+                data: {
+                    action: 'success',
+                    text: 'product_comparison_page.removed_from_the_list' | trans,
+                },
+            } only %}
+        {% endblock %}
+    </template>
+
+    <template class="{{ config.jsName }}__success-message-template">
+        {% block successMessage %}
+            {% include molecule('flash-message') with {
+                data: {
+                    action: 'success',
+                    text: 'product_comparison_page.add_to_comparison.success' | trans,
+                },
+            } only %}
+        {% endblock %}
+    </template>
+
+    <template class="{{ config.jsName }}__max-message-template">
+        {% block maxItemsMessage %}
+            {% include molecule('flash-message') with {
+                data: {
+                    action: 'alert',
+                    text: 'product_comparison_page.add_to_comparison.error.max' | trans,
+                },
+            } only %}
+        {% endblock %}
+    </template>
+
+    <template class="{{ config.jsName }}__remove-template">
+        {% block removeFromCompare %}
+            {{ data.removeText }}
+        {% endblock %}
+    </template>
+
+    <template class="{{ config.jsName }}__add-template">
+        {% block addToCompare %}
+            {{ data.text }}
+        {% endblock %}
+    </template>
+
+    {% block button %}
+        <button class="button {{ _self.renderClass('button', modifiers) }} {{ config.name }}__button {{ config.jsName }}__button"
+            {% if data.isDisabled %} disabled {% endif %}
+            {{ qa('add-to-compare-list-button') }}
+        >
+            {% if data.icon %}
+                {% include atom('icon') with {
+                    data: {
+                        name: data.icon,
+                    },
+                } only %}
+            {% endif %}
+
+            {% if data.text or data.removeText %}
+                <sapn class="{{ config.jsName }}__button-placeholder">{{ data.text ?? data.removeText }}</span>
+            {% endif %}
+        </button>
+    {% endblock %}
+{% endblock %}

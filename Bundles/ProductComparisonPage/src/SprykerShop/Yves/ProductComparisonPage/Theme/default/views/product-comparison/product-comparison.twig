@@ -1,0 +1,31 @@
+{% extends template('page-layout-main') %}
+
+{% define data = {
+    products: _view.products,
+    attributes: _view.attributes,
+    title: 'product_comparison_page.page_title' | trans,
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'product_comparison_page.page_title' | trans,
+                url: path('product-comparison'),
+            }],
+        },
+    } only %}
+{% endblock %}
+
+{% block content %}
+    <div class="box">
+        {% block table %}
+            {% include molecule('comparison-table', 'ProductComparisonPage') with {
+                data: {
+                    products: data.products,
+                    attributes: data.attributes,
+                },
+            } only %}
+        {% endblock %}
+    </div>
+{% endblock %}

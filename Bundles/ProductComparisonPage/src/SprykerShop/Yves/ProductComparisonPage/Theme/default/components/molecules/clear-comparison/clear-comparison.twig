@@ -1,0 +1,37 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'clear-comparison',
+    tag: 'clear-comparison',
+} %}
+
+{% define data = {
+    icon: 'remove',
+    text: 'product_comparison_page.clear-compare-list' | trans,
+} %}
+
+{% define attributes = {
+    url: path('product-comparison'),
+} %}
+
+{% block component %}
+    {% if data.icon or data.text %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <button class="button {{ config.name }}__button {{ config.jsName }}__button" {{ qa('clear-compare-list-button') }}>
+        {% if data.icon %}
+            {% include atom('icon') with {
+                data: {
+                    name: data.icon,
+                },
+            } only %}
+        {% endif %}
+
+        {% if data.text %}
+            {{ data.text }}
+        {% endif %}
+    </button>
+{% endblock %}

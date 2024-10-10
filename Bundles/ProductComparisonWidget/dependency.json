@@ -1,0 +1,6 @@
+{
+    "include": {
+        "spryker-shop/shop-ui": "ShopUi provides basic frontend infrastructure.",
+        "spryker-shop/product-comparison-page": "ProductComparisonPage provides specific for comparison feature components."
+    }
+}

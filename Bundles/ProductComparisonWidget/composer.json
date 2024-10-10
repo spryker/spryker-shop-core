@@ -1,0 +1,40 @@
+{
+    "name": "spryker-shop/product-comparison-widget",
+    "type": "library",
+    "description": "ProductComparisonWidget module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.2",
+        "spryker-shop/product-comparison-page": "^1.0.0",
+        "spryker-shop/shop-ui": "^1.73.0",
+        "spryker/kernel": "^3.52.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*"
+    },
+    "suggest": {
+        "spryker/silex": "Use this module when using plugins that need Silex dependencies."
+    },
+    "autoload": {
+        "psr-4": {
+            "SprykerShop\\": "src/SprykerShop/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

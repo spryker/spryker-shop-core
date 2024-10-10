@@ -232,7 +232,7 @@
         {% else %}
             {% include molecule('wishlist-selector-product-detail-page', 'WishlistWidget') ignore missing with {
                 data: {
-                    product: data.product
+                    product: data.product,
                 },
             } only %}
         {% endif %}
@@ -241,4 +241,6 @@
     {% widget 'ProductDiscontinuedNoteWidget' args [sku] only %}
     {% elsewidget 'ProductDiscontinuedWidgetPlugin' args [sku] only %} {# @deprecated Use ProductDiscontinuedNoteWidget instead. #}
     {% endwidget %}
+
+    {% widget 'ComparisonProductTogglerComparisonListWidget' args [data.product.sku, isDisabled] only %}{% endwidget %}
 {% endblock %}

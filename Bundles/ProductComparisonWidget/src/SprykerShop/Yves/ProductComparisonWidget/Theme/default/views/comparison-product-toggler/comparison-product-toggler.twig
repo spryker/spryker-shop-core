@@ -1,0 +1,19 @@
+{% extends template('widget') %}
+
+{% define data = {
+    sku: _widget.sku,
+    isDisabled: _widget.isDisabled,
+    maxItems: _widget.maxItems,
+} %}
+
+{% block body %}
+    {% include molecule('comparison-product-toggler', 'ProductComparisonPage') with {
+        class: 'spacing-top',
+        modifiers: ['expand'],
+        data: {
+            sku: data.sku,
+            isDisabled: data.isDisabled,
+            maxItems: data.maxItems,
+        },
+    } only %}
+{% endblock %}

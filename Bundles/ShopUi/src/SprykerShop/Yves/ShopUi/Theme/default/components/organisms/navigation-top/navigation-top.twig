@@ -64,6 +64,16 @@
         </li>
         {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
 
+        {% widget 'LinkToProductComparisonListWidget' %}
+            {% block body %}
+                <li class="menu__item">
+                    {{ parent() }}
+                </li>
+            {% endblock %}
+        {% endwidget %}
+
+        {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
+
         {% block multiCart %}
             <li class="menu__item menu__item--has-children-dropdown">
                 {% widget 'MiniCartWidget' args [cartQuantity] with {

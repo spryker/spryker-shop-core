@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="spryker:transfer-01" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ProductView">
+        <property name="attributes" type="array" singular="attributes"/>
+        <property name="sku" type="string"/>
+        <property name="name" type="string"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="url" type="string"/>
+        <property name="images" singular="image" type="ProductImageStorage[]"/>
+        <property name="prices" type="array" singular="prices"/>
+    </transfer>
+
+    <transfer name="ProductStorageCriteria">
+    </transfer>
+
+    <transfer name="ProductImageStorage">
+    </transfer>
+
+</transfers>

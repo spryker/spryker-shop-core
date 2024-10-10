@@ -1,0 +1,103 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'comparison-table',
+    tag: 'comparison-table',
+} %}
+
+{% define data = {
+    products: [],
+    attributes: [],
+} %}
+
+{% block body %}
+    {% if data.products | length %}
+        {% block comparisonStyle %}
+            <style>
+                :root {
+                    --comparison-repeat-columns: {{ data.products | length }};
+                }
+            </style>
+        {% endblock %}
+
+        {% block list %}
+            <div class="{{ config.name }}__list {{ config.name }}__list--size-{{ data.products | length }}">
+                {% block tableHeadRow %}
+                    <div class="{{ config.name }}__list-row">
+                        {% block clearData %}
+                            <div class="{{ config.name }}__list-cell {{ config.name }}__list-cell--sm-full">
+                                {% block clearButton %}
+                                    {% include molecule('clear-comparison', 'ProductComparisonPage') only %}
+                                {% endblock %}
+                            </div>
+                        {% endblock %}
+
+                        {% for product in data.products %}
+                            {% block productData %}
+                                <div class="{{ config.name }}__list-cell {{ config.name }}__list-cell--products">
+                                    {% block deleteButton %}
+                                        {% include molecule('comparison-product-toggler', 'ProductComparisonPage') with {
+                                            class: 'spacing-bottom spacing-bottom--big',
+                                            data: {
+                                                icon: 'remove',
+                                                text: '',
+                                                removeText: '',
+                                                sku: product.sku,
+                                            },
+                                            attributes: {
+                                                updateUrlOnRemove: true,
+                                            },
+                                        } only %}
+                                    {% endblock %}
+
+                                    {% block product %}
+                                        {% include molecule('product-item') with {
+                                            class: "#{config.name}__product box--spacingless",
+                                            data: {
+                                                product: product,
+                                                name: product.name,
+                                                idProductAbstract: product.idProductAbstract,
+                                                url: product.url,
+                                                image: product.images.0.externalUrlSmall | default,
+                                            },
+                                        } only %}
+                                    {% endblock %}
+                                </div>
+                            {% endblock %}
+                        {% endfor %}
+                    </div>
+                {% endblock %}
+
+                {% for attribute_name in data.attributes %}
+                    {% block attributesRow %}
+                        <div class="{{ config.name }}__list-row">
+                            {% block attributeNameData %}
+                                <div class="{{ config.name }}__list-cell {{ config.name }}__list-cell--name {{ config.name }}__list-cell--sm-full">
+                                    {% block attributeName %}
+                                        <strong itemprop="name">{{ ('product.attribute.' ~ attribute_name) | trans }}</strong>
+                                    {% endblock %}
+                                </div>
+                            {% endblock %}
+
+                            {% for product in data.products %}
+                                {% block attributeData %}
+                                    <div class="{{ config.name }}__list-cell {{ config.name }}__list-cell--attribute">
+                                        {% block attribute %}
+                                            {{ product.attributes[attribute_name] | default('-') }}
+                                        {% endblock %}
+                                    </div>
+                                {% endblock %}
+                            {% endfor %}
+                        </div>
+                    {% endblock %}
+                {% endfor %}
+            </div>
+        {% endblock %}
+    {% else %}
+        {% block empty %}
+            <div class="alert alert-info">
+                {{ 'product_comparison_page.empty_comparison' | trans }}
+            </div>
+        {% endblock %}
+    {% endif %}
+{% endblock %}
