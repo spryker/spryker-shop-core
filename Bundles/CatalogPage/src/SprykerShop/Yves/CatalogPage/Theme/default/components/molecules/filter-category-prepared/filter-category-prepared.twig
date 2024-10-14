@@ -17,30 +17,88 @@
 
 {% block body %}
     <ul class="menu">
-        {% for categoryNode in data.categories %}
-            {% if (categoryNode.quantity > 0) or (categoryNode.quantity <= 0 and data.isEmptyCategoryFilterValueVisible == true) %}
-                {% set childrenClass = categoryNode.hasChildren ? 'menu__item--has-children-list' %}
-                {% set isDisabled = categoryNode.quantity == 0 ? 'disabled' %}
+        {% block categoryList %}
+            {% for categoryNode in data.categories %}
+                {% if (categoryNode.quantity > 0) %}
+                    {% set categoryNamePrepared = categoryNode.name | replace({'[^a-zA-Z0-9]': '_'}) %}
+                    {% set childrenClass = categoryNode.hasChildren ? 'menu__item--has-children-list' %}
+                    {% set isDisabled = categoryNode.quantity == 0 ? 'disabled' %}
+                    {% set triggerClassName = config.jsName ~ '__category-trigger-' ~ categoryNamePrepared %}
+                    {% set targetCategoryClassName = config.jsName ~ '__category-target-' ~ categoryNamePrepared %}
+                    {% set targetTogglerClassName = config.jsName ~ '__toggler-target-' ~ categoryNamePrepared %}
+                    {% set classToToggle = config.name ~ '__category-target' %}
+                    {% set classToToggleModifier = classToToggle ~ '--hidden' %}
+                    {% set toggleButtonClassName = config.name  ~ '__category-toggle-button' %}
 
-                <li class="menu__item {{ childrenClass }}">
-                    <button class="link {{ data.parentJsName ? data.parentJsName ~ '__trigger' }}" type="button" {{ isDisabled }} data-url={{ categoryNode.url }}>
-                        {{ categoryNode.name }} ({{ categoryNode.quantity | executeFilterIfExists('formatInt', app.locale) }})
-                    </button>
+                    {% block categoryItem %}
+                        <li class="menu__item {{ config.name }}__menu-item">
+                            <div class="grid">
+                                {% if categoryNode.hasChildren %}
+                                    {% block categoryItemToggler %}
+                                        <div class="col">
+                                            {% block categoryItemTogglerIcon %}
+                                                <button type="button" class="link spacing-right--small {{ toggleButtonClassName }} {{ triggerClassName }} {{ targetTogglerClassName }}">
+                                                    {% include atom('icon') with {
+                                                        class: config.name ~ '__category-toggle-button-icon',
+                                                        data: {
+                                                            name: 'caret-down',
+                                                        },
+                                                    } only %}
+                                                </button>
+                                            {% endblock %}
 
-                    {% if categoryNode.hasChildren %}
-                        {% include molecule('filter-category', 'CatalogPage') with {
-                            data: {
-                                prepareFilterCategoriesDefined: data.prepareFilterCategoriesDefined,
-                                filter: data.filter,
-                                filterPath: data.filterPath,
-                                categories: categoryNode.children,
-                                isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible,
-                                parentJsName: data.parentJsName,
-                            },
-                        } only %}
-                    {% endif %}
-                </li>
-            {% endif %}
-        {% endfor %}
+                                            {% block categoryItemTogglerHandlers %}
+                                                {% include molecule('toggler-click') with {
+                                                    attributes: {
+                                                        'trigger-class-name': triggerClassName,
+                                                        'target-class-name': targetCategoryClassName,
+                                                        'class-to-toggle': classToToggleModifier,
+                                                    },
+                                                } only %}
+
+                                                {% include molecule('toggler-click') with {
+                                                    attributes: {
+                                                        'trigger-class-name': triggerClassName,
+                                                        'target-class-name': targetTogglerClassName,
+                                                        'class-to-toggle': toggleButtonClassName ~ '--collapsed',
+                                                    },
+                                                } only %}
+                                            {% endblock %}
+                                        </div>
+                                    {% endblock %}
+                                {% endif %}
+
+                                {% block categoryRow %}
+                                    <div class="col {{ config.name }}__category-row {{ not categoryNode.hasChildren ? config.name ~ '__category-row--no-children' }}">
+                                        {% block categoryLink %}
+                                            <button class="link {{ data.parentJsName ? data.parentJsName ~ '__trigger' }}" type="button" {{ isDisabled }} data-url={{ categoryNode.url }}>
+                                                {{ categoryNode.name }} ({{ categoryNode.quantity | executeFilterIfExists('formatInt', app.locale) }})
+                                            </button>
+                                        {% endblock %}
+
+                                        {% if categoryNode.hasChildren %}
+                                            {% block categoryChildren %}
+                                                <div class="{{ classToToggle }} {{ targetCategoryClassName }}">
+                                                    {% include molecule('filter-category', 'CatalogPage') with {
+                                                        data: {
+                                                            prepareFilterCategoriesDefined: data.prepareFilterCategoriesDefined,
+                                                            filter: data.filter,
+                                                            filterPath: data.filterPath,
+                                                            categories: categoryNode.children,
+                                                            isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible,
+                                                            parentJsName: data.parentJsName,
+                                                        },
+                                                    } only %}
+                                                </div>
+                                            {% endblock %}
+                                        {% endif %}
+                                    </div>
+                                {% endblock %}
+                            </div>
+                        </li>
+                    {% endblock %}
+                {% endif %}
+            {% endfor %}
+        {% endblock %}
     </ul>
 {% endblock %}

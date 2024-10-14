@@ -1,0 +1,36 @@
+@mixin catalog-page-filter-category($name: '.filter-category') {
+    #{$name} {
+        &__category-toggle-button {
+            @include helper-effect-transition(transform);
+            margin-right: map-get($setting-spacing, 'small');
+
+            &--collapsed {
+                transform: rotate(-90deg);
+            }
+        }
+
+        &__category-target {
+            @include helper-effect-transition(max-height);
+            overflow: hidden;
+            max-height: 100rem;
+            opacity: 1;
+
+            &--hidden {
+                max-height: 0;
+                opacity: 0;
+            }
+        }
+
+        &__category-row {
+            &--no-children {
+                margin-left: 1.25rem;
+            }
+        }
+
+        &__menu-item &__menu-item {
+            font-size: map-get($setting-font-size, 'small');
+        }
+
+        @content;
+    }
+}
