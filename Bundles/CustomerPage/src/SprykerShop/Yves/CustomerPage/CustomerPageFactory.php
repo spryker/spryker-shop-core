@@ -75,6 +75,7 @@ use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
 use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
+use Symfony\Component\Security\Http\EventListener\UserCheckerListener;
 use Twig\TwigFunction;
 
 /**
@@ -592,6 +593,16 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
+     */
+    public function createUserCheckerListener(): EventSubscriberInterface
+    {
+        return new UserCheckerListener(
+            $this->createCustomerConfirmationUserChecker(),
+        );
+    }
+
+    /**
      * @return \SprykerShop\Yves\CustomerPage\Formatter\LoginCheckUrlFormatterInterface
      */
     public function createLoginCheckUrlFormatter(): LoginCheckUrlFormatterInterface
@@ -688,6 +699,7 @@ class CustomerPageFactory extends AbstractFactory
             $this->getConfig(),
             $this->createInteractiveLoginEventSubscriber(),
             $this->createCustomerLoginAuthenticator(),
+            $this->createUserCheckerListener(),
         );
     }
 

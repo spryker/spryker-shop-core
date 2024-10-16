@@ -75,24 +75,32 @@ class SecurityBuilderExpander implements SecurityBuilderExpanderInterface
     protected AuthenticatorInterface $authenticator;
 
     /**
+     * @var \Symfony\Component\EventDispatcher\EventSubscriberInterface
+     */
+    protected EventSubscriberInterface $userCheckerListener;
+
+    /**
      * @param \SprykerShop\Yves\CustomerPage\Builder\CustomerSecurityOptionsBuilderInterface $customerSecurityOptionsBuilder
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface $customerClient
      * @param \SprykerShop\Yves\CustomerPage\CustomerPageConfig $customerPageConfig
      * @param \Symfony\Component\EventDispatcher\EventSubscriberInterface $eventSubscriber
      * @param \Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface $authenticator
+     * @param \Symfony\Component\EventDispatcher\EventSubscriberInterface $userCheckerListener
      */
     public function __construct(
         CustomerSecurityOptionsBuilderInterface $customerSecurityOptionsBuilder,
         CustomerPageToCustomerClientInterface $customerClient,
         CustomerPageConfig $customerPageConfig,
         EventSubscriberInterface $eventSubscriber,
-        AuthenticatorInterface $authenticator
+        AuthenticatorInterface $authenticator,
+        EventSubscriberInterface $userCheckerListener
     ) {
         $this->customerSecurityOptionsBuilder = $customerSecurityOptionsBuilder;
         $this->customerClient = $customerClient;
         $this->customerPageConfig = $customerPageConfig;
         $this->eventSubscriber = $eventSubscriber;
         $this->authenticator = $authenticator;
+        $this->userCheckerListener = $userCheckerListener;
     }
 
     /**
@@ -109,7 +117,21 @@ class SecurityBuilderExpander implements SecurityBuilderExpanderInterface
         $securityBuilder = $this->addInteractiveLoginEventSubscriber($securityBuilder);
         $this->addAuthenticator($container);
 
+        $this->addUserCheckerListener($securityBuilder);
+
         return $securityBuilder;
+    }
+
+    /**
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
+     *
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
+     */
+    protected function addUserCheckerListener(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
+    {
+        return $securityBuilder->addEventSubscriber(function () {
+            return $this->userCheckerListener;
+        });
     }
 
     /**

@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\CustomerPage\Plugin\Provider;
 
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
-use SprykerShop\Yves\CustomerPage\Exception\NotConfirmedAccountException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -24,11 +23,6 @@ class CustomerAuthenticationFailureHandler extends BaseCustomerAuthenticationHan
      * @var string
      */
     public const MESSAGE_CUSTOMER_AUTHENTICATION_FAILED = 'customer.authentication.failed';
-
-    /**
-     * @var string
-     */
-    protected const GLOSSARY_KEY_CUSTOMER_NOT_CONFIRMED_ACCOUNT = 'customer.authorization.invalid_account';
 
     /**
      * @var \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
@@ -72,10 +66,6 @@ class CustomerAuthenticationFailureHandler extends BaseCustomerAuthenticationHan
      */
     protected function buildErrorMessage(AuthenticationException $exception): string
     {
-        if ($exception instanceof NotConfirmedAccountException) {
-            return static::GLOSSARY_KEY_CUSTOMER_NOT_CONFIRMED_ACCOUNT;
-        }
-
         return static::MESSAGE_CUSTOMER_AUTHENTICATION_FAILED;
     }
 }
