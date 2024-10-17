@@ -19,7 +19,7 @@
     <ul class="menu">
         {% block categoryList %}
             {% for categoryNode in data.categories %}
-                {% if (categoryNode.quantity > 0) %}
+                {% if (categoryNode.quantity > 0) or (categoryNode.quantity == 0 and data.isEmptyCategoryFilterValueVisible) %}
                     {% set categoryNamePrepared = categoryNode.name | replace({'[^a-zA-Z0-9]': '_'}) %}
                     {% set childrenClass = categoryNode.hasChildren ? 'menu__item--has-children-list' %}
                     {% set isDisabled = categoryNode.quantity == 0 ? 'disabled' %}
@@ -27,6 +27,7 @@
                     {% set targetCategoryClassName = config.jsName ~ '__category-target-' ~ categoryNamePrepared %}
                     {% set targetTogglerClassName = config.jsName ~ '__toggler-target-' ~ categoryNamePrepared %}
                     {% set classToToggle = config.name ~ '__category-target' %}
+                    {% set categoryTargetInner = config.name ~ '__category-target-inner' %}
                     {% set classToToggleModifier = classToToggle ~ '--hidden' %}
                     {% set toggleButtonClassName = config.name  ~ '__category-toggle-button' %}
 
@@ -79,16 +80,18 @@
                                         {% if categoryNode.hasChildren %}
                                             {% block categoryChildren %}
                                                 <div class="{{ classToToggle }} {{ targetCategoryClassName }}">
-                                                    {% include molecule('filter-category', 'CatalogPage') with {
-                                                        data: {
-                                                            prepareFilterCategoriesDefined: data.prepareFilterCategoriesDefined,
-                                                            filter: data.filter,
-                                                            filterPath: data.filterPath,
-                                                            categories: categoryNode.children,
-                                                            isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible,
-                                                            parentJsName: data.parentJsName,
-                                                        },
-                                                    } only %}
+                                                    <div class="{{ categoryTargetInner }}">
+                                                        {% include molecule('filter-category', 'CatalogPage') with {
+                                                            data: {
+                                                                prepareFilterCategoriesDefined: data.prepareFilterCategoriesDefined,
+                                                                filter: data.filter,
+                                                                filterPath: data.filterPath,
+                                                                categories: categoryNode.children,
+                                                                isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible,
+                                                                parentJsName: data.parentJsName,
+                                                            },
+                                                        } only %}
+                                                    </div>
                                                 </div>
                                             {% endblock %}
                                         {% endif %}
