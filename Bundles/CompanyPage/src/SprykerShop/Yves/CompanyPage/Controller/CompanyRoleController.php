@@ -12,14 +12,46 @@ use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\CompanyPage\Form\CompanyRoleForm;
 use SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CompanyRoleController extends AbstractCompanyController
 {
+    use PermissionAwareTrait;
+
+    /**
+     * @uses \Spryker\Client\CompanyRole\Plugin\Permission\SeeCompanyRolesPermissionPlugin
+     *
+     * @var string
+     */
+    protected const PERMISSION_SEE_COMPANY_ROLES = 'SeeCompanyRolesPermissionPlugin';
+
+    /**
+     * @uses \Spryker\Client\CompanyRole\Plugin\Permission\DeleteCompanyRolesPermissionPlugin
+     *
+     * @var string
+     */
+    protected const PERMISSION_DELETE_COMPANY_ROLES = 'DeleteCompanyRolesPermissionPlugin';
+
+    /**
+     * @uses \Spryker\Client\CompanyRole\Plugin\Permission\CreateCompanyRolesPermissionPlugin
+     *
+     * @var string
+     */
+    protected const PERMISSION_CREATE_COMPANY_ROLES = 'CreateCompanyRolesPermissionPlugin';
+
+    /**
+     * @uses \Spryker\Client\CompanyRole\Plugin\Permission\EditCompanyRolesPermissionPlugin
+     *
+     * @var string
+     */
+    protected const PERMISSION_EDIT_COMPANY_ROLES = 'EditCompanyRolesPermissionPlugin';
+
     /**
      * @var string
      */
@@ -58,10 +90,16 @@ class CompanyRoleController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     *
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
+        if (!$this->can(static::PERMISSION_SEE_COMPANY_ROLES)) {
+            throw new AccessDeniedHttpException();
+        }
+
         $viewData = $this->executeIndexAction($request);
 
         return $this->view($viewData, [], '@CompanyPage/views/role/role.twig');
@@ -88,10 +126,16 @@ class CompanyRoleController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     *
      * @return \Spryker\Yves\Kernel\View\View|array
      */
     public function detailsAction(Request $request)
     {
+        if (!$this->can(static::PERMISSION_SEE_COMPANY_ROLES)) {
+            throw new AccessDeniedHttpException();
+        }
+
         $viewData = $this->executeDetailsAction($request);
 
         return $this->view($viewData, [], '@CompanyPage/views/role-detail/role-detail.twig');
@@ -135,11 +179,16 @@ class CompanyRoleController extends AbstractCompanyController
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request): RedirectResponse
     {
+        if (!$this->can(static::PERMISSION_DELETE_COMPANY_ROLES)) {
+            throw new AccessDeniedHttpException();
+        }
+
         $companyRoleDeleteForm = $this->getFactory()
             ->createCompanyPageFormFactory()
             ->getCompanyRoleDeleteForm(new CompanyRoleTransfer())
@@ -178,11 +227,16 @@ class CompanyRoleController extends AbstractCompanyController
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
      *
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function confirmDeleteAction(Request $request)
     {
+        if (!$this->can(static::PERMISSION_DELETE_COMPANY_ROLES)) {
+            throw new AccessDeniedHttpException();
+        }
+
         $idCompanyRole = $request->query->getInt(static::PARAMETER_ID_COMPANY_ROLE);
 
         $companyRoleTransfer = (new CompanyRoleTransfer())
@@ -243,10 +297,16 @@ class CompanyRoleController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     *
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
     {
+        if (!$this->can(static::PERMISSION_CREATE_COMPANY_ROLES)) {
+            throw new AccessDeniedHttpException();
+        }
+
         $response = $this->executeCreateAction($request);
 
         if (!is_array($response)) {
@@ -297,10 +357,16 @@ class CompanyRoleController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     *
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function updateAction(Request $request)
     {
+        if (!$this->can(static::PERMISSION_EDIT_COMPANY_ROLES)) {
+            throw new AccessDeniedHttpException();
+        }
+
         $response = $this->executeUpdateAction($request);
 
         if (!is_array($response)) {

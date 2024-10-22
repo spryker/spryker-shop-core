@@ -9,9 +9,11 @@ namespace SprykerShop\Yves\CompanyPage\Controller;
 
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -19,6 +21,15 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class CompanyUserStatusController extends AbstractCompanyController
 {
+    use PermissionAwareTrait;
+
+    /**
+     * @uses \Spryker\Client\CompanyUser\Plugin\CompanyUserStatusChangePermissionPlugin
+     *
+     * @var string
+     */
+    protected const PERMISSION_COMPANY_USER_STATUS_CHANGE = 'CompanyUserStatusChangePermissionPlugin';
+
     /**
      * @var string
      */
@@ -57,10 +68,16 @@ class CompanyUserStatusController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function enableAction(Request $request): RedirectResponse
     {
+        if ($this->can(static::PERMISSION_COMPANY_USER_STATUS_CHANGE)) {
+            throw new AccessDeniedHttpException();
+        }
+
         $idCompanyUser = $request->query->getInt(static::ID_COMPANY_USER_PARAMETER);
 
         if ($this->isCurrentCompanyUser($idCompanyUser)) {
@@ -84,10 +101,16 @@ class CompanyUserStatusController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function disableAction(Request $request): RedirectResponse
     {
+        if ($this->can(static::PERMISSION_COMPANY_USER_STATUS_CHANGE)) {
+            throw new AccessDeniedHttpException();
+        }
+
         $idCompanyUser = $request->query->getInt(static::ID_COMPANY_USER_PARAMETER);
 
         if ($this->isCurrentCompanyUser($idCompanyUser)) {

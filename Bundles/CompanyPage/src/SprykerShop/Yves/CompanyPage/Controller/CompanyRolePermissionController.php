@@ -12,9 +12,11 @@ use Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -22,6 +24,15 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class CompanyRolePermissionController extends AbstractCompanyController
 {
+    use PermissionAwareTrait;
+
+    /**
+     * @uses \Spryker\Client\CompanyRole\Plugin\Permission\EditCompanyRolesPermissionPlugin
+     *
+     * @var string
+     */
+    protected const PERMISSION_EDIT_COMPANY_ROLES = 'EditCompanyRolesPermissionPlugin';
+
     /**
      * @var string
      */
@@ -50,10 +61,16 @@ class CompanyRolePermissionController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function assignAction(Request $request): RedirectResponse
     {
+        if (!$this->can(static::PERMISSION_EDIT_COMPANY_ROLES)) {
+            throw new AccessDeniedHttpException();
+        }
+
         $companyRolePermissionAssignForm = $this->getFactory()
             ->createCompanyPageFormFactory()
             ->getCompanyRolePermissionAssignForm()
@@ -88,10 +105,16 @@ class CompanyRolePermissionController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function unassignAction(Request $request): RedirectResponse
     {
+        if (!$this->can(static::PERMISSION_EDIT_COMPANY_ROLES)) {
+            throw new AccessDeniedHttpException();
+        }
+
         $companyRolePermissionUnassignForm = $this->getFactory()
             ->createCompanyPageFormFactory()
             ->getCompanyRolePermissionUnassignForm()

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Shared\CompanyUser\Plugin\AddCompanyUserPermissionPlugin;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\CompanyPage\Form\CompanyUserForm;
@@ -63,12 +62,46 @@ class UserController extends AbstractCompanyController
     protected const ERROR_MESSAGE_COMPANY_USER_ASSIGN_EMPTY_ROLES = 'company.account.company_user.assign_roles.empty_roles.error';
 
     /**
+     * @uses \Spryker\Client\CompanyUser\Plugin\Permission\SeeCompanyUsersPermissionPlugin
+     *
+     * @var string
+     */
+    protected const PERMISSION_SEE_COMPANY_USERS = 'SeeCompanyUsersPermissionPlugin';
+
+    /**
+     * @uses \Spryker\Shared\CompanyUser\Plugin\AddCompanyUserPermissionPlugin
+     *
+     * @var string
+     */
+    protected const PERMISSION_ADD_COMPANY_USERS = 'AddCompanyUserPermissionPlugin';
+
+    /**
+     * @uses \Spryker\Client\CompanyUser\Plugin\Permission\EditCompanyUsersPermissionPlugin
+     *
+     * @var string
+     */
+    protected const PERMISSION_EDIT_COMPANY_USERS = 'EditCompanyUsersPermissionPlugin';
+
+    /**
+     * @uses \Spryker\Client\CompanyUser\Plugin\Permission\DeleteCompanyUsersPermissionPlugin
+     *
+     * @var string
+     */
+    protected const PERMISSION_DELETE_COMPANY_USERS = 'DeleteCompanyUsersPermissionPlugin';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
      *
      * @return \Spryker\Yves\Kernel\View\View|array
      */
     public function indexAction(Request $request)
     {
+        if (!$this->can(static::PERMISSION_SEE_COMPANY_USERS)) {
+            throw new AccessDeniedHttpException();
+        }
+
         $viewData = $this->executeIndexAction($request);
 
         return $this->view($viewData, [], '@CompanyPage/views/user/user.twig');
@@ -119,7 +152,7 @@ class UserController extends AbstractCompanyController
      */
     protected function executeCreateAction(Request $request)
     {
-        if (!$this->can(AddCompanyUserPermissionPlugin::KEY)) {
+        if (!$this->can(static::PERMISSION_ADD_COMPANY_USERS)) {
             throw new AccessDeniedHttpException();
         }
 
@@ -163,10 +196,16 @@ class UserController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     *
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function updateAction(Request $request)
     {
+        if (!$this->can(static::PERMISSION_EDIT_COMPANY_USERS)) {
+            throw new AccessDeniedHttpException();
+        }
+
         $response = $this->executeUpdateAction($request);
 
         if (!is_array($response)) {
@@ -230,11 +269,16 @@ class UserController extends AbstractCompanyController
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request)
     {
+        if (!$this->can(static::PERMISSION_DELETE_COMPANY_USERS)) {
+            throw new AccessDeniedHttpException();
+        }
+
         $companyUserDeleteForm = $this->getFactory()
             ->createCompanyPageFormFactory()
             ->getCompanyUserDeleteForm(new CompanyUserTransfer())

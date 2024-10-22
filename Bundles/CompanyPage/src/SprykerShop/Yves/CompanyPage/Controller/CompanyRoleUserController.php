@@ -13,9 +13,11 @@ use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -23,6 +25,15 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class CompanyRoleUserController extends AbstractCompanyController
 {
+    use PermissionAwareTrait;
+
+    /**
+     * @uses \Spryker\Client\CompanyUser\Plugin\Permission\EditCompanyUsersPermissionPlugin
+     *
+     * @var string
+     */
+    protected const PERMISSION_EDIT_COMANY_USERS = 'EditCompanyUsersPermissionPlugin';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -51,10 +62,16 @@ class CompanyRoleUserController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function assignAction(Request $request): RedirectResponse
     {
+        if (!$this->can(static::PERMISSION_EDIT_COMANY_USERS)) {
+            throw new AccessDeniedHttpException();
+        }
+
         $idCompanyRole = $request->query->getInt('id-company-role');
         $idCompanyUser = $request->query->getInt('id-company-user');
 
@@ -81,10 +98,16 @@ class CompanyRoleUserController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function unassignAction(Request $request): RedirectResponse
     {
+        if (!$this->can(static::PERMISSION_EDIT_COMANY_USERS)) {
+            throw new AccessDeniedHttpException();
+        }
+
         $idCompanyRole = $request->query->getInt('id-company-role');
         $idCompanyUser = $request->query->getInt('id-company-user');
 

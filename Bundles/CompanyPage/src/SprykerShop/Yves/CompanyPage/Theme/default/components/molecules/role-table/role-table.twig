@@ -43,19 +43,23 @@
                                     </a>
                                 </li>
                             {% endif %}
-                            {% if data.actions.update %}
-                                <li class="menu__item">
-                                    <a href="{{ url('company/company-role/update', {'id': role.idCompanyRole}) }}">
-                                        {{ "company.account.business_unit.edit" | trans }}
-                                    </a>
-                                </li>
+                            {% if can('EditCompanyRolesPermissionPlugin') %}
+                                {% if data.actions.update %}
+                                    <li class="menu__item">
+                                        <a href="{{ url('company/company-role/update', {'id': role.idCompanyRole}) }}">
+                                            {{ "company.account.business_unit.edit" | trans }}
+                                        </a>
+                                    </li>
+                                {% endif %}
                             {% endif %}
-                            {% if data.actions.delete %}
-                                <li class="menu__item">
-                                    <a href="{{ url('company/company-role/confirm-delete', {'id': role.idCompanyRole }) }}">
-                                        {{ "company.account.business_unit.delete" | trans }}
-                                    </a>
-                                </li>
+                            {% if can('DeleteCompanyRolesPermissionPlugin') %}
+                                {% if data.actions.delete %}
+                                    <li class="menu__item">
+                                        <a href="{{ url('company/company-role/confirm-delete', {'id': role.idCompanyRole }) }}">
+                                            {{ "company.account.business_unit.delete" | trans }}
+                                        </a>
+                                    </li>
+                                {% endif %}
                             {% endif %}
                         </ul>
                     </td>

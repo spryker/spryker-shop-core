@@ -17,10 +17,11 @@
 } %}
 
 {% block companyContent %}
-    <div class="box text-right">
-        <a class="button" href="{{url('company/company-role/create')}}">{{ 'company.account.company_role.add' | trans }}</a>
-    </div>
-
+    {% if can('CreateCompanyRolesPermissionPlugin') %}
+        <div class="box text-right">
+            <a class="button" href="{{url('company/company-role/create')}}">{{ 'company.account.company_role.add' | trans }}</a>
+        </div>
+    {% endif %}
     {% if data.roles is not empty %}
         <div class="box">
             {% include molecule('role-table', 'CompanyPage') with {
