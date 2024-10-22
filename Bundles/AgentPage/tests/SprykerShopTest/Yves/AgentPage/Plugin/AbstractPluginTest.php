@@ -8,13 +8,50 @@
 namespace SprykerShopTest\Yves\AgentPage\Plugin;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\UserTransfer;
 use Psr\Log\LoggerInterface;
 use SprykerShop\Yves\AgentPage\AgentPageFactory;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToAgentClientBridge;
 use SprykerShop\Yves\AgentPage\Logger\AuditLogger;
+use SprykerShop\Yves\AgentPage\Security\Agent;
+use Symfony\Component\Security\Core\Authentication\Token\SwitchUserToken;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class AbstractPluginTest extends Unit
 {
+    /**
+     * @return \Symfony\Component\Security\Core\Authentication\Token\SwitchUserToken
+     */
+    protected function getSwitchUserTokenMock(): SwitchUserToken
+    {
+        $agentPageFactoryMock = $this->createMock(SwitchUserToken::class);
+        $agentPageFactoryMock->method('getOriginalToken')->willReturn($this->getTokenInterfaceMock());
+
+        return $agentPageFactoryMock;
+    }
+
+    /**
+     * @return (\object&\PHPUnit\Framework\MockObject\MockObject)|\PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Security\Core\Authentication\Token\TokenInterface|(\Symfony\Component\Security\Core\Authentication\Token\TokenInterface&\object&\PHPUnit\Framework\MockObject\MockObject)|(\Symfony\Component\Security\Core\Authentication\Token\TokenInterface&\PHPUnit\Framework\MockObject\MockObject)
+     */
+    protected function getTokenInterfaceMock()
+    {
+        $tokenMock = $this->createMock(TokenInterface::class);
+        $tokenMock->method('getUser')->willReturn($this->getAgentMock());
+
+        return $tokenMock;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\AgentPage\Security\Agent
+     */
+    protected function getAgentMock(): Agent
+    {
+        $agentMock = $this->createMock(Agent::class);
+        $agentMock->method('getUsername')->willReturn('username');
+
+        return $agentMock;
+    }
+
     /**
      * @param string $expectedAuditLogMessage
      *
@@ -65,6 +102,12 @@ class AbstractPluginTest extends Unit
      */
     protected function getAgentClientMock(): AgentPageToAgentClientBridge
     {
-        return $this->createMock(AgentPageToAgentClientBridge::class);
+        $agentClientMock = $this->createMock(AgentPageToAgentClientBridge::class);
+
+        $agentClientMock->method('findAgentByUsername')->willReturn(
+            (new UserTransfer())->setStatus('active'),
+        );
+
+        return $agentClientMock;
     }
 }

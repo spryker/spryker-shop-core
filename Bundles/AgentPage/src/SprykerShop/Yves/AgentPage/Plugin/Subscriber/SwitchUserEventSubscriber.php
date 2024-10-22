@@ -46,15 +46,23 @@ class SwitchUserEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     public function switchUser(SwitchUserEvent $switchUserEvent)
     {
-        $targetUser = $switchUserEvent->getTargetUser();
+        $username = $this->findAgentUsername($switchUserEvent);
 
-        $agentUserTransfer = $this->findAgentUserByUsername($this->findAgentUsername($switchUserEvent));
+        if ($username === null) {
+            $this->onImpersonationEnd();
+
+            return;
+        }
+
+        $agentUserTransfer = $this->findAgentUserByUsername($username);
 
         if ($agentUserTransfer === null) {
             $this->onImpersonationEnd();
 
             return;
         }
+
+        $targetUser = $switchUserEvent->getTargetUser();
 
         if ($targetUser instanceof Customer) {
             $this->onImpersonationStart($targetUser);

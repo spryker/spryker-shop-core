@@ -33,11 +33,11 @@ class SwitchUserEventSubscriberTest extends AbstractPluginTest
     {
         // Arrange
         $switchUserEventSubscriber = $this->getSwitchUserEventSubscriber('Impersonation Started');
-        $switchUserEvent = new SwitchUserEvent(new Request(), new Customer(
-            new CustomerTransfer(),
-            'test',
-            'test',
-        ));
+        $switchUserEvent = new SwitchUserEvent(
+            new Request(),
+            new Customer(new CustomerTransfer(), 'test', 'test'),
+            $this->getSwitchUserTokenMock(),
+        );
 
         // Act
         $switchUserEventSubscriber->switchUser($switchUserEvent);
@@ -50,7 +50,7 @@ class SwitchUserEventSubscriberTest extends AbstractPluginTest
     {
         // Arrange
         $switchUserEventSubscriber = $this->getSwitchUserEventSubscriber('Impersonation Ended');
-        $switchUserEvent = new SwitchUserEvent(new Request(), new Agent(new UserTransfer()));
+        $switchUserEvent = new SwitchUserEvent(new Request(), new Agent(new UserTransfer()), $this->getSwitchUserTokenMock());
 
         // Act
         $switchUserEventSubscriber->switchUser($switchUserEvent);
