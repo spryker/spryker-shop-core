@@ -223,7 +223,7 @@ class ContentProductAbstractListTwigPluginTest extends Unit
     protected function getTwig(): Environment
     {
         $twigMock = $this->getMockBuilder(Environment::class)->setConstructorArgs([new FilesystemLoader()])
-            ->setMethods(['render'])
+            ->onlyMethods(['render'])
             ->getMock();
 
         $twigMock->method('render')->willReturn(static::RENDERED_STRING);

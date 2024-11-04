@@ -55,7 +55,7 @@ class CheckoutAddressFormDataProviderTest extends Unit
         parent::setUp();
 
         $this->dataProvider = $this->getMockBuilder(CheckoutAddressFormDataProvider::class)
-            ->setMethods(['resolveShipmentForSingleAddressDelivery'])
+            ->onlyMethods(['resolveShipmentForSingleAddressDelivery'])
             ->disableOriginalConstructor()
             ->getMock();
     }

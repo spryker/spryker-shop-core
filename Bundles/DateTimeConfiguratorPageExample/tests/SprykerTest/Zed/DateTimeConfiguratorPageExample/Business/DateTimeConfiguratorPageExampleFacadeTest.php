@@ -100,11 +100,10 @@ class DateTimeConfiguratorPageExampleFacadeTest extends Unit
             DateTimeConfiguratorPageExampleToAvailabilityFacadeInterface::class,
         )->onlyMethods(['findOrCreateProductConcreteAvailabilityBySkuForStore'])->getMockForAbstractClass();
 
-        $dateTimeConfiguratorPageExampleFactoryMock = $this->getMockBuilder(
-            DateTimeConfiguratorPageExampleBusinessFactory::class,
-        )->disableOriginalConstructor()->setMethodsExcept([
-            'createProductConcreteAvailabilityReader',
-        ])->getMock();
+        $dateTimeConfiguratorPageExampleFactoryMock = $this->getMockBuilder(DateTimeConfiguratorPageExampleBusinessFactory::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getAvailabilityFacade'])
+            ->getMock();
 
         $dateTimeConfiguratorPageExampleFactoryMock->method('getAvailabilityFacade')
             ->willReturn($this->availabilityFacadeMock);

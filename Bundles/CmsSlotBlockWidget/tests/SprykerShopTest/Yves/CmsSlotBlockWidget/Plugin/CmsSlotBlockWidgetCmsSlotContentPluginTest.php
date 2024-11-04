@@ -92,7 +92,7 @@ class CmsSlotBlockWidgetCmsSlotContentPluginTest extends Unit
     {
         $cmsSlotBlockWidgetCmsSlotContentPluginMock = $this
             ->getMockBuilder(CmsSlotBlockWidgetCmsSlotContentPlugin::class)
-            ->setMethods(['getFactory'])
+            ->onlyMethods(['getFactory'])
             ->getMock();
 
         $cmsSlotBlockWidgetFactory = $this->tester->getFactory();
@@ -111,7 +111,7 @@ class CmsSlotBlockWidgetCmsSlotContentPluginTest extends Unit
     {
         $cmsSlotBlockWidgetDataProviderMock = $this
             ->getMockBuilder(CmsSlotBlockWidgetDataProvider::class)
-            ->setMethods(['getCmsBlockTwigFunction'])
+            ->onlyMethods(['getCmsBlockTwigFunction'])
             ->setConstructorArgs([
                 $this->getMockBuilder(Environment::class)
                     ->getMock(),
