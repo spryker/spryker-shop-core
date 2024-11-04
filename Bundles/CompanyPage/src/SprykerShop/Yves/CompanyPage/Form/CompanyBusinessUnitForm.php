@@ -24,6 +24,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageConfig getConfig()
+ * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
  */
 class CompanyBusinessUnitForm extends AbstractType
 {
@@ -150,6 +151,7 @@ class CompanyBusinessUnitForm extends AbstractType
             'required' => true,
             'constraints' => [
                 $this->createNotBlankConstraint(),
+                $this->getFactory()->createCompanyUserRelationConstraint(),
             ],
         ]);
 
