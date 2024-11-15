@@ -6,6 +6,7 @@
 
 {% define data = {
     quantity: data.product.quantity | default,
+    checkboxClasses: '',
 } %}
 
 {% block extraClass %}{% endblock %}
@@ -13,7 +14,13 @@
 {% block imageContainer %}
     <div class="{{ config.name }}__col grid grid--middle col col--sm-12 col--lg-2">
         <div class="grid grid--middle">
-            {% widget 'CustomerReorderItemCheckboxWidget' args [data.product] only %}{% endwidget %}
+            {% if widgetGlobalExists('CartReorderItemCheckboxWidget') %}
+                {% widget 'CartReorderItemCheckboxWidget'args [data.product] with {
+                    data: { checkboxClasses: data.checkboxClasses },
+                } only %}{% endwidget %}
+            {% else %}
+                {% widget 'CustomerReorderItemCheckboxWidget' args [data.product] only %}{% endwidget %}
+            {% endif %}
         </div>
         <div class="col col--expand grid grid--middle">
             {% set thumbnailModifiers = ['small', 'expand'] %}

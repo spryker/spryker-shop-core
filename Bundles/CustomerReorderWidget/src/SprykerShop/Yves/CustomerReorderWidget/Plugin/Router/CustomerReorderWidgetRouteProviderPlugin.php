@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CustomerReorderWidget\Plugin\Router;
 use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
 use Spryker\Yves\Router\Route\RouteCollection;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class CustomerReorderWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     /**

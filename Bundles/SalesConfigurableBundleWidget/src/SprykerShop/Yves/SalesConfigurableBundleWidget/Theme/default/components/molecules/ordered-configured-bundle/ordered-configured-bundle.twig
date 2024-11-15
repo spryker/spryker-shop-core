@@ -11,6 +11,7 @@
     bundle: required,
     items: [],
     currencyIsoCode: null,
+    checkboxClasses: '',
 } %}
 
 {%- block extraClass %} spacing-bottom spacing-bottom--big{% endblock -%}
@@ -91,6 +92,7 @@
                                     product: data.items[item.idSalesOrderItem],
                                     currencyIsoCode: data.items[item.idSalesOrderItem].currencyIsoCode ?? data.currencyIsoCode,
                                     image: data.items[item.idSalesOrderItem].metadata.image,
+                                    checkboxClasses: data.checkboxClasses,
                                 },
                             } only %}
                         {% endblock %}

@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPostReorderPluginInterface} instead.
+ */
 interface PostReorderPluginInterface
 {
     /**

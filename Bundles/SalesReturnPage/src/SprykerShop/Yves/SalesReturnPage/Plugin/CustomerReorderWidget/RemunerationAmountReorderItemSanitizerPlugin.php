@@ -11,6 +11,8 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\ReorderItemSanitizerPluginInterface;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \SprykerShop\Yves\SalesReturnPage\SalesReturnPageFactory getFactory()
  */
 class RemunerationAmountReorderItemSanitizerPlugin extends AbstractPlugin implements ReorderItemSanitizerPluginInterface

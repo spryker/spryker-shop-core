@@ -7,6 +7,9 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Widget;
 
+/**
+ * @deprecated Use {@link \SprykerShop\Yves\CartReorderPage\Widget\CartReorderItemCheckboxWidget} instead.
+ */
 class CustomerReorderBundleItemCheckboxWidget extends CustomerReorderItemCheckboxWidget
 {
     /**

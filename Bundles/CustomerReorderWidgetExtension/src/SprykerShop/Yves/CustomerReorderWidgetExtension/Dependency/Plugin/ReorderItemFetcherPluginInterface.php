@@ -8,6 +8,8 @@
 namespace SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * Implement this plugin if you want to fetch items by provided request parameters during partial reordering.
  */
 interface ReorderItemFetcherPluginInterface

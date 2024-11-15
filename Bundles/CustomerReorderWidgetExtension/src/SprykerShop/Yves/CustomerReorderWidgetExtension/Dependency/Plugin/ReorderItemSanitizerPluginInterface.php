@@ -8,6 +8,8 @@
 namespace SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemHydratorPluginInterface} or {@link \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPreReorderPluginInterface} instead.
+ *
  * Sets the properties of `ItemTransfer` to default values.
  *
  * Use this plugin if some of `ItemTransfer` properties need to be sanitized before executing items reordering.

@@ -12,6 +12,8 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\ReorderItemExpanderPluginInterface;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \SprykerShop\Yves\SalesProductConfigurationWidget\SalesProductConfigurationWidgetFactory getFactory()
  */
 class ProductConfigurationReorderItemExpanderPlugin extends AbstractPlugin implements ReorderItemExpanderPluginInterface

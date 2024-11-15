@@ -1,0 +1,28 @@
+{# @var order \Generated\Shared\Transfer\OrderTransfer #}
+{# @var shipmentGroups \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer> #}
+{# @var orderShipmentExpenses array<string, \Generated\Shared\Transfer\ExpenseTransfer> #}
+
+{% extends template('widget') %}
+
+{% define data = {
+    form: _widget.form,
+    order: _widget.order,
+    shipmentGroups: _widget.shipmentGroups | default,
+    orderShipmentExpenses: _widget.orderShipmentExpenses | default([]),
+} %}
+
+{% block body %}
+    {{ form_start(data.form, {'action': path('cart-reorder', {'orderReference': data.order.orderReference})}) }}
+    {% block embeddedData %}
+        {% block reorderForm %}
+            {% include molecule('cart-reorder-form', 'CartReorderPage') with {
+                data: {
+                    order: data.order,
+                    shipmentGroups: data.shipmentGroups,
+                    orderShipmentExpenses: data.orderShipmentExpenses,
+                },
+            } only %}
+        {% endblock %}
+    {% endblock %}
+    {{ form_end(data.form) }}
+{% endblock %}

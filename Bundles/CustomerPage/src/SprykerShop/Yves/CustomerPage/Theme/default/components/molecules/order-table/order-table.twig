@@ -105,7 +105,11 @@
                                     </a>
                                 </li>
 
-                                {% if widgetExists('CustomerReorderWidgetPlugin') %}
+                                {% if widgetGlobalExists('CartReorderWidget') %}
+                                    <li class="menu__item">
+                                        {% widget 'CartReorderWidget' args [order, 'link'] only %}{% endwidget %}
+                                    </li>
+                                {% elseif widgetExists('CustomerReorderWidgetPlugin') %}
                                     <li class="menu__item">
                                         {% include molecule('remote-form-submit') with {
                                             data: {
@@ -165,6 +169,12 @@
                                         {% endblock %}
                                     {% endwidget %}
                                 {% endblock %}
+
+                                {% if widgetGlobalExists('OrderAmendmentWidget') %}
+                                    <li class="menu__item">
+                                        {% widget 'OrderAmendmentWidget' args [order] only %}{% endwidget %}
+                                    </li>
+                                {% endif %}
                             </ul>
                         {% endblock %}
                     </td>

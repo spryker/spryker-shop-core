@@ -5,8 +5,11 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.2",
+        "spryker-shop/cart-reorder-page-extension": "^1.0.0",
         "spryker-shop/shop-ui": "^1.0.0",
-        "spryker/kernel": "^3.30.0"
+        "spryker/availability-storage": "^2.2.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/transfer": "^3.25.0"
     },
     "require-dev": {
         "spryker-shop/product-detail-page": "*",

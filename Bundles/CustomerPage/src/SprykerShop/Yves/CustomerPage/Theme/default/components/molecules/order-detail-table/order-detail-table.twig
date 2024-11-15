@@ -30,26 +30,32 @@
                         <div class="{{ config.name }}__item grid grid--justify">
                             <div class="col col--middle col--sm-1 spacing">
                                 {% if data.order is not empty %}
-                                    {% if concreteItem.bundleItemIdentifier ?? false %}
-                                        {% widget 'CustomerReorderBundleItemCheckboxWidget'
-                                            args [concreteItem]
-                                            with {
-                                                data: { checkboxClasses: data.reorderSelectionClassName },
-                                            }
-                                            only %}
-                                        {% nowidget %}
-                                            {{ widgetBlock('CustomerReorderWidgetPlugin', 'formCheckbox', data.order, concreteItem) }} {# @deprecated Use widget 'CustomerReorderItemCheckboxWidget' instead. #}
-                                        {% endwidget %}
+                                    {% if widgetGlobalExists('CartReorderItemCheckboxWidget') %}
+                                        {% widget 'CartReorderItemCheckboxWidget'args [concreteItem] with {
+                                            data: { checkboxClasses: data.reorderSelectionClassName },
+                                        } only %}{% endwidget %}
                                     {% else %}
-                                        {% widget 'CustomerReorderItemCheckboxWidget'
-                                            args [concreteItem]
-                                            with {
-                                                data: { checkboxClasses: data.reorderSelectionClassName },
-                                            }
-                                            only %}
-                                        {% nowidget %}
-                                            {{ widgetBlock('CustomerReorderWidgetPlugin', 'formCheckbox', data.order, concreteItem) }} {# @deprecated Use widget 'CustomerReorderItemCheckboxWidget' instead. #}
-                                        {% endwidget %}
+                                        {% if concreteItem.bundleItemIdentifier ?? false %}
+                                            {% widget 'CustomerReorderBundleItemCheckboxWidget'
+                                                args [concreteItem]
+                                                with {
+                                                    data: { checkboxClasses: data.reorderSelectionClassName },
+                                                }
+                                                only %}
+                                            {% nowidget %}
+                                                {{ widgetBlock('CustomerReorderWidgetPlugin', 'formCheckbox', data.order, concreteItem) }} {# @deprecated Use widget 'CustomerReorderItemCheckboxWidget' instead. #}
+                                            {% endwidget %}
+                                        {% else %}
+                                            {% widget 'CustomerReorderItemCheckboxWidget'
+                                                args [concreteItem]
+                                                with {
+                                                    data: { checkboxClasses: data.reorderSelectionClassName },
+                                                }
+                                                only %}
+                                            {% nowidget %}
+                                                {{ widgetBlock('CustomerReorderWidgetPlugin', 'formCheckbox', data.order, concreteItem) }} {# @deprecated Use widget 'CustomerReorderItemCheckboxWidget' instead. #}
+                                            {% endwidget %}
+                                        {% endif %}
                                     {% endif %}
                                 {% endif %}
                             </div>
@@ -139,7 +145,9 @@
                     {% endif %}
                 {% endfor %}
 
-                {% widget 'OrderItemsConfiguredBundleWidget' args [shipmentGroup.items] only %}
+                {% widget 'OrderItemsConfiguredBundleWidget' args [shipmentGroup.items] with {
+                    data: { checkboxClasses: data.reorderSelectionClassName },
+                } only  %}
                 {% elsewidget 'OrderConfiguredBundleWidget' args [data.order, shipmentGroup.items] only %} {# @deprecated Use OrderItemsConfiguredBundleWidget instead. #}
                 {% endwidget %}
             </div>

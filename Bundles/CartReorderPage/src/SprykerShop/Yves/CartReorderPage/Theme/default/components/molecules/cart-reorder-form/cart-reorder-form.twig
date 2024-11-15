@@ -1,0 +1,37 @@
+{# @var order \Generated\Shared\Transfer\OrderTransfer #}
+{# @var shipmentGroups \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer> #}
+{# @var orderShipmentExpenses array<string, \Generated\Shared\Transfer\ExpenseTransfer> #}
+
+{% extends model('component') %}
+
+{% define config = {
+    name: 'cart-reorder-form',
+    tag: 'cart-reorder-form',
+} %}
+
+{% define data = {
+    order: required,
+    shipmentGroups: {},
+    orderShipmentExpenses: [],
+} %}
+
+{% block body %}
+    {% block formContent %}
+        {% include molecule('order-detail', 'CustomerPage') ignore missing with {
+            data: {
+                order: data.order,
+                shipmentGroups: data.shipmentGroups,
+                orderShipmentExpenses: data.orderShipmentExpenses,
+                reorderSelectionClassName: config.jsName ~ '__selection',
+            },
+        } only %}
+    {% endblock %}
+
+    {% block formActions %}
+        <div class="box text-right">
+            <button class="button {{ config.jsName }}__trigger" disabled>
+                {{ 'cart_reorder_page.reorder_selected' | trans }}
+            </button>
+        </div>
+    {% endblock %}
+{% endblock %}

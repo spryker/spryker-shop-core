@@ -10,6 +10,8 @@ namespace SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\OrderTransfer;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * Use this plugin to extend items before they added to the cart on the reorder action.
  */
 interface ReorderItemExpanderPluginInterface

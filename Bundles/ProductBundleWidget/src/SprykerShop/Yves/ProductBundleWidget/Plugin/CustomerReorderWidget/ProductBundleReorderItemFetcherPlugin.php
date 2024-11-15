@@ -11,6 +11,8 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\ReorderItemFetcherPluginInterface;
 
 /**
+ * @deprecated Use {@link \SprykerShop\Yves\ProductBundleWidget\Plugin\CartReorderPage\ProductBundleCartReorderItemCheckboxAttributeExpanderPlugin} and {@link \SprykerShop\Yves\ProductBundleWidget\Plugin\CartReorderPage\ProductBundleCartReorderRequestExpanderPlugin} instead.
+ *
  * @method \SprykerShop\Yves\ProductBundleWidget\ProductBundleWidgetFactory getFactory()
  */
 class ProductBundleReorderItemFetcherPlugin extends AbstractPlugin implements ReorderItemFetcherPluginInterface

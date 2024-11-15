@@ -1,0 +1,35 @@
+{# @var order \Generated\Shared\Transfer\OrderTransfer #}
+
+{% extends template('widget') %}
+
+{% define data = {
+    form: _widget.form,
+    order: _widget.order,
+    buttonClass: _widget.buttonClass,
+} %}
+
+{% block body %}
+    {% if data.buttonClass == 'button' %}
+        {{ form_start(data.form, {'action': path('cart-reorder', {'orderReference': data.order.orderReference})}) }}
+            {% block embeddedData %}
+                <button class="button">{{ 'cart_reorder_page.reorder_all' | trans }}</button>
+            {% endblock %}
+        {{ form_end(data.form) }}
+    {% endif %}
+
+    {% if data.buttonClass == 'link' %}
+        {% include molecule('remote-form-submit') with {
+            data: {
+                label: 'cart_reorder_page.reorder' | trans,
+                buttonClass: 'link',
+            },
+            attributes: {
+                'form-name': data.form.vars.id ~ data.order.orderReference,
+                'form-action': path('cart-reorder', {'orderReference': data.order.orderReference}),
+                'field-id': data.form.vars.id ~ '_token_' ~ data.order.idSalesOrder,
+                'field-name': data.form.vars.id ~ '[_token]',
+                'field-value': csrf_token(data.form.vars.id),
+            },
+        } only %}
+    {% endif %}
+{% endblock %}

@@ -17,6 +17,7 @@
         "spryker/code-sniffer": "*"
     },
     "suggest": {
+        "spryker-shop/cart-reorder-page": "If you want to use CartReorderItemCheckboxWidget.",
         "spryker-shop/configurable-bundle-note-widget": "If you want to use configurable bundle note feature."
     },
     "autoload": {

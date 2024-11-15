@@ -11,6 +11,8 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\ReorderItemSanitizerPluginInterface;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \SprykerShop\Yves\SalesServicePointWidget\SalesServicePointWidgetFactory getFactory()
  */
 class ServicePointReorderItemSanitizerPlugin extends AbstractPlugin implements ReorderItemSanitizerPluginInterface

@@ -10,7 +10,11 @@
 
 {% block imageContainer %}
     <div class="col grid grid--middle">
-        {% widget 'CustomerReorderItemCheckboxWidget' args [data.product] only %}{% endwidget %}
+        {% if widgetGlobalExists('CartReorderItemCheckboxWidget') %}
+            {% widget 'CartReorderItemCheckboxWidget' args [data.product] only %}{% endwidget %}
+        {% else %}
+            {% widget 'CustomerReorderItemCheckboxWidget' args [data.product] only %}{% endwidget %}
+        {% endif %}
     </div>
 {% endblock %}
 

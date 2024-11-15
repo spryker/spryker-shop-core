@@ -11,6 +11,8 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductBundleWidget\Dependency\Client\ProductBundleWidgetToProductBundleClientInterface;
 use SprykerShop\Yves\ProductBundleWidget\ItemFetcher\BundleItemFetcher;
 use SprykerShop\Yves\ProductBundleWidget\ItemFetcher\BundleItemFetcherInterface;
+use SprykerShop\Yves\ProductBundleWidget\Mapper\BundleItemMapper;
+use SprykerShop\Yves\ProductBundleWidget\Mapper\BundleItemMapperInterface;
 
 class ProductBundleWidgetFactory extends AbstractFactory
 {
@@ -20,6 +22,14 @@ class ProductBundleWidgetFactory extends AbstractFactory
     public function createBundleItemFetcher(): BundleItemFetcherInterface
     {
         return new BundleItemFetcher();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductBundleWidget\Mapper\BundleItemMapperInterface
+     */
+    public function createBundleItemMapper(): BundleItemMapperInterface
+    {
+        return new BundleItemMapper();
     }
 
     /**

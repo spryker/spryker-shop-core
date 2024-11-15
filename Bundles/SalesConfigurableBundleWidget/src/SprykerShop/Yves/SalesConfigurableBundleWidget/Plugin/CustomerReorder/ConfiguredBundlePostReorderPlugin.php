@@ -12,6 +12,8 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\PostReorderPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\SalesConfigurableBundle\Communication\Plugin\CartReorder\ConfiguredBundleCartPostReorderPlugin} instead.
+ *
  * @method \SprykerShop\Yves\SalesConfigurableBundleWidget\SalesConfigurableBundleWidgetFactory getFactory()
  */
 class ConfiguredBundlePostReorderPlugin extends AbstractPlugin implements PostReorderPluginInterface

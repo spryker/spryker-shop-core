@@ -3,6 +3,7 @@
 {% define data = {
     items: _widget.items,
     salesOrderConfiguredBundles: _widget.salesOrderConfiguredBundles,
+    checkboxClasses: data.checkboxClasses | default(''),
 } %}
 
 {% block body %}
@@ -12,6 +13,7 @@
                 data: {
                     bundle: bundle,
                     items: data.items,
+                    checkboxClasses: data.checkboxClasses,
                 },
             } only %}
         {% endblock %}

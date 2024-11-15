@@ -12,6 +12,8 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 use Symfony\Component\Form\FormView;
 
 /**
+ * @deprecated Use {@link \SprykerShop\Yves\CartReorderPage\Widget\CartReorderWidget} instead.
+ *
  * @method \SprykerShop\Yves\CustomerReorderWidget\CustomerReorderWidgetFactory getFactory()
  */
 class CustomerReorderFormWidget extends AbstractWidget

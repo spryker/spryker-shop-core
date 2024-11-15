@@ -1,0 +1,51 @@
+{
+    "name": "spryker-shop/sales-order-amendment-widget",
+    "type": "library",
+    "description": "SalesOrderAmendmentWidget module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.2",
+        "spryker-shop/shop-application": "^1.0.0",
+        "spryker-shop/shop-ui": "^1.0.0",
+        "spryker/application": "^3.0.0",
+        "spryker/cart-reorder": "^0.1.0",
+        "spryker/customer": "^7.4.0",
+        "spryker/kernel": "^3.52.0",
+        "spryker/sales-order-amendment": "^0.1.0",
+        "spryker/symfony": "^3.1.0",
+        "spryker/transfer": "^3.27.0",
+        "spryker/zed-request": "^3.6.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/router": "*"
+    },
+    "suggest": {
+        "spryker-shop/cart-page": "The default successful amendment redirect is heading to a cart controller.",
+        "spryker-shop/customer-page": "The default failure amendment redirect is heading to a customer controller.",
+        "spryker/router": "Use this module when you want to use the Router.",
+        "spryker/silex": "If you want use the widget's router provider."
+    },
+    "autoload": {
+        "psr-4": {
+            "SprykerShop\\": "src/SprykerShop/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

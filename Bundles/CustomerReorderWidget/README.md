@@ -4,6 +4,8 @@
 
 This module contains the customer reorder related widgets.
 
+**DEPRECATED - This module is not continued at this point.**
+
 ## Installation
 
 ```

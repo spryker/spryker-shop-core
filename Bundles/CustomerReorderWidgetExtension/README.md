@@ -4,6 +4,8 @@
 
 The module provides plugin interfaces for extending CustomerReorderWidget module functionality.
 
+**DEPRECATED - This module is not continued at this point.**
+
 ## Installation
 
 ```

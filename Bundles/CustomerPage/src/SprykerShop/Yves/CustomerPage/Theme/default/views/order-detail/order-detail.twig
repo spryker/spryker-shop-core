@@ -13,41 +13,60 @@
 
 {% block customerContent %}
     {% block orderDetail %}
-        {% widget 'CustomerReorderItemsFormWidget' args [
-            data.order,
-            {},
-            data.orderShipmentExpenses,
-            data.shipmentGroups
-        ] only %}
-        {% nowidget %}
-            {% embed molecule('order-detail', 'CustomerPage') with {
-                data: {
-                    idSalesOrder: data.order.idSalesOrder,
-                    shipmentGroups: data.shipmentGroups,
-                    orderShipmentExpenses: data.orderShipmentExpenses,
-                    order: data.order,
-                },
-            } only %}
-                {% block orderDetailContent %}
-                    {{ widgetBlock('CustomerReorderWidgetPlugin', 'formStart', data.order) }} {# @deprecated Use molecule('customer-reorder-form', 'CustomerReorderWidget') instead. #}
+        {% if widgetGlobalExists('CartReorderItemsWidget') %}
+            {% widget 'CartReorderItemsWidget' args [
+                data.order,
+                data.shipmentGroups,
+                data.orderShipmentExpenses,
+            ] only %}
+            {% endwidget %}
+        {% else %}
+            {% widget 'CustomerReorderItemsFormWidget' args [
+                data.order,
+                {},
+                data.orderShipmentExpenses,
+                data.shipmentGroups
+            ] only %}
+            {% nowidget %}
+                {% embed molecule('order-detail', 'CustomerPage') with {
+                    data: {
+                        idSalesOrder: data.order.idSalesOrder,
+                        shipmentGroups: data.shipmentGroups,
+                        orderShipmentExpenses: data.orderShipmentExpenses,
+                        order: data.order,
+                    },
+                } only %}
+                    {% block orderDetailContent %}
+                        {{ widgetBlock('CustomerReorderWidgetPlugin', 'formStart', data.order) }} {# @deprecated Use molecule('customer-reorder-form', 'CustomerReorderWidget') instead. #}
 
-                    {{ parent() }}
+                        {{ parent() }}
 
-                    {{ widgetBlock('CustomerReorderWidgetPlugin', 'formActions', data.order) }} {# @deprecated Use molecule('customer-reorder-form', 'CustomerReorderWidget') instead. #}
-                    {{ widgetBlock('CustomerReorderWidgetPlugin', 'formEnd', data.order) }} {# @deprecated Use molecule('customer-reorder-form', 'CustomerReorderWidget') instead. #}
-                {% endblock %}
-            {% endembed %}
-        {% endwidget %}
+                        {{ widgetBlock('CustomerReorderWidgetPlugin', 'formActions', data.order) }} {# @deprecated Use molecule('customer-reorder-form', 'CustomerReorderWidget') instead. #}
+                        {{ widgetBlock('CustomerReorderWidgetPlugin', 'formEnd', data.order) }} {# @deprecated Use molecule('customer-reorder-form', 'CustomerReorderWidget') instead. #}
+                    {% endblock %}
+                {% endembed %}
+            {% endwidget %}
+        {% endif %}
     {% endblock %}
 
     {% block reorderAll %}
-        {% widget 'CustomerReorderFormWidget' args [data.order] only %}
-            {% block body %}
-                <div class="box text-right">
-                    {{ parent() }}
-                </div>
-            {% endblock %}
-        {% endwidget %}
+        {% if widgetGlobalExists('CartReorderWidget') %}
+            {% widget 'CartReorderWidget' args [data.order] only %}
+                {% block body %}
+                    <div class="box text-right">
+                        {{ parent() }}
+                    </div>
+                {% endblock %}
+            {% endwidget %}
+        {% else %}
+            {% widget 'CustomerReorderFormWidget' args [data.order] only %}
+                {% block body %}
+                    <div class="box text-right">
+                        {{ parent() }}
+                    </div>
+                {% endblock %}
+            {% endwidget %}
+        {% endif %}
     {% endblock %}
 
     {% block orderCancel %}

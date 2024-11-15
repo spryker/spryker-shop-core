@@ -1,0 +1,24 @@
+{# @var item \Generated\Shared\Transfer\ItemTransfer #}
+
+{% extends template('widget') %}
+
+{% define data = {
+    item: _widget.item,
+    attributeName: _widget.attributeName | default('sales-order-item-ids'),
+    attributeValue: _widget.attributeValue | default(_widget.item.idSalesOrderItem),
+    attributeDisabled: _widget.attributeDisabled | default(false),
+    checkboxClasses: '',
+} %}
+
+{% block body %}
+    {% include atom('checkbox') with {
+        data: {
+            inputClass: data.checkboxClasses,
+        },
+        attributes: {
+            name: data.attributeName ~ '[]',
+            value: data.attributeValue,
+            disabled: data.attributeDisabled,
+        },
+    } only %}
+{% endblock %}

@@ -24,4 +24,8 @@
         <property name="externalUrlSmall" type="string"/>
     </transfer>
 
+    <transfer name="CartReorderRequest" strict="true">
+        <property name="bundleItemIdentifiers" type="array" singular="bundleItemIdentifier"/>
+    </transfer>
+
 </transfers>

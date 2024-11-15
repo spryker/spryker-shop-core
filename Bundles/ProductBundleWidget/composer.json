@@ -5,11 +5,13 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.2",
+        "spryker-shop/cart-reorder-page-extension": "^1.0.0",
         "spryker-shop/customer-reorder-widget-extension": "^1.3.0",
         "spryker-shop/shop-ui": "^1.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/product-bundle": "^4.1.0 || ^6.0.0 || ^7.0.0",
-        "spryker/transfer": "^3.25.0",
+        "spryker/symfony": "^3.0.0",
+        "spryker/transfer": "^3.27.0",
         "spryker/twig": "^3.18.0"
     },
     "require-dev": {
@@ -20,8 +22,8 @@
     },
     "suggest": {
         "spryker-shop/cart-page": "Widget plugins are available for this module.",
-        "spryker-shop/multi-cart-widget": "Add to use bundle product widgets",
-        "spryker-shop/multi-cart-page": "If you want to use ProductBundleItemCounterWidgetPlugin: ^1.0.0"
+        "spryker-shop/multi-cart-page": "If you want to use ProductBundleItemCounterWidgetPlugin: ^1.0.0",
+        "spryker-shop/multi-cart-widget": "Add to use bundle product widgets"
     },
     "autoload": {
         "psr-4": {
