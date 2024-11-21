@@ -98,6 +98,8 @@
             {% block price %}
                 <div class="col {{ priceColumnClass }} spacing spacing--inner">
                     {% block priceInner %}
+                        <span itemprop="itemPrice" content="{{ product.prices['DEFAULT'] | default }}">
+
                         {% include molecule('money-price') with {
                             data: {
                                 amount: data.price is empty ? null : data.price,

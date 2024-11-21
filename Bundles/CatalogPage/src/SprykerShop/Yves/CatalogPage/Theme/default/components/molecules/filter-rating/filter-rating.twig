@@ -9,6 +9,10 @@
     request: app.request,
 } %}
 
+{% define attributes = {
+    name: data.filter.config.name,
+} %}
+
 {% block body %}
     <h3 class="title--h6">{{ ('product.filter.' ~ data.filter.name | lower) | trans }}</h3>
 

@@ -11,9 +11,17 @@
 
 {% block selection %}
     {% set firstImage = item.images | first | default(null) %}
+    {% set queryString = app.request.query.all
+        | filter((value) => value is not iterable )
+        | map((value, key) => "#{key}=#{value}")
+        | join('&')
+    %}
     {% set dataAttributesList = {
         'data-product-image-src': firstImage ? firstImage.externalUrlSmall,
-        href: item.url ? item.url,
+        href: item.url
+                ? queryString
+                    ? "#{item.url}?#{queryString}"
+                    : item.url,
         'data-product-sku': item.sku,
     } %}
 

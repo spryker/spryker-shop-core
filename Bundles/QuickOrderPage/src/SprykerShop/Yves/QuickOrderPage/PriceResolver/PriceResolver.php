@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuickOrderPage\PriceResolver;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
@@ -75,13 +76,17 @@ class PriceResolver implements PriceResolverInterface
             return $quickOrderItemTransfer;
         }
 
-        $sumPrice = $this->getSumPriceForQuickOrderItemTransfer(
+        $currentProductPriceTransfer = $this->getCurrentProductPriceTransfer(
             $quickOrderItemTransfer,
             $idProduct,
             $this->productResolver->getIdProductAbstractByIdProduct($idProduct),
         );
 
-        $quickOrderItemTransfer->setSumPrice($sumPrice);
+        $quickOrderItemTransfer->setSumPrice($currentProductPriceTransfer->getSumPrice());
+        $quickOrderItemTransfer->getProductConcrete()->setDefaultPrice(
+            $currentProductPriceTransfer->getPrice() ? (string)$currentProductPriceTransfer->getPrice() : null,
+        );
+        $quickOrderItemTransfer->getProductConcrete()->setPrices(new ArrayObject($currentProductPriceTransfer->getPrices()));
 
         return $quickOrderItemTransfer;
     }
@@ -91,18 +96,19 @@ class PriceResolver implements PriceResolverInterface
      * @param int $idProduct
      * @param int $idProductAbstract
      *
-     * @return int|null
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
-    protected function getSumPriceForQuickOrderItemTransfer(QuickOrderItemTransfer $quickOrderItemTransfer, int $idProduct, int $idProductAbstract): ?int
-    {
+    protected function getCurrentProductPriceTransfer(
+        QuickOrderItemTransfer $quickOrderItemTransfer,
+        int $idProduct,
+        int $idProductAbstract
+    ): CurrentProductPriceTransfer {
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->fromArray($quickOrderItemTransfer->toArray(), true)
             ->setIdProduct($idProduct)
             ->setIdProductAbstract($idProductAbstract)
             ->setSku(null);
 
-        return $this->priceProductStorageClient
-            ->getResolvedCurrentProductPriceTransfer($priceProductFilterTransfer)
-            ->getSumPrice();
+        return $this->priceProductStorageClient->getResolvedCurrentProductPriceTransfer($priceProductFilterTransfer);
     }
 }

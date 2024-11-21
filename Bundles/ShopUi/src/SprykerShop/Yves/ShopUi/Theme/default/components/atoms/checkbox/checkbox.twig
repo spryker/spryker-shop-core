@@ -23,7 +23,7 @@
 {% endblock %}
 
 {% block body %}
-    <label class="{{config.name}}__container" {{qa('label')}}>
+    <label tabindex="0" class="{{config.name}}__container" {{qa('label')}}>
         <input class="{{config.name}}__input {% block inputClass %} {{- data.inputClass -}} {% endblock %}" {{ component.renderAttributes(attributes) }}>
         <span class="{{config.name}}__box"></span>
         <span class="{{config.name}}__check"></span>

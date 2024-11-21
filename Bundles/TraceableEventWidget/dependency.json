@@ -1,0 +1,9 @@
+{
+    "include": {
+        "spryker/kernel-app": "TraceableEventWidget uses tenant identifier.",
+        "spryker-shop/store-widget": "TraceableEventWidget uses store in twig. Initialization in StoreApplicationPlugin.",
+        "spryker/locale": "TraceableEventWidget uses store in twig. Initialization in LocaleApplicationPlugin.",
+        "spryker/transfer": "Provides transfer objects definition.",
+        "spryker-shop/shop-ui": "ShopUi provides basic frontend infrastructure."
+    }
+}

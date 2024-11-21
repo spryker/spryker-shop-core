@@ -26,3 +26,64 @@
         },
     } only %}
 {% endblock %}
+
+{% block eventTracker %}
+    {% set productsConfig = {
+        multi: true,
+        selector: '.quick-order-row',
+        composed: {
+            sku: {
+                selector: '.js-autocomplete-form__value-input',
+                attribute: 'value',
+            },
+            quantity: {
+                selector: '.js-formatted-number-input__hidden-input',
+                attribute: 'value',
+            },
+            price: {
+                selector: '[itemprop="itemPrice"]',
+                attribute: 'content',
+            },
+        },
+    } %}
+    {% set events = {
+        list: events.list | merge([
+            {
+                event: 'ADD_TO_SHOPPING_LIST',
+                name: 'click',
+                triggers: [
+                    {
+                        selector: 'body:has([name="addToShoppingList"]:focus)',
+                        data: {
+                            products: productsConfig,
+                        },
+                    },
+                ],
+            },
+            {
+                event: 'ADD_TO_CART',
+                name: 'click',
+                triggers: [
+                    {
+                        selector: 'body:has([name="addToCart"]:focus)',
+                        data: {
+                            products: productsConfig,
+                        },
+                    },
+                    {
+                        selector: 'body:has([name="createOrder"]:focus)',
+                        data: {
+                            products: productsConfig,
+                        },
+                    },
+                ],
+            }
+        ]),
+
+        data: events.data | merge({
+            page: 'QUICK_ORDER',
+        }),
+    } %}
+
+    {{ parent() }}
+{% endblock %}

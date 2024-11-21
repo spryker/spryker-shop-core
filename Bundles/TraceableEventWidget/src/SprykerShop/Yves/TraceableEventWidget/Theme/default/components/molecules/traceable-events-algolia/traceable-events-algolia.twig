@@ -1,0 +1,38 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'traceable-events-algolia',
+    tag: 'traceable-events-algolia',
+} %}
+
+{% define data = {
+    searchSettings: data.searchSettings,
+    tenantIdentifier: data.tenantIdentifier,
+} %}
+
+{% set shouldRender = data.searchSettings['algolia_app_id'] is defined
+    and data.searchSettings['algolia_app_key'] is defined
+    and data.tenantIdentifier is defined
+%}
+
+{% define attributes = {
+    initial: shouldRender
+        ? {
+            appId: data.searchSettings['algolia_app_id'],
+            apiKey: data.searchSettings['algolia_app_key'],
+            indexName: "#{data.tenantIdentifier}-product-#{app.store}-#{app.locale}" | lower,
+            authenticatedUserToken: app.user.customerTransfer.customerReference | default,
+            userToken: app.session.get('anonymousID') | default,
+        } | json_encode
+        : {},
+    'traceable-adapter': true,
+    'filters-mapper': (data.searchSettings.project_mapping_facets | default({})) | json_encode,
+} %}
+
+{% block component %}
+    {% if shouldRender %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}{% endblock %}

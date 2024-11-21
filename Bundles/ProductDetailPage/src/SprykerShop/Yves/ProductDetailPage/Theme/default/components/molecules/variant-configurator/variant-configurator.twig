@@ -9,7 +9,7 @@
     superAttributes: [],
     selectedAttributes: [],
     availableAttributes: [],
-    useExternalForm: false
+    useExternalForm: false,
 } %}
 
 {% block component %}
@@ -17,6 +17,20 @@
 {% endblock %}
 
 {% block body %}
+    {% set excludeParams = [] %}
+    {% set transformedParams = {} %}
+    {% set attributeKey = 'attribute' %}
+
+    {% for key, value in app.request.query.all %}
+        {% if key == attributeKey and value is iterable %}
+            {% for attrKey, attrValue in value %}
+                {% set transformedParams = transformedParams | merge({ ("#{attributeKey}[#{attrKey}]"): attrValue }) %}
+            {% endfor %}
+        {% else %}
+            {% set transformedParams = transformedParams | merge({ (key): value }) %}
+        {% endif %}
+    {% endfor %}
+
     {% if not data.useExternalForm %}
         <form method="GET">
     {% endif %}
@@ -26,11 +40,17 @@
             {% set selectedValue = data.selectedAttributes[name] | default %}
             {% set selectedValue = selectedValue in values ? selectedValue : null %}
             {% set isAvailable = true %}
-            {% set optionResetUrl = '' %}
+            {% set formName = "#{attributeKey}[#{name}]" %}
+            {% set excludeParams = excludeParams | merge([formName]) %}
+            {% set optionResetUrl = transformedParams
+                | filter((value, key) => key != formName)
+                | map((value, key) => "#{key}=#{value}")
+                | join('&')
+            %}
 
             {% for selectedAttributeName, selectedAttributeValue in data.selectedAttributes | filter((v, k) => k != name) %}
-                {% set selectedUrlParameter = [('attribute[' ~ selectedAttributeName ~ ']')| url_encode, selectedAttributeValue]|join('=') %}
-                {% set optionResetUrl = [optionResetUrl, selectedUrlParameter]|join('&') %}
+                {% set selectedUrlParameter = [("#{attributeKey}[#{selectedAttributeName}]")| url_encode, selectedAttributeValue]|join('=') %}
+                {% set optionResetUrl = [optionResetUrl, selectedUrlParameter] | join('&') %}
             {% endfor %}
 
             {% if name in data.availableAttributes | keys %}
@@ -43,10 +63,10 @@
                         {% include molecule('variant', 'ProductDetailPage') with {
                             data: {
                                 name: name,
-                                formName: 'attribute[' ~ name ~ ']',
+                                formName: formName,
                                 values: values,
                                 selectedValue: selectedValue,
-                                label: ('product.attribute.' ~ name) | trans,
+                                label: "product.attribute.#{name}" | trans,
                                 isAvailable: isAvailable,
                                 optionResetUrl: optionResetUrl
                             }
@@ -55,6 +75,14 @@
                 {% endblock %}
         {% endfor %}
     </ul>
+
+    {% block requestParams %}
+        {% for name, value in transformedParams %}
+            {% if name not in transformedParams %}
+                <input type="hidden" name="{{ name }}" value="{{ value }}" />
+            {% endif %}
+        {% endfor %}
+    {% endblock %}
 
     {% if not data.useExternalForm %}
         </form>

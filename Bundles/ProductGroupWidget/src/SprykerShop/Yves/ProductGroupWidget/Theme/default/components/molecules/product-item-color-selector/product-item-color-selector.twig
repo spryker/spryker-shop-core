@@ -34,6 +34,7 @@
         'data-product-name': item.name ?: '',
         'data-product-rating': item.rating ? item.rating.averageRating,
         'data-product-default-price': item.prices['DEFAULT'] is defined ? (item.prices['DEFAULT'] | money),
+        'data-product-price': item.prices['DEFAULT'] is defined ? item.prices['DEFAULT'],
         'data-product-original-price': item.prices['ORIGINAL'] is defined ? (item.prices['ORIGINAL'] | money),
         'data-product-detail-page-url': item.url ?: '',
         'data-product-add-to-cart-url': productSku ? path('cart/add', {sku: productSku}),

@@ -14,13 +14,7 @@
 {% endset %}
 
 {% block content %}
-    <div class="box">
-        <h3>{{data.title}}</h3>
-        <p>{{data.message}}</p>
-        {% if isUserLoggedIn %}
-            <a href="{{ url('customer/overview') }}">{{ 'payment_foreign.go_to_my_account' | trans }}</a>
-        {% endif %}
-    </div>
+    {{ parent() }}
 
     {% if data.quote.orderReference %}
         <section itemscope itemtype="https://schema.org/Invoice">

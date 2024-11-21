@@ -72,7 +72,7 @@
                                 {% block categoryRow %}
                                     <div class="col {{ config.name }}__category-row {{ not categoryNode.hasChildren ? config.name ~ '__category-row--no-children' }}">
                                         {% block categoryLink %}
-                                            <button class="link {{ data.parentJsName ? data.parentJsName ~ '__trigger' }}" type="button" {{ isDisabled }} data-url={{ categoryNode.url }}>
+                                            <button data-name="{{ categoryNode.name }}" class="link {{ data.parentJsName ? data.parentJsName ~ '__trigger' }}" type="button" {{ isDisabled }} data-url={{ categoryNode.url }}>
                                                 {{ categoryNode.name }} ({{ categoryNode.quantity | executeFilterIfExists('formatInt', app.locale) }})
                                             </button>
                                         {% endblock %}

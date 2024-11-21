@@ -1,0 +1,31 @@
+{% extends template('widget') %}
+
+{% define data = {
+    events: events,
+    searchSettings: _widget.searchSettings,
+    tenantIdentifier: _widget.tenantIdentifier,
+    adapterMolecules: _widget.adapterMolecules,
+    debug: _widget.debug,
+} %}
+
+{% block body %}
+    {% if not app.request.cookies.get('disableUserActionTracking') %}
+        {% include molecule('traceable-events-orchestrator', 'TraceableEventWidget') with {
+            data: {
+                events: data.events,
+            },
+            attributes: {
+                debug: data.debug,
+            },
+        } only %}
+
+        {% for moleculeName in data.adapterMolecules %}
+            {% include molecule(moleculeName, 'TraceableEventWidget') ignore missing with {
+                data: {
+                    searchSettings: data.searchSettings,
+                    tenantIdentifier: data.tenantIdentifier,
+                },
+            } only %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}

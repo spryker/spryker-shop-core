@@ -1,0 +1,23 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'traceable-events-orchestrator',
+    tag: 'traceable-events-orchestrator',
+} %}
+
+{%- block extraClass %} {{ config.jsName }}{% endblock -%}
+
+{#
+    events - TraceableEvents (see. traceable-events-orchestrator.ts)
+#}
+{% define data = {
+    events: {},
+} %}
+
+{% define attributes = {
+    events: data.events | json_encode,
+    'adapter-selector': '[traceable-adapter]',
+    debug: false,
+} %}
+
+{% block body %}{% endblock %}

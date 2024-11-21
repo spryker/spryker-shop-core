@@ -1,0 +1,19 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Spryker\\Client\\SearchHttp\\SearchHttpClientInterface::findSearchConfig expects Generated\\Shared\\Transfer\\SearchHttpConfigTransfer, but Generated\\Shared\\Transfer\\SearchHttpConfigCriteriaTransfer provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/TraceableEventWidget/src/SprykerShop/Yves/TraceableEventWidget/Dependency/Client/TraceableEventWidgetToSearchHttpClientBridge.php",
+            "snippet": "        return $this->searchHttpClient->findSearchConfig($searchHttpConfigCriteria);",
+            "selected_text": "$searchHttpConfigCriteria",
+            "error_level": 6,
+            "shortcode": 4
+        }
+    ],
+    "warning": [],
+    "deprecation": [],
+    "count": 1
+}

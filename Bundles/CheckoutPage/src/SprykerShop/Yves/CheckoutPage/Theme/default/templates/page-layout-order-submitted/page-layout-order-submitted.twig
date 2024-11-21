@@ -9,7 +9,24 @@
 
 {% block content %}
     <div class="box">
-        <h3>{{data.title}}</h3>
-        <p>{{data.message}}</p>
+        <h3>{{ data.title }}</h3>
+        <p>{{ data.message }}</p>
     </div>
+{% endblock %}
+
+{% block eventTracker %}
+    {% set events = {
+        list: events.list,
+        data: events.data | merge({
+            page: 'CHECKOUT_SUCCESS',
+            products: (data.quote.items | merge(data.quote.bundleItems)) | map(item => {
+                sku: item.sku,
+                price: can('SeePricePermissionPlugin') ? item.sumSubtotalAggregation : null,
+                quantity: item.quantity,
+            }),
+            total: can('SeePricePermissionPlugin') ? data.quote.totals.grandTotal : null,
+        }),
+    } %}
+
+    {{ parent() }}
 {% endblock %}

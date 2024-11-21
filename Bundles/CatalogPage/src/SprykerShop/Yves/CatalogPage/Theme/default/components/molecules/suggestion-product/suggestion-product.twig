@@ -14,6 +14,10 @@
     originalPrice: null,
 } %}
 
+{% define attributes = {
+    sku: data.product.add_to_cart_sku | default(data.product.abstract_sku),
+} %}
+
 {% block body %}
     <a class="grid js-suggest-search__item--navigable js-suggest-search__product-item--navigable {{ config.name }}__link" href="{{ data.url }}">
         <span class="col col--sm-3">

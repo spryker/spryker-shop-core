@@ -21,6 +21,14 @@
 {% define attributes = {
     itemscope: '',
     itemtype: 'https://schema.org/Product',
+    details: {
+        sku: data.product.add_to_cart_sku
+            | default((data.product.attributeMap is defined ? data.product.attributeMap.productConcreteIds | keys | first)
+            | default(data.metaSku)),
+        searchId: data.product.searchQueryId | default,
+        position: data.product.position | default(0),
+        price: can('SeePricePermissionPlugin') ? data.product.prices.DEFAULT | default : null,
+    } | json_encode,
 } %}
 
 {% import _self as macros %}
@@ -56,7 +64,7 @@
             {% block image %}
                 {% if data.url %}
                     {% block imageLink %}
-                        <a class="{{ config.jsName }}__link-detail-page" itemprop="url" href="{{ path(data.url) }}">
+                        <a class="{{ config.jsName }}__link-detail-page" itemprop="url" href="{{ data.url }}">
                             {{ macros.thumbnail(data.image, data.imageAlt | default(data.name), extraClass, modifiers, config.jsName) }}
                         </a>
                     {% endblock %}
@@ -102,7 +110,7 @@
         {% block name %}
             {% if data.name and data.url %}
                 {% block link %}
-                    <a class="{{ config.name }}__name {{ config.jsName }}__name {{ config.jsName }}__link-detail-page" href="{{ path(data.url) }}">
+                    <a class="{{ config.name }}__name {{ config.jsName }}__name {{ config.jsName }}__link-detail-page" href="{{ data.url }}">
                         <span itemprop="name">{{ data.name }}</span>
                     </a>
                 {% endblock %}
@@ -168,7 +176,7 @@
                     {% block actionsContent %}
                         {% if data.url %}
                             {% block action %}
-                                <a class="button button--expand {{ config.jsName }}__link-detail-page" href="{{ path(data.url) }}">
+                                <a class="button button--expand {{ config.jsName }}__link-detail-page" href="{{ data.url }}">
                                     {% block actionInner %}
                                         {{- 'product.view' | trans -}}
 

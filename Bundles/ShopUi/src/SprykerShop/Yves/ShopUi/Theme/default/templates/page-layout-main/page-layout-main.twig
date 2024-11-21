@@ -104,6 +104,84 @@
         } only %}
     {% endblock %}
 
+    {% block traceableEvent %}
+        {% set currency %}
+            {% widget 'CurrencyIsoCodeWidget' only %}{% endwidget %}
+        {% endset %}
+
+        {% set events = {
+            list: [
+                {
+                    event: 'PAGE_LOAD',
+                    name: 'load',
+                },
+                {
+                    event: 'PRODUCT_CLICK',
+                    name: 'click',
+                    triggers: [
+                        {
+                            selector: '.js-product-item:not(:has(.js-ajax-add-to-cart__button:focus))',
+                            groupAs: {
+                                key: 'products',
+                                toArray: true,
+                            },
+                            data: {
+                                details: {
+                                    selector: 'self',
+                                    flatten: true,
+                                },
+                            },
+                        },
+                        {
+                            selector: '.suggestion-product',
+                            groupAs: {
+                                key: 'products',
+                                toArray: true,
+                            },
+                            data: {
+                                sku: {
+                                    selector: 'self',
+                                },
+                                searchId: {
+                                    value: null,
+                                },
+                            },
+                        }
+                    ],
+                },
+                {
+                    event: 'ADD_TO_CART',
+                    name: 'click',
+                    triggers: [
+                        {
+                            selector: '.js-product-item:has(.js-ajax-add-to-cart__button:focus)',
+                            groupAs: {
+                                key: 'products',
+                                toArray: true,
+                            },
+                            data: {
+                                details: {
+                                    selector: 'self',
+                                    flatten: true,
+                                },
+                            },
+                        },
+                    ],
+                },
+            ],
+            data: {
+                currency: currency | spaceless,
+            },
+        } %}
+
+        {% block eventTracker %}
+            {% widget 'TraceableEventWidget' with {
+                events: events,
+            } only %}
+            {% endwidget %}
+        {% endblock %}
+    {% endblock %}
+
     {% block icons %}
         {% include atom('icon-sprite') only %}
     {% endblock %}

@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import Component from '../../../models/component';
 
 /**
@@ -31,6 +32,7 @@ export interface ProductItemData {
     addToCartUrl: string;
     ajaxAddToCartUrl?: string;
     addToCartFormAction?: string;
+    price?: number;
 }
 
 type Url = string | null;
@@ -85,10 +87,11 @@ export default class ProductItem extends Component {
         this.defaultPrice = data.defaultPrice;
         this.sku = data.sku ?? null;
         this.originalPrice = data.originalPrice;
-        this.detailPageUrl = data.detailPageUrl;
+        this.detailPageUrl = this.generatePDPUrl(data.detailPageUrl);
         this.addToCartUrl = data.addToCartUrl;
         this.ajaxAddToCartUrl = data.ajaxAddToCartUrl ?? null;
         this.addToCartFormAction = data.addToCartFormAction ?? null;
+        this.updateDetails(data);
     }
 
     protected getSkuFromUrl(url: Url): Url {
@@ -100,6 +103,30 @@ export default class ProductItem extends Component {
         const sku = url.match(lastPartOfUrl);
 
         return sku[0];
+    }
+
+    protected generatePDPUrl(url: string): string {
+        const fullUrl = new URL(url, window.location.origin);
+
+        if (this.details.searchId) {
+            fullUrl.searchParams.set('search-id', this.details.searchId);
+        }
+
+        return `${fullUrl.pathname}?${fullUrl.searchParams.toString()}`;
+    }
+
+    protected updateDetails(data: ProductItemData): void {
+        const details = { ...this.details };
+
+        for (const key in data) {
+            if (details[key] === undefined || details[key] === null) {
+                continue;
+            }
+
+            details[key] = data[key];
+        }
+
+        this.setAttribute('details', JSON.stringify(details));
     }
 
     /**
@@ -323,5 +350,9 @@ export default class ProductItem extends Component {
         this.dispatchCustomEvent(EVENT_UPDATE_ADD_TO_CART_FORM_ACTION, {
             sku: this.getSkuFromUrl(addToCartFormAction),
         });
+    }
+
+    get details(): Record<string, string> {
+        return JSON.parse(this.getAttribute('details') ?? '{}');
     }
 }
