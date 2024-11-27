@@ -12,24 +12,36 @@
     useExternalForm: false,
 } %}
 
+{% macro generateQueryString(data, parentKey = '') %}
+    {% set queryString = '' %}
+
+    {% for key, value in data %}
+        {% set currentKey = parentKey ? "#{parentKey}[#{key}]" : key %}
+
+        {% if value is iterable %}
+            {% set queryString = "#{queryString}#{_self.generateQueryString(value, currentKey)}" %}
+        {% else %}
+            {% if value %}
+                {% set queryString = "#{queryString}#{currentKey}=#{value}," %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    {{- queryString -}}
+{% endmacro %}
+
 {% block component %}
     {% if data.superAttributes is not empty %}{{parent()}}{% endif %}
 {% endblock %}
 
 {% block body %}
-    {% set excludeParams = [] %}
-    {% set transformedParams = {} %}
     {% set attributeKey = 'attribute' %}
-
-    {% for key, value in app.request.query.all %}
-        {% if key == attributeKey and value is iterable %}
-            {% for attrKey, attrValue in value %}
-                {% set transformedParams = transformedParams | merge({ ("#{attributeKey}[#{attrKey}]"): attrValue }) %}
-            {% endfor %}
-        {% else %}
-            {% set transformedParams = transformedParams | merge({ (key): value }) %}
-        {% endif %}
-    {% endfor %}
+    {% set transformedParams = _self.generateQueryString(app.request.query.all)
+        | spaceless
+        | split(',')
+        | filter(param => param is defined and param | trim)
+        | reduce(((acc, param) => acc | merge({((param | split('='))[0]): (param | split('='))[1]})), {})
+    %}
 
     {% if not data.useExternalForm %}
         <form method="GET">
@@ -41,16 +53,18 @@
             {% set selectedValue = selectedValue in values ? selectedValue : null %}
             {% set isAvailable = true %}
             {% set formName = "#{attributeKey}[#{name}]" %}
-            {% set excludeParams = excludeParams | merge([formName]) %}
             {% set optionResetUrl = transformedParams
                 | filter((value, key) => key != formName)
-                | map((value, key) => "#{key}=#{value}")
+                | map((value, key) => "#{key | url_encode}=#{value}")
                 | join('&')
             %}
 
             {% for selectedAttributeName, selectedAttributeValue in data.selectedAttributes | filter((v, k) => k != name) %}
-                {% set selectedUrlParameter = [("#{attributeKey}[#{selectedAttributeName}]")| url_encode, selectedAttributeValue]|join('=') %}
-                {% set optionResetUrl = [optionResetUrl, selectedUrlParameter] | join('&') %}
+                {% set selectedUrlParameter = ["#{attributeKey}[#{selectedAttributeName}]" | url_encode, selectedAttributeValue] | join('=') %}
+
+                {% if selectedUrlParameter not in optionResetUrl %}
+                    {% set optionResetUrl = [optionResetUrl, selectedUrlParameter] | join('&') %}
+                {% endif %}
             {% endfor %}
 
             {% if name in data.availableAttributes | keys %}
@@ -68,7 +82,7 @@
                                 selectedValue: selectedValue,
                                 label: "product.attribute.#{name}" | trans,
                                 isAvailable: isAvailable,
-                                optionResetUrl: optionResetUrl
+                                optionResetUrl: optionResetUrl,
                             }
                         } only %}
                     </li>
@@ -78,7 +92,7 @@
 
     {% block requestParams %}
         {% for name, value in transformedParams %}
-            {% if name not in transformedParams %}
+            {% if attributeKey not in name %}
                 <input type="hidden" name="{{ name }}" value="{{ value }}" />
             {% endif %}
         {% endfor %}

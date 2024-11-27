@@ -20,7 +20,7 @@ export class BaseTraceableEventAdapter extends Component {
     }
 
     addAdapter(orchestratorSelector = '.js-traceable-events-orchestrator'): void {
-        document.querySelector<TraceableEventsOrchestrator>(orchestratorSelector).addAdapter(this);
+        document.querySelector<TraceableEventsOrchestrator>(orchestratorSelector)?.addAdapter(this);
     }
 
     async eventsHandler(data: EventsHandlerData<EventName>): Promise<void> {
@@ -28,6 +28,6 @@ export class BaseTraceableEventAdapter extends Component {
     }
 
     disconnectedCallback() {
-        document.querySelector<TraceableEventsOrchestrator>(this.orchestratorSelector).removeAdapter(this);
+        document.querySelector<TraceableEventsOrchestrator>(this.orchestratorSelector)?.removeAdapter(this);
     }
 }
