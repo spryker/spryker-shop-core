@@ -1,0 +1,43 @@
+{% extends template('widget') %}
+
+{% define data = {
+    expressCheckoutPaymentWidgetContentUrl: _widget.expressCheckoutPaymentWidgetContentUrl,
+} %}
+
+{% block body %}
+    <div class="spacing-y--big is-position-relative">
+        {% block content %}
+            {% set containerClass = "js-express-checkout-payment-widget-container" %}
+            {% set providerClass = "js-express-checkout-payment-widget-provider" %}
+
+            {% block loaders %}
+                {% include molecule('ajax-provider') with {
+                    class: providerClass,
+                    attributes: {
+                        'fetch-on-load': true,
+                        url:  data.expressCheckoutPaymentWidgetContentUrl
+                    },
+                } only %}
+
+                {% include molecule('ajax-loader') with {
+                    modifiers: ['static'],
+                    attributes: {
+                        'provider-class-name': providerClass,
+                    },
+                } only %}
+
+                {% include molecule('ajax-renderer') with {
+                    attributes: {
+                        'provider-class-name': providerClass,
+                        'target-class-name': containerClass,
+                        'mount-after-render': true,
+                    },
+                } only %}
+            {% endblock %}
+
+            {% block render %}
+                <div class="{{ containerClass }}"></div>
+            {% endblock %}
+        {% endblock %}
+    </div>
+{% endblock %}

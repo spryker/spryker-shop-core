@@ -15,7 +15,10 @@
 {%- endblock %}
 
 {% block body %}
-    <li class="list__item">{{ ('customer.salutation.' ~ data.address.salutation | lower) | trans }} {{ data.address.firstName }} {{ data.address.lastName }}</li>
+    <li class="list__item">
+        {{ (('customer.salutation.' ~ data.address.salutation | lower) | trans) == 'n/a' ? '' : (('customer.salutation.' ~ data.address.salutation | lower) | trans) }}
+        {{ data.address.firstName }} {{ data.address.lastName }}
+    </li>
 
     {% if data.address.company is not empty %}
         <li class="list__item">{{ data.address.company }}</li>

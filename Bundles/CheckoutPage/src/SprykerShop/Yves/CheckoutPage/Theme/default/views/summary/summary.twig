@@ -22,6 +22,7 @@
     isPlaceableOrderErrors: _view.isPlaceableOrderErrors,
     shipmentExpenses: _view.shipmentExpenses,
     acceptTermsFieldName: _view.acceptTermsFieldName,
+    isExpressCheckoutPayment: _view.quoteTransfer.payment.checkoutConfiguration.strategy | default(''),
 
     forms: {
         summary: _view.summaryForm,
@@ -52,6 +53,7 @@
 
 {% block content %}
     {% set isGiftCardExists = null %}
+    {% set isExpressCheckoutPayment = data.isExpressCheckoutPayment %}
 
     <div class="grid grid--stretch grid--justify">
         {% for shipmentGroup in data.shipmentGroups %}
@@ -108,11 +110,9 @@
                 <div class="box">
                     <h6>{{ 'checkout.step.summary.delivery_address' | trans }}</h6>
                     <hr>
-                    
                     {% block servicePointNameForShipmentGroup %}
                         {% widget 'ServicePointNameForShipmentGroupWidget' args [shipmentGroup] only %}{% endwidget %}
                     {% endblock %}
-                    
                     {% embed molecule('display-address') with {
                         data: {
                             address: shipmentGroup.shipment.shippingAddress,
@@ -121,9 +121,11 @@
                         {% block addressBadgeLabel %}{% endblock %}
                     {% endembed %}
 
-                    <a href="{{ url('checkout-address') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-address') }}>
-                        {{ 'general.edit.button' | trans }}
-                    </a>
+                    {% if not isExpressCheckoutPayment %}
+                        <a href="{{ url('checkout-address') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-address') }}>
+                            {{ 'general.edit.button' | trans }}
+                        </a>
+                    {% endif %}
                 </div>
                 {% if not isGiftCardExists %}
                     {% if data.shipmentExpenses[shipmentGroup.hash] is defined %}
@@ -136,9 +138,11 @@
                                 },
                             } only %}
 
-                            <a href="{{ url('checkout-shipment') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-shipment') }}>
-                                {{ 'general.edit.button' | trans }}
-                            </a>
+                            {% if not isExpressCheckoutPayment %}
+                                <a href="{{ url('checkout-shipment') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-shipment') }}>
+                                    {{ 'general.edit.button' | trans }}
+                                </a>
+                            {% endif %}
                         </div>
                     {% endif %}
                     <div class="box">
@@ -147,9 +151,12 @@
                         <ul class="list">
                             <li class="list__item">{{ shipmentGroup.shipment.requestedDeliveryDate }}</li>
                         </ul>
-                        <a href="{{ url('checkout-shipment') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-shipment') }}>
-                            {{ 'general.edit.button' | trans }}
-                        </a>
+
+                        {% if not isExpressCheckoutPayment %}
+                            <a href="{{ url('checkout-shipment') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-shipment') }}>
+                                {{ 'general.edit.button' | trans }}
+                            </a>
+                        {% endif %}
                     </div>
                 {% endif %}
             </div>
@@ -184,9 +191,11 @@
                         {% endif %}
                     {% endblock %}
 
-                    <a href="{{ url('checkout-payment') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-payment') }}>
-                        {{ 'general.edit.button' | trans }}
-                    </a>
+                    {% if not isExpressCheckoutPayment %}
+                        <a href="{{ url('checkout-payment') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-payment') }}>
+                            {{ 'general.edit.button' | trans }}
+                        </a>
+                    {% endif %}
                 </div>
             </div>
 
@@ -202,9 +211,11 @@
                         {% block addressBadgeLabel %}{% endblock %}
                     {% endembed %}
 
-                    <a href="{{ url('checkout-address') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-address') }}>
-                        {{ 'general.edit.button' | trans }}
-                    </a>
+                    {% if not isExpressCheckoutPayment %}
+                        <a href="{{ url('checkout-address') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-address') }}>
+                            {{ 'general.edit.button' | trans }}
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>

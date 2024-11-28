@@ -1,0 +1,3 @@
+@include helper-import(molecule, paypal-buttons) {
+    @include payment-app-widget-paypal-buttons;
+}

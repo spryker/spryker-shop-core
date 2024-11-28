@@ -16,14 +16,20 @@ use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginWithMessengerInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
+use Spryker\Yves\StepEngine\Dependency\Step\StepWithCodeInterface;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPaymentClientInterface;
 use SprykerShop\Yves\CheckoutPage\Extractor\PaymentMethodKeyExtractorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
+class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterface, StepWithCodeInterface
 {
+    /**
+     * @var string
+     */
+    protected const STEP_CODE = 'payment';
+
     /**
      * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPaymentClientInterface
      */
@@ -268,5 +274,13 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
         }
 
         return true;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCode(): string
+    {
+        return static::STEP_CODE;
     }
 }

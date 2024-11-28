@@ -49,6 +49,10 @@
             }
         }
 
+        &--static:not(.is-invisible) {
+            position: static;
+        }
+
         @content;
     }
 }

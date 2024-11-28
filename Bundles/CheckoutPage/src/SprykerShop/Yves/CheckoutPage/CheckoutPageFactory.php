@@ -69,6 +69,7 @@ class CheckoutPageFactory extends AbstractFactory
         return new PaymentMethodReader(
             $this->getPaymentClient(),
             $this->getQuoteClient(),
+            $this->getConfig(),
         );
     }
 

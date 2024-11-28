@@ -74,4 +74,17 @@ class CheckoutPageConfig extends AbstractBundleConfig
     {
         return null;
     }
+
+    /**
+     * Specification:
+     * - Returns keys that are used to filter out payment methods during the checkout process on the Payment step.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getExcludedPaymentMethodKeys(): array
+    {
+        return [];
+    }
 }

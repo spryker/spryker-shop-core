@@ -1,7 +1,7 @@
-import Component from '../../../models/component';
 import { debug } from '../../../app/logger';
+import Component from '../../../models/component';
 
-const EVENT_SCRIPT_LOAD = 'scriptload';
+export const EVENT_SCRIPT_LOAD = 'scriptload';
 const defaultIgnoredAttributes = ['class', 'data-qa'];
 
 /**

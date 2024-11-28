@@ -1,0 +1,59 @@
+{
+    "name": "spryker-shop/payment-app-widget",
+    "type": "library",
+    "description": "PaymentAppWidget module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.2",
+        "spryker-shop/checkout-page-extension": "^1.0.0",
+        "spryker-shop/payment-app-widget-extension": "^1.0.0",
+        "spryker-shop/shop-application": "^1.0.0",
+        "spryker-shop/shop-ui": "^1.80.0",
+        "spryker/application": "^3.8.0",
+        "spryker/kernel": "^3.52.0",
+        "spryker/locale": "^4.0.0",
+        "spryker/log": "^3.0.0",
+        "spryker/payment": "^5.25.0",
+        "spryker/payment-app": "^1.0.0",
+        "spryker/quote": "^2.20.0",
+        "spryker/step-engine": "^3.3.0",
+        "spryker/symfony": "^3.0.0",
+        "spryker/transfer": "^3.27.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/router": "*",
+        "spryker/testify": "*"
+    },
+    "suggest": {
+        "spryker/router": "Use this module when using plugins that need Router dependencies.",
+        "spryker/silex": "Use this module when using plugins that need Silex dependencies."
+    },
+    "autoload": {
+        "psr-4": {
+            "SprykerShop\\": "src/SprykerShop/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerShopTest\\": "tests/SprykerShopTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

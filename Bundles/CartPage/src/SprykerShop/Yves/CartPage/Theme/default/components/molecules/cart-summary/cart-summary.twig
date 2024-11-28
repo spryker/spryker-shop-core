@@ -155,6 +155,8 @@
             {% block body %}
                 <hr>
                 {{ parent() }}
+
+                {% widget 'ExpressCheckoutPaymentWidget' %}{% endwidget %}
             {% endblock %}
         {% nowidget %}
             {% set checkoutButtonText =  'cart.checkout' | trans %}

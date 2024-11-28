@@ -1,0 +1,66 @@
+{# @var data.expressCheckoutPaymentMethodWidget \Generated\Shared\Transfer\expressCheckoutPaymentMethodWidgetTransfer #}
+{# @var data.expressCheckoutPaymentMethodWidget.paymentMethod \Generated\Shared\Transfer\PaymentMethodTransfer #}
+{# @var data.expressCheckoutPaymentMethodWidget.paymentMethod.paymentMethodAppConfiguration.checkoutConfiguration.scripts ArrayObject<\Generated\Shared\Transfer\ScriptTransfer> #}
+{# @var data.expressCheckoutPaymentMethodWidget.redirectUrls \Generated\Shared\Transfer\ExpressCheckoutRedirectUrlsTransfer #}
+{# @var data.expressCheckoutPaymentMethodWidget.csrfToken \Generated\Shared\Transfer\ExpressCheckoutCsrfTokenTransfer #}
+
+{% extends model('component') %}
+
+{% define config = {
+    name: 'paypal-buttons',
+    tag: 'paypal-buttons',
+} %}
+
+{% define data = {
+    expressCheckoutPaymentMethodWidget: required,
+} %}
+
+{% set paymentMethod = data.expressCheckoutPaymentMethodWidget.paymentMethod %}
+{% set csrfToken = data.expressCheckoutPaymentMethodWidget.csrfToken %}
+{% set urls = data.expressCheckoutPaymentMethodWidget.redirectUrls %}
+
+{% define attributes = {
+    'urls': {
+        preOrderUrl: urls.preOrderUrl,
+        successUrl: urls.successUrl,
+        failureUrl: urls.failureUrl,
+        cancelUrl: urls.cancelUrl,
+    } | json_encode,
+    'request-data': {
+        paymentMethod: paymentMethod.name,
+        paymentProvider: paymentMethod.paymentProvider.paymentProviderKey,
+        csrfToken: csrfToken.value,
+        csrfTokenName: csrfToken.name,
+    } | json_encode,
+    'loading-class': 'is-loading',
+} %}
+
+{%- block extraClass %} {{ attributes['loading-class'] }}{%- endblock -%}
+
+{% block body %}
+    {% block container %}
+        <div class="{{ config.jsName }}__buttons">
+            {% block spinner %}
+                <div class="{{ config.name }}__spinner">
+                    {% include atom('icon') with {
+                        modifiers: ['spinner'],
+                        data: {
+                            name: 'spinner',
+                        },
+                    } only %}
+                </div>
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% for script in paymentMethod.paymentMethodAppConfiguration.checkoutConfiguration.scripts %}
+        {% block script %}
+            {% include molecule('script-loader') with {
+                class: "#{config.jsName}__script-loader",
+                attributes: {
+                    src: "#{script.url}&#{script.queryParams | url_encode}",
+                },
+            } only %}
+        {% endblock %}
+    {% endfor %}
+{% endblock %}

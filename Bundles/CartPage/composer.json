@@ -51,6 +51,7 @@
         "spryker-shop/product-measurement-unit-widget": "^0.7.2: If you want to use measurement-unit-item molecule from module ProductMeasurementUnitWidget",
         "spryker-shop/product-option-widget": "If you want to use components from module ProductOptionWidget or CartItemProductOptionWidgetPlugin",
         "spryker-shop/product-packaging-unit-widget": "If you want to use components from module ProductPackagingUnitWidget or CartProductPackagingUnitWidgetPlugin",
+        "spryker-shop/payment-app-widget": "If you want to use ExpressCheckoutPaymentWidget.",
         "spryker/container": "If you want to use the CartTwigPlugin",
         "spryker/permission": "If you want to use permissions plugins",
         "spryker/router": "Use this module when using plugins that adds routes to the Route Module.",

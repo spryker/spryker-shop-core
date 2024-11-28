@@ -1,0 +1,33 @@
+{# @var expressCheckoutPaymentMethodTemplates \Generated\Shared\Transfer\ExpressCheckoutPaymentMethodTemplateTransfer[] #}
+
+{% extends template('widget') %}
+
+{% define data = {
+    expressCheckoutPaymentMethodWidgets: expressCheckoutPaymentMethodWidgets | default([]),
+} %}
+
+{% block body %}
+
+    {% if data.expressCheckoutPaymentMethodWidgets is empty %}
+        {% block missingTemplates %}
+            {# This block is used to display a message or alternative content when no payment method widgets are available. #}
+        {% endblock %}
+    {% else %}
+        {% for widget in data.expressCheckoutPaymentMethodWidgets %}
+            {% set widgetTemplate = _self.getTemplate(
+                widget.templateType,
+                widget.templateName,
+                widget.moduleName
+            ) | trim %}
+
+            {# This block is used to include the specific express checkout payment method widget. #}
+            {% block templateBlock %}
+                {% include widgetTemplate ignore missing with {
+                    data: {
+                        expressCheckoutPaymentMethodWidget: widget,
+                    },
+                } only %}
+            {% endblock %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}

@@ -105,6 +105,8 @@
         "spryker-shop/newsletter-widget": "*",
         "spryker-shop/order-cancel-widget": "*",
         "spryker-shop/order-custom-reference-widget": "*",
+        "spryker-shop/payment-app-widget": "*",
+        "spryker-shop/payment-app-widget-extension": "*",
         "spryker-shop/payment-page": "*",
         "spryker-shop/persistent-cart-share-page": "*",
         "spryker-shop/persistent-cart-share-widget": "*",
