@@ -10,7 +10,7 @@
 {% set steps = [] %}
 {% for category in data.categories %}
     {% set steps = steps | merge([{
-        url: category.url,
+        url: functionExists('generatePath') ? generatePath(category.url) : category.url,
         label: category.name,
         itemProp: 'category'
     }]) %}

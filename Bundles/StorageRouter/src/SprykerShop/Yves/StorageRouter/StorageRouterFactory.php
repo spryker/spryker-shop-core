@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\StorageRouter;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\StorageRouter\Dependency\Client\StorageRouterToStoreClientInterface;
 use SprykerShop\Yves\StorageRouter\Dependency\Client\StorageRouterToUrlStorageClientInterface;
 use SprykerShop\Yves\StorageRouter\ParameterMerger\ParameterMerger;
 use SprykerShop\Yves\StorageRouter\ParameterMerger\ParameterMergerInterface;
@@ -53,6 +54,7 @@ class StorageRouterFactory extends AbstractFactory
     {
         return new StorageRequestMatcher(
             $this->getUrlStorageClient(),
+            $this->getStorageRouterEnhancerPlugins(),
         );
     }
 
@@ -64,6 +66,7 @@ class StorageRouterFactory extends AbstractFactory
         return new StorageUrlGenerator(
             $this->getUrlStorageClient(),
             $this->createParameterMerger(),
+            $this->getStorageRouterEnhancerPlugins(),
         );
     }
 
@@ -89,5 +92,21 @@ class StorageRouterFactory extends AbstractFactory
     public function createParameterMerger(): ParameterMergerInterface
     {
         return new ParameterMerger();
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\StorageRouterExtension\Dependency\Plugin\StorageRouterEnhancerPluginInterface>
+     */
+    public function getStorageRouterEnhancerPlugins(): array
+    {
+        return $this->getProvidedDependency(StorageRouterDependencyProvider::PLUGINS_ROUTER_ENHANCER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\StorageRouter\Dependency\Client\StorageRouterToStoreClientInterface
+     */
+    public function getStoreClient(): StorageRouterToStoreClientInterface
+    {
+        return $this->getProvidedDependency(StorageRouterDependencyProvider::CLIENT_STORE);
     }
 }

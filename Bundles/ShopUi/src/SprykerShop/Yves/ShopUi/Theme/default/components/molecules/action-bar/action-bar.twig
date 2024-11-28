@@ -22,7 +22,7 @@
     <div class="{{ config.name }}__actions">
         {% block actions %}
             {% for action in data.actions %}
-                <a class="{{ component.renderClass('button', modifiers) }} {{ config.name }}__action" href="{{ action.url }}">
+                <a class="{{ component.renderClass('button', modifiers) }} {{ config.name }}__action" href="{{ functionExists('generatePath') ? generatePath(action.url) : action.url }}">
                     {% if action.icon is defined and action.icon %}
                         {% include atom('icon') with {
                             class: config.name ~ '__icon',

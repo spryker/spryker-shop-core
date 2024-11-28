@@ -48,7 +48,7 @@
                     </td>
                     <td>
                         <ul>
-                            <li><a href="{{ item.url }}">{{ item.name }}</a></li>
+                            <li><a href="{{ functionExists('generatePath') ? generatePath(item.url) : item.url }}">{{ item.name }}</a></li>
                             <li>{{ item.sku }}</li>
                             <li>
                                 {% set listOfAttributes = {} %}

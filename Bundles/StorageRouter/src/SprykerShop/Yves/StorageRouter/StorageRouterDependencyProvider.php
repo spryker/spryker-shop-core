@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\StorageRouter;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\StorageRouter\Dependency\Client\StorageRouterToUrlStorageClientBridge;
+use SprykerShop\Yves\StorageRouter\Dependency\Client\StorageStorageRouterToStoreClientBridge;
 
 /**
  * @method \SprykerShop\Yves\StorageRouter\StorageRouterConfig getConfig()
@@ -27,6 +28,16 @@ class StorageRouterDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_RESOURCE_CREATORS = 'PLUGIN_RESOURCE_CREATORS';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_ROUTER_ENHANCER = 'PLUGINS_ROUTER_ENHANCER';
+
+    /**
+     * @var string
+     */
+    public const CLIENT_STORE = 'CLIENT_STORE';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -35,6 +46,8 @@ class StorageRouterDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addUrlStorageClient($container);
         $container = $this->addResourceCreatorPlugins($container);
+        $container = $this->addStorageRouterEnhancerPlugins($container);
+        $container = $this->addStoreClient($container);
 
         return $container;
     }
@@ -68,10 +81,46 @@ class StorageRouterDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addStorageRouterEnhancerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ROUTER_ENHANCER, function () {
+            return $this->getStorageRouterEnhancerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return array<\SprykerShop\Yves\StorageRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface>
      */
     protected function getResourceCreatorPlugins()
     {
         return [];
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\StorageRouterExtension\Dependency\Plugin\StorageRouterEnhancerPluginInterface>
+     */
+    protected function getStorageRouterEnhancerPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return new StorageStorageRouterToStoreClientBridge($container->getLocator()->store()->client());
+        });
+
+        return $container;
     }
 }

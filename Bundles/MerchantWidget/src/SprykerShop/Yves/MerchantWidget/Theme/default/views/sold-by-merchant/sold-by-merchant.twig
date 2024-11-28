@@ -17,7 +17,7 @@
 
         {% block soldBy %}
             <p>
-                {{ 'merchant.sold_by' | trans }} <a href="{{ merchantUrl }}" target="_blank" >{{ data.merchant.name }}</a>
+                {{ 'merchant.sold_by' | trans }} <a href="{{ functionExists('generatePath') ? generatePath(merchantUrl) : merchantUrl }}" target="_blank" >{{ data.merchant.name }}</a>
             </p>
         {% endblock %}
     {% endif %}

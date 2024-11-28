@@ -35,7 +35,7 @@
                 {% set isDisabled = quantity == 0 ? 'disabled' %}
 
                 <li class="menu__item {{ childrenClass }}">
-                    <button class="link {{ triggerButtonJsName }}" type="button" {{ isDisabled }} data-url={{ categoryUrl }}>
+                    <button class="link {{ triggerButtonJsName }}" type="button" {{ isDisabled }} data-url={{ functionExists('generatePath') ? generatePath(categoryUrl) : categoryUrl }}>
                         {{ categoryNode.name }} ({{ quantity | executeFilterIfExists('formatInt', app.locale) }})
                     </button>
 

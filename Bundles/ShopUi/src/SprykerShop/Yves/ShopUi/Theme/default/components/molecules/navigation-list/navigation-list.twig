@@ -24,7 +24,7 @@
                 }
             } only %}
                 {% block url %}
-                    <a href="{{ data.node.url }}" class="{{ data.node.cssClass }}">{{ data.node.title }}</a>
+                    <a href="{{ functionExists('generatePath') ? generatePath(data.node.url) : data.node.url }}" class="{{ data.node.cssClass }}">{{ data.node.title }}</a>
                 {% endblock %}
 
                 {% block externalUrl %}

@@ -43,7 +43,7 @@
                             {% endif %}
                         </td>
                         <td class="text-center">
-                            <a href="{{ item.url }}">{{ item.name }}</a>
+                            <a href="{{ functionExists('generatePath') ? generatePath(item.url) : item.url }}">{{ item.name }}</a>
                             <div><small>{{ item.sku }}</small></div>
                             {% for attribute in item.superAttributesDefinition %}
                                 {% if item.attributes[attribute] is defined %}

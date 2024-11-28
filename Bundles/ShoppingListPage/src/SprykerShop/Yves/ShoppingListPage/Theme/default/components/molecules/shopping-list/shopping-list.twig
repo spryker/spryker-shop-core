@@ -100,7 +100,7 @@
                                                 <ul class="list spacing-y">
                                                     {% block productName %}
                                                         <li class="list__item">
-                                                            <a itemprop="url" href="{{ item.url }}"><span itemprop="name">{{ item.name }}</span></a>
+                                                            <a itemprop="url" href="{{ item.url ? (functionExists('generatePath') ? generatePath(item.url) : item.url) : '' }}"><span itemprop="name">{{ item.name }}</span></a>
                                                         </li>
                                                     {% endblock %}
 

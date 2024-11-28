@@ -32,13 +32,23 @@ class StorageUrlGenerator implements UrlGeneratorInterface
     protected $parameterMerger;
 
     /**
+     * @var array<\SprykerShop\Yves\StorageRouterExtension\Dependency\Plugin\StorageRouterEnhancerPluginInterface>
+     */
+    protected array $storageRouterEnhancerPlugins;
+
+    /**
      * @param \SprykerShop\Yves\StorageRouter\Dependency\Client\StorageRouterToUrlStorageClientInterface $urlStorageClient
      * @param \SprykerShop\Yves\StorageRouter\ParameterMerger\ParameterMergerInterface $parameterMerger
+     * @param array<\SprykerShop\Yves\StorageRouterExtension\Dependency\Plugin\StorageRouterEnhancerPluginInterface> $storageRouterEnhancerPlugins
      */
-    public function __construct(StorageRouterToUrlStorageClientInterface $urlStorageClient, ParameterMergerInterface $parameterMerger)
-    {
+    public function __construct(
+        StorageRouterToUrlStorageClientInterface $urlStorageClient,
+        ParameterMergerInterface $parameterMerger,
+        array $storageRouterEnhancerPlugins
+    ) {
         $this->urlStorageClient = $urlStorageClient;
         $this->parameterMerger = $parameterMerger;
+        $this->storageRouterEnhancerPlugins = $storageRouterEnhancerPlugins;
     }
 
     /**
@@ -71,8 +81,15 @@ class StorageUrlGenerator implements UrlGeneratorInterface
     public function generate(string $name, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
         $localeName = $this->getContext()->getParameter('_locale');
+        foreach ($this->storageRouterEnhancerPlugins as $storageRouterEnhancerPlugin) {
+            $name = $storageRouterEnhancerPlugin->beforeMatch($name, $this->getContext());
+        }
         if (!$this->urlStorageClient->matchUrl($name, $localeName)) {
             throw new RouteNotFoundException();
+        }
+
+        foreach ($this->storageRouterEnhancerPlugins as $storageRouterEnhancerPlugin) {
+            $storageRouterEnhancerPlugin->afterMatch([], $this->getContext());
         }
 
         parse_str($this->getContext()->getQueryString(), $requestParameter);
@@ -83,7 +100,13 @@ class StorageUrlGenerator implements UrlGeneratorInterface
             $name .= '?' . $queryString;
         }
 
-        return $this->getUrlOrPathForType($name, $referenceType);
+        $url = $this->getUrlOrPathForType($name, $referenceType);
+
+        foreach (array_reverse($this->storageRouterEnhancerPlugins) as $storageRouterEnhancerPlugin) {
+            $url = $storageRouterEnhancerPlugin->afterGenerate($url, $this->getContext(), $referenceType);
+        }
+
+        return $url;
     }
 
     /**

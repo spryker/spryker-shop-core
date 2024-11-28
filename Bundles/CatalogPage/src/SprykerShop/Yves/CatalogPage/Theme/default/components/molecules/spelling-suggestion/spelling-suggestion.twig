@@ -21,6 +21,6 @@
 {% block body %}
     <em class="text-big">
         {{ 'global.search.spellingSuggestion' | trans }}
-        <strong><a href="{{href}}">{{data.suggestion}}</a></strong>?
+        <strong><a href="{{ functionExists('generatePath') ? generatePath(href) : href }}">{{data.suggestion}}</a></strong>?
     </em>
 {% endblock %}

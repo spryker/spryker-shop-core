@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\LanguageSwitcherWidget\Widget;
 
 use Generated\Shared\Transfer\UrlStorageTransfer;
+use InvalidArgumentException;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
@@ -17,13 +18,43 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class LanguageSwitcherWidget extends AbstractWidget
 {
     /**
+     * @var string
+     */
+    protected const SERVICE_REQUEST_STACK = 'request_stack';
+
+    /**
+     * @var string
+     */
+    protected const SERVICE_ROUTERS = 'routers';
+
+    /**
+     * @var string
+     */
+    protected const REQUEST_ATTRIBUTE_PATH_INFO = 'pathinfo';
+
+    /**
+     * @var string
+     */
+    protected const REQUEST_ATTRIBUTE_ROUTE = '_route';
+
+    /**
+     * @var string
+     */
+    protected const REQUEST_ATTRIBUTE_ROUTE_PARAMS = '_route_params';
+
+    /**
+     * @var string
+     */
+    protected const REQUEST_CONTEXT_LOCALE = '_locale';
+
+    /**
      * @param string $pathInfo
      * @param string $queryString
      * @param string $requestUri
      */
     public function __construct(string $pathInfo, $queryString, string $requestUri)
     {
-        $languages = $this->getLanguages($pathInfo, $queryString, $requestUri);
+        $languages = $this->getLanguages($pathInfo, $queryString);
 
         $this->addParameter('languages', $this->filterExcludedUrls($languages))
             ->addParameter('currentLanguage', $this->getCurrentLanguage());
@@ -47,13 +78,15 @@ class LanguageSwitcherWidget extends AbstractWidget
 
     /**
      * @param string $pathInfo
-     * @param string $queryString
-     * @param string $requestUri
+     * @param string|null $queryString
      *
      * @return array<string>
      */
-    protected function getLanguages(string $pathInfo, $queryString, string $requestUri): array
+    protected function getLanguages(string $pathInfo, ?string $queryString): array
     {
+        $request = $this->getGlobalContainer()->get(static::SERVICE_REQUEST_STACK)->getCurrentRequest();
+        $pathInfo = $request->attributes->get(static::REQUEST_ATTRIBUTE_PATH_INFO) ?? $pathInfo;
+
         $currentUrlStorage = $this->getFactory()
             ->getUrlStorageClient()
             ->findUrlStorageTransferByUrl($pathInfo);
@@ -71,28 +104,29 @@ class LanguageSwitcherWidget extends AbstractWidget
             return $this->attachLocaleUrlsFromStorageToLanguages($locales, $localeUrls, $queryString);
         }
 
-        return $this->attachLocaleUrlsToLanguages($locales, $requestUri);
+        return $this->attachLocaleUrlsToLanguages($locales);
     }
 
     /**
-     * @param array $locales
-     * @param array $localeUrls
-     * @param string $queryString
+     * @param array<string> $locales
+     * @param array<mixed> $localeUrls
+     * @param string|null $queryString
      *
-     * @return array
+     * @return array<string, string>
      */
     protected function attachLocaleUrlsFromStorageToLanguages(
         array $locales,
         array $localeUrls,
-        $queryString
+        ?string $queryString
     ): array {
         $languages = [];
+        $routers = $this->getGlobalContainer()->get(static::SERVICE_ROUTERS);
         foreach ($locales as $locale) {
             $language = $this->getLanguageFromLocale($locale);
             foreach ($localeUrls as $localeUrl) {
                 if ($localeUrl[UrlStorageTransfer::LOCALE_NAME] === $locale) {
                     $languages[$language] = $this->getLocaleUrlWithQueryString(
-                        $localeUrl[UrlStorageTransfer::URL],
+                        $routers->generate($localeUrl[UrlStorageTransfer::URL]),
                         $queryString,
                     );
 
@@ -120,37 +154,74 @@ class LanguageSwitcherWidget extends AbstractWidget
     }
 
     /**
-     * @param array $locales
-     * @param string $requestUri
+     * @param array<string> $locales
      *
-     * @return array
+     * @return array<string, string>
      */
-    protected function attachLocaleUrlsToLanguages(array $locales, string $requestUri): array
+    protected function attachLocaleUrlsToLanguages(array $locales): array
     {
-        $currentUrl = $requestUri;
         $languages = [];
+        $currentLocale = $locales[$this->getFactory()->getLocaleClient()->getCurrentLanguage()];
+        $request = $this->getGlobalContainer()->get(static::SERVICE_REQUEST_STACK)->getCurrentRequest();
+        $route = $request->attributes->get(static::REQUEST_ATTRIBUTE_ROUTE);
+        $parameters = $request->attributes->get(static::REQUEST_ATTRIBUTE_ROUTE_PARAMS, []);
         foreach ($locales as $locale) {
             $language = $this->getLanguageFromLocale($locale);
-            $languages[$language] = $this->replaceCurrentUrlLanguage($currentUrl, array_keys($locales), $language);
+            $languages[$language] = $this->replaceCurrentUrlLanguage($locale, $currentLocale, $route, $parameters);
         }
 
         return $languages;
     }
 
     /**
-     * @param string $currentUrl
-     * @param array $languages
-     * @param string $replacementLanguage
+     * @param string $locale
+     * @param string $currentLocale
+     * @param string $route
+     * @param array<string, mixed> $parameters
      *
      * @return string
      */
-    protected function replaceCurrentUrlLanguage(string $currentUrl, array $languages, string $replacementLanguage): string
-    {
-        if (preg_match('~/(' . implode('|', $languages) . ')/~', $currentUrl)) {
-            return preg_replace('~/(' . implode('|', $languages) . ')~', '/' . $replacementLanguage, $currentUrl, 1);
-        }
+    protected function replaceCurrentUrlLanguage(
+        string $locale,
+        string $currentLocale,
+        string $route,
+        array $parameters
+    ): string {
+        $this->setRouterLocale($locale);
+        $generatedRoute = $this->generateRoute($route, $parameters);
+        $this->setRouterLocale($currentLocale);
 
-        return rtrim('/' . $replacementLanguage . $currentUrl, '/');
+        return $generatedRoute;
+    }
+
+    /**
+     * @param string $locale
+     *
+     * @return void
+     */
+    protected function setRouterLocale(string $locale): void
+    {
+        $routers = $this->getGlobalContainer()->get(static::SERVICE_ROUTERS);
+        $context = $routers->getContext();
+        $context->setParameter(static::REQUEST_CONTEXT_LOCALE, $locale);
+        $routers->setContext($context);
+    }
+
+    /**
+     * @param string $route
+     * @param array<string, mixed> $parameters
+     *
+     * @return string
+     */
+    protected function generateRoute(string $route, array $parameters): string
+    {
+        $routers = $this->getGlobalContainer()->get(static::SERVICE_ROUTERS);
+
+        try {
+            return $routers->generate($route);
+        } catch (InvalidArgumentException $exception) {
+            return $routers->generate($route, $parameters);
+        }
     }
 
     /**
@@ -174,9 +245,9 @@ class LanguageSwitcherWidget extends AbstractWidget
     }
 
     /**
-     * @param array $languages
+     * @param array<string> $languages
      *
-     * @return array
+     * @return array<string, string>
      */
     protected function filterExcludedUrls(array $languages): array
     {

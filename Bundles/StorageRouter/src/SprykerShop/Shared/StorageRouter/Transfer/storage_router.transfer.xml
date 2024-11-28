@@ -5,9 +5,4 @@
         <property name="name" type="string"/>
     </transfer>
 
-    <transfer name="StoreStorage">
-        <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
-        <property name="defaultLocaleIsoCode" type="string"/>
-    </transfer>
-
 </transfers>

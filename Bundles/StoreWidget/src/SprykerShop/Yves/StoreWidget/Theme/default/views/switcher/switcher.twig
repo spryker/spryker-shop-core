@@ -4,16 +4,28 @@
     storeNames: _widget.storeNames,
     currentStoreName: _widget.currentStoreName,
     isVisible: _widget.storeNames is not empty and (_widget.isDynamicStoreEnabled ?? true),
+    storeUrls: _widget.storeUrls ?? null,
 } %}
 
+{% set attributes = data.storeUrls
+    ? {
+    name: '_store',
+    'onchange': 'this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);'
+}
+    : {
+    name: '_store',
+    'data-form-submitter': true,
+}
+%}
+
 {% block body %}
-    <form method="GET" action="/">
+    <form method="GET" action="{{ data.storeUrls ? '' : '/' }}">
         {% set options = [] %}
 
         {% for storeName in data.storeNames %}
             {% set options = options | merge([{
                 label: 'store_widget.switcher.store' | trans ~ ' ' ~ storeName,
-                value: storeName,
+                value: data.storeUrls ? data.storeUrls[storeName] : storeName,
                 selected: storeName == data.currentStoreName,
             }]) %}
         {% endfor %}
@@ -23,10 +35,7 @@
             data: {
                 options: options,
             },
-            attributes: {
-                name: '_store',
-                'data-form-submitter': true,
-            },
+            attributes: attributes,
         } only %}
     </form>
 {% endblock %}

@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\StoreWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\StoreStorageTransfer;
+
 class StoreWidgetToStoreStorageClientBridge implements StoreWidgetToStoreStorageClientInterface
 {
     /**
@@ -28,5 +30,15 @@ class StoreWidgetToStoreStorageClientBridge implements StoreWidgetToStoreStorage
     public function getStoreNames(): array
     {
         return $this->storeStorageClient->getStoreNames();
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\StoreStorageTransfer|null
+     */
+    public function findStoreByName(string $name): ?StoreStorageTransfer
+    {
+        return $this->storeStorageClient->findStoreByName($name);
     }
 }

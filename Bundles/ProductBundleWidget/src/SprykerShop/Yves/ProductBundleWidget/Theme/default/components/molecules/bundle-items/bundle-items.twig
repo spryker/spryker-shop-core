@@ -39,7 +39,7 @@
                     <div class="{{ thumbnailClassName }}">
                         {% if imageUrl %}
                             {% if itemUrl %}
-                                <a href="{{ itemUrl }}">
+                                <a href="{{ functionExists('generatePath') ? generatePath(itemUrl) : itemUrl }}">
                                     {% block thumbnail %}
                                         {% include molecule('lazy-image') with {
                                             modifiers: thumbnailModifiers,
@@ -59,7 +59,7 @@
                 {% block info %}
                     <div class="{{ itemDetailsClassName }}">
                         {% if itemUrl %}
-                            <a href="{{ itemUrl }}" class="{{ config.name }}__name">{{ itemName }}</a>
+                            <a href="{{ functionExists('generatePath') ? generatePath(itemUrl) : itemUrl }}" class="{{ config.name }}__name">{{ itemName }}</a>
                         {% else %}
                             <span class="{{ config.name }}__name">{{ itemName }}</span>
                         {% endif %}

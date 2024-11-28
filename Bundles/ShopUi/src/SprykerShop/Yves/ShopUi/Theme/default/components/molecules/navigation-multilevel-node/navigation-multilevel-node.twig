@@ -25,11 +25,11 @@
 {% endblock %}
 
 {% block url %}
-    <a class="link {{ node.cssClass }}" href="{{ node.url }}">{{ node.title }}</a>
+    <a class="link {{ node.cssClass }}" href="{{ functionExists('generatePath') ? generatePath(node.url) : node.url }}">{{ node.title }}</a>
 {% endblock %}
 
 {% block link %}
-    <a class="link {{ node.cssClass }}" href="{{ node.url }}">{{ node.title }}</a>
+    <a class="link {{ node.cssClass }}" href="{{ functionExists('generatePath') ? generatePath(node.url) : node.url }}">{{ node.title }}</a>
 {% endblock %}
 
 {% block externalUrl %}

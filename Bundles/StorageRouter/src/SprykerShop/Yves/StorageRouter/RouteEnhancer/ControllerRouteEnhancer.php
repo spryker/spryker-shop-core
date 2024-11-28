@@ -17,6 +17,16 @@ use Symfony\Component\HttpFoundation\Request;
 class ControllerRouteEnhancer implements RouteEnhancerInterface
 {
     /**
+     * @var string
+     */
+    protected const ATTRIBUTE_PATH_INFO = 'pathinfo';
+
+    /**
+     * @var string
+     */
+    protected const ATTRIBUTE_DATA = 'data';
+
+    /**
      * @var array<\SprykerShop\Yves\StorageRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface>
      */
     protected $resourceCreatorPlugins;
@@ -39,7 +49,10 @@ class ControllerRouteEnhancer implements RouteEnhancerInterface
     {
         foreach ($this->resourceCreatorPlugins as $resourceCreator) {
             if ($defaults['type'] === $resourceCreator->getType()) {
-                return $this->createResource($resourceCreator, $defaults['data']);
+                $resource = $this->createResource($resourceCreator, $defaults[static::ATTRIBUTE_DATA]);
+                $resource[static::ATTRIBUTE_PATH_INFO] = $defaults[static::ATTRIBUTE_PATH_INFO];
+
+                return $resource;
             }
         }
 

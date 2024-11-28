@@ -11,20 +11,35 @@ use SprykerShop\Yves\StorageRouter\Dependency\Client\StorageRouterToUrlStorageCl
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Matcher\RequestMatcherInterface;
+use Symfony\Component\Routing\RequestContext;
 
 class StorageRequestMatcher implements RequestMatcherInterface
 {
+    /**
+     * @var string
+     */
+    protected const ATTRIBUTE_PATH_INFO = 'pathinfo';
+
     /**
      * @var \SprykerShop\Yves\StorageRouter\Dependency\Client\StorageRouterToUrlStorageClientInterface
      */
     protected $urlStorageClient;
 
     /**
-     * @param \SprykerShop\Yves\StorageRouter\Dependency\Client\StorageRouterToUrlStorageClientInterface $urlStorageClient
+     * @var array<\SprykerShop\Yves\StorageRouterExtension\Dependency\Plugin\StorageRouterEnhancerPluginInterface>
      */
-    public function __construct(StorageRouterToUrlStorageClientInterface $urlStorageClient)
-    {
+    protected array $storageRouterEnhancerPlugins;
+
+    /**
+     * @param \SprykerShop\Yves\StorageRouter\Dependency\Client\StorageRouterToUrlStorageClientInterface $urlStorageClient
+     * @param array<\SprykerShop\Yves\StorageRouterExtension\Dependency\Plugin\StorageRouterEnhancerPluginInterface> $storageRouterEnhancerPlugins
+     */
+    public function __construct(
+        StorageRouterToUrlStorageClientInterface $urlStorageClient,
+        array $storageRouterEnhancerPlugins
+    ) {
         $this->urlStorageClient = $urlStorageClient;
+        $this->storageRouterEnhancerPlugins = $storageRouterEnhancerPlugins;
     }
 
     /**
@@ -36,12 +51,23 @@ class StorageRequestMatcher implements RequestMatcherInterface
      */
     public function matchRequest(Request $request): array
     {
+        $requestContext = new RequestContext();
         $pathinfo = $request->getPathInfo();
+
+        foreach ($this->storageRouterEnhancerPlugins as $storageRouterEnhancerPlugin) {
+            $pathinfo = $storageRouterEnhancerPlugin->beforeMatch($pathinfo, $requestContext);
+        }
+
         if ($pathinfo !== '/') {
             $localeName = $request->attributes->get('_locale');
             $urlDetails = $this->urlStorageClient->matchUrl($pathinfo, $localeName);
 
             if ($urlDetails) {
+                foreach ($this->storageRouterEnhancerPlugins as $storageRouterEnhancerPlugin) {
+                    $urlDetails = $storageRouterEnhancerPlugin->afterMatch($urlDetails, $requestContext);
+                }
+                $urlDetails[static::ATTRIBUTE_PATH_INFO] = $pathinfo;
+
                 return $urlDetails;
             }
         }

@@ -70,7 +70,7 @@
 {% block productCol %}
     <td class="{{ config.name }}__cell" colspan="2">
         {% if item.name %}
-            <a href="{{ item.url }}">{{ item.name }}</a>
+            <a href="{{ functionExists('generatePath') ? generatePath(item.url) : item.url }}">{{ item.name }}</a>
         {% endif %}
         {% if item.sku %}
             <div>

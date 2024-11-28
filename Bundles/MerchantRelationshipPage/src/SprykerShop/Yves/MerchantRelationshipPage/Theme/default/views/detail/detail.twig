@@ -61,7 +61,7 @@
 
                 <div class="col">
                     {% if data.merchantUrl is not null %}
-                        <a href="{{ data.merchantUrl }}">
+                        <a href="{{ functionExists('generatePath') ? generatePath(data.merchantUrl) : data.merchantUrl }}">
                             {{ data.merchant.name }}
                         </a>
                     {% else %}

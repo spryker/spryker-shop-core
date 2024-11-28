@@ -112,8 +112,26 @@ class StoreApplicationPlugin extends AbstractPlugin implements ApplicationPlugin
 
         /** @var \Symfony\Component\HttpFoundation\Request $currentRequest */
         $currentRequest = $requestStack->getCurrentRequest();
+        $store = $currentRequest->query->get('_store');
 
-        /** @phpstan-var string|null */
-        return $currentRequest->query->get('_store');
+        if ($store !== null) {
+            /** @phpstan-var string */
+            return $store;
+        }
+
+        return $this->extractStoreCode($currentRequest->getRequestUri());
+    }
+
+    /**
+     * @param string $requestUri
+     *
+     * @return string|null
+     */
+    protected function extractStoreCode(string $requestUri): ?string
+    {
+        $urlPath = (string)parse_url(trim($requestUri, '/'), PHP_URL_PATH);
+        $pathElements = explode('/', $urlPath);
+
+        return $pathElements[$this->getConfig()->getStoreCodeIndex()] ?? null;
     }
 }

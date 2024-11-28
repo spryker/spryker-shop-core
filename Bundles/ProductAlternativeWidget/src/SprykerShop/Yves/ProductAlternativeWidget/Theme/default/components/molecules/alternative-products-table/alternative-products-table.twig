@@ -32,7 +32,7 @@
                 <ul class="list spacing-y">
                     {% if item.name is not empty %}
                         <li class="list__item">
-                            <a itemprop="url" href="{% if item.url is not empty %}{{ item.url }}{% endif %}">
+                            <a itemprop="url" href="{% if item.url is not empty %}{{ functionExists('generatePath') ? generatePath(item.url) : item.url }}{% endif %}">
                                 <span itemprop="name">{{ item.name }}</span>
                             </a>
                         </li>

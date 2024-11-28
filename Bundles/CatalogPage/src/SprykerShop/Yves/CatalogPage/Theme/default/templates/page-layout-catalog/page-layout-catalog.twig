@@ -42,7 +42,7 @@
 
         {% include molecule('breadcrumb-step') with {
             data: {
-                url: categoryUrl,
+                url: functionExists('generatePath') ? generatePath(categoryUrl) : categoryUrl,
                 label: categoryLabel,
                 withChevron: not isLastLeaf
             }

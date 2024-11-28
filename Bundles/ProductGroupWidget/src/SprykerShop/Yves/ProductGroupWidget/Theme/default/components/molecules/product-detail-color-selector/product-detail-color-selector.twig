@@ -16,12 +16,13 @@
         | map((value, key) => "#{key}=#{value}")
         | join('&')
     %}
+    {% set baseUrl = functionExists('generatePath') ? generatePath(item.url) : item.url %}
     {% set dataAttributesList = {
         'data-product-image-src': firstImage ? firstImage.externalUrlSmall,
         href: item.url
                 ? queryString
-                    ? "#{item.url}?#{queryString}"
-                    : item.url,
+                    ? "#{baseUrl}?#{queryString}"
+                    : baseUrl,
         'data-product-sku': item.sku,
     } %}
 

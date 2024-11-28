@@ -38,7 +38,7 @@
                 {% endfor %}
 
                 {% block url %}
-                    <a class="link link--alt {{ data.node.cssClass }}" href="{{ data.node.url }}"
+                    <a class="link link--alt {{ data.node.cssClass }}" href="{{ functionExists('generatePath') ? generatePath(data.node.url) : data.node.url }}"
                        title="{{ data.node.title }}">
                         {% if iconName %}
                             {% include atom('icon') with {

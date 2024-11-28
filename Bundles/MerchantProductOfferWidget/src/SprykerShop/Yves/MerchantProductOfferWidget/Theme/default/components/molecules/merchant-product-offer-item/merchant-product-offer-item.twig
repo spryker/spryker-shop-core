@@ -68,7 +68,7 @@
                                         {% endblock %}
 
                                         {% block merchantLink %}
-                                            <a class="link link--small" href="{{ data.merchantUrl }}">
+                                            <a class="link link--small" href="{{ functionExists('generatePath') ? generatePath(data.merchantUrl) : data.merchantUrl }}">
                                                 {{ 'merchant_product_offer.view_seller' | trans }}
                                             </a>
                                         {% endblock %}
