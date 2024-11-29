@@ -60,6 +60,7 @@
 
                 <input {% if data.name is not empty %}name="{{data.name}}"{% endif %}
                        type="hidden"
+                       data-name="value"
                        class="{{ config.jsName }}__value-input"
                        value="{{ data.hiddenValue }}">
             </div>

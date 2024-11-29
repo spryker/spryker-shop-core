@@ -13,67 +13,69 @@
         {% include organism('notification-area') only %}
     {% endblock %}
 
-    {% block sidebar %}
-        {% include organism('side-drawer') with {
-            class: 'is-hidden-lg-xl',
-            data: {
-                isAjaxMode: data.isAjaxHeader,
-                ajaxCartUrl: data.ajaxCartUrl,
-            },
-            attributes: {
-                'container-selector': 'js-page-layout-main',
-                'trigger-selector': 'js-page-layout-main__side-drawer-trigger',
-            },
-        } only %}
-    {% endblock %}
+    {% block viewport %}
+        {% block sidebar %}
+            {% include organism('side-drawer') with {
+                class: 'is-hidden-lg-xl',
+                data: {
+                    isAjaxMode: data.isAjaxHeader,
+                    ajaxCartUrl: data.ajaxCartUrl,
+                },
+                attributes: {
+                    'container-selector': 'js-page-layout-main',
+                    'trigger-selector': 'js-page-layout-main__side-drawer-trigger',
+                },
+            } only %}
+        {% endblock %}
 
-    {% block outside %}
-        {% include molecule('outside-widgets') only %}
-    {% endblock %}
+        {% block outside %}
+            {% include molecule('outside-widgets') only %}
+        {% endblock %}
 
-    {% block header %}
-        {% embed organism('header') with {
-            data: {
-                isAjaxMode: data.isAjaxHeader,
-                ajaxCartUrl: data.ajaxCartUrl,
-            },
-        } only %}
-            {% block mobile %}
-                <a href="#" class="link link--alt js-page-layout-main__side-drawer-trigger">
-                    {% include atom('icon') with {
-                        modifiers: ['big'],
-                        data: {
-                            name: 'bars',
-                        },
-                    } only %}
-                </a>
+        {% block header %}
+            {% embed organism('header') with {
+                data: {
+                    isAjaxMode: data.isAjaxHeader,
+                    ajaxCartUrl: data.ajaxCartUrl,
+                },
+            } only %}
+                {% block mobile %}
+                    <a href="#" class="link link--alt js-page-layout-main__side-drawer-trigger">
+                        {% include atom('icon') with {
+                            modifiers: ['big'],
+                            data: {
+                                name: 'bars',
+                            },
+                        } only %}
+                    </a>
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+
+        <div class="container">
+            {% block pageInfo %}
+                <div class="box">
+                    {% block breadcrumbs %}
+                        {% include molecule('breadcrumb') only %}
+                    {% endblock %}
+
+                    <hr class="box__separator">
+
+                    {% block title %}
+                        <h1 class="title--h3">{{ data.title }}</h1>
+                    {% endblock %}
+                </div>
             {% endblock %}
-        {% endembed %}
+
+            <main>
+                {% block content %}{% endblock %}
+            </main>
+
+            {% block footer %}
+                {% include organism('footer') only %}
+            {% endblock %}
+        </div>
     {% endblock %}
-
-    <div class="container">
-        {% block pageInfo %}
-            <div class="box">
-                {% block breadcrumbs %}
-                    {% include molecule('breadcrumb') only %}
-                {% endblock %}
-
-                <hr class="box__separator">
-
-                {% block title %}
-                    <h1 class="title--h3">{{ data.title }}</h1>
-                {% endblock %}
-            </div>
-        {% endblock %}
-
-        <main>
-            {% block content %}{% endblock %}
-        </main>
-
-        {% block footer %}
-            {% include organism('footer') only %}
-        {% endblock %}
-    </div>
 
     {% block globalComponents %}
         {% include molecule('action-single-click-enforcer') with {

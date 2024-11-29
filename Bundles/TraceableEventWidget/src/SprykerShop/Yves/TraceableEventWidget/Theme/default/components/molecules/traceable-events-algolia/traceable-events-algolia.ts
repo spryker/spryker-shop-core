@@ -265,13 +265,14 @@ export default class TraceableEventsAlgolia extends BaseTraceableEventAdapter {
         const mapper: Record<string, number> = {};
 
         for (const product of products) {
-            const { sku, price } = product ?? {};
-
-            if (!sku) {
+            if (!product?.sku) {
                 continue;
             }
 
+            product.sku = String(product.sku);
             product.quantity = Number(product.quantity ?? 1);
+
+            const { sku, price, quantity } = product;
 
             if (_products.length >= this.algoliaLimitProducts) {
                 break;
@@ -286,7 +287,7 @@ export default class TraceableEventsAlgolia extends BaseTraceableEventAdapter {
             }
 
             const index = mapper[sku];
-            _products[index].quantity += product.quantity;
+            _products[index].quantity += quantity;
         }
 
         return _products;

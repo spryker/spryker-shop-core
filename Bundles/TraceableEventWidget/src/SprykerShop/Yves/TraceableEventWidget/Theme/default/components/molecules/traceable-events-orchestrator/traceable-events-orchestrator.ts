@@ -214,10 +214,9 @@ export default class TraceableEventsOrchestrator extends Component {
 
                 const isElementAttribute = Boolean(isSelfAttribute || attributeName);
                 const details = { value: predefinedValue, attribute, isElementAttribute, composed };
-                const value = Array.isArray(element)
-                    ? element.map((el) => this.getValue(el, details))
-                    : this.getValue(element, details);
-                const data = typeof value === 'string' ? this.parseString(value) : value;
+                const data = Array.isArray(element)
+                    ? element.map((el) => this.getData(this.getValue(el, details)))
+                    : this.getData(this.getValue(element, details));
                 const shouldFlat = flatten && typeof data === 'object' && data !== null;
 
                 return shouldFlat ? { ...acc, ...data } : { ...acc, [key]: data };
@@ -241,6 +240,10 @@ export default class TraceableEventsOrchestrator extends Component {
         }
 
         return element.textContent;
+    }
+
+    protected getData(value: unknown): unknown {
+        return typeof value === 'string' ? this.parseString(value) : value;
     }
 
     protected transformData(
