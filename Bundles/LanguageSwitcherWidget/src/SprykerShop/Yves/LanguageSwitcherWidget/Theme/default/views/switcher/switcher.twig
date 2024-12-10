@@ -12,7 +12,8 @@
             {% embed atom('select') with {
                 modifiers: ['naked'],
                 attributes: {
-                    'onchange': 'this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);'
+                    'onchange': 'this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);',
+                    'data-qa': 'language-selector'
                 },
                 embed: {
                     languages: data.languages,
