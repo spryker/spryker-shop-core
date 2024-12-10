@@ -198,6 +198,9 @@ class CompanyUserForm extends AbstractType
     {
         $builder->add(static::FIELD_ID_CUSTOMER, HiddenType::class, [
             'required' => false,
+            'constraints' => [
+                $this->getFactory()->createCompanyUserCustomerRelationConstraint(),
+            ],
         ]);
 
         return $this;
@@ -212,6 +215,9 @@ class CompanyUserForm extends AbstractType
     {
         $builder->add(static::FIELD_FK_CUSTOMER, HiddenType::class, [
             'required' => false,
+            'constraints' => [
+                $this->getFactory()->createCompanyUserCustomerRelationConstraint(),
+            ],
         ]);
 
         return $this;

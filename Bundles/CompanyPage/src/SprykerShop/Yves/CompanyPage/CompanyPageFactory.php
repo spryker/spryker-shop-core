@@ -29,6 +29,7 @@ use SprykerShop\Yves\CompanyPage\Expander\CompanyBusinessUnitOrderSearchFormExpa
 use SprykerShop\Yves\CompanyPage\Expander\CompanyUnitAddressExpander;
 use SprykerShop\Yves\CompanyPage\Expander\CompanyUnitAddressExpanderInterface;
 use SprykerShop\Yves\CompanyPage\Form\Cloner\FormCloner;
+use SprykerShop\Yves\CompanyPage\Form\Constraint\CompanyUserCustomerRelationConstraint;
 use SprykerShop\Yves\CompanyPage\Form\Constraint\CompanyUserRelationConstraint;
 use SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyBusinessUnitOrderSearchFormDataProvider;
 use SprykerShop\Yves\CompanyPage\Form\FormFactory;
@@ -290,6 +291,18 @@ class CompanyPageFactory extends AbstractFactory
     public function createCompanyUserRelationConstraint(): Constraint
     {
         return new CompanyUserRelationConstraint([
+            CompanyUserRelationConstraint::OPTION_CUSTOMER_CLIENT => $this->getCustomerClient(),
+            CompanyUserRelationConstraint::OPTION_GLOSSARY_STORAGE_CLIENT => $this->getGlossaryStorageClient(),
+            CompanyUserRelationConstraint::OPTION_LOCALE_CLIENT => $this->getLocaleClient(),
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    public function createCompanyUserCustomerRelationConstraint(): Constraint
+    {
+        return new CompanyUserCustomerRelationConstraint([
             CompanyUserRelationConstraint::OPTION_CUSTOMER_CLIENT => $this->getCustomerClient(),
             CompanyUserRelationConstraint::OPTION_GLOSSARY_STORAGE_CLIENT => $this->getGlossaryStorageClient(),
             CompanyUserRelationConstraint::OPTION_LOCALE_CLIENT => $this->getLocaleClient(),

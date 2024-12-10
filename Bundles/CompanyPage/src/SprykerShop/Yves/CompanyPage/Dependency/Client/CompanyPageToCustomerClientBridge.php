@@ -59,4 +59,14 @@ class CompanyPageToCustomerClientBridge implements CompanyPageToCustomerClientIn
     {
         return $this->customerClient->getCustomerByEmail($customerTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findCustomerById(CustomerTransfer $customerTransfer): ?CustomerTransfer
+    {
+        return $this->customerClient->findCustomerById($customerTransfer);
+    }
 }
