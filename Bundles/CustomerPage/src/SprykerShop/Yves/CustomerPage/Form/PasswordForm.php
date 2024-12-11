@@ -13,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
+use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
@@ -94,6 +96,11 @@ class PasswordForm extends AbstractType
                     'minMessage' => static::VALIDATION_MIN_LENGTH_MESSAGE,
                     'maxMessage' => static::VALIDATION_MAX_LENGTH_MESSAGE,
                 ]),
+                new Regex([
+                    'pattern' => $this->getConfig()->getCustomerPasswordPattern(),
+                    'message' => $this->getConfig()->getPasswordValidationMessage(),
+                ]),
+                new NotCompromisedPassword(),
             ],
         ]);
 

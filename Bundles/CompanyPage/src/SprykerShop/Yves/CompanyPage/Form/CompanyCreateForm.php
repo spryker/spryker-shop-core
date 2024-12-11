@@ -16,7 +16,10 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
+use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageConfig getConfig()
@@ -213,6 +216,15 @@ class CompanyCreateForm extends AbstractType
             ],
             'constraints' => [
                 $this->createNotBlankConstraint(),
+                new Length([
+                    'min' => $this->getConfig()->getCompanyUserPasswordMinLength(),
+                    'max' => $this->getConfig()->getCompanyUserPasswordMaxLength(),
+                ]),
+                new Regex([
+                    'pattern' => $this->getConfig()->getCompanyUserPasswordPattern(),
+                    'message' => $this->getConfig()->getPasswordValidationMessage(),
+                ]),
+                new NotCompromisedPassword(),
             ],
         ]);
 
