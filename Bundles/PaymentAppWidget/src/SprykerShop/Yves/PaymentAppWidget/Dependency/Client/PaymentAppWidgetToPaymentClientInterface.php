@@ -8,8 +8,6 @@
 namespace SprykerShop\Yves\PaymentAppWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
-use Generated\Shared\Transfer\PreOrderPaymentRequestTransfer;
-use Generated\Shared\Transfer\PreOrderPaymentResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface PaymentAppWidgetToPaymentClientInterface
@@ -20,22 +18,4 @@ interface PaymentAppWidgetToPaymentClientInterface
      * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
      */
     public function getAvailableMethods(QuoteTransfer $quoteTransfer): PaymentMethodsTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\PreOrderPaymentResponseTransfer
-     */
-    public function initializePreOrderPayment(
-        PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
-    ): PreOrderPaymentResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\PreOrderPaymentResponseTransfer
-     */
-    public function cancelPreOrderPayment(
-        PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
-    ): PreOrderPaymentResponseTransfer;
 }

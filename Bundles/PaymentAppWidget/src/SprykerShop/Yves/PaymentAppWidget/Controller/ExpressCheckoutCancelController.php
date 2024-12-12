@@ -70,6 +70,6 @@ class ExpressCheckoutCancelController extends ExpressCheckoutAbstractController
             ->setPayment($paymentTransfer)
             ->setPreOrderPaymentData($quoteTransfer->getPreOrderPaymentData());
 
-        return $this->getFactory()->getPaymentClient()->cancelPreOrderPayment($preOrderPaymentRequestTransfer);
+        return $this->getFactory()->getPaymentAppClient()->cancelPreOrderPayment($preOrderPaymentRequestTransfer);
     }
 }

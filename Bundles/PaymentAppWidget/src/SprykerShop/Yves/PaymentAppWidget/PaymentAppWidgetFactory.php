@@ -104,7 +104,7 @@ class PaymentAppWidgetFactory extends AbstractFactory
      */
     public function createPreOrderPaymentInitializer(): PreOrderPaymentInitializerInterface
     {
-        return new PreOrderPaymentInitializer($this->getPaymentClient());
+        return new PreOrderPaymentInitializer($this->getPaymentAppClient());
     }
 
     /**

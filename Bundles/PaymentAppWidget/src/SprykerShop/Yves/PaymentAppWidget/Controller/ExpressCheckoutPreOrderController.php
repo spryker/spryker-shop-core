@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\PaymentAppWidget\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PreOrderPaymentResponseTransfer;
 use SprykerShop\Yves\PaymentAppWidget\Form\ExpressCheckoutForm;
@@ -45,17 +46,22 @@ class ExpressCheckoutPreOrderController extends ExpressCheckoutAbstractControlle
         $expressCheckoutForm = $this->createExpressCheckoutForm($requestPayload);
 
         $expressCheckoutForm->submit($requestPayload);
+
         if (!$expressCheckoutForm->isSubmitted() || !$expressCheckoutForm->isValid()) {
             return $this->createErrorJsonResponse(static::GLOSSARY_KEY_FORM_CSRF_VALIDATION_ERROR);
         }
 
         $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
+
         if ($quoteTransfer->getItems()->count() === 0) {
             return $this->createErrorJsonResponse(static::GLOSSARY_KEY_VALIDATION_QUOTE_IS_EMPTY);
         }
 
         $paymentTransfer = $this->getFactory()->createPaymentMapper()
             ->mapToPaymentTransfer($expressCheckoutForm->getData(), $quoteTransfer, new PaymentTransfer());
+
+        $quoteTransfer->setPayment($paymentTransfer);
+        $quoteTransfer->setPayments(new ArrayObject([$paymentTransfer]));
 
         $preOrderPaymentResponseTransfer = $this->getFactory()->createPreOrderPaymentInitializer()
             ->initializePreOrderPayment($paymentTransfer, $quoteTransfer);

@@ -7,26 +7,25 @@
 
 namespace SprykerShop\Yves\PaymentAppWidget\Initializer;
 
-use ArrayObject;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PreOrderPaymentRequestTransfer;
 use Generated\Shared\Transfer\PreOrderPaymentResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use SprykerShop\Yves\PaymentAppWidget\Dependency\Client\PaymentAppWidgetToPaymentClientInterface;
+use SprykerShop\Yves\PaymentAppWidget\Dependency\Client\PaymentAppWidgetToPaymentAppClientInterface;
 
 class PreOrderPaymentInitializer implements PreOrderPaymentInitializerInterface
 {
     /**
-     * @var \SprykerShop\Yves\PaymentAppWidget\Dependency\Client\PaymentAppWidgetToPaymentClientInterface
+     * @var \SprykerShop\Yves\PaymentAppWidget\Dependency\Client\PaymentAppWidgetToPaymentAppClientInterface
      */
-    protected PaymentAppWidgetToPaymentClientInterface $paymentClient;
+    protected PaymentAppWidgetToPaymentAppClientInterface $paymentAppClient;
 
     /**
-     * @param \SprykerShop\Yves\PaymentAppWidget\Dependency\Client\PaymentAppWidgetToPaymentClientInterface $paymentClient
+     * @param \SprykerShop\Yves\PaymentAppWidget\Dependency\Client\PaymentAppWidgetToPaymentAppClientInterface $paymentAppClient
      */
-    public function __construct(PaymentAppWidgetToPaymentClientInterface $paymentClient)
+    public function __construct(PaymentAppWidgetToPaymentAppClientInterface $paymentAppClient)
     {
-        $this->paymentClient = $paymentClient;
+        $this->paymentAppClient = $paymentAppClient;
     }
 
     /**
@@ -39,10 +38,9 @@ class PreOrderPaymentInitializer implements PreOrderPaymentInitializerInterface
         PaymentTransfer $paymentTransfer,
         QuoteTransfer $quoteTransfer
     ): PreOrderPaymentResponseTransfer {
-        $quoteTransfer = $this->expandQuoteWithPayment($quoteTransfer, $paymentTransfer);
         $preOrderPaymentRequestTransfer = $this->createPreOrderPaymentRequestTransfer($paymentTransfer, $quoteTransfer);
 
-        return $this->paymentClient->initializePreOrderPayment($preOrderPaymentRequestTransfer);
+        return $this->paymentAppClient->initializePreOrderPayment($preOrderPaymentRequestTransfer);
     }
 
     /**
@@ -58,22 +56,5 @@ class PreOrderPaymentInitializer implements PreOrderPaymentInitializerInterface
         return (new PreOrderPaymentRequestTransfer())
             ->setQuote($quoteTransfer)
             ->setPayment($paymentTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function expandQuoteWithPayment(
-        QuoteTransfer $quoteTransfer,
-        PaymentTransfer $paymentTransfer
-    ): QuoteTransfer {
-        return (new QuoteTransfer())
-            ->fromArray($quoteTransfer->toArray(), true)
-            ->setPayment($paymentTransfer)
-            ->setPayments(new ArrayObject([$paymentTransfer]))
-            ->setItems(new ArrayObject());
     }
 }
