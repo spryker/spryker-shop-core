@@ -153,6 +153,7 @@
         <property name="sumGrossPrice" type="int"/>
         <property name="unitGrossPrice" type="int"/>
         <property name="sku" type="string"/>
+        <property name="abstractSku" type="string"/>
         <property name="name" type="string"/>
         <property name="sumSubtotalAggregation" type="int"/>
     </transfer>

@@ -27,6 +27,7 @@ export interface ProductItemData {
     ratingValue: number;
     defaultPrice: string;
     sku?: string;
+    abstractSku: string;
     originalPrice: string;
     detailPageUrl: string;
     addToCartUrl: string;
@@ -43,6 +44,7 @@ export default class ProductItem extends Component {
     protected productRating: HTMLInputElement;
     protected productDefaultPrice: HTMLElement;
     protected productSku: HTMLMetaElement;
+    protected productAbstractSku: HTMLMetaElement;
     protected productOriginalPrice: HTMLElement;
     protected productLinkDetailPage: HTMLAnchorElement[];
     protected productLinkAddToCart: HTMLAnchorElement;
@@ -58,6 +60,7 @@ export default class ProductItem extends Component {
         this.productRating = <HTMLInputElement>this.getElementsByClassName(`${this.jsName}__rating`)[0];
         this.productDefaultPrice = <HTMLElement>this.getElementsByClassName(`${this.jsName}__default-price`)[0];
         this.productSku = <HTMLMetaElement>this.getElementsByClassName(`${this.jsName}__sku`)[0];
+        this.productAbstractSku = <HTMLMetaElement>this.getElementsByClassName(`${this.jsName}__abstract-sku`)[0];
         this.productOriginalPrice = <HTMLElement>this.getElementsByClassName(`${this.jsName}__original-price`)[0];
         this.productLinkDetailPage = <HTMLAnchorElement[]>(
             Array.from(this.getElementsByClassName(`${this.jsName}__link-detail-page`))
@@ -86,6 +89,7 @@ export default class ProductItem extends Component {
         this.ratingValue = data.ratingValue;
         this.defaultPrice = data.defaultPrice;
         this.sku = data.sku ?? null;
+        this.abstractSku = data.abstractSku;
         this.originalPrice = data.originalPrice;
         this.detailPageUrl = this.generatePDPUrl(data.detailPageUrl);
         this.addToCartUrl = data.addToCartUrl;
@@ -237,6 +241,25 @@ export default class ProductItem extends Component {
     set sku(productSku: string) {
         if (this.productSku) {
             this.productSku.content = productSku;
+        }
+    }
+
+    /**
+     * Gets the product card abstract sku.
+     */
+    get abstractSku(): string {
+        if (this.productAbstractSku) {
+            return this.productAbstractSku.content;
+        }
+    }
+
+    /**
+     * Sets the product card abstract sku.
+     * @param productAbstractSku A product card abstract sku.
+     */
+    set abstractSku(productAbstractSku: string) {
+        if (this.productAbstractSku) {
+            this.productAbstractSku.content = productAbstractSku;
         }
     }
 

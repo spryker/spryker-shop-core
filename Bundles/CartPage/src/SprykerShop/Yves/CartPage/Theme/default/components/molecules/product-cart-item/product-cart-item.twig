@@ -40,7 +40,8 @@
         {%- endblock %}
 
         {% block sku -%}
-            <meta itemprop="sku" content="{{ data.sku }}">
+            <meta class="{{ config.jsName }}__sku" itemprop="sku" content="{{ data.sku }}">
+            <meta class="{{ config.jsName }}__abstract-sku" itemprop="abstractSku" content="{{ data.abstractSku }}">
 
             <small class="text-secondary" data-qa="cart-item-sku">
                 {{- 'cart.item.sku' | trans }} {{ data.sku -}}

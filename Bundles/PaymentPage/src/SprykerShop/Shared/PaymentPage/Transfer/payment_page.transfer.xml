@@ -28,6 +28,7 @@
         <property name="quantity" type="int"/>
         <property name="name" type="string"/>
         <property name="sku" type="string"/>
+        <property name="abstractSku" type="string"/>
         <property name="sumSubtotalAggregation" type="int"/>
     </transfer>
 

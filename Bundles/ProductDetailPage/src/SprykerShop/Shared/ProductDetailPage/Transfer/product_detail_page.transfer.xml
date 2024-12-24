@@ -8,6 +8,7 @@
         <property name="selectedAttributes" type="array" singular="selectedAttribute"/>
         <property name="attributes" type="array" singular="attributes"/>
         <property name="sku" type="string"/>
+        <property name="abstractSku" type="string"/>
         <property name="price" type="int"/>
         <property name="available" type="bool"/>
         <property name="currentProductPrice" type="CurrentProductPrice"/>

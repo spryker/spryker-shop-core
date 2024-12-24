@@ -41,6 +41,7 @@
         'data-product-ajax-add-to-cart-url': isAvailable ? path('cart/add-ajax', {sku: productSku}),
         'data-product-add-to-cart-form-action': productSku ? path('cart/add', {sku: productSku}),
         'data-product-sku': productSku,
+        'data-product-abstract-sku': item.abstractSku,
     } %}
 
     {{ parent() }}

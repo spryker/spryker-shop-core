@@ -15,6 +15,7 @@
     idProductAbstract: data.product.idProductAbstract | default,
     currencyIsoCode: null,
     metaSku: data.product.sku is defined ? data.product.sku : (data.product.abstract_sku is defined ? data.product.abstract_sku : ''),
+    abstractSku: data.product.abstractSku is defined ? data.product.abstractSku : (data.product.abstract_sku is defined ? data.product.abstract_sku : ''),
     eventRevealer: null,
 } %}
 
@@ -124,6 +125,7 @@
         {% endblock %}
 
         {% block sku %}
+            <meta class="{{ config.jsName }}__abstract-sku" itemprop="abstractSku" content="{{ data.abstractSku }}">
             <meta class="{{ config.jsName }}__sku" itemprop="sku" content="{{ data.metaSku }}">
 
             {% if data.sku %}

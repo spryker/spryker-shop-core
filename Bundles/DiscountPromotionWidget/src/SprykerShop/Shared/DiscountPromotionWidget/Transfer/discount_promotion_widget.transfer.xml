@@ -5,6 +5,7 @@
         <property name="idProductAbstract" type="int"/>
         <property name="promotionItem" type="PromotionItem"/>
         <property name="attributeMap" type="AttributeMapStorage"/>
+        <property name="abstractSku" type="string"/>
         <property name="selectedAttributes" type="array" singular="selectedAttribute"/>
         <property name="availableAttributes" type="array" singular="availableAttribute"/>
         <property name="idProductConcrete" type="int"/>
