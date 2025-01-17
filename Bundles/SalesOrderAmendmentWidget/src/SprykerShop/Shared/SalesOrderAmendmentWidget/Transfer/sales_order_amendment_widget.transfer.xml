@@ -20,6 +20,7 @@
     </transfer>
 
     <transfer name="Order">
+        <property name="isAmendable" type="bool" strict="true"/>
     </transfer>
 
 </transfers>
