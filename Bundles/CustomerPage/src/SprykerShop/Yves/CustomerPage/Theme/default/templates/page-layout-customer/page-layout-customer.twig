@@ -4,6 +4,8 @@
     activePage: 'overview'
 } %}
 
+{% set contentSectionId = 'customer-content' %}
+
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
         data: {
@@ -17,6 +19,13 @@
 {% block content %}
     <div class="grid">
         <div class="col col--sm-12 col--md-3">
+            {% include molecule('skip-link') with {
+                data: {
+                    href: contentSectionId,
+                    text: 'global.skip-to-content' | trans,
+                },
+            } only %}
+
             {% block customerNavigation %}
                 {% widget 'CustomerNavigationWidget' args [data.activePage] only %}
                 {% elsewidget 'CustomerNavigationWidgetPlugin' args [data.activePage] only %} {# @deprecated Use CustomerNavigationWidget instead. #}
@@ -24,7 +33,7 @@
             {% endblock %}
         </div>
 
-        <div class="col col--sm-12 col--md-9">
+        <div class="col col--sm-12 col--md-9" id="{{ contentSectionId }}">
             {% block customerContent %}{% endblock %}
         </div>
     </div>

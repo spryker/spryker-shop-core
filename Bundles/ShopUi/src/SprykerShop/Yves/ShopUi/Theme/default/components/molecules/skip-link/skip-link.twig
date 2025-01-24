@@ -1,0 +1,19 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'skip-link',
+    tag: 'a',
+} %}
+
+{% define data = {
+    href: required,
+    text: 'global.skip-link-text' | trans,
+} %}
+
+{% define attributes = {
+    href: '#' ~ data.href,
+} %}
+
+{% block body %}
+    {{ data.text }}
+{% endblock %}

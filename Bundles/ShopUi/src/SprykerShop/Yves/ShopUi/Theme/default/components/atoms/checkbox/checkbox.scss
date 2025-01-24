@@ -30,9 +30,10 @@
         }
 
         &__input {
-            @include helper-visibility-invisible;
+            @include helper-accessible-visibility-invisible;
             position: absolute;
 
+            &:focus,
             &:active {
                 & + #{$name}__box {
                     border-color: $setting-color-main;

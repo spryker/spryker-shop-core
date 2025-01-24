@@ -50,6 +50,8 @@ export default class SuggestSearch extends Component {
      */
     navigationActiveClass: string;
 
+    parentWrapper: HTMLElement;
+
     protected readyCallback(): void {
         this.ajaxProvider = <AjaxProvider>this.getElementsByClassName(`${this.jsName}__ajax-provider`)[0];
         this.suggestionsContainer = <HTMLElement>this.getElementsByClassName(`${this.jsName}__container`)[0];
@@ -58,6 +60,7 @@ export default class SuggestSearch extends Component {
             : // eslint-disable-next-line deprecation/deprecation
               document.querySelector(this.searchInputSelector));
         this.navigationActiveClass = `${this.name}__item--active`;
+        this.parentWrapper = this.closest(`.${this.parentElementClassName}`);
         this.createHintInput();
         this.mapEvents();
     }
@@ -130,9 +133,15 @@ export default class SuggestSearch extends Component {
     }
 
     protected onTab(event: KeyboardEvent): boolean {
-        if (this.hint) {
-            this.searchInput.value = this.hint;
+        if (!this.hint) {
+            return false;
         }
+
+        if (this.searchInput.value === this.hint) {
+            return false;
+        }
+
+        this.searchInput.value = this.hint;
         event.preventDefault();
 
         return false;
@@ -176,10 +185,25 @@ export default class SuggestSearch extends Component {
 
     protected onInputFocusIn(): void {
         this.activeItemIndex = 0;
+        document.addEventListener('keyup', () => this.checkFormFocusState());
+    }
+
+    protected checkFormFocusState(): void {
+        if (!this.parentWrapper) {
+            this.hideSugestions();
+            return;
+        }
+
+        if (this.parentWrapper.contains(document.activeElement)) {
+            return;
+        }
+
+        this.hideSugestions();
+        document.removeEventListener('keyup', () => this.checkFormFocusState());
     }
 
     protected onInputFocusOut(): void {
-        this.hideSugestions();
+        this.checkFormFocusState();
     }
 
     protected getActiveNavigationItem(): HTMLElement {
@@ -261,6 +285,7 @@ export default class SuggestSearch extends Component {
     protected createHintInput(): void {
         this.hintInput = document.createElement('input');
         this.hintInput.classList.add(`${this.name}__hint`);
+        this.hintInput.setAttribute('tabindex', '-1');
         this.searchInput.parentNode.appendChild(this.hintInput).setAttribute('readonly', 'readonly');
         this.searchInput.classList.add(`${this.name}__input--transparent`);
     }
@@ -318,5 +343,9 @@ export default class SuggestSearch extends Component {
     }
     protected get searchInputClassName(): string {
         return this.getAttribute('input-class-name');
+    }
+
+    protected get parentElementClassName(): string {
+        return this.getAttribute('parent-class-name');
     }
 }

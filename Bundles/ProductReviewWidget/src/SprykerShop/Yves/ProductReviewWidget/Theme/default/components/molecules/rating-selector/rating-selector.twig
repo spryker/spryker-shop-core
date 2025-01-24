@@ -26,6 +26,7 @@
 {% set precision = data.useHalfSteps ? 1 : 0 %}
 {% set value = data.value | round(precision, 'floor') %}
 {% set isActive = false %}
+{% set tabIndex = attributes.readonly ? '-1' : '0' %}
 
 {% block extraClass %}
     {% if attributes.readonly %}{{ config.name }}--readonly{% endif %}
@@ -42,7 +43,7 @@
 
                 {% if data.useHalfSteps %}
                     <span
-                        tabindex="0"
+                        tabindex="{{ tabIndex }}"
                         data-step-value="{{ currentStepValue }}"
                         class="
                             {{ config.name }}__step
@@ -64,7 +65,7 @@
                     {% endif %}
 
                     <span
-                        tabindex="0"
+                        tabindex="{{ tabIndex }}"
                         data-step-value="{{ currentStepValue }}"
                         class="
                             {{ config.name }}__step
@@ -83,7 +84,7 @@
 
                 {% if not data.useHalfSteps %}
                     <span
-                        tabindex="0"
+                        tabindex="{{ tabIndex }}"
                         data-step-value="{{ currentStepValue }}"
                         class="
                             {{ config.name }}__step

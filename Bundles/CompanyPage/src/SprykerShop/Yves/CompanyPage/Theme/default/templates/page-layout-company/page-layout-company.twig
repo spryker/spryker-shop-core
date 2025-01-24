@@ -5,6 +5,8 @@
     currentBreadcrumb: 'customer.account.overview',
 } %}
 
+{% set contentSectionId = 'company-content' %}
+
 {% block breadcrumbs %}
     {% set breadcrumbs = [] %}
 
@@ -29,6 +31,13 @@
 {% block content %}
     <div class="grid">
         <div class="col col--sm-12 col--md-3">
+            {% include molecule('skip-link') with {
+                data: {
+                    href: contentSectionId,
+                    text: 'global.skip-to-content' | trans,
+                },
+            } only %}
+
             {% block companyNavigation %}
                 {% include molecule('company-navigation', 'CompanyPage') with {
                     class: 'box',
@@ -39,7 +48,7 @@
             {% endblock %}
         </div>
 
-        <div class="col col--sm-12 col--md-9">
+        <div class="col col--sm-12 col--md-9" id="{{ contentSectionId }}">
             {% block companyContent %}{% endblock %}
         </div>
     </div>

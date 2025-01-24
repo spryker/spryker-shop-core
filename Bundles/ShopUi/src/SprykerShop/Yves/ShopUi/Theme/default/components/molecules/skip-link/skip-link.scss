@@ -1,0 +1,19 @@
+@mixin shop-ui-skip-link($name: '.skip-link') {
+    #{$name} {
+        @include helper-accessible-visibility-invisible();
+        background: $setting-color-main;
+        position: absolute;
+        padding: 0.5rem 1rem;
+        z-index: $setting-zi-skip-link;
+        text-decoration: none;
+
+        &:hover,
+        &:focus {
+            @include helper-accessible-visibility-visible();
+            outline: 0.0625rem solid $setting-color-white;
+            color: $setting-color-white;
+        }
+
+        @content;
+    }
+}

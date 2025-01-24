@@ -19,6 +19,7 @@ export default class ColorSelector extends Component {
     protected mapTriggerMouseenterEvent() {
         this.triggers.forEach((element: HTMLElement) => {
             element.addEventListener('mouseenter', (event: Event) => this.onTriggerSelection(event));
+            element.addEventListener('focusin', (event: Event) => this.onTriggerSelection(event));
         });
     }
 

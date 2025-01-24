@@ -44,7 +44,8 @@
                     }
                 }
 
-                &:hover > #{$name} {
+                &:hover > #{$name},
+                &:has(:focus-visible) > #{$name} {
                     @include helper-visibility-visible;
                 }
 
