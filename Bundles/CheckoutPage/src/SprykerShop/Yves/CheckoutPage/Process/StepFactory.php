@@ -482,7 +482,7 @@ class StepFactory extends AbstractFactory
      */
     public function createShipmentStepPostConditionChecker(): PostConditionCheckerInterface
     {
-        return new ShipmentStepPostConditionChecker($this->getShipmentService(), $this->createGiftCardItemsChecker());
+        return new ShipmentStepPostConditionChecker($this->getShipmentService());
     }
 
     /**

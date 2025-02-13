@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use SprykerShop\Shared\CheckoutPage\CheckoutPageConfig;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
-use SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface;
 
 class PostConditionChecker implements PostConditionCheckerInterface
@@ -28,20 +27,11 @@ class PostConditionChecker implements PostConditionCheckerInterface
     protected $shipmentService;
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface
-     */
-    protected $giftCardItemsChecker;
-
-    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
-     * @param \SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface $giftCardItemsChecker
      */
-    public function __construct(
-        CheckoutPageToShipmentServiceInterface $shipmentService,
-        GiftCardItemsCheckerInterface $giftCardItemsChecker
-    ) {
+    public function __construct(CheckoutPageToShipmentServiceInterface $shipmentService)
+    {
         $this->shipmentService = $shipmentService;
-        $this->giftCardItemsChecker = $giftCardItemsChecker;
     }
 
     /**
@@ -51,10 +41,6 @@ class PostConditionChecker implements PostConditionCheckerInterface
      */
     public function check(QuoteTransfer $quoteTransfer): bool
     {
-        if ($this->giftCardItemsChecker->hasOnlyGiftCardItems($quoteTransfer->getItems())) {
-            return true;
-        }
-
         return $this->isShipmentSet($quoteTransfer);
     }
 
