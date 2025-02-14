@@ -292,6 +292,7 @@
         <property name="isSuccess" type="bool"/>
         <property name="errors" type="CustomerError[]" singular="error"/>
         <property name="message" type="Message"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="Message">

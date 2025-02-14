@@ -11,6 +11,7 @@
 } %}
 
 {% block customerContent %}
+    {% widget 'CustomerEmailChangeRequestWidget' only %}{% endwidget %}
     {% include molecule('form') with {
         class: 'box',
         data: {

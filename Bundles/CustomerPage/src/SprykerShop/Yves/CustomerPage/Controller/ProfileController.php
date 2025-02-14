@@ -102,6 +102,12 @@ class ProfileController extends AbstractCustomerController
         if ($customerResponseTransfer->getIsSuccess()) {
             $this->updateLoggedInCustomerTransfer($customerResponseTransfer->getCustomerTransfer());
 
+            if ($customerResponseTransfer->getMessages()->offsetExists(0) === true) {
+                foreach ($customerResponseTransfer->getMessages() as $messageTransfer) {
+                    $this->addSuccessMessage($messageTransfer->getValue());
+                }
+            }
+
             $this->addSuccessMessage(static::MESSAGE_PROFILE_CHANGE_SUCCESS);
 
             return true;
