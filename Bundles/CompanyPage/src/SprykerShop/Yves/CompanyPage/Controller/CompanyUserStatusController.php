@@ -74,7 +74,7 @@ class CompanyUserStatusController extends AbstractCompanyController
      */
     public function enableAction(Request $request): RedirectResponse
     {
-        if ($this->can(static::PERMISSION_COMPANY_USER_STATUS_CHANGE)) {
+        if (!$this->can(static::PERMISSION_COMPANY_USER_STATUS_CHANGE)) {
             throw new AccessDeniedHttpException();
         }
 
@@ -107,7 +107,7 @@ class CompanyUserStatusController extends AbstractCompanyController
      */
     public function disableAction(Request $request): RedirectResponse
     {
-        if ($this->can(static::PERMISSION_COMPANY_USER_STATUS_CHANGE)) {
+        if (!$this->can(static::PERMISSION_COMPANY_USER_STATUS_CHANGE)) {
             throw new AccessDeniedHttpException();
         }
 
