@@ -102,6 +102,11 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
+     * @var string
+     */
+    public const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
+
+    /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
      *
      * @var string
@@ -117,6 +122,7 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideDependencies($container);
 
+        $container = $this->addCsrfProviderService($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addStoreClient($container);
         $container = $this->addLocaleClient($container);
@@ -147,6 +153,20 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
             return new CompanyPageToBusinessOnBehalfClientBridge(
                 $container->getLocator()->businessOnBehalf()->client(),
             );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCsrfProviderService(Container $container): Container
+    {
+        $container->set(static::SERVICE_FORM_CSRF_PROVIDER, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_FORM_CSRF_PROVIDER);
         });
 
         return $container;

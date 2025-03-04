@@ -47,6 +47,7 @@ use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserSaver;
 use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserSaverInterface;
 use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserValidator;
 use SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserValidatorInterface;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Validator\Constraint;
 
 class CompanyPageFactory extends AbstractFactory
@@ -86,6 +87,14 @@ class CompanyPageFactory extends AbstractFactory
             $this->getCustomerClient(),
             $this->getCompanyBusinessUnitClient(),
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface
+     */
+    public function getCsrfTokenManager(): CsrfTokenManagerInterface
+    {
+        return $this->getProvidedDependency(CompanyPageDependencyProvider::SERVICE_FORM_CSRF_PROVIDER);
     }
 
     /**

@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
@@ -26,6 +27,11 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class CompanyRoleUserController extends AbstractCompanyController
 {
     use PermissionAwareTrait;
+
+    /**
+     * @var string
+     */
+    protected const FORM_FIELD_CSRF_TOKEN = '_token';
 
     /**
      * @uses \Spryker\Client\CompanyUser\Plugin\Permission\EditCompanyUsersPermissionPlugin
@@ -68,7 +74,10 @@ class CompanyRoleUserController extends AbstractCompanyController
      */
     public function assignAction(Request $request): RedirectResponse
     {
-        if (!$this->can(static::PERMISSION_EDIT_COMANY_USERS)) {
+        if (
+            !$this->can(static::PERMISSION_EDIT_COMANY_USERS)
+            || !$this->isCsrfTokenValid($request)
+        ) {
             throw new AccessDeniedHttpException();
         }
 
@@ -98,13 +107,34 @@ class CompanyRoleUserController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @return bool
+     */
+    protected function isCsrfTokenValid(Request $request): bool
+    {
+        /** @var string|null $token */
+        $token = $request->query->get(static::FORM_FIELD_CSRF_TOKEN);
+        if (!$token) {
+            return false;
+        }
+
+        return $this->getFactory()
+            ->getCsrfTokenManager()
+            ->isTokenValid(new CsrfToken('role-user-form_token', $token));
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function unassignAction(Request $request): RedirectResponse
     {
-        if (!$this->can(static::PERMISSION_EDIT_COMANY_USERS)) {
+        if (
+            !$this->can(static::PERMISSION_EDIT_COMANY_USERS)
+            || !$this->isCsrfTokenValid($request)
+        ) {
             throw new AccessDeniedHttpException();
         }
 
@@ -230,9 +260,7 @@ class CompanyRoleUserController extends AbstractCompanyController
             ->getCompanyRoleById($companyRoleTransfer);
 
         if (!$this->isCurrentCustomerRelatedToCompany($companyRoleTransfer->getFkCompanyOrFail())) {
-            return;
+            throw new NotFoundHttpException();
         }
-
-        throw new NotFoundHttpException();
     }
 }

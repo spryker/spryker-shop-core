@@ -50,11 +50,22 @@
                             {% if data.actions.switch %}
                                 <li class="menu__item">
                                     {% if isAssigned %}
-                                        <a href="{{ path('company/company-role/user/unassign', {'id-company-user': user.idCompanyUser, 'id-company-role': data.idCompanyRole}) }}">
+                                        <a href="{{ path('company/company-role/user/unassign', {
+                                            'id-company-user': user.idCompanyUser,
+                                            'id-company-role': data.idCompanyRole,
+                                            '_token': csrf_token('role-user-form_token'),
+                                            }
+                                        )}}">
                                             {{ 'company.account.company_role.permission.unassign' | trans }}
                                         </a>
                                     {% else %}
-                                        <a href="{{ path('company/company-role/user/assign', {'id-company-user': user.idCompanyUser, 'id-company-role': data.idCompanyRole}) }}">
+                                        <a href="{{ path('company/company-role/user/assign',
+                                            {
+                                                'id-company-user': user.idCompanyUser,
+                                                'id-company-role': data.idCompanyRole,
+                                                '_token': csrf_token('role-user-form_token'),
+                                            }
+                                        ) }}">
                                             {{ 'company.account.company_role.permission.assign' | trans }}
                                         </a>
                                     {% endif %}
