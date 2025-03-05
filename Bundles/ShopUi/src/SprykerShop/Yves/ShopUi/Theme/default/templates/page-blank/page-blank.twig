@@ -25,6 +25,7 @@
                 <meta name="description" content="{% block metaDescription %}{{ data.metaDescription }}{% endblock %}">
                 <meta name="keywords" content="{% block metaKeywords %}{{ data.metaKeywords }}{% endblock %}">
                 <meta name="generator" content="spryker">
+                {% widget 'SitemapWidget' only %}{% endwidget %}
             {% endblock %}
 
             {% block headStyles %}
