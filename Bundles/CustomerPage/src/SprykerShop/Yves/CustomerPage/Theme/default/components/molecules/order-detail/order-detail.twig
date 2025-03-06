@@ -27,11 +27,17 @@
                     },
                 } only %}
             {% endblock %}
+
             {% widget 'OrderAmendmentWidget' args [data.order] with {
                 data: {
                     buttonClass: 'link float-right spacing-left',
                 },
             } only %}{% endwidget %}
+
+            {% if widgetGlobalExists('CreateOrderSspInquiryLinkWidget') and can('CreateSspInquiryPermissionPlugin') %}
+                {% widget 'CreateOrderSspInquiryLinkWidget' args [data.order.orderReference, data.order.idSalesOrder] only %}{% endwidget %}
+            {% endif %}
+
             <a href="{{url('customer/order')}}" class="link float-right">{{ 'general.back.button' | trans }}</a>
             <h5>{{ 'customer.profile.order_details' | trans }}</h5>
             <hr class="box__separator">

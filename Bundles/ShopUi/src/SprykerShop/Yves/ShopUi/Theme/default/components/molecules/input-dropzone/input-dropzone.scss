@@ -1,0 +1,74 @@
+@mixin shop-ui-input-dropzone($name: '.input-dropzone') {
+    #{$name} {
+        display: flex;
+        flex-direction: column;
+        gap: 0.625rem;
+
+        &__area {
+            @include helper-effect-transition(border-color);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            border: 0.125rem dashed $setting-color-input-border;
+            min-height: 8.75rem;
+            padding: 1rem;
+            gap: 0.625rem;
+            border-radius: 0.5rem;
+            padding-bottom: 0.625rem;
+
+            &--error {
+                border-color: map-get($setting-color-actions, 'alert');
+            }
+
+            &:hover {
+                border-color: $setting-color-input-border-focus;
+            }
+        }
+
+        &__input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        &__description {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 0.625rem;
+        }
+
+        &__files {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.625rem;
+            padding-bottom: 0.625rem;
+
+            &:empty {
+                display: none;
+            }
+        }
+
+        &__file {
+            display: flex;
+            align-items: center;
+            border-radius: 0.625rem;
+            padding: 0 0.3125rem;
+            gap: 0.3rem;
+            background-color: $setting-color-dark;
+            cursor: pointer;
+        }
+
+        &__file-delete {
+            color: map-get($setting-color-actions, 'alert');
+        }
+
+        @content;
+    }
+}

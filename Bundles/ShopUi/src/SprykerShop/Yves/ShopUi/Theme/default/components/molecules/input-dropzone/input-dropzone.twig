@@ -1,0 +1,87 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'input-dropzone',
+    tag: 'input-dropzone',
+} %}
+
+{% define data = {
+    id: '',
+    name: '',
+    inputAttrs: {},
+} %}
+
+{% define attributes = {
+    'max-count': data.inputAttrs.maxCount | default(0),
+    accept: data.inputAttrs.acceptExtensions | default(''),
+    'max-total-size': data.inputAttrs.maxTotalSize | default(0),
+} %}
+
+{%- block class -%}
+    {{ parent() }} {{ config.jsName }}
+{%- endblock -%}
+
+{% block body %}
+    {% block dropzone %}
+        <div class="{{ _self.renderClass(config.name ~ '__area', modifiers) }} {{ config.jsName }}__area">
+            {% block content %}
+                {% block description %}
+                    <div class="{{ config.name }}__description">
+                        {% include atom('icon') with {
+                            modifiers: ['big'],
+                            data: {
+                                name: 'upload',
+                            },
+                        } only %}
+
+                        <span>
+                            {{ 'general.fileUpload.description' | trans({
+                                '%amount%': attributes['max-count'],
+                                '%size%': attributes['max-total-size'],
+                                '%format%': attributes.accept | split('.')
+                                    | reduce((carry, format) => "#{format | upper}", ''),
+                            }) }}
+                        </span>
+                    </div>
+                {% endblock %}
+
+                {% block inputContainer %}
+                    <input
+                        class="{{ config.name }}__input {{ config.jsName }}__input"
+                        {{ _self.renderAttributes(data.inputAttrs) }}
+                        id="{{ data.id }}"
+                        name="{{ data.name }}"
+                    />
+                {% endblock %}
+
+                {% block button %}
+                    <button type="button" class="button button--hollow">
+                        <i class="fa fa-plus"></i>
+                        {{ 'Upload file' | trans }}
+                    </button>
+                {% endblock %}
+            {% endblock %}
+        </div>
+
+        {% block files %}
+            <div class="{{ _self.renderClass(config.name ~ '__files', modifiers) }} {{ config.jsName }}__files"></div>
+        {% endblock %}
+    {% endblock %}
+
+    {% block file %}
+        <template data-id="{{ config.jsName }}-file-template">
+            <span class="{{ config.name }}__file {{ config.jsName }}__file">
+                {% include atom('icon') with {
+                    class: "#{config.jsName}__file-delete #{config.name}__file-delete",
+                    data: {
+                        name: 'cross',
+                    },
+                } only %}
+
+                <span class="{{ config.name }}__file-name {{ config.jsName }}__file-name"></span>
+
+                <span>(<span class="{{ config.name }}__file-size {{ config.jsName }}__file-size"></span> {{ 'general.fileUpload.mb' | trans }})</span>
+            </span>
+        </template>
+    {% endblock %}
+{% endblock %}

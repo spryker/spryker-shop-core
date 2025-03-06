@@ -33,6 +33,7 @@
             color: helper-color-dark($setting-color-darkest);
         }
 
+        &--cancelled,
         &--canceled,
         &--ready-for-return,
         &--returned,
