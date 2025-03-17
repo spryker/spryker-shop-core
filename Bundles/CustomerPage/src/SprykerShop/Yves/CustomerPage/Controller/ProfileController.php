@@ -54,7 +54,6 @@ class ProfileController extends AbstractCustomerController
 
         if ($profileForm->isSubmitted() === false) {
             $loggedInCustomerTransfer = $this->getLoggedInCustomerTransfer();
-
             $customerTransfer = $this
                 ->getFactory()
                 ->getCustomerClient()
@@ -102,13 +101,20 @@ class ProfileController extends AbstractCustomerController
         if ($customerResponseTransfer->getIsSuccess()) {
             $this->updateLoggedInCustomerTransfer($customerResponseTransfer->getCustomerTransfer());
 
+            $hasEmailChangeMessage = false;
+
             if ($customerResponseTransfer->getMessages()->offsetExists(0) === true) {
                 foreach ($customerResponseTransfer->getMessages() as $messageTransfer) {
+                    if ($messageTransfer->getValue() === 'customer.change_customer_email_mail_sent') {
+                        $hasEmailChangeMessage = true;
+                    }
                     $this->addSuccessMessage($messageTransfer->getValue());
                 }
             }
 
-            $this->addSuccessMessage(static::MESSAGE_PROFILE_CHANGE_SUCCESS);
+            if (!$hasEmailChangeMessage) {
+                $this->addSuccessMessage(static::MESSAGE_PROFILE_CHANGE_SUCCESS);
+            }
 
             return true;
         }
