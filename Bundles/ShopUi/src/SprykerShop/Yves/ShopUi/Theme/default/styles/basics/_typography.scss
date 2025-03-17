@@ -25,7 +25,7 @@
     }
 
     a {
-        color: $setting-color-main;
+        color: helper-color-dark($setting-color-main);
         text-decoration: none;
 
         &:hover {

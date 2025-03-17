@@ -4,7 +4,7 @@
         padding: 0;
         margin: 0;
         background-color: transparent;
-        color: $setting-color-main;
+        color: helper-color-dark($setting-color-main);
         cursor: pointer;
 
         &:hover {

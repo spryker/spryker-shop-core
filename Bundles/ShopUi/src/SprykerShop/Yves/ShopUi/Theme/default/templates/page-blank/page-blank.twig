@@ -13,6 +13,7 @@
 {# @deprecated variable "isNewFrontendBuildSupported" is deprecated #}
 {% set isNewFrontendBuildSupported = false %}
 {% set isCssLazyLoadSupported = false %}
+{% set viewportUserScaleable = 'no' %}
 
 {% block template %}
     <!doctype html>
@@ -20,7 +21,7 @@
         <head>
             {% block meta %}
                 <meta charset="utf-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable={{ viewportUserScaleable }}">
                 <meta name="title" content="{% block metaTitle %}{{ data.metaTitle }}{% endblock %}">
                 <meta name="description" content="{% block metaDescription %}{{ data.metaDescription }}{% endblock %}">
                 <meta name="keywords" content="{% block metaKeywords %}{{ data.metaKeywords }}{% endblock %}">

@@ -35,7 +35,7 @@ $shop-ui-simple-carousel-icon-size: map-get($setting-icon-sizes, 'icon-size-big'
                 display: block;
                 width: 0.5rem;
                 height: 0.5rem;
-                background-color: $setting-color-light;
+                background-color: $setting-color-darker;
                 border-radius: 100%;
             }
 
@@ -67,7 +67,7 @@ $shop-ui-simple-carousel-icon-size: map-get($setting-icon-sizes, 'icon-size-big'
 
         &__arrow {
             @include helper-effect-transition(color);
-            color: $setting-color-light;
+            color: $setting-color-darker;
             pointer-events: all;
 
             &:hover {

@@ -28,7 +28,7 @@
 {% block body %}
     <input value="{{ data.inputValue }}"
            class="{{ config.jsName }}__input {{ component.renderClass(config.name ~ '__input', modifiers) }} {{ data.inputExtraClasses }}"
-           {{ component.renderAttributes(data.inputAttributes) }}>
+           {{ component.renderAttributes(data.inputAttributes) }} aria-label="{{ 'shop_ui.aria_label.counter.input' | trans }}">
 
     {% block hiddenInput %}
         <input type="hidden"

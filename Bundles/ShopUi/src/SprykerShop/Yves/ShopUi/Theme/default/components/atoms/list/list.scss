@@ -2,6 +2,7 @@
     #{$name} {
         &__item {
             display: block;
+            margin-bottom: 0.25rem;
 
             & > #{$name} {
                 margin-left: 0.5rem;

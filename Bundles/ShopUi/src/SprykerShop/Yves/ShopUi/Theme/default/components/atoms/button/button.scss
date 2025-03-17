@@ -53,6 +53,7 @@
             background-color: $setting-color-light;
             border-color: $setting-color-light;
             pointer-events: none;
+            color: $setting-color-darker;
 
             &:hover,
             &:focus {

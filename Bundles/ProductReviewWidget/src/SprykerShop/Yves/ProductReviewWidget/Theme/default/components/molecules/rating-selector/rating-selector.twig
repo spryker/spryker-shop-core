@@ -20,6 +20,7 @@
     'readonly': false,
     'disable-if-empty-value': false,
     'product-item-class-name': data.parentJsName,
+    'aria-label': 'product_review_widget.aria_label.current.rating' | trans({ '%s%': data.value }),
 } %}
 
 {% set singleStepValue = (data.maxValue - data.minValue) / (data.steps - 1) %}
@@ -45,6 +46,8 @@
                     <span
                         tabindex="{{ tabIndex }}"
                         data-step-value="{{ currentStepValue }}"
+                        role="button"
+                        aria-label="{{ loop.index ~ ('product_review.summary' | trans) }}"
                         class="
                             {{ config.name }}__step
                             {{ config.name }}__step--half
@@ -67,6 +70,8 @@
                     <span
                         tabindex="{{ tabIndex }}"
                         data-step-value="{{ currentStepValue }}"
+                        role="button"
+                        aria-label="{{ loop.index ~ ('product_review.summary' | trans) }}"
                         class="
                             {{ config.name }}__step
                             {{ config.name }}__step--half
@@ -86,6 +91,8 @@
                     <span
                         tabindex="{{ tabIndex }}"
                         data-step-value="{{ currentStepValue }}"
+                        role="button"
+                        aria-label="{{ 'product_review_widget.product_review.summary.mark' | trans({ '%mark%': data.steps - loop.index0 }) }}"
                         class="
                             {{ config.name }}__step
                             {{ config.name }}__step--full

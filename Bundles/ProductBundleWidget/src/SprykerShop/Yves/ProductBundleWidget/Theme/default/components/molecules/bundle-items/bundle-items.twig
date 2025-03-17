@@ -39,7 +39,9 @@
                     <div class="{{ thumbnailClassName }}">
                         {% if imageUrl %}
                             {% if itemUrl %}
-                                <a href="{{ functionExists('generatePath') ? generatePath(itemUrl) : itemUrl }}">
+                                <a href="{{ functionExists('generatePath') ? generatePath(itemUrl) : itemUrl }}"
+                                   title="{{ 'product_bundle_widget.aria_label.view.details' | trans({ '%productName%': itemName }) }}"
+                                   aria-label="{{ 'product_bundle_widget.aria_label.view.details' | trans({ '%productName%': itemName }) }}">
                                     {% block thumbnail %}
                                         {% include molecule('lazy-image') with {
                                             modifiers: thumbnailModifiers,

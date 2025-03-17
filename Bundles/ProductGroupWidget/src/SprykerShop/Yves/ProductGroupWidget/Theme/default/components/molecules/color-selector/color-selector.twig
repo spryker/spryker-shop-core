@@ -26,6 +26,7 @@
             {% block selection %}
                 <{{ data.selectionTag }}
                     class="{{ config.name }}__item {{ activeClassName }} {{ config.jsName }}__item"
+                    aria-label="{{ item.attributes.color is defined ? 'product_group_widget.product.view.in.color' | trans({ '%color%': item.attributes.color }) }}"
                     style="{{ backgroundColor }}"
                     {{ component.renderAttributes(dataAttributesList) }}>
                 </{{ data.selectionTag }}>

@@ -33,6 +33,7 @@
         <button
             class="{{ config.name }}__button {{ config.jsName }}__button {{ data.buttonClasses }} {{ data.buttonExtraClasses }}"
             type="button"
+            aria-label="{{ data.buttonTitle }}"
             title="{{ data.buttonTitle }}"
             data-url="{{ data.url }}"
             data-csrf-token="{{ data.csrfToken }}"

@@ -5,7 +5,7 @@
         &__separator {
             margin-left: 0.25rem;
             margin-right: 0.25rem;
-            color: $setting-color-light;
+            color: $setting-color-darker;
         }
 
         &__form {
@@ -17,7 +17,7 @@
         }
 
         &--disabled:not(&--active) {
-            color: $setting-color-dark;
+            color: $setting-color-darker;
         }
 
         @content;

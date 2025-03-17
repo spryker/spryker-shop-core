@@ -1,7 +1,7 @@
 /**
  * Defines the main color of the shop theme. Usage: primary elements' background and color.
  */
-$setting-color-main: #2199e8 !default;
+$setting-color-main: #1479bd !default;
 
 /**
  * Defines alternative color of the shop theme. Usage: secondary elements' background and color.
@@ -41,7 +41,7 @@ $setting-color-dark: #bbbbbb !default;
 /**
  * Defines a darker shade color. Usage: elements' text color variant.
  */
-$setting-color-darker: #777777 !default;
+$setting-color-darker: #595959 !default;
 
 /**
  * Defines the darkest shade color. Usage: elements' text color variant.
@@ -96,7 +96,7 @@ $setting-color-blue: #0064b4;
  * Defines action colors map.
  */
 $setting-color-actions: (
-    success: #4fc2a0,
+    success: #2c8168,
     warning: #f29133,
     alert: #b2171a,
 ) !default;

@@ -24,6 +24,10 @@
             &--has-children-dropdown {
                 position: relative;
                 z-index: $setting-zi-element + 1;
+
+                &:hover {
+                    z-index: $setting-zi-element + 2;
+                }
             }
 
             &--has-children-dropdown > #{$name}__item-inner,

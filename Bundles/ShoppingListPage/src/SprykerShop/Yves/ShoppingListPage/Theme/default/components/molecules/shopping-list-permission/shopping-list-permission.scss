@@ -1,7 +1,5 @@
 @mixin shopping-list-page-shopping-list-permission($name: '.shopping-list-permission') {
     #{$name} {
-        color: $setting-color-dark;
-
         &__full-access {
             color: map-get($setting-color-actions, 'success');
         }

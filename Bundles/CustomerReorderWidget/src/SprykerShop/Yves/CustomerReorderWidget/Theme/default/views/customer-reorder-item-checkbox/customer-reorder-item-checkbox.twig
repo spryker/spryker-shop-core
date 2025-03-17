@@ -15,6 +15,7 @@
             name: 'items[]',
             disabled: not data.availability,
             value: data.idSalesOrderItem,
+            'aria-label': 'customer_reorder_widget.aria_label.check.product.to.reorder' | trans({ '%productName%': _widget.item.name }),
         },
     } only %}
 {% endblock %}

@@ -13,7 +13,8 @@
                 modifiers: ['naked'],
                 attributes: {
                     'onchange': 'this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);',
-                    'data-qa': 'language-selector'
+                    'data-qa': 'language-selector',
+                    'aria-label': 'language_switcher_widget.aria_label.language.switcher' | trans,
                 },
                 embed: {
                     languages: data.languages,

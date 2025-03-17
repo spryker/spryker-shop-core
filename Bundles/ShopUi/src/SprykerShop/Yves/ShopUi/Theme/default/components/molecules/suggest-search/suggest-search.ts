@@ -50,7 +50,7 @@ export default class SuggestSearch extends Component {
      */
     navigationActiveClass: string;
 
-    parentWrapper: HTMLElement;
+    parentWrapper: HTMLElement = null;
 
     protected readyCallback(): void {
         this.ajaxProvider = <AjaxProvider>this.getElementsByClassName(`${this.jsName}__ajax-provider`)[0];
@@ -60,7 +60,9 @@ export default class SuggestSearch extends Component {
             : // eslint-disable-next-line deprecation/deprecation
               document.querySelector(this.searchInputSelector));
         this.navigationActiveClass = `${this.name}__item--active`;
-        this.parentWrapper = this.closest(`.${this.parentElementClassName}`);
+        if (this.parentElementClassName) {
+            this.parentWrapper = this.closest(`.${this.parentElementClassName}`);
+        }
         this.createHintInput();
         this.mapEvents();
     }
@@ -286,6 +288,7 @@ export default class SuggestSearch extends Component {
         this.hintInput = document.createElement('input');
         this.hintInput.classList.add(`${this.name}__hint`);
         this.hintInput.setAttribute('tabindex', '-1');
+        this.hintInput.setAttribute('aria-label', this.inputAreaLabel);
         this.searchInput.parentNode.appendChild(this.hintInput).setAttribute('readonly', 'readonly');
         this.searchInput.classList.add(`${this.name}__input--transparent`);
     }
@@ -343,6 +346,10 @@ export default class SuggestSearch extends Component {
     }
     protected get searchInputClassName(): string {
         return this.getAttribute('input-class-name');
+    }
+
+    protected get inputAreaLabel(): string {
+        return this.getAttribute('input-aria-label');
     }
 
     protected get parentElementClassName(): string {

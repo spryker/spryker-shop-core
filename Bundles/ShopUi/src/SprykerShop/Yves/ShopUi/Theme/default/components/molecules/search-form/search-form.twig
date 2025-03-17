@@ -20,7 +20,7 @@
             <div class="col col--sm-10">
                 <div class="grid">
                     <div class="is-position-relative col col--expand">
-                        <input name="q" type="text" class="input input--expand suggest-search__input {{ config.jsName }}__input--{{ attributes['data-search-id'] }}" placeholder="{{ 'global.search' | trans }}" value="{{ data.searchValue }}" autocomplete="off">
+                        <input name="q" type="text" class="input input--expand suggest-search__input {{ config.jsName }}__input--{{ attributes['data-search-id'] }}" placeholder="{{ 'global.search' | trans }}" aria-label="{{ 'global.search' | trans }}" value="{{ data.searchValue }}" autocomplete="off">
                     </div>
 
                     {% if data.byImage and widgetGlobalExists('ImageSearchAiWidget') %}
@@ -46,6 +46,7 @@
                 'parent-class-name': config.name,
                 'suggestion-url': path('search/suggestion'),
                 'input-class-name': config.jsName ~ '__input--' ~ attributes['data-search-id'],
+                'input-area-label': 'global.search.hint' | trans,
             },
         } only %}
     </form>
