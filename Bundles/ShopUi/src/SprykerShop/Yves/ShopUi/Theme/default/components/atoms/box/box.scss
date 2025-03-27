@@ -26,6 +26,15 @@
             }
         }
 
+        &--outer-spacingless {
+            margin: 0;
+
+            #{$name}__separator {
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
+
         &--stretch {
             height: calc(100% - 1rem);
         }

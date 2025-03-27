@@ -86,6 +86,10 @@
         align-items: flex-start;
         justify-content: flex-start;
 
+        &--column {
+            flex-direction: column;
+        }
+
         &--top {
             align-items: flex-start;
         }

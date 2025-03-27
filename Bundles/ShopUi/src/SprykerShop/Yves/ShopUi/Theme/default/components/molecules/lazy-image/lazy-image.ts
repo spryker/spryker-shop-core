@@ -31,12 +31,12 @@ export default class LazyImage extends Component {
 
     protected mapTriggerCustomViewportEvent(): void {
         this.addEventListener(EVENT_ELEMENT_IN_VIEWPORT, () => {
-            if (this.image) {
+            if (this.image && this.image.dataset.src) {
                 this.imageSrc = this.image.dataset.src;
 
                 return;
             }
-            if (this.background) {
+            if (this.background && this.background.dataset.backgroundImage) {
                 this.backgroundImage = this.background.dataset.backgroundImage;
             }
         });
