@@ -8,7 +8,6 @@ export const EVENT_POPUP_OPENED = 'popupOpened';
 
 export default class MainPopup extends Component {
     protected triggers: HTMLElement[];
-    protected closeButton: HTMLButtonElement;
     protected overlay: HTMLElement;
     protected cloneTarget = document.body;
     protected clone: HTMLElement;
@@ -60,8 +59,13 @@ export default class MainPopup extends Component {
     }
 
     protected mapCloseButtonClickEvent(currentPopup: HTMLElement = this): void {
-        this.closeButton = <HTMLButtonElement>currentPopup.getElementsByClassName(`${this.jsName}__close`)[0];
-        this.closeButton.addEventListener('click', () => this.onCloseButtonClick());
+        const closeButtons = currentPopup.querySelectorAll<HTMLButtonElement>(
+            `.${this.jsName}__close, ${this.closePopupSelector}`,
+        );
+
+        closeButtons.forEach((closeButton: HTMLButtonElement) => {
+            closeButton.addEventListener('click', () => this.onCloseButtonClick());
+        });
     }
 
     protected mapOverlayEvents(): void {
@@ -214,5 +218,9 @@ export default class MainPopup extends Component {
 
     protected get shouldCloseByOverlayClick(): boolean {
         return this.hasAttribute('should-close-by-overlay-click');
+    }
+
+    protected get closePopupSelector(): string {
+        return this.getAttribute('close-popup-selector');
     }
 }
