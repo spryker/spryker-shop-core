@@ -24,7 +24,7 @@
     itemtype: 'https://schema.org/Product',
     details: {
         sku: data.product.add_to_cart_sku
-            | default((data.product.attributeMap is defined ? data.product.attributeMap.productConcreteIds | keys | first)
+            | default((data.product.attributeMap is defined and data.product.attributeMap ? data.product.attributeMap.productConcreteIds | keys | first)
             | default(data.metaSku)),
         searchId: data.product.searchQueryId | default,
         position: data.product.position | default(0),
