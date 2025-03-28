@@ -148,8 +148,6 @@ class CompanyRolePermissionController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function configureAction(Request $request)
@@ -157,13 +155,7 @@ class CompanyRolePermissionController extends AbstractCompanyController
         $idCompanyRole = $request->query->getInt('id-company-role');
         $idPermission = $request->query->getInt('id-permission');
 
-        $companyRoleTransfer = $this->getFactory()
-            ->getCompanyRoleClient()
-            ->getCompanyRoleById((new CompanyRoleTransfer())->setIdCompanyRole($idCompanyRole));
-
-        if (!$this->isCurrentCustomerRelatedToCompany($companyRoleTransfer->getFkCompany())) {
-            throw new NotFoundHttpException();
-        }
+        $this->assertCurrentCustomerCanEditRole($idCompanyRole);
 
         $form = $this->getFactory()
             ->createCompanyPageFormFactory()
@@ -171,9 +163,13 @@ class CompanyRolePermissionController extends AbstractCompanyController
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $permissionTransfer = $form->getData();
+
+            $this->assertCurrentCustomerCanEditRole($permissionTransfer->getIdCompanyRole());
+
             $companyRolePermissionResponse = $this->getFactory()
                 ->getCompanyRoleClient()
-                ->updateCompanyRolePermission($form->getData());
+                ->updateCompanyRolePermission($permissionTransfer);
 
             $this->generateMessagesByCompanyRolePermissionResponse($companyRolePermissionResponse);
         }
@@ -183,6 +179,24 @@ class CompanyRolePermissionController extends AbstractCompanyController
         ];
 
         return $this->view($data, [], '@CompanyPage/views/role-permission-configure/role-permission-configure.twig');
+    }
+
+    /**
+     * @param int $idCompanyRole
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return void
+     */
+    protected function assertCurrentCustomerCanEditRole(int $idCompanyRole): void
+    {
+        $companyRoleTransfer = $this->getFactory()
+            ->getCompanyRoleClient()
+            ->getCompanyRoleById((new CompanyRoleTransfer())->setIdCompanyRole($idCompanyRole));
+
+        if (!$this->isCurrentCustomerRelatedToCompany($companyRoleTransfer->getFkCompany())) {
+            throw new NotFoundHttpException();
+        }
     }
 
     /**
