@@ -98,7 +98,7 @@ class ProductOfferServicePointAvailabilityReaderTest extends Unit
         $productOfferServicePointAvailabilities = $productOfferServicePointAvailabilityReader->getProductOfferServicePointAvailabilities(
             [$servicePointSearchTransfer],
             [],
-        );
+        )[0];
 
         // Assert
         $this->assertCount(1, $productOfferServicePointAvailabilities);
@@ -145,7 +145,7 @@ class ProductOfferServicePointAvailabilityReaderTest extends Unit
         $productOfferServicePointAvailabilities = $productOfferServicePointAvailabilityReader->getProductOfferServicePointAvailabilities(
             [$firstServicePointSearchTransfer, $secondServicePointSearchTransfer, $thirdServicePointSearchTransfer],
             [],
-        );
+        )[0];
 
         // Assert
         $this->assertCount(3, $productOfferServicePointAvailabilities);
@@ -213,7 +213,7 @@ class ProductOfferServicePointAvailabilityReaderTest extends Unit
         $productOfferServicePointAvailabilities = $productOfferServicePointAvailabilityReader->getProductOfferServicePointAvailabilities(
             [$servicePointSearchTransfer],
             [],
-        );
+        )[0];
 
         // Assert
         $this->assertCount(1, $productOfferServicePointAvailabilities);

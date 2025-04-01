@@ -51,30 +51,32 @@ class ProductOfferServicePointAvailabilityReader implements ProductOfferServiceP
      * @param list<string> $groupKeys
      * @param string|null $serviceTypeUuid
      * @param string|null $shipmentTypeUuid
+     * @param list<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return array<string, string>
+     * @return array<int, array<string, string>|array<string, array<int, array<string, mixed>>>>
      */
     public function getProductOfferServicePointAvailabilities(
         array $servicePointSearchTransfers,
         array $groupKeys,
         ?string $serviceTypeUuid = null,
-        ?string $shipmentTypeUuid = null
+        ?string $shipmentTypeUuid = null,
+        array $itemTransfers = []
     ): array {
         if (!$servicePointSearchTransfers) {
-            return $this->servicePointAvailabilityMessageBuilder->buildUnavailableAvailabilityMessagesPerServicePoint(
+            return [$this->servicePointAvailabilityMessageBuilder->buildUnavailableAvailabilityMessagesPerServicePoint(
                 $servicePointSearchTransfers,
-            );
+            )];
         }
 
         $itemTransfersBeforeFiltering = $this->quoteItemReader->getItemsFromQuote($groupKeys);
-        $itemTransfers = $this->filterOutItemsWithoutProductOfferReference($itemTransfersBeforeFiltering);
+        $itemTransfers = $itemTransfers ?: $this->filterOutItemsWithoutProductOfferReference($itemTransfersBeforeFiltering);
 
         $hasItemsWithoutProductOfferReferences = count($itemTransfersBeforeFiltering) > count($itemTransfers);
 
         if (!$itemTransfers) {
-            return $this->servicePointAvailabilityMessageBuilder->buildUnavailableAvailabilityMessagesPerServicePoint(
+            return [$this->servicePointAvailabilityMessageBuilder->buildUnavailableAvailabilityMessagesPerServicePoint(
                 $servicePointSearchTransfers,
-            );
+            )];
         }
 
         $productOfferServicePointAvailabilityRequestItemTransfers = $this->mapItemTransfersToProductOfferServicePointAvailabilityRequestItemTransfers(
@@ -91,10 +93,16 @@ class ProductOfferServicePointAvailabilityReader implements ProductOfferServiceP
         $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid = $this->productOfferServicePointAvailabilityCalculatorStorageClient
             ->calculateProductOfferServicePointAvailabilities($productOfferServicePointAvailabilityCriteriaTransfer);
 
-        return $this->servicePointAvailabilityMessageBuilder->buildAvailabilityMessagesPerServicePoint(
-            $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid,
-            $hasItemsWithoutProductOfferReferences,
-        );
+        return [
+            $this->servicePointAvailabilityMessageBuilder->buildAvailabilityMessagesPerServicePoint(
+                $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid,
+                $hasItemsWithoutProductOfferReferences,
+            ),
+            $this->servicePointAvailabilityMessageBuilder
+                ->buildProductOfferAvailabilityDataPerServicePoint(
+                    $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid,
+                ),
+        ];
     }
 
     /**

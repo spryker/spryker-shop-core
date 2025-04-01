@@ -3,15 +3,15 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 89,
-            "line_to": 89,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ServicePointSearchTransfer> variable ",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ServicePointWidget/src/SprykerShop/Yves/ServicePointWidget/Reader/ServicePointReader.php",
-            "snippet": "                'servicePoints' => $servicePointSearchCollectionTransfer->getServicePoints()->getArrayCopy(),",
-            "selected_text": "getArrayCopy",
+            "line_from": 117,
+            "line_to": 117,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of SprykerShop\\Yves\\ServicePointWidget\\Widget\\ServicePointSearchWidget::addSearchRouteParameter cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker-shop/Bundles/ServicePointWidget/src/SprykerShop/Yves/ServicePointWidget/Widget/ServicePointSearchWidget.php",
+            "snippet": "        $this->addSearchRouteParameter($searchRoute);",
+            "selected_text": "$searchRoute",
             "error_level": 3,
-            "shortcode": 113
+            "shortcode": 78
         }
     ],
     "deprecation": [

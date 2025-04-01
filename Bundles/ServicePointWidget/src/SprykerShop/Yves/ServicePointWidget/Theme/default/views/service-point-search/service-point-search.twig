@@ -10,6 +10,8 @@
     itemGroupKeys: _widget.itemGroupKeys,
     searchValue: '',
     extraClassName: '',
+    quantity: null,
+    sku: null,
 } %}
 
 {% set searchFieldAttributes = data.searchValue ? { value: data.searchValue } : {} %}
@@ -21,6 +23,13 @@
     'shipmentTypeUuid': data.shipmentTypeUuid,
     'itemGroupKeys': data.itemGroupKeys,
 } %}
+
+{% if data.quantity and data.sku %}
+    {% set queryStringObject = queryStringObject | merge({
+        quantity: data.quantity,
+        sku: data.sku,
+    }) %}
+{% endif %}
 
 {% block body %}
     {% include molecule('service-point-finder', 'ServicePointWidget') with {

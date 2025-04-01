@@ -25,23 +25,37 @@ class ProductOfferServicePointAvailabilityWidget extends AbstractWidget
     protected const PARAMETER_PRODUCT_OFFER_SERVICE_POINT_AVAILABILITIES = 'productOfferServicePointAvailabilities';
 
     /**
+     * @var string
+     */
+    protected const PARAMETER_PRODUCT_OFFER_AVAILABILITY_DATA_PER_SERVICE_POINT = 'productOfferAvailabilityDataPerServicePoint';
+
+    /**
      * @param list<\Generated\Shared\Transfer\ServicePointSearchTransfer> $servicePointSearchTransfers
      * @param list<string> $groupKeys
      * @param string|null $serviceTypeUuid
      * @param string|null $shipmentTypeUuid
+     * @param list<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      */
     public function __construct(
         array $servicePointSearchTransfers,
         array $groupKeys,
         ?string $serviceTypeUuid = null,
-        ?string $shipmentTypeUuid = null
+        ?string $shipmentTypeUuid = null,
+        array $itemTransfers = []
     ) {
-        $this->addProductOfferServicePointAvailabilitiesParameter(
+        $productOfferAvailabilitiesGroup = $this->getFactory()->createProductOfferServicePointAvailabilityReader()->getProductOfferServicePointAvailabilities(
             $servicePointSearchTransfers,
             $groupKeys,
             $serviceTypeUuid,
             $shipmentTypeUuid,
+            $itemTransfers,
         );
+
+        $productOfferServicePointAvailabilityMessages = $productOfferAvailabilitiesGroup[0];
+        $productOfferAvailabilityDataPerServicePoint = $productOfferAvailabilitiesGroup[1] ?? [];
+
+        $this->addProductOfferServicePointAvailabilitiesParameter($productOfferServicePointAvailabilityMessages);
+        $this->addProductOfferAvailabilityDataPerServicePoint($productOfferAvailabilityDataPerServicePoint);
     }
 
     /**
@@ -69,27 +83,23 @@ class ProductOfferServicePointAvailabilityWidget extends AbstractWidget
     }
 
     /**
-     * @param list<\Generated\Shared\Transfer\ServicePointSearchTransfer> $servicePointSearchTransfers
-     * @param list<string> $groupKeys
-     * @param string|null $serviceTypeUuid
-     * @param string|null $shipmentTypeUuid
+     * @param array<string, array<int, array<string, mixed>>|string> $productOfferServicePointAvailabilityMessages
      *
      * @return void
      */
     protected function addProductOfferServicePointAvailabilitiesParameter(
-        array $servicePointSearchTransfers,
-        array $groupKeys,
-        ?string $serviceTypeUuid = null,
-        ?string $shipmentTypeUuid = null
+        array $productOfferServicePointAvailabilityMessages
     ): void {
-        $this->addParameter(
-            static::PARAMETER_PRODUCT_OFFER_SERVICE_POINT_AVAILABILITIES,
-            $this->getFactory()->createProductOfferServicePointAvailabilityReader()->getProductOfferServicePointAvailabilities(
-                $servicePointSearchTransfers,
-                $groupKeys,
-                $serviceTypeUuid,
-                $shipmentTypeUuid,
-            ),
-        );
+        $this->addParameter(static::PARAMETER_PRODUCT_OFFER_SERVICE_POINT_AVAILABILITIES, $productOfferServicePointAvailabilityMessages);
+    }
+
+    /**
+     * @param array<string, array<int, array<string, mixed>>|string> $productOfferAvailabilityDataPerServicePoint
+     *
+     * @return void
+     */
+    protected function addProductOfferAvailabilityDataPerServicePoint(array $productOfferAvailabilityDataPerServicePoint): void
+    {
+        $this->addParameter(static::PARAMETER_PRODUCT_OFFER_AVAILABILITY_DATA_PER_SERVICE_POINT, $productOfferAvailabilityDataPerServicePoint);
     }
 }

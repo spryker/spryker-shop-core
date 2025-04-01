@@ -1,6 +1,13 @@
 import { debug } from '../../../app/logger';
 import Component from '../../../models/component';
 
+interface DynamicParams {
+    [key: string]: {
+        selector: string;
+        attribute: string;
+    };
+}
+
 export const EVENT_FETCHING = 'fetching';
 export const EVENT_FETCHED = 'fetched';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -83,6 +90,18 @@ export default class AjaxProvider extends Component {
         this.dispatchCustomEvent(EVENT_FETCHING);
 
         return new Promise<T>((resolve, reject) => {
+            if (this.dynamicParams) {
+                Object.entries(this.dynamicParams).forEach(([key, params]) => {
+                    this.queryParams.delete(key);
+                    const selector = document.querySelector(params.selector);
+                    const value = selector?.getAttribute(params.attribute) ?? selector[params.attribute];
+
+                    if (value) {
+                        this.queryParams.set(key, value);
+                    }
+                });
+            }
+
             this.xhr.open(this.method, this.url);
             this.headers.forEach((value: string, key: string) => this.xhr.setRequestHeader(key, value));
             this.xhr.responseType = this.responseType;
@@ -206,5 +225,9 @@ export default class AjaxProvider extends Component {
      */
     get elementVisibilityChecker(): string | null {
         return this.getAttribute('element-visibility-checker-class-name');
+    }
+
+    get dynamicParams(): DynamicParams {
+        return this.getAttribute('dynamic-params') ? JSON.parse(this.getAttribute('dynamic-params')) : null;
     }
 }

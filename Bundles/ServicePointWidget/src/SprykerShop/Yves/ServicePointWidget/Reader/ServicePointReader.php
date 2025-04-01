@@ -51,6 +51,11 @@ class ServicePointReader implements ServicePointReaderInterface
     protected const SEARCH_REQUEST_PARAMETER_ITEM_GROUP_KEYS = 'itemGroupKeys';
 
     /**
+     * @var string
+     */
+    protected const SEARCH_REQUEST_PARAMETER_ITEMS = 'items';
+
+    /**
      * @uses \Spryker\Client\ServicePointSearch\Plugin\Elasticsearch\Query\PaginatedServicePointSearchQueryExpanderPlugin::PARAMETER_OFFSET
      *
      * @var string
@@ -100,6 +105,7 @@ class ServicePointReader implements ServicePointReaderInterface
         $serviceTypeUuid = $requestParameters[static::SEARCH_REQUEST_PARAMETER_SERVICE_TYPE_UUID] ?? null;
         $shipmentTypeUuid = $requestParameters[static::SEARCH_REQUEST_PARAMETER_SHIPMENT_TYPE_UUID] ?? null;
         $itemGroupKeys = $requestParameters[static::SEARCH_REQUEST_PARAMETER_ITEM_GROUP_KEYS] ?? [];
+        $itemTransfers = $requestParameters[static::SEARCH_REQUEST_PARAMETER_ITEMS] ?? [];
 
         return $this->twigEnvironment->render(
             '@ServicePointWidget/views/service-point-list/service-point-list.twig',
@@ -114,6 +120,7 @@ class ServicePointReader implements ServicePointReaderInterface
                 'itemGroupKeys' => $itemGroupKeys,
                 'searchString' => $servicePointSearchRequestTransfer->getSearchString(),
                 'searchRoute' => static::ROUTE_NAME_SEARCH,
+                'items' => $itemTransfers,
             ],
         );
     }

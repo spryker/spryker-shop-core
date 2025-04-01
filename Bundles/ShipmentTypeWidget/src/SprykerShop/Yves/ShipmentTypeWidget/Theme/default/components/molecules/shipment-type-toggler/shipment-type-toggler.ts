@@ -26,9 +26,13 @@ export default class ShipmentTypeToggler extends Component {
     }
 
     protected mapEvents(): void {
-        this.triggers.forEach((trigger) =>
-            trigger.addEventListener('change', (event) => this.onTrigerChange(event.target as HTMLInputElement)),
-        );
+        this.triggers.forEach((trigger) => {
+            trigger.addEventListener('change', (event) => this.onTrigerChange(event.target as HTMLInputElement));
+
+            if ((trigger as HTMLInputElement).checked) {
+                trigger.dispatchEvent(new Event('change'));
+            }
+        });
     }
 
     protected onTrigerChange(trigger: HTMLInputElement): void {

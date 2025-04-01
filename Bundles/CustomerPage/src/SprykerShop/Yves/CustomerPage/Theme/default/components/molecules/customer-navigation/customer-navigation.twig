@@ -102,5 +102,7 @@
         {% if widgetGlobalExists('DashboardMenuItemWidget') %}
             {% widget 'DashboardMenuItemWidget' args [data.activePage] only %}{% endwidget %}
         {% endif %}
+
+        {% widget 'SspServiceMenuItemWidget' args [data.activePage] only %}{% endwidget %}
     </ul>
 {% endblock %}

@@ -14,13 +14,15 @@ interface ProductOfferServicePointAvailabilityReaderInterface
      * @param list<string> $groupKeys
      * @param string|null $serviceTypeUuid
      * @param string|null $shipmentTypeUuid
+     * @param list<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return array<string, string>
+     * @return array<int, array<string, string>|array<string, array<int, array<string, mixed>>>>
      */
     public function getProductOfferServicePointAvailabilities(
         array $servicePointSearchTransfers,
         array $groupKeys,
         ?string $serviceTypeUuid = null,
-        ?string $shipmentTypeUuid = null
+        ?string $shipmentTypeUuid = null,
+        array $itemTransfers = []
     ): array;
 }

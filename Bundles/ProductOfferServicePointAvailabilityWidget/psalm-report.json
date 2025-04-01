@@ -1,19 +1,6 @@
 {
     "error": [],
-    "warning": [
-        {
-            "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
-            "file_name": "vendor/spryker/spryker-shop/Bundles/ProductOfferServicePointAvailabilityWidget/src/SprykerShop/Yves/ProductOfferServicePointAvailabilityWidget/Reader/ProductOfferServicePointAvailabilityReader.php",
-            "snippet": "        $itemTransfers = $this->cartClient->getQuote()->getItems()->getArrayCopy();",
-            "selected_text": "getArrayCopy",
-            "error_level": 3,
-            "shortcode": 113
-        }
-    ],
+    "warning": [],
     "deprecation": [],
-    "count": 1
+    "count": 0
 }

@@ -21,6 +21,15 @@ interface ServicePointAvailabilityMessageBuilderInterface
     ): array;
 
     /**
+     * @param array<string, list<\Generated\Shared\Transfer\ProductOfferServicePointAvailabilityResponseItemTransfer>> $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid
+     *
+     * @return array<string, array<int, array<string, mixed>>>
+     */
+    public function buildProductOfferAvailabilityDataPerServicePoint(
+        array $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid
+    ): array;
+
+    /**
      * @param list<\Generated\Shared\Transfer\ServicePointSearchTransfer> $servicePointSearchTransfers
      *
      * @return array<string, string>

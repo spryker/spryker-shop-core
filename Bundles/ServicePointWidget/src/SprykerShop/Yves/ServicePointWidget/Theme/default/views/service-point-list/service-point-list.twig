@@ -13,6 +13,7 @@
     serviceTypeUuid: serviceTypeUuid,
     shipmentTypeUuid: shipmentTypeUuid,
     itemGroupKeys: itemGroupKeys,
+    items: items | default([]),
 } %}
 
 {%- block body -%}
@@ -24,6 +25,7 @@
                     itemGroupKeys,
                     data.serviceTypeUuid,
                     data.shipmentTypeUuid,
+                    data.items,
                 ]) %}
 
                 {% for servicePoint in data.servicePoints %}
@@ -31,6 +33,7 @@
                         data: {
                             servicePoint: servicePoint,
                             availabilityGlossaryKey: productOfferServicePointAvailabilityWidget.productOfferServicePointAvailabilities[servicePoint.uuid] | default,
+                            productOfferAvailabilityDataPerServicePoint: productOfferServicePointAvailabilityWidget.productOfferAvailabilityDataPerServicePoint[servicePoint.uuid] | default,
                         },
                     } only %}
                 {% endfor %}

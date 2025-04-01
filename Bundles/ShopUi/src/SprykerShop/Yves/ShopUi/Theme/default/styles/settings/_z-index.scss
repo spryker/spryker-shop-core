@@ -57,3 +57,8 @@ $setting-zi-navigation-top: 800 !default;
  * Defines z-index value for the skip to content link context.
  */
 $setting-zi-skip-link: 900 !default;
+
+/**
+ * Defines z-index value for layer under main content.
+ */
+$setting-zi-under-layer: -1 !default;

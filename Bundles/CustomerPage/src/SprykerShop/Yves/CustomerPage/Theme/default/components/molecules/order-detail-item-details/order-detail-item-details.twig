@@ -44,4 +44,8 @@
             </span>
         {% endblock %}
     </div>
+
+    {% block additionalInfo %}
+        {% widget 'SspServiceChangeScheduledTimeLinkWidget' args [data.orderItem] only %}{% endwidget %}
+    {% endblock %}
 {% endblock %}

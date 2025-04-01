@@ -158,6 +158,7 @@
             {% elsewidget 'MultiCartWidgetPlugin' args [data.product, data.isDisabled] only %} {# @deprecated Use AddToMultiCartWidget instead. #}
             {% endwidget %}
 
+            {% widget 'ShipmentTypeServicePointSelectorWidget' args [data.product, data.isDisabled] only %}{% endwidget %}
             {% widget 'CartAddProductAsSeparateItemWidget' only %}{% endwidget %}
 
             {% block productOfferByMerchant %}

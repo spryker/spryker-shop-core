@@ -10,6 +10,7 @@
 {% define data = {
     servicePoint: required,
     availabilityGlossaryKey: '',
+    productOfferAvailabilityDataPerServicePoint: [],
 } %}
 
 {% set address = data.servicePoint.address %}
@@ -45,6 +46,7 @@
                     class="button {{ config.jsName }}__select-button {{ disabledButtonClass }}"
                     data-service-point-uuid="{{ data.servicePoint.uuid }}"
                     data-service-point-address="{{ data.servicePoint.name }} {{ fullAddress }}"
+                    data-service-point-product-offer-availability="{{ data.productOfferAvailabilityDataPerServicePoint | json_encode() }}"
                     {{ partiallyAvailableAttribute }}>
                 {{ 'service_point_widget.select_store_action' | trans }}
             </button>

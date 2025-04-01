@@ -7,6 +7,8 @@
 
     <transfer name="ProductOfferServicePointAvailabilityResponseItem" strict="true">
         <property name="isAvailable" type="bool"/>
+        <property name="productOfferReference" type="string"/>
+        <property name="servicePointUuid" type="string"/>
     </transfer>
 
     <transfer name="ServicePointSearch" strict="true">

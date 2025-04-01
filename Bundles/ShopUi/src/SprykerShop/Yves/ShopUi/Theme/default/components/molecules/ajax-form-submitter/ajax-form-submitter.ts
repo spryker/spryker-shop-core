@@ -67,6 +67,11 @@ export default class AjaxFormSubmitter extends Component {
 
         event.preventDefault();
 
+        if (this.asProviderTrigger) {
+            this.provider.fetch();
+            return;
+        }
+
         const form = <HTMLFormElement>trigger.closest(TAG_NAME);
 
         if (!form) {
@@ -120,5 +125,9 @@ export default class AjaxFormSubmitter extends Component {
 
     protected get eventName(): string {
         return this.getAttribute('event');
+    }
+
+    protected get asProviderTrigger(): boolean {
+        return this.getAttribute('is-provider-trigger') === 'true';
     }
 }

@@ -13,19 +13,43 @@
 } %}
 
 {% block body %}
-    {% for cartItem in data.cartItems %}
+	{% widget 'ListItemsByShipmentTypeWidget' args [data.cartItems] with {
+        embed: {
+            cart: data.cart,
+            cartItems: data.cartItems,
+            isQuoteEditable: data.isQuoteEditable,
+            attributes: data.attributes,
+            ajaxTriggerAttribute: data.ajaxTriggerAttribute,
+        },
+    } only %}
         {% block cartItem %}
             {% if not cartItem.configuredBundleItem | default %}
                 {% include molecule('product-cart-item', 'CartPage') with {
                     data: {
                         product: cartItem,
-                        cart: data.cart,
-                        isQuoteEditable: data.isQuoteEditable,
-                        attributes: data.attributes[cartItem.sku] | default([]),
-                        ajaxTriggerAttribute: data.ajaxTriggerAttribute,
+                        cart: embed.cart,
+                        isQuoteEditable: embed.isQuoteEditable,
+                        attributes: embed.attributes[cartItem.sku] | default([]),
+                        ajaxTriggerAttribute: embed.ajaxTriggerAttribute,
                     },
                 } only %}
             {% endif %}
         {% endblock %}
-    {% endfor %}
+	{% nowidget %}
+        {% for cartItem in data.cartItems %}
+            {% block cartItem %}
+                {% if not cartItem.configuredBundleItem | default %}
+                    {% include molecule('product-cart-item', 'CartPage') with {
+                        data: {
+                            product: cartItem,
+                            cart: data.cart,
+                            isQuoteEditable: data.isQuoteEditable,
+                            attributes: data.attributes[cartItem.sku] | default([]),
+                            ajaxTriggerAttribute: data.ajaxTriggerAttribute,
+                        },
+                    } only %}
+                {% endif %}
+            {% endblock %}
+        {% endfor %}
+	{% endwidget %}
 {% endblock %}
