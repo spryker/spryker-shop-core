@@ -66,6 +66,11 @@ class CompanyUserStatusController extends AbstractCompanyController
     protected const ERROR_MESSAGE_STATUS_DISABLE_YOURSELF = 'company.account.company_user.status.disable.error.cannot_disable_yourself';
 
     /**
+     * @var string
+     */
+    protected const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
@@ -75,7 +80,7 @@ class CompanyUserStatusController extends AbstractCompanyController
     public function enableAction(Request $request): RedirectResponse
     {
         if (!$this->can(static::PERMISSION_COMPANY_USER_STATUS_CHANGE)) {
-            throw new AccessDeniedHttpException();
+            throw new AccessDeniedHttpException(static::MESSAGE_PERMISSION_FAILED);
         }
 
         $idCompanyUser = $request->query->getInt(static::ID_COMPANY_USER_PARAMETER);
@@ -108,7 +113,7 @@ class CompanyUserStatusController extends AbstractCompanyController
     public function disableAction(Request $request): RedirectResponse
     {
         if (!$this->can(static::PERMISSION_COMPANY_USER_STATUS_CHANGE)) {
-            throw new AccessDeniedHttpException();
+            throw new AccessDeniedHttpException(static::MESSAGE_PERMISSION_FAILED);
         }
 
         $idCompanyUser = $request->query->getInt(static::ID_COMPANY_USER_PARAMETER);
