@@ -147,6 +147,7 @@ class UserController extends AbstractCompanyController
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
@@ -169,15 +170,27 @@ class UserController extends AbstractCompanyController
             ->handleRequest($request);
 
         if ($companyUserForm->isSubmitted() === false) {
-            $companyUserForm->setData($dataProvider->getData(
+            $data = $dataProvider->getData(
                 $this->findCurrentCompanyUserTransfer()->getFkCompany(),
                 null,
                 $companyUserFormOptions,
-            ));
+            );
+
+            if (!$this->isCurrentCustomerRelatedToCompany($data[CompanyUserForm::FIELD_FK_COMPANY])) {
+                throw new NotFoundHttpException();
+            }
+
+            $companyUserForm->setData($data);
         }
 
         if ($companyUserForm->isSubmitted() === true && $companyUserForm->isValid() === true) {
-            $companyUserResponseTransfer = $this->createCompanyUser($companyUserForm->getData());
+            $data = $companyUserForm->getData();
+
+            if (!$this->isCurrentCustomerRelatedToCompany($data[CompanyUserForm::FIELD_FK_COMPANY])) {
+                throw new NotFoundHttpException();
+            }
+
+            $companyUserResponseTransfer = $this->createCompanyUser($data);
 
             if ($companyUserResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(static::SUCCESS_MESSAGE_COMPANY_USER_CREATE);
@@ -249,7 +262,16 @@ class UserController extends AbstractCompanyController
         }
 
         if ($companyUserForm->isSubmitted() === true && $companyUserForm->isValid() === true) {
-            $companyUserResponseTransfer = $this->updateCompanyUser($companyUserForm->getData());
+            $data = $companyUserForm->getData();
+
+            if (
+                !$this->isCustomerIdNotEmpty($data)
+                || !$this->isCurrentCustomerRelatedToCompany($data[CompanyUserForm::FIELD_FK_COMPANY])
+            ) {
+                throw new NotFoundHttpException();
+            }
+
+            $companyUserResponseTransfer = $this->updateCompanyUser($data);
 
             if ($companyUserResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(static::SUCCESS_MESSAGE_COMPANY_USER_UPDATE);
@@ -429,5 +451,16 @@ class UserController extends AbstractCompanyController
         $companyUserTransfer->setCustomer($customerTransfer);
 
         return $this->getFactory()->getCompanyUserClient()->updateCompanyUser($companyUserTransfer);
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return bool
+     */
+    protected function isCustomerIdNotEmpty(array $data): bool
+    {
+        return isset($data[CompanyUserForm::FIELD_ID_CUSTOMER])
+            && $data[CompanyUserForm::FIELD_ID_CUSTOMER];
     }
 }

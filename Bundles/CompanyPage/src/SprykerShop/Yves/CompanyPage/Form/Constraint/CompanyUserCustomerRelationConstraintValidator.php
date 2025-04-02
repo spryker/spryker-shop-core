@@ -45,6 +45,10 @@ class CompanyUserCustomerRelationConstraintValidator extends ConstraintValidator
      */
     protected function isValidCustomer(int $idCustomer, CompanyUserCustomerRelationConstraint $constraint): bool
     {
+        if (!$idCustomer) {
+            return true;
+        }
+
         $customerTransfer = $constraint->getCustomerClient()->getCustomer();
         $customerRequestTransfer = (new CustomerTransfer())->setIdCustomer($idCustomer);
         $customerFromFormTransfer = $constraint->getCustomerClient()->findCustomerById($customerRequestTransfer);
