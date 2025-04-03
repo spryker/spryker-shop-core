@@ -36,6 +36,11 @@ class CartPageConfig extends AbstractBundleConfig
     protected const CART_BLOCK_MINI_CART_VIEW_TEMPLATE_PATH = null;
 
     /**
+     * @var bool
+     */
+    protected const IS_QUOTE_VALIDATION_ENABLED_FOR_AJAX_CART_ITEMS = true;
+
+    /**
      * Specification:
      * - Enables loading the cart items via AJAX.
      *
@@ -69,6 +74,19 @@ class CartPageConfig extends AbstractBundleConfig
     public function isQuoteValidationEnabled(): bool
     {
         return true;
+    }
+
+    /**
+     * Specification:
+     * - Enables performing the quote validation for getting cart items via AJAX.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isQuoteValidationEnabledForAjaxCartItems(): bool
+    {
+        return static::IS_QUOTE_VALIDATION_ENABLED_FOR_AJAX_CART_ITEMS;
     }
 
     /**

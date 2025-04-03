@@ -106,6 +106,34 @@ class CartPageView implements CartPageViewInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer
+     *
+     * @return array<string, mixed>
+     */
+    public function getAjaxCartItemsViewData(CartPageViewArgumentsTransfer $cartPageViewArgumentsTransfer): array
+    {
+        if (!$this->config->isQuoteValidationEnabledForAjaxCartItems()) {
+            $this->getAjaxQuote();
+        }
+
+        return $this->getViewData($cartPageViewArgumentsTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function getAjaxQuote(): QuoteTransfer
+    {
+        if ($this->quoteTransfer !== null) {
+            return $this->quoteTransfer;
+        }
+
+        $this->quoteTransfer = $this->cartClient->getQuote();
+
+        return $this->quoteTransfer;
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function getQuote(): QuoteTransfer
@@ -171,6 +199,10 @@ class CartPageView implements CartPageViewInterface
     protected function isQuoteValid(): bool
     {
         if (!$this->config->isQuoteValidationEnabled()) {
+            return true;
+        }
+
+        if (!$this->quoteResponseTransfer && !$this->config->isQuoteValidationEnabledForAjaxCartItems()) {
             return true;
         }
 

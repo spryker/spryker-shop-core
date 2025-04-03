@@ -172,7 +172,7 @@ class CartController extends AbstractCartController
             ->setSelectedAttributes([])
             ->setWithItems(true);
 
-        $viewData = $this->getFactory()->createCartPageView()->getViewData($cartPageViewArgumentsTransfer);
+        $viewData = $this->getFactory()->createCartPageView()->getAjaxCartItemsViewData($cartPageViewArgumentsTransfer);
 
         return $this->view($viewData, [], '@CartPage/views/ajax-cart-items/ajax-cart-items.twig');
     }
