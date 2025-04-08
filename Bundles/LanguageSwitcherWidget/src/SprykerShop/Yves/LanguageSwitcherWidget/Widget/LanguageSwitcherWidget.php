@@ -48,6 +48,21 @@ class LanguageSwitcherWidget extends AbstractWidget
     protected const REQUEST_CONTEXT_LOCALE = '_locale';
 
     /**
+     * @var string
+     */
+    protected const URL_FORMAT = '%s%s%s';
+
+    /**
+     * @var string
+     */
+    protected const QUERY_SEPARATOR = '?';
+
+    /**
+     * @var string
+     */
+    protected const QUERY_GLUE = '&';
+
+    /**
      * @param string $pathInfo
      * @param string $queryString
      * @param string $requestUri
@@ -104,7 +119,7 @@ class LanguageSwitcherWidget extends AbstractWidget
             return $this->attachLocaleUrlsFromStorageToLanguages($locales, $localeUrls, $queryString);
         }
 
-        return $this->attachLocaleUrlsToLanguages($locales);
+        return $this->attachLocaleUrlsToLanguages($locales, $queryString);
     }
 
     /**
@@ -155,10 +170,11 @@ class LanguageSwitcherWidget extends AbstractWidget
 
     /**
      * @param array<string> $locales
+     * @param string|null $queryString
      *
      * @return array<string, string>
      */
-    protected function attachLocaleUrlsToLanguages(array $locales): array
+    protected function attachLocaleUrlsToLanguages(array $locales, ?string $queryString): array
     {
         $languages = [];
         $currentLocale = $locales[$this->getFactory()->getLocaleClient()->getCurrentLanguage()];
@@ -167,7 +183,7 @@ class LanguageSwitcherWidget extends AbstractWidget
         $parameters = $request->attributes->get(static::REQUEST_ATTRIBUTE_ROUTE_PARAMS, []);
         foreach ($locales as $locale) {
             $language = $this->getLanguageFromLocale($locale);
-            $languages[$language] = $this->replaceCurrentUrlLanguage($locale, $currentLocale, $route, $parameters);
+            $languages[$language] = $this->replaceCurrentUrlLanguage($locale, $currentLocale, $route, $parameters, $queryString);
         }
 
         return $languages;
@@ -178,6 +194,7 @@ class LanguageSwitcherWidget extends AbstractWidget
      * @param string $currentLocale
      * @param string $route
      * @param array<string, mixed> $parameters
+     * @param string|null $queryString
      *
      * @return string
      */
@@ -185,13 +202,22 @@ class LanguageSwitcherWidget extends AbstractWidget
         string $locale,
         string $currentLocale,
         string $route,
-        array $parameters
+        array $parameters,
+        ?string $queryString
     ): string {
         $this->setRouterLocale($locale);
         $generatedRoute = $this->generateRoute($route, $parameters);
         $this->setRouterLocale($currentLocale);
 
-        return $generatedRoute;
+        if ($queryString === null) {
+            return $generatedRoute;
+        }
+
+        $separator = parse_url($generatedRoute, PHP_URL_QUERY) === null
+            ? static::QUERY_SEPARATOR
+            : static::QUERY_GLUE;
+
+        return sprintf(static::URL_FORMAT, $generatedRoute, $separator, $queryString);
     }
 
     /**
