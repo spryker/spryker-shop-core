@@ -6,7 +6,7 @@
     "require": {
         "php": ">=8.2",
         "spryker-shop/checkout-page-extension": "^1.0.0",
-        "spryker-shop/customer-page-extension": "^1.6.0",
+        "spryker-shop/customer-page-extension": "^1.7.0",
         "spryker-shop/shop-application": "^1.0.0",
         "spryker-shop/shop-ui": "^1.84.0",
         "spryker/application": "^3.8.0",
@@ -65,6 +65,7 @@
         "spryker-shop/sales-service-point-widget": "Add the module if you want to display the service point related information.",
         "spryker/config": "Use this module when using plugins that need Config dependencies.",
         "spryker/messenger": "Use this module when using plugins that need Messenger dependencies.",
+        "spryker/multi-factor-auth": "Use this module when using plugins that need MultiFactorAuth dependencies.",
         "spryker/shipment-cart-connector": "If you want to use shipment totals in quote or shipment source prices, min version 2.1.0",
         "spryker/silex": "Use this module when using plugins that need Silex dependencies."
     },

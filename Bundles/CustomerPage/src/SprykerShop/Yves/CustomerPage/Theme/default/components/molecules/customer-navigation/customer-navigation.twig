@@ -92,6 +92,7 @@
             {% endblock %}
         {% endwidget %}
 
+        {% widget 'SetMultiFactorAuthMenuItemWidget' args [data.activePage] only %}{% endwidget %}
         {% if widgetGlobalExists('SspInquiryMenuItemWidget') and (can('ViewBusinessUnitSspInquiryPermissionPlugin') or can('CreateSspInquiryPermissionPlugin') or can('ViewCompanySspInquiryPermissionPlugin')) %}
             {% widget 'SspInquiryMenuItemWidget' args [data.activePage] only %}{% endwidget %}
         {% endif %}

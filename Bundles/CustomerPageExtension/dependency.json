@@ -1,5 +1,6 @@
 {
     "include": {
-        "spryker/symfony": "spryker/symfony provides Symfony\\Component\\Security\\Core\\User\\UserInterface"
+        "spryker/symfony": "spryker/symfony provides Symfony\\Component\\Security\\Core\\User\\UserInterface",
+        "spryker/transfer": "Provides transfer objects definition with strict types."
     }
 }

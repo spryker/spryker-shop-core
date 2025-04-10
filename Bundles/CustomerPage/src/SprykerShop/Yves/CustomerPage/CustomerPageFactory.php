@@ -15,6 +15,7 @@ use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Authenticator\CustomerAuthenticator;
 use SprykerShop\Yves\CustomerPage\Authenticator\CustomerAuthenticatorInterface;
 use SprykerShop\Yves\CustomerPage\Authenticator\CustomerLoginFormAuthenticator;
+use SprykerShop\Yves\CustomerPage\Badge\MultiFactorAuthBadge;
 use SprykerShop\Yves\CustomerPage\Builder\CustomerSecurityOptionsBuilder;
 use SprykerShop\Yves\CustomerPage\Builder\CustomerSecurityOptionsBuilderInterface;
 use SprykerShop\Yves\CustomerPage\CustomerAddress\AddressChoicesResolver;
@@ -673,6 +674,7 @@ class CustomerPageFactory extends AbstractFactory
             $this->createCustomerAuthenticationSuccessHandler(),
             $this->createCustomerAuthenticationFailureHandler(),
             $this->getRouter(),
+            $this->createMultiFactorAuthBadge(),
         );
     }
 
@@ -682,6 +684,14 @@ class CustomerPageFactory extends AbstractFactory
     public function createRememberMeBadge(): RememberMeBadge
     {
         return new RememberMeBadge();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Badge\MultiFactorAuthBadge
+     */
+    public function createMultiFactorAuthBadge(): MultiFactorAuthBadge
+    {
+        return new MultiFactorAuthBadge($this->getCustomerMultiFactorAuthenticationHandlerPlugins());
     }
 
     /**
@@ -720,5 +730,13 @@ class CustomerPageFactory extends AbstractFactory
     public function createAuditLogger(): AuditLoggerInterface
     {
         return new AuditLogger();
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\AuthenticationHandlerPluginInterface>
+     */
+    public function getCustomerMultiFactorAuthenticationHandlerPlugins(): array
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGINS_CUSTOMER_AUTHENTICATION_HANDLER);
     }
 }

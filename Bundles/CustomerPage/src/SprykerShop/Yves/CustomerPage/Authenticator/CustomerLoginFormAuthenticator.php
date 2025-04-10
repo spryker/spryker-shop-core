@@ -8,9 +8,11 @@
 namespace SprykerShop\Yves\CustomerPage\Authenticator;
 
 use Spryker\Yves\Router\Router\ChainRouter;
+use SprykerShop\Yves\CustomerPage\Badge\MultiFactorAuthBadge;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\NullToken;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -63,29 +65,16 @@ class CustomerLoginFormAuthenticator implements AuthenticatorInterface, Authenti
     protected const ROUTE_LOGIN = 'login';
 
     /**
-     * @var \Symfony\Component\Security\Core\User\UserProviderInterface
+     * @var string
      */
-    protected UserProviderInterface $userProvider;
+    protected const PARAMETER_OPTIONS = 'options';
 
     /**
-     * @var \Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge
+     * @uses \Spryker\Shared\MultiFactorAuth\MultiFactorAuthConstants::CODE_BLOCKED
+     *
+     * @var int
      */
-    protected RememberMeBadge $rememberMeBadge;
-
-    /**
-     * @var \Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface
-     */
-    protected AuthenticationSuccessHandlerInterface $authenticationSuccessHandler;
-
-    /**
-     * @var \Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface
-     */
-    protected AuthenticationFailureHandlerInterface $authenticationFailureHandler;
-
-    /**
-     * @var \Spryker\Yves\Router\Router\ChainRouter
-     */
-    protected ChainRouter $router;
+    protected const CODE_BLOCKED = 1;
 
     /**
      * @param \Symfony\Component\Security\Core\User\UserProviderInterface $userProvider
@@ -93,19 +82,16 @@ class CustomerLoginFormAuthenticator implements AuthenticatorInterface, Authenti
      * @param \Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface $authenticationSuccessHandler
      * @param \Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface $authenticationFailureHandler
      * @param \Spryker\Yves\Router\Router\ChainRouter $router
+     * @param \SprykerShop\Yves\CustomerPage\Badge\MultiFactorAuthBadge $multiFactorAuthBadge
      */
     public function __construct(
-        UserProviderInterface $userProvider,
-        RememberMeBadge $rememberMeBadge,
-        AuthenticationSuccessHandlerInterface $authenticationSuccessHandler,
-        AuthenticationFailureHandlerInterface $authenticationFailureHandler,
-        ChainRouter $router
+        protected UserProviderInterface $userProvider,
+        protected RememberMeBadge $rememberMeBadge,
+        protected AuthenticationSuccessHandlerInterface $authenticationSuccessHandler,
+        protected AuthenticationFailureHandlerInterface $authenticationFailureHandler,
+        protected ChainRouter $router,
+        protected MultiFactorAuthBadge $multiFactorAuthBadge
     ) {
-        $this->userProvider = $userProvider;
-        $this->rememberMeBadge = $rememberMeBadge;
-        $this->authenticationSuccessHandler = $authenticationSuccessHandler;
-        $this->authenticationFailureHandler = $authenticationFailureHandler;
-        $this->router = $router;
     }
 
     /**
@@ -117,12 +103,25 @@ class CustomerLoginFormAuthenticator implements AuthenticatorInterface, Authenti
     {
         $data = $request->request->all(static::PARAMETER_LOGIN_FORM);
 
+        /** @var \SprykerShop\Yves\CustomerPage\Security\CustomerUserInterface $user */
+        $user = $this->userProvider->loadUserByIdentifier($data[static::PARAMETER_EMAIL]);
+
+        $badges = [];
+        if (isset($data[static::PARAMETER_REMEMBER_ME])) {
+            $badges[] = $this->rememberMeBadge->enable();
+        }
+
+        $badges[] = $this->multiFactorAuthBadge->enable(
+            $user->getCustomerTransfer(),
+            $request,
+        );
+
         return new Passport(
-            new UserBadge($data[static::PARAMETER_EMAIL], function (string $userEmail) {
-                return $this->userProvider->loadUserByIdentifier($userEmail);
+            new UserBadge($data[static::PARAMETER_EMAIL], function () use ($user) {
+                return $user;
             }),
             new PasswordCredentials($data[static::PARAMETER_PASSWORD]),
-            isset($data[static::PARAMETER_REMEMBER_ME]) ? [$this->rememberMeBadge->enable()] : [],
+            $badges,
         );
     }
 
@@ -178,6 +177,13 @@ class CustomerLoginFormAuthenticator implements AuthenticatorInterface, Authenti
      */
     public function createToken(Passport $passport, string $firewallName): TokenInterface
     {
+        /** @var \SprykerShop\Yves\CustomerPage\Badge\MultiFactorAuthBadge $multiFactorAuthBadge */
+        $multiFactorAuthBadge = $passport->getBadge(MultiFactorAuthBadge::class);
+
+        if ($multiFactorAuthBadge->getIsRequired() === true || $multiFactorAuthBadge->getStatus() === static::CODE_BLOCKED) {
+            return new NullToken();
+        }
+
         return new PostAuthenticationToken(
             $passport->getUser(),
             $firewallName,

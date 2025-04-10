@@ -9,8 +9,10 @@ namespace SprykerShop\Yves\CustomerPage\Plugin\Provider;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\NullToken;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 
@@ -27,6 +29,16 @@ class CustomerAuthenticationSuccessHandler extends AbstractPlugin implements Aut
     protected const ROUTE_HOME = 'home';
 
     /**
+     * @var string
+     */
+    protected const PARAMETER_OPTIONS = 'options';
+
+    /**
+     * @var string
+     */
+    protected const PARAMETER_REQUIRES_ADDITIONAL_AUTH = 'requiresAdditionalAuth';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
      *
@@ -36,6 +48,13 @@ class CustomerAuthenticationSuccessHandler extends AbstractPlugin implements Aut
     {
         /** @var \SprykerShop\Yves\CustomerPage\Security\Customer $customer */
         $customer = $token->getUser();
+
+        if ($token instanceof NullToken) {
+            return new JsonResponse([
+                static::PARAMETER_REQUIRES_ADDITIONAL_AUTH => true,
+            ]);
+        }
+
         $this->setCustomerSession($customer->getCustomerTransfer());
 
         $response = $this->createRedirectResponse($request);

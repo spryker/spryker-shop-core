@@ -142,6 +142,11 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_CUSTOMER_AUTHENTICATION_HANDLER = 'PLUGINS_CUSTOMER_AUTHENTICATION_HANDLER';
+
+    /**
+     * @var string
+     */
     public const SERVICE_CUSTOMER = 'SERVICE_CUSTOMER';
 
     /**
@@ -267,6 +272,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCheckoutAddressCollectionFormExpanderPlugins($container);
         $container = $this->addCheckoutMultiShippingAddressesFormExpanderPlugins($container);
         $container = $this->addSecurityBlockerClient($container);
+        $container = $this->addCustomerAuthenticationHandlerPlugins($container);
 
         return $container;
     }
@@ -869,6 +875,28 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return list<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CheckoutMultiShippingAddressesFormExpanderPluginInterface>
      */
     protected function getCheckoutMultiShippingAddressesFormExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCustomerAuthenticationHandlerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CUSTOMER_AUTHENTICATION_HANDLER, function () {
+            return $this->getCustomerAuthenticationHandlerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\AuthenticationHandlerPluginInterface>
+     */
+    protected function getCustomerAuthenticationHandlerPlugins(): array
     {
         return [];
     }
