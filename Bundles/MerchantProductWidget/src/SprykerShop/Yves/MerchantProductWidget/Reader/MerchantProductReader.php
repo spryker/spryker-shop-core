@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MerchantProductViewTransfer;
 use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\PriceProductResolveConditionsTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToMerchantStorageClientInterface;
 use SprykerShop\Yves\MerchantProductWidget\Dependency\Client\MerchantProductWidgetToPriceProductClientInterface;
@@ -106,7 +107,10 @@ class MerchantProductReader implements MerchantProductReaderInterface
 
         $priceProductTransfers = $this->getPriceProductTransfers($productViewTransfer);
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
-            ->setQuantity($productViewTransfer->getQuantity());
+            ->setQuantity($productViewTransfer->getQuantity())
+            ->setPriceProductResolveConditions(
+                (new PriceProductResolveConditionsTransfer())->fromArray($productViewTransfer->toArray(), true),
+            );
 
         $currentProductPriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
             $priceProductTransfers,

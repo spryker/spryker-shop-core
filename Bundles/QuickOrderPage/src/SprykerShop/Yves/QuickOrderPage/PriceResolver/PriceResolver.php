@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\QuickOrderPage\PriceResolver;
 use ArrayObject;
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\PriceProductResolveConditionsTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
@@ -107,7 +108,10 @@ class PriceResolver implements PriceResolverInterface
             ->fromArray($quickOrderItemTransfer->toArray(), true)
             ->setIdProduct($idProduct)
             ->setIdProductAbstract($idProductAbstract)
-            ->setSku(null);
+            ->setSku(null)
+            ->setPriceProductResolveConditions(
+                (new PriceProductResolveConditionsTransfer())->fromArray($quickOrderItemTransfer->toArray(), true),
+            );
 
         return $this->priceProductStorageClient->getResolvedCurrentProductPriceTransfer($priceProductFilterTransfer);
     }

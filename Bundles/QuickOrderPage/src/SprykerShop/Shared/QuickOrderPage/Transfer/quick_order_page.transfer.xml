@@ -54,6 +54,11 @@
         <property name="idProduct" type="int"/>
         <property name="idProductAbstract" type="int"/>
         <property name="sku" type="string"/>
+        <property name="priceProductResolveConditions" type="PriceProductResolveConditions" strict="true"/>
+    </transfer>
+
+    <transfer name="PriceProductResolveConditions" strict="true">
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="ProductConcreteStorage">
