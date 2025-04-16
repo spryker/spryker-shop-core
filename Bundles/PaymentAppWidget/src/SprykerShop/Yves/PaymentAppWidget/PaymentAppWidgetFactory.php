@@ -15,6 +15,7 @@ use SprykerShop\Yves\PaymentAppWidget\Dependency\Client\PaymentAppWidgetToLocale
 use SprykerShop\Yves\PaymentAppWidget\Dependency\Client\PaymentAppWidgetToPaymentAppClientInterface;
 use SprykerShop\Yves\PaymentAppWidget\Dependency\Client\PaymentAppWidgetToPaymentClientInterface;
 use SprykerShop\Yves\PaymentAppWidget\Dependency\Client\PaymentAppWidgetToQuoteClientInterface;
+use SprykerShop\Yves\PaymentAppWidget\Dependency\Client\PaymentAppWidgetToSalesClientInterface;
 use SprykerShop\Yves\PaymentAppWidget\Expander\CurrencyScriptQueryStringParameterExpander;
 use SprykerShop\Yves\PaymentAppWidget\Expander\LocaleScriptQueryStringParameterExpander;
 use SprykerShop\Yves\PaymentAppWidget\Expander\QuoteCustomerExpander;
@@ -30,6 +31,8 @@ use SprykerShop\Yves\PaymentAppWidget\Initializer\PreOrderPaymentInitializer;
 use SprykerShop\Yves\PaymentAppWidget\Initializer\PreOrderPaymentInitializerInterface;
 use SprykerShop\Yves\PaymentAppWidget\Mapper\PaymentMapper;
 use SprykerShop\Yves\PaymentAppWidget\Mapper\PaymentMapperInterface;
+use SprykerShop\Yves\PaymentAppWidget\Order\Order;
+use SprykerShop\Yves\PaymentAppWidget\Order\OrderInterface;
 use SprykerShop\Yves\PaymentAppWidget\Reader\ExpressCheckoutPaymentMethodWidgetReader;
 use SprykerShop\Yves\PaymentAppWidget\Reader\ExpressCheckoutPaymentMethodWidgetReaderInterface;
 use SprykerShop\Yves\PaymentAppWidget\Reader\PaymentMethodScriptReader;
@@ -256,6 +259,14 @@ class PaymentAppWidgetFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\PaymentAppWidget\Dependency\Client\PaymentAppWidgetToSalesClientInterface
+     */
+    public function getSalesClient(): PaymentAppWidgetToSalesClientInterface
+    {
+        return $this->getProvidedDependency(PaymentAppWidgetDependencyProvider::CLIENT_SALES);
+    }
+
+    /**
      * @return \SprykerShop\Yves\PaymentAppWidget\Dependency\Client\PaymentAppWidgetToQuoteClientInterface
      */
     public function getQuoteClient(): PaymentAppWidgetToQuoteClientInterface
@@ -317,5 +328,13 @@ class PaymentAppWidgetFactory extends AbstractFactory
     public function getLocaleClient(): PaymentAppWidgetToLocaleClientInterface
     {
         return $this->getProvidedDependency(PaymentAppWidgetDependencyProvider::CLIENT_LOCALE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\PaymentAppWidget\Order\OrderInterface
+     */
+    public function createOrder(): OrderInterface
+    {
+        return new Order($this->getSalesClient());
     }
 }

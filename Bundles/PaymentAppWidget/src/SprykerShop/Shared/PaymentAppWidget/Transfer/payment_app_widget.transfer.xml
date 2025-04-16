@@ -41,6 +41,8 @@
         <property name="billingAddress" type="Address"/>
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="billingSameAsShipping" type="bool"/>
+        <property name="orderReference" type="string"/>
+        <property name="errors" type="Error[]" singular="error"/>
     </transfer>
 
     <transfer name="PaymentMethods">
@@ -73,6 +75,8 @@
         <property name="additionalPaymentData" type="array" singular="additionalPaymentData"/>
         <property name="amount" type="int"/>
         <property name="checkoutConfiguration" type="CheckoutConfiguration"/>
+        <property name="paymentSelection" type="string"/>
+        <property name="foreignPayments" type="array" associative="true" singular="foreignPayment"/>
     </transfer>
 
     <transfer name="Totals">
@@ -143,6 +147,25 @@
         <property name="isSuccessful" type="bool"/>
         <property name="error" type="string"/>
         <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="OrderCancelRequest">
+        <property name="orderReference" type="string" strict="true"/>
+        <property
+            name="allowCancellationWithoutCustomer"
+            type="bool"
+            strict="true"
+            description="Set this to be true for cases where a cancellation without a customer is allowed. For security reasons, this MUST be used carefully and should only be executed from code logic and not be executable via a URL."
+        />
+    </transfer>
+
+    <transfer name="OrderCancelResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="message" type="string"/>
     </transfer>
 
 </transfers>

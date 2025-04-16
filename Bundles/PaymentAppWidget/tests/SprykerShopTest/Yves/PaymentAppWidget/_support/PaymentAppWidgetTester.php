@@ -30,8 +30,4 @@ use Codeception\Actor;
 class PaymentAppWidgetTester extends Actor
 {
     use _generated\PaymentAppWidgetTesterActions;
-
-    /**
-     * Define custom actions here
-     */
 }

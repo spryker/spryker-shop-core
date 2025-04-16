@@ -247,6 +247,16 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_CHECKOUT_SUMMARY_STEP_PRE_CONDITION = 'PLUGINS_CHECKOUT_SUMMARY_STEP_PRE_CONDITION';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_CHECKOUT_SUMMARY_STEP_POST_CONDITION = 'PLUGINS_CHECKOUT_SUMMARY_STEP_POST_CONDITION';
+
+    /**
+     * @var string
+     */
     public const PLUGINS_CHECKOUT_STEP_RESOLVER_STRATEGY = 'PLUGINS_CHECKOUT_STEP_RESOLVER_STRATEGY';
 
     /**
@@ -305,6 +315,8 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCheckoutShipmentStepEnterPreCheckPlugins($container);
         $container = $this->addCheckoutPaymentStepEnterPreCheckPlugins($container);
         $container = $this->addCheckoutAddressFormDataProviderPlugin($container);
+        $container = $this->addCheckoutSummaryStepPreConditionPlugins($container);
+        $container = $this->addCheckoutSummaryStepPostConditionPlugins($container);
 
         $container = $this->addCustomerStepSubForms($container);
         $container = $this->addAddressStepSubForms($container);
@@ -900,6 +912,50 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutPaymentStepEnterPreCheckPluginInterface>
      */
     protected function getCheckoutPaymentStepEnterPreCheckPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCheckoutSummaryStepPreConditionPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CHECKOUT_SUMMARY_STEP_PRE_CONDITION, function () {
+            return $this->getCheckoutSummaryStepPreConditionPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepPreConditionPluginInterface>
+     */
+    protected function getCheckoutSummaryStepPreConditionPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCheckoutSummaryStepPostConditionPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CHECKOUT_SUMMARY_STEP_POST_CONDITION, function () {
+            return $this->getCheckoutSummaryStepPostConditionPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepPostConditionPluginInterface>
+     */
+    protected function getCheckoutSummaryStepPostConditionPlugins(): array
     {
         return [];
     }

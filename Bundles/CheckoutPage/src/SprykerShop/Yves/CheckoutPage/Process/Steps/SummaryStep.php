@@ -5,6 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+declare(strict_types = 1);
+
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
 use ArrayObject;
@@ -27,47 +29,26 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     public const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface
-     */
-    protected $productBundleClient;
-
-    /**
-     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface
-     */
-    protected $checkoutClient;
-
-    /**
-     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
-     */
-    protected $shipmentService;
-
-    /**
-     * @var \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig
-     */
-    protected $checkoutPageConfig;
-
-    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface $productBundleClient
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
      * @param \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig $checkoutPageConfig
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface $checkoutClient
+     * @param array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepPreConditionPluginInterface> $preConditionPlugins
+     * @param array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepPostConditionPluginInterface> $postConditionPlugins
      * @param string $stepRoute
      * @param string|null $escapeRoute
-     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface $checkoutClient
      */
     public function __construct(
-        CheckoutPageToProductBundleClientInterface $productBundleClient,
-        CheckoutPageToShipmentServiceInterface $shipmentService,
-        CheckoutPageConfig $checkoutPageConfig,
-        $stepRoute,
-        $escapeRoute,
-        CheckoutPageToCheckoutClientInterface $checkoutClient
+        protected CheckoutPageToProductBundleClientInterface $productBundleClient,
+        protected CheckoutPageToShipmentServiceInterface $shipmentService,
+        protected CheckoutPageConfig $checkoutPageConfig,
+        protected CheckoutPageToCheckoutClientInterface $checkoutClient,
+        protected array $preConditionPlugins,
+        protected array $postConditionPlugins,
+        string $stepRoute,
+        ?string $escapeRoute
     ) {
         parent::__construct($stepRoute, $escapeRoute);
-
-        $this->productBundleClient = $productBundleClient;
-        $this->shipmentService = $shipmentService;
-        $this->checkoutPageConfig = $checkoutPageConfig;
-        $this->checkoutClient = $checkoutClient;
     }
 
     /**
@@ -75,7 +56,33 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      *
      * @return bool
      */
-    public function requireInput(AbstractTransfer $quoteTransfer)
+    public function preCondition(AbstractTransfer $quoteTransfer): bool
+    {
+        $quoteTransfer = $this->executePreConditionPlugins($quoteTransfer);
+
+        return parent::preCondition($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executePreConditionPlugins(AbstractTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($this->preConditionPlugins as $preConditionPlugin) {
+            $quoteTransfer = $preConditionPlugin->preCondition($quoteTransfer);
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function requireInput(AbstractTransfer $quoteTransfer): bool
     {
         return true;
     }
@@ -86,7 +93,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function execute(Request $request, AbstractTransfer $quoteTransfer)
+    public function execute(Request $request, AbstractTransfer $quoteTransfer): QuoteTransfer
     {
         $this->markCheckoutConfirmed($request, $quoteTransfer);
 
@@ -98,8 +105,10 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      *
      * @return bool
      */
-    public function postCondition(AbstractTransfer $quoteTransfer)
+    public function postCondition(AbstractTransfer $quoteTransfer): bool
     {
+        $quoteTransfer = $this->executePostConditionPlugins($quoteTransfer);
+
         return $quoteTransfer->getBillingAddress() !== null
             && $this->haveItemsShipmentTransfers($quoteTransfer)
             && $quoteTransfer->getPayment() !== null
@@ -109,9 +118,23 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executePostConditionPlugins(AbstractTransfer $quoteTransfer): AbstractTransfer
+    {
+        foreach ($this->postConditionPlugins as $postConditionPlugin) {
+            $quoteTransfer = $postConditionPlugin->postCondition($quoteTransfer);
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return array
      */
-    public function getTemplateVariables(AbstractTransfer $quoteTransfer)
+    public function getTemplateVariables(AbstractTransfer $quoteTransfer): array
     {
         $shipmentGroups = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
         $isPlaceableOrderResponseTransfer = $this->checkoutClient->isPlaceableOrder($quoteTransfer);
@@ -155,7 +178,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     /**
      * @return string
      */
-    public function getBreadcrumbItemTitle()
+    public function getBreadcrumbItemTitle(): string
     {
         return 'checkout.step.summary.title';
     }
@@ -165,7 +188,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      *
      * @return bool
      */
-    public function isBreadcrumbItemEnabled(AbstractTransfer $quoteTransfer)
+    public function isBreadcrumbItemEnabled(AbstractTransfer $quoteTransfer): bool
     {
         return $this->postCondition($quoteTransfer);
     }
@@ -175,7 +198,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      *
      * @return bool
      */
-    public function isBreadcrumbItemHidden(AbstractTransfer $quoteTransfer)
+    public function isBreadcrumbItemHidden(AbstractTransfer $quoteTransfer): bool
     {
         return !$this->requireInput($quoteTransfer);
     }
@@ -186,11 +209,13 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      *
      * @return void
      */
-    protected function markCheckoutConfirmed(Request $request, QuoteTransfer $quoteTransfer)
+    protected function markCheckoutConfirmed(Request $request, QuoteTransfer $quoteTransfer): void
     {
-        if ($request->isMethod('POST')) {
-            $quoteTransfer->setCheckoutConfirmed(true);
+        if (!$request->isMethod(Request::METHOD_POST)) {
+            return;
         }
+
+        $quoteTransfer->setCheckoutConfirmed(true);
     }
 
     /**

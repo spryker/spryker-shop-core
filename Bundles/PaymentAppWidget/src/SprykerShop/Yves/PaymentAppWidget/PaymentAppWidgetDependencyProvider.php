@@ -5,6 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+declare(strict_types = 1);
+
 namespace SprykerShop\Yves\PaymentAppWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
@@ -13,6 +15,7 @@ use SprykerShop\Yves\PaymentAppWidget\Dependency\Client\PaymentAppWidgetToLocale
 use SprykerShop\Yves\PaymentAppWidget\Dependency\Client\PaymentAppWidgetToPaymentAppClientBridge;
 use SprykerShop\Yves\PaymentAppWidget\Dependency\Client\PaymentAppWidgetToPaymentClientBridge;
 use SprykerShop\Yves\PaymentAppWidget\Dependency\Client\PaymentAppWidgetToQuoteClientBridge;
+use SprykerShop\Yves\PaymentAppWidget\Dependency\Client\PaymentAppWidgetToSalesClientBridge;
 
 /**
  * @method \SprykerShop\Yves\PaymentAppWidget\PaymentAppWidgetConfig getConfig()
@@ -38,6 +41,11 @@ class PaymentAppWidgetDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+
+    /**
+     * @var string
+     */
+    public const CLIENT_SALES = 'CLIENT_SALES';
 
     /**
      * @uses \Spryker\Yves\Form\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
@@ -74,6 +82,7 @@ class PaymentAppWidgetDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container = parent::provideDependencies($container);
         $container = $this->addQuoteClient($container);
+        $container = $this->addSalesClient($container);
         $container = $this->addPaymentClient($container);
         $container = $this->addPaymentAppClient($container);
         $container = $this->addLocaleClient($container);
@@ -180,6 +189,20 @@ class PaymentAppWidgetDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new PaymentAppWidgetToQuoteClientBridge($container->getLocator()->quote()->client());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSalesClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_SALES, function (Container $container) {
+            return new PaymentAppWidgetToSalesClientBridge($container->getLocator()->sales()->client());
         });
 
         return $container;

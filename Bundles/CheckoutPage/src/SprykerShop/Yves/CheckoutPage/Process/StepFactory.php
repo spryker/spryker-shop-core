@@ -266,9 +266,11 @@ class StepFactory extends AbstractFactory
             $this->getProductBundleClient(),
             $this->getShipmentService(),
             $this->getConfig(),
+            $this->getCheckoutClient(),
+            $this->getCheckoutSummaryStepPreConditionPlugins(),
+            $this->getCheckoutSummaryStepPostConditionPlugins(),
             CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_SUMMARY,
             $this->getConfig()->getEscapeRoute(),
-            $this->getCheckoutClient(),
         );
     }
 
@@ -447,6 +449,22 @@ class StepFactory extends AbstractFactory
     public function getCheckoutPaymentStepEnterPreCheckPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_PAYMENT_STEP_ENTER_PRE_CHECK);
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepPreConditionPluginInterface>
+     */
+    public function getCheckoutSummaryStepPreConditionPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_SUMMARY_STEP_PRE_CONDITION);
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepPostConditionPluginInterface>
+     */
+    public function getCheckoutSummaryStepPostConditionPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_SUMMARY_STEP_POST_CONDITION);
     }
 
     /**
