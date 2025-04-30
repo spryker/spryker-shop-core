@@ -78,7 +78,7 @@ class OrderCancelController extends AbstractController
 
         $orderCancelRequestTransfer = (new OrderCancelRequestTransfer())
             ->setCustomer($this->getFactory()->getCustomerClient()->getCustomer())
-            ->setIdSalesOrder($request->get(static::PARAMETER_ID_SALES_ORDER));
+            ->setIdSalesOrder((int)$request->get(static::PARAMETER_ID_SALES_ORDER));
 
         $orderCancelResponseTransfer = $this->getFactory()->getSalesClient()->cancelOrder($orderCancelRequestTransfer);
 
