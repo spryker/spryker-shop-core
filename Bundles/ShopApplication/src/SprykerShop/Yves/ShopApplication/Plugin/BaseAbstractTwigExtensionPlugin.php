@@ -119,6 +119,10 @@ abstract class BaseAbstractTwigExtensionPlugin extends AbstractPlugin implements
      */
     public function getOperators()
     {
+        if (version_compare(Environment::VERSION, '3.21.0', '>=')) {
+            return [[], []];
+        }
+
         return [];
     }
 

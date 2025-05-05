@@ -21,3 +21,4 @@ parameters:
         - '#Call to an undefined method Symfony\\Component\\HttpKernel\\Event\\ViewEvent\:\:isMainRequest\(\).#'
     excludePaths:
         - '%rootDir%/../../../vendor/spryker/spryker-shop/Bundles/ShopApplication/src/SprykerShop/Yves/ShopApplication/Plugin/AbstractTwigExtensionPlugin.php'
+    treatPhpDocTypesAsCertain: false
