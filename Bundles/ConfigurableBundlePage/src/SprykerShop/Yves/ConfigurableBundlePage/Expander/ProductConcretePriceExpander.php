@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ConfigurableBundlePage\Expander;
 
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\PriceProductResolveConditionsTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToPriceProductStorageClientInterface;
@@ -58,7 +59,10 @@ class ProductConcretePriceExpander implements ProductConcretePriceExpanderInterf
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setQuantity($productViewTransfer->getQuantity() ?: 1)
             ->setIdProduct($productViewTransfer->getIdProductConcrete())
-            ->setIdProductAbstract($productViewTransfer->getIdProductAbstract());
+            ->setIdProductAbstract($productViewTransfer->getIdProductAbstract())
+            ->setPriceProductResolveConditions(
+                (new PriceProductResolveConditionsTransfer())->fromArray($productViewTransfer->toArray(), true),
+            );
 
         return $this->priceProductStorageClient->getResolvedCurrentProductPriceTransfer($priceProductFilterTransfer);
     }

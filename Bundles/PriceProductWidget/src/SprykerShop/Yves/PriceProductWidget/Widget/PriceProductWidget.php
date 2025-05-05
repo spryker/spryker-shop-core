@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\PriceProductWidget\Widget;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\PriceProductResolveConditionsTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
@@ -67,7 +68,10 @@ class PriceProductWidget extends AbstractWidget
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setQuantity($productViewTransfer->getQuantity())
             ->setIdProduct($productViewTransfer->getIdProductConcrete())
-            ->setIdProductAbstract($productViewTransfer->getIdProductAbstract());
+            ->setIdProductAbstract($productViewTransfer->getIdProductAbstract())
+            ->setPriceProductResolveConditions(
+                (new PriceProductResolveConditionsTransfer())->fromArray($productViewTransfer->toArray(), true),
+            );
 
         $currentProductPriceTransfer = $this->getFactory()
             ->getPriceProductStorageClient()

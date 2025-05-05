@@ -6,7 +6,8 @@
     "require": {
         "php": ">=8.2",
         "spryker/kernel": "^3.33.0",
-        "spryker/price-product-storage": "^2.9.0 || ^4.0.0"
+        "spryker/price-product-storage": "^2.9.0 || ^4.12.0",
+        "spryker/transfer": "^3.27.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*"

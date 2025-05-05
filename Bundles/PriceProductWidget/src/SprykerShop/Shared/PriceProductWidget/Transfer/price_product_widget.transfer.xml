@@ -11,9 +11,14 @@
         <property name="quantity" type="int"/>
         <property name="idProduct" type="int"/>
         <property name="idProductAbstract" type="int"/>
+        <property name="priceProductResolveConditions" type="PriceProductResolveConditions" strict="true"/>
     </transfer>
 
     <transfer name="CurrentProductPrice">
+    </transfer>
+
+    <transfer name="PriceProductResolveConditions" strict="true">
+        <property name="sku" type="string"/>
     </transfer>
 
 </transfers>
