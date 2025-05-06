@@ -1,0 +1,29 @@
+{# @var data.cart \Generated\Shared\Transfer\QuoteTransfer #}
+
+{% extends template('widget') %}
+
+{% define data = {
+    form: _widget.form,
+    quote: _widget.quote,
+    isVisible: _widget.isVisible,
+    buttonClass: 'button button--expand',
+} %}
+
+{% block body %}
+    {% include molecule('remote-form-submit') with {
+        data: {
+            label: 'sales_order_amendment_widget.cancel_order_amendment' | trans,
+            buttonClass: data.buttonClass,
+            buttonExtraAttributes: {
+                'data-qa': 'cancel-order-amendment-button',
+            },
+        },
+        attributes: {
+            'form-name': data.form.vars.name,
+            'form-action': path('cancel-order-amendment', {'amendedOrderReference': data.quote.amendmentOrderReference}),
+            'field-id': data.form.vars.id,
+            'field-name': data.form.vars.id ~ '[_token]',
+            'field-value': csrf_token(data.form.vars.id),
+        },
+    } only %}
+{% endblock %}

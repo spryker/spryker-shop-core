@@ -5,6 +5,7 @@
         <property name="orderReference" type="string"/>
         <property name="customerReference" type="string"/>
         <property name="isAmendment" type="bool"/>
+        <property name="reorderStrategy" type="string"/>
     </transfer>
 
     <transfer name="CartReorderResponse" strict="true">
@@ -21,6 +22,10 @@
 
     <transfer name="Order">
         <property name="isAmendable" type="bool" strict="true"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="amendmentOrderReference" type="string" strict="true"/>
     </transfer>
 
 </transfers>

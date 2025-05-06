@@ -11,7 +11,10 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\SalesOrderAmendmentWidget\Dependency\Client\SalesOrderAmendmentWidgetToCartReorderClientInterface;
 use SprykerShop\Yves\SalesOrderAmendmentWidget\Dependency\Client\SalesOrderAmendmentWidgetToCustomerClientInterface;
+use SprykerShop\Yves\SalesOrderAmendmentWidget\Dependency\Client\SalesOrderAmendmentWidgetToQuoteClientInterface;
+use SprykerShop\Yves\SalesOrderAmendmentWidget\Dependency\Client\SalesOrderAmendmentWidgetToSalesOrderAmendmentClientInterface;
 use SprykerShop\Yves\SalesOrderAmendmentWidget\Dependency\Client\SalesOrderAmendmentWidgetToZedRequestClientInterface;
+use SprykerShop\Yves\SalesOrderAmendmentWidget\Form\CancelOrderAmendmentForm;
 use SprykerShop\Yves\SalesOrderAmendmentWidget\Form\Handler\OrderAmendmentHandler;
 use SprykerShop\Yves\SalesOrderAmendmentWidget\Form\Handler\OrderAmendmentHandlerInterface;
 use SprykerShop\Yves\SalesOrderAmendmentWidget\Form\OrderAmendmentForm;
@@ -32,6 +35,14 @@ class SalesOrderAmendmentWidgetFactory extends AbstractFactory
     }
 
     /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCancelOrderAmendmentForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(CancelOrderAmendmentForm::class);
+    }
+
+    /**
      * @return \SprykerShop\Yves\SalesOrderAmendmentWidget\Form\Handler\OrderAmendmentHandlerInterface
      */
     public function createOrderAmendmentHandler(): OrderAmendmentHandlerInterface
@@ -40,6 +51,7 @@ class SalesOrderAmendmentWidgetFactory extends AbstractFactory
             $this->getCustomerClient(),
             $this->getCartReorderClient(),
             $this->getZedRequestClient(),
+            $this->getConfig(),
         );
     }
 
@@ -65,6 +77,22 @@ class SalesOrderAmendmentWidgetFactory extends AbstractFactory
     public function getCartReorderClient(): SalesOrderAmendmentWidgetToCartReorderClientInterface
     {
         return $this->getProvidedDependency(SalesOrderAmendmentWidgetDependencyProvider::CLIENT_CART_REORDER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\SalesOrderAmendmentWidget\Dependency\Client\SalesOrderAmendmentWidgetToSalesOrderAmendmentClientInterface
+     */
+    public function getSalesOrderAmendmentClient(): SalesOrderAmendmentWidgetToSalesOrderAmendmentClientInterface
+    {
+        return $this->getProvidedDependency(SalesOrderAmendmentWidgetDependencyProvider::CLIENT_SALES_ORDER_AMENDMENT);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\SalesOrderAmendmentWidget\Dependency\Client\SalesOrderAmendmentWidgetToQuoteClientInterface
+     */
+    public function getQuoteClient(): SalesOrderAmendmentWidgetToQuoteClientInterface
+    {
+        return $this->getProvidedDependency(SalesOrderAmendmentWidgetDependencyProvider::CLIENT_QUOTE);
     }
 
     /**

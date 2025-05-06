@@ -112,6 +112,12 @@
                                         {% endwidget %}
                                     </div>
                                 {% endif %}
+                                {% widget 'CancelOrderAmendmentWidget' args [data.cart] only %}
+                                    {% block body %}
+                                        <hr>
+                                        {{ parent() }}
+                                    {% endblock %}
+                                {% endwidget %}
                             </div>
                         </div>
                     {% endblock %}
@@ -302,6 +308,13 @@
                                         },
                                     } only %}
                                 {% endblock %}
+
+                                {% widget 'CancelOrderAmendmentWidget' args [data.cart] only %}
+                                    {% block body %}
+                                        <hr>
+                                        {{ parent() }}
+                                    {% endblock %}
+                                {% endwidget %}
                             </div>
                         </div>
                     </div>

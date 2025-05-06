@@ -52,6 +52,7 @@
         "spryker-shop/product-option-widget": "If you want to use components from module ProductOptionWidget or CartItemProductOptionWidgetPlugin",
         "spryker-shop/product-packaging-unit-widget": "If you want to use components from module ProductPackagingUnitWidget or CartProductPackagingUnitWidgetPlugin",
         "spryker-shop/payment-app-widget": "If you want to use ExpressCheckoutPaymentWidget.",
+        "spryker-shop/sales-order-amendment-widget": "If you want to use CancelOrderAmendmentWidget.",
         "spryker/container": "If you want to use the CartTwigPlugin",
         "spryker/permission": "If you want to use permissions plugins",
         "spryker/router": "Use this module when using plugins that adds routes to the Route Module.",

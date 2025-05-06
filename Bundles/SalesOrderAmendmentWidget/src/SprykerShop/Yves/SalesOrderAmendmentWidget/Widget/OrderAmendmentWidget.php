@@ -12,6 +12,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
  * @method \SprykerShop\Yves\SalesOrderAmendmentWidget\SalesOrderAmendmentWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\SalesOrderAmendmentWidget\SalesOrderAmendmentWidgetConfig getConfig()
  */
 class OrderAmendmentWidget extends AbstractWidget
 {
@@ -26,12 +27,18 @@ class OrderAmendmentWidget extends AbstractWidget
     protected const PARAMETER_FORM = 'form';
 
     /**
+     * @var string
+     */
+    protected const PARAMETER_IS_ORDER_AMENDMENT_CONFIRMATION_ENABLED = 'isOrderAmendmentConfirmationEnabled';
+
+    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      */
     public function __construct(OrderTransfer $orderTransfer)
     {
         $this->addFormParameter();
         $this->addOrderParameter($orderTransfer);
+        $this->addIsOrderAmendmentConfirmationEnabledParameter();
     }
 
     /**
@@ -66,5 +73,16 @@ class OrderAmendmentWidget extends AbstractWidget
     protected function addOrderParameter(OrderTransfer $orderTransfer): void
     {
         $this->addParameter(static::PARAMETER_ORDER, $orderTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    protected function addIsOrderAmendmentConfirmationEnabledParameter(): void
+    {
+        $this->addParameter(
+            static::PARAMETER_IS_ORDER_AMENDMENT_CONFIRMATION_ENABLED,
+            $this->getConfig()->isOrderAmendmentConfirmationEnabled(),
+        );
     }
 }

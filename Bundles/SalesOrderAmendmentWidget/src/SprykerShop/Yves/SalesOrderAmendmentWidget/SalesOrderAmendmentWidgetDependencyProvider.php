@@ -11,6 +11,8 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\SalesOrderAmendmentWidget\Dependency\Client\SalesOrderAmendmentWidgetToCartReorderClientBridge;
 use SprykerShop\Yves\SalesOrderAmendmentWidget\Dependency\Client\SalesOrderAmendmentWidgetToCustomerClientBridge;
+use SprykerShop\Yves\SalesOrderAmendmentWidget\Dependency\Client\SalesOrderAmendmentWidgetToQuoteClientBridge;
+use SprykerShop\Yves\SalesOrderAmendmentWidget\Dependency\Client\SalesOrderAmendmentWidgetToSalesOrderAmendmentClientBridge;
 use SprykerShop\Yves\SalesOrderAmendmentWidget\Dependency\Client\SalesOrderAmendmentWidgetToZedRequestClientBridge;
 
 class SalesOrderAmendmentWidgetDependencyProvider extends AbstractBundleDependencyProvider
@@ -31,6 +33,16 @@ class SalesOrderAmendmentWidgetDependencyProvider extends AbstractBundleDependen
     public const CLIENT_CART_REORDER = 'CLIENT_CART_REORDER';
 
     /**
+     * @var string
+     */
+    public const CLIENT_SALES_ORDER_AMENDMENT = 'CLIENT_SALES_ORDER_AMENDMENT';
+
+    /**
+     * @var string
+     */
+    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -41,6 +53,8 @@ class SalesOrderAmendmentWidgetDependencyProvider extends AbstractBundleDependen
         $container = $this->addCustomerClient($container);
         $container = $this->addZedRequestClient($container);
         $container = $this->addCartReorderClient($container);
+        $container = $this->addSalesOrderAmendmentClient($container);
+        $container = $this->addQuoteClient($container);
 
         return $container;
     }
@@ -88,6 +102,34 @@ class SalesOrderAmendmentWidgetDependencyProvider extends AbstractBundleDependen
             return new SalesOrderAmendmentWidgetToCartReorderClientBridge(
                 $container->getLocator()->cartReorder()->client(),
             );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSalesOrderAmendmentClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_SALES_ORDER_AMENDMENT, function (Container $container) {
+            return new SalesOrderAmendmentWidgetToSalesOrderAmendmentClientBridge($container->getLocator()->salesOrderAmendment()->client());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addQuoteClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
+            return new SalesOrderAmendmentWidgetToQuoteClientBridge($container->getLocator()->quote()->client());
         });
 
         return $container;

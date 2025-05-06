@@ -1,0 +1,91 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'order-amendment',
+    tag: 'order-amendment',
+} %}
+
+{% define data = {
+    form: required,
+    order: required,
+    hasConfirmationPopup: true,
+    buttonClass: 'link',
+} %}
+
+
+{% define attributes = {
+    'popup-content-id': 'order-reference-popup-content-' ~ data.order.orderReference,
+    'attribute-to-add': 'initial-mount',
+    'form-selector': '.remote-form-submit',
+} %}
+
+{% block component %}
+    {% set order = data.order %}
+    {% set popupTriggerClassName = "#{config.jsName}__trigger-#{order.orderReference}" %}
+
+    {% if order.isAmendable %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block form %}
+    {% set formVars = data.form.vars %}
+
+    {% include molecule('remote-form-submit') with {
+        data: {
+            label: (data.hasConfirmationPopup ? 'sales_order_amendment_widget.edit_order.confirm' : 'sales_order_amendment_widget.edit_order') | trans,
+            buttonClass: data.buttonClass,
+        },
+        attributes: {
+            'form-name': formVars.id ~ order.orderReference,
+            'form-action': path('order-amendment', {'orderReference': order.orderReference}),
+            'field-id': formVars.id ~ '_token_' ~ order.idSalesOrder,
+            'field-name': formVars.id ~ '[_token]',
+            'field-value': csrf_token(formVars.id),
+        } | merge(data.hasConfirmationPopup ? {
+            'initial-mount': false,
+        }: {}),
+    } only %}
+{% endblock %}
+
+{% block popupContent %}
+    <div class="spacing-x">
+        {{ 'sales_order_amendment_widget.edit_order.warning_message' | trans }}
+
+        <div class="grid grid--right spacing-top">
+            <div class="col spacing-x">
+                <button class="link {{ popupTriggerClassName }}">
+                    {{ 'sales_order_amendment_widget.edit_order.cancel' | trans }}
+                </button>
+            </div>
+
+            <div class="col spacing-x">
+                {{ block('form') }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block popup %}
+    {% include molecule('main-popup') with {
+        data: {
+            title: 'sales_order_amendment_widget.edit_order' | trans,
+            content: block('popupContent'),
+        },
+        attributes: {
+            'content-id': attributes['popup-content-id'],
+            'trigger-class-name': popupTriggerClassName,
+            'close-popup-selector': ".#{popupTriggerClassName}",
+            'has-content-mount': true,
+        },
+    } only %}
+{% endblock %}
+
+{% block body %}
+    {% if data.hasConfirmationPopup %}
+        <button type="button" class="link {{ popupTriggerClassName }}">{{ 'sales_order_amendment_widget.edit_order' | trans }}</button>
+        {{ block('popup') }}
+    {% else %}
+        {{ block('form') }}
+    {% endif %}
+{% endblock %}

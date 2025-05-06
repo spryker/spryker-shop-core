@@ -21,6 +21,11 @@ class SalesOrderAmendmentWidgetRouteProviderPlugin extends AbstractRouteProvider
     /**
      * @var string
      */
+    public const ROUTE_NAME_CANCEL_ORDER_AMENDMENT = 'cancel-order-amendment';
+
+    /**
+     * @var string
+     */
     protected const PATTERN_REFERENCE_REGEX = '[a-zA-Z0-9-_]+';
 
     /**
@@ -36,12 +41,13 @@ class SalesOrderAmendmentWidgetRouteProviderPlugin extends AbstractRouteProvider
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
         $routeCollection = $this->addReorderRoute($routeCollection);
+        $routeCollection = $this->addCancelOrderAmendmentRoute($routeCollection);
 
         return $routeCollection;
     }
 
     /**
-     * @uses \SprykerShop\Yves\SalesOrderAmendmentWidget\Controller\OrderController::reorderAction()
+     * @uses \SprykerShop\Yves\SalesOrderAmendmentWidget\Controller\OrderAmendmentController::amendOrderAction()
      *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
@@ -53,6 +59,23 @@ class SalesOrderAmendmentWidgetRouteProviderPlugin extends AbstractRouteProvider
         $route = $route->setRequirement('orderReference', static::PATTERN_REFERENCE_REGEX);
         $route = $route->setMethods([Request::METHOD_POST]);
         $routeCollection->add(static::ROUTE_NAME_ORDER_AMENDMENT, $route);
+
+        return $routeCollection;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\SalesOrderAmendmentWidget\Controller\CancelOrderAmendmentController::indexAction()
+     *
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Yves\Router\Route\RouteCollection
+     */
+    protected function addCancelOrderAmendmentRoute(RouteCollection $routeCollection): RouteCollection
+    {
+        $route = $this->buildRoute('/order-amendment/cancel/{amendedOrderReference}', 'SalesOrderAmendmentWidget', 'CancelOrderAmendment');
+        $route = $route->setRequirement('amendedOrderReference', static::PATTERN_REFERENCE_REGEX);
+        $route = $route->setMethods([Request::METHOD_POST]);
+        $routeCollection->add(static::ROUTE_NAME_CANCEL_ORDER_AMENDMENT, $route);
 
         return $routeCollection;
     }

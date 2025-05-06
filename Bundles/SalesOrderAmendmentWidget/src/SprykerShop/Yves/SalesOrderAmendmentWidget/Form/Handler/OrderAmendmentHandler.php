@@ -12,38 +12,23 @@ use Generated\Shared\Transfer\CartReorderResponseTransfer;
 use SprykerShop\Yves\SalesOrderAmendmentWidget\Dependency\Client\SalesOrderAmendmentWidgetToCartReorderClientInterface;
 use SprykerShop\Yves\SalesOrderAmendmentWidget\Dependency\Client\SalesOrderAmendmentWidgetToCustomerClientInterface;
 use SprykerShop\Yves\SalesOrderAmendmentWidget\Dependency\Client\SalesOrderAmendmentWidgetToZedRequestClientInterface;
+use SprykerShop\Yves\SalesOrderAmendmentWidget\SalesOrderAmendmentWidgetConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 class OrderAmendmentHandler implements OrderAmendmentHandlerInterface
 {
     /**
-     * @var \SprykerShop\Yves\SalesOrderAmendmentWidget\Dependency\Client\SalesOrderAmendmentWidgetToCustomerClientInterface
-     */
-    protected SalesOrderAmendmentWidgetToCustomerClientInterface $customerClient;
-
-    /**
-     * @var \SprykerShop\Yves\SalesOrderAmendmentWidget\Dependency\Client\SalesOrderAmendmentWidgetToCartReorderClientInterface
-     */
-    protected SalesOrderAmendmentWidgetToCartReorderClientInterface $cartReorderClient;
-
-    /**
-     * @var \SprykerShop\Yves\SalesOrderAmendmentWidget\Dependency\Client\SalesOrderAmendmentWidgetToZedRequestClientInterface
-     */
-    protected SalesOrderAmendmentWidgetToZedRequestClientInterface $zedRequestClient;
-
-    /**
      * @param \SprykerShop\Yves\SalesOrderAmendmentWidget\Dependency\Client\SalesOrderAmendmentWidgetToCustomerClientInterface $customerClient
      * @param \SprykerShop\Yves\SalesOrderAmendmentWidget\Dependency\Client\SalesOrderAmendmentWidgetToCartReorderClientInterface $cartReorderClient
      * @param \SprykerShop\Yves\SalesOrderAmendmentWidget\Dependency\Client\SalesOrderAmendmentWidgetToZedRequestClientInterface $zedRequestClient
+     * @param \SprykerShop\Yves\SalesOrderAmendmentWidget\SalesOrderAmendmentWidgetConfig $salesOrderAmendmentWidgetConfig
      */
     public function __construct(
-        SalesOrderAmendmentWidgetToCustomerClientInterface $customerClient,
-        SalesOrderAmendmentWidgetToCartReorderClientInterface $cartReorderClient,
-        SalesOrderAmendmentWidgetToZedRequestClientInterface $zedRequestClient
+        protected SalesOrderAmendmentWidgetToCustomerClientInterface $customerClient,
+        protected SalesOrderAmendmentWidgetToCartReorderClientInterface $cartReorderClient,
+        protected SalesOrderAmendmentWidgetToZedRequestClientInterface $zedRequestClient,
+        protected SalesOrderAmendmentWidgetConfig $salesOrderAmendmentWidgetConfig
     ) {
-        $this->customerClient = $customerClient;
-        $this->cartReorderClient = $cartReorderClient;
-        $this->zedRequestClient = $zedRequestClient;
     }
 
     /**
@@ -59,7 +44,8 @@ class OrderAmendmentHandler implements OrderAmendmentHandlerInterface
         $cartReorderRequestTransfer = (new CartReorderRequestTransfer())
             ->setOrderReference($orderReference)
             ->setCustomerReference($customerTransfer->getCustomerReference())
-            ->setIsAmendment(true);
+            ->setIsAmendment(true)
+            ->setReorderStrategy($this->salesOrderAmendmentWidgetConfig->getCartReorderStrategyForOrderAmendment());
 
         $cartReorderResponseTransfer = $this->cartReorderClient->reorder($cartReorderRequestTransfer);
 

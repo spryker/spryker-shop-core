@@ -6,12 +6,13 @@
     "require": {
         "php": ">=8.2",
         "spryker-shop/shop-application": "^1.0.0",
-        "spryker-shop/shop-ui": "^1.0.0",
+        "spryker-shop/shop-ui": "^1.91.0",
         "spryker/application": "^3.0.0",
         "spryker/cart-reorder": "^0.2.0",
         "spryker/customer": "^7.4.0",
         "spryker/kernel": "^3.52.0",
-        "spryker/sales-order-amendment": "^0.4.0",
+        "spryker/quote": "^2.0.0",
+        "spryker/sales-order-amendment": "^0.5.0",
         "spryker/symfony": "^3.1.0",
         "spryker/transfer": "^3.27.0",
         "spryker/zed-request": "^3.6.0"

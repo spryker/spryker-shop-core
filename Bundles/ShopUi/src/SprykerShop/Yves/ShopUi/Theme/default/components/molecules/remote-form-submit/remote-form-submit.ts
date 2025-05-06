@@ -8,6 +8,9 @@ export default class RemoteFormSubmit extends Component {
     protected readyCallback(): void {}
 
     protected init(): void {
+        if (!this.initialMount) {
+            return;
+        }
         this.fieldsContainer = <HTMLElement>this.getElementsByClassName(`${this.jsName}__container`)[0];
         this.submitButton = <HTMLButtonElement>this.getElementsByClassName(`${this.jsName}__submit`)[0];
 
@@ -72,5 +75,9 @@ export default class RemoteFormSubmit extends Component {
 
     protected get formAction(): string {
         return this.getAttribute('form-action');
+    }
+
+    protected get initialMount(): boolean {
+        return this.hasAttribute('initial-mount');
     }
 }

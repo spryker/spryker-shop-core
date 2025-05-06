@@ -5,23 +5,17 @@
 {% define data = {
     form: _widget.form,
     order: _widget.order,
+    hasConfirmationPopup: _widget.isOrderAmendmentConfirmationEnabled,
     buttonClass: 'link',
 } %}
 
 {% block body %}
-    {% if data.order.isAmendable == true %}
-        {% include molecule('remote-form-submit') with {
-            data: {
-                label: 'sales_order_amendment_widget.edit_order' | trans,
-                buttonClass: data.buttonClass,
-            },
-            attributes: {
-                'form-name': data.form.vars.id ~ data.order.orderReference,
-                'form-action': path('order-amendment', {'orderReference': data.order.orderReference}),
-                'field-id': data.form.vars.id ~ '_token_' ~ data.order.idSalesOrder,
-                'field-name': data.form.vars.id ~ '[_token]',
-                'field-value': csrf_token(data.form.vars.id),
-            },
-        } only %}
-    {% endif %}
+    {% include molecule('order-amendment', 'SalesOrderAmendmentWidget') with {
+        data: {
+            form: data.form,
+            order: data.order,
+            hasConfirmationPopup: data.hasConfirmationPopup,
+            buttonClass: data.buttonClass,
+        }
+    } only %}
 {% endblock %}
