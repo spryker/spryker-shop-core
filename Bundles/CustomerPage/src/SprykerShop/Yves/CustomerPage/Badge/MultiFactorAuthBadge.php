@@ -46,7 +46,7 @@ class MultiFactorAuthBadge implements BadgeInterface
     /**
      * @var int|null
      */
-    protected ?int $status;
+    protected ?int $status = null;
 
     /**
      * @param array<\SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\AuthenticationHandlerPluginInterface> $customerMultiFactorAuthenticationHandlerPlugins
