@@ -60,6 +60,10 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     {
         $quoteTransfer = $this->executePreConditionPlugins($quoteTransfer);
 
+        if (!$quoteTransfer->getShippingAddress() || !$quoteTransfer->getBillingAddress()) {
+            return false;
+        }
+
         return parent::preCondition($quoteTransfer);
     }
 

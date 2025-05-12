@@ -60,12 +60,12 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 class PaymentAppWidgetFactory extends AbstractFactory
 {
     /**
-     * @param array<string, mixed> $data
+     * @param array<string, mixed>|null $data
      * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getExpressCheckoutForm(array $data = [], array $options = []): FormInterface
+    public function getExpressCheckoutForm(?array $data = null, array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(ExpressCheckoutForm::class, $data, $options);
     }

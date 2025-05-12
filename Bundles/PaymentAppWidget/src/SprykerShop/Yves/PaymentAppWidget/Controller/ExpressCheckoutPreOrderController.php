@@ -106,7 +106,7 @@ class ExpressCheckoutPreOrderController extends ExpressCheckoutAbstractControlle
         $expressCheckoutFormDataProvider = $this->getFactory()->createExpressCheckoutFormDataProvider();
 
         return $this->getFactory()->getExpressCheckoutForm(
-            [],
+            null,
             $expressCheckoutFormDataProvider->getOptions($requestPayload),
         );
     }
