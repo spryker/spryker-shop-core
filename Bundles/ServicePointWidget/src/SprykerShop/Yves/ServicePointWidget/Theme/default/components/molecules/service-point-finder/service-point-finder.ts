@@ -3,10 +3,18 @@ import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provide
 import debounce from 'lodash-es/debounce';
 
 export const EVENT_SET_SERVICE_POINT = 'setServicePoint';
+
+export interface ProductOfferAvailability {
+    isAvailable: boolean;
+    productOfferReference: string;
+    servicePointUuid: string;
+}
+
 export interface ServicePointEventDetail {
     uuid: string;
     address: string;
     partiallyAvailable?: boolean;
+    productOfferAvailability: ProductOfferAvailability[];
 }
 
 export default class ServicePointFinder extends Component {
@@ -69,7 +77,12 @@ export default class ServicePointFinder extends Component {
         const eventDetail: ServicePointEventDetail = {
             uuid: servicePointTrigger.dataset[this.servicePointUuidDataAttribute],
             address: servicePointTrigger.dataset[this.servicePointAddressDataAttribute],
+            productOfferAvailability:
+                this.servicePointProductOfferAvailability in servicePointTrigger.dataset
+                    ? JSON.parse(servicePointTrigger.dataset[this.servicePointProductOfferAvailability])
+                    : [],
         };
+
         const hasServicePointPartiallyAvailableDataAttribute =
             this.servicePointPartiallyAvailableDataAttribute in servicePointTrigger.dataset;
 
@@ -119,5 +132,9 @@ export default class ServicePointFinder extends Component {
 
     protected get servicePointPartiallyAvailableDataAttribute(): string {
         return this.getAttribute('service-point-partially-available-data-attribute');
+    }
+
+    protected get servicePointProductOfferAvailability(): string {
+        return this.getAttribute('service-point-product-offer-availability-data-attribute');
     }
 }

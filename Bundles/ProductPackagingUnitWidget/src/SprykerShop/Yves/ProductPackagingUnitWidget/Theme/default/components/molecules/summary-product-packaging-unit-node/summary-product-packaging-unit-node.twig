@@ -87,6 +87,9 @@
                         {% endwidget %}
                     {% endblock %}
 
+                    {% widget 'SspAssetInfoForItemWidget' args [data.node] only %}
+                    {% endwidget %}
+
                     {% block productConfiguration %}
                         {% widget 'ProductConfigurationCartItemDisplayWidget' args [data.node] only %}
                             {% block status %}{% endblock %}

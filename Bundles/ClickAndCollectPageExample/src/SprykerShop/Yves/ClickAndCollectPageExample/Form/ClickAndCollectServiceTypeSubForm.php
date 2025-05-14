@@ -15,6 +15,10 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 
+/**
+ * @method \SprykerShop\Yves\ClickAndCollectPageExample\ClickAndCollectPageExampleFactory getFactory()
+ * @method \SprykerShop\Yves\ClickAndCollectPageExample\ClickAndCollectPageExampleConfig getConfig()
+ */
 class ClickAndCollectServiceTypeSubForm extends AbstractType
 {
     /**
@@ -38,13 +42,6 @@ class ClickAndCollectServiceTypeSubForm extends AbstractType
      * @var string
      */
     protected const OPTION_AVAILABLE_SHIPMENT_TYPES = 'option_available_shipment_types';
-
-    /**
-     * @uses \Spryker\Shared\ServicePoint\ServicePointConfig::SERVICE_TYPE_PICKUP
-     *
-     * @var string
-     */
-    protected const SERVICE_TYPE_PICKUP = 'pickup';
 
     /**
      * @uses \SprykerShop\Yves\ServicePointWidget\Form\ServicePointAddressStepForm::FIELD_SERVICE_POINT
@@ -101,8 +98,12 @@ class ClickAndCollectServiceTypeSubForm extends AbstractType
             return null;
         }
 
+        $pickableServiceTypes = $this->getConfig()->getPickableServiceTypes();
         foreach ($availableShipmentTypes as $shipmentTypeTransfer) {
-            if ($shipmentTypeTransfer->getServiceType() && $shipmentTypeTransfer->getServiceTypeOrFail()->getKeyOrFail() === static::SERVICE_TYPE_PICKUP) {
+            if (
+                $shipmentTypeTransfer->getServiceType()
+                && in_array($shipmentTypeTransfer->getServiceTypeOrFail()->getKeyOrFail(), $pickableServiceTypes, true)
+            ) {
                 return $shipmentTypeTransfer;
             }
         }

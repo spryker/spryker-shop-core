@@ -26,11 +26,25 @@ class ClickAndCollectPageExampleConfig extends AbstractBundleConfig
     protected const SHIPMENT_TYPE_PICKUP = 'pickup';
 
     /**
+     * @uses \Spryker\Shared\ServicePoint\ServicePointConfig::SERVICE_TYPE_PICKUP
+     *
+     * @var string
+     */
+    protected const SERVICE_TYPE_PICKUP = 'pickup';
+
+    /**
      * @var list<string>
      */
     protected const CLICK_AND_COLLECT_SHIPMENT_TYPES = [
         self::SHIPMENT_TYPE_DELIVERY,
         self::SHIPMENT_TYPE_PICKUP,
+    ];
+
+    /**
+     * @var list<string>
+     */
+    protected const DEFAULT_PICKABLE_SERVICE_TYPES = [
+        self::SERVICE_TYPE_PICKUP,
     ];
 
     /**
@@ -44,5 +58,18 @@ class ClickAndCollectPageExampleConfig extends AbstractBundleConfig
     public function getClickAndCollectShipmentTypes(): array
     {
         return static::CLICK_AND_COLLECT_SHIPMENT_TYPES;
+    }
+
+    /**
+     * Specification:
+     * - Returns list of service type keys that are considered pickable.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getPickableServiceTypes(): array
+    {
+        return static::DEFAULT_PICKABLE_SERVICE_TYPES;
     }
 }

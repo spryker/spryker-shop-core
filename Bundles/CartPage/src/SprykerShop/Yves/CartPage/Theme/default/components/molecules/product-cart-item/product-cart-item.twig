@@ -85,7 +85,10 @@
             {% widget 'ProductConfigurationCartPageButtonWidget' args [data.product] only %}
             {% endwidget %}
 
-            {% widget 'ServicePointNameForItemWidget' args [data.product] only %}
+            {% widget 'SspServicePointNameForItemWidget' args [data.product] only %}
+            {% elsewidget 'ServicePointNameForItemWidget' args [data.product] only %}
+            {% endwidget %}
+            {% widget 'SspAssetInfoForItemWidget' args [data.product] only %}
             {% endwidget %}
         {% endblock %}
     </div>

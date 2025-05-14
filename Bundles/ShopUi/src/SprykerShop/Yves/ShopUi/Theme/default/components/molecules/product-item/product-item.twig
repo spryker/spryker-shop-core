@@ -199,14 +199,16 @@
                         {% endif %}
 
                         {% block ajaxAddToCart %}
-                            {% if data.product is iterable and can('SeeAddToCartPermissionPlugin') %}
-                                {% widget 'ProductAbstractAddToCartButtonWidget' args [data.product] with {
-                                    data: {
-                                        buttonExtraClasses: config.jsName ~ '__ajax-button-add-to-cart',
-                                        eventRevealer: data.eventRevealer,
-                                    },
-                                } only %}
-                                {% endwidget %}
+                            {% if data.product is iterable %}
+                                {% if can('SeeAddToCartPermissionPlugin') and ('isSspService' is not defined or not isSspService(data.product))%}
+                                    {% widget 'ProductAbstractAddToCartButtonWidget' args [data.product] with {
+                                        data: {
+                                            buttonExtraClasses: config.jsName ~ '__ajax-button-add-to-cart',
+                                            eventRevealer: data.eventRevealer,
+                                        },
+                                    } only %}
+                                    {% endwidget %}
+                                {% endif %}
                             {% endif %}
                         {% endblock %}
                     {% endblock %}

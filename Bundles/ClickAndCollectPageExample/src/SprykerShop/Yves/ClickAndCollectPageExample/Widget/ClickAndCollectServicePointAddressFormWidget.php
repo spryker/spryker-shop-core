@@ -289,8 +289,7 @@ class ClickAndCollectServicePointAddressFormWidget extends AbstractWidget
 
         $clickAndCollectShipmentTypes = $this->getConfig()->getClickAndCollectShipmentTypes();
 
-        return !array_diff($shipmentTypeKeys, $clickAndCollectShipmentTypes)
-            && !array_diff($clickAndCollectShipmentTypes, $shipmentTypeKeys);
+        return (bool)array_intersect($shipmentTypeKeys, $clickAndCollectShipmentTypes);
     }
 
     /**

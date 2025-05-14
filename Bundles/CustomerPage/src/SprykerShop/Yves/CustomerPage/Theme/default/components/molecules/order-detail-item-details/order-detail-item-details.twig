@@ -46,6 +46,9 @@
     </div>
 
     {% block additionalInfo %}
+        {% widget 'SspAssetInfoForItemWidget' args [data.orderItem] only %}{% endwidget %}
+        {% widget 'SspServicePointNameForItemWidget' args [data.orderItem, false] only %}{% endwidget %}
         {% widget 'SspServiceChangeScheduledTimeLinkWidget' args [data.orderItem] only %}{% endwidget %}
+        {% widget 'SspServiceCancelWidget' args [data.orderItem] only %}{% endwidget %}
     {% endblock %}
 {% endblock %}

@@ -39,7 +39,7 @@ class ServicePointAvailabilityMessageBuilder implements ServicePointAvailability
     /**
      * @var string
      */
-    protected const KEY_IS_AVAILABLE = 'isAvaialble';
+    protected const KEY_IS_AVAILABLE = 'isAvailable';
 
     /**
      * @var string

@@ -10,6 +10,7 @@
     billingSameAsShippingContainerClassName: '',
     shipmentTypesClassName: '',
     servicePointClassName: '',
+    hideChoices: false,
 } %}
 
 {% block body %}
@@ -20,6 +21,7 @@
             shipmentTypesClassName: data.shipmentTypesClassName,
             servicePointClassName: data.servicePointClassName,
             deliverySelectClassName: data.deliverySelectClassName,
+            hideChoices: data.hideChoices,
         },
         attributes: {
             'default-shipment-type': data.defaultShipmentType,

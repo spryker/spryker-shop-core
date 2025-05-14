@@ -11,6 +11,7 @@
     shipmentTypesClassName: '',
     servicePointClassName: '',
     deliverySelectClassName: '',
+    hideChoices: false,
 } %}
 
 {% define attributes = {
@@ -24,7 +25,7 @@
 
 {% block body %}
     {% block radioButtons %}
-        <div class="spacing-y spacing-y--big">
+        <div class="spacing-y spacing-y--big {{ data.hideChoices ? 'is-hidden' }}">
             {{ form_row(data.shipmentTypeForm.key, {
                 label_attr: {
                     class: 'list--inline',

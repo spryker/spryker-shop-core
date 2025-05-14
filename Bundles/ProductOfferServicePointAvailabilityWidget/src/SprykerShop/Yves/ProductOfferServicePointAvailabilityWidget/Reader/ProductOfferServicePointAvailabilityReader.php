@@ -68,10 +68,11 @@ class ProductOfferServicePointAvailabilityReader implements ProductOfferServiceP
             )];
         }
 
+        $isItemsAreSet = (bool)$itemTransfers;
         $itemTransfersBeforeFiltering = $this->quoteItemReader->getItemsFromQuote($groupKeys);
         $itemTransfers = $itemTransfers ?: $this->filterOutItemsWithoutProductOfferReference($itemTransfersBeforeFiltering);
 
-        $hasItemsWithoutProductOfferReferences = count($itemTransfersBeforeFiltering) > count($itemTransfers);
+        $hasItemsWithoutProductOfferReferences = $isItemsAreSet ? false : count($itemTransfersBeforeFiltering) > count($itemTransfers);
 
         if (!$itemTransfers) {
             return [$this->servicePointAvailabilityMessageBuilder->buildUnavailableAvailabilityMessagesPerServicePoint(
