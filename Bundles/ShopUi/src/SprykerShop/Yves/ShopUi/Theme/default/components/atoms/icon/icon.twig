@@ -7,6 +7,7 @@
 
 {% define data = {
     name: required,
+    isSpriteGenerationEnabled: false,
 } %}
 
 {% define attributes = {
@@ -14,5 +15,9 @@
 } %}
 
 {% block body %}
-    <use xlink:href="#:{{ data.name }}"></use>
+    {% if data.isSpriteGenerationEnabled %}
+        <use xlink:href="{{ publicPath('icons/sprite.svg#:' ~ data.name) }}"></use>
+    {% else %}
+        <use xlink:href="#:{{ data.name }}"></use>
+    {% endif %}
 {% endblock %}
