@@ -50,7 +50,9 @@
 
     <hr>
 
-    {% if 'isSspService' is defined and isSspService(data.product) %}
+    {% set sspServiceDetectorWidget = findWidget('SspServiceDetectorWidget', [data.product]) %}
+
+    {% if (sspServiceDetectorWidget and sspServiceDetectorWidget.isService) %}
         {% widget 'SspProductOfferPriceWidget' args [data.product] only %}{% endwidget %}
     {% else %}
         {% widget 'CurrentProductPriceVolumeWidget' args [data.product.currentProductPrice] only %}
