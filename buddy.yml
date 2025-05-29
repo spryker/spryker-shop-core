@@ -41,3 +41,12 @@
             - 'bash travis_check_touched_modules.sh'
         cache_base_image: false
         shell: 'BASH'
+      - action: 'Module codeception include checker'
+        type: 'BUILD'
+        docker_image_name: 'spryker/php'
+        docker_image_tag: '8.2'
+        execute_commands:
+            - 'chmod +x *.sh'
+            - 'bash ci_check_module_codeception.sh Bundles SprykerShopTest'
+            - 'echo "Finished checking touched modules"'
+        shell: 'BASH'
