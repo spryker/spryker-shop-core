@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -15,6 +15,7 @@ import { HeaderComponent } from './header/header.component';
 import { JsonOutputComponent } from './json-output/json-output.component';
 import { ProductConfiguratorComponent } from './product-configurator/product-configurator.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { provideTranslateService } from '@ngx-translate/core';
 
 export function HttpLoaderFactory(httpClient: HttpClient): TranslateLoader {
     return new TranslateHttpLoader(httpClient, `${ASSETS}/assets/i18n/`);
@@ -32,13 +33,10 @@ export function HttpLoaderFactory(httpClient: HttpClient): TranslateLoader {
         ConfiguratorItemComponent,
         JsonOutputComponent,
     ],
-    imports: [
-        FormsModule,
-        CommonModule,
-        BrowserModule,
-        HttpClientModule,
-        TranslateModule,
-        TranslateModule.forRoot({
+    imports: [FormsModule, CommonModule, BrowserModule, TranslateModule],
+    providers: [
+        provideHttpClient(),
+        provideTranslateService({
             loader: {
                 provide: TranslateLoader,
                 useFactory: HttpLoaderFactory,
