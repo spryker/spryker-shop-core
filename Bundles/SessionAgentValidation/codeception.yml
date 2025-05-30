@@ -1,4 +1,6 @@
 namespace: SprykerShopTest
+include:
+    - tests/SprykerShopTest/Yves/SessionAgentValidation
 paths:
     tests: tests/
     output: tests/_output/

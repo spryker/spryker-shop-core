@@ -1,6 +1,6 @@
 namespace: QuickOrderPage
 include:
-    - tests/QuickOrderPageTest/Yves/QuickOrderPage
+    - tests/SprykerShopTest/Yves/QuickOrderPage
 paths:
     tests: tests
     output: tests/_output
