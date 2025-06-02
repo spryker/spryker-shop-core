@@ -28,6 +28,13 @@ class CategoryTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     protected const SERVICE_LOCALE = 'locale';
 
     /**
+     * @var string
+     *
+     * @uses \Spryker\Yves\Twig\Plugin\Console\TwigTemplateWarmingModeEventSubscriberPlugin::FLAG_TWIG_TEMPLATE_WARMING_MODE_ENABLED
+     */
+    protected const FLAG_TWIG_TEMPLATE_WARMING_MODE_ENABLED = 'FLAG_TWIG_TEMPLATE_WARMING_MODE_ENABLED';
+
+    /**
      * {@inheritDoc}
      *
      * @api
@@ -39,6 +46,14 @@ class CategoryTwigPlugin extends AbstractPlugin implements TwigPluginInterface
      */
     public function extend(Environment $twig, ContainerInterface $container): Environment
     {
+        // In Twig template warming mode there's no need for any variable values.
+        if (
+            $container->has(static::FLAG_TWIG_TEMPLATE_WARMING_MODE_ENABLED)
+            && $container->get(static::FLAG_TWIG_TEMPLATE_WARMING_MODE_ENABLED)
+        ) {
+            return $twig;
+        }
+
         return $this->addGlobalTemplateVariables($twig, $container);
     }
 

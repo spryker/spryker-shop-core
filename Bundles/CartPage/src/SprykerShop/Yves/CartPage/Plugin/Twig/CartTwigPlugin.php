@@ -31,6 +31,13 @@ class CartTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     protected const FUNCTION_NAME_GET_CART_QUANTITY = 'getCartQuantity';
 
     /**
+     * @var string
+     *
+     * @uses \Spryker\Yves\Twig\Plugin\Console\TwigTemplateWarmingModeEventSubscriberPlugin::FLAG_TWIG_TEMPLATE_WARMING_MODE_ENABLED
+     */
+    protected const FLAG_TWIG_TEMPLATE_WARMING_MODE_ENABLED = 'FLAG_TWIG_TEMPLATE_WARMING_MODE_ENABLED';
+
+    /**
      * {@inheritDoc}
      *
      * @api
@@ -42,8 +49,17 @@ class CartTwigPlugin extends AbstractPlugin implements TwigPluginInterface
      */
     public function extend(Environment $twig, ContainerInterface $container): Environment
     {
-        $twig = $this->addCartQuantityGlobalVariable($twig);
         $twig = $this->addTwigFunctions($twig);
+
+        // In Twig template warming mode there's no need for any variable values.
+        if (
+            $container->has(static::FLAG_TWIG_TEMPLATE_WARMING_MODE_ENABLED)
+            && $container->get(static::FLAG_TWIG_TEMPLATE_WARMING_MODE_ENABLED)
+        ) {
+            return $twig;
+        }
+
+        $twig = $this->addCartQuantityGlobalVariable($twig);
 
         return $twig;
     }
