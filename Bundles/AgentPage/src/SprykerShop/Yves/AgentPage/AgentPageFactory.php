@@ -13,6 +13,7 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Application;
 use Spryker\Yves\Router\Router\RouterInterface;
 use SprykerShop\Yves\AgentPage\Authenticator\AgentLoginFormAuthenticator;
+use SprykerShop\Yves\AgentPage\Badge\MultiFactorAuthBadge;
 use SprykerShop\Yves\AgentPage\Builder\AgentSecurityOptionsBuilder;
 use SprykerShop\Yves\AgentPage\Builder\AgentSecurityOptionsBuilderInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToAgentClientInterface;
@@ -271,6 +272,7 @@ class AgentPageFactory extends AbstractFactory
             $this->createAgentAuthenticationSuccessHandler(),
             $this->createAgentAuthenticationFailureHandler(),
             $this->getRouter(),
+            $this->createMultiFactorAuthBadge(),
         );
     }
 
@@ -338,5 +340,21 @@ class AgentPageFactory extends AbstractFactory
     public function getRequestStackService(): RequestStack
     {
         return $this->getProvidedDependency(AgentPageDependencyProvider::SERVICE_REQUEST_STACK);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\AgentPage\Badge\MultiFactorAuthBadge
+     */
+    public function createMultiFactorAuthBadge(): MultiFactorAuthBadge
+    {
+        return new MultiFactorAuthBadge($this->getAgentUserMultiFactorAuthenticationHandlerPlugins());
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\AgentPageExtension\Dependency\Plugin\AuthenticationHandlerPluginInterface>
+     */
+    public function getAgentUserMultiFactorAuthenticationHandlerPlugins(): array
+    {
+        return $this->getProvidedDependency(AgentPageDependencyProvider::PLUGINS_AGENT_USER_AUTHENTICATION_HANDLER);
     }
 }

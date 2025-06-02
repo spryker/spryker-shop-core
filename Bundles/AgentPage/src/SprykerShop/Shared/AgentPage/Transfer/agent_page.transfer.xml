@@ -20,4 +20,13 @@
         <property name="channelName" type="string"/>
     </transfer>
 
+    <transfer name="MultiFactorAuthValidationRequest" strict="true">
+        <property name="user" type="User"/>
+    </transfer>
+
+    <transfer name="MultiFactorAuthValidationResponse" strict="true">
+        <property name="isRequired" type="bool"/>
+        <property name="status" type="int"/>
+    </transfer>
+
 </transfers>

@@ -12,7 +12,6 @@ use SprykerShop\Yves\CustomerPage\Badge\MultiFactorAuthBadge;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Authentication\Token\NullToken;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -65,16 +64,16 @@ class CustomerLoginFormAuthenticator implements AuthenticatorInterface, Authenti
     protected const ROUTE_LOGIN = 'login';
 
     /**
-     * @var string
-     */
-    protected const PARAMETER_OPTIONS = 'options';
-
-    /**
      * @uses \Spryker\Shared\MultiFactorAuth\MultiFactorAuthConstants::CODE_BLOCKED
      *
      * @var int
      */
     protected const CODE_BLOCKED = 1;
+
+    /**
+     * @var string
+     */
+    protected const ACCESS_MODE_PRE_AUTH = 'ACCESS_MODE_PRE_AUTH';
 
     /**
      * @param \Symfony\Component\Security\Core\User\UserProviderInterface $userProvider
@@ -177,17 +176,10 @@ class CustomerLoginFormAuthenticator implements AuthenticatorInterface, Authenti
      */
     public function createToken(Passport $passport, string $firewallName): TokenInterface
     {
-        /** @var \SprykerShop\Yves\CustomerPage\Badge\MultiFactorAuthBadge $multiFactorAuthBadge */
-        $multiFactorAuthBadge = $passport->getBadge(MultiFactorAuthBadge::class);
-
-        if ($multiFactorAuthBadge->getIsRequired() === true || $multiFactorAuthBadge->getStatus() === static::CODE_BLOCKED) {
-            return new NullToken();
-        }
-
         return new PostAuthenticationToken(
             $passport->getUser(),
             $firewallName,
-            $passport->getUser()->getRoles(),
+            $this->assertUserIsPreAuthenticated($passport) ? [static::ACCESS_MODE_PRE_AUTH] : $passport->getUser()->getRoles(),
         );
     }
 
@@ -203,5 +195,18 @@ class CustomerLoginFormAuthenticator implements AuthenticatorInterface, Authenti
     public function createAuthenticatedToken(PassportInterface $passport, string $firewallName): TokenInterface /** @phpstan-ignore-line */
     {
         return $this->createToken($passport, $firewallName);
+    }
+
+    /**
+     * @param \Symfony\Component\Security\Http\Authenticator\Passport\Passport $passport
+     *
+     * @return bool
+     */
+    protected function assertUserIsPreAuthenticated(Passport $passport): bool
+    {
+        /** @var \SprykerShop\Yves\CustomerPage\Badge\MultiFactorAuthBadge $multiFactorAuthBadge */
+        $multiFactorAuthBadge = $passport->getBadge(MultiFactorAuthBadge::class);
+
+        return $multiFactorAuthBadge->getIsRequired() === true || $multiFactorAuthBadge->getStatus() === static::CODE_BLOCKED;
     }
 }

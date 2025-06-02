@@ -23,6 +23,13 @@ class AuthController extends AbstractController
     protected const ROUTE_CUSTOMER_OVERVIEW = 'customer/overview';
 
     /**
+     * @uses \SprykerShop\Yves\AgentPage\Plugin\Router\AgentPageRouteProviderPlugin::ROUTE_AGENT_OVERVIEW
+     *
+     * @var string
+     */
+    protected const ROUTE_AGENT_OVERVIEW = 'agent/overview';
+
+    /**
      * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_ALREADY_LOGGED_IN = 'agent_page.error.customer_already_logged_in';
@@ -36,6 +43,10 @@ class AuthController extends AbstractController
             $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ALREADY_LOGGED_IN);
 
             return $this->redirectResponseInternal(static::ROUTE_CUSTOMER_OVERVIEW);
+        }
+
+        if ($this->getFactory()->getAgentClient()->isLoggedIn()) {
+            return $this->redirectResponseInternal(static::ROUTE_AGENT_OVERVIEW);
         }
 
         return $this->view([

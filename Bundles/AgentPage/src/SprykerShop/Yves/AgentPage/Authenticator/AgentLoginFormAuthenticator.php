@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\AgentPage\Authenticator;
 
+use SprykerShop\Yves\AgentPage\Badge\MultiFactorAuthBadge;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -55,41 +56,31 @@ class AgentLoginFormAuthenticator implements AuthenticatorInterface, Authenticat
     protected const ROUTE_LOGIN = 'agent/login';
 
     /**
-     * @var \Symfony\Component\Security\Core\User\UserProviderInterface
+     * @var string
      */
-    protected UserProviderInterface $userProvider;
+    protected const ACCESS_MODE_PRE_AUTH = 'ACCESS_MODE_PRE_AUTH';
 
     /**
-     * @var \Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface
+     * @uses \Spryker\Shared\MultiFactorAuth\MultiFactorAuthConstants::CODE_BLOCKED
+     *
+     * @var int
      */
-    protected AuthenticationSuccessHandlerInterface $authenticationSuccessHandler;
-
-    /**
-     * @var \Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface
-     */
-    protected AuthenticationFailureHandlerInterface $authenticationFailureHandler;
-
-    /**
-     * @var \Spryker\Yves\Router\Router\RouterInterface
-     */
-    protected RouterInterface $router;
+    protected const CODE_BLOCKED = 1;
 
     /**
      * @param \Symfony\Component\Security\Core\User\UserProviderInterface $userProvider
      * @param \Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface $authenticationSuccessHandler
      * @param \Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface $authenticationFailureHandler
      * @param \Spryker\Yves\Router\Router\RouterInterface $router
+     * @param \SprykerShop\Yves\AgentPage\Badge\MultiFactorAuthBadge $multiFactorAuthBadge
      */
     public function __construct(
-        UserProviderInterface $userProvider,
-        AuthenticationSuccessHandlerInterface $authenticationSuccessHandler,
-        AuthenticationFailureHandlerInterface $authenticationFailureHandler,
-        RouterInterface $router
+        protected UserProviderInterface $userProvider,
+        protected AuthenticationSuccessHandlerInterface $authenticationSuccessHandler,
+        protected AuthenticationFailureHandlerInterface $authenticationFailureHandler,
+        protected RouterInterface $router,
+        protected MultiFactorAuthBadge $multiFactorAuthBadge
     ) {
-        $this->userProvider = $userProvider;
-        $this->authenticationSuccessHandler = $authenticationSuccessHandler;
-        $this->authenticationFailureHandler = $authenticationFailureHandler;
-        $this->router = $router;
     }
 
     /**
@@ -101,11 +92,19 @@ class AgentLoginFormAuthenticator implements AuthenticatorInterface, Authenticat
     {
         $data = $request->request->all(static::PARAMETER_LOGIN_FORM);
 
+        /** @var \Spryker\Zed\SecurityGui\Communication\Security\UserInterface $user */
+        $user = $this->userProvider->loadUserByIdentifier($data[static::PARAMETER_EMAIL]);
+        $badges = [$this->multiFactorAuthBadge->enable(
+            $user->getUserTransfer(),
+            $request,
+        )];
+
         return new Passport(
             new UserBadge($data[static::PARAMETER_EMAIL], function ($userEmail) {
                 return $this->userProvider->loadUserByIdentifier($userEmail);
             }),
             new PasswordCredentials($data[static::PARAMETER_PASSWORD]),
+            $badges,
         );
     }
 
@@ -164,7 +163,7 @@ class AgentLoginFormAuthenticator implements AuthenticatorInterface, Authenticat
         return new PostAuthenticationToken(
             $passport->getUser(),
             $firewallName,
-            $passport->getUser()->getRoles(),
+            $this->assertUserIsPreAuthenticated($passport) ? [static::ACCESS_MODE_PRE_AUTH] : $passport->getUser()->getRoles(),
         );
     }
 
@@ -180,5 +179,18 @@ class AgentLoginFormAuthenticator implements AuthenticatorInterface, Authenticat
     public function createAuthenticatedToken(PassportInterface $passport, string $firewallName): TokenInterface /** @phpstan-ignore-line */
     {
         return $this->createToken($passport, $firewallName);
+    }
+
+    /**
+     * @param \Symfony\Component\Security\Http\Authenticator\Passport\Passport $passport
+     *
+     * @return bool
+     */
+    protected function assertUserIsPreAuthenticated(Passport $passport): bool
+    {
+        /** @var \SprykerShop\Yves\AgentPage\Badge\MultiFactorAuthBadge $multiFactorAuthBadge */
+        $multiFactorAuthBadge = $passport->getBadge(MultiFactorAuthBadge::class);
+
+        return $multiFactorAuthBadge->getIsRequired() === true || $multiFactorAuthBadge->getStatus() === static::CODE_BLOCKED;
     }
 }

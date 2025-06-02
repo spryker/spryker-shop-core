@@ -23,5 +23,8 @@
         <li class="menu__item {{ macros.isActive('quoteRequestAgent', data.activePage) }}">
             <a href="{{ url('agent/quote-request') }}" data-id="sidebar-quote-request">{{ 'agent.account.quote_request' | trans }}</a>
         </li>
+        {% if widgetGlobalExists('SetMultiFactorAuthMenuItemWidget') %}
+            {% widget 'SetMultiFactorAuthMenuItemWidget' args [data.activePage] only %}{% endwidget %}
+        {% endif %}
     </ul>
 {% endblock %}

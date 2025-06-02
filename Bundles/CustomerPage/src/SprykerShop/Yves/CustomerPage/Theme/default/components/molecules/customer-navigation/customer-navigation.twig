@@ -90,7 +90,9 @@
             {% endblock %}
         {% endwidget %}
 
-        {% widget 'SetMultiFactorAuthMenuItemWidget' args [data.activePage] only %}{% endwidget %}
+        {% if widgetGlobalExists('SetMultiFactorAuthMenuItemWidget') %}
+            {% widget 'SetMultiFactorAuthMenuItemWidget' args [data.activePage] only %}{% endwidget %}
+        {% endif %}
 
         {% widget 'SspListMenuItemWidget' args [data.activePage] only %}{% endwidget %}
     </ul>

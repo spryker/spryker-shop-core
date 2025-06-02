@@ -37,7 +37,6 @@ class AgentController extends AbstractController
     {
         return [
             'agent' => $this->getFactory()->getAgentClient()->isLoggedIn() ? $this->getFactory()->getAgentClient()->getAgent() : null,
-            'loginRedirectUrl' => static::LOGIN_REDIRECT_URL,
         ];
     }
 

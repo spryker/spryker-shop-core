@@ -13,6 +13,7 @@ parameters:
         - '#Call to an undefined method .+getUsername\(\).#'
         - '#Class .+UsernamePasswordFormAuthenticationListener not found.#'
         - '#Parameter \#1 \$passport of method .+CustomerLoginFormAuthenticator::createToken\(\) expects .+Passport, .+PassportInterface given.#'
+        - '#Call to an undefined method .+AuthenticationSuccessHandlerInterface::executeOnAuthenticationSuccess\(\).#'
     excludePaths:
         - '%rootDir%/../../../vendor/spryker/spryker-shop/Bundles/CustomerPage/src/SprykerShop/Yves/CustomerPage/UserChecker/InMemoryUserChecker.php'
 

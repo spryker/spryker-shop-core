@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\AgentPage\Plugin\Handler;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\AgentPage\Security\Agent;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,6 +35,16 @@ class AgentAuthenticationSuccessHandler extends AbstractPlugin implements Authen
     protected $targetUrl;
 
     /**
+     * @var string
+     */
+    protected const ACCESS_MODE_PRE_AUTH = 'ACCESS_MODE_PRE_AUTH';
+
+    /**
+     * @var string
+     */
+    protected const PARAMETER_REQUIRES_ADDITIONAL_AUTH = 'requires_additional_auth';
+
+    /**
      * @param string|null $targetUrl
      */
     public function __construct(?string $targetUrl = null)
@@ -49,13 +60,29 @@ class AgentAuthenticationSuccessHandler extends AbstractPlugin implements Authen
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token): Response
     {
-        $this->setAgentSession(
+        if (in_array(static::ACCESS_MODE_PRE_AUTH, $token->getRoleNames())) {
+            return new JsonResponse([
+                static::PARAMETER_REQUIRES_ADDITIONAL_AUTH => true,
+            ]);
+        }
+
+        $this->executeOnAuthenticationSuccess(
             $this->getSecurityUser($token)->getUserTransfer(),
         );
 
-        $this->getFactory()->createAuditLogger()->addAgentSuccessfulLoginAuditLog();
-
         return $this->createRedirectResponse();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return void
+     */
+    public function executeOnAuthenticationSuccess(UserTransfer $userTransfer): void
+    {
+        $this->setAgentSession($userTransfer);
+
+        $this->getFactory()->createAuditLogger()->addAgentSuccessfulLoginAuditLog();
     }
 
     /**

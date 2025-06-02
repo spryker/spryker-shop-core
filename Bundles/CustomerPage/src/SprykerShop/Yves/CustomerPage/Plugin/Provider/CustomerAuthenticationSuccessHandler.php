@@ -12,7 +12,6 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Authentication\Token\NullToken;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 
@@ -31,12 +30,12 @@ class CustomerAuthenticationSuccessHandler extends AbstractPlugin implements Aut
     /**
      * @var string
      */
-    protected const PARAMETER_OPTIONS = 'options';
+    protected const PARAMETER_REQUIRES_ADDITIONAL_AUTH = 'requires_additional_auth';
 
     /**
      * @var string
      */
-    protected const PARAMETER_REQUIRES_ADDITIONAL_AUTH = 'requiresAdditionalAuth';
+    protected const ACCESS_MODE_PRE_AUTH = 'ACCESS_MODE_PRE_AUTH';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -46,24 +45,31 @@ class CustomerAuthenticationSuccessHandler extends AbstractPlugin implements Aut
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token): Response
     {
-        /** @var \SprykerShop\Yves\CustomerPage\Security\Customer $customer */
-        $customer = $token->getUser();
-
-        if ($token instanceof NullToken) {
+        if (in_array(static::ACCESS_MODE_PRE_AUTH, $token->getRoleNames())) {
             return new JsonResponse([
                 static::PARAMETER_REQUIRES_ADDITIONAL_AUTH => true,
             ]);
         }
 
-        $this->setCustomerSession($customer->getCustomerTransfer());
+        /** @var \SprykerShop\Yves\CustomerPage\Security\Customer $customer */
+        $customer = $token->getUser();
+        $this->executeOnAuthenticationSuccess($customer->getCustomerTransfer());
 
-        $response = $this->createRedirectResponse($request);
+        return $this->createRedirectResponse($request);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    public function executeOnAuthenticationSuccess(CustomerTransfer $customerTransfer): void
+    {
+        $this->setCustomerSession($customerTransfer);
 
         $this->executeAfterPlugins();
 
         $this->getFactory()->createAuditLogger()->addSuccessfulLoginAuditLog();
-
-        return $response;
     }
 
     /**

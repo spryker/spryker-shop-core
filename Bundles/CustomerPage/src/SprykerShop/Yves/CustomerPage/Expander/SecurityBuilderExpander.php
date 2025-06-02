@@ -36,6 +36,11 @@ class SecurityBuilderExpander implements SecurityBuilderExpanderInterface
     protected const ACCESS_MODE_PUBLIC = 'PUBLIC_ACCESS';
 
     /**
+     * @var string
+     */
+    protected const ACCESS_MODE_PRE_AUTH = 'ACCESS_MODE_PRE_AUTH';
+
+    /**
      * @uses \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_LOGIN
      *
      * @var string
@@ -162,6 +167,10 @@ class SecurityBuilderExpander implements SecurityBuilderExpanderInterface
             [
                 $this->customerPageConfig->getAnonymousPattern(),
                 static::ACCESS_MODE_PUBLIC,
+            ],
+            [
+                $this->customerPageConfig->getAnonymousPattern(),
+                static::ACCESS_MODE_PRE_AUTH,
             ],
         ]);
     }

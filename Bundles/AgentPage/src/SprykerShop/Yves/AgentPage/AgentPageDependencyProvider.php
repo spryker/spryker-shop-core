@@ -93,6 +93,11 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_SESSION_POST_IMPERSONATION = 'PLUGINS_SESSION_POST_IMPERSONATION';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_AGENT_USER_AUTHENTICATION_HANDLER = 'PLUGINS_AGENT_USER_AUTHENTICATION_HANDLER';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -112,6 +117,7 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addLocale($container);
         $container = $this->addRequestStackService($container);
         $container = $this->addSessionPostImpersonationPlugins($container);
+        $container = $this->addAgentUserAuthenticationHandlerPlugins($container);
 
         return $container;
     }
@@ -284,6 +290,28 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return list<\SprykerShop\Yves\AgentPageExtension\Dependency\Plugin\SessionPostImpersonationPluginInterface>
      */
     protected function getSessionPostImpersonationPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addAgentUserAuthenticationHandlerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_AGENT_USER_AUTHENTICATION_HANDLER, function () {
+            return $this->getAgentUserAuthenticationHandlerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\SprykerShop\Yves\AgentPageExtension\Dependency\Plugin\AuthenticationHandlerPluginInterface>
+     */
+    protected function getAgentUserAuthenticationHandlerPlugins(): array
     {
         return [];
     }

@@ -40,6 +40,11 @@ class SecurityBuilderExpander implements SecurityBuilderExpanderInterface
     protected const ROLE_ALLOWED_TO_SWITCH = 'ROLE_ALLOWED_TO_SWITCH';
 
     /**
+     * @var string
+     */
+    protected const ACCESS_MODE_PRE_AUTH = 'ACCESS_MODE_PRE_AUTH';
+
+    /**
      * @uses \SprykerShop\Shared\CustomerPage\CustomerPageConfig::SECURITY_FIREWALL_NAME
      *
      * @var string
@@ -151,6 +156,7 @@ class SecurityBuilderExpander implements SecurityBuilderExpanderInterface
                 [
                     static::ROLE_AGENT,
                     static::ROLE_PREVIOUS_ADMIN,
+                    static::ACCESS_MODE_PRE_AUTH,
                 ],
             ],
         ]);
