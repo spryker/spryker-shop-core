@@ -44,6 +44,54 @@ class QuickOrderPageConfig extends AbstractBundleConfig
     ];
 
     /**
+     * @var int
+     */
+    protected const UPLOAD_MAX_FILE_COUNT = 1;
+
+    /**
+     * @var string
+     */
+    protected const UPLOAD_MAX_TOTAL_FILE_SIZE = '5 MB';
+
+    /**
+     * @var string
+     */
+    protected const UPLOAD_DISPLAY_ALLOWED_FILE_TYPES_TEXT = 'csv';
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getUploadMaxFileCount(): int
+    {
+        return static::UPLOAD_MAX_FILE_COUNT;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getUploadMaxTotalFileSize(): string
+    {
+        return static::UPLOAD_MAX_TOTAL_FILE_SIZE;
+    }
+
+    /**
+     * Specification:
+     * - This will be displayed as a help text in the Uploader UI.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getUploadDisplayAllowedFileTypesText(): string
+    {
+        return static::UPLOAD_DISPLAY_ALLOWED_FILE_TYPES_TEXT;
+    }
+
+    /**
      * @api
      *
      * @return string
