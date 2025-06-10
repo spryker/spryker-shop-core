@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Form\DataProvider;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
@@ -55,9 +54,9 @@ class SummaryFormDataProvider implements StepEngineFormDataProviderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function getData(AbstractTransfer $quoteTransfer): QuoteTransfer
+    public function getData(AbstractTransfer $quoteTransfer)
     {
         return $quoteTransfer;
     }
