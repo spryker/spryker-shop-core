@@ -29,6 +29,7 @@ export default class ActionSingleClickEnforcer extends Component {
         }
 
         if (isLink) {
+            event.preventDefault();
             const link = <HTMLLinkElement>targetElement;
             this.disableLink(event, link);
 
