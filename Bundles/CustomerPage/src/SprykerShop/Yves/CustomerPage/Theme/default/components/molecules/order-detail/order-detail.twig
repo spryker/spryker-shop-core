@@ -34,8 +34,8 @@
                 },
             } only %}{% endwidget %}
 
-            {% if widgetGlobalExists('CreateOrderSspInquiryLinkWidget') and can('CreateSspInquiryPermissionPlugin') %}
-                {% widget 'CreateOrderSspInquiryLinkWidget' args [data.order.orderReference, data.order.idSalesOrder] only %}{% endwidget %}
+            {% if widgetGlobalExists('CreateOrderSspInquiryWidget') and can('CreateSspInquiryPermissionPlugin') %}
+                {% widget 'CreateOrderSspInquiryWidget' args [data.order.orderReference, data.order.idSalesOrder] only %}{% endwidget %}
             {% endif %}
 
             <a href="{{url('customer/order')}}" class="link float-right">{{ 'general.back.button' | trans }}</a>
