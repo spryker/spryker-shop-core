@@ -1,0 +1,9 @@
+{% extends template('widget') %}
+
+{% define data = {
+    successTitle: _widget.successTitle,
+} %}
+
+{% block body %}
+    {{ data.successTitle | trans }}
+{% endblock %}

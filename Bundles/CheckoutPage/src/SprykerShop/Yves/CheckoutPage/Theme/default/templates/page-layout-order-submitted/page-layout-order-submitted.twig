@@ -9,7 +9,13 @@
 
 {% block content %}
     <div class="box">
-        <h3>{{ data.title }}</h3>
+        <h3>
+            {% if widgetGlobalExists('UpdateOrderCheckoutSuccessTitleWidget') %}
+                {% widget 'UpdateOrderCheckoutSuccessTitleWidget' args [data.title, data.quote] only %}{% endwidget %}
+            {% else %}
+                {{ data.title }}
+            {% endif %}
+        </h3>
         <p>{{ data.message }}</p>
     </div>
 {% endblock %}

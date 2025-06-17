@@ -100,7 +100,7 @@
                                     {% endif %}
 
                                     {% widget 'SspServicePointNameForItemWidget' args [data.node, false] only %}{% endwidget %}
-                                    
+
                                 {% endblock %}
                             {% endembed %}
 
@@ -311,7 +311,11 @@
 
                 {% block submit %}
                     <button class="{{ config.name }}__action {{ data.submit.class }} js-summary__submit-button" data-init-single-click>
-                        {{ data.submit.text }}
+                        {% if widgetGlobalExists('UpdateOrderCheckoutSubmitButtonTextWidget') %}
+                            {% widget 'UpdateOrderCheckoutSubmitButtonTextWidget' args [data.submit.text, embed.cart] only %}{% endwidget %}
+                        {% else %}
+                            {{ data.submit.text }}
+                        {% endif %}
                     </button>
                 {% endblock %}
 

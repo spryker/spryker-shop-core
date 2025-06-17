@@ -1,0 +1,9 @@
+{% extends template('widget') %}
+
+{% define data = {
+    submitButtonText: _widget.submitButtonText,
+} %}
+
+{% block body %}
+    {{ data.submitButtonText | trans }}
+{% endblock %}
