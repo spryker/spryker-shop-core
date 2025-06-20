@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 use ReflectionClassConstant;
 use Spryker\Client\ContentProductSet\Exception\InvalidProductSetTermException;
 use Spryker\Service\Container\ContainerInterface;
-use Spryker\Shared\Kernel\Store;
 use SprykerShop\Yves\ContentProductSetWidget\ContentProductSetWidgetDependencyProvider;
 use SprykerShop\Yves\ContentProductSetWidget\Dependency\Client\ContentProductSetWidgetToContentProductSetClientInterface;
 use SprykerShop\Yves\ContentProductSetWidget\Dependency\Client\ContentProductSetWidgetToProductSetStorageClientInterface;
@@ -99,16 +98,6 @@ class ContentProductSetTwigPluginTest extends Unit
      * @var \SprykerShopTest\Yves\ContentProductSetWidget\ContentProductSetWidgetYvesTester
      */
     protected $tester;
-
-    /**
-     * @return void
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        Store::getInstance()->setCurrentLocale(static::LOCALE);
-    }
 
     /**
      * @return void

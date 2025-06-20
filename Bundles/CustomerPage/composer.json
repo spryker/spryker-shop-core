@@ -49,7 +49,8 @@
         "spryker/silex": "*",
         "spryker/storage": "*",
         "spryker/storage-redis": "*",
-        "spryker/testify": "*"
+        "spryker/testify": "*",
+        "spryker/zed-request": "*"
     },
     "suggest": {
         "spryker-shop/business-on-behalf-widget": "If you want to use BusinessOnBehalfWidget or MenuItemBusinessOnBehalfWidgetPlugin.",

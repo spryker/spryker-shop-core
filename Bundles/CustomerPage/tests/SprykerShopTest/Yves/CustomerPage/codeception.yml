@@ -33,3 +33,6 @@ suites:
                 - \SprykerTest\Yves\Router\Helper\RouterHelper
                 - \SprykerTest\Yves\Security\Helper\SecurityHelper
                 - \SprykerTest\Yves\Session\Helper\SessionHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Zed\ZedRequest\Helper\MetadataHelper
+                - \SprykerTest\Shared\Storage\Helper\StorageRedisConfigHelper

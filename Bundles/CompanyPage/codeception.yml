@@ -1,6 +1,6 @@
 namespace: SprykerShopTest
 include:
-    - tests/SprykerShopTest/Yves/CompanyPage/Form
+    - tests/SprykerShopTest/Yves/CompanyPage
 paths:
     tests: tests/
     output: tests/_output/

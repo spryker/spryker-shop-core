@@ -15,7 +15,6 @@ use ReflectionClassConstant;
 use Spryker\Client\ContentNavigation\ContentNavigationDependencyProvider;
 use Spryker\Client\ContentNavigation\Dependency\Client\ContentNavigationToContentStorageClientInterface;
 use Spryker\Service\Container\ContainerInterface;
-use Spryker\Shared\Kernel\Store;
 use SprykerShop\Yves\ContentNavigationWidget\ContentNavigationWidgetDependencyProvider;
 use SprykerShop\Yves\ContentNavigationWidget\Dependency\Client\ContentNavigationWidgetToContentNavigationClientInterface;
 use SprykerShop\Yves\ContentNavigationWidget\Dependency\Client\ContentNavigationWidgetToNavigationStorageClientInterface;
@@ -90,18 +89,11 @@ class ContentNavigationTwigPluginTest extends Unit
     /**
      * @return void
      */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        Store::getInstance()->setCurrentLocale(static::LOCALE);
-    }
-
-    /**
-     * @return void
-     */
     public function testContentNavigationNotFound(): void
     {
+        // Arrange
+        $this->setContentNavigationToContentStorageClientReturn();
+
         // Act
         $navigationContent = call_user_func(
             $this->getContentNavigationTwigFunction()->getCallable(),

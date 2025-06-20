@@ -7,9 +7,10 @@
 
 namespace SprykerShopTest\Yves\CustomerPage\Form;
 
-use PHPUnit\Framework\TestCase;
+use Codeception\Test\Unit;
 use SprykerShop\Yves\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Form\LoginForm;
+use SprykerShopTest\Yves\CustomerPage\CustomerPageTester;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -19,8 +20,13 @@ use Symfony\Component\Form\FormBuilderInterface;
  * @group Form
  * @group LoginFormTest
  */
-class LoginFormTest extends TestCase
+class LoginFormTest extends Unit
 {
+    /**
+     * @var \SprykerShopTest\Yves\CustomerPage\CustomerPageTester
+     */
+    protected CustomerPageTester $tester;
+
     /**
      * @var \SprykerShop\Yves\CustomerPage\Form\LoginForm|\PHPUnit\Framework\MockObject\MockObject
      */
@@ -36,10 +42,13 @@ class LoginFormTest extends TestCase
      */
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->loginForm = $this->getMockBuilder(LoginForm::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['addRememberMeField', 'getConfig'])
             ->getMock();
+        $this->loginForm->setFactory($this->tester->getFactory());
 
         $this->builderMock = $this->getMockBuilder(FormBuilderInterface::class)
             ->disableOriginalConstructor()

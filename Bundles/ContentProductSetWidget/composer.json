@@ -21,6 +21,7 @@
         "spryker/event-dispatcher": "*",
         "spryker/locale": "*",
         "spryker/router": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "suggest": {

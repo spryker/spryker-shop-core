@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 use ReflectionClassConstant;
 use Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTermException;
 use Spryker\Service\Container\Container;
-use Spryker\Shared\Kernel\Store;
 use SprykerShop\Yves\ContentProductWidget\ContentProductWidgetDependencyProvider;
 use SprykerShop\Yves\ContentProductWidget\Dependency\Client\ContentProductWidgetToContentProductClientBridgeInterface;
 use SprykerShop\Yves\ContentProductWidget\Dependency\Client\ContentProductWidgetToProductStorageClientBridgeInterface;
@@ -89,16 +88,6 @@ class ContentProductAbstractListTwigPluginTest extends Unit
      * @var \SprykerShopTest\Yves\ContentProductWidget\ContentProductWidgetYvesTester
      */
     protected $tester;
-
-    /**
-     * @return void
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        Store::getInstance()->setCurrentLocale(static::LOCALE);
-    }
 
     /**
      * @return void

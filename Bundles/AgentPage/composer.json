@@ -34,11 +34,12 @@
         "spryker/storage": "*",
         "spryker/storage-redis": "*",
         "spryker/store": "*",
-        "spryker/testify": "*"
+        "spryker/testify": "*",
+        "spryker/zed-request": "*"
     },
     "suggest": {
-        "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
-        "spryker/multi-factor-auth": "Use this module when using plugins that need MultiFactorAuth dependencies."
+        "spryker/multi-factor-auth": "Use this module when using plugins that need MultiFactorAuth dependencies.",
+        "spryker/silex": "Use this module when using plugins that need Silex dependencies."
     },
     "autoload": {
         "psr-4": {

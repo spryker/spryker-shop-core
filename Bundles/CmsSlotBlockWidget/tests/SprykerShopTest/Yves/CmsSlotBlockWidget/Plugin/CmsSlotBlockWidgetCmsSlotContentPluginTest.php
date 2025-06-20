@@ -114,6 +114,7 @@ class CmsSlotBlockWidgetCmsSlotContentPluginTest extends Unit
             ->onlyMethods(['getCmsBlockTwigFunction'])
             ->setConstructorArgs([
                 $this->getMockBuilder(Environment::class)
+                    ->disableOriginalConstructor()
                     ->getMock(),
                 $this->tester->getFactory()->getCmsSlotBlockStorageClient(),
                 $this->tester->getFactory()->getCmsSlotBlockClient(),

@@ -17,6 +17,7 @@
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
         "spryker/locale": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "suggest": {

@@ -14,7 +14,6 @@ use ReflectionClassConstant;
 use Spryker\Client\ContentBanner\ContentBannerDependencyProvider;
 use Spryker\Client\ContentBanner\Dependency\Client\ContentBannerToContentStorageClientInterface;
 use Spryker\Service\Container\ContainerInterface;
-use Spryker\Shared\Kernel\Store;
 use SprykerShop\Yves\ContentBannerWidget\ContentBannerWidgetDependencyProvider;
 use SprykerShop\Yves\ContentBannerWidget\Dependency\Client\ContentBannerWidgetToContentBannerClientInterface;
 use SprykerShop\Yves\ContentBannerWidget\Plugin\Twig\ContentBannerTwigPlugin;
@@ -35,11 +34,6 @@ use Twig\Loader\FilesystemLoader;
  */
 class ContentBannerTwigPluginTest extends Unit
 {
-    /**
-     * @var string
-     */
-    protected const LOCALE = 'de_DE';
-
     /**
      * @var string
      */
@@ -84,16 +78,6 @@ class ContentBannerTwigPluginTest extends Unit
      * @var \SprykerShopTest\Yves\ContentBannerWidget\ContentBannerWidgetYvesTester
      */
     protected $tester;
-
-    /**
-     * @return void
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        Store::getInstance()->setCurrentLocale(static::LOCALE);
-    }
 
     /**
      * @return void

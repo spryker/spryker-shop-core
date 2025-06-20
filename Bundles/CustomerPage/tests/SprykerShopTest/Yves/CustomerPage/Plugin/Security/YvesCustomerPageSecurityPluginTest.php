@@ -9,6 +9,8 @@ namespace SprykerShopTest\Yves\CustomerPage\Plugin\Security;
 
 use Codeception\Stub;
 use Codeception\Test\Unit;
+use DateTime;
+use Generated\Shared\Transfer\CustomerTransfer;
 use ReflectionClass;
 use Spryker\Client\Storage\StorageDependencyProvider;
 use Spryker\Client\StorageRedis\Plugin\StorageRedisPlugin;
@@ -82,7 +84,7 @@ class YvesCustomerPageSecurityPluginTest extends Unit
     {
         // Arrange
         $container = $this->tester->getContainer();
-        $customerTransfer = $this->tester->haveCustomer(['password' => 'foo']);
+        $customerTransfer = $this->tester->haveCustomer(['password' => 'foo', CustomerTransfer::REGISTERED => new DateTime()]);
 
         $securityPlugin = new YvesCustomerPageSecurityPlugin();
         $securityPlugin->setFactory($this->tester->getFactory());
@@ -95,9 +97,8 @@ class YvesCustomerPageSecurityPluginTest extends Unit
 
         // Act
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
-        $httpKernelBrowser->request('get', '/');
         $httpKernelBrowser->request('post', '/login_check', ['loginForm' => ['email' => $customerTransfer->getEmail(), 'password' => 'foo']]);
-        $httpKernelBrowser->followRedirect();
+        $httpKernelBrowser->request('get', '/');
 
         // Assert
         $this->assertSame('authenticated', $httpKernelBrowser->getResponse()->getContent());

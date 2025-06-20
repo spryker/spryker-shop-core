@@ -25,3 +25,4 @@ suites:
                 - \SprykerTest\Yves\Application\Helper\ApplicationHelper
                 - \SprykerTest\Yves\EventDispatcher\Helper\EventDispatcherHelper
                 - \SprykerTest\Yves\Router\Helper\RouterHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper

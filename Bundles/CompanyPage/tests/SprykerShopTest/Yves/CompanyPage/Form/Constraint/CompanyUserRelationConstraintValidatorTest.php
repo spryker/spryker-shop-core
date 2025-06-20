@@ -46,11 +46,6 @@ class CompanyUserRelationConstraintValidatorTest extends ConstraintValidatorTest
     /**
      * @var string
      */
-    protected const VALIDATION_MESSAGE = 'Unauthorized request.';
-
-    /**
-     * @var string
-     */
     protected const LOCALE_DE = 'de_DE';
 
     /**
@@ -139,30 +134,30 @@ class CompanyUserRelationConstraintValidatorTest extends ConstraintValidatorTest
     {
         return [
             'Should return false when a customer is not set' => [
-                static::TEST_ID_COMPANY, static::VALIDATION_MESSAGE, false, static::VALIDATION_MESSAGE, null,
+                static::TEST_ID_COMPANY, static::GLOSSARY_KEY_COMPANY_USER_INVALID_COMPANY, false, static::GLOSSARY_KEY_GLOBAL_PERMISSION_FAILED, null,
             ],
             'Should return false when a customer does not have company user' => [
-                static::TEST_ID_COMPANY, static::VALIDATION_MESSAGE, false, static::VALIDATION_MESSAGE, new CustomerTransfer(),
+                static::TEST_ID_COMPANY, static::GLOSSARY_KEY_COMPANY_USER_INVALID_COMPANY, false, static::GLOSSARY_KEY_GLOBAL_PERMISSION_FAILED, new CustomerTransfer(),
             ],
             'Should return false when a company user does not have company' => [
                 static::TEST_ID_COMPANY,
-                static::VALIDATION_MESSAGE,
+                static::GLOSSARY_KEY_COMPANY_USER_INVALID_COMPANY,
                 false,
-                static::VALIDATION_MESSAGE,
+                static::GLOSSARY_KEY_GLOBAL_PERMISSION_FAILED,
                 (new CustomerTransfer())->setCompanyUserTransfer(new CompanyUserTransfer()),
             ],
             'Should return false when a company user have another company' => [
                 static::TEST_ID_COMPANY,
-                static::VALIDATION_MESSAGE,
+                static::GLOSSARY_KEY_COMPANY_USER_INVALID_COMPANY,
                 false,
-                static::VALIDATION_MESSAGE,
+                static::GLOSSARY_KEY_GLOBAL_PERMISSION_FAILED,
                 (new CustomerTransfer())->setCompanyUserTransfer((new CompanyUserTransfer())->setFkCompany(static::TEST_ID_COMPANY_2)),
             ],
             'Should return true when a company user have the same company' => [
                 static::TEST_ID_COMPANY,
-                static::VALIDATION_MESSAGE,
+                static::GLOSSARY_KEY_COMPANY_USER_INVALID_COMPANY,
                 true,
-                static::VALIDATION_MESSAGE,
+                static::GLOSSARY_KEY_GLOBAL_PERMISSION_FAILED,
                 (new CustomerTransfer())->setCompanyUserTransfer((new CompanyUserTransfer())->setFkCompany(static::TEST_ID_COMPANY)),
             ],
             'Should return fallback glossary when translation for new glossary is not provided' => [
