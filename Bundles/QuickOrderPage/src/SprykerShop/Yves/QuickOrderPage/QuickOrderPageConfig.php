@@ -61,6 +61,8 @@ class QuickOrderPageConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return int
      */
     public function getUploadMaxFileCount(): int
@@ -70,6 +72,8 @@ class QuickOrderPageConfig extends AbstractBundleConfig
 
     /**
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return string
      */
@@ -83,6 +87,8 @@ class QuickOrderPageConfig extends AbstractBundleConfig
      * - This will be displayed as a help text in the Uploader UI.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return string
      */

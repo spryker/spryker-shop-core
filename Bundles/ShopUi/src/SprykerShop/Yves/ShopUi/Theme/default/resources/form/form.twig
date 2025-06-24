@@ -12,26 +12,25 @@
 
 {%- block form_widget_simple -%}
     {%- set label = (label | default('')) | trans -%}
-    {% set type = type | default('text') %}
 
     {%- set attr = attr | merge({
-        class: type == 'file' ?: ('input input--expand' ~ (errors is not empty ? ' input--error' : ' ') ~ (attr.class | default(''))) | trim,
-        type: type,
+        class: ('input input--expand' ~ (errors is not empty ? ' input--error' : ' ') ~ (attr.class | default(''))) | trim,
+        type: type | default('text'),
         placeholder: attr.placeholder | default(label)
     }) -%}
 
-    {% if type == 'file' %}
-        {% include molecule('input-dropzone') with {
-            modifiers: [errors is not empty ? 'error' : ''],
-            data: {
-                name: full_name,
-                id: id,
-                inputAttrs: attr,
-            },
-        } only %}
-    {% else %}
-        <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}>
-    {% endif %}
+    <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}>
+{%- endblock -%}
+
+{%- block dropzone_widget -%}
+    {% include molecule('input-dropzone') with {
+        modifiers: [errors is not empty ? 'error' : ''],
+        data: {
+            name: full_name,
+            id: id,
+            inputAttrs: attr,
+        },
+    } only %}
 {%- endblock -%}
 
 {%- block textarea_widget -%}

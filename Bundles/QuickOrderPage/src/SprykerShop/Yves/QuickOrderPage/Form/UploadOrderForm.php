@@ -53,12 +53,6 @@ class UploadOrderForm extends AbstractType
                 'constraints' => [
                     $this->getFactory()->createUploadOrderCorrectConstraint(),
                 ],
-                'attr' => [
-                    'maxCount' => $this->getConfig()->getUploadMaxFileCount(),
-                    'maxTotalSize' => $this->getConfig()->getUploadMaxTotalFileSize(),
-                    'accept' => implode(',', $this->getConfig()->getAllowedCsvFileMimeTypes()),
-                    'acceptExtensions' => $this->getConfig()->getUploadDisplayAllowedFileTypesText(),
-                ],
             ],
         );
 
