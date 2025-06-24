@@ -1,6 +1,12 @@
 @mixin service-point-widget-service-point($name: '.service-point') {
     #{$name} {
         padding: map-get($setting-spacing, big) 1.5rem;
+        flex-shrink: 0;
+
+        &:hover,
+        &--highlighted {
+            box-shadow: inset 0 0 0 2px $setting-color-main;
+        }
 
         &:not(:last-child) {
             border-bottom: solid 1px $setting-color-input-border;

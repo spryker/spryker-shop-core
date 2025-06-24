@@ -16,6 +16,10 @@
         z-index: $setting-zi-popup;
         overflow: hidden;
 
+        &--wide {
+            width: 77.8125rem;
+        }
+
         &__head {
             min-height: 2rem;
         }

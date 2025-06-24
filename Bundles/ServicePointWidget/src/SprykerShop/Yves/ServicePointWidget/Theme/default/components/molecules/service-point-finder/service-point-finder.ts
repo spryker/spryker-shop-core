@@ -8,6 +8,9 @@ export interface ProductOfferAvailability {
     isAvailable: boolean;
     productOfferReference: string;
     servicePointUuid: string;
+    lat: string;
+    lng: string;
+    address: string;
 }
 
 export interface ServicePointEventDetail {
