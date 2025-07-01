@@ -10,7 +10,7 @@
 {% block content %}
     <div class="box">
         <h3>
-            {% if widgetGlobalExists('UpdateOrderCheckoutSuccessTitleWidget') %}
+            {% if widgetGlobalExists('UpdateOrderCheckoutSuccessTitleWidget') and data.quote is defined %}
                 {% widget 'UpdateOrderCheckoutSuccessTitleWidget' args [data.title, data.quote] only %}{% endwidget %}
             {% else %}
                 {{ data.title }}
