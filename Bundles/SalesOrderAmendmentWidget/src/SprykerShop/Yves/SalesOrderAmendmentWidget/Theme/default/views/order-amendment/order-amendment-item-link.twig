@@ -1,0 +1,14 @@
+{% extends template('widget') %}
+
+{% define data = {
+    url: _widget.url,
+    name: _widget.name,
+} %}
+
+{% block body %}
+    {% if data.url %}
+        <a href="{{ data.url }}">{{ data.name }}</a>
+    {% else %}
+        {{ data.name }}
+    {% endif %}
+{% endblock %}
