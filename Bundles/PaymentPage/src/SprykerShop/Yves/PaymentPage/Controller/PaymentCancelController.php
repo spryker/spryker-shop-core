@@ -46,10 +46,18 @@ class PaymentCancelController extends AbstractController
         $orderReference = $request->query->get(static::PARAM_ORDER_REFERENCE);
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
-        if ($orderReference !== null && $customerTransfer !== null) {
+        if ($orderReference !== null) {
+            if ($customerTransfer !== null) {
+                $this->getFactory()->getSalesClient()->cancelOrder((new OrderCancelRequestTransfer())
+                    ->setCustomer($customerTransfer)
+                    ->setOrderReference((string)$orderReference));
+
+                return;
+            }
+
             $this->getFactory()->getSalesClient()->cancelOrder((new OrderCancelRequestTransfer())
-                ->setCustomer($customerTransfer)
-                ->setOrderReference((string)$orderReference));
+                ->setOrderReference((string)$orderReference)
+                ->setAllowCancellationWithoutCustomer(true));
         }
     }
 }
