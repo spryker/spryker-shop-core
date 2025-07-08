@@ -24,11 +24,27 @@ class ShipmentTypeWidgetConfig extends AbstractBundleConfig
      *
      * @api
      *
+     * @deprecated Use {@link \SprykerShop\Yves\ShipmentTypeWidget\ShipmentTypeWidgetConfig::getDeliveryShipmentTypes()} instead.
+     *
      * @return string
      */
     public function getDefaultShipmentType(): string
     {
         return static::SHIPMENT_TYPE_DELIVERY;
+    }
+
+    /**
+     * Specification:
+     * - Defines a list of shipment type keys that are considered as delivery types, that will be used in the shipment type address form.
+     * - The first shipment type in the list will be considered as the primary default.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getDeliveryShipmentTypes(): array
+    {
+        return [static::SHIPMENT_TYPE_DELIVERY];
     }
 
     /**

@@ -17,6 +17,13 @@ class ServicePointWidgetConfig extends AbstractBundleConfig
     protected const SEARCH_RESULT_LIMIT = 10;
 
     /**
+     * @uses \Spryker\Shared\ShipmentType\ShipmentTypeConfig::SHIPMENT_TYPE_DELIVERY
+     *
+     * @var string
+     */
+    protected const SHIPMENT_TYPE_DELIVERY = 'delivery';
+
+    /**
      * Specification:
      * - Defines number of search results returned in single batch.
      * - Used as a fallback.
@@ -42,5 +49,21 @@ class ServicePointWidgetConfig extends AbstractBundleConfig
     public function getNotApplicableServicePointAddressStepFormItemPropertiesForHydration(): array
     {
         return [];
+    }
+
+    /**
+     * Specification:
+     * - Defines a list of shipment type keys that are considered as delivery types.
+     * - Used to determine if a shipment type is a delivery type in the service point widget.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getDeliveryShipmentTypeKeys(): array
+    {
+        return [
+            static::SHIPMENT_TYPE_DELIVERY,
+        ];
     }
 }

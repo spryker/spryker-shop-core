@@ -5,6 +5,7 @@
     shipmentTypeForm: _widget.shipmentTypeForm,
     checkoutAddressForm: _widget.checkoutAddressForm,
     defaultShipmentType: _widget.defaultShipmentType,
+    deliveryShipmentTypes: _widget.deliveryShipmentTypes,
     deliveryContainerClassName: '',
     deliverySelectClassName: '',
     billingSameAsShippingContainerClassName: '',
@@ -25,6 +26,7 @@
         },
         attributes: {
             'default-shipment-type': data.defaultShipmentType,
+            'delivery-shipment-types': data.deliveryShipmentTypes|join(','),
             'delivery-targets-class-name': data.deliveryContainerClassName,
             'billing-same-as-shipping-container-class-name': data.billingSameAsShippingContainerClassName,
         },

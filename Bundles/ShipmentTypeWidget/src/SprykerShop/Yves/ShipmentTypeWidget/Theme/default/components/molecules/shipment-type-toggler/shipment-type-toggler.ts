@@ -36,7 +36,7 @@ export default class ShipmentTypeToggler extends Component {
     }
 
     protected onTrigerChange(trigger: HTMLInputElement): void {
-        const isDefaultShipmentTypeSelected = trigger.value === this.defaultShipmentType;
+        const isDefaultShipmentTypeSelected = this.isDefaultShipmentType(trigger.value);
 
         this.toggleContentVisibility(isDefaultShipmentTypeSelected);
 
@@ -69,8 +69,31 @@ export default class ShipmentTypeToggler extends Component {
         this.billingSameAsShippingInput.dispatchEvent(new Event('change'));
     }
 
+    protected isDefaultShipmentType(shipmentType: string): boolean {
+        const deliveryShipmentTypes = this.deliveryShipmentTypes;
+
+        if (deliveryShipmentTypes.length > 0) {
+            return deliveryShipmentTypes.includes(shipmentType);
+        }
+
+        return shipmentType === this.defaultShipmentType;
+    }
+
     protected get defaultShipmentType(): string {
         return this.getAttribute('default-shipment-type');
+    }
+
+    protected get deliveryShipmentTypes(): string[] {
+        const deliveryShipmentTypesAttribute = this.getAttribute('delivery-shipment-types');
+
+        if (!deliveryShipmentTypesAttribute) {
+            return [];
+        }
+
+        return deliveryShipmentTypesAttribute
+            .split(',')
+            .map((type) => type.trim())
+            .filter((type) => type.length > 0);
     }
 
     protected get targetsClassName(): string {

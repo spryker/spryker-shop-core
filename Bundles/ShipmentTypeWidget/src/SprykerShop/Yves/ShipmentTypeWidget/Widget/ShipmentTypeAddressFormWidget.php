@@ -38,6 +38,11 @@ class ShipmentTypeAddressFormWidget extends AbstractWidget
     protected const PARAMETER_DEFAULT_SHIPMENT_TYPE = 'defaultShipmentType';
 
     /**
+     * @var string
+     */
+    protected const PARAMETER_DELIVERY_SHIPMENT_TYPES = 'deliveryShipmentTypes';
+
+    /**
      * @param \Symfony\Component\Form\FormView $checkoutAddressForm
      */
     public function __construct(FormView $checkoutAddressForm)
@@ -46,6 +51,7 @@ class ShipmentTypeAddressFormWidget extends AbstractWidget
         $this->addShipmentTypeFormParameter($checkoutAddressForm);
         $this->addCheckoutAddressFormParameter($checkoutAddressForm);
         $this->addDefaultShipmentTypeParameter();
+        $this->addDeliveryShipmentTypesParameter();
     }
 
     /**
@@ -101,10 +107,20 @@ class ShipmentTypeAddressFormWidget extends AbstractWidget
     }
 
     /**
+     * @deprecated Use {@link \SprykerShop\Yves\ShipmentTypeWidget\Widget\ShipmentTypeAddressFormWidget::addDeliveryShipmentTypesParameter()} instead.
+     *
      * @return void
      */
     protected function addDefaultShipmentTypeParameter(): void
     {
         $this->addParameter(static::PARAMETER_DEFAULT_SHIPMENT_TYPE, $this->getConfig()->getDefaultShipmentType());
+    }
+
+    /**
+     * @return void
+     */
+    protected function addDeliveryShipmentTypesParameter(): void
+    {
+        $this->addParameter(static::PARAMETER_DELIVERY_SHIPMENT_TYPES, $this->getConfig()->getDeliveryShipmentTypes());
     }
 }

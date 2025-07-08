@@ -23,13 +23,6 @@ class AddressFormChecker implements AddressFormCheckerInterface
     protected const FIELD_SHIPMENT_TYPE = 'shipmentType';
 
     /**
-     * @uses \Spryker\Shared\ShipmentType\ShipmentTypeConfig::SHIPMENT_TYPE_DELIVERY
-     *
-     * @var string
-     */
-    protected const SHIPMENT_TYPE_DELIVERY = 'delivery';
-
-    /**
      * @uses \SprykerShop\Yves\ShipmentTypeWidget\Form\ShipmentTypeSubForm::FIELD_SHIPMENT_TYPE_KEY
      *
      * @var string
@@ -65,16 +58,10 @@ class AddressFormChecker implements AddressFormCheckerInterface
     protected const VALUE_DELIVER_TO_MULTIPLE_ADDRESSES = '-1';
 
     /**
-     * @var \SprykerShop\Yves\ServicePointWidget\ServicePointWidgetConfig
-     */
-    protected ServicePointWidgetConfig $servicePointWidgetConfig;
-
-    /**
      * @param \SprykerShop\Yves\ServicePointWidget\ServicePointWidgetConfig $servicePointWidgetConfig
      */
-    public function __construct(ServicePointWidgetConfig $servicePointWidgetConfig)
+    public function __construct(protected ServicePointWidgetConfig $servicePointWidgetConfig)
     {
-        $this->servicePointWidgetConfig = $servicePointWidgetConfig;
     }
 
     /**
@@ -110,7 +97,9 @@ class AddressFormChecker implements AddressFormCheckerInterface
             return true;
         }
 
-        return $shipmentTypeForm->get(static::FIELD_SHIPMENT_TYPE_KEY)->getData() === static::SHIPMENT_TYPE_DELIVERY;
+        $shipmentTypeKey = $shipmentTypeForm->get(static::FIELD_SHIPMENT_TYPE_KEY)->getData();
+
+        return in_array($shipmentTypeKey, $this->servicePointWidgetConfig->getDeliveryShipmentTypeKeys(), true);
     }
 
     /**
