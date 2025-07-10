@@ -52,7 +52,7 @@
     <div class="spacing-x">
         {{ 'sales_order_amendment_widget.edit_order.warning_message' | trans }}
 
-        <div class="grid grid--right spacing-top">
+        <div class="grid grid--right grid--middle spacing-top">
             <div class="col spacing-x">
                 <button class="link {{ popupTriggerClassName }}">
                     {{ 'sales_order_amendment_widget.edit_order.cancel' | trans }}
@@ -83,7 +83,7 @@
 
 {% block body %}
     {% if data.hasConfirmationPopup %}
-        <button type="button" class="link {{ popupTriggerClassName }}">{{ 'sales_order_amendment_widget.edit_order' | trans }}</button>
+        <button type="button" class="{{ data.buttonClass}} {{ popupTriggerClassName }}">{{ 'sales_order_amendment_widget.edit_order' | trans }}</button>
         {{ block('popup') }}
     {% else %}
         {{ block('form') }}
