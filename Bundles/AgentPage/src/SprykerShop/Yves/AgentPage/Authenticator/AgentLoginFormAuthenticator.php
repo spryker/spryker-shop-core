@@ -92,7 +92,7 @@ class AgentLoginFormAuthenticator implements AuthenticatorInterface, Authenticat
     {
         $data = $request->request->all(static::PARAMETER_LOGIN_FORM);
 
-        /** @var \Spryker\Zed\SecurityGui\Communication\Security\UserInterface $user */
+        /** @var \SprykerShop\Yves\AgentPage\Security\Agent $user */
         $user = $this->userProvider->loadUserByIdentifier($data[static::PARAMETER_EMAIL]);
         $badges = [$this->multiFactorAuthBadge->enable(
             $user->getUserTransfer(),
@@ -100,8 +100,8 @@ class AgentLoginFormAuthenticator implements AuthenticatorInterface, Authenticat
         )];
 
         return new Passport(
-            new UserBadge($data[static::PARAMETER_EMAIL], function ($userEmail) {
-                return $this->userProvider->loadUserByIdentifier($userEmail);
+            new UserBadge($data[static::PARAMETER_EMAIL], function () use ($user) {
+                return $user;
             }),
             new PasswordCredentials($data[static::PARAMETER_PASSWORD]),
             $badges,

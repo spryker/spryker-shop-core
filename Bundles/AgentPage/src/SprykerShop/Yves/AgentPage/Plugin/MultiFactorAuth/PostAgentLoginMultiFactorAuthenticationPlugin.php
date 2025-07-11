@@ -24,6 +24,13 @@ class PostAgentLoginMultiFactorAuthenticationPlugin extends AbstractPlugin imple
     protected const AGENT_POST_AUTHENTICATION_TYPE = 'AGENT_POST_AUTHENTICATION_TYPE';
 
     /**
+     * @uses {@link \SprykerShop\Yves\AgentPage\Plugin\Handler\AgentAuthenticationSuccessHandler::MULTI_FACTOR_AUTH_LOGIN_AGENT_EMAIL_SESSION_KEY}
+     *
+     * @var string
+     */
+    protected const MULTI_FACTOR_AUTH_LOGIN_AGENT_EMAIL_SESSION_KEY = '_multi_factor_auth_login_agent_email';
+
+    /**
      * {@inheritDoc}
      *
      * @api
@@ -57,6 +64,8 @@ class PostAgentLoginMultiFactorAuthenticationPlugin extends AbstractPlugin imple
         );
         $tokenStorage = $this->getFactory()->getTokenStorage();
         $tokenStorage->setToken($token);
+
+        $this->getFactory()->getSessionClient()->remove(static::MULTI_FACTOR_AUTH_LOGIN_AGENT_EMAIL_SESSION_KEY);
     }
 
     /**

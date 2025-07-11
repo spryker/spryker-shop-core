@@ -45,6 +45,11 @@ class AgentAuthenticationSuccessHandler extends AbstractPlugin implements Authen
     protected const PARAMETER_REQUIRES_ADDITIONAL_AUTH = 'requires_additional_auth';
 
     /**
+     * @var string
+     */
+    protected const MULTI_FACTOR_AUTH_LOGIN_AGENT_EMAIL_SESSION_KEY = '_multi_factor_auth_login_agent_email';
+
+    /**
      * @param string|null $targetUrl
      */
     public function __construct(?string $targetUrl = null)
@@ -60,14 +65,18 @@ class AgentAuthenticationSuccessHandler extends AbstractPlugin implements Authen
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token): Response
     {
+        $userTransfer = $this->getSecurityUser($token)->getUserTransfer();
+
         if (in_array(static::ACCESS_MODE_PRE_AUTH, $token->getRoleNames())) {
+            $this->getFactory()->getSessionClient()->set(static::MULTI_FACTOR_AUTH_LOGIN_AGENT_EMAIL_SESSION_KEY, $userTransfer->getUsername());
+
             return new JsonResponse([
                 static::PARAMETER_REQUIRES_ADDITIONAL_AUTH => true,
             ]);
         }
 
         $this->executeOnAuthenticationSuccess(
-            $this->getSecurityUser($token)->getUserTransfer(),
+            $userTransfer,
         );
 
         return $this->createRedirectResponse();

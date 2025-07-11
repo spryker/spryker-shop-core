@@ -38,6 +38,11 @@ class CustomerAuthenticationSuccessHandler extends AbstractPlugin implements Aut
     protected const ACCESS_MODE_PRE_AUTH = 'ACCESS_MODE_PRE_AUTH';
 
     /**
+     * @var string
+     */
+    protected const MULTI_FACTOR_AUTH_LOGIN_CUSTOMER_EMAIL_SESSION_KEY = '_multi_factor_auth_login_customer_email';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
      *
@@ -45,14 +50,17 @@ class CustomerAuthenticationSuccessHandler extends AbstractPlugin implements Aut
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token): Response
     {
+        /** @var \SprykerShop\Yves\CustomerPage\Security\Customer $customer */
+        $customer = $token->getUser();
+
         if (in_array(static::ACCESS_MODE_PRE_AUTH, $token->getRoleNames())) {
+            $this->getFactory()->getSessionClient()->set(static::MULTI_FACTOR_AUTH_LOGIN_CUSTOMER_EMAIL_SESSION_KEY, $customer->getCustomerTransfer()->getEmail());
+
             return new JsonResponse([
                 static::PARAMETER_REQUIRES_ADDITIONAL_AUTH => true,
             ]);
         }
 
-        /** @var \SprykerShop\Yves\CustomerPage\Security\Customer $customer */
-        $customer = $token->getUser();
         $this->executeOnAuthenticationSuccess($customer->getCustomerTransfer());
 
         return $this->createRedirectResponse($request);

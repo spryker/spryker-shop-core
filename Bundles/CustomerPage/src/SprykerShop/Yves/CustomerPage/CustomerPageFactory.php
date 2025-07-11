@@ -25,6 +25,7 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleC
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSecurityBlockerClientInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSessionClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToStoreClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface;
@@ -738,5 +739,13 @@ class CustomerPageFactory extends AbstractFactory
     public function getCustomerMultiFactorAuthenticationHandlerPlugins(): array
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGINS_CUSTOMER_AUTHENTICATION_HANDLER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSessionClientInterface
+     */
+    public function getSessionClient(): CustomerPageToSessionClientInterface
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_SESSION);
     }
 }

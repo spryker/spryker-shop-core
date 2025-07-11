@@ -20,6 +20,7 @@ use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToAgentClientInterface
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToCustomerClientInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToMessengerClientInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToQuoteClientInterface;
+use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToSessionClientInterface;
 use SprykerShop\Yves\AgentPage\Expander\SecurityBuilderExpander;
 use SprykerShop\Yves\AgentPage\Expander\SecurityBuilderExpanderInterface;
 use SprykerShop\Yves\AgentPage\Form\AgentLoginForm;
@@ -356,5 +357,13 @@ class AgentPageFactory extends AbstractFactory
     public function getAgentUserMultiFactorAuthenticationHandlerPlugins(): array
     {
         return $this->getProvidedDependency(AgentPageDependencyProvider::PLUGINS_AGENT_USER_AUTHENTICATION_HANDLER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToSessionClientInterface
+     */
+    public function getSessionClient(): AgentPageToSessionClientInterface
+    {
+        return $this->getProvidedDependency(AgentPageDependencyProvider::CLIENT_SESSION);
     }
 }

@@ -15,6 +15,7 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleC
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientAdapter;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSecurityBlockerClientBridge;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSessionClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToStoreClientBridge;
@@ -232,6 +233,11 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CHECKOUT_MULTI_SHIPPING_ADDRESSES_FORM_EXPANDER = 'PLUGINS_CHECKOUT_MULTI_SHIPPING_ADDRESSES_FORM_EXPANDER';
 
     /**
+     * @var string
+     */
+    public const CLIENT_SESSION = 'CLIENT_SESSION';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -273,6 +279,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCheckoutMultiShippingAddressesFormExpanderPlugins($container);
         $container = $this->addSecurityBlockerClient($container);
         $container = $this->addCustomerAuthenticationHandlerPlugins($container);
+        $container = $this->addSessionClient($container);
 
         return $container;
     }
@@ -899,5 +906,21 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function getCustomerAuthenticationHandlerPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSessionClient(Container $container)
+    {
+        $container->set(static::CLIENT_SESSION, function () use ($container) {
+            return new CustomerPageToSessionClientBridge(
+                $container->getLocator()->session()->client(),
+            );
+        });
+
+        return $container;
     }
 }

@@ -19,6 +19,7 @@ use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToMessengerClientBridg
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToMessengerClientInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToQuoteClientBridge;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToQuoteClientInterface;
+use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToSessionClientBridge;
 
 /**
  * @method \SprykerShop\Yves\AgentPage\AgentPageConfig getConfig()
@@ -98,6 +99,11 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_AGENT_USER_AUTHENTICATION_HANDLER = 'PLUGINS_AGENT_USER_AUTHENTICATION_HANDLER';
 
     /**
+     * @var string
+     */
+    public const CLIENT_SESSION = 'CLIENT_SESSION';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -118,6 +124,7 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addRequestStackService($container);
         $container = $this->addSessionPostImpersonationPlugins($container);
         $container = $this->addAgentUserAuthenticationHandlerPlugins($container);
+        $container = $this->addSessionClient($container);
 
         return $container;
     }
@@ -314,5 +321,21 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function getAgentUserAuthenticationHandlerPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSessionClient(Container $container)
+    {
+        $container->set(static::CLIENT_SESSION, function () use ($container) {
+            return new AgentPageToSessionClientBridge(
+                $container->getLocator()->session()->client(),
+            );
+        });
+
+        return $container;
     }
 }

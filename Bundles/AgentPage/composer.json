@@ -20,6 +20,7 @@
         "spryker/quote": "^2.0.0",
         "spryker/router": "^1.5.0",
         "spryker/security-extension": "^1.0.0",
+        "spryker/session": "^4.0.0",
         "spryker/symfony": "^3.1.0",
         "spryker/transfer": "^3.27.0"
     },
@@ -29,7 +30,6 @@
         "spryker/event-dispatcher": "*",
         "spryker/propel": "*",
         "spryker/security": "*",
-        "spryker/session": "*",
         "spryker/silex": "*",
         "spryker/storage": "*",
         "spryker/storage-redis": "*",

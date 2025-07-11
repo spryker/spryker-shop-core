@@ -24,6 +24,13 @@ class PostCustomerLoginMultiFactorAuthenticationPlugin extends AbstractPlugin im
     protected const CUSTOMER_POST_AUTHENTICATION_TYPE = 'CUSTOMER_POST_AUTHENTICATION_TYPE';
 
     /**
+     * @uses {@link \SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationSuccessHandler::MULTI_FACTOR_AUTH_LOGIN_CUSTOMER_EMAIL_SESSION_KEY}
+     *
+     * @var string
+     */
+    protected const MULTI_FACTOR_AUTH_LOGIN_CUSTOMER_EMAIL_SESSION_KEY = '_multi_factor_auth_login_customer_email';
+
+    /**
      * {@inheritDoc}
      *
      * @api
@@ -57,6 +64,8 @@ class PostCustomerLoginMultiFactorAuthenticationPlugin extends AbstractPlugin im
         );
         $tokenStorage = $this->getFactory()->getTokenStorage();
         $tokenStorage->setToken($token);
+
+        $this->getFactory()->getSessionClient()->remove(static::MULTI_FACTOR_AUTH_LOGIN_CUSTOMER_EMAIL_SESSION_KEY);
     }
 
     /**
