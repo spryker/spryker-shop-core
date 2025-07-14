@@ -9,9 +9,7 @@
     form: required,
     order: required,
     hasConfirmationPopup: true,
-    buttonClass: 'link',
 } %}
-
 
 {% define attributes = {
     'popup-content-id': 'order-reference-popup-content-' ~ data.order.orderReference,
@@ -29,41 +27,48 @@
 {% endblock %}
 
 {% block form %}
+    {% set popupConfirmationClass = 'link' %}
     {% set formVars = data.form.vars %}
 
-    {% include molecule('remote-form-submit') with {
-        data: {
-            label: (data.hasConfirmationPopup ? 'sales_order_amendment_widget.edit_order.confirm' : 'sales_order_amendment_widget.edit_order') | trans,
-            buttonClass: data.buttonClass,
-        },
-        attributes: {
-            'form-name': formVars.id ~ order.orderReference,
-            'form-action': path('order-amendment', {'orderReference': order.orderReference}),
-            'field-id': formVars.id ~ '_token_' ~ order.idSalesOrder,
-            'field-name': formVars.id ~ '[_token]',
-            'field-value': csrf_token(formVars.id),
-        } | merge(data.hasConfirmationPopup ? {
-            'initial-mount': false,
-        }: {}),
-    } only %}
+    {% block formContent %}
+        {% include molecule('remote-form-submit') with {
+            data: {
+                label: (data.hasConfirmationPopup ? 'sales_order_amendment_widget.edit_order.confirm' : 'sales_order_amendment_widget.edit_order') | trans,
+                buttonClass: popupConfirmationClass,
+            },
+            attributes: {
+                'form-name': formVars.id ~ order.orderReference,
+                'form-action': path('order-amendment', {'orderReference': order.orderReference}),
+                'field-id': formVars.id ~ '_token_' ~ order.idSalesOrder,
+                'field-name': formVars.id ~ '[_token]',
+                'field-value': csrf_token(formVars.id),
+            } | merge(data.hasConfirmationPopup ? {
+                'initial-mount': false,
+            }: {}),
+        } only %}
+    {% endblock %}
 {% endblock %}
 
 {% block popupContent %}
-    <div class="spacing-x">
-        {{ 'sales_order_amendment_widget.edit_order.warning_message' | trans }}
+    {% set popupCancelClass = 'link' %}
 
-        <div class="grid grid--right grid--middle spacing-top">
-            <div class="col spacing-x">
-                <button class="link {{ popupTriggerClassName }}">
-                    {{ 'sales_order_amendment_widget.edit_order.cancel' | trans }}
-                </button>
-            </div>
+    {% block popupContentInner %}
+        <div class="spacing-x">
+            {{ 'sales_order_amendment_widget.edit_order.warning_message' | trans }}
 
-            <div class="col spacing-x">
-                {{ block('form') }}
+            <div class="grid grid--right grid--middle spacing-top">
+                <div class="col spacing-x">
+                    <button class="{{ popupCancelClass}} {{ popupTriggerClassName }}">
+                        {{ 'sales_order_amendment_widget.edit_order.cancel' | trans }}
+                    </button>
+                </div>
+
+                <div class="col spacing-x">
+                    {{ block('form') }}
+                </div>
             </div>
         </div>
-    </div>
+    {% endblock %}
 {% endblock %}
 
 {% block popup %}
@@ -76,16 +81,19 @@
             'content-id': attributes['popup-content-id'],
             'trigger-class-name': popupTriggerClassName,
             'close-popup-selector': ".#{popupTriggerClassName}",
-            'has-content-mount': true,
         },
     } only %}
 {% endblock %}
 
 {% block body %}
-    {% if data.hasConfirmationPopup %}
-        <button type="button" class="{{ data.buttonClass}} {{ popupTriggerClassName }}">{{ 'sales_order_amendment_widget.edit_order' | trans }}</button>
-        {{ block('popup') }}
-    {% else %}
-        {{ block('form') }}
-    {% endif %}
+    {% set buttonClass = 'link' %}
+
+    {% block content %}
+        {% if data.hasConfirmationPopup %}
+            <button type="button" class="{{ buttonClass}} {{ popupTriggerClassName }}">{{ 'sales_order_amendment_widget.edit_order' | trans }}</button>
+            {{ block('popup') }}
+        {% else %}
+            {{ block('form') }}
+        {% endif %}
+    {% endblock %}
 {% endblock %}

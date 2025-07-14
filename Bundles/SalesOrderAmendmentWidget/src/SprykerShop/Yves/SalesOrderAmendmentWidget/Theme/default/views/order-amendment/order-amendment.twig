@@ -6,7 +6,6 @@
     form: _widget.form,
     order: _widget.order,
     hasConfirmationPopup: _widget.isOrderAmendmentConfirmationEnabled,
-    buttonClass: 'link',
 } %}
 
 {% block body %}
@@ -15,7 +14,6 @@
             form: data.form,
             order: data.order,
             hasConfirmationPopup: data.hasConfirmationPopup,
-            buttonClass: data.buttonClass,
-        }
+        },
     } only %}
 {% endblock %}
