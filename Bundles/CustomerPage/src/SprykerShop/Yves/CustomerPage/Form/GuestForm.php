@@ -164,7 +164,9 @@ class GuestForm extends AbstractType
                 new Callback([
                     'callback' => function ($email, ExecutionContextInterface $context) {
                         if (!$email) {
-                            return $this->createNotBlankConstraint();
+                            $context->addViolation(static::VALIDATION_NOT_BLANK_MESSAGE);
+
+                            return;
                         }
                         $isEmailFormatValid = $this->getFactory()
                             ->getUtilValidateService()
