@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\SalesOrderAmendmentWidget\Widget;
 
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
@@ -38,12 +36,10 @@ class OrderAmendmentItemLinkWidget extends AbstractWidget
     /**
      * @param string $url
      * @param string $name
-     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      */
-    public function __construct(string $url, string $name, ?QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer)
+    public function __construct(string $url, string $name)
     {
-        $this->addUrlParameter($quoteTransfer, $itemTransfer, $url);
+        $this->addUrlParameter($url);
         $this->addNameParameter($name);
     }
 
@@ -60,17 +56,15 @@ class OrderAmendmentItemLinkWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@SalesOrderAmendmentWidget/views/order-amendment/order-amendment-item-link.twig';
+        return '@SalesOrderAmendmentWidget/views/order-amendment-item-link/order-amendment-item-link.twig';
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param string $url
      *
      * @return void
      */
-    protected function addUrlParameter(?QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, string $url): void
+    protected function addUrlParameter(string $url): void
     {
         $url = $this->generateUrl($url);
         $this->addParameter(static::PARAMETER_URL, $url);

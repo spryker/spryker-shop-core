@@ -32,9 +32,8 @@
         {% block name -%}
             <h6>
                 {% if data.url %}
-                    {% set quote = data.cart is defined and data.cart is not empty ? data.cart : null %}
                     {% if widgetGlobalExists('OrderAmendmentItemLinkWidget') %}
-                        {% widget 'OrderAmendmentItemLinkWidget' args [data.url, data.name, quote, data.product] only %}{% endwidget %}
+                        {% widget 'OrderAmendmentItemLinkWidget' args [data.url, data.name] only %}{% endwidget %}
                     {% else %}
                         <a href="{{ path(data.url) }}">{{ data.name }}</a>
                     {% endif %}

@@ -24,41 +24,17 @@ class CartReorderHandler implements CartReorderHandlerInterface
     protected const ATTRIBUTE_NAME_SALES_ORDER_ITEM_IDS = 'sales-order-item-ids';
 
     /**
-     * @var \SprykerShop\Yves\CartReorderPage\Dependency\Client\CartReorderPageToCustomerClientInterface
-     */
-    protected CartReorderPageToCustomerClientInterface $customerClient;
-
-    /**
-     * @var \SprykerShop\Yves\CartReorderPage\Dependency\Client\CartReorderPageToCartReorderClientInterface
-     */
-    protected CartReorderPageToCartReorderClientInterface $cartReorderClient;
-
-    /**
-     * @var \SprykerShop\Yves\CartReorderPage\Dependency\Client\CartReorderPageToZedRequestClientInterface
-     */
-    protected CartReorderPageToZedRequestClientInterface $zedRequestClient;
-
-    /**
-     * @var list<\SprykerShop\Yves\CartReorderPageExtension\Dependency\Plugin\CartReorderRequestExpanderPluginInterface>
-     */
-    protected array $cartReorderRequestExpanderPlugins;
-
-    /**
      * @param \SprykerShop\Yves\CartReorderPage\Dependency\Client\CartReorderPageToCustomerClientInterface $customerClient
      * @param \SprykerShop\Yves\CartReorderPage\Dependency\Client\CartReorderPageToCartReorderClientInterface $cartReorderClient
      * @param \SprykerShop\Yves\CartReorderPage\Dependency\Client\CartReorderPageToZedRequestClientInterface $zedRequestClient
      * @param list<\SprykerShop\Yves\CartReorderPageExtension\Dependency\Plugin\CartReorderRequestExpanderPluginInterface> $cartReorderRequestExpanderPlugins
      */
     public function __construct(
-        CartReorderPageToCustomerClientInterface $customerClient,
-        CartReorderPageToCartReorderClientInterface $cartReorderClient,
-        CartReorderPageToZedRequestClientInterface $zedRequestClient,
-        array $cartReorderRequestExpanderPlugins
+        protected CartReorderPageToCustomerClientInterface $customerClient,
+        protected CartReorderPageToCartReorderClientInterface $cartReorderClient,
+        protected CartReorderPageToZedRequestClientInterface $zedRequestClient,
+        protected array $cartReorderRequestExpanderPlugins
     ) {
-        $this->customerClient = $customerClient;
-        $this->cartReorderClient = $cartReorderClient;
-        $this->zedRequestClient = $zedRequestClient;
-        $this->cartReorderRequestExpanderPlugins = $cartReorderRequestExpanderPlugins;
     }
 
     /**
