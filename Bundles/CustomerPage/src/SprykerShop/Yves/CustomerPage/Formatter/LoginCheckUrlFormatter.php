@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CustomerPage\Formatter;
 
 use SprykerShop\Yves\CustomerPage\CustomerPageConfig;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToStoreClientInterface;
 
 class LoginCheckUrlFormatter implements LoginCheckUrlFormatterInterface
 {
@@ -17,23 +18,20 @@ class LoginCheckUrlFormatter implements LoginCheckUrlFormatterInterface
     protected const ROUTE_CHECK_PATH = '/login_check';
 
     /**
-     * @var \SprykerShop\Yves\CustomerPage\CustomerPageConfig
-     */
-    protected $customerPageConfig;
-
-    /**
      * @var string
      */
-    protected $localeName;
+    protected const ROUTE_WITH_STORE_PLACEHOLDER = '/%s%s';
 
     /**
      * @param \SprykerShop\Yves\CustomerPage\CustomerPageConfig $customerPageConfig
      * @param string $localeName
+     * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToStoreClientInterface $storeClient
      */
-    public function __construct(CustomerPageConfig $customerPageConfig, string $localeName)
-    {
-        $this->customerPageConfig = $customerPageConfig;
-        $this->localeName = $localeName;
+    public function __construct(
+        protected CustomerPageConfig $customerPageConfig,
+        protected string $localeName,
+        protected CustomerPageToStoreClientInterface $storeClient
+    ) {
     }
 
     /**
@@ -44,6 +42,11 @@ class LoginCheckUrlFormatter implements LoginCheckUrlFormatterInterface
         $loginCheckPath = static::ROUTE_CHECK_PATH;
         if ($this->customerPageConfig->isLocaleInLoginCheckPath()) {
             $loginCheckPath = $this->getDefaultLocalePrefix() . $loginCheckPath;
+        }
+
+        /* Required by infrastructure, exists only for BC with DMS ON mode. */
+        if ($this->customerPageConfig->isStoreRoutingEnabled()) {
+            $loginCheckPath = sprintf(static::ROUTE_WITH_STORE_PLACEHOLDER, $this->storeClient->getCurrentStore()->getNameOrFail(), $loginCheckPath);
         }
 
         return $loginCheckPath;

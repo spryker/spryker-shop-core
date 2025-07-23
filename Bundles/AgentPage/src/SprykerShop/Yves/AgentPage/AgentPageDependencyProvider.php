@@ -20,6 +20,7 @@ use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToMessengerClientInter
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToQuoteClientBridge;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToQuoteClientInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToSessionClientBridge;
+use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToStoreClientBridge;
 
 /**
  * @method \SprykerShop\Yves\AgentPage\AgentPageConfig getConfig()
@@ -104,6 +105,11 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_SESSION = 'CLIENT_SESSION';
 
     /**
+     * @var string
+     */
+    public const CLIENT_STORE = 'CLIENT_STORE';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -125,6 +131,7 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSessionPostImpersonationPlugins($container);
         $container = $this->addAgentUserAuthenticationHandlerPlugins($container);
         $container = $this->addSessionClient($container);
+        $container = $this->addStoreClient($container);
 
         return $container;
     }
@@ -333,6 +340,22 @@ class AgentPageDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::CLIENT_SESSION, function () use ($container) {
             return new AgentPageToSessionClientBridge(
                 $container->getLocator()->session()->client(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return new AgentPageToStoreClientBridge(
+                $container->getLocator()->store()->client(),
             );
         });
 

@@ -21,6 +21,7 @@ use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToCustomerClientInterf
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToMessengerClientInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToQuoteClientInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToSessionClientInterface;
+use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToStoreClientInterface;
 use SprykerShop\Yves\AgentPage\Expander\SecurityBuilderExpander;
 use SprykerShop\Yves\AgentPage\Expander\SecurityBuilderExpanderInterface;
 use SprykerShop\Yves\AgentPage\Form\AgentLoginForm;
@@ -229,7 +230,11 @@ class AgentPageFactory extends AbstractFactory
      */
     public function createLoginCheckUrlFormatter(): LoginCheckUrlFormatterInterface
     {
-        return new LoginCheckUrlFormatter($this->getConfig(), $this->getLocale());
+        return new LoginCheckUrlFormatter(
+            $this->getConfig(),
+            $this->getLocale(),
+            $this->getStoreClient(),
+        );
     }
 
     /**
@@ -365,5 +370,13 @@ class AgentPageFactory extends AbstractFactory
     public function getSessionClient(): AgentPageToSessionClientInterface
     {
         return $this->getProvidedDependency(AgentPageDependencyProvider::CLIENT_SESSION);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToStoreClientInterface
+     */
+    public function getStoreClient(): AgentPageToStoreClientInterface
+    {
+        return $this->getProvidedDependency(AgentPageDependencyProvider::CLIENT_STORE);
     }
 }

@@ -104,6 +104,10 @@ class YvesAgentPageSecurityPluginTest extends Unit
             return $this->createResponse($container);
         });
 
+        $this->tester->addRoute('agent/login_check', '/agent/login_check', function () use ($container) {
+            return $this->createResponse($container);
+        });
+
         $this->tester->addRoute('agent/overview', '/agent/overview', function () use ($container) {
             return $this->createResponse($container);
         });

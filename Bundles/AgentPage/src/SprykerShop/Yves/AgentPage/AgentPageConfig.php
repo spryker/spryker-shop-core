@@ -37,4 +37,17 @@ class AgentPageConfig extends AbstractBundleConfig
     {
         return false;
     }
+
+    /**
+     * Specification:
+     * - Returns true if the store routing is enabled.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isStoreRoutingEnabled(): bool
+    {
+        return $this->get(AgentPageConstants::IS_STORE_ROUTING_ENABLED, false);
+    }
 }

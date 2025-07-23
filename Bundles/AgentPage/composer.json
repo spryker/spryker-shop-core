@@ -21,6 +21,7 @@
         "spryker/router": "^1.5.0",
         "spryker/security-extension": "^1.0.0",
         "spryker/session": "^4.0.0",
+        "spryker/store": "^1.19.0",
         "spryker/symfony": "^3.1.0",
         "spryker/transfer": "^3.27.0"
     },
@@ -33,7 +34,6 @@
         "spryker/silex": "*",
         "spryker/storage": "*",
         "spryker/storage-redis": "*",
-        "spryker/store": "*",
         "spryker/testify": "*",
         "spryker/zed-request": "*"
     },

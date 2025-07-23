@@ -58,6 +58,9 @@ class CustomerPageSecurityPluginTest extends Unit
         $this->tester->addRoute('login', '/login', function () {
             return new Response('loginpage');
         });
+        $this->tester->addRoute('login_check', '/login_check', function () use ($container) {
+            return new Response('login_check');
+        });
     }
 
     /**

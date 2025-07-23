@@ -16,4 +16,14 @@ interface AgentPageConstants
      * @var string
      */
     public const AGENT_FIREWALL_REGEX = 'AGENT_PAGE:AGENT_FIREWALL_REGEX';
+
+    /**
+     * Specification:
+     * - Returns true if the store routing is enabled.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const IS_STORE_ROUTING_ENABLED = 'AGENT_PAGE:IS_STORE_ROUTING_ENABLED';
 }

@@ -21,4 +21,14 @@ interface CustomerPageConstants
      * @var string
      */
     public const CUSTOMER_REMEMBER_ME_LIFETIME = 'CUSTOMER_PAGE:CUSTOMER_REMEMBER_ME_LIFETIME';
+
+    /**
+     * Specification:
+     * - Returns true if the store routing is enabled.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const IS_STORE_ROUTING_ENABLED = 'CUSTOMER_PAGE:IS_STORE_ROUTING_ENABLED';
 }

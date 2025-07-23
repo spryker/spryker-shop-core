@@ -325,4 +325,17 @@ class CustomerPageConfig extends AbstractBundleConfig
     {
         return static::PASSWORD_VALIDATION_MESSAGE;
     }
+
+    /**
+     * Specification:
+     * - Returns true if the store routing is enabled.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isStoreRoutingEnabled(): bool
+    {
+        return $this->get(CustomerPageConstants::IS_STORE_ROUTING_ENABLED, false);
+    }
 }

@@ -609,7 +609,11 @@ class CustomerPageFactory extends AbstractFactory
      */
     public function createLoginCheckUrlFormatter(): LoginCheckUrlFormatterInterface
     {
-        return new LoginCheckUrlFormatter($this->getConfig(), $this->getLocale());
+        return new LoginCheckUrlFormatter(
+            $this->getConfig(),
+            $this->getLocale(),
+            $this->getStoreClient(),
+        );
     }
 
     /**

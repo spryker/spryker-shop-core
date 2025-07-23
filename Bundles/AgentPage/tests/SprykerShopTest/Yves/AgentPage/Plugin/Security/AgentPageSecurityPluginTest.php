@@ -88,6 +88,9 @@ class AgentPageSecurityPluginTest extends Unit
         $this->tester->addRoute('agent/login', '/agent/login', function () {
             return new Response('agent/loginpage');
         });
+        $this->tester->addRoute('agent/login_check', '/agent/login_check', function () use ($container) {
+            return new Response('agent/login_check');
+        });
     }
 
     /**
