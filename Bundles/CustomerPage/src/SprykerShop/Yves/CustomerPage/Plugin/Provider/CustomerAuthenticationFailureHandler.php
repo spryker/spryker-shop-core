@@ -8,8 +8,9 @@
 namespace SprykerShop\Yves\CustomerPage\Plugin\Provider;
 
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
 
@@ -23,6 +24,11 @@ class CustomerAuthenticationFailureHandler extends BaseCustomerAuthenticationHan
      * @var string
      */
     public const MESSAGE_CUSTOMER_AUTHENTICATION_FAILED = 'customer.authentication.failed';
+
+    /**
+     * @var string
+     */
+    protected const PARAMETER_REQUIRES_ADDITIONAL_AUTH = 'requires_additional_auth';
 
     /**
      * @var \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
@@ -48,13 +54,16 @@ class CustomerAuthenticationFailureHandler extends BaseCustomerAuthenticationHan
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $exception
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): RedirectResponse
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
         $this->flashMessenger->addErrorMessage($this->buildErrorMessage($exception));
-
         $this->getFactory()->createAuditLogger()->addFailedLoginAuditLog();
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->createAjaxResponse();
+        }
 
         return $this->createRefererRedirectResponse($request, $this->targetUrl);
     }
@@ -67,5 +76,15 @@ class CustomerAuthenticationFailureHandler extends BaseCustomerAuthenticationHan
     protected function buildErrorMessage(AuthenticationException $exception): string
     {
         return static::MESSAGE_CUSTOMER_AUTHENTICATION_FAILED;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    protected function createAjaxResponse(): JsonResponse
+    {
+        return new JsonResponse([
+            static::PARAMETER_REQUIRES_ADDITIONAL_AUTH => false,
+        ]);
     }
 }

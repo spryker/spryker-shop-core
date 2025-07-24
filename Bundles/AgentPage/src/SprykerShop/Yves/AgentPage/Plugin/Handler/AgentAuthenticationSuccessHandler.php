@@ -70,14 +70,14 @@ class AgentAuthenticationSuccessHandler extends AbstractPlugin implements Authen
         if (in_array(static::ACCESS_MODE_PRE_AUTH, $token->getRoleNames())) {
             $this->getFactory()->getSessionClient()->set(static::MULTI_FACTOR_AUTH_LOGIN_AGENT_EMAIL_SESSION_KEY, $userTransfer->getUsername());
 
-            return new JsonResponse([
-                static::PARAMETER_REQUIRES_ADDITIONAL_AUTH => true,
-            ]);
+            return $this->createAjaxResponse(true);
         }
 
-        $this->executeOnAuthenticationSuccess(
-            $userTransfer,
-        );
+        $this->executeOnAuthenticationSuccess($userTransfer);
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->createAjaxResponse();
+        }
 
         return $this->createRedirectResponse();
     }
@@ -92,6 +92,18 @@ class AgentAuthenticationSuccessHandler extends AbstractPlugin implements Authen
         $this->setAgentSession($userTransfer);
 
         $this->getFactory()->createAuditLogger()->addAgentSuccessfulLoginAuditLog();
+    }
+
+    /**
+     * @param bool $requiresAdditionalAuth
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    protected function createAjaxResponse(bool $requiresAdditionalAuth = false): JsonResponse
+    {
+        return new JsonResponse([
+            static::PARAMETER_REQUIRES_ADDITIONAL_AUTH => $requiresAdditionalAuth,
+        ]);
     }
 
     /**
