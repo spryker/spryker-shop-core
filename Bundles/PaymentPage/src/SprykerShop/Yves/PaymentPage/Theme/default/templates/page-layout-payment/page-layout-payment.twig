@@ -1,14 +1,24 @@
 {% extends template('page-layout-order-submitted', 'CheckoutPage') %}
 
-{% set isUserLoggedIn = is_granted('ROLE_USER') %}
-
 {% block content %}
-    <div class="box">
-        <h3>{{ data.title }}</h3>
-        <p>{{ data.message }}</p>
+    {% set isUserLoggedIn = is_granted('ROLE_USER') %}
+    {% set wrapperClass = "box" %}
+    {% set titleClass = "" %}
+    {% set messageClass = "" %}
+    {% set buttonClass = "button" %}
 
-        {% if isUserLoggedIn %}
-            <a href="{{ url('customer/overview') }}">{{ 'payment_foreign.go_to_my_account' | trans }}</a>
-        {% endif %}
-    </div>
+    {% block contentInner %}
+        <div class="{{ wrapperClass }}">
+            {% block text %}
+                <h3 class="{{ titleClass }}">{{ data.title }}</h3>
+                <p class="{{ messageClass }}">{{ data.message }}</p>
+            {% endblock %}
+
+            {% block button %}
+                {% if isUserLoggedIn %}
+                    <a class="{{ buttonClass }}" href="{{ url('customer/overview') }}">{{ 'payment_foreign.go_to_my_account' | trans }}</a>
+                {% endif %}
+            {% endblock %}
+        </div>
+    {% endblock %}
 {% endblock %}
