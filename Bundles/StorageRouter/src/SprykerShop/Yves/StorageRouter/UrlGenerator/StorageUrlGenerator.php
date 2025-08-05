@@ -17,6 +17,21 @@ use Symfony\Component\Routing\RequestContext;
 class StorageUrlGenerator implements UrlGeneratorInterface
 {
     /**
+     * @var string
+     */
+    protected const REQUEST_CONTEXT_STORE = 'store';
+
+    /**
+     * @var string
+     */
+    protected const REQUEST_CONTEXT_LOCALE = '_locale';
+
+    /**
+     * @var string
+     */
+    protected const HOME_PAGE_URL_PATTERN = '/%s/';
+
+    /**
      * @var \Symfony\Component\Routing\RequestContext
      */
     protected $context;
@@ -74,18 +89,16 @@ class StorageUrlGenerator implements UrlGeneratorInterface
      * @param array<int|string, mixed> $parameters
      * @param int $referenceType
      *
-     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
-     *
      * @return string
      */
     public function generate(string $name, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
-        $localeName = $this->getContext()->getParameter('_locale');
+        $localeName = $this->getContext()->getParameter(static::REQUEST_CONTEXT_LOCALE);
         foreach ($this->storageRouterEnhancerPlugins as $storageRouterEnhancerPlugin) {
             $name = $storageRouterEnhancerPlugin->beforeMatch($name, $this->getContext());
         }
         if (!$this->urlStorageClient->matchUrl($name, $localeName)) {
-            throw new RouteNotFoundException();
+            return $this->generateHomePageUrl($referenceType);
         }
 
         foreach ($this->storageRouterEnhancerPlugins as $storageRouterEnhancerPlugin) {
@@ -194,5 +207,26 @@ class StorageUrlGenerator implements UrlGeneratorInterface
     protected function getScheme(): string
     {
         return $this->context->getScheme();
+    }
+
+    /**
+     * @param int $referenceType
+     *
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     *
+     * @return string
+     */
+    protected function generateHomePageUrl(int $referenceType): string
+    {
+        $context = $this->getContext();
+        $store = $context->getParameter(static::REQUEST_CONTEXT_STORE);
+
+        if (!$store) {
+            throw new RouteNotFoundException();
+        }
+
+        $homeUrl = sprintf(static::HOME_PAGE_URL_PATTERN, $store);
+
+        return $this->getUrlOrPathForType($homeUrl, $referenceType);
     }
 }
