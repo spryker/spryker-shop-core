@@ -4,7 +4,7 @@
     "description": "ClickAndCollectPageExample module",
     "license": "MIT",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker-shop/customer-page-extension": "^1.6.0",
         "spryker-shop/service-point-widget": "^1.0.0",
         "spryker-shop/shop-application-extension": "^1.2.0",

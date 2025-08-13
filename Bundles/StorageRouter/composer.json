@@ -4,7 +4,7 @@
     "description": "StorageRouter module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker-shop/storage-router-extension": "^1.1.0",
         "spryker/kernel": "^3.30.0",
         "spryker/router-extension": "^1.0.0",

@@ -4,7 +4,7 @@
     "description": "MerchantProductOfferWidget module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker-shop/cart-page-extension": "^1.0.0",
         "spryker-shop/merchant-product-offer-widget-extension": "^1.0.0",
         "spryker-shop/product-search-widget-extension": "^1.0.0",
