@@ -1,6 +1,5 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
@@ -14,3 +13,5 @@ parameters:
         - '#Parameter \#1 \$passport of method .+AgentLoginFormAuthenticator::createToken\(\) expects .+Passport, .+PassportInterface given.#'
         - '#Throwing object of an unknown class .+UsernameNotFoundException.#'
         - '#Call to an undefined method .+AuthenticationSuccessHandlerInterface::executeOnAuthenticationSuccess\(\).#'
+        -
+            identifier: missingType.iterableValue
