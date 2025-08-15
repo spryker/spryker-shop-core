@@ -1,6 +1,7 @@
 parameters:
     level: 8
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
-        -
-            identifier: missingType.generics
+#        For compatibility with Symfony 5.4+
+        - message: '#interface Symfony\\\\Component\\\\Form\\\\DataTransformerInterface is not generic#'
 
