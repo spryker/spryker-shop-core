@@ -79,7 +79,7 @@ class PaymentAppWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<mixed, \Generated\Shared\Transfer\InitializePreOrderPaymentRequestTransfer>
      */
     public function createArrayToInitializePreOrderPaymentRequestTransferTransformer(): DataTransformerInterface
     {

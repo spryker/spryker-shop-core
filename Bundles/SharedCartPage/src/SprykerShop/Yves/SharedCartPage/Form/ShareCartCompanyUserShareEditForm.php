@@ -71,7 +71,7 @@ class ShareCartCompanyUserShareEditForm extends AbstractType
     }
 
     /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Symfony\Component\Form\DataTransformerInterface<\Generated\Shared\Transfer\QuotePermissionGroupTransfer|null, int|string>
      */
     protected function createModelTransformer(): DataTransformerInterface
     {
