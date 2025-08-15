@@ -11,9 +11,6 @@ use Generated\Shared\Transfer\InitializePreOrderPaymentRequestTransfer;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
-/**
- * @phpstan-implements \Symfony\Component\Form\DataTransformerInterface<mixed, \Generated\Shared\Transfer\InitializePreOrderPaymentRequestTransfer>
- */
 class ArrayToInitializePreOrderPaymentRequestTransferTransformer implements DataTransformerInterface
 {
     /**

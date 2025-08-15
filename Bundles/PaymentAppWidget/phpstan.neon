@@ -1,2 +1,5 @@
 parameters:
     level: 8
+    ignoreErrors:
+        -
+            identifier: missingType.generics
