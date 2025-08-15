@@ -1,7 +1,10 @@
 parameters:
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
 #        For compatibility with Symfony 5.4+
-        - message: '#PHPDoc tag @(?:return|phpstan-return) contains generic type\s+Symfony\\\\Component\\\\Form\\\\DataTransformerInterface<[^>]+>\s+but interface Symfony\\\\Component\\\\Form\\\\DataTransformerInterface is not\s+generic#s'
-        -
-            identifier: missingType.iterableValue
+        - message:
+          - '#PHPDoc tag @return contains generic type .+DataTransformerInterface<.+> but interface .+DataTransformerInterface is not generic#'
+          - '#PHPDoc tag @implements contains generic type .+DataTransformerInterface<.+> but interface Symfony\Component\Form\DataTransformerInterface is not generic#'
+        - identifier:
+          - missingType.iterableValue
     level: 7

@@ -4,6 +4,6 @@ parameters:
     ignoreErrors:
 #        For compatibility with Symfony 5.4+
         - message: '#Interface Symfony\\\\Component\\\\Form\\\\DataTransformerInterface is not generic#'
-        - message: '#PHPDoc tag @(?:return|phpstan-return) contains generic type\s+Symfony\\\\Component\\\\Form\\\\DataTransformerInterface<[^>]+>\s+but interface Symfony\\\\Component\\\\Form\\\\DataTransformerInterface is not\s+generic#s'
+        - message: '#PHPDoc tag @return contains generic type .+DataTransformerInterface<.+> but interface .+DataTransformerInterface is not generic#'
 
 
