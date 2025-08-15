@@ -12,7 +12,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
 /**
- * @implements \Symfony\Component\Form\DataTransformerInterface<array<mixed>|null, \Generated\Shared\Transfer\InitializePreOrderPaymentRequestTransfer>
+ * @implements \Symfony\Component\Form\DataTransformerInterface<mixed, \Generated\Shared\Transfer\InitializePreOrderPaymentRequestTransfer>
  */
 class ArrayToInitializePreOrderPaymentRequestTransferTransformer implements DataTransformerInterface
 {
