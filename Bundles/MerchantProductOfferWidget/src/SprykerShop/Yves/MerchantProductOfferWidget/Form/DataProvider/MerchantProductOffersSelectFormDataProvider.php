@@ -222,8 +222,8 @@ class MerchantProductOffersSelectFormDataProvider
     {
         return array_filter(
             $productOfferTransfers,
-            function ($productOfferTransfer) {
-                return $productOfferTransfer->getMerchantReference();
+            static function (ProductOfferTransfer $productOfferTransfer): bool {
+                return (bool)$productOfferTransfer->getMerchantReference();
             },
         );
     }
