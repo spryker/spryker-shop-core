@@ -1,5 +1,7 @@
 parameters:
     level: 8
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         -
             identifier: missingType.generics
+
