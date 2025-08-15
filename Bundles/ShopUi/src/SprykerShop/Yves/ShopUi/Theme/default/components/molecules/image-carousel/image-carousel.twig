@@ -16,11 +16,12 @@
 {% endblock %}
 
 {% block slide %}
+    {% set imageAltText = slide.altTextLarge ?? slide.altText ?? '' %}
     {% include molecule('lazy-image') with {
         modifiers: ['thumbnail', 'bigger'],
         data: {
             imageSrc: slide.externalUrlLarge,
-            imageTitle: slide.altText | default,
+            imageTitle: imageAltText,
             extraAttributes: {
                 itemprop: 'image',
             },
