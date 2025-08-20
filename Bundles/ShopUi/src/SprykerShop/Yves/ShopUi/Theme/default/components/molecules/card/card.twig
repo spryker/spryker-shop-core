@@ -10,6 +10,7 @@
     url: required,
     imageUrl: '',
     description: '',
+    imageTitle: '',
 } %}
 
 {% block body %}
@@ -20,7 +21,7 @@
                     modifiers: ['thumbnail'],
                     data: {
                         imageSrc: data.imageUrl,
-                        imageTitle: data.name,
+                        imageTitle: data.imageTitle | default(data.name),
                     },
                 } only %}
             </a>

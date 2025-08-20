@@ -19,6 +19,9 @@
     eventRevealer: null,
 } %}
 
+{% set image = data.product.images[0] ?? null %}
+{% set imageAltText = image.alt_text_small ?? image.altTextSmall ?? data.imageAlt %}
+
 {% define attributes = {
     itemscope: '',
     itemtype: 'https://schema.org/Product',
@@ -66,13 +69,13 @@
                 {% if data.url %}
                     {% block imageLink %}
                         <a class="{{ config.jsName }}__link-detail-page" itemprop="url" href="{{ functionExists('generatePath') ? generatePath(data.url) : data.url }}">
-                            {{ macros.thumbnail(data.image, data.imageAlt | default(data.name), extraClass, modifiers, config.jsName) }}
+                            {{ macros.thumbnail(data.image, imageAltText | default(data.name), extraClass, modifiers, config.jsName) }}
                         </a>
                     {% endblock %}
                 {% endif %}
                 {% if not data.url %}
                     {% block productThumbnail %}
-                        {{ macros.thumbnail(data.image, data.imageAlt | default(data.name), extraClass, modifiers, config.jsName) }}
+                        {{ macros.thumbnail(data.image, imageAltText | default(data.name), extraClass, modifiers, config.jsName) }}
                     {% endblock %}
                 {% endif %}
             {% endblock %}
