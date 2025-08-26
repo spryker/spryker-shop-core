@@ -47,9 +47,14 @@
     } only %}
         {% block body %}
             <hr>
-            {{parent()}}
+            {{ parent() }}
         {% endblock %}
     {% endembed %}
+{% endblock %}
+
+{% block filters %}
+    {% widget 'SspAssetFilterWidget' only %}{% endwidget %}
+    {{ parent() }}
 {% endblock %}
 
 {% block form %}
@@ -57,7 +62,7 @@
         {% widget 'FullTextSearchTabsWidget' args [data.searchString, 'FullTextSearchProductsTab'] only %}{% endwidget %}
     </div>
 
-    {{parent()}}
+    {{ parent() }}
     {% if data.searchString is not empty %}
         <input type="hidden" name="q" value="{{ data.searchString }}">
     {% endif %}

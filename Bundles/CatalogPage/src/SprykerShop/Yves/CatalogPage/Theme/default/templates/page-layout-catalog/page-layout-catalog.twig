@@ -111,19 +111,21 @@
                         },
                     } only %}
 
-                    {% include organism('filter-section', 'CatalogPage') with {
-                        class: 'box spacing-top spacing-top--big js-catalog__filters-toggle',
-                        data: {
-                            facets: data.facets,
-                            filteredFacets: data.filteredFacets,
-                            filterPath: data.filterPath,
-                            categories: data.categories,
-                            category: data.category,
-                            isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible,
-                            parentJsName: catalogJsName,
-                            numberFormatConfig: numberFormatConfig,
-                        },
-                    } only %}
+                    {% block filters %}
+                        {% include organism('filter-section', 'CatalogPage') with {
+                            class: 'box spacing-top spacing-top--big js-catalog__filters-toggle',
+                            data: {
+                                facets: data.facets,
+                                filteredFacets: data.filteredFacets,
+                                filterPath: data.filterPath,
+                                categories: data.categories,
+                                category: data.category,
+                                isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible,
+                                parentJsName: catalogJsName,
+                                numberFormatConfig: numberFormatConfig,
+                            },
+                        } only %}
+                    {% endblock %}
                 {% endblock %}
             </div>
 
