@@ -1,11 +1,137 @@
 {% extends template('page-layout-main') %}
 
 {% define data = {
-    pages: required,
+    pages: _view.cms_pages | default([]),
+    sort: _view.sort | default([]),
+    searchString: _view.searchString,
+    title: ('global.search.results' | trans) ~ ' ' ~ _view.searchString,
+    metaTitle: _view.pageTitle | default,
+    metaDescription: _view.pageDescription | default,
+    metaKeywords: _view.pageKeywords | default,
+    pagination: {
+        parameters: app.request.query.all(),
+        currentPage: _view.pagination.currentPage | default,
+        paginationPath: app.request.attributes.get('_route'),
+        maxPage: _view.pagination.maxPage | default,
+        showAlwaysFirstAndLast: true,
+        numFound: _view.pagination.numFound | default,
+        config: _view.pagination.config | default,
+        currentItemsPerPage: _view.pagination.currentItemsPerPage | default,
+    },
+    facets: _view.facets | default([]),
+    filteredFacets: _view.filteredFacets | default([]),
+    filterPath: _view.filterPath | default,
+    numberFormatConfig: _view.numberFormatConfig | default({}),
 } %}
 
+{% set pageContentId = 'page-content' %}
+{% set numberFormatConfig = {} %}
+{% for key, value in data.numberFormatConfig %}
+    {% set numberFormatConfig = numberFormatConfig | merge ({ (key | replace({'_symbol': '', '_': '-'})): value }) %}
+{% endfor %}
+
 {% block content %}
-    <form method="GET" class="grid" data-init-default-value-form>
-        {% block form %}{% endblock %}
+    {% include molecule('skip-link') with {
+        data: {
+            href: pageContentId,
+            text: 'global.skip-to-results' | trans,
+        },
+    } only %}
+
+    {% set pageJsName = 'js-cms-page-search' %}
+
+    {% include molecule('window-location-applicator', 'CatalogPage') with {
+        attributes: {
+            'form-class-name': pageJsName ~ '__form',
+            'trigger-class-name': pageJsName ~ '__trigger',
+        },
+    } only %}
+
+    <form method="GET" class="grid {{ pageJsName }}__form" data-init-default-value-form>
+        {% set formFiltersClassName = 'col col--sm-12 col--lg-4 col--xl-3' %}
+        {% set formContentWrapperClassName = data.facets | length ? 'col col--sm-12 col--lg-8 col--xl-9' : 'col col--sm-12' %}
+
+        {% block form %}
+            {% block formFilters %}
+                {% if data.facets | length %}
+                    <div class="{{ formFiltersClassName }}">
+                    {% block filterBar %}
+                        {% include molecule('toggler-checkbox') with {
+                            modifiers: ['expand'],
+                            class: 'box spacing-top spacing-top--big is-hidden-lg-xl',
+                            data: {
+                                label: 'catalog.filter.show_hide_button' | trans,
+                            },
+                            attributes: {
+                                'target-class-name': 'js-catalog__filters-toggle',
+                                'class-to-toggle': 'is-hidden-sm-md',
+                                checked: true,
+                            },
+                        } only %}
+
+                        {% include organism('filter-section', 'CatalogPage') with {
+                            class: 'box spacing-top spacing-top--big js-catalog__filters-toggle',
+                            data: {
+                                facets: data.facets,
+                                filteredFacets: data.filteredFacets,
+                                filterPath: data.filterPath,
+                                parentJsName: pageJsName,
+                                numberFormatConfig: numberFormatConfig,
+                            },
+                        } only %}
+                    {% endblock %}
+                </div>
+                {% endif %}
+            {% endblock %}
+
+            {% block formContentWrapper %}
+                <div class="{{ formContentWrapperClassName }}" id="{{ pageContentId }}">
+                    {% block formContent %}
+                        {% block formContentSort %}
+                            {% include molecule('sort', 'CatalogPage') with {
+                                class: 'box',
+                                data: {
+                                    pagination: data.pagination,
+                                    sort: data.sort,
+                                    parentJsName: pageJsName,
+                                },
+                            } only %}
+                        {% endblock %}
+
+                        {% block formContentActiveFilters %}
+                            {% include organism('active-filter-section', 'CatalogPage') with {
+                                class: 'spacing-top spacing-top--big',
+                                data: {
+                                    facets: data.facets,
+                                    filteredFacets: data.filteredFacets,
+                                },
+                            } only %}
+                        {% endblock %}
+
+                        {% block formContentPaginationTop %}
+                            {% include molecule('pagination') with {
+                                class: 'box spacing-top spacing-top--big',
+                                data: data.pagination,
+                            } only %}
+                        {% endblock %}
+
+                        {% block formContentData %}
+                            {% include molecule('search-cms-results', 'CmsSearchPage') with {
+                                data: {
+                                    pages: data.pages,
+                                },
+                            } only %}
+                        {% endblock %}
+
+                        {% block formContentPaginationBottom %}
+                            {% include molecule('pagination') with {
+                                class: 'box',
+                                data: data.pagination,
+                            } only %}
+                        {% endblock %}
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        {% endblock %}
     </form>
 {% endblock %}

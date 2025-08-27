@@ -2,27 +2,42 @@
 
 {% define config = {
     name: 'search-cms-results',
-    tag: 'ul'
+    tag: 'ul',
 } %}
 
 {% define data = {
-    pages: required
+    pages: required,
 } %}
 
 {% block body %}
     {% for page in data.pages %}
-        <li class="list__item">
-            <div class="box grid grid--justify grid--middle">
-                <div class="col spacing-y spacing-y--inner">
-                    {{ page.name }}
-                </div>
-                <div class="col">
-                    <a href="{{ functionExists('generatePath') ? generatePath(page.url) : page.url }}" class="button">
-                        {{ 'global.search.results.view' | trans }} >>
-                    </a>
-                </div>
-            </div>
-        </li>
-    {% endfor %}
+        {% block pageItem %}
+            <li class="list__item list__item--highlighted">
+                <article class="box grid grid--justify">
+                    <div class="col">
+                        {% block title %}
+                            <h2 class="title--h6">{{ page.name | raw }}</h2>
+                        {% endblock %}
 
+                        {% block content %}
+                            {% if page.content is defined %}
+                                <p>{{ page.content | raw }}</p>
+                            {% endif %}
+                        {% endblock %}
+                    </div>
+                    <div class="col">
+                        {% block button %}
+                            <a href="{{ functionExists('generatePath') ? generatePath(page.url) : page.url }}" class="button">
+                                {{ 'global.search.results.view' | trans }} >>
+                            </a>
+                        {% endblock %}
+                    </div>
+                </article>
+            </li>
+        {% endblock %}
+    {% else %}
+        {% block noResults %}
+            <div class="text-center">{{ 'catalog.no-results' | trans }}</div>
+        {% endblock %}
+    {% endfor %}
 {% endblock %}
