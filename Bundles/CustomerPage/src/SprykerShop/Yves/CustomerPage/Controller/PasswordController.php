@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CustomerPage\Controller;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
 use Spryker\Shared\Customer\Code\Messages;
+use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Form\RestorePasswordForm;
 use SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -152,6 +153,14 @@ class PasswordController extends AbstractCustomerController
      */
     protected function executeRestorePasswordAction(Request $request): RedirectResponse|array
     {
+        if ($request->query->get(CustomerPageConfig::URL_PARAM_LOCALE)) {
+            return $this->redirectWithLocale(
+                CustomerPageRouteProviderPlugin::ROUTE_NAME_PASSWORD_RESTORE,
+                (string)$request->query->get(CustomerPageConfig::URL_PARAM_LOCALE),
+                ['token' => $request->query->get('token')],
+            );
+        }
+
         if ($this->isLoggedInCustomer()) {
             $this->addErrorMessage('customer.reset.password.error.already.loggedIn');
 

@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -142,6 +143,15 @@ class RegisterController extends AbstractCustomerController
     protected function executeConfirmAction(Request $request): RedirectResponse
     {
         $token = (string)$request->query->get('token');
+
+        if ($request->query->get(CustomerPageConfig::URL_PARAM_LOCALE)) {
+            return $this->redirectWithLocale(
+                CustomerPageRouteProviderPlugin::ROUTE_NAME_CONFIRM_REGISTRATION,
+                (string)$request->query->get(CustomerPageConfig::URL_PARAM_LOCALE),
+                ['token' => $request->query->get('token')],
+            );
+        }
+
         if (!$token) {
             $this->addErrorMessage(static::GLOSSARY_KEY_MISSING_CONFIRMATION_TOKEN);
 

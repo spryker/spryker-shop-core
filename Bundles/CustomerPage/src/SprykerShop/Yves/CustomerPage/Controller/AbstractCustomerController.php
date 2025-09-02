@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
 use Generated\Shared\Transfer\CustomerResponseTransfer;
+use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 
 /**
@@ -45,5 +46,20 @@ abstract class AbstractCustomerController extends AbstractController
         foreach ($customerResponseTransfer->getErrors() as $errorTransfer) {
             $this->addErrorMessage($errorTransfer->getMessage());
         }
+    }
+
+    /**
+     * @param string $routeName
+     * @param string $locale
+     * @param array<mixed> $parameters
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function redirectWithLocale(string $routeName, string $locale, array $parameters)
+    {
+        $routerContext = $this->getFactory()->getRouter()->getContext();
+        $routerContext->setParameter(CustomerPageConfig::URL_PARAM_LOCALE, $locale);
+
+        return $this->redirectResponseInternal($routeName, $parameters);
     }
 }
