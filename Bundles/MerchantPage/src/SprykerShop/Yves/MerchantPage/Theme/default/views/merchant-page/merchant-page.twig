@@ -26,6 +26,9 @@
 {% endblock %}
 
 {% block content %}
+    {% if merchantName is defined and merchantName is not empty %}
+        {% widget 'MerchantSearchLinkWidget' args [merchantName] only %}{% endwidget %}
+    {% endif %}
     {% include molecule('merchant-profile', 'MerchantProfileWidget') ignore missing with {
         data: {
             merchantStorageProfile: data.merchant.merchantProfile | default,

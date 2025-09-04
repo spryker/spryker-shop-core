@@ -1,0 +1,14 @@
+{% extends template('widget') %}
+
+{% define data = {
+    searchButtonUrl: _widget.searchButtonUrl,
+    classes: 'spacing-left spacing-top',
+} %}
+
+{% block body %}
+    <div class="{{ data.classes }}">
+        <a href="{{ data.searchButtonUrl }}" class="button button--primary">
+            {{ 'merchant_profile.shop_merchant_products' | trans }}
+        </a>
+    </div>
+{% endblock %}

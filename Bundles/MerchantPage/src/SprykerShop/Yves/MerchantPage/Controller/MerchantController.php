@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\MerchantPage\Controller;
 
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Spryker\Yves\Kernel\View\View;
+use SprykerShop\Yves\MerchantPage\Widget\MerchantSearchLinkWidget;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -29,7 +30,9 @@ class MerchantController extends AbstractController
             [
                 'merchant' => $merchantStorageTransfer,
             ],
-            [],
+            [
+                MerchantSearchLinkWidget::class,
+            ],
             '@MerchantPage/views/merchant-page/merchant-page.twig',
         );
     }
