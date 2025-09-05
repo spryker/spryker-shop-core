@@ -85,14 +85,16 @@ export default class EndlessScroll extends Component {
 
     protected render(): void {
         const response = this.ajaxProvider.xhr.response;
+        const isJson = this.ajaxProvider.xhr.getResponseHeader('Content-Type') === 'application/json';
+        const content = isJson ? JSON.parse(response ?? '{}').content : response;
 
-        if (!response) {
+        if (!content) {
             this.removeScrollListener();
 
             return;
         }
 
-        this.contentContainer.innerHTML += response;
+        this.contentContainer.innerHTML += content;
 
         if (this.hasContentMount) {
             mount();

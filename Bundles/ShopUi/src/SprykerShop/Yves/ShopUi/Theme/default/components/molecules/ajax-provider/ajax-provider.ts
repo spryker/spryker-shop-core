@@ -175,7 +175,9 @@ export default class AjaxProvider extends Component {
             queryStringParams.push(`${key}=${encodeValue}`);
         });
 
-        return `${url}?${queryStringParams.join('&')}`;
+        const querySign = url.includes('?') ? '&' : '?';
+
+        return `${url}${querySign}${queryStringParams.join('&')}`;
     }
 
     /**

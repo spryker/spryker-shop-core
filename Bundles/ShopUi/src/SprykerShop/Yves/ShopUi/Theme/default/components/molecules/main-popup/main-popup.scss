@@ -22,6 +22,10 @@
 
         &__head {
             min-height: 2rem;
+
+            &--scroll-inside-content {
+                flex-shrink: 0;
+            }
         }
 
         &__title {
@@ -54,6 +58,11 @@
         &__content {
             padding: 0 map-get($setting-spacing, big) 1.5rem;
             overflow-y: auto;
+
+            &--scroll-inside-content {
+                flex-direction: column;
+                display: flex;
+            }
         }
 
         &--spaceless {
@@ -74,6 +83,10 @@
             #{$name}__content {
                 display: flex;
             }
+        }
+
+        &--auto {
+            width: auto;
         }
 
         @content;
