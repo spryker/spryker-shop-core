@@ -13,7 +13,7 @@
     filterPath: _view.filterPath | default,
     viewMode: _view.viewMode | default,
 
-    title: ('global.search.results' | trans) ~ ' ' ~ _view.searchString,
+    title: _view.searchString is not empty ? ('global.search.results' | trans) ~ ' ' ~ _view.searchString : ('global.search.results.no_query' | trans),
     metaTitle: _view.pageTitle | default(_view.category.name | default),
     metaDescription: _view.pageDescription | default,
     metaKeywords: _view.pageKeywords | default,
@@ -38,7 +38,14 @@
 {% endblock %}
 
 {% block title %}
-    <h3>{{ 'global.search.results' | trans }} "<strong class="text-break">{{ data.searchString }}</strong>"</h3>
+    <h3>
+        {% if data.searchString is not empty %}
+            {{ 'global.search.results' | trans }}
+            "<strong class="text-break">{{ data.searchString }}</strong>"
+        {% else %}
+            {{ 'global.search.results.no_query' | trans }}
+        {% endif %}
+    </h3>
 
     {% embed molecule('spelling-suggestion', 'CatalogPage') with {
         data: {
@@ -47,17 +54,24 @@
     } only %}
         {% block body %}
             <hr>
-            {{parent()}}
+            {{ parent() }}
         {% endblock %}
     {% endembed %}
 {% endblock %}
 
+{% block filters %}
+    {% widget 'SspAssetFilterWidget' only %}{% endwidget %}
+    {{ parent() }}
+{% endblock %}
+
 {% block form %}
     <div class="col col--sm-12 spacing spacing--inner">
-        {% widget 'FullTextSearchTabsWidget' args [data.searchString, 'FullTextSearchProductsTab'] only %}{% endwidget %}
+        {% block tabsWidget %}
+            {% widget 'FullTextSearchTabsWidget' args [data.searchString, 'FullTextSearchProductsTab'] only %}{% endwidget %}
+        {% endblock %}
     </div>
 
-    {{parent()}}
+    {{ parent() }}
     {% if data.searchString is not empty %}
         <input type="hidden" name="q" value="{{ data.searchString }}">
     {% endif %}

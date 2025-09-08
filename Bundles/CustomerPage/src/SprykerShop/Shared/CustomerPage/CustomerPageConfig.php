@@ -27,4 +27,16 @@ class CustomerPageConfig extends AbstractSharedConfig
      * @var string
      */
     public const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
+
+    /**
+     * Specification:
+     * - URL param specifying the locale that should be used by the target page.
+     *
+     * @api
+     *
+     * @uses \Spryker\Shared\Customer\CustomerConfig::URL_PARAM_LOCALE
+     *
+     * @var string
+     */
+    public const URL_PARAM_LOCALE = '_locale';
 }

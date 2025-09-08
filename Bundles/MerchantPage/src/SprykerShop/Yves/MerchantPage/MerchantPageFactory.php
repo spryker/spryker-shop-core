@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\MerchantPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\Router\Router\ChainRouter;
 use SprykerShop\Yves\MerchantPage\Dependency\Client\MerchantPageToMerchantStorageClientInterface;
 
 class MerchantPageFactory extends AbstractFactory
@@ -18,5 +19,13 @@ class MerchantPageFactory extends AbstractFactory
     public function getMerchantStorageClient(): MerchantPageToMerchantStorageClientInterface
     {
         return $this->getProvidedDependency(MerchantPageDependencyProvider::CLIENT_MERCHANT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Yves\Router\Router\ChainRouter
+     */
+    public function getRouter(): ChainRouter
+    {
+        return $this->getProvidedDependency(MerchantPageDependencyProvider::SERVICE_ROUTER);
     }
 }

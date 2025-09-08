@@ -7,6 +7,12 @@
             & > #{$name} {
                 margin-left: 0.5rem;
             }
+
+            &--highlighted {
+                em {
+                    text-decoration: underline;
+                }
+            }
         }
 
         &--inline {

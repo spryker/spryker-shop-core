@@ -19,15 +19,20 @@ class MerchantPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_MERCHANT_STORAGE = 'CLIENT_MERCHANT_STORAGE';
 
     /**
+     * @var string
+     */
+    public const SERVICE_ROUTER = 'routers';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
      */
     public function provideDependencies(Container $container): Container
     {
-        parent::provideDependencies($container);
-
+        $container = parent::provideDependencies($container);
         $container = $this->addMerchantStorageClient($container);
+        $container = $this->addRouter($container);
 
         return $container;
     }
@@ -41,6 +46,20 @@ class MerchantPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_MERCHANT_STORAGE, function (Container $container) {
             return new MerchantPageToMerchantStorageClientBridge($container->getLocator()->merchantStorage()->client());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addRouter(Container $container): Container
+    {
+        $container->set(static::SERVICE_ROUTER, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_ROUTER);
         });
 
         return $container;

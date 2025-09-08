@@ -91,88 +91,111 @@
     } only %}
 
     <form method="GET" class="grid {{ catalogJsName }}__form" data-init-default-value-form>
+        {% set formFiltersClassName = 'col col--sm-12 col--lg-4 col--xl-3' %}
+        {% set formContentWrapperClassName = 'col col--sm-12 col--lg-8 col--xl-9' %}
+
         {% block form %}
-            <div class="col col--sm-12 col--lg-4 col--xl-3">
-                {% block filterBar %}
-                    {% include molecule('view-mode-switch', 'CatalogPage') with {
-                        class: 'box',
-                    } only %}
+            {% block formFilters %}
+                <div class="{{ formFiltersClassName }}">
+                    {% block filterBar %}
+                        {% block filterBarViewMode %}
+                            {% include molecule('view-mode-switch', 'CatalogPage') with {
+                                class: 'box',
+                            } only %}
+                        {% endblock %}
 
-                    {% include molecule('toggler-checkbox') with {
-                        modifiers: ['expand'],
-                        class: 'box spacing-top spacing-top--big is-hidden-lg-xl',
-                        data: {
-                            label: 'catalog.filter.show_hide_button' | trans,
-                        },
-                        attributes: {
-                            'target-class-name': 'js-catalog__filters-toggle',
-                            'class-to-toggle': 'is-hidden-sm-md',
-                            checked: true,
-                        },
-                    } only %}
+                        {% include molecule('toggler-checkbox') with {
+                            modifiers: ['expand'],
+                            class: 'box spacing-top spacing-top--big is-hidden-lg-xl',
+                            data: {
+                                label: 'catalog.filter.show_hide_button' | trans,
+                            },
+                            attributes: {
+                                'target-class-name': 'js-catalog__filters-toggle',
+                                'class-to-toggle': 'is-hidden-sm-md',
+                                checked: true,
+                            },
+                        } only %}
 
-                    {% include organism('filter-section', 'CatalogPage') with {
-                        class: 'box spacing-top spacing-top--big js-catalog__filters-toggle',
-                        data: {
-                            facets: data.facets,
-                            filteredFacets: data.filteredFacets,
-                            filterPath: data.filterPath,
-                            categories: data.categories,
-                            category: data.category,
-                            isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible,
-                            parentJsName: catalogJsName,
-                            numberFormatConfig: numberFormatConfig,
-                        },
-                    } only %}
-                {% endblock %}
-            </div>
-
-            <div class="col col--sm-12 col--lg-8 col--xl-9" id="{{ catalogProductListId }}">
-                {% include molecule('sort', 'CatalogPage') with {
-                    class: 'box',
-                    data: {
-                        pagination: data.pagination,
-                        sort: data.sort,
-                        parentJsName: catalogJsName,
-                    },
-                } only %}
-
-                {% include organism('active-filter-section', 'CatalogPage') with {
-                    class: 'spacing-top spacing-top--big',
-                    data: {
-                        facets: data.facets,
-                        filteredFacets: data.filteredFacets
-                    },
-                } only %}
-
-                {% include molecule('pagination') with {
-                    class: 'box spacing-top spacing-top--big',
-                    data: data.pagination,
-                } only %}
-
-                <div class="grid grid--stretch">
-                    {% if data.products %}
-                        {% for product in data.products %}
-                            {% widget 'CatalogPageProductWidget' args [product, data.viewMode] with {
+                        {% block filters %}
+                            {% include organism('filter-section', 'CatalogPage') with {
+                                class: 'box spacing-top spacing-top--big js-catalog__filters-toggle',
                                 data: {
-                                    eventRevealer: data.isAjaxHeader ? 'CART_UPDATE_EVENT' : null,
+                                    facets: data.facets,
+                                    filteredFacets: data.filteredFacets,
+                                    filterPath: data.filterPath,
+                                    categories: data.categories,
+                                    category: data.category,
+                                    isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible,
+                                    parentJsName: catalogJsName,
+                                    numberFormatConfig: numberFormatConfig,
                                 },
                             } only %}
-                            {% elsewidget 'ProductWidgetPlugin' args [product, data.viewMode] only %} {# @deprecated Use CatalogPageProductWidget instead. #}
-                            {% endwidget %}
-                        {% endfor %}
-                    {% else %}
-                        {% block noResults %}
-                            <div class="col col--sm-12 text-center">{{ 'catalog.no-results' | trans }}</div>
                         {% endblock %}
-                    {% endif %}
+                    {% endblock %}
                 </div>
+            {% endblock %}
 
-                {% include molecule('pagination') with {
-                    class: 'box',
-                    data: data.pagination
-                } only %}
-            </div>
+            {% block formContentWrapper %}
+                <div class="{{ formContentWrapperClassName }}" id="{{ catalogProductListId }}">
+                    {% block formContent %}
+                        {% block formContentSort %}
+                            {% include molecule('sort', 'CatalogPage') with {
+                                class: 'box',
+                                data: {
+                                    pagination: data.pagination,
+                                    sort: data.sort,
+                                    parentJsName: catalogJsName,
+                                },
+                            } only %}
+                        {% endblock %}
+
+                        {% block formContentActiveFilters %}
+                            {% include organism('active-filter-section', 'CatalogPage') with {
+                                class: 'spacing-top spacing-top--big',
+                                data: {
+                                    facets: data.facets,
+                                    filteredFacets: data.filteredFacets
+                                },
+                            } only %}
+                        {% endblock %}
+
+                        {% block formContentPaginationTop %}
+                            {% include molecule('pagination') with {
+                                class: 'box spacing-top spacing-top--big',
+                                data: data.pagination,
+                            } only %}
+                        {% endblock %}
+
+                        {% block formContentData %}
+                            <div class="grid grid--stretch">
+                                {% if data.products %}
+                                    {% for product in data.products %}
+                                        {% widget 'CatalogPageProductWidget' args [product, data.viewMode] with {
+                                            data: {
+                                                eventRevealer: data.isAjaxHeader ? 'CART_UPDATE_EVENT' : null,
+                                            },
+                                        } only %}
+                                        {% elsewidget 'ProductWidgetPlugin' args [product, data.viewMode] only %} {# @deprecated Use CatalogPageProductWidget instead. #}
+                                        {% endwidget %}
+                                    {% endfor %}
+                                {% else %}
+                                    {% block noResults %}
+                                        <div class="col col--sm-12 text-center">{{ 'catalog.no-results' | trans }}</div>
+                                    {% endblock %}
+                                {% endif %}
+                            </div>
+                        {% endblock %}
+
+                        {% block formContentPaginationBottom %}
+                            {% include molecule('pagination') with {
+                                class: 'box',
+                                data: data.pagination
+                            } only %}
+                        {% endblock %}
+                    {% endblock %}
+                </div>
+            {% endblock %}
         {% endblock %}
     </form>
 {% endblock %}

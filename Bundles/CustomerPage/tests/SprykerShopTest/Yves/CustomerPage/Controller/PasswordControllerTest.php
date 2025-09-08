@@ -15,6 +15,7 @@ use SprykerShop\Yves\CustomerPage\CustomerPageFactory;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientBridge;
 use SprykerShop\Yves\CustomerPage\Form\FormFactory;
 use SprykerShop\Yves\CustomerPage\Logger\AuditLogger;
+use SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -50,6 +51,43 @@ class PasswordControllerTest extends Unit
 
         // Act
         $passwordResetController->restorePasswordAction(new Request());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExecuteRestorePasswordActionWithLocaleRedirectsWithCorrectRoute(): void
+    {
+        // Arrange
+        $token = 'test-token';
+        $locale = 'de_DE';
+
+        $request = new Request([
+            'token' => $token,
+            '_locale' => $locale,
+        ]);
+
+        $passwordControllerMock = $this->getMockBuilder(PasswordController::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getFactory', 'redirectResponseInternal'])
+            ->getMock();
+
+        $factoryMock = $this->createMock(CustomerPageFactory::class);
+
+        $passwordControllerMock->method('getFactory')
+            ->willReturn($factoryMock);
+
+        // Assert
+        $passwordControllerMock->expects($this->once())
+            ->method('redirectResponseInternal')
+            ->with(
+                CustomerPageRouteProviderPlugin::ROUTE_NAME_PASSWORD_RESTORE,
+                ['token' => $token],
+            )
+            ->willReturn(new RedirectResponse('/'));
+
+        // Act
+        $passwordControllerMock->restorePasswordAction($request);
     }
 
     /**

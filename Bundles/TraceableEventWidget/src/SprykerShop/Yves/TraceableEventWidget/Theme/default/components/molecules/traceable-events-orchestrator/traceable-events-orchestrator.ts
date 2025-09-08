@@ -94,11 +94,18 @@ export default class TraceableEventsOrchestrator extends Component {
     protected readyCallback(): void {}
     protected init(): void {
         Object.keys(this.groupedEvents).forEach((name) => {
-            document.addEventListener(
-                name,
-                debounce((event) => this.eventHandler(event), this.debounceDelay, { leading: true, trailing: false }),
-                { signal: this.controller.signal },
-            );
+            if (name === 'load') {
+                this.eventHandler();
+            } else {
+                document.addEventListener(
+                    name,
+                    debounce((event) => this.eventHandler(event), this.debounceDelay, {
+                        leading: true,
+                        trailing: false,
+                    }),
+                    { signal: this.controller.signal },
+                );
+            }
         });
     }
 
