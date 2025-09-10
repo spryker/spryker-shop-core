@@ -9,7 +9,6 @@ on:
     workflow_dispatch:
 
 env:
-    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     COMPOSER_MEMORY_LIMIT: -1
     NODE_OPTIONS: --max-old-space-size=8192
 
