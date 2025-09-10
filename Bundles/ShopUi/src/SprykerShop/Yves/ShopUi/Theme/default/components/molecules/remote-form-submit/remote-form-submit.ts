@@ -49,7 +49,7 @@ export default class RemoteFormSubmit extends Component {
     }
 
     protected createForm(): void {
-        if (document.getElementById(this.formName)?.tagName === 'form') {
+        if (document.getElementById(this.formName)?.tagName.toLowerCase() === 'form') {
             return;
         }
 
@@ -62,6 +62,10 @@ export default class RemoteFormSubmit extends Component {
     }
 
     protected removeFieldsContainer(): void {
+        if (!this.fieldsContainer) {
+            return;
+        }
+
         this.fieldsContainer.remove();
     }
 
