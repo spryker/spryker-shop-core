@@ -46,7 +46,7 @@ jobs:
 
             - name: Install dependencies
               run: |
-                  composer config github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
+                  composer config github-oauth.github.com ${{ secrets.SPRYKER_BOT_TOKEN }}
                   composer install --no-interaction --prefer-dist --optimize-autoloader
 
             - name: Setup Node.js
