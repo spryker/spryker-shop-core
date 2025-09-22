@@ -23,6 +23,8 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
 
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
@@ -73,7 +75,7 @@ jobs:
               run: chmod +x *.sh
 
             - name: Check touched modules
-              run: bash travis_check_touched_modules.sh
+              run: bash ci_check_touched_modules.sh
 
             - name: Check module codeception
               run: |

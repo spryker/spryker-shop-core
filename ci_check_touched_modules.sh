@@ -34,7 +34,7 @@ runCommand() {
 }
 
 validateModuleCodeSniffer() {
-  MODULES=$(git -C ./ diff --name-only --diff-filter=ACMRTUXB master... | grep "^Bundles\/" | cut -d "/" -f2- | cut -d "/" -f1 | sort | uniq)
+  MODULES=$(git -C ./ diff --name-only --diff-filter=ACMRTUXB origin/master | grep "^Bundles\/" | cut -d "/" -f2- | cut -d "/" -f1 | sort | uniq)
 
   echo "code sniffer check"
   for module in $MODULES
