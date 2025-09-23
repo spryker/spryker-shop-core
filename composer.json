@@ -18,9 +18,6 @@
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
-    "scripts": {
-        "cs-check": "phpcs"
-    },
     "replace": {
         "spryker-shop/agent-page": "*",
         "spryker-shop/agent-page-extension": "*",
