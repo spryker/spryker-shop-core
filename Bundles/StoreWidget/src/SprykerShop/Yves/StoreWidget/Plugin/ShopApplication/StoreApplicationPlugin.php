@@ -30,6 +30,11 @@ class StoreApplicationPlugin extends AbstractPlugin implements ApplicationPlugin
     protected const SESSION_STORE = 'current_store';
 
     /**
+     * @var string
+     */
+    protected const SERVICE_TIMEZONE = 'SERVICE_TIMEZONE';
+
+    /**
      * {@inheritDoc}
      *
      * @api
@@ -41,6 +46,7 @@ class StoreApplicationPlugin extends AbstractPlugin implements ApplicationPlugin
     public function provide(ContainerInterface $container): ContainerInterface
     {
         $container = $this->addStore($container);
+        $container = $this->addStoreTimezone($container);
 
         return $container;
     }
@@ -58,6 +64,24 @@ class StoreApplicationPlugin extends AbstractPlugin implements ApplicationPlugin
             $this->getFactory()->getSessionClient()->set(static::SESSION_STORE, $storeName);
 
             return $storeName;
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Spryker\Service\Container\ContainerInterface
+     */
+    protected function addStoreTimezone(ContainerInterface $container): ContainerInterface
+    {
+        $container->set(static::SERVICE_TIMEZONE, function (ContainerInterface $container) {
+            return $this
+                ->getFactory()
+                ->getStoreClient()
+                ->getCurrentStore()
+                ->getTimezone();
         });
 
         return $container;
