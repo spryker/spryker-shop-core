@@ -92,8 +92,10 @@
             {% widget 'SspServicePointNameForItemWidget' args [data.product] only %}
             {% elsewidget 'ServicePointNameForItemWidget' args [data.product] only %}
             {% endwidget %}
-            {% widget 'SspAssetInfoForItemWidget' args [data.product] only %}
-            {% endwidget %}
+
+            {% widget 'SspCartItemAssetSelectorWidget' args [data.product, false] with {
+                ajaxTriggerAttribute: data.ajaxTriggerAttribute
+            } only %}{% endwidget %}
         {% endblock %}
     </div>
 {% endblock %}
