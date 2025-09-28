@@ -6,6 +6,7 @@ export const EVENT_OPEN_POPUP = 'openPopup';
 export const EVENT_CLOSE_POPUP = 'closePopup';
 export const EVENT_POPUP_OPENED = 'popupOpened';
 export const EVENT_POPUP_CLOSED = 'popupClosed';
+export const EVENT_POPUP_CONTENT_MOUNTED = 'popupContentMounted';
 
 export default class MainPopup extends Component {
     protected triggers: HTMLElement[];
@@ -166,7 +167,9 @@ export default class MainPopup extends Component {
         }
 
         if (this.hasContentMount) {
-            mount();
+            mount().then(() => {
+                this.dispatchCustomEvent(EVENT_POPUP_CONTENT_MOUNTED);
+            });
         }
     }
 
@@ -183,7 +186,9 @@ export default class MainPopup extends Component {
         }
 
         if (this.hasContentMount) {
-            mount();
+            mount().then(() => {
+                this.dispatchCustomEvent(EVENT_POPUP_CONTENT_MOUNTED);
+            });
         }
     }
 
@@ -191,7 +196,9 @@ export default class MainPopup extends Component {
         const popupContent = this.clone.getElementsByClassName(`${this.jsName}__content`)[0];
         popupContent.innerHTML = html;
 
-        mount();
+        mount().then(() => {
+            this.dispatchCustomEvent(EVENT_POPUP_CONTENT_MOUNTED);
+        });
     }
 
     protected toggleOverlay(): void {
