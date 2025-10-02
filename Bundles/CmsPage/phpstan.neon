@@ -1,6 +1,7 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method Twig\\Loader\\LoaderInterface::exists\(\).#'
+        -
+            identifier: missingType.iterableValue
     reportUnmatchedIgnoredErrors: false

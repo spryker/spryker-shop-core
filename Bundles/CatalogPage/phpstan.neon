@@ -1,6 +1,7 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Parameter \#2 \$\w+ of class Twig\\TwigFunction constructor expects .+callable.+ given.#'
+        -
+            identifier: missingType.iterableValue

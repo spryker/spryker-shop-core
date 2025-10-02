@@ -4,7 +4,7 @@
     "description": "ContentProductSetWidget module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker-shop/product-set-widget": "^1.9.0",
         "spryker/content-product-set": "^0.1.2 || ^1.0.0",
         "spryker/kernel": "^3.52.0",

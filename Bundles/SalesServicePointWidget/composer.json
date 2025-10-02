@@ -4,7 +4,7 @@
     "description": "SalesServicePointWidget module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker-shop/customer-reorder-widget-extension": "^1.2.0",
         "spryker-shop/shop-ui": "^1.72.0",
         "spryker/kernel": "^3.52.0",

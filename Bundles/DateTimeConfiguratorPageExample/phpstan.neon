@@ -1,6 +1,5 @@
 parameters:
     level: 8
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Parameter \#1 \$json of function json_decode expects string, resource\|string given.#'
@@ -9,3 +8,5 @@ parameters:
         - '#Method .+ConfiguratorPage::renderHtmlPageAction\(\) should return string but returns string\|false.#'
         - '#Cannot call method getAvailabilityOrFail\(\) on .+ProductConcreteAvailabilityTransfer\|null#'
         - '#Parameter \#1 \$accessTokenRequestUrl of method .+ProductConfiguratorRequestTransfer::setAccessTokenRequestUrl\(\) expects string\|null, array\|string given.#'
+        -
+            identifier: missingType.iterableValue

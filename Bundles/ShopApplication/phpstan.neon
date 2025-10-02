@@ -1,6 +1,5 @@
 parameters:
     level: 7
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     dynamicConstantNames:
         - APPLICATION
@@ -19,6 +18,8 @@ parameters:
         - '#Parameter \#2 \$string of function explode expects string, string\|false given.#'
         - '#^Call to function method_exists\(\) with Symfony\\Component\\HttpKernel\\Event\\ViewEvent and#'
         - '#Call to an undefined method Symfony\\Component\\HttpKernel\\Event\\ViewEvent\:\:isMainRequest\(\).#'
+        -
+            identifier: missingType.iterableValue
     excludePaths:
         - '%rootDir%/../../../vendor/spryker/spryker-shop/Bundles/ShopApplication/src/SprykerShop/Yves/ShopApplication/Plugin/AbstractTwigExtensionPlugin.php'
     treatPhpDocTypesAsCertain: false
