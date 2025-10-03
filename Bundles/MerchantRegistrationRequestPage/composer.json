@@ -1,0 +1,45 @@
+{
+    "name": "spryker-shop/merchant-registration-request-page",
+    "type": "library",
+    "description": "MerchantRegistrationRequestPage module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.3",
+        "spryker-shop/shop-ui": "^1.73.0",
+        "spryker/kernel": "^3.52.0",
+        "spryker/merchant-registration-request": "^1.0.0",
+        "spryker/store": "^1.24.0",
+        "spryker/symfony": "^3.1.0",
+        "spryker/transfer": "^3.27.0",
+        "spryker/twig": "^3.24.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/router": "*"
+    },
+    "suggest": {
+        "spryker/router": "Use this module if you want use the RouterProviderPlugin."
+    },
+    "autoload": {
+        "psr-4": {
+            "SprykerShop\\": "src/SprykerShop/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

@@ -86,6 +86,7 @@
         "spryker-shop/merchant-product-offer-widget-extension": "*",
         "spryker-shop/merchant-product-widget": "*",
         "spryker-shop/merchant-profile-widget": "*",
+        "spryker-shop/merchant-registration-request-page": "*",
         "spryker-shop/merchant-relation-request-page": "*",
         "spryker-shop/merchant-relation-request-widget": "*",
         "spryker-shop/merchant-relationship-page": "*",
