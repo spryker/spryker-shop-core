@@ -26,6 +26,11 @@ class CartReorderPageConfig extends AbstractBundleConfig
     protected const ROUTE_SUCCESSFUL_REDIRECT = 'cart';
 
     /**
+     * @var string|null
+     */
+    protected const CART_REORDER_STRATEGY = null;
+
+    /**
      * Specification:
      * - Returns the URL to redirect to when the reorder process is failed.
      *
@@ -49,5 +54,20 @@ class CartReorderPageConfig extends AbstractBundleConfig
     public function getReorderSuccessfulRedirectUrl(): string
     {
         return static::ROUTE_SUCCESSFUL_REDIRECT;
+    }
+
+    /**
+     * Specification:
+     * - Defines the cart reorder strategy, e.g., `replace`, `new`.
+     * - If `null` is returned, no predefined strategy will be used.
+     * - The corresponding strategy plugin handling the specified value must be registered in the project.
+     *
+     * @api
+     *
+     * @return string|null
+     */
+    public function getCartReorderStrategy(): ?string
+    {
+        return static::CART_REORDER_STRATEGY;
     }
 }

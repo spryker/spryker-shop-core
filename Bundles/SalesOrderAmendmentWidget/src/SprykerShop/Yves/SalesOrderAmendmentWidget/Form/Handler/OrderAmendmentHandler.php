@@ -42,8 +42,8 @@ class OrderAmendmentHandler implements OrderAmendmentHandlerInterface
         /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
         $customerTransfer = $this->customerClient->getCustomer();
         $cartReorderRequestTransfer = (new CartReorderRequestTransfer())
+            ->fromArray($customerTransfer->toArray(), true)
             ->setOrderReference($orderReference)
-            ->setCustomerReference($customerTransfer->getCustomerReference())
             ->setIsAmendment(true)
             ->setReorderStrategy($this->salesOrderAmendmentWidgetConfig->getCartReorderStrategyForOrderAmendment());
 

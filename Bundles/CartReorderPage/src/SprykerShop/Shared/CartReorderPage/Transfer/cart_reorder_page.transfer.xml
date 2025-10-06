@@ -5,6 +5,7 @@
         <property name="salesOrderItemIds" type="array" singular="idSalesOrderItem"/>
         <property name="orderReference" type="string"/>
         <property name="customerReference" type="string"/>
+        <property name="reorderStrategy" type="string"/>
     </transfer>
 
     <transfer name="CartReorderResponse" strict="true">

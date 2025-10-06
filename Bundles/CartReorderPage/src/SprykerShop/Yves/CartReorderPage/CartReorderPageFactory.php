@@ -40,6 +40,7 @@ class CartReorderPageFactory extends AbstractFactory
             $this->getCustomerClient(),
             $this->getCartReorderClient(),
             $this->getZedRequestClient(),
+            $this->getConfig(),
             $this->getCartReorderRequestExpanderPlugins(),
         );
     }

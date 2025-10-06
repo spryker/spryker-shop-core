@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CartReorderPage\Form\Handler;
 
 use Generated\Shared\Transfer\CartReorderRequestTransfer;
 use Generated\Shared\Transfer\CartReorderResponseTransfer;
+use SprykerShop\Yves\CartReorderPage\CartReorderPageConfig;
 use SprykerShop\Yves\CartReorderPage\Dependency\Client\CartReorderPageToCartReorderClientInterface;
 use SprykerShop\Yves\CartReorderPage\Dependency\Client\CartReorderPageToCustomerClientInterface;
 use SprykerShop\Yves\CartReorderPage\Dependency\Client\CartReorderPageToZedRequestClientInterface;
@@ -27,12 +28,14 @@ class CartReorderHandler implements CartReorderHandlerInterface
      * @param \SprykerShop\Yves\CartReorderPage\Dependency\Client\CartReorderPageToCustomerClientInterface $customerClient
      * @param \SprykerShop\Yves\CartReorderPage\Dependency\Client\CartReorderPageToCartReorderClientInterface $cartReorderClient
      * @param \SprykerShop\Yves\CartReorderPage\Dependency\Client\CartReorderPageToZedRequestClientInterface $zedRequestClient
+     * @param \SprykerShop\Yves\CartReorderPage\CartReorderPageConfig $cartReorderPageConfig
      * @param list<\SprykerShop\Yves\CartReorderPageExtension\Dependency\Plugin\CartReorderRequestExpanderPluginInterface> $cartReorderRequestExpanderPlugins
      */
     public function __construct(
         protected CartReorderPageToCustomerClientInterface $customerClient,
         protected CartReorderPageToCartReorderClientInterface $cartReorderClient,
         protected CartReorderPageToZedRequestClientInterface $zedRequestClient,
+        protected CartReorderPageConfig $cartReorderPageConfig,
         protected array $cartReorderRequestExpanderPlugins
     ) {
     }
@@ -51,7 +54,8 @@ class CartReorderHandler implements CartReorderHandlerInterface
         $cartReorderRequestTransfer = (new CartReorderRequestTransfer())
             ->setOrderReference($orderReference)
             ->setCustomerReference($customerTransfer->getCustomerReference())
-            ->setSalesOrderItemIds($request->request->all()[static::ATTRIBUTE_NAME_SALES_ORDER_ITEM_IDS] ?? null);
+            ->setSalesOrderItemIds($request->request->all()[static::ATTRIBUTE_NAME_SALES_ORDER_ITEM_IDS] ?? null)
+            ->setReorderStrategy($this->cartReorderPageConfig->getCartReorderStrategy());
 
         $cartReorderRequestTransfer = $this->executeCartReorderRequestExpanderPlugins($cartReorderRequestTransfer, $request);
         $cartReorderResponseTransfer = $this->cartReorderClient->reorder($cartReorderRequestTransfer);
