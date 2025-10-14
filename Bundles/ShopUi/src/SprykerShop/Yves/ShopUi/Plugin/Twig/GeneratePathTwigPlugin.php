@@ -110,7 +110,9 @@ class GeneratePathTwigPlugin extends AbstractPlugin implements TwigPluginInterfa
                     }
                     $store = $this->getContainer()->get(static::SERVICE_STORE);
 
-                    return sprintf('/%s%s%s', $store, $path, $query);
+                    return str_starts_with($path, '/' . $store)
+                        ? sprintf('%s%s', $path, $query)
+                        : sprintf('/%s%s%s', $store, $path, $query);
                 }
             },
         );

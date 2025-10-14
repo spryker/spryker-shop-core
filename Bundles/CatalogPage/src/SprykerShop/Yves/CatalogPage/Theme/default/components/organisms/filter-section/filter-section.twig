@@ -16,6 +16,7 @@
     isEmptyCategoryFilterValueVisible: null,
     parentJsName: '',
     numberFormatConfig: {},
+    prepareFilterCategoriesDefined: data.prepareFilterCategoriesDefined ?? app.twig.function('prepareFilterCategories'),
 } %}
 
 {% block body %}
@@ -43,6 +44,7 @@
                         categories: data.categories,
                         category: data.category,
                         filter: filter,
+                        prepareFilterCategoriesDefined: data.prepareFilterCategoriesDefined,
                         parameter: filter.config.parameterName | default(''),
                         min: filter.min | default(0),
                         max: filter.max | default(0),

@@ -11,6 +11,7 @@
     viewMode: null,
     isEmptyCategoryFilterValueVisible: null,
     sort: _view.sort | default,
+    prepareFilterCategoriesDefined: data.prepareFilterCategoriesDefined ?? app.twig.function('prepareFilterCategories'),
     pagination: {
         currentPage: required,
         maxPage: required,
@@ -129,6 +130,7 @@
                                     isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible,
                                     parentJsName: catalogJsName,
                                     numberFormatConfig: numberFormatConfig,
+                                    prepareFilterCategoriesDefined: data.prepareFilterCategoriesDefined,
                                 },
                             } only %}
                         {% endblock %}
