@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\SecurityBlockerPage\EventSubscriber;
 use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
 use SprykerShop\Yves\SecurityBlockerPage\Builder\MessageBuilderInterface;
 use SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToSecurityBlockerClientInterface;
+use SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToStoreClientInterface;
 use SprykerShop\Yves\SecurityBlockerPage\SecurityBlockerPageConfig;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,54 +50,21 @@ class SecurityBlockerAgentEventSubscriber implements EventSubscriberInterface
     protected const KERNEL_REQUEST_SUBSCRIBER_PRIORITY = 9;
 
     /**
-     * @var string
-     */
-    protected const GLOSSARY_KEY_ERROR_ACCOUNT_BLOCKED = 'security_blocker_page.error.account_blocked';
-
-    /**
-     * @var \Symfony\Component\HttpFoundation\RequestStack
-     */
-    protected $requestStack;
-
-    /**
-     * @var \SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToSecurityBlockerClientInterface
-     */
-    protected $securityBlockerClient;
-
-    /**
-     * @var \SprykerShop\Yves\SecurityBlockerPage\Builder\MessageBuilderInterface
-     */
-    protected $messageBuilder;
-
-    /**
-     * @var \SprykerShop\Yves\SecurityBlockerPage\SecurityBlockerPageConfig
-     */
-    protected $securityBlockerPageConfig;
-
-    /**
-     * @var string
-     */
-    protected $localeName;
-
-    /**
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToSecurityBlockerClientInterface $securityBlockerClient
      * @param \SprykerShop\Yves\SecurityBlockerPage\Builder\MessageBuilderInterface $messageBuilder
      * @param \SprykerShop\Yves\SecurityBlockerPage\SecurityBlockerPageConfig $securityBlockerPageConfig
      * @param string $localeName
+     * @param \SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToStoreClientInterface $storeClient
      */
     public function __construct(
-        RequestStack $requestStack,
-        SecurityBlockerPageToSecurityBlockerClientInterface $securityBlockerClient,
-        MessageBuilderInterface $messageBuilder,
-        SecurityBlockerPageConfig $securityBlockerPageConfig,
-        string $localeName
+        protected RequestStack $requestStack,
+        protected SecurityBlockerPageToSecurityBlockerClientInterface $securityBlockerClient,
+        protected MessageBuilderInterface $messageBuilder,
+        protected SecurityBlockerPageConfig $securityBlockerPageConfig,
+        protected string $localeName,
+        protected SecurityBlockerPageToStoreClientInterface $storeClient
     ) {
-        $this->requestStack = $requestStack;
-        $this->securityBlockerClient = $securityBlockerClient;
-        $this->messageBuilder = $messageBuilder;
-        $this->securityBlockerPageConfig = $securityBlockerPageConfig;
-        $this->localeName = $localeName;
     }
 
     /**
@@ -162,8 +130,13 @@ class SecurityBlockerAgentEventSubscriber implements EventSubscriberInterface
     protected function isLoginAttempt(Request $request): bool
     {
         $currentRoute = $request->attributes->get('_route');
-        if ($this->securityBlockerPageConfig->isLocaleInAgentLoginCheckPath()) {
-            $currentRoute = mb_substr($currentRoute, mb_strlen($this->localeName) - 2);
+
+        if ($this->securityBlockerPageConfig->isStoreRoutingEnabled()) {
+            $currentRoute = $this->removePrefix($currentRoute, $this->storeClient->getCurrentStore()->getNameOrFail());
+        }
+
+        if ($this->securityBlockerPageConfig->isLocaleInCustomerLoginCheckPath()) {
+            $currentRoute = $this->removePrefix($currentRoute, mb_substr($this->localeName, 0, 2));
         }
 
         return $currentRoute === static::LOGIN_ROUTE && $request->getMethod() === Request::METHOD_POST;
@@ -185,5 +158,16 @@ class SecurityBlockerAgentEventSubscriber implements EventSubscriberInterface
         }
 
         return $securityCheckAuthContextTransfer;
+    }
+
+    /**
+     * @param string $route
+     * @param string $prefix
+     *
+     * @return string
+     */
+    protected function removePrefix(string $route, string $prefix): string
+    {
+        return ltrim(mb_substr($route, mb_strlen($prefix)), '_');
     }
 }

@@ -12,6 +12,7 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToGlossaryStorageClientBridge;
 use SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToSecurityBlockerClientBridge;
+use SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToStoreClientBridge;
 
 /**
  * @method \SprykerShop\Yves\SecurityBlockerPage\SecurityBlockerPageConfig getConfig()
@@ -43,6 +44,11 @@ class SecurityBlockerPageDependencyProvider extends AbstractBundleDependencyProv
     public const SERVICE_LOCALE = 'locale';
 
     /**
+     * @var string
+     */
+    public const CLIENT_STORE = 'CLIENT_STORE';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -54,6 +60,7 @@ class SecurityBlockerPageDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addGlossaryStorageClient($container);
         $container = $this->addRequestStack($container);
         $container = $this->addLocaleService($container);
+        $container = $this->addStoreClient($container);
 
         return $container;
     }
@@ -113,6 +120,22 @@ class SecurityBlockerPageDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::SERVICE_LOCALE, function (Container $container) {
             return $container->getApplicationService(static::SERVICE_LOCALE);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return new SecurityBlockerPageToStoreClientBridge(
+                $container->getLocator()->store()->client(),
+            );
         });
 
         return $container;

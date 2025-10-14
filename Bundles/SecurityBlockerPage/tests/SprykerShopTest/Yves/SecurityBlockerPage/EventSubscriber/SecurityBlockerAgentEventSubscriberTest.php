@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
 use Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer;
 use SprykerShop\Yves\SecurityBlockerPage\Builder\MessageBuilder;
 use SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToSecurityBlockerClientInterface;
+use SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToStoreClientInterface;
 use SprykerShop\Yves\SecurityBlockerPage\EventSubscriber\SecurityBlockerAgentEventSubscriber;
 use SprykerShop\Yves\SecurityBlockerPage\SecurityBlockerPageConfig;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -56,6 +57,7 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
             $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
             $this->getSecurityBlockerPageConfigMock(true),
             static::LOCALE_NAME_EN,
+            $this->getMockBuilder(SecurityBlockerPageToStoreClientInterface::class)->getMock(),
         );
 
         $eventDispatcher = new EventDispatcher();
@@ -89,6 +91,7 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
             $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
             $this->getSecurityBlockerPageConfigMock(true),
             static::LOCALE_NAME_EN,
+            $this->getMockBuilder(SecurityBlockerPageToStoreClientInterface::class)->getMock(),
         );
 
         $eventDispatcher = new EventDispatcher();
@@ -124,6 +127,7 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
             $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
             $this->getSecurityBlockerPageConfigMock(true),
             static::LOCALE_NAME_EN,
+            $this->getMockBuilder(SecurityBlockerPageToStoreClientInterface::class)->getMock(),
         );
 
         $eventDispatcher = new EventDispatcher();
@@ -158,6 +162,7 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
             $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
             $this->getSecurityBlockerPageConfigMock(true),
             static::LOCALE_NAME_EN,
+            $this->getMockBuilder(SecurityBlockerPageToStoreClientInterface::class)->getMock(),
         );
 
         $eventDispatcher = new EventDispatcher();
@@ -192,6 +197,7 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
             $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
             $this->getSecurityBlockerPageConfigMock(true),
             static::LOCALE_NAME_EN,
+            $this->getMockBuilder(SecurityBlockerPageToStoreClientInterface::class)->getMock(),
         );
 
         $eventDispatcher = new EventDispatcher();
@@ -234,6 +240,7 @@ class SecurityBlockerAgentEventSubscriberTest extends Unit
             $this->getMockBuilder(MessageBuilder::class)->disableOriginalConstructor()->getMock(),
             $this->getSecurityBlockerPageConfigMock(false),
             static::LOCALE_NAME_EN,
+            $this->getMockBuilder(SecurityBlockerPageToStoreClientInterface::class)->getMock(),
         );
 
         $eventDispatcher = new EventDispatcher();

@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\SecurityBlockerPage;
 
 use Spryker\Yves\Kernel\AbstractBundleConfig;
+use SprykerShop\Shared\SecurityBlockerPage\SecurityBlockerPageConstants;
 
 class SecurityBlockerPageConfig extends AbstractBundleConfig
 {
@@ -75,5 +76,15 @@ class SecurityBlockerPageConfig extends AbstractBundleConfig
     public function useEmailContextForLoginSecurityBlocker(): bool
     {
         return static::USE_EMAIL_CONTEXT_FOR_LOGIN_SECURITY_BLOCKER;
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isStoreRoutingEnabled(): bool
+    {
+        return $this->get(SecurityBlockerPageConstants::IS_STORE_ROUTING_ENABLED, false);
     }
 }

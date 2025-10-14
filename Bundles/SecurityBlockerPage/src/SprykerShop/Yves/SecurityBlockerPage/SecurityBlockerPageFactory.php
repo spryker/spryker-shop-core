@@ -12,6 +12,7 @@ use SprykerShop\Yves\SecurityBlockerPage\Builder\MessageBuilder;
 use SprykerShop\Yves\SecurityBlockerPage\Builder\MessageBuilderInterface;
 use SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToSecurityBlockerClientInterface;
+use SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToStoreClientInterface;
 use SprykerShop\Yves\SecurityBlockerPage\EventSubscriber\SecurityBlockerAgentEventSubscriber;
 use SprykerShop\Yves\SecurityBlockerPage\EventSubscriber\SecurityBlockerCustomerEventSubscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -33,6 +34,7 @@ class SecurityBlockerPageFactory extends AbstractFactory
             $this->createMessageBuilder(),
             $this->getConfig(),
             $this->getLocale(),
+            $this->getStoreClient(),
         );
     }
 
@@ -47,6 +49,7 @@ class SecurityBlockerPageFactory extends AbstractFactory
             $this->createMessageBuilder(),
             $this->getConfig(),
             $this->getLocale(),
+            $this->getStoreClient(),
         );
     }
 
@@ -88,5 +91,13 @@ class SecurityBlockerPageFactory extends AbstractFactory
     public function getLocale(): string
     {
         return $this->getProvidedDependency(SecurityBlockerPageDependencyProvider::SERVICE_LOCALE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\SecurityBlockerPage\Dependency\Client\SecurityBlockerPageToStoreClientInterface
+     */
+    public function getStoreClient(): SecurityBlockerPageToStoreClientInterface
+    {
+        return $this->getProvidedDependency(SecurityBlockerPageDependencyProvider::CLIENT_STORE);
     }
 }
