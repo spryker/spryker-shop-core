@@ -33,7 +33,7 @@ class StrategyCacheKeyGenerator implements CacheKeyGeneratorInterface
     public function generateCacheKey(string $widgetClassName, array $arguments): ?string
     {
         if (!isset(static::$widgetCacheKeyGeneratorPlugins[$widgetClassName])) {
-            return md5($widgetClassName . serialize($arguments));
+            return md5($widgetClassName . $this->argumentSerializer($arguments));
         }
 
         $key = static::$widgetCacheKeyGeneratorPlugins[$widgetClassName]->generateCacheKey($arguments);
@@ -43,6 +43,36 @@ class StrategyCacheKeyGenerator implements CacheKeyGeneratorInterface
         }
 
         return md5($widgetClassName . $key);
+    }
+
+    /**
+     * @param array $arguments
+     *
+     * @return string
+     */
+    protected function argumentSerializer(array $arguments): string
+    {
+        $result = '';
+        foreach ($arguments as $argument) {
+            if (is_object($argument)) {
+                if (get_class($argument) === 'Generated\\Shared\\Transfer\\QuoteTransfer') {
+                    $result .= $argument->getIdQuote() . $argument->getCustomerReference();
+                    if (method_exists($argument, 'getUuid')) {
+                        $result .= $argument->getUuid();
+                    }
+
+                    continue;
+                }
+                if (get_class($argument) === 'Generated\\Shared\\Transfer\\ItemTransfer') {
+                    $result .= $argument->getId() . $argument->getGroupKey() . $argument->getSku();
+
+                    continue;
+                }
+            }
+            $result .= serialize($argument);
+        }
+
+        return $result;
     }
 
     /**

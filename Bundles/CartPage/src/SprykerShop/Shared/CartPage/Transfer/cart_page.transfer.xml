@@ -20,6 +20,7 @@
         <property name="currency" type="Currency"/>
         <property name="taxVendor" type="string" strict="true"/>
         <property name="totalItemCount" type="int" strict="true"/>
+        <property name="revalidationTime" type="int" strict="true"/>
     </transfer>
 
     <transfer name="QuoteApproval">

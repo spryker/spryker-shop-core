@@ -1,47 +1,61 @@
 {% extends template('widget') %}
 
 {% define data = {
-    products: _widget.products
+    products: _widget.products,
+    isNewCarouselRenderingEnabled: false,
 } %}
 
 {% block body %}
     {% if data.products is not empty %}
-        <div class="spacing-y--big">
-            <h2 class="title title--h5 spacing-x">{{ 'product_alternative_widget.product_alternative' | trans }}</h2>
-        {% embed molecule('simple-carousel') with {
+        {% set sliderConfig = data.isNewCarouselRenderingEnabled
+        ? {
+            modifiers: ['inset'],
+            data: {
+                slides: data.products,
+                showDots: false,
+            },
+            attributes: {
+                'slides-to-show': 4,
+                'is-new-carousel-rendering-enabled': true,
+            },
+        } : {
             modifiers: ['inset'],
             class: 'is-hidden-sm-md',
             data: {
                 slides: data.products,
-                showDots: false
+                showDots: false,
             },
             attributes: {
-                'slides-to-show': 4
-            }
-        } only %}
-            {% block slide %}
-                {% widget 'ProductAlternativeWidget' args [slide] only %}
-                {% elsewidget 'ProductWidgetPlugin' args [slide] only %} {# @deprecated Use ProductAlternativeWidget instead. #}
-                {% endwidget %}
-            {% endblock %}
-        {% endembed %}
+                'slides-to-show': 4,
+            },
+        } %}
 
-        {% embed molecule('simple-carousel') with {
-            class: 'is-hidden-lg-xl',
-            data: {
-                slides: data.products,
-                showDots: false
-            },
-            attributes: {
-                'slides-to-show': 1
-            }
-        } only %}
-            {% block slide %}
-                {% widget 'ProductAlternativeWidget' args [slide] only %}
-                {% elsewidget 'ProductWidgetPlugin' args [slide] only %} {# @deprecated Use ProductAlternativeWidget instead. #}
-                {% endwidget %}
-            {% endblock %}
-        {% endembed %}
+        <div class="spacing-y--big">
+            <h2 class="title title--h5 spacing-x">{{ 'product_alternative_widget.product_alternative' | trans }}</h2>
+
+            {% embed molecule('simple-carousel') with sliderConfig only %}
+                {% block slide %}
+                    {% widget 'ProductAlternativeWidget' args [slide] only %}
+                    {% elsewidget 'ProductWidgetPlugin' args [slide] only %} {# @deprecated Use ProductAlternativeWidget instead. #}
+                    {% endwidget %}
+                {% endblock %}
+            {% endembed %}
+
+            {% if not data.isNewCarouselRenderingEnabled %}
+                {% embed molecule('simple-carousel') with {
+                    class: 'is-hidden-lg-xl',
+                    data: sliderData,
+                    attributes: {
+                        'slides-to-show': 1
+                    }
+                } only %}
+                    {% block slide %}
+                        {% widget 'ProductAlternativeWidget' args [slide] only %}
+                        {% elsewidget 'ProductWidgetPlugin' args [slide] only %} {# @deprecated Use ProductAlternativeWidget instead. #}
+                        {% endwidget %}
+                    {% endblock %}
+                {% endembed %}
+            {% endif %}
         </div>
     {% endif %}
 {% endblock %}

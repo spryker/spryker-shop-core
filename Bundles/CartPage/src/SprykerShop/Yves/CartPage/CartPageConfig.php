@@ -114,4 +114,17 @@ class CartPageConfig extends AbstractBundleConfig
     {
         return static::CART_BLOCK_MINI_CART_VIEW_TEMPLATE_PATH;
     }
+
+    /**
+     * Specification:
+     * - Returns the cache lifetime for cart validation operations in seconds.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getCartValidationCacheTTL(): int
+    {
+        return 0;
+    }
 }

@@ -179,7 +179,15 @@ export default class SimpleCarousel extends Component {
      * Gets the number of slides to be shown.
      */
     get slidesToShow(): number {
-        return parseInt(this.getAttribute('slides-to-show') || '0');
+        if (!this.isNewCarouselRenderingEnabled) {
+            return parseInt(this.getAttribute('slides-to-show'));
+        }
+
+        if (window.innerWidth > this.desktopWidth) {
+            return parseInt(this.getAttribute('slides-to-show'));
+        }
+
+        return parseInt(this.getAttribute('mobile-slides-to-show'));
     }
 
     /**
@@ -187,5 +195,13 @@ export default class SimpleCarousel extends Component {
      */
     get slidesToScroll(): number {
         return parseInt(this.getAttribute('slides-to-scroll') || '0');
+    }
+
+    get desktopWidth(): number {
+        return parseInt(this.getAttribute('desktop-width'));
+    }
+
+    get isNewCarouselRenderingEnabled(): boolean {
+        return this.hasAttribute('is-new-carousel-rendering-enabled');
     }
 }

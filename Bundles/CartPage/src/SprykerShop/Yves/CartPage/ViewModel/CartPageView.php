@@ -142,16 +142,32 @@ class CartPageView implements CartPageViewInterface
             return $this->quoteTransfer;
         }
 
-        if ($this->config->isQuoteValidationEnabled()) {
+        $this->quoteTransfer = $this->cartClient->getQuote();
+        if ($this->isQuoteValidationRequired()) {
             $this->quoteResponseTransfer = $this->cartClient->validateQuote();
             $this->quoteTransfer = $this->quoteResponseTransfer->getQuoteTransferOrFail();
+
+            if ($this->quoteResponseTransfer->getIsSuccessful()) {
+                $this->quoteTransfer->setRevalidationTime(time());
+            }
 
             return $this->quoteTransfer;
         }
 
-        $this->quoteTransfer = $this->cartClient->getQuote();
-
         return $this->quoteTransfer;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isQuoteValidationRequired(): bool
+    {
+        $currentTimestamp = time();
+        $revalidationTime = $this->quoteTransfer->getRevalidationTime();
+
+        return $this->config->isQuoteValidationEnabled() &&
+            $this->quoteTransfer->getItems()->count() > 0 &&
+            ($revalidationTime === null || ($currentTimestamp - $revalidationTime) > $this->config->getCartValidationCacheTTL());
     }
 
     /**

@@ -21,6 +21,11 @@ use Twig\TwigFunction;
 class GeneratePathTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     /**
+     * @var array<string, string>
+     */
+    protected static array $urlCache = [];
+
+    /**
      * @var string
      */
     protected const TWIG_FUNCTION_NAME_GENERATE_PATH = 'generatePath';
@@ -85,6 +90,9 @@ class GeneratePathTwigPlugin extends AbstractPlugin implements TwigPluginInterfa
                 if ($url === null) {
                     return null;
                 }
+                if (isset(static::$urlCache[$url])) {
+                    return static::$urlCache[$url];
+                }
 
                 $parsedUrl = parse_url($url);
                 /** @var string $path */
@@ -103,7 +111,9 @@ class GeneratePathTwigPlugin extends AbstractPlugin implements TwigPluginInterfa
                 try {
                     $newPath = $router->generate($path);
 
-                    return sprintf('%s%s', $newPath, $query);
+                    static::$urlCache[$url] = sprintf('%s%s', $newPath, $query);
+
+                    return static::$urlCache[$url];
                 } catch (InvalidArgumentException $exception) {
                     if ($this->getConfig()->isStoreRoutingEnabled() === false) {
                         return $url;

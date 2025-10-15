@@ -10,8 +10,8 @@
     metaDescription: _view.product.metaDescription | default,
     metaKeywords: _view.product.metaKeywords | default,
     productId: _view.product.idProductConcrete is not empty ? _view.product.idProductConcrete : _view.product.idProductAbstract,
+    isNewCarouselRenderingEnabled: true,
 } %}
-
 {% block meta %}
     {{ parent() }}
     <link rel="canonical" href="{{ data.product.url }}" />
@@ -76,7 +76,11 @@
             </div>
         </div>
 
-        {% widget 'ProductAlternativeListWidget' args [data.product] only %}
+        {% widget 'ProductAlternativeListWidget' args [data.product] with {
+            data: {
+                isNewCarouselRenderingEnabled: data.isNewCarouselRenderingEnabled,
+            }
+        } only %}
         {% elsewidget 'ProductAlternativeWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductAlternativeListWidget instead. #}
         {% endwidget %}
 
@@ -88,7 +92,11 @@
             }
         } only %}
 
-        {% widget 'ProductReplacementForListWidget' args [data.product.sku] only %}
+        {% widget 'ProductReplacementForListWidget' args [data.product.sku] with {
+            data: {
+                isNewCarouselRenderingEnabled: data.isNewCarouselRenderingEnabled,
+            }
+        } only %}
         {% elsewidget 'ProductReplacementForWidgetPlugin' args [data.product.sku] only %} {# @deprecated Use ProductReplacementForListWidget instead. #}
         {% endwidget %}
 
@@ -96,7 +104,11 @@
         {% elsewidget 'ProductReviewWidgetPlugin' args [data.product.idProductAbstract] only %} {# @deprecated Use ProductDetailPageReviewWidget instead. #}
         {% endwidget %}
 
-        {% widget 'SimilarProductsWidget' args [data.product] only %}
+        {% widget 'SimilarProductsWidget' args [data.product] with {
+            data: {
+                isNewCarouselRenderingEnabled: data.isNewCarouselRenderingEnabled,
+            }
+        } only %}
         {% elsewidget 'SimilarProductsWidgetPlugin' args [data.product] only %} {# @deprecated Use SimilarProductsWidget instead. #}
         {% endwidget %}
 

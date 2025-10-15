@@ -1,22 +1,36 @@
 {% extends template('widget') %}
 
 {% define data = {
-    products: []
+    products: [],
+    isNewCarouselRenderingEnabled: false,
 } %}
 
 {% block body %}
     {% if data.products is not empty %}
-        {% embed molecule('simple-carousel') with {
+        {% set sliderConfig = data.isNewCarouselRenderingEnabled
+        ? {
+            modifiers: ['inset'],
+            data: {
+                slides: data.products,
+                showDots: false,
+            },
+            attributes: {
+                'slides-to-show': 4,
+                'is-new-carousel-rendering-enabled': true,
+            },
+        } : {
             modifiers: ['inset'],
             class: 'is-hidden-sm-md',
             data: {
                 slides: data.products,
-                showDots: false
+                showDots: false,
             },
             attributes: {
-                'slides-to-show': 4
-            }
-        } only %}
+                'slides-to-show': 4,
+            },
+        } %}
+
+        {% embed molecule('simple-carousel') with sliderConfig only %}
             {% block slide %}
                 {% widget 'PdpProductRelationWidget' args [slide] only %}
                 {% elsewidget 'ProductWidgetPlugin' args [slide] only %} {# @deprecated Use PdpProductRelationWidget instead. #}
@@ -24,21 +38,23 @@
             {% endblock %}
         {% endembed %}
 
-        {% embed molecule('simple-carousel') with {
-            class: 'is-hidden-lg-xl',
-            data: {
-                slides: data.products,
-                showDots: false
-            },
-            attributes: {
-                'slides-to-show': 1
-            }
-        } only %}
-            {% block slide %}
-                {% widget 'PdpProductRelationWidget' args [slide] only %}
-                {% elsewidget 'ProductWidgetPlugin' args [slide] only %} {# @deprecated Use PdpProductRelationWidget instead. #}
-                {% endwidget %}
-            {% endblock %}
-        {% endembed %}
+        {% if not data.isNewCarouselRenderingEnabled %}
+            {% embed molecule('simple-carousel') with {
+                class: 'is-hidden-lg-xl',
+                data: {
+                    slides: data.products,
+                    showDots: false
+                },
+                attributes: {
+                    'slides-to-show': 1
+                }
+            } only %}
+                {% block slide %}
+                    {% widget 'PdpProductRelationWidget' args [slide] only %}
+                    {% elsewidget 'ProductWidgetPlugin' args [slide] only %} {# @deprecated Use PdpProductRelationWidget instead. #}
+                    {% endwidget %}
+                {% endblock %}
+            {% endembed %}
+        {% endif %}
     {% endif %}
 {% endblock %}

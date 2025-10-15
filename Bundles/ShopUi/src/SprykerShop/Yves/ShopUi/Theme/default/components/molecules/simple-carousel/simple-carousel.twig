@@ -7,12 +7,15 @@
 
 {% define data = {
     slides: [],
-    showDots: true
+    showDots: true,
 } %}
 
 {% define attributes = {
+    'desktop-width': 768,
     'slides-to-show': 1,
-    'slides-to-scroll': 1
+    'mobile-slides-to-show': 1,
+    'slides-to-scroll': 1,
+    'is-new-carousel-rendering-enabled': false,
 } %}
 
 {% set slidesCount = data.slides | length %}
@@ -20,6 +23,14 @@
 {% set dotsCount = (((slidesCount - attributes['slides-to-show']) / attributes['slides-to-scroll']) | round(0, 'ceil')) + 1 %}
 {% set showNavigation = data.slides | length > 1 %}
 {% set showDots = data.showDots and dotsCount > 1 %}
+
+{% set slideClasses = {
+    0: 'col--sm-12 col--md-4 col--lg-3',
+    1: 'col--sm-12',
+    2: 'col--sm-12 col--md-6',
+    3: 'col--sm-12 col--md-6 col--lg-4',
+    4: 'col--sm-12 col--md-4 col--lg-3',
+} %}
 
 {% block body %}
     <div class="{{config.name}}__container">
@@ -39,7 +50,10 @@
         <div class="{{config.name}}__view">
             <div class="{{config.name}}__slider {{config.jsName}}__slider grid grid--stretch">
                 {% for slide in data.slides %}
-                    <div class="{{config.jsName}}__slide col" style="width:{{slideWidth}}%;min-width:{{slideWidth}}%;">
+                    <div
+                        class="{{config.jsName}}__slide {% if attributes['is-new-carousel-rendering-enabled'] %}{{ slideClasses[attributes['slides-to-show']] | default(slideClasses[0]) }}{% endif %}"
+                        style="{% if not attributes['is-new-carousel-rendering-enabled'] %}width:{{slideWidth}}%;min-width:{{slideWidth}}%;{% endif %}"
+                    >
                         {% block slide %}{% endblock %}
                     </div>
                 {% endfor %}
