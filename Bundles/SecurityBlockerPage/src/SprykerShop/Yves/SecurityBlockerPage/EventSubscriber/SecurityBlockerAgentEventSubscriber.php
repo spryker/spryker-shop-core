@@ -130,6 +130,9 @@ class SecurityBlockerAgentEventSubscriber implements EventSubscriberInterface
     protected function isLoginAttempt(Request $request): bool
     {
         $currentRoute = $request->attributes->get('_route');
+        if ($currentRoute === null) {
+            return false;
+        }
 
         if ($this->securityBlockerPageConfig->isStoreRoutingEnabled()) {
             $currentRoute = $this->removePrefix($currentRoute, $this->storeClient->getCurrentStore()->getNameOrFail());

@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CatalogPage\Controller;
 
 use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormatterPlugin;
+use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Shared\Storage\StorageConstants;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -23,6 +24,7 @@ use Throwable;
 class CatalogController extends AbstractController
 {
     use PermissionAwareTrait;
+    use LoggerTrait;
 
     public const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL;
 
@@ -155,6 +157,7 @@ class CatalogController extends AbstractController
             if (preg_match('/Search failed with the following reason: Numeric value \(\d+\) out of range of int.*/', $e->getMessage())) {
                 throw new NotFoundHttpException();
             }
+            $this->getLogger()->error($e->getMessage(), ['exception' => $e]);
             $this->addErrorMessage(static::MESSAGE_PAGE_CANNOT_BE_OPENED);
 
             return $this->redirectResponseInternal(static::ROUTE_SEARCH_PAGE);
